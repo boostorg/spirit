@@ -86,7 +86,7 @@ tree_node<T> const &node = *start;
         // only this node
             nodes.first = start;
             nodes.second = start;
-            advance(nodes.second, 1);
+            std::advance(nodes.second, 1);
         }
         return true;
     }
