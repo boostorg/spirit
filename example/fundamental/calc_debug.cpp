@@ -1,4 +1,5 @@
 /*=============================================================================
+    Copyright (c) 2001-2003 Dan Nuffer
     Copyright (c) 2002-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -8,17 +9,21 @@
 =============================================================================*/
 ////////////////////////////////////////////////////////////////////////////
 //
-//  Plain calculator example demostrating the grammar and semantic actions.
-//  This is discussed in the "Grammar" and "Semantic Actions" chapters in
-//  the Spirit User's Guide. << With debugging enabled >>
+//  Full calculator example using STL functors with debugging enabled.
+//  This is discussed in the "Functional" chapter in the Spirit User's Guide
+//  and the Debugging chapter.
 //
-//  [ JDG 5/10/2002 ]
+//  Ported to Spirit v1.5 from v1.2/1.3 example by Dan Nuffer
+//  [ JDG 9/18/2002 ]
+//  [ JDG 7/29/2004 ]
 //
 ////////////////////////////////////////////////////////////////////////////
 
 #define BOOST_SPIRIT_DEBUG
 #include <boost/spirit/core.hpp>
 #include <iostream>
+#include <stack>
+#include <functional>
 #include <string>
 
 ////////////////////////////////////////////////////////////////////////////
@@ -30,20 +35,67 @@ using namespace boost::spirit;
 //  Semantic actions
 //
 ////////////////////////////////////////////////////////////////////////////
-namespace
+struct push_int
 {
-    void    do_int(char const* str, char const* end)
+    push_int(stack<long>& eval_)
+    : eval(eval_) {}
+
+    void operator()(char const* str, char const* /*end*/) const
     {
-        string  s(str, end);
-        cout << "PUSH(" << s << ')' << endl;
+        long n = strtol(str, 0, 10);
+        eval.push(n);
+        cout << "push\t" << long(n) << endl;
     }
 
-    void    do_add(char const*, char const*)    { cout << "ADD\n"; }
-    void    do_subt(char const*, char const*)   { cout << "SUBTRACT\n"; }
-    void    do_mult(char const*, char const*)   { cout << "MULTIPLY\n"; }
-    void    do_div(char const*, char const*)    { cout << "DIVIDE\n"; }
-    void    do_neg(char const*, char const*)    { cout << "NEGATE\n"; }
+    stack<long>& eval;
+};
+
+template <typename op>
+struct do_op
+{
+    do_op(op const& the_op, stack<long>& eval_)
+    : m_op(the_op), eval(eval_) {}
+
+    void operator()(char const*, char const*) const
+    {
+        long rhs = eval.top();
+        eval.pop();
+        long lhs = eval.top();
+        eval.pop();
+
+        cout << "popped " << lhs << " and " << rhs << " from the stack. ";
+        cout << "pushing " << m_op(lhs, rhs) << " onto the stack.\n";
+        eval.push(m_op(lhs, rhs));
+    }
+
+    op m_op;
+    stack<long>& eval;
+};
+
+template <class op>
+do_op<op>
+make_op(op const& the_op, stack<long>& eval)
+{
+    return do_op<op>(the_op, eval);
 }
+
+struct do_negate
+{
+    do_negate(stack<long>& eval_)
+    : eval(eval_) {}
+
+    void operator()(char const*, char const*) const
+    {
+        long lhs = eval.top();
+        eval.pop();
+
+        cout << "popped " << lhs << " from the stack. ";
+        cout << "pushing " << -lhs << " onto the stack.\n";
+        eval.push(-lhs);
+    }
+
+    stack<long>& eval;
+};
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -52,42 +104,51 @@ namespace
 ////////////////////////////////////////////////////////////////////////////
 struct calculator : public grammar<calculator>
 {
+    calculator(stack<long>& eval_)
+    : eval(eval_) {}
+
     template <typename ScannerT>
     struct definition
     {
-        definition(calculator const& /*self*/)
+        definition(calculator const& self)
         {
-            expression
-                =   term
-                    >> *(   ('+' >> term)[&do_add]
-                        |   ('-' >> term)[&do_subt]
-                        )
+            integer =
+                lexeme_d[ (+digit_p)[push_int(self.eval)] ]
                 ;
 
-            term
-                =   factor
-                    >> *(   ('*' >> factor)[&do_mult]
-                        |   ('/' >> factor)[&do_div]
-                        )
-                ;
-
-            factor
-                =   lexeme_d[(+digit_p)[&do_int]]
+            factor =
+                    integer
                 |   '(' >> expression >> ')'
-                |   ('-' >> factor)[&do_neg]
+                |   ('-' >> factor)[do_negate(self.eval)]
                 |   ('+' >> factor)
                 ;
 
-            BOOST_SPIRIT_DEBUG_NODE(expression);
-            BOOST_SPIRIT_DEBUG_NODE(term);
+            term =
+                factor
+                >> *(   ('*' >> factor)[make_op(multiplies<long>(), self.eval)]
+                    |   ('/' >> factor)[make_op(divides<long>(), self.eval)]
+                    )
+                    ;
+
+            expression =
+                term
+                >> *(  ('+' >> term)[make_op(plus<long>(), self.eval)]
+                    |   ('-' >> term)[make_op(minus<long>(), self.eval)]
+                    )
+                    ;
+
+            BOOST_SPIRIT_DEBUG_NODE(integer);
             BOOST_SPIRIT_DEBUG_NODE(factor);
+            BOOST_SPIRIT_DEBUG_NODE(term);
+            BOOST_SPIRIT_DEBUG_NODE(expression);
         }
 
-        rule<ScannerT> expression, term, factor;
-
+        rule<ScannerT> expression, term, factor, integer;
         rule<ScannerT> const&
         start() const { return expression; }
     };
+
+    stack<long>& eval;
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -99,11 +160,13 @@ int
 main()
 {
     cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\tExpression parser...\n\n";
+    cout << "\t\tThe simplest working calculator...\n\n";
     cout << "/////////////////////////////////////////////////////////\n\n";
     cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    calculator calc;    //  Our parser
+    stack<long> eval;
+    calculator  calc(eval); //  Our parser
+    BOOST_SPIRIT_DEBUG_NODE(calc);
 
     string str;
     while (getline(cin, str))
@@ -117,6 +180,7 @@ main()
         {
             cout << "-------------------------\n";
             cout << "Parsing succeeded\n";
+            cout << "result = " << calc.eval.top() << endl;
             cout << "-------------------------\n";
         }
         else
