@@ -36,15 +36,19 @@
   <tt>i</tt>. There's something you should be aware of though. In the viewpoint 
   of the grammar, the variable <tt>i</tt> is global. When the grammar gets more 
   complex, it's hard to keep track of the current state of <tt>i</tt>. And, with 
-  recursive rules, global variables simply won't be adequate. We need a machanism 
-  to attach local variables to our rules.</p>
-<p>Closures provide an environment, a stack frame, for local variables to reside. 
+  recursive rules, global variables simply won't be adequate. </p>
+<p>Closures are needed if you need your rules (or grammars) to be reentrant. For 
+  example, a rule (or grammar) might be called recursively indirectly or directly 
+  by itself. The calculator is a good example. The expression rule recursively 
+  calls itself indirectly when it invokes the factor rule. </p>
+<p>We need a machanism to attach local variables to our rules (and grammars). 
+  Closures provide an environment, a stack frame, for local variables to reside. 
   Most importantly, the closure variables are accessible from the EBNF grammar 
   specification and can be used to pass parser information upstream or downstream 
   from the topmost rule down to the terminals in a top-down recursive descent. 
-  For one, closures provide a parser with the ability to have inherited and synthetic 
-  attributes, more or less analogous to return values and function arguments. 
-</p>
+  For one, closures provide a parser with the ability to have <em>inherited</em> 
+  and <em>synthetic attributes</em>, more or less analogous to <em>return values</em> 
+  and <em>function arguments</em>. </p>
 <p>When a rule is given a closure, the closure's local variables are created prior 
   to entering the parse function and destructed after exiting the parse function. 
   These local variables are true local variables that exist on the hardware stack.</p>
