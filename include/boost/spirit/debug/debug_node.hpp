@@ -77,8 +77,8 @@ namespace impl {
 
 #if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
     template <typename ResultT>
-    inline void
-    print_closure_info(ResultT const &hit, int level, std::string const& name)
+    inline ResultT &
+    print_closure_info(ResultT &hit, int level, std::string const& name)
     {
         if (!name.empty()) {
             for (int i = 0; i < level-1; ++i)
@@ -88,6 +88,7 @@ namespace impl {
             BOOST_SPIRIT_DEBUG_OUT 
                 << "^" << name << ":\t" << hit.value() << "\n";
         }
+        return hit;
     }
 #endif // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
 
@@ -219,8 +220,8 @@ namespace impl {
 #if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
             if (trace_parser(p)) {    
             // for now, print out the return value only
-                impl::print_closure_info(
-                    hit, 
+                return impl::print_closure_info(
+                    this->base_t::post_parse(hit, p, scan), 
                     scan.get_level(), 
                     parser_name(p)
                 );
