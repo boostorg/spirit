@@ -19,8 +19,6 @@
 #include <list>
 #include <boost/iterator_adaptors.hpp>
 
-//#include "cpp/tagged_token.hpp" 
-
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
 namespace util {
@@ -58,7 +56,6 @@ public:
     { 
         if (x.policies().unput_queue.size() > 0) {
         // there exist pending tokens in the unput queue
-//            x.policies().unput_queue.front().reset_tag();
             x.policies().unput_queue.pop_front();
         }
         else {
@@ -82,7 +79,6 @@ public:
     typename ContainerT::size_type queuesize() const 
     { return unput_queue.size(); }
 
-//    void unput_token (TokenT const &token) { unput_queue.push_front(token); }
     ContainerT &get_unput_queue() { return unput_queue; }
     
 private:
@@ -116,7 +112,6 @@ public:
     :   base_t(it, policies)
     {}
     
-//    void unput_token(TokenT const &token) { policies().unput_token(token); }
     ContainerT &get_unput_queue() { return policies().get_unput_queue(); }
 };
 
@@ -175,12 +170,6 @@ namespace impl {
             dest.base() = src.base();
             dest.policies() = src.policies();
         }
-        
-//        static void 
-//        do_ (iterator_t &dest, IteratorT const &src)
-//        {
-//            dest.base() = src;
-//        }
     };
 
 ///////////////////////////////////////////////////////////////////////////////

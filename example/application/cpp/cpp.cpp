@@ -137,7 +137,7 @@ file_position current_position;
             }
         }
         
-    // analyze the actual file
+    // analyze the input file
     context_t::iterator_t first = ctx.begin();
     context_t::iterator_t last = ctx.end();
             
@@ -145,8 +145,11 @@ file_position current_position;
         // print out the string representation of this token (skip comments)
             using namespace cpplexer;
             
+        // store last known good position
+            current_position = (*first).get_position();
+
         token_id id = token_id(*first);
-        
+
             if (id == T_CPPCOMMENT || id == T_NEWLINE) {
             // C++ comment tokens contain the trailing newline
                 cout << endl;
