@@ -230,8 +230,8 @@ main()
 #define LONG_LONG_MIN (-LONG_LONG_MAX - 1)
 #endif
 
-    long long ll;
-    int_parser<long long> long_long_p;
+     ::boost::long_long_type ll;
+    int_parser< ::boost::long_long_type> long_long_p;
 
     parse("1234567890123456789", long_long_p[assign_a(ll)]);
     assert(ll == 1234567890123456789LL);

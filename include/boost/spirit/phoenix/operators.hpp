@@ -373,8 +373,8 @@ template <> struct rank<long>               { static int const value = 90; };
 template <> struct rank<unsigned long>      { static int const value = 100; };
 
 #ifdef BOOST_HAS_LONG_LONG
-template <> struct rank<long long>          { static int const value = 110; };
-template <> struct rank<unsigned long long> { static int const value = 120; };
+template <> struct rank< ::boost::long_long_type>          { static int const value = 110; };
+template <> struct rank< ::boost::ulong_long_type> { static int const value = 120; };
 #endif
 
 template <> struct rank<float>              { static int const value = 130; };
