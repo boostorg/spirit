@@ -144,12 +144,12 @@ namespace boost { namespace spirit {
         range(CharT first_, CharT last_)
         : first(first_), last(last_)
         {
-            BOOST_SPIRIT_ASSERT(first <= last);
+            BOOST_SPIRIT_ASSERT(!(last < first));
         }
 
         template <typename T>
         bool test(T ch) const
-        { return first <= CharT(ch) && CharT(ch) <= last; }
+        { return !(CharT(ch) < first) && !(last < CharT(ch)); }
 
         CharT   first;
         CharT   last;
