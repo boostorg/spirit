@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_ERASE_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_ERASE_ACTOR_HPP
 
@@ -29,7 +28,7 @@ namespace boost { namespace spirit {
     //      erase_action
     //
     //  Policy holder, corresponding helper method:
-    //      ref_value_actor, erase_a( ref ); 
+    //      ref_value_actor, erase_a( ref );
     //      ref_const_ref_actor, erase_a( ref, key_ref );
     //
     //  () operators: both
@@ -51,8 +50,8 @@ namespace boost { namespace spirit {
             typename IteratorT
         >
         void act(
-            T& ref_, 
-            IteratorT const& first_, 
+            T& ref_,
+            IteratorT const& first_,
             IteratorT const& last_
             ) const
         {

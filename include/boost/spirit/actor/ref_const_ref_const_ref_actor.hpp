@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_REF_CONST_REF_CONST_REF_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_REF_CONST_REF_CONST_REF_ACTOR_HPP
 
@@ -25,8 +24,8 @@ namespace boost { namespace spirit {
     //
     //  Constructor:
     //      ...(
-    //          T& ref_, 
-    //          Value1T const& value1_ref_, 
+    //          T& ref_,
+    //          Value1T const& value1_ref_,
     //          Value2T const& value2_ref_ );
     //      where ref_, value1_ref and value2_ref_ are stored in the holder.
     //
@@ -54,8 +53,8 @@ namespace boost { namespace spirit {
             Value1T const& value1_ref_,
             Value2T const& value2_ref_
             )
-        : 
-            ref(ref_), 
+        :
+            ref(ref_),
             value1_ref(value1_ref_),
             value2_ref(value2_ref_)
         {}

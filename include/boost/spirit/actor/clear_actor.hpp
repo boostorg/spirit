@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_CLEAR_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_CLEAR_ACTOR_HPP
 
@@ -21,12 +20,12 @@ namespace boost { namespace spirit {
     //
     //  Actions (what it does):
     //      ref.clear();
-    //    
+    //
     //  Policy name:
     //      clear_action
     //
     //  Policy holder, corresponding helper method:
-    //      ref_actor, clear_a( ref ); 
+    //      ref_actor, clear_a( ref );
     //
     //  () operators: both.
     //

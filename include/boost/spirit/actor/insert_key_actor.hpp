@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_INSERT_KEY_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_INSERT_KEY_ACTOR_HPP
 
@@ -16,7 +15,7 @@ namespace boost { namespace spirit {
 
     ///////////////////////////////////////////////////////////////////////////
     //  Summary:
-    //  A semantic action policy that insert data into an associative 
+    //  A semantic action policy that insert data into an associative
     //  container using a const reference to data.
     //  (This doc uses convention available in actors.hpp)
     //
@@ -28,7 +27,7 @@ namespace boost { namespace spirit {
     //      insert_key_action
     //
     //  Policy holder, corresponding helper method:
-    //      ref_const_ref_value_actor, insert_key_a( ref, value_ref ); 
+    //      ref_const_ref_value_actor, insert_key_a( ref, value_ref );
     //
     //  () operators: both
     //
@@ -42,7 +41,7 @@ namespace boost { namespace spirit {
             typename ReferentT
         >
         void act(
-            T& ref_, 
+            T& ref_,
             ValueT const& value_,
             ReferentT const& key_
             ) const
@@ -58,9 +57,9 @@ namespace boost { namespace spirit {
             typename IteratorT
         >
         void act(
-            T& ref_, 
+            T& ref_,
             ValueT const& value_,
-            IteratorT const& first_, 
+            IteratorT const& first_,
             IteratorT const& last_
             ) const
         {

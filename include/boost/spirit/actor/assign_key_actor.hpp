@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_ASSIGN_KEY_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_ASSIGN_KEY_ACTOR_HPP
 
@@ -33,9 +32,9 @@ namespace boost { namespace spirit {
             typename IteratorT
         >
         void act(
-            T& ref_, 
+            T& ref_,
             ValueT const& value_,
-            IteratorT const& first_, 
+            IteratorT const& first_,
             IteratorT const& last_
             ) const
         {
@@ -50,7 +49,7 @@ namespace boost { namespace spirit {
         typename T,
         typename ValueT
     >
-    inline ref_const_ref_value_actor<T,ValueT,assign_key_action> 
+    inline ref_const_ref_value_actor<T,ValueT,assign_key_action>
         assign_key_a(T& ref_, ValueT const& value_)
     {
         return ref_const_ref_value_actor<T,ValueT,assign_key_action>(
@@ -69,7 +68,7 @@ namespace boost { namespace spirit {
         ValueT,
         KeyT,
         assign_key_action
-    > 
+    >
         assign_key_a(
             T& ref_,
             ValueT const& value_,

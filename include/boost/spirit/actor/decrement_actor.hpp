@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_DECREMENT_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_DECREMENT_ACTOR_HPP
 
@@ -21,12 +20,12 @@ namespace boost { namespace spirit {
     //
     //  Actions:
     //      --ref;
-    //    
+    //
     //  Policy name:
     //      decrement_action
     //
     //  Policy holder, corresponding helper method:
-    //      ref_actor, decrement_a( ref ); 
+    //      ref_actor, decrement_a( ref );
     //
     //  () operators: both.
     //

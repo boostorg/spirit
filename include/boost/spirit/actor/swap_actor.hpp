@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_SWAP_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_SWAP_ACTOR_HPP
 
@@ -26,7 +25,7 @@ namespace boost { namespace spirit {
     //      swap_action
     //
     //  Policy holder, corresponding helper method:
-    //      ref_value_actor, swap_a( ref ); 
+    //      ref_value_actor, swap_a( ref );
     //      ref_const_ref_actor, swap_a( ref, value_ref );
     //
     //  () operators: both

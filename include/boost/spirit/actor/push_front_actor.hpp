@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_PUSH_FRONT_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_PUSH_FRONT_ACTOR_HPP
 
@@ -18,7 +17,7 @@ namespace boost { namespace spirit {
     ///////////////////////////////////////////////////////////////////////////
     //  Summary:
     //
-    //  A semantic action policy that appends a value to the front of a 
+    //  A semantic action policy that appends a value to the front of a
     //  container.
     //  (This doc uses convention available in actors.hpp)
     //
@@ -26,12 +25,12 @@ namespace boost { namespace spirit {
     //      ref.push_front( value );
     //      ref.push_front( T::value_type(first,last) );
     //      ref.push_front( value_ref );
-    //    
+    //
     //  Policy name:
     //      push_front_action
     //
     //  Policy holder, corresponding helper method:
-    //      ref_value_actor, push_front_a( ref ); 
+    //      ref_value_actor, push_front_a( ref );
     //      ref_const_ref_actor, push_front_a( ref, value_ref );
     //
     //  () operators: both
@@ -53,8 +52,8 @@ namespace boost { namespace spirit {
             typename IteratorT
         >
         void act(
-            T& ref_, 
-            IteratorT const& first_, 
+            T& ref_,
+            IteratorT const& first_,
             IteratorT const& last_
             ) const
         {

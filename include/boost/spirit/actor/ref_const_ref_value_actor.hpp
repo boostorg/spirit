@@ -6,7 +6,6 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #ifndef BOOST_SPIRIT_ACTOR_REF_CONST_REF_VALUE_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_REF_CONST_REF_VALUE_ACTOR_HPP
 
@@ -15,7 +14,7 @@ namespace boost { namespace spirit {
     ///////////////////////////////////////////////////////////////////////////
     //  Summary:
     //  A semantic action policy holder. This holder stores a reference to ref
-    //  and a const reference to value_ref. 
+    //  and a const reference to value_ref.
     //  act methods are feed with ref, value_ref and the parse result.
     //
     //  (This doc uses convention available in actors.hpp)
@@ -46,8 +45,8 @@ namespace boost { namespace spirit {
             T& ref_,
             ValueT const& value_ref_
             )
-        : 
-            ref(ref_), 
+        :
+            ref(ref_),
             value_ref(value_ref_)
         {}
 
