@@ -28,7 +28,7 @@ enum universal_char_type {
     universal_char_type_valid = 0,
     universal_char_type_invalid = 1,
     universal_char_type_base_charset = 2,
-    universal_char_type_not_allowed = 3,
+    universal_char_type_not_allowed_for_identifiers = 3,
 };
 
 namespace {
@@ -58,7 +58,7 @@ namespace {
 //      universal_char_type_base_charset
 //          the universal character value designates a character from the base
 //          character set
-//      universal_char_type_not_allowed
+//      universal_char_type_not_allowed_for_identifiers
 //          the universal character value is not allowed in an identifier
 //
 //  Implementation note:
@@ -198,7 +198,7 @@ classify_universal_char (unsigned long ch)
         return universal_char_type_valid;   // Thai
     }
 
-    return universal_char_type_not_allowed;
+    return universal_char_type_not_allowed_for_identifiers;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -206,8 +206,9 @@ classify_universal_char (unsigned long ch)
 //  validate_identifier_name
 //
 //      The validate_identifier_name function tests a given identifier name for
-//      its validity inregrads to contained universal characters. These should 
-//      be in valid ranges (see the function classify_universal_char above).
+//      its validity in regard to eventually contained universal characters. 
+//      These should be in valid ranges (see the function 
+//      classify_universal_char above).
 //
 //      If the identifier name contains invalid or not allowed universal 
 //      characters a corresponding lexing_exception is thrown.
@@ -221,13 +222,13 @@ std::string::size_type pos = name.find_first_of('\\');
 
     while (std::string::npos != pos) {
     // the identifier name contains a backslash (must be universal char)
-        BOOST_SPIRIT_ASSERT('u' == name[pos+1] || 'U'== name[pos+1]);
+        BOOST_SPIRIT_ASSERT('u' == name[pos+1] || 'U' == name[pos+1]);
         
     std::string uchar_val(name.substr(pos+2, ('u' == name[pos+1]) ? 4 : 8));
     universal_char_type type = 
         classify_universal_char(std::strtoul(uchar_val.c_str(), 0, 16));  
         
-        if (type != universal_char_type_valid) {
+        if (universal_char_type_valid != type) {
         // an invalid char was found, so throw an exception
         std::string error_uchar(name.substr(pos, ('u' == name[pos+1]) ? 6 : 10));
         
@@ -245,6 +246,54 @@ std::string::size_type pos = name.find_first_of('\\');
             }
         }
         
+    // find next universal char (if appropriate)
+        pos = name.find_first_of('\\', pos+2);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  validate_literal
+//
+//      The validate_literal function tests a given string or character literal 
+//      for its validity in regard to eventually contained universal 
+//      characters. These should be in valid ranges (see the function 
+//      classify_universal_char above).
+//
+//      If the string or character literal contains invalid or not allowed 
+//      universal characters a corresponding lexing_exception is thrown.
+//
+///////////////////////////////////////////////////////////////////////////////
+inline void 
+validate_literal (std::string const &name, int line, int column, 
+    std::string const &file_name)
+{
+std::string::size_type pos = name.find_first_of('\\');
+
+    while (std::string::npos != pos) {
+    // the literal contains a backslash (may be universal char)
+        if ('u' == name[pos+1] || 'U' == name[pos+1]) {
+        std::string uchar_val(name.substr(pos+2, ('u' == name[pos+1]) ? 4 : 8));
+        universal_char_type type = 
+            classify_universal_char(std::strtoul(uchar_val.c_str(), 0, 16));  
+            
+            if (universal_char_type_valid != type && 
+                universal_char_type_not_allowed_for_identifiers != type) 
+            {
+            // an invalid char was found, so throw an exception
+            std::string error_uchar(name.substr(pos, ('u' == name[pos+1]) ? 6 : 10));
+            
+                if (universal_char_type_invalid == type) {
+                    CPPLEXER_THROW(lexing_exception, universal_char_invalid, 
+                        error_uchar, line, column, file_name.c_str());
+                }
+                else {
+                    CPPLEXER_THROW(lexing_exception, universal_char_base_charset, 
+                        error_uchar, line, column, file_name.c_str());
+                }
+            }
+        }
+                
     // find next universal char (if appropriate)
         pos = name.find_first_of('\\', pos+2);
     }

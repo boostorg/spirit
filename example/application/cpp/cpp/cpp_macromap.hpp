@@ -25,6 +25,8 @@
 #include <algorithm>
 
 #include "util/time_conversion_helper.hpp"
+#include "cpplexer/validate_universal_char.hpp"
+#include "cpp/insert_whitespace_detection.hpp"
 #include "cpp/unput_queue_iterator.hpp"
 #include "cpp/cpp_exceptions.hpp"
 #include "cpp/cpp_defined_grammar.hpp"
@@ -42,7 +44,7 @@ namespace impl {
     {
         StringT result(value);
         typename StringT::size_type pos = 0;
-        while ((pos = result.find_first_of ("\"\\", pos)) !=
+        while ((pos = result.find_first_of ("\"\\?", pos)) !=
             StringT::size_type(StringT::npos))
         {
             result.insert (pos, 1, '\\');
@@ -52,12 +54,13 @@ namespace impl {
     }
     
     // return the string representation of a token sequence
-    template <typename ContainerT>
+    template <typename ContainerT, typename PositionT>
     inline typename ContainerT::value_type::string_t
-    as_stringlit (ContainerT const &token_sequence)
+    as_stringlit (ContainerT const &token_sequence, PositionT const &pos)
     {
         using namespace cpplexer;
         typedef typename ContainerT::value_type::string_t string_t;
+        util::insert_whitespace_detection whitespace;
         
         string_t result("\"");
         bool was_whitespace = false;
@@ -66,6 +69,9 @@ namespace impl {
              it != end; ++it) 
         {
             token_id id = token_id(*it);
+            bool must_insert_whitespace = 
+                whitespace.must_insert(id, (*it).get_value());
+            
             if (IS_CATEGORY(*it, WhiteSpaceTokenType) || T_NEWLINE == id) {
                 if (!was_whitespace) {
                 // C++ standard 16.3.2.2 [cpp.stringize]
@@ -73,20 +79,40 @@ namespace impl {
                 // preprocessing tokens becomes a single space character in the 
                 // character string literal.
                     result += " ";
+                    whitespace.shift_tokens(T_SPACE);
                     was_whitespace = true;
                 }
             }
             else if (T_STRINGLIT == id || T_CHARLIT == id) {
-            // a string literals and character literals have to be escaped
+                if (must_insert_whitespace) {
+                // insert additional whitespace if appropriate
+                    whitespace.shift_tokens(T_SPACE);
+                    result += " ";
+                }
+                
+            // string literals and character literals have to be escaped
                 result += impl::escape_lit((*it).get_value());
+                whitespace.shift_tokens(id);
                 was_whitespace = false;
             }
             else {
+                if (must_insert_whitespace) {
+                // insert additional whitespace if appropriate
+                    whitespace.shift_tokens(T_SPACE);
+                    result += " ";
+                }
+
+            // now append this token to the string
+                whitespace.shift_tokens(id);
                 result += (*it).get_value();
                 was_whitespace = false;
             }
         }
         result += "\"";
+
+    // validate the resulting literal to contain no invalid universal character
+    // value (throws if invalid chars found)
+        cpplexer::impl::validate_literal(result, pos.line, pos.column, pos.file); 
         return result;
     }
 
@@ -630,19 +656,19 @@ namespace {
 
     using namespace cpplexer;
     
-    template <typename IteratorT>
-    bool next_token_is(IteratorT it, IteratorT const &end, token_id id)
-    {
-        using namespace cpplexer;
-        if (++it == end) return false;
-        while (IS_CATEGORY(*it, WhiteSpaceTokenType) || 
-               T_NEWLINE == token_id(*it)) 
-        {
-            if (++it == end)
-                return false;
-        }
-        return (token_id(*it) == id) ? true : false;
-    }
+//    template <typename IteratorT>
+//    bool next_token_is(IteratorT it, IteratorT const &end, token_id id)
+//    {
+//        using namespace cpplexer;
+//        if (++it == end) return false;
+//        while (IS_CATEGORY(*it, WhiteSpaceTokenType) || 
+//               T_NEWLINE == token_id(*it)) 
+//        {
+//            if (++it == end)
+//                return false;
+//        }
+//        return (token_id(*it) == id) ? true : false;
+//    }
 
     template <typename IteratorT>
     bool skip_to_token(IteratorT &it, IteratorT const &end, token_id id)
@@ -760,7 +786,8 @@ bool adjacent_stringize = false;
         }
         else {
             if (adjacent_stringize || adjacent_concat || 
-                next_token_is(cit, cend, T_POUND_POUND))
+                impl::next_token_is<macro_definition_iter_t>
+                    ::test(cit, cend, T_POUND_POUND))
             {
                 use_replaced_arg = false;
             }
@@ -785,9 +812,12 @@ bool adjacent_stringize = false;
             {
             // stringize the current argument
                 BOOST_SPIRIT_ASSERT(!arguments[i].empty());
+                
+            typename TokenT::position_t const &pos =
+                (*arguments[i].begin()).get_position();
+            
                 expanded.push_back(TokenT(T_STRINGLIT, 
-                    impl::as_stringlit(arguments[i]), 
-                    (*arguments[i].begin()).get_position()));
+                    impl::as_stringlit(arguments[i], pos), pos));
                 adjacent_stringize = false;
             }
             else {
@@ -876,7 +906,7 @@ macro_definition<TokenT> &macro_def = (*it).second;
 
 ContainerT replacement_list;
 
-    if (next_token_is(first, last, T_LEFTPAREN)) {
+    if (impl::next_token_is<IteratorT>::test(first, last, T_LEFTPAREN)) {
     // called as a function-like macro 
         skip_to_token(first, last, T_LEFTPAREN);
         

@@ -430,6 +430,13 @@ public:
                     impl::validate_identifier_name(value, pos.line, pos.column, 
                         pos.file); 
                 }
+                else if (T_STRINGLIT == id || T_CHARLIT == id) {
+                // test literal characters for validity (throws if invalid 
+                // chars found)
+                    PositionT const &pos = prev.get_position();
+                    impl::validate_literal(value, pos.line, pos.column, 
+                        pos.file); 
+                }
                 return token_t(id, value, prev.get_position());
             }
         

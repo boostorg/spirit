@@ -18,6 +18,8 @@
 #define _CPP_RE2C_LEXER_HPP__B81A2629_D5B1_4944_A97D_60254182B9A8__INCLUDED_
 
 #include <string>
+#include <cstdio>
+#include <cstdarg>
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <iostream>
 #endif // defined(BOOST_SPIRIT_DEBUG)
@@ -113,6 +115,10 @@ lexer<IteratorT, PositionT>::get()
     // test identifier characters for validity (throws if invalid chars found)
         impl::validate_identifier_name(value, scanner.line, -1, filename); 
     }
+    else if (T_STRINGLIT == id || T_CHARLIT == id) {
+    // test literal characters for validity (throws if invalid chars found)
+        impl::validate_literal(value, scanner.line, -1, filename); 
+    }
     return lex_token<IteratorT, PositionT>(id, value, 
         PositionT(filename, scanner.line, -1));
 }
@@ -123,9 +129,14 @@ lexer<IteratorT, PositionT>::report_error(Scanner *s, char *msg, ...)
 {
     BOOST_SPIRIT_ASSERT(0 != s);
     BOOST_SPIRIT_ASSERT(0 != msg);
+
+    char buffer[200];           // should be large enough
+    std::va_list params;
+    va_start(params, msg);
+    std::vsprintf(buffer, msg, params);
+    va_end(params);
     
-    // ignore the ellipses for now (shouldn't be used anyway)
-    CPPLEXER_THROW(lexing_exception, unexpected_error, msg, s->line, -1, 
+    CPPLEXER_THROW(lexing_exception, generic_lexing_error, buffer, s->line, -1, 
         s->file_name);
 }
 

@@ -32,6 +32,7 @@
 
 #include "cpplexer/cpp_lex_iterator.hpp"
 
+#include "cpp/insert_whitespace_detection.hpp"
 #include "cpp/cpp_exceptions.hpp"
 #include "cpp/cpp_iteration_context.hpp"
 #include "cpp/cpp_grammar_gen.hpp"
@@ -146,6 +147,11 @@ private:
     
     std::list<result_type> unput_queue;     // tokens to be preprocessed again
     std::list<result_type> pending_queue;   // tokens already preprocessed
+    
+    // detect whether to insert additional whitespace in between two adjacent 
+    // tokens, which otherwise would form a different token type, if 
+    // retokenized
+    util::insert_whitespace_detection whitespace; 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -198,6 +204,7 @@ bool returned_from_include = false;
             // (the C++ comment token includes the trailing newline)
                 seen_newline = true;
                 ++iter_ctx->first;
+                whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                 return act_token;
             }
             seen_newline = false;
@@ -205,6 +212,7 @@ bool returned_from_include = false;
             if (was_seen_newline && pp_directive()) {
             // a pp directive was found, return the corresponding eol only
                 seen_newline = true;
+                whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                 return act_token = result_type(T_NEWLINE, 
                     typename result_type::string_t("\n"), 
                     cpp_grammar_t::pos_of_newline);
@@ -219,6 +227,7 @@ bool returned_from_include = false;
                 // newline, return it, otherwise discard the actual token and 
                 // try the next one
                 if (act_token == T_NEWLINE) {
+                    whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                     seen_newline = true;
                     return act_token;
                 }
@@ -232,11 +241,13 @@ bool returned_from_include = false;
     else if (returned_from_include) {
     // if there was an '#include' statement on the last line of a file we have
     // to return an additional newline token
+        whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
         return act_token = result_type(T_NEWLINE, 
             typename result_type::string_t("\n"), 
             cpp_grammar_t::pos_of_newline);
     }
-    return act_token = eof;   // return eof token
+    whitespace.shift_tokens(T_EOF);  // whitespace controller
+    return act_token = eof;         // return eof token
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -255,6 +266,16 @@ pp_iterator_functor<ContextT>::pp_token()
     act_token = ctx.expand_tokensequence(iter_ctx->first, iter_ctx->last, 
         pending_queue, unput_queue); 
 
+    if (whitespace.must_insert(token_id(act_token), act_token.get_value())) {
+    // must insert some whitespace into the output stream to avoid adjacent
+    // tokens, which would form different (and wrong) tokens
+        whitespace.shift_tokens(T_SPACE);
+        pending_queue.push_front(act_token);        // push this token back
+        return act_token = result_type(T_SPACE, 
+            typename result_type::string_t(" "), 
+            act_token.get_position());
+    }
+    
 token_id id = token_id(act_token);
 
     if (T_NONREPLACABLE_IDENTIFIER == token_id(act_token))
@@ -262,6 +283,7 @@ token_id id = token_id(act_token);
     else if (T_NEWLINE == id || T_CPPCOMMENT == id)
         seen_newline = true;
 
+    whitespace.shift_tokens(token_id(act_token));
     return act_token;
 }
 

@@ -565,13 +565,12 @@ Newline            = "\r\n" | "\n" | "\r";
 
     any
     {
-        /* handle this error
-        if (0 != s->error_proc)
-            (*s->error_proc)(s, "Unexpected character: %c", *s->tok);
+        /* if (0 != s->error_proc)
+            (*s->error_proc)(s, "Unexpected character: '%c'", *s->tok);
         else
-            printf("unexpected character: %c\n", *s->tok);
+            printf("unexpected character: '%c'\n", *s->tok);
         */
-        RET(T_SPACE);
+        RET(TOKEN_FROM_ID(*s->tok, UnknownTokenType));
     }
 */
 

@@ -107,12 +107,16 @@ class unput_queue_iterator
         base_t;
         
 public:
+    typedef ContainerT  container_t;
+    typedef IteratorT   iterator_t;
+    
     unput_queue_iterator(IteratorT const &it, 
             unput_queue_policies<TokenT, ContainerT> policies)
     :   base_t(it, policies)
     {}
     
     ContainerT &get_unput_queue() { return policies().get_unput_queue(); }
+    IteratorT &get_base_iterator() { return base(); }
 };
 
 namespace impl {
@@ -172,6 +176,81 @@ namespace impl {
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Look for the first non-whitespace token and return, whether this has the 
+    // given token id.
+    // Note though, that the embedded unput_queues are not touched in any way!
+    //
+    template <typename IteratorT>
+    struct next_token_is {
+    
+        static bool 
+        test (IteratorT it, IteratorT end, cpplexer::token_id id)
+        {
+            for (++it; it != end; ++it) {
+                if (!IS_CATEGORY(*it, WhiteSpaceTokenType) &&
+                    T_NEWLINE != token_id(*it))
+                {
+                    break;  // stop at the first non-whitespace token
+                }
+            }
+            if (it != end) 
+                return (token_id(*it) == id) ? true : false;
+            return false;
+        }
+    };
+    
+    template <typename IteratorT, typename TokenT, typename ContainerT>
+    struct next_token_is<
+        unput_queue_iterator<IteratorT, TokenT, ContainerT> > {
+        
+        typedef unput_queue_iterator<IteratorT, TokenT, ContainerT> iterator_t;
+        
+        static bool 
+        test(iterator_t it, iterator_t end, cpplexer::token_id id)
+        {
+            using namespace cpplexer;
+            
+        typename iterator_t::container_t &queue = it.get_unput_queue();
+        
+        // first try to find it in the unput_queue
+            if (0 != queue.size()) {
+            typename iterator_t::container_t::iterator cit = queue.begin();
+            typename iterator_t::container_t::iterator cend = queue.end();
+            
+                for (++cit; cit != cend; ++cit) {
+                    if (!IS_CATEGORY(*cit, WhiteSpaceTokenType) &&
+                        T_NEWLINE != token_id(*cit))
+                    {
+                        break;  // stop at the first non-whitespace token
+                    }
+                }
+                if (cit != cend) 
+                    return (token_id(*cit) == id) ? true : false;
+            }
+            
+        // second try to move on into the base iterator stream
+        typename iterator_t::iterator_t base_it = it.get_base_iterator();
+        typename iterator_t::iterator_t base_end = end.get_base_iterator();
+
+            if (0 == queue.size())
+                ++base_it;  // advance, if the unput queue is empty
+                
+            for (/**/; base_it != base_end; ++base_it) {
+                if (!IS_CATEGORY(*base_it, WhiteSpaceTokenType) &&
+                    T_NEWLINE != token_id(*base_it))
+                {
+                    break;  // stop at the first non-whitespace token
+                }
+            }
+            if (base_it == base_end)
+                return false;
+
+            return (token_id(*base_it) == id) ? true : false;
+        }
+    };
+    
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace impl
 

@@ -121,6 +121,7 @@ public:
         universal_char_invalid = 1,
         universal_char_base_charset = 2,
         universal_char_not_allowed = 3,
+        generic_lexing_error = 4
     };
 
     lexing_exception(char const *what_, error_code code, int line_, 
@@ -158,6 +159,7 @@ public:
             "a universal character name cannot designate a character in the "
                 "basic character set",                  // universal_char_base_charset
             "this universal character is not allowed in an identifier", // universal_char_not_allowed 
+            "generic lexing error"                      // generic_lexing_error
         };
         return preprocess_exception_errors[code];
     }
@@ -168,7 +170,8 @@ public:
             util::severity_fatal,               // unexpected_error
             util::severity_error,               // universal_char_invalid
             util::severity_error,               // universal_char_base_charset
-            util::severity_error                // universal_char_not_allowed
+            util::severity_error,               // universal_char_not_allowed
+            util::severity_error                // generic_lexing_error                
         };
         return preprocess_exception_severity[code];
     }
