@@ -414,8 +414,12 @@ struct compound_case_parser
     typename parser_result<self_t, ScannerT>::type
     parse(ScannerT const& scan, CondT const &cond) const
     {
-        return parse_switch<value, case_chain<self_t>::depth, is_default>::
-            do_(*this, scan, cond(scan), scan.first);
+        if (!scan.at_end()) {
+            return parse_switch<value, case_chain<self_t>::depth, is_default>::
+                do_(*this, scan, cond(scan), scan.first);
+        }
+        return default_case<self_t>::is_epsilon ? scan.empty_match() :
+            scan.no_match();
     }
 
     template <int N1, typename ParserT1, bool IsDefault1>
