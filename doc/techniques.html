@@ -103,7 +103,7 @@
   business</a>, our no. 1 FAQ. Apart from that, the virtual functions in rules 
   slow down parsing, kill all meta-information, and kills inlining, hence bloating 
   the generated code, especially for very tiny rules such as:</p>
-<pre>    r <span class="special">=</span> ch_p<span class="special">&lt;&gt;(</span><span class="quotes">'x'</span><span class="special">) &gt;&gt;</span> uint_p<span class="special">;</span></pre>
+<pre>    r <span class="special">=</span> ch_p<span class="special">(</span><span class="quotes">'x'</span><span class="special">) &gt;&gt;</span> uint_p<span class="special">;</span></pre>
 <p> The rule's limitation is the main reason why the grammar is designed the way 
   it is now, with a nested template definition class. The rule's limitation is 
   also the reason why subrules exists. But do we really need rules? Of course! 
