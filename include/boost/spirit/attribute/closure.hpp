@@ -17,11 +17,11 @@
 #include "boost/spirit/core/composite/composite.hpp"
 #include "boost/spirit/attribute/parametric.hpp"
 
-#include "boost/phoenix/closures.hpp"
-#include "boost/phoenix/primitives.hpp"
-#include "boost/phoenix/casts.hpp"
-#include "boost/phoenix/operators.hpp"
-#include "boost/phoenix/tuple_helpers.hpp"
+#include "boost/spirit/phoenix/closures.hpp"
+#include "boost/spirit/phoenix/primitives.hpp"
+#include "boost/spirit/phoenix/casts.hpp"
+#include "boost/spirit/phoenix/operators.hpp"
+#include "boost/spirit/phoenix/tuple_helpers.hpp"
 
 #include <boost/static_assert.hpp>
 
