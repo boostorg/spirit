@@ -134,6 +134,9 @@ namespace boost { namespace spirit {
             node_t**  np = &root;
             CharT   ch = *first;
 
+            BOOST_SPIRIT_ASSERT(first == last || ch != 0
+                && "Won't add string containing null character");
+
             for (;;)
             {
                 if (*np == 0 || ch == 0)
