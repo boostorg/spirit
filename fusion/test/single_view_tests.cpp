@@ -13,7 +13,7 @@
 struct X {};
 
 template <typename OS>
-OS& operator<<(OS& os, X const& x)
+OS& operator<<(OS& os, X const&)
 {
     os << "<X-object>";
     return os;
