@@ -97,7 +97,7 @@
 #include <boost/spirit/actor/ref_value_actor.hpp>
 #include <boost/spirit/actor/ref_const_ref_actor.hpp>
 #include <boost/spirit/actor/ref_const_ref_value_actor.hpp>
-#include <boost/spirit/actor/ref_const_ref_const_ref_actor.hpp>
+#include <boost/spirit/actor/ref_const_ref_const_ref_a.hpp>
 
 #include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/spirit/actor/clear_actor.hpp>

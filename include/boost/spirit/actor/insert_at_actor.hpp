@@ -10,7 +10,7 @@
 #define BOOST_SPIRIT_ACTOR_INSERT_AT_ACTOR_HPP
 
 #include <boost/spirit/actor/ref_const_ref_value_actor.hpp>
-#include <boost/spirit/actor/ref_const_ref_const_ref_actor.hpp>
+#include <boost/spirit/actor/ref_const_ref_const_ref_a.hpp>
 
 namespace boost { namespace spirit {
 
