@@ -55,7 +55,34 @@
   assertion, <tt>#define NDEBUG</tt>.</p>
 <a name="spirit_debug"></a>
 <h3>BOOST_SPIRIT_DEBUG</h3>
-<p> Define this to enable debugging.</p>
+<p>Define this to enable debugging.</p>
+<p>With debugging enabled, special output is generated at key points of the
+  parse process, using the standard output operator (<tt><span class="keyword">operator</span><span class="special">&lt;&lt;</span></tt>)
+  with <tt>BOOST_SPIRIT_DEBUG_OUT</tt> (default is <tt><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></tt>,
+  see below) as its left operand.</p>
+<table width="80%" border="0" align="center">
+  <tr>
+    <td class="note_box"><img src="theme/note.gif"> In order to use spirit's
+    debugging support you must ensure that appropriate overloads of 
+    <tt><span class="identifier">operator</span><span class="special">&lt;&lt;</span></tt>
+    taking <tt>BOOST_SPIRIT_DEBUG_OUT</tt> as its left operand are available.
+    The expected semantics are those of the standard output operator.<br>
+    <br>
+    These overloads may be provided either within the namespace where the
+    corresponding class is declared (will be found through ADL) or [within an
+    anonymous namespace] within <tt><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></tt>,
+    so it is visible where it is called.<br>
+    <br>
+    <img src="theme/alert.gif"> Note in particular that when <tt>BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES</tt>
+    is set, overloads of <tt><span class="identifier">operator</span><span class="special">&lt;&lt;</span></tt>
+    taking instances of the types used in closures as their right operands are required.<br>
+    <br>
+    You may find an example of overloading the output operator for
+    <tt><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span></tt>
+    in a <a href="faq.html#output_operator">related FAQ entry</a>.</td>
+  </tr>
+</table>
+
 <p>By default, if the <tt>BOOST_SPIRIT_DEBUG</tt> macro is defined, all available
   debug output is generated. To fine tune the amount of generated text you can
   define the <tt>BOOST_SPIRIT_DEBUG_FLAGS</tt> constant to be equal of a combination
