@@ -12,6 +12,7 @@
 #include <boost/spirit/fusion/sequence/get.hpp>
 #include <boost/spirit/fusion/sequence/make_tuple.hpp>
 #include <boost/spirit/fusion/sequence/equal_to.hpp>
+#include <string>
 
 namespace
 {
