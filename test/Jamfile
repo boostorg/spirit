@@ -73,6 +73,7 @@ else
     #template multi-threading : <dll>../../thread/build/boost_thread : :
     template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
         <threading>multi
+        <define>BOOST_ALL_NO_LIB=1
         $(spirit-header-include)
     ;
 }
