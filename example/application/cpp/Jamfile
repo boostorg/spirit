@@ -2,15 +2,15 @@
 subproject libs/spirit/example/application/cpp ;
 
 exe cpp :
-		cpp.hpp
-		instantiate_cpp_grammar.cpp
-		instantiate_slex_lexer.cpp
-		instantiate_re2c_lexer.cpp
-		./cpp_lexer/re2clex/aq.cpp
-		./cpp_lexer/re2clex/cpp.re.cpp
-	:	<include>../..
-		<sysinclude>$(BOOST_ROOT)
-		<lib>program_options
-		<lib>fs
-	;
-		
+        cpp.hpp
+        instantiate_cpp_grammar.cpp
+        instantiate_slex_lexer.cpp
+        instantiate_re2c_lexer.cpp
+        ./cpp_lexer/re2clex/aq.cpp
+        ./cpp_lexer/re2clex/cpp.re.cpp
+    :   <include>../..
+        <sysinclude>$(BOOST_ROOT)
+        <lib>program_options
+        <lib>fs
+    ;
+        

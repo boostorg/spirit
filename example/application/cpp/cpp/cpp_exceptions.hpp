@@ -262,9 +262,9 @@ private:
 struct abort_preprocess_exception 
 :   public cpp_exception
 {
-	abort_preprocess_exception(int error_count_, int level_, int line_, 
-	    int column_, char const *filename_) throw() 
-	:   cpp_exception(line_, column_, filename_)
+    abort_preprocess_exception(int error_count_, int level_, int line_, 
+        int column_, char const *filename_) throw() 
+    :   cpp_exception(line_, column_, filename_)
     {
     }
     ~abort_preprocess_exception() throw() {}

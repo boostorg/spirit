@@ -123,7 +123,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
             token_t BEGIN       = nocase_d["begin"];
 
             //-----------------------------------------------------------------
-            //	Start grammar definition
+            //  Start grammar definition
             //-----------------------------------------------------------------
             identifier
                 = nocase_d[
@@ -135,8 +135,8 @@ struct pascal_grammar : public grammar<pascal_grammar>
 
             string_literal
                 = lexeme_d[ chlit<>('\'') >>
-			       +( strlit<>("\'\'") | anychar_p-chlit<>('\'') ) >>
-			       chlit<>('\'') ];
+                   +( strlit<>("\'\'") | anychar_p-chlit<>('\'') ) >>
+                   chlit<>('\'') ];
 
 
             program
@@ -150,7 +150,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                     LPAREN >> fileIdentifier
                     >> *( COMMA >> fileIdentifier ) >> RPAREN >>
                     SEMI
-            	;
+                ;
 
             fileIdentifier
                 =   identifier.alias()
@@ -674,7 +674,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             //-----------------------------------------------------------------
-            //	End grammar definition
+            //  End grammar definition
             //-----------------------------------------------------------------
         }
 
@@ -901,7 +901,7 @@ parse(char const* filename)
 
     if (info.full)
     {
-		cout << "\t\t" << filename << " Parses OK\n\n\n";
+        cout << "\t\t" << filename << " Parses OK\n\n\n";
     }
     else
     {
@@ -918,9 +918,9 @@ parse(char const* filename)
 int
 main(int argc, char* argv[])
 {
-	cout << "/////////////////////////////////////////////////////////\n\n";
-	cout << "\t\tPascal Grammar For Spirit...\n\n";
-	cout << "/////////////////////////////////////////////////////////\n\n";
+    cout << "/////////////////////////////////////////////////////////\n\n";
+    cout << "\t\tPascal Grammar For Spirit...\n\n";
+    cout << "/////////////////////////////////////////////////////////\n\n";
 
     if (argc > 1)
     {
