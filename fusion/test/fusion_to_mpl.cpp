@@ -5,7 +5,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/test/minimal.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/mpl/begin_end.hpp>
 #include <boost/mpl/next.hpp>
@@ -34,12 +34,12 @@ struct test_sequence
 };
 
 int
-test_main(int, char *[])
+main()
 {
     using namespace boost::fusion;
 
     typedef tuple<int, float, bool, char> tuple_type;
     test_sequence<tuple_type> tuple_test;
 
-    return 0;
+    return boost::report_errors();
 }

@@ -5,7 +5,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/test/minimal.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
@@ -24,7 +24,7 @@ struct X
 };
 
 int
-test_main(int, char*[])
+main()
 {
     using namespace boost::fusion;
     using boost::mpl::vector_c;
@@ -107,6 +107,6 @@ test_main(int, char*[])
 
 #endif
 
-    return 0;
+    return boost::report_errors();
 }
 

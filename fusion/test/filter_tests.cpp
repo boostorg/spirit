@@ -5,7 +5,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/test/minimal.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/io.hpp>
 #include <boost/spirit/fusion/sequence/make_tuple.hpp>
@@ -33,7 +33,7 @@ struct Y
 };
 
 int
-test_main(int, char*[])
+main()
 {
     using namespace boost::fusion;
 
@@ -73,6 +73,6 @@ test_main(int, char*[])
             == make_tuple(y, x)));
     }
 
-    return 0;
+    return boost::report_errors();
 }
 

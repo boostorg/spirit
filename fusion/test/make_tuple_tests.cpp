@@ -6,7 +6,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#include <boost/test/minimal.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/ref.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/get.hpp>
@@ -25,7 +25,7 @@ namespace
 void make_tuple_test() {}
 
 int
-test_main(int, char *[])
+main()
 {
     using namespace boost::fusion;
 
@@ -97,5 +97,5 @@ test_main(int, char *[])
 // This is probably not a very common situation, so currently
 // I don't know how which compiler is right (JJ)
 
-    return 0;
+    return boost::report_errors();
 }
