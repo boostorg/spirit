@@ -21,7 +21,7 @@
 struct square
 {
     template <typename T>
-    struct result
+    struct apply
     {
         typedef int type;
     };
@@ -37,6 +37,7 @@ int
 test_main(int, char*[])
 {
     using namespace boost::fusion;
+    using boost::mpl::range_c;
 
     std::cout << tuple_open('[');
     std::cout << tuple_close(']');
@@ -45,7 +46,7 @@ test_main(int, char*[])
 /// Testing the transform
 
     {
-        typedef boost::mpl::range_c<int, 5, 9> mpl_list1;
+        typedef range_c<int, 5, 9> mpl_list1;
         typedef type_sequence<mpl_list1> sequence_type;
         sequence_type sequence;
 
@@ -53,13 +54,11 @@ test_main(int, char*[])
         BOOST_TEST((transform(sequence, square()) == make_tuple(25, 36, 49, 64)));
     }
 
-#ifdef FUSION_COMFORMING_COMPILER
     {
-        typedef boost::mpl::range_c<int, 5, 9> mpl_list1;
+        typedef range_c<int, 5, 9> mpl_list1;
         std::cout << transform(mpl_list1(), square()) << std::endl;
         BOOST_TEST((transform(mpl_list1(), square()) == make_tuple(25, 36, 49, 64)));
     }
-#endif
 
     return 0;
 }

@@ -49,14 +49,12 @@ test_main(int, char*[])
         }
     }
 
-#ifdef FUSION_COMFORMING_COMPILER
     {
         typedef boost::mpl::vector_c<int, 1, 2, 3, 4, 5> mpl_vec;
-        std::cout << push_back(mpl_vec(), boost::mpl::int_<6>()) << std::endl;
-        BOOST_TEST((push_back(mpl_vec(), boost::mpl::int_<6>())
+        std::cout << boost::fusion::push_back(mpl_vec(), boost::mpl::int_<6>()) << std::endl;
+        BOOST_TEST((boost::fusion::push_back(mpl_vec(), boost::mpl::int_<6>())
             == make_tuple(1, 2, 3, 4, 5, 6)));
     }
-#endif
 
     return 0;
 }

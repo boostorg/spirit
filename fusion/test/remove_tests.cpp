@@ -12,6 +12,7 @@
 #include <boost/spirit/fusion/sequence/equal_to.hpp>
 #include <boost/spirit/fusion/algorithm/remove.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/mpl/identity.hpp>
 
 struct X
 {
@@ -33,6 +34,9 @@ int
 test_main(int, char*[])
 {
     using namespace boost::fusion;
+    using boost::mpl::identity;
+    using boost::mpl::vector;
+    namespace fusion = boost::fusion;
 
     std::cout << tuple_open('[');
     std::cout << tuple_close(']');
@@ -45,34 +49,32 @@ test_main(int, char*[])
     tuple_type t(y, '@', 987654, x, true, 6.6);
 
     {
-        std::cout << remove<X>(t) << std::endl;
-        BOOST_TEST((remove<X>(t)
+        std::cout << fusion::remove(t, identity<X>()) << std::endl;
+        BOOST_TEST((fusion::remove(t, identity<X>())
             == make_tuple(y, '@', 987654, true, 6.6)));
     }
 
     {
-        std::cout << remove<Y>(t) << std::endl;
-        BOOST_TEST((remove<Y>(t)
+        std::cout << fusion::remove(t, identity<Y>()) << std::endl;
+        BOOST_TEST((fusion::remove(t, identity<Y>())
             == make_tuple('@', 987654, x, true, 6.6)));
     }
 
     {
-        std::cout << remove<long>(t) << std::endl;
-        BOOST_TEST((remove<long>(t)
+        std::cout << fusion::remove(t, identity<long>()) << std::endl;
+        BOOST_TEST((fusion::remove(t, identity<long>())
             == make_tuple(y, '@', x, true, 6.6)));
     }
 
-#ifdef FUSION_COMFORMING_COMPILER
     {
-        typedef boost::mpl::vector<Y, char, long, X, bool, double> mpl_vec;
-        BOOST_TEST((remove<X>(mpl_vec())
+        typedef vector<Y, char, long, X, bool, double> mpl_vec;
+        BOOST_TEST((fusion::remove(mpl_vec(), identity<X>())
             == tuple<Y, char, long, bool, double>()));
-        BOOST_TEST((remove<Y>(mpl_vec())
+        BOOST_TEST((fusion::remove(mpl_vec(), identity<Y>())
             == tuple<char, long, X, bool, double>()));
-        BOOST_TEST((remove<long>(mpl_vec())
+        BOOST_TEST((fusion::remove(mpl_vec(), identity<long>())
             == tuple<Y, char, X, bool, double>()));
     }
-#endif
 
     return 0;
 }

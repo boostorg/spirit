@@ -49,7 +49,7 @@ test_main(int, char *[])
         make_tuple(boost::ref(ca));
     }
 
-    {   //  the result of make_tuple is assignable: $$$ LATER $$$
+    {   //  the result of make_tuple is assignable: 
         BOOST_TEST(make_tuple(2, 4, 6) ==
             (make_tuple(1, 2, 3) = make_tuple(2, 4, 6)));
     }

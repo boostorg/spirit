@@ -7,6 +7,7 @@
 ==============================================================================*/
 #include <boost/test/minimal.hpp>
 #include <boost/spirit/fusion/sequence/tuple.hpp>
+#include <boost/spirit/fusion/sequence/io.hpp>
 #include <boost/spirit/fusion/algorithm/for_each.hpp>
 #include <boost/mpl/vector_c.hpp>
 
@@ -32,6 +33,8 @@ int
 test_main(int, char*[])
 {
     using namespace boost::fusion;
+    using boost::mpl::vector_c;
+    namespace fusion = boost::fusion;
 
 /// Testing for_each
 
@@ -46,16 +49,14 @@ test_main(int, char*[])
         typedef tuple<int, char, double, char const*> tuple_type;
         tuple_type t(1, 'x', 3.3, "Ruby");
         for_each(t, increment());
-        std::cout << std::endl;
+        std::cout << t << std::endl;
     }
 
-#ifdef FUSION_COMFORMING_COMPILER
     {
-        typedef boost::mpl::vector_c<int, 2, 3, 4, 5, 6> mpl_vec;
-        boost::fusion::for_each(mpl_vec(), print());
+        typedef vector_c<int, 2, 3, 4, 5, 6> mpl_vec;
+        fusion::for_each(mpl_vec(), print());
         std::cout << std::endl;
     }
-#endif
 
     return 0;
 }

@@ -6,7 +6,6 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/test/minimal.hpp>
-#include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/io.hpp>
 #include <boost/spirit/fusion/sequence/single_view.hpp>
 

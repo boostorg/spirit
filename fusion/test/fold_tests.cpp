@@ -22,7 +22,7 @@ using boost::is_same;
 struct add_ints_only
 {
     template <typename T, typename State>
-    struct result
+    struct apply
     {
         typedef State type;
     };
@@ -44,7 +44,7 @@ struct add_ints_only
 struct count_ints
 {
     template <typename T, typename CountT>
-    struct result
+    struct apply
     {
         typedef typename
             if_<
@@ -56,10 +56,10 @@ struct count_ints
     };
 
     template <typename T, typename CountT>
-    typename result<T, CountT>::type
+    typename apply<T, CountT>::type
     operator()(T const&, CountT const&) const
     {
-        typedef typename result<T, CountT>::type result;
+        typedef typename apply<T, CountT>::type result;
         return result();
     }
 };
@@ -68,6 +68,8 @@ int
 test_main(int, char*[])
 {
     using namespace boost::fusion;
+    using boost::mpl::vector;
+    namespace fusion = boost::fusion;
 
 /// Testing fold
 
@@ -83,7 +85,7 @@ test_main(int, char*[])
         typedef tuple<int> tuple_type;
         tuple_type t(12345);
 
-        int n = boost::fusion::fold(t, int_<0>(), count_ints());
+        int n = fusion::fold(t, int_<0>(), count_ints());
         std::cout << n << std::endl;
         BOOST_TEST(n == 1);
     }
@@ -92,19 +94,17 @@ test_main(int, char*[])
         typedef tuple<int, char, int, double, int> tuple_type;
         tuple_type t(12345, 'x', 678910, 3.36, 8756);
 
-        int n = boost::fusion::fold(t, int_<0>(), count_ints());
+        int n = fusion::fold(t, int_<0>(), count_ints());
         std::cout << n << std::endl;
         BOOST_TEST(n == 3);
     }
 
-#ifdef FUSION_COMFORMING_COMPILER
     {
-        typedef boost::mpl::vector<int, char, int, double, int> mpl_vec;
-        int n = boost::fusion::fold(mpl_vec(), int_<0>(), count_ints());
+        typedef vector<int, char, int, double, int> mpl_vec;
+        int n = fusion::fold(mpl_vec(), int_<0>(), count_ints());
         std::cout << n << std::endl;
         BOOST_TEST(n == 3);
     }
-#endif
 
     return 0;
 }

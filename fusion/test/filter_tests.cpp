@@ -40,6 +40,7 @@ test_main(int, char*[])
     using boost::mpl::_;
     using boost::mpl::not_;
     using boost::is_class;
+    using boost::mpl::vector;
     using boost::is_same;
 
     std::cout << tuple_open('[');
@@ -53,26 +54,24 @@ test_main(int, char*[])
     tuple_type t(y, '@', 987654, x, true, 6.6);
 
     {
-        std::cout << filter<not_<is_class<_> > >(t) << std::endl;
-        BOOST_TEST((filter<not_<is_class<_> > >(t)
+        std::cout << filter(t, not_<is_class<_> >()) << std::endl;
+        BOOST_TEST((filter(t, not_<is_class<_> >())
             == make_tuple('@', 987654, true, 6.6)));
     }
 
     {
-        std::cout << filter<is_class<_> >(t) << std::endl;
-        BOOST_TEST((filter<is_class<_> >(t)
+        std::cout << filter(t, is_class<_>()) << std::endl;
+        BOOST_TEST((filter(t, is_class<_>())
             == make_tuple(y, x)));
     }
 
-#ifdef FUSION_COMFORMING_COMPILER
     {
-        typedef boost::mpl::vector<Y, char, long, X, bool, double> mpl_vec;
-        BOOST_TEST((filter<not_<is_class<_> > >(mpl_vec())
+        typedef vector<Y, char, long, X, bool, double> mpl_vec;
+        BOOST_TEST((filter(mpl_vec(), not_<is_class<_> >())
             == make_tuple('\0', 0, false, 0.0)));
-        BOOST_TEST((filter<is_class<_> >(mpl_vec())
+        BOOST_TEST((filter(mpl_vec(), is_class<_>())
             == make_tuple(y, x)));
     }
-#endif
 
     return 0;
 }

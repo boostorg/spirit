@@ -49,9 +49,9 @@ test_main(int, char*[])
 #endif
 
         BOOST_TEST(*i == 1);
-        BOOST_TEST(*(next(i)) == 'x');
-        BOOST_TEST(*(next(next(i))) == 3.3);
-        BOOST_TEST(*(next(next(next(i)))) == s);
+        BOOST_TEST(*next(i) == 'x');
+        BOOST_TEST(*next(next(i)) == 3.3);
+        BOOST_TEST(*next(next(next(i))) == s);
 
         next(next(next(next(i)))); // end
 
@@ -59,9 +59,9 @@ test_main(int, char*[])
         next(next(next(next(next(i))))); // past the end: must not compile
 #endif
 
-        BOOST_TEST(*(prior(next(next(next(i))))) == 3.3);
-        BOOST_TEST(*(prior(prior(next(next(next(i)))))) == 'x');
-        BOOST_TEST(*(prior(prior(prior(next(next(next(i))))))) == 1);
+        BOOST_TEST(*prior(next(next(next(i)))) == 3.3);
+        BOOST_TEST(*prior(prior(next(next(next(i))))) == 'x');
+        BOOST_TEST(*prior(prior(prior(next(next(next(i)))))) == 1);
 
         BOOST_TEST(*begin(t) == 1);
         BOOST_TEST(*prior(end(t)) == s);
@@ -79,7 +79,7 @@ test_main(int, char*[])
         tuple_iterator<0, tuple_type> i(t);
 
         BOOST_TEST(*i == 1);
-        BOOST_TEST(*(next(i)) == 'x');
+        BOOST_TEST(*next(i) == 'x');
         BOOST_TEST(*begin(t) == 1);
         BOOST_TEST(*prior(end(t)) == s);
 
@@ -93,12 +93,12 @@ test_main(int, char*[])
         typedef tuple<int, char, double, char const*> tuple_type;
         typedef tuple_iterator<0, tuple_type> ti1;
         typedef tuple_iterator<0, tuple_type const> ti2;
-        BOOST_STATIC_ASSERT((equal_to<ti1 const, ti1>::value));
-        BOOST_STATIC_ASSERT((equal_to<ti1, ti1 const>::value));
-        BOOST_STATIC_ASSERT((equal_to<ti1, ti2>::value));
-        BOOST_STATIC_ASSERT((equal_to<ti1 const, ti2>::value));
-        BOOST_STATIC_ASSERT((equal_to<ti1, ti2 const>::value));
-        BOOST_STATIC_ASSERT((equal_to<ti1 const, ti2 const>::value));
+        BOOST_STATIC_ASSERT((meta::equal_to<ti1 const, ti1>::value));
+        BOOST_STATIC_ASSERT((meta::equal_to<ti1, ti1 const>::value));
+        BOOST_STATIC_ASSERT((meta::equal_to<ti1, ti2>::value));
+        BOOST_STATIC_ASSERT((meta::equal_to<ti1 const, ti2>::value));
+        BOOST_STATIC_ASSERT((meta::equal_to<ti1, ti2 const>::value));
+        BOOST_STATIC_ASSERT((meta::equal_to<ti1 const, ti2 const>::value));
     }
 //
 //    { // Testing distance
@@ -139,10 +139,10 @@ test_main(int, char*[])
 // #$%&@ Borland IS SO DUMB!!! #$%&@
     {
         typedef tuple<int, int> tuple_type;
-        typedef result_of_begin<tuple_type>::type begin_type;
-        typedef result_of_end<tuple_type>::type end_type;
-        typedef result_of_next<begin_type>::type i1;
-        typedef result_of_next<i1>::type i2;
+        typedef meta::begin<tuple_type>::type begin_type;
+        typedef meta::end<tuple_type>::type end_type;
+        typedef meta::next<begin_type>::type i1;
+        typedef meta::next<i1>::type i2;
 
         BOOST_STATIC_ASSERT((is_same<end_type, i2>::value));
     }
@@ -170,7 +170,7 @@ test_main(int, char*[])
     }
 
     { // Testing tuple iterator value, reference, pointer, is_readable,
-      // is_writable, result_of_deref, result_of_get_pointer
+      // is_writable, meta::deref, result_of_get_pointer
 
         typedef tuple<int, char&> tuple_type;
         typedef tuple_iterator<0, tuple_type> i0;
@@ -191,8 +191,8 @@ test_main(int, char*[])
 //        BOOST_STATIC_ASSERT(is_readable<i2>::value);
 //        BOOST_STATIC_ASSERT(!is_writable<i2>::value);
 
-        BOOST_STATIC_ASSERT((is_same<result_of_deref<i0>::type, int&>::value));
-        BOOST_STATIC_ASSERT((is_same<result_of_deref<i1>::type, char&>::value));
+        BOOST_STATIC_ASSERT((is_same<meta::deref<i0>::type, int&>::value));
+        BOOST_STATIC_ASSERT((is_same<meta::deref<i1>::type, char&>::value));
 
 //        BOOST_STATIC_ASSERT((is_same<result_of_get_pointer<i0>::type, int*>::value));
 //        BOOST_STATIC_ASSERT((is_same<result_of_get_pointer<i1>::type, char*>::value));

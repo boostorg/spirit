@@ -17,7 +17,7 @@
 struct square
 {
     template <typename T>
-    struct result
+    struct apply
     {
         typedef int type;
     };

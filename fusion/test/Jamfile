@@ -32,6 +32,12 @@ unit-test tuple_copy_tests
     :
     ;
 
+unit-test tuple_comparison_tests
+    : tuple_comparison_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
 unit-test vc6_bug_001
     : vc6_bug_001.cpp
     : <sysinclude>$(BOOST_ROOT)

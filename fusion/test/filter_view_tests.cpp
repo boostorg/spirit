@@ -60,8 +60,8 @@ test_main(int, char*[])
 
         BOOST_TEST(*type(t) == 987654);
         std::cout << *type(t) << std::endl;
-        std::cout << *filter::apply(begin(t)) << std::endl;
-        BOOST_TEST(*type(t) == *filter::apply(begin(t)));
+        std::cout << *filter::call(begin(t)) << std::endl;
+        BOOST_TEST(*type(t) == *filter::call(begin(t)));
     }
 
     {

@@ -27,6 +27,10 @@ int
 test_main(int, char*[])
 {
     using namespace boost::fusion;
+    using boost::mpl::vector_c;
+    using boost::mpl::int_;
+    using boost::mpl::list;
+    namespace mpl = boost::mpl;
 
     std::cout << tuple_open('[');
     std::cout << tuple_close(']');
@@ -35,9 +39,9 @@ test_main(int, char*[])
 /// Testing type_sequence
 
     {
-        typedef boost::mpl::list<int, double, X> mpl_list1;
-        typedef boost::mpl::begin<mpl_list1>::type begin_type;
-        typedef boost::mpl::end<mpl_list1>::type end_type;
+        typedef list<int, double, X> mpl_list1;
+        typedef mpl::begin<mpl_list1>::type begin_type;
+        typedef mpl::end<mpl_list1>::type end_type;
         typedef tuple<int, double, X> tuple_type;
 
         type_sequence_iterator<begin_type> iter;
@@ -48,7 +52,7 @@ test_main(int, char*[])
     }
 
     {
-        typedef boost::mpl::list<int, double, X, int> mpl_list1;
+        typedef list<int, double, X, int> mpl_list1;
         type_sequence<mpl_list1> view;
         std::cout << generate(view) << std::endl;
 
@@ -57,32 +61,32 @@ test_main(int, char*[])
 
     { // MPL constant integer vector
 
-        typedef boost::mpl::vector_c<int, 1, 2, 3, 4, 5> mpl_vec;
+        typedef vector_c<int, 1, 2, 3, 4, 5> mpl_vec;
         type_sequence<mpl_vec> view;
         std::cout << generate(view) << std::endl;
 
         BOOST_TEST((generate(view) ==
             tuple<
-                boost::mpl::int_<1>
-              , boost::mpl::int_<2>
-              , boost::mpl::int_<3>
-              , boost::mpl::int_<4>
-              , boost::mpl::int_<5> >()));
+                int_<1>
+              , int_<2>
+              , int_<3>
+              , int_<4>
+              , int_<5> >()));
     }
 
 #ifdef FUSION_COMFORMING_COMPILER
 
     { // Direct MPL sequence operations
 
-        typedef boost::mpl::vector_c<int, 1, 2, 3, 4, 5> mpl_vec;
+        typedef vector_c<int, 1, 2, 3, 4, 5> mpl_vec;
         std::cout << generate(mpl_vec()) << std::endl;
 
         tuple<
-            boost::mpl::int_<1>
-          , boost::mpl::int_<2>
-          , boost::mpl::int_<3>
-          , boost::mpl::int_<4>
-          , boost::mpl::int_<5> >
+            int_<1>
+          , int_<2>
+          , int_<3>
+          , int_<4>
+          , int_<5> >
         expected;
 
         BOOST_TEST((generate(mpl_vec()) == expected));
@@ -94,7 +98,7 @@ test_main(int, char*[])
 
         {   // Testing a VC7.1 bug (see note on deref.hpp)
 
-            typedef boost::mpl::vector_c<int, 1, 2, 3> v1_type;
+            typedef vector_c<int, 1, 2, 3> v1_type;
             v1_type v1;
             int i = *boost::fusion::begin(v1);
             (void)i;
