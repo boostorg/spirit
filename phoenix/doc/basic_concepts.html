@@ -33,56 +33,42 @@ Amusingly, even functions return functions. We shall see what this means in a sh
 Currying, named after the famous Logician <a href="http://www.haskell.org">
 Haskell</a> Curry, is one of the important mechanisms in the programming discipline known as functional programming (or FP). There's much theory surrounding the concepts behind it, however, in the most simplest term, it is safe to assume that &quot;currying&quot; a function is more or less like partially evaluating a function. Take a simple pseudo C++ function:</p>
 <code><pre>
-    <span class=identifier>plus</span><span class=special>(</span><span class=identifier>x</span><span class=special>, </span><span class=identifier>y</span><span class=special>) </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>x </span><span class=special>+ </span><span class=identifier>y</span><span class=special>; </span><span class=special>}
+    <span class=identifier>plus</span><span class=special>(</span><span class=identifier>x</span><span class=special>, </span><span class=identifier>y</span><span class=special>) { </span><span class=keyword>return </span><span class=identifier>x </span><span class=special>+ </span><span class=identifier>y</span><span class=special>; }
 </span></pre></code>
-<p>
-</p>
 <p>
 for example. Fully evaluating the function 'plus' above is done by supplying the arguments for x and y. For example:</p>
 <code><pre>
     <span class=identifier>plus</span><span class=special>(</span><span class=number>3</span><span class=special>, </span><span class=number>2</span><span class=special>)
 </span></pre></code>
 <p>
-</p>
-<p>
 will give us 5. On the other hand, partial evaluation can be thought of as calling the function without supplying all the arguments. Here's an imaginary (non-C++) example:</p>
 <code><pre>
     <span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>)
 </span></pre></code>
 <p>
-</p>
-<p>
 What does this mean and what is the function's result? First, the question mark proclaims that we don't have this argument yet, let this be supplied later. We have the second argument though, which is 6. Now, while the fully evaluated function plus(3, 2) results to the actual computed value 5, the partially evaluated function plus(?, 6) results to another (unnamed) function (A higher order function. In FP, the unnamed function is called a lambda function), this time, the lambda function expects one less argument:</p>
 <code><pre>
-    <span class=identifier>plus</span><span class=special>(</span><span class=number>3</span><span class=special>, </span><span class=number>2</span><span class=special>) </span><span class=special>--&gt; </span><span class=number>5
-    </span><span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>) </span><span class=special>--&gt; </span><span class=identifier>unnamed_f_x_plus_6</span><span class=special>(</span><span class=identifier>x</span><span class=special>)
+    <span class=identifier>plus</span><span class=special>(</span><span class=number>3</span><span class=special>, </span><span class=number>2</span><span class=special>) --&gt; </span><span class=number>5
+    </span><span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>) --&gt; </span><span class=identifier>unnamed_f_x_plus_6</span><span class=special>(</span><span class=identifier>x</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 now, we can use unnamed_f_x_plus_6, which is the result of the expression plus(?, 6) just like a function with one argument. Thus:</p>
 <code><pre>
-    <span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>)(</span><span class=number>3</span><span class=special>) </span><span class=special>--&gt; </span><span class=number>9
+    <span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>)(</span><span class=number>3</span><span class=special>) --&gt; </span><span class=number>9
 </span></pre></code>
-<p>
-</p>
 <p>
 This can be understood as:</p>
 <code><pre>
-    <span class=special>| </span><span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>) </span><span class=special>| </span><span class=special>(</span><span class=number>3</span><span class=special>) </span><span class=special>|
-    </span><span class=special>|</span><span class=identifier>_____f1_____</span><span class=special>|     </span><span class=special>|
-    </span><span class=special>|</span><span class=identifier>_____f2___________</span><span class=special>|
+    <span class=special>| </span><span class=identifier>plus</span><span class=special>(?, </span><span class=number>6</span><span class=special>) | (</span><span class=number>3</span><span class=special>) |
+    |</span><span class=identifier>_____f1_____</span><span class=special>|     |
+    |</span><span class=identifier>_____f2___________</span><span class=special>|
 </span></pre></code>
-<p>
-</p>
 <ul><li>f1 is the result of partially evaluating plus(?, 6)</li><li>f2 is the result of the fully evaluated function passing 3 where f1 has the ? placeholder, thus plus(3, 6)</li></ul><p>
 The same can be done with operators. For instance, the above example is equivalent to:</p>
 <code><pre>
         <span class=number>3 </span><span class=special>+ </span><span class=number>2 </span><span class=special>--&gt; </span><span class=number>5
-        </span><span class=special>? </span><span class=special>+ </span><span class=number>6 </span><span class=special>--&gt; </span><span class=identifier>unnamed_f_x_plus_6</span><span class=special>(</span><span class=identifier>x</span><span class=special>)
+        </span><span class=special>? + </span><span class=number>6 </span><span class=special>--&gt; </span><span class=identifier>unnamed_f_x_plus_6</span><span class=special>(</span><span class=identifier>x</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 Obviously, partially evaluating the plus function as we see above cannot be done directly in C++ where we are expected to supply all the arguments that a function expects. Simply, currying the function plus is not possible in straight C++. That's where the Phoenix framework comes in. The framework provides the facilities to do partial function evaluation.</p>
 <table border="0">

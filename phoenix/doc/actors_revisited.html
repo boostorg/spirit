@@ -34,16 +34,13 @@ This class is a protocol class for all actors. This class is essentially an inte
         </span><span class=identifier>actor</span><span class=special>();
         </span><span class=identifier>actor</span><span class=special>(</span><span class=identifier>BaseT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>base</span><span class=special>);
 
-        </span><span class=comment>/*...member functions...*/
-    </span><span class=special>};
+        /*...</span><span class=identifier>member </span><span class=identifier>functions</span><span class=special>...*/
+    };
 </span></pre></code>
-<p>
-</p>
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/lens.gif">
- <b>Curiously Recurring Template Pattern Inverse</b><br><br>Notice that actor derives from its template argument BaseT. This is the inverse of the curiously recurring template pattern (CRTP). With the CRTP, the actor is an abstract class with a DerivedT template parameter that is assumed to be its parametric subclass. This pattern however, &quot;parametric base class pattern&quot; (PBCP) for lack of a name, inverses the inheritance and makes actor a concrete class. Anyway, be it CRTP or PBCP, actor is a protocol class and either BaseT or DerivedT will have to conform to its protocol. Both CRTP and PBCP techniques has its pros and cons, of which is outside the scope of this document. CRTP should really be renamed &quot;parametric subclass pattern (PSCP), but again, that's another story.    </td>
+<img src="theme/lens.gif"></img> <b>Curiously Recurring Template Pattern Inverse</b><br><br>Notice that actor derives from its template argument BaseT. This is the inverse of the curiously recurring template pattern (CRTP). With the CRTP, the actor is an abstract class with a DerivedT template parameter that is assumed to be its parametric subclass. This pattern however, &quot;parametric base class pattern&quot; (PBCP) for lack of a name, inverses the inheritance and makes actor a concrete class. Anyway, be it CRTP or PBCP, actor is a protocol class and either BaseT or DerivedT will have to conform to its protocol. Both CRTP and PBCP techniques has its pros and cons, of which is outside the scope of this document. CRTP should really be renamed &quot;parametric subclass pattern (PSCP), but again, that's another story.    </td>
   </tr>
 </table>
 <p>
@@ -54,14 +51,12 @@ Schematically:</p>
     <span class=identifier>arg0 </span><span class=special>---------|
     </span><span class=identifier>arg1 </span><span class=special>---------|
     </span><span class=identifier>arg3 </span><span class=special>---------|---&gt; </span><span class=identifier>tupled_args </span><span class=special>---&gt; </span><span class=identifier>base</span><span class=special>.</span><span class=identifier>eval
-    </span><span class=special>...           </span><span class=special>|
+    </span><span class=special>...           |
     </span><span class=identifier>argN </span><span class=special>---------|
 
     </span><span class=identifier>actor</span><span class=special>::</span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>arg0</span><span class=special>, </span><span class=identifier>arg1</span><span class=special>... </span><span class=identifier>argN</span><span class=special>)
-      </span><span class=special>---&gt; </span><span class=identifier>BaseT</span><span class=special>::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>);
+      ---&gt; </span><span class=identifier>BaseT</span><span class=special>::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>);
 </span></pre></code>
-<p>
-</p>
 <p>
 Actor base classes from which this class inherits from are expected to have a corresponding member function eval compatible with the conceptual Interface:</p>
 <code><pre>
@@ -70,8 +65,6 @@ Actor base classes from which this class inherits from are expected to have a co
     </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>TupleT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>args</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
 </span></pre></code>
 <p>
-</p>
-<p>
 where args are the actual arguments passed in by the client funneled into a tuple (see tuple for details).</p>
 <p>
 The actor_return_type can be anything. Base classes are free to return any type, even argument dependent types (types that are deduced from the types of the arguments). After evaluating the parameters and doing some computations or actions, the eval member function concludes by returning something back to the client. To do this, the forwarding function (the actor's operator()) needs to know the return type of the eval member function that it is calling. For this purpose, actor base classes are required to provide a nested template class:</p>
@@ -79,8 +72,6 @@ The actor_return_type can be anything. Base classes are free to return any type,
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>TupleT</span><span class=special>&gt;
     </span><span class=keyword>struct </span><span class=identifier>result</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 This auxiliary class provides the result type information returned by the eval member function of a base actor class. The nested template class result should have a typedef 'type' that reflects the return type of its member function eval. It is basically a type computer that answers the question &quot;given arguments packed into a TupleT type, what will be the result type of the eval member function of ActorT?&quot;.</p>
 <p>
@@ -91,10 +82,8 @@ There is a global template class actor_result declared in namespace phoenix scop
 
         </span><span class=keyword>typedef </span><span class=keyword>typename </span><span class=identifier>ActorT</span><span class=special>::</span><span class=keyword>template </span><span class=identifier>result</span><span class=special>&lt;</span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>type</span><span class=special>;
         </span><span class=keyword>typedef </span><span class=keyword>typename </span><span class=identifier>remove_reference</span><span class=special>&lt;</span><span class=identifier>type</span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>plain_type</span><span class=special>;
-    </span><span class=special>};
+    };
 </span></pre></code>
-<p>
-</p>
 <ul><li>type is the actual return type</li><li>plain_type is the return type stripped from references.</li></ul><p>
 Given an actor type ActorT and a TupleT, we can get the actor's return type this way:</p>
 <code><pre>
@@ -102,27 +91,22 @@ Given an actor type ActorT and a TupleT, we can get the actor's return type this
         </span><span class=identifier>actor_return_type</span><span class=special>;
 </span></pre></code>
 <p>
-</p>
-<p>
 where actor_return_type is the actual type returned by ActorT's eval member function given some arguments packed in a TupleT.</p>
 <p>
 For reference, here's a typical actor::operator() that accepts two (2) arguments:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>BaseT</span><span class=special>&gt;
     </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T0</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>T1</span><span class=special>&gt;
-    </span><span class=keyword>inline </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>, </span><span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>&amp;, </span><span class=identifier>T1</span><span class=special>&amp;&gt; </span><span class=special>&gt;::</span><span class=identifier>type
+    </span><span class=keyword>inline </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>, </span><span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>&amp;, </span><span class=identifier>T1</span><span class=special>&amp;&gt; &gt;::</span><span class=identifier>type
     </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt;::</span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>T0</span><span class=special>&amp; </span><span class=identifier>_0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&amp; </span><span class=identifier>_1</span><span class=special>) </span><span class=keyword>const
     </span><span class=special>{
         </span><span class=keyword>return </span><span class=identifier>BaseT</span><span class=special>::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tuple</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>&amp;, </span><span class=identifier>T1</span><span class=special>&amp;&gt;(</span><span class=identifier>_0</span><span class=special>, </span><span class=identifier>_1</span><span class=special>));
-    </span><span class=special>}
+    }
 </span></pre></code>
-<p>
-</p>
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/lens.gif">
- <b>Forwarding Function Problem</b><br><br>_0 and _1 are references. Hence the arguments cannot accept non-const temporaries and literal constants. This is a current C++ language issue known as the &quot;forwarding function problem&quot; that is currently being discussed. The problem is that given an arbitrary function f, using current C++ language rules, one cannot create a forwarding function f' that transparently assumes the arguments of f.    </td>
+<img src="theme/lens.gif"></img> <b>Forwarding Function Problem</b><br><br>_0 and _1 are references. Hence the arguments cannot accept non-const temporaries and literal constants. This is a current C++ language issue known as the &quot;forwarding function problem&quot; that is currently being discussed. The problem is that given an arbitrary function f, using current C++ language rules, one cannot create a forwarding function f' that transparently assumes the arguments of f.    </td>
   </tr>
 </table>
 <table border="0">

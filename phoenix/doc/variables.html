@@ -28,48 +28,36 @@
 <p>
 Values are immutable constants which cannot be modified at all. Attempting to do so will result in a compile time error. When we want the function to modify the parameter, we use a variable instead. For instance, imagine a curryable (lazy) function plus_assign:</p>
 <code><pre>
-    <span class=identifier>plus_assign</span><span class=special>(</span><span class=identifier>x</span><span class=special>, </span><span class=identifier>y</span><span class=special>) </span><span class=special>{ </span><span class=identifier>x </span><span class=special>+= </span><span class=identifier>y</span><span class=special>; </span><span class=special>}
+    <span class=identifier>plus_assign</span><span class=special>(</span><span class=identifier>x</span><span class=special>, </span><span class=identifier>y</span><span class=special>) { </span><span class=identifier>x </span><span class=special>+= </span><span class=identifier>y</span><span class=special>; }
 </span></pre></code>
-<p>
-</p>
 <p>
 Here, we want the first function argument x to be mutable. Obviously, we cannot write:</p>
 <code><pre>
-    <span class=identifier>plus_assign</span><span class=special>(</span><span class=number>1</span><span class=special>, </span><span class=number>2</span><span class=special>) </span><span class=comment>// error first argument is immutable
+    <span class=identifier>plus_assign</span><span class=special>(</span><span class=number>1</span><span class=special>, </span><span class=number>2</span><span class=special>) // </span><span class=identifier>error </span><span class=identifier>first </span><span class=identifier>argument </span><span class=identifier>is </span><span class=identifier>immutable
 </span></pre></code>
-<p>
-</p>
 <p>
 In C++, we can pass in a reference to a variable as the first argument in our example above. Yet, by default, the Phoenix framework forces arguments passed to curryable functions to be constant immutable values. To achive our intent, we use the variable&lt;T&gt; class. This is similar to the value&lt;T&gt; class above but instead holds a reference to a variable instead. For example:</p>
 <code><pre>
     <span class=keyword>int </span><span class=identifier>i_</span><span class=special>;
-    </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>variable</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt; </span><span class=special>&gt; </span><span class=identifier>i </span><span class=special>= </span><span class=identifier>i_</span><span class=special>;
+    </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>variable</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt; &gt; </span><span class=identifier>i </span><span class=special>= </span><span class=identifier>i_</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 now, we can use our actor&lt;variable&lt;int&gt; &gt; 'i' as argument to the plus_assign lazy function:</p>
 <code><pre>
     <span class=identifier>plus_assign</span><span class=special>(</span><span class=identifier>i</span><span class=special>, </span><span class=number>2</span><span class=special>)
 </span></pre></code>
 <p>
-</p>
-<p>
 A shortcut is the var(v) utility function. The expression above is also equivalent to:</p>
 <code><pre>
     <span class=identifier>plus_assign</span><span class=special>(</span><span class=identifier>var</span><span class=special>(</span><span class=identifier>i_</span><span class=special>), </span><span class=number>2</span><span class=special>)
 </span></pre></code>
 <p>
-</p>
-<p>
 Lazy variables are actors. As such, variables can be evaluated through the actor's operator(). Such invocation gives the variables's identity. Example:</p>
 <code><pre>
     <span class=keyword>int </span><span class=identifier>i </span><span class=special>= </span><span class=number>3</span><span class=special>;
     </span><span class=keyword>char </span><span class=keyword>const</span><span class=special>* </span><span class=identifier>s </span><span class=special>= </span><span class=string>&quot;Hello World&quot;</span><span class=special>;
-    </span><span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=identifier>var</span><span class=special>(</span><span class=identifier>i</span><span class=special>)() </span><span class=special>&lt;&lt; </span><span class=identifier>var</span><span class=special>(</span><span class=identifier>s</span><span class=special>)();
+    </span><span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=identifier>var</span><span class=special>(</span><span class=identifier>i</span><span class=special>)() &lt;&lt; </span><span class=identifier>var</span><span class=special>(</span><span class=identifier>s</span><span class=special>)();
 </span></pre></code>
-<p>
-</p>
 <p>
 prints out &quot;3 Hello World&quot;</p>
 <p>

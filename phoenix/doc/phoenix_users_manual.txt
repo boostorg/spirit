@@ -1711,13 +1711,21 @@ So there you have it. Have fun! See you in the FP world.
 
 [page References]
 
-Why Functional Programming Matters, John Hughes...
-The Lambda Library, Jaakko Jarvi
-Functional Programming in C++, Brian McNamara and Yannis Smaragdakis
-Side-effects and partial function application in C++, Jaakko Jarvi and Gary Powell
-Spirit v1.2, Joel de Guzman
-C++ static polymorphism patterns ???
-A Gentle Introduction to Haskell, Who??
-Large scale software design, John Lackos
-Design Patterns, GOF
-More???
+Why Functional Programming Matters, John Hughes, 1989.[br] Available online at [@http://www.math.chalmers.se/~rjmh/Papers/whyfp.html http://www.math.chalmers.se/~rjmh/Papers/whyfp.html].
+
+Boost.Lambda library, Jaakko Jarvi, 1999-2002 Jaakko Järvi, Gary Powell.[br] Available online at [@http://www.boost.org/libs/lambda/ http://www.boost.org/libs/lambda/].
+
+Functional Programming in C++ using the FC++ Library: a short article introducing FC++, Brian McNamara and Yannis Smaragdakis, April 2001. Available online at [@http://www.cc.gatech.edu/~yannis/fc++/ http://www.cc.gatech.edu/~yannis/fc++/].
+
+Side-effects and partial function application in C++, Jaakko Jarvi and Gary Powell, 2001.[br] Available online at [@http://osl.iu.edu/~jajarvi/publications/papers/mpool01.pdf http://osl.iu.edu/~jajarvi/publications/papers/mpool01.pdf].
+
+Spirit Version 1.2, Joel de Guzman, Nov 2001.[br] Available online at [@http://spirit.sourceforge.net/index.php?doc=docs/v1_2/index.html http://spirit.sourceforge.net/index.php?doc=docs/v1_2/index.html].
+
+Generic Programming Redesign of Patterns, Proceedings of the 5th European Conference on Pattern Languages of Programs, (EuroPLoP'2000) Irsee, Germany, July 2000.[br] Available online at [@http://www.coldewey.com/europlop2000/papers/geraud%2Bduret.zip http://www.coldewey.com/europlop2000/papers/geraud%2Bduret.zip].
+
+A Gentle Introduction to Haskell, Paul Hudak, John Peterson and Joseph Fasel, 1999.[br] Available online at [@http://www.haskell.org/tutorial/ http://www.haskell.org/tutorial/]
+
+Large scale software design, John Lackos, ISBN 0201633620, Addison-Wesley, July 1996.
+
+Design Patterns, Elements of Reusable Object-Oriented Software, Erich Gamma, Richard Helm, Ralph Jhonson, and John Vlissides, Addison-Wesley, 1995.
+

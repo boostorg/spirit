@@ -34,26 +34,20 @@ Write a function:</p>
 <code><pre>
     <span class=keyword>bool
     </span><span class=identifier>is_odd</span><span class=special>(</span><span class=keyword>int </span><span class=identifier>arg1</span><span class=special>)
-    </span><span class=special>{
+    {
         </span><span class=keyword>return </span><span class=identifier>arg1 </span><span class=special>% </span><span class=number>2 </span><span class=special>== </span><span class=number>1</span><span class=special>;
-    </span><span class=special>}
+    }
 </span></pre></code>
-<p>
-</p>
 <p>
 Pass a pointer to the function to STL's find_if generic function:</p>
 <code><pre>
-    <span class=identifier>find_if</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(), </span><span class=identifier>c</span><span class=special>.</span><span class=identifier>end</span><span class=special>(), </span><span class=special>&amp;</span><span class=identifier>is_odd</span><span class=special>)
+    <span class=identifier>find_if</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(), </span><span class=identifier>c</span><span class=special>.</span><span class=identifier>end</span><span class=special>(), &amp;</span><span class=identifier>is_odd</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 2)  Using Phoenix, the same can be achieved directly with a one- liner (sample2.cpp):</p>
 <code><pre>
     <span class=identifier>find_if</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(), </span><span class=identifier>c</span><span class=special>.</span><span class=identifier>end</span><span class=special>(), </span><span class=identifier>arg1 </span><span class=special>% </span><span class=number>2 </span><span class=special>== </span><span class=number>1</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 The expression &quot;arg1 % 2 == 1&quot; automagically creates a functor with the expected behavior. In FP, this unnamed function is called a lambda function. Unlike 1, the function pointer version, which is monomorphic (expects and works only with a fixed type int argument), the Phoenix version is completely polymorphic and works with any container (of ints, of doubles, of complex, etc.) as long as its elements can handle the &quot;arg1 % 2 == 1&quot; expression.</p>
 <p>
@@ -62,24 +56,20 @@ The expression &quot;arg1 % 2 == 1&quot; automagically creates a functor with th
     <span class=keyword>struct </span><span class=identifier>is_odd_ </span><span class=special>{
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ArgT</span><span class=special>&gt;
-        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=keyword>bool </span><span class=identifier>type</span><span class=special>; </span><span class=special>};
+        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=keyword>bool </span><span class=identifier>type</span><span class=special>; };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ArgT</span><span class=special>&gt;
         </span><span class=keyword>bool </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ArgT </span><span class=identifier>arg1</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>arg1 </span><span class=special>% </span><span class=number>2 </span><span class=special>== </span><span class=number>1</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>arg1 </span><span class=special>% </span><span class=number>2 </span><span class=special>== </span><span class=number>1</span><span class=special>; }
+    };
 
     </span><span class=identifier>function</span><span class=special>&lt;</span><span class=identifier>is_odd_</span><span class=special>&gt; </span><span class=identifier>is_odd</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 Call the lazy is_odd function:</p>
 <code><pre>
     <span class=identifier>find_if</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(), </span><span class=identifier>c</span><span class=special>.</span><span class=identifier>end</span><span class=special>(), </span><span class=identifier>is_odd</span><span class=special>(</span><span class=identifier>arg1</span><span class=special>))
 </span></pre></code>
-<p>
-</p>
 <p>
 is_odd_ is the actual functor. It has been proxied in function&lt;is_odd_&gt; by is_odd (note no trailing underscore) which makes it a lazy function. is_odd_::operator() is the main function body. is_odd_::result is a type computer that answers the question &quot;What should be our return type given an argument of type ArgT?&quot;.</p>
 <p>

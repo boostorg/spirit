@@ -30,25 +30,20 @@ Actors are functors. Actors are the main driving force behind the framework. An 
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/note.gif">
- an actor is the metaphor of a function declaration    </td>
+<img src="theme/note.gif"></img> an actor is the metaphor of a function declaration    </td>
   </tr>
 </table>
 <p>
 The actor is a template class though, and its sole template parameter fills in the missing function body and does the actual function evaluation. The actor class derives from its template argument. Here's the simplified actor class declaration:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>BaseT</span><span class=special>&gt;
-    </span><span class=keyword>struct </span><span class=identifier>actor </span><span class=special>: </span><span class=keyword>public </span><span class=identifier>BaseT </span><span class=special>{ </span><span class=comment>/*...*/ </span><span class=special>};
+    </span><span class=keyword>struct </span><span class=identifier>actor </span><span class=special>: </span><span class=keyword>public </span><span class=identifier>BaseT </span><span class=special>{ /*...*/ };
 </span></pre></code>
-<p>
-</p>
 <p>
 To avoid being overwhelmed in details, the following is a brief overview of what an actor is. First, imagine an actor as a non- lazy function that accepts 0..N arguments:</p>
 <code><pre>
-    <span class=identifier>actor</span><span class=special>(</span><span class=identifier>a0</span><span class=special>, </span><span class=identifier>a1</span><span class=special>, </span><span class=special>... </span><span class=identifier>aN</span><span class=special>)
+    <span class=identifier>actor</span><span class=special>(</span><span class=identifier>a0</span><span class=special>, </span><span class=identifier>a1</span><span class=special>, ... </span><span class=identifier>aN</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 Not knowing what to do with the arguments passed in, the actor forwards the arguments received from the client (caller) onto its base class BaseT. It is the base class that does the actual operation, finally returning a result. In essence, the actor's base class is the metaphor of the function body. The sequence of events that transpire is outlined informally as follows:</p>
 <p>
@@ -66,8 +61,7 @@ actor's base operation --&gt; return result --&gt; actor --&gt; client</p>
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/note.gif">
- In essence, the actor's base class is the metaphor of the function body    </td>
+<img src="theme/note.gif"></img> In essence, the actor's base class is the metaphor of the function body    </td>
   </tr>
 </table>
 <p>
