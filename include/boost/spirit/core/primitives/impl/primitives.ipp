@@ -78,7 +78,7 @@ namespace boost { namespace spirit {
 
 #ifndef BOOST_SPIRIT_NO_CHAR_TRAITS
 
-    using std::char_traits;
+    #define BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE std
 
 #else
 
@@ -106,6 +106,8 @@ namespace boost { namespace spirit {
         { return c; }
     };
 
+    #define BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE impl
+
 #ifndef BOOST_NO_CWCHAR
 
     template<>
@@ -121,10 +123,12 @@ namespace boost { namespace spirit {
 #endif // BOOST_SPIRIT_NO_CHAR_TRAITS
 
     template <typename CharT>
-    inline typename char_traits<CharT>::int_type
+    inline typename
+    BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE::char_traits<CharT>::int_type
     to_int_type(CharT c)
     {
-        return char_traits<CharT>::to_int_type(c);
+        return BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
+            ::char_traits<CharT>::to_int_type(c);
     }
 
     ///////////////////////////////////////////////////////////////////////////
