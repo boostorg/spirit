@@ -72,7 +72,7 @@ find(symbols<T, CharT, SetT> const& table, CharT const* sym)
     CharT const* last = sym;
     while (*last)
         last++;
-    scanner<> scan(sym, last);
+    scanner<CharT const *> scan(sym, last);
     T* result = table.find(scan);
     return scan.at_end()? result: 0;
 }
@@ -85,7 +85,7 @@ add(symbols<T, CharT, SetT>& table, CharT const* sym, T const& data)
     CharT const* last = sym;
     while (*last)
         last++;
-    scanner<> scan(sym, last);
+    scanner<CharT const *> scan(sym, last);
     if (table.find(scan))
         return 0;               // symbol already contained in symbol table
     table.add(sym, last, data);
