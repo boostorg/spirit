@@ -39,7 +39,7 @@ namespace util {
         time_conversion_grammar() : fYearIsCorrected(false)
         {
             memset (&time_stamp, 0, sizeof(std::tm));
-            BOOST_SPIRIT_DEBUG_TRACE_RULE(*this, "time_conversion_grammar",
+            BOOST_SPIRIT_DEBUG_TRACE_RULE_NAME(*this, "time_conversion_grammar",
                 TRACE_CPP_TIME_CONVERSION);
         }
         

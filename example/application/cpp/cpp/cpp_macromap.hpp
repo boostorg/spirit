@@ -15,6 +15,7 @@
 #if !defined(_CPP_MACROMAP_HPP__CB8F51B0_A3F0_411C_AEF4_6FF631B8B414__INCLUDED_)
 #define _CPP_MACROMAP_HPP__CB8F51B0_A3F0_411C_AEF4_6FF631B8B414__INCLUDED_
 
+#include <set>
 #include <map>
 #include <vector>
 #include <iterator>
@@ -105,7 +106,9 @@ class macromap {
     typedef std::vector<TokenT>                     container_t;
     
 public:
-
+    BOOST_STATIC_CONSTANT(int, must_continue = 0x1);
+    BOOST_STATIC_CONSTANT(int, replaced_tokens = 0x2);
+    
     macromap() {}
     ~macromap() {}
 
@@ -114,21 +117,26 @@ public:
     bool is_defined(string_t const &name) const;
     bool remove_macro(string_t const &name);
     
-    template <typename ContainerT>
-    bool expand_macro(ContainerT &sequence, 
-        typename ContainerT::iterator &first);
-    template <typename ContainerT>
-    bool resolve_defined(ContainerT &sequence, 
-        typename ContainerT::iterator &first,
-        typename ContainerT::iterator &last);
-    
+    template <typename IteratorT, typename ContainerT>
+    int expand_tokensequence(IteratorT &first, IteratorT const &last,
+        std::insert_iterator<ContainerT> &insert_iter, 
+        std::set<string_t> &replaced, bool one_token_only, bool expand_undefined);
+
 protected:
-    template <typename ContainerT, typename SizeT>
+    template <typename IteratorT, typename ContainerT, typename SizeT>
     void collect_arguments (std::vector<ContainerT> &arguments, 
-        typename ContainerT::iterator &next, 
-        typename ContainerT::iterator const &end, 
+        IteratorT &next, IteratorT const &end, 
         SizeT const &parameter_count);
 
+    template <typename IteratorT, typename ContainerT>
+    int expand_macro(IteratorT &first, IteratorT const &last,
+        std::insert_iterator<ContainerT> &insert_iter, 
+        std::set<string_t> &replaced, bool expand_undefined);
+
+    template <typename IteratorT, typename ContainerT>
+    bool resolve_defined(IteratorT &first, IteratorT const &last,
+        std::insert_iterator<ContainerT> &insert_iter);
+    
 private:
     defined_macros_t defined_macros;
 };
@@ -208,11 +216,85 @@ macromap<TokenT>::remove_macro(typename TokenT::string_t const &name)
 ///////////////////////////////////////////////////////////////////////////////
 
 template <typename TokenT>
-template <typename ContainerT, typename SizeT>
+template <typename IteratorT, typename ContainerT>
+inline int
+macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last, 
+    std::insert_iterator<ContainerT> &insert_iter, std::set<string_t> &replaced, 
+    bool one_token_only, bool expand_undefined)
+{
+    using namespace cpplexer;
+    
+//  Iterate over all the elements of the given sequence, if it is an 
+//  T_IDENTIFIER token, try to replace this as a macro
+int return_replaced = 0;       // return, whether a replacement occured
+
+    while(first != last) {
+    token_id id = token_id(*first);
+    
+        if (T_DEFINED == id) {
+        // resolve operator defined()
+            resolve_defined(first, last, insert_iter);
+
+        // expand one token only if requested
+            if (one_token_only)
+                break;
+            continue;           // 'it' is already adjusted correctly
+        }
+        else if (T_IDENTIFIER == id) {
+        // try to replace this identifier as a macro
+            if (is_defined((*first).get_value())) {
+            // the current token contains an identifier, which is currently 
+            // defined as a macro
+                return_replaced = expand_macro(first, last, insert_iter, 
+                    replaced, expand_undefined) | return_replaced;
+
+            // expand one token only if requested
+                if (one_token_only)
+                    break;
+                continue;       // 'it' is already adjusted correctly
+            }
+            else if (expand_undefined) {
+            // in preprocessing conditionals undefined identifiers and keywords 
+            // are to be replaced with '0' (see. C++ standard 16.1.4)
+            TokenT new_token (*first);
+            
+                new_token.set_token_id(T_INTLIT);
+                new_token.set_value("0");
+                *insert_iter = new_token;
+                return_replaced |= (replaced_tokens | must_continue);
+            }
+        }
+        else if (expand_undefined && IS_CATEGORY(*first, KeywordTokenType) && 
+                 T_TRUE != id && T_FALSE != id)
+        {
+        // all remaining identifiers and keywords, except for true and false, 
+        // are replaced with the pp-number 0 (C++ standard 16.1.4, [cpp.cond])
+        TokenT new_token (*first);
+        
+            new_token.set_token_id(T_INTLIT);
+            new_token.set_value("0");
+            *insert_iter = new_token;
+            return_replaced |= (replaced_tokens | must_continue);
+        }
+        else {
+            *insert_iter = *first;
+            return_replaced |= replaced_tokens;
+        }
+        ++first;
+        
+    // expand one token only if requested
+        if (one_token_only)
+            break;
+    }
+    return return_replaced;
+}
+
+template <typename TokenT>
+template <typename IteratorT, typename ContainerT, typename SizeT>
 inline void 
 macromap<TokenT>::collect_arguments (
-    std::vector<ContainerT> &arguments, typename ContainerT::iterator &next, 
-    typename ContainerT::iterator const &end, SizeT const &parameter_count)
+    std::vector<ContainerT> &arguments, IteratorT &next, IteratorT const &end, 
+    SizeT const &parameter_count)
 {
     using namespace cpplexer;
     
@@ -276,83 +358,124 @@ ContainerT *argument = &arguments[0];
 }        
 
 template <typename TokenT>
-template <typename ContainerT>
-inline bool 
-macromap<TokenT>::expand_macro(ContainerT &sequence, 
-    typename ContainerT::iterator &first) 
+template <typename IteratorT, typename ContainerT>
+inline int 
+macromap<TokenT>::expand_macro(IteratorT &first, IteratorT const &last, 
+    std::insert_iterator<ContainerT> &insert_iter, 
+    std::set<string_t> &replaced, bool expand_undefined) 
 {
     using namespace cpplexer;
     
     defined_macros_t::iterator it = defined_macros.find((*first).get_value());
     if (it == defined_macros.end()) 
-        return false;
+        return 0;
 
 // ensure the parameters to be replaced with special parameter tokens
     (*it).second.replace_parameters();
 
-typename ContainerT::iterator next = first;
-std::insert_iterator<ContainerT> insert_iter (sequence, first);
+// 
+TokenT act_token = *first;
+std::set<string_t>::const_iterator it_replaced = 
+    replaced.find(act_token.get_value());
+bool no_expansion = it_replaced != replaced.end();;
 
-    if (T_LEFTPAREN == *++next) {
+    if (!no_expansion)  // do not expand the actual macro 
+        replaced.insert(std::set<string_t>::value_type(act_token.get_value()));
+    else
+        *insert_iter = act_token;      // copy macroname itself
+
+//    IteratorT next = first;
+    if (T_LEFTPAREN == *++first) {
     // called as a function-like macro 
         if ((*it).second.is_function_like()) {
         // defined as a function-like macro
-        std::vector<ContainerT> arguments;
-        
-            collect_arguments (arguments, next, sequence.end(), 
-                (*it).second.parameter_count());
-            if (arguments.size() < (*it).second.parameter_count()) {
-            // too many macro arguments
-                CPP_THROW(preprocess_exception, too_few_macroarguments, 
-                    "", (*first));
-            }
-
-        // try to expand the arguments itself
-            std::vector<ContainerT>::iterator end = arguments.end();
-            for (std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
-                 arg_it != end; ++arg_it)
-            {
-                typename ContainerT::iterator arg_first = (*arg_it).begin();
-                expand_macro (*arg_it, arg_first);
-            }
+            if (no_expansion) {
+            // do not expand this macro
+            
+            // copy the arguments
+            int nested_parenthesis_level = 0;
+            
+                while (first != last) {
+                    switch (token_id(*first)) {
+                    case T_LEFTPAREN:
+                        ++nested_parenthesis_level;
+                        break;
                         
-        // replace macro
-            typedef 
-                typename macro_definition_t::const_iterator_t 
-                macro_definition_iter_t;
-                
-            macro_definition_iter_t cend = (*it).second.macrodefinition.end();
-            for (macro_definition_iter_t cit = (*it).second.macrodefinition.begin();
-                cit != cend; ++cit)
-            {
-                if (IS_CATEGORY((*cit), ParameterTokenType)) {
-                // copy argument i instead of the parameter token i
-                ContainerT &arg = arguments[token_id(*cit) - T_PARAMETERBASE];
-                
-                    std::copy(arg.begin(), arg.end(), insert_iter);
-                }
-                else {
-                // insert the actual replacement token
-                    *insert_iter = *cit;
+                    case T_RIGHTPAREN:
+                        --nested_parenthesis_level;
+                        break;
+                    }
+                    
+                    *insert_iter = *first;
+                    ++first;
+                    if (0 == nested_parenthesis_level)
+                        break;
                 }
             }
-            sequence.erase(first, next);    // erase macro invocation
+            else {
+            // expand this macro
+            
+            // collect the arguments
+            std::vector<ContainerT> arguments;
+            
+                collect_arguments (arguments, first, last, 
+                    (*it).second.parameter_count());
+                if (arguments.size() < (*it).second.parameter_count()) {
+                // too many macro arguments
+                    CPP_THROW(preprocess_exception, too_few_macroarguments, 
+                        "", act_token);
+                }
+
+            // try to expand the arguments itself
+                std::vector<ContainerT>::iterator arg_end = arguments.end();
+                for (std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
+                    arg_it != arg_end; ++arg_it)
+                {
+                    //std::set<string_t> replaced;
+                    ContainerT expanded_arg;
+                    if (replaced_tokens & expand_tokensequence(
+                            (*arg_it).begin(), (*arg_it).end(),
+                            std::inserter(expanded_arg, expanded_arg.begin()),
+                            replaced, false, expand_undefined))
+                    {
+                        std::swap(*arg_it, expanded_arg);
+                    }
+                }
+                        
+            // replace macro
+                typedef typename macro_definition_t::const_iterator_t 
+                    macro_definition_iter_t;
+                    
+                macro_definition_iter_t cend = (*it).second.macrodefinition.end();
+                for (macro_definition_iter_t cit = (*it).second.macrodefinition.begin();
+                    cit != cend; ++cit)
+                {
+                    if (IS_CATEGORY((*cit), ParameterTokenType)) {
+                    // copy argument 'i' instead of the parameter token i
+                    ContainerT &arg = arguments[token_id(*cit) - T_PARAMETERBASE];
+                    
+                        std::copy(arg.begin(), arg.end(), insert_iter);
+                    }
+                    else {
+                    // insert the actual replacement token
+                        *insert_iter = *cit;
+                    }
+                }
+            }
         }
         else {
         // defined as an object-like macro: no replacement at all
-            first = next;
-            return true;
+            return no_expansion ? replaced_tokens : 0;
         }
     }
     else {
     // defined as an object-like macro
-        std::copy ((*it).second.macrodefinition.begin(), 
-            (*it).second.macrodefinition.end(), insert_iter);
-        sequence.erase(first);      // remove the current token
+        if (!no_expansion) {
+            std::copy ((*it).second.macrodefinition.begin(), 
+                (*it).second.macrodefinition.end(), insert_iter);
+        }
     }
-    
-    first = next;                   // next token position to be used
-    return true;
+    return replaced_tokens | (no_expansion ? 0 : must_continue);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -361,35 +484,31 @@ std::insert_iterator<ContainerT> insert_iter (sequence, first);
 //                     correct T_INTLIT token
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 template <typename TokenT>
-template <typename ContainerT>
+template <typename IteratorT, typename ContainerT>
 inline bool 
-macromap<TokenT>::resolve_defined(ContainerT &sequence, 
-    typename ContainerT::iterator &first,
-    typename ContainerT::iterator &last) 
+macromap<TokenT>::resolve_defined(
+    IteratorT &first, IteratorT const &last,
+    std::insert_iterator<ContainerT> &insert_iter) 
 {
     using namespace cpplexer;
     
 TokenT result;
 cpp::defined_grammar<TokenT> g;
-parse_info<typename ContainerT::iterator> hit =
+parse_info<IteratorT> hit =
     parse(first, last, g[assign(result)], ch_p(T_SPACE) | ch_p(T_CCOMMENT));
 
     if (!hit.hit) {
         CPP_THROW(preprocess_exception, ill_formed_expression, 
             "defined()", (*first));
     }
-
-// erase defined()
-    sequence.erase(first, hit.stop);
-    first = hit.stop;
+    impl::assign_iterator<IteratorT>::do_(first, hit.stop);
 
 // insert token refelcting outcome
 bool isdefined = is_defined(result.get_value());
 TokenT new_token(T_INTLIT, isdefined ? "1" : "0", result.get_position());
 
-    sequence.insert(first, new_token);
+    *insert_iter = new_token;
     return true;
 }
 

@@ -22,6 +22,7 @@
 #include <list>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/iterator_adaptors.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/spirit/core/assert.hpp>
@@ -47,8 +48,15 @@ namespace impl {
 template <typename ContextT> 
 class pp_iterator_functor {
 
+public:
+// interface to the boost::spirit::multi_pass_policies::functor_input policy
+    typedef typename ContextT::lex_t::token_t       result_type;
+
+// VC7.1 gives a linker error, if the following is defined static
+    /*static*/ result_type const eof;
+
+private:
     typedef typename ContextT::lex_t                lex_t;
-    typedef typename lex_t::token_t                 result_type;
     typedef typename result_type::string_t          string_t;
     typedef cpp::cpp_grammar_gen<result_type>       cpp_grammar_t;
 
@@ -81,7 +89,7 @@ public:
     {}
     
 // get the next preprocessed token
-    result_type get();
+    result_type operator()();
 
 // get the last recognized token (for error processing etc.)
     result_type const &current_token() const { return act_token; }
@@ -112,26 +120,55 @@ protected:
         typename parse_tree_t::const_iterator const &end);
 
 private:
-    ContextT &ctx;              // context, this iterator is assicciated with
+    ContextT &ctx;              // context, this iterator is associated with
     boost::shared_ptr<base_iteration_context_t> iter_ctx;
     
     result_type act_token;      // current token 
     bool seen_newline;          // needed for recognizing begin of line
+    
+    std::list<result_type> unput_queue;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
+//  eof token
+// VC7.1 gives a linker error, if the following is defined static
+//template <typename ContextT>
+//typename pp_iterator_functor<ContextT>::result_type const
+//    pp_iterator_functor<ContextT>::eof;
+
+///////////////////////////////////////////////////////////////////////////////
 //
-//  get(): get the next preprocessed token
+//  operator()(): get the next preprocessed token
 //
 //      throws a pp_exception, if appropriate
 //
 ///////////////////////////////////////////////////////////////////////////////
+namespace {
+
+    template <typename TokenT>
+    struct pop_front_onexit {
+
+        pop_front_onexit(std::list<TokenT> &list_) : list(list_) {}
+        ~pop_front_onexit() { list.pop_front(); }
+        
+        std::list<TokenT> &list;
+    };
+}
+
 template <typename ContextT> 
 inline typename pp_iterator_functor<ContextT>::result_type
-pp_iterator_functor<ContextT>::get()
+pp_iterator_functor<ContextT>::operator()()
 {
     using namespace cpplexer;
 
+// if there is something in the unput_queue, then return the next token from
+// there (all tokens in the queue are preprocessed already)
+    if (unput_queue.size() > 0) {
+    pop_front_onexit<result_type> popfront(unput_queue);
+    
+        return act_token = unput_queue.front();    // get next token
+    }
+    
 // test for EOI, if there is a pending input context, pop it back and continue
 // parsing with it
 bool returned_from_include = false;
@@ -207,10 +244,16 @@ template <typename ContextT>
 inline typename pp_iterator_functor<ContextT>::result_type
 pp_iterator_functor<ContextT>::pp_token()
 {
-    // TODO: take the next preprocessed token from the unput queue or
-    //       call the lexer, preprocess the required number of tokens, put them
-    //       into the unput queue and return the next preprocessed token
-    return *iter_ctx->first++;
+//  call the lexer, preprocess the required number of tokens, put them
+//  into the unput queue 
+    BOOST_SPIRIT_ASSERT(0 == unput_queue.size());
+    ctx.expand_tokensequence(iter_ctx->first, iter_ctx->last, unput_queue); 
+
+// return the next preprocessed token
+pop_front_onexit<result_type> popfront(unput_queue);
+
+    BOOST_SPIRIT_ASSERT(0 != unput_queue.size());
+    return act_token = unput_queue.front();    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -544,6 +587,73 @@ pp_iterator_functor<ContextT>::on_endif()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+namespace {
+
+//=============================================================================
+// Transform Iterator Adaptor
+//
+// Upon deference, apply some unary function object and return the
+// result by reference.
+
+    template <class AdaptableUnaryFunctionT>
+    struct ref_transform_iterator_policies 
+    :   public boost::default_iterator_policies
+    {
+        ref_transform_iterator_policies() 
+        {}
+        ref_transform_iterator_policies(const AdaptableUnaryFunctionT &f) 
+        : m_f(f) {}
+
+        template <class IteratorAdaptorT>
+        typename IteratorAdaptorT::reference
+        dereference(const IteratorAdaptorT &iter) const
+        { return m_f(*iter.base()); }
+
+        AdaptableUnaryFunctionT m_f;
+    };
+
+    template <class AdaptableUnaryFunctionT, class IteratorT>
+    class ref_transform_iterator_generator
+    {
+        typedef typename AdaptableUnaryFunctionT::result_type value_type;
+        
+    public:
+        typedef boost::iterator_adaptor<
+                IteratorT,
+                ref_transform_iterator_policies<AdaptableUnaryFunctionT>,
+                value_type, value_type const &, value_type const *, 
+                std::input_iterator_tag>
+            type;
+    };
+
+    template <class AdaptableUnaryFunctionT, class IteratorT>
+    inline 
+    typename ref_transform_iterator_generator<
+        AdaptableUnaryFunctionT, IteratorT>::type
+    make_ref_transform_iterator(
+        IteratorT base,
+        const AdaptableUnaryFunctionT &f = AdaptableUnaryFunctionT())
+    {
+        typedef typename ref_transform_iterator_generator<
+                    AdaptableUnaryFunctionT, IteratorT>::type 
+            result_t;
+        return result_t(base, f);
+    }
+
+    template <typename TokenT, typename ParseTreeNodeT>
+    struct get_token_value {
+
+        typedef TokenT result_type;
+        
+        TokenT const &operator()(ParseTreeNodeT const &node) const
+        {
+            BOOST_SPIRIT_ASSERT(1 == std::distance(node.value.begin(), 
+                node.value.end()));
+            return *node.value.begin();
+        }
+    };
+}
+
 template <typename ContextT> 
 inline void  
 pp_iterator_functor<ContextT>::on_if(
@@ -552,15 +662,12 @@ pp_iterator_functor<ContextT>::on_if(
 {
 // copy the sequence to preprocess into the provided list
 std::list<result_type> expanded;
-
-    for (typename parse_tree_t::const_iterator it = begin; it != end; ++it) {
-    // should contain exactly 1 element
-        BOOST_SPIRIT_ASSERT(1 == std::distance((*it).value.begin(), (*it).value.end()));
-        expanded.push_back (*(*it).value.begin());
-    }
+get_token_value<result_type, parse_node_t> get_value;
     
-// preprocess the pp expression
-    ctx.expand_tokensequence(expanded, true);
+    ctx.expand_tokensequence(
+        make_ref_transform_iterator(begin, get_value),
+        make_ref_transform_iterator(end, get_value), 
+        expanded, false, true);
     
 // parse the expression and enter the #if block
     ctx.enter_if_block(expression_grammar_gen<result_type>::
@@ -589,61 +696,17 @@ pp_iterator_functor<ContextT>::on_elif(
             
 // copy the sequence to preprocess into the provided list
 std::list<result_type> expanded;
-
-    for (typename parse_tree_t::const_iterator it = begin; it != end; ++it) {
-    // should contain exactly 1 element
-        BOOST_SPIRIT_ASSERT(1 == std::distance((*it).value.begin(), (*it).value.end()));
-        expanded.push_back (*(*it).value.begin());
-    }
+get_token_value<result_type, parse_node_t> get_value;
     
-// preprocess the pp expression
-    ctx.expand_tokensequence(expanded, true);
+    ctx.expand_tokensequence(
+        make_ref_transform_iterator(begin, get_value),
+        make_ref_transform_iterator(end, get_value), 
+        expanded, false, true);
     
 // parse the expression and enter the #elif block
     ctx.enter_elif_block(expression_grammar_gen<result_type>::
             evaluate(expanded.begin(), expanded.end(), act_token));
 }
-
-///////////////////////////////////////////////////////////////////////////////
-//  
-//  pp_iterator_functor_shim
-//
-///////////////////////////////////////////////////////////////////////////////
-template <typename ContextT> 
-class pp_iterator_functor_shim 
-{
-    typedef typename ContextT::lex_t        lex_t;
-    typedef pp_iterator_functor<ContextT>   functor_t;
-    
-public:
-    template <typename IteratorT>
-    pp_iterator_functor_shim(ContextT &ctx, IteratorT const &first, 
-            IteratorT const &last, typename ContextT::position_t const &pos)
-    :   functor_ptr(new functor_t(ctx, first, last, pos)) 
-    {}
-
-// interface to the boost::spirit::multi_pass_policies::functor_input policy
-    typedef typename lex_t::token_t result_type;
-
-// VC7.1 gives a linker error, if the following is defined static
-    /*static*/ result_type const eof;
-    
-    result_type operator()() 
-    { 
-        BOOST_ASSERT(0 != functor_ptr.get());
-        return functor_ptr->get(); 
-    }
-
-private:
-    boost::shared_ptr<functor_t> functor_ptr;
-};
-
-///////////////////////////////////////////////////////////////////////////////
-//  eof token
-// VC7.1 gives a linker error, if the following is defined static
-//template <typename LexT>
-//typename pp_iterator_functor_shim<LexT>::result_type const
-//    pp_iterator_functor_shim<LexT>::eof;
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace impl
@@ -660,11 +723,11 @@ private:
 template <typename ContextT>
 class pp_iterator 
 :   public boost::spirit::multi_pass<
-        impl::pp_iterator_functor_shim<ContextT>,
+        impl::pp_iterator_functor<ContextT>,
         boost::spirit::multi_pass_policies::functor_input
     >
 {
-    typedef impl::pp_iterator_functor_shim<ContextT> input_policy_t;
+    typedef impl::pp_iterator_functor<ContextT> input_policy_t;
     typedef 
         boost::spirit::multi_pass<input_policy_t, 
                 boost::spirit::multi_pass_policies::functor_input>
