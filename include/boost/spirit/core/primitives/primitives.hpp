@@ -254,6 +254,13 @@ namespace boost { namespace spirit {
         return strlit<CharT const*>(str); 
     }
 
+    template <typename CharT>
+    inline strlit<CharT *>
+    str_p(CharT * str)
+    { 
+        return strlit<CharT *>(str); 
+    }
+
     template <typename IteratorT>
     inline strlit<IteratorT>
     str_p(IteratorT first, IteratorT last)
