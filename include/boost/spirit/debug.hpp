@@ -128,7 +128,7 @@
     #endif // !defined(BOOST_SPIRIT_TRACE_NODE_NAME)
 
     #if !defined(BOOST_SPIRIT_TRACE_GRAMMAR_NAME)
-    #define BOOST_SPIRIT_TRACE_GRAMMAR_NAME(r, t)    \
+    #define BOOST_SPIRIT_TRACE_GRAMMAR_NAME(r, n, t)    \
         ::boost::spirit::impl::get_node_registry().register_node(&r, (n), (t))
     #endif // !defined(BOOST_SPIRIT_TRACE_GRAMMAR_NAME)
 
