@@ -20,8 +20,13 @@
 #include <functional>
 #include <string>
 
-// This example shows how to use a parse tree
+#ifdef BOOST_SPIRIT_DUMP_PARSETREE_AS_XML
+#include <boost/spirit/tree/tree_to_xml.hpp>
+#include <map>
+#endif
+
 ////////////////////////////////////////////////////////////////////////////
+// This example shows how to use a parse tree
 using namespace std;
 using namespace boost::spirit;
 
@@ -56,7 +61,7 @@ long evaluate(const tree_parse_info<>& info)
 long eval_expression(iter_t const& i)
 {
     parser_id id = i->value.id();
-    assert(id == parser_id(&expression)); // check the id
+    assert(id == expression.id()); // check the id
 
     // first child points to a term, so call eval_term on it
     iter_t chi = i->children.begin();
@@ -81,7 +86,7 @@ long eval_expression(iter_t const& i)
 long eval_term(iter_t const& i)
 {
     parser_id id = i->value.id();
-    assert(id == parser_id(&term));
+    assert(id == term.id());
 
     iter_t chi = i->children.begin();
     long lhs = eval_factor(chi);
@@ -103,11 +108,11 @@ long eval_term(iter_t const& i)
 long eval_factor(iter_t const& i)
 {
     parser_id id = i->value.id();
-    assert(id == parser_id(&factor));
+    assert(id == factor.id());
 
     iter_t chi = i->children.begin();
     id = chi->value.id();
-    if (id == parser_id(&integer))
+    if (id == integer.id())
         return eval_integer(chi->children.begin());
     else if (*(chi->value.begin()) == '(')
     {
@@ -175,10 +180,10 @@ main()
 #if defined(BOOST_SPIRIT_DUMP_PARSETREE_AS_XML)
             // dump parse tree as XML
             std::map<parser_id, std::string> rule_names;
-            rule_names[&integer] = "integer";
-            rule_names[&factor] = "factor";
-            rule_names[&term] = "term";
-            rule_names[&expression] = "expression";
+            rule_names[integer.id()] = "integer";
+            rule_names[factor.id()] = "factor";
+            rule_names[term.id()] = "term";
+            rule_names[expression.id()] = "expression";
             tree_to_xml(cout, info.trees, first, rule_names);
 #endif
 

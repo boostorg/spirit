@@ -36,7 +36,7 @@ Here, we want the first function argument x to be mutable. Obviously, we cannot 
     <span class=identifier>plus_assign</span><span class=special>(</span><span class=number>1</span><span class=special>, </span><span class=number>2</span><span class=special>) // </span><span class=identifier>error </span><span class=identifier>first </span><span class=identifier>argument </span><span class=identifier>is </span><span class=identifier>immutable
 </span></pre></code>
 <p>
-In C++, we can pass in a reference to a variable as the first argument in our example above. Yet, by default, the Phoenix framework forces arguments passed to curryable functions to be constant immutable values. To achive our intent, we use the variable&lt;T&gt; class. This is similar to the value&lt;T&gt; class above but instead holds a reference to a variable instead. For example:</p>
+In C++, we can pass in a reference to a variable as the first argument in our example above. Yet, by default, the Phoenix framework forces arguments passed to curryable functions to be constant immutable values. To achieve our intent, we use the variable&lt;T&gt; class. This is similar to the value&lt;T&gt; class above but instead holds a reference to a variable instead. For example:</p>
 <code><pre>
     <span class=keyword>int </span><span class=identifier>i_</span><span class=special>;
     </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>variable</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt; &gt; </span><span class=identifier>i </span><span class=special>= </span><span class=identifier>i_</span><span class=special>;

@@ -1,6 +1,6 @@
 #==============================================================================
 #   Copyright (c) 2002 Joel de Guzman
-#   Copyright (c) 2003 Martin Wille
+#   Copyright (c) 2003-2004 Martin Wille
 #   http://spirit.sourceforge.net/
 #
 #   Use, modification and distribution is subject to the Boost Software
@@ -14,11 +14,9 @@
 
 subproject libs/spirit/test ;
 
-spirit-header-include = ;
-if ($SPIRIT_HEADER_INCLUDE)
-{
-    spirit-header-include = <include>$(SPIRIT_HEADER_INCLUDE) ;
-}
+SPIRIT_HEADER_INCLUDE ?= ../../.. ;
+
+spirit-header-include = <include>$(SPIRIT_HEADER_INCLUDE) ;
 
 spirit-src = ./ ;
 if $(SPIRIT_SRC_INCLUDE)
@@ -72,7 +70,8 @@ if ($(COMO_BASE) && $(UNIX))
 }
 else
 {
-    template multi-threading : <dll>../../thread/build/boost_thread : :
+    #template multi-threading : <dll>../../thread/build/boost_thread : :
+    template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
         <threading>multi
         $(spirit-header-include)
     ;

@@ -70,7 +70,7 @@ to the end of the input stream). So we have to refactor this into:
 <p>The case, where the expr parser is a combination of the two mentioned problems 
   (i.e. the expr parser is a unary parser with an attached action), is handled 
   accordingly too, so: </p>
-<pre><code><span class=identifier>    confix_p</span><span class=special>(</span><span class=identifier>start</span><span class=special>, (*</span><span class=identifier>anychar_p</span><span class=special>)[</span><span class=identifier>func</span><span class=special>], </span>close<span class=special>)</span></code></pre>
+<pre><code><span class=identifier>    confix_p</span><span class=special>(</span><span class=identifier>open</span><span class=special>, (*</span><span class=identifier>anychar_p</span><span class=special>)[</span><span class=identifier>func</span><span class=special>], </span>close<span class=special>)</span></code></pre>
 <p>will be parsed as expected: </p>
 <pre><code>    <span class=identifier>open</span> <span class=special>&gt;&gt; (*(</span><span class=identifier>anychar_p </span><span class=special>- </span><span class=identifier>end</span><span class=special>))[</span><span class=identifier>func</span><span class=special>] &gt;&gt; </span>close</code></pre>
 <p>The required refactoring is implemented here with the help of the <a href="refactoring.html">Refactoring 
@@ -87,7 +87,7 @@ to the end of the input stream). So we have to refactor this into:
   <tr> 
     <td width="40%" class="table_cells"><code>confix_p<span class="special">(</span><span class=identifier>open</span><span class="special">,</span> 
       expr<span class="special">,</span> close<span class="special">)</span></code></td>
-    <td width="60%" class="table_cells"> <p><code>start <span class=special>&gt;&gt; 
+    <td width="60%" class="table_cells"> <p><code>open <span class=special>&gt;&gt; 
         (</span>expr <span class=special>-</span> close<span class=special>)</span><font color="#0000FF"> 
         </font><span class=special>&gt;&gt;</span> close</code></p>
     </td>
@@ -95,7 +95,7 @@ to the end of the input stream). So we have to refactor this into:
   <tr> 
     <td width="40%" class="table_cells"><code>confix_p<span class="special">(</span><span class=identifier>open</span><span class="special">,</span> 
       expr<span class="special">[</span>func<span class="special">],</span> close<span class="special">)</span></code></td>
-    <td width="60%" class="table_cells"> <p><code>start <span class=special>&gt;&gt; 
+    <td width="60%" class="table_cells"> <p><code>open <span class=special>&gt;&gt; 
         (</span>expr <span class=special>-</span> close<span class="special">)[</span>func<span class="special">] 
         <font color="#0000FF" class="special">&gt;&gt;</font></span> close</code></p>
     </td>
@@ -103,7 +103,7 @@ to the end of the input stream). So we have to refactor this into:
   <tr> 
     <td width="40%" class="table_cells" height="9"><code>confix_p<span class="special">(</span><span class=identifier>open</span><span class="special">, 
       *</span>expr<span class="special">,</span> close<span class="special">)</span></code></td>
-    <td width="60%" class="table_cells" height="9"> <p><code>start <font color="#0000FF"><span class="special">&gt;&gt;</span></font> 
+    <td width="60%" class="table_cells" height="9"> <p><code>open <font color="#0000FF"><span class="special">&gt;&gt;</span></font> 
         <span class="special"><font color="#0000FF" class="special">*</font>(</span>expr 
         <font color="#0000FF" class="special">-</font> close<span class="special">) 
         <font color="#0000FF" class="special">&gt;&gt;</font></span> close</code></p>
@@ -113,7 +113,7 @@ to the end of the input stream). So we have to refactor this into:
     <td width="40%" class="table_cells"><code>confix_p<span class="special">(</span><span class=identifier>open</span><span class="special">, 
       (*</span>expr<span class="special">)[</span>func<span class="special">], 
       close</span><span class="special">)</span></code></td>
-    <td width="60%" class="table_cells"> <p><code>start <font color="#0000FF"><span class="special">&gt;&gt;</span></font><span class="special"> 
+    <td width="60%" class="table_cells"> <p><code>open <font color="#0000FF"><span class="special">&gt;&gt;</span></font><span class="special"> 
         (<font color="#0000FF" class="special">*</font>(</span>expr <font color="#0000FF" class="special">-</font> 
         close<span class="special">))[</span>func<span class="special">] <font color="#0000FF" class="special">&gt;&gt;</font></span> 
         close</code></p>

@@ -26,7 +26,7 @@
    </tr>
 </table>
 <p>
-The modular design of Phoenix makes it extremely extensible. We have seen that layer upon layer, the whole framework is built on solid foundation. There are only a few simple well designed concepts that are laid out like bricks. Overall the framework is designed to be extended. Everything above the composite and primitives can in fact be considered just as extensions to the framework. This modular design was inherited from the <a href="http://spirit.sourceforge.net">
+The modular design of Phoenix makes it extremely extensible. We have seen that layer upon layer, the whole framework is built on a solid foundation. There are only a few simple well designed concepts that are laid out like bricks. Overall the framework is designed to be extended. Everything above the composite and primitives can in fact be considered just as extensions to the framework. This modular design was inherited from the <a href="http://spirit.sourceforge.net">
 Spirit</a> inline parser framework.</p>
 <p>
 Extension is non-intrusive. And, whenever a component or module is extended, the new extension automatically becomes a first class citizen and is automatically recognized by all modules and components in the framework. There are a multitude of ways in which a module is extended.</p>
@@ -68,7 +68,7 @@ Prints out &quot;11&quot;. There are lots of things you can do with this form of
 <p>
 2)  Write and deploy a new composite:</p>
 <p>
-This is more complicated than our first example (writing a primitive). Nevertheless, once you get the basics, writing a composite is almost mechanical and boring (read: easy <img src="theme/smiley.gif"></img>. Check out statements.hpp. All the lazy statements are written in terms of the composite interface.</p>
+This is more complicated than our first example (writing a primitive). Nevertheless, once you get the basics, writing a composite is almost mechanical and boring (read: easy <img src="theme/smiley.gif"></img>). Check out statements.hpp. All the lazy statements are written in terms of the composite interface.</p>
 <p>
 Ok, let's get on with it. Recall that the if_ else_ lazy statement (and all statements for that matter) return void. What's missing, and will surely be useful, is something like C/C++'s &quot;cond ? a : b&quot; expression. It is really unfortunate that C++ fell short of allowing this to be overloaded. Sigh. Anyway here's the code (sample6.cpp):</p>
 <code><pre>
@@ -101,7 +101,7 @@ Ok, let's get on with it. Recall that the if_ else_ lazy statement (and all stat
     </span><span class=special>};
 </span></pre></code>
 <p>
-Ok, this is quite a mouthfull. Let's digest this piecemeal.</p>
+Ok, this is quite a mouthful. Let's digest this piecemeal.</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>CondT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>TrueT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>FalseT</span><span class=special>&gt;
     </span><span class=keyword>struct </span><span class=identifier>if_else_composite </span><span class=special>{

@@ -30,7 +30,7 @@
   to read the input to a parser from a file, but the STL file iterators are input 
   iterators. To get around this limitation, Spirit has a utility class <tt>file_iterator</tt>, 
   which is a read-only random-access iterator for files.</p>
-<p>To use the Spirit file iterator, simple create a file iterator with the path 
+<p>To use the Spirit file iterator, simply create a file iterator with the path 
   to the file you wish to parse, and then create an EOF iterator for the file:</p>
 <pre><span class=identifier>    </span><span class=preprocessor>#include </span><span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>spirit</span><span class=special>/</span><span class=identifier>iterator</span><span class=special>/</span><span class=identifier>file_iterator</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt; </span><span class=comment>// the header file</span></pre>
 <pre>    <span class=identifier>file_iterator</span><span class=special>&lt;&gt; </span><span class=identifier>first</span><span class=special>(</span><span class=string>&quot;input.dat&quot;</span><span class=special>);

@@ -77,7 +77,7 @@
 <p>With functors, take note that the <tt>operator()</tt> should be <tt>const</tt>.
   This implies that functors are immutable. One may wish to have some member variables
   that are modified when the action gets called. This is not a good idea. First
-  of all, functors are preferably lighweight. Functors are passed around a lot
+  of all, functors are preferably lightweight. Functors are passed around a lot
   and it would incur a lot of overhead if the functors are heavily laden. Second,
   functors are passed by value. Thus, the actual functor object that finally attaches
   to the parser, will surely not be the original instance supplied by the client.
