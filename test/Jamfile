@@ -106,6 +106,7 @@ else
         : [ spirit-run $(spirit-src)rule_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)owi_st_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)grammar_tests.cpp <template>opt-metrowerks ]
+          [ spirit-run $(spirit-src)grammar_multi_instance_tests.cpp <template>opt-metrowerks ]
           [ spirit-run $(spirit-src)subrule_tests.cpp <template>normal ]
           [        run $(spirit-src)owi_mt_tests.cpp <template>multi-threading ]
           [        run $(spirit-src)grammar_mt_tests.cpp <template>multi-threading ]
