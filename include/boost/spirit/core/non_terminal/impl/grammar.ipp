@@ -309,7 +309,7 @@ struct grammar_definition
 # endif
 
 #else
-		(void)self;
+        (void)self;
 #endif
     }
 
