@@ -13,6 +13,11 @@
 #include <boost/spirit/fusion/sequence/end.hpp>
 #include <boost/spirit/fusion/sequence/detail/sequence_equal_to.hpp>
 
+#ifdef FUSION_COMFORMING_COMPILER
+#include <boost/utility/enable_if.hpp>
+#include <boost/spirit/fusion/sequence/is_sequence.hpp>
+#endif
+
 namespace boost { namespace fusion
 {
     template <typename Seq1, typename Seq2>
@@ -21,10 +26,31 @@ namespace boost { namespace fusion
     {
         return detail::sequence_equal_to<Seq1 const, Seq2 const>::
             apply(
-                begin(static_cast<Seq1 const&>(a))
-              , begin(static_cast<Seq2 const&>(b))
+                boost::fusion::begin(a.cast())
+              , boost::fusion::begin(b.cast())
             );
     }
+
+#ifdef FUSION_COMFORMING_COMPILER
+
+    template <typename Sequence>
+    struct type_sequence;
+
+    template <typename Seq1, typename Seq2>
+    inline typename disable_if<fusion::is_sequence<Seq2>, bool>::type
+    operator==(sequence_base<Seq1> const& a, Seq2)
+    {
+        return a == type_sequence<Seq2>();
+    }
+
+    template <typename Seq1, typename Seq2>
+    inline typename disable_if<fusion::is_sequence<Seq1>, bool>::type
+    operator==(Seq1, sequence_base<Seq2> const& b)
+    {
+        return type_sequence<Seq1>() == b;
+    }
+
+#endif
 }}
 
 #endif

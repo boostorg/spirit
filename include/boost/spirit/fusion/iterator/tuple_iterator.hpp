@@ -11,6 +11,7 @@
 #include <boost/mpl/int.hpp>
 #include <boost/spirit/fusion/iterator/detail/iterator_base.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/deref_traits.hpp>
+#include <boost/spirit/fusion/iterator/detail/tuple_iterator/value_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/next_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/prior_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/equal_to_traits.hpp>
@@ -29,6 +30,10 @@ namespace boost { namespace fusion
 
         tuple_iterator(tuple& t)
             : t(t) {}
+
+        template <int N2, typename Tuple2>
+        tuple_iterator(tuple_iterator<N2, Tuple2> const& i)
+            : t(static_cast<tuple&>(i.get_tuple())) {}
 
         tuple&
         get_tuple() const

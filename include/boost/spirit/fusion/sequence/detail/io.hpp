@@ -68,11 +68,10 @@ namespace boost { namespace fusion { namespace detail
         static void
         apply(OS& os, First const& first, Last const& last, mpl::false_)
         {
-            typename
-                equal_to<
-                    BOOST_DEDUCED_TYPENAME result_of_next<First>::type
-                  , Last
-                >::type
+            equal_to<
+                BOOST_DEDUCED_TYPENAME result_of_next<First>::type
+              , Last
+            >
             is_last;
 
             os << *first;
@@ -84,7 +83,7 @@ namespace boost { namespace fusion { namespace detail
         static void
         apply(OS& os, First const& first, Last const& last)
         {
-            typename equal_to<First, Last>::type eq;
+            equal_to<First, Last> eq;
             apply(os, first, last, eq);
         }
     };
@@ -101,11 +100,10 @@ namespace boost { namespace fusion { namespace detail
         static void
         apply(IS& is, First const& first, Last const& last, mpl::false_)
         {
-            typename
-                equal_to<
-                    BOOST_DEDUCED_TYPENAME result_of_next<First>::type
-                  , Last
-                >::type
+          	equal_to<
+                BOOST_DEDUCED_TYPENAME result_of_next<First>::type
+              , Last
+            >
             is_last;
 
             is >> *first;
@@ -117,7 +115,7 @@ namespace boost { namespace fusion { namespace detail
         static void
         apply(IS& is, First const& first, Last const& last)
         {
-            typename equal_to<First, Last>::type eq;
+            equal_to<First, Last> eq;
             apply(is, first, last, eq);
         }
     };

@@ -16,11 +16,11 @@ namespace boost { namespace fusion
     struct value_traits
     {
         template <typename Iterator>
-        struct impl
-        {
-            // VC6 needs this
-            typedef int type;
-        };
+        struct impl;
+//        {
+//            // VC6 needs this
+//            typedef int type;
+//        };
     };
 
     template <typename Iterator>

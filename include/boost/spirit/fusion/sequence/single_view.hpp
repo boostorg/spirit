@@ -10,9 +10,9 @@
 
 #include <boost/spirit/fusion/detail/access.hpp>
 #include <boost/spirit/fusion/sequence/detail/as_tuple_element.hpp>
+#include <boost/spirit/fusion/iterator/single_view_iterator.hpp>
 #include <boost/spirit/fusion/sequence/detail/single_view_begin_end_traits.hpp>
 #include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
-#include <boost/spirit/fusion/iterator/single_view_iterator.hpp>
 
 namespace boost { namespace fusion
 {

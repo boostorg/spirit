@@ -25,7 +25,7 @@ namespace boost { namespace fusion
     inline OStream&
     operator<<(OStream& os, sequence_base<Sequence> const& seq)
     {
-        detail::print_sequence(os, static_cast<Sequence const&>(seq));
+        detail::print_sequence(os, seq.cast());
         return os;
     }
 
@@ -33,7 +33,7 @@ namespace boost { namespace fusion
     inline IStream&
     operator>>(IStream& is, sequence_base<Sequence>& seq)
     {
-        detail::read_sequence(is, static_cast<Sequence&>(seq));
+        detail::read_sequence(is, seq.cast());
         return is;
     }
 }}

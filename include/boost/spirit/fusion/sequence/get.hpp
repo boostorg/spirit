@@ -49,8 +49,7 @@ namespace boost { namespace fusion
         typedef FUSION_GET_TAG(Sequence) tag;
 
         return tuple_get_traits<tag>::
-            template impl<N, Sequence const>::
-                apply(static_cast<Sequence const&>(seq));
+            template impl<N, Sequence const>::apply(seq.cast());
     }
 
     template <int N, typename Sequence>
@@ -60,8 +59,7 @@ namespace boost { namespace fusion
         typedef FUSION_GET_TAG(Sequence) tag;
 
         return tuple_get_traits<tag>::
-            template impl<N, Sequence>::
-                apply(static_cast<Sequence&>(seq));
+            template impl<N, Sequence>::apply(seq.cast());
     }
 }}
 

@@ -32,6 +32,14 @@ namespace boost { namespace fusion
 
     template <typename I1, typename I2>
     struct equal_to
+        : equal_to_traits<FUSION_GET_TAG(I1)>::
+            template impl<I1, I2>::type {};
+
+/* this code is wrong because equal_to must be convertible
+   to an mpl::bool_ !!! However, VC6/7 might not like the new code above
+
+    template <typename I1, typename I2>
+    struct equal_to
     {
         typedef typename
             equal_to_traits<FUSION_GET_TAG(I1)>::
@@ -39,6 +47,7 @@ namespace boost { namespace fusion
         type;
         BOOST_STATIC_CONSTANT(bool, value = FUSION_GET_VALUE(type));
     };
+*/
 }}
 
 #endif

@@ -29,6 +29,7 @@ namespace boost { namespace fusion
         typedef mpl::void_ types;
         typedef tuple_tag tag;
         typedef mpl::int_<0> size;
+        typedef tuple0 identity_type;
 
         tuple0() {}
 
@@ -42,6 +43,7 @@ namespace boost { namespace fusion
         typedef mpl::vector1<T0> types;
         typedef tuple_tag tag;
         typedef mpl::int_<1> size;
+        typedef tuple1 identity_type;
 
         tuple1()
             : m0(T0())
@@ -90,11 +92,15 @@ namespace boost { namespace fusion
     };
 
     template <typename T0, typename T1>
-    struct tuple_data2 : sequence_base<tuple_data2<T0, T1> >
+    struct tuple2;
+
+    template <typename T0, typename T1>
+    struct tuple_data2 : sequence_base<tuple2<T0, T1> >
     {
         typedef mpl::vector2<T0, T1> types;
         typedef tuple_tag tag;
         typedef mpl::int_<2> size;
+        typedef tuple_data2 identity_type;
 
         tuple_data2()
             : m0(T0())
@@ -114,11 +120,15 @@ namespace boost { namespace fusion
     };
 
     template <typename T0, typename T1, typename T2>
-    struct tuple_data3 : sequence_base<tuple_data3<T0, T1, T2> >
+    struct tuple3;
+
+    template <typename T0, typename T1, typename T2>
+    struct tuple_data3 : sequence_base<tuple3<T0, T1, T2> >
     {
         typedef mpl::vector3<T0, T1, T2> types;
         typedef tuple_tag tag;
         typedef mpl::int_<3> size;
+        typedef tuple_data3 identity_type;
 
         tuple_data3()
             : m0(T0())

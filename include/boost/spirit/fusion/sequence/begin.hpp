@@ -11,6 +11,11 @@
 #include <boost/spirit/fusion/detail/config.hpp>
 #include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
 
+#ifdef FUSION_COMFORMING_COMPILER
+#include <boost/utility/enable_if.hpp>
+#include <boost/spirit/fusion/sequence/is_sequence.hpp>
+#endif
+
 namespace boost { namespace fusion
 {
     template <typename Tag>
@@ -34,8 +39,7 @@ namespace boost { namespace fusion
     begin(sequence_base<Sequence> const& seq)
     {
         return begin_traits<FUSION_GET_TAG(Sequence)>::
-            template impl<Sequence const>::apply(
-                static_cast<Sequence const&>(seq));
+            template impl<Sequence const>::apply(seq.cast());
     }
 
     template <typename Sequence>
@@ -43,9 +47,25 @@ namespace boost { namespace fusion
     begin(sequence_base<Sequence>& seq)
     {
         return begin_traits<FUSION_GET_TAG(Sequence)>::
-            template impl<Sequence>::apply(
-                static_cast<Sequence&>(seq));
+            template impl<Sequence>::apply(seq.cast());
     }
+
+#ifdef FUSION_COMFORMING_COMPILER
+
+    template <typename Sequence>
+    struct type_sequence;
+
+    template <typename Sequence>
+    inline typename lazy_disable_if<
+        fusion::is_sequence<Sequence>
+      , result_of_begin<type_sequence<Sequence const> >
+    >::type
+    begin(Sequence)
+    {
+        return fusion::begin(type_sequence<Sequence const>());
+    }
+
+#endif
 }}
 
 #endif

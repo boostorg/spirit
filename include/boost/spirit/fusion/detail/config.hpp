@@ -12,6 +12,14 @@
 #include <boost/detail/workaround.hpp>
 #include <boost/preprocessor/cat.hpp>
 
+#if     (defined(BOOST_MSVC) && (BOOST_MSVC < 1310))                            \
+    ||  (defined(__BORLANDC__) && (__BORLANDC__ <= 0x570))                      \
+    ||  (defined(__GNUC__) && (__GNUC__ < 3))                                   \
+    ||  (defined(__GNUC__) && (__GNUC__ == 3) && (__GNUC_MINOR__ < 1))
+#else
+# define FUSION_COMFORMING_COMPILER
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  BOOST_NO_TEMPLATED_STREAMS macro. This ought to be in boost.config

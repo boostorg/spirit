@@ -30,11 +30,18 @@ namespace boost { namespace fusion
         struct has_same_index
             : mpl::equal_to<FUSION_GET_INDEX(I1), FUSION_GET_INDEX(I2)>::type {};
 
+        template <typename I>
+        struct tuple_identity
+        {
+            typedef typename I::tuple tuple_type;
+            typedef typename tuple_type::identity_type type;
+        };
+
         template <typename I1, typename I2>
-        struct has_same_tuple_type
+        struct has_same_tuple_identity
             : is_same<
-                typename add_const<FUSION_GET_TUPLE(I1)>::type
-              , typename add_const<FUSION_GET_TUPLE(I2)>::type
+                typename tuple_identity<I1>::type
+              , typename tuple_identity<I2>::type
             >
         {};
 
@@ -42,7 +49,7 @@ namespace boost { namespace fusion
         struct tuple_iterator_equal_to
             : mpl::and_<
                 has_same_index<I1, I2>
-              , has_same_tuple_type<I1, I2>
+              , has_same_tuple_identity<I1, I2>
             >
         {
             BOOST_STATIC_ASSERT((has_same_tags<I1, I2>::value));

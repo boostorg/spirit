@@ -56,7 +56,7 @@ namespace boost { namespace fusion
             static type
             apply()
             {
-                return type();
+               	FUSION_RETURN_DEFAULT_CONSTRUCTED;
             }
         };
 

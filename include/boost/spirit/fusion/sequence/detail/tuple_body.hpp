@@ -7,13 +7,17 @@
 #define N BOOST_PP_ITERATION()
 
 template <BOOST_PP_ENUM_PARAMS(N, typename T)>
+struct BOOST_PP_CAT(tuple, N);
+
+template <BOOST_PP_ENUM_PARAMS(N, typename T)>
 struct BOOST_PP_CAT(tuple_data, N)
-    : sequence_base<BOOST_PP_CAT(tuple_data, N)
+    : sequence_base<BOOST_PP_CAT(tuple, N)
         <BOOST_PP_ENUM_PARAMS(N, T)> >
 {
     typedef mpl::BOOST_PP_CAT(vector, N)<BOOST_PP_ENUM_PARAMS(N, T)> types;
     typedef tuple_tag tag;
     typedef mpl::int_<N> size;
+    typedef BOOST_PP_CAT(tuple_data, N) identity_type;
 
     BOOST_PP_CAT(tuple_data, N)()
         : BOOST_PP_ENUM(N, FUSION_TUPLE_MEMBER_DEFAULT_INIT, _) {}

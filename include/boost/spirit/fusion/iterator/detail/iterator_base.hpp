@@ -13,7 +13,20 @@ namespace boost { namespace fusion
     struct iterator_root {};
 
     template <typename Iterator>
-    struct iterator_base : iterator_root {};
+    struct iterator_base : iterator_root
+    {
+        Iterator const&
+        cast() const
+        {
+            return static_cast<Iterator const&>(*this);
+        }
+
+        Iterator&
+        cast()
+        {
+            return static_cast<Iterator&>(*this);
+        }
+    };
 }}
 
 #endif

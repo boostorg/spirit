@@ -11,6 +11,12 @@
 #include <boost/spirit/fusion/sequence/begin.hpp>
 #include <boost/spirit/fusion/sequence/end.hpp>
 #include <boost/spirit/fusion/sequence/detail/generate.hpp>
+#include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
+
+#ifdef FUSION_COMFORMING_COMPILER
+#include <boost/utility/enable_if.hpp>
+#include <boost/spirit/fusion/sequence/is_sequence.hpp>
+#endif
 
 namespace boost { namespace fusion
 {
@@ -27,10 +33,29 @@ namespace boost { namespace fusion
 
     template <typename Sequence>
     inline typename result_of_generate<Sequence const>::type
-    generate(Sequence const& seq)
+    generate(sequence_base<Sequence> const& seq)
     {
-        return detail::generate(fusion::begin(seq), fusion::end(seq));
+        return detail::generate(
+            fusion::begin(seq.cast())
+          , fusion::end(seq.cast()));
     }
+
+#ifdef FUSION_COMFORMING_COMPILER
+
+    template <typename Sequence>
+    struct type_sequence;
+
+    template <typename Sequence>
+    inline typename lazy_disable_if<
+        fusion::is_sequence<Sequence>
+      , result_of_generate<type_sequence<Sequence const> >
+    >::type
+    generate(Sequence)
+    {
+        return generate(type_sequence<Sequence const>());
+    }
+
+#endif
 }}
 
 #endif

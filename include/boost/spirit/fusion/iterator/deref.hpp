@@ -33,10 +33,25 @@ namespace boost { namespace fusion
     inline typename result_of_deref<Iterator>::type
     operator*(iterator_base<Iterator> const& i)
     {
-        return deref_traits<FUSION_GET_TAG(Iterator)>::
-            template impl<Iterator>::apply(
-                static_cast<Iterator const&>(i));
+        typename result_of_deref<Iterator>::type result =
+            deref_traits<FUSION_GET_TAG(Iterator)>::
+                template impl<Iterator>::apply(i.cast());
+        return result;
     }
+
+    template <typename Iterator>
+    inline typename result_of_deref<Iterator>::type
+    operator*(iterator_base<Iterator>& i)
+    {
+        typename result_of_deref<Iterator>::type result =
+            deref_traits<FUSION_GET_TAG(Iterator)>::
+                template impl<Iterator>::apply(i.cast());
+        return result;
+    }
+
+    // Note: VC7.1 has a problem when we pass the return value directly.
+    // Try removing the named temporary. This only happens on debug builds.
+    // It seems to be a return value optimization bug.
 }}
 
 #endif

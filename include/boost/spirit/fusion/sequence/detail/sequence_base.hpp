@@ -13,7 +13,20 @@ namespace boost { namespace fusion
     struct sequence_root {};
 
     template <typename Sequence>
-    struct sequence_base : sequence_root {};
+    struct sequence_base : sequence_root
+    {
+        Sequence const&
+        cast() const
+        {
+            return static_cast<Sequence const&>(*this);
+        }
+
+        Sequence&
+        cast()
+        {
+            return static_cast<Sequence&>(*this);
+        }
+    };
 }}
 
 #endif
