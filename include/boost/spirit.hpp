@@ -62,6 +62,8 @@
 //  Spirit.Attributes
 //
 ///////////////////////////////////////////////////////////////////////////////
+#if !defined(BOOST_MSVC) || (BOOST_MSVC > 1300)
 #include "boost/spirit/attribute.hpp"
+#endif
 
 #endif // !defined(SPIRIT_HPP)
