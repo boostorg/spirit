@@ -110,7 +110,14 @@ conventions given below.</p>
     <td class="table_title" colspan="14"> Associative container actors </td>
   </tr>
     <td width="30%" class="table_cells">ref.insert(vt(value, value_ref))</td>  <td width="70%" class="table_cells"><b>insert_key_a</b>(ref, value_ref)</td>
-  </tr>
+  </tr>  <tr>
+      <td class="table_cells"> ref.insert(vt(key_ref,value_ref)) </td>
+      <td class="table_cells"> <strong>insert_at_a </strong>(ref, key_ref_,value_ref) </td>
+    </tr>
+    <tr>
+      <td class="table_cells"> ref.insert(vt(key_ref,value)) </td>
+      <td class="table_cells"> <strong>insert_at_a </strong>(ref, key_ref) </td>
+    </tr>
     <td class="table_cells">ref[value] = value_ref</td>
     <td class="table_cells"><b>assign_key_a</b>(ref, value_ref)</td>
   </tr>
@@ -139,6 +146,7 @@ conventions given below.</p>
     <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">clear_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span><span class="special"></span>
     <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">decrement_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span><span class="special"></span>
     <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">erase_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span> <br>    <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">increment_actor</span><span class="special">.</span>hpp<span class="special">&gt;<br></span>    <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">insert_key_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span><span class="special"></span>
+    <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span>insert_at_actor.hpp<span class="special">&gt;</span>
     <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">push_back_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span><span class="special"></span>
     <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">push_front_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span><span class="special"></span>
     <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">/</span>actor<span class="special">/</span><span class="identifier">swap_actor</span><span class="special">.</span>hpp<span class="special">&gt;</span><span class="special"></span><span class="special"></span></pre>
@@ -153,7 +161,7 @@ Suppose that your input string is </p>
 and we want to count the number of ints. The actor <tt>increment_a</tt> applies <tt>++</tt> to its reference:</p>
 <code>
 <pre>    <span class=keyword>int </span><span class=identifier>count </span><span class=special>= </span><span class=number>0</span><span class=special>;    
-    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>list_p</span><span class=special>(</span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>increment_a</span><span class=special>(</span><span class=identifier>count</span><span class=special>)], </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>','</span><span class=special>));</span></pre>
+    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>list_p</span><span class=special>.</span><span class=identifier>direct</span><span class=special>(</span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>increment_a</span><span class=special>(</span><span class=identifier>count</span><span class=special>)], </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>','</span><span class=special>));</span></pre>
 </code> 
 <h4>Append values to a vector (or other container)</h4>
 <p> Here, you want to fill a <tt>vector&lt;int&gt;</tt> with the numbers. The 
@@ -161,8 +169,8 @@ and we want to count the number of ints. The actor <tt>increment_a</tt> applies 
   the vector:</p>
 <code>
 <pre>    <span class=identifier>vector</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt; </span><span class=identifier>v</span><span class=special>;
-    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>list_p</span><span class=special>(</span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>push_back_a</span><span class=special>(</span><span class=identifier>v</span><span class=special>)], </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>','</span><span class=special>));</span></pre>
-</code><code></code> <code> </code> 
+    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>list_p</span><span class=special>.</span><span class=identifier>direct</span><span class=special>(</span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>push_back_a</span><span class=special>(</span><span class=identifier>v</span><span class=special>)], </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>','</span><span class=special>));</span></pre>
+</code>
 <h4>insert key-value pairs into a map</h4><p>
 Suppose that your input string is </p>
 <code> 
@@ -180,7 +188,7 @@ Suppose that your input string is </p>
             </span><span class=literal>'('</span><span class=special>
           , </span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>assign_a</span><span class=special>(</span>k.first<span class=special>)] &gt;&gt; </span><span class=literal>','</span><span class=special> &gt;&gt; </span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>assign_a</span><span class=special>(</span>k.second<span class=special>)]
           ,</span><span class=literal> ')'
-        </span><span class=special>)<br>        [</span><span class=identifier>insert_a</span><span class=special>(</span><span class=identifier>m</span><span class=special>, </span><span class=identifier>k</span><span class=identifier></span><span class=special>)]
+        </span><span class=special>)<br>        [</span><span class=identifier>insert_at_a</span><span class=special>(</span><span class=identifier>m</span><span class=special>, </span><span class=identifier>k</span><span class=identifier></span><span class=special>)]
         ;</span></code></pre> 
 <h2>Policy holder actors and policy actions</h2>
 <p> The action takes place through a call to the <tt>()</tt> operator: single 
