@@ -14,7 +14,7 @@
 #include <boost/spirit/meta/as_parser.hpp>
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/core/composite/composite.hpp>
-#include <boost/spirit/utility/parsers/impl/lists.ipp>
+#include <boost/spirit/utility/impl/lists.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {

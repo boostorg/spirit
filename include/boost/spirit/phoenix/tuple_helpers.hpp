@@ -526,7 +526,7 @@ namespace impl
         typedef is_default_t<false> is_not_default;
 
         static type
-        actor_element(ActorTupleT const& actor_tuple, is_default)
+        actor_element(ActorTupleT const& /*actor_tuple*/, is_default)
         {
             return type(); // default construct
         }

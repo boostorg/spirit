@@ -508,7 +508,7 @@ namespace impl
             MetaT, ParserT, typename ParserT::left_t,
             typename ParserT::right_t, EnvT
         >::nexttype
-        generate(MetaT const &meta_, ParserT const &binary_, EnvT const &env)
+        generate(MetaT const &meta_, ParserT const &binary_, EnvT const& /*env*/)
         {
             typedef typename ParserT::left_t                left_t;
             typedef typename ParserT::right_t               right_t;

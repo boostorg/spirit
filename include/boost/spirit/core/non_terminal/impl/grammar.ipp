@@ -76,7 +76,7 @@ struct grammar_definition
         typedef std::vector<helper_t*>        vector_t;
 
         grammar_helper_list() {}
-        grammar_helper_list(grammar_helper_list const& x)
+        grammar_helper_list(grammar_helper_list const& /*x*/)
         {   // Does _not_ copy the helpers member !
         }
 
@@ -308,6 +308,8 @@ struct grammar_definition
             std::bind2nd(std::mem_fun(&helper_base_t::undefine), self));
 # endif
 
+#else
+		(void)self;
 #endif
     }
 

@@ -61,7 +61,7 @@ namespace boost { namespace spirit {
 
 
         template<typename T2>
-        void operator()(T2 const& val_) const
+        void operator()(T2 const& /*val*/) const
         {
             this->act(ref,value1_ref,value2_ref); // defined in ActionT
         }
@@ -69,8 +69,8 @@ namespace boost { namespace spirit {
 
         template<typename IteratorT>
             void operator()(
-            IteratorT const& first_,
-            IteratorT const& last_
+            IteratorT const& /*first*/,
+            IteratorT const& /*last*/
             ) const
         {
             this->act(ref,value1_ref,value2_ref); // defined in ActionT

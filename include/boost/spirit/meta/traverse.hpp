@@ -73,7 +73,7 @@ namespace boost { namespace spirit
 
         template <typename ParserT, typename EnvT>
         typename parser_traversal_plain_result<TransformT, ParserT, EnvT>::type
-        generate_plain(ParserT const &parser_, EnvT const &env) const
+        generate_plain(ParserT const &parser_, EnvT const& /*env*/) const
         {
             return parser_;
         }
@@ -104,7 +104,7 @@ namespace boost { namespace spirit
         typename parser_traversal_unary_result<
             TransformT, UnaryT, SubjectT, EnvT>::type
         generate_unary(
-            UnaryT const &, SubjectT const &subject_, EnvT const &env) const
+            UnaryT const &, SubjectT const &subject_, EnvT const& /*env*/) const
         {
             typedef typename UnaryT::parser_generator_t parser_generator_t;
             return parser_generator_t::template generate<SubjectT>(subject_);
@@ -127,7 +127,7 @@ namespace boost { namespace spirit
             TransformT, ActionT, SubjectT, EnvT
         >::type
         generate_action(ActionT const &action_, SubjectT const &subject_,
-            EnvT const &env) const
+            EnvT const& /*env*/) const
         {
             return subject_[action_.predicate()];
         }
@@ -162,7 +162,7 @@ namespace boost { namespace spirit
         >::type
         generate_binary(
             BinaryT const &, LeftT const& left_
-          , RightT const& right_, EnvT const &env) const
+          , RightT const& right_, EnvT const& /*env*/) const
         {
             typedef typename BinaryT::parser_generator_t parser_generator_t;
             return parser_generator_t::

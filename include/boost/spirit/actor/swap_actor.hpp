@@ -49,7 +49,7 @@ namespace boost { namespace spirit {
         {};
 
         template<typename T2>
-        void operator()(T2 const& val_) const
+        void operator()(T2 const& /*val*/) const
         {
             ref.swap(swap_ref);
         }
@@ -57,8 +57,8 @@ namespace boost { namespace spirit {
 
         template<typename IteratorT>
         void operator()(
-            IteratorT const& first_,
-            IteratorT const& last_
+            IteratorT const& /*first*/,
+            IteratorT const& /*last*/
             ) const
         {
             ref.swap(swap_ref);

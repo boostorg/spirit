@@ -38,9 +38,9 @@ public:
         ++pos.line;
     }
 
-    void set_tab_chars(unsigned int chars){}
-    void next_char(file_position_without_column& pos)    {}
-    void tabulation(file_position_without_column& pos)   {}
+    void set_tab_chars(unsigned int /*chars*/){}
+    void next_char(file_position_without_column& /*pos*/)    {}
+    void tabulation(file_position_without_column& /*pos*/)   {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////

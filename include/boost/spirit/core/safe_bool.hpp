@@ -13,22 +13,40 @@
 
 namespace boost { namespace spirit
 {
-    template <typename DerivedT>
-    class safe_bool
+    namespace impl
     {
-        void dummy_func(DerivedT*) {}
-        typedef void (safe_bool::*bool_type)(DerivedT*);
+        template <typename T>
+        struct no_base {};
+
+        template <typename T>
+        struct safe_bool_impl
+        {
+            typedef T* TP; // workaround for MWCW
+            TP stub;
+            typedef TP safe_bool_impl::*type;
+        };
+    }
+
+    template <typename DerivedT, typename BaseT = impl::no_base<DerivedT> >
+    struct safe_bool : BaseT
+    {
+    private:
+        typedef impl::safe_bool_impl<DerivedT> impl_t;
+        typedef typename impl_t::type bool_type;
 
     public:
         operator bool_type() const
-        { return static_cast<const DerivedT*>(this)->operator_bool() ?
-            &safe_bool::dummy_func : 0; }
+        {
+            return static_cast<const DerivedT*>(this)->operator_bool() ?
+                &impl_t::stub : 0;
+        }
 
         operator bool_type()
-        { return static_cast<DerivedT*>(this)->operator_bool() ?
-            &safe_bool::dummy_func : 0; }
+        {
+            return static_cast<DerivedT*>(this)->operator_bool() ?
+                &impl_t::stub : 0;
+        }
     };
-
 }}
 
 #endif
