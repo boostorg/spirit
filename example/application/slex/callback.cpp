@@ -78,7 +78,7 @@ void ignore_callback(const char* const& tok_begin, const char*& tok_end,
 void change_callback(const char* const& tok_begin, const char*& tok_end,
         const char* const& /*last*/, const int& token, lexer_control<int>& ctl)
 {
-    cout << "changing token #" << token << " to 150. token = " << 
+    cout << "changing token #" << token << " to 150. token = " <<
         std::string(tok_begin, tok_end) << endl;
 
     ctl.set_token(150);
@@ -87,7 +87,7 @@ void change_callback(const char* const& tok_begin, const char*& tok_end,
 void term_callback(const char* const& tok_begin, const char*& tok_end,
         const char* const& /*last*/, const int& token, lexer_control<int>& ctl)
 {
-    cout << "matched token #" << token << " token = " << 
+    cout << "matched token #" << token << " token = " <<
         std::string(tok_begin, tok_end) << endl;
     cout << "terminating lexer" << endl;
 
@@ -99,7 +99,7 @@ struct term_callback_ftr
     void operator()(const char* const& tok_begin, const char*& tok_end,
         const char* const& /*last*/, const int& token, lexer_control<int>& ctl)
     {
-        cout << "matched token #" << token << " token = " << 
+        cout << "matched token #" << token << " token = " <<
             std::string(tok_begin, tok_end) << endl;
         cout << "terminating lexer" << endl;
 
@@ -133,11 +133,11 @@ int main(int , char** )
     }
 
     {
-        typedef boost::function<void, 
-                        const char* const&, 
-                        const char*&, 
-                        const char* const&, 
-                        const int&, 
+        typedef boost::function5<void,
+                        const char* const&,
+                        const char*&,
+                        const char* const&,
+                        const int&,
                         lexer_control<int>&> func_callback_t;
 
         func_callback_t func_lex_cb = &lex_callback;

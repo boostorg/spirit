@@ -80,15 +80,15 @@ namespace boost { namespace spirit {
         enum
         {
             is_cptr = boost::is_convertible<T, char const*>::value,
-            is_wcptr = boost::is_convertible<T, wchar_t const*>::value
+            is_wcptr
+                = is_cptr ? false
+                : boost::is_convertible<T, wchar_t const*>::value
         };
 
         typedef
-            typename mpl::if_c<
-                is_cptr,
+            typename mpl::if_c<is_cptr,
                 strlit<char const*>,
-                typename mpl::if_c<
-                    is_wcptr,
+                typename mpl::if_c<is_wcptr,
                     strlit<wchar_t const*>,
                     T
                 >::type
@@ -96,11 +96,9 @@ namespace boost { namespace spirit {
         type;
 
         typedef
-            typename mpl::if_c<
-                is_cptr,
+            typename mpl::if_c<is_cptr,
                 char const*,
-                typename mpl::if_c<
-                    is_wcptr,
+                typename mpl::if_c<is_wcptr,
                     wchar_t const*,
                     T const&
                 >::type
@@ -108,8 +106,7 @@ namespace boost { namespace spirit {
         param_type;
 
         typedef
-            typename mpl::if_c<
-                (is_cptr || is_wcptr),
+            typename mpl::if_c<(is_cptr || is_wcptr),
                 type,
                 type const&
             >::type

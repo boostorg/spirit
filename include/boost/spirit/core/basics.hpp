@@ -11,6 +11,19 @@
 #if !defined(BOOST_SPIRIT_BASICS_HPP)
 #define BOOST_SPIRIT_BASICS_HPP
 
+#if defined(__BORLANDC__) && (__BORLANDC__ <= 0x561)
+namespace boost { namespace spirit { namespace borland_only {
+
+    //  Before including MPL, we define these dummy template
+    //  functions. Borland complains when a template class
+    //  has the same name as a template function, regardless if
+    //  they are in different namespaces.
+
+    template <typename T> void arg(T) {}
+
+}}} // namespace boost::spirit::impl
+#endif
+
 #include <boost/config.hpp>
 #include <boost/mpl/apply_if.hpp>
 #include <boost/mpl/if.hpp>
