@@ -38,4 +38,4 @@ MINUS()MINUS()                // - -, not --
 STRINGIZE( MINUS()MINUS() )   // "- -", not "--"
 
 DOT()DOT()DOT()               // .. ., not ...
-STRINGIZE( DOT()DOT()DOT() )  // ".. ", not "..."
+STRINGIZE( DOT()DOT()DOT() )  // ".. .", not "..."

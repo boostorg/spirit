@@ -12,7 +12,7 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-// Tests, if universal character values to generated accidently by 
+// Tests, if no universal character values are to be generated accidently by 
 // concatenation
 
 #define CONCAT(a, b) PRIMITIVE_CONCAT(a, b)

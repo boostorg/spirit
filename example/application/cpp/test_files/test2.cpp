@@ -12,8 +12,8 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-// Tests macro expansion order together with the need to skip expansion of
-// the same macro as it is currently expanded.
+// Tests macro expansion order in conjunction with the need to skip expansion 
+// of the same macro as it is currently expanded.
 
 #define CONCAT(a, b) a ## b
 #define CONCAT_INDIRECT() CONCAT

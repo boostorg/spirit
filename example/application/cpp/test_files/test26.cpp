@@ -12,7 +12,7 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-// Tests the vaidity of whitespace handling during macro expansion
+// Tests the validity of whitespace handling during macro expansion
 
 #define MACRO()	123
 

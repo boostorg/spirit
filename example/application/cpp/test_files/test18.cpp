@@ -13,8 +13,8 @@
 =============================================================================*/
 
 // Tests the #warning directive (note: only available, if enabled during
-// compilation, the macro expansion is available only, when enable during the
-// compilation too)
+// compilation, the macro expansion is available only, when enabled separately
+// during the compilation too)
 
 #define WARNING1 This is a 
 #define WARNING2 warning

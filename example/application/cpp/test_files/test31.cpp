@@ -1,3 +1,20 @@
+/*=============================================================================
+    A Standard compliant C++ preprocessor
+
+    Copyright (c) 2001-2003 Hartmut Kaiser
+    Copyright (c) 2003 Paul Mensonides
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software
+    is granted provided this copyright notice appears in all copies.
+    This software is provided "as is" without express or implied
+    warranty, and with no claim as to its suitability for any purpose.
+
+    See Copyright.txt for full copyright notices and acknowledgements.
+=============================================================================*/
+
+// Tests more complex macro expansion. 
+
 // token-pasting macro
 
 #define CAT(a, b) PRIMITIVE_CAT(a, b)
@@ -79,7 +96,7 @@
 #define LESS_EQUAL(x, y) COMPL(LESS(y, x))
 #define GREATER_EQUAL(x, y) COMPL(LESS(x, y))
 
-// causes a another rescan...
+// causes another rescan...
 
 #define SCAN(x) x
 
