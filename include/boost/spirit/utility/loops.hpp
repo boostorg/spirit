@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit V1.5.2
+    Spirit v1.6.0
     Copyright (c) 1998-2003 Joel de Guzman
     Copyright (c) 2002 Raghavendra Satish
     Copyright (c) 2002 Jeff Westfahl

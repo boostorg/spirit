@@ -15,7 +15,7 @@
 [def Haskell        [@http://www.haskell.org Haskell]]
 [def boost_lambda   [@http://www.boost.org/libs/lambda/doc/index.html BLL]]
 [def FC++           [@http://www.cc.gatech.edu/~yannis/fc++/ FC++]]
-[def spirit_docs    [@../../spirit/index.html '''Spirit''' v1.5]]
+[def spirit_docs    [@../../spirit/index.html '''Spirit''' v1.6]]
 [def spirit_mlist   [@https://lists.sourceforge.net/lists/listinfo/spirit-general '''Spirit''' Mailing List]]
 [def Boost          [@http://www.boost.org Boost]]
 
