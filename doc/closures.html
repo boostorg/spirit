@@ -62,11 +62,11 @@
 <p> The general closure declaration syntax is:</p>
 <pre><code>    <span class=keyword>struct </span><span class=identifier>name</span><span class=special></span> <span class=special>: </span><span class=identifier>spirit</span><span class=special>::</span><span class=identifier>closure</span><span class=special>&lt;</span><span class=identifier>name</span><span class=special>, </span><span class=keyword>type1, type2, type3..., typeN</span><span class=special>&gt;
     {
-        </span><span class=identifier>member1 member_name1</span><span class=special>;
-        </span><span class=identifier>member2 member_name2</span><span class=special>;
-        </span><span class=identifier>member3 member_name3</span><span class=special>;
+        </span><span class=identifier>member1 m_name1</span><span class=special>;
+        </span><span class=identifier>member2 m_name2</span><span class=special>;
+        </span><span class=identifier>member3 m_name3</span><span class=special>;
         ...
-        </span><span class=identifier>memberN member_nameN</span><span class=special>;
+        </span><span class=identifier>memberN m_nameN</span><span class=special>;
     };</span></code></pre>
 <p> <tt>member1</tt>... <tt>memberN</tt> are indirect links to the actual closure 
   variables. Their indirect types correspond to <code><tt>type1</tt></code>... 
@@ -78,9 +78,12 @@
     </span><span class=special>};</span></code></pre>
 <p> <tt>member1</tt> and <tt>member2</tt> are indirect links to the actual closure 
   variables. Their indirect types correspond to double and int, respectively. 
-  The closure <tt>member1</tt> is the closure's return value. This return value, 
-  like the one returned by <tt>anychar_p</tt>, for example, can be used to propagate 
-  data up the parser hierarchy or passed to semantic actions. </p>
+</p>
+<p><strong>Closure return value (synthetic attribute)</strong></p>
+<p>The closure <tt>member1</tt> is the closure's return value (synthetic attribute 
+  in parsing terminology). This return value, like the one returned by <tt>anychar_p</tt>, 
+  for example, can be used to propagate data up the parser hierarchy or passed 
+  to semantic actions. </p>
 <p><strong>Attaching closures</strong></p>
 <p>Closures can be applied to rules, subrules and grammars. The closure has a 
   special parser context that can be used with these non terminals. The closure's 
@@ -108,13 +111,13 @@
 <pre class="identifier"><code>    r<span class="special">.</span>x  <span class="comment">// refer to rule r's closure member x
     </span>sr<span class="special">.</span>y <span class="comment">// refer to subrule sr's closure member y
     </span>g<span class="special">.</span>x <span class="comment"> // refer to grammar g's closure member x</span></code></pre>
-<p><strong>Initializing closure members</strong></p>
+<p><strong>Initializing closure members (inherited attributes)</strong></p>
 <p>Closure enabled rules, subrules and grammars by default, default constructs 
   its members when the host rule, subrule or grammar enters its parse member function. 
-  If this is not desirable, we can pass constructor arguments to the rule, subrule 
-  or grammar. The syntax mimics a function call. For example, if wish to construct 
-  <tt>my_closure</tt>'s members to 3.6 and 8, respectively, when we invoke the 
-  rule <tt>r</tt>, we write:</p>
+  If this is not desirable, we can pass constructor arguments (inherited attributes 
+  in parsing terminology) to the rule, subrule or grammar. The syntax mimics a 
+  function call. For example, if wish to construct <tt>my_closure</tt>'s members 
+  to 3.6 and 8, respectively, when we invoke the rule <tt>r</tt>, we write:</p>
 <pre class="identifier"><code>    r<span class="special">(</span><span class="keyword">3.6</span><span class="special">, </span><span class="keyword">8</span><span class="special">) </span><span class="comment">// invoke rule r and set its closure members to 3.6 and 8</span></code></pre>
 <p>The constructor arguments are actually Phoenix lambda expressions, so you can 
   use arbitrarily complex expressions such as:</p>
@@ -123,6 +126,11 @@
     // above</span>
 
     r<span class="special">((</span>g<span class="special">.</span>x<span class="keyword"> </span><span class="special">/</span><span class="keyword"> 8</span><span class="special">) *</span><span class="keyword"> </span>g<span class="special">.</span>y<span class="special">, </span><span class="keyword">0</span><span class="special">)</span></code></pre>
+<p>We can pass less arguments than the actual number of members in the closure. 
+  The members at the right with no corresponding constructor arguments are default 
+  constructed. Example:</p>
+<pre class="identifier"><code>    r<span class="special">(</span><span class="keyword">11.9</span><span class="special">) </span><span class="comment">// invoke rule r and set its closure members to 11.9 and 0</span></code></pre>
+<p>Passing more arguments than there are closure members is an error.</p>
 <h2>An example</h2>
 <p>Consider a rule that parses even palindromes: A parser that can recognize textual 
   mirror images such as &quot;abcddcba&quot;. </p>
