@@ -21,7 +21,7 @@ bool    verbose_runtests; // set to true when started by
 void init(int /*argc*/, char* /*argv*/[])
 {
     using namespace std;
-    verbose_runtests = !!::getenv("VERBOSE_RUNTESTS");
+    verbose_runtests = !!getenv("VERBOSE_RUNTESTS");
 }
 
 void banner(char const *text)
@@ -31,7 +31,7 @@ void banner(char const *text)
 
     using namespace std;
 
-    int len = ::strlen(text);
+    int len = strlen(text);
     std::cout << "/////////////////////////////////////////////////////////\n";
     len = (57-len)/2;
     while(len-->0) std::cout << ' ';
