@@ -200,6 +200,12 @@ unit-test cons_tests
     :
     ;
 
+unit-test any_tests
+    : any_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
 
 
 

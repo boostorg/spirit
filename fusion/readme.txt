@@ -86,7 +86,7 @@ Basic functions and meta_functions on sequences:
     operator        : tuple operators ==, !=, <, >, <=, >=
     begin           : start of sequence
     end             : end of sequence
-    make-tuple      : make a tuple
+    make_tuple      : make a tuple
     tie             : make a tuple of references
     generate        : given a fusion sequence, generate a tuple
     get<N>          : get the nth element of a tuple
@@ -122,6 +122,7 @@ Algorithms:
         remove_if
         replace
         transform
+        any
 
 TODO:
     iteration is limited to input_iterator
