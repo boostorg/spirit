@@ -88,7 +88,7 @@
       <a href="scanner.html#lexeme_scanner">lexeme_scanner</a> and <a href="scanner.html#as_lower_scanner">as_lower_scanner.</a></td>
   </tr>
 </table>
-<p><b> Eliminating Left Recursion </b></p>
+<p><b> <a name="left_recursion"></a> Eliminating Left Recursion </b></p>
 <p><font color="#FF0000">Question:</font> I ported a grammar from YACC. It's &quot;kinda&quot; 
   working - the parser itself compiles with no errors. But when I try to parse, 
   it gives me an &quot;invalid page fault&quot;. I tracked down the problem to 
@@ -98,8 +98,8 @@
   causes the invalid page fault because the program enters an infinite loop. The 
   code above is good for bottom up parsers such as YACC but not for LL parsers 
   such as Spirit.</p>
-<p>This is similar to a rule in Hartmut Kaiser's <a href="../example/application/c/c_grammar.cpp">C 
-  parser</a> in the examples/applications.</p>
+<p>This is similar to a rule in Hartmut Kaiser's C 
+  parser (this should be available for download from <a href="http://spirit.sf.net">Spirit's site</a> as soon as you read this).</p>
 <pre>
     <span class=identifier>inclusive_or_expression
     </span><span class=special>= </span><span class=identifier>exclusive_or_expression
@@ -224,7 +224,7 @@
 </ul>
 <p>The first task is merely logistical, the second is rather a technical one. </p>
 <p>A good example of solving the first task is given in the Spirit cpp_lexer example 
-  written by JCAB, which you can find <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/spirit/spirit/libs/spirit/example/application/cpp_lexer/">here</a>. 
+  written by JCAB. 
 </p>
 <p>The cross referencing problems may be solved by some kind of forward declaration, 
   or, if this does not work, by introducing some dummy template argument to the 
@@ -254,8 +254,7 @@
   time is split between several compilation units, reducing the overall 
   required time drastically too. </p>
 <p>For a sample, showing how to achieve this, you may want to look at the <tt>Wave</tt> 
-  preprocessor library, where this technique is used extensively. You can find 
-  <tt>Wave</tt> <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/spirit/spirit/wave/">here</a>.</p>
+  preprocessor library, where this technique is used extensively.  (this should be available for download from <a href="http://spirit.sf.net">Spirit's site</a> as soon as you read this).</p>
 <p><strong><a name="frame_assertion" id="frame_assertion"></a>Closure frame assertion</strong></p>
 <p><font color="#FF0000">Question:</font> When I run the parser I get an assertion 
   <span class="string">&quot;frame.get() != 0 in file closures.hpp&quot;</span>. 
