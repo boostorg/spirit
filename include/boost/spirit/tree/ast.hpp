@@ -129,7 +129,9 @@ struct ast_tree_policy :
         else
         {
             match_t newmatch(m.length(),
-                m.trees.empty() ? factory_t::empty_node() : factory_t::create_node(first, last, false));
+                m.trees.empty() ? 
+                    factory_t::empty_node() : 
+                    factory_t::create_node(first, last, false));
 
             std::swap(newmatch.trees.begin()->children, m.trees);
             // set this node and all it's unset children's rule_id
