@@ -11,6 +11,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <memory> // for std::auto_ptr
+#include <boost/spirit/core/assert.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -168,6 +169,8 @@ namespace boost { namespace spirit {
                        }
                         ++first;
                         ch = (first == last) ? 0 : *first;
+                        BOOST_SPIRIT_ASSERT(first == last || ch != 0
+                            && "Won't work on binary streams");
                         np = &(**np).middle.link;
                     }
                     else
@@ -195,7 +198,8 @@ namespace boost { namespace spirit {
 
             while (np)
             {
-                if (ch < np->value)
+
+                if (ch < np->value) // => go left!
                 {
                     if (np->value == 0)
                     {
@@ -206,41 +210,47 @@ namespace boost { namespace spirit {
                             latest_len = result.length;
                         }
                     }
+
                     np = np->left;
                 }
-                else
+                else if (ch == np->value) // => go middle!
                 {
-                    if (ch == np->value)
+                    if (np->value == 0)
                     {
-                        if (scan.at_end())
-                        {
-                            result.data = np->middle.data;
-                            if (result.data)
-                            {
-                                latest = scan.first;
-                                latest_len = result.length;
-                            }
-                            break;
-                        }
-
-                        ++scan;
-                        ch = scan.at_end() ? 0 : *scan;
-                        np = np->middle.link;
-                        ++result.length;
+                        // null character is an implementation detail
+                        // of the tst. It is not part of the match
+                        break;
                     }
-                    else
+
+                    if (scan.at_end())
                     {
-                        if (np->value == 0)
+                        result.data = np->middle.data;
+                        if (result.data)
                         {
-                            result.data = np->middle.data;
-                            if (result.data)
-                            {
-                                latest = scan.first;
-                                latest_len = result.length;
-                            }
+                            latest = scan.first;
+                            latest_len = result.length;
                         }
-                        np = np->right;
-                     }
+                        break;
+                    }
+
+                    ++scan;
+                    ch = scan.at_end() ? 0 : *scan;
+                    np = np->middle.link;
+                    ++result.length;
+                }
+                else // (ch > np->value) => go right!
+                {
+                    if (np->value == 0)
+                    {
+                        result.data = np->middle.data;
+                        if (result.data)
+                        {
+                            latest = scan.first;
+                            latest_len = result.length;
+                        }
+                    }
+
+                    np = np->right;
                 }
             }
 

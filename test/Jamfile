@@ -163,6 +163,8 @@ else
           [ spirit-run $(spirit-src)confix_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)loops_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)symbols_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)symbols_add_null.cpp <template>normal ]
+          [ spirit-run $(spirit-src)symbols_find_null.cpp <template>normal ]
           [ spirit-run $(spirit-src)escape_char_parser_tests.cpp <template>opt ]
           [ spirit-run $(spirit-src)distinct_tests.cpp <template>normal ]
         ;
