@@ -145,8 +145,8 @@ namespace boost { namespace fusion
                 {
                     if (stream.get() != c)
                     {
-	                    stream.unget();
-	                    stream.setstate(std::ios::failbit);
+                        stream.unget();
+                        stream.setstate(std::ios::failbit);
                     }
                 }
             }
