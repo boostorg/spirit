@@ -100,16 +100,22 @@ pp_iterator_functor<ContextT>::get()
 
 // test for EOI, if there is a pending input context, pop it back and continue
 // parsing with it
-    if (iter_ctx->first == iter_ctx->last && 
-        ctx.has_pending_iteration_context()) 
-    {
+bool returned_from_include = false;
+
+    if (iter_ctx->first == iter_ctx->last && ctx.get_iteration_depth() > 0) {
+    // restore the previous iteration context after preprocessing the included
+    // file
         iter_ctx = ctx.pop_iteration_context();
-        seen_newline = true;    // fake a newline to trigger pp_directive
+        returned_from_include = true; // fake a newline to trigger pp_directive
+
+    // restore the actual current directory 
+        ctx.set_current_directory(iter_ctx->filename.c_str());
     }
     
 // try to generate the next token 
-    while (iter_ctx->first != iter_ctx->last) {
-    bool was_seen_newline = seen_newline;
+    if (iter_ctx->first != iter_ctx->last) {
+        do {
+        bool was_seen_newline = seen_newline || returned_from_include;
     
         act_token = *iter_ctx->first;
         if (act_token == T_NEWLINE) {   // a newline is to be returned asap
@@ -127,26 +133,38 @@ pp_iterator_functor<ContextT>::get()
                 cpp_grammar_t::pos_of_newline);
         }
         else if (ctx.get_if_block_status()) {
-        // preprocess this token, eat up more, if appropriate, return the next
-        // preprocessed token
+            // preprocess this token, eat up more, if appropriate, return the 
+            // next preprocessed token
             return pp_token();
         }
         else {
-        // compilation condition is false: if the current token is a newline, 
-        // return it, otherwise discard the actual token and try the next one
+            // compilation condition is false: if the current token is a 
+            // newline, return it, otherwise discard the actual token and try 
+            // the next one
             if (act_token == T_NEWLINE) {
                 seen_newline = true;
                 return act_token;
             }
-            continue;
+
+            // next token
+                ++iter_ctx->first;
         }
+            
+        } while (iter_ctx->first != iter_ctx->last);
+    }
+    else if (returned_from_include) {
+    // if there was an '#include' statement on the last line of a file we have
+    // to return an additional newline token
+        return result_type(T_NEWLINE, 
+            typename result_type::string_t("\n"), 
+            cpp_grammar_t::pos_of_newline);
     }
     return result_type();   // return eof token
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  ppdirective(): recognize and dispatch a preprocessor directive
+//  pptoken(): return the next preprocessed token
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -173,7 +191,7 @@ boost::spirit::tree_parse_info<lex_t> hit =
 
     if (hit.match) {
     // position the iterator past the matched sequence to allow 
-    // resyncronisation, if an error occurs
+    // resynchronisation, if an error occurs
         iter_ctx->first = hit.stop;
         
     // found a valid pp directive, dispatch to the correct function to handle 
@@ -214,7 +232,7 @@ long node_id = node.id().to_long();
     }
     else if (node_id == cpp_grammar_t::rule_ids.sysinclude_file_id) {
     // #include <...>
-        //return on_include (*node.begin(), true);
+        on_include (*node.begin(), true);
     }
     else if (node_id == cpp_grammar_t::rule_ids.macroinclude_file_id) {
     // #include ...
@@ -361,43 +379,6 @@ private:
 //template <typename LexT>
 //typename pp_iterator_functor_shim<LexT>::result_type const
 //    pp_iterator_functor_shim<LexT>::eof;
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Store a stream position inside a given file to maintain an #include point
-//  stack.
-//
-///////////////////////////////////////////////////////////////////////////////
-
-//template <typename LexT>
-//struct stream_position {
-//
-//    stream_position()
-//    {}
-//    stream_position(stream_position const &rhs)
-//    :   act(rhs.act), end(rhs.end), filename(rhs.filename)
-//    {}
-//    stream_position &operator= (stream_position const &rhs)
-//    {
-//        if (&rhs != this) {
-//        stream_position pos (rhs);  // may throw
-//        
-//            this->swap(pos);
-//        }
-//        return *this; 
-//    }
-//    
-//    void swap(stream_position &rhs)
-//    {
-//        std::swap(act, rhs.act);
-//        std::swap(end, rhs.end);
-//        std::swap(filename, rhs.filename);
-//    }
-//    
-//    LexT act;
-//    LexT end;
-//    std::string filename;
-//};
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace impl

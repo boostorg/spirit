@@ -78,7 +78,7 @@ main(int argc, char *argv[])
         teststr = argv[1];
     }
 
-// The template lex_functor<> is defined in both namespaces: cpplexer::slex and 
+// The template lex_token<> is defined in both namespaces: cpplexer::slex and 
 // cpplexer::re2clex. The 'using namespace' directive above tells the compiler,
 // which of them to use.
     typedef cpp::context<lex_token<std::string::iterator> > context_t;

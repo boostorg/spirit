@@ -37,7 +37,13 @@ namespace cpp {
 //
 //      The following template parameter has to be supplied:
 //
-//      TokenT      The token type to return from the preprocessing
+//      TokenT          The token type to return from the preprocessing
+//      InputPolicyT    The input policy type to use for loading the files
+//                      to be included. This template parameter is optional and 
+//                      defaults to the 
+//                          iteration_context_policies::
+//                          load_file_to_string<cpplexer::lex_iterator<TokenT> >
+//                      type
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -84,8 +90,8 @@ public:
     bool exit_if_block() { return ifblocks.exit_if_block(); }
 
 // maintain include pathes
-    bool add_include_path(char const *path_)
-        { return includes.add_include_path(path_);}
+    bool add_include_path(char const *path_, bool is_system = false)
+        { return includes.add_include_path(path_, is_system);}
     void set_sys_include_delimiter() { includes.set_sys_include_delimiter(); }
     bool find_include_file (std::string &s, bool is_system) const
         { return includes.find_include_file(s, is_system); }
@@ -93,12 +99,11 @@ public:
         { includes.set_current_directory(path_); }
 
 // stack of iteration contexts
-    bool has_pending_iteration_context() const { return iter_ctxs.size() > 0; }
+    int get_iteration_depth() const { return iter_ctxs.size(); }
     iteration_ptr_t pop_iteration_context()
         { iteration_ptr_t top = iter_ctxs.top(); iter_ctxs.pop(); return top; }
     void push_iteration_context(iteration_ptr_t iter_ctx)
         { iter_ctxs.push(iter_ctx); }
-    int get_iteration_depth() const { return iter_ctxs.size(); }
 
 private:
 // the main input stream

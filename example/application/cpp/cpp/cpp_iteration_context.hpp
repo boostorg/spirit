@@ -87,11 +87,13 @@ namespace iteration_context_policies {
         class inner {
 
         public:
+            ~inner() { if (instream.is_open()) instream.close(); }
+            
             template <typename TokenT>
             static 
             void init_iterators(IterContextT &iter_ctx, TokenT const &act_tok)
             {
-                iter_ctx.instream(iter_ctx.filename.c_str());
+                iter_ctx.instream.open(iter_ctx.filename.c_str());
                 if (!iter_ctx.instream.is_open()) {
                     CPP_THROW(preprocess_exception, bad_include_file, 
                         iter_ctx.filename, act_tok);

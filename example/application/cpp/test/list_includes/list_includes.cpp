@@ -110,8 +110,9 @@ long seconds = long(std::difftime(compilation_time.get_time(),
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-int do_actual_work (po::options_and_arguments const opts, 
-    po::variables_map const &vm, vector<string> const &pathes)
+int do_actual_work (
+    po::options_and_arguments const opts, po::variables_map const &vm, 
+    vector<string> const &pathes, vector<string> const &syspathes)
 {
 // current file position is saved for exception handling
 file_position current_position;
@@ -133,7 +134,7 @@ file_position current_position;
             instring = string(istreambuf_iterator<char>(instream.rdbuf()),
                               istreambuf_iterator<char>());
             
-        // The template lex_functor<> is defined in both namespaces: 
+        // The template lex_token<> is defined in both namespaces: 
         // cpplexer::slex and cpplexer::re2clex. The 'using namespace' 
         // directive above tells the compiler, which of them to use.
             typedef cpp::context<lex_token<std::string::iterator> > context_t;
@@ -156,6 +157,16 @@ file_position current_position;
                 }
             }
             
+        // add system include directories to the include path
+            if (vm.count("syspath")) {
+                vector<string>::const_iterator end = syspathes.end();
+                for (vector<string>::const_iterator cit = syspathes.begin(); 
+                     cit != end; ++cit)
+                {
+                    ctx.add_include_path((*cit).c_str(), true);
+                }
+            }
+            
         // analyze the actual file
         context_t::iterator_t first = ctx.begin();
         context_t::iterator_t last = ctx.end();
@@ -171,7 +182,7 @@ file_position current_position;
                 if (iter_depth != ctx.get_iteration_depth()) {
                     if (iter_depth < ctx.get_iteration_depth()) {
                     // the get_iteration_depth() reflects the include level of
-                    // the _next_ to be returned token
+                    // the _next_ token to be returned 
                         if (++first == last)
                             break;
 
@@ -242,6 +253,7 @@ main (int argc, char const *argv[])
     try {
     // analyze the command line options and arguments
     vector<string> pathes;
+    vector<string> syspathes;
     po::options_description desc("Usage: list_includes [options] file ...");
         
         desc.add_options()
@@ -249,6 +261,8 @@ main (int argc, char const *argv[])
             ("version,v", "", "print the version number")
             ("path,I", po::parameter<vector<string> >("dir", &pathes), 
                 "specify additional include directory")
+            ("syspath,S", po::parameter<vector<string> >("dir", &syspathes), 
+                "specify additional system include directory")
         ;
 
     po::options_and_arguments opts = po::parse_command_line(argc, argv, desc);
@@ -256,7 +270,7 @@ main (int argc, char const *argv[])
     
         po::store(opts, vm, desc);
         if (vm.count("help")) {
-            cout << desc << "\n";
+            cout << desc << endl;
             return 1;
         }
         
@@ -272,7 +286,7 @@ main (int argc, char const *argv[])
         }
 
     // iterate over all given input files
-        return do_actual_work(opts, vm, pathes);
+        return do_actual_work(opts, vm, pathes, syspathes);
     }
     catch (std::exception &e) {
         cout << "list_includes: exception caught: " << e.what() << endl;

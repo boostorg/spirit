@@ -8,7 +8,7 @@ exe cpp :
         instantiate_re2c_lexer.cpp
         ./cpp_lexer/re2clex/aq.cpp
         ./cpp_lexer/re2clex/cpp.re.cpp
-    :   <include>../..
+    :   <include>.
         <sysinclude>$(BOOST_ROOT)
         <lib>program_options
         <lib>fs

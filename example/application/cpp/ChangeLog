@@ -1,16 +1,20 @@
-Thu Jan 29 21:13:32  2003
+Fri Jan 31 21:30:55  2003
+- Fixed different minor issues and a border case (#include statement at the 
+  last line of a included file)
+
+Wed Jan 29 21:13:32  2003
 - Fixed exception handling to report the correct error position
 - Fixed another bug in the stream position calculation scheme
 - Added a more elaborate sample 'list_includes' which lists the dependency
   information for a given source file (see test/list_includes/readme.txt).
 
-Thu Jan 18 22:01:03  2003
+Sat Jan 18 22:01:03  2003
 - Fixed a bug in the stream position calculation scheme
 - Made cpp::exceptions more standard conformant (added 'throw()' at appropriate 
   places)
 - Overall housekeeping :-)
 
-Thu Jan 15 21:54:20  2003
+Wed Jan 15 21:54:20  2003
 Changes since project start (still 0.5.0)
 - Added #include <...> and #include "..." functionality
 - pp directives are now generally recognized 
