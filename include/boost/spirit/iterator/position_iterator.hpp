@@ -71,7 +71,7 @@ struct file_position {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template < typename IteratorT, typename PositionT = file_position >
+template < typename IteratorT, typename PositionT = file_position>
 class position_iterator {
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)) \
     || (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))

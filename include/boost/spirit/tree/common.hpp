@@ -1371,7 +1371,8 @@ struct tree_parse_info {
 
 }} // namespace boost::spirit
 
-#undef BOOST_SPIRIT_MP_TYPE_COMPUTER_ARGS
 #undef BOOST_SPIRIT_IT_NS
+#undef BOOST_SPIRIT_MP_TYPE_COMPUTER_ARGS
 
 #endif
+

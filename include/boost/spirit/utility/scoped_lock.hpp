@@ -77,7 +77,7 @@ namespace boost { namespace spirit {
         scoped_lock_parser
         <
             MutexT,
-            typename ::boost::spirit::as_parser<ParserT>::type
+            typename as_parser<ParserT>::type
         >
         operator[](ParserT const &p) const
         {

@@ -106,3 +106,4 @@ private:
 
 #undef BOOST_SPIRIT_IT_NS
 #endif // BOOST_SPIRIT_TREE_TREE_ITERATOR_HPP
+
