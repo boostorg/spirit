@@ -64,6 +64,8 @@ int main ()
         result = !m ? 1 : 0;
     }
 
+#if !defined(__COMO_VERSION__)
     unlink("./input_file.txt");
+#endif
     return result;
 }
