@@ -69,21 +69,25 @@ namespace boost { namespace spirit
         template
         <
             typename InitF, typename CondT, typename StepF,
-            typename ParserT
+            typename ParsableT
         >
         struct for_parser
             : private for_init_functor<InitF>
             , private for_step_functor<StepF>
-            , private condition_evaluator<CondT>
+            , private condition_evaluator<typename as_parser<CondT>::type>
             , public unary
             <
-                ParserT,
-                parser< for_parser<InitF, CondT, StepF, ParserT> >
+                typename as_parser<ParsableT>::type,
+                parser< for_parser<InitF, CondT, StepF, ParsableT> >
             >
         {
-            typedef for_parser< InitF, CondT, StepF, ParserT > self_t;
-            typedef condition_evaluator<CondT>                 eval_t;
-            typedef unary< ParserT, parser< self_t > >         base_t;
+            typedef for_parser<InitF, CondT, StepF, ParsableT> self_t;
+            typedef as_parser<CondT>                           cond_as_parser_t;
+            typedef typename cond_as_parser_t::type            condition_t;
+            typedef condition_evaluator<condition_t>           eval_t;
+            typedef as_parser<ParsableT>                       as_parser_t;
+            typedef typename as_parser_t::type                 parser_t;
+            typedef unary< parser_t, parser< self_t > >        base_t;
 
 
             //////////////////////////////
@@ -92,12 +96,12 @@ namespace boost { namespace spirit
             for_parser
             (
                 InitF const &i, CondT const &c, StepF const &s,
-                ParserT const &p
+                ParsableT const &p
             )
                 : for_init_functor<InitF>(i)
                 , for_step_functor<StepF>(s)
-                , eval_t(c)
-                , base_t(p)
+                , eval_t(cond_as_parser_t::convert(c))
+                , base_t(as_parser_t::convert(p))
             { }
 
             for_parser()
@@ -113,8 +117,10 @@ namespace boost { namespace spirit
             typename parser_result<self_t, ScannerT>::type
             parse(ScannerT const &scan) const
             {
-                typedef typename parser_result<self_t, ScannerT>::type result_t;
-                typedef typename parser_result<ParserT, ScannerT>::type sresult_t;
+                typedef typename parser_result<self_t, ScannerT>::type
+                    result_t;
+                typedef typename parser_result<parser_t, ScannerT>::type
+                    body_result_t;
 
                 typename ScannerT::iterator_t save(scan.first);
 
@@ -125,7 +131,7 @@ namespace boost { namespace spirit
                 while ((eval_length = evaluate(scan))>=0)
                 {
                     length += eval_length;
-                    sresult_t tmp(this->subject().parse(scan));
+                    body_result_t tmp(this->subject().parse(scan));
                     if (tmp)
                     {
                         length+=tmp.length();
@@ -136,7 +142,8 @@ namespace boost { namespace spirit
                     }
                     step();
                 }
-                return scan.create_match(length, boost::spirit::nil_t(), save, scan.first);
+                return scan.create_match
+                    (length, boost::spirit::nil_t(), save, scan.first);
             }
         };
 
@@ -152,30 +159,12 @@ namespace boost { namespace spirit
                 , step(s)
             {}
 
-            typedef ::boost::spirit::as_parser<CondT> cond_as_parser_t;
-            typedef typename cond_as_parser_t::type  cond_p;
-
-            template <typename ParserT>
-            for_parser
-            <
-                InitF, cond_p, StepF,
-                typename /*::boost::spirit::*/as_parser<ParserT>::type
-            >
-            operator[](ParserT const &p) const
+            template <typename ParsableT>
+            for_parser<InitF, CondT, StepF, ParsableT>
+            operator[](ParsableT const &p) const
             {
-                typedef ::boost::spirit::as_parser<ParserT> as_parser_t;
-                typedef typename as_parser_t::type parser_t;
-
-                typedef char assert_argument_must_be_a_parser
-                     [::boost::spirit::is_parser<parser_t>::value];
-
-                return for_parser<InitF, cond_p, StepF, parser_t>
-                (
-                    init,
-                    cond_as_parser_t::convert(condition),
-                    step,
-                    as_parser_t::convert(p)
-                );
+                return for_parser<InitF, CondT, StepF, ParsableT>
+                    (init, condition, step, p);
             }
 
             InitF const &init;
