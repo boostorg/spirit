@@ -37,6 +37,8 @@
     at construction time</a></strong></li>
   <li><strong><a href="#storing_rules">Storing Rules</a></strong></li>
   <li><strong><a href="#parsing_ints_and_reals">Parsing ints and reals</a> </strong></li>
+  <li><strong><a href="#output_operator">BOOST_SPIRIT_DEBUG and missing <tt>operator&lt;&lt;</tt></a></strong></li>
+  <li><strong><a href="#repository">Applications that used to be part of spirit</a></strong></li>
 </ul>
 <p><b> <a name="scanner_business" id="scanner_business"></a> The Scanner Business</b></p>
 <p><font color="#FF0000">Question:</font> Why doesn't this compile?</p>
@@ -209,6 +211,18 @@
   development takes place in the Boost CVS. There will be announcements on the
   Spirit mailing lists whenever the status of the Spirit CVS changes.<br>
 </p>
+<table width="80%" border="0" align="center">
+  <tr>
+    <td class="note_box"><img src="theme/alert.gif" width="16" height="16">
+    During development of Spirit v1.8.1 (released as part of boost-1.32.0) and
+    v1.6.2, Spirit's developers decided to stop maintaining Spirit CVS for
+    BRANCH_1_8 and BRANCH_1_6. This was necessary to reduce the added work of
+    maintaining and synch'ing two repositories. The maintenance of these branches
+    will take place on Boost CVS. At this time, new developments towards Spirit
+    v2 and other experimental developments are expected to happen in Spirit
+    CVS.</td>
+  </tr>
+</table>
 <p><strong><a name="compilation_times"></a>How to reduce compilation times with
   complex Spirit grammars </strong></p>
 <p><font color="#FF0000">Question:</font> Are there any techniques to minimize
@@ -225,7 +239,7 @@
 </ul>
 <p>The first task is merely logistical, the second is rather a technical one. </p>
 <p>A good example of solving the first task is given in the Spirit cpp_lexer example
-  written by JCAB.
+  written by JCAB (you may find it on the <a href="http://spirit.sourceforge.net/repository/applications/show_contents.php">applications' repository</a>).
 </p>
 <p>The cross referencing problems may be solved by some kind of forward declaration,
   or, if this does not work, by introducing some dummy template argument to the
@@ -341,7 +355,7 @@
 <p>Ok... this will do for now. You'll definitely see more of the rule-holder in
   the coming days.</p>
 <p><strong><a name="parsing_ints_and_reals"></a>Parsing Ints and Reals</strong></p>
-<p> <font color="#FF0000">Question:</font>  I was trying to parse an int or float value with the <tt>longest_d</tt> directive and put some actors on the alternatives to visualize the results. When I parse &quot;123.456&quot;, the ouput reports:</p>
+<p> <font color="#FF0000">Question:</font>  I was trying to parse an int or float value with the <tt>longest_d</tt> directive and put some actors on the alternatives to visualize the results. When I parse &quot;123.456&quot;, the output reports:</p>
 <ol>
   <li>(int) has been matched: full match = false</li>
   <li> (double) has been matched: full match = true</li>
@@ -366,6 +380,65 @@ Your grammar can be written unambiguously as:</p>
 &quot;2&quot; ---&gt; triggers I</p>
 </blockquote>
 <p> Again, as a rule of thumb, it is always best to resolve as much ambiguity as possible. The best grammars are those which involve no backtracking at all: an LL(1) grammar. Backtracking and semantic actions do not mix well.</p>
+<p><b><a name="output_operator" id="output_operator"></a>BOOST_SPIRIT_DEBUG and missing <tt>operator&lt;&lt;</tt></b></p>
+<p><font color="#FF0000">Question:</font> My code compiles fine in release mode but when I try to define <tt>BOOST_SPIRIT_DEBUG</tt> the compiler complains about a missing <tt><span class="keyword">operator</span><span class="special">&lt;&lt;</span></tt>.</p>
+<p>When <tt>BOOST_SPIRIT_DEBUG</tt> is defined debug output is generated for
+  spirit parsers. To this end it is expected that each closure member has the
+  default output operator defined.</p>
+<p>You may provide the operator overload either in the namespace where the
+  class is declared (it will be found through ADL) or make it visible where it is
+  used, that is <tt><span class="keyword">namespace</span> <span
+  class="identifier">boost</span><span class="special">::</span><span
+  class="identifier">spirit</span></tt>. Here's an example for <tt><span
+  class="identifier">std</span><span class="special">::</span><span
+  class="identifier">pair</span></tt>:</p>
+<pre><code>
+    <span class="preprocessor">#include</span> <span class="string">&lt;iosfwd&gt;</span>
+    <span class="preprocessor">#include</span> <span class="string">&lt;utility&gt;</span>
+
+    <span class="keyword">namespace</span> <span class="identifier">std</span> <span class="special">{</span>
+
+        <span class="keyword">template</span> <span class="special">&lt;</span>
+            <span class="keyword">typename</span> <span class="identifier">C</span><span class="special">,</span>
+            <span class="keyword">typename</span> <span class="identifier">E</span><span class="special">,</span>
+            <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span>
+            <span class="keyword">typename</span> <span class="identifier">T2</span>
+        <span class="special">&gt;</span>
+        <span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">,</span> <span class="identifier">E</span><span class="special">&gt;</span> <span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;(</span>
+            <span class="identifier">basic_ostream</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">,</span> <span class="identifier">E</span><span class="special">&gt;</span> <span class="special">&amp;</span> <span class="identifier">out</span><span class="special">,</span>
+            <span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">,</span> <span class="identifier">T2</span><span class="special">&gt;</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">what</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="keyword">return</span> <span class="identifier">out</span> <span class="special">&lt;&lt;</span> <span class="string">'('</span> <span class="special">&lt;&lt;</span> <span class="identifier">what</span><span class="special">.</span><span class="identifier">first</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span>
+                <span class="special">&lt;&lt;</span> <span class="identifier">what</span><span class="special">.</span><span class="identifier">second</span> <span class="special">&lt;&lt;</span> <span class="string">')'</span><span class="special">;</span>
+        <span class="special">}</span>
+
+    <span class="special">}</span>
+
+</code></pre>
+<p><b><a name="repository" id="repository"></a>Applications that used to be part of spirit</b></p>
+<p><font color="#FF0000">Question:</font> Where can I find <i>&lt;insert great application&gt;</i>, that used to be part of the Spirit distribution?</p>
+<p>Old versions of Spirit used to include applications built with it.
+  In order to streamline the distribution they were moved to a separate
+  <a href="http://spirit.sourceforge.net/repository/applications/show_contents.php">applications repository</a>.
+  In that page you'll find links to full applications that use the Spirit
+  parser framework. We encourage you to send in your own applications for
+  inclusion (see the page for instructions).</p>
+  <p>You may also check out the <a href="http://spirit.sourceforge.net/repository/grammars/show_contents.php">grammars' repository</a>.</p>
+<table width="80%" border="0" align="center">
+  <tr>
+    <td class="note_box">
+      <img src="theme/note.gif" width="16" height="16"> You'll still find the
+      example applications that complement (actually are part of) the
+      documentation in the usual place: <a href="../example">libs/spirit/example</a>.<br>
+      <br>
+      <img src="theme/alert.gif" width="16" height="16"> The applications and
+      grammars listed in the repositories are works of the respective authors.
+      It is the author's responsibility to provide support and maintenance.
+      Should you have any questions, please send the author an email.
+    </td>
+  </tr>
+</table>
+<br>
 <table border="0">
   <tr>
     <td width="10"></td>
