@@ -34,6 +34,5 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "boost/spirit/attribute/parametric.hpp"
 #include "boost/spirit/attribute/closure.hpp"
-#include "boost/spirit/attribute/grouping.hpp"
 
 #endif // !defined(BOOST_SPIRIT_ATTRIBUTE_MAIN_HPP)
