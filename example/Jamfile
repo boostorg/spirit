@@ -199,42 +199,42 @@ exe thousand_separated
     ;
 
 exe ast_calc2
-	: fundamental/more_calculators/ast_calc2.cpp
+    : fundamental/more_calculators/ast_calc2.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
 exe calc_with_variables
-	: fundamental/more_calculators/calc_with_variables.cpp
+    : fundamental/more_calculators/calc_with_variables.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
 exe phoenix_subrule_calc
-	: fundamental/more_calculators/phoenix_subrule_calc.cpp
+    : fundamental/more_calculators/phoenix_subrule_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
 exe primitive_calc
-	: fundamental/more_calculators/primitive_calc.cpp
+    : fundamental/more_calculators/primitive_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
 exe rpn_calc
-	: fundamental/more_calculators/rpn_calc.cpp
+    : fundamental/more_calculators/rpn_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
 exe vmachine_calc
-	: fundamental/more_calculators/vmachine_calc.cpp
+    : fundamental/more_calculators/vmachine_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :

@@ -160,7 +160,7 @@ else
         ;
 
     test-suite "spirit.utility.support"
-		# This test doesn't actually use multiple threads
+        # This test doesn't actually use multiple threads
         : [ spirit-run $(spirit-src)scoped_lock_tests.cpp <template>multi-threading ]
         ;
 

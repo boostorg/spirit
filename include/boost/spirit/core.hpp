@@ -60,7 +60,7 @@
 #include <boost/spirit/core/composite/list.hpp>
 #include <boost/spirit/core/composite/no_actions.hpp>
 
-//	Deprecated interface includes
+//  Deprecated interface includes
 #include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/spirit/actor/push_back_actor.hpp>
 
