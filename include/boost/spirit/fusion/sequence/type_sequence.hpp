@@ -10,7 +10,7 @@
 
 #include <boost/spirit/fusion/detail/access.hpp>
 #include <boost/spirit/fusion/iterator/type_sequence_iterator.hpp>
-#include <boost/spirit/fusion/sequence/detail/type_sequence_begin_end_traits.hpp>
+#include <boost/spirit/fusion/sequence/detail/type_seq_begin_end_trts.hpp>
 #include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
 #include <boost/type_traits/remove_const.hpp>
 

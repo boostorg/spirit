@@ -10,7 +10,7 @@
 
 #include <boost/spirit/fusion/detail/access.hpp>
 #include <boost/spirit/fusion/iterator/transform_view_iterator.hpp>
-#include <boost/spirit/fusion/sequence/detail/transform_view_begin_end_traits.hpp>
+#include <boost/spirit/fusion/sequence/detail/trsfrm_view_begin_end_trts.hpp>
 #include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
 #include <boost/spirit/fusion/sequence/begin.hpp>
 #include <boost/spirit/fusion/sequence/end.hpp>
