@@ -109,7 +109,7 @@ namespace boost { namespace spirit {
 #endif // BOOST_SPIRIT_NO_CHAR_TRAITS
 
     template <typename CharT>
-    char_traits<CharT>::int_type to_int_type(CharT c)
+    typename char_traits<CharT>::int_type to_int_type(CharT c)
     {
         return char_traits<CharT>::to_int_type(c);
     }
@@ -157,7 +157,41 @@ namespace boost { namespace spirit {
 		{ using namespace std; return tolower(to_int_type(c)); }
 
     inline char toupper_(char c)
-    { using namespace std; return toupper(to_int_type(c)); }
+        { using namespace std; return toupper(to_int_type(c)); }
+
+    ///////////////////////////////////////////////////////////////////////////
+    inline bool isalnum_(int c)
+		{ using namespace std; return isalnum(c); }
+
+    inline bool isalpha_(int c)
+		{ using namespace std; return isalpha(c); }
+
+    inline bool iscntrl_(int c)
+		{ using namespace std; return iscntrl(c); }
+
+    inline bool isdigit_(int c)
+		{ using namespace std; return isdigit(c); }
+
+    inline bool isgraph_(int c)
+		{ using namespace std; return isgraph(c); }
+
+    inline bool islower_(int c)
+		{ using namespace std; return islower(c); }
+
+    inline bool isprint_(int c)
+		{ using namespace std; return isprint(c); }
+
+    inline bool ispunct_(int c)
+		{ using namespace std; return ispunct(c); }
+
+    inline bool isspace_(int c)
+		{ using namespace std; return isspace(c); }
+
+    inline bool isupper_(int c)
+		{ using namespace std; return isupper(c); }
+
+    inline bool isxdigit_(int c)
+		{ using namespace std; return isxdigit(c); }
 
 #if !defined(BOOST_NO_CWCTYPE)
 
