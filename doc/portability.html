@@ -41,20 +41,23 @@
   <li>MSVC 7.1</li>
 </ol>
 <p>Spirit is 100% ANSI/ISO C++ conformant. Unfortunately, some compilers do not 
-  support all the features of Spirit due to bugs and inadequate conformance to 
-  the standard. Finding workarounds for these non-conformance problems is a high 
-  priority but it takes time and a lot of effort. </p>
+  support all the features of Spirit primarily due to bugs and inadequate conformance 
+  to the standard. Finding workarounds for these non-conformance problems is a 
+  high priority but it takes time and a lot of effort. </p>
 <ul>
   <li>MSVC 6 and 7 does not support partial template specialization (PTS). Some 
     features that rely on PTS therefore does not compile on MSVC 6 and 7. This 
     include Closures, Lambda expressions as semantic actions (Phoenix and BLL), 
     and the Trees (Abtract Syntax Trees and Parse Trees). Hopefully, these features 
     will be ported to support MSVC 6 and 7. However, The much anticipated MSVC 
-    do support PTS and was tested to fully compile Spirit.</li>
+    7.1 do support PTS and was tested to fully compile Spirit.</li>
   <li>The list parsers and comment parsers do not compile on MSVC6 yet. Use the 
     <tt>%</tt> operator instead.</li>
   <li>The multi_pass does not compile on MSVC6, MSVC 7 and Metrowerks 7.2 yet.</li>
-  <li>Comeau has a problem with the <tt>file_iterator</tt>.</li>
+  <li>Comeau has a problem with the <tt>file_iterator</tt>. The problem is not 
+    related to conformance to the standard at all. Comeau, an EDG based compiler, 
+    is one of the most conformant compiler in existence. The problem is the <tt>file_iterator</tt>'s 
+    use of posix API calls.</li>
   <li>The regular expression parsers does not compile on both MSVC6 and 7, Intel 
     5.0 and Comeau 4.24.5 </li>
   <li>Metrowerks CodeWarrior 7.2 does not compile all the meta-parsers and features 
