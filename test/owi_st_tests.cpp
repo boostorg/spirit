@@ -74,4 +74,5 @@ main()
     assert(c1o1->get_object_id()==1);
 
     std::cout << "Test concluded successfully\n";
+    return 0;
 }

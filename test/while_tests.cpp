@@ -194,6 +194,8 @@ main()
     // check wether as_parser<> works:
     while_p('"')['"'];
     do_p['"'].while_p('"');
+
+    return error_count!=0;
 }
 ////////////////////////////////////////////////////////////////////////////////
 // End of File

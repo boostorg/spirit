@@ -44,5 +44,6 @@ int main(int, char**)
     assert(*b++ == 4);
     assert(*b++ == 5);
     assert(b == q.end());
+    return 0;
 }
 
