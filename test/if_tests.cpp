@@ -19,11 +19,11 @@ namespace local
     struct var_wrapper
         : public ::boost::reference_wrapper<T>
     {
-        explicit inline var_wrapper(T& t)
-            : ::boost::reference_wrapper<T>(t)
-        {}
+        typedef ::boost::reference_wrapper<T> parent;
 
-        inline T& operator()() const { return get(); }
+        explicit inline var_wrapper(T& t) : parent(t) {}
+
+        inline T& operator()() const { return parent::get(); }
     };
 
     template <typename T>
