@@ -9,7 +9,7 @@
 =============================================================================*/
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
-#include <boost/spirit/utility/parsers/escape_char.hpp>
+#include <boost/spirit/utility/escape_char.hpp>
 
 #include <iostream>
 #include <cassert>

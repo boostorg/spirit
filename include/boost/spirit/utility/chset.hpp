@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/shared_ptr.hpp>
 #include <boost/spirit/core/primitives/primitives.hpp>
-#include <boost/spirit/utility/parsers/impl/chset/basic_chset.hpp>
+#include <boost/spirit/utility/impl/chset/basic_chset.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -179,5 +179,5 @@ chset_p(unsigned long long ch)
 
 #endif
 
-#include <boost/spirit/utility/parsers/impl/chset.ipp>
-#include <boost/spirit/utility/parsers/chset_operators.hpp>
+#include <boost/spirit/utility/impl/chset.ipp>
+#include <boost/spirit/utility/chset_operators.hpp>

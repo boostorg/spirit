@@ -11,7 +11,7 @@
 #define BOOST_SPIRIT_CHSET_OPERATORS_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -395,4 +395,4 @@ operator^(nothing_parser a, chset<CharT> const& b);
 
 #endif
 
-#include <boost/spirit/utility/parsers/impl/chset_operators.ipp>
+#include <boost/spirit/utility/impl/chset_operators.ipp>

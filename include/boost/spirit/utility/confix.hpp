@@ -13,7 +13,7 @@
 #include <boost/config.hpp>
 #include <boost/spirit/meta/as_parser.hpp>
 #include <boost/spirit/core/composite/operators.hpp>
-#include <boost/spirit/utility/parsers/impl/confix.ipp>
+#include <boost/spirit/utility/impl/confix.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {

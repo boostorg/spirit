@@ -43,7 +43,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/meta/as_parser.hpp>
 #include <boost/spirit/core/parser.hpp>
-#include <boost/spirit/utility/parsers/impl/regex.ipp>
+#include <boost/spirit/utility/impl/regex.ipp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 ///////////////////////////////////////////////////////////////////////////////

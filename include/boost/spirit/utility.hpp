@@ -24,18 +24,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // Utility.Parsers
-#include <boost/spirit/utility/parsers/chset.hpp>
-#include <boost/spirit/utility/parsers/chset_operators.hpp>
-#include <boost/spirit/utility/parsers/escape_char.hpp>
-#include <boost/spirit/utility/parsers/functor_parser.hpp>
-#include <boost/spirit/utility/parsers/loops.hpp>
-#include <boost/spirit/utility/parsers/confix.hpp>
-#include <boost/spirit/utility/parsers/lists.hpp>
-#include <boost/spirit/utility/parsers/distinct.hpp>
+#include <boost/spirit/utility/chset.hpp>
+#include <boost/spirit/utility/chset_operators.hpp>
+#include <boost/spirit/utility/escape_char.hpp>
+#include <boost/spirit/utility/functor_parser.hpp>
+#include <boost/spirit/utility/loops.hpp>
+#include <boost/spirit/utility/confix.hpp>
+#include <boost/spirit/utility/lists.hpp>
+#include <boost/spirit/utility/distinct.hpp>
 
 // Utility.Support
-#include <boost/spirit/utility/support/flush_multi_pass.hpp>
-#include <boost/spirit/utility/support/scoped_lock.hpp>
+#include <boost/spirit/utility/flush_multi_pass.hpp>
+#include <boost/spirit/utility/scoped_lock.hpp>
 
 
 #endif // !defined(BOOST_SPIRIT_UTILITY_MAIN_HPP)

@@ -14,7 +14,7 @@
 #include "impl/util.ipp"
 #include "impl/sstream.hpp"
 
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 using namespace std;
 using namespace boost::spirit;

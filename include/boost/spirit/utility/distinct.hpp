@@ -17,7 +17,7 @@
 #include <boost/spirit/core/composite/directives.hpp>
 #include <boost/spirit/core/composite/epsilon.hpp>
 #include <boost/spirit/core/non_terminal/rule.hpp>
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 namespace boost {
     namespace spirit {

@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/parsers/confix.hpp>
+#include <boost/spirit/utility/confix.hpp>
 #include <boost/test/included/unit_test_framework.hpp>
 
 using namespace boost;
