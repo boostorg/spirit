@@ -238,11 +238,11 @@ void dynamic_distinct_directive_test()
 int
 main()
 {
-	distinct_parser_test();
-	distinct_directive_test();
-	dynamic_distinct_parser_test();
-	dynamic_distinct_directive_test();
+    distinct_parser_test();
+    distinct_directive_test();
+    dynamic_distinct_parser_test();
+    dynamic_distinct_directive_test();
 
-   	return boost::report_errors();
+    return boost::report_errors();
 }
 
