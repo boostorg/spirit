@@ -388,7 +388,7 @@ comment_nest_parser<
             as_parser<OpenT>::convert(open),
             as_parser<CloseT>::convert(close)
         );
-};
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 }} // namespace boost::spirit
