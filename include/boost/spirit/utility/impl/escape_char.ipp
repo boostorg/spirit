@@ -67,7 +67,6 @@ namespace impl {
                         case '"':   unescaped = '"';    ++scan.first; break;
                         case '\'':  unescaped = '\'';   ++scan.first; break;
                         case '\\':  unescaped = '\\';   ++scan.first; break;
-                        case '0':   unescaped = '\0';   ++scan.first; break;
 
                         case 'x': case 'X':
                             {
