@@ -409,7 +409,7 @@ namespace impl {
     struct as_ptr {
 
         typedef T* pointer_type;
-    
+
         static T* get(T& ref)
         { return &ref; }
     };
@@ -419,7 +419,7 @@ namespace impl {
     struct as_ptr<T*> {
 
         typedef T* pointer_type;
-    
+
         static T* get(T* ptr)
         { return ptr; }
     };
@@ -2434,7 +2434,7 @@ struct bound_member
     bound_member(CT & c, FPT fp)
     :   function<action_t>(action_t(c,fp)) {}
 
-#if ! defined(__BORLANDC__)
+#if !defined(__BORLANDC__)
     template <typename CT, typename FPT>
     bound_member(CT * c, FPT fp)
     :   function<action_t>(action_t(c,fp)) {}
@@ -2488,14 +2488,18 @@ template <typename RT, typename ClassT>
 inline bound_member<RT,ClassT>
 bind(ClassT & obj, RT(ClassT::*fptr)())
 {
-    return bound_member<RT,ClassT>(obj,fptr);
+    return bound_member<RT,ClassT>(obj, fptr);
 }
 
 template <typename RT, typename ClassT>
 inline bound_member<RT,ClassT>
 bind(ClassT * obj, RT(ClassT::*fptr)())
 {
-    return bound_member<RT,ClassT>(obj,fptr);
+#if defined(__MWERKS__) && (__MWERKS__ < 0x3003)
+    return bound_member<RT,ClassT>(*obj, fptr);
+#else
+    return bound_member<RT,ClassT>(obj, fptr);
+#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
