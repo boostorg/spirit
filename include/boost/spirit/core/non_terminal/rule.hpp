@@ -12,8 +12,7 @@
 #define BOOST_SPIRIT_RULE_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#include <memory> // for auto_ptr
-
+#include "boost/scoped_ptr.hpp" // for scoped_ptr
 #include "boost/spirit/core/parser.hpp"
 #include "boost/spirit/core/scanner/scanner.hpp"
 #include "boost/spirit/core/non_terminal/parser_context.hpp"
@@ -107,7 +106,7 @@ namespace boost { namespace spirit {
     private:
 
         typedef impl::abstract_parser<ScannerT, result_t> abstract_parser_t;
-        ::std::auto_ptr<abstract_parser_t> ptr;
+        ::boost::scoped_ptr<abstract_parser_t> ptr;
     };
 
 ///////////////////////////////////////////////////////////////////////////////
