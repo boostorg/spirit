@@ -232,7 +232,8 @@ struct list_parser_gen :
     list_parser<
         typename as_parser<ItemT>::type,
         typename as_parser<DelimT>::type,
-        typename as_parser<EndT>::type
+        typename as_parser<EndT>::type,
+        typename as_parser<ItemT>::type::parser_category_t
     >
     operator()(
         ItemT const &item_, DelimT const &delim_, EndT const &end_) const
