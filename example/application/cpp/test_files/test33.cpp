@@ -15,3 +15,6 @@
 // Tests, if a diagnostic is emitted, if a predefined macro is to be undefined.
 
 #undef __cplusplus     // should emit a warning
+// FIXME:
+//L (17): warning: #undef may not be used on this predefined name: __cplusplus
+//R 1

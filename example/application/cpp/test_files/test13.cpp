@@ -19,7 +19,12 @@
 
 #define scan(x) x
 
-expr // macro par par ()
-scan(expr) // macro par ()
-scan(scan(expr)) // macro ()
-scan(scan(scan(expr))) // end
+expr
+//E macro par par ()
+scan(expr)
+//E macro par ()
+scan(scan(expr))
+//E macro ()
+scan(scan(scan(expr)))
+//E end
+//R 0

@@ -31,3 +31,9 @@ __FILE__
 __LINE__
 __FILE__
 
+// The output from preprocessing this file is quite hard to
+// guess for a shell script. Therefore, it is currently not
+// tested.
+
+//Eignore
+//R 0

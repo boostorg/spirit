@@ -18,6 +18,10 @@
 #define TEST2() ## A
 #define TEST3() A ##
 
-TEST1()	    // AB
+TEST1()
+//E AB
 TEST2()	    // error
+//L (18): error: ill formed preprocessing operator: concat ('##')
 TEST3()	    // error
+
+//R 1

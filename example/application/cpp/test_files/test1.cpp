@@ -18,4 +18,6 @@
 #define B(x, y) [x][y]
 #define C(x) B(x)
 
-C( A(2, 3) )	// should expand to [2][3]
+C( A(2, 3) )
+//E [2][3]
+//R 0

@@ -21,5 +21,7 @@
 #define A B NIL
 #define B() anything
 
-A() 	// expands to B (), not 'anything'
-
+A()
+// expands to B (), not 'anything'
+//E B ()
+//R 0

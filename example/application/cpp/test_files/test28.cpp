@@ -16,9 +16,12 @@
 
 #define \u00ff ...
 
-\u00ff             // expands to '...'
+\u00ff
+//E ...
 
 #define \u0061 weird // 0x61 == 'a'
 
 \u0061             // should emit an error
+//L (22): error: a universal character name cannot designate a character in the basic character set: \u0061
 
+//R 2

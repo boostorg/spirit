@@ -20,13 +20,24 @@
 #define STRINGIZE(x) STRINGIZE_D(x)
 #define STRINGIZE_D(x) # x
 
-STRINGIZE( CONCAT(\, a) )	// expands to "\a"
-STRINGIZE( CONCAT(\, u00ff) )	// expands to "\u00ff"
-STRINGIZE( CONCAT(\u00, ff) )	// expands to "\ u00ff"
-STRINGIZE( CONCAT(\u00ff, 56) )	// expands to "\u00ff56"
-CONCAT(\, a)	        // expands to \a
-CONCAT(\, u00ff)        // expands to \u00ff
-CONCAT(\u00, ff)        // expands to \ u00ff
-CONCAT(\u00ff, 56)      // expands to \u00ff56
+STRINGIZE( CONCAT(\, a) )
+//E  "\a"
+STRINGIZE( CONCAT(\, u00ff) )
+//E  "\u00ff"
+STRINGIZE( CONCAT(\u00, ff) )
+//E  "\ u00ff"
+STRINGIZE( CONCAT(\u00ff, 56) )
+//E  "\u00ff56"
+CONCAT(\, a)
+//E \a
+CONCAT(\, u00ff)
+//E \u00ff
+CONCAT(\u00, ff)
+//E \ u00ff
+CONCAT(\u00ff, 56)
+//E \u00ff56
 
 STRINGIZE( CONCAT(\, u0061) )	// reports an error
+//L (40): error: a universal character name cannot designate a character in the basic character set: \u0061
+
+//R 2

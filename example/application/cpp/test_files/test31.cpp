@@ -116,26 +116,45 @@
 #define EQUAL(x, y) COMPL(NOT_EQUAL(x, y))
 
 LESS(2, 3) == 1
+//E 1 == 1
 LESS(3, 2) == 0
+//E 0 == 0
 LESS(3, 3) == 0
+//E 0 == 0
 
 GREATER(2, 3) == 0
+//E 0 == 0
 GREATER(3, 2) == 1
+//E 1 == 1
 GREATER(3, 3) == 0
+//E 0 == 0
 
 LESS_EQUAL(2, 3) == 1
+//E 1 == 1
 LESS_EQUAL(3, 2) == 0
+//E 0 == 0
 LESS_EQUAL(3, 3) == 1
+//E 1 == 1
 
 GREATER_EQUAL(2, 3) == 0
+//E 0 == 0
 GREATER_EQUAL(3, 2) == 1
+//E 1 == 1
 GREATER_EQUAL(3, 3) == 1
+//E 1 == 1
 
 NOT_EQUAL(2, 3) == 1
+//E 1 == 1
 NOT_EQUAL(3, 2) == 1
+//E 1 == 1
 NOT_EQUAL(3, 3) == 0
+//E 0 == 0
 
 EQUAL(2, 3) == 0
+//E 0 == 0
 EQUAL(3, 2) == 0
+//E 0 == 0
 EQUAL(3, 3) == 1
+//E 1 == 1
 
+//R 0

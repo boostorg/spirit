@@ -22,11 +22,19 @@
 
 #define scan(x) x
 
-expr // macro ()
-scan(expr) // macro_2 par par ()
-scan(scan(expr)) // macro_2 par ()
-scan(scan(scan(expr))) // macro_2 ()
-scan(scan(scan(scan(expr)))) // macro ()
-scan(scan(scan(scan(scan(expr))))) // macro_2 par par ()
-scan(scan(scan(scan(scan(scan(expr)))))) // macro_2 par ()
+expr
+//E macro ()
+scan(expr)
+//E macro_2 par par ()
+scan(scan(expr))
+//E macro_2 par ()
+scan(scan(scan(expr)))
+//E macro_2 ()
+scan(scan(scan(scan(expr))))
+//E macro ()
+scan(scan(scan(scan(scan(expr)))))
+//E macro_2 par par ()
+scan(scan(scan(scan(scan(scan(expr))))))
+//E macro_2 par ()
+//R 0
 

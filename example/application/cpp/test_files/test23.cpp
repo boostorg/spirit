@@ -17,7 +17,12 @@
 #define PRAGMA_BODY	preprocessed pragma body
 
 #pragma some pragma body
+//E #pragma some pragma body
 #pragma PRAGMA_BODY
+//E #pragma preprocessed pragma body
 #pragma STDC some C99 standard pragma body
+//E #pragma STDC some C99 standard pragma body
 #pragma STDC PRAGMA_BODY
+//E #pragma STDC PRAGMA_BODY
+//R 0
 

@@ -16,6 +16,7 @@
 // (which it shouldn't).
 
 BEGINNING OF THE FILE
+//E BEGINNING OF THE FILE
 
 #define SCAN(x) x
 
@@ -23,5 +24,9 @@ BEGINNING OF THE FILE
 #define BUG_2
 
 SCAN(BUG) 1 2 3 4 5
+//E  1 2 3 4 5
 
 END OF THE FILE
+//E END OF THE FILE
+
+//R 0

@@ -18,5 +18,7 @@
 #define A Token1 B
 #define B() Token2
 
-A() // Token1 Token2
+A()
+//E Token1 Token2
+//R 0
 

@@ -17,3 +17,5 @@
 #line 5 
 
 #error This error should occur at line 6 of "test20.cpp"
+//L (6): fatal error: encountered #error directive: This error should occur at line 6 of "test20.cpp"
+//R 1

@@ -17,3 +17,5 @@
 #line 5 "a_nonexisting_file.cpp"
 
 #error This error should occur at line 6 of "a_nonexisting_file.cpp"
+//L (6): fatal error: encountered #error directive: This error should occur at line 6 of "a_nonexisting_file.cpp"
+//R 1

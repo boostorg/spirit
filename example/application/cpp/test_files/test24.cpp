@@ -14,3 +14,5 @@
 
 #define INCLUDE_FILE "some_include_file.h"
 #include INCLUDE_FILE
+//L (16): error: could not find include file: some_include_file.h
+//R 1

@@ -32,9 +32,11 @@ glue(HIGH, LOW);
 xglue(HIGH, LOW)
 
 // should expand to 
-// printf("x1= %d, x2= %s", x1, x2);
-// fputs("strncmp(\"abc\\0d\", \"abc\", '\\4', \"\\u1234\") == 0: @\n", s);
-// "vers2.h" 
-// "hello";
-// "hello" ", world"
+//E printf("x"  "1" "= %d, x"  "2" "= %s", x1, x2);
+//  printf("x1= %d, x2= %s", x1, x2);
+//E fputs( "strncmp(\"abc\\0d\?\", \"abc\", '\\4', \"\\u1234\") == 0"  ": @\n", s);
+//E   "vers2.h"
+//E "hello";
+//E "hello" ", world"
+//R 0
 

@@ -21,4 +21,5 @@
 #define NEXT() ...
 
 MACRO()()
-
+//E 1 + 2 ...
+//R 0

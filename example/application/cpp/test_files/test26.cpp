@@ -16,8 +16,12 @@
 
 #define MACRO()	123
 
-MACRO()       // 123
+MACRO()
+//E 123
 MACRO
-()            // 123
+()
+//E 123
 MACRO(
-)             // 123
+)
+//E 123
+//R 0

@@ -22,20 +22,41 @@
 #define MINUS() -
 #define DOT() .
 
-X()2                 // 1 2
-STRINGIZE( X()2 )    // should expand to: "1 2"
+X()2
+//E 1 2
+STRINGIZE( X()2 )
+//E "1 2"
 
-X() 2                // 1 2
-STRINGIZE( X() 2 )   // should expand to: "1 2"
+X() 2
+//E 1 2
+STRINGIZE( X() 2 )
+//E "1 2"
 
-PLUS()MINUS()                 // +-
-STRINGIZE( PLUS()MINUS() )    // "+-"
+PLUS()MINUS()
+//E +-
+STRINGIZE( PLUS()MINUS() )
+//E "+-"
 
-PLUS()PLUS()                  // + +, not ++
-STRINGIZE( PLUS()PLUS() )     // "+ +", not "++"
+PLUS()PLUS()
+//E + +
+//  not ++
+STRINGIZE( PLUS()PLUS() )
+//E "+ +"
+//  not "++"
 
-MINUS()MINUS()                // - -, not --
-STRINGIZE( MINUS()MINUS() )   // "- -", not "--"
+MINUS()MINUS()
+//E - -
+//  not --
+STRINGIZE( MINUS()MINUS() )
+//E "- -"
+//  not "--"
 
-DOT()DOT()DOT()               // .. ., not ...
-STRINGIZE( DOT()DOT()DOT() )  // ".. .", not "..."
+DOT()DOT()DOT()
+//E .. .
+//  not ...
+STRINGIZE( DOT()DOT()DOT() )
+//E ".. ."
+//  not "..."
+
+//R 0
+

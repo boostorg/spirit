@@ -15,4 +15,5 @@
 // test the error reporting for unknown directives
 
 #this_is_a_unknown_pp_directive with some parameter
-
+//L (17): error: unknown preprocessor directive (ignored): this_is_a_unknown_pp_directive
+//R 1

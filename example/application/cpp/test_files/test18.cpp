@@ -18,4 +18,6 @@
 
 #define WARNING1 This is a 
 #define WARNING2 warning
-#warning WARNING1 WARNING2 // this is a warning
+#warning WARNING1 WARNING2
+//L (21): warning: encountered #warning directive: This is a warning
+//R 1

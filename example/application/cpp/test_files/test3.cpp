@@ -17,4 +17,6 @@
 #define A() B
 #define B(x) x
 
-A()(123)            // should expand to 123
+A()(123)
+//E 123
+//R 0

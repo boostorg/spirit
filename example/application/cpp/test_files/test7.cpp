@@ -19,4 +19,7 @@
 #define CAT(x) X ## x   // expanded parameter not used
 
 ID( MACRO(*) )  // error: MACRO takes no arguments (too many arguments)
+//L (21): warning: too many macro arguments
 CAT( MACRO(*) ) // error: MACRO takes no arguments (too many arguments)
+
+//R 1
