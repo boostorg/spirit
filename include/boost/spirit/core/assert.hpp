@@ -13,13 +13,14 @@
 #if !defined(BOOST_SPIRIT_DEBUG_ASSERT_HPP)
 #define BOOST_SPIRIT_DEBUG_ASSERT_HPP
 
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
-//  BOOST_SPIRIT_ASSERT is used throughout the framework.  It can be overridden
-//  by the user.  If BOOST_SPIRIT_ASSERT_EXCEPTION is defined, then that will
-//  be thrown, otherwise, BOOST_SPIRIT_ASSERT simply turns into a plain assert()
+//  BOOST_SPIRIT_ASSERT is used throughout the framework.  It can be
+//  overridden by the user.  If BOOST_SPIRIT_ASSERT_EXCEPTION is defined,
+//  then that will be thrown, otherwise, BOOST_SPIRIT_ASSERT simply turns
+//  into a plain assert()
 //
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 #if !defined(BOOST_SPIRIT_ASSERT)
 #if defined(NDEBUG)
     #define BOOST_SPIRIT_ASSERT(x)

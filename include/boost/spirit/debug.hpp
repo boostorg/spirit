@@ -12,8 +12,6 @@
 #if !defined(BOOST_SPIRIT_DEBUG_MAIN_HPP)
 #define BOOST_SPIRIT_DEBUG_MAIN_HPP
 
-#include "boost/spirit/debug/assert.hpp"
-
 ///////////////////////////////////////////////////////////////////////////
 #if defined(BOOST_SPIRIT_DEBUG)
 
