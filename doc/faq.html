@@ -23,8 +23,16 @@
     <td width="20"><a href="rationale.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
+<ul>
+  <li><strong><a href="#scanner_business">The Scanner Business</a></strong></li>
+  <li><a href="#left_recursion"><strong>Eliminating Left Recursion</strong></a><strong> 
+    </strong></li>
+  <li><strong><a href="#lexeme_and_rules">The lexeme_d directive and rules</a></strong></li>
+  <li><strong><a href="#kleene_star">Kleene Star infinite loop</a></strong></li>
+  <li><a href="#CVS"><strong>Boost CVS and Spirit CVS</strong></a></li>
+</ul>
 <p><b> <a name="scanner_business" id="scanner_business"></a> The Scanner Business</b></p>
-<p>Question: Why doesn't this compile?</p>
+<p><font color="#FF0000">Question:</font> Why doesn't this compile?</p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>r </span><span class=special>= /*...*/;
 </span>    <span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, </span><span class=identifier>r</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>); </span><span class=comment>// BAD [attempts phrase level parsing]</span></font></code></pre>
 <p>But if I <font color="#000000">remove the skip-parser, everything goes back 
@@ -59,12 +67,12 @@
   scanner type. For instance:</p>
 <pre><span class=comment>    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, *</span><span class=identifier>anychar_p</span><span class=special>);           </span><span class=comment><code><font color="#000000"><span class=comment>//  OK  [character level parsing</span></font></code>]
     </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, *</span><span class=identifier>anychar_p</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>);  </span><span class="comment">//  OK  [phrase level parsing</span></pre>
-<p><b> <a name="scanner_business" id="scanner_business"></a> Eliminating Left 
+<p><b> <a name="left_recursion" id="left_recursion"></a> Eliminating Left 
   Recursion </b></p>
-<p>Question: I ported a grammar from YACC. It's &quot;kinda&quot; working - the 
-  parser itself compiles with no errors. But when I try to parse, it gives me 
-  an &quot;invalid page fault&quot;. I tracked down the problem to this grammar 
-  snippet:</p>
+<p><font color="#FF0000">Question:</font> I ported a grammar from YACC. It's &quot;kinda&quot; 
+  working - the parser itself compiles with no errors. But when I try to parse, 
+  it gives me an &quot;invalid page fault&quot;. I tracked down the problem to 
+  this grammar snippet:</p>
 <pre>    <span class=identifier>or_expr </span><span class=special>= </span><span class=identifier>xor_expr </span><span class=special>| (</span><span class=identifier>or_expr </span><span class=special>&gt;&gt; </span><span class=identifier>VBAR </span><span class=special>&gt;&gt; </span><span class=identifier>xor_expr</span><span class=special>);</span></pre>
 <p>What you should do is to elliminate direct and indirect left-recursion. This 
   causes the invalid page fault because the program enters an infinite loop. The 
@@ -88,7 +96,7 @@
     </span><span class=special>| </span><span class=identifier>epsilon_p
     </span><span class=special>;</span></pre>
 <p><span class=special></span>I'd go further. Since:</p>
-<pre>    <span class=identifier>r </span><span class=special>= </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>epsilon</span><span class=special>;</span></pre>
+<pre>    <span class=identifier>r </span><span class=special>= </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>epsilon_p</span><span class=special>;</span></pre>
 <p><span class=special></span>is equivalent to:<span class=special><br>
   </span></p>
 <pre>    <span class=identifier>r </span><span class=special>= !</span><span class=identifier>a</span><span class=special>;</span></pre>
@@ -114,15 +122,13 @@
 <p><span class=special></span><span class=identifier>in </span><span class=identifier>pseudo-YACC 
   </span><span class=identifier>is</span><span class=special>:</span></p>
 <pre>    <span class=identifier>a </span><span class=special>= </span><span class=identifier>b </span><span class=special>&gt;&gt; *(</span><span class=identifier>op </span><span class=special>&gt;&gt; </span><span class=identifier>b</span><span class=special>);</span></pre>
-<p><span class=special></span><span class=identifier>in Spirit. What </span><span class=identifier>could 
-  </span><span class=identifier>be </span><span class=identifier>simpler? </span><span class=identifier>Look 
-  </span><span class=identifier>Ma</span><span class=special>, </span><span class=identifier>no 
-  </span><span class=identifier>recursion</span><span class=special>, </span><span class=identifier>just 
-  </span><span class=identifier>iteration</span><span class=special>.</span></p>
+<p><span class=special></span>in Spirit. What could be simpler? Look Ma, no recursion, 
+  just iteration.</p>
 <p><b> <a name="lexeme_and_rules" id="lexeme_and_rules"></a> The lexeme_d directive 
   and rules</b></p>
-<p> Question: Does lexeme_d not support expressions which include rules? In the 
-  example below, the definition of atomicRule compiles, </p>
+<p> <font color="#FF0000">Question:</font> Does lexeme_d not support expressions 
+  which include rules? In the example below, the definition of atomicRule compiles, 
+</p>
 <pre>    <span class=identifier></span><span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt; </span><span class=identifier>atomicRule</span>
         <span class=special>= </span><span class=identifier>lexeme_d</span><span class=special>[(</span><span class=identifier>alpha_p </span><span class=special>| </span><span class=literal>'_'</span><span class=special>) &gt;&gt; *(</span><span class=identifier>alnum_p </span><span class=special>| </span><span class=literal>'.' </span><span class=special>| </span><span class=literal>'-' </span><span class=special>| </span><span class=literal>'_'</span><span class=special>)];</span></pre>
 <p>but if I move <tt>alnum_p | '.' | '-' | '_'</tt> into its own rule, the compiler 
@@ -154,8 +160,8 @@
 <p>The same thing happens when rules are used inside the <tt>as_lower_d</tt> directive. 
   In such cases, you can use the <tt>as_lower_scanner</tt>. See the <span class=identifier><tt><a href="scanner.html#lexeme_scanner">lexeme_scanner</a></tt></span> 
   and <tt><a href="scanner.html#as_lower_scanner">as_lower_scanner</a></tt>.</p>
-<p><strong>Kleene Star Forever</strong></p>
-<p>Question: Why Does This Loop Forever?</p>
+<p><strong><a name="kleene_star"></a>Kleene Star infinite loop</strong></p>
+<p><font color="#FF0000">Question</font>: Why Does This Loop Forever?</p>
 <pre>    <span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>optional </span><span class=special>= !(</span>str_p<span class="special">(</span><span class="string">&quot;optional&quot;</span><span class="special">));
     </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class="identifier">list_of_optional </span><span class=special>= *</span><span class=identifier>optional</span><span class="special">;</span></pre>
 <p>The problem with this is that the kleene star will continue looping until it 
@@ -164,7 +170,15 @@
   &quot;optional&quot; it will return a zero length match. <tt>list_of_optional</tt> 
   will keep calling optional forever since optional will never return a no-match. 
   So in general, any rule that can be &quot;nullable&quot; (meaning it can return 
-  a zero length match) must not be put inside a kleene star.<span class=special></span></p>
+  a zero length match) must not be put inside a kleene star.</p>
+<p><strong><a name="CVS"></a>Boost CVS and Spirit CVS</strong></p>
+<p><font color="#FF0000">Question:</font> There is Boost CVS and Spirit CVS. Which 
+  is used for further development of Spirit?</p>
+<p> Generally, development takes place in Spirit's CVS. However, from time to 
+  time a new version of Spirit will be integrated in Boost. When this happens 
+  develepment takes place in the Boost CVS. There will be announcements on the 
+  Spirit mailing lists whenever the status of the Spirit CVS changes.<br>
+</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
