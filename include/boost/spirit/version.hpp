@@ -14,7 +14,7 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x1800
-#define SPIRIT_PIZZA_VERSION SPIRIT_LOTZA_CHEESE  // :-)
+#define SPIRIT_VERSION 0x1801
+#define SPIRIT_PIZZA_VERSION SPIRIT_FOUR_SEASONS  // :-)
 
 #endif // defined(SPIRIT_VERSION_HPP)
