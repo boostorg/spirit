@@ -147,6 +147,7 @@ else
           [ compile $(spirit-src)while_p_as_parser_tests.cpp <template>normal ]
           [ compile $(spirit-src)for_p_as_parser_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)if_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)if_p_int_as_condition_test.cpp <template>normal ]
           [ spirit-run $(spirit-src)for_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)while_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)lazy_tests.cpp <template>normal ]

@@ -44,10 +44,10 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-            if (positive_ == cond())
-                return scan.empty_match();
-            else
+            if (positive_ == !cond())
                 return scan.no_match();
+            else
+                return scan.empty_match();
         }
 
         condition_parser<CondT, !positive_>
