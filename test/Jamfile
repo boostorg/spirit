@@ -152,6 +152,7 @@ else
           [ spirit-run $(spirit-src)switch_tests_wo_default.cpp <template>normal ]
           [ spirit-run $(spirit-src)switch_tests_single.cpp <template>normal ]
           [ spirit-run $(spirit-src)switch_problem.cpp <template>normal ]
+          [ spirit-run $(spirit-src)select_p_with_rule.cpp<template>normal ]
         ;
 
     test-suite "spirit.utility.parsers"
