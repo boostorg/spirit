@@ -131,39 +131,52 @@ struct as_parser
 
 // helps to dispatch to the correct version of get for char[] and T
     typedef
-        typename if_t<bool_t<is_cptr || is_wcptr>, int_t<0>, int_t<1> >::type
+        typename mpl::if_c<
+            is_cptr || is_wcptr,
+            mpl::int_c<0>, mpl::int_c<1>
+        >::type
         selector_t;
 
 // return type (type) and formal argument (arg_type) of convert
     typedef
-        typename if_t<
-            bool_t<is_cptr>, char const *,
-                typename if_t<bool_t<is_wcptr>, wchar_t const *, T>::type
+        typename mpl::if_c<
+            is_cptr,
+            char const *,
+            typename mpl::if_<
+                mpl::bool_c<is_wcptr>,
+                wchar_t const *,
+                T
+            >::type
         >::type
         arg_type;
 
     typedef
-        typename if_t<
-            bool_t<is_cptr>, strlit<char const *>,
-                typename if_t<bool_t<is_wcptr>, strlit<wchar_t const *>, T>::type
+        typename mpl::if_c<
+            is_cptr,
+            strlit<char const *>,
+            typename mpl::if_c<
+                is_wcptr,
+                strlit<wchar_t const *>,
+                T
+            >::type
         >::type
         type;
 
-    static 
-    typename as_parser::type::embed_t 
+    static
+    typename as_parser::type::embed_t
     convert(arg_type const &t)
     { return convert(t, selector_t()); }
 
 private:
 
-    static 
-    typename as_parser::type::embed_t 
-    convert(arg_type str, int_t<0> sel)
+    static
+    typename as_parser::type::embed_t
+    convert(arg_type str, mpl::int_c<0> sel)
     { return type(str); }
 
-    static 
-    typename as_parser::type::embed_t 
-    convert(arg_type const &p, int_t<1> sel)
+    static
+    typename as_parser::type::embed_t
+    convert(arg_type const &p, mpl::int_c<1> sel)
     { return p; }
 };
 

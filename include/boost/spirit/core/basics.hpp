@@ -12,7 +12,10 @@
 #define BOOST_SPIRIT_BASICS_HPP
 
 #include <boost/config.hpp>
-#include <boost/spirit/core/impl/basics.ipp>
+#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/int_c.hpp>
+#include <boost/mpl/bool_c.hpp>
 
 #if defined(BOOST_MSVC) || defined(BOOST_INTEL_CXX_VERSION)
 #include "boost/spirit/core/impl/msvc.hpp"
@@ -28,40 +31,6 @@
 namespace boost { namespace spirit {
 
     struct nil_t {};
-    struct void_t {};
-    struct default_t {};
-
-    template <int N>
-    struct int_t { BOOST_STATIC_CONSTANT(int, value = N); };
-
-    template <bool C>
-    struct bool_t { BOOST_STATIC_CONSTANT(bool, value = C); };
-    typedef bool_t<true> true_t;
-    typedef bool_t<false> false_t;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  if_t selects type A or B depending on the condition C.
-    //  If C is of type true_t, A is selected, otherwise B
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-
-    template <typename C, typename A, typename B>
-    struct if_t
-    {
-        typedef typename impl::chooser<C>::type chooser_t;
-        typedef typename chooser_t::template result<A, B>::type type;
-    };
-
-    #else
-    template <typename C, typename A, typename B>
-    struct if_t { typedef A type; };
-
-    template <typename A, typename B>
-    struct if_t<false_t, A, B> { typedef B type; };
-
-    #endif
 
 }} // namespace boost::spirit
 

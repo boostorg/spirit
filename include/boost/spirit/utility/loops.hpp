@@ -290,8 +290,8 @@ namespace boost { namespace spirit {
         template <typename ParserT, typename MinT, typename MaxT>
         struct loop_traits
         {
-            typedef typename if_t <
-                    loop_chooser<MaxT>::value,
+            typedef typename mpl::if_<
+                    loop_chooser<MaxT>,
                     finite_loop<ParserT, MinT, MaxT>,
                     infinite_loop<ParserT, MinT>
                 >::type type;

@@ -59,8 +59,8 @@ namespace boost { namespace spirit {
     private:
 
         typedef
-            typename if_t<
-                    bool_t< ::boost::spirit::is_parser<ConditionT>::value >,
+            typename mpl::if_<
+                    is_parser<ConditionT>,
                     select_identity,
                     select_condition_parser
                 >::type

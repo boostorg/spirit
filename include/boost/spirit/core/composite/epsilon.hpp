@@ -241,8 +241,8 @@ namespace impl
     {
         typedef typename as_parser<SubjectT>::type subject_t;
         typedef typename
-            if_t
-                <bool_t< ::boost::spirit::is_parser<subject_t>::value>
+            mpl::if_<
+                is_parser<subject_t>
                 ,empty_match_parser<subject_t>
                 ,condition_parser<subject_t>
                 >::type type;

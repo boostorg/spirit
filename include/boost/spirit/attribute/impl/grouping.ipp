@@ -58,19 +58,19 @@ struct tuple_result<plain_parser_category> {
     //  the begin and the end of the matched input sequence is considered to
     //  be the parser result.
 
-#if defined(__BORLANDC__) && __BORLANDC__ >= 0x561
-        enum {
-            value = ::boost::is_same<nil_t, typename match_t::attr_t>::value
-        };
-#else
-        BOOST_STATIC_CONSTANT(int,
-            value = (::boost::is_same<nil_t, typename match_t::attr_t>::value));
-#endif
+//#if defined(__BORLANDC__) && __BORLANDC__ >= 0x561
+//        enum {
+//            value = ::boost::is_same<nil_t, typename match_t::attr_t>::value
+//        };
+//#else
+//        BOOST_STATIC_CONSTANT(int,
+//            value = (::boost::is_same<nil_t, typename match_t::attr_t>::value));
+//#endif
 
         typedef result self_t;
         typedef typename ScannerT::iterator_t iterator_t;
         typedef typename
-                if_t<bool_t<(self_t::value)>,
+                mpl::if_<is_same<nil_t, typename match_t::attr_t>,
                     std::pair<iterator_t, iterator_t>,
                     typename match_t::attr_t
                 >::type

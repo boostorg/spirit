@@ -89,10 +89,10 @@ namespace boost { namespace spirit {
         template <typename T>
         struct match_attr
         {
-            typedef if_t<
-                bool_t<boost::is_reference_wrapper<T>::value>,  //  IF
-                match_attr_helper2,                             //  THEN
-                match_attr_helper1                              //  ELSE
+            typedef mpl::if_<
+                boost::is_reference_wrapper<T>, //  IF
+                match_attr_helper2,             //  THEN
+                match_attr_helper1              //  ELSE
             >::type select_t;
 
             template <typename MatchT>

@@ -233,9 +233,8 @@ namespace boost { namespace spirit {
         template <typename T>
         struct select_to_longest
         {
-            typedef typename if_t
-            <
-                is_alternative<T>::value    //  IF
+            typedef typename mpl::if_<
+                is_alternative<T>           //  IF
                 , to_longest_recursive<T>   //  THEN
                 , to_longest_generic<T>     //  ELSE
             >::type type;
@@ -304,9 +303,8 @@ namespace boost { namespace spirit {
         template <typename T>
         struct select_to_shortest
         {
-            typedef typename if_t
-            <
-                is_alternative<T>::value    //  IF
+            typedef typename mpl::if_<
+                is_alternative<T>           //  IF
                 , to_shortest_recursive<T>  //  THEN
                 , to_shortest_generic<T>    //  ELSE
             >::type type;

@@ -33,7 +33,7 @@ struct node_count {
     typedef impl::nodes<parser_category_t> nodes_t;
 
     typedef typename impl::count_wrapper<nodes_t>
-        ::template result_<ParserT, int_t<0> > count_t;
+        ::template result_<ParserT, mpl::int_c<0> > count_t;
 
     BOOST_STATIC_CONSTANT(int, value = count_t::value);
 };
@@ -45,7 +45,7 @@ struct node_count {
 
     typedef typename ParserT::parser_category_t parser_category_t;
     typedef typename impl::nodes<parser_category_t>
-        ::template count<ParserT, int_t<0> > count_t;
+        ::template count<ParserT, mpl::int_c<0> > count_t;
 
     BOOST_STATIC_CONSTANT(int, value = count_t::value);
 };
@@ -68,7 +68,7 @@ struct leaf_count {
     typedef impl::leafs<parser_category_t> nodes_t;
 
     typedef typename impl::count_wrapper<nodes_t>
-        ::template result_<ParserT, int_t<0> > count_t;
+        ::template result_<ParserT, mpl::int_c<0> > count_t;
 
     BOOST_STATIC_CONSTANT(int, value = count_t::value);
 };
@@ -80,7 +80,7 @@ struct leaf_count {
 
     typedef typename ParserT::parser_category_t parser_category_t;
     typedef typename impl::leafs<parser_category_t>
-        ::template count<ParserT, int_t<0> > count_t;
+        ::template count<ParserT, mpl::int_c<0> > count_t;
 
     BOOST_STATIC_CONSTANT(int, value = count_t::value);
 };

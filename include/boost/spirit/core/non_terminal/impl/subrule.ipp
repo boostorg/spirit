@@ -132,9 +132,8 @@ namespace boost { namespace spirit {
         //  the return type of the right hand side of this subrule_parser,
         //  otherwise it is equal to the dictated return value.
 
-            enum { is_nil_t = (boost::is_same<T1, nil_t>::value) };
-            typedef typename if_t<
-                bool_t<is_nil_t>, T2, T1
+            typedef typename mpl::if_<
+                boost::is_same<T1, nil_t>, T2, T1
             >::type type;
         };
 
@@ -179,17 +178,17 @@ namespace boost { namespace spirit {
         {
             template <typename ListT>
             static void
-            do_parse(RT& r, ScannerT const& scan, ListT const& list, true_t)
+            do_parse(RT& r, ScannerT const& scan, ListT const& list, mpl::true_c)
             {
                 r = list.first.rhs.parse(scan);
             }
 
             template <typename ListT>
             static void
-            do_parse(RT& r, ScannerT const& scan, ListT const& list, false_t)
+            do_parse(RT& r, ScannerT const& scan, ListT const& list, mpl::false_c)
             {
                 typedef typename ListT::rest_t::first_t subrule_t;
-                bool_t<same_subrule_id<subrule_t, ID>::value> same_id;
+                mpl::bool_c<same_subrule_id<subrule_t, ID>::value> same_id;
                 do_parse(r, scan, list.rest, same_id);
             }
 
@@ -197,7 +196,7 @@ namespace boost { namespace spirit {
             do_(RT& r, ScannerT const& scan)
             {
                 typedef typename ScannerT::list_t::first_t subrule_t;
-                bool_t<same_subrule_id<subrule_t, ID>::value> same_id;
+                mpl::bool_c<same_subrule_id<subrule_t, ID>::value> same_id;
                 do_parse(r, scan, scan.list, same_id);
             }
         };

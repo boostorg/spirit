@@ -87,10 +87,8 @@ namespace boost { namespace spirit {
         template <typename T, typename BaseT>
         struct subject_type
         {
-            enum { is_empty = boost::is_empty<T>::value };
-            typedef typename if_t
-            <
-                bool_t<is_empty>,           // IF
+            typedef typename mpl::if_<
+                is_empty<T>,                // IF
                 empty_subject<T, BaseT>,    // THEN
                 non_empty_subject<T, BaseT> // ELSE
             >::type type;
