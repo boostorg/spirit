@@ -67,14 +67,33 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-            if (evaluate(scan) >= 0)
+            typedef typename parser_result
+                <ParserT_true, ScannerT>::type   then_result_t;
+            typedef typename parser_result
+                <ParserT_false, ScannerT>::type  else_result_t;
+
+            typename ScannerT::iterator_t const  save(scan.first);
+
+            int length = evaluate(scan);
+            if (length >= 0)
             {
-                return this->left().parse(scan);
+                then_result_t then_result(this->left().parse(scan));
+                if (then_result)
+                {
+                    length += then_result.length();
+                    return scan.create_match(length, nil_t(), save, scan.first);
+                }
             }
             else
             {
-                return this->right().parse(scan);
+                else_result_t else_result(this->right().parse(scan));
+                if (else_result)
+                {
+                    length += else_result.length();
+                    return scan.create_match(length, nil_t(), save, scan.first);
+                }
             }
+            return scan.no_match();
         }
     };
 
@@ -112,8 +131,10 @@ namespace boost { namespace spirit {
         }
 
         //typename ParserT_true::embed_t p_true;
-        ParserT_true const &p_true;
-        CondT const &cond;
+
+        // these must be copies from the source parsers for now [m]
+        ParserT_true const p_true;
+        CondT const cond;
     };
 
     //////////////////////////////////
@@ -145,9 +166,18 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-            if (evaluate(scan) >= 0)
+            typedef typename parser_result<ParserT, ScannerT>::type t_result_t;
+            typename ScannerT::iterator_t const save(scan.first);
+
+            int length = evaluate(scan);
+            if (length >= 0)
             {
-                return this->subject().parse(scan);
+                t_result_t then_result(this->subject().parse(scan));
+                if (then_result)
+                {
+                    length += then_result.length();
+                    return scan.create_match(length, nil_t(), save, scan.first);
+                }
             }
             return scan.empty_match();
         }
