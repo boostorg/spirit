@@ -88,7 +88,7 @@
   However, semantic actions attached to epsilon itself will always be called. 
   The following code snippets illustrates the behavior:</p>
 <pre>    eps_p<span class="special">(</span>c<span class="special">[</span>f<span class="special">])</span>  <span class="comment">// f not called</span><br>    eps_p<span class="special">(</span>c<span class="special">)[</span>f<span class="special">]</span>  <span class="comment">// f is called</span><br>    eps_p<span class="special">[</span>f<span class="special">]</span>     <span class="comment">// f is called</span></pre>
-<p>Actually, the conditional parser <tt>p</tt> is implicitly wrapped in a <tt><a href="directives.html#no_actions_scanner">no_actions_d</a></tt> 
+<p>Actually, the conditional parser <tt>p</tt> is implicitly wrapped in a <tt><a href="scanner.html#no_actions_scanner">no_actions_d</a></tt> 
   directive:</p>
 <pre><code><span class=special>    </span>no_actions_d<span class="special">[</span>p<span class="special">]</span></code></pre>
 <p>The conditional parser is required to be free from side-effects (semantic actions). 
