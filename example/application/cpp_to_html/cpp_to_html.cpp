@@ -90,7 +90,8 @@ struct cpp_to_html : public grammar<cpp_to_html>
         {
             program
                 =
-               *(   preprocessor    [process("preprocessor", self.out)]
+                *space_p >>
+                *(  preprocessor    [process("preprocessor", self.out)]
                 |   comment         [process("comment", self.out)]
                 |   keyword         [process("keyword", self.out)]
                 |   identifier      [process("identifier", self.out)]
@@ -134,7 +135,7 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             special
-                =   +(chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p)
+                =   +chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p
                 ;
 
             string_

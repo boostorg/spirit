@@ -196,7 +196,8 @@ Will generate:
 
     int main()
     {
-        std::cout << "Hello World\n";
+        // Sample code
+        std::cout << "Hello, World\n";
     }
 
 Preformatted code starts with a space or a tab. The code will be syntax

@@ -301,7 +301,8 @@ namespace quickdoc
             {
                 program
                     =
-                   *(   preprocessor    [ProcessT("preprocessor", self.out)]
+                    *space_p >>
+                    *(  preprocessor    [ProcessT("preprocessor", self.out)]
                     |   comment         [ProcessT("comment", self.out)]
                     |   keyword         [ProcessT("keyword", self.out)]
                     |   identifier      [ProcessT("identifier", self.out)]
@@ -345,7 +346,7 @@ namespace quickdoc
                     ;
 
                 special
-                    =   +(chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p)
+                    =   +chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p
                     ;
 
                 string_
