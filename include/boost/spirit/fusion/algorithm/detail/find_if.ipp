@@ -107,7 +107,7 @@ namespace boost { namespace fusion { namespace detail
         typename main_find_if<First,Last,typename mpl::lambda<Pred>::type>::type
         call(static_find_if<First,Last,Pred> const& obj,Iterator const& iter)
         {
-            typedef meta::equal_to<Iterator, static_find_if<First,Last,Pred>::type> found;
+            typedef meta::equal_to<Iterator, BOOST_DEDUCED_TYPENAME static_find_if<First,Last,Pred>::type> found;
             return call(obj,iter, found());
         };        
     }

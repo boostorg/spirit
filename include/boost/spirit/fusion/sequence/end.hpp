@@ -38,6 +38,7 @@ namespace boost { namespace fusion
         };
     }
 
+#if BOOST_WORKAROUND(BOOST_MSVC,<=1300)
     namespace detail {
         template <typename Sequence>
         inline typename meta::end<Sequence const>::type
@@ -66,6 +67,27 @@ namespace boost { namespace fusion
     {
         return detail::end(seq,is_const<Sequence>());
     }
+#else
+    template <typename Sequence>
+    inline typename meta::end<Sequence const>::type
+    end(Sequence const& seq)
+    {
+        typedef meta::end<Sequence const> end_meta;
+        return meta::end_impl<typename end_meta::seq::tag>::
+            template apply<typename end_meta::seq const>::call(
+                end_meta::seq_converter::convert_const(seq));
+    }
+
+    template <typename Sequence>
+    inline typename meta::end<Sequence>::type
+    end(Sequence& seq)
+    {
+        typedef meta::end<Sequence> end_meta;
+        return meta::end_impl<typename end_meta::seq::tag>::
+            template apply<typename end_meta::seq>::call(
+                end_meta::seq_converter::convert(seq));
+    }
+#endif
 }}
 
 #endif
