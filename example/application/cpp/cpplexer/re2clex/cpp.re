@@ -25,7 +25,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include <boost/assert.hpp>
 #if !defined(_MSC_VER)
 #include <unistd.h>
 #else
@@ -33,14 +32,15 @@
 #include <io.h>
 #endif 
 
-#include "cpplexer/cpp_token_ids.hpp"
+#include "cpp_config.hpp"
 
+#include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/re2clex/aq.h"
 #include "cpplexer/re2clex/scanner.h"
 
-#if defined(_MSC_VER)
-#pragma warning (disable: 4101)     // 'bla' : unreferenced local variable
-#pragma warning (disable: 4102)     // 'bla' : unreferenced label
+#if defined(_MSC_VER) && !defined(__COMO__)
+#pragma warning (disable: 4101)     // 'foo' : unreferenced local variable
+#pragma warning (disable: 4102)     // 'foo' : unreferenced label
 #endif
 
 #define BSIZE     196608
@@ -54,8 +54,18 @@
 #define RET(i)    {s->cur = cursor; return i;}
 
 ///////////////////////////////////////////////////////////////////////////////
+#if defined(COMPILE_RE2C_AS_CPP)
 namespace cpplexer {
 namespace re2clex {
+#endif // defined(COMPILE_RE2C_AS_CPP)
+
+#if defined(COMPILE_RE2C_AS_CPP)
+#include <boost/assert.hpp>
+#define RE2C_ASSERT BOOST_ASSERT
+#else
+#include <assert.h>
+#define RE2C_ASSERT assert
+#endif // defined(COMPILE_RE2C_AS_CPP)
 
 int get_one_char(Scanner *s)
 {
@@ -66,8 +76,8 @@ int get_one_char(Scanner *s)
             return val;
     }
     else if (0 != s->act) {
-        BOOST_ASSERT(s->first != 0 && s->last != 0);
-        BOOST_ASSERT(s->first <= s->act && s->act <= s->last);
+        RE2C_ASSERT(s->first != 0 && s->last != 0);
+        RE2C_ASSERT(s->first <= s->act && s->act <= s->last);
         if (s->act < s->last) 
             return *(s->act)++;
     }
@@ -80,9 +90,9 @@ int rewind_stream (Scanner *s, int cnt)
         return lseek(s->fd, cnt, SEEK_CUR);
     }
     else if (0 != s->act) {
-        BOOST_ASSERT(s->first != 0 && s->last != 0);
+        RE2C_ASSERT(s->first != 0 && s->last != 0);
         s->act += cnt;
-        BOOST_ASSERT(s->first <= s->act && s->act <= s->last);
+        RE2C_ASSERT(s->first <= s->act && s->act <= s->last);
         return s->act - s->first;
     }
     return 0;
@@ -381,7 +391,23 @@ Newline            = "\r\n" | "\n" | "\r";
     "volatile"      { RET(T_VOLATILE); }
     "wchar_t"       { RET(T_WCHART); }
     "while"         { RET(T_WHILE); }
-    
+
+    "__int8"        { RET(T_MSEXT_INT8); }
+    "__int16"       { RET(T_MSEXT_INT16); }
+    "__int32"       { RET(T_MSEXT_INT32); }
+    "__int64"       { RET(T_MSEXT_INT64); }
+    "__based"       { RET(T_MSEXT_BASED); }
+    "__decspec"     { RET(T_MSEXT_DECLSPEC); }
+    "__cdecl"       { RET(T_MSEXT_CDECL); }
+    "__fastcall"    { RET(T_MSEXT_FASTCALL); }
+    "__stdcall"     { RET(T_MSEXT_STDCALL); }
+    "__try"         { RET(T_MSEXT_TRY); }
+    "__except"      { RET(T_MSEXT_EXCEPT); }
+    "__finally"     { RET(T_MSEXT_FINALLY); }
+    "__leave"       { RET(T_MSEXT_LEAVE); }
+    "__inline"      { RET(T_MSEXT_INLINE); }
+    "__asm"         { RET(T_MSEXT_ASM); }
+
     "{"             { RET(T_LEFTBRACE); }
     "??<"           { RET(T_LEFTBRACE); }
     "<%"            { RET(T_LEFTBRACE); }
@@ -465,7 +491,6 @@ Newline            = "\r\n" | "\n" | "\r";
     "->*"           { RET(T_ARROWSTAR); }
     "->"            { RET(T_ARROW); }
 
-
     [a-zA-Z_] ([a-zA-Z_0-9])*        
         { RET(T_IDENTIFIER); }
     
@@ -500,8 +525,10 @@ Newline            = "\r\n" | "\n" | "\r";
     Pound PPSpace "define"    { RET(T_PP_DEFINE); }
     Pound PPSpace "undef"     { RET(T_PP_UNDEF); }
     Pound PPSpace "line"      { RET(T_PP_LINE); }
-    Pound PPSpace "error" (any\[\n\r])*   { RET(T_PP_ERROR); }
+    Pound PPSpace "error"     { RET(T_PP_ERROR); }
     Pound PPSpace "pragma"    { RET(T_PP_PRAGMA); }
+
+    Pound PPSpace "warning"   { RET(T_PP_WARNING); }
 
     [ \t\v\f]+
         { RET(T_SPACE); }
@@ -635,5 +662,7 @@ cppcomment:
 } /* end of scan */
 
 ///////////////////////////////////////////////////////////////////////////////
+#if defined(COMPILE_RE2C_AS_CPP)
 }   // namespace re2clex
 }   // namespace cpplexer
+#endif // defined(COMPILE_RE2C_AS_CPP)

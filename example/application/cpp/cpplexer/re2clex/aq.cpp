@@ -16,11 +16,18 @@
 #include <memory.h>
 #include <boost/assert.hpp>
 
+#include "cpp_config.hpp"
 #include "cpplexer/re2clex/aq.h"
 
 ///////////////////////////////////////////////////////////////////////////////
+#if defined(COMPILE_RE2C_AS_CPP)
 namespace cpplexer {
 namespace re2clex {
+#else
+#if defined(__cplusplus)
+extern "C" {
+#endif // defined(__cplusplus)
+#endif // defined(COMPILE_RE2C_AS_CPP)
 
 int aq_grow(aq_queue q)
 {
@@ -211,5 +218,11 @@ void aq_terminate(aq_queue q)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+#if defined(COMPILE_RE2C_AS_CPP)
 }   // namespace re2clex
 }   // namespace cpplexer
+#else
+#if defined(__cplusplus)
+}   // extern "C"
+#endif // defined(__cplusplus)
+#endif // defined(COMPILE_RE2C_AS_CPP)

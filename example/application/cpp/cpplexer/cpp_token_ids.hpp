@@ -15,16 +15,19 @@
 #if !defined(_CPP_TOKEN_IDS_HPP__414E9A58_F079_4789_8AFF_513815CE475B__INCLUDED_)
 #define _CPP_TOKEN_IDS_HPP__414E9A58_F079_4789_8AFF_513815CE475B__INCLUDED_
 
+#if defined(__cplusplus)
+
 #include <string>
 #include <boost/assert.hpp>
 
 namespace cpplexer {
+#endif // defined(__cplusplus)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  assemble tokenid's
 #define TOKEN_FROM_ID(id, cat)   ((id) | (cat))
-#define ID_FROM_TOKEN(tok)       ((tok) & ~::cpplexer::TokenTypeMask)
-#define CATEGORY_FROM_TOKEN(tok) ((tok) & ::cpplexer::TokenTypeMask)
+#define ID_FROM_TOKEN(tok)       ((tok) & ~TokenTypeMask)
+#define CATEGORY_FROM_TOKEN(tok) ((tok) & TokenTypeMask)
 #define IS_CATEGORY(tok, cat)    \
     ((CATEGORY_FROM_TOKEN(tok) == (cat)) ? true : false) \
     /**/
@@ -202,7 +205,8 @@ enum token_id {
     T_PP_QHEADER   = TOKEN_FROM_ID(399, PPTokenType),
     T_PP_HHEADER   = TOKEN_FROM_ID(400, PPTokenType),
     T_EOF          = TOKEN_FROM_ID(401, EOFTokenType),      // end of input reached
-#if defined(SUPPORT_MS_EXTENSIONS)
+
+// MS extensions
     T_MSEXT_INT8   = TOKEN_FROM_ID(402, KeywordTokenType),
     T_MSEXT_INT16  = TOKEN_FROM_ID(403, KeywordTokenType),
     T_MSEXT_INT32  = TOKEN_FROM_ID(404, KeywordTokenType),
@@ -218,7 +222,7 @@ enum token_id {
     T_MSEXT_LEAVE  = TOKEN_FROM_ID(414, KeywordTokenType),
     T_MSEXT_INLINE = TOKEN_FROM_ID(415, KeywordTokenType),
     T_MSEXT_ASM    = TOKEN_FROM_ID(416, KeywordTokenType),
-#endif // defined(SUPPORT_MS_EXTENSIONS)
+
     T_LAST_TOKEN_ID,
     T_LAST_TOKEN = ID_FROM_TOKEN(T_LAST_TOKEN_ID),
     
@@ -228,6 +232,8 @@ enum token_id {
     T_PLACEHOLDER = TOKEN_FROM_ID(T_LAST_TOKEN+2, WhiteSpaceTokenType),
     T_PARAMETERBASE = TOKEN_FROM_ID(T_LAST_TOKEN+3, ParameterTokenType),
 };
+
+#if defined(__cplusplus)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  return a token name
@@ -385,7 +391,7 @@ static char const *tok_names[] = {
         "PP_QHEADER",
         "PP_HHEADER",
         "EOF",
-#if defined(SUPPORT_MS_EXTENSIONS)
+    // MS extensions
         "MSEXT_INT8",
         "MSEXT_INT16",
         "MSEXT_INT32",
@@ -401,7 +407,6 @@ static char const *tok_names[] = {
         "MSEXT_LEAVE",
         "MSEXT_INLINE",
         "MSEXT_ASM",
-#endif // defined(SUPPORT_MS_EXTENSIONS)
     };   
      
     int id = ID_FROM_TOKEN(tokid)-T_FIRST_TOKEN;
@@ -409,8 +414,11 @@ static char const *tok_names[] = {
     BOOST_ASSERT(id >= 0 && id < T_LAST_TOKEN-T_FIRST_TOKEN);
     return tok_names[id];
 }
+#endif // defined(__cplusplus)
 
 ///////////////////////////////////////////////////////////////////////////////
+#if defined(__cplusplus)
 }   // namespace cpplexer 
+#endif // defined(__cplusplus)
 
 #endif // !defined(_CPP_TOKEN_IDS_HPP__414E9A58_F079_4789_8AFF_513815CE475B__INCLUDED_)

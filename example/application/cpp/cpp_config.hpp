@@ -17,10 +17,6 @@
 #if !defined(_CPP_CONFIG_HPP__F143F90A_A63F_4B27_AC41_9CA4F14F538D__INCLUDED_)
 
 ///////////////////////////////////////////////////////////////////////////////
-//  global configuration information
-#include <boost/config.hpp>
-
-///////////////////////////////////////////////////////////////////////////////
 //  Decide, whether to implement a #warning directive as 
 //
 //  To implement #warning directives, undefine the following
@@ -29,12 +25,21 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //  undefine the following, to enable some MS specific language extensions
-//#define SUPPORT_MS_EXTENSIONS
+//#define CPP_SUPPORT_MS_EXTENSIONS
+
+///////////////////////////////////////////////////////////////////////////////
+//  Allow the compilation of the re2c generated lexer as C++
+//  This moves the re2c lexer into the correct namespace. This flag is needed
+//  because at least VC7.1 has problems while compiling the re2c lexer with
+//  optimizations, when in C++ mode
+//
+//  To allow compilation of the re2c lexer in C++ mode undefine the following
+//#define COMPILE_RE2C_AS_CPP
 
 ///////////////////////////////////////////////////////////////////////////////
 // decide, which C++ lexer to use (choose one!)
-#define USE_SLEX_CPP_LEXER         // use the SLex based C++ lexer
-//#define USE_RE2C_CPP_LEXER       // use the Re2C based C++ lexer
+//#define USE_SLEX_CPP_LEXER         // use the SLex based C++ lexer
+#define USE_RE2C_CPP_LEXER       // use the Re2C based C++ lexer
 
 ///////////////////////////////////////////////////////////////////////////////
 //  undefine the following, if you need debug output, the 

@@ -13,6 +13,10 @@ Still missing features
 - #pragma directive (C++ standard 16.6)
 - predefinded macros (__LINE__ et.al.) (C++ standard 16.8)
 
+- Allowed to optionally compile the Re2c generated lexer in 'C' mode, because 
+  at least the VC7.1 (final beta) compiler has problems to compile it IN 'C++'
+  mode with optimizations switch on
+
 Wed Feb 19 23:44:47  2003
 - Corrected a lot of bugs in the macro expansion engine, which now should be 
   conformant to the C++ standard.

@@ -76,7 +76,7 @@ namespace fs = boost::filesystem;
 int print_version()
 {
 // get time of last compilation of this file
-util::time_conversion_helper compilation_time(__DATE__ " " __TIME__);
+cpplexer::slex::util::time_conversion_helper compilation_time(__DATE__ " " __TIME__);
 
 // calculate the number of days since Dec 13 2001 
 // (the day the cpp project was started)

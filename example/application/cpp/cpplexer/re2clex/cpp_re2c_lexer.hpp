@@ -50,10 +50,10 @@ public:
     typedef lex_token<IteratorT, PositionT> token_t;
     
     lexer(IteratorT const &first, IteratorT const &last, 
-        std::string const &fname);
+        PositionT const &pos);
     ~lexer();
 
-    lex_token<IteratorT, PositionT> scan();
+    lex_token<IteratorT, PositionT> get();
     
 private:
     static char const *tok_names[];
@@ -67,8 +67,8 @@ private:
 template <typename IteratorT, typename PositionT>
 inline
 lexer<IteratorT, PositionT>::lexer(IteratorT const &first, 
-        IteratorT const &last, std::string const &fname) 
-:   filename(fname)
+        IteratorT const &last, PositionT const &pos) 
+:   filename(pos.file)
 {
     memset(&scanner, '\0', sizeof(Scanner));
     scanner.fd = -1;
@@ -89,9 +89,10 @@ lexer<IteratorT, PositionT>::~lexer()
 //  get the next token from the input stream
 template <typename IteratorT, typename PositionT>
 inline lex_token<IteratorT, PositionT> 
-lexer<IteratorT, PositionT>::scan()
+lexer<IteratorT, PositionT>::get()
 {
-    token_id id = token_id(re2clex::scan(&scanner));
+    using namespace cpplexer::re2clex;
+    token_id id = token_id(scan(&scanner));
     return lex_token<IteratorT, PositionT>(id, 
                 std::string((char const *)scanner.tok, scanner.cur-scanner.tok), 
                 PositionT(filename, scanner.line)
@@ -119,7 +120,7 @@ public:
 
 // get the next token from the input stream
     token_t get()
-    { return lexer.scan(); }
+    { return lexer.get(); }
     
 private:
     lexer<IteratorT, PositionT> lexer;
