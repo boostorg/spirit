@@ -135,7 +135,7 @@
   conveniently publish it in header files. The idea is that once written and fully 
   tested, a grammar can be reused in many contexts. We now have the notion of 
   grammar libraries.</p>
-<h2>Reentrancy and multithreading</h2>
+<h2><a name="multithreading"></a>Reentrancy and multithreading</h2>
 <p>An instance of a grammar may be used in different places multiple times without 
   any problem. The implementation is tuned to allow this at the expense of some 
   overhead. However, we can save considerable cycles and bytes if we are certain 
@@ -145,7 +145,8 @@
   </font><tt>BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE</tt></code></span> <br>
   <br>
   On the other hand, if a grammar is intended to be used in multithreaded code, 
-  we should then define BOOST_SPIRIT_THREADSAFE before including any spirit header files.<br>
+  we should then define <tt>BOOST_SPIRIT_THREADSAFE</tt> before including any 
+  spirit header files. In this case it will also be required to link against <a href="http://www.boost.org/libs/thread/doc/index.html">Boost.Threads</a><br>
   <br>
   <font face="Courier New, Courier, mono"><span class="preprocessor">#define</span></font> 
   <span class="preprocessor"><tt>BOOST_SPIRIT_THREADSAFE</tt></span></p>

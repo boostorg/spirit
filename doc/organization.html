@@ -167,8 +167,12 @@
   time. There are parsers that handle common tasks such as list processing, comments, 
   confix expressions, etc.</p>
 <h2>Header files</h2>
-<p>Spirit is purely header only. There are no libraries to build and link against. 
-  Using Spirit is as easy as including the main header file: </p>
+<p>Spirit is designed to be header only. Generally, there are no libraries to build
+and link against. Certain features, however, require additional libraries; in particular
+the <a href="regular_expression_parser.html">regular expression parser</a> requires
+<a href="http://www.boost.org/libs/regex/index.htm">Boost.Regex</a> and <a href="grammar.html#multithreading">multithreading support</a>
+requires <a href="http://www.boost.org/libs/thread/doc/index.html">Boost.Threads.</a></p>
+<p>Using Spirit is as easy as including the main header file: </p>
 <pre>    <span class="preprocessor">#include</span> <span class="special">&lt;</span>boost<span class="special">/</span>spirit<span class="special">.</span>hpp<span class="special">&gt;</span></pre>
 <p>Doing so will include all the header files. This might not be desirable. A 
   low cholesterol alternative is to include only the module that you need. Each 
