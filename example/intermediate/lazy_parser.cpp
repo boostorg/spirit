@@ -53,17 +53,19 @@ struct my_grammar
     struct definition
     {
         typedef rule<ScannerT> rule_t;
-
         typedef stored_rule<ScannerT, parser_context<int> > number_rule_t;
 
-        struct block_closure:
-            public spirit::closure<
-                block_closure,
-                int,
-                typename number_rule_t::alias_t>
-        {
-            member1 sum;
-            member2 int_rule;
+		struct block_closure;
+    	typedef spirit::closure<
+            block_closure,
+            int,
+            typename number_rule_t::alias_t>
+    	closure_base_t;
+
+        struct block_closure : closure_base_t
+        {        	
+            typename closure_base_t::member1 sum;
+            typename closure_base_t::member2 int_rule;
         };
 
         // block rule type

@@ -10,12 +10,34 @@
 #  Spirit examples boost-jam file
 #  Joel de Guzman [Sept 27, 2002]   : created
 #  Joel de Guzman [Oct 30, 2003]    : separated the applications
+#  Martin Wille   [Jan 15, 2004]    : changes for new directory structure
 #
 
 subproject libs/spirit/example ;
 
+exe ast_calc
+    : fundamental/ast_calc.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe "bind"
+    : fundamental/bind.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
 exe boiler_plate
     : fundamental/boiler_plate.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe calc_plain
+    : fundamental/calc_plain.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
@@ -35,8 +57,8 @@ exe complex_number
     :
     ;
 
-exe dynamic_parser
-    : fundamental/dynamic_parser.cpp
+exe error_handling
+    : fundamental/error_handling.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
@@ -49,8 +71,8 @@ exe file_parser
     :
     ;
 
-exe refactoring
-    : fundamental/refactoring.cpp
+exe full_calc
+    : fundamental/full_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
@@ -70,13 +92,6 @@ exe list_parser
     :
     ;
 
-exe polynomial
-    : fundamental/polynomial.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    : <borland><*><cxxflags>-Ve-
-    :
-    ;
-
 exe matching_tags
     : fundamental/matching_tags.cpp
     : <sysinclude>$(BOOST_ROOT)
@@ -84,8 +99,8 @@ exe matching_tags
     :
     ;
 
-exe position_iterator
-    : fundamental/position_iterator/position_iterator.cpp
+exe no_actions
+    : fundamental/no_actions.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
@@ -98,15 +113,43 @@ exe number_list
     :
     ;
 
-exe regular_expression
-    : fundamental/regular_expression.cpp
+exe parse_tree_calc1
+    : fundamental/parse_tree_calc1.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe rfc821
-    : fundamental/rfc821.cpp
+exe parser_context
+    : fundamental/parser_context.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe phoenix_calc
+    : fundamental/phoenix_calc.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe position_iterator
+    : fundamental/position_iterator/position_iterator.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe refactoring
+    : fundamental/refactoring.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe regular_expression
+    : fundamental/regular_expression.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
@@ -119,8 +162,22 @@ exe roman_numerals
     :
     ;
 
-exe spirit_bind
-    : fundamental/spirit_bind.cpp
+exe stuff_vector
+    : fundamental/stuff_vector.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe stuff_vector2
+    : fundamental/stuff_vector2.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe subrule_calc
+    : fundamental/subrule_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
@@ -133,90 +190,105 @@ exe sum
     :
     ;
 
-exe ast_calc
-    : fundamental/calc/ast_calc.cpp
+exe thousand_separated
+    : fundamental/thousand_separated.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe ast_calc2
-    : fundamental/calc/ast_calc2.cpp
+################################################################################
+
+exe ipv4
+    : intermediate/ipv4.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe parse_tree_calc1
-    : fundamental/calc/parse_tree_calc1.cpp
+exe ipv4_opt
+    : intermediate/ipv4_opt.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe calc_plain
-    : fundamental/calc/calc_plain.cpp
+exe lazy_parser
+    : intermediate/lazy_parser.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe calc_with_variables
-    : fundamental/calc/calc_with_variables.cpp
+exe parameters
+    : intermediate/parameters.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe full_calc
-    : fundamental/calc/full_calc.cpp
+exe regex_convert
+    : intermediate/regex_convert.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe phoenix_calc
-    : fundamental/calc/phoenix_calc.cpp
+################################################################################
+
+exe dynamic_rule
+    : techniques/dynamic_rule.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe phoenix_subrule_calc
-    : fundamental/calc/phoenix_subrule_calc.cpp
+exe epsilon
+    : techniques/epsilon.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe primitive_calc
-    : fundamental/calc/primitive_calc.cpp
+exe multiple_scanners
+    : techniques/multiple_scanners.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe rpn_calc
-    : fundamental/calc/rpn_calc.cpp
+exe nabialek
+    : techniques/nabialek.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe subrule_calc
-    : fundamental/calc/subrule_calc.cpp
+exe no_rule1
+    : techniques/no_rules/no_rule1.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
-exe vmachine_calc
-    : fundamental/calc/vmachine_calc.cpp
+exe no_rule2
+    : techniques/no_rules/no_rule2.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :
     ;
 
+exe no_rule3
+    : techniques/no_rules/no_rule3.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
 
-
+exe typeof
+    : techniques/typeof.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
 
