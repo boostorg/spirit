@@ -32,10 +32,10 @@ namespace boost { namespace spirit {
 //      returns an empty match when the condition evaluates to true.
 //
 ///////////////////////////////////////////////////////////////////////////////
-    template <typename CondT, bool positive = true>
-    struct condition_parser : parser<condition_parser<CondT, positive> >
+    template <typename CondT, bool positive_ = true>
+    struct condition_parser : parser<condition_parser<CondT, positive_> >
     {
-        typedef condition_parser<CondT, positive> self_t;
+        typedef condition_parser<CondT, positive_> self_t;
 
         // not explicit! (needed for implementation of if_p et al.)
         condition_parser(CondT const& cond_) : cond(cond_) {}
@@ -44,15 +44,15 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-            if (positive == cond())
+            if (positive_ == cond())
                 return scan.empty_match();
             else
                 return scan.no_match();
         }
 
-        condition_parser<CondT, !positive>
+        condition_parser<CondT, !positive_>
         negate() const
-        { return condition_parser<CondT, !positive>(cond); }
+        { return condition_parser<CondT, !positive_>(cond); }
 
     private:
 
