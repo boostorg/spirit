@@ -1,1 +1,0 @@
-Dec 8, 2004: Fixed bug where a match<T> is a variant.
