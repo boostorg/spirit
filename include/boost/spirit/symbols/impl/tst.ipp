@@ -170,7 +170,7 @@ namespace boost { namespace spirit {
                         ++first;
                         ch = (first == last) ? 0 : *first;
                         BOOST_SPIRIT_ASSERT(first == last || ch != 0
-                            && "Won't work on binary streams");
+                            && "Won't add string containing null character");
                         np = &(**np).middle.link;
                     }
                     else
