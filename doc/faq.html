@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="theme/style.css" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" background="theme/bkd2.gif" cellspacing="2">
+  <tr> 
+    <td width="10"> 
+    </td>
+    <td width="85%"> <font size="6" face="Verdana, Arial, Helvetica, sans-serif"><b>FAQ</b></font></td>
+    <td width="112"><a href="http://spirit.sf.net"><img src="theme/spirit.gif" width="112" height="48" align="right" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<table border="0">
+  <tr>
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><img src="theme/l_arr.gif" border="0"></td>
+    <td width="20"><img src="theme/r_arr.gif" border="0"></td>
+   </tr>
+</table>
+<p><b><img src="theme/alert.gif"> <a name="business"></a> The Scanner Business</b></p>
+<p>As much as possible, we do not want to complicate matters. However, dealing 
+  with some nitty gritty details is sometimes unavoidable. While the free functions 
+  above are indeed easy to use, sometimes you'll want to pass in a rule to one 
+  of the functions. The problem is that the rule is a template class that is parameterized 
+  by the scanner type. This is rather awkward but unavoidable: the rule is tied 
+  to a scanner. What's not obvious is that this scanner must be compatible with 
+  the scanner that is ultimately passed to the rule's parse member function. Otherwise, 
+  the compiler will complain. Many times, the problem is subtle. For example:</p>
+<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=special>*</span><span class=identifier>anychar_p</span><span class=special>;
+    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, </span><span class=identifier>r</span><span class=special>);            </span><span class=comment>//  OK  [character level parsing]
+    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, </span><span class=identifier>r</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>);   </span><span class=comment>//  BAD [attempts phrase level parsing]</span></font></code></pre>
+<p>Why does the second call to parse not compile? Because of scanner incompatibility. 
+  Behind the scenes, the free parse function creates a scanner from the iterators 
+  passed in. In the first call to parse, the scanner created is a plain vanilla 
+  <tt>scanner&lt;&gt;</tt>. This is compatible with the default scanner type of 
+  <tt>rule&lt;&gt;</tt> [see default template parameters of <a href="rule.html">the 
+  rule</a>]. The second call creates a scanner of type <tt>phrase_scanner_t</tt>:</p>
+<pre><span class=special>    </span><span class=keyword>typedef </span><span class=identifier>skipper_iteration_policy</span><span class=special>&lt;&gt;                  </span><span class=identifier>iter_policy_t</span><span class=special>;
+    </span><span class=keyword>typedef </span><span class=identifier>scanner_policies</span><span class=special>&lt;</span><span class=identifier>iter_policy_t</span><span class=special>&gt;             </span><span class=identifier>scanner_policies_t</span><span class=special>;
+    </span><span class=keyword>typedef </span><span class=identifier>scanner</span><span class=special>&lt;</span><span class=keyword>char </span><span class=keyword>const</span><span class=special>*, </span><span class=identifier>scanner_policies_t</span><span class=special>&gt;    </span><span class=identifier>phrase_scanner_t</span><span class=special>;</span></pre>
+<p>Thus, in order for the second call to succeed, the rule must be parameterized 
+  as <tt>rule&lt;phrase_scanner_t&gt;</tt>:</p>
+<pre><code><font color="#000000"><span class=comment>    </span><span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>phrase_scanner_t</span><span class=special>&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=special>*</span><span class=identifier>anychar_p</span><span class=special>;
+    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, </span><span class=identifier>r</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>);       </span><span class=comment>//  OK [phrase level parsing]</span></font></code></pre>
+<p>Take note however that <tt>phrase_scanner_t</tt> is compatible only when you 
+  are using <tt>char const*</tt> iterators and <tt>space_p</tt> as the skip parser. 
+  Other than that, you'll have to find the right type of scanner. This is tedious 
+  to do correctly. In light of this issue, it is best to avoid rules as arguments 
+  to the parse functions. We shall see how this can be done in the next section. 
+  Keep in mind that this happens only with rules. The rule is the only parser 
+  that has to be tied to a particular scanner type. For instance:</p>
+<pre><span class=comment>    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, *</span><span class=identifier>anychar_p</span><span class=special>);           </span><span class=comment><code><font color="#000000"><span class=comment>//  OK  [character level parsing</span></font></code>]
+    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, *</span><span class=identifier>anychar_p</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>);  </span><span class="comment">//  OK  [phrase level parsing</span></pre>
+<table border="0">
+  <tr> 
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><img src="theme/l_arr.gif" border="0"></td>
+    <td width="20"><img src="theme/r_arr.gif" border="0"></td>
+  </tr>
+</table>
+<br>
+<hr size="1">
+<p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
+  <br>
+  <font size="2">Permission to copy, use, modify, sell and distribute this document 
+  is granted provided this copyright notice appears in all copies. This document 
+  is provided &quot;as is&quot; without express or implied warranty, and with 
+  no claim as to its suitability for any purpose.</font></p>
+<p class="copyright">&nbsp;</p>
+</body>
+</html>
