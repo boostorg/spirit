@@ -67,7 +67,7 @@ namespace impl {
                             {
                                 char_t hex = 0;
                                 char_t const lim =
-                                    std::numeric_limits<char_t>::max() >> 4;
+                                    (std::numeric_limits<char_t>::max)() >> 4;
 
                                 ++scan.first;
                                 while (scan.first != scan.last)
@@ -106,7 +106,7 @@ namespace impl {
                             {
                                 char_t oct = 0;
                                 char_t const lim =
-                                    std::numeric_limits<char_t>::max() >> 3;
+                                    (std::numeric_limits<char_t>::max)() >> 3;
                                 while (scan.first != scan.last)
                                 {
                                     char_t c = *scan.first;
