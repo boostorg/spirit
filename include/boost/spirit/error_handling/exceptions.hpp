@@ -11,14 +11,10 @@
 #ifndef BOOST_SPIRIT_EXCEPTIONS_HPP
 #define BOOST_SPIRIT_EXCEPTIONS_HPP
 
-#if !defined(BOOST_SPIRIT_PARSER_HPP)
+#include "boost/config.hpp"
+#include "boost/throw_exception.hpp"
 #include "boost/spirit/core/parser.hpp"
-#endif
-
-#if !defined(BOOST_SPIRIT_COMPOSITE_HPP)
 #include "boost/spirit/core/composite/composite.hpp"
-#endif
-
 #include <exception>
 
 namespace boost { namespace spirit {
@@ -86,7 +82,8 @@ namespace boost { namespace spirit {
     inline void
     throw_(IteratorT where, ErrorDescrT descriptor)
     {
-        throw parser_error<ErrorDescrT, IteratorT>(where, descriptor);
+         boost::throw_exception(
+            parser_error<ErrorDescrT, IteratorT>(where, descriptor));
     }
 
     ///////////////////////////////////////////////////////////////////////////

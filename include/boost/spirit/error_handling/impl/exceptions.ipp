@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace impl {
                         return scan.create_match
                             (hr.length, hr.value, save, scan.first);
                     case error_status_t::rethrow:
-                        throw;
+                         boost::throw_exception(error);
                     default:
                         continue;
                 }
