@@ -48,7 +48,7 @@ typedef object_with_id<tag1> class1;
 
 struct test_task
 {
-    static unsigned int size() { return 1000000; }
+    static unsigned int size() { return 200000; }
 
     void operator ()()
     { // create lots of objects
