@@ -20,17 +20,6 @@ namespace boost { namespace spirit {
 
 namespace impl
 {
-    struct is_parser_helper
-    {
-        typedef struct { char dummy[1]; } no;
-        typedef struct { no dummy[2]; } yes;
-
-        template <typename T>
-        static yes test(parser<T> const *);
-
-        static no test(...);
-    };
-
 
 #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
 

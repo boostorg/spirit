@@ -37,15 +37,16 @@ namespace boost { namespace spirit {
 // class is a parser.
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <typename CandidateT>
+template <typename T>
 struct is_parser
 {
-    typedef CandidateT *cptr;
-
     BOOST_STATIC_CONSTANT(bool, value =
-        (sizeof(impl::is_parser_helper::test(cptr(0))) ==
-        sizeof(impl::is_parser_helper::yes)));
+        (::boost::is_base_and_derived<parser<T>, T>::value));
+
+//  [JDG 2/3/03] simplified implementation by
+//  using boost::is_base_and_derived
 };
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
