@@ -56,8 +56,12 @@ namespace boost { namespace spirit {
             ) const
         {
             typedef T value_type;
+#ifndef BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS
             value_type value(first_,last_);
-
+#else
+            value_type value;
+            std::copy(first_, last_, std::inserter(value, value.end()));
+#endif
             ref_ = value;
         }
     };
