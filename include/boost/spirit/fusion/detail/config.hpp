@@ -117,7 +117,7 @@ namespace boost { namespace fusion { namespace detail
 //  VC6 will return the wrong result from a wrong index!
 //
 ///////////////////////////////////////////////////////////////////////////////
-#if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
 # define FUSION_GET_MSVC_WORKAROUND , mpl::int_<N>* = 0
 #else
 # define FUSION_GET_MSVC_WORKAROUND
