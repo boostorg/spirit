@@ -15,6 +15,10 @@
 #include <cassert>
 #include <cstdio>       // for sprintf
 
+#ifndef BOOST_NO_CWCHAR
+# include <cwchar>      // for swprintf
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace boost::spirit;
@@ -113,6 +117,8 @@ main()
     assert(c == '\xff');
 #endif
 
+#ifndef BOOST_NO_CWCHAR
+
     // test wide chars
     typedef escape_char_parser<lex_escapes, wchar_t> wlep_t;
     wlep_t wlep = wlep_t();
@@ -124,53 +130,60 @@ main()
     //wchar_t const* wend(wstr + wcslen(wstr));
 
     wchar_t wc;
-    assert(parse("a", wcep[assign_a(wc)]).hit);
+    assert(parse(L"a", wcep[assign_a(wc)]).hit);
     assert(wc == L'a');
-    assert(parse("\\b", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\b", wcep[assign_a(wc)]).full);
     assert(wc == L'\b');
-    assert(parse("\\t", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\t", wcep[assign_a(wc)]).full);
     assert(wc == L'\t');
-    assert(parse("\\n", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\n", wcep[assign_a(wc)]).full);
     assert(wc == L'\n');
-    assert(parse("\\f", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\f", wcep[assign_a(wc)]).full);
     assert(wc == L'\f');
-    assert(parse("\\r", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\r", wcep[assign_a(wc)]).full);
     assert(wc == L'\r');
-    assert(parse("\\\"", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\\"", wcep[assign_a(wc)]).full);
     assert(wc == L'\"');
-    assert(parse("\\'", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\'", wcep[assign_a(wc)]).full);
     assert(wc == L'\'');
-    assert(parse("\\\\", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\\\", wcep[assign_a(wc)]).full);
     assert(wc == L'\\');
-    assert(parse("\\120", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\120", wcep[assign_a(wc)]).full);
     assert(wc == L'\120');
-    assert(parse("\\x2e", wcep[assign_a(wc)]).full);
+    assert(parse(L"\\x2e", wcep[assign_a(wc)]).full);
     assert(wc == L'\x2e');
 
     // test bad wc escapes
-    assert(!parse("\\z", wcep[assign_a(wc)]).hit);
+    assert(!parse(L"\\z", wcep[assign_a(wc)]).hit);
 
     // test out of range octal escape
-    char octmax[16];
-    sprintf(octmax, "\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max());
+    size_t const octmax_size = 16;
+    wchar_t octmax[octmax_size];
+
+    swprintf(octmax, octmax_size,
+      L"\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max());
     assert(parse(octmax, wlep[assign_a(wc)]).full);
     //assert(lex_escape_ch_p[assign_a(wc)].parse(str, end));
     assert(wc == std::numeric_limits<wchar_t>::max());
 
-    sprintf(octmax, "\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max()
-            + 1);
+    swprintf(octmax, octmax_size,
+      L"\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max() + 1);
     assert(!parse(octmax, wlep[assign_a(wc)]).hit);
 
     // test out of range hex escape
-    char hexmax[16];
-    sprintf(hexmax, "\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max());
+    size_t const hexmax_size = 16;
+    wchar_t hexmax[hexmax_size];
+
+    swprintf(hexmax, hexmax_size,
+      L"\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max());
     assert(parse(hexmax, wlep[assign_a(wc)]).full);
     assert(wc == std::numeric_limits<wchar_t>::max());
 
-    sprintf(hexmax, "\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max()
-            + 1);
+    swprintf(hexmax, hexmax_size,
+      L"\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max() + 1);
     assert(!parse(hexmax, wlep[assign_a(wc)]).hit);
+
+#endif
 
     return 0;
 }
-
