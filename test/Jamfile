@@ -101,6 +101,7 @@ else
           [ spirit-run $(spirit-src)negated_eps_p_test.cpp <template>normal ]
           [ spirit-run $(spirit-src)operators_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)directives_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)shortest_alternative_tests.cpp <template>normal ]
         ;
 
     test-suite "spirit.core.non_terminal"
