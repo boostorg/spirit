@@ -64,7 +64,7 @@ namespace boost { namespace spirit {
         typedef rule<ScannerT, ContextT, TagT>          self_t;
         typedef rule<ScannerT, ContextT, TagT> const&   embed_t;
         typedef parser_scanner_linker<ScannerT>         scanner_t;
-        typedef parser_context_linker<ContextT>         context_t;
+        typedef typename ContextT::context_linker_t     context_t;
 
         typedef typename context_t::attr_t attr_t;
         typedef typename match_result<ScannerT, attr_t>::type result_t;

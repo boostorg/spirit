@@ -75,13 +75,29 @@ namespace impl {
     }
 #endif  // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
 
+#if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
+    template <typename ResultT>
+    inline void
+    print_closure_info(ResultT const hit, int level, std::string const& name)
+    {
+        if (!name.empty()) {
+            for (int i = 0; i < level-1; ++i)
+                BOOST_SPIRIT_DEBUG_OUT << "  ";
+
+        // for now, print out the return value only
+            BOOST_SPIRIT_DEBUG_OUT 
+                << "^" << name << ":\t" << hit.value() << "\n";
+        }
+    }
+#endif // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Implementation note: The parser_context_linker and parser_scanner_linker
-//  classes are wrapped by a PP constant to allow redefinition of this class
-//  outside of Spirit
+//  Implementation note: The parser_context_linker, parser_scanner_linker and
+//  closure_context_linker classes are wrapped by a PP constant to allow 
+//  redefinition of this classes outside of Spirit
 //
 ///////////////////////////////////////////////////////////////////////////////
 #if !defined(BOOST_SPIRIT_PARSER_CONTEXT_LINKER_DEFINED)
@@ -90,7 +106,7 @@ namespace impl {
     ///////////////////////////////////////////////////////////////////////////
     //
     //  parser_context_linker is a debug wrapper for the ContextT template
-    //  parameter of the rule<> class
+    //  parameter of the rule<>, subrule<> and the grammar<> classes
     //
     ///////////////////////////////////////////////////////////////////////////
     template<typename ContextT>
@@ -172,6 +188,50 @@ namespace impl {
     };
 
 #endif // !defined(BOOST_SPIRIT_PARSER_SCANNER_LINKER_DEFINED)
+
+#if !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
+#define BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  closure_context_linker is a debug wrapper for the closure template 
+    //  parameter of the rule<>, subrule<> and grammar classes
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
+    template<typename ContextT>
+    struct closure_context_linker : public parser_context_linker<ContextT>
+    {
+        typedef parser_context_linker<ContextT> base_t;
+
+        template <typename ParserT>
+        closure_context_linker(ParserT const& p)
+        : parser_context_linker<ContextT>(p) {}
+
+        template <typename ParserT, typename ScannerT>
+        void pre_parse(ParserT const& p, ScannerT &scan)
+        { this->base_t::pre_parse(p, scan); }
+
+        template <typename ResultT, typename ParserT, typename ScannerT>
+        ResultT&
+        post_parse(ResultT& hit, ParserT const& p, ScannerT &scan)
+        { 
+#if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
+            if (trace_parser(p)) {    
+            // for now, print out the return value only
+                impl::print_closure_info(
+                    hit, 
+                    scan.get_level(), 
+                    parser_name(p)
+                );
+            }
+#endif // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
+
+            return this->base_t::post_parse(hit, p, scan); 
+        }
+    };
+
+#endif // !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
 
 }} // namespace boost::spirit
 

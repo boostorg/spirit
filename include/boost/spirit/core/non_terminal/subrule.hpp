@@ -258,7 +258,7 @@ namespace boost { namespace spirit {
         typedef subrule<ID, ContextT> self_t;
         typedef subrule<ID, ContextT> const&  embed_t;
 
-        typedef parser_context_linker<ContextT> context_t;
+        typedef typename ContextT::context_linker_t context_t;
         typedef typename context_t::attr_t attr_t;
 
         BOOST_STATIC_CONSTANT(int, id = ID);

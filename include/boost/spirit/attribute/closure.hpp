@@ -16,6 +16,7 @@
 #include "boost/spirit/core/parser.hpp"
 #include "boost/spirit/core/composite/composite.hpp"
 #include "boost/spirit/attribute/parametric.hpp"
+#include "boost/spirit/attribute/closure_context.hpp"
 
 #include "boost/spirit/phoenix/closures.hpp"
 #include "boost/spirit/phoenix/primitives.hpp"
@@ -65,7 +66,8 @@ namespace boost { namespace spirit {
         typedef typename phoenix::tuple_element<0,
             typename ClosureT::tuple_t>::type attr_t;
         typedef ClosureT base_t;
-
+        typedef closure_context_linker<closure_context> context_linker_t;
+        
         closure_context(ClosureT const& clos)
         : frame(clos) {}
 
@@ -160,7 +162,7 @@ namespace boost { namespace spirit {
         {
             typedef init_closure_context<self_t> init_context_t;
             typedef parser_scanner_linker<ScannerT> scanner_t;
-            typedef parser_context_linker<init_context_t> context_t;
+            typedef closure_context_linker<init_context_t> context_t;
             typedef typename parser_result<self_t, ScannerT>::type result_t;
             BOOST_SPIRIT_CONTEXT_PARSE(
                 scan, *this, scanner_t, context_t, result_t);

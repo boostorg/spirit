@@ -39,7 +39,8 @@ namespace boost
     {
         typedef nil_t attr_t;
         typedef default_parser_context_base base_t;
-
+        typedef parser_context_linker<parser_context> context_linker_t;
+        
         template <typename ParserT>
         parser_context(ParserT const&) {}
 

@@ -35,10 +35,10 @@ struct grammar
     , public ContextT::base_t
     BOOST_SPIRIT_GRAMMAR_ID
 {
-    typedef grammar<DerivedT, ContextT>     self_t;
-    typedef DerivedT const&                 embed_t;
-    typedef parser_context_linker<ContextT> context_t;
-    typedef typename context_t::attr_t      attr_t;
+    typedef grammar<DerivedT, ContextT>         self_t;
+    typedef DerivedT const&                     embed_t;
+    typedef typename ContextT::context_linker_t context_t;
+    typedef typename context_t::attr_t          attr_t;
 
     template <typename ScannerT>
     struct result
