@@ -86,7 +86,7 @@ exe regular_expression
 exe rfc821
     : fundamental/rfc821.cpp
 	: <sysinclude>$(BOOST_ROOT)
-	:
+	: 
 	;
 
 exe roman_numerals

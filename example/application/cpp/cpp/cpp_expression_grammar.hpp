@@ -137,7 +137,7 @@ struct expression_grammar :
 {
     expression_grammar()
     {
-        BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "expression_grammar", 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "expression_grammar", 
             TRACE_CPP_EXPR_GRAMMAR);
     }
     
@@ -407,23 +407,23 @@ struct expression_grammar :
                     ]
                 ;
               
-            BOOST_SPIRIT_TRACE_RULE(pp_expression, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(const_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(logical_or_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(logical_and_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(inclusive_or_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(exclusive_or_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(and_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(cmp_equality, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(cmp_relational, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(shift_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(add_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(multiply_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(unary_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(primary_exp, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(constant, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(const_exp_subrule, TRACE_CPP_EXPR_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(shift_exp_clos, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(pp_expression, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(const_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(logical_or_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(logical_and_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(inclusive_or_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(exclusive_or_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(and_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(cmp_equality, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(cmp_relational, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(shift_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(add_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(multiply_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(unary_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(primary_exp, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(constant, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(const_exp_subrule, TRACE_CPP_EXPR_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(shift_exp_clos, TRACE_CPP_EXPR_GRAMMAR);
         }
 
     // start rule of this grammar

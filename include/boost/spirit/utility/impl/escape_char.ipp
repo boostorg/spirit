@@ -183,7 +183,7 @@ namespace impl {
                 |   (anychar_p - nocase_d['x'] - oct_parser_t())
                 ;
 
-            BOOST_SPIRIT_TRACE_NODE(escape,
+            BOOST_SPIRIT_DEBUG_TRACE_NODE(escape,
                 BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_ESCAPE_CHAR);
             return ((anychar_p - '\\') | ('\\' >> escape)).parse(scan);
         }

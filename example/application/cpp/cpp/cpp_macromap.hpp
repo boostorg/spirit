@@ -123,9 +123,11 @@ public:
         typename ContainerT::iterator &last);
     
 protected:
-    template <typename IteratorT, typename SizeT>
-    void collect_arguments (std::vector<std::vector<TokenT> > &arguments, 
-        IteratorT &next, IteratorT const &end, SizeT const &parameter_count);
+    template <typename ContainerT, typename SizeT>
+    void collect_arguments (std::vector<ContainerT> &arguments, 
+        typename ContainerT::iterator &next, 
+        typename ContainerT::iterator const &end, 
+        SizeT const &parameter_count);
 
 private:
     defined_macros_t defined_macros;
@@ -206,19 +208,19 @@ macromap<TokenT>::remove_macro(typename TokenT::string_t const &name)
 ///////////////////////////////////////////////////////////////////////////////
 
 template <typename TokenT>
-template <typename IteratorT, typename SizeT>
+template <typename ContainerT, typename SizeT>
 inline void 
 macromap<TokenT>::collect_arguments (
-    std::vector<std::vector<TokenT> > &arguments, IteratorT &next, 
-        IteratorT const &end, SizeT const &parameter_count)
+    std::vector<ContainerT> &arguments, typename ContainerT::iterator &next, 
+    typename ContainerT::iterator const &end, SizeT const &parameter_count)
 {
     using namespace cpplexer;
     
-    arguments.push_back(std::vector<TokenT>());
+    arguments.push_back(ContainerT());
     
 // collect the actual arguments
 int nested_parenthesis_level = 1;
-std::vector<TokenT> *argument = &arguments[0];
+ContainerT *argument = &arguments[0];
     
     while (++next != end && nested_parenthesis_level) {
         if (0 == parameter_count && !IS_CATEGORY((*next), WhiteSpaceTokenType)) {
@@ -234,7 +236,7 @@ std::vector<TokenT> *argument = &arguments[0];
             break;
             
         case T_RIGHTPAREN:
-            if (--nested_parenthesis_level > 1)
+            if (--nested_parenthesis_level >= 1)
                 argument->push_back(*next);
             break;
         
@@ -246,7 +248,7 @@ std::vector<TokenT> *argument = &arguments[0];
                     CPP_THROW(preprocess_exception, too_many_macroarguments, 
                         "", (*next));
                 }
-                arguments.push_back(std::vector<TokenT>()); // add new arg
+                arguments.push_back(ContainerT()); // add new arg
                 argument = &arguments[arguments.size()-1];
             }
             else {
@@ -295,16 +297,25 @@ std::insert_iterator<ContainerT> insert_iter (sequence, first);
     // called as a function-like macro 
         if ((*it).second.is_function_like()) {
         // defined as a function-like macro
-        std::vector<std::vector<TokenT> > arguments;
+        std::vector<ContainerT> arguments;
         
             collect_arguments (arguments, next, sequence.end(), 
                 (*it).second.parameter_count());
             if (arguments.size() < (*it).second.parameter_count()) {
             // too many macro arguments
                 CPP_THROW(preprocess_exception, too_few_macroarguments, 
-                    "", (*next));
+                    "", (*first));
             }
-            
+
+        // try to expand the arguments itself
+            std::vector<ContainerT>::iterator end = arguments.end();
+            for (std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
+                 arg_it != end; ++arg_it)
+            {
+                typename ContainerT::iterator arg_first = (*arg_it).begin();
+                expand_macro (*arg_it, arg_first);
+            }
+                        
         // replace macro
             typedef 
                 typename macro_definition_t::const_iterator_t 
@@ -316,8 +327,7 @@ std::insert_iterator<ContainerT> insert_iter (sequence, first);
             {
                 if (IS_CATEGORY((*cit), ParameterTokenType)) {
                 // copy argument i instead of the parameter token i
-                std::vector<TokenT> &arg = 
-                    arguments[token_id(*cit) - T_PARAMETERBASE];
+                ContainerT &arg = arguments[token_id(*cit) - T_PARAMETERBASE];
                 
                     std::copy(arg.begin(), arg.end(), insert_iter);
                 }

@@ -310,27 +310,27 @@ struct cpp_grammar :
                 =   ch_p(T_SPACE) | ch_p(T_CCOMMENT)
                 ;
 
-            BOOST_SPIRIT_TRACE_RULE(pp_statement, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(include_file, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(system_include_file, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(macro_include_file, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(plain_define, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(macro_definition, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(macro_parameters, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(undefine, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppifdef, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppifndef, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppif, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppelse, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppelif, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppendif, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppline, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(line_file, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(pperror, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppwarning, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppnull, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(illformed, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(ppspace, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(pp_statement, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(include_file, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(system_include_file, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(macro_include_file, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(plain_define, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(macro_definition, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(macro_parameters, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(undefine, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppifdef, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppifndef, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppif, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppelse, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppelif, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppendif, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppline, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(line_file, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(pperror, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppwarning, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppnull, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(illformed, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ppspace, TRACE_CPP_GRAMMAR);
         }
 
     // start rule of this grammar
@@ -343,7 +343,10 @@ struct cpp_grammar :
     
     cpp_grammar(cpp_grammar_rule_ids &rule_ids_, PositionT &pos_of_newline_) 
     :   rule_ids(rule_ids_), pos_of_newline(pos_of_newline_)
-    { BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "cpp_grammar", TRACE_CPP_GRAMMAR); }
+    { 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "cpp_grammar", 
+            TRACE_CPP_GRAMMAR); 
+    }
 
 #if defined(CPP_DUMP_PARSE_TREE)
 // helper function and data to get readable names of the rules known to us

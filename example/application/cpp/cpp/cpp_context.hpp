@@ -199,7 +199,7 @@ bool replaced = false;       // return, whether a replacement occured
             }
         }
         else if (expand_undefined && IS_CATEGORY(*it, KeywordTokenType) && 
-                 T_TRUE != it && T_FALSE != id)
+                 T_TRUE != id && T_FALSE != id)
         {
         // all remaining identifiers and keywords, except for true and false, 
         // are replaced with the pp-number 0 (C++ standard 16.1.4, [cpp.cond])

@@ -2,6 +2,7 @@
     Spirit V1.5.2
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2002-2003 Hartmut Kaiser
+    Copyright (c) 2003 Gustavo Guerra
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software is
@@ -20,6 +21,11 @@
 
 #include <string>
 
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/logical/and.hpp>
+#include <boost/spirit/core/primitives/primitives.hpp> // for iscntrl_
+
 namespace boost { namespace spirit {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,6 +36,72 @@ namespace boost { namespace spirit {
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace impl {
+
+    struct token_printer_aux_for_chars
+    {
+      template<typename CharT>
+      void operator()(CharT c)
+      {
+        if (c == static_cast<CharT>('\a'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\a";
+
+        else if (c == static_cast<CharT>('\b'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\b";
+
+        else if (c == static_cast<CharT>('\f'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\f";
+
+        else if (c == static_cast<CharT>('\n'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\n";
+
+        else if (c == static_cast<CharT>('\r'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\r";
+
+        else if (c == static_cast<CharT>('\t'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\t";
+
+        else if (c == static_cast<CharT>('\v'))
+          BOOST_SPIRIT_DEBUG_OUT << "\\v";
+
+        else if (iscntrl_(c))
+          BOOST_SPIRIT_DEBUG_OUT << "\\" << static_cast<int>(c);
+
+        else
+          BOOST_SPIRIT_DEBUG_OUT << static_cast<char>(c);
+      }
+    };
+
+    // for token types where the comparison with char constants wouldn't work
+    struct token_printer_aux_for_other_types
+    {
+      template<typename CharT>
+      inline void operator()(CharT c)
+      {
+        BOOST_SPIRIT_DEBUG_OUT << c;
+      }
+    };
+
+    template<typename CharT>
+    inline void token_printer(CharT c)
+    {
+      #if !defined(BOOST_SPIRIT_DEBUG_TOKEN_PRINTER)
+
+         typedef typename
+           mpl::if_<mpl::logical_and<is_convertible<CharT, char>,
+                                     is_convertible<char, CharT> >,
+                    token_printer_aux_for_chars,
+                    token_printer_aux_for_other_types>::type aux_t;
+
+         aux_t aux;
+         aux(c);
+
+      #else
+
+        BOOST_SPIRIT_DEBUG_TOKEN_PRINTER(BOOST_SPIRIT_DEBUG_OUT, c);
+
+      #endif
+    }
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Dump infos about the parsing state of a rule
@@ -61,13 +133,7 @@ namespace impl {
                 if (iter == ilast)
                     break;
 
-                switch (*iter) {
-
-                    case '\r': BOOST_SPIRIT_DEBUG_OUT << "\\r";  break;
-                    case '\n': BOOST_SPIRIT_DEBUG_OUT << "\\n";  break;
-                    case '\0': BOOST_SPIRIT_DEBUG_OUT << "\\0";  break;
-                    default: BOOST_SPIRIT_DEBUG_OUT << *iter;    break;
-                }
+                token_printer(*iter);
                 ++iter;
             }
             BOOST_SPIRIT_DEBUG_OUT << " \"\n";

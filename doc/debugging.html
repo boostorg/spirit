@@ -56,21 +56,69 @@
 <a name="spirit_debug"></a>
 <h3>BOOST_SPIRIT_DEBUG</h3>
 <p> Define this to enable debugging.</p>
-<a name="spirit_debug_out"></a>
+<p>By default, if the <tt>BOOST_SPIRIT_DEBUG</tt> macro is defined, all available 
+  debug output is generated. To fine tune the amount of generated text you can 
+  define the <tt>BOOST_SPIRIT_DEBUG_FLAGS</tt> constant to be equal of a combination 
+  of the following flags:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td colspan="2" class="table_title"><b>Available flags to fine tune debug 
+      output </b></td>
+  </tr>
+  <tr> 
+    <td width="29%" height="27" class="table_cells"><tt>BOOST_SPIRIT_DEBUG_FLAGS_NODES</tt></td>
+    <td width="71%" class="table_cells"><p>print information about nodes (general 
+        for all parsers)</p></td>
+  </tr>
+  <tr> 
+    <td height="27" class="table_cells"><tt>BOOST_SPIRIT_DEBUG_FLAGS_TREES</tt></td>
+    <td class="table_cells"><p>print information about parse trees and AST's (general 
+        for all tree parsers)</p></td>
+  </tr>
+  <tr> 
+    <td height="27" class="table_cells"><tt>BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES</tt></td>
+    <td class="table_cells">print information about closures (general for all 
+      parsers with closures)</td>
+  </tr>
+  <tr> 
+    <td height="27" class="table_cells"><tt>BOOST_SPIRIT_DEBUG_FLAGS_ESCAPE_CHAR</tt></td>
+    <td class="table_cells"><p>print information out of the <tt>esc_char_parser</tt></p></td>
+  </tr>
+  <tr>
+    <td height="27" class="table_cells"><tt>BOOST_SPIRIT_DEBUG_FLAGS_SLEX</tt></td>
+    <td class="table_cells">print information out of the <tt>SLEX</tt> parser</td>
+  </tr>
+</table>
+<p><a name="spirit_debug_out"></a> </p>
 <h3>BOOST_SPIRIT_DEBUG_OUT</h3>
 <p> Define this to redirect the debugging diagnostics printout to somewhere else 
   (e.g. a file or stream). Defaults to <tt>std::cout</tt>.</p>
+<a name="spirit_debug_token printer"></a>
+<h3>BOOST_SPIRIT_DEBUG_TOKEN_PRINTER</h3>
+<p> The <tt>BOOST_SPIRIT_DEBUG_TOKEN_PRINTER</tt> macro allows you to redefine the way characters are printed on the stream. </p>
+<p>If <tt>BOOST_SPIRIT_DEBUG_OUT</tt> is of type <tt>StreamT</tt>,  the character type is <tt>CharT</tt> and <tt>BOOST_SPIRIT_DEBUG_TOKEN_PRINTER</tt> is
+  defined to <tt>foo</tt>, it must be compatible with this usage:</p>
+<pre><code><span class=identifier>    foo</span><span class=special>(</span><span class=identifier>StreamT</span><span class=special>, </span><span class=identifier>CharT</span><span class=special>)</span></code></pre>
+<p>The default printer requires <tt>operator&lt;&lt;(StreamT, CharT)</tt>  to
+  be defined. Additionaly, if <tt>CharT</tt> is convertible to a normal character
+  type (<tt>char</tt>, <tt>wchar_t</tt> or <tt>int</tt>), it prints control
+  characters in a friendly manner (e.g., when it receives <span class=special>'\n'</span> it
+  actually prints the <span class=special>\</span> and <span class=special>n</span> charactes,
+instead of a newline).</p>
 <a name="spirit_debug_print_some"></a>
 <h3>BOOST_SPIRIT_DEBUG_PRINT_SOME</h3>
-<p> The <tt>BOOST_SPIRIT_DEBUG_PRINT_SOME</tt> constant defines the number of characters 
-  from the stream to be printed for diagnosis. This defaults to the first 20 characters.</p>
-<a name="spirit_debug_tracenode"></a>
+<p> The <tt>BOOST_SPIRIT_DEBUG_PRINT_SOME</tt> constant defines the number of 
+  characters from the stream to be printed for diagnosis. This defaults to the 
+  first 20 characters.</p>
+<p><a name="spirit_debug_tracenode"></a> </p>
 <h3>BOOST_SPIRIT_DEBUG_TRACENODE</h3>
 <p> By default all parser nodes are traced. This constant may be used to redefine 
   this default. If this is <tt>1</tt> (<tt>true</tt>), then tracing is enabled 
   by default, if this constant is <tt>0</tt> (<tt>false</tt>), the tracing is 
   disabled by default. This preprocessor constant is set to <tt>1 </tt>(<tt>true</tt>) 
   by default.</p>
+<p>Please note, that the following <tt>BOOST_SPIRIT_DEBUG_...() </tt>macros are 
+  to be used at function scope only.</p>
 <a name="spirit_debug_node_p_"></a>
 <h3>BOOST_SPIRIT_DEBUG_NODE(p)</h3>
 <p> Define this to print some debugging diagnostics for parser p. This macro</p>
@@ -90,16 +138,28 @@
   <li>BOOST_SPIRIT_DEBUG_GRAMMAR</li>
 </ol>
 <a name="spirit_trace_node_p__flag_"></a>
-<h3>BOOST_SPIRIT_TRACE_NODE(p, flag)</h3>
+<h3>BOOST_SPIRIT_DEBUG_TRACE_NODE(p, flag)</h3>
 <p> Similar to <tt>BOOST_SPIRIT_DEBUG_NODE</tt>. Additionally allows selective debugging. 
   This is useful in situations where we want to debug just a hand picked set of 
   nodes.</p>
-<p> The following are synonyms for <tt>BOOST_SPIRIT_TRACE_NODE</tt></p>
+<p> The following are synonyms for <tt>BOOST_SPIRIT_DEBUG_TRACE_NODE</tt></p>
 <ol>
-  <li>BOOST_SPIRIT_TRACE_RULE</li>
-  <li>BOOST_SPIRIT_TRACE_GRAMMAR</li>
+  <li>BOOST_SPIRIT_DEBUG_TRACE_RULE</li>
+  <li>BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR</li>
 </ol>
-<p> Here's the original calculator with debugging features enabled:</p>
+<p><a name="spirit_trace_node_p__flag__name_"></a> </p>
+<h3>BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME(p, name, flag)</h3>
+<p> Similar to <tt>BOOST_SPIRIT_DEBUG_NODE</tt>. Additionally allows selective 
+  debugging and allows to specify the name used during debug printout. This is 
+  useful in situations where we want to debug just a hand picked set of nodes. 
+  The <tt>name</tt> may be redefined in situations, where the parser parameter does not reflect the name of the parser to debug.</p>
+<p> The following are synonyms for <tt>BOOST_SPIRIT_DEBUG_TRACE_NODE</tt></p>
+<ol>
+  <li>BOOST_SPIRIT_DEBUG_TRACE_RULE_NAME</li>
+  <li>BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME</li>
+</ol>
+<hr>
+<p>Here's the original calculator with debugging features enabled:</p>
 <pre>
     <code><span class=preprocessor>#define </span><span class=identifier>BOOST_SPIRIT_DEBUG  </span><span class=comment>///$$$ DEFINE THIS BEFORE ANYTHING ELSE $$$///
     </span><span class=preprocessor>#include </span><span class=string>&quot;boost/spirit.hpp&quot;
@@ -155,7 +215,8 @@
 </table>
 <br>
 <hr size="1">
-<p class="copyright">Copyright &copy; 1998-2002 Joel de Guzman<br>
+<p class="copyright">Copyright &copy; 1998-2002 Joel de Guzman<br>Copyright &copy; 
+  2003 Hartmut Kaiser<br>
   <br>
   <font size="2">Permission to copy, use, modify, sell and distribute this document 
   is granted provided this copyright notice appears in all copies. This document 

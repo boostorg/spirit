@@ -52,7 +52,7 @@ struct defined_grammar :
 {
     defined_grammar()
     {
-        BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "defined_grammar", 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "defined_grammar", 
             TRACE_CPP_DEFINED_GRAMMAR);
     }
 
@@ -84,7 +84,7 @@ struct defined_grammar :
                             ]
                 ;
 
-            BOOST_SPIRIT_TRACE_RULE(defined_op, TRACE_CPP_DEFINED_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(defined_op, TRACE_CPP_DEFINED_GRAMMAR);
         }
 
     // start rule of this grammar

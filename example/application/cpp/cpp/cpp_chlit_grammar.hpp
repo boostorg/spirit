@@ -52,7 +52,7 @@ struct chlit_grammar :
 {
     chlit_grammar()
     {
-        BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "chlit_grammar", 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "chlit_grammar", 
             TRACE_CHLIT_GRAMMAR);
     }
     
@@ -104,7 +104,7 @@ struct chlit_grammar :
                     >>  ch_p('\'')
                 ;
 
-            BOOST_SPIRIT_TRACE_RULE(ch_lit, TRACE_CHLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(ch_lit, TRACE_CHLIT_GRAMMAR);
         }
 
     // start rule of this grammar

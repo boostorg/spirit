@@ -52,7 +52,7 @@ struct floatlit_grammar :
 {
     floatlit_grammar()
     {
-        BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "floatlit_grammar", 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "floatlit_grammar", 
             TRACE_FLOATLIT_GRAMMAR);
     }
     
@@ -76,7 +76,7 @@ struct floatlit_grammar :
                         ]
                 ;
 
-            BOOST_SPIRIT_TRACE_RULE(float_lit, TRACE_FLOATLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(float_lit, TRACE_FLOATLIT_GRAMMAR);
         }
 
     // start rule of this grammar

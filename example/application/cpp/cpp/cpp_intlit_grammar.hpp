@@ -52,7 +52,7 @@ struct intlit_grammar :
 {
     intlit_grammar()
     {
-        BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "intlit_grammar", 
+        BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(*this, "intlit_grammar", 
             TRACE_INTLIT_GRAMMAR);
     }
     
@@ -104,11 +104,11 @@ struct intlit_grammar :
                     )
                 ;
                 
-            BOOST_SPIRIT_TRACE_RULE(int_lit, TRACE_INTLIT_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(sub_int_lit, TRACE_INTLIT_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(hex_lit, TRACE_INTLIT_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(oct_lit, TRACE_INTLIT_GRAMMAR);
-            BOOST_SPIRIT_TRACE_RULE(dec_lit, TRACE_INTLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(int_lit, TRACE_INTLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(sub_int_lit, TRACE_INTLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(hex_lit, TRACE_INTLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(oct_lit, TRACE_INTLIT_GRAMMAR);
+            BOOST_SPIRIT_DEBUG_TRACE_RULE(dec_lit, TRACE_INTLIT_GRAMMAR);
         }
 
     // start rule of this grammar
