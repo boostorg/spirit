@@ -107,8 +107,8 @@ else
           [ spirit-run $(spirit-src)owi_st_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)grammar_tests.cpp <template>opt-metrowerks ]
           [ spirit-run $(spirit-src)subrule_tests.cpp <template>normal ]
-          [ spirit-run $(spirit-src)owi_mt_tests.cpp <template>multi-threading ]
-          [ spirit-run $(spirit-src)grammar_mt_tests.cpp <template>multi-threading ]
+          [        run $(spirit-src)owi_mt_tests.cpp <template>multi-threading ]
+          [        run $(spirit-src)grammar_mt_tests.cpp <template>multi-threading ]
           [ spirit-run $(spirit-src)parser_context_test.cpp <template>normal ]
         ;
 
@@ -121,7 +121,7 @@ else
 
     test-suite "spirit.attribute"
         : [ spirit-run $(spirit-src)closure_tests.cpp <template>opt-metrowerks ]
-          [ spirit-run $(spirit-src)bug_000008.cpp <template>multi-threading ]
+          [        run $(spirit-src)bug_000008.cpp <template>multi-threading ]
           [ spirit-run $(spirit-src)parametric_tests.cpp <template>normal ]
         ;
 
@@ -160,6 +160,7 @@ else
         ;
 
     test-suite "spirit.utility.support"
+		# This test doesn't actually use multiple threads
         : [ spirit-run $(spirit-src)scoped_lock_tests.cpp <template>multi-threading ]
         ;
 
