@@ -125,8 +125,7 @@ namespace boost { namespace spirit {
         template <typename ScannerT>
         struct result
         {
-            typedef typename FirstT::def_t parser_t;
-            typedef typename parser_result<parser_t, ScannerT>::type type;
+            typedef typename parser_result<FirstT, ScannerT>::type type;
         };
 
         template <typename ScannerT>
