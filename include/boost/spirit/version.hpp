@@ -14,7 +14,7 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x1700
-#define SPIRIT_PIZZA_VERSION SPIRIT_PIZZA_HAM_AND_SAUSAGE  // :-)
+#define SPIRIT_VERSION 0x1800
+#define SPIRIT_PIZZA_VERSION SPIRIT_LOTZA_CHEESE  // :-)
 
 #endif // defined(SPIRIT_VERSION_HPP)

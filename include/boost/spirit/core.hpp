@@ -24,6 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 //  Spirit.Core.Kernel
+#include <boost/spirit/version.hpp>
 #include <boost/spirit/core/config.hpp>
 #include <boost/spirit/core/nil.hpp>
 #include <boost/spirit/core/match.hpp>

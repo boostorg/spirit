@@ -20,8 +20,6 @@
 #if !defined(SPIRIT_HPP)
 #define SPIRIT_HPP
 
-#include <boost/spirit/version.hpp>
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  If SPIRIT_DEBUG is defined, the following header includes the
