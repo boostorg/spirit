@@ -25,6 +25,17 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+//  For all recognized preprocessor statements the output parse trees 
+//  formatted as xml are printed. The formatted parse trees are streamed to the 
+//  std::ostream given through the CPP_DUMP_PARSE_TREE_OUT constant.
+//
+//  Undefine the following, if you want to see these parse trees. 
+//
+//#define CPP_DUMP_PARSE_TREE
+//#define CPP_DUMP_PARSE_TREE_OUT std::cout
+
+///////////////////////////////////////////////////////////////////////////////
+//
 //  Use the separation model for the instantiation of the lex_functor object.
 //
 //  If this is defined, you should explicitly instantiate the lex_functor

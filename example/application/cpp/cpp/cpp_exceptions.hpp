@@ -183,7 +183,8 @@ public:
         warning_directive,
         ill_formed_expression,
         missing_matching_if,
-        ill_formed_operator
+        ill_formed_operator,
+        bad_define_statement
     };
 
     preprocess_exception(char const *what_, error_code code, int line_, 
@@ -225,7 +226,8 @@ public:
             "encountered #warning directive",           // warning_directive
             "ill formed preprocessor expression",       // ill_formed_expression
             "the #if for this directive is missing",    // missing_matching_if
-            "ill formed preprocessing operator"         // ill_formed_operator
+            "ill formed preprocessing operator",        // ill_formed_operator
+            "ill formed define statement"               // bad_define_statement
         };
         return preprocess_exception_errors[code];
     }
@@ -243,7 +245,8 @@ public:
             severity_util::severity_warning,            // warning_directive
             severity_util::severity_error,              // ill_formed_expression
             severity_util::severity_error,              // missing_matching_if
-            severity_util::severity_error               // ill_formed_operator
+            severity_util::severity_error,               // ill_formed_operator
+            severity_util::severity_error               // bad_define_statement
         };
         return preprocess_exception_severity[code];
     }

@@ -33,6 +33,7 @@ namespace cpplexer {
 //  the token_category helps to classify the different tokentypes 
 enum token_category {
     IdentifierTokenType         = 0x10000000,
+    ParameterTokenType          = 0x11000000,
     KeywordTokenType            = 0x20000000,
     OperatorTokenType           = 0x30000000,
     LiteralTokenType            = 0x40000000,
@@ -219,6 +220,9 @@ enum token_id {
 #endif // defined(SUPPORT_MS_EXTENSIONS)
     T_LAST_TOKEN_ID,
     T_LAST_TOKEN = ID_FROM_TOKEN(T_LAST_TOKEN_ID),
+    
+// pseudo token to help streamlining macro replacement
+    T_PARAMETERBASE = TOKEN_FROM_ID(T_LAST_TOKEN+1, ParameterTokenType),
 };
 
 ///////////////////////////////////////////////////////////////////////////////

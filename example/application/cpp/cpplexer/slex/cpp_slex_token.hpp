@@ -70,6 +70,15 @@ public:
     operator token_id() const { return id; }
     string_t const &get_value() const { return value; }
     position_t const &get_position() const { return pos; }
+    void set_token_id (token_id id_) { id = id_; }
+    
+#if defined(CPP_DUMP_PARSE_TREE)
+// access functions for the tree_to_xml functionality
+    static int get_token_id(lex_token const &t) 
+        { return ID_FROM_TOKEN(token_id(t)); }
+    static string_t get_token_value(lex_token const &t) 
+        { return t.get_value(); }
+#endif // defined(CPP_DUMP_PARSE_TREE)
     
 #if defined(BOOST_SPIRIT_DEBUG)
 // debug support

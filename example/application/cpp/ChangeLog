@@ -5,6 +5,12 @@ http://spirit.sourceforge.net/
 See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
+Sun Feb  2 23:28:24  2003
+- Implemented the  #define, #undef, #ifdef, #ifndef, #else and #endif 
+  statements
+- Added optional parse tree output as xml stream (controlled through the config
+  pp constant CPP_DUMP_PARSE_TREE)
+
 Fri Jan 31 21:30:55  2003
 - Fixed different minor issues and a border case (#include statement at the 
   last line of a included file)

@@ -24,6 +24,7 @@
 #include "cpp/cpp_include_pathes.hpp"
 #include "cpp/cpp_iterator.hpp"
 #include "cpp/cpp_iteration_context.hpp"
+#include "cpp/cpp_macromap.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
@@ -105,6 +106,15 @@ public:
     void push_iteration_context(iteration_ptr_t iter_ctx)
         { iter_ctxs.push(iter_ctx); }
 
+// maintain defined macros
+    bool add_macro_definition(TokenT const &name, 
+            std::vector<TokenT> &parameters, std::vector<TokenT> &definition)
+        { return macros.add_macro(name, parameters, definition); }
+    bool is_defined_macro(typename TokenT::string_t const &name)
+        { return macros.is_defined(name); }
+    bool remove_macro_definition(typename TokenT::string_t const &name)
+        { return macros.remove_macro(name); }
+        
 private:
 // the main input stream
     target_iterator_t const &first; // underlying input stream
@@ -114,6 +124,7 @@ private:
     if_block_stack ifblocks;        // conditional compilation contexts
     include_pathes includes;        // lists of include directories to search
     iteration_context_stack_t iter_ctxs;    // iteration contexts
+    macromap<TokenT> macros;        // map of defined macros
 };
 
 ///////////////////////////////////////////////////////////////////////////////

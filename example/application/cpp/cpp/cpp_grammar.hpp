@@ -21,6 +21,11 @@
 #include <boost/spirit/utility/lists.hpp>
 #include <boost/spirit/utility/functor_parser.hpp>
 
+#if defined(CPP_DUMP_PARSE_TREE)
+#include <map>
+#include <boost/spirit/tree/tree_to_xml.hpp>
+#endif // defined(CPP_DUMP_PARSE_TREE)
+
 #include "cpp/cpp_grammar_gen.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_iterator.hpp"
@@ -89,7 +94,7 @@ struct cpp_grammar :
     // 'normal' (parse_tree generating) rule type
         typedef boost::spirit::rule<ScannerT> rule_t;
 
-        rule_t cpp_line;
+        rule_t pp_statement;
         rule_t include_file, system_include_file, macro_include_file;
         rule_t plain_define, macro_definition, macro_parameters;
         rule_t undefine;
@@ -108,13 +113,13 @@ struct cpp_grammar :
             using namespace cpplexer;
             
         // save the rule id's for later use
-            self.rule_ids.cpp_line_id = cpp_line.id().to_long();
+            self.rule_ids.pp_statement_id = pp_statement.id().to_long();
             self.rule_ids.include_file_id = include_file.id().to_long();
             self.rule_ids.sysinclude_file_id = system_include_file.id().to_long();
             self.rule_ids.macroinclude_file_id = macro_include_file.id().to_long();
             self.rule_ids.plain_define_id = plain_define.id().to_long();
-            self.rule_ids.macro_parameters_id = macro_definition.id().to_long();
-            self.rule_ids.macro_definition_id = macro_parameters.id().to_long();
+            self.rule_ids.macro_parameters_id = macro_parameters.id().to_long();
+            self.rule_ids.macro_definition_id = macro_definition.id().to_long();
             self.rule_ids.undefine_id = undefine.id().to_long();
             self.rule_ids.ifdef_id = ppifdef.id().to_long();
             self.rule_ids.ifndef_id = ppifndef.id().to_long();
@@ -131,8 +136,12 @@ struct cpp_grammar :
             self.rule_ids.illformed_id = illformed.id().to_long();
             self.rule_ids.ppspace_id = ppspace.id().to_long();
 
+#if defined(CPP_DUMP_PARSE_TREE)
+            self.map_rule_id_to_name.init_rule_id_to_name_map(self);
+#endif // defined(CPP_DUMP_PARSE_TREE)
+            
         // recognizes preprocessor directives only
-            cpp_line
+            pp_statement
                 =   no_node_d[*ppspace]
                     >>  (
                             (   ppnull
@@ -202,7 +211,7 @@ struct cpp_grammar :
                     )
                 ;
 
-        // macro body
+        // macro body (anything left until eol)
             macro_definition
                 =   no_node_d[+ppspace]
                     >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
@@ -292,7 +301,7 @@ struct cpp_grammar :
                 =   ch_p(T_SPACE) | ch_p(T_CCOMMENT)
                 ;
 
-            BOOST_SPIRIT_TRACE_RULE(cpp_line, TRACE_CPP_GRAMMAR);
+            BOOST_SPIRIT_TRACE_RULE(pp_statement, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_TRACE_RULE(include_file, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_TRACE_RULE(system_include_file, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_TRACE_RULE(macro_include_file, TRACE_CPP_GRAMMAR);
@@ -317,37 +326,31 @@ struct cpp_grammar :
 
     // start rule of this grammar
         rule_t const& start() const
-        { return cpp_line; }
+        { return pp_statement; }
     };
 
     cpp_grammar_rule_ids &rule_ids;
     PositionT &pos_of_newline;
     
-#if !defined(_DUMP_PARSE_TREE)
     cpp_grammar(cpp_grammar_rule_ids &rule_ids_, PositionT &pos_of_newline_) 
     :   rule_ids(rule_ids_), pos_of_newline(pos_of_newline_)
     { BOOST_SPIRIT_TRACE_RULE_NAME(*this, "cpp_grammar", TRACE_CPP_GRAMMAR); }
-#else    
-    cpp_grammar(cpp_grammar_rule_ids &rule_ids_, PositionT &pos_of_newline_)
-    :   map_rule_id_to_name(this), rule_ids(rule_ids_), 
-        pos_of_newline(pos_of_newline_)
-    {
-        BOOST_SPIRIT_TRACE_RULE_NAME(*this, "cpp_grammar", TRACE_CPP_GRAMMAR);
-    }
 
+#if defined(CPP_DUMP_PARSE_TREE)
 // helper function and data to get readable names of the rules known to us
     struct map_ruleid_to_name :
-        public map<parser_id, string, less<parser_id> > 
+        public std::map<boost::spirit::parser_id, std::string> 
     {
-        typedef map<parser_id, string, less<parser_id> > base_t;
+        typedef std::map<boost::spirit::parser_id, std::string> base_t;
 
-        map_ruleid_to_name(cpp_grammar const &self)
+        void init_rule_id_to_name_map(cpp_grammar const &self)
         {
-            static struct {
+            struct {
                 int parser_id;
                 char const *rule_name;
-            } init_ruleid_name_map[] = {
-                { self.rule_ids.cpp_line_id, "cpp_line" },
+            } 
+            init_ruleid_name_map[] = {
+                { self.rule_ids.pp_statement_id, "pp_statement" },
                 { self.rule_ids.include_file_id, "include_file" },
                 { self.rule_ids.sysinclude_file_id, "system_include_file" },
                 { self.rule_ids.macroinclude_file_id, "macro_include_file" },
@@ -375,13 +378,13 @@ struct cpp_grammar :
         // initialize parser_id to rule_name map
             for (int i = 0; 0 != init_ruleid_name_map[i].parser_id; ++i)
                 base_t::insert(base_t::value_type(
-                    parser_id(init_ruleid_name_map[i].parser_id), 
+                    boost::spirit::parser_id(init_ruleid_name_map[i].parser_id), 
                     std::string(init_ruleid_name_map[i].rule_name))
                 );
         }
     };
-    map_ruleid_to_name map_rule_id_to_name;
-#endif // defined(_DUMP_PARSE_TREE)
+    mutable map_ruleid_to_name map_rule_id_to_name;
+#endif // defined(CPP_DUMP_PARSE_TREE)
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -408,7 +411,19 @@ cpp_grammar_gen<TokenT>::parse_cpp_grammar (
     cpplexer::lex_iterator<TokenT> const &last)
 {
     static cpp_grammar<typename TokenT::position_t> g (rule_ids, pos_of_newline);
-    return boost::spirit::pt_parse (first, last, g);
+    
+    using namespace boost::spirit;
+    tree_parse_info<cpplexer::lex_iterator<TokenT> > hit = pt_parse (first, last, g);
+    
+#if defined(CPP_DUMP_PARSE_TREE)
+    if (hit.match) {
+        tree_to_xml (CPP_DUMP_PARSE_TREE_OUT, hit.trees, "", 
+            g.map_rule_id_to_name, &TokenT::get_token_id, 
+            &TokenT::get_token_value);
+    }
+#endif // defined(CPP_DUMP_PARSE_TREE)
+
+    return hit;
 }
 
 #undef CPP_GRAMMAR_GEN_INLINE

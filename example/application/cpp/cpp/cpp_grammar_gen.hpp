@@ -28,7 +28,7 @@ namespace cpp {
 //
 ///////////////////////////////////////////////////////////////////////////////
 struct cpp_grammar_rule_ids {
-    long cpp_line_id;
+    long pp_statement_id;
     long include_file_id;       // #include "..."
     long sysinclude_file_id;    // #include <...>
     long macroinclude_file_id;  // #include ...

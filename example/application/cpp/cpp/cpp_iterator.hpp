@@ -24,6 +24,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/spirit/iterator/multi_pass.hpp>
 #include <boost/spirit/tree/parse_tree_utils.hpp>
+#include <boost/spirit/tree/tree_to_xml.hpp>
 
 #include "cpplexer/cpp_lex_iterator.hpp"
 
@@ -40,7 +41,6 @@ namespace impl {
 //  pp_iterator_functor
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 template <typename ContextT> 
 class pp_iterator_functor {
 
@@ -88,9 +88,21 @@ protected:
     bool pp_directive();
     void dispatch_directive(boost::spirit::tree_parse_info<lex_t> const &hit);
 
-    void on_include (result_type const &t, bool is_system);
-    void on_define (parse_node_t const &node);
-                    
+    void on_include(result_type const &t, bool is_system);
+
+    void on_define(parse_node_t const &node);
+    void retrieve_macroname(parse_node_t const &node, 
+        result_type &macroname);
+    void retrieve_macrodefinition(parse_node_t const &node, 
+        boost::spirit::parser_id id, std::vector<result_type> &macroparameters);
+
+    void on_undefine(result_type const &t);
+    
+    void on_ifdef(result_type const &t);
+    void on_ifndef(result_type const &t);
+    void on_else();
+    void on_endif();
+
 private:
     ContextT &ctx;              // context, this iterator is assicciated with
     boost::shared_ptr<base_iteration_context_t> iter_ctx;
@@ -227,7 +239,7 @@ pp_iterator_functor<ContextT>::dispatch_directive(
     boost::spirit::tree_parse_info<lex_t> const &hit)
 {
     using namespace boost::spirit;
-    
+
 // this iterator points to the root node of the parse tree
 parse_tree_t::const_iterator begin = hit.trees.begin();
 
@@ -253,12 +265,15 @@ long node_id = nodeval.id().to_long();
     }
     else if (node_id == cpp_grammar_t::rule_ids.undefine_id) {
     // #undef
+        on_undefine(*nodeval.begin());
     }
     else if (node_id == cpp_grammar_t::rule_ids.ifdef_id) {
     // #ifdef
+        on_ifdef(*nodeval.begin());
     }
     else if (node_id == cpp_grammar_t::rule_ids.ifndef_id) {
     // #ifndef
+        on_ifndef(*nodeval.begin());
     }
     else if (node_id == cpp_grammar_t::rule_ids.if_id) {
     // #if
@@ -268,9 +283,11 @@ long node_id = nodeval.id().to_long();
     }
     else if (node_id == cpp_grammar_t::rule_ids.else_id) {
     // #else
+        on_else();
     }
     else if (node_id == cpp_grammar_t::rule_ids.endif_id) {
     // #endif
+        on_endif();
     }
     else if (node_id == cpp_grammar_t::rule_ids.line_id) {
     // #line
@@ -355,10 +372,144 @@ boost::shared_ptr<base_iteration_context_t> new_iter_ctx (
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+// retrieve the macro name from the parse tree
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::retrieve_macroname(parse_node_t const &node, 
+    result_type &macroname)
+{
+parse_node_t const *name_node = NULL;
+
+    using boost::spirit::find_node;
+    if (!find_node(node, cpp_grammar_t::rule_ids.plain_define_id, &name_node)) 
+    {
+        // ill formed define statement (unexpected, should not happen)
+        CPP_THROW(preprocess_exception, bad_define_statement, 
+            "bad parse tree", act_token);
+    }
+    
+typename parse_node_t::children_t const &children = name_node->children;
+
+    if (0 == children.size() || 
+        children[0].value.begin() == children[0].value.end()) 
+    {
+        // ill formed define statement (unexpected, should not happen)
+        CPP_THROW(preprocess_exception, bad_define_statement, 
+            "bad parse tree", act_token);
+    }
+
+// retrieve the macro name
+    macroname = *children[0].value.begin();
+}
+
+// retrieve the macro parameters or the macro definition from the parse tree
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::retrieve_macrodefinition(
+    parse_node_t const &node, boost::spirit::parser_id id, 
+    std::vector<result_type> &macrodefinition)
+{
+    typedef typename parse_node_t::const_tree_iterator const_tree_iterator;
+
+// find macro parameters inside the parse tree
+std::pair<const_tree_iterator, const_tree_iterator> nodes;
+
+    using boost::spirit::get_node_range;
+    if (get_node_range(node, id, nodes)) {
+    // copy all parameters to the supplied parameter vector
+        const_tree_iterator end = nodes.second;
+        for (const_tree_iterator cit = nodes.first; cit != end; ++cit) {
+            if ((*cit).value.begin() != (*cit).value.end())
+                macrodefinition.push_back(*(*cit).value.begin());
+        }
+    }
+}
+
 template <typename ContextT> 
 inline void  
 pp_iterator_functor<ContextT>::on_define (parse_node_t const &node) 
 {
+//  skip this define, if conditional compilation is off
+    if (!ctx.get_if_block_status()) 
+        return;
+
+// retrieve the macro definition from the parse tree
+result_type macroname;
+std::vector<result_type> macroparameters;
+std::vector<result_type> macrodefinition;
+
+    retrieve_macroname(node, macroname);
+    retrieve_macrodefinition(node, cpp_grammar_t::rule_ids.macro_parameters_id, 
+        macroparameters);
+    retrieve_macrodefinition(node, cpp_grammar_t::rule_ids.macro_definition_id, 
+        macrodefinition);
+    
+    ctx.add_macro_definition(macroname, macroparameters, macrodefinition);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_define(): handle #undef statements
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_undefine (result_type const &token) 
+{
+//  skip this undefine, if conditional compilation is off
+    if (!ctx.get_if_block_status()) 
+        return;
+
+// retrieve the macro name to undefine from the parse tree
+    ctx.remove_macro_definition(token.get_value());       // never fails
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_define(): handle #ifdef statements
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_ifdef(result_type const &token)
+{
+    ctx.enter_if_block(ctx.is_defined_macro(token.get_value()));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_define(): handle #ifndef statements
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_ifndef(result_type const &token)
+{
+    ctx.enter_if_block(!ctx.is_defined_macro(token.get_value()));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_define(): handle #else statements
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_else()
+{
+    ctx.enter_else_block();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_define(): handle #endif statements
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_endif()
+{
+    ctx.exit_if_block();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -366,7 +517,6 @@ pp_iterator_functor<ContextT>::on_define (parse_node_t const &node)
 //  pp_iterator_functor_shim
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 template <typename ContextT> 
 class pp_iterator_functor_shim 
 {

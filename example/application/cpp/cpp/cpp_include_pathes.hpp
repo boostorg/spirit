@@ -1,8 +1,6 @@
 /*=============================================================================
     A Standard compliant C++ preprocessor
 
-    Definition of the preprocessor context
-    
     Copyright (c) 2001-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -42,7 +40,7 @@ namespace cpp {
 //
 //      In addition, a call to the function 'set_sys_include_delimiter()' 
 //      inhibits the use of the current directory as the first search directory 
-//      for '#include "file"' directives. Therefor, the current directory is 
+//      for '#include "file"' directives. Therefore, the current directory is 
 //      searched only if it is requested explicitly with a call to the function
 //      'add_include_path(".")'. 
 //
@@ -52,7 +50,6 @@ namespace cpp {
 //      after.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 class include_pathes
 {
     typedef std::list<boost::filesystem::path> include_list_t;
