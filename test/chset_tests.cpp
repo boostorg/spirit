@@ -10,15 +10,13 @@
 =============================================================================*/
 #include <iostream>
 #include <cassert>
-#include <boost/test/included/unit_test_framework.hpp>
-#include "impl/util.ipp"
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/sstream.hpp"
 
 #include <boost/spirit/utility/chset.hpp>
 
 using namespace std;
 using namespace boost::spirit;
-namespace ut = boost::unit_test_framework;
 
 namespace
 {
@@ -318,31 +316,16 @@ namespace
                 getstring(bout);
         }
 
-        BOOST_CHECK(narrow_chset_works);
-        BOOST_CHECK(wide_chset_works);
+        BOOST_TEST(narrow_chset_works);
+        BOOST_TEST(wide_chset_works);
     }
 
 } // namespace
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Main
-//
-///////////////////////////////////////////////////////////////////////////////
-
-char const banner_name[]="Character set tests";
-char const suite_name[]="spirit::chset tests";
-
-ut::test_suite *
-init_unit_test_suite(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
-    test::init(argc, argv);
-    test::banner(banner_name);
-
-    ut::test_suite* suite = BOOST_TEST_SUITE(suite_name);
-
-    suite->add(BOOST_TEST_CASE(chset_tests));
-
-    return suite;
+    chset_tests();
+    return boost::report_errors();
 }
 

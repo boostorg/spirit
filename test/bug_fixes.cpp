@@ -8,7 +8,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/test/minimal.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
 
@@ -104,20 +104,20 @@ void bug_004()
 
     {
         chset<> set(~range<>(min, max));
-        BOOST_CHECK(set.test(min) == false);
-        BOOST_CHECK(set.test(min) == false);
+        BOOST_TEST(set.test(min) == false);
+        BOOST_TEST(set.test(min) == false);
     }
 
     {
         chset<> set(chset<>(anychar_p) & range<>(min, max));
-        BOOST_CHECK(set.test(min) == true);
-        BOOST_CHECK(set.test(min) == true);
+        BOOST_TEST(set.test(min) == true);
+        BOOST_TEST(set.test(min) == true);
     }
 
     {
         chset<> set(range<>(min, max) & chset<>(anychar_p));
-        BOOST_CHECK(set.test(min) == true);
-        BOOST_CHECK(set.test(min) == true);
+        BOOST_TEST(set.test(min) == true);
+        BOOST_TEST(set.test(min) == true);
     }
 }
 
@@ -133,24 +133,23 @@ void bug_004()
 
 using namespace std;
 using namespace boost;
-using namespace unit_test_framework;
 using namespace spirit;
 
 void bug_005()
 {
-    BOOST_CHECK(
+    BOOST_TEST(
         parse("   aaaaaaaaa     ", *ch_p('a'), space_p).full
     );
 
-    BOOST_CHECK(
+    BOOST_TEST(
         parse("   aaaaaaaaa     ", lexeme_d[*ch_p('a')], space_p).full
     );
 
-    BOOST_CHECK(
+    BOOST_TEST(
         parse("   aaaaaaaaa     ", *ch_p('a'), ch_p(' ')).full
     );
 
-    BOOST_CHECK(
+    BOOST_TEST(
         parse("   aaaaaaaaa     ", lexeme_d[*ch_p('a')], ch_p(' ')).full
     );
 }
@@ -167,7 +166,7 @@ void bug_005()
 
 void bug_006()
 {
-    BOOST_CHECK(parse("#some comment", comment_p('#')).full);
+    BOOST_TEST(parse("#some comment", comment_p('#')).full);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -182,9 +181,9 @@ void bug_006()
 
 void bug_007()
 {
-    BOOST_CHECK(parse("test ", str_p("test"), space_p).full);
-    BOOST_CHECK(pt_parse("test ", str_p("test"), space_p).full);
-    BOOST_CHECK(ast_parse("test ", str_p("test"), space_p).full);
+    BOOST_TEST(parse("test ", str_p("test"), space_p).full);
+    BOOST_TEST(pt_parse("test ", str_p("test"), space_p).full);
+    BOOST_TEST(ast_parse("test ", str_p("test"), space_p).full);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -220,7 +219,7 @@ void sf_bug_719322()
     basic_chset<int> s;
     s.set(3, 3);
     s.set(1, 5);
-    BOOST_CHECK(s.test(5));
+    BOOST_TEST(s.test(5));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -317,11 +316,11 @@ bug_009()
 {
     parse(
         "test"
-      , limit_d(1, 10)[uint_p] | str_p("test"));
+      , limit_d(1U, 10U)[uint_p] | str_p("test"));
 }
 
 int
-test_main(int, char *[])
+main()
 {
     bug_001();
     bug_002();
@@ -336,5 +335,5 @@ test_main(int, char *[])
     sf_bug_719322();
     sf_bug_742038();
 
-    return 0;
+    return boost::report_errors();
 }

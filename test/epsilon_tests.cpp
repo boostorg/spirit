@@ -12,17 +12,14 @@
 
 // This test program only includes the epsilon.hpp header from Spirit
 #include <boost/spirit/core/composite/epsilon.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/var.hpp"
-#include "impl/util.ipp"
 
-namespace ut = boost::unit_test_framework;
 using namespace test;
-
 static boost::spirit::parse_info<char const *> pi;
 
 ////////////////////////////////////////////////
-// These macros are used with BOOST_CHECK
+// These macros are used with BOOST_TEST
 #define matches (pi.hit)
 #define full_match (pi.hit && pi.full)
 #define partial_match (pi.hit && !pi.full)
@@ -38,13 +35,13 @@ parse(char const *s, ParserT const &p, bool match)
     pi = boost::spirit::parse(s, s+std::strlen(s), p);
     if (match)
     {
-        BOOST_CHECK(matches);
-        BOOST_CHECK(zero_length_match);
-        BOOST_CHECK(stop_equals_start);
+        BOOST_TEST(matches);
+        BOOST_TEST(zero_length_match);
+        BOOST_TEST(stop_equals_start);
     }
     else
     {
-        BOOST_CHECK(no_match);
+        BOOST_TEST(no_match);
     }
 }
 
@@ -61,14 +58,14 @@ epsilon_as_primitive()
     // both eps_p and epsilon_p are present.
 
     parse(empty, boost::spirit::epsilon_p, true);
-    BOOST_CHECK(full_match);
+    BOOST_TEST(full_match);
     parse(not_empty, boost::spirit::epsilon_p, true);
-    BOOST_CHECK(partial_match);
+    BOOST_TEST(partial_match);
 
     parse(empty, boost::spirit::eps_p, true);
-    BOOST_CHECK(full_match);
+    BOOST_TEST(full_match);
     parse(not_empty, boost::spirit::eps_p, true);
-    BOOST_CHECK(partial_match);
+    BOOST_TEST(partial_match);
 }
 
 ////////////////////////////////////////////////
@@ -80,11 +77,11 @@ epsilon_as_parser_generator_for_functors()
 {
     bool       flag = false;
     parse(empty, boost::spirit::epsilon_p(var(flag)), flag);
-    BOOST_CHECK(no_match);
+    BOOST_TEST(no_match);
 
     flag = true;
     parse(empty, boost::spirit::epsilon_p(var(flag)), flag);
-    BOOST_CHECK(full_match);
+    BOOST_TEST(full_match);
 }
 
 ////////////////////////////////////////////////
@@ -100,12 +97,12 @@ epsilon_as_parser_generator_for_parsers()
     bool        flag = false;
     parse(empty, boost::spirit::epsilon_p(
             boost::spirit::epsilon_p(var(flag))), flag);
-    BOOST_CHECK(no_match);
+    BOOST_TEST(no_match);
 
     flag = true;
     parse(empty, boost::spirit::epsilon_p(
             boost::spirit::epsilon_p(var(flag))), flag);
-    BOOST_CHECK(full_match);
+    BOOST_TEST(full_match);
 }
 
 ////////////////////////////////////////////////
@@ -115,31 +112,24 @@ negation_operator_for_epsilon()
 {
     bool       flag = false;
     parse(empty, ~boost::spirit::epsilon_p(var(flag)), !flag);
-    BOOST_CHECK(full_match);
+    BOOST_TEST(full_match);
     parse(empty, ~~boost::spirit::epsilon_p(var(flag)), flag);
-    BOOST_CHECK(no_match);
+    BOOST_TEST(no_match);
 
     flag = true;
     parse(empty, ~boost::spirit::epsilon_p(var(flag)), !flag);
-    BOOST_CHECK(no_match);
+    BOOST_TEST(no_match);
     parse(empty, ~~boost::spirit::epsilon_p(var(flag)), flag);
-    BOOST_CHECK(full_match);
+    BOOST_TEST(full_match);
 }
 
-////////////////////////////////////////////////
-// Definition of the test suite
-ut::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner("epsilon_tests");
+    epsilon_as_primitive();
+    epsilon_as_parser_generator_for_functors();
+    epsilon_as_parser_generator_for_parsers();
+    negation_operator_for_epsilon();
 
-    ut::test_suite* test= BOOST_TEST_SUITE( "spirit::epsilon tests" );
-
-    test->add(BOOST_TEST_CASE(epsilon_as_primitive));
-    test->add(BOOST_TEST_CASE(epsilon_as_parser_generator_for_functors));
-    test->add(BOOST_TEST_CASE(epsilon_as_parser_generator_for_parsers));
-    test->add(BOOST_TEST_CASE(negation_operator_for_epsilon));
-
-    return test;
+    return boost::report_errors();
 }
