@@ -127,7 +127,7 @@ private:
 //      This is a helper for generating a correct list_parser<> from
 //      auxiliary parameters. There are the following types supported as
 //      parameters yet: parsers, single characters and strings (see
-//      as_parser<> in parser_type.hpp).
+//      as_parser<> in meta/as_parser.hpp).
 //
 //      The list_parser_gen by itself can be used for parsing comma separated
 //      lists without item formatting:
