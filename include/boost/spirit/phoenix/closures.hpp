@@ -11,7 +11,7 @@
 #define PHOENIX_CLOSURES_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#include "actor.hpp"
+#include <boost/spirit/phoenix/actor.hpp>
 #include <cassert>
 
 #ifdef PHOENIX_THREADSAFE
