@@ -569,7 +569,6 @@ class inner
 
         bool input_at_eof() const
         {
-            ensure_initialized();
             return !data || data->input == InputT();
         }
 
