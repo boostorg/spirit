@@ -78,7 +78,7 @@ namespace impl {
 #if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
     template <typename ResultT>
     inline void
-    print_closure_info(ResultT const hit, int level, std::string const& name)
+    print_closure_info(ResultT const &hit, int level, std::string const& name)
     {
         if (!name.empty()) {
             for (int i = 0; i < level-1; ++i)

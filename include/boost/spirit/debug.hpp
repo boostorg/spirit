@@ -53,6 +53,7 @@
     #define BOOST_SPIRIT_DEBUG_FLAGS_NODES        0x0001  // node diagnostics
     #define BOOST_SPIRIT_DEBUG_FLAGS_ESCAPE_CHAR  0x0002  // escape_char_parse diagnostics
     #define BOOST_SPIRIT_DEBUG_FLAGS_TREES        0x0004  // parse tree/ast diagnostics
+    #define BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES     0x0008  // closure diagnostics
     #define BOOST_SPIRIT_DEBUG_FLAGS_SLEX         0x8000  // slex diagnostics
 
     #define BOOST_SPIRIT_DEBUG_FLAGS_MAX          0xFFFF  // print maximal diagnostics

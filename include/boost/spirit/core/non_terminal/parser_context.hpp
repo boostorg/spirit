@@ -35,6 +35,8 @@ namespace boost
     //
     ///////////////////////////////////////////////////////////////////////////
     struct nil_t;
+    template<typename ContextT> struct parser_context_linker;
+    
     struct parser_context
     {
         typedef nil_t attr_t;
