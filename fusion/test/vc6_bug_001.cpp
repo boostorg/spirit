@@ -15,7 +15,8 @@ test_main(int, char *[])
     tuple<int, char> t1(4, 'a');
     get<1>(t1);
 
-    tuple<nontrivial> t3(nontrivial());
+    nontrivial nt;
+    tuple<nontrivial> t3(nt);
     return 0;
 }
 

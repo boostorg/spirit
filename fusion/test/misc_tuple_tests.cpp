@@ -10,7 +10,7 @@
 #include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/sequence/get.hpp>
 #include <boost/spirit/fusion/sequence/tuple_size.hpp>
-#include <boost/spirit/fusion/sequence/is_tuple.hpp>
+#include <boost/spirit/fusion/sequence/is_sequence.hpp>
 
 int
 test_main(int, char *[])
@@ -33,17 +33,17 @@ test_main(int, char *[])
         BOOST_STATIC_ASSERT(tuple_size<t2>::value == 0);
     }
 
-    {   // testing is_tuple
+    {   // testing is_sequence
 
         typedef tuple<int, float, double> t1;
         typedef tuple<> t2;
         typedef tuple<char> t3;
 
-        BOOST_STATIC_ASSERT(is_tuple<t1>::value);
-        BOOST_STATIC_ASSERT(is_tuple<t2>::value);
-        BOOST_STATIC_ASSERT(is_tuple<t3>::value);
-        BOOST_STATIC_ASSERT(!is_tuple<int>::value);
-        BOOST_STATIC_ASSERT(!is_tuple<char>::value);
+        BOOST_STATIC_ASSERT(is_sequence<t1>::value);
+        BOOST_STATIC_ASSERT(is_sequence<t2>::value);
+        BOOST_STATIC_ASSERT(is_sequence<t3>::value);
+        BOOST_STATIC_ASSERT(!is_sequence<int>::value);
+        BOOST_STATIC_ASSERT(!is_sequence<char>::value);
     }
 
     return 0;
