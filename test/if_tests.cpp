@@ -20,6 +20,7 @@
 #include <boost/spirit/dynamic/if.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/ref.hpp>
+#include "impl/string_length.hpp"
 
 namespace local
 {
@@ -65,15 +66,15 @@ void
 test_number(char const *s, unsigned int wanted, rule_t const &r)
 {
     using namespace std;
-    using std::strlen;
+    
     ++test_count;
 
     number_result = wanted-1;
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+strlen(s), r);
+    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+string_length(s), r);
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
-    if (m.full && (m.length != strlen(s)))
+    if (m.full && (m.length != string_length(s)))
         result = bad;
 
 

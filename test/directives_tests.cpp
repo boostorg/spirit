@@ -12,6 +12,7 @@
 
 using namespace std;
 
+#include "impl/string_length.hpp"
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
 using namespace boost::spirit;
@@ -26,7 +27,7 @@ directives_test1()
 {
     char const* cpx = "H e l l o";
     char const* cpx_first = cpx;
-    char const* cpx_last = cpx + strlen(cpx);
+    char const* cpx_last = cpx + string_length(cpx);
 
     match<> hit;
     typedef skipper_iteration_policy<iteration_policy> iter_policy;
@@ -43,7 +44,7 @@ directives_test1()
 
     char const* cp = "Hello \n\tWorld";
     char const* cp_first = cp;
-    char const* cp_last = cp + strlen(cp);
+    char const* cp_last = cp + string_length(cp);
 
     scanner<char const*, scanner_policies<iter_policy> >
         scan(cp_first, cp_last);
@@ -80,7 +81,7 @@ directives_test1()
 
     char const* cpy = "123.456";
     char const* cpy_first = cpy;
-    char const* cpy_last = cpy + strlen(cpy);
+    char const* cpy_last = cpy + string_length(cpy);
 
     scanner<> scany(cpy_first, cpy_last);
     hit = longest_d[(+digit_p >> '.' >> +digit_p) | (+digit_p)].parse(scany);
@@ -95,7 +96,7 @@ directives_test1()
 
     char const* cpz = "razamanaz";
     char const* cpz_first = cpz;
-    char const* cpz_last = cpz + strlen(cpz);
+    char const* cpz_last = cpz + string_length(cpz);
 
     scanner<> scanz(cpz_first, cpz_last);
     hit = longest_d[str_p("raza") | "razaman" | "razamanaz"].parse(scanz);

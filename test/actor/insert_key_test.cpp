@@ -27,7 +27,7 @@ void insert_key_single_argument_test()
 
     const char* cp = "(one,0),(two,1),(three,2)";
     const char* cp_first = cp;
-    const char* cp_last = cp + strlen(cp);
+    const char* cp_last = cp + string_length(cp);
     const char* cp_i[] = {"one","two","three"};
     int i;
     typedef std::map<int,std::string> map_string_type;
@@ -69,7 +69,7 @@ void insert_key_two_arguments_test()
 
     const char* cp = "(0,one),(1,two),(2,three)";
     const char* cp_first = cp;
-    const char* cp_last = cp + strlen(cp);
+    const char* cp_last = cp + string_length(cp);
     const char* cp_i[] = {"one","two","three"};
     int i;
     typedef std::map<std::string, int> map_string_type;

@@ -24,7 +24,7 @@ void clear_action_test()
 
     const char* cp = "63";
     const char* cp_first = cp;
-    const char* cp_last = cp + strlen(cp);
+    const char* cp_last = cp + string_length(cp);
     std::vector<int> c;
     c.push_back(1);
 

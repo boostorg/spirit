@@ -13,13 +13,11 @@
 #include <iostream>
 #include <boost/config.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include "impl/util.ipp"
 
 #if !defined(BOOST_HAS_THREADS) || defined(DONT_HAVE_BOOST)
 static void skipped()
 {
-    if (test::verbose_runtests)
-        std::cout << "skipped\n";
+    std::cout << "skipped\n";
 }
 
 int
@@ -92,8 +90,7 @@ struct test_task
             if (test_size > maximum_test_size)
                 test_size = maximum_test_size;
         }
-        if (test::verbose_runtests)
-            std::cout << "increasing test size to " << test_size << "\n";
+
         return test_size;
     }
 
@@ -168,9 +165,6 @@ check_not_contained_in(
 void concurrent_creation_of_objects()
 {
     {
-        if (test::verbose_runtests)
-            std::cout << "preparing ..." << std::endl;
-
         boost::xtime_get(&start_time, boost::TIME_UTC);
         boost::thread thread1(boost::ref(test1));
         boost::thread thread2(boost::ref(test2));
@@ -193,9 +187,6 @@ void local_uniqueness()
 
 void local_ordering_and_uniqueness()
 {
-    if (test::verbose_runtests)
-        std::cout << "checking\n   ... local ordering and uniqueness\n";
-
     // now all objects should have unique ids,
     // the ids must be ascending within each vector
     // check for ascending ids
@@ -206,9 +197,6 @@ void local_ordering_and_uniqueness()
 
 void global_uniqueness()
 {
-    if (test::verbose_runtests)
-        std::cout << "   ... global uniqueness\n";
-
     check_not_contained_in(test1,test3);
     check_not_contained_in(test1,test2);
     check_not_contained_in(test2,test1);

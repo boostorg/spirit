@@ -21,7 +21,7 @@ void assign_test()
 
     const char* cp = "63";
     const char* cp_first = cp;
-    const char* cp_last = cp + strlen(cp);
+    const char* cp_last = cp + string_length(cp);
     int h=127;
     int hm=h;
 
@@ -39,10 +39,11 @@ void assign_test()
 void assign_test_ref()
 {
     using namespace boost::spirit;
+    
 
     const char* cp = "63";
     const char* cp_first = cp;
-    const char* cp_last = cp + strlen(cp);
+    const char* cp_last = cp + string_length(cp);
     int h=127;
     int hm=63;
 

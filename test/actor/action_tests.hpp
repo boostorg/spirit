@@ -9,6 +9,7 @@
 #ifndef BOOST_SPIRIT_ACTOR_TEST_HPP
 #define BOOST_SPIRIT_ACTOR_TEST_HPP
 #include <boost/detail/lightweight_test.hpp>
+#include "../impl/string_length.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Test suite for actors

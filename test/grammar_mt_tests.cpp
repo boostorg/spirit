@@ -9,16 +9,12 @@
 #include <iostream>
 #include <boost/config.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include "impl/util.ipp"
-
-using namespace test;
 
 #if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS)
 // we end here if we can't do multithreading
 static void skipped()
 {
-    if (test::verbose_runtests)
-        std::cout << "skipped\n";
+    std::cout << "skipped\n";
 }
 
 int

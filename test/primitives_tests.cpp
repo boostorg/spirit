@@ -8,11 +8,11 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
 
 using namespace std;
-
 #include <boost/spirit/core.hpp>
+#include <boost/detail/lightweight_test.hpp>
+#include "impl/string_length.hpp"
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,99 +25,99 @@ primitives_tests()
 {
     char const* cp = "xyz.Jambalaya";
     char const* cp_first = cp;
-    char const* cp_last = cp + strlen(cp);
+    char const* cp_last = cp + string_length(cp);
 
     chlit<> cpx('x');
     parse_info<char const*> pi = parse(cp_first, cp_last, cpx);
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 1);
-    assert(pi.stop == &cp[1]);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 1);
+    BOOST_TEST(pi.stop == &cp[1]);
 
     pi = parse(pi.stop, ch_p('y'));
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 1);
-    assert(pi.stop == &cp[2]);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 1);
+    BOOST_TEST(pi.stop == &cp[2]);
 
     scanner<char const*> scan(pi.stop, cp_last);
     match<char> hit = ch_p('z').parse(scan);
-    assert(hit);
-    assert(hit.value() == 'z');
-    assert(pi.stop == &cp[3]);
+    BOOST_TEST(hit);
+    BOOST_TEST(hit.value() == 'z');
+    BOOST_TEST(pi.stop == &cp[3]);
 
     pi = parse(pi.stop, eps_p);
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 0);
-    assert(pi.stop == &cp[3]);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 0);
+    BOOST_TEST(pi.stop == &cp[3]);
 
     pi = parse(pi.stop, nothing_p);
-    assert(!pi.hit);
-    assert(!pi.full);
-    assert(pi.stop == &cp[3]);
+    BOOST_TEST(!pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.stop == &cp[3]);
 
     pi = parse(pi.stop, anychar_p);
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 1);
-    assert(pi.stop == &cp[4]);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 1);
+    BOOST_TEST(pi.stop == &cp[4]);
 
     scan.first = pi.stop;
     hit = range_p('A','Z').parse(scan);
-    assert(hit);
-    assert(hit.value() == 'J');
-    assert(pi.stop == &cp[5]);
+    BOOST_TEST(hit);
+    BOOST_TEST(hit.value() == 'J');
+    BOOST_TEST(pi.stop == &cp[5]);
 
     strlit<char const*>     sp("ambalaya");
     strlit<wchar_t const*>  wsp(L"ambalaya");
 
     char const* save = pi.stop;
     pi = parse(save, sp);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 8);
-    assert(pi.stop == cp_last);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 8);
+    BOOST_TEST(pi.stop == cp_last);
 
     pi = parse(save, wsp);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 8);
-    assert(pi.stop == cp_last);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 8);
+    BOOST_TEST(pi.stop == cp_last);
 
     pi = parse("\n", eol_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("\r", eol_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("\r\n", eol_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("\n\r", eol_p);
-    assert(pi.hit);
-    assert(!pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
 
     pi = parse("", end_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("1", ~alpha_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("a", ~alpha_p);
-    assert(!pi.hit);
+    BOOST_TEST(!pi.hit);
 
     pi = parse("a", ~~alpha_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("1", ~~alpha_p);
-    assert(!pi.hit);
+    BOOST_TEST(!pi.hit);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -129,7 +129,8 @@ int
 main()
 {
     primitives_tests();
-    cout << "Tests concluded successfully\n";
-    return 0;
+    if (boost::report_errors() == 0)
+        cout << "Tests concluded successfully\n";
+    return boost::report_errors();
 }
 

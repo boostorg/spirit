@@ -30,7 +30,7 @@ void push_back_test()
 
     const char* cp = "one,two,three";
     const char* cp_first = cp;
-    const char* cp_last = cp + strlen(cp);
+    const char* cp_last = cp + string_length(cp);
     const char* cp_i[] = {"one","two","three"};
     int i;
     ContainerT c;

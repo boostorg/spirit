@@ -13,7 +13,6 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/symbols/symbols.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include "impl/util.ipp"
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;

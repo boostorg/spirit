@@ -9,7 +9,6 @@
 =============================================================================*/
 #include <boost/spirit/iterator/multi_pass.hpp>
 #include <iterator>
-#include "impl/util.ipp"
 #include "impl/sstream.hpp"
 #include <boost/detail/lightweight_test.hpp>
 

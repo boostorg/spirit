@@ -16,6 +16,8 @@
 #if qDebug
 #define BOOST_SPIRIT_DEBUG
 #endif
+
+#include "impl/string_length.hpp"
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/spirit/dynamic/while.hpp>
@@ -88,19 +90,19 @@ test_while(
     unsigned int iterations_wanted)
 {
     using namespace std;
-    using std::strlen;
+    
     ++test_count;
 
     number_result = 0;
     iterations_performed = 0;
 
-    boost::spirit::parse_info<> m = boost::spirit::parse(s, s+strlen(s), r);
+    boost::spirit::parse_info<> m = boost::spirit::parse(s, s+string_length(s), r);
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
     result &= iterations_performed == iterations_wanted;
 
-    if (m.full && (m.length != strlen(s)))
+    if (m.full && (m.length != string_length(s)))
         result = bad;
 
     if (result==good)

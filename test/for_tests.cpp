@@ -21,6 +21,7 @@
 #include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/spirit/dynamic/for.hpp>
 #include <boost/ref.hpp>
+#include "impl/string_length.hpp"
 
 namespace local
 {
@@ -93,16 +94,16 @@ test_for
 )
 {
     using namespace std;
-    using std::strlen;
+    
     ++test_count;
 
     iterations_performed = 0;
 
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+strlen(s), r);
+    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+string_length(s), r);
 
     bool result = (succeed==m.full)?good:bad;
 
-    if (m.full && (m.length != strlen(s)))
+    if (m.full && (m.length != string_length(s)))
         result = bad;
 
     result &= iterations_expected == iterations_performed;

@@ -21,7 +21,6 @@ using namespace boost::spirit;
 using namespace phoenix;
 
 #include <boost/detail/lightweight_test.hpp>
-#include "impl/util.ipp"
 
 ///////////////////////////////////////////////////////////////////////////////
 //

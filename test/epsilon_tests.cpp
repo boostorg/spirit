@@ -14,6 +14,7 @@
 #include <boost/spirit/core/composite/epsilon.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include "impl/var.hpp"
+#include "impl/string_length.hpp"
 
 using namespace test;
 static boost::spirit::parse_info<char const *> pi;
@@ -31,8 +32,8 @@ template<typename ParserT>
 static void
 parse(char const *s, ParserT const &p, bool match)
 {
-    using namespace std;
-    pi = boost::spirit::parse(s, s+std::strlen(s), p);
+    
+    pi = boost::spirit::parse(s, s+string_length(s), p);
     if (match)
     {
         BOOST_TEST(matches);
