@@ -1,0 +1,594 @@
+matched token CCOMMENT(#386): >/* this is a c comment */<
+matched token NEWLINE(#393): >
+<
+matched token CCOMMENT(#386): >/**/<
+matched token NEWLINE(#393): >
+<
+matched token CCOMMENT(#386): >/***/<
+matched token NEWLINE(#393): >
+<
+matched token CCOMMENT(#386): >/* now a multi-line c comment 
+  this is the second line */<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// a c++ comment
+<
+matched token CPPCOMMENT(#387): >// now for all the identifiers
+<
+matched token ASM(#305): >asm<
+matched token SPACE(#391): > <
+matched token AUTO(#306): >auto<
+matched token SPACE(#391): >     <
+matched token ASM(#305): >asm<
+matched token SPACE(#391): > <
+matched token AUTO(#306): >auto<
+matched token SPACE(#391): > <
+matched token BOOL(#307): >bool<
+matched token SPACE(#391): > <
+matched token BREAK(#310): >break<
+matched token SPACE(#391): > <
+matched token CASE(#311): >case<
+matched token SPACE(#391): > <
+matched token CATCH(#312): >catch<
+matched token SPACE(#391): > <
+matched token CHAR(#313): >char<
+matched token SPACE(#391): > <
+matched token CLASS(#314): >class<
+matched token SPACE(#391): > <
+matched token CONST(#315): >const<
+matched token SPACE(#391): > <
+matched token CONSTCAST(#316): >const_cast<
+matched token NEWLINE(#393): >
+<
+matched token CONTINUE(#317): >continue<
+matched token SPACE(#391): > <
+matched token DEFAULT(#318): >default<
+matched token SPACE(#391): > <
+matched token DELETE(#320): >delete<
+matched token SPACE(#391): > <
+matched token DO(#321): >do<
+matched token SPACE(#391): > <
+matched token DOUBLE(#322): >double<
+matched token SPACE(#391): > <
+matched token DYNAMICCAST(#323): >dynamic_cast<
+matched token SPACE(#391): > <
+matched token ELSE(#324): >else<
+matched token SPACE(#391): > <
+matched token ENUM(#325): >enum<
+matched token SPACE(#391): > <
+matched token EXPLICIT(#326): >explicit<
+matched token SPACE(#391): > <
+matched token EXPORT(#327): >export<
+matched token NEWLINE(#393): >
+<
+matched token EXTERN(#328): >extern<
+matched token SPACE(#391): > <
+matched token FALSE(#308): >false<
+matched token SPACE(#391): > <
+matched token FLOAT(#329): >float<
+matched token SPACE(#391): > <
+matched token FOR(#330): >for<
+matched token SPACE(#391): > <
+matched token FRIEND(#331): >friend<
+matched token SPACE(#391): > <
+matched token GOTO(#332): >goto<
+matched token SPACE(#391): > <
+matched token IF(#333): >if<
+matched token SPACE(#391): > <
+matched token INLINE(#334): >inline<
+matched token SPACE(#391): > <
+matched token INT(#335): >int<
+matched token SPACE(#391): > <
+matched token LONG(#336): >long<
+matched token SPACE(#391): > <
+matched token MUTABLE(#337): >mutable<
+matched token SPACE(#391): > <
+matched token NAMESPACE(#338): >namespace<
+matched token SPACE(#391): > <
+matched token NEW(#339): >new<
+matched token NEWLINE(#393): >
+<
+matched token OPERATOR(#340): >operator<
+matched token SPACE(#391): > <
+matched token PRIVATE(#341): >private<
+matched token SPACE(#391): > <
+matched token PROTECTED(#342): >protected<
+matched token SPACE(#391): > <
+matched token PUBLIC(#343): >public<
+matched token SPACE(#391): > <
+matched token REGISTER(#344): >register<
+matched token SPACE(#391): > <
+matched token REINTERPRETCAST(#345): >reinterpret_cast<
+matched token SPACE(#391): > <
+matched token RETURN(#346): >return<
+matched token SPACE(#391): > <
+matched token SHORT(#347): >short<
+matched token NEWLINE(#393): >
+<
+matched token SIGNED(#348): >signed<
+matched token SPACE(#391): > <
+matched token SIZEOF(#349): >sizeof<
+matched token SPACE(#391): > <
+matched token STATIC(#350): >static<
+matched token SPACE(#391): > <
+matched token STATICCAST(#351): >static_cast<
+matched token SPACE(#391): > <
+matched token STRUCT(#352): >struct<
+matched token SPACE(#391): > <
+matched token SWITCH(#353): >switch<
+matched token SPACE(#391): > <
+matched token TEMPLATE(#354): >template<
+matched token SPACE(#391): > <
+matched token THIS(#355): >this<
+matched token SPACE(#391): > <
+matched token THROW(#356): >throw<
+matched token SPACE(#391): > <
+matched token TRUE(#309): >true<
+matched token NEWLINE(#393): >
+<
+matched token TRY(#357): >try<
+matched token SPACE(#391): > <
+matched token TYPEDEF(#358): >typedef<
+matched token SPACE(#391): > <
+matched token TYPEID(#359): >typeid<
+matched token SPACE(#391): > <
+matched token TYPENAME(#360): >typename<
+matched token SPACE(#391): > <
+matched token UNION(#361): >union<
+matched token SPACE(#391): > <
+matched token UNSIGNED(#362): >unsigned<
+matched token SPACE(#391): > <
+matched token USING(#363): >using<
+matched token SPACE(#391): > <
+matched token VIRTUAL(#364): >virtual<
+matched token SPACE(#391): > <
+matched token VOID(#365): >void<
+matched token SPACE(#391): > <
+matched token VOLATILE(#366): >volatile<
+matched token NEWLINE(#393): >
+<
+matched token WCHART(#367): >wchar_t<
+matched token SPACE(#391): > <
+matched token WHILE(#368): >while<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// now here's the punctuation
+<
+matched token LEFTBRACE(#274): >{<
+matched token SPACE(#391): > <
+matched token LEFTBRACE(#274): >??<<
+matched token SPACE(#391): > <
+matched token LEFTBRACE(#274): ><%<
+matched token SPACE(#391): >            <
+matched token RIGHTBRACE(#293): >}<
+matched token SPACE(#391): >             <
+matched token RIGHTBRACE(#293): >??><
+matched token SPACE(#391): >           <
+matched token RIGHTBRACE(#293): >%><
+matched token SPACE(#391): >            <
+matched token LEFTBRACKET(#278): >[<
+matched token SPACE(#391): >             <
+matched token NEWLINE(#393): >
+<
+matched token LEFTBRACKET(#278): >??(<
+matched token SPACE(#391): >           <
+matched token LEFTBRACKET(#278): ><:<
+matched token SPACE(#391): >            <
+matched token RIGHTBRACKET(#295): >]<
+matched token SPACE(#391): >             <
+matched token RIGHTBRACKET(#295): >??)<
+matched token SPACE(#391): >           <
+matched token RIGHTBRACKET(#295): >:><
+matched token SPACE(#391): >            <
+matched token POUND(#395): >#<
+matched token NEWLINE(#393): >
+<
+matched token POUND(#395): >??=<
+matched token SPACE(#391): > <
+matched token POUND(#395): >%:<
+matched token SPACE(#391): > <
+matched token POUND_POUND(#394): >##<
+matched token SPACE(#391): >            <
+matched token POUND_POUND(#394): >#??=<
+matched token SPACE(#391): >          <
+matched token POUND_POUND(#394): >??=#<
+matched token SPACE(#391): >          <
+matched token POUND_POUND(#394): >??=??=<
+matched token SPACE(#391): >        <
+matched token POUND_POUND(#394): >%:%:<
+matched token SPACE(#391): >          <
+matched token NEWLINE(#393): >
+<
+matched token LEFTPAREN(#277): >(<
+matched token SPACE(#391): >             <
+matched token RIGHTPAREN(#294): >)<
+matched token SPACE(#391): >             <
+matched token SEMICOLON(#297): >;<
+matched token SPACE(#391): >             <
+matched token COLON(#265): >:<
+matched token SPACE(#391): >             <
+matched token ELLIPSIS(#270): >...<
+matched token SPACE(#391): >           <
+matched token NEWLINE(#393): >
+<
+matched token QUESTION_MARK(#292): >?<
+matched token SPACE(#391): >             <
+matched token COLON_COLON(#296): >::<
+matched token SPACE(#391): >            <
+matched token DOT(#268): >.<
+matched token SPACE(#391): >             <
+matched token DOTSTAR(#269): >.*<
+matched token SPACE(#391): >            <
+matched token PLUS(#287): >+<
+matched token SPACE(#391): >             <
+matched token NEWLINE(#393): >
+<
+matched token MINUS(#279): >-<
+matched token SPACE(#391): >             <
+matched token STAR(#302): >*<
+matched token SPACE(#391): >             <
+matched token DIVIDE(#266): >/<
+matched token SPACE(#391): >             <
+matched token PERCENT(#282): >%<
+matched token SPACE(#391): >             <
+matched token XOR(#262): >^<
+matched token SPACE(#391): >             <
+matched token NEWLINE(#393): >
+<
+matched token XOR(#262): >??'<
+matched token SPACE(#391): >           <
+matched token XOR(#262): >xor<
+matched token SPACE(#391): > <
+matched token AND(#256): >&<
+matched token SPACE(#391): >             <
+matched token AND(#256): >bitand<
+matched token SPACE(#391): > <
+matched token OR(#260): >|<
+matched token SPACE(#391): >             <
+matched token OR(#260): >bitor<
+matched token NEWLINE(#393): >
+<
+matched token OR(#260): >??!<
+matched token SPACE(#391): >           <
+matched token COMPL(#303): >~<
+matched token SPACE(#391): >             <
+matched token COMPL(#303): >??-<
+matched token SPACE(#391): >           <
+matched token COMPL(#303): >compl<
+matched token SPACE(#391): > <
+matched token NOT(#284): >!<
+matched token SPACE(#391): >             <
+matched token NOT(#284): >not<
+matched token NEWLINE(#393): >
+<
+matched token ASSIGN(#258): >=<
+matched token SPACE(#391): >             <
+matched token LESS(#275): ><<
+matched token SPACE(#391): >             <
+matched token GREATER(#272): >><
+matched token SPACE(#391): >             <
+matched token PLUSASSIGN(#288): >+=<
+matched token SPACE(#391): >            <
+matched token MINUSASSIGN(#280): >-=<
+matched token SPACE(#391): >            <
+matched token NEWLINE(#393): >
+<
+matched token STARASSIGN(#304): >*=<
+matched token SPACE(#391): >            <
+matched token DIVIDEASSIGN(#267): >/=<
+matched token SPACE(#391): >            <
+matched token PERCENTASSIGN(#283): >%=<
+matched token SPACE(#391): >            <
+matched token XORASSIGN(#263): >^=<
+matched token SPACE(#391): >            <
+matched token XORASSIGN(#263): >xor_eq<
+matched token NEWLINE(#393): >
+<
+matched token XORASSIGN(#263): >??'=<
+matched token SPACE(#391): >          <
+matched token ANDASSIGN(#259): >&=<
+matched token SPACE(#391): >            <
+matched token ANDASSIGN(#259): >and_eq<
+matched token SPACE(#391): > <
+matched token ORASSIGN(#261): >|=<
+matched token SPACE(#391): >            <
+matched token ORASSIGN(#261): >or_eq<
+matched token SPACE(#391): > <
+matched token ORASSIGN(#261): >??!=<
+matched token SPACE(#391): >          <
+matched token NEWLINE(#393): >
+<
+matched token SHIFTLEFT(#298): ><<<
+matched token SPACE(#391): >            <
+matched token SHIFTRIGHT(#300): >>><
+matched token SPACE(#391): >            <
+matched token SHIFTRIGHTASSIGN(#301): >>>=<
+matched token SPACE(#391): >           <
+matched token SHIFTLEFTASSIGN(#299): ><<=<
+matched token SPACE(#391): >           <
+matched token EQUAL(#271): >==<
+matched token SPACE(#391): >            <
+matched token NOTEQUAL(#285): >!=<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// here's some identifiers
+<
+matched token IDENTIFIER(#380): >ident<
+matched token NEWLINE(#393): >
+<
+matched token IDENTIFIER(#380): >ident1<
+matched token NEWLINE(#393): >
+<
+matched token IDENTIFIER(#380): >ident1a<
+matched token NEWLINE(#393): >
+<
+matched token IDENTIFIER(#380): >_ident<
+matched token NEWLINE(#393): >
+<
+matched token IDENTIFIER(#380): >IdEnT_A<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// hex ints
+<
+matched token INTLIT(#384): >0x123a<
+matched token NEWLINE(#393): >
+<
+matched token INTLIT(#384): >0X123B<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// octal ints
+<
+matched token INTLIT(#384): >0<
+matched token NEWLINE(#393): >
+<
+matched token INTLIT(#384): >012375423<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// decimal ints
+<
+matched token INTLIT(#384): >1<
+matched token NEWLINE(#393): >
+<
+matched token INTLIT(#384): >1234999<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// ints with suffixes
+<
+matched token INTLIT(#384): >123l<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123L<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123u<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123U<
+matched token NEWLINE(#393): >
+<
+matched token INTLIT(#384): >123ul<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123uL<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123Ul<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123UL<
+matched token NEWLINE(#393): >
+<
+matched token INTLIT(#384): >123lu<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123Lu<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123lU<
+matched token SPACE(#391): > <
+matched token INTLIT(#384): >123LU<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// floats
+<
+matched token FLOATLIT(#385): >.123<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >1.1<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >1.<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >.123e345<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >1.1E+2<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >1.e-5<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >22e3<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >33E+4<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >43e-3<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >.123f<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >1.1F<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >1.l<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >.123e345L<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >1.1E+2fl<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >1.e-5fL<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >22e3Fl<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >33E+4FL<
+matched token NEWLINE(#393): >
+<
+matched token FLOATLIT(#385): >43e-3lf<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >.123Lf<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >1.1lF<
+matched token SPACE(#391): > <
+matched token FLOATLIT(#385): >1.LF<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// chars
+<
+matched token CHARLIT(#388): >'a'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'0'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'"'<
+matched token NEWLINE(#393): >
+<
+matched token CHARLIT(#388): >L'a'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >L'0'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >L'"'<
+matched token NEWLINE(#393): >
+<
+matched token CHARLIT(#388): >'\a'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'??/b'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\f'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'??/n'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\r'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\t'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\v'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\?'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\''<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\"'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\\'<
+matched token NEWLINE(#393): >
+<
+matched token CHARLIT(#388): >'\x1'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\xaBcD123'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\1'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\12'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\123'<
+matched token NEWLINE(#393): >
+<
+matched token CHARLIT(#388): >'\u1234'<
+matched token SPACE(#391): > <
+matched token CHARLIT(#388): >'\UABCD1234'<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// Strings
+<
+matched token STRINGLIT(#389): >""<
+matched token SPACE(#391): > <
+matched token STRINGLIT(#389): >"a"<
+matched token SPACE(#391): > <
+matched token STRINGLIT(#389): >"01234"<
+matched token SPACE(#391): > <
+matched token STRINGLIT(#389): >"'"<
+matched token NEWLINE(#393): >
+<
+matched token STRINGLIT(#389): >L""<
+matched token SPACE(#391): > <
+matched token STRINGLIT(#389): >L"a"<
+matched token SPACE(#391): > <
+matched token STRINGLIT(#389): >L"01234"<
+matched token SPACE(#391): > <
+matched token STRINGLIT(#389): >L"'"<
+matched token NEWLINE(#393): >
+<
+matched token STRINGLIT(#389): >"\a??/b\f??/n\r\t\v\?\'\"\\"<
+matched token NEWLINE(#393): >
+<
+matched token STRINGLIT(#389): >"\x1\xaBcD123\1\12\123"<
+matched token NEWLINE(#393): >
+<
+matched token STRINGLIT(#389): >"\u1234\UABCD1234"<
+matched token NEWLINE(#393): >
+<
+matched token STRINGLIT(#389): >"/* a faked c comment */"<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CPPCOMMENT(#387): >// pre-processor directives
+<
+matched token PP_HHEADER(#399): >#include <io.h><
+matched token NEWLINE(#393): >
+<
+matched token SPACE(#391): >    <
+matched token PP_QHEADER(#398): >#   include"r.h"<
+matched token NEWLINE(#393): >
+<
+matched token PP_INCLUDE(#397): >#include <
+matched token IDENTIFIER(#380): >SOME_HEADER<
+matched token NEWLINE(#393): >
+<
+matched token PP_IF(#370): >#if<
+matched token NEWLINE(#393): >
+<
+matched token PP_IFDEF(#371): >#ifdef<
+matched token NEWLINE(#393): >
+<
+matched token PP_IFNDEF(#372): >#ifndef<
+matched token NEWLINE(#393): >
+<
+matched token PP_ELIF(#373): >#elif<
+matched token NEWLINE(#393): >
+<
+matched token PP_ENDIF(#374): >#endif<
+matched token NEWLINE(#393): >
+<
+matched token PP_DEFINE(#369): >#define<
+matched token NEWLINE(#393): >
+<
+matched token PP_UNDEF(#378): >#undef<
+matched token NEWLINE(#393): >
+<
+matched token PP_LINE(#376): >#line<
+matched token NEWLINE(#393): >
+<
+matched token PP_ERROR(#375): >#error<
+matched token NEWLINE(#393): >
+<
+matched token PP_PRAGMA(#377): >#pragma<
+matched token NEWLINE(#393): >
+<
+matched token NEWLINE(#393): >
+<
+matched token CCOMMENT(#386): >/* another c comment */<
+matched token NEWLINE(#393): >
+<

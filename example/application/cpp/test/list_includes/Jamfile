@@ -1,0 +1,12 @@
+subproject libs/spirit/example/application/cpp/test/list_includes ;
+
+exe list_includes : 
+		list_includes.cpp
+		instantiate_cpp_grammar.cpp
+		instantiate_slex_lexer.cpp
+		instantiate_re2c_lexer.cpp
+	:	<include>../..
+		<sysinclude>$(BOOST_ROOT)
+		<lib>program_options
+		<lib>fs
+	;

@@ -1,0 +1,92 @@
+Thu Jan 29 21:13:32  2003
+- Fixed exception handling to report the correct error position
+- Fixed another bug in the stream position calculation scheme
+- Added a more elaborate sample 'list_includes' which lists the dependency
+  information for a given source file (see test/list_includes/readme.txt).
+
+Thu Jan 18 22:01:03  2003
+- Fixed a bug in the stream position calculation scheme
+- Made cpp::exceptions more standard conformant (added 'throw()' at appropriate 
+  places)
+- Overall housekeeping :-)
+
+Thu Jan 15 21:54:20  2003
+Changes since project start (still 0.5.0)
+- Added #include <...> and #include "..." functionality
+- pp directives are now generally recognized 
+- Decoupled the C++ lexers and the pp grammar to separate compilation
+  units (optionally) to speed up compilation (a lot!)
+
+Thu Jan  2 12:39:30  2003
+A completely new version 0.5.0 of the C preprocessor was startet. It's a 
+complete rewrite of the existing code base. The main differences are:
+- The preprocessor is now implemented as an iterator, which returns the 
+  current preprocessed token from the input stream.
+- The preprocessing of include files isn't implemented through recursion
+  anymore. This follows directly from the first change. As a result of this
+  change the internal error handling is simplified.
+- The C preprocessor iterator itself is feeded by a new unified C++ lexer 
+  iterator. BTW, this C++ lexer iterator could be used standalone and is not 
+  tied to the C preprocessor. There are two different C++ lexers implemented 
+  now, which are functionally completely identical. These expose a similar
+  interface, so the C preprocessor could be used with both of them.
+- The C++ lexers integrated into the C preprocessor by now are:
+    Slex:   A spirit based table driven regular expression lexer (the slex 
+            engine originally was written by Dan Nuffer and is available as a
+            separate Spirit sample).
+    Re2c:   A C++ lexer generated with the help of the re2c tool. This C++
+            lexer was written as a sample by Dan Nuffer too.
+  It isn't hard to plug in additional different C++ lexers. There are plans to
+  integrate a third one written by Juan Carlos Arevalo-Baeza, which is 
+  available as a Spirit sample.
+  
+-------------------------------------------------------------------------------
+Tue Feb 12 22:29:50  2002
+Changes from 0.2.3 to 0.2.4:
+- Moved XML dumping functions to the main Spirit directory
+- Fixed operator '##', it was not correctly implemented somehow :-(
+
+Sun Feb 10 21:07:19  2002
+Changes from 0.2.2 to 0.2.3:
+- Implemented concatenation operator '##' (cpp.concat)
+- Removed defined() functionality for Intel compiler (it ICE's) until this 
+  issue is resolved
+- Separated code for dumping a parsetree to XML for inclusion in the main
+  Spirit headers
+
+Thu Jan 17 23:51:21  2002
+Changes from 0.2.1 to 0.2.2:
+- Fixes to compile with gcc 2.95.2 and gcc 3.0.2 (thanks Dan Nuffer)
+- Reformatted the grammars to conform to a single formatting guideline
+- Assigned explicit rule_id's to the rules of cpp_grammar, so that the 
+  access code to the embedded definition class is not needed anymore
+- Fixed a remaining const problem
+
+Tue Jan 15 23:40:40  2002
+Changes from 0.2.0 to 0.2.1:
+- Corrected handling of defined() operator
+- In preprocessing conditionals undefined identifiers now correctly
+  replaced by '0'
+- Fixed several const problems
+- Added parse_node_iterator for traversing one node in a parse_tree
+  without going deeper down the hierarchy than one level (this is useful,
+  if all inspected tokens arranged along a single node in the parse tree.
+  The main difference to the parse_tree_iterator is, that the underlying
+  iterator generally can be adjusted correctly after advancing the attached
+  parse_node_iterator
+- Fixed a problem with gcc 2.95.2, which doesn't have a <sstream> header
+- Prepared usage of slex for lexer states
+
+Sun Jan 13 10:21:16  2002
+Changes from 0.1.0 to 0.2.0:
+- Added operator 'defined()'
+- Added directive '#warning'
+- Corrected error reporting
+- Added command line option -I- for finer control of the searched include
+  directories (-I and -I- should now work as in gcc, see readme.html for 
+  more info)
+- Corrected conditional preprocessing (should be fully functional now)
+- Fixed existing codebase for changes made in parse tree support
+- Moved parse tree utility functions to a separate header (prepaired for 
+  inclusion to the Spirit main library)
+

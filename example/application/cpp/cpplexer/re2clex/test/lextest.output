@@ -1,0 +1,594 @@
+ 130         CCOMMENT Line:     1 >/* this is a c comment */<
+ 137          NEWLINE Line:     2 >
+<
+ 130         CCOMMENT Line:     2 >/**/<
+ 137          NEWLINE Line:     3 >
+<
+ 130         CCOMMENT Line:     3 >/***/<
+ 137          NEWLINE Line:     4 >
+<
+ 130         CCOMMENT Line:     5 >/* now a multi-line c comment 
+  this is the second line */<
+ 137          NEWLINE Line:     6 >
+<
+ 131       CPPCOMMENT Line:     7 >// a c++ comment
+<
+ 131       CPPCOMMENT Line:     8 >// now for all the identifiers
+<
+  49              ASM Line:     8 >asm<
+ 135            SPACE Line:     8 > <
+  50             AUTO Line:     8 >auto<
+ 135            SPACE Line:     8 >     <
+  49              ASM Line:     8 >asm<
+ 135            SPACE Line:     8 > <
+  50             AUTO Line:     8 >auto<
+ 135            SPACE Line:     8 > <
+  51             BOOL Line:     8 >bool<
+ 135            SPACE Line:     8 > <
+  54            BREAK Line:     8 >break<
+ 135            SPACE Line:     8 > <
+  55             CASE Line:     8 >case<
+ 135            SPACE Line:     8 > <
+  56            CATCH Line:     8 >catch<
+ 135            SPACE Line:     8 > <
+  57             CHAR Line:     8 >char<
+ 135            SPACE Line:     8 > <
+  58            CLASS Line:     8 >class<
+ 135            SPACE Line:     8 > <
+  59            CONST Line:     8 >const<
+ 135            SPACE Line:     8 > <
+  60        CONSTCAST Line:     8 >const_cast<
+ 137          NEWLINE Line:     9 >
+<
+  61         CONTINUE Line:     9 >continue<
+ 135            SPACE Line:     9 > <
+  62          DEFAULT Line:     9 >default<
+ 135            SPACE Line:     9 > <
+  64           DELETE Line:     9 >delete<
+ 135            SPACE Line:     9 > <
+  65               DO Line:     9 >do<
+ 135            SPACE Line:     9 > <
+  66           DOUBLE Line:     9 >double<
+ 135            SPACE Line:     9 > <
+  67      DYNAMICCAST Line:     9 >dynamic_cast<
+ 135            SPACE Line:     9 > <
+  68             ELSE Line:     9 >else<
+ 135            SPACE Line:     9 > <
+  69             ENUM Line:     9 >enum<
+ 135            SPACE Line:     9 > <
+  70         EXPLICIT Line:     9 >explicit<
+ 135            SPACE Line:     9 > <
+  71           EXPORT Line:     9 >export<
+ 137          NEWLINE Line:    10 >
+<
+  72           EXTERN Line:    10 >extern<
+ 135            SPACE Line:    10 > <
+  52            FALSE Line:    10 >false<
+ 135            SPACE Line:    10 > <
+  73            FLOAT Line:    10 >float<
+ 135            SPACE Line:    10 > <
+  74              FOR Line:    10 >for<
+ 135            SPACE Line:    10 > <
+  75           FRIEND Line:    10 >friend<
+ 135            SPACE Line:    10 > <
+  76             GOTO Line:    10 >goto<
+ 135            SPACE Line:    10 > <
+  77               IF Line:    10 >if<
+ 135            SPACE Line:    10 > <
+  78           INLINE Line:    10 >inline<
+ 135            SPACE Line:    10 > <
+  79              INT Line:    10 >int<
+ 135            SPACE Line:    10 > <
+  80             LONG Line:    10 >long<
+ 135            SPACE Line:    10 > <
+  81          MUTABLE Line:    10 >mutable<
+ 135            SPACE Line:    10 > <
+  82        NAMESPACE Line:    10 >namespace<
+ 135            SPACE Line:    10 > <
+  83              NEW Line:    10 >new<
+ 137          NEWLINE Line:    11 >
+<
+  84         OPERATOR Line:    11 >operator<
+ 135            SPACE Line:    11 > <
+  85          PRIVATE Line:    11 >private<
+ 135            SPACE Line:    11 > <
+  86        PROTECTED Line:    11 >protected<
+ 135            SPACE Line:    11 > <
+  87           PUBLIC Line:    11 >public<
+ 135            SPACE Line:    11 > <
+  88         REGISTER Line:    11 >register<
+ 135            SPACE Line:    11 > <
+  89  REINTERPRETCAST Line:    11 >reinterpret_cast<
+ 135            SPACE Line:    11 > <
+  90           RETURN Line:    11 >return<
+ 135            SPACE Line:    11 > <
+  91            SHORT Line:    11 >short<
+ 137          NEWLINE Line:    12 >
+<
+  92           SIGNED Line:    12 >signed<
+ 135            SPACE Line:    12 > <
+  93           SIZEOF Line:    12 >sizeof<
+ 135            SPACE Line:    12 > <
+  94           STATIC Line:    12 >static<
+ 135            SPACE Line:    12 > <
+  95       STATICCAST Line:    12 >static_cast<
+ 135            SPACE Line:    12 > <
+  96           STRUCT Line:    12 >struct<
+ 135            SPACE Line:    12 > <
+  97           SWITCH Line:    12 >switch<
+ 135            SPACE Line:    12 > <
+  98         TEMPLATE Line:    12 >template<
+ 135            SPACE Line:    12 > <
+  99             THIS Line:    12 >this<
+ 135            SPACE Line:    12 > <
+ 100            THROW Line:    12 >throw<
+ 135            SPACE Line:    12 > <
+  53             TRUE Line:    12 >true<
+ 137          NEWLINE Line:    13 >
+<
+ 101              TRY Line:    13 >try<
+ 135            SPACE Line:    13 > <
+ 102          TYPEDEF Line:    13 >typedef<
+ 135            SPACE Line:    13 > <
+ 103           TYPEID Line:    13 >typeid<
+ 135            SPACE Line:    13 > <
+ 104         TYPENAME Line:    13 >typename<
+ 135            SPACE Line:    13 > <
+ 105            UNION Line:    13 >union<
+ 135            SPACE Line:    13 > <
+ 106         UNSIGNED Line:    13 >unsigned<
+ 135            SPACE Line:    13 > <
+ 107            USING Line:    13 >using<
+ 135            SPACE Line:    13 > <
+ 108          VIRTUAL Line:    13 >virtual<
+ 135            SPACE Line:    13 > <
+ 109             VOID Line:    13 >void<
+ 135            SPACE Line:    13 > <
+ 110         VOLATILE Line:    13 >volatile<
+ 137          NEWLINE Line:    14 >
+<
+ 111           WCHART Line:    14 >wchar_t<
+ 135            SPACE Line:    14 > <
+ 112            WHILE Line:    14 >while<
+ 137          NEWLINE Line:    15 >
+<
+ 137          NEWLINE Line:    16 >
+<
+ 131       CPPCOMMENT Line:    17 >// now here's the punctuation
+<
+  18        LEFTBRACE Line:    17 >{<
+ 135            SPACE Line:    17 > <
+  18        LEFTBRACE Line:    17 >??<<
+ 135            SPACE Line:    17 > <
+  18        LEFTBRACE Line:    17 ><%<
+ 135            SPACE Line:    17 >            <
+  37       RIGHTBRACE Line:    17 >}<
+ 135            SPACE Line:    17 >             <
+  37       RIGHTBRACE Line:    17 >??><
+ 135            SPACE Line:    17 >           <
+  37       RIGHTBRACE Line:    17 >%><
+ 135            SPACE Line:    17 >            <
+  22      LEFTBRACKET Line:    17 >[<
+ 135            SPACE Line:    17 >             <
+ 137          NEWLINE Line:    18 >
+<
+  22      LEFTBRACKET Line:    18 >??(<
+ 135            SPACE Line:    18 >           <
+  22      LEFTBRACKET Line:    18 ><:<
+ 135            SPACE Line:    18 >            <
+  39     RIGHTBRACKET Line:    18 >]<
+ 135            SPACE Line:    18 >             <
+  39     RIGHTBRACKET Line:    18 >??)<
+ 135            SPACE Line:    18 >           <
+  39     RIGHTBRACKET Line:    18 >:><
+ 135            SPACE Line:    18 >            <
+ 139            POUND Line:    18 >#<
+ 137          NEWLINE Line:    19 >
+<
+ 139            POUND Line:    19 >??=<
+ 135            SPACE Line:    19 > <
+ 139            POUND Line:    19 >%:<
+ 135            SPACE Line:    19 > <
+ 138      POUND_POUND Line:    19 >##<
+ 135            SPACE Line:    19 >            <
+ 138      POUND_POUND Line:    19 >#??=<
+ 135            SPACE Line:    19 >          <
+ 138      POUND_POUND Line:    19 >??=#<
+ 135            SPACE Line:    19 >          <
+ 138      POUND_POUND Line:    19 >??=??=<
+ 135            SPACE Line:    19 >        <
+ 138      POUND_POUND Line:    19 >%:%:<
+ 135            SPACE Line:    19 >          <
+ 137          NEWLINE Line:    20 >
+<
+  21        LEFTPAREN Line:    20 >(<
+ 135            SPACE Line:    20 >             <
+  38       RIGHTPAREN Line:    20 >)<
+ 135            SPACE Line:    20 >             <
+  41        SEMICOLON Line:    20 >;<
+ 135            SPACE Line:    20 >             <
+   9            COLON Line:    20 >:<
+ 135            SPACE Line:    20 >             <
+  14         ELLIPSIS Line:    20 >...<
+ 135            SPACE Line:    20 >           <
+ 137          NEWLINE Line:    21 >
+<
+  36    QUESTION_MARK Line:    21 >?<
+ 135            SPACE Line:    21 >             <
+  40      COLON_COLON Line:    21 >::<
+ 135            SPACE Line:    21 >            <
+  12              DOT Line:    21 >.<
+ 135            SPACE Line:    21 >             <
+  13          DOTSTAR Line:    21 >.*<
+ 135            SPACE Line:    21 >            <
+  31             PLUS Line:    21 >+<
+ 135            SPACE Line:    21 >             <
+ 137          NEWLINE Line:    22 >
+<
+  23            MINUS Line:    22 >-<
+ 135            SPACE Line:    22 >             <
+  46             STAR Line:    22 >*<
+ 135            SPACE Line:    22 >             <
+  10           DIVIDE Line:    22 >/<
+ 135            SPACE Line:    22 >             <
+  26          PERCENT Line:    22 >%<
+ 135            SPACE Line:    22 >             <
+   6              XOR Line:    22 >^<
+ 135            SPACE Line:    22 >             <
+ 137          NEWLINE Line:    23 >
+<
+   6              XOR Line:    23 >??'<
+ 135            SPACE Line:    23 >           <
+   6              XOR Line:    23 >xor<
+ 135            SPACE Line:    23 > <
+   0              AND Line:    23 >&<
+ 135            SPACE Line:    23 >             <
+   0              AND Line:    23 >bitand<
+ 135            SPACE Line:    23 > <
+   4               OR Line:    23 >|<
+ 135            SPACE Line:    23 >             <
+   4               OR Line:    23 >bitor<
+ 137          NEWLINE Line:    24 >
+<
+   4               OR Line:    24 >??!<
+ 135            SPACE Line:    24 >           <
+  47            COMPL Line:    24 >~<
+ 135            SPACE Line:    24 >             <
+  47            COMPL Line:    24 >??-<
+ 135            SPACE Line:    24 >           <
+  47            COMPL Line:    24 >compl<
+ 135            SPACE Line:    24 > <
+  28              NOT Line:    24 >!<
+ 135            SPACE Line:    24 >             <
+  28              NOT Line:    24 >not<
+ 137          NEWLINE Line:    25 >
+<
+   2           ASSIGN Line:    25 >=<
+ 135            SPACE Line:    25 >             <
+  19             LESS Line:    25 ><<
+ 135            SPACE Line:    25 >             <
+  16          GREATER Line:    25 >><
+ 135            SPACE Line:    25 >             <
+  32       PLUSASSIGN Line:    25 >+=<
+ 135            SPACE Line:    25 >            <
+  24      MINUSASSIGN Line:    25 >-=<
+ 135            SPACE Line:    25 >            <
+ 137          NEWLINE Line:    26 >
+<
+  48       STARASSIGN Line:    26 >*=<
+ 135            SPACE Line:    26 >            <
+  11     DIVIDEASSIGN Line:    26 >/=<
+ 135            SPACE Line:    26 >            <
+  27    PERCENTASSIGN Line:    26 >%=<
+ 135            SPACE Line:    26 >            <
+   7        XORASSIGN Line:    26 >^=<
+ 135            SPACE Line:    26 >            <
+   7        XORASSIGN Line:    26 >xor_eq<
+ 137          NEWLINE Line:    27 >
+<
+   7        XORASSIGN Line:    27 >??'=<
+ 135            SPACE Line:    27 >          <
+   3        ANDASSIGN Line:    27 >&=<
+ 135            SPACE Line:    27 >            <
+   3        ANDASSIGN Line:    27 >and_eq<
+ 135            SPACE Line:    27 > <
+   5         ORASSIGN Line:    27 >|=<
+ 135            SPACE Line:    27 >            <
+   5         ORASSIGN Line:    27 >or_eq<
+ 135            SPACE Line:    27 > <
+   5         ORASSIGN Line:    27 >??!=<
+ 135            SPACE Line:    27 >          <
+ 137          NEWLINE Line:    28 >
+<
+  42        SHIFTLEFT Line:    28 ><<<
+ 135            SPACE Line:    28 >            <
+  44       SHIFTRIGHT Line:    28 >>><
+ 135            SPACE Line:    28 >            <
+  45 SHIFTRIGHTASSIGN Line:    28 >>>=<
+ 135            SPACE Line:    28 >           <
+  43  SHIFTLEFTASSIGN Line:    28 ><<=<
+ 135            SPACE Line:    28 >           <
+  15            EQUAL Line:    28 >==<
+ 135            SPACE Line:    28 >            <
+  29         NOTEQUAL Line:    28 >!=<
+ 137          NEWLINE Line:    29 >
+<
+ 137          NEWLINE Line:    30 >
+<
+ 131       CPPCOMMENT Line:    31 >// here's some identifiers
+<
+ 124       IDENTIFIER Line:    31 >ident<
+ 137          NEWLINE Line:    32 >
+<
+ 124       IDENTIFIER Line:    32 >ident1<
+ 137          NEWLINE Line:    33 >
+<
+ 124       IDENTIFIER Line:    33 >ident1a<
+ 137          NEWLINE Line:    34 >
+<
+ 124       IDENTIFIER Line:    34 >_ident<
+ 137          NEWLINE Line:    35 >
+<
+ 124       IDENTIFIER Line:    35 >IdEnT_A<
+ 137          NEWLINE Line:    36 >
+<
+ 137          NEWLINE Line:    37 >
+<
+ 131       CPPCOMMENT Line:    38 >// hex ints
+<
+ 128           INTLIT Line:    38 >0x123a<
+ 137          NEWLINE Line:    39 >
+<
+ 128           INTLIT Line:    39 >0X123B<
+ 137          NEWLINE Line:    40 >
+<
+ 137          NEWLINE Line:    41 >
+<
+ 131       CPPCOMMENT Line:    42 >// octal ints
+<
+ 128           INTLIT Line:    42 >0<
+ 137          NEWLINE Line:    43 >
+<
+ 128           INTLIT Line:    43 >012375423<
+ 137          NEWLINE Line:    44 >
+<
+ 137          NEWLINE Line:    45 >
+<
+ 131       CPPCOMMENT Line:    46 >// decimal ints
+<
+ 128           INTLIT Line:    46 >1<
+ 137          NEWLINE Line:    47 >
+<
+ 128           INTLIT Line:    47 >1234999<
+ 137          NEWLINE Line:    48 >
+<
+ 137          NEWLINE Line:    49 >
+<
+ 131       CPPCOMMENT Line:    50 >// ints with suffixes
+<
+ 128           INTLIT Line:    50 >123l<
+ 135            SPACE Line:    50 > <
+ 128           INTLIT Line:    50 >123L<
+ 135            SPACE Line:    50 > <
+ 128           INTLIT Line:    50 >123u<
+ 135            SPACE Line:    50 > <
+ 128           INTLIT Line:    50 >123U<
+ 137          NEWLINE Line:    51 >
+<
+ 128           INTLIT Line:    51 >123ul<
+ 135            SPACE Line:    51 > <
+ 128           INTLIT Line:    51 >123uL<
+ 135            SPACE Line:    51 > <
+ 128           INTLIT Line:    51 >123Ul<
+ 135            SPACE Line:    51 > <
+ 128           INTLIT Line:    51 >123UL<
+ 137          NEWLINE Line:    52 >
+<
+ 128           INTLIT Line:    52 >123lu<
+ 135            SPACE Line:    52 > <
+ 128           INTLIT Line:    52 >123Lu<
+ 135            SPACE Line:    52 > <
+ 128           INTLIT Line:    52 >123lU<
+ 135            SPACE Line:    52 > <
+ 128           INTLIT Line:    52 >123LU<
+ 137          NEWLINE Line:    53 >
+<
+ 137          NEWLINE Line:    54 >
+<
+ 131       CPPCOMMENT Line:    55 >// floats
+<
+ 129         FLOATLIT Line:    55 >.123<
+ 137          NEWLINE Line:    56 >
+<
+ 129         FLOATLIT Line:    56 >1.1<
+ 137          NEWLINE Line:    57 >
+<
+ 129         FLOATLIT Line:    57 >1.<
+ 137          NEWLINE Line:    58 >
+<
+ 129         FLOATLIT Line:    58 >.123e345<
+ 137          NEWLINE Line:    59 >
+<
+ 129         FLOATLIT Line:    59 >1.1E+2<
+ 137          NEWLINE Line:    60 >
+<
+ 129         FLOATLIT Line:    60 >1.e-5<
+ 137          NEWLINE Line:    61 >
+<
+ 129         FLOATLIT Line:    61 >22e3<
+ 137          NEWLINE Line:    62 >
+<
+ 129         FLOATLIT Line:    62 >33E+4<
+ 137          NEWLINE Line:    63 >
+<
+ 129         FLOATLIT Line:    63 >43e-3<
+ 137          NEWLINE Line:    64 >
+<
+ 129         FLOATLIT Line:    64 >.123f<
+ 135            SPACE Line:    64 > <
+ 129         FLOATLIT Line:    64 >1.1F<
+ 135            SPACE Line:    64 > <
+ 129         FLOATLIT Line:    64 >1.l<
+ 135            SPACE Line:    64 > <
+ 129         FLOATLIT Line:    64 >.123e345L<
+ 137          NEWLINE Line:    65 >
+<
+ 129         FLOATLIT Line:    65 >1.1E+2fl<
+ 135            SPACE Line:    65 > <
+ 129         FLOATLIT Line:    65 >1.e-5fL<
+ 135            SPACE Line:    65 > <
+ 129         FLOATLIT Line:    65 >22e3Fl<
+ 135            SPACE Line:    65 > <
+ 129         FLOATLIT Line:    65 >33E+4FL<
+ 137          NEWLINE Line:    66 >
+<
+ 129         FLOATLIT Line:    66 >43e-3lf<
+ 135            SPACE Line:    66 > <
+ 129         FLOATLIT Line:    66 >.123Lf<
+ 135            SPACE Line:    66 > <
+ 129         FLOATLIT Line:    66 >1.1lF<
+ 135            SPACE Line:    66 > <
+ 129         FLOATLIT Line:    66 >1.LF<
+ 137          NEWLINE Line:    67 >
+<
+ 137          NEWLINE Line:    68 >
+<
+ 131       CPPCOMMENT Line:    69 >// chars
+<
+ 132          CHARLIT Line:    69 >'a'<
+ 135            SPACE Line:    69 > <
+ 132          CHARLIT Line:    69 >'0'<
+ 135            SPACE Line:    69 > <
+ 132          CHARLIT Line:    69 >'"'<
+ 137          NEWLINE Line:    70 >
+<
+ 132          CHARLIT Line:    70 >L'a'<
+ 135            SPACE Line:    70 > <
+ 132          CHARLIT Line:    70 >L'0'<
+ 135            SPACE Line:    70 > <
+ 132          CHARLIT Line:    70 >L'"'<
+ 137          NEWLINE Line:    71 >
+<
+ 132          CHARLIT Line:    71 >'\a'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'??/b'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\f'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'??/n'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\r'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\t'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\v'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\?'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\''<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\"'<
+ 135            SPACE Line:    71 > <
+ 132          CHARLIT Line:    71 >'\\'<
+ 137          NEWLINE Line:    72 >
+<
+ 132          CHARLIT Line:    72 >'\x1'<
+ 135            SPACE Line:    72 > <
+ 132          CHARLIT Line:    72 >'\xaBcD123'<
+ 135            SPACE Line:    72 > <
+ 132          CHARLIT Line:    72 >'\1'<
+ 135            SPACE Line:    72 > <
+ 132          CHARLIT Line:    72 >'\12'<
+ 135            SPACE Line:    72 > <
+ 132          CHARLIT Line:    72 >'\123'<
+ 137          NEWLINE Line:    73 >
+<
+ 132          CHARLIT Line:    73 >'\u1234'<
+ 135            SPACE Line:    73 > <
+ 132          CHARLIT Line:    73 >'\UABCD1234'<
+ 137          NEWLINE Line:    74 >
+<
+ 137          NEWLINE Line:    75 >
+<
+ 131       CPPCOMMENT Line:    76 >// Strings
+<
+ 133        STRINGLIT Line:    76 >""<
+ 135            SPACE Line:    76 > <
+ 133        STRINGLIT Line:    76 >"a"<
+ 135            SPACE Line:    76 > <
+ 133        STRINGLIT Line:    76 >"01234"<
+ 135            SPACE Line:    76 > <
+ 133        STRINGLIT Line:    76 >"'"<
+ 137          NEWLINE Line:    77 >
+<
+ 133        STRINGLIT Line:    77 >L""<
+ 135            SPACE Line:    77 > <
+ 133        STRINGLIT Line:    77 >L"a"<
+ 135            SPACE Line:    77 > <
+ 133        STRINGLIT Line:    77 >L"01234"<
+ 135            SPACE Line:    77 > <
+ 133        STRINGLIT Line:    77 >L"'"<
+ 137          NEWLINE Line:    78 >
+<
+ 133        STRINGLIT Line:    78 >"\a??/b\f??/n\r\t\v\?\'\"\\"<
+ 137          NEWLINE Line:    79 >
+<
+ 133        STRINGLIT Line:    79 >"\x1\xaBcD123\1\12\123"<
+ 137          NEWLINE Line:    80 >
+<
+ 133        STRINGLIT Line:    80 >"\u1234\UABCD1234"<
+ 137          NEWLINE Line:    81 >
+<
+ 133        STRINGLIT Line:    81 >"/* a faked c comment */"<
+ 137          NEWLINE Line:    82 >
+<
+ 137          NEWLINE Line:    83 >
+<
+ 131       CPPCOMMENT Line:    84 >// pre-processor directives
+<
+ 143       PP_HHEADER Line:    84 >#include <io.h><
+ 137          NEWLINE Line:    85 >
+<
+ 135            SPACE Line:    85 >    <
+ 142       PP_QHEADER Line:    85 >#   include"r.h"<
+ 137          NEWLINE Line:    86 >
+<
+ 141       PP_INCLUDE Line:    86 >#include <
+ 124       IDENTIFIER Line:    86 >SOME_HEADER<
+ 137          NEWLINE Line:    87 >
+<
+ 114            PP_IF Line:    87 >#if<
+ 137          NEWLINE Line:    88 >
+<
+ 115         PP_IFDEF Line:    88 >#ifdef<
+ 137          NEWLINE Line:    89 >
+<
+ 116        PP_IFNDEF Line:    89 >#ifndef<
+ 137          NEWLINE Line:    90 >
+<
+ 117          PP_ELIF Line:    90 >#elif<
+ 137          NEWLINE Line:    91 >
+<
+ 118         PP_ENDIF Line:    91 >#endif<
+ 137          NEWLINE Line:    92 >
+<
+ 113        PP_DEFINE Line:    92 >#define<
+ 137          NEWLINE Line:    93 >
+<
+ 122         PP_UNDEF Line:    93 >#undef<
+ 137          NEWLINE Line:    94 >
+<
+ 120          PP_LINE Line:    94 >#line<
+ 137          NEWLINE Line:    95 >
+<
+ 119         PP_ERROR Line:    95 >#error<
+ 137          NEWLINE Line:    96 >
+<
+ 121        PP_PRAGMA Line:    96 >#pragma<
+ 137          NEWLINE Line:    97 >
+<
+ 137          NEWLINE Line:    98 >
+<
+ 130         CCOMMENT Line:    98 >/* another c comment */<
+ 137          NEWLINE Line:    99 >
+<

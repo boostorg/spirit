@@ -1,0 +1,340 @@
+ 143       PP_HHEADER Line:     1 >#include <fcntl.h><
+ 137          NEWLINE Line:     2 >
+<
+ 114            PP_IF Line:     2 >#if<
+ 135            SPACE Line:     2 > <
+  28              NOT Line:     2 >!<
+ 124       IDENTIFIER Line:     2 >defined<
+  21        LEFTPAREN Line:     2 >(<
+ 124       IDENTIFIER Line:     2 >_MSC_VER<
+  38       RIGHTPAREN Line:     2 >)<
+ 137          NEWLINE Line:     3 >
+<
+ 143       PP_HHEADER Line:     3 >#include <unistd.h><
+ 137          NEWLINE Line:     4 >
+<
+ 139            POUND Line:     4 >#<
+  68             ELSE Line:     4 >else<
+ 137          NEWLINE Line:     5 >
+<
+ 143       PP_HHEADER Line:     5 >#include <memory.h><
+ 137          NEWLINE Line:     6 >
+<
+ 143       PP_HHEADER Line:     6 >#include <io.h><
+ 137          NEWLINE Line:     7 >
+<
+ 118         PP_ENDIF Line:     7 >#endif<
+ 135            SPACE Line:     7 > <
+ 137          NEWLINE Line:     8 >
+<
+ 143       PP_HHEADER Line:     8 >#include <stdio.h><
+ 137          NEWLINE Line:     9 >
+<
+ 137          NEWLINE Line:    10 >
+<
+ 142       PP_QHEADER Line:    10 >#include "../tokens.h"<
+ 137          NEWLINE Line:    11 >
+<
+ 142       PP_QHEADER Line:    11 >#include "../tokennames.cpp"<
+ 137          NEWLINE Line:    12 >
+<
+ 137          NEWLINE Line:    13 >
+<
+ 142       PP_QHEADER Line:    13 >#include "scanner.h"<
+ 137          NEWLINE Line:    14 >
+<
+ 137          NEWLINE Line:    15 >
+<
+  79              INT Line:    15 >int<
+ 135            SPACE Line:    15 > <
+ 124       IDENTIFIER Line:    15 >main<
+  21        LEFTPAREN Line:    15 >(<
+  79              INT Line:    15 >int<
+ 135            SPACE Line:    15 > <
+ 124       IDENTIFIER Line:    15 >argc<
+   8            COMMA Line:    15 >,<
+ 135            SPACE Line:    15 > <
+  57             CHAR Line:    15 >char<
+  46             STAR Line:    15 >*<
+  46             STAR Line:    15 >*<
+ 135            SPACE Line:    15 > <
+ 124       IDENTIFIER Line:    15 >argv<
+  38       RIGHTPAREN Line:    15 >)<
+ 135            SPACE Line:    15 > <
+  18        LEFTBRACE Line:    15 >{<
+ 137          NEWLINE Line:    16 >
+<
+ 135            SPACE Line:    16 >    <
+ 124       IDENTIFIER Line:    16 >Scanner<
+ 135            SPACE Line:    16 > <
+ 124       IDENTIFIER Line:    16 >in<
+  41        SEMICOLON Line:    16 >;<
+ 137          NEWLINE Line:    17 >
+<
+ 135            SPACE Line:    17 >    <
+  79              INT Line:    17 >int<
+ 135            SPACE Line:    17 > <
+ 124       IDENTIFIER Line:    17 >t<
+  41        SEMICOLON Line:    17 >;<
+ 137          NEWLINE Line:    18 >
+<
+ 135            SPACE Line:    18 >    <
+ 124       IDENTIFIER Line:    18 >memset<
+  21        LEFTPAREN Line:    18 >(<
+  21        LEFTPAREN Line:    18 >(<
+  57             CHAR Line:    18 >char<
+  46             STAR Line:    18 >*<
+  38       RIGHTPAREN Line:    18 >)<
+ 135            SPACE Line:    18 > <
+   0              AND Line:    18 >&<
+ 124       IDENTIFIER Line:    18 >in<
+   8            COMMA Line:    18 >,<
+ 135            SPACE Line:    18 > <
+ 128           INTLIT Line:    18 >0<
+   8            COMMA Line:    18 >,<
+ 135            SPACE Line:    18 > <
+  93           SIZEOF Line:    18 >sizeof<
+  21        LEFTPAREN Line:    18 >(<
+ 124       IDENTIFIER Line:    18 >in<
+  38       RIGHTPAREN Line:    18 >)<
+  38       RIGHTPAREN Line:    18 >)<
+  41        SEMICOLON Line:    18 >;<
+ 137          NEWLINE Line:    19 >
+<
+ 135            SPACE Line:    19 >    <
+ 124       IDENTIFIER Line:    19 >in<
+  12              DOT Line:    19 >.<
+ 124       IDENTIFIER Line:    19 >fd<
+ 135            SPACE Line:    19 > <
+   2           ASSIGN Line:    19 >=<
+ 135            SPACE Line:    19 > <
+  23            MINUS Line:    19 >-<
+ 128           INTLIT Line:    19 >1<
+  41        SEMICOLON Line:    19 >;<
+ 137          NEWLINE Line:    20 >
+<
+ 135            SPACE Line:    20 >    <
+  77               IF Line:    20 >if<
+ 135            SPACE Line:    20 > <
+  21        LEFTPAREN Line:    20 >(<
+ 124       IDENTIFIER Line:    20 >argc<
+ 135            SPACE Line:    20 > <
+  15            EQUAL Line:    20 >==<
+ 135            SPACE Line:    20 > <
+ 128           INTLIT Line:    20 >2<
+  38       RIGHTPAREN Line:    20 >)<
+ 137          NEWLINE Line:    21 >
+<
+ 135            SPACE Line:    21 >    <
+  18        LEFTBRACE Line:    21 >{<
+ 137          NEWLINE Line:    22 >
+<
+ 135            SPACE Line:    22 >        <
+ 124       IDENTIFIER Line:    22 >in<
+  12              DOT Line:    22 >.<
+ 124       IDENTIFIER Line:    22 >fd<
+ 135            SPACE Line:    22 > <
+   2           ASSIGN Line:    22 >=<
+ 135            SPACE Line:    22 > <
+ 124       IDENTIFIER Line:    22 >open<
+  21        LEFTPAREN Line:    22 >(<
+ 124       IDENTIFIER Line:    22 >argv<
+  22      LEFTBRACKET Line:    22 >[<
+ 128           INTLIT Line:    22 >1<
+  39     RIGHTBRACKET Line:    22 >]<
+   8            COMMA Line:    22 >,<
+ 135            SPACE Line:    22 > <
+ 124       IDENTIFIER Line:    22 >O_RDONLY<
+  38       RIGHTPAREN Line:    22 >)<
+  41        SEMICOLON Line:    22 >;<
+ 137          NEWLINE Line:    23 >
+<
+ 135            SPACE Line:    23 >    <
+  37       RIGHTBRACE Line:    23 >}<
+ 137          NEWLINE Line:    24 >
+<
+ 135            SPACE Line:    24 >    <
+ 137          NEWLINE Line:    25 >
+<
+ 135            SPACE Line:    25 >    <
+  77               IF Line:    25 >if<
+ 135            SPACE Line:    25 > <
+  21        LEFTPAREN Line:    25 >(<
+  23            MINUS Line:    25 >-<
+ 128           INTLIT Line:    25 >1<
+ 135            SPACE Line:    25 > <
+  15            EQUAL Line:    25 >==<
+ 135            SPACE Line:    25 > <
+ 124       IDENTIFIER Line:    25 >in<
+  12              DOT Line:    25 >.<
+ 124       IDENTIFIER Line:    25 >fd<
+  38       RIGHTPAREN Line:    25 >)<
+ 137          NEWLINE Line:    26 >
+<
+ 135            SPACE Line:    26 >    <
+  18        LEFTBRACE Line:    26 >{<
+ 137          NEWLINE Line:    27 >
+<
+ 135            SPACE Line:    27 >        <
+ 124       IDENTIFIER Line:    27 >printf<
+ 135            SPACE Line:    27 > <
+  21        LEFTPAREN Line:    27 >(<
+ 133        STRINGLIT Line:    27 >"Usage: test_lexer <input>\n"<
+  38       RIGHTPAREN Line:    27 >)<
+  41        SEMICOLON Line:    27 >;<
+ 137          NEWLINE Line:    28 >
+<
+ 135            SPACE Line:    28 >        <
+ 124       IDENTIFIER Line:    28 >exit<
+  21        LEFTPAREN Line:    28 >(<
+ 128           INTLIT Line:    28 >1<
+  38       RIGHTPAREN Line:    28 >)<
+  41        SEMICOLON Line:    28 >;<
+ 137          NEWLINE Line:    29 >
+<
+ 135            SPACE Line:    29 >    <
+  37       RIGHTBRACE Line:    29 >}<
+ 137          NEWLINE Line:    30 >
+<
+ 135            SPACE Line:    30 >    <
+ 124       IDENTIFIER Line:    30 >in<
+  12              DOT Line:    30 >.<
+ 124       IDENTIFIER Line:    30 >eol_offsets<
+ 135            SPACE Line:    30 > <
+   2           ASSIGN Line:    30 >=<
+ 135            SPACE Line:    30 > <
+ 124       IDENTIFIER Line:    30 >aq_create<
+  21        LEFTPAREN Line:    30 >(<
+  38       RIGHTPAREN Line:    30 >)<
+  41        SEMICOLON Line:    30 >;<
+ 137          NEWLINE Line:    31 >
+<
+ 135            SPACE Line:    31 >    <
+ 112            WHILE Line:    31 >while<
+  21        LEFTPAREN Line:    31 >(<
+  21        LEFTPAREN Line:    31 >(<
+ 124       IDENTIFIER Line:    31 >t<
+ 135            SPACE Line:    31 > <
+   2           ASSIGN Line:    31 >=<
+ 135            SPACE Line:    31 > <
+ 124       IDENTIFIER Line:    31 >scan<
+  21        LEFTPAREN Line:    31 >(<
+   0              AND Line:    31 >&<
+ 124       IDENTIFIER Line:    31 >in<
+  38       RIGHTPAREN Line:    31 >)<
+  38       RIGHTPAREN Line:    31 >)<
+ 135            SPACE Line:    31 > <
+  29         NOTEQUAL Line:    31 >!=<
+ 135            SPACE Line:    31 > <
+ 124       IDENTIFIER Line:    31 >T_EOF<
+  38       RIGHTPAREN Line:    31 >)<
+ 137          NEWLINE Line:    32 >
+<
+ 135            SPACE Line:    32 >    <
+  18        LEFTBRACE Line:    32 >{<
+ 137          NEWLINE Line:    33 >
+<
+ 135            SPACE Line:    33 >        <
+ 124       IDENTIFIER Line:    33 >printf<
+  21        LEFTPAREN Line:    33 >(<
+ 133        STRINGLIT Line:    33 >"%4d %16s Line: %5d >%.*s<\n"<
+   8            COMMA Line:    33 >,<
+ 135            SPACE Line:    33 > <
+ 124       IDENTIFIER Line:    33 >ID_FROM_TOKEN<
+  21        LEFTPAREN Line:    33 >(<
+ 124       IDENTIFIER Line:    33 >t<
+  23            MINUS Line:    33 >-<
+ 124       IDENTIFIER Line:    33 >T_FIRST_TOKEN<
+  38       RIGHTPAREN Line:    33 >)<
+   8            COMMA Line:    33 >,<
+ 135            SPACE Line:    33 > <
+ 137          NEWLINE Line:    34 >
+<
+ 135            SPACE Line:    34 >            <
+ 124       IDENTIFIER Line:    34 >tok_names<
+  22      LEFTBRACKET Line:    34 >[<
+ 124       IDENTIFIER Line:    34 >ID_FROM_TOKEN<
+  21        LEFTPAREN Line:    34 >(<
+ 124       IDENTIFIER Line:    34 >t<
+  23            MINUS Line:    34 >-<
+ 124       IDENTIFIER Line:    34 >T_FIRST_TOKEN<
+  38       RIGHTPAREN Line:    34 >)<
+  39     RIGHTBRACKET Line:    34 >]<
+   8            COMMA Line:    34 >,<
+ 135            SPACE Line:    34 > <
+ 124       IDENTIFIER Line:    34 >in<
+  12              DOT Line:    34 >.<
+ 124       IDENTIFIER Line:    34 >line<
+ 135            SPACE Line:    34 > <
+  31             PLUS Line:    34 >+<
+ 135            SPACE Line:    34 > <
+ 128           INTLIT Line:    34 >1<
+   8            COMMA Line:    34 >,<
+ 135            SPACE Line:    34 > <
+ 137          NEWLINE Line:    35 >
+<
+ 135            SPACE Line:    35 >            <
+ 124       IDENTIFIER Line:    35 >in<
+  12              DOT Line:    35 >.<
+ 124       IDENTIFIER Line:    35 >cur<
+ 135            SPACE Line:    35 > <
+  23            MINUS Line:    35 >-<
+ 135            SPACE Line:    35 > <
+ 124       IDENTIFIER Line:    35 >in<
+  12              DOT Line:    35 >.<
+ 124       IDENTIFIER Line:    35 >tok<
+   8            COMMA Line:    35 >,<
+ 135            SPACE Line:    35 > <
+ 124       IDENTIFIER Line:    35 >in<
+  12              DOT Line:    35 >.<
+ 124       IDENTIFIER Line:    35 >tok<
+  38       RIGHTPAREN Line:    35 >)<
+  41        SEMICOLON Line:    35 >;<
+ 137          NEWLINE Line:    36 >
+<
+ 135            SPACE Line:    36 >    <
+  37       RIGHTBRACE Line:    36 >}<
+ 137          NEWLINE Line:    37 >
+<
+ 135            SPACE Line:    37 >    <
+ 124       IDENTIFIER Line:    37 >aq_terminate<
+  21        LEFTPAREN Line:    37 >(<
+ 124       IDENTIFIER Line:    37 >in<
+  12              DOT Line:    37 >.<
+ 124       IDENTIFIER Line:    37 >eol_offsets<
+  38       RIGHTPAREN Line:    37 >)<
+  41        SEMICOLON Line:    37 >;<
+ 137          NEWLINE Line:    38 >
+<
+ 135            SPACE Line:    38 >    <
+ 124       IDENTIFIER Line:    38 >free<
+  21        LEFTPAREN Line:    38 >(<
+ 124       IDENTIFIER Line:    38 >in<
+  12              DOT Line:    38 >.<
+ 124       IDENTIFIER Line:    38 >bot<
+  38       RIGHTPAREN Line:    38 >)<
+  41        SEMICOLON Line:    38 >;<
+ 137          NEWLINE Line:    39 >
+<
+ 135            SPACE Line:    39 >    <
+ 124       IDENTIFIER Line:    39 >close<
+  21        LEFTPAREN Line:    39 >(<
+ 124       IDENTIFIER Line:    39 >in<
+  12              DOT Line:    39 >.<
+ 124       IDENTIFIER Line:    39 >fd<
+  38       RIGHTPAREN Line:    39 >)<
+  41        SEMICOLON Line:    39 >;<
+ 137          NEWLINE Line:    40 >
+<
+ 137          NEWLINE Line:    41 >
+<
+ 135            SPACE Line:    41 >    <
+  90           RETURN Line:    41 >return<
+ 135            SPACE Line:    41 > <
+ 128           INTLIT Line:    41 >0<
+  41        SEMICOLON Line:    41 >;<
+ 137          NEWLINE Line:    42 >
+<
+  37       RIGHTBRACE Line:    42 >}<
+ 137          NEWLINE Line:    43 >
+<

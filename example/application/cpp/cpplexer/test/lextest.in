@@ -1,0 +1,98 @@
+/* this is a c comment */
+/**/
+/***/
+/* now a multi-line c comment 
+  this is the second line */
+// a c++ comment
+// now for all the identifiers
+asm auto     asm auto bool break case catch char class const const_cast
+continue default delete do double dynamic_cast else enum explicit export
+extern false float for friend goto if inline int long mutable namespace new
+operator private protected public register reinterpret_cast return short
+signed sizeof static static_cast struct switch template this throw true
+try typedef typeid typename union unsigned using virtual void volatile
+wchar_t while
+
+// now here's the punctuation
+{ ??< <%            }             ??>           %>            [             
+??(           <:            ]             ??)           :>            #
+??= %: ##            #??=          ??=#          ??=??=        %:%:          
+(             )             ;             :             ...           
+?             ::            .             .*            +             
+-             *             /             %             ^             
+??'           xor &             bitand |             bitor
+??!           ~             ??-           compl !             not
+=             <             >             +=            -=            
+*=            /=            %=            ^=            xor_eq
+??'=          &=            and_eq |=            or_eq ??!=          
+<<            >>            >>=           <<=           ==            !=
+
+// here's some identifiers
+ident
+ident1
+ident1a
+_ident
+IdEnT_A
+
+// hex ints
+0x123a
+0X123B
+
+// octal ints
+0
+012375423
+
+// decimal ints
+1
+1234999
+
+// ints with suffixes
+123l 123L 123u 123U
+123ul 123uL 123Ul 123UL
+123lu 123Lu 123lU 123LU
+
+// floats
+.123
+1.1
+1.
+.123e345
+1.1E+2
+1.e-5
+22e3
+33E+4
+43e-3
+.123f 1.1F 1.l .123e345L
+1.1E+2fl 1.e-5fL 22e3Fl 33E+4FL
+43e-3lf .123Lf 1.1lF 1.LF
+
+// chars
+'a' '0' '"'
+L'a' L'0' L'"'
+'\a' '??/b' '\f' '??/n' '\r' '\t' '\v' '\?' '\'' '\"' '\\'
+'\x1' '\xaBcD123' '\1' '\12' '\123'
+'\u1234' '\UABCD1234'
+
+// Strings
+"" "a" "01234" "'"
+L"" L"a" L"01234" L"'"
+"\a??/b\f??/n\r\t\v\?\'\"\\"
+"\x1\xaBcD123\1\12\123"
+"\u1234\UABCD1234"
+"/* a faked c comment */"
+
+// pre-processor directives
+#include <io.h>
+    #   include"r.h"
+#include SOME_HEADER
+#if
+#ifdef
+#ifndef
+#elif
+#endif
+#define
+#undef
+#line
+#error
+#pragma
+
+/* another c comment */
