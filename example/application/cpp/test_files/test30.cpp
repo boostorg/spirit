@@ -12,13 +12,21 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-// Tests the correctness of parameter replacement, if the parameter is
-// adjacent to an operator '##'.
+// Tests, if universal character values to generated accidently by 
+// concatenation
 
 #define CONCAT(a, b) PRIMITIVE_CONCAT(a, b)
 #define PRIMITIVE_CONCAT(a, b) a ## b
+#define STRINGIZE(x) STRINGIZE_D(x)
+#define STRINGIZE_D(x) # x
 
-CONCAT(1, PRIMITIVE_CONCAT(2, 3))           // 123
-CONCAT(1, CONCAT(2, 3))                     // 123
-PRIMITIVE_CONCAT(1, CONCAT(2, 3))           // 1CONCAT(2, 3)
-PRIMITIVE_CONCAT(1, PRIMITIVE_CONCAT(2, 3)) // 1PRIMITIVE_CONCAT(2, 3)
+STRINGIZE( CONCAT(\, a) )	// expands to "\a"
+STRINGIZE( CONCAT(\, u00ff) )	// expands to "\u00ff"
+STRINGIZE( CONCAT(\u00, ff) )	// expands to "\ u00ff"
+STRINGIZE( CONCAT(\u00ff, 56) )	// expands to "\u00ff56"
+CONCAT(\, a)	        // expands to \a
+CONCAT(\, u00ff)        // expands to \u00ff
+CONCAT(\u00, ff)        // expands to \ u00ff
+CONCAT(\u00ff, 56)      // expands to \u00ff56
+
+STRINGIZE( CONCAT(\, u0061) )	// reports an error

@@ -104,7 +104,7 @@ public:
         { return macros.add_macro(name, has_params, parameters, definition); }
     bool is_defined_macro(typename TokenT::string_t const &name) const
         { return macros.is_defined(name); }
-    bool remove_macro_definition(typename TokenT::string_t const &name)
+    bool remove_macro_definition(TokenT const &name)
         { return macros.remove_macro(name); }
     void reset_macro_definitions() { macros.reset_macromap(); }
 
@@ -115,7 +115,8 @@ public:
         { return util::predefined_macros::get_versionstr(false); }
     
 protected:
-    friend typename iterator_t::input_policy_t;
+    typedef typename iterator_t::input_policy_t pp_iterator_policy_t;
+    friend pp_iterator_policy_t;
     
 // maintain include pathes (helper functions)
     bool find_include_file (std::string &s, bool is_system) const
@@ -164,7 +165,7 @@ protected:
     void expand_whole_tokensequence(IteratorT &first, IteratorT const &last, 
         std::list<token_t> &expanded, bool expand_undefined = true)
     {
-        return macros.expand_whole_tokensequence(expanded, first, last, 
+        macros.expand_whole_tokensequence(expanded, first, last, 
             expand_undefined);
     }
 

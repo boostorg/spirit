@@ -12,16 +12,11 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests continuing scanning into the underlying input stream after expanding
+// a macro, if this is appropriate
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#define A Token1 B
+#define B() Token2
 
-CAT ARGS            // expands to CAT (1, 2) not 12
+A() // Token1 Token2
 
-#define INVOKE(macro) macro ARGS
-
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning

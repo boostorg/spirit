@@ -44,8 +44,7 @@ namespace impl {
     {
         StringT result(value);
         typename StringT::size_type pos = 0;
-        while ((pos = result.find_first_of ("\"\\?", pos)) !=
-            StringT::size_type(StringT::npos))
+        while ((pos = result.find_first_of ("\"\\?", pos)) != StringT::npos)
         {
             result.insert (pos, 1, '\\');
             pos += 2;
@@ -175,9 +174,11 @@ struct macro_definition {
         typename definition_container_t::const_iterator 
         const_definition_iterator_t;
     
-    macro_definition(TokenT const &token_, bool has_parameters)
+    macro_definition(TokenT const &token_, bool has_parameters, 
+            bool is_predefined_ = false)
     :   macroname(token_), is_functionlike(has_parameters), 
-        replaced_parameters(false), is_available_for_replacement(true)
+        replaced_parameters(false), is_available_for_replacement(true),
+        is_predefined(is_predefined_)
     {
     }
     // generated copy constructor
@@ -225,6 +226,7 @@ struct macro_definition {
     bool is_available_for_replacement;
     bool is_functionlike;
     bool replaced_parameters;
+    bool is_predefined;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -250,9 +252,10 @@ public:
     ~macromap() {}
 
     bool add_macro(TokenT const &name, bool has_parameters, 
-        parameter_container_t &parameters, definition_container_t &definition);
+        parameter_container_t &parameters, definition_container_t &definition,
+        bool is_predefined = false);
     bool is_defined(string_t const &name) const;
-    bool remove_macro(string_t const &name);
+    bool remove_macro(TokenT const &name);
     
     template <typename IteratorT, typename ContainerT>
     TokenT const &expand_tokensequence(IteratorT &first, IteratorT const &last,
@@ -324,7 +327,8 @@ private:
 template <typename TokenT>
 inline bool 
 macromap<TokenT>::add_macro(TokenT const &name, bool has_parameters,
-    parameter_container_t &parameters, definition_container_t &definition)
+    parameter_container_t &parameters, definition_container_t &definition,
+    bool is_predefined)
 {
 typename defined_macros_t::iterator it = defined_macros.find(name.get_value());
 
@@ -343,7 +347,8 @@ typename defined_macros_t::iterator it = defined_macros.find(name.get_value());
 // insert a new macro node
     std::pair<typename defined_macros_t::iterator, bool> p = 
         defined_macros.insert(defined_macros_t::value_type(
-            name.get_value(), macro_definition<TokenT>(name, has_parameters)));
+            name.get_value(), macro_definition<TokenT>(name, has_parameters, 
+                is_predefined)));
             
     if (!p.second){
         CPP_THROW(preprocess_exception, macro_insertion_error, 
@@ -377,12 +382,23 @@ macromap<TokenT>::is_defined(typename TokenT::string_t const &name) const
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TokenT>
 inline bool 
-macromap<TokenT>::remove_macro(typename TokenT::string_t const &name)
+macromap<TokenT>::remove_macro(TokenT const &name)
 {
-    defined_macros_t::iterator it = defined_macros.find(name);
+    typename defined_macros_t::iterator it = 
+        defined_macros.find(name.get_value());
+    
     if (it != defined_macros.end()) {
+        if ((*it).second.is_predefined) {
+            CPP_THROW(preprocess_exception, bad_undefine_statement, 
+                name.get_value(), name);
+        }
         defined_macros.erase(it);
         return true;
+    }
+    else if ("__LINE__" == name.get_value() || "__FILE__" == name.get_value()) 
+    {
+        CPP_THROW(preprocess_exception, bad_undefine_statement, 
+            name.get_value(), name);
     }
     return false;       // macro was not defined
 }
@@ -447,8 +463,6 @@ macromap<TokenT>::expand_tokensequence_worker(
 
 //  analyze the next element of the given sequence, if it is an 
 //  T_IDENTIFIER token, try to replace this as a macro etc.
-int return_flags = 0;       // return, whether a replacement occured
-
     if (first != last) {
     token_id id = token_id(*first);
 
@@ -460,12 +474,12 @@ int return_flags = 0;       // return, whether a replacement occured
             id = token_id(*first);
         }
             
-        if (T_DEFINED == id) {
-        // resolve operator defined()
-            return resolve_defined(first, last, pending);
-        }
-        else if (T_IDENTIFIER == id) {
+        if (T_IDENTIFIER == id) {
         // try to replace this identifier as a macro
+            if (typename TokenT::string_t("defined") == (*first).get_value()) {
+            // resolve operator defined()
+                return resolve_defined(first, last, pending);
+            }
             if (is_defined((*first).get_value())) {
             // the current token contains an identifier, which is currently 
             // defined as a macro
@@ -729,7 +743,7 @@ inline void
 macromap<TokenT>::expand_arguments (std::vector<ContainerT> &arguments, 
     std::vector<ContainerT> &expanded_args, bool expand_undefined)
 {
-std::vector<ContainerT>::size_type i = 0;
+typename std::vector<ContainerT>::size_type i = 0;
 
     typename std::vector<ContainerT>::iterator arg_end = arguments.end();
     for (typename std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
@@ -976,8 +990,9 @@ string_t const &value = curr_token.get_value();
     if (value == "__LINE__") { 
     // expand the __LINE__ macro
     char buffer[22];    // 21 bytes holds all NUL-terminated unsigned 64-bit numbers
-    
-        std::sprintf(buffer, "%d", main_token.get_position().line);
+
+        using namespace std;    // for some systems sprintf is in namespace std
+        sprintf(buffer, "%d", main_token.get_position().line);
         expanded.push_back(TokenT(T_INTLIT, buffer, curr_token.get_position()));
         return true;
     }
@@ -1128,8 +1143,9 @@ namespace predefined_macros {
             if (tt != (std::time_t)-1) {
             char buffer[sizeof("\"Oct 11 1347\"")+1];
 
+                using namespace std;    // for some systems sprintf is in namespace std
                 tb = localtime (&tt);
-                std::sprintf (buffer, "\"%s %2d %4d\"",
+                sprintf (buffer, "\"%s %2d %4d\"",
                     monthnames[tb->tm_mon], tb->tm_mday, tb->tm_year + 1900);
                 datestr = buffer;
             }
@@ -1155,8 +1171,9 @@ namespace predefined_macros {
             if (tt != (std::time_t)-1) {
             char buffer[sizeof("\"12:34:56\"")+1];
 
+                using namespace std;    // for some systems sprintf is in namespace std
                 tb = localtime (&tt);
-                std::sprintf (buffer, "\"%02d:%02d:%02d\"", tb->tm_hour, 
+                sprintf (buffer, "\"%02d:%02d:%02d\"", tb->tm_hour, 
                     tb->tm_min, tb->tm_sec);
                 timestr = buffer;
             }
@@ -1173,7 +1190,8 @@ namespace predefined_macros {
     static std::string versionstr;
     char buffer[sizeof("0x0000")+1];
 
-        std::sprintf(buffer, "0x%02d%1d%1d", CPP_VERSION_MAJOR, 
+        using namespace std;    // for some systems sprintf is in namespace std
+        sprintf(buffer, "0x%02d%1d%1d", CPP_VERSION_MAJOR, 
             CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR);
         versionstr = buffer;
         return versionstr.c_str();
@@ -1192,7 +1210,8 @@ namespace predefined_macros {
     // (the day the cpp project was started)
     std::tm first_day;
 
-        std::memset (&first_day, 0, sizeof(std::tm));
+        using namespace std;    // for some systems memset is in namespace std
+        memset (&first_day, 0, sizeof(std::tm));
         first_day.tm_mon = 11;           // Dec
         first_day.tm_mday = 13;          // 13
         first_day.tm_year = 101;         // 2001
@@ -1200,7 +1219,8 @@ namespace predefined_macros {
     long seconds = long(std::difftime(compilation_time.get_time(), 
         std::mktime(&first_day)));
 
-        std::sprintf(buffer, "0x%02d%1d%1d%04d", CPP_VERSION_MAJOR,
+        using namespace std;    // for some systems sprintf is in namespace std
+        sprintf(buffer, "0x%02d%1d%1d%04d", CPP_VERSION_MAJOR,
              CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR, seconds/(3600*24));
         versionstr = buffer;
         return versionstr.c_str();
@@ -1216,7 +1236,8 @@ namespace predefined_macros {
     // (the day the cpp project was started)
     std::tm first_day;
 
-        std::memset (&first_day, 0, sizeof(std::tm));
+        using namespace std;    // for some systems memset is in namespace std
+        memset (&first_day, 0, sizeof(std::tm));
         first_day.tm_mon = 11;           // Dec
         first_day.tm_mday = 13;          // 13
         first_day.tm_year = 101;         // 2001
@@ -1224,7 +1245,8 @@ namespace predefined_macros {
     long seconds = long(std::difftime(compilation_time.get_time(), 
         std::mktime(&first_day)));
 
-        std::sprintf(buffer, "\"%d.%02d.%02d.%04d\"", CPP_VERSION_MAJOR,
+        using namespace std;    // for some systems sprintf is in namespace std
+        sprintf(buffer, "\"%d.%d.%d.%d\"", CPP_VERSION_MAJOR,
              CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR, seconds/(3600*24));
         versionstr = buffer;
         return versionstr.c_str();
@@ -1262,18 +1284,18 @@ std::vector<TokenT> macroparameters;
         macrodefinition.push_back(TokenT(static_data[i].token_id, 
             static_data[i].value, pos));
         add_macro(TokenT(T_IDENTIFIER, static_data[i].name, pos), false, 
-            macroparameters, macrodefinition);
+            macroparameters, macrodefinition, true);
     }
 
 // now add the dynamic macros
-    for (int i = 0; 0 != dynamic_data[i].name; ++i) {
+    for (int j = 0; 0 != dynamic_data[j].name; ++j) {
     std::list<TokenT> macrodefinition;
     typename TokenT::position_t pos;
     
-        macrodefinition.push_back(TokenT(dynamic_data[i].token_id, 
-            dynamic_data[i].generator(false), pos));
-        add_macro(TokenT(T_IDENTIFIER, dynamic_data[i].name, pos), false, 
-            macroparameters, macrodefinition);
+        macrodefinition.push_back(TokenT(dynamic_data[j].token_id, 
+            dynamic_data[j].generator(false), pos));
+        add_macro(TokenT(T_IDENTIFIER, dynamic_data[j].name, pos), false, 
+            macroparameters, macrodefinition, true);
     }
 }
 

@@ -33,6 +33,7 @@ namespace closures {
     struct cpp_defined_closure 
     :   boost::spirit::closure<cpp_defined_closure<TokenT>, TokenT> 
     {
+        typedef typename cpp_defined_closure<TokenT>::member1 member1;
         member1 val;
     };
     
@@ -71,7 +72,7 @@ struct defined_grammar :
             using namespace cpplexer;
             
             defined_op      // parens not required, see C++ standard 16.1.1
-                =   ch_p(T_DEFINED) 
+                =   ch_p(T_IDENTIFIER)      // token contains 'defined'
                     >>  (       ch_p(T_LEFTPAREN)
                             >>  ch_p(T_IDENTIFIER) 
                                 [

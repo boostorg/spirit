@@ -6,6 +6,17 @@ See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
 
+Mon Feb 24 19:13:46     2003
+- defined() functionality was broken
+- added missing typename keywords
+- added missing using namespace statements, where appropriate
+- added warning, when a predefined macro is to be undefined
+- removed the 'compile in C mode' hack for the re2c generated lexer (VC7.1 
+  (final beta) is not able to compile it with optimizations switched on 
+  anyway :( )
+- compiled with gcc 3.2 and Intel V7.0 (20030129Z)
+
+  
 Sun Feb 23 23:39:33  2003
 - Fixed a couple of 'missing typename' bugs (thanks to Martin Wille)
 - Added code to insert whitespace at places, where otherwise two adjacent 

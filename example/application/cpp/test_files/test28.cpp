@@ -12,16 +12,13 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Test if invalid or not allowed universal characters are rejected
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#define \u00ff ...
 
-CAT ARGS            // expands to CAT (1, 2) not 12
+\u00ff             // expands to '...'
 
-#define INVOKE(macro) macro ARGS
+#define \u0061 weird // 0x61 == 'a'
 
-INVOKE(CAT)         // CAT (1, 2) not 12
+\u0061             // should emit an error
 
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning

@@ -54,18 +54,11 @@
 #define RET(i)    {s->cur = cursor; return i;}
 
 ///////////////////////////////////////////////////////////////////////////////
-#if defined(COMPILE_RE2C_AS_CPP)
 namespace cpplexer {
 namespace re2clex {
-#endif // defined(COMPILE_RE2C_AS_CPP)
 
-#if defined(COMPILE_RE2C_AS_CPP)
 #include <boost/assert.hpp>
 #define RE2C_ASSERT BOOST_ASSERT
-#else
-#include <assert.h>
-#define RE2C_ASSERT assert
-#endif // defined(COMPILE_RE2C_AS_CPP)
 
 int get_one_char(Scanner *s)
 {
@@ -106,7 +99,7 @@ unsigned int get_first_eol_offset(Scanner* s)
     }
     else
     {
-        return -1;
+        return (unsigned int)-1;
     }
 }
 
@@ -661,7 +654,5 @@ cppcomment:
 } /* end of scan */
 
 ///////////////////////////////////////////////////////////////////////////////
-#if defined(COMPILE_RE2C_AS_CPP)
 }   // namespace re2clex
 }   // namespace cpplexer
-#endif // defined(COMPILE_RE2C_AS_CPP)

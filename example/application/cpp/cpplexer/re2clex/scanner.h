@@ -19,14 +19,8 @@
 #include "cpplexer/re2clex/aq.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-#if defined(COMPILE_RE2C_AS_CPP)
 namespace cpplexer {
 namespace re2clex {
-#else
-#if defined(__cplusplus)
-extern "C" {
-#endif // defined(__cplusplus)
-#endif // defined(COMPILE_RE2C_AS_CPP)
 
 struct Scanner;
 typedef unsigned char uchar;
@@ -57,14 +51,8 @@ typedef struct Scanner {
 int scan(Scanner *s);
 
 ///////////////////////////////////////////////////////////////////////////////
-#if defined(COMPILE_RE2C_AS_CPP)
 }   // namespace re2clex
 }   // namespace cpplexer
-#else
-#if defined(__cplusplus)
-}   // extern "C"
-#endif // defined(__cplusplus)
-#endif // defined(COMPILE_RE2C_AS_CPP)
 
 #endif // SCANNER_H
 

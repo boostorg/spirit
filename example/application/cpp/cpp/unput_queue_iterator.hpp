@@ -188,6 +188,7 @@ namespace impl {
         static bool 
         test (IteratorT it, IteratorT end, cpplexer::token_id id)
         {
+            using namespace cpplexer;
             for (++it; it != end; ++it) {
                 if (!IS_CATEGORY(*it, WhiteSpaceTokenType) &&
                     T_NEWLINE != token_id(*it))

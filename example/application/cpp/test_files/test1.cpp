@@ -2,7 +2,6 @@
     A Standard compliant C++ preprocessor
 
     Copyright (c) 2001-2003 Hartmut Kaiser
-    Copyright (c) 2003 Paul Mensonides
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software
@@ -19,4 +18,4 @@
 #define B(x, y) [x][y]
 #define C(x) B(x)
 
-C( A(2, 3) )	        // should expand to [2][3]
+C( A(2, 3) )	// should expand to [2][3]

@@ -25,7 +25,7 @@ x ## s, x ## t)
 #define HIGHLOW "hello"
 #define LOW LOW ", world"
 debug(1, 2);
-fputs(str(strncmp("abc\0d", "abc", '\4') /* this goes away */
+fputs(str(strncmp("abc\0d?", "abc", '\4', "\u1234") /* this goes away */
 == 0) str(: @\n), s);
 /*#include*/ xstr(INCFILE(2).h)
 glue(HIGH, LOW);
@@ -33,8 +33,8 @@ xglue(HIGH, LOW)
 
 // should expand to 
 // printf("x1= %d, x2= %s", x1, x2);
-// fputs("strncmp(\"abc\\0d\", \"abc\", '\\4') == 0: @\n", s);
-// "vers2.h" (after macro replacement, before file access)
+// fputs("strncmp(\"abc\\0d\", \"abc\", '\\4', \"\\u1234\") == 0: @\n", s);
+// "vers2.h" 
 // "hello";
-// "hello, world"
+// "hello" ", world"
 

@@ -2,7 +2,6 @@
     A Standard compliant C++ preprocessor
 
     Copyright (c) 2001-2003 Hartmut Kaiser
-    Copyright (c) 2003 Paul Mensonides
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software

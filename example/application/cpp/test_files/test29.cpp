@@ -12,16 +12,12 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests, if function-like macros buried deep inside a macro expansion of the
+// same name as an object-like macro do not eat up more tokens, than expected.
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#define PRIMITIVE_CAT(a, b) a ## b
 
-CAT ARGS            // expands to CAT (1, 2) not 12
+#define EAT(n) PRIMITIVE_CAT(EAT_, n)
+#define EAT_1(a)
 
-#define INVOKE(macro) macro ARGS
-
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning
+EAT(1)...	// expands to EAT_1...

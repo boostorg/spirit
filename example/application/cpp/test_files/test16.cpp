@@ -12,16 +12,14 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests the handling of placeholder tokens, which have to be inserted, when
+// some macro expands into nothing (certainly these have to be ignored 
+// afterwards :-)
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#define NIL
 
-CAT ARGS            // expands to CAT (1, 2) not 12
+#define A B NIL
+#define B() anything
 
-#define INVOKE(macro) macro ARGS
+A() 	// expands to B (), not 'anything'
 
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning

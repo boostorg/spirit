@@ -12,16 +12,21 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+#define macro() expr_2
+#define macro_2() expr
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#define par() ()
 
-CAT ARGS            // expands to CAT (1, 2) not 12
+#define expr macro par ()
+#define expr_2 macro_2 par par par()
 
-#define INVOKE(macro) macro ARGS
+#define scan(x) x
 
-INVOKE(CAT)         // CAT (1, 2) not 12
+expr // macro ()
+scan(expr) // macro_2 par par ()
+scan(scan(expr)) // macro_2 par ()
+scan(scan(scan(expr))) // macro_2 ()
+scan(scan(scan(scan(expr)))) // macro ()
+scan(scan(scan(scan(scan(expr))))) // macro_2 par par ()
+scan(scan(scan(scan(scan(scan(expr)))))) // macro_2 par ()
 
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning

@@ -134,7 +134,8 @@ public:
         too_few_macroarguments,
         too_many_macroarguments,
         improperly_terminated_macro,
-        bad_line_statement                
+        bad_line_statement,
+        bad_undefine_statement
     };
 
     preprocess_exception(char const *what_, error_code code, int line_, 
@@ -182,6 +183,7 @@ public:
             "too many macro arguments",                 // too_many_macroarguments
             "improperly terminated macro invocation",   // improperly_terminated_macro
             "ill formed #line directive",               // bad_line_statement
+            "#undef may not be used on this predefined name"    // bad_undefine_statement
         };
         return preprocess_exception_errors[code];
     }
@@ -204,7 +206,8 @@ public:
             util::severity_warning,            // too_few_macroarguments
             util::severity_warning,            // too_many_macroarguments
             util::severity_error,              // improperly_terminated_macro
-            util::severity_warning             // bad_line_statement
+            util::severity_warning,            // bad_line_statement
+            util::severity_warning             // bad_undefine_statement
         };
         return preprocess_exception_severity[code];
     }

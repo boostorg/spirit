@@ -31,15 +31,6 @@
 //#define CPP_SUPPORT_MS_EXTENSIONS
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Allow the compilation of the re2c generated lexer as C++
-//  This moves the re2c lexer into the correct namespace. This flag is needed
-//  because at least VC7.1 has problems while compiling the re2c lexer with
-//  optimizations, when in C++ mode
-//
-//  To allow compilation of the re2c lexer in C++ mode undefine the following
-//#define COMPILE_RE2C_AS_CPP
-
-///////////////////////////////////////////////////////////////////////////////
 //  Allow the message body of the #error and #warning directives to be 
 //  preprocessed before the diagnostic is issued.
 //

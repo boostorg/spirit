@@ -12,16 +12,12 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests the vaidity of whitespace handling during macro expansion
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#define MACRO()	123
 
-CAT ARGS            // expands to CAT (1, 2) not 12
-
-#define INVOKE(macro) macro ARGS
-
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning
+MACRO()       // 123
+MACRO
+()            // 123
+MACRO(
+)             // 123

@@ -12,16 +12,10 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests the #warning directive (note: only available, if enabled during
+// compilation, the macro expansion is available only, when enable during the
+// compilation too)
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
-
-CAT ARGS            // expands to CAT (1, 2) not 12
-
-#define INVOKE(macro) macro ARGS
-
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning
+#define WARNING1 This is a 
+#define WARNING2 warning
+#warning WARNING1 WARNING2 // this is a warning

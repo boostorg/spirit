@@ -12,16 +12,22 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests predefined macros
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+"__STDC__":    __STDC__
+"__cplusplus": __cplusplus
+"__DATE__":    __DATE__
+"__TIME__":    __TIME__
+"__LINE__":    __LINE__
+"__FILE__":    __FILE__
+"__SPIRIT_PP__":             __SPIRIT_PP__
+"__SPIRIT_PP_VERSION__":     __SPIRIT_PP_VERSION__
+"__SPIRIT_PP_VERSION_STR__": __SPIRIT_PP_VERSION_STR__
+#line 50 "test.cpp"
+__LINE__
+__FILE__
 
-CAT ARGS            // expands to CAT (1, 2) not 12
 
-#define INVOKE(macro) macro ARGS
+__LINE__
+__FILE__
 
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning

@@ -427,14 +427,14 @@ pp_iterator_functor<ContextT>::on_include (result_type const &t, bool is_system)
 string_t const &s = t.get_value();
 typename string_t::size_type pos_end = s.find_last_of(is_system ? '>' : '\"');
 
-    if (string_t::size_type(string_t::npos) == pos_end) {
+    if (string_t::npos == pos_end) {
         CPP_THROW(preprocess_exception, bad_include_statement, s, act_token);
     }
 
 typename string_t::size_type pos_begin = 
     s.find_last_of(is_system ? '<' : '\"', pos_end-1);
 
-    if (string_t::size_type(string_t::npos) == pos_begin) {
+    if (string_t::npos == pos_begin) {
         CPP_THROW(preprocess_exception, bad_include_statement, s, act_token);
     }
 
@@ -624,6 +624,7 @@ pp_iterator_functor<ContextT>::retrieve_macrodefinition(
     parse_node_t const &node, boost::spirit::parser_id id, 
     ContainerT &macrodefinition)
 {
+    using namespace cpplexer;
     typedef typename parse_node_t::const_tree_iterator const_tree_iterator;
 
 // find macro parameters/macro definition inside the parse tree
@@ -696,7 +697,7 @@ pp_iterator_functor<ContextT>::on_undefine (result_type const &token)
         return;
 
 // retrieve the macro name to undefine from the parse tree
-    ctx.remove_macro_definition(token.get_value());       // never fails
+    ctx.remove_macro_definition(token);       // throws for predefined macros
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1042,6 +1043,8 @@ pp_iterator_functor<ContextT>::on_pragma(
     typename parse_tree_t::const_iterator const &begin,
     typename parse_tree_t::const_iterator const &end)
 {
+    using namespace cpplexer;
+    
 //  skip this #pragma, if conditional compilation is off
     if (!ctx.get_if_block_status()) 
         return true;

@@ -2,7 +2,6 @@
     A Standard compliant C++ preprocessor
 
     Copyright (c) 2001-2003 Hartmut Kaiser
-    Copyright (c) 2003 Paul Mensonides
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software
@@ -24,3 +23,4 @@ CONCAT(CON, CAT(1, 2))              // should expand to CONCAT(1, 2)
 CONCAT(1, CONCAT(2, 3))             // should expand to 1CONCAT(2, 3)
 CONCAT(1, CONCAT_INDIRECT()(2, 3))  // should expand to 1CONCAT_INDIRECT()(2, 3)
 CONCAT(CONCAT_, INDIRECT)()(1, 2)   // should expand to 12
+CONCAT(CONCAT_, INDIRECT())(1, 2)   // should expand to CONCAT(1, 2)

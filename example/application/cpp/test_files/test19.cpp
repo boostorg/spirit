@@ -12,16 +12,8 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
+// Tests simple #line functionality
 
-#define CAT(a, b) a ## b
-#define ARGS (1, 2)
+#line 5 "a_nonexisting_file.cpp"
 
-CAT ARGS            // expands to CAT (1, 2) not 12
-
-#define INVOKE(macro) macro ARGS
-
-INVOKE(CAT)         // CAT (1, 2) not 12
-
-#define EXPAND(x) x
-
-EXPAND(CAT ARGS)    // expands to 12 because of rescanning
+#error This error should occur at line 6 of "a_nonexisting_file.cpp"
