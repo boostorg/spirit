@@ -98,6 +98,7 @@ else
     test-suite "spirit.core.composite"
         : [ spirit-run $(spirit-src)composite_tests.cpp <template>opt ]
           [ spirit-run $(spirit-src)epsilon_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)negated_eps_p_test.cpp <template>normal ]
           [ spirit-run $(spirit-src)operators_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)directives_tests.cpp <template>normal ]
         ;

@@ -156,7 +156,11 @@ namespace boost { namespace spirit {
         {
             typename ScannerT::iterator_t save(scan.first);
 
-            bool matches = this->subject().parse(scan);
+            typedef typename no_actions_scanner<ScannerT>::policies_t
+                policies_t;
+
+            bool matches = this->subject().parse(
+                scan.change_policies(policies_t(scan)));
             if (!matches)
             {
                 scan.first = save; // reset the position
