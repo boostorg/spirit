@@ -12,7 +12,7 @@
 #include <boost/spirit/fusion/detail/access.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/mpl/at.hpp>
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 
 namespace boost { namespace fusion { namespace detail
 {
@@ -21,7 +21,7 @@ namespace boost { namespace fusion { namespace detail
     {
         typedef mpl::at_c<FUSION_GET_TYPES(Tuple), N> element;
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 is_const<Tuple>
               , cref_result<element>
               , ref_result<element>

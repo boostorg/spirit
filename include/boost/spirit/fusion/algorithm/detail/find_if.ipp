@@ -8,7 +8,7 @@
 #if !defined(FUSION_ALGORITHM_DETAIL_FIND_IF_HPP)
 #define FUSION_ALGORITHM_DETAIL_FIND_IF_HPP
 
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/spirit/fusion/iterator/value_of.hpp>
@@ -50,7 +50,7 @@ namespace boost { namespace fusion { namespace detail
         filter;
 
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 filter
               , mpl::identity<First>
               , recursive_find_if<First, Last, Pred>

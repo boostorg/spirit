@@ -9,7 +9,7 @@
 #define FUSION_ITERATOR_TUPLE_ITERATOR_HPP
 
 #include <boost/mpl/int.hpp>
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/spirit/fusion/iterator/detail/iterator_base.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/deref_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/value_traits.hpp>
@@ -17,7 +17,7 @@
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/prior_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/tuple_iterator/equal_to_traits.hpp>
 #include <boost/spirit/fusion/sequence/detail/tuple_begin_end_traits.hpp>
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/identity.hpp>
 
@@ -35,7 +35,7 @@ namespace boost { namespace fusion
         typedef tuple_iterator<N, Tuple> self_type;
 
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 mpl::less<index, typename Tuple::size>
               , detail::tuple_iterator_next_traits_impl<self_type>
               , mpl::identity<void_t>
@@ -43,7 +43,7 @@ namespace boost { namespace fusion
         next;
 
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 mpl::less<index, typename Tuple::size>
               , detail::tuple_iterator_value_traits_impl<self_type>
               , mpl::identity<void_t>

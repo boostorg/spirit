@@ -12,7 +12,7 @@
 #include <boost/ref.hpp>
 
 #if defined BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
-# include <boost/mpl/apply_if.hpp>
+# include <boost/mpl/eval_if.hpp>
 # include <boost/mpl/identity.hpp>
 # include <boost/type_traits/is_array.hpp>
 # include <boost/type_traits/is_convertible.hpp>
@@ -73,12 +73,12 @@ namespace boost { namespace fusion { namespace detail
     struct maybe_string
     {
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 is_array<T>
-              , mpl::apply_if<
+              , mpl::eval_if<
                     is_convertible<T, char const*>
                   , mpl::identity<char const*>
-                  , mpl::apply_if<
+                  , mpl::eval_if<
                         is_convertible<T, wchar_t const*>
                       , mpl::identity<wchar_t const*>
                       , mpl::identity<T>
@@ -93,7 +93,7 @@ namespace boost { namespace fusion { namespace detail
     struct as_tuple_element
     {
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 is_reference_wrapper<T>
               , add_reference<typename unwrap_reference<T>::type>
               , maybe_string<T>

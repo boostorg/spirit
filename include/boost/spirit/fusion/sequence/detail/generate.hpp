@@ -16,7 +16,7 @@
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/arithmetic/inc.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 #define FUSION_DEREF_ITERATOR(z, n, data)                                       \
@@ -34,7 +34,7 @@ namespace boost { namespace fusion { namespace detail
     struct checked_deref_iterator
     {
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 meta::equal_to<First, Last>
               , mpl::identity<void_t>
               , meta::value_of<First>
@@ -46,7 +46,7 @@ namespace boost { namespace fusion { namespace detail
     struct checked_next_iterator
     {
         typedef typename
-            mpl::apply_if<
+            mpl::eval_if<
                 meta::equal_to<First, Last>
               , mpl::identity<Last>
               , meta::next<First>

@@ -8,7 +8,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/spirit/iterator/fixed_size_queue.hpp>
-#include <boost/mpl/assert_is_same.hpp>
+#include <boost/mpl/assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>
 #include <cassert>
 #include <iostream>
@@ -108,12 +109,12 @@ int main(int, char**)
 //  $$$ This is isolated in fixed_size_queue_fail_tests.cpp [JDG 11-5-2003] $$$
 
     // Iterators are random access.
-    BOOST_MPL_ASSERT_IS_SAME(
+    BOOST_MPL_ASSERT(( boost::is_same<
         iter_t::iterator_category,
-        std::random_access_iterator_tag);
-    BOOST_MPL_ASSERT_IS_SAME(
+        std::random_access_iterator_tag > ));
+    BOOST_MPL_ASSERT(( boost::is_same<
         const_iter_t::iterator_category,
-        std::random_access_iterator_tag);
+        std::random_access_iterator_tag > ));
 
     //  Check comparisons and interoperations (we are comparing
     //  const and non-const iterators)

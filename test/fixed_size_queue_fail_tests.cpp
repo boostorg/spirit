@@ -8,7 +8,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/spirit/iterator/fixed_size_queue.hpp>
-#include <boost/mpl/assert_is_same.hpp>
+#include <boost/mpl/assert.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>
 #include <cassert>
 #include <iostream>
@@ -27,12 +28,12 @@ BOOST_CLASS_REQUIRE(iter_t, boost, RandomAccessIteratorConcept);
 int main(int, char**)
 {
     // Iterators are random access.
-    BOOST_MPL_ASSERT_IS_SAME(
+    BOOST_MPL_ASSERT(( boost::is_same<
         iter_t::iterator_category,
-        std::random_access_iterator_tag);
-    BOOST_MPL_ASSERT_IS_SAME(
+        std::random_access_iterator_tag > ));
+    BOOST_MPL_ASSERT(( boost::is_same<
         const_iter_t::iterator_category,
-        std::random_access_iterator_tag);
+        std::random_access_iterator_tag > ));
 
     queue_t q;
     const queue_t& cq = q;

@@ -9,7 +9,7 @@
 #define FUSION_DETAIL_ACCESS_HPP
 
 #include <boost/spirit/fusion/detail/config.hpp>
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/add_reference.hpp>
@@ -42,7 +42,7 @@ namespace boost { namespace fusion { namespace detail
     struct call_param
     {
         typedef
-            typename mpl::apply_if<
+            typename mpl::eval_if<
                 is_reference<T>
               , mpl::identity<T>
               , non_ref_parameter<T>

@@ -12,7 +12,7 @@
 #include <boost/spirit/fusion/algorithm/detail/find_if.ipp>
 #include <boost/spirit/fusion/iterator/next.hpp>
 #include <boost/spirit/fusion/iterator/equal_to.hpp>
-#include <boost/mpl/apply_if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 namespace boost { namespace fusion
@@ -38,7 +38,7 @@ namespace boost { namespace fusion
                 typedef typename Iterator::pred_type pred_type;
 
                 typedef typename
-                    mpl::apply_if<
+                    mpl::eval_if<
                         meta::equal_to<first_type, last_type>
                       , mpl::identity<last_type>
                       , meta::next<first_type>
