@@ -92,7 +92,7 @@
 <p><span class=special></span>is equivalent to:<span class=special><br>
   </span></p>
 <pre>    <span class=identifier>r </span><span class=special>= !</span><span class=identifier>a</span><span class=special>;</span></pre>
-<p>We can simplify <tt>inclusive_or_expression_helper</tt> thus:</p>
+<p>we can simplify <tt>inclusive_or_expression_helper</tt> thus:</p>
 <pre>    <span class=identifier>inclusive_or_expression_helper
     </span><span class=special>= !(</span><span class=identifier>OR </span><span class=special>&gt;&gt; </span><span class=identifier>exclusive_or_expression </span><span class=special>&gt;&gt; </span><span class=identifier>inclusive_or_expression_helper</span><span class=special>)
     ;</span></pre>
@@ -100,7 +100,7 @@
 <pre>    <span class=identifier>r </span><span class=special>= !(</span><span class=identifier>a </span><span class=special>&gt;&gt; </span><span class=identifier>r</span><span class=special>);</span></pre>
 <p><span class=special></span>is equivalent to:</p>
 <pre>    <span class=identifier>r </span><span class=special>= *</span><span class=identifier>a</span><span class=special>;</span></pre>
-<p><span class=special></span>We have:</p>
+<p><span class=special></span>we have:</p>
 <pre>    <span class=identifier>inclusive_or_expression_helper
     </span><span class=special>= *(</span><span class=identifier>OR </span><span class=special>&gt;&gt; </span><span class=identifier>exclusive_or_expression</span><span class=special>)
     ;</span></pre>
@@ -111,7 +111,7 @@
     ;</span></pre>
 <p><span class=special></span>Reminds me of the calculators. So in short:</p>
 <pre>    <span class=identifier>a </span><span class=special>= </span><span class=identifier>b </span><span class=special>| </span><span class=identifier>a </span><span class=special>&gt;&gt; </span><span class=identifier>op </span><span class=special>&gt;&gt; </span><span class=identifier>b</span><span class=special>;</span></pre>
-<p><span class=special></span><span class=identifier>In </span><span class=identifier>pseudo-YACC 
+<p><span class=special></span><span class=identifier>in </span><span class=identifier>pseudo-YACC 
   </span><span class=identifier>is</span><span class=special>:</span></p>
 <pre>    <span class=identifier>a </span><span class=special>= </span><span class=identifier>b </span><span class=special>&gt;&gt; *(</span><span class=identifier>op </span><span class=special>&gt;&gt; </span><span class=identifier>b</span><span class=special>);</span></pre>
 <p><span class=special></span><span class=identifier>in Spirit. What </span><span class=identifier>could 
