@@ -501,26 +501,21 @@ class inner
 
     protected:
         inner()
-            : input(new InputT())
-            , val(new value_type)
+            : input(new InputT)
         {}
 
         inner(InputT x)
             : input(new InputT(x))
-            , val(new value_type(**input))
         {}
 
         inner(inner const& x)
             : input(x.input)
-            , val(x.val)
         {}
 
         void destroy()
         {
-            delete input;
-            input = 0;
-            delete val;
-            val = 0;
+          delete input;
+          input = 0;
         }
 
         bool same_input(inner const& x) const
@@ -534,19 +529,17 @@ class inner
         void swap(inner& x)
         {
             impl::mp_swap(input, x.input);
-            impl::mp_swap(val, x.val);
         }
 
     public:
         reference get_input() const
         {
-            return *val;
+            return **input;
         }
 
         void advance_input()
         {
             ++*input;
-            *val = **input;
         }
 
         bool input_at_eof() const
@@ -556,8 +549,6 @@ class inner
 
     private:
         InputT* input;
-        value_type* val;
-
 };
 
 };
