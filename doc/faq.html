@@ -133,8 +133,38 @@
 
 <span class=identifier>    rule</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt; </span><span class=identifier>compositeRule</span>
         <span class=special>= </span><span class=identifier>lexeme_d</span><span class=special>[(</span><span class=identifier>alpha_p </span><span class=special>| </span><span class=literal>'_'</span><span class=special>) &gt;&gt; *(</span><span class=identifier>ch</span><span class=special>)]; </span><span class="comment">// &lt;- error source</span></pre>
-<p>This problem is related the the first FAQ entry: The Scanner Business. <span class=special><br>
-  </span></p>
+<p>You might get the impression that the <tt>lexeme_d</tt> directive and rules 
+  do not mix. Actually, this problem is related the the first FAQ entry: The Scanner 
+  Business. More precisely, the <tt>lexeme_d</tt> directive and rules with incompatible 
+  scanner types do not mix. This problem is more subtle. What's causing the scanner 
+  incompatibility is the directive itself. The <tt>lexeme_d</tt> directive transforms 
+  the scanner it receives into something that disables the skip parser. This non-skipping 
+  scanner, unfortunately, is incompatible with the original scanner before transformation 
+  took place.</p>
+<p>The simplest solution is not to use rules in the <tt>lexeme_d</tt>. Instead, 
+  you can definitely apply <tt>lexeme_d</tt> to subrules and grammars if you really 
+  need more complex parsers inside the <tt>lexeme_d</tt>. If you really must use 
+  a rule, you need to know the exact scanner used by the directive. The <tt>lexeme_scanner</tt> 
+  metafunction is your friend here. The example above will work as expected once 
+  we give the <tt>ch</tt> rule a correct scanner type:</p>
+<pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>lexeme_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span><span class=identifier>ch </span><span class=special>
+        = </span><span class=identifier>alnum_p </span><span class=special>| </span><span class=literal>'.' </span><span class=special>| </span><span class=literal>'-' </span><span class=special>| </span><span class=literal>'_'</span><span class=special>;</span></pre>
+<p>Note: make sure to add &quot;<tt>typename</tt>&quot; before <tt>lexeme_scanner</tt> 
+  when this is used inside a template class or function.</p>
+<p>The same thing happens when rules are used inside the <tt>as_lower_d</tt> directive. 
+  In such cases, you can use the <tt>as_lower_scanner</tt>. See the <span class=identifier><tt><a href="scanner.html#lexeme_scanner">lexeme_scanner</a></tt></span> 
+  and <tt><a href="scanner.html#as_lower_scanner">as_lower_scanner</a></tt>.</p>
+<p><strong>Kleene Star Forever</strong></p>
+<p>Question: Why Does This Loop Forever?</p>
+<pre>    <span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>optional </span><span class=special>= !(</span>str_p<span class="special">(</span><span class="string">&quot;optional&quot;</span><span class="special">));
+    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class="identifier">list_of_optional </span><span class=special>= *</span><span class=identifier>optional</span><span class="special">;</span></pre>
+<p>The problem with this is that the kleene star will continue looping until it 
+  gets a no-match from it's enclosed parser. Because the <tt>optional</tt> rule 
+  is optional, it will always return a match. Even if the input doesn't match 
+  &quot;optional&quot; it will return a zero length match. <tt>list_of_optional</tt> 
+  will keep calling optional forever since optional will never return a no-match. 
+  So in general, any rule that can be &quot;nullable&quot; (meaning it can return 
+  a zero length match) must not be put inside a kleene star.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>

@@ -31,9 +31,9 @@
   free to define their own directives as needed. Information on how this is done 
   will be provided later. For now, we shall deal only with predefined directives.</p>
 <h2>lexeme_d</h2>
-<p>Turns off white space skipping. By default the parser ignores white spaces 
-  and all things considered as white spaces, possibly including comments as parameterized 
-  by the scanner passed into the parser's parse member function.</p>
+<p>Turns off white space skipping. At the phrase level, the parser ignores white 
+  spaces and all things considered as white spaces, possibly including comments 
+  as parameterized by the scanner passed into the parser's parse member function.</p>
 <p>Situations where we want to work at the character level instead of the phrase 
   level call for a special construct. Rules can be directed to work at the character 
   level by enclosing the pertinent parts of the grammar inside the <tt>lexeme_d</tt> 

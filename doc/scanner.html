@@ -53,11 +53,9 @@
   the iterator type and <tt>PoliciesT</tt>, its set of policies. <tt>IteratorT</tt> 
   defaults to <tt>char const*</tt> while <tt>PoliciesT</tt> defaults to <tt>scanner_policies&lt;&gt;</tt>, 
   a predefined set of scanner policies that we can use straight out of the box.</p>
-<pre><code><font color="#000000"><span class=keyword>    template
-    </span><span class=special>&lt;
+<pre><code><font color="#000000"><span class=keyword>    template</span><span class=special>&lt;
         </span><span class=keyword>typename </span><span class=identifier>IteratorT  </span><span class=special>= </span><span class=keyword>char </span><span class=keyword>const</span><span class=special>*,
-        </span><span class=keyword>typename </span><span class=identifier>PoliciesT  </span><span class=special>= </span><span class=identifier>scanner_policies</span><span class=special>&lt;&gt;
-    </span><span class=special>&gt;
+        </span><span class=keyword>typename </span><span class=identifier>PoliciesT  </span><span class=special>= </span><span class=identifier>scanner_policies</span><span class=special>&lt;&gt; </span><span class=special>&gt;
     </span><span class=keyword>class </span><span class=identifier>scanner</span><span class=special>;</span></font></code></pre>
 <p>Spirit uses the same iterator concepts and interface formally defined by the 
   C++ Standard Template Library (STL). We can use iterators supplied by STL's 
@@ -195,6 +193,30 @@
   a scanner iteration policy that skips over portions that are recognized by the 
   skip-parser. This may then be used to create a scanner. The <tt>scanner_policies</tt> 
   class wraps all scanner related policies including the iteration policies.</p>
+<h2><a name="lexeme_scanner"></a>lexeme_scanner</h2>
+<p>When switching from phrase level to character level parsing, the <tt>lexeme_d</tt> 
+  (see <a href="directives.html">directives.html</a>) does its magic by disabling 
+  the skipping of white spaces. This is done by tweaking the <a href="scanner.html">scanner</a>. 
+  However, when we do this, all parsers inside the lexeme gets a transformed scanner 
+  type. This should not be a problem in most cases. However, when rules are called 
+  inside the <tt>lexeme_d</tt>, the compiler will choke if the rule does not have 
+  the proper scanner type. If a rule must be used inside a <tt>lexeme_d</tt>, 
+  the rule's type must be:</p>
+<pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>lexeme_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span>r<span class=special>;</span></pre>
+<p>where <span class=identifier><tt>ScannerT</tt></span> is the actual type of 
+  the scanner used. Note: make sure to add &quot;<tt>typename</tt>&quot; before 
+  <tt>lexeme_scanner</tt> when this is used inside a template class or function.</p>
+<h2><a name="as_lower_scanner"></a>as_lower_scanner</h2>
+<p>Similarly, the <tt>as_lower_d</tt> does its work by filtering and converting 
+  all characters received from the scanner to lower case. This is also done by 
+  tweaking the <a href="scanner.html">scanner</a>. Then again, all parsers inside 
+  the <tt>as_lower_d</tt> gets a transformed scanner type. If a rule must be used 
+  inside a <tt>lexeme_d</tt>, the rule's type must be:</p>
+<pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>as_lower_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span>r<span class=special>;</span></pre>
+<p>where <span class=identifier><tt>ScannerT</tt></span> is the actual type of 
+  the scanner used. Note: again, make sure to add &quot;<tt>typename</tt>&quot; 
+  before <tt>lexeme_scanner</tt> when this is used inside a template class or 
+  function.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>

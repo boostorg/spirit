@@ -23,7 +23,8 @@
     <td width="20"><img src="theme/r_arr.gif" border="0"></td>
    </tr>
 </table>
-<h3>Virtual functions: From static to dynamic C++</h3>
+<p><img src="theme/lens.gif" width="15" height="16"> <strong>Virtual functions: 
+  From static to dynamic C++</strong></p>
 <p>Rules straddle the border between static and dynamic C++. In effect, a rule 
   transforms compile-time polymorphism (using templates) into run-time polymorphism 
   (using virtual functions). This is necessary due to C++'s inability to automatically 
@@ -40,20 +41,17 @@
 <p>These limitations lead us to this implementation of rules. This comes at the 
   expense of the overhead of a virtual function call, once through each invocation 
   of a rule.</p>
-<h2>Multiple declaration</h2>
+<p><img src="theme/lens.gif" width="15" height="16"> <strong>Multiple declaration 
+  </strong> </p>
 <p>Some BNF variants allow multiple declarations of a <tt>rule</tt>. The declarations 
-  are taken as alternatives. Example:<br>
-  <br>
-  <span class=identifier><code>r </code></span><code><span class=special>= </span><span class=identifier>a</span><span class=special>; 
-  </span><span class=identifier><br>
-  r </span><span class=special>= </span><span class=identifier>b</span><span class=special>;</span></code><br>
-  <br>
-  is equivalent to: <br>
-  <br>
-  <span class=identifier><code>r </code></span><code><span class=special>= </span><span class=identifier>a 
-  </span><span class=special>| </span><span class=identifier>b</span><span class=special>;</span></code><br>
-  <br>
-  Spirit v1.3 allowed this behavior. However, the current version of Spirit <b>no 
+  are taken as alternatives. Example:</p>
+<pre>
+   <span class=identifier><code>r </code></span><code><span class=special>= </span><span class=identifier>a</span><span class=special>;    </span><span class=identifier>
+   r </span><span class=special>= </span><span class=identifier>b</span><span class=special>;</span></code></pre>
+<p> is equivalent to: </p>
+<pre>
+   <span class=identifier><code>r </code></span><code><span class=special>= </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b</span><span class=special>;</span></code></pre>
+<p>Spirit v1.3 allowed this behavior. However, the current version of Spirit <b>no 
   longer</b> allows this because experience shows that this behavior leads to 
   unwanted gotchas (for instance, it does not allow rules to be held in containers). 
   In the current release of Spirit, a second assignment to a rule will simply 
@@ -73,12 +71,12 @@
   April 1, 1998. Oh well.</p>
 <p><img src="theme/lens.gif" width="15" height="16"> <b>Forward iterators</b><br>
   <br>
-  In general, the <tt>scanner</tt> expects at least a standard conforming forward 
-  iterator. Forward iterators are needed for backtracking where the iterator needs 
-  to be saved and restored later. Generally speaking, Spirit is a backtracking 
-  parser. The implication of this is that at some point, the iterator position 
-  will have to be saved to allow the parser to backtrack to a previous point. 
-  Thus, for backtracking to work, the framework requires at least a forward iterator.<br>
+  In general, the scanner expects at least a standard conforming forward iterator. 
+  Forward iterators are needed for backtracking where the iterator needs to be 
+  saved and restored later. Generally speaking, Spirit is a backtracking parser. 
+  The implication of this is that at some point, the iterator position will have 
+  to be saved to allow the parser to backtrack to a previous point. Thus, for 
+  backtracking to work, the framework requires at least a forward iterator.<br>
   <br>
   Some parsers might require more specialized iterators (bi-directional or even 
   random access). Perhaps in the future, deterministic parsers when added to the 
