@@ -493,7 +493,7 @@ main()
         lfun2(arg1 + 2000),
         lfun2(val(5000) * 2),
         lfun2(lvar1 + lfun3()),
-        lfun4(55),
+        lfun4(val(55)),
         cout << lvar1 << '\n',
         cout << lfun3() << '\n',
         cout << val("bye bye\n")
