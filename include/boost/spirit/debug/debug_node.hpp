@@ -218,7 +218,7 @@ namespace impl {
         post_parse(ResultT& hit, ParserT const& p, ScannerT &scan)
         { 
 #if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
-            if (trace_parser(p)) {    
+            if (hit && trace_parser(p)) {    
             // for now, print out the return value only
                 return impl::print_closure_info(
                     this->base_t::post_parse(hit, p, scan), 
