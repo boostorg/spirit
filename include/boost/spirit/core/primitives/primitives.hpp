@@ -24,7 +24,7 @@
 #include "boost/spirit/core/parser.hpp"
 #endif
 
-#if !defined(BOOST_SPIRIT_DIRECTIVES_HPP)
+#if !defined(BOOST_SPIRIT_DIRECTIVES_IPP)
 #include "boost/spirit/core/composite/impl/directives.ipp"
 #endif
 
