@@ -82,6 +82,9 @@
 //      - push_front_a(ref, value_ref)  push front value_ref in ref
 //      - insert_key_a(ref,value_ref)   insert value_ref in ref using the
 //                                      parse result as key
+//      - insert_at_a(ref, key_ref)     insert the parse result in ref at key_ref
+//      - insert_at_a(ref, key_ref      insert value_ref in ref at key_ref
+//          , value_ref)                
 //      - assign_key_a(ref, value_ref)  assign value_ref in ref using the
 //                                      parse result as key
 //      - erase_a(ref, key)             erase data at key from ref
