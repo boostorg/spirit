@@ -77,6 +77,7 @@ struct parse_tuple_element {
             return scan.create_match(result.length(), TupleT::length - N, 
                 save, scan.first);
         }
+        scan.first = save;    // reset the input stream 
         return parse_tuple_element<N-1, ResultT, TupleT, BehaviourT>::
             do_(t, scan);
     }
@@ -102,6 +103,7 @@ struct parse_tuple_element<1, ResultT, TupleT, BehaviourT> {
             return scan.create_match(result.length(), TupleT::length - 1, 
                 save, scan.first);
         }
+        scan.first = save;    // reset the input stream 
         return select_match_gen<ResultT, BehaviourT>::do_(scan);
     }
 };

@@ -119,29 +119,8 @@ namespace fileiter_impl {
     /////////////////////////////////////////////////////////////////////////
 
 #if !defined(BOOST_ITERATOR_ADAPTORS_VERSION) || \
-    BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-
-    template <typename BaseT>
-    struct file_iterator_policy;
-
-    template <typename BaseIteratorT>
-    struct file_iter_generator
-    {
-    public:
-        typedef BaseIteratorT adapted_t;
-        typedef typename adapted_t::value_type value_type;
-        typedef file_iterator_policy<adapted_t> policy_t;
-
-        typedef boost::iterator_adaptor
-        <
-            adapted_t,
-            policy_t,
-            const value_type, const value_type&, const value_type*,
-            std::random_access_iterator_tag,
-            signed long
-        > type;
-    };
-
+     BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
+#error "Please use at least Boost V1.31.0 while compiling the file_iterator class!"
 #else // BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
 
     template <typename CharT, typename BaseIteratorT>
@@ -178,57 +157,6 @@ namespace fileiter_impl {
 //  impl::BaseIterator class. This class merely derives the iterator_adaptors
 //  generated class to implement the custom constructors and make_end()
 //  member function.
-//
-///////////////////////////////////////////////////////////////////////////////
-
-#if !defined(BOOST_ITERATOR_ADAPTORS_VERSION) || \
-    BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Uses the iterator_adaptor version from Boost V1.30.0
-//
-///////////////////////////////////////////////////////////////////////////////
-
-template<typename CharT, typename BaseIteratorT>
-class file_iterator
-    : public fileiter_impl::file_iter_generator<BaseIteratorT>::type
-{
-private:
-    typedef typename
-        fileiter_impl::file_iter_generator<BaseIteratorT>::type base_t;
-    typedef typename
-        fileiter_impl::file_iter_generator<BaseIteratorT>::adapted_t adapted_t;
-    typedef typename
-        safe_bool<base_t>::type safe_bool;
-
-public:
-    file_iterator()
-    {}
-
-    file_iterator(std::string fileName)
-        : base_t(adapted_t(fileName))
-    {}
-
-    file_iterator(const base_t& iter)
-        : base_t(iter)
-    {}
-
-    inline file_iterator& operator=(const base_t& iter);
-    file_iterator make_end(void);
-
-    // operator bool. This borrows a trick from boost::shared_ptr to avoid
-    //   to interfere with arithmetic operations.
-    operator safe_bool()
-    { return make_safe_bool<base_t>(this->base()); }
-};
-
-#else // BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Uses the newer iterator_adaptor version (should be released with
-//  Boost V1.31.0)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -301,8 +229,6 @@ private:
         return x.base().distance(this->base_reference());
     }
 };
-
-#endif // BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
 
 ///////////////////////////////////////////////////////////////////////////////
 }} /* namespace boost::spirit */

@@ -18,6 +18,7 @@ namespace boost { namespace fusion
         template <typename Iterator>
         struct impl
         {
+            // VC6 needs this
             typedef int type;
         };
     };

@@ -9,8 +9,27 @@
 #if !defined(BOOST_SPIRIT_SAFE_BOOL_HPP)
 #define BOOST_SPIRIT_SAFE_BOOL_HPP
 
+#include <boost/config.hpp>
+
 namespace boost { namespace spirit
 {
+#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
+
+    template <typename T>
+    struct safe_bool
+    {
+        typedef bool type;
+    };
+
+    template <typename T>
+    inline bool
+    make_safe_bool(bool cond)
+    {
+        return cond;
+    }
+
+#else
+
     template <typename T>
     struct safe_bool
     {
@@ -24,6 +43,9 @@ namespace boost { namespace spirit
     {
         return cond ? &safe_bool<T>::dummy : 0;
     }
+
+#endif
+
 }}
 
 #endif

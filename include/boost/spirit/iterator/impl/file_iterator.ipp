@@ -432,73 +432,6 @@ private:
 
 #endif // BOOST_SPIRIT_FILEITERATOR_POSIX
 
-#if !defined(BOOST_ITERATOR_ADAPTORS_VERSION) || \
-    BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Uses the iterator_adaptor version from Boost V1.30.0
-//
-///////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//  file_iterator_policy
-//
-//  This is the policy used by boost::iterator_adaptor to create a standard
-//  conforming iterator wrapping around the base iterators. It basically just
-//  dispatches function calls, since everything is implemented inside
-//  the base iterators.
-//
-///////////////////////////////////////////////////////////////////////////////
-
-template <typename BaseT>
-struct file_iterator_policy
-{
-    template <class T>
-    void initialize(T&)
-    {}
-
-    template <class IterT>
-    typename IterT::reference dereference(const IterT& x) const
-    {
-        return x.base().get_cur_char();
-    }
-
-    template <class IterT>
-    void increment(IterT& x)
-    { 
-        x.base().next_char();
-    }
-
-    template <class IterT>
-    void decrement(IterT& x)
-    { 
-        x.base().prev_char();
-    }
-
-    template <class IterT, class DiffT>
-    void advance(IterT& x, DiffT n)
-    { 
-        x.base().advance(n);
-    }
-
-    template <class Iter1T, class Iter2T>
-    typename Iter1T::difference_type 
-    distance(const Iter1T& x, const Iter2T& y) const
-    { 
-        return y.base().distance(x.base()); 
-    }
-
-    template <class Iter1T, class Iter2T>
-    bool equal(const Iter1T& x, const Iter2T& y) const
-    { 
-        return x.base() == y.base(); 
-    }
-};
-
-#endif // BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-
 ///////////////////////////////////////////////////////////////////////////////
 } /* namespace boost::spirit::fileiter_impl */
 
@@ -507,17 +440,7 @@ file_iterator<CharT,BaseIteratorT>
 file_iterator<CharT,BaseIteratorT>::make_end(void)
 {
     file_iterator iter(*this);
-
-#if !defined(BOOST_ITERATOR_ADAPTORS_VERSION) || \
-    BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-    
-    // base() member function returns the reference
-    //  to the adapted type (BaseFileIterator)
-    iter.base().seek_end();
-#else // BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
     iter.base_reference().seek_end();
-#endif // BOOST_ITERATOR_ADAPTORS_VERSION < 0x0200
-    
     return iter;
 }
 
