@@ -82,7 +82,11 @@ void construct_string_from(void)
     IterT mp1(a);
 
     std::string dummy;
+#ifndef BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS
     dummy.assign(mp1, mpend);
+#else
+    copy(mp1, mpend, inserter(dummy, dummy.end()));
+#endif
 }
 
 template <>
@@ -92,7 +96,11 @@ void construct_string_from<functor_multi_pass_t>(void)
     functor_multi_pass_t mp1 = functor_multi_pass_t(my_functor());
 
     std::string dummy;
+#ifndef BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS
     dummy.assign(mp1, mpend);
+#else
+    copy(mp1, mpend, inserter(dummy, dummy.end()));
+#endif
 }
 
 ////////////////////////////////////////////////
