@@ -45,7 +45,8 @@ namespace test_grammars {
                 r = switch_p [
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
-                        case_p<'c'>(str_p("bcd"))
+                        case_p<'c'>(str_p("bcd")),
+                        case_p<'d'>(eps_p)
                     ];
             }
 
@@ -66,7 +67,8 @@ namespace test_grammars {
                 r = switch_p(anychar_p) [
                         case_p<'a'>(int_p),
                         case_p<'b'>(ch_p(',')),
-                        case_p<'c'>(str_p("bcd"))
+                        case_p<'c'>(str_p("bcd")),
+                        case_p<'d'>(eps_p)
                     ];
             }
 
@@ -90,11 +92,12 @@ namespace test_grammars {
             definition(switch_grammar_actor const& /*self*/)
             {
                 using phoenix::arg1;
-                r = select_p('a', 'b', 'c')[r.val = arg1] >>
+                r = select_p('a', 'b', 'c', 'd')[r.val = arg1] >>
                     switch_p(r.val) [
                         case_p<0>(int_p),
                         case_p<1>(ch_p(',')),
-                        case_p<2>(str_p("bcd"))
+                        case_p<2>(str_p("bcd")),
+                        case_p<3>(eps_p)
                     ];
             }
 
@@ -120,26 +123,44 @@ namespace tests {
             assert(parse("a1", g).full);
             assert(!parse("a,", g).hit);
             assert(!parse("abcd", g).hit);
+            assert(!parse("a", g).hit);
             
             assert(parse("a 1", g, space_p).full);
             assert(!parse("a ,", g, space_p).hit);
             assert(!parse("a bcd", g, space_p).hit);
+            assert(!parse("a ", g, space_p).hit);
             
             assert(!parse("b1", g).hit);
             assert(parse("b,", g).full);
             assert(!parse("bbcd", g).hit);
+            assert(!parse("b", g).hit);
             
             assert(!parse("b 1", g, space_p).hit);
             assert(parse("b ,", g, space_p).full);
             assert(!parse("b bcd", g, space_p).hit);
+            assert(!parse("b ", g, space_p).hit);
             
             assert(!parse("c1", g).hit);
             assert(!parse("c,", g).hit);
             assert(parse("cbcd", g).full);
+            assert(!parse("c", g).hit);
             
             assert(!parse("c 1", g, space_p).hit);
             assert(!parse("c ,", g, space_p).hit);
             assert(parse("c bcd", g, space_p).full);
+            assert(!parse("c ", g, space_p).hit);
+            
+            assert(parse("d1", g).hit);
+            assert(parse("d,", g).hit);
+            assert(parse("dbcd", g).hit);
+            assert(parse("d", g).full);
+            
+            assert(parse("d 1", g, space_p).hit);
+            assert(parse("d ,", g, space_p).hit);
+            assert(parse("d bcd", g, space_p).hit);
+            assert(parse("d ", g, space_p).full);
+
+            assert(parse(" a 1 b , c bcd d ", *g, space_p).full);
         }
     };
 
@@ -151,13 +172,13 @@ namespace tests {
         {
             GrammarT g;
             
-            assert(!parse("d1", g).hit);
-            assert(!parse("d,", g).hit);
-            assert(!parse("dbcd", g).hit);
+            assert(!parse("x1", g).hit);
+            assert(!parse("x,", g).hit);
+            assert(!parse("xbcd", g).hit);
 
-            assert(!parse("d 1", g, space_p).hit);
-            assert(!parse("d ,", g, space_p).hit);
-            assert(!parse("d bcd", g, space_p).hit);
+            assert(!parse("x 1", g, space_p).hit);
+            assert(!parse("x ,", g, space_p).hit);
+            assert(!parse("x bcd", g, space_p).hit);
         }
     };
        
