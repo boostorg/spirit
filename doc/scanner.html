@@ -232,7 +232,7 @@
   the rule's type must be:</p>
 <pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>lexeme_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span>r<span class=special>;</span></pre>
 <p>where <span class=identifier><tt>ScannerT</tt></span> is the actual type of 
-  the scanner used. </p>
+  the scanner used. Take note that <tt>lexeme_scanner</tt> will only work for phrase level scanners. </p>
 <h2><a name="as_lower_scanner"></a>as_lower_scanner</h2>
 <p>Similarly, the <tt>as_lower_d</tt> does its work by filtering and converting 
   all characters received from the scanner to lower case. This is also done by 

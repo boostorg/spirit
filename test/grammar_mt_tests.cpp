@@ -10,7 +10,7 @@
 #include <boost/config.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS)
+#if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS) || defined(BOOST_DISABLE_THREADS)
 // we end here if we can't do multithreading
 static void skipped()
 {

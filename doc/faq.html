@@ -174,7 +174,7 @@
   a rule, you need to know the exact scanner used by the directive. The <tt>lexeme_scanner</tt>
   metafunction is your friend here. The example above will work as expected once
   we give the <tt>ch</tt> rule a correct scanner type:</p>
-<pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>lexeme_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span><span class=identifier>ch </span><span class=special>
+<pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>lexeme_scanner</span><span class="special">&lt;</span><span class=identifier>phrase_scanner_t</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span><span class=identifier>ch </span><span class=special>
         = </span><span class=identifier>alnum_p </span><span class=special>| </span><span class=literal>'.' </span><span class=special>| </span><span class=literal>'-' </span><span class=special>| </span><span class=literal>'_'</span><span class=special>;</span></pre>
 <p>Note: make sure to add &quot;<tt>typename</tt>&quot; before <tt>lexeme_scanner</tt>
   when this is used inside a template class or function.</p>
