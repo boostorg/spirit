@@ -15,7 +15,7 @@
     #include <cwctype>
 #endif
 
-#ifdef __BORLANDC__
+#if defined(__BORLANDC__) || (defined(__ICL) && __ICL >= 700)
 #define CREF const&
 #else
 #define CREF
