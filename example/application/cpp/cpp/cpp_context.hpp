@@ -84,9 +84,36 @@ public:
 
 // iterator interface
     iterator_t begin() 
-        { return iterator_t(*this, first, last, position_t(filename)); }
-    iterator_t end()   
-        { return iterator_t(); }
+    {   
+        macros.init_predefined_macros();
+        return iterator_t(*this, first, last, position_t(filename)); 
+    }
+    iterator_t end() const { return iterator_t(); }
+
+// maintain include pathes
+    bool add_include_path(char const *path_, bool is_system = false)
+        { return includes.add_include_path(path_, is_system);}
+    void set_sys_include_delimiter() { includes.set_sys_include_delimiter(); }
+    int get_iteration_depth() const { return iter_ctxs.size(); }
+
+// maintain defined macros
+    bool add_macro_definition(TokenT const &name, bool has_params,
+            std::vector<TokenT> &parameters, std::list<TokenT> &definition)
+        { return macros.add_macro(name, has_params, parameters, definition); }
+    bool is_defined_macro(typename TokenT::string_t const &name) const
+        { return macros.is_defined(name); }
+    bool remove_macro_definition(typename TokenT::string_t const &name)
+        { return macros.remove_macro(name); }
+    void reset_macro_definitions() { macros.reset_macromap(); }
+        
+protected:
+    friend typename iterator_t::input_policy_t;
+    
+// maintain include pathes (helper functions)
+    bool find_include_file (std::string &s, bool is_system) const
+        { return includes.find_include_file(s, is_system); }
+    void set_current_directory(char const *path_) 
+        { includes.set_current_directory(path_); }
 
 // conditional compilation contexts
     bool get_if_block_status() const { return ifblocks.get_status(); }
@@ -97,31 +124,14 @@ public:
     bool enter_else_block() { return ifblocks.enter_else_block(); }
     bool exit_if_block() { return ifblocks.exit_if_block(); }
 
-// maintain include pathes
-    bool add_include_path(char const *path_, bool is_system = false)
-        { return includes.add_include_path(path_, is_system);}
-    void set_sys_include_delimiter() { includes.set_sys_include_delimiter(); }
-    bool find_include_file (std::string &s, bool is_system) const
-        { return includes.find_include_file(s, is_system); }
-    void set_current_directory(char const *path_) 
-        { includes.set_current_directory(path_); }
-
 // stack of iteration contexts
-    int get_iteration_depth() const { return iter_ctxs.size(); }
     iteration_ptr_t pop_iteration_context()
         { iteration_ptr_t top = iter_ctxs.top(); iter_ctxs.pop(); return top; }
     void push_iteration_context(iteration_ptr_t iter_ctx)
         { iter_ctxs.push(iter_ctx); }
 
-// maintain defined macros
-    bool add_macro_definition(TokenT const &name, bool has_params,
-            std::vector<TokenT> &parameters, std::list<TokenT> &definition)
-        { return macros.add_macro(name, has_params, parameters, definition); }
-    bool is_defined_macro(typename TokenT::string_t const &name) const
-        { return macros.is_defined(name); }
-    bool remove_macro_definition(typename TokenT::string_t const &name)
-        { return macros.remove_macro(name); }
-
+    token_t &get_main_token() { return macros.get_main_token(); }
+    
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  expand_tokensequence(): 
@@ -156,10 +166,10 @@ private:
     target_iterator_t const &last;
     std::string filename;           // associated main filename
 
-    if_block_stack ifblocks;        // conditional compilation contexts
-    include_pathes includes;        // lists of include directories to search
+    util::if_block_stack ifblocks;  // conditional compilation contexts
+    util::include_pathes includes;  // lists of include directories to search
     iteration_context_stack_t iter_ctxs;    // iteration contexts
-    macromap<TokenT> macros;        // map of defined macros
+    util::macromap<TokenT> macros;  // map of defined macros
 };
 
 ///////////////////////////////////////////////////////////////////////////////

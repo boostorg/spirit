@@ -32,7 +32,7 @@ template <typename TokenT, typename PositionT = boost::spirit::file_position>
 struct lex_input_interface 
 {
     virtual TokenT get() = 0;
-    //virtual typename TokenT::position_t get_position() = 0;
+    virtual void set_position(PositionT const &pos) = 0;
 
 //  The NewLexer function allows the opaque generation of a new lexer object.
 //  It is coupled to the token type to allow to distinguish different 

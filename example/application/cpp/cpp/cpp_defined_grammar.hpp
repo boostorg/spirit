@@ -24,9 +24,10 @@
 #include "cpp/cpp_macromap.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace cpp {
+namespace cpp { 
+namespace grammars {
 
-namespace {
+namespace closures {
 
     template <typename TokenT>
     struct cpp_defined_closure 
@@ -47,7 +48,7 @@ template <typename TokenT>
 struct defined_grammar :
     public boost::spirit::grammar<
         defined_grammar<TokenT>, 
-        typename cpp_defined_closure<TokenT>::context_t
+        typename closures::cpp_defined_closure<TokenT>::context_t
     >
 {
     defined_grammar()
@@ -97,6 +98,7 @@ struct defined_grammar :
 #undef TRACE_CPP_DEFINED_GRAMMAR
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_DEFINED_GRAMMAR_HPP__F48287B2_DC67_40A8_B4A1_800EFBD67869__INCLUDED_)

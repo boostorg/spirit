@@ -11,28 +11,28 @@
             <p><b>Introduction</b></p>
             
   <p align="justify">During the last time many new features were developed as 
-    additions to <tt>Spirit</tt> <a href="readme.html#spirit">[4]</a> and we felt 
+    additions to <tt>Spirit</tt> <a href="preprocessing_iterator.html#spirit">[4]</a> and we felt 
     more and more, that it would be very helpful, to have a 'real world' example, 
     which could be used as a sandbox for testing the usability of certain features. 
     Additionally&nbsp;a recent discussion on the Boost mailing list showed the 
     widespread interest of developers to have a modern C preprocessor library 
     to play with.&nbsp; </p>
   <p align="justify">The C preprocessor sample uses the <a href="http://spirit.sourceforge.net/"> 
-    </a> <tt>Spirit<a href="readme.html#spirit">[4]</a></tt> parser construction 
-    library to implement a C++ lexer with ISO/ANSI standard conformant preprocessing 
-    capabilities. The C preprocessor library exposes an iterator interface, which 
-    returns the current preprocessed token from the input stream. This preprocessed 
-    token is generated on the fly while iterating over the preprocessor iterator 
-    sequence (in the terminology of the STL these iterators are forward iterators). 
-  </p>
+    </a> <tt>Spirit<a href="preprocessing_iterator.html#spirit">[4]</a></tt> parser 
+    construction library to implement a C++ lexer with ISO/ANSI standard conformant 
+    preprocessing capabilities. This C preprocessor library exposes an iterator 
+    interface, which returns the current preprocessed token from the input stream. 
+    This preprocessed token is generated on the fly while iterating over the preprocessor 
+    iterator sequence (in the terminology of the STL these iterators are forward 
+    iterators). </p>
   <p align="justify"> The main goals for this project are:</p>
             
   <blockquote> 
     <p><b><img src="theme/bullet.gif" width="13" height="13" id="IMG1">&nbsp;</b>full 
-      conformance with the C++ standard (ISO/IEC 14882) <a href="readme.html#iso_cpp">[1]</a>, 
-      later on with the C99 standard (ISO/IEC 9899) <a href="readme.html#iso_c">[2]</a><br>
+      conformance with the C++ standard (ISO/IEC 14882) <a href="preprocessing_iterator.html#iso_cpp">[1]</a>, 
+      later on with the C99 standard (ISO/IEC 9899) <a href="preprocessing_iterator.html#iso_c">[2]</a><br>
       <b><img src="theme/bullet.gif" width="13" height="13">&nbsp;</b>usage of 
-      <tt>Spirit<a href="readme.html#spirit">[4]</a></tt> for the parsing parts 
+      <tt>Spirit<a href="preprocessing_iterator.html#spirit">[4]</a></tt> for the parsing parts 
       of the game (certainly :-)<br>
       <b><img src="theme/bullet.gif" width="13" height="13">&nbsp;</b>maximal 
       usage of STL and/or boost libraries (for compactness and maintainability)<br>
@@ -122,7 +122,7 @@
     finetuning of the process of preprocessing itself.</P>
             
   <P dir="ltr">The first of this C++ lexers is implemented with the help of the 
-    wellknown <tt>re2c</tt> <a href="readme.html#re2c">[3]</a> tool, which generates 
+    wellknown <tt>re2c</tt> <a href="preprocessing_iterator.html#re2c">[3]</a> tool, which generates 
     C code from given regular expressions. The lexers generated with <tt>re2c</tt> 
     are known to be very fast, because they are not&nbsp;table driven but the 
     whole token building logic is coded directly (very similar to hand coded lexers). 
@@ -130,7 +130,7 @@
             
   <P dir="ltr">The second of this C++ lexers is build around a table driven lexer, 
     where the DFA tables are generated from regular expressions with the help 
-    of a Spirit based lexer generating framework named <tt>Slex</tt> <a href="readme.html#slex">[5]</a>. 
+    of a Spirit based lexer generating framework named <tt>Slex</tt> <a href="preprocessing_iterator.html#slex">[5]</a>. 
     The <tt>Slex</tt> is feeded during runtime with the token definitions (regular 
     expressions) and generates the resulting DFA table. This table is used to 
     combine the input characters into corresponding lexems (tokens). The generated 
@@ -139,8 +139,8 @@
             
   <P dir="ltr">It is possible to build other C++ lexers if needed. Currently there 
     are plans to adapt the <tt>Spirit</tt> C++ lexer example <tt>cpplexer</tt> 
-    <a href="readme.html#cpplexer">[6]</a>, which is completely based on static 
-    <tt>Spirit<a href="readme.html#spirit">[4]</a></tt> grammars.</P>
+    <a href="preprocessing_iterator.html#cpplexer">[6]</a>, which is completely based on static 
+    <tt>Spirit<a href="preprocessing_iterator.html#spirit">[4]</a></tt> grammars.</P>
 	
   <P dir="ltr"><b>Library compile time configuration</b></P>
   <P dir="ltr">The C preprocessor iterator library may be configured at compile 
@@ -154,30 +154,48 @@
         library configuration</b></td>
     </tr>
     <tr> 
-      <td width="36%" class="table_cells"><code>CPP_SUPPORT_WARNING_DIRECTIVE</code></td>
-      <td width="64%" class="table_cells"> <p>Support the #warning directive</p></td>
+      <td width="39%" class="table_cells"><code>CPP_SUPPORT_WARNING_DIRECTIVE</code></td>
+      <td width="61%" class="table_cells"> <p>Support the #warning directive</p></td>
     </tr>
     <tr> 
-      <td width="36%" class="table_cells"><code>CPP_SUPPORT_MS_EXTENSIONS</code></td>
-      <td width="64%" class="table_cells"> <p>Support several MS specific language 
+      <td width="39%" class="table_cells"><code>CPP_SUPPORT_MS_EXTENSIONS</code></td>
+      <td width="61%" class="table_cells"> <p>Support several MS specific language 
           extensions (i.e. <tt>__int8</tt> et.al.)</p></td>
     </tr>
-    <tr>
+    <tr> 
       <td class="table_cells"><code>COMPILE_RE2C_AS_CPP</code></td>
       <td class="table_cells"><p>Allows to compile the Re2c based lexer in 'C' 
           mode instead of normal 'C++' mode.<br>
           This option is required, because at least the VC7.1 (final beta) compiler 
           has problems to compile it with optimization switched on.</p></td>
     </tr>
+    <tr> 
+      <td class="table_cells"><code>CPP_PREPROCESS_ERROR_MESSAGE_BODY</code></td>
+      <td class="table_cells"><p>Switches on the preprocessing of the message 
+          bodies of <span class="keyword">#error</span> and <span class="keyword">#warning</span> 
+          directives.</p></td>
+    </tr>
+    <tr> 
+      <td class="table_cells"><code>CPP_RETURN_PRAGMA_DIRECTIVES</code></td>
+      <td class="table_cells"><p>If defined, then the <span class="keyword">#pragma</span> 
+          directives are returned as a token sequence to the caller, if not defined, 
+          the whole <span class="keyword">#pragma</span> directive is skipped.</p></td>
+    </tr>
+    <tr>
+      <td class="table_cells"><code>CPP_PREPROCESS_PRAGMA_BODY</code></td>
+      <td class="table_cells"><p>Switches on the preprocessing of the bodies of 
+          <span class="keyword"> #pragma</span> directives</p></td>
+    </tr>
   </table>
   <P dir="ltr"></P>
   <P dir="ltr"><b>Separation and inclusion compilation models</b></P>
-  <P dir="ltr">The C preprocessor iterator library is build as a header only library. 
-    If you're trying to include all required files at once you will mention, that 
-    the resulting compilation times are very large (up to an hour - depending 
-    on your system configuration). This straightforward method we'll call the 
-    inclusion compilation model. If you do not pay attention to compilation times, 
-    that's the way to go, no special handling is needed.</P>
+  <P dir="ltr">The C preprocessor iterator library is build almost as a header 
+    only library (except for the re2c based lexer). If you're trying to include 
+    all required files at once you will mention, that the resulting compilation 
+    times are very large (up to an hour - depending on your system configuration). 
+    This straightforward method we'll call the inclusion compilation model. If 
+    you do not pay attention to compilation times, that's the way to go, no special 
+    handling is needed.</P>
             
   <P dir="ltr">If you're interested in decreasing compilation times, the following 
     method is to be used. This we will call the separation compilation model. 
@@ -201,17 +219,17 @@
         to enable the separation compilation model</b></td>
     </tr>
     <tr class="table_title"> 
-      <td width="36%"><b>Separate</b></td>
-      <td width="64%"><p><code><font face="Verdana, Arial, Helvetica, sans-serif">Preprocessor 
+      <td width="25%"><b>Separate</b></td>
+      <td width="75%"><p><code><font face="Verdana, Arial, Helvetica, sans-serif">Preprocessor 
           constant</font></code></p></td>
     </tr>
     <tr> 
-      <td width="36%" class="table_cells"><code>C++ lexer</code></td>
-      <td width="64%" class="table_cells"> <p><code>CPP_SEPARATE_LEXER_INSTANTIATION</code></p></td>
+      <td width="25%" class="table_cells"><code>C++ lexer</code></td>
+      <td width="75%" class="table_cells"> <p><code>CPP_SEPARATE_LEXER_INSTANTIATION</code></p></td>
     </tr>
     <tr> 
-      <td width="36%" class="table_cells"><code>Spirit grammars</code></td>
-      <td width="64%" class="table_cells"> <p><code>CPP_SEPARATE_GRAMMAR_INSTANTIATION</code></p></td>
+      <td width="25%" class="table_cells"><code>Spirit grammars</code></td>
+      <td width="75%" class="table_cells"> <p><code>CPP_SEPARATE_GRAMMAR_INSTANTIATION</code></p></td>
     </tr>
   </table>
   <P dir="ltr">The following table shows the explicit template instantiations 
@@ -232,24 +250,24 @@
         required when using the separation compilation model</b></td>
     </tr>
     <tr class="table_title"> 
-      <td width="36%"><b>Separate</b></td>
-      <td width="64%"><p><code><font face="Verdana, Arial, Helvetica, sans-serif">Templates 
+      <td width="25%"><b>Separate</b></td>
+      <td width="75%"><p><code><font face="Verdana, Arial, Helvetica, sans-serif">Templates 
           to explicitly instantiate</font></code></p></td>
     </tr>
     <tr> 
-      <td width="36%" class="table_cells"><code>C++ lexer</code></td>
-      <td width="64%" class="table_cells"> <code><span class="keyword">template</span> 
+      <td width="25%" class="table_cells"><code>C++ lexers</code></td>
+      <td width="75%" class="table_cells"> <code><span class="keyword">template</span> 
         cpplexer::re2clex::new_lexer_gen&lt;<tt>TokenT</tt>&gt;; <span class="table_cells">or</span><br>
         <span class="keyword"> template</span> cpplexer::slex::new_lexer_gen&lt;<tt>TokenT</tt>&gt;;</code></td>
     </tr>
     <tr> 
-      <td width="36%" class="table_cells"><code>Spirit grammars</code></td>
-      <td width="64%" class="table_cells"> <p><span class="keyword"><code>template</code><code></code></span><code> 
-          cpp::cpp_grammar_gen&lt;<tt>TokenT</tt>&gt;;<br>
-          <span class="keyword"> template</span> cpp::expression_grammar_gen&lt<tt>TokenT</tt>&gt;;<br>
-          <span class="keyword"> template</span> cpp::intlit_grammar_gen&lt;<tt>TokenT</tt>&gt;;<br>
-          <span class="keyword"> template</span> cpp::chlit_grammar_gen&lt;<tt>TokenT</tt>&gt;;<br>
-          <span class="keyword"> template</span> cpp::floatlit_grammar_gen&lt;<tt>TokenT</tt>&gt;;</code></p></td>
+      <td width="25%" class="table_cells"><code>Spirit grammars</code></td>
+      <td width="75%" class="table_cells"> <p><span class="keyword"><code>template</code><code></code></span><code> 
+          cpp::grammars::cpp_grammar_gen&lt;<tt>TokenT</tt>&gt;;<br>
+          <span class="keyword"> template</span> cpp::grammars::expression_grammar_gen&lt<tt>TokenT</tt>&gt;;<br>
+          <span class="keyword"> template</span> cpp::grammars::intlit_grammar_gen&lt;<tt>TokenT</tt>&gt;;<br>
+          <span class="keyword"> template</span> cpp::grammars::chlit_grammar_gen&lt;<tt>TokenT</tt>&gt;;<br>
+          <span class="keyword"> template</span> cpp::grammars::floatlit_grammar_gen&lt;<tt>TokenT</tt>&gt;;</code></p></td>
     </tr>
   </table>
   <P dir="ltr">&nbsp;</P>

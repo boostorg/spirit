@@ -38,9 +38,10 @@
 //  expressions
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace cpp {
+namespace cpp { 
+namespace grammars {
 
-namespace {
+namespace closures {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -67,12 +68,16 @@ namespace {
         member1 val;
     };
 
+}   // namespace closures
+
+namespace impl {
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  convert the given tokenvalue (integer literal) to a unsigned long
 //
 ///////////////////////////////////////////////////////////////////////////////
-    struct convert_intlit_impl {
+    struct convert_intlit {
 
         template <typename ArgT>
         struct result { typedef unsigned long type; };
@@ -83,14 +88,14 @@ namespace {
             return intlit_grammar_gen<TokenT>::evaluate(token);
         }
     };
-    phoenix::function<convert_intlit_impl> const as_intlit;
+    phoenix::function<convert_intlit> const as_intlit;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  convert the given tokenvalue (character literal) to a unsigned int
 //
 ///////////////////////////////////////////////////////////////////////////////
-    struct convert_chlit_impl {
+    struct convert_chlit {
 
         template <typename ArgT>
         struct result { typedef unsigned int type; };
@@ -101,14 +106,14 @@ namespace {
             return chlit_grammar_gen<TokenT>::evaluate(token);
         }
     };
-    phoenix::function<convert_chlit_impl> const as_chlit;
+    phoenix::function<convert_chlit> const as_chlit;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  convert the given tokenvalue (floating literal) to a double
 //
 ///////////////////////////////////////////////////////////////////////////////
-    struct convert_floatlit_impl {
+    struct convert_floatlit {
 
         template <typename ArgT>
         struct result { typedef double type; };
@@ -119,9 +124,9 @@ namespace {
             return floatlit_grammar_gen<TokenT>::evaluate(token);
         }
     };
-    phoenix::function<convert_floatlit_impl> const as_floatlit;
+    phoenix::function<convert_floatlit> const as_floatlit;
 
-}
+}   // namespace impl
 
 ///////////////////////////////////////////////////////////////////////////////
 //  define, whether the rule's should generate some debug output
@@ -132,7 +137,7 @@ namespace {
 struct expression_grammar :
     public boost::spirit::grammar<
         expression_grammar, 
-        cpp_expr_closure::context_t
+        closures::cpp_expr_closure::context_t
     >
 {
     expression_grammar()
@@ -144,7 +149,7 @@ struct expression_grammar :
     template <typename ScannerT>
     struct definition
     {
-        typedef cpp_expr_closure closure_t;
+        typedef closures::cpp_expr_closure closure_t;
         typedef boost::spirit::rule<ScannerT, closure_t::context_t> rule_t;
         typedef boost::spirit::rule<ScannerT> simple_rule_t;
 
@@ -395,15 +400,15 @@ struct expression_grammar :
             constant
                 =   ch_p(T_INTLIT) 
                     [
-                        constant.val = as_intlit(arg1)
+                        constant.val = impl::as_intlit(arg1)
                     ]
                 |   ch_p(T_CHARLIT) 
                     [
-                        constant.val = as_chlit(arg1)
+                        constant.val = impl::as_chlit(arg1)
                     ]
                 |   ch_p(T_FLOATLIT) 
                     [
-                        constant.val = as_floatlit(arg1)
+                        constant.val = impl::as_floatlit(arg1)
                     ]
                 ;
               
@@ -461,8 +466,8 @@ expression_grammar_gen<TokenT>::evaluate(
     
     typedef typename std::list<TokenT>::const_iterator iterator_t;
     
-static expression_grammar g;    // expression grammar
-double result = 0;              // expression result
+static expression_grammar g;  // expression grammar
+double result = 0;                      // expression result
 parse_info<iterator_t> hit =  parse (first, last, g[assign(result)], 
     ch_p(T_SPACE) | ch_p(T_CCOMMENT) | ch_p(T_CPPCOMMENT));
 
@@ -476,6 +481,7 @@ parse_info<iterator_t> hit =  parse (first, last, g[assign(result)],
 #undef CPP_EXPRGRAMMAR_GEN_INLINE
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_EXPRESSION_GRAMMAR_HPP__099CD1A4_A6C0_44BE_8F24_0B00F5BE5674__INCLUDED_)

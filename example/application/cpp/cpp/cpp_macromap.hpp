@@ -15,6 +15,9 @@
 #if !defined(_CPP_MACROMAP_HPP__CB8F51B0_A3F0_411C_AEF4_6FF631B8B414__INCLUDED_)
 #define _CPP_MACROMAP_HPP__CB8F51B0_A3F0_411C_AEF4_6FF631B8B414__INCLUDED_
 
+#include <cstdlib>
+#include <ctime>
+
 #include <list>
 #include <map>
 #include <vector>
@@ -27,12 +30,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
+namespace util {
 
-namespace {
+namespace impl {
 
     // escape a string literal (insert '\\' before every '\"' and '\\'
     template <typename StringT>
-    StringT
+    inline StringT
     escape_lit(StringT const &value)
     {
         StringT result(value);
@@ -48,7 +52,7 @@ namespace {
     
     // return the string representation of a token sequence
     template <typename ContainerT>
-    typename ContainerT::value_type::string_t
+    inline typename ContainerT::value_type::string_t
     as_stringlit (ContainerT const &token_sequence)
     {
         using namespace cpplexer;
@@ -73,7 +77,7 @@ namespace {
             }
             else if (T_STRINGLIT == id || T_CHARLIT == id) {
             // a string literals and character literals have to be escaped
-                result += escape_lit((*it).get_value());
+                result += impl::escape_lit((*it).get_value());
                 was_whitespace = false;
             }
             else {
@@ -85,29 +89,45 @@ namespace {
         return result;
     }
 
-    template <typename TokenT>
-    struct pop_front_onexit {
+}   // namespace impl
 
-        pop_front_onexit(std::list<TokenT> &list_) : list(list_) {}
-        ~pop_front_onexit() { list.pop_front(); }
+namespace on_exit {
+
+    template <typename TokenT>
+    struct pop_front {
+
+        pop_front(std::list<TokenT> &list_) : list(list_) {}
+        ~pop_front() { list.pop_front(); }
         
         std::list<TokenT> &list;
     };
     
     template <typename TypeT>
-    struct reset_on_exit {
+    struct reset {
     
-        reset_on_exit(TypeT &target_value_, TypeT new_value)
+        reset(TypeT &target_value_, TypeT new_value)
         :   target_value(target_value_), old_value(target_value_)
         {
             target_value_ = new_value;
         }
-        ~reset_on_exit() { target_value = old_value; }
+        ~reset() { target_value = old_value; }
         
         TypeT &target_value;
         TypeT old_value;
     };
-}
+
+    template <typename IteratorT, typename UnputIteratorT>
+    struct assign {
+
+        assign(IteratorT &it_, UnputIteratorT const &uit_) 
+        :   it(it_), uit(uit_) {}
+        ~assign() { it = uit.base(); }
+        
+        IteratorT &it;
+        UnputIteratorT const &uit;
+    };
+
+}   // namespace on_exit
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -172,11 +192,6 @@ struct macro_definition {
         }
     }
 
-    bool is_function_like() const 
-        { return is_functionlike; }
-    typename parameter_container_t::size_type parameter_count() const 
-        { return macroparameters.size(); }
-    
     TokenT macroname;
     parameter_container_t macroparameters;
     definition_container_t macrodefinition;
@@ -217,10 +232,14 @@ public:
         ContainerT &pending, ContainerT &expanded, bool expand_undefined);
 
     template <typename IteratorT, typename ContainerT>
-    void
-    expand_whole_tokensequence(ContainerT &expanded, IteratorT const &first, 
-        IteratorT const &last, bool expand_undefined);
+    void expand_whole_tokensequence(ContainerT &expanded, 
+        IteratorT const &first, IteratorT const &last, bool expand_undefined);
 
+    void init_predefined_macros();
+    void reset_macromap();
+
+    TokenT &get_main_token() { return main_token; }
+    
 protected:
     template <typename IteratorT, typename ContainerT>
     TokenT const &expand_tokensequence_worker(
@@ -237,6 +256,10 @@ protected:
     template <typename IteratorT, typename ContainerT>
     bool expand_macro(ContainerT &pending, IteratorT &first, 
         IteratorT const &last, bool expand_undefined);
+
+    template <typename ContainerT>
+    bool expand_predefined_macro(TokenT const &curr_token, 
+        ContainerT &expanded);
 
     template <typename ContainerT>
     void expand_arguments (std::vector<ContainerT> &arguments, 
@@ -263,6 +286,7 @@ protected:
 private:
     defined_macros_t defined_macros;
     TokenT act_token;
+    TokenT main_token;      // last returned token from the pp_iterator
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -278,7 +302,7 @@ macromap<TokenT>::add_macro(TokenT const &name, bool has_parameters,
     defined_macros_t::iterator it = defined_macros.find(name.get_value());
     if (it != defined_macros.end()) {
     // redefinition, should not be different
-        if ((*it).second.is_function_like() != has_parameters ||
+        if ((*it).second.is_functionlike != has_parameters ||
             (*it).second.macroparameters != parameters ||
             (*it).second.macrodefinition != definition)
         {
@@ -313,7 +337,9 @@ template <typename TokenT>
 inline bool 
 macromap<TokenT>::is_defined(typename TokenT::string_t const &name) const
 {
-    return defined_macros.find(name) != defined_macros.end();
+    return 
+        defined_macros.find(name) != defined_macros.end() ||
+        name == "__LINE__" || name == "__FILE__";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -335,26 +361,6 @@ macromap<TokenT>::remove_macro(typename TokenT::string_t const &name)
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-//  expand_tokensequence(): expands a sequence of tokens
-//
-///////////////////////////////////////////////////////////////////////////////
-
-namespace {
-
-    template <typename IteratorT, typename UnputIteratorT>
-    struct assign_on_exit {
-
-        assign_on_exit(IteratorT &it_, UnputIteratorT const &uit_) 
-        :   it(it_), uit(uit_) {}
-        ~assign_on_exit() { it = uit.base(); }
-        
-        IteratorT &it;
-        UnputIteratorT const &uit;
-    };
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//
 //  expand_tokensequence
 //
 //      This function is a helper function which wrappes the given iterator 
@@ -375,7 +381,7 @@ macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last,
     iterator_t first_it = gen_t::generate(expanded, first);
     iterator_t last_it = gen_t::generate(eof_queue, last);
     
-assign_on_exit<IteratorT, iterator_t> on_exit(first, first_it);
+on_exit::assign<IteratorT, iterator_t> on_exit(first, first_it);
 
     return expand_tokensequence_worker(pending, first_it, last_it, expand_undefined);
 }
@@ -406,7 +412,7 @@ macromap<TokenT>::expand_tokensequence_worker(
 // if there exist pending tokens (tokens, which are already preprocessed), then
 // return the next one from there
     if (!pending.empty()) {
-    pop_front_onexit<TokenT> pop_front_token(pending);
+    on_exit::pop_front<TokenT> pop_front_token(pending);
     
         return act_token = pending.front();
     }
@@ -450,7 +456,7 @@ int return_flags = 0;       // return, whether a replacement occured
                 }
                 else if (!pending.empty()) {
                 // return the first token from the pending queue
-                pop_front_onexit<TokenT> pop_front_queue (pending);
+                on_exit::pop_front<TokenT> pop_front_queue (pending);
                 
                     return act_token = pending.front();
                 }
@@ -772,7 +778,8 @@ bool adjacent_stringize = false;
             {
             // stringize the current argument
                 BOOST_SPIRIT_ASSERT(!arguments[i].empty());
-                expanded.push_back(TokenT(T_STRINGLIT, as_stringlit(arguments[i]), 
+                expanded.push_back(TokenT(T_STRINGLIT, 
+                    impl::as_stringlit(arguments[i]), 
                     (*arguments[i].begin()).get_position()));
                 adjacent_stringize = false;
             }
@@ -806,7 +813,7 @@ macromap<TokenT>::rescan_replacement_list(TokenT const &curr_token,
 
 // rescan the replacement list
     if (!replacement_list.empty()) {
-    reset_on_exit<bool> on_exit(macro_def.is_available_for_replacement, false);
+    on_exit::reset<bool> on_exit(macro_def.is_available_for_replacement, false);
 
         expand_whole_tokensequence(expanded, replacement_list.begin(),
             replacement_list.end(), expand_undefined);
@@ -834,6 +841,12 @@ TokenT curr_token = *first;
     BOOST_SPIRIT_ASSERT(T_IDENTIFIER == token_id(curr_token));
     defined_macros_t::iterator it = defined_macros.find(curr_token.get_value());
     if (it == defined_macros.end()) {
+        ++first;    // advance
+
+    // try to expand a predefined macro (__FILE__ or __LINE__)
+        if (expand_predefined_macro(curr_token, expanded))
+            return false;
+        
     // not defined as a macro
         expanded.push_back(curr_token);
         return false;
@@ -859,14 +872,15 @@ ContainerT replacement_list;
     // called as a function-like macro 
         skip_to_token(first, last, T_LEFTPAREN);
         
-        if (macro_def.is_function_like()) {
+        if (macro_def.is_functionlike) {
         // defined as a function-like macro
 
         // collect the arguments
         std::vector<ContainerT> arguments;
         
-            collect_arguments (arguments, first, last, macro_def.parameter_count());
-            if (arguments.size() < macro_def.parameter_count()) {
+            collect_arguments (arguments, first, last, 
+                macro_def.macroparameters.size());
+            if (arguments.size() < macro_def.macroparameters.size()) {
             // too many macro arguments
                 CPP_THROW(preprocess_exception, too_few_macroarguments, 
                     "", curr_token);
@@ -890,7 +904,7 @@ ContainerT replacement_list;
     }
     else {
     // called as an object like macro
-        if ((*it).second.is_function_like()) {
+        if ((*it).second.is_functionlike) {
         // defined as a function-like macro
             expanded.push_back(curr_token);
             ++first;                // skip macro name
@@ -911,6 +925,33 @@ ContainerT replacement_list;
     return true;        // rescan is required
 }
 
+template <typename TokenT>
+template <typename ContainerT>
+inline bool 
+macromap<TokenT>::expand_predefined_macro(TokenT const &curr_token, 
+    ContainerT &expanded)
+{
+    using namespace cpplexer;
+    
+string_t const &value = curr_token.get_value();
+
+    if (value == "__LINE__") { 
+    // expand the __LINE__ macro
+    char buffer[22];    // 21 bytes holds all NUL-terminated unsigned 64-bit numbers
+    
+        std::sprintf(buffer, "%d", main_token.get_position().line);
+        expanded.push_back(TokenT(T_INTLIT, buffer, curr_token.get_position()));
+        return true;
+    }
+    else if (value == "__FILE__") {
+    // expand the __FILE__ macro
+        expanded.push_back(TokenT(T_STRINGLIT, main_token.get_position().file, 
+            curr_token.get_position()));
+        return true;
+    }
+    return false;   // no predefined token
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  resolve_defined(): resolve the operator defined() and replace it with the 
@@ -926,7 +967,7 @@ macromap<TokenT>::resolve_defined(IteratorT &first, IteratorT const &last,
     using namespace cpplexer;
     
 TokenT result;
-cpp::defined_grammar<TokenT> g;
+cpp::grammars::defined_grammar<TokenT> g;
 parse_info<IteratorT> hit =
     parse(first, last, g[assign(result)], ch_p(T_SPACE) | ch_p(T_CCOMMENT));
 
@@ -1007,6 +1048,143 @@ macromap<TokenT>::concat_tokensequence(ContainerT &expanded)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+//
+//  init_predefined_macros(): init the predefined macros
+//
+///////////////////////////////////////////////////////////////////////////////
+
+namespace predefined_macros {
+
+// list of static predefined macros
+    struct static_macros {
+        char const *name;
+        cpplexer::token_id token_id;
+        char const *value;
+    } 
+    static_data[] = {
+        { "__STDC__", T_INTLIT, "1" },
+        { "__cplusplus", T_INTLIT, "199711L" },
+        { 0, T_EOF, 0 }
+    }; 
+    
+// list of dynamic predefined macros
+    typedef char const * (* get_dynamic_value)(bool);
+
+// __DATE__ 
+    inline char const *get_date(bool reset)
+    {
+    static const char *const monthnames[] =
+    {
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    };
+    static std::string datestr;
+    
+        if (reset) {
+            datestr.clear();
+        }
+        else {
+        std::time_t tt = time(0);
+        struct std::tm *tb = 0;
+
+            if (tt != (std::time_t)-1) {
+            char buffer[sizeof("\"Oct 11 1347\"")+1];
+
+                tb = localtime (&tt);
+                std::sprintf (buffer, "\"%s %2d %4d\"",
+                    monthnames[tb->tm_mon], tb->tm_mday, tb->tm_year + 1900);
+                datestr = buffer;
+            }
+            else {
+                datestr = "\"??? ?? ????\"";
+            }
+        }
+        return datestr.c_str();
+    }
+
+// __TIME__
+    inline char const *get_time(bool reset)
+    {
+    static std::string timestr;
+    
+        if (reset) {
+            timestr.clear();
+        }
+        else {
+        std::time_t tt = time(0);
+        struct std::tm *tb = 0;
+
+            if (tt != (std::time_t)-1) {
+            char buffer[sizeof("\"12:34:56\"")+1];
+
+                tb = localtime (&tt);
+                std::sprintf (buffer, "\"%02d:%02d:%02d\"", tb->tm_hour, 
+                    tb->tm_min, tb->tm_sec);
+                timestr = buffer;
+            }
+            else {
+                timestr = "\"??? ?? ????\"";
+            }
+        }
+        return timestr.c_str();
+    }
+
+    struct dynamic_macros {
+        char const *name;
+        cpplexer::token_id token_id;
+        get_dynamic_value generator;
+    }
+    dynamic_data[] = {
+        { "__DATE__", T_STRINGLIT, get_date },
+        { "__TIME__", T_STRINGLIT, get_time },
+        { 0, T_EOF, 0 }
+    };
+
+}   // namespace predefined_macros
+
+template <typename TokenT>
+inline void 
+macromap<TokenT>::init_predefined_macros()
+{
+    using namespace predefined_macros;
+
+// first, add the static macros
+std::vector<TokenT> macroparameters;
+
+    for (int i = 0; 0 != static_data[i].name; ++i) {
+    std::list<TokenT> macrodefinition;
+    typename TokenT::position_t pos;
+    
+        macrodefinition.push_back(TokenT(static_data[i].token_id, 
+            static_data[i].value, pos));
+        add_macro(TokenT(T_IDENTIFIER, static_data[i].name, pos), false, 
+            macroparameters, macrodefinition);
+    }
+
+// now add the dynamic macros
+    for (int i = 0; 0 != dynamic_data[i].name; ++i) {
+    std::list<TokenT> macrodefinition;
+    typename TokenT::position_t pos;
+    
+        macrodefinition.push_back(TokenT(dynamic_data[i].token_id, 
+            dynamic_data[i].generator(false), pos));
+        add_macro(TokenT(T_IDENTIFIER, dynamic_data[i].name, pos), false, 
+            macroparameters, macrodefinition);
+    }
+}
+
+template <typename TokenT>
+inline void 
+macromap<TokenT>::reset_macromap()
+{
+    defined_macros.clear();
+    predefined_macros::get_time(true);
+    predefined_macros::get_date(true);
+    act_token = TokenT();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+}   // namespace util
 }   // namespace cpp
 
 #endif // !defined(_CPP_MACROMAP_HPP__CB8F51B0_A3F0_411C_AEF4_6FF631B8B414__INCLUDED_)

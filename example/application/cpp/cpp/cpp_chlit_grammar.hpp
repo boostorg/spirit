@@ -30,9 +30,10 @@
 //  Reusable grammar to parse a C++ style character literal 
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace cpp {
+namespace cpp { 
+namespace grammars {
 
-namespace {
+namespace closures {
 
     struct chlit_closure 
     :   boost::spirit::closure<chlit_closure, unsigned int> 
@@ -48,7 +49,8 @@ namespace {
     /**/
 
 struct chlit_grammar :
-    public boost::spirit::grammar<chlit_grammar, chlit_closure::context_t>
+    public boost::spirit::grammar<chlit_grammar, 
+        closures::chlit_closure::context_t>
 {
     chlit_grammar()
     {
@@ -151,6 +153,7 @@ parse_info<typename TokenT::string_t::const_iterator> hit =
 #undef CPP_CHLITGRAMMAR_GEN_INLINE
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_CHLIT_GRAMMAR_HPP__9527D349_6592_449A_A409_42A001E6C64C__INCLUDED_)

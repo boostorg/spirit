@@ -22,6 +22,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
 
+namespace grammars {
+
 ///////////////////////////////////////////////////////////////////////////////
 //  
 //  store parser_id's of all rules of the cpp_grammar here for later access
@@ -43,7 +45,6 @@ struct cpp_grammar_rule_ids {
     long else_id;               // #else
     long endif_id;              // #endif
     long line_id;               // #line
-    long line_file_id;
     long error_id;              // #error
     long warning_id;            // #warning
     long null_id;               // #
@@ -89,6 +90,7 @@ template <typename TokenT>
 typename TokenT::position_t cpp_grammar_gen<TokenT>::pos_of_newline;
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_GRAMMAR_GEN_HPP__80CB8A59_5411_4E45_B406_62531A12FB99__INCLUDED_)

@@ -30,9 +30,10 @@
 //  Reusable grammar for parsing of C++ style floting point literals
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace cpp {
+namespace cpp { 
+namespace grammars {
 
-namespace {
+namespace closures {
 
     struct floatlit_closure 
     :   boost::spirit::closure<floatlit_closure, double> 
@@ -48,7 +49,8 @@ namespace {
     /**/
 
 struct floatlit_grammar :
-    boost::spirit::grammar<floatlit_grammar, floatlit_closure::context_t>
+    boost::spirit::grammar<floatlit_grammar, 
+        closures::floatlit_closure::context_t>
 {
     floatlit_grammar()
     {
@@ -123,6 +125,7 @@ parse_info<typename TokenT::string_t::const_iterator> hit =
 #undef CPP_FLOATLITGRAMMAR_GEN_INLINE
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_FLOATLIT_GRAMMAR_HPP__572D0597_9719_485A_AE71_6846FC18CFF1__INCLUDED_)

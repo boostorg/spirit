@@ -73,12 +73,15 @@ public:
     :   id(id_), value(value_), pos(pos_)
     {}
 
+// accessors
     operator token_id() const { return id; }
     string_t const &get_value() const { return value; }
     position_t const &get_position() const { return pos; }
     void set_token_id (token_id id_) { id = id_; }
     void set_value (string_t const &newval) { value = newval; }
+    void set_position (position_t const &pos_) { pos = pos_; }
 
+// debug support
 #if defined(CPP_DUMP_PARSE_TREE)
 // access functions for the tree_to_xml functionality
     static int get_token_id(lex_token const &t) 

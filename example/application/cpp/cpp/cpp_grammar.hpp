@@ -30,9 +30,10 @@
 #include "cpplexer/cpp_lex_iterator.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace cpp {
+namespace cpp { 
+namespace grammars {
 
-namespace {
+namespace impl {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -57,6 +58,34 @@ namespace {
         PositionT &pos;
     };
 
+///////////////////////////////////////////////////////////////////////////////
+//
+//  flush_underlying_parser
+//
+//      The flush_underlying_parser flushes the underlying
+//      multi_pass_iterator during the normal parsing process. This is
+//      used at certain points during the parsing process, when it is
+//      clear, that no backtracking is needed anymore and the input
+//      gathered so far may be discarded.
+//
+///////////////////////////////////////////////////////////////////////////////
+    struct flush_underlying_parser
+    :   public boost::spirit::parser<flush_underlying_parser>
+    {
+        typedef flush_underlying_parser this_t;
+
+        template <typename ScannerT>
+        typename boost::spirit::parser_result<this_t, ScannerT>::type
+        parse(ScannerT const& scan) const
+        {
+            scan.first.clear_queue();
+            return scan.empty_match();  
+        }
+    };
+
+    flush_underlying_parser const 
+        flush_underlying_parser_p = flush_underlying_parser();
+
 }   // anonymous namespace
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,8 +100,8 @@ template <typename PositionT>
 struct cpp_grammar : 
     public boost::spirit::grammar<cpp_grammar<PositionT> >
 {
-    typedef cpp_grammar<PositionT>      grammar_t;
-    typedef store_position<PositionT>   store_pos_t;
+    typedef cpp_grammar<PositionT>          grammar_t;
+    typedef impl::store_position<PositionT> store_pos_t;
     
     template <typename ScannerT>
     struct definition
@@ -98,7 +127,7 @@ struct cpp_grammar :
         rule_t plain_define, macro_definition, macro_parameters;
         rule_t undefine;
         rule_t ppifdef, ppifndef, ppif, ppelse, ppelif, ppendif;
-        rule_t ppline, line_file;
+        rule_t ppline; 
         rule_t pperror;
         rule_t ppwarning;
         rule_t ppnull;
@@ -128,7 +157,6 @@ struct cpp_grammar :
             self.rule_ids.else_id = ppelse.id().to_long();
             self.rule_ids.endif_id = ppendif.id().to_long();
             self.rule_ids.line_id = ppline.id().to_long();
-            self.rule_ids.line_file_id = line_file.id().to_long();
             self.rule_ids.error_id = pperror.id().to_long();
             self.rule_ids.warning_id = ppwarning.id().to_long();
             self.rule_ids.null_id = ppnull.id().to_long();
@@ -153,8 +181,7 @@ struct cpp_grammar :
             pp_statement
                 =   no_node_d[*ppspace]
                     >>  (
-                            (   ppnull
-                            |   include_file
+                            (   include_file
                             |   system_include_file
                             |   macro_include_file
                             |   plain_define
@@ -170,6 +197,7 @@ struct cpp_grammar :
                             |   ppwarning
                             |   pppragma
                             |   illformed
+                            |   ppnull
                             )
                             >>  no_node_d
                                 [
@@ -182,6 +210,9 @@ struct cpp_grammar :
                                         store_pos_t(self.pos_of_newline)
                                     ]
                                 ]
+#if defined(BOOST_SPIRIT_DEBUG) && !(BOOST_SPIRIT_DEBUG_FLAGS_CPP & BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR)
+                            >>  impl::flush_underlying_parser_p
+#endif // defined(BOOST_SPIRIT_DEBUG && !(BOOST_SPIRIT_DEBUG_FLAGS_CPP & BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR)
                         )
                 ;
 
@@ -266,13 +297,7 @@ struct cpp_grammar :
         // #line ...
             ppline 
                 =   no_node_d[ch_p(T_PP_LINE) >> +ppspace]
-                    >>  (   ch_p(T_DECIMALINT) >> !line_file
-                        |  *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
-                        )
-                ;
-
-            line_file
-                =   no_node_d[+ppspace] >> ch_p(T_STRINGLIT)
+                    >>  *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
                 ;
 
         // # (empty preprocessor directive)
@@ -304,7 +329,7 @@ struct cpp_grammar :
 
         // #pragma ...
             pppragma
-                =   no_node_d[ch_p(T_PP_PRAGMA) >> +ppspace]
+                =   no_node_d[ch_p(T_PP_PRAGMA)] 
                     >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
                 ;
 
@@ -328,7 +353,6 @@ struct cpp_grammar :
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppelif, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppendif, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppline, TRACE_CPP_GRAMMAR);
-            BOOST_SPIRIT_DEBUG_TRACE_RULE(line_file, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(pperror, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppwarning, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppnull, TRACE_CPP_GRAMMAR);
@@ -380,7 +404,6 @@ struct cpp_grammar :
                 { self.rule_ids.else_id, "ppelse" },
                 { self.rule_ids.endif_id, "ppendif" },
                 { self.rule_ids.line_id, "ppline" },
-                { self.rule_ids.line_file_id, "line_file" },
                 { self.rule_ids.error_id, "pperror" },
                 { self.rule_ids.warning_id, "ppwarning" },
                 { self.rule_ids.null_id, "ppnull" },
@@ -425,7 +448,7 @@ cpp_grammar_gen<TokenT>::parse_cpp_grammar (
     cpplexer::lex_iterator<TokenT> const &first,
     cpplexer::lex_iterator<TokenT> const &last)
 {
-    static cpp_grammar<typename TokenT::position_t> g (rule_ids, pos_of_newline);
+    static cpp_grammar<typename TokenT::position_t> g(rule_ids, pos_of_newline);
     
     using namespace boost::spirit;
     tree_parse_info<cpplexer::lex_iterator<TokenT> > hit = pt_parse (first, last, g);
@@ -444,6 +467,7 @@ cpp_grammar_gen<TokenT>::parse_cpp_grammar (
 #undef CPP_GRAMMAR_GEN_INLINE
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_GRAMMAR_HPP__FEAEBC2E_2734_428B_A7CA_85E5A415E23E__INCLUDED_)

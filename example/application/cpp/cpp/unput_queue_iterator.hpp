@@ -23,6 +23,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
+namespace util {
 
 template <typename TokenT, typename ContainerT>
 class unput_queue_policies : public boost::default_iterator_policies
@@ -186,6 +187,7 @@ namespace impl {
 }   // namespace impl
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace util
 }   // namespace cpp
 
 #endif // !defined(_UNPUT_QUEUE_ITERATOR_HPP__76DA23D0_4893_4AD5_ABCC_6CED7CFB89BC__INCLUDED_)

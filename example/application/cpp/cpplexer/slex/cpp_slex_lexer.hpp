@@ -425,6 +425,8 @@ public:
         } while (true);
         return token;       // return T_EOF
     }
+    void set_position(PositionT const &pos) 
+    { first.set_position(pos); }
     
 private:
     iterator_t first;

@@ -23,10 +23,12 @@
 //
 #include <boost/program_options.hpp>
 
+#include "cpplexer/cpplexer_exceptions.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_iterator.hpp"
 #include "cpplexer/slex/util/time_conversion_helper.hpp"
 
+#include "cpp/cpp_exceptions.hpp"
 #include "cpp/cpp_context.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -108,91 +110,81 @@ int do_actual_work (
 file_position current_position;
 
     try {
-    // preprocess all given files 
-    vector<string> const &arguments = opts.arguments();
-    vector<string>::const_iterator lastfile = arguments.end();
+    // process the given file
+    string file_name(opts.arguments().front());
+    ifstream instream(file_name.c_str());
+    string instring;
 
-        for (vector<string>::const_iterator file_it = arguments.begin(); 
-             file_it != lastfile; ++file_it)
-        {
-        ifstream instream((*file_it).c_str());
-        string instring;
-
-            if (!instream.is_open()) {
-                cerr << "cpp: could not open input file: " << *file_it << endl;
-                continue;
-            }
-            instring = string(istreambuf_iterator<char>(instream.rdbuf()),
-                              istreambuf_iterator<char>());
-            
-        // The template lex_token<> is defined in several namespaces (here: 
-        // cpplexer::slex and cpplexer::re2clex). The 'using namespace' 
-        // directive above tells the compiler, which of them to use.
-            typedef cpp::context<lex_token<std::string::iterator> > context_t;
-
-        // The C preprocessor iterator shouldn't be constructed directly. It is 
-        // to be generated through a cpp::context<> object. This cpp:context<> 
-        // object is additionally to be used to initialize and define different 
-        // parameters of the actual preprocessing.
-        // The preprocessing of the input stream is done on the fly behind the 
-        // scenes during iteration over the context_t::iterator_t stream.
-        context_t ctx (instring.begin(), instring.end(), (*file_it).c_str());
-
-        // add include directories to the include path
-            if (vm.count("path")) {
-                vector<string>::const_iterator end = pathes.end();
-                for (vector<string>::const_iterator cit = pathes.begin(); 
-                     cit != end; ++cit)
-                {
-                    ctx.add_include_path((*cit).c_str());
-                }
-            }
-            
-        // add system include directories to the include path
-            if (vm.count("syspath")) {
-                vector<string>::const_iterator end = syspathes.end();
-                for (vector<string>::const_iterator cit = syspathes.begin(); 
-                     cit != end; ++cit)
-                {
-                    ctx.add_include_path((*cit).c_str(), true);
-                }
-            }
-            
-        // analyze the actual file
-        context_t::iterator_t first = ctx.begin();
-        context_t::iterator_t last = ctx.end();
-                
-            while (first != last) {
-            // print out the string representation of this token (skip comments)
-                using namespace cpplexer;
-                
-            token_id id = token_id(*first);
-            
-                if (id == T_CPPCOMMENT || id == T_NEWLINE) {
-                // C++ comment tokens contain the trailing newline
-                    cout << endl;
-                }
-                else if (id != T_CCOMMENT) {
-                // out the current token value
-                    cout << (*first).get_value();
-                }
-                ++first;        // advance to the next token
-            }
-        
-        // prepend endl before next file
-            cout << endl;
+        if (!instream.is_open()) {
+            cerr << "cpp: could not open input file: " << file_name << endl;
+            return -1;
         }
-    }
-    catch (cpp::abort_preprocess_exception &e) {
-    // abort the preprocessing: simply abort compilation
-        cerr 
-            << e.file_name() << "(" << e.line_no() << "): "
-            << "aborting preprocessing." 
-            << endl;
-        return 1;
+        instring = string(istreambuf_iterator<char>(instream.rdbuf()),
+                          istreambuf_iterator<char>());
+        
+    // The template lex_token<> is defined in several namespaces (here: 
+    // cpplexer::slex and cpplexer::re2clex). The 'using namespace' 
+    // directive above tells the compiler, which of them to use.
+        typedef cpp::context<lex_token<std::string::iterator> > context_t;
+
+    // The C preprocessor iterator shouldn't be constructed directly. It is 
+    // to be generated through a cpp::context<> object. This cpp:context<> 
+    // object is additionally to be used to initialize and define different 
+    // parameters of the actual preprocessing.
+    // The preprocessing of the input stream is done on the fly behind the 
+    // scenes during iteration over the context_t::iterator_t stream.
+    context_t ctx (instring.begin(), instring.end(), file_name.c_str());
+
+    // add include directories to the include path
+        if (vm.count("path")) {
+            vector<string>::const_iterator end = pathes.end();
+            for (vector<string>::const_iterator cit = pathes.begin(); 
+                    cit != end; ++cit)
+            {
+                ctx.add_include_path((*cit).c_str());
+            }
+        }
+        
+    // add system include directories to the include path
+        if (vm.count("syspath")) {
+            vector<string>::const_iterator end = syspathes.end();
+            for (vector<string>::const_iterator cit = syspathes.begin(); 
+                    cit != end; ++cit)
+            {
+                ctx.add_include_path((*cit).c_str(), true);
+            }
+        }
+        
+    // analyze the actual file
+    context_t::iterator_t first = ctx.begin();
+    context_t::iterator_t last = ctx.end();
+            
+        while (first != last) {
+        // print out the string representation of this token (skip comments)
+            using namespace cpplexer;
+            
+        token_id id = token_id(*first);
+        
+            if (id == T_CPPCOMMENT || id == T_NEWLINE) {
+            // C++ comment tokens contain the trailing newline
+                cout << endl;
+            }
+            else if (id != T_CCOMMENT) {
+            // print out the current token value
+                cout << (*first).get_value();
+            }
+            ++first;        // advance to the next token
+        }
     }
     catch (cpp::cpp_exception &e) {
     // some preprocessing error
+        cerr 
+            << e.file_name() << "(" << e.line_no() << "): "
+            << e.description() << endl;
+        return 1;
+    }
+    catch (cpplexer::lexing_exception &e) {
+    // some lexing error
         cerr 
             << e.file_name() << "(" << e.line_no() << "): "
             << e.description() << endl;

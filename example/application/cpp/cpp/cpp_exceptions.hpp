@@ -12,8 +12,8 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-#if !defined(_EXCEPTIONS_HPP__5190E447_A781_4521_A275_5134FF9917D7__INCLUDED_)
-#define _EXCEPTIONS_HPP__5190E447_A781_4521_A275_5134FF9917D7__INCLUDED_
+#if !defined(_CPP_EXCEPTIONS_HPP__5190E447_A781_4521_A275_5134FF9917D7__INCLUDED_)
+#define _CPP_EXCEPTIONS_HPP__5190E447_A781_4521_A275_5134FF9917D7__INCLUDED_
 
 #include <exception>
 #include <string>
@@ -58,8 +58,8 @@
 namespace cpp {
 
 ///////////////////////////////////////////////////////////////////////////////
-// generic file related exception
-namespace severity_util {
+// exception severity
+namespace util {
 
     enum severity {
         severity_remark = 0,
@@ -113,64 +113,6 @@ protected:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
-class file_exception :
-    public cpp_exception
-{
-public:
-    enum error_code {
-        invalid_argument = 0,
-        missing_unc
-    };
-
-    file_exception(char const *what_, error_code, int line_, int column_, 
-            char const *filename_) throw()
-    :   cpp_exception(line_, column_, filename_)
-    {
-        unsigned int off = 0;
-        while (off < sizeof(buffer) && *what_)
-            buffer[off++] = *what_++;
-        buffer[off] = 0;
-    }
-    ~file_exception() throw() {}
-    
-    virtual char const *what() const throw()
-    {
-        return "cpp::file_exception";
-    }
-    virtual char const *description() const throw()
-    {
-        return buffer;
-    }
-
-    static char const *error_text(int code)
-    {
-    // error texts in this array must apear in the same order as the items in
-    // the error enum above
-        static char const *file_exception_errors[] = 
-        {
-            "Invalid argument",                        // invalid_argument
-            "The object must have an UNC (Universal Naming Convention) component",
-                                                        // missing_unc
-        };
-        return file_exception_errors[code];
-    }
-
-    static char const *severity_text(int code)
-    {
-        static severity_util::severity file_exception_severity[] = 
-        {
-            severity_util::severity_error,              // invalid_argument
-            severity_util::severity_error               // missing_unc
-        };
-        return severity_util::get_severity(file_exception_severity[code]);
-    }
-
-private:
-    char buffer[512];
-};
-
-///////////////////////////////////////////////////////////////////////////////
 // preprocessor error
 class preprocess_exception :
     public cpp_exception
@@ -191,7 +133,8 @@ public:
         bad_define_statement,
         too_few_macroarguments,
         too_many_macroarguments,
-        improperly_terminated_macro                 
+        improperly_terminated_macro,
+        bad_line_statement                
     };
 
     preprocess_exception(char const *what_, error_code code, int line_, 
@@ -213,7 +156,7 @@ public:
     {
         return buffer;
     }
-    severity_util::severity get_severity()
+    util::severity get_severity()
     {
         return level;
     }
@@ -227,75 +170,55 @@ public:
             "illegal macro redefinition",               // macro_redefinition
             "macro definition failed (out of memory?)", // macro_insertion_error
             "could not find include file",              // bad_include_file
-            "ill formed include statement",             // bad_include_statement
+            "ill formed #include directive",            // bad_include_statement
             "unknown preprocessor directive (ignored)", // ill_formed_directive
             "encountered #error directive",             // error_directive
             "encountered #warning directive",           // warning_directive
             "ill formed preprocessor expression",       // ill_formed_expression
             "the #if for this directive is missing",    // missing_matching_if
             "ill formed preprocessing operator",        // ill_formed_operator
-            "ill formed define statement",              // bad_define_statement
+            "ill formed #define directive",             // bad_define_statement
             "too few macro arguments",                  // too_few_macroarguments
             "too many macro arguments",                 // too_many_macroarguments
-            "improperly terminated macro invocation"    // improperly_terminated_macro
+            "improperly terminated macro invocation",   // improperly_terminated_macro
+            "ill formed #line directive",               // bad_line_statement
         };
         return preprocess_exception_errors[code];
     }
 
-    static severity_util::severity severity_level(int code)
+    static util::severity severity_level(int code)
     {
-        static severity_util::severity preprocess_exception_severity[] = {
-            severity_util::severity_fatal,              // unexpected_error
-            severity_util::severity_warning,            // macro_redefinition
-            severity_util::severity_fatal,              // macro_insertion_error
-            severity_util::severity_error,              // bad_include_file
-            severity_util::severity_error,              // bad_include_statement
-            severity_util::severity_error,              // ill_formed_directive
-            severity_util::severity_fatal,              // error_directive
-            severity_util::severity_warning,            // warning_directive
-            severity_util::severity_error,              // ill_formed_expression
-            severity_util::severity_error,              // missing_matching_if
-            severity_util::severity_error,              // ill_formed_operator
-            severity_util::severity_error,              // bad_define_statement
-            severity_util::severity_warning,            // too_few_macroarguments
-            severity_util::severity_warning,            // too_many_macroarguments
-            severity_util::severity_error               // improperly_terminated_macro
+        static util::severity preprocess_exception_severity[] = {
+            util::severity_fatal,              // unexpected_error
+            util::severity_warning,            // macro_redefinition
+            util::severity_fatal,              // macro_insertion_error
+            util::severity_error,              // bad_include_file
+            util::severity_error,              // bad_include_statement
+            util::severity_error,              // ill_formed_directive
+            util::severity_fatal,              // error_directive
+            util::severity_warning,            // warning_directive
+            util::severity_error,              // ill_formed_expression
+            util::severity_error,              // missing_matching_if
+            util::severity_error,              // ill_formed_operator
+            util::severity_error,              // bad_define_statement
+            util::severity_warning,            // too_few_macroarguments
+            util::severity_warning,            // too_many_macroarguments
+            util::severity_error,              // improperly_terminated_macro
+            util::severity_warning             // bad_line_statement
         };
         return preprocess_exception_severity[code];
     }
     static char const *severity_text(int code)
     {
-        return severity_util::get_severity(severity_level(code));
+        return util::get_severity(severity_level(code));
     }
 
 private:
     char buffer[512];
-    severity_util::severity level;
-};
-
-///////////////////////////////////////////////////////////////////////////////
-// abort compilation
-struct abort_preprocess_exception 
-:   public cpp_exception
-{
-    abort_preprocess_exception(int error_count_, int level_, int line_, 
-        int column_, char const *filename_) throw() 
-    :   cpp_exception(line_, column_, filename_)
-    {
-    }
-    ~abort_preprocess_exception() throw() {}
-    
-    virtual char const *what() const throw()
-    {
-        return "cpp::abort_preprocess_exception";
-    }
-    virtual char const *description() const throw()
-    {
-        return "fatal error";
-    }
+    util::severity level;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace cpp
 
-#endif // !defined(_EXCEPTIONS_HPP__5190E447_A781_4521_A275_5134FF9917D7__INCLUDED_)
+#endif // !defined(_CPP_EXCEPTIONS_HPP__5190E447_A781_4521_A275_5134FF9917D7__INCLUDED_)

@@ -30,9 +30,10 @@
 //  Reusable grammar for parsing of C++ style integer literals
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace cpp {
+namespace cpp { 
+namespace grammars {
 
-namespace {
+namespace closures {
 
     struct intlit_closure 
     :   boost::spirit::closure<intlit_closure, unsigned long> 
@@ -48,7 +49,7 @@ namespace {
     /**/
 
 struct intlit_grammar :
-    boost::spirit::grammar<intlit_grammar, intlit_closure::context_t>
+    boost::spirit::grammar<intlit_grammar, closures::intlit_closure::context_t>
 {
     intlit_grammar()
     {
@@ -155,6 +156,7 @@ parse_info<typename TokenT::string_t::const_iterator> hit =
 #undef CPP_INTLITGRAMMAR_GEN_INLINE
 
 ///////////////////////////////////////////////////////////////////////////////
+}   // namespace grammars
 }   // namespace cpp
 
 #endif // !defined(_CPP_INTLIT_GRAMMAR_HPP__2E1E70B1_F15C_4132_8554_10A231B0D91C__INCLUDED_)

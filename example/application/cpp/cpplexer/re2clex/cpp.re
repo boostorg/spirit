@@ -163,7 +163,7 @@ uchar *fill(Scanner *s, uchar *cursor)
             if (buf == 0)
             {
                 if (0 != s->error_proc)
-                    (*s->error_proc)("Out of memory!");
+                    (*s->error_proc)(s, "Out of memory!");
                 else 
                     printf("Out of memory!\n");
                     
@@ -556,7 +556,7 @@ Newline            = "\r\n" | "\n" | "\r";
         if(cursor != s->eof) 
         {
             if (0 != s->error_proc)
-                (*s->error_proc)("'\\000' in input stream");
+                (*s->error_proc)(s, "'\\000' in input stream");
             else
                 printf("Error: 0 in file\n");
         }
@@ -567,7 +567,7 @@ Newline            = "\r\n" | "\n" | "\r";
     {
         /* handle this error
         if (0 != s->error_proc)
-            (*s->error_proc)("Unexpected character: %c", *s->tok);
+            (*s->error_proc)(s, "Unexpected character: %c", *s->tok);
         else
             printf("unexpected character: %c\n", *s->tok);
         */
@@ -605,14 +605,14 @@ ccomment:
         if(cursor == s->eof) 
         {
             if (s->error_proc)
-                (*s->error_proc)("Unterminated comment");
+                (*s->error_proc)(s, "Unterminated comment");
             else
                 printf("Error: Unterminated comment\n");
         }
         else
         {
             if (s->error_proc)
-                (*s->error_proc)("'\\000' in input stream");
+                (*s->error_proc)(s, "'\\000' in input stream");
             else
                 printf("Error: 0 in file");
         }
@@ -650,7 +650,7 @@ cppcomment:
         if(cursor != s->eof) 
         {
             if (s->error_proc)
-                (*s->error_proc)("'\\000' in input stream");
+                (*s->error_proc)(s, "'\\000' in input stream");
             else
                 printf("Error: 0 in file");
         }

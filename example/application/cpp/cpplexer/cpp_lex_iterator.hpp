@@ -57,7 +57,12 @@ public:
         BOOST_ASSERT(0 != functor_ptr.get());
         return functor_ptr->get(); 
     }
-
+    void set_position(typename TokenT::position_t const &pos)
+    {
+        BOOST_ASSERT(0 != functor_ptr.get());
+        functor_ptr->set_position(pos);
+    }
+    
 private:
     boost::shared_ptr<lex_input_interface<TokenT> > functor_ptr;
 };
@@ -116,6 +121,21 @@ public:
             typename TokenT::position_t const &pos)
     :   base_t(input_policy_t(first, last, pos))
     {}
+    
+    void set_position(typename TokenT::position_t pos)
+    { 
+        using namespace cpplexer;
+        
+    // If the lookahead token is a newline or a C++ comment (wich contains the
+    // trailing newline character), we have to increment the linecounter. 
+        get_input().set_position(pos); 
+        if (T_NEWLINE == token_id(get_input()) || 
+            T_CPPCOMMENT == token_id(get_input()))
+        {
+            ++pos.line;
+        }
+        get_functor().set_position(pos); 
+    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

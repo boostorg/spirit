@@ -41,7 +41,7 @@ using namespace cpplexer::re2clex;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template cpp::cpp_grammar_gen<lex_token<std::string::iterator> >;
+template cpp::grammars::cpp_grammar_gen<lex_token<std::string::iterator> >;
 
 #endif // #if defined(CPP_SEPARATE_GRAMMAR_INSTANTIATION)
 

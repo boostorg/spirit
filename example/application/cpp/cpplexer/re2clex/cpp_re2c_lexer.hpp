@@ -25,6 +25,7 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/iterator/position_iterator.hpp>
 
+#include "cpplexer/cpplexer_exceptions.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_interface.hpp"
 #include "cpplexer/re2clex/scanner.h"
@@ -54,7 +55,16 @@ public:
     ~lexer();
 
     lex_token<IteratorT, PositionT> get();
-    
+    void set_position(PositionT const &pos)
+    {
+        filename = pos.file;
+        scanner.line = pos.line;
+        scanner.file_name = filename.c_str();
+    }
+
+// error reporting from the re2c generated lexer
+    static int report_error(Scanner *s, char *, ...);
+
 private:
     static char const *tok_names[];
     
@@ -75,6 +85,9 @@ lexer<IteratorT, PositionT>::lexer(IteratorT const &first,
     scanner.eol_offsets = aq_create();
     scanner.first = scanner.act = (uchar *)&(*first);
     scanner.last = (uchar *)&(*last);
+    scanner.line = 1;                   // start with line_no 1
+    scanner.error_proc = report_error;
+    scanner.file_name = filename.c_str();
 }
 
 template <typename IteratorT, typename PositionT>
@@ -95,8 +108,20 @@ lexer<IteratorT, PositionT>::get()
     token_id id = token_id(scan(&scanner));
     return lex_token<IteratorT, PositionT>(id, 
                 std::string((char const *)scanner.tok, scanner.cur-scanner.tok), 
-                PositionT(filename, scanner.line)
+                PositionT(filename, scanner.line, -1)
            );
+}
+
+template <typename IteratorT, typename PositionT>
+inline int 
+lexer<IteratorT, PositionT>::report_error(Scanner *s, char *msg, ...)
+{
+    BOOST_SPIRIT_ASSERT(0 != s);
+    BOOST_SPIRIT_ASSERT(0 != msg);
+    
+    // ignore the ellipses for now (shouldn't be used anyway)
+    CPPLEXER_THROW(lexing_exception, unexpected_error, msg, s->line, -1, 
+        s->file_name);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -119,9 +144,10 @@ public:
     {}
 
 // get the next token from the input stream
-    token_t get()
-    { return lexer.get(); }
-    
+    token_t get() { return lexer.get(); }
+    void set_position(PositionT const &pos) 
+    { lexer.set_position(pos); }
+
 private:
     lexer<IteratorT, PositionT> lexer;
 };

@@ -21,10 +21,13 @@
 //
 //  To implement #warning directives, undefine the following
 //
-//#define CPP_SUPPORT_WARNING_DIRECTIVE
+#define CPP_SUPPORT_WARNING_DIRECTIVE
 
 ///////////////////////////////////////////////////////////////////////////////
-//  undefine the following, to enable some MS specific language extensions
+//  Undefine the following, to enable some MS specific language extensions:
+//  __int8, __int16, __int32, __int64, __based, __declspec, __cdecl, 
+//  __fastcall, __stdcall, __try, __except, __finally, __leave, __inline,
+//  __asm
 //#define CPP_SUPPORT_MS_EXTENSIONS
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,12 +40,38 @@
 //#define COMPILE_RE2C_AS_CPP
 
 ///////////////////////////////////////////////////////////////////////////////
-// decide, which C++ lexer to use (choose one!)
+//  Allow the message body of the #error and #warning directives to be 
+//  preprocessed before the diagnostic is issued.
+//
+//  Undefining the following will preprocess the message bodies of #error and
+//  #warning messages before the error (warning) is issued
+//
+#define CPP_PREPROCESS_ERROR_MESSAGE_BODY
+
+///////////////////////////////////////////////////////////////////////////////
+//  Allow the #pragma directives to be returned to the caller (optionally after 
+//  preprcessing the body) 
+//
+//  Undefining the following will skip #pragma directives, so that the caller
+//  will not see them.
+//
+#define CPP_RETURN_PRAGMA_DIRECTIVES
+
+///////////////////////////////////////////////////////////////////////////////
+//  Allow the body of a #pragma directive to be preprocessed before the 
+//  directive is returned to the caller.
+//
+//  Undefining the following will preprocess the bodies of #pragma directives
+//
+#define CPP_PREPROCESS_PRAGMA_BODY
+
+///////////////////////////////////////////////////////////////////////////////
+// Decide, which C++ lexer to use (choose one!)
 //#define USE_SLEX_CPP_LEXER         // use the SLex based C++ lexer
 #define USE_RE2C_CPP_LEXER       // use the Re2C based C++ lexer
 
 ///////////////////////////////////////////////////////////////////////////////
-//  undefine the following, if you need debug output, the 
+//  Undefine the following, if you need debug output, the 
 //  BOOST_SPIRIT_DEBUG_FLAGS constants below help to fine control the amount of 
 //  the generated debug output
 //#define BOOST_SPIRIT_DEBUG

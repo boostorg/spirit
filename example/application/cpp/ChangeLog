@@ -6,17 +6,40 @@ See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
 
-Still missing features
-- #include directive with macro argument (C++ standard 16.2.4)
-- #line directive (C++ standard 16.4)
-- #error and #warning (optional) directive (C++ standard 16.5)
-- #pragma directive (C++ standard 16.6)
-- predefinded macros (__LINE__ et.al.) (C++ standard 16.8)
-
+Fri Feb 21 22:09:04  2003 (feature complete!)
 - Allowed to optionally compile the Re2c generated lexer in 'C' mode, because 
-  at least the VC7.1 (final beta) compiler has problems to compile it IN 'C++'
+  at least the VC7.1 (final beta) compiler has problems to compile it in 'C++'
   mode with optimizations switch on
-
+- Implemented #error and #warning (optional) directives (C++ standard 16.5). 
+  Additionally there are now allowed the following preprocessor configuration 
+  constants:
+    CPP_PREPROCESS_ERROR_MESSAGE_BODY
+        if defined, preprocesses the message body of #error and #warning  
+        directives to allow for better diagnostics.
+    CPP_SUPPORT_WARNING_DIRECTIVE
+        if defined, then the #warning directive will be recognized such, that
+        a warning with the given message will be issued
+- Adjusted the error handling for the Re2c generated C++ lexer, so that any
+  error inside the lexer is now propagated as an cpplexer_exception.
+- Implemented the #line directive (C++ standard 16.4)
+- Implemented #pragma directive (C++ standard 16.6)
+  Additionally there are now allowed the following preprocessor configuration 
+  constants:
+    CPP_RETURN_PRAGMA_DIRECTIVES
+        if defined, then the whole pragma directive is returned a a token
+        sequence to the caller, if not defined the whole pragma directive is 
+        skipped
+    CPP_PREPROCESS_PRAGMA_BODY
+        if defined, then the #pragma body will be preprocessed 
+- Implemented #include directive with macro arguments (C++ standard 16.2.4)
+- Made the namespace structure finer granulated to leave only the main 
+  interface classes in the main namespace cpp. All other classes are moved into
+  subnamespaces to reflect the logical dependencies
+- Reorganized the public interface of the context<> template class, made all
+  non relevant functions into the protected.
+- Implemented predefinded macros (__LINE__ et.al.) (C++ standard 16.8)
+- Further documentation work
+  
 Wed Feb 19 23:44:47  2003
 - Corrected a lot of bugs in the macro expansion engine, which now should be 
   conformant to the C++ standard.

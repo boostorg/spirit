@@ -30,7 +30,7 @@ extern "C" {
 
 typedef unsigned int aq_stdelement;
 
-typedef struct
+typedef struct tag_aq_queuetype
 {
     size_t head;
     size_t tail;

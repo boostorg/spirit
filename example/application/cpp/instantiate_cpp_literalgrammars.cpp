@@ -49,9 +49,9 @@ using namespace cpplexer::re2clex;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template cpp::intlit_grammar_gen<lex_token<std::string::iterator> >;
-template cpp::chlit_grammar_gen<lex_token<std::string::iterator> >;
-template cpp::floatlit_grammar_gen<lex_token<std::string::iterator> >;
+template cpp::grammars::intlit_grammar_gen<lex_token<std::string::iterator> >;
+template cpp::grammars::chlit_grammar_gen<lex_token<std::string::iterator> >;
+template cpp::grammars::floatlit_grammar_gen<lex_token<std::string::iterator> >;
 
 #endif // #if defined(CPP_SEPARATE_GRAMMAR_INSTANTIATION)
 

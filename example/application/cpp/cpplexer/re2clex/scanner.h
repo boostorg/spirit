@@ -28,8 +28,9 @@ extern "C" {
 #endif // defined(__cplusplus)
 #endif // defined(COMPILE_RE2C_AS_CPP)
 
+struct Scanner;
 typedef unsigned char uchar;
-typedef int (* ReportErrorProc)(char *, ...);
+typedef int (* ReportErrorProc)(struct Scanner *, char *, ...);
 
 typedef struct Scanner {
     int    fd;  /* file descriptor */
@@ -49,6 +50,7 @@ typedef struct Scanner {
     unsigned int line; /* current line being lexed */
     ReportErrorProc error_proc;     /* if != 0 this function is called to 
                 report an error */
+    char const *file_name;  /* name of the lexed file */
     aq_queue eol_offsets;
 } Scanner;
 
