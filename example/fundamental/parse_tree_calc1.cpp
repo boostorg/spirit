@@ -12,6 +12,8 @@
 //  "Trees" chapter in the Spirit User's Guide.
 //
 ///////////////////////////////////////////////////////////////////////////////
+#define BOOST_SPIRIT_DUMP_PARSETREE_AS_XML
+
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/tree/parse_tree.hpp>
 

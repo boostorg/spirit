@@ -82,6 +82,15 @@
             </span><span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt; </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>start</span><span class=special>() </span><span class=keyword>const </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>rr</span><span class=special>; </span><span class=special>}
         </span><span class=special>};
     </span><span class=special>};</span></pre>
+<p>By default support for multiple scanners is disabled.  The macro
+  <tt>BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT</tt> must be defined to the
+  maximum number of scanners allowed in a scanner_list.  The value must
+  be greater than 1 to enable multiple scanners.  Given the
+  example above, to define a limit of three scanners for the list, the
+  following line must be inserted into the source file before the
+  inclusion of Spirit headers:
+</p>
+<pre><span class=special>    </span><span class=preprocessor>#define </span><span class=identifier>BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT</span> <span class=literal>3</span></pre>
 <h3><span class=special></span><b> <a name="no_rules" id="no_rules"></a> Look 
   Ma' No Rules</b></h3>
 <p>You use grammars and you use lots of 'em? Want a fly-weight, no-cholesterol, 
