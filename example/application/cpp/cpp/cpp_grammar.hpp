@@ -19,7 +19,6 @@
 #include <boost/spirit/tree/parse_tree.hpp>
 #include <boost/spirit/utility/confix.hpp>
 #include <boost/spirit/utility/lists.hpp>
-#include <boost/spirit/utility/functor_parser.hpp>
 
 #if defined(CPP_DUMP_PARSE_TREE)
 #include <map>
@@ -63,7 +62,7 @@ namespace {
 ///////////////////////////////////////////////////////////////////////////////
 //  define, whether the rule's should generate some debug output
 #define TRACE_CPP_GRAMMAR \
-    (BOOST_SPIRIT_DEBUG_FLAGS_CPP & BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR) \
+    bool(BOOST_SPIRIT_DEBUG_FLAGS_CPP & BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR) \
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -141,6 +140,15 @@ struct cpp_grammar :
 #endif // defined(CPP_DUMP_PARSE_TREE)
             
         // recognizes preprocessor directives only
+
+        // C++ standard 16.1: A preprocessing directive consists of a sequence 
+        // of preprocessing tokens. The first token in the sequence is # 
+        // preprocessing token that is either the first character in the source 
+        // file (optionally after white space containing no new-line 
+        // characters) or that follows white space containing at least one 
+        // new-line character. The last token in the sequence is the first 
+        // new-line character that follows the first token in the sequence.
+
             pp_statement
                 =   no_node_d[*ppspace]
                     >>  (
@@ -200,7 +208,7 @@ struct cpp_grammar :
             macro_parameters
                 =   confix_p(
                         no_node_d[ch_p(T_LEFTPAREN) >> *ppspace],
-                        list_p(
+                       !list_p(
                             ch_p(T_IDENTIFIER), 
                             no_node_d
                             [
@@ -240,7 +248,7 @@ struct cpp_grammar :
                 ;
 
             ppelse
-                =   no_node_d[ch_p(T_ELSE)]
+                =   no_node_d[ch_p(T_PP_ELSE)]
                 ;
 
             ppelif
@@ -271,7 +279,8 @@ struct cpp_grammar :
 
         // # something else (ill formed preprocessor directive)
             illformed           // for error reporting
-                =   (anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)))
+                =   no_node_d[ch_p(T_POUND) >> *ppspace]
+                    >> (anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)))
                     >> no_node_d
                        [
                            *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
@@ -334,7 +343,7 @@ struct cpp_grammar :
     
     cpp_grammar(cpp_grammar_rule_ids &rule_ids_, PositionT &pos_of_newline_) 
     :   rule_ids(rule_ids_), pos_of_newline(pos_of_newline_)
-    { BOOST_SPIRIT_TRACE_RULE_NAME(*this, "cpp_grammar", TRACE_CPP_GRAMMAR); }
+    { BOOST_SPIRIT_TRACE_GRAMMAR_NAME(*this, "cpp_grammar", TRACE_CPP_GRAMMAR); }
 
 #if defined(CPP_DUMP_PARSE_TREE)
 // helper function and data to get readable names of the rules known to us

@@ -40,7 +40,7 @@ struct new_lexer_gen
 //  configurations at compile time.
     static lex_input_interface<lex_token<IteratorT, PositionT> > *
     new_lexer(IteratorT const &first, IteratorT const &last, 
-        std::string const &fname);
+        PositionT const &pos);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,6 +71,7 @@ public:
     string_t const &get_value() const { return value; }
     position_t const &get_position() const { return pos; }
     void set_token_id (token_id id_) { id = id_; }
+    void set_value (string_t const &newval) { value = newval; }
     
 #if defined(CPP_DUMP_PARSE_TREE)
 // access functions for the tree_to_xml functionality

@@ -93,7 +93,7 @@ lexer<IteratorT, PositionT>::scan()
 {
     token_id id = token_id(re2clex::scan(&scanner));
     return lex_token<IteratorT, PositionT>(id, 
-                std::string((char const *)scanner.tok, scanner.cur - scanner.tok), 
+                std::string((char const *)scanner.tok, scanner.cur-scanner.tok), 
                 PositionT(filename, scanner.line)
            );
 }
@@ -110,13 +110,11 @@ class lex_functor
 {    
 public:
 
-    //typedef char                                            char_t;
-    //typedef std::basic_string<char_t>                       string_t;
     typedef typename lexer<IteratorT, PositionT>::token_t   token_t;
     
     lex_functor(IteratorT const &first, IteratorT const &last, 
-            std::string const &fname)
-    :   lexer(first, last, fname)
+            PositionT const &pos)
+    :   lexer(first, last, pos)
     {}
 
 // get the next token from the input stream
@@ -164,9 +162,9 @@ template <typename IteratorT, typename PositionT>
 RE2C_NEW_LEXER_INLINE
 lex_input_interface<lex_token<IteratorT, PositionT> > *
 new_lexer_gen<IteratorT, PositionT>::new_lexer(IteratorT const &first,
-    IteratorT const &last, std::string const &fname)
+    IteratorT const &last, PositionT const &pos)
 {
-    return new lex_functor<IteratorT, PositionT>(first, last, fname);
+    return new lex_functor<IteratorT, PositionT>(first, last, pos);
 }
 
 #undef RE2C_NEW_LEXER_INLINE

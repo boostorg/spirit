@@ -30,7 +30,9 @@
     using namespace cpp; \
     std::strstream stream; \
         stream << cls::severity_text(cls::code) << ": " \
-        << cls::error_text(cls::code) << ": " << msg << std::ends; \
+        << cls::error_text(cls::code); \
+    if (msg[0] != 0) stream << ": " << msg; \
+    stream << std::ends; \
     std::string throwmsg = stream.str(); stream.freeze(false); \
     throw cls(throwmsg.c_str(), cls::code, act_tok.get_position().line, \
         act_tok.get_position().column, act_tok.get_position().file.c_str()); \
@@ -43,7 +45,9 @@
     using namespace cpp; \
     std::stringstream stream; \
         stream << cls::severity_text(cls::code) << ": " \
-        << cls::error_text(cls::code) << ": " << msg << std::ends; \
+        << cls::error_text(cls::code); \
+    if (msg[0] != 0) stream << ": " << msg; \
+    stream << std::ends; \
     throw cls(stream.str().c_str(), cls::code, act_tok.get_position().line, \
         act_tok.get_position().column, act_tok.get_position().file.c_str()); \
     } \
@@ -184,7 +188,10 @@ public:
         ill_formed_expression,
         missing_matching_if,
         ill_formed_operator,
-        bad_define_statement
+        bad_define_statement,
+        too_few_macroarguments,
+        too_many_macroarguments,
+        improperly_terminated_macro                 
     };
 
     preprocess_exception(char const *what_, error_code code, int line_, 
@@ -227,7 +234,10 @@ public:
             "ill formed preprocessor expression",       // ill_formed_expression
             "the #if for this directive is missing",    // missing_matching_if
             "ill formed preprocessing operator",        // ill_formed_operator
-            "ill formed define statement"               // bad_define_statement
+            "ill formed define statement",              // bad_define_statement
+            "too few macro arguments",                  // too_few_macroarguments
+            "too many macro arguments",                 // too_many_macroarguments
+            "improperly terminated macro invocation"    // improperly_terminated_macro
         };
         return preprocess_exception_errors[code];
     }
@@ -245,8 +255,11 @@ public:
             severity_util::severity_warning,            // warning_directive
             severity_util::severity_error,              // ill_formed_expression
             severity_util::severity_error,              // missing_matching_if
-            severity_util::severity_error,               // ill_formed_operator
-            severity_util::severity_error               // bad_define_statement
+            severity_util::severity_error,              // ill_formed_operator
+            severity_util::severity_error,              // bad_define_statement
+            severity_util::severity_warning,            // too_few_macroarguments
+            severity_util::severity_warning,            // too_many_macroarguments
+            severity_util::severity_error               // improperly_terminated_macro
         };
         return preprocess_exception_severity[code];
     }

@@ -18,7 +18,10 @@
 #define _CPP_CONTEXT_HPP__907485E2_6649_4A87_911B_7F7225F3E5B8__INCLUDED_
 
 #include <string>
+#include <vector>
 #include <stack>
+
+#include "cpplexer/cpp_token_ids.hpp"
 
 #include "cpp/cpp_ifblock.hpp"
 #include "cpp/cpp_include_pathes.hpp"
@@ -53,7 +56,7 @@ template <
     typename InputPolicyT = iteration_context_policies::
         load_file_to_string<cpplexer::lex_iterator<TokenT> > 
 >
-class context 
+class context
 :   public InputPolicyT 
 {
 public:
@@ -61,11 +64,12 @@ public:
     typedef typename TokenT::iterator_t     target_iterator_t;
 
     typedef cpplexer::lex_iterator<TokenT>  lex_t;
-    typedef context<TokenT>                 self_t;
+    typedef context<TokenT, InputPolicyT>   self_t;
     typedef pp_iterator<self_t>             iterator_t;
     typedef TokenT                          token_t;
     typedef InputPolicyT                    input_policy_t;
-    
+    typedef typename TokenT::position_t     position_t;
+        
 private:
 // stack of shared_ptr's to the pending iteration contexts 
     typedef boost::shared_ptr<base_iteration_context<lex_t> > iteration_ptr_t;
@@ -78,8 +82,10 @@ public:
     {}
 
 // iterator interface
-    iterator_t begin() { return iterator_t(*this, first, last, filename); }
-    iterator_t end()   { return iterator_t(); }
+    iterator_t begin() 
+        { return iterator_t(*this, first, last, position_t(filename)); }
+    iterator_t end()   
+        { return iterator_t(); }
 
 // conditional compilation contexts
     bool get_if_block_status() const { return ifblocks.get_status(); }
@@ -107,14 +113,22 @@ public:
         { iter_ctxs.push(iter_ctx); }
 
 // maintain defined macros
-    bool add_macro_definition(TokenT const &name, 
+    bool add_macro_definition(TokenT const &name, bool has_params,
             std::vector<TokenT> &parameters, std::vector<TokenT> &definition)
-        { return macros.add_macro(name, parameters, definition); }
-    bool is_defined_macro(typename TokenT::string_t const &name)
+        { return macros.add_macro(name, has_params, parameters, definition); }
+    bool is_defined_macro(typename TokenT::string_t const &name) const
         { return macros.is_defined(name); }
     bool remove_macro_definition(typename TokenT::string_t const &name)
         { return macros.remove_macro(name); }
+
+    void expand_tokensequence(std::list<token_t> &expanded, 
+        bool expand_undefined = false);
         
+protected:
+    bool expand_tokensequence_worker(std::list<token_t> &expanded, 
+        bool expand_undefined);
+    void concat_tokensequence(std::list<token_t> &expanded);
+            
 private:
 // the main input stream
     target_iterator_t const &first; // underlying input stream
@@ -126,6 +140,160 @@ private:
     iteration_context_stack_t iter_ctxs;    // iteration contexts
     macromap<TokenT> macros;        // map of defined macros
 };
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  expand_tokensequence(): 
+//      expands all macros contained in a given token sequence, handles '##' 
+//      and '#' pp operators and re-scans the resulting sequence, if nessecary 
+//      (essentially preprocesses the token sequence).
+//
+//      The expand_undefined parameter is true during macro expansion inside
+//      a C++ expression given for a #if or #elif statement. 
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename TokenT, typename InputPolicyT>
+inline 
+void context<TokenT, InputPolicyT>::expand_tokensequence(
+    std::list<TokenT> &expanded, bool expand_undefined)
+{
+    while (expand_tokensequence_worker (expanded, expand_undefined)) 
+        concat_tokensequence(expanded);     // handle '##' and '#' operators
+}
+
+template <typename TokenT, typename InputPolicyT>
+inline 
+bool context<TokenT, InputPolicyT>::expand_tokensequence_worker(
+    std::list<TokenT> &expanded, bool expand_undefined)
+{
+    using namespace cpplexer;
+    
+//  Iterate over all the elements of the given sequence, if it is an 
+//  T_IDENTIFIER token, try to replace this as a macro
+bool replaced = false;       // return, whether a replacement occured
+
+    std::list<TokenT>::iterator end = expanded.end();
+    for (std::list<TokenT>::iterator it = expanded.begin(); it != end; /**/) {
+    token_id id = token_id(*it);
+    
+        if (T_DEFINED == id) {
+        // resolve operator defined()
+            macros.resolve_defined(expanded, it, expanded.end());
+            continue;           // 'it' is already adjusted correctly
+        }
+        else if (T_IDENTIFIER == id) {
+        // try to replace this identifier as a macro
+            if (macros.is_defined((*it).get_value())) {
+            // the current token contains an identifier, which is currently 
+            // defined as a macro
+                replaced = macros.expand_macro(expanded, it) 
+                    || replaced;
+                continue;       // 'it' is already adjusted correctly
+            }
+            else if (expand_undefined) {
+            // in preprocessing conditionals undefined identifiers and keywords 
+            // are to be replaced with '0' (see. C++ standard 16.1.4)
+                (*it).set_token_id(T_INTLIT);
+                (*it).set_value("0");
+                replaced = true;
+            }
+        }
+        else if (expand_undefined && IS_CATEGORY(*it, KeywordTokenType) && 
+                 T_TRUE != it && T_FALSE != id)
+        {
+        // all remaining identifiers and keywords, except for true and false, 
+        // are replaced with the pp-number 0 (C++ standard 16.1.4, [cpp.cond])
+            (*it).set_token_id(T_INTLIT);
+            (*it).set_value("0");
+            replaced = true;
+        }
+        ++it;
+    }
+    return replaced;
+}
+
+namespace {
+
+    // return the string representation of a token sequence
+    template <typename TokenT>
+    typename TokenT::string_t
+    as_string (std::list<TokenT> const &token_sequence)
+    {
+        typename TokenT::string_t result;
+        std::list<TokenT>::const_iterator end = token_sequence.end();
+        for (std::list<TokenT>::const_iterator it = token_sequence.begin(); 
+             it != end; ++it) 
+        {
+            result += (*it).get_value();
+        }
+        return result;
+    }
+}
+
+template <typename TokenT, typename InputPolicyT>
+inline 
+void context<TokenT, InputPolicyT>::concat_tokensequence(
+    std::list<TokenT> &expanded)
+{
+    using namespace cpplexer;
+    
+bool found_concat = false;
+
+    std::list<TokenT>::iterator end = expanded.end();
+    std::list<TokenT>::iterator prev = end;
+    for (std::list<TokenT>::iterator it = expanded.begin(); it != end; ++it) {
+    
+        if (T_POUND_POUND == token_id(*it)) {
+        std::list<TokenT>::iterator next = it;
+    
+            ++next;
+            if (prev == end || next == end) {
+            // error, '##' should be in between two tokens
+                CPP_THROW(preprocess_exception, ill_formed_operator,
+                    "concat ('##')", (*it));
+            }
+
+        // replace prev##next with the concatenated value, skip whitespace
+        // before and after the '##' operator
+            while (T_SPACE == token_id(*next) || T_SPACE2 == token_id(*next))
+                ++next;
+
+        // we leave the token_id unchanged, because the whole sequence is to be
+        // re-scanned anyway
+            (*prev).set_value((*prev).get_value() + (*next).get_value());
+
+        // remove the '##' and the next tokens from the sequence
+        std::list<TokenT>::iterator it_tmp = next; 
+        
+            ++it_tmp;                  // now points behind next
+            expanded.erase(next);      // remove next token
+            expanded.erase(it);        // remove '##' token
+            it = it_tmp;
+
+            found_concat = true;
+            prev = it;
+            continue;
+        }
+
+    // save last non-whitespace token position
+        if (T_SPACE != token_id(*it) && T_SPACE2 != token_id(*it))        
+            prev = it;
+    }
+    
+// re-scan the sequence, if necessary
+    if (found_concat) {
+        typename TokenT::string_t str (as_string(expanded));
+        std::list<TokenT> rescanned;
+        
+        iterator_t it = iterator_t(*this, str.begin(), str.end(), 
+            (*expanded.begin()).get_position());
+        iterator_t end = iterator_t();
+        for (/**/; it != end; ++it) 
+            rescanned.push_back(*it);
+    
+        std::swap(expanded, rescanned);
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace cpp

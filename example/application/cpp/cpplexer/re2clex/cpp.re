@@ -2,7 +2,7 @@
     A Standard compliant C++ preprocessor
 
     Copyright (c) 2001 Daniel C. Nuffer
-    Copyright (c) 2001-2003 Hartmut Kaiser
+    Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software
@@ -494,6 +494,7 @@ Newline            = "\r\n" | "\n" | "\r";
     Pound PPSpace "if"        { RET(T_PP_IF); }
     Pound PPSpace "ifdef"     { RET(T_PP_IFDEF); }
     Pound PPSpace "ifndef"    { RET(T_PP_IFNDEF); }
+    Pound PPSpace "else"      { RET(T_PP_ELSE); }
     Pound PPSpace "elif"      { RET(T_PP_ELIF); }
     Pound PPSpace "endif"     { RET(T_PP_ENDIF); }
     Pound PPSpace "define"    { RET(T_PP_DEFINE); }

@@ -28,7 +28,7 @@ namespace cpplexer {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename TokenT>
+template <typename TokenT, typename PositionT = boost::spirit::file_position>
 struct lex_input_interface 
 {
     virtual TokenT get() = 0;
@@ -39,8 +39,8 @@ struct lex_input_interface
 //  lexer/token configurations at compile time.
     static lex_input_interface *
     new_lexer(typename TokenT::iterator_t const &first, 
-        typename TokenT::iterator_t const &last, std::string const &fname)
-    { return TokenT::lexer_gen_t::new_lexer (first, last, fname); }
+        typename TokenT::iterator_t const &last, PositionT const &pos)
+    { return TokenT::lexer_gen_t::new_lexer (first, last, pos); }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

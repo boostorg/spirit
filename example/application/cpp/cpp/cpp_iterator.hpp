@@ -18,19 +18,22 @@
 #define _CPP_ITERATOR_HPP__175CA88F_7273_43FA_9039_BCF7459E1F29__INCLUDED_
 
 #include <string>
+#include <vector>
+#include <list>
 
 #include <boost/shared_ptr.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/spirit/core/assert.hpp>
 #include <boost/spirit/iterator/multi_pass.hpp>
 #include <boost/spirit/tree/parse_tree_utils.hpp>
-#include <boost/spirit/tree/tree_to_xml.hpp>
 
 #include "cpplexer/cpp_lex_iterator.hpp"
 
 #include "cpp/cpp_exceptions.hpp"
-#include "cpp/cpp_grammar_gen.hpp"
 #include "cpp/cpp_iteration_context.hpp"
+#include "cpp/cpp_grammar_gen.hpp"
+#include "cpp/cpp_expression_grammar_gen.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
@@ -63,17 +66,17 @@ class pp_iterator_functor {
     typedef 
         boost::spirit::tree_match<lex_t, node_factory_t> 
         parse_tree_match_t;
-    typedef typename parse_tree_match_t::node_t         parse_node_t;
-    typedef typename parse_tree_match_t::parse_node_t   parse_node_value_t;
-    typedef typename parse_tree_match_t::container_t    parse_tree_t;
+    typedef typename parse_tree_match_t::node_t         parse_node_t;       // tree_node<node_val_data<> >
+    typedef typename parse_tree_match_t::parse_node_t   parse_node_value_t; // node_val_data<>
+    typedef typename parse_tree_match_t::container_t    parse_tree_t;       // parse_node_t::children_t
 
 public:
     template <typename IteratorT>
     pp_iterator_functor(ContextT &ctx_, IteratorT const &first_, 
-            IteratorT const &last_, std::string const &filename_)
+            IteratorT const &last_, typename ContextT::position_t const &pos_)
     :   ctx(ctx_), 
         iter_ctx(new base_iteration_context_t(
-            lex_t(first_, last_, filename_), lex_t(), filename_)), 
+            lex_t(first_, last_, pos_), lex_t(), pos_.file)), 
         seen_newline(true)
     {}
     
@@ -93,7 +96,7 @@ protected:
     void on_define(parse_node_t const &node);
     void retrieve_macroname(parse_node_t const &node, 
         result_type &macroname);
-    void retrieve_macrodefinition(parse_node_t const &node, 
+    bool retrieve_macrodefinition(parse_node_t const &node, 
         boost::spirit::parser_id id, std::vector<result_type> &macroparameters);
 
     void on_undefine(result_type const &t);
@@ -102,6 +105,11 @@ protected:
     void on_ifndef(result_type const &t);
     void on_else();
     void on_endif();
+    
+    void on_if(typename parse_tree_t::const_iterator const &begin,
+        typename parse_tree_t::const_iterator const &end);
+    void on_elif(typename parse_tree_t::const_iterator const &begin,
+        typename parse_tree_t::const_iterator const &end);
 
 private:
     ContextT &ctx;              // context, this iterator is assicciated with
@@ -143,38 +151,40 @@ bool returned_from_include = false;
         do {
         bool was_seen_newline = seen_newline || returned_from_include;
     
-        act_token = *iter_ctx->first;
-        if (act_token == T_NEWLINE) {   // a newline is to be returned asap
-            seen_newline = true;
-            ++iter_ctx->first;
-            return act_token;
-        }
-        seen_newline = false;
-
-        if (was_seen_newline && pp_directive()) {
-        // a pp directive was found, return the corresponding eol only
-            seen_newline = true;
-            return result_type(T_NEWLINE, 
-                typename result_type::string_t("\n"), 
-                cpp_grammar_t::pos_of_newline);
-        }
-        else if (ctx.get_if_block_status()) {
-            // preprocess this token, eat up more, if appropriate, return the 
-            // next preprocessed token
-            return pp_token();
-        }
-        else {
-            // compilation condition is false: if the current token is a 
-            // newline, return it, otherwise discard the actual token and try 
-            // the next one
-            if (act_token == T_NEWLINE) {
+            act_token = *iter_ctx->first;
+            if (T_NEWLINE == act_token || T_CPPCOMMENT == act_token) {   
+            // a newline is to be returned asap, a C++ comment too
+            // (the C++ comment token includes the trailing newline)
                 seen_newline = true;
+                ++iter_ctx->first;
                 return act_token;
             }
+            seen_newline = false;
+
+            if (was_seen_newline && pp_directive()) {
+            // a pp directive was found, return the corresponding eol only
+                seen_newline = true;
+                return result_type(T_NEWLINE, 
+                    typename result_type::string_t("\n"), 
+                    cpp_grammar_t::pos_of_newline);
+            }
+            else if (ctx.get_if_block_status()) {
+                // preprocess this token, eat up more, if appropriate, return 
+                // the next preprocessed token
+                return pp_token();
+            }
+            else {
+                // compilation condition is false: if the current token is a 
+                // newline, return it, otherwise discard the actual token and 
+                // try the next one
+                if (act_token == T_NEWLINE) {
+                    seen_newline = true;
+                    return act_token;
+                }
 
             // next token
                 ++iter_ctx->first;
-        }
+            }
             
         } while (iter_ctx->first != iter_ctx->last);
     }
@@ -277,9 +287,13 @@ long node_id = nodeval.id().to_long();
     }
     else if (node_id == cpp_grammar_t::rule_ids.if_id) {
     // #if
+        on_if((*root.begin()).children.begin(), 
+            (*root.begin()).children.end());
     }
     else if (node_id == cpp_grammar_t::rule_ids.elif_id) {
     // #elif
+        on_elif((*root.begin()).children.begin(), 
+            (*root.begin()).children.end());
     }
     else if (node_id == cpp_grammar_t::rule_ids.else_id) {
     // #else
@@ -404,7 +418,7 @@ typename parse_node_t::children_t const &children = name_node->children;
 
 // retrieve the macro parameters or the macro definition from the parse tree
 template <typename ContextT> 
-inline void  
+inline bool  
 pp_iterator_functor<ContextT>::retrieve_macrodefinition(
     parse_node_t const &node, boost::spirit::parser_id id, 
     std::vector<result_type> &macrodefinition)
@@ -422,7 +436,9 @@ std::pair<const_tree_iterator, const_tree_iterator> nodes;
             if ((*cit).value.begin() != (*cit).value.end())
                 macrodefinition.push_back(*(*cit).value.begin());
         }
+        return true;
     }
+    return false;
 }
 
 template <typename ContextT> 
@@ -437,14 +453,16 @@ pp_iterator_functor<ContextT>::on_define (parse_node_t const &node)
 result_type macroname;
 std::vector<result_type> macroparameters;
 std::vector<result_type> macrodefinition;
+bool has_parameters = false;
 
     retrieve_macroname(node, macroname);
-    retrieve_macrodefinition(node, cpp_grammar_t::rule_ids.macro_parameters_id, 
-        macroparameters);
+    has_parameters = retrieve_macrodefinition(node, 
+        cpp_grammar_t::rule_ids.macro_parameters_id, macroparameters);
     retrieve_macrodefinition(node, cpp_grammar_t::rule_ids.macro_definition_id, 
         macrodefinition);
     
-    ctx.add_macro_definition(macroname, macroparameters, macrodefinition);
+    ctx.add_macro_definition(macroname, has_parameters, macroparameters, 
+        macrodefinition);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -466,7 +484,7 @@ pp_iterator_functor<ContextT>::on_undefine (result_type const &token)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_define(): handle #ifdef statements
+//  on_ifdef(): handle #ifdef statements
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -478,7 +496,7 @@ pp_iterator_functor<ContextT>::on_ifdef(result_type const &token)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_define(): handle #ifndef statements
+//  on_ifndef(): handle #ifndef statements
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -490,26 +508,100 @@ pp_iterator_functor<ContextT>::on_ifndef(result_type const &token)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_define(): handle #else statements
+//  on_else(): handle #else statements
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
 inline void  
 pp_iterator_functor<ContextT>::on_else()
 {
-    ctx.enter_else_block();
+    if (!ctx.enter_else_block()) {
+    // #else without matching #if
+        CPP_THROW(preprocess_exception, missing_matching_if, "#else", 
+            act_token);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_define(): handle #endif statements
+//  on_endif(): handle #endif statements
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
 inline void  
 pp_iterator_functor<ContextT>::on_endif()
 {
-    ctx.exit_if_block();
+    if (!ctx.exit_if_block()) {
+    // #endif without matching #if
+        CPP_THROW(preprocess_exception, missing_matching_if, "#endif", 
+            act_token);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_if(): handle #if statements
+//
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_if(
+    typename parse_tree_t::const_iterator const &begin,
+    typename parse_tree_t::const_iterator const &end)
+{
+// copy the sequence to preprocess into the provided list
+std::list<result_type> expanded;
+
+    for (typename parse_tree_t::const_iterator it = begin; it != end; ++it) {
+    // should contain exactly 1 element
+        BOOST_SPIRIT_ASSERT(1 == std::distance((*it).value.begin(), (*it).value.end()));
+        expanded.push_back (*(*it).value.begin());
+    }
+    
+// preprocess the pp expression
+    ctx.expand_tokensequence(expanded, true);
+    
+// parse the expression and enter the #if block
+    ctx.enter_if_block(expression_grammar_gen<result_type>::
+        evaluate(expanded.begin(), expanded.end(), act_token));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_elif(): handle #elif statements
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_elif(
+    typename parse_tree_t::const_iterator const &begin,
+    typename parse_tree_t::const_iterator const &end)
+{
+    if (ctx.get_if_block_status()) {
+        if (!ctx.enter_elif_block(false)) {
+        // #else without matching #if
+            CPP_THROW(preprocess_exception, missing_matching_if, "#elif", 
+                act_token);
+        }
+        return;     // #if/previous #elif was true, so don't enter this #elif 
+    }
+            
+// copy the sequence to preprocess into the provided list
+std::list<result_type> expanded;
+
+    for (typename parse_tree_t::const_iterator it = begin; it != end; ++it) {
+    // should contain exactly 1 element
+        BOOST_SPIRIT_ASSERT(1 == std::distance((*it).value.begin(), (*it).value.end()));
+        expanded.push_back (*(*it).value.begin());
+    }
+    
+// preprocess the pp expression
+    ctx.expand_tokensequence(expanded, true);
+    
+// parse the expression and enter the #elif block
+    ctx.enter_elif_block(expression_grammar_gen<result_type>::
+            evaluate(expanded.begin(), expanded.end(), act_token));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -526,8 +618,8 @@ class pp_iterator_functor_shim
 public:
     template <typename IteratorT>
     pp_iterator_functor_shim(ContextT &ctx, IteratorT const &first, 
-            IteratorT const &last, std::string const &filename)
-    :   functor_ptr(new functor_t(ctx, first, last, filename)) 
+            IteratorT const &last, typename ContextT::position_t const &pos)
+    :   functor_ptr(new functor_t(ctx, first, last, pos)) 
     {}
 
 // interface to the boost::spirit::multi_pass_policies::functor_input policy
@@ -585,8 +677,8 @@ public:
     
     template <typename IteratorT>
     pp_iterator(ContextT &ctx, IteratorT const &first, IteratorT const &last,
-            std::string const &filename)
-    :   base_t(input_policy_t(ctx, first, last, filename))
+            typename ContextT::position_t const &pos)
+    :   base_t(input_policy_t(ctx, first, last, pos))
     {}
 };
 

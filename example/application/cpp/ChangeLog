@@ -5,6 +5,17 @@ http://spirit.sourceforge.net/
 See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
+
+Sun Feb  9 23:01:00  2003
+- Improved error handling for #if et.al.
+- Fixed a pair of lexer errors
+- Implemented the #if/#elif statements, the sample now contains a complete C++ 
+  expression evaluation engine (for the calculation of the outcome of the 
+  #if/#elif statements)
+- Implemented macro replacement (with parameters)
+- Implemented the '##' [cpp.concat] operator
+- Implemented the defined() [cpp.cond] operator
+
 Sun Feb  2 23:28:24  2003
 - Implemented the  #define, #undef, #ifdef, #ifndef, #else and #endif 
   statements

@@ -22,6 +22,7 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/spirit/iterator/multi_pass.hpp>
+#include <boost/spirit/iterator/position_iterator.hpp>
 
 #include "cpplexer/cpp_lex_interface.hpp"
 
@@ -41,8 +42,8 @@ class lex_iterator_functor_shim
 public:
     template <typename IteratorT>
     lex_iterator_functor_shim(IteratorT const &first, IteratorT const &last, 
-            std::string const &fname) 
-    :   functor_ptr(lex_input_interface<TokenT>::new_lexer(first, last, fname)) 
+            typename TokenT::position_t const &pos) 
+    :   functor_ptr(lex_input_interface<TokenT>::new_lexer(first, last, pos)) 
     {}
 
 // interface to the boost::spirit::multi_pass_policies::functor_input policy
@@ -57,12 +58,6 @@ public:
         return functor_ptr->get(); 
     }
 
-    //typename TokenT::position_t get_position()
-    //{
-    //    BOOST_ASSERT(0 != functor_ptr.get());
-    //    return functor_ptr->get_position(); 
-    //}
-    
 private:
     boost::shared_ptr<lex_input_interface<TokenT> > functor_ptr;
 };
@@ -118,12 +113,9 @@ public:
     
     template <typename IteratorT>
     lex_iterator(IteratorT const &first, IteratorT const &last, 
-            std::string const &fname)
-    :   base_t(input_policy_t(first, last, fname))
+            typename TokenT::position_t const &pos)
+    :   base_t(input_policy_t(first, last, pos))
     {}
-    
-    typename TokenT::position_t get_position()
-    { return get_input().get_position(); }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

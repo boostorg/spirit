@@ -15,8 +15,10 @@
 subproject libs/spirit/example/application/cpp ;
 
 exe cpp :
-        cpp.hpp
+        cpp.cpp
         instantiate_cpp_grammar.cpp
+        instantiate_cpp_exprgrammar.cpp
+        instantiate_cpp_literalgrammars.cpp
         instantiate_slex_lexer.cpp
         instantiate_re2c_lexer.cpp
         ./cpp_lexer/re2clex/aq.cpp

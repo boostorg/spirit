@@ -259,6 +259,7 @@ lexer<IteratorT, PositionT>::init_data[] =
     TOKEN_DATA(PP_IF, POUNDDEF PPSPACE "if"),
     TOKEN_DATA(PP_IFDEF, POUNDDEF PPSPACE "ifdef"),
     TOKEN_DATA(PP_IFNDEF, POUNDDEF PPSPACE "ifndef"),
+    TOKEN_DATA(PP_ELSE, POUNDDEF PPSPACE "else"),
     TOKEN_DATA(PP_ELIF, POUNDDEF PPSPACE "elif"),
     TOKEN_DATA(PP_ENDIF, POUNDDEF PPSPACE "endif"),
     TOKEN_DATA(PP_ERROR, POUNDDEF PPSPACE "error"),
@@ -409,8 +410,8 @@ public:
     typedef typename lexer<IteratorT, PositionT>::token_t   token_t;
 
     lex_functor(IteratorT const &first, IteratorT const &last, 
-            std::string const &fname)
-    :   first(first, last, fname.c_str())
+            PositionT const &pos)
+    :   first(first, last, pos)
     {
         init_lexer(lexer);  // initialize lexer dfa tables
     }
@@ -478,9 +479,9 @@ template <typename IteratorT, typename PositionT>
 SLEX_NEW_LEXER_INLINE
 lex_input_interface<lex_token<IteratorT, PositionT> > *
 new_lexer_gen<IteratorT, PositionT>::new_lexer(IteratorT const &first,
-    IteratorT const &last, std::string const &fname)
+    IteratorT const &last, PositionT const &pos)
 {
-    return new lex_functor<IteratorT, PositionT>(first, last, fname);
+    return new lex_functor<IteratorT, PositionT>(first, last, pos);
 }
 
 #undef SLEX_NEW_LEXER_INLINE

@@ -33,22 +33,27 @@
 //  undefine the following, if you need debug output, the 
 //  BOOST_SPIRIT_DEBUG_FLAGS constants below help to fine control the amount of 
 //  the generated debug output
-//#define BOOST_SPIRIT_DEBUG
+#define BOOST_SPIRIT_DEBUG
 
 ///////////////////////////////////////////////////////////////////////////////
 //  debug rules, subrules and grammars only, for possible flags see 
 //  spirit/debug.hpp
 #define BOOST_SPIRIT_DEBUG_FLAGS  \
-    BOOST_SPIRIT_DEBUG_FLAGS_NODES
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES | BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES) \
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////
 //  debug flags for CPP library, possible flags:
-#define BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR      0x0001
-#define BOOST_SPIRIT_DEBUG_FLAGS_TIME_CONVERSION  0x0002
+#define BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR        0x0001
+#define BOOST_SPIRIT_DEBUG_FLAGS_TIME_CONVERSION    0x0002
+#define BOOST_SPIRIT_DEBUG_FLAGS_CPP_EXPR_GRAMMAR   0x0004
+#define BOOST_SPIRIT_DEBUG_FLAGS_INTLIT_GRAMMAR     0x0008
+#define BOOST_SPIRIT_DEBUG_FLAGS_FLOATLIT_GRAMMAR   0x0010
+#define BOOST_SPIRIT_DEBUG_FLAGS_CHLIT_GRAMMAR      0x0020
+#define BOOST_SPIRIT_DEBUG_FLAGS_DEFINED_GRAMMAR    0x0040
 
 #define BOOST_SPIRIT_DEBUG_FLAGS_CPP \
-    BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR \
+    BOOST_SPIRIT_DEBUG_FLAGS_DEFINED_GRAMMAR \
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////
