@@ -6,7 +6,7 @@ using namespace std;
 #include "boost/spirit/core.hpp"
 #include "boost/spirit/attribute/closure.hpp"
 #include "boost/spirit/attribute/parametric.hpp"
-#include "boost/phoenix/binders.hpp"
+#include "boost/spirit/phoenix/binders.hpp"
 using namespace boost::spirit;
 using namespace phoenix;
 
