@@ -28,11 +28,12 @@
 #include <iostream>
 #include <boost/cstdlib.hpp>
 #include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/actors/plus_assign_actor.hpp>
+#include <boost/spirit/phoenix.hpp>
 
 using namespace std;
 using namespace boost;
 using namespace spirit;
+using namespace phoenix;
 
 //-----------------------------------------------------------------------------
 
@@ -46,7 +47,7 @@ int main()
 
     int i(0);
 
-    r = int_p[plus_assign_a(i)];
+    r = int_p[var(i) += arg1];
 
     parse_info<> info = parse(
         "1",
@@ -58,7 +59,7 @@ int main()
     );
 
     assert(info.full);
-    // Check, that the semanctio action was invoked only once
+    // Check, that the semantic action was invoked only once
     assert(i == 1);
 
     return exit_success;
