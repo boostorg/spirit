@@ -144,7 +144,7 @@ struct case_parser
     typedef unary_parser_category               parser_category_t;
     typedef unary<ParserT, parser<self_t> >     base_t;
 
-    typedef typename self_t::subject_t          self_subject_t;
+    typedef typename base_t::subject_t          self_subject_t;
 
     BOOST_STATIC_CONSTANT(int, value = N);
     BOOST_STATIC_CONSTANT(bool, is_default = IsDefault);
