@@ -16,7 +16,12 @@ subproject libs/spirit/test ;
 
 SPIRIT_HEADER_INCLUDE ?= ../../.. ;
 
-spirit-header-include = <include>$(SPIRIT_HEADER_INCLUDE) ;
+spirit-header-include = <sysinclude>$(SPIRIT_HEADER_INCLUDE) ;
+
+if $(SPIRIT_BOOST_HEADER_INCLUDE)
+{
+    spirit-header-include += <sysinclude>$(SPIRIT_BOOST_HEADER_INCLUDE) ;
+}
 
 spirit-src = ./ ;
 if $(SPIRIT_SRC_INCLUDE)
@@ -62,21 +67,21 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
         $(spirit-header-include)
         ;
 
-if ($(COMO_BASE)) # MT is not available on both Unix and Windows on Comeau
-{   # no MT support available
-    template multi-threading : : :
-        $(spirit-header-include)
-    ;
-}
-else
-{
-    #template multi-threading : <dll>../../thread/build/boost_thread : :
-    template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
-        <threading>multi
-        <define>BOOST_ALL_NO_LIB=1
-        $(spirit-header-include)
-    ;
-}
+    if ( $(COMO_BASE) || $(SPIRIT_HAVE_BOOST_THREAD) = "FALSE" )
+    # MT is not available on both Unix and Windows on Comeau
+    {   # no MT support available
+        template multi-threading : : :
+            $(spirit-header-include)
+        ;
+    }
+    else
+    {
+        template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
+            <threading>multi
+            <define>BOOST_ALL_NO_LIB=1
+            $(spirit-header-include)
+        ;
+    }
 
     template normal : : :
         $(spirit-header-include)
@@ -135,8 +140,8 @@ else
 
     test-suite "spirit.tree"
         : [ spirit-run $(spirit-src)ast_calc_tests.cpp <template>normal ]
-          [ spirit-run $(spirit-src)group_match_bug.cpp <template>normal ]
           [ spirit-run $(spirit-src)repeat_ast_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)group_match_bug.cpp <template>normal ]
         ;
 
 # temporarily removed from the test suite. tree_tests are not finished, yet.

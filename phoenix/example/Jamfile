@@ -22,12 +22,6 @@ if $(SPIRIT_BOOST_HEADER_INCLUDE)
     spirit-header-include += <sysinclude>$(SPIRIT_BOOST_HEADER_INCLUDE) ;
 }
 
-#unit-test sample1
-#    : fundamental/sample1.cpp
-#    : $(spirit-header-include)
-#    :
-#    ;
-
 unit-test sample2
     : fundamental/sample2.cpp
     : $(spirit-header-include)
