@@ -144,14 +144,12 @@ namespace boost { namespace spirit {
         range(CharT first_, CharT last_)
         : first(first_), last(last_)
         {
-            BOOST_SPIRIT_ASSERT(impl::to_int_type(first)
-              <= impl::to_int_type(last));
+            BOOST_SPIRIT_ASSERT(first <= last);
         }
 
         template <typename T>
         bool test(T ch) const
-        { return (impl::to_int_type(CharT(ch)) >= impl::to_int_type(first))
-            && (impl::to_int_type(CharT(ch)) <= impl::to_int_type(last)); }
+        { return first <= CharT(ch) && CharT(ch) <= last; }
 
         CharT   first;
         CharT   last;
@@ -565,6 +563,15 @@ namespace boost { namespace spirit {
     };
 
     end_parser const end_p = end_parser();
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  the pizza_p parser :-)
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    inline strlit<char const*> const
+    pizza_p(char const* your_favorite_pizza)
+    { return your_favorite_pizza; }
 
 }} // namespace boost::spirit
 

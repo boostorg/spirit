@@ -82,12 +82,14 @@ namespace boost { namespace spirit {
 
 #else
 
-    template <typename CharT> struct char_traits
+    template <typename CharT>
+    struct char_traits
     {
         typedef CharT int_type;
     };
 
-    template<> struct char_traits<char>
+    template<>
+    struct char_traits<char>
     {
         typedef int int_type;
 
@@ -95,7 +97,8 @@ namespace boost { namespace spirit {
         { return static_cast<unsigned char>(c); }
     };
 
-    template<> struct char_traits<unsigned char>
+    template<>
+    struct char_traits<unsigned char>
     {
         typedef int int_type;
 
@@ -105,7 +108,8 @@ namespace boost { namespace spirit {
 
 #ifndef BOOST_NO_CWCHAR
 
-    template<> struct char_traits<wchar_t>
+    template<>
+    struct char_traits<wchar_t>
     {
         typedef wint_t int_type;
         static wint_t to_int_type(wchar_t c)
@@ -117,7 +121,8 @@ namespace boost { namespace spirit {
 #endif // BOOST_SPIRIT_NO_CHAR_TRAITS
 
     template <typename CharT>
-    typename char_traits<CharT>::int_type to_int_type(CharT c)
+    inline typename char_traits<CharT>::int_type
+    to_int_type(CharT c)
     {
         return char_traits<CharT>::to_int_type(c);
     }
