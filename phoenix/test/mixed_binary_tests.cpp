@@ -1,5 +1,5 @@
 /*=============================================================================
-    Phoenix v1.1
+    Phoenix v1.2
     Copyright (c) 2001-2003 Joel de Guzman
 
     Use, modification and distribution is subject to the Boost Software
