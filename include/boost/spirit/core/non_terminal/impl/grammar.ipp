@@ -176,7 +176,7 @@ struct grammar_definition
                 result(new definition_t(grammar->derived()));
 
 #ifdef BOOST_SPIRIT_THREADSAFE
-            boost::mutex::scoped_lock(helpers.mutex());
+            boost::mutex::scoped_lock lock(helpers.mutex());
 #endif
             helpers.push_back(this);
 
