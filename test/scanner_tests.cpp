@@ -1,12 +1,10 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 1998-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
 #include <cassert>
@@ -14,7 +12,7 @@
 
 using namespace std;
 
-#include "boost/spirit/core.hpp"
+#include <boost/spirit/core.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,8 +59,8 @@ scanner_tests()
         pp1(cp_first, cp_last);
 
     //  compile check only...
-    scanner<> spp1(pp1);
-    scanner<> spp2(pp1);
+    scanner<> spp1(pp1); (void)spp1;
+    scanner<> spp2(pp1); (void)spp2;
     //    spp1 = spp2;
     //  compile check only...
 
@@ -73,11 +71,6 @@ scanner_tests()
     }
     cout << '\n';
     cp_first = cp;
-
-#if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)) \
-    || defined(BOOST_INTEL_CXX_VERSION)
-#else
-//  VC++6 Cannot handle iterator traits properly
 
     list<char>              li(cp_first, cp_last);
     list<char>::iterator    li_first = li.begin();
@@ -93,8 +86,6 @@ scanner_tests()
     }
     cout << '\n';
     li_first = li.begin();
-
-#endif
 
     scanner<char const*, scanner_policies<to_upper_iter_policy> >
         pp3(cp_first, cp_last);

@@ -1,74 +1,126 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-// vim:ts=4:sw=4:et
-
 #include <iostream>
-#if !defined(DONT_HAVE_BOOST)
-#include <boost/thread/thread.hpp>
-#endif
-#if !defined(BOOST_HAS_THREADS)
-int
-main()
-{
-    std::cout << "/////////////////////////////////////////////////////////\n";
-    std::cout << "\n";
-    std::cout << "          object_with_id test (MT)\n";
-    std::cout << "\n";
-    std::cout << "/////////////////////////////////////////////////////////\n";
-    std::cout << "\n";
+#include <boost/config.hpp>
+#include <boost/test/included/unit_test_framework.hpp>
+#include "impl/util.ipp"
 
-    std::cout << "Test skipped\n";
-    return 0;
+namespace ut = boost::unit_test_framework;
+
+#if !defined(BOOST_HAS_THREADS) || defined(DONT_HAVE_BOOST)
+static void skipped()
+{
+    if (test::verbose_runtests)
+        std::cout << "skipped\n";
+}
+
+ut::test_suite*
+init_unit_test_suite( int argc, char* argv[] )
+{
+    test::init(argc, argv);
+    test::banner("object_with_id tests (MT)");
+    ut::test_suite* test= BOOST_TEST_SUITE( "spirit::object_with_id tests" );
+    test->add(BOOST_TEST_CASE(skipped));
+    return test;
 }
 #else
+
+////////////////////////////////////////////////////////////////////////////////
+
+static const unsigned long initial_test_size = 5000UL;
+static const unsigned long maximum_test_size = 1000000UL;
+
+////////////////////////////////////////////////////////////////////////////////
 
 #undef BOOST_SPIRIT_THREADSAFE
 #define BOOST_SPIRIT_THREADSAFE
 
+#include <boost/thread/thread.hpp>
 #include <boost/spirit/core/non_terminal/impl/object_with_id.ipp>
 #include <boost/ref.hpp>
+#include <boost/thread/xtime.hpp>
 #include <vector>
 #include <algorithm>
 #include <cassert>
-#include <cstdlib>
 
 using boost::spirit::impl::object_with_id;
 
 struct tag1 {};
-
 typedef object_with_id<tag1> class1;
 
+unsigned long test_size = initial_test_size;
+boost::xtime start_time;
+
+template <typename ClassT>
 struct test_task
 {
-    static unsigned int size() { return 200000; }
+    test_task() : v(), m(), progress(0) {}
 
     void operator ()()
-    { // create lots of objects
-        v1.reserve(size());
-        for (unsigned long i=0; i<size(); ++i)
+    {   // create lots of objects
+        unsigned long i = 0;
+
+        v.reserve(maximum_test_size);
+        do
         {
-            //boost::thread().yield();
-            v1.push_back(new class1);
+            for (; i<test_size; ++i)
+                v.push_back(new ClassT);
         }
+        while ( i < increase_test_size(i) );
     }
 
-    std::vector<class1*> v1;
+    static unsigned long
+    increase_test_size(unsigned long size)
+    {
+        static boost::mutex  m;
+        boost::mutex::scoped_lock l(m);
+
+        if (size<test_size || test_size == maximum_test_size)
+            return test_size;
+
+        boost::xtime now;
+        boost::xtime_get(&now, boost::TIME_UTC);
+        unsigned long seconds = now.sec - start_time.sec;
+        if (seconds < 4)
+        {
+            test_size *= 2;
+            if (test_size > maximum_test_size)
+                test_size = maximum_test_size;
+        }
+        if (test::verbose_runtests)
+            std::cout << "increasing test size to " << test_size << "\n";
+        return test_size;
+    }
+
+    std::vector<ClassT*> const &data() const
+    {
+        return v;
+    }
+
+private:
+    std::vector<ClassT*> v;
+    boost::mutex         m;
+    unsigned int         progress;
 };
 
+test_task<class1> test1;
+test_task<class1> test2;
+test_task<class1> test3;
+
+
+template <typename ClassT>
 void
-check_ascending(test_task const &t)
+check_ascending(test_task<ClassT> const &t)
 {
-    typedef std::vector<class1*>::const_iterator iter;
-    iter p(t.v1.begin());
-    iter const e(t.v1.end());
+    typedef typename std::vector<ClassT*>::const_iterator iter;
+    iter p(t.data().begin());
+    iter const e(t.data().end());
     iter n(p);
 
     while (++n!=e)
@@ -76,8 +128,7 @@ check_ascending(test_task const &t)
         if ((**n).get_object_id()<=(**p).get_object_id())
         {
             using namespace std;
-            cerr << "object ids out of order";
-            exit(EXIT_FAILURE);
+            throw std::runtime_error("object ids out of order");
         }
         p = n;
     }
@@ -91,75 +142,96 @@ struct less1
     }
 };
 
+template <typename ClassT>
 void
 check_not_contained_in(
-    test_task const &candidate,
-    test_task const &in
+    test_task<ClassT> const &candidate,
+    test_task<ClassT> const &in
 )
 {
-    typedef std::vector<class1*>::const_iterator iter;
-    iter p(candidate.v1.begin());
-    iter const e(candidate.v1.end());
+    typedef typename std::vector<ClassT*>::const_iterator iter;
+    iter p(candidate.data().begin());
+    iter const e(candidate.data().end());
 
     while (p!=e)
     {
-        iter found = std::lower_bound(in.v1.begin(),in.v1.end(),*p,less1());
-        if  (found!=in.v1.end() &&
+        iter found = std::lower_bound(in.data().begin(),in.data().end(),*p,less1());
+        if  (found!=in.data().end() &&
             (**found).get_object_id() == (**p).get_object_id())
         {
             using namespace std;
-            cerr << "object ids not unique";
-            exit(EXIT_FAILURE);
+            throw std::runtime_error("object ids not unqiue");
         }
         ++p;
     }
 };
 
-int
-main()
+void concurrent_creation_of_objects()
 {
-    std::cout << "/////////////////////////////////////////////////////////\n";
-    std::cout << "\n";
-    std::cout << "          object_with_id test (MT)\n";
-    std::cout << "\n";
-    std::cout << "/////////////////////////////////////////////////////////\n";
-    std::cout << "\n";
+    {
+        if (test::verbose_runtests)
+            std::cout << "preparing ..." << std::endl;
 
-    test_task test1;
-    test_task test2;
-    test_task test3;
+        boost::xtime_get(&start_time, boost::TIME_UTC);
+        boost::thread thread1(boost::ref(test1));
+        boost::thread thread2(boost::ref(test2));
+        boost::thread thread3(boost::ref(test3));
 
-    boost::thread thread1(boost::ref(test1));
-    boost::thread thread2(boost::ref(test2));
-    boost::thread thread3(boost::ref(test3));
+        thread1.join();
+        thread2.join();
+        thread3.join();
+    }
+}
 
-    std::cout << "preparing ..." << std::flush;
-    thread1.join();
-    thread2.join();
-    thread3.join();
+void local_uniqueness()
+{
+
+
+    assert(test1.data().size()==test_size);
+    assert(test2.data().size()==test_size);
+    assert(test3.data().size()==test_size);
+}
+
+void local_ordering_and_uniqueness()
+{
+    if (test::verbose_runtests)
+        std::cout << "checking\n   ... local ordering and uniqueness\n";
 
     // now all objects should have unique ids,
     // the ids must be ascending within each vector
-    std::cout << "checking \n";
-
-    assert(test1.v1.size()==test_task::size());
-    assert(test2.v1.size()==test_task::size());
-    assert(test3.v1.size()==test_task::size());
-
     // check for ascending ids
     check_ascending(test1);
     check_ascending(test2);
     check_ascending(test3);
+}
 
-    //  check for uniqueness
+void global_uniqueness()
+{
+    if (test::verbose_runtests)
+        std::cout << "   ... global uniqueness\n";
+
     check_not_contained_in(test1,test3);
     check_not_contained_in(test1,test2);
     check_not_contained_in(test2,test1);
     check_not_contained_in(test2,test3);
     check_not_contained_in(test3,test2);
     check_not_contained_in(test3,test1);
-
-    std::cout << "Test concluded successfully\n";
 }
 
-#endif // !defined(DONT_HAVE_BOOST)
+ut::test_suite*
+init_unit_test_suite( int argc, char* argv[] )
+{
+    test::init(argc, argv);
+    test::banner("object_with_id tests (MT)");
+
+    ut::test_suite* test= BOOST_TEST_SUITE( "spirit::object_with_id tests" );
+
+    test->add(BOOST_TEST_CASE(concurrent_creation_of_objects));
+    test->add(BOOST_TEST_CASE(local_ordering_and_uniqueness));
+    test->add(BOOST_TEST_CASE(global_uniqueness));
+
+    return test;
+}
+
+#endif // BOOST_HAS_THREADS
+

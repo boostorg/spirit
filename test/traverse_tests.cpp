@@ -1,12 +1,10 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -19,8 +17,8 @@
 #include <string>
 #include <vector>
 
-#include "boost/config.hpp"
-#include "boost/static_assert.hpp"
+#include <boost/config.hpp>
+#include <boost/static_assert.hpp>
 
 #ifdef BOOST_NO_STRINGSTREAM
 #include <strstream>
@@ -38,12 +36,18 @@ std::string GETSTRING(std::ostrstream& ss)
 #define OSSTREAM std::ostringstream
 #endif
 
+#ifndef BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_DEBUG    // needed for parser_name functions
+#endif
 
-#include "boost/spirit/core.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
+#include <boost/spirit/meta.hpp>
 
 using namespace std;
 using namespace boost::spirit;
+
+typedef ref_value_actor<char, assign_action> assign_actor;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -53,39 +57,39 @@ using namespace boost::spirit;
 void
 traverse_identity_tests()
 {
-//    //  test type equality
-//    typedef sequence<chlit<char>, chlit<char> > test_sequence1_t;
-//    BOOST_STATIC_ASSERT((
-//        ::boost::is_same<
-//            test_sequence1_t,
-//            post_order::result<identity_transform, test_sequence1_t>::type
-//        >::value
-//    ));
-//
-//    //  test (rough) runtime equality
-//    assert(
-//        parse(
-//            "ab",
-//            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
-//        ).full
-//    );
-//    assert(
-//        !parse(
-//            "ba",
-//            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
-//        ).hit
-//    );
-//
-//    ///////////////////////////////////////////////////////////////////////////
-//    assert(
-//        !parse(
-//            "cba",
-//            post_order::traverse(
-//                identity_transform(),
-//                ch_p('a') >> 'b' >> 'c'
-//            )
-//        ).hit
-//    );
+    //  test type equality
+    typedef sequence<chlit<char>, chlit<char> > test_sequence1_t;
+    BOOST_STATIC_ASSERT((
+        ::boost::is_same<
+            test_sequence1_t,
+            post_order::result<identity_transform, test_sequence1_t>::type
+        >::value
+    ));
+
+    //  test (rough) runtime equality
+    assert(
+        parse(
+            "ab",
+            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
+        ).full
+    );
+    assert(
+        !parse(
+            "ba",
+            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
+        ).hit
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    assert(
+        !parse(
+            "cba",
+            post_order::traverse(
+                identity_transform(),
+                ch_p('a') >> 'b' >> 'c'
+            )
+        ).hit
+    );
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Test more complex sequences
@@ -98,7 +102,7 @@ char c;
             sequence<
                 sequence<
                     kleene_star<chlit<> >,
-                    action<chlit<>, assign_actor<char> >
+                    action<chlit<>, assign_actor>
                 >,
                 chlit<>
             >,
@@ -118,7 +122,7 @@ char c;
             "aabcd",
             post_order::traverse(
                 identity_transform(),
-                ((*ch_p('a') >> ch_p('b')[assign(c)]) >> 'c') >> !ch_p('d')
+                ((*ch_p('a') >> ch_p('b')[assign_a(c)]) >> 'c') >> !ch_p('d')
             )
         ).full
     );
@@ -131,7 +135,7 @@ char c;
             sequence<
                 kleene_star<chlit<> >,
                 sequence<
-                    action<chlit<>, assign_actor<char> >,
+                    action<chlit<>, assign_actor>,
                     chlit<>
                 >
             >,
@@ -151,7 +155,7 @@ char c;
             "aabcd",
             post_order::traverse(
                 identity_transform(),
-                (*ch_p('a') >> (ch_p('b')[assign(c)] >> 'c')) >> !ch_p('d')
+                (*ch_p('a') >> (ch_p('b')[assign_a(c)] >> 'c')) >> !ch_p('d')
             )
         ).full
     );
@@ -163,7 +167,7 @@ char c;
         sequence<
             kleene_star<chlit<> >,
             sequence<
-                action<chlit<>, assign_actor<char> >,
+                action<chlit<>, assign_actor>,
                 sequence<
                     chlit<>,
                     optional<chlit<> >
@@ -184,7 +188,7 @@ char c;
             "aabcd",
             post_order::traverse(
                 identity_transform(),
-                *ch_p('a') >> (ch_p('b')[assign(c)] >> ('c' >> !ch_p('d')))
+                *ch_p('a') >> (ch_p('b')[assign_a(c)] >> ('c' >> !ch_p('d')))
             )
         ).full
     );
@@ -197,7 +201,7 @@ char c;
             kleene_star<chlit<> >,
             sequence<
                 sequence<
-                    action<chlit<>, assign_actor<char> >,
+                    action<chlit<>, assign_actor>,
                     chlit<>
                 >,
                 optional<chlit<> >
@@ -217,7 +221,7 @@ char c;
             "aabcd",
             post_order::traverse(
                 identity_transform(),
-                *ch_p('a') >> ((ch_p('b')[assign(c)] >> 'c') >> !ch_p('d'))
+                *ch_p('a') >> ((ch_p('b')[assign_a(c)] >> 'c') >> !ch_p('d'))
             )
         ).full
     );
@@ -229,7 +233,7 @@ char c;
         sequence<
             sequence<
                 kleene_star<chlit<> >,
-                action<chlit<>, assign_actor<char> >
+                action<chlit<>, assign_actor>
             >,
             sequence<
                 chlit<>,
@@ -250,7 +254,7 @@ char c;
             "aabcd",
             post_order::traverse(
                 identity_transform(),
-                (*ch_p('a') >> ch_p('b')[assign(c)]) >> ('c' >> !ch_p('d'))
+                (*ch_p('a') >> ch_p('b')[assign_a(c)]) >> ('c' >> !ch_p('d'))
             )
         ).full
     );
@@ -414,7 +418,7 @@ const char *test_result2[] = {
     };
 
     post_order_trace_test(
-        ((*ch_p('a') >> ch_p('b')[assign(c)]) >> 'c') >> !ch_p('d'),
+        ((*ch_p('a') >> ch_p('b')[assign_a(c)]) >> 'c') >> !ch_p('d'),
         test_result2, _countof(test_result2)
     );
 
@@ -433,7 +437,7 @@ const char *test_result3[] = {
     };
 
     post_order_trace_test(
-        (*ch_p('a') >> (ch_p('b')[assign(c)] >> 'c')) >> !ch_p('d'),
+        (*ch_p('a') >> (ch_p('b')[assign_a(c)] >> 'c')) >> !ch_p('d'),
         test_result3, _countof(test_result3)
     );
 
@@ -452,7 +456,7 @@ const char *test_result4[] = {
     };
 
     post_order_trace_test(
-        *ch_p('a') >> (ch_p('b')[assign(c)] >> ('c' >> !ch_p('d'))),
+        *ch_p('a') >> (ch_p('b')[assign_a(c)] >> ('c' >> !ch_p('d'))),
         test_result4, _countof(test_result4)
     );
 
@@ -471,7 +475,7 @@ const char *test_result5[] = {
     };
 
     post_order_trace_test(
-        *ch_p('a') >> ((ch_p('b')[assign(c)] >> 'c') >> !ch_p('d')),
+        *ch_p('a') >> ((ch_p('b')[assign_a(c)] >> 'c') >> !ch_p('d')),
         test_result5, _countof(test_result5)
     );
 
@@ -490,7 +494,7 @@ const char *test_result6[] = {
     };
 
     post_order_trace_test(
-        (*ch_p('a') >> ch_p('b')[assign(c)]) >> ('c' >> !ch_p('d')),
+        (*ch_p('a') >> ch_p('b')[assign_a(c)]) >> ('c' >> !ch_p('d')),
         test_result6, _countof(test_result6)
     );
 }

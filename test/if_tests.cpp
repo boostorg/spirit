@@ -1,12 +1,10 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 // vi:ts=4:sw=4:et
 // Tests for boost::spirit::if_p
@@ -20,8 +18,8 @@
 #endif
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/dynamic/if.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/ref.hpp>
-////////////////////////////////////////////////////////////////////////////////
 
 namespace local
 {
@@ -45,6 +43,8 @@ namespace local
 }
 
 typedef ::boost::spirit::rule<> rule_t;
+typedef ::boost::spirit::rule<boost::spirit::no_actions_scanner<>::type >
+    no_actions_rule_t;
 
 unsigned int test_count = 0;
 unsigned int error_count = 0;
@@ -54,7 +54,8 @@ static const unsigned int kError = 999;
 static const bool good = true;
 static const bool bad = false;
 
-rule_t hex_prefix, oct_prefix;
+rule_t hex_prefix;
+no_actions_rule_t oct_prefix;
 rule_t hex_rule, oct_rule, dec_rule;
 
 rule_t auto_number_rule;
@@ -73,7 +74,7 @@ test_number(char const *s, unsigned int wanted, rule_t const &r)
 
     if (m.full && (m.length != strlen(s)))
         result = bad;
-        
+
 
     if (result==good)
         cout << "PASSED";
@@ -102,7 +103,7 @@ main()
     using ::boost::spirit::hex_p;
     using ::boost::spirit::str_p;
     using ::boost::spirit::ch_p;
-    using ::boost::spirit::assign;
+    using ::boost::spirit::assign_a;
 
     cout << "/////////////////////////////////////////////////////////\n";
     cout << "\n";
@@ -126,9 +127,9 @@ main()
     hex_prefix = str_p("0x");
     oct_prefix = ch_p('0');
 
-    hex_rule = hex_p[assign(number_result)];
-    oct_rule = oct_p[assign(number_result)];
-    dec_rule = uint_p[assign(number_result)];
+    hex_rule = hex_p[assign_a(number_result)];
+    oct_rule = oct_p[assign_a(number_result)];
+    dec_rule = uint_p[assign_a(number_result)];
 
     auto_number_rule =
         if_p(hex_prefix)
@@ -207,5 +208,3 @@ main()
 
     return error_count!=0;
 }
-////////////////////////////////////////////////////////////////////////////////
-// End of File

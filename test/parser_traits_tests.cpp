@@ -1,12 +1,10 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -16,13 +14,14 @@
 
 #include <cassert>
 #include <iostream>
-
-#include "boost/spirit/core.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 
 using namespace std;
 using namespace boost::spirit;
 
-///////////////////////////////////////////////////////////////////////////////
+typedef ref_value_actor<char, assign_action> assign_actor;
+
 //  Test parser_traits templates
 void
 parser_traits_tests()
@@ -30,7 +29,7 @@ parser_traits_tests()
 // is_parser_category_tests
     typedef chlit<char> plain_t;
     typedef optional<chlit<char> > unary_t;
-    typedef action<chlit<char>, assign_actor<char> > action_t;
+    typedef action<chlit<char>, assign_actor> action_t;
     typedef sequence<chlit<char>, anychar_parser> binary_t;
 
 // is_parser
@@ -228,7 +227,7 @@ parser_extraction_tests()
 {
     typedef chlit<char> plain_t;
     typedef optional<chlit<char> > unary_t;
-    typedef action<chlit<char>, assign_actor<char> > action_t;
+    typedef action<chlit<char>, assign_actor> action_t;
     typedef sequence<chlit<char>, anychar_parser> binary_t;
 
 // parser type extraction templates
@@ -242,7 +241,7 @@ parser_extraction_tests()
             >::value));
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
-                assign_actor<char>, semantic_action<action_t>::type
+                assign_actor, semantic_action<action_t>::type
             >::value));
     BOOST_STATIC_ASSERT((
         ::boost::is_same<

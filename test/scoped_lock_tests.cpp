@@ -1,17 +1,16 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (C) 2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
 // Nota bene: the actual locking is _not_ tested here!
 
 #include <iostream>
+#include <boost/config.hpp>
 
 void banner()
 {
@@ -23,7 +22,7 @@ void banner()
     std::cout << "\n";
 }
 
-#if defined(DONT_HAVE_BOOST)
+#if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS)
 // if boost libraries are not available we have to skip the tests
 int
 main()
@@ -36,7 +35,7 @@ main()
 
 #include <boost/thread/mutex.hpp>
 #include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/scoped_lock.hpp>
+#include <boost/spirit/utility/support/scoped_lock.hpp>
 #include <cassert>
 
 int
@@ -61,4 +60,4 @@ main()
     return 0;
 }
 
-#endif // !defined(HAVE_BOOST)
+#endif // defined(DONT_HAVE_BOOST)

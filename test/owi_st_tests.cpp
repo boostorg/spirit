@@ -1,12 +1,10 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 // vim:ts=4:sw=4:et
 
@@ -58,7 +56,7 @@ main()
     assert(c1o3->get_object_id()==3);
     assert(c1o2->get_object_id()==2);
 
-    // test wether objects of different classes are numbered independently
+    // test whether objects of different classes are numbered independently
     class2 *c2o1 = new class2;
     class2 *c2o2 = new class2;
     class2 *c2o3 = new class2;

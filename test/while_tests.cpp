@@ -2,10 +2,9 @@
     Phoenix V1.0
     Copyright (c) 2002-2003 Martin Wille
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 // vi:ts=4:sw=4:et
 // Tests for boost::spirit::while_p
@@ -18,9 +17,9 @@
 #define BOOST_SPIRIT_DEBUG
 #endif
 #include <boost/spirit/core.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/spirit/dynamic/while.hpp>
 #include <boost/ref.hpp>
-////////////////////////////////////////////////////////////////////////////////
 
 namespace local
 {
@@ -151,7 +150,7 @@ main()
     using ::boost::spirit::uint_p;
     using ::boost::spirit::while_p;
     using ::boost::spirit::do_p;
-    using ::boost::spirit::assign;
+    using ::boost::spirit::assign_a;
 
 #if qDebug
     BOOST_SPIRIT_DEBUG_RULE(while_rule);
@@ -159,7 +158,7 @@ main()
 #endif
 
     while_rule
-        =   uint_p[assign(number_result)]
+        =   uint_p[assign_a(number_result)]
         >>  while_p('+')
             [
                 uint_p[add(number_result)][inc(iterations_performed)]
@@ -202,5 +201,3 @@ main()
 
     return error_count!=0;
 }
-////////////////////////////////////////////////////////////////////////////////
-// End of File

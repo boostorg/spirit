@@ -1,23 +1,20 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2001-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include "boost/spirit/core.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 #include <iostream>
 #include <assert.h>
 
-///////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace boost::spirit;
 
-//////////////////////////////////
 template <typename T>
 struct ts_real_parser_policies : public ureal_parser_policies<T>
 {
@@ -59,10 +56,9 @@ struct ts_real_parser_policies : public ureal_parser_policies<T>
         if (RT hit = uint3_p.parse(scan))
         {
             T n;
-            while (match<> next = (',' >> uint3_3_p[assign(n)]).parse(scan))
+            while (match<> next = (',' >> uint3_3_p[assign_a(n)]).parse(scan))
             {
-                hit.value() *= 1000;
-                hit.value() += n;
+                hit.value((hit.value() * 1000) + n);
                 scan.concat_match(hit, next);
             }
             return hit;
@@ -73,6 +69,24 @@ struct ts_real_parser_policies : public ureal_parser_policies<T>
 
 real_parser<double, ts_real_parser_policies<double> > const
     ts_real_p = real_parser<double, ts_real_parser_policies<double> >();
+
+template <typename T>
+struct no_trailing_dot : public real_parser_policies<T>
+{
+    static const bool allow_trailing_dot = false;
+};
+
+real_parser<double, no_trailing_dot<double> > const
+    notrdot_real_p = real_parser<double, no_trailing_dot<double> >();
+
+template <typename T>
+struct no_leading_dot : public real_parser_policies<T>
+{
+    static const bool allow_leading_dot = false;
+};
+
+real_parser<double, no_leading_dot<double> > const
+    nolddot_real_p = real_parser<double, no_leading_dot<double> >();
 
 ///////////////////////////////////////////////////////////////////////////////
 int
@@ -113,10 +127,10 @@ main()
 
 //  unsigned integer
 
-    parse("123456", uint_p[assign(u)]);
+    parse("123456", uint_p[assign_a(u)]);
     assert(u == 123456);
 
-    parse(max_unsigned, uint_p[assign(u)]);
+    parse(max_unsigned, uint_p[assign_a(u)]);
     assert(u == UINT_MAX);
 
     assert(!parse(unsigned_overflow, uint_p).full);
@@ -125,16 +139,16 @@ main()
 
     int i;
 
-    parse("123456", int_p[assign(i)]);
+    parse("123456", int_p[assign_a(i)]);
     assert(i == 123456);
 
-    parse("-123456", int_p[assign(i)]);
+    parse("-123456", int_p[assign_a(i)]);
     assert(i == -123456);
 
-    parse(max_int, int_p[assign(i)]);
+    parse(max_int, int_p[assign_a(i)]);
     assert(i == INT_MAX);
 
-    parse(min_int, int_p[assign(i)]);
+    parse(min_int, int_p[assign_a(i)]);
     assert(i == INT_MIN);
 
     assert(!parse(int_overflow, int_p).full);
@@ -144,33 +158,33 @@ main()
 
 //  binary
 
-    parse("11111110", bin_p[assign(u)]);
+    parse("11111110", bin_p[assign_a(u)]);
     assert(u == 0xFE);
 
-    parse(max_binary, bin_p[assign(u)]);
+    parse(max_binary, bin_p[assign_a(u)]);
     assert(u == UINT_MAX);
 
     assert(!parse(binary_overflow, bin_p).full);
 
 //  octal
 
-    parse("12545674515", oct_p[assign(u)]);
+    parse("12545674515", oct_p[assign_a(u)]);
     assert(u == 012545674515);
 
-    parse(max_octal, oct_p[assign(u)]);
+    parse(max_octal, oct_p[assign_a(u)]);
     assert(u == UINT_MAX);
 
     assert(!parse(octal_overflow, oct_p).full);
 
 //  hex
 
-    parse("95BC8DF", hex_p[assign(u)]);
+    parse("95BC8DF", hex_p[assign_a(u)]);
     assert(u == 0x95BC8DF);
 
-    parse("abcdef12", hex_p[assign(u)]);
+    parse("abcdef12", hex_p[assign_a(u)]);
     assert(u == 0xabcdef12);
 
-    parse(max_hex, hex_p[assign(u)]);
+    parse(max_hex, hex_p[assign_a(u)]);
     assert(u == UINT_MAX);
 
     assert(!parse(hex_overflow, hex_p).full);
@@ -178,11 +192,11 @@ main()
 //  limited fieldwidth
 
     uint_parser<unsigned, 10, 1, 3> uint3_p;
-    parse("123456", uint3_p[assign(u)]);
+    parse("123456", uint3_p[assign_a(u)]);
     assert(u == 123);
 
     uint_parser<unsigned, 10, 1, 4> uint4_p;
-    parse("123456", uint4_p[assign(u)]);
+    parse("123456", uint4_p[assign_a(u)]);
     assert(u == 1234);
 
     uint_parser<unsigned, 10, 3, 3> uint3_3_p;
@@ -214,16 +228,16 @@ main()
     long long ll;
     int_parser<long long> long_long_p;
 
-    parse("1234567890123456789", long_long_p[assign(ll)]);
+    parse("1234567890123456789", long_long_p[assign_a(ll)]);
     assert(ll == 1234567890123456789LL);
 
-    parse("-1234567890123456789", long_long_p[assign(ll)]);
+    parse("-1234567890123456789", long_long_p[assign_a(ll)]);
     assert(ll == -1234567890123456789LL);
 
-    parse(max_long_long, long_long_p[assign(ll)]);
+    parse(max_long_long, long_long_p[assign_a(ll)]);
     assert(ll == LONG_LONG_MAX);
 
-    parse(min_long_long, long_long_p[assign(ll)]);
+    parse(min_long_long, long_long_p[assign_a(ll)]);
     assert(ll == LONG_LONG_MIN);
 
     assert(!parse(long_long_overflow, long_long_p).full);
@@ -235,40 +249,43 @@ main()
 
     double  d;
 
-    assert(parse("1234", ureal_p[assign(d)]).full && d == 1234);        //  Good.
-    assert(parse("1.2e3", ureal_p[assign(d)]).full && d == 1.2e3);      //  Good.
-    assert(parse("1.2e-3", ureal_p[assign(d)]).full && d == 1.2e-3);    //  Good.
-    assert(parse("1.e2", ureal_p[assign(d)]).full && d == 1.e2);        //  Good.
-    assert(parse(".2e3", ureal_p[assign(d)]).full && d == .2e3);        //  Good.
-    assert(parse("2e3", ureal_p[assign(d)]).full && d == 2e3);          //  Good. No fraction
+    assert(parse("1234", ureal_p[assign_a(d)]).full && d == 1234);      //  Good.
+    assert(parse("1.2e3", ureal_p[assign_a(d)]).full && d == 1.2e3);    //  Good.
+    assert(parse("1.2e-3", ureal_p[assign_a(d)]).full && d == 1.2e-3);  //  Good.
+    assert(parse("1.e2", ureal_p[assign_a(d)]).full && d == 1.e2);      //  Good.
+    assert(parse(".2e3", ureal_p[assign_a(d)]).full && d == .2e3);      //  Good.
+    assert(parse("2e3", ureal_p[assign_a(d)]).full && d == 2e3);        //  Good. No fraction
     assert(!parse("e3", ureal_p).full);                                 //  Bad! No number
     assert(!parse("-1.2e3", ureal_p).full);                             //  Bad! Negative number
     assert(!parse("+1.2e3", ureal_p).full);                             //  Bad! Positive sign
     assert(!parse("1.2e", ureal_p).full);                               //  Bad! No exponent
     assert(!parse("-.3", ureal_p).full);                                //  Bad! Negative
 
-    assert(parse("-1234", real_p[assign(d)]).full && d == -1234);       //  Good.
-    assert(parse("-1.2e3", real_p[assign(d)]).full && d == -1.2e3);     //  Good.
-    assert(parse("+1.2e3", real_p[assign(d)]).full && d == 1.2e3);      //  Good.
-    assert(parse("-0.1", real_p[assign(d)]).full && d == -0.1);         //  Good.
-    assert(parse("-1.2e-3", real_p[assign(d)]).full && d == -1.2e-3);   //  Good.
-    assert(parse("-1.e2", real_p[assign(d)]).full && d == -1.e2);       //  Good.
-    assert(parse("-.2e3", real_p[assign(d)]).full && d == -.2e3);       //  Good.
-    assert(parse("-2e3", real_p[assign(d)]).full && d == -2e3);         //  Good. No fraction
+    assert(parse("-1234", real_p[assign_a(d)]).full && d == -1234);     //  Good.
+    assert(parse("-1.2e3", real_p[assign_a(d)]).full && d == -1.2e3);   //  Good.
+    assert(parse("+1.2e3", real_p[assign_a(d)]).full && d == 1.2e3);    //  Good.
+    assert(parse("-0.1", real_p[assign_a(d)]).full && d == -0.1);       //  Good.
+    assert(parse("-1.2e-3", real_p[assign_a(d)]).full && d == -1.2e-3); //  Good.
+    assert(parse("-1.e2", real_p[assign_a(d)]).full && d == -1.e2);     //  Good.
+    assert(parse("-.2e3", real_p[assign_a(d)]).full && d == -.2e3);     //  Good.
+    assert(parse("-2e3", real_p[assign_a(d)]).full && d == -2e3);       //  Good. No fraction
     assert(!parse("-e3", real_p).full);                                 //  Bad! No number
     assert(!parse("-1.2e", real_p).full);                               //  Bad! No exponent
 
-    assert(!parse("1234", strict_ureal_p[assign(d)]).full);             //  Bad. Strict real
-    assert(parse("1.2", strict_ureal_p[assign(d)]).full && d == 1.2);   //  Good.
-    assert(!parse("-1234", strict_real_p[assign(d)]).full);             //  Bad. Strict real
-    assert(parse("123.", strict_real_p[assign(d)]).full && d == 123);   //  Good.
-    assert(parse("3.E6", strict_real_p[assign(d)]).full && d == 3e6);   //  Good.
+    assert(!parse("1234", strict_ureal_p[assign_a(d)]).full);           //  Bad. Strict real
+    assert(parse("1.2", strict_ureal_p[assign_a(d)]).full && d == 1.2); //  Good.
+    assert(!parse("-1234", strict_real_p[assign_a(d)]).full);           //  Bad. Strict real
+    assert(parse("123.", strict_real_p[assign_a(d)]).full && d == 123); //  Good.
+    assert(parse("3.E6", strict_real_p[assign_a(d)]).full && d == 3e6); //  Good.
+
+    assert(!parse("1234.", notrdot_real_p[assign_a(d)]).full);          //  Bad trailing dot
+    assert(!parse(".1234", nolddot_real_p[assign_a(d)]).full);          //  Bad leading dot
 
 //  Special thousands separated numbers
 
-    assert(parse("123,456,789.01", ts_real_p[assign(d)]).full && d == 123456789.01);    //  Good.
-    assert(parse("12,345,678.90", ts_real_p[assign(d)]).full && d == 12345678.90);      //  Good.
-    assert(parse("1,234,567.89", ts_real_p[assign(d)]).full && d == 1234567.89);        //  Good.
+    assert(parse("123,456,789.01", ts_real_p[assign_a(d)]).full && d == 123456789.01);  //  Good.
+    assert(parse("12,345,678.90", ts_real_p[assign_a(d)]).full && d == 12345678.90);    //  Good.
+    assert(parse("1,234,567.89", ts_real_p[assign_a(d)]).full && d == 1234567.89);      //  Good.
     assert(!parse("1234,567,890", ts_real_p).full);     //  Bad.
     assert(!parse("1,234,5678,9", ts_real_p).full);     //  Bad.
     assert(!parse("1,234,567.89e6", ts_real_p).full);   //  Bad.

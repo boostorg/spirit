@@ -1,22 +1,20 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2001-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
 #include <cassert>
 
 using namespace std;
 
-#include "boost/spirit/core.hpp"
-#include "boost/spirit/attribute/closure.hpp"
-#include "boost/spirit/attribute/parametric.hpp"
-#include "boost/spirit/phoenix/binders.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/attribute/closure.hpp>
+#include <boost/spirit/attribute/parametric.hpp>
+#include <boost/spirit/phoenix/binders.hpp>
 using namespace boost::spirit;
 using namespace phoenix;
 
@@ -42,12 +40,34 @@ struct my_closure3 : boost::spirit::closure<my_closure3, char>
 
 struct X { int a; int b; };
 
+#if defined(BOOST_SPIRIT_DEBUG)
+//  If debugging is switched on, all closure members should have a 
+//  corresponding output streaming operator
+std::ostream &
+operator<< (std::ostream& o, X const &x)
+{
+    o << "X(" << x.a << ", " << x.b << ")";
+    return o;
+}
+#endif // defined(BOOST_SPIRIT_DEBUG)
+
 struct my_closure4 : boost::spirit::closure<my_closure4, X>
 {
     member1 x;
 };
 
 struct Y { Y(int) {} };
+
+#if defined(BOOST_SPIRIT_DEBUG)
+//  If debugging is switched on, all closure members should have a 
+//  corresponding output streaming operator
+std::ostream &
+operator<< (std::ostream& o, Y const &x)
+{
+    o << "Y";
+    return o;
+}
+#endif // defined(BOOST_SPIRIT_DEBUG)
 
 struct my_closure5 : boost::spirit::closure<my_closure5, int, Y>
 {

@@ -1,29 +1,23 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #include <iostream>
 #include <cstring>
 #include <cassert>
 
 // This test program only includes the epsilon.hpp header from Spirit
 #include <boost/spirit/core/composite/epsilon.hpp>
-////////////////////////////////////////////////////////////////////////////////
-
-#include "impl/unit_test.ipp"
+#include <boost/test/included/unit_test_framework.hpp>
 #include "impl/var.hpp"
+#include "impl/util.ipp"
 
 namespace ut = boost::unit_test_framework;
 using namespace test;
-
-////////////////////////////////////////////////////////////////////////////////
 
 static boost::spirit::parse_info<char const *> pi;
 
@@ -41,7 +35,7 @@ static void
 parse(char const *s, ParserT const &p, bool match)
 {
     using namespace std;
-    pi = boost::spirit::parse(s, s+strlen(s), p);
+    pi = boost::spirit::parse(s, s+std::strlen(s), p);
     if (match)
     {
         BOOST_CHECK(matches);
@@ -137,6 +131,9 @@ negation_operator_for_epsilon()
 ut::test_suite*
 init_unit_test_suite( int argc, char* argv[] )
 {
+    test::init(argc, argv);
+    test::banner("epsilon_tests");
+
     ut::test_suite* test= BOOST_TEST_SUITE( "spirit::epsilon tests" );
 
     test->add(BOOST_TEST_CASE(epsilon_as_primitive));

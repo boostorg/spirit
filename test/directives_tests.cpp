@@ -1,24 +1,19 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2001-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if defined (__BORLANDC__)
-#define _RWSTD_COMPILE_INSTANTIATE // Borland Workaround
-#endif
-
 #include <iostream>
 #include <cassert>
 #include <string>
 
 using namespace std;
 
-#include "boost/spirit/core.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -93,19 +88,7 @@ directives_test1()
     assert(scany.first == scany.last);
     scany.first = cpy;
 
-#ifdef __BORLANDC__
-
-    //  #$%^ Borland gets confused when the expression inside the
-    //  shortest directive is exactly the same as the expression
-    //  inside the longest directive above. Borland calls whichever
-    //  is first. Switching the '.' to L'.' solves the problem.
-    //  Buggy Borland!!! Took some hair pulling to find the problem.
-    //  Fortunately this does not happen often. This must be documented.
-
-    hit = shortest_d[(+digit_p >> L'.' >> +digit_p) | (+digit_p)].parse(scany);
-#else
     hit = shortest_d[(+digit_p >> '.' >> +digit_p) | (+digit_p)].parse(scany);
-#endif
     assert(hit);
     assert(scany.first != scany.last);
     scany.first = cpy;
@@ -120,11 +103,7 @@ directives_test1()
     assert(scanz.first == scanz.last);
     scanz.first = cpz;
 
-#ifdef __BORLANDC__
-    hit = shortest_d[str_p("raza") | L"razaman" | "razamanaz"].parse(scanz);
-#else
     hit = shortest_d[str_p("raza") | "razaman" | "razamanaz"].parse(scanz);
-#endif
     assert(hit);
     assert(scanz.first == cpz+4);
     scanz.first = cpz;
@@ -185,7 +164,7 @@ directives_test2()
 
     parse("rock_n_roll never_dies ",
 
-        ident[assign(str1)] >> ident[assign(str2)], space_p
+        ident[assign_a(str1)] >> ident[assign_a(str2)], space_p
     );
 
     cout << '*' << str1 << ',' << str2 << '*' << endl;
@@ -203,7 +182,7 @@ directives_test2()
 int
 main()
 {
-//    directives_test1();
+    directives_test1();
     directives_test2();
     cout << "Tests concluded successfully\n";
     return 0;

@@ -1,21 +1,15 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 // vi:ts=4:sw=4:et
 // Tests for spirit::for_p
 // [13-Jan-2003]
 ////////////////////////////////////////////////////////////////////////////////
-#if defined (__BORLANDC__)
-#define _RWSTD_COMPILE_INSTANTIATE // Borland Workaround [JDG]
-#endif
-
 #define qDebug 0
 #include <iostream>
 #include <cstring>
@@ -24,9 +18,9 @@
 #endif
 #include <string>
 #include <boost/spirit/core.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 #include <boost/spirit/dynamic/for.hpp>
 #include <boost/ref.hpp>
-////////////////////////////////////////////////////////////////////////////////
 
 namespace local
 {
@@ -154,7 +148,7 @@ main()
 
     using boost::spirit::uint_p;
     using boost::spirit::for_p;
-    using boost::spirit::assign;
+    using boost::spirit::assign_a;
 
 #if qDebug
     SPIRIT_DEBUG_RULE(for_rule);
@@ -162,14 +156,14 @@ main()
 #endif
 
     for_rule
-        =   uint_p[assign(iterations_desired)] >> ':'
+        =   uint_p[assign_a(iterations_desired)] >> ':'
         >>  for_p(&zero, cmp(), inc())["xy"]
-            [assign(input_matched)]
+            [assign_a(input_matched)]
         ;
 
     for_rule2
         =   for_p(&zero, '.', inc())["xy"]
-            [assign(input_matched)]
+            [assign_a(input_matched)]
         ;
 
     cout << "/////////////////////////////////////////////////////////\n";
@@ -197,5 +191,4 @@ main()
 
     return error_count!=0;
 }
-////////////////////////////////////////////////////////////////////////////////
-// End of File
+

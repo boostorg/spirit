@@ -1,89 +1,121 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 1998-2003 Joel de Guzman
+    Copyright (c)      2003 Martin Wille
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
 #include <string>
 #include <cassert>
-#include "boost/spirit/core.hpp"
-#include "boost/spirit/symbols/symbols.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/symbols/symbols.hpp>
+#include <boost/test/included/unit_test_framework.hpp>
+#include "impl/util.ipp"
+
+namespace ut = boost::unit_test_framework;
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
-void
-add(symbols<>& sym, char const* str)
+
+template <typename IteratorT>
+bool
+equal(IteratorT p, IteratorT q)
 {
-    sym.add(str, str + strlen(str));
+    while (*p && *p == *q)
+    {
+        ++p;
+        ++q;
+    }
+    return *p == *q;
 }
 
-///////////////////////////////////////
+template <class SymbolsT, typename CharT>
 void
-check(
-    symbols<> const& sym,
-    char const* str,
-    bool hit,
-    char const* result,
-    int length)
+check
+(
+    SymbolsT const &sym,
+    CharT    const *candidate,
+    bool           hit,
+    CharT    const *result,
+    int            length
+)
 {
-    char const* s = str;
-    parse_info<>  info = parse(str, sym);
+    parse_info<CharT const*> info = parse(candidate, sym);
 
-    if (info.hit)
+#define correctly_matched hit == info.hit
+#define correct_match_length unsigned(length) == info.length
+#define correct_tail equal(candidate + (hit?1:0)*length, result)
+
+    BOOST_CHECK(correctly_matched);
+
+    if (hit)
     {
-        cout << s << " OK [non-matching=\""
-        << str+info.length << "\", matching-length="
-        << info.length << "]" << endl;
-
-        assert(hit);
-        assert(unsigned(length) == info.length);
-        assert(strcmp(str+info.length, result) == 0);
+        BOOST_CHECK(correct_match_length);
+        BOOST_CHECK(correct_tail);
     }
     else
     {
-        cout << s << " is not a member" << endl;
-        assert(!hit);
-        assert(strcmp(str, result) == 0);
+        BOOST_CHECK(correct_tail);
     }
 }
 
-///////////////////////////////////////
-void
-action1(int& data)
+template <typename T>
+struct store_action
 {
-    cout << "storing 123456 into data slot" << endl;
-    data = 123456;
+    store_action(T const &v) : value(v) {}
+    void operator()(T &v) const { v = value; }
+private:
+    T const value;
+};
+
+template <typename T>
+store_action<T>
+store(T const &v)
+{
+    return v;
 }
 
-///////////////////////////////////////
-void
-action2(int data)
+template <typename T>
+struct check_action
 {
-    cout << "got: " << data << " from data slot" << endl;
-    assert(data == 123456);
+    check_action(T const &v) : value(v) {}
+
+#define correct_value_stored (v==value)
+    void operator()(T const &v) const { BOOST_CHECK(correct_value_stored); }
+private:
+    T const value;
+};
+
+template <typename T>
+check_action<T>
+check(T const &v)
+{
+    return v;
 }
 
-///////////////////////////////////////
-int
-main()
-{
-    cout << "/////////////////////////////////////////////////////////\n\n";
-    cout << "\t\tSymbol table test\n\n";
-    cout << "/////////////////////////////////////////////////////////\n\n";
 
+static void
+default_constructible()
+{   // this actually a compile time test
+    symbols<>                     ns1;
+    symbols<int, wchar_t>         ws1;
+    symbols<std::string, char>    ns2;
+    symbols<std::string, wchar_t> ws2;
+
+    (void)ns1; (void)ws1; (void)ns2; (void)ws2;
+}
+
+static void
+narrow_match_tests()
+{
     symbols<>   sym;
     sym = "pineapple", "orange", "banana", "applepie", "apple";
-
-    cout << "\nsym = \"pineapple\", \"orange\","
-    << " \"banana\", \"apple\", \"applepie\";\n\n";
 
     check(sym, "pineapple", true, "", 9);
     check(sym, "orange", true, "", 6);
@@ -97,26 +129,187 @@ main()
     check(sym, "applepi", true, "pi", 5);
     check(sym, "appl", false, "appl", -1);
 
-    symbols<>   sym2 = sym;
+    check(sym, "pineapplez", true, "z", 9);
+    check(sym, "orangez", true, "z", 6);
+    check(sym, "bananaz", true, "z", 6);
+    check(sym, "applez", true, "z", 5);
+    check(sym, "pizzaz", false, "pizzaz", -1);
+    check(sym, "steakz", false, "steakz", -1);
+    check(sym, "applepiez", true, "z", 8);
+    check(sym, "bananaramaz", true, "ramaz", 6);
+    check(sym, "appletz", true, "tz", 5);
+    check(sym, "applepix", true, "pix", 5);
+}
 
-    cout << "\nsym2 = sym\n\n";
+static void
+narrow_copy_ctor_tests()
+{
+    symbols<>   sym;
+    sym = "pineapple", "orange", "banana", "applepie", "apple";
 
-    check(sym2, "pineapplez", true, "z", 9);
-    check(sym2, "orangez", true, "z", 6);
-    check(sym2, "bananaz", true, "z", 6);
-    check(sym2, "applez", true, "z", 5);
-    check(sym2, "pizzaz", false, "pizzaz", -1);
-    check(sym2, "steakz", false, "steakz", -1);
-    check(sym2, "applepiez", true, "z", 8);
-    check(sym2, "bananaramaz", true, "ramaz", 6);
-    check(sym2, "appletz", true, "tz", 5);
-    check(sym2, "applepix", true, "pix", 5);
+    symbols<>   sym2(sym);
+    check(sym2, "pineapple", true, "", 9);
+    check(sym2, "pizza", false, "pizza", -1);
+    check(sym2, "bananarama", true, "rama", 6);
+}
 
-    cout << "\nchecking data slot \"orange\" of sym\n";
-    parse("orange", sym[&action1]);
-    parse("orange", sym[&action2]);
-    check(sym, "orange", true, "", 6);
+static void
+narrow_assigment_operator_tests()
+{
+    symbols<>   sym;
+    sym = "pineapple", "orange", "banana", "applepie", "apple";
 
-    cout << "\nTest concluded successfully\n";
-    return 0;
+    symbols<>   sym2;
+    sym2 = sym;
+
+    check(sym2, "pineapple", true, "", 9);
+    check(sym2, "pizza", false, "pizza", -1);
+    check(sym2, "bananarama", true, "rama", 6);
+}
+
+static void
+narrow_value_tests()
+{   // also tests the add member functions
+    symbols<>   sym;
+
+    sym = "orange", "banana";
+    sym.add("pineapple",1234);
+    sym.add("lemon");
+
+    parse("orange", sym[store(12345)]);
+    parse("orange", sym[check(12345)]);
+    parse("pineapple", sym[check(1234)]);
+    parse("banana", sym[check(int())]);
+    parse("lemon", sym[check(int())]);
+}
+
+static void
+narrow_free_functions_tests()
+{
+    symbols<>   sym;
+
+#define add_returned_non_null_value (res!=0)
+#define add_returned_null (res==0)
+#define find_returned_non_null_value (res!=0)
+#define find_returned_null (res==0)
+
+    int *res = add(sym,"pineapple");
+    BOOST_CHECK(add_returned_non_null_value);
+    res = add(sym,"pineapple");
+    BOOST_CHECK(add_returned_null);
+
+    res = find(sym, "pineapple");
+    BOOST_CHECK(find_returned_non_null_value);
+    res = find(sym, "banana");
+    BOOST_CHECK(find_returned_null);
+};
+
+static void
+wide_match_tests()
+{
+    symbols<int, wchar_t>   sym;
+    sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
+
+    check(sym, L"pineapple", true, L"", 9);
+    check(sym, L"orange", true, L"", 6);
+    check(sym, L"banana", true, L"", 6);
+    check(sym, L"apple", true, L"", 5);
+    check(sym, L"pizza", false, L"pizza", -1);
+    check(sym, L"steak", false, L"steak", -1);
+    check(sym, L"applepie", true, L"", 8);
+    check(sym, L"bananarama", true, L"rama", 6);
+    check(sym, L"applet", true, L"t", 5);
+    check(sym, L"applepi", true, L"pi", 5);
+    check(sym, L"appl", false, L"appl", -1);
+
+    check(sym, L"pineapplez", true, L"z", 9);
+    check(sym, L"orangez", true, L"z", 6);
+    check(sym, L"bananaz", true, L"z", 6);
+    check(sym, L"applez", true, L"z", 5);
+    check(sym, L"pizzaz", false, L"pizzaz", -1);
+    check(sym, L"steakz", false, L"steakz", -1);
+    check(sym, L"applepiez", true, L"z", 8);
+    check(sym, L"bananaramaz", true, L"ramaz", 6);
+    check(sym, L"appletz", true, L"tz", 5);
+    check(sym, L"applepix", true, L"pix", 5);
+}
+
+static void
+wide_copy_ctor_tests()
+{
+    symbols<int, wchar_t>   sym;
+    sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
+
+    symbols<int, wchar_t>   sym2(sym);
+    check(sym2, L"pineapple", true, L"", 9);
+    check(sym2, L"pizza", false, L"pizza", -1);
+    check(sym2, L"bananarama", true, L"rama", 6);
+}
+
+static void
+wide_assigment_operator_tests()
+{
+    symbols<int, wchar_t>   sym;
+    sym = L"pineapple", L"orange", L"banana", L"applepie", L"apple";
+
+    symbols<int, wchar_t>   sym2;
+    sym2 = sym;
+
+    check(sym2, L"pineapple", true, L"", 9);
+    check(sym2, L"pizza", false, L"pizza", -1);
+    check(sym2, L"bananarama", true, L"rama", 6);
+}
+
+static void
+wide_value_tests()
+{   // also tests the add member functions
+    symbols<int, wchar_t>   sym;
+
+    sym = L"orange", L"banana";
+    sym.add(L"pineapple",1234);
+    sym.add(L"lemon");
+
+    parse(L"orange", sym[store(12345)]);
+    parse(L"orange", sym[check(12345)]);
+    parse(L"pineapple", sym[check(1234)]);
+    parse(L"banana", sym[check(int())]);
+    parse(L"lemon", sym[check(int())]);
+}
+
+static void
+wide_free_functions_tests()
+{
+    symbols<int, wchar_t>   sym;
+
+    int *res = add(sym,L"pineapple");
+    BOOST_CHECK(add_returned_non_null_value);
+    res = add(sym,L"pineapple");
+    BOOST_CHECK(add_returned_null);
+
+    res = find(sym, L"pineapple");
+    BOOST_CHECK(find_returned_non_null_value);
+    res = find(sym, L"banana");
+    BOOST_CHECK(find_returned_null);
+};
+
+///////////////////////////////////////
+ut::test_suite *
+init_unit_test_suite(int argc, char *argv[])
+{
+    test::init(argc, argv);
+    test::banner("symbols_tests");
+
+    ut::test_suite *suite = BOOST_TEST_SUITE("spirit::symbols tests");
+    suite->add(BOOST_TEST_CASE(default_constructible));
+    suite->add(BOOST_TEST_CASE(narrow_match_tests));
+    suite->add(BOOST_TEST_CASE(narrow_copy_ctor_tests));
+    suite->add(BOOST_TEST_CASE(narrow_assigment_operator_tests));
+    suite->add(BOOST_TEST_CASE(narrow_value_tests));
+    suite->add(BOOST_TEST_CASE(narrow_free_functions_tests));
+    suite->add(BOOST_TEST_CASE(wide_match_tests));
+    suite->add(BOOST_TEST_CASE(wide_copy_ctor_tests));
+    suite->add(BOOST_TEST_CASE(wide_assigment_operator_tests));
+    suite->add(BOOST_TEST_CASE(wide_value_tests));
+    suite->add(BOOST_TEST_CASE(wide_free_functions_tests));
+    return suite;
 }
