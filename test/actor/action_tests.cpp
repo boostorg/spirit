@@ -6,7 +6,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <libs/spirit/test/actor/action_tests.hpp>
+#include "action_tests.hpp"
 #include <boost/test/unit_test.hpp>
 
 boost::unit_test_framework::test_suite*
