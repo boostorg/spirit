@@ -85,13 +85,15 @@ template <typename T, typename CharT, typename SetT>
 inline T*
 add(symbols<T, CharT, SetT>& table, CharT const* sym, T const& data)
 {
+    CharT const* first = sym;
     CharT const* last = sym;
     while (*last)
         last++;
-    scanner<CharT const *> scan(sym, last);
-    if (table.find(scan))
+    scanner<CharT const *> scan(first, last);
+    if (table.find(scan) && scan.at_end())
         return 0;               // symbol already contained in symbol table
     table.add(sym, last, data);
+    first = sym;
     return table.find(scan);    // refind the inserted symbol
 }
 

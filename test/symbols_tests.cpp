@@ -289,6 +289,16 @@ wide_free_functions_tests()
     BOOST_TEST(find_returned_null);
 }
 
+static 
+void free_add_find_functions_tests()
+{
+    symbols<> sym;
+    BOOST_TEST(*add(sym, "a", 0) == 0);
+    BOOST_TEST(*add(sym, "a2", 1) == 1);
+    BOOST_TEST(find(sym, "a2"));
+    BOOST_TEST(find(sym, "a"));
+}
+
 int
 main()
 {
@@ -303,5 +313,6 @@ main()
     wide_assigment_operator_tests();
     wide_value_tests();
     wide_free_functions_tests();
+    free_add_find_functions_tests();
     return boost::report_errors();
 }
