@@ -39,7 +39,7 @@ directives_test1()
     scanx.first = cpx;
 
     hit = chseq_p("Hello").parse(scanx);
-    assert(hit);
+    assert(!!hit);
     scanx.first = cpx;
 
     char const* cp = "Hello \n\tWorld";
@@ -50,32 +50,32 @@ directives_test1()
         scan(cp_first, cp_last);
 
     hit = (+(alpha_p | punct_p)).parse(scan);
-    assert(hit);
+    assert(!!hit);
     assert(scan.first == scan.last);
     scan.first = cp;
 
     hit = (+(lexeme_d[+(alpha_p | '\'')])).parse(scan);
-    assert(hit);
+    assert(!!hit);
     assert(scan.first == scan.last);
     scan.first = cp;
 
     hit = (+(lexeme_d[lexeme_d[+anychar_p]])).parse(scan);
-    assert(hit);
+    assert(!!hit);
     assert(scan.first == scan.last);
     scan.first = cp;
 
     hit = (str_p("Hello") >> "World").parse(scan);
-    assert(hit);
+    assert(!!hit);
     assert(scan.first == scan.last);
     scan.first = cp;
 
     hit = as_lower_d[str_p("hello") >> "world"].parse(scan);
-    assert(hit);
+    assert(!!hit);
     assert(scan.first == scan.last);
     scan.first = cp;
 
     hit = (+(as_lower_d[as_lower_d[+lower_p | '\'']])).parse(scan);
-    assert(hit);
+    assert(!!hit);
     assert(scan.first == scan.last);
     scan.first = cp;
 
@@ -85,12 +85,12 @@ directives_test1()
 
     scanner<> scany(cpy_first, cpy_last);
     hit = longest_d[(+digit_p >> '.' >> +digit_p) | (+digit_p)].parse(scany);
-    assert(hit);
+    assert(!!hit);
     assert(scany.first == scany.last);
     scany.first = cpy;
 
     hit = shortest_d[(+digit_p >> '.' >> +digit_p) | (+digit_p)].parse(scany);
-    assert(hit);
+    assert(!!hit);
     assert(scany.first != scany.last);
     scany.first = cpy;
 
@@ -100,12 +100,12 @@ directives_test1()
 
     scanner<> scanz(cpz_first, cpz_last);
     hit = longest_d[str_p("raza") | "razaman" | "razamanaz"].parse(scanz);
-    assert(hit);
+    assert(!!hit);
     assert(scanz.first == scanz.last);
     scanz.first = cpz;
 
     hit = shortest_d[str_p("raza") | "razaman" | "razamanaz"].parse(scanz);
-    assert(hit);
+    assert(!!hit);
     assert(scanz.first == cpz+4);
     scanz.first = cpz;
 

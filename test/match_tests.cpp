@@ -142,8 +142,8 @@ match_policy_tests()
 
     m0 = mp.no_match();     assert(!m0);
     m1 = mp.no_match();     assert(!m1);
-    m0 = mp.empty_match();  assert(m0);
-    m2 = mp.empty_match();  assert(m2);
+    m0 = mp.empty_match();  assert(!!m0);
+    m2 = mp.empty_match();  assert(!!m2);
 
     m1 = mp.create_match(5, 100, 0, 0);
     m2 = mp.create_match(5, 10.5, 0, 0);

@@ -46,7 +46,7 @@ void RunTest(void)
 {
     // Check constructor opening a file
     ITER a(TMP_FILE);
-    assert(a);
+    assert(!!a);
 
     // Assert dereference (twice: derefence
     //  must not move the iterator)
@@ -68,7 +68,7 @@ void RunTest(void)
 
     // Check make_end()
     ITER b(a.make_end());
-    assert(b);
+    assert(!!b);
     assert(a != b);
     assert(a+256 == b);
     assert(a == b-256);
