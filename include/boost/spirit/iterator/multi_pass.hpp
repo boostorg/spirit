@@ -27,7 +27,7 @@
 #include <boost/limits.hpp>
 
 #include "fixed_size_queue.hpp"
-#include "boost/spirit/debug/assert.hpp" // for BOOST_SPIRIT_ASSERT
+#include "boost/spirit/core/assert.hpp" // for BOOST_SPIRIT_ASSERT
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {

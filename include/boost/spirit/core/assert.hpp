@@ -9,9 +9,8 @@
     software is provided "as is" without express or implied warranty, and
     with no claim as to its suitability for any purpose.
 =============================================================================*/
-
-#if !defined(BOOST_SPIRIT_DEBUG_ASSERT_HPP)
-#define BOOST_SPIRIT_DEBUG_ASSERT_HPP
+#if !defined(BOOST_SPIRIT_ASSERT_HPP)
+#define BOOST_SPIRIT_ASSERT_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,4 +33,4 @@
 #endif
 #endif // !defined(BOOST_SPIRIT_ASSERT)
 
-#endif // BOOST_SPIRIT_DEBUG_ASSERT_HPP
+#endif // BOOST_SPIRIT_ASSERT_HPP

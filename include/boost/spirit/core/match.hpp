@@ -22,6 +22,10 @@
 #include "boost/spirit/core/impl/match.ipp"
 #endif
 
+#if !defined(BOOST_SPIRIT_ASSERT_HPP)
+#include "boost/spirit/core/assert.hpp"
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 

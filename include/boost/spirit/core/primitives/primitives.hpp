@@ -16,8 +16,8 @@
 #include "boost/ref.hpp"
 #endif
 
-#if !defined(BOOST_SPIRIT_DEBUG_ASSERT_HPP)
-#include "boost/spirit/debug/assert.hpp"
+#if !defined(BOOST_SPIRIT_ASSERT_HPP)
+#include "boost/spirit/core/assert.hpp"
 #endif
 
 #if !defined(BOOST_SPIRIT_PARSER_HPP)

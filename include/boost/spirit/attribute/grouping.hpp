@@ -13,9 +13,9 @@
 
 #include <utility>
 
-#include "boost/phoenix/tuples.hpp"
-#include "boost/phoenix/tuple_helpers.hpp"
-#include "boost/phoenix/functions.hpp"
+#include "boost/spirit/phoenix/tuples.hpp"
+#include "boost/spirit/phoenix/tuple_helpers.hpp"
+#include "boost/spirit/phoenix/functions.hpp"
 
 #include "boost/spirit/core/parser.hpp"
 #include "boost/spirit/attribute/impl/grouping.ipp"
