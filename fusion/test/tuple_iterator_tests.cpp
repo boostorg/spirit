@@ -45,13 +45,14 @@ test_main(int, char*[])
 
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
         // ?%$# VC6 I don't know why this is needed! $$$LOOK$$$
-        next(i);
+        //This is no longer needed...
+        //next(i);
 #endif
 
-        BOOST_TEST(*i == 1);
-        BOOST_TEST(*next(i) == 'x');
-        BOOST_TEST(*next(next(i)) == 3.3);
-        BOOST_TEST(*next(next(next(i))) == s);
+        BOOST_CHECK(*i == 1);
+        BOOST_CHECK(*next(i) == 'x');
+        BOOST_CHECK(*next(next(i)) == 3.3);
+        BOOST_CHECK(*next(next(next(i))) == s);
 
         next(next(next(next(i)))); // end
 
@@ -59,16 +60,16 @@ test_main(int, char*[])
         next(next(next(next(next(i))))); // past the end: must not compile
 #endif
 
-        BOOST_TEST(*prior(next(next(next(i)))) == 3.3);
-        BOOST_TEST(*prior(prior(next(next(next(i))))) == 'x');
-        BOOST_TEST(*prior(prior(prior(next(next(next(i)))))) == 1);
+        BOOST_CHECK(*prior(next(next(next(i)))) == 3.3);
+        BOOST_CHECK(*prior(prior(next(next(next(i))))) == 'x');
+        BOOST_CHECK(*prior(prior(prior(next(next(next(i)))))) == 1);
 
-        BOOST_TEST(*begin(t) == 1);
-        BOOST_TEST(*prior(end(t)) == s);
+        BOOST_CHECK(*begin(t) == 1);
+        BOOST_CHECK(*prior(end(t)) == s);
 
         *i = 3;
-        BOOST_TEST(*i == 3);
-        BOOST_TEST(*i == get<0>(t));
+        BOOST_CHECK(*i == 3);
+        BOOST_CHECK(*i == get<0>(t));
     }
 
     { // Testing const tuple and const tuple_iterator
@@ -78,10 +79,10 @@ test_main(int, char*[])
         tuple_type t(1, 'x', 3.3, s);
         tuple_iterator<0, tuple_type> i(t);
 
-        BOOST_TEST(*i == 1);
-        BOOST_TEST(*next(i) == 'x');
-        BOOST_TEST(*begin(t) == 1);
-        BOOST_TEST(*prior(end(t)) == s);
+        BOOST_CHECK(*i == 1);
+        BOOST_CHECK(*next(i) == 'x');
+        BOOST_CHECK(*begin(t) == 1);
+        BOOST_CHECK(*prior(end(t)) == s);
 
 #ifdef FUSION_TEST_COMPILE_FAIL
         *i = 3; // must not compile
@@ -153,16 +154,16 @@ test_main(int, char*[])
         tuple<int, char, double> t1(1, 'x', 3.3);
 
         tuple<long, int, double> t2(begin(t1));
-        BOOST_TEST(get<0>(t2) == get<0>(t1));
-        BOOST_TEST(get<1>(t2) == get<1>(t1));
-        BOOST_TEST(get<2>(t2) == get<2>(t1));
+        BOOST_CHECK(get<0>(t2) == get<0>(t1));
+        BOOST_CHECK(get<1>(t2) == get<1>(t1));
+        BOOST_CHECK(get<2>(t2) == get<2>(t1));
 
         tuple<char, double> t3(next(begin(t1)));
-        BOOST_TEST(get<0>(t3) == get<1>(t1));
-        BOOST_TEST(get<1>(t3) == get<2>(t1));
+        BOOST_CHECK(get<0>(t3) == get<1>(t1));
+        BOOST_CHECK(get<1>(t3) == get<2>(t1));
 
         tuple<double> t4(prior(end(t1)));
-        BOOST_TEST(get<0>(t4) == get<2>(t1));
+        BOOST_CHECK(get<0>(t4) == get<2>(t1));
 
         tuple<char, char, char, char, char, char, char, char, char> t5;
         tuple<int, int, int, int, int, int, int, int, int> t6(begin(t5));

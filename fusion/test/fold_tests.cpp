@@ -85,7 +85,7 @@ test_main(int, char*[])
         typedef tuple<int> tuple_type;
         tuple_type t(12345);
 
-        int n = fusion::fold(t, int_<0>(), count_ints());
+        int n = fusion::fold(t, FUSION_INT(0)(), count_ints());
         std::cout << n << std::endl;
         BOOST_TEST(n == 1);
     }
@@ -94,14 +94,14 @@ test_main(int, char*[])
         typedef tuple<int, char, int, double, int> tuple_type;
         tuple_type t(12345, 'x', 678910, 3.36, 8756);
 
-        int n = fusion::fold(t, int_<0>(), count_ints());
+        int n = fusion::fold(t, FUSION_INT(0)(), count_ints());
         std::cout << n << std::endl;
         BOOST_TEST(n == 3);
     }
 
     {
         typedef vector<int, char, int, double, int> mpl_vec;
-        int n = fusion::fold(mpl_vec(), int_<0>(), count_ints());
+        int n = fusion::fold(mpl_vec(), FUSION_INT(0)(), count_ints());
         std::cout << n << std::endl;
         BOOST_TEST(n == 3);
     }
