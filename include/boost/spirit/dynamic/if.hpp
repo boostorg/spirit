@@ -32,29 +32,40 @@ namespace boost { namespace spirit {
     //////////////////////////////////
     // if-else-parser, holds two alternative parsers and a conditional functor
     // that selects between them.
-    template <typename ParserT_true, typename ParserT_false, typename CondT>
+    template <typename ParsableTrueT, typename ParsableFalseT, typename CondT>
     struct if_else_parser
-        : public condition_evaluator<CondT>
+        : public condition_evaluator<typename as_parser<CondT>::type>
         , public binary
         <
-            ParserT_true,
-            ParserT_false,
-            parser<if_else_parser<ParserT_true, ParserT_false, CondT> >
+            typename as_parser<ParsableTrueT>::type,
+            typename as_parser<ParsableFalseT>::type,
+            parser< if_else_parser<ParsableTrueT, ParsableFalseT, CondT> >
         >
     {
-        typedef if_else_parser<ParserT_true, ParserT_false, CondT>  self_t;
-        typedef condition_evaluator<CondT>                          eval_t;
-        typedef binary<ParserT_true, ParserT_false, parser<self_t> >base_t;
-        typedef CondT                                               condition_t;
+        typedef if_else_parser<ParsableTrueT, ParsableFalseT, CondT>  self_t;
+
+        typedef as_parser<ParsableTrueT>            as_parser_true_t;
+        typedef as_parser<ParsableFalseT>           as_parser_false_t;
+        typedef typename as_parser_true_t::type     parser_true_t;
+        typedef typename as_parser_false_t::type    parser_false_t;
+        typedef as_parser<CondT>                    cond_as_parser_t;
+        typedef typename cond_as_parser_t::type     condition_t;
+
+        typedef binary<parser_true_t, parser_false_t, parser<self_t> > base_t;
+        typedef condition_evaluator<condition_t>                       eval_t;
 
         if_else_parser
         (
-            ParserT_true  const& p_true,
-            ParserT_false const& p_false,
-            CondT         const& cond_
+            ParsableTrueT  const& p_true,
+            ParsableFalseT const& p_false,
+            CondT          const& cond_
         )
-            : eval_t(cond_)
-            , base_t(p_true, p_false)
+            : eval_t(cond_as_parser_t::convert(cond_))
+            , base_t
+                (
+                    as_parser_true_t::convert(p_true),
+                    as_parser_false_t::convert(p_false)
+                )
         { }
 
         template <typename ScannerT>
@@ -68,9 +79,9 @@ namespace boost { namespace spirit {
         parse(ScannerT const& scan) const
         {
             typedef typename parser_result
-                <ParserT_true, ScannerT>::type   then_result_t;
+                <parser_true_t, ScannerT>::type   then_result_t;
             typedef typename parser_result
-                <ParserT_false, ScannerT>::type  else_result_t;
+                <parser_false_t, ScannerT>::type  else_result_t;
 
             typename ScannerT::iterator_t const  save(scan.first);
 
@@ -89,7 +100,7 @@ namespace boost { namespace spirit {
                 else_result_t else_result(this->right().parse(scan));
                 if (else_result)
                 {
-                    length += else_result.length();
+                    length = else_result.length();
                     return scan.create_match(length, nil_t(), save, scan.first);
                 }
             }
@@ -100,59 +111,58 @@ namespace boost { namespace spirit {
     //////////////////////////////////
     // if-else-parser generator, takes the false-parser in brackets
     // and returns the if-else-parser.
-    template <typename ParserT_true, typename CondT>
+    template <typename ParsableTrueT, typename CondT>
     struct if_else_parser_gen
     {
-        if_else_parser_gen(ParserT_true const& p_true_, CondT const& cond_)
+        if_else_parser_gen(ParsableTrueT const& p_true_, CondT const& cond_)
             : p_true(p_true_)
             , cond(cond_) {}
 
-        template <typename ParserT_false>
+        template <typename ParsableFalseT>
         if_else_parser
         <
-            ParserT_true,
-            typename /*::boost::spirit::*/as_parser<ParserT_false>::type,
+            ParsableTrueT,
+            ParsableFalseT,
             CondT
         >
-        operator[](ParserT_false const& subject) const
+        operator[](ParsableFalseT const& p_false) const
         {
-            typedef ::boost::spirit::as_parser<ParserT_false> as_parser_t;
-            typedef typename as_parser_t::type parser_t;
-
-            typedef char assert_argument_must_be_a_parser
-                [::boost::spirit::is_parser<parser_t>::value];
-
-            return if_else_parser<ParserT_true, parser_t, CondT>
+            return if_else_parser<ParsableTrueT, ParsableFalseT, CondT>
                 (
                     p_true,
-                    as_parser_t::convert(subject),
+                    p_false,
                     cond
                 );
         }
 
-        //typename ParserT_true::embed_t p_true;
-
-        // these must be copies from the source parsers for now [m]
-        ParserT_true const p_true;
-        CondT const cond;
+        ParsableTrueT const &p_true;
+        CondT const &cond;
     };
 
     //////////////////////////////////
     // if-parser, conditionally runs a parser is a functor condition is true.
     // If the condition is fales, it fails the parse.
     // It can optionally become an if-else-parser through the member else_p.
-    template <typename ParserT, typename CondT>
+    template <typename ParsableT, typename CondT>
     struct if_parser
-        : public condition_evaluator<CondT>
-        , public unary<ParserT, parser<if_parser<ParserT, CondT> > >
+        : public condition_evaluator<typename as_parser<CondT>::type>
+        , public unary
+        <
+            typename as_parser<ParsableT>::type,
+            parser<if_parser<ParsableT, CondT> > >
     {
-        typedef if_parser<ParserT, CondT>           self_t;
-        typedef condition_evaluator<CondT>          eval_t;
-        typedef unary<ParserT, parser<self_t> >     base_t;
+        typedef if_parser<ParsableT, CondT>           self_t;
+        typedef as_parser<ParsableT>                  as_parser_t;
+        typedef typename as_parser_t::type            parser_t;
 
-        if_parser(ParserT const& p, CondT const& cond_)
-            : eval_t(cond_)
-            , base_t(p)
+        typedef as_parser<CondT>                      cond_as_parser_t;
+        typedef typename cond_as_parser_t::type       condition_t;
+        typedef condition_evaluator<condition_t>      eval_t;
+        typedef unary<parser_t, parser<self_t> >      base_t;
+
+        if_parser(ParsableT const& p, CondT const& cond_)
+            : eval_t(cond_as_parser_t::convert(cond_))
+            , base_t(as_parser_t::convert(p))
             , else_p(p, cond_)
         {}
 
@@ -166,7 +176,7 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-            typedef typename parser_result<ParserT, ScannerT>::type t_result_t;
+            typedef typename parser_result<parser_t, ScannerT>::type t_result_t;
             typename ScannerT::iterator_t const save(scan.first);
 
             int length = evaluate(scan);
@@ -182,7 +192,7 @@ namespace boost { namespace spirit {
             return scan.empty_match();
         }
 
-        if_else_parser_gen<ParserT, CondT> else_p;
+        if_else_parser_gen<ParsableT, CondT> else_p;
     };
 
     //////////////////////////////////
@@ -191,30 +201,17 @@ namespace boost { namespace spirit {
     template <typename CondT>
     struct if_parser_gen
     {
-        typedef ::boost::spirit::as_parser<CondT> c_as_parser_t;
-        typedef typename c_as_parser_t::type      condition_t;
-
         if_parser_gen(CondT const& cond_) : cond(cond_) {}
 
-        template <typename ParserT>
+        template <typename ParsableT>
         if_parser
         <
-            typename /*::boost::spirit::*/as_parser<ParserT>::type,
-            condition_t
+            ParsableT,
+            CondT
         >
-        operator[](ParserT const& subject) const
+        operator[](ParsableT const& subject) const
         {
-            typedef ::boost::spirit::as_parser<ParserT> p_as_parser_t;
-            typedef typename p_as_parser_t::type        parser_t;
-
-            typedef char assert_argument_must_be_a_parser
-                [::boost::spirit::is_parser<parser_t>::value];
-
-            return if_parser<parser_t, condition_t>
-                (
-                    p_as_parser_t::convert(subject),
-                    c_as_parser_t::convert(cond)
-                );
+            return if_parser<ParsableT, CondT>(subject, cond);
         }
 
         CondT const &cond;
