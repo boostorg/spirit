@@ -171,6 +171,7 @@ else
           [ spirit-run $(spirit-src)multi_pass_tests.cpp <template>opt-metrowerks ]
           [ spirit-run $(spirit-src)sf_bug_720917.cpp <template>opt-metrowerks ]
           [ spirit-run $(spirit-src)position_iterator_tests.cpp <template>opt-metrowerks ]
+          [ compile $(spirit-src)multi_pass_compile_tests.cpp <template>normal ]
         ;
 
     test-suite "spirit.small_bug_fixes"
