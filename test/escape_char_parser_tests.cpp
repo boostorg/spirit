@@ -152,22 +152,22 @@ main()
 
     // test out of range octal escape
     char octmax[16];
-    sprintf(octmax, "\\%o", (unsigned int)std::numeric_limits<wchar_t>::max());
+    sprintf(octmax, "\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max());
     assert(parse(octmax, wlep[assign_a(wc)]).full);
     //assert(lex_escape_ch_p[assign_a(wc)].parse(str, end));
     assert(wc == std::numeric_limits<wchar_t>::max());
 
-    sprintf(octmax, "\\%o", (unsigned int)std::numeric_limits<wchar_t>::max()
+    sprintf(octmax, "\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max()
             + 1);
     assert(!parse(octmax, wlep[assign_a(wc)]).hit);
 
     // test out of range hex escape
     char hexmax[16];
-    sprintf(hexmax, "\\x%x", (unsigned int)std::numeric_limits<wchar_t>::max());
+    sprintf(hexmax, "\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max());
     assert(parse(hexmax, wlep[assign_a(wc)]).full);
     assert(wc == std::numeric_limits<wchar_t>::max());
 
-    sprintf(hexmax, "\\x%x", (unsigned int)std::numeric_limits<wchar_t>::max()
+    sprintf(hexmax, "\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max()
             + 1);
     assert(!parse(hexmax, wlep[assign_a(wc)]).hit);
 
