@@ -40,7 +40,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_direct const &self)
+            definition(switch_grammar_direct const& /*self*/)
             {
                 r = switch_p [
                         case_p<'a'>(int_p),
@@ -61,7 +61,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_parser const &self)
+            definition(switch_grammar_parser const& /*self*/)
             {
                 r = switch_p(anychar_p) [
                         case_p<'a'>(int_p),
@@ -87,7 +87,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_actor const &self)
+            definition(switch_grammar_actor const& /*self*/)
             {
                 using phoenix::arg1;
                 r = select_p('a', 'b', 'c')[r.val = arg1] >>

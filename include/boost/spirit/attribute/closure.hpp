@@ -113,7 +113,7 @@ namespace boost { namespace spirit {
         ~init_closure_context() {}
 
         template <typename ParserT, typename ScannerT>
-        void pre_parse(ParserT const& p, ScannerT const&) {}
+        void pre_parse(ParserT const& /*p*/, ScannerT const&) {}
 
         template <typename ResultT, typename ParserT, typename ScannerT>
         ResultT& post_parse(ResultT& hit, ParserT const&, ScannerT const&)

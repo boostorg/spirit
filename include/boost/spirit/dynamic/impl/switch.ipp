@@ -81,7 +81,7 @@ struct default_delegate_parse<N, true, HasDefault> {
         typename ValueT, typename ScannerT
     >
     static typename parser_result<ParserT, ScannerT>::type
-    parse (ValueT const &value, ParserT const &, DefaultT const &d,
+    parse (ValueT const& /*value*/, ParserT const &, DefaultT const &d,
         ScannerT const &scan, typename ScannerT::iterator_t const save)
     {
         //  Since there is a default_p case branch defined, the corresponding
@@ -507,7 +507,7 @@ struct cond_actor {
 
     template <typename ScannerT>
     typename condition_result<self_t, ScannerT>::type
-    operator()(ScannerT const &scan) const
+    operator()(ScannerT const& /*scan*/) const
     {
         return actor();
     }

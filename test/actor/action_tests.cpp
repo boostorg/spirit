@@ -10,7 +10,7 @@
 #include <boost/test/unit_test.hpp>
 
 boost::unit_test_framework::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
 {
     boost::unit_test_framework::test_suite* test=
         BOOST_TEST_SUITE( "Spirit Actor Test Suite" );

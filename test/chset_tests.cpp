@@ -48,7 +48,7 @@ namespace
         out << "\t";
 
         for (int i = '!'; i < '^'; i++)
-            if (a.test(i))
+            if (a.test(CharT(i)))
                 out << '*';
             else
                 out << " ";

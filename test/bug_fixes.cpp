@@ -30,7 +30,7 @@ using namespace std;
 struct my_action
 {
     template <typename TreeT, typename IterT>
-    void operator()(TreeT& t, IterT begin, IterT end) const
+    void operator()(TreeT& /*t*/, IterT begin, IterT end) const
     {
         BOOST_TEST(*begin == '1');
         BOOST_TEST(*end == '2');

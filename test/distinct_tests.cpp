@@ -236,7 +236,7 @@ void dynamic_distinct_directive_test()
     }
 }
 
-test_suite* init_unit_test_suite(int argc, char* argv[])
+test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
 {
     test_suite* test = BOOST_TEST_SUITE("distinct test");
 

@@ -409,6 +409,11 @@ namespace boost { namespace spirit {
         //  real_parser_impl class
         //
         ///////////////////////////////////////////////////////////////////////
+#if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
+#pragma warning(push)
+#pragma warning(disable:4127)
+#endif
+
         template <typename RT, typename T, typename RealPoliciesT>
         struct real_parser_impl
         {
@@ -512,6 +517,11 @@ namespace boost { namespace spirit {
                 return impl::implicit_lexeme_parse<RT>(this_, scan, scan);
             }
         };
+
+#if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
+#pragma warning(pop)
+#pragma warning(disable:4127)
+#endif
 
     }   //  namespace impl
 

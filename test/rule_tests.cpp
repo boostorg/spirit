@@ -89,7 +89,7 @@ struct my_grammar : public grammar<my_grammar>
     template <typename ScannerT>
     struct definition
     {
-        definition(my_grammar const& self)
+        definition(my_grammar const& /*self*/)
         {
             r = lower_p;
             rr = +(lexeme_d[r] >> as_lower_d[r] >> r);

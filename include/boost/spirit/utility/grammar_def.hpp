@@ -120,7 +120,7 @@ namespace impl {
     struct assign_zero_to_tuple_member<N, phoenix::nil_t> {
 
         template <typename TupleT>
-        static void do_(TupleT &t) {}
+        static void do_(TupleT& /*t*/) {}
     };
 
     struct phoenix_nil_type {

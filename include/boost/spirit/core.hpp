@@ -60,6 +60,10 @@
 #include <boost/spirit/core/composite/list.hpp>
 #include <boost/spirit/core/composite/no_actions.hpp>
 
+//	Deprecated interface includes
+#include <boost/spirit/actor/ref_actor.hpp>
+#include <boost/spirit/actor/push_back_actor.hpp>
+
 #if defined(BOOST_SPIRIT_DEBUG)
     //////////////////////////////////
     #include <boost/spirit/debug/parser_names.hpp>

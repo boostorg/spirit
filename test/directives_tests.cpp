@@ -140,7 +140,7 @@ struct identifier : public grammar<identifier>
     template <typename ScannerT>
     struct definition
     {
-        definition(identifier const& self)
+        definition(identifier const& /*self*/)
         {
             rr = +(alpha_p | '_');
             r = lexeme_d[rr];
