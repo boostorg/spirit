@@ -12,7 +12,7 @@
 #define BOOST_SPIRIT_RULE_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#include "boost/shared_ptr.hpp"
+#include <memory> // for auto_ptr
 
 #include "boost/spirit/core/parser.hpp"
 #include "boost/spirit/core/scanner/scanner.hpp"
@@ -107,7 +107,7 @@ namespace boost { namespace spirit {
     private:
 
         typedef impl::abstract_parser<ScannerT, result_t> abstract_parser_t;
-        boost::shared_ptr<abstract_parser_t> ptr;
+        ::std::auto_ptr<abstract_parser_t> ptr;
     };
 
 ///////////////////////////////////////////////////////////////////////////////
