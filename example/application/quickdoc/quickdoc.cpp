@@ -231,7 +231,7 @@ struct code_action
             out << "<code><pre>\n";
             while (first != last && isspace(*first))    //  print leading spaces
                 print_char(*first++, out);
-            parse(first, last, code_p, space_p);
+            parse(first, last, code_p);
             out << "</pre></code>\n";
         }
     }
@@ -794,6 +794,11 @@ parse(char const* filename)
         istream_iterator<char>(in),
         istream_iterator<char>(),
         std::back_inserter(vec));
+
+    //  ensure that we have enough trailing newlines to eliminate
+    //  the need to check for end of file in the grammar.
+    vec.push_back('\n');
+    vec.push_back('\n');
 
     vector<char>::const_iterator first = vec.begin();
     vector<char>::const_iterator last = vec.end();

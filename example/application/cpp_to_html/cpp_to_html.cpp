@@ -103,18 +103,17 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             preprocessor
-                =   lexeme_d['#' >> ((alpha_p | '_') >> *(alnum_p | '_'))
-                    >> *space_p]
+                =   '#' >> ((alpha_p | '_') >> *(alnum_p | '_'))
+                    >> *space_p
                 ;
 
             comment
-                =   +lexeme_d[(comment_p("//") | comment_p("/*", "*/"))
-                    >> *space_p]
+                =   +((comment_p("//") | comment_p("/*", "*/"))
+                    >> *space_p)
                 ;
 
             keyword
-                =   lexeme_d[keyword_ >> (eps_p - (alnum_p | '_'))
-                    >> *space_p];
+                =   keyword_ >> (eps_p - (alnum_p | '_')) >> *space_p
                 ;   // make sure we recognize whole words only
 
             keyword_
@@ -135,16 +134,17 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             special
-                =   lexeme_d[(+chset_p("~!%^&*()+={[}]:;,<.>?/|\\-"))
-                    >> *space_p]
+                =   +(chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p)
                 ;
 
             string_
                 =   !nocase_d['l'] >> confix_p('"', *c_escape_ch_p, '"')
+                    >> *space_p
                 ;
 
             literal
                 =   !nocase_d['l'] >> confix_p('\'', *c_escape_ch_p, '\'')
+                    >> *space_p
                 ;
 
             number
@@ -152,11 +152,13 @@ struct cpp_to_html : public grammar<cpp_to_html>
                     |   nocase_d["0x"] >> hex_p
                     |   '0' >> oct_p
                     )
-                >>  *nocase_d[chset_p("ldfu")]
+                    >>  *nocase_d[chset_p("ldfu")]
+                    >>  *space_p
                 ;
 
             identifier
-                =   lexeme_d[((alpha_p | '_') >> *(alnum_p | '_')) >> *space_p]
+                =   ((alpha_p | '_') >> *(alnum_p | '_'))
+                    >> *space_p
                 ;
         }
 
@@ -219,7 +221,7 @@ parse(char const* filename)
 
     cpp_to_html p(out);
     parse_info<vector<char>::const_iterator> info =
-        parse(first, last, p, space_p);
+        parse(first, last, p);
 
     if (!info.full)
     {

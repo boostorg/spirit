@@ -8,6 +8,7 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/symbols/symbols.hpp>
 #include <boost/spirit/utility/escape_char.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -101,23 +102,20 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             preprocessor
-                =   lexeme_d['#' >> ((alpha_p | '_') >> *(alnum_p | '_'))
-                    >> *space_p]
+                =   '#' >> ((alpha_p | '_') >> *(alnum_p | '_'))
+                    >> *space_p
                 ;
 
             comment
                 =
-                +lexeme_d[
-                    (   ("//" >> *(anychar_p - eol_p) >> eol_p)
-                    |   ("/*" >> *(anychar_p - "*/") >> "*/")
-                    )
-                    >> *space_p
-                ]
+                +(  ("//" >> *(anychar_p - eol_p) >> eol_p)
+                |   ("/*" >> *(anychar_p - "*/") >> "*/")
+                )
+                >> *space_p
                 ;
 
             keyword
-                =   lexeme_d[keyword_ >> (eps_p - (alnum_p | '_'))
-                    >> *space_p]
+                =   keyword_ >> (eps_p - (alnum_p | '_')) >> *space_p
                 ;   // make sure we recognize whole words only
 
             keyword_
@@ -138,24 +136,17 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             special
-                =
-                lexeme_d[
-                    (
-                        ch_p('~') | "!" | "%" | "^" | "&" | "*"
-                        | "(" | ")" | "+" | "=" | "{" | "["
-                        | "}" | "]" | ":" | ";" | "," | "<"
-                        | "." | ">" | "?" | "/" | "|" | "\\" | "-"
-                    )
-                    >> *space_p
-                ]
+                =   +(chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p)
                 ;
 
             string_
-                =   !nocase_d['l'] >> '"' >> *(c_escape_ch_p - '"') >> '"';
+                =   !nocase_d['l'] >> '"' >> *(c_escape_ch_p - '"') >> '"'
+                    >> *space_p;
                 ;
 
             literal
-                =   !nocase_d['l'] >> '\'' >> *(c_escape_ch_p - '\'') >> '\'';
+                =   !nocase_d['l'] >> '\'' >> *(c_escape_ch_p - '\'') >> '\''
+                    >> *space_p;
                 ;
 
             number
@@ -163,11 +154,13 @@ struct cpp_to_html : public grammar<cpp_to_html>
                     |   nocase_d["0x"] >> hex_p
                     |   '0' >> oct_p
                     )
-                >>  *nocase_d[ch_p('l') | 'd' | 'f' | 'u']
+                    >>  *nocase_d[chset_p("ldfu")]
+                    >>  *space_p
                 ;
 
             identifier
-                =   lexeme_d[((alpha_p | '_') >> *(alnum_p | '_')) >> *space_p]
+                =   ((alpha_p | '_') >> *(alnum_p | '_')) >> *space_p
+                    >> *space_p
                 ;
         }
 
