@@ -114,11 +114,23 @@
 <h2>Static rules: subrules </h2>
 <p>The subrule is a fully static version of the rule. The subrule does not have
   the drawbacks listed above. </p>
-<p><img src="theme/bullet.gif" width="12" height="12"> The subrule is not tied
+<p><img src="theme/bullet.gif" width="12" height="12"> The subrule is not tied 
   to a specific scanner so just about any scanner type may be used<br>
-  <img src="theme/bullet.gif" width="12" height="12"> The subrule also allows
+  <img src="theme/bullet.gif" width="12" height="12"> The subrule also allows 
   aggressive inlining since there are no virtual function calls</p>
-<p>Apart from a few minor differences, the subrule follows the usage and syntax
+<pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>template</span><span class=special>&lt;</span><span class=keyword>int </span></font><span class="identifier">ID</span><font color="#000000"><span class=special>, </span><span class=keyword>typename </span><span class=identifier>ContextT </span><span class=special>= </span><span class=identifier>parser_context</span><span class=special>&gt;
+    </span><span class=keyword>class </span><span class=identifier>subrule</span><span class=special>;</span></font></code></pre>
+<p>The first template parameter gives the subrule an identification tag. Like 
+  the <a href="rule.html">rule</a>, there is a ContextT template parameter that 
+  defaults to <code><tt>parser_context</tt></code>. You need not be concerned 
+  at all with the <tt>ContextT</tt> template parameter unless you wish to tweak 
+  the low level behavior of the subrule. Detailed information on the <tt>ContextT</tt> 
+  template parameter is provided <a href="indepth_the_parser_context.html">elsewhere</a>. 
+</p>
+<p>Presented above is the public API. There may actually be more template parameters 
+  after <tt>ContextT</tt>. Everything after the <tt>ContextT</tt> parameter should 
+  not be of concern to the client and are strictly for internal use only.</p>
+<p>Apart from a few minor differences, the subrule follows the usage and syntax 
   of the rule closely. Here's the calculator grammar using subrules:</p>
 <pre><code><font color="#000000"><span class=comment>    </span><span class=keyword>struct </span><span class=identifier>calculator </span><span class=special>: </span><span class=keyword>public </span><span class=identifier>grammar</span><span class=special>&lt;</span><span class=identifier>calculator</span><span class=special>&gt;
     </span><span class=special>{
@@ -267,32 +279,6 @@
   the outer subrule group defines the subrules <tt>a</tt> and <tt>b</tt> while 
   the inner subrule group defines the subrules <tt>c</tt> and <tt>d</tt>. Notice 
   that the definition of <tt>b</tt> is the inner subrule.</p>
-<table width="80%" border="0" align="center">
-  <tr>
-    <td class="note_box"><img src="theme/lens.gif" width="15" height="16"><b>
-      Why are subrules important?</b><br>
-      <br>
-      Subrules open up the oportunity to do aggressive meta programming as well
-      because they do not rely on virtual functions. The virtual function is the
-      meta-programmer's hell. Not only does it slow down the program due to the
-      virtual function indirect call, it is also an opaque wall where no metaprogram
-      can get past. It kills all meta-information beyond the virtual function
-      call. Worse, the virtual function cannot be templated. Which means that
-      its arguments have to be tied to a actual types. Many problems stem from
-      this limitation. <br>
-      <br>
-      While Spirit is a currently classified as a non-deterministic recursive-descent
-      parser, Doug Gregor first noted that other parsing techniques apart from
-      top-down recursive descent may be applied. For instance, apart from non-deterministic
-      recursive descent, deterministic LL(1) and LR(1) can theoretically be implemented
-      using the same expression template front end. Spirit rules use virtual functions
-      to encode the RHS parser expression in an opaque abstract parser type. While
-      it serves its purpose well, the rule's virtual functions are the stumbling
-      blocks to more advanced metaprogramming. Subrules are free from virtual
-      functions.</td>
-  </tr>
-</table>
-<br>
 <table border="0">
   <tr>
     <td width="10"></td>

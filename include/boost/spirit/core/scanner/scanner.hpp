@@ -18,7 +18,6 @@
 #include <iterator>
 
 #include "boost/config.hpp"
-
 #include "boost/spirit/core/match.hpp"
 #include "boost/spirit/core/non_terminal/parser_id.hpp"
 

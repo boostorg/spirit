@@ -117,7 +117,8 @@
 <pre><code><span class=special>    </span><span class=identifier>range</span><span class=special>&lt;&gt;(</span><span class=literal>'A'</span><span class=special>,</span><span class=literal>'Z'</span><span class=special>)    </span><span class=comment>// matches 'A'..'Z'
     </span><span class=identifier>range_p</span><span class=special>(</span><span class=literal>'a'</span><span class=special>,</span><span class=literal>'z'</span><span class=special>)    </span><span class=comment>// matches 'a'..'z'</span></code></pre>
 <p>Note, the first character must be &quot;before&quot; the second, according 
-  to the underlying character encoding characters.</p>
+  to the underlying character encoding characters. The range, like chlit is a 
+  single character parser.</p>
 <table border="0" align="center" width="80%">
   <tr>
     <td class="note_box"><img src="theme/alert.gif" width="16" height="16"><b> 
@@ -183,26 +184,17 @@
     </span><span class=identifier>A </span><span class=identifier>B </span><span class=identifier>C </span><span class=identifier>D </span><span class=identifier>E </span><span class=identifier>F </span><span class=identifier>G
     </span><span class=identifier>AB </span><span class=identifier>CD </span><span class=identifier>EFG</span></pre>
 <h2>More character parsers</h2>
-<p>The framework also predefines a few more utility parsers plus a full repertoire 
-  of single character parsers. Unlike the <tt>ch_p</tt> and the rest of the generator functions 
-  we've seen above, these parsers are actual instantiations.</p>
+<p>The framework also predefines the full repertoire of single character parsers. 
+  Unlike the <tt>ch_p</tt> and the rest of the generator functions we've seen 
+  above, these parsers are actual instantiations.</p>
 <table width="90%" border="0" align="center">
   <tr> 
     <td class="table_title" colspan="2">Single character parsers</td>
   </tr>
   <tr> 
-    <td class="table_cells" width="30%"><b>epsilon_p and eps_p</b></td>
-    <td class="table_cells" width="70%">Matches the null string (always returns 
-      a sucessful match with 0 length)</td>
-  </tr>
-  <tr> 
     <td class="table_cells" width="30%"><b>anychar_p</b></td>
     <td class="table_cells" width="70%">Matches any single character (including 
       the null terminator: '\0')</td>
-  </tr>
-  <tr> 
-    <td class="table_cells" width="30%"><b>nothing_p</b></td>
-    <td class="table_cells" width="70%">Never matches anything and always fails</td>
   </tr>
   <tr> 
     <td class="table_cells" width="30%"><b>alnum_p</b></td>
@@ -252,18 +244,41 @@
     <td class="table_cells" width="30%"><b>xdigit_p</b></td>
     <td class="table_cells" width="70%">Matches hexadecimal digits</td>
   </tr>
-  <tr> 
-    <td class="table_cells" width="30%"><b>eol_p</b></td>
-    <td class="table_cells" width="70%">Matches the end of line (CR/LF and combinations 
-      thereof)</td>
-  </tr>
-  <tr>
-    <td class="table_cells" width="30%"><b>end_p</b></td>
-    <td class="table_cells" width="70%">Matches the end of input (returns a sucessful 
-      match with 0 length when the input is exhausted)</td>
-  </tr>
 </table>
-<br>
+<h2><a name="negation"></a>negation ~</h2>
+<p>Single character parsers such as the <tt>chlit</tt>, <tt>range</tt>, <tt>anychar_p</tt>, 
+  <tt>alnum_p</tt> etc. can be negated. For example:</p>
+<pre><code><span class=special>    ~</span><span class=identifier>ch_p</span><span class="special">(</span><span class="literal">'x'</span><span class="special">)</span></code></pre>
+<p>matches any character except <tt>'x'</tt>. Double negation of a character parser 
+  cancels out the negation. <tt>~~alpha_p</tt> is equivalent to <tt>alpha_p</tt>.</p>
+<h2>eol_p</h2>
+<p>Matches the end of line (CR/LF and combinations thereof).</p>
+<h2><b>nothing_p</b></h2>
+<p>Never matches anything and always fails.</p>
+<h2>end_p</h2>
+<p>Matches the end of input (returns a sucessful match with 0 length when the 
+  input is exhausted)</p>
+<h2>epsilon_p and eps_p</h2>
+<p>Not strictly a primitive parser, <tt>epsilon_p</tt>, <tt>eps_p</tt> are parsers 
+  that match the null string and return a match of zero length:</p>
+<pre><code><span class=special>    </span><span class="identifier">epsilon_p </span><span class="comment">// always returns a zero-length match</span></code></pre>
+<p>The eplsilon also operates as a parser generator. In this role, they take an 
+  argument that is a 0-ary function/functor or another parser. They construct 
+  parsers that will report either an empty (zero length) match or a failure.</p>
+<p>A failure will be reported when the function/functor result evaluates to false 
+  or when the contained parser reports a failure. Otherwise an empty match will 
+  be reported.</p>
+<p>Operator <tt>~</tt> is defined for parsers constructed by <tt>epsilon_p</tt>/<tt>eps_p</tt>. 
+  It performs negation by complementing the results reported. <tt>~~eps_p(x)</tt> 
+  is identical to <tt>eps_p(x)</tt>.</p>
+<p>Example:</p>
+<pre><code><span class=special>    </span><span class="identifier">epsilon_p</span><span class="special">(</span><span class="literal">'0'</span><span class="special">) &gt;&gt; </span><span class="identifier">oct_p </span><span class="comment">// note that '0' is actually a ch_p('0')</span><span class="identifier"> </span></code></pre>
+<p>Epsilon here is used as a syntactic predicate. <tt>oct_p</tt> is parsed only 
+  if we see a leading <tt>'0'</tt>. Wrapping the leading <tt>'0'</tt> inside an 
+  epsilon makes the parser not consume anything from the input. If a <tt>'0'</tt> 
+  is seen, <tt>epsilon_p</tt> reports a successful match with zero length. We 
+  shall learn more about <tt>oct_p</tt> when we get to the section on <a href="numerics.html">numerics</a>. 
+  Suffice it to say that it is a primitive parser that parses octal numbers.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
@@ -275,6 +290,7 @@
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
+  Copyright &copy; 2003 Martin Wille<br>
   <br>
   <font size="2">Permission to copy, use, modify, sell and distribute this document 
   is granted provided this copyright notice appears in all copies. This document 

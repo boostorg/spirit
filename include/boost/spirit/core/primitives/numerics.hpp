@@ -182,8 +182,8 @@ template <typename T>
 struct ureal_parser_policies
 {
     // trailing dot policy suggested suggested by Gustavo Guerra
-    BOOST_STATIC_CONSTANT(bool, allow_trailing_left_dot = true);
-    BOOST_STATIC_CONSTANT(bool, allow_trailing_right_dot = true);
+    BOOST_STATIC_CONSTANT(bool, allow_leading_dot = true);
+    BOOST_STATIC_CONSTANT(bool, allow_trailing_dot = true);
     BOOST_STATIC_CONSTANT(bool, expect_dot = false);
 
     typedef uint_parser<T, 10, 1, -1>   uint_parser_t;

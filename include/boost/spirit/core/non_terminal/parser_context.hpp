@@ -36,13 +36,13 @@ namespace boost
     ///////////////////////////////////////////////////////////////////////////
     struct nil_t;
     template<typename ContextT> struct parser_context_linker;
-    
+
     struct parser_context
     {
         typedef nil_t attr_t;
         typedef default_parser_context_base base_t;
         typedef parser_context_linker<parser_context> context_linker_t;
-        
+
         template <typename ParserT>
         parser_context(ParserT const&) {}
 
@@ -89,10 +89,10 @@ namespace boost
     ///////////////////////////////////////////////////////////////////////////
     //
     //  parser_scanner_linker and parser_scanner_linker classes
-    //  { helper templates for the rule extendability }
+    //  { helper templates for the rule extensibility }
     //
     //      This classes can be 'overloaded' (defined elsewhere), to plug
-    //      in additional functionality into the rule parsing process.
+    //      in additional functionality into the non-terminal parsing process.
     //
     ///////////////////////////////////////////////////////////////////////////
     #if !defined(BOOST_SPIRIT_PARSER_SCANNER_LINKER_DEFINED)

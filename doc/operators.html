@@ -99,7 +99,9 @@
       The complement operator <tt>~</tt> was originally put into consideration. 
       Further understanding of its value and meaning leads us to uncertainty. 
       The basic problem stems from the fact that <tt>~a</tt> will yield <tt>U-a</tt>, 
-      where <tt>U</tt> is the universal set of all strings. </td>
+      where <tt>U</tt> is the universal set of all strings. However, where it 
+      makes sense, some parsers can be complemented (see the <a href="primitives.html#negation">primitive 
+      character parsers</a> for examples).</td>
   </tr>
 </table>
 <br>
@@ -135,22 +137,6 @@
   it must be in sequence; this is equivalent to <tt>a <span class="operators">|</span> 
   b <span class="operators">|</span> a <span class="operators">&gt;&gt;</span> 
   b</tt>.</p>
-<table width="80%" border="0" align="center">
-  <tr> 
-    <td class="note_box"><img src="theme/lens.gif" width="15" height="16"> <b>Sequencing 
-      Syntax</b> <br>
-      <br>
-      The comma operator as in a, b seems to be a better candidate, syntax-wise. 
-      But then the problem is with its precedence. It has the lowest precedence 
-      in C/C++, which makes it virtually useless. <br>
-      <br>
-      Bjarne Stroustrup, in his article <a href="references.html#generalized_overloading">&quot;Generalizing 
-      Overloading for C++2000&quot;</a> talks about overloading whitespace. Such 
-      a feature would allow juxtapositioning of parser objects exactly as we do 
-      in (E)BNF (e.g. a b | c instead of a &gt;&gt; b | c). Unfortunately, the 
-      article was dated April 1, 1998. Oh well.</td>
-  </tr>
-</table>
 <br>
 <table width="90%" border="0" align="center">
   <tr> 
