@@ -1,49 +1,16 @@
 /*=============================================================================
     Lexer
 
-    Spirit V1.3
+    Spirit V1.5.2
     Copyright (c) 2001, Daniel C. Nuffer
+    Copyright (c) 2002-2003, Hartmut Kaiser
 
-    This software is provided 'as-is', without any express or implied
-    warranty. In no event will the copyright holder be held liable for
-    any damages arising from the use of this software.
+    http://spirit.sourceforge.net/
 
-    Permission is granted to anyone to use this software for any purpose,
-    including commercial applications, and to alter it and redistribute
-    it freely, subject to the following restrictions:
-
-    1.  The origin of this software must not be misrepresented; you must
-        not claim that you wrote the original software. If you use this
-        software in a product, an acknowledgment in the product documentation
-        would be appreciated but is not required.
-
-    2.  Altered source versions must be plainly marked as such, and must
-        not be misrepresented as being the original software.
-
-    3.  This notice may not be removed or altered from any source
-        distribution.
-
-    Acknowledgements:
-
-        Special thanks to Dan Nuffer, John (EBo) David, Chris Uzdavinis,
-        and Doug Gregor. These people are most instrumental in steering
-        Spirit in the right direction.
-
-        Special thanks also to people who have contributed to the code base
-        and sample code, ported Spirit to various platforms and compilers,
-        gave suggestions, reported and provided bug fixes. Alexander
-        Hirner, Andy Elvey, Bogdan Kushnir, Brett Calcott, Bruce Florman,
-        Changzhe Han, Colin McPhail, Hakki Dogusan, Jan Bares, Joseph
-        Smith, Martijn W. van der Lee, Raghavendra Satish, Remi Delcos, Tom
-        Spilman, Vladimir Prus, W. Scott Dillman, David A. Greene, Bob
-        Bailey, Hartmut Kaiser.
-
-        Finally special thanks also to people who gave feedback and
-        valuable comments, particularly members of Spirit's Source Forge
-        mailing list and boost.org.
-
-    URL: http://spirit.sourceforge.net/
-
+    Permission to copy, use, modify, sell and distribute this software
+    is granted provided this copyright notice appears in all copies.
+    This software is provided "as is" without express or implied
+    warranty, and with no claim as to its suitability for any purpose.
 
     TODO List:
         X callback objects (called when a match is made.)
@@ -58,6 +25,7 @@
                     yymore
                     get length of matched token
                     get current lexer state
+        X DFA serialization to save recomputing the DFA.
 
         lexer states.
         organize the file into hpp and ipp. arrange the classes in a logical order.
@@ -68,7 +36,6 @@
         ^ and $
         DFA minimization.
         DFA table compression.
-        DFA serialization to save recomputing the DFA.
 
 =============================================================================*/
 #ifndef BOOST_SPIRIT_LEXER_HPP
