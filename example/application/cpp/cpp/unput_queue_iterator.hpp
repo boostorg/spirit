@@ -19,19 +19,24 @@
 #include <list>
 #include <boost/iterator_adaptors.hpp>
 
+//#include "cpp/tagged_token.hpp" 
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
 
-template <typename TokenT>
+template <typename TokenT, typename ContainerT>
 class unput_queue_policies : public boost::default_iterator_policies
 {
 public:
-    unput_queue_policies(std::list<TokenT> const &unput_queue_)
+    unput_queue_policies(ContainerT &unput_queue_)
     :   unput_queue(unput_queue_)
     {}
     
     unput_queue_policies &operator= (unput_queue_policies const &rhs)
-    { unput_queue = rhs.unput_queue; return *this; }
+    { 
+        unput_queue = rhs.unput_queue; 
+        return *this; 
+    }
     
     template <typename BaseT>
     void initialize(BaseT &)
@@ -50,10 +55,15 @@ public:
     void 
     increment(IteratorAdaptorT &x)
     { 
-        if (x.policies().unput_queue.size() > 0)
+        if (x.policies().unput_queue.size() > 0) {
+        // there exist pending tokens in the unput queue
+//            x.policies().unput_queue.front().reset_tag();
             x.policies().unput_queue.pop_front();
-        else
+        }
+        else {
+        // the unput_queue is empty, so advance the base iterator
             ++x.base(); 
+        }
     }
 
     template <typename IteratorAdaptorT1, typename IteratorAdaptorT2>
@@ -68,11 +78,14 @@ public:
             x.base() == y.base(); 
     }
     
-    typename std::list<TokenT>::size_type queuesize() const 
+    typename ContainerT::size_type queuesize() const 
     { return unput_queue.size(); }
+
+//    void unput_token (TokenT const &token) { unput_queue.push_front(token); }
+    ContainerT &get_unput_queue() { return unput_queue; }
     
 private:
-    std::list<TokenT> unput_queue;
+    ContainerT &unput_queue;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -83,49 +96,58 @@ private:
 //      with the direct input to be read after the unput queue is emptied
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <typename IteratorT, typename TokenT>
+template <typename IteratorT, typename TokenT, typename ContainerT>
 class unput_queue_iterator 
-:   public boost::iterator_adaptor<IteratorT, unput_queue_policies<TokenT>,
-        TokenT, TokenT const &, TokenT const *>
+:   public boost::iterator_adaptor<
+        IteratorT, unput_queue_policies<TokenT, ContainerT>, TokenT, 
+        TokenT const &, TokenT const *>
 {
     typedef 
         boost::iterator_adaptor<
-            IteratorT, unput_queue_policies<TokenT>, TokenT, TokenT const &, TokenT const *
+            IteratorT, unput_queue_policies<TokenT, ContainerT>, TokenT, 
+            TokenT const &, TokenT const *
         >
         base_t;
         
 public:
     unput_queue_iterator(IteratorT const &it, 
-            unput_queue_policies<TokenT> policies)
+            unput_queue_policies<TokenT, ContainerT> policies)
     :   base_t(it, policies)
     {}
+    
+//    void unput_token(TokenT const &token) { policies().unput_token(token); }
+    ContainerT &get_unput_queue() { return policies().get_unput_queue(); }
 };
 
 namespace impl {
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename IteratorT, typename TokenT>
+    template <typename IteratorT, typename TokenT, typename ContainerT>
     struct gen_unput_queue_iterator {
     
-        typedef unput_queue_iterator<IteratorT, TokenT> return_t;
+        typedef unput_queue_iterator<IteratorT, TokenT, ContainerT> return_t;
+        typedef unput_queue_policies<TokenT, ContainerT> policies_t;
         
         static return_t
-        do_(std::list<TokenT> const &queue, IteratorT const &it)
+        generate(ContainerT &queue, IteratorT const &it)
         {
-            return return_t(it, unput_queue_policies<TokenT>(queue));
+            return return_t(it, policies_t(queue));
         }
     };
     
-    template <typename IteratorT, typename TokenT>
+    template <typename IteratorT, typename TokenT, typename ContainerT>
     struct gen_unput_queue_iterator<
-        unput_queue_iterator<IteratorT, TokenT>, TokenT > {
+        unput_queue_iterator<IteratorT, TokenT, ContainerT>, 
+            TokenT, ContainerT> 
+    {
     
-        typedef unput_queue_iterator<IteratorT, TokenT> return_t;
+        typedef unput_queue_iterator<IteratorT, TokenT, ContainerT> return_t;
+        typedef unput_queue_policies<TokenT, ContainerT> policies_t;
         
-        static return_t const &
-        do_(std::list<TokenT> const &queue, return_t const &it)
+        static return_t 
+        generate(ContainerT &queue, return_t const &it)
         {
-            return it;
+            return return_t(it.base(), policies_t(queue));
         }
     };
     
@@ -140,10 +162,11 @@ namespace impl {
         }
     };
     
-    template <typename IteratorT, typename TokenT>
-    struct assign_iterator<unput_queue_iterator<IteratorT, TokenT> > {
+    template <typename IteratorT, typename TokenT, typename ContainerT>
+    struct assign_iterator<
+        unput_queue_iterator<IteratorT, TokenT, ContainerT> > {
     
-        typedef unput_queue_iterator<IteratorT, TokenT> iterator_t;
+        typedef unput_queue_iterator<IteratorT, TokenT, ContainerT> iterator_t;
         
         static void 
         do_ (iterator_t &dest, iterator_t const &src)
@@ -159,31 +182,10 @@ namespace impl {
 //        }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename IteratorT>
-    struct is_fresh_token {
-
-        static bool
-        test_(IteratorT const &it)
-        {
-            return true;
-        }
-    };
-    
-    template <typename IteratorT, typename TokenT>
-    struct is_fresh_token<unput_queue_iterator<IteratorT, TokenT> > {
-
-        typedef unput_queue_iterator<IteratorT, TokenT> iterator_t;
-
-        static bool
-        test_(iterator_t const &it)
-        {
-            return 0 == it.policies().queuesize();
-        }
-    };
-}
+///////////////////////////////////////////////////////////////////////////////
+}   // namespace impl
 
 ///////////////////////////////////////////////////////////////////////////////
-}
+}   // namespace cpp
 
 #endif // !defined(_UNPUT_QUEUE_ITERATOR_HPP__76DA23D0_4893_4AD5_ABCC_6CED7CFB89BC__INCLUDED_)

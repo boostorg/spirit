@@ -45,7 +45,9 @@ struct cpp_grammar_rule_ids {
     long line_id;               // #line
     long line_file_id;
     long error_id;              // #error
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
     long warning_id;            // #warning
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
     long null_id;               // #
     long pragma_id;             // #pragma
     long illformed_id;

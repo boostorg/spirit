@@ -222,9 +222,11 @@ enum token_id {
     T_LAST_TOKEN_ID,
     T_LAST_TOKEN = ID_FROM_TOKEN(T_LAST_TOKEN_ID),
     
-// pseudo tokens to help streamlining macro replacement
+// pseudo tokens to help streamlining macro replacement, these should not 
+// returned from the lexer nor should these be returned from the pp-iterator
     T_NONREPLACABLE_IDENTIFIER = TOKEN_FROM_ID(T_LAST_TOKEN+1, IdentifierTokenType),
-    T_PARAMETERBASE = TOKEN_FROM_ID(T_LAST_TOKEN+2, ParameterTokenType),
+    T_PLACEHOLDER = TOKEN_FROM_ID(T_LAST_TOKEN+2, WhiteSpaceTokenType),
+    T_PARAMETERBASE = TOKEN_FROM_ID(T_LAST_TOKEN+3, ParameterTokenType),
 };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -89,13 +89,13 @@ public:
     {}
     
 // get the next preprocessed token
-    result_type operator()();
+    result_type const &operator()();
 
 // get the last recognized token (for error processing etc.)
     result_type const &current_token() const { return act_token; }
     
 protected:
-    result_type pp_token();
+    result_type const &pp_token();
     bool pp_directive();
     void dispatch_directive(boost::spirit::tree_parse_info<lex_t> const &hit);
 
@@ -104,8 +104,10 @@ protected:
     void on_define(parse_node_t const &node);
     void retrieve_macroname(parse_node_t const &node, 
         result_type &macroname);
+        
+    template <typename ContainerT>
     bool retrieve_macrodefinition(parse_node_t const &node, 
-        boost::spirit::parser_id id, std::vector<result_type> &macroparameters);
+        boost::spirit::parser_id id, ContainerT &macroparameters);
 
     void on_undefine(result_type const &t);
     
@@ -113,10 +115,20 @@ protected:
     void on_ifndef(result_type const &t);
     void on_else();
     void on_endif();
+    void on_null();
+    void on_line();
     
     void on_if(typename parse_tree_t::const_iterator const &begin,
         typename parse_tree_t::const_iterator const &end);
     void on_elif(typename parse_tree_t::const_iterator const &begin,
+        typename parse_tree_t::const_iterator const &end);
+    void on_error(typename parse_tree_t::const_iterator const &begin,
+        typename parse_tree_t::const_iterator const &end);
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
+    void on_warning(typename parse_tree_t::const_iterator const &begin,
+        typename parse_tree_t::const_iterator const &end);
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
+    void on_pragma(typename parse_tree_t::const_iterator const &begin,
         typename parse_tree_t::const_iterator const &end);
 
 private:
@@ -126,7 +138,8 @@ private:
     result_type act_token;      // current token 
     bool seen_newline;          // needed for recognizing begin of line
     
-    std::list<result_type> unput_queue;
+    std::list<result_type> unput_queue;     // tokens to be preprocessed again
+    std::list<result_type> pending_queue;   // tokens already preprocessed
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,31 +156,16 @@ private:
 //      throws a pp_exception, if appropriate
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace {
-
-    template <typename TokenT>
-    struct pop_front_onexit {
-
-        pop_front_onexit(std::list<TokenT> &list_) : list(list_) {}
-        ~pop_front_onexit() { list.pop_front(); }
-        
-        std::list<TokenT> &list;
-    };
-}
-
 template <typename ContextT> 
-inline typename pp_iterator_functor<ContextT>::result_type
+inline typename pp_iterator_functor<ContextT>::result_type const &
 pp_iterator_functor<ContextT>::operator()()
 {
     using namespace cpplexer;
 
 // if there is something in the unput_queue, then return the next token from
 // there (all tokens in the queue are preprocessed already)
-    if (unput_queue.size() > 0) {
-    pop_front_onexit<result_type> popfront(unput_queue);
-    
-        return act_token = unput_queue.front();    // get next token
-    }
+    if (pending_queue.size() > 0 || unput_queue.size() > 0) 
+        return pp_token();      // return next token
     
 // test for EOI, if there is a pending input context, pop it back and continue
 // parsing with it
@@ -201,7 +199,7 @@ bool returned_from_include = false;
             if (was_seen_newline && pp_directive()) {
             // a pp directive was found, return the corresponding eol only
                 seen_newline = true;
-                return result_type(T_NEWLINE, 
+                return act_token = result_type(T_NEWLINE, 
                     typename result_type::string_t("\n"), 
                     cpp_grammar_t::pos_of_newline);
             }
@@ -228,11 +226,11 @@ bool returned_from_include = false;
     else if (returned_from_include) {
     // if there was an '#include' statement on the last line of a file we have
     // to return an additional newline token
-        return result_type(T_NEWLINE, 
+        return act_token = result_type(T_NEWLINE, 
             typename result_type::string_t("\n"), 
             cpp_grammar_t::pos_of_newline);
     }
-    return result_type();   // return eof token
+    return act_token = result_type();   // return eof token
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -241,19 +239,19 @@ bool returned_from_include = false;
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
-inline typename pp_iterator_functor<ContextT>::result_type
+inline typename pp_iterator_functor<ContextT>::result_type const &
 pp_iterator_functor<ContextT>::pp_token()
 {
+    using namespace cpplexer;
+
 //  call the lexer, preprocess the required number of tokens, put them
 //  into the unput queue 
-    BOOST_SPIRIT_ASSERT(0 == unput_queue.size());
-    ctx.expand_tokensequence(iter_ctx->first, iter_ctx->last, unput_queue); 
-
-// return the next preprocessed token
-pop_front_onexit<result_type> popfront(unput_queue);
-
-    BOOST_SPIRIT_ASSERT(0 != unput_queue.size());
-    return act_token = unput_queue.front();    
+    act_token = ctx.expand_tokensequence(iter_ctx->first, iter_ctx->last, 
+        pending_queue, unput_queue); 
+        
+    if (T_NONREPLACABLE_IDENTIFIER == token_id(act_token))
+        act_token.set_token_id(T_IDENTIFIER);
+    return act_token;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -348,18 +346,28 @@ long node_id = nodeval.id().to_long();
     }
     else if (node_id == cpp_grammar_t::rule_ids.line_id) {
     // #line
+        on_line();
     }
     else if (node_id == cpp_grammar_t::rule_ids.error_id) {
     // #error
+        on_error((*root.begin()).children.begin(), 
+            (*root.begin()).children.end());
     }
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
     else if (node_id == cpp_grammar_t::rule_ids.warning_id) {
     // #warning
+        on_warning((*root.begin()).children.begin(), 
+            (*root.begin()).children.end());
     }
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
     else if (node_id == cpp_grammar_t::rule_ids.null_id) {
     // #
+        on_null();
     }
     else if (node_id == cpp_grammar_t::rule_ids.pragma_id) {
     // #pragma
+        on_pragma((*root.begin()).children.begin(), 
+            (*root.begin()).children.end());
     }
     else if (node_id == cpp_grammar_t::rule_ids.illformed_id) {
     // #something else
@@ -425,7 +433,7 @@ boost::shared_ptr<base_iteration_context_t> new_iter_ctx (
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_define(): handle #define statements
+//  on_define(): handle #define directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -461,10 +469,11 @@ typename parse_node_t::children_t const &children = name_node->children;
 
 // retrieve the macro parameters or the macro definition from the parse tree
 template <typename ContextT> 
+template <typename ContainerT>
 inline bool  
 pp_iterator_functor<ContextT>::retrieve_macrodefinition(
     parse_node_t const &node, boost::spirit::parser_id id, 
-    std::vector<result_type> &macrodefinition)
+    ContainerT &macrodefinition)
 {
     typedef typename parse_node_t::const_tree_iterator const_tree_iterator;
 
@@ -473,22 +482,23 @@ std::pair<const_tree_iterator, const_tree_iterator> nodes;
 
     using boost::spirit::get_node_range;
     if (get_node_range(node, id, nodes)) {
-    // copy all parameters to the supplied parameter vector
-        typename std::vector<result_type>::size_type last_nonwhite = ~0;
+    // copy all parameters to the supplied container
+        typename ContainerT::iterator last_nonwhite = macrodefinition.end();
         const_tree_iterator end = nodes.second;
         
         for (const_tree_iterator cit = nodes.first; cit != end; ++cit) {
             if ((*cit).value.begin() != (*cit).value.end()) {
-                macrodefinition.push_back(*(*cit).value.begin());
+            typename ContainerT::iterator inserted = macrodefinition.insert(
+                macrodefinition.end(), *(*cit).value.begin());
+                
                 if (!IS_CATEGORY(macrodefinition.back(), WhiteSpaceTokenType))
-                    last_nonwhite = macrodefinition.size();
+                    last_nonwhite = inserted;
             }
         }
         
     // trim trailing whitespace (leading whitespace is trimmed by the grammar)
-        if (last_nonwhite != ~0 && last_nonwhite != macrodefinition.size()) {
-            macrodefinition.erase(macrodefinition.begin() + last_nonwhite, 
-                macrodefinition.end());
+        if (last_nonwhite != macrodefinition.end()) {
+            macrodefinition.erase(++last_nonwhite, macrodefinition.end());
         }
         return true;
     }
@@ -506,7 +516,7 @@ pp_iterator_functor<ContextT>::on_define (parse_node_t const &node)
 // retrieve the macro definition from the parse tree
 result_type macroname;
 std::vector<result_type> macroparameters;
-std::vector<result_type> macrodefinition;
+std::list<result_type> macrodefinition;
 bool has_parameters = false;
 
     retrieve_macroname(node, macroname);
@@ -521,7 +531,7 @@ bool has_parameters = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_define(): handle #undef statements
+//  on_define(): handle #undef directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -538,7 +548,7 @@ pp_iterator_functor<ContextT>::on_undefine (result_type const &token)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_ifdef(): handle #ifdef statements
+//  on_ifdef(): handle #ifdef directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -550,7 +560,7 @@ pp_iterator_functor<ContextT>::on_ifdef(result_type const &token)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_ifndef(): handle #ifndef statements
+//  on_ifndef(): handle #ifndef directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -562,7 +572,7 @@ pp_iterator_functor<ContextT>::on_ifndef(result_type const &token)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_else(): handle #else statements
+//  on_else(): handle #else directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -578,7 +588,7 @@ pp_iterator_functor<ContextT>::on_else()
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_endif(): handle #endif statements
+//  on_endif(): handle #endif directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -594,17 +604,21 @@ pp_iterator_functor<ContextT>::on_endif()
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_if(): handle #if statements
+//  on_if(): handle #if directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace {
 
-//=============================================================================
-// Transform Iterator Adaptor
+///////////////////////////////////////////////////////////////////////////////
+// 
+//  Transform Iterator Adaptor
 //
-// Upon deference, apply some unary function object and return the
-// result by reference.
+//  Upon deference, apply some unary function object and return the
+//  result by reference.
+//
+//  This class is adapted from the Boost.Iterator library, where a similar 
+//  class exists, which returns the next item by value
 
     template <class AdaptableUnaryFunctionT>
     struct ref_transform_iterator_policies 
@@ -674,14 +688,14 @@ pp_iterator_functor<ContextT>::on_if(
 // copy the sequence to preprocess into the provided list
 std::list<result_type> expanded;
 get_token_value<result_type, parse_node_t> get_value;
+
 typename ref_transform_iterator_generator<
         get_token_value<result_type, parse_node_t>, 
         typename parse_tree_t::const_iterator
     >::type first = make_ref_transform_iterator(begin, get_value);
     
-    ctx.expand_tokensequence(
-        first, make_ref_transform_iterator(end, get_value), 
-        expanded, false, true);
+    ctx.expand_whole_tokensequence(first, 
+        make_ref_transform_iterator(end, get_value), expanded);
     
 // parse the expression and enter the #if block
     ctx.enter_if_block(expression_grammar_gen<result_type>::
@@ -690,7 +704,7 @@ typename ref_transform_iterator_generator<
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-//  on_elif(): handle #elif statements
+//  on_elif(): handle #elif directives
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -709,8 +723,10 @@ pp_iterator_functor<ContextT>::on_elif(
     }
             
 // copy the sequence to preprocess into the provided list
+std::list<result_type> pending;
 std::list<result_type> expanded;
 get_token_value<result_type, parse_node_t> get_value;
+
 typename ref_transform_iterator_generator<
         get_token_value<result_type, parse_node_t>, 
         typename parse_tree_t::const_iterator
@@ -718,11 +734,74 @@ typename ref_transform_iterator_generator<
     
     ctx.expand_tokensequence(
         first, make_ref_transform_iterator(end, get_value), 
-        expanded, false, true);
+        pending, expanded);
     
 // parse the expression and enter the #elif block
     ctx.enter_elif_block(expression_grammar_gen<result_type>::
             evaluate(expanded.begin(), expanded.end(), act_token));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_null(): handles the '# (null)' directive
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_null()
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_line(): handle #line directives
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_line()
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_error(): handle #error directives
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void 
+pp_iterator_functor<ContextT>::on_error(
+    typename parse_tree_t::const_iterator const &begin,
+    typename parse_tree_t::const_iterator const &end)
+{
+}
+
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_warning(): handle #warning directives
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void 
+pp_iterator_functor<ContextT>::on_warning(
+    typename parse_tree_t::const_iterator const &begin,
+    typename parse_tree_t::const_iterator const &end)
+{
+}
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_pragma(): handle #pragma directives
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename ContextT> 
+inline void 
+pp_iterator_functor<ContextT>::on_pragma(
+    typename parse_tree_t::const_iterator const &begin,
+    typename parse_tree_t::const_iterator const &end)
+{
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -99,7 +99,10 @@ struct cpp_grammar :
         rule_t undefine;
         rule_t ppifdef, ppifndef, ppif, ppelse, ppelif, ppendif;
         rule_t ppline, line_file;
-        rule_t pperror, ppwarning;
+        rule_t pperror;
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
+        rule_t ppwarning;
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
         rule_t ppnull;
         rule_t pppragma;
         rule_t illformed;
@@ -129,7 +132,9 @@ struct cpp_grammar :
             self.rule_ids.line_id = ppline.id().to_long();
             self.rule_ids.line_file_id = line_file.id().to_long();
             self.rule_ids.error_id = pperror.id().to_long();
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
             self.rule_ids.warning_id = ppwarning.id().to_long();
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
             self.rule_ids.null_id = ppnull.id().to_long();
             self.rule_ids.pragma_id = pppragma.id().to_long();
             self.rule_ids.illformed_id = illformed.id().to_long();
@@ -166,7 +171,9 @@ struct cpp_grammar :
                             |   ppendif
                             |   ppline
                             |   pperror
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
                             |   ppwarning
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
                             |   pppragma
                             |   illformed
                             )
@@ -295,11 +302,13 @@ struct cpp_grammar :
                     >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
                 ;
 
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
         // #warning
             ppwarning
                 =   no_node_d[ch_p(T_PP_WARNING) >> +ppspace]
                     >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
                 ;
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
 
         // #pragma ...
             pppragma
@@ -329,7 +338,9 @@ struct cpp_grammar :
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppline, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(line_file, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(pperror, TRACE_CPP_GRAMMAR);
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppwarning, TRACE_CPP_GRAMMAR);
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppnull, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(illformed, TRACE_CPP_GRAMMAR);
             BOOST_SPIRIT_DEBUG_TRACE_RULE(ppspace, TRACE_CPP_GRAMMAR);
@@ -381,7 +392,9 @@ struct cpp_grammar :
                 { self.rule_ids.line_id, "ppline" },
                 { self.rule_ids.line_file_id, "line_file" },
                 { self.rule_ids.error_id, "pperror" },
+#if defined(CPP_SUPPORT_WARNING_DIRECTIVE)
                 { self.rule_ids.warning_id, "ppwarning" },
+#endif // defined(CPP_SUPPORT_WARNING_DIRECTIVE)
                 { self.rule_ids.null_id, "ppnull" },
                 { self.rule_ids.pragma_id, "pppragma" },
                 { self.rule_ids.illformed_id, "illformed" },

@@ -11,12 +11,15 @@
 
     Acknowledgements
     
-    - to Juan Carlos Arevalo-Baeza, who wrote the Spirit cpp_lexer sample, 
-      from which are taken some ideas 
-    - to Dan Nuffer, who wrote the initial Re2C based C++ lexer and the 
-      Slex (Spirit Lex) scanner generator sample
-    - to Paul Mensonides for his invaluable help while developing the macro
-      replacement engine and his insightful tips
+    - To Paul Mensonides for his invaluable help while developing the macro
+      expansion engine and his insightful tips.
+      He developed the recursive macro expansion algorithm use herein.
+      He also contributed the small testfiles used for testing the correctness
+      of the macro expansion.
+    - To Dan Nuffer, who wrote the initial Re2C based C++ lexer and the 
+      Slex (Spirit Lex) scanner generator sample.
+    - To Juan Carlos Arevalo-Baeza, who wrote the Spirit cpp_lexer sample, 
+      from which are taken some ideas.
       
 =============================================================================*/
 

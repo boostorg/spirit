@@ -115,7 +115,7 @@ public:
 
 // maintain defined macros
     bool add_macro_definition(TokenT const &name, bool has_params,
-            std::vector<TokenT> &parameters, std::vector<TokenT> &definition)
+            std::vector<TokenT> &parameters, std::list<TokenT> &definition)
         { return macros.add_macro(name, has_params, parameters, definition); }
     bool is_defined_macro(typename TokenT::string_t const &name) const
         { return macros.is_defined(name); }
@@ -134,12 +134,20 @@ public:
 //
 ///////////////////////////////////////////////////////////////////////////////
     template <typename IteratorT>
-    int expand_tokensequence(IteratorT &first, IteratorT const &last,
-        std::list<token_t> &expanded, bool one_token_only = true,
+    TokenT expand_tokensequence(IteratorT &first, IteratorT const &last, 
+        std::list<token_t> &pending, std::list<token_t> &expanded, 
         bool expand_undefined = false)
     {
-        return macros.expand_tokensequence(first, last, expanded, 
-           one_token_only, expand_undefined);
+        return macros.expand_tokensequence(first, last, pending, expanded, 
+            expand_undefined);
+    }
+
+    template <typename IteratorT>
+    void expand_whole_tokensequence(IteratorT &first, IteratorT const &last, 
+        std::list<token_t> &expanded, bool expand_undefined = true)
+    {
+        return macros.expand_whole_tokensequence(expanded, first, last, 
+            expand_undefined);
     }
 
 private:

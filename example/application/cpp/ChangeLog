@@ -9,10 +9,14 @@ See Copyright.txt for full copyright notices and acknowledgements.
 Still missing features
 - #include directive with macro argument (C++ standard 16.2.4)
 - #line directive (C++ standard 16.4)
-- #error and #warning directive (C++ standard 16.5)
+- #error and #warning (optional) directive (C++ standard 16.5)
 - #pragma directive (C++ standard 16.6)
-- # (null) directive (C++ standard 16.7)
 - predefinded macros (__LINE__ et.al.) (C++ standard 16.8)
+
+Wed Feb 19 23:44:47  2003
+- Corrected a lot of bugs in the macro expansion engine, which now should be 
+  conformant to the C++ standard.
+- # (null) directive (C++ standard 16.7)
 
 Sun Feb 16 08:40:38  2003
 - Added a macro expansion engine which expands macros with arguments 

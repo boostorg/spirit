@@ -21,6 +21,13 @@
 #include <boost/config.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
+//  Decide, whether to implement a #warning directive as 
+//
+//  To implement #warning directives, undefine the following
+//
+//#define CPP_SUPPORT_WARNING_DIRECTIVE
+
+///////////////////////////////////////////////////////////////////////////////
 //  undefine the following, to enable some MS specific language extensions
 //#define SUPPORT_MS_EXTENSIONS
 
