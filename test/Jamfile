@@ -16,8 +16,7 @@
 
 subproject libs/spirit/test ;
 
-SEARCH on testing.jam = $(BOOST_BUILD_PATH) ;
-include testing.jam ;
+import testing ;
 
 spirit-header-include = ;
 if ($SPIRIT_HEADER_INCLUDE)
