@@ -47,7 +47,6 @@ struct is_parser
 //  using boost::is_base_and_derived
 };
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  The is_unary_composite traits template can be used to tell if a given

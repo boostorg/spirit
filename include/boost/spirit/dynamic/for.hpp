@@ -136,7 +136,7 @@ namespace boost { namespace spirit
                     }
                     step();
                 }
-                return scan.create_match(length, nil_t(), save, scan.first);
+                return scan.create_match(length, boost::spirit::nil_t(), save, scan.first);
             }
         };
 

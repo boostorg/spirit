@@ -268,33 +268,21 @@ namespace boost { namespace spirit {
         };
 
         template <typename ParserT, typename MinT>
-        struct loop_traits <ParserT, MinT, more_t>
+        struct loop_traits<ParserT, MinT, more_t>
         {
             typedef infinite_loop<ParserT, MinT> type;
         };
 
     #else
 
-        template <typename MaxT>
-        struct loop_chooser
-        {
-            typedef true_t value;
-        };
-
-        template <>
-        struct loop_chooser <more_t>
-        {
-            typedef false_t value;
-        };
-
         template <typename ParserT, typename MinT, typename MaxT>
         struct loop_traits
         {
             typedef typename mpl::if_<
-                    loop_chooser<MaxT>,
-                    finite_loop<ParserT, MinT, MaxT>,
-                    infinite_loop<ParserT, MinT>
-                >::type type;
+                boost::is_same<MaxT, more_t>,
+                infinite_loop<ParserT, MinT>,
+                finite_loop<ParserT, MinT, MaxT>
+            >::type type;
         };
 
     #endif
@@ -308,11 +296,11 @@ namespace boost { namespace spirit {
         : m_min (min), m_max (max) {}
 
        template <typename ParserT>
-       typename impl::loop_traits <ParserT, MinT, MaxT>::type
-       operator [] (parser <ParserT> const & subject) const
+       typename impl::loop_traits<ParserT, MinT, MaxT>::type
+       operator[](parser <ParserT> const & subject) const
        {
-            return impl::loop_traits <ParserT, MinT, MaxT>::type(
-                subject.derived (),
+            return impl::loop_traits<ParserT, MinT, MaxT>::type(
+                subject.derived(),
                 m_min,
                 m_max);
        }
@@ -323,14 +311,14 @@ namespace boost { namespace spirit {
 
     template <typename ExactT>
     fixed_loop_gen <ExactT>
-    repeat_p (ExactT const & exact)
+    repeat_p(ExactT const & exact)
     {
         return fixed_loop_gen <ExactT> (exact);
     }
 
     template <typename MinT, typename MaxT>
     nonfixed_loop_gen <MinT, MaxT>
-    repeat_p (MinT const & min, MaxT const & max)
+    repeat_p(MinT const & min, MaxT const & max)
     {
         return nonfixed_loop_gen <MinT, MaxT> (min, max);
     }
