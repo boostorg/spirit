@@ -125,6 +125,14 @@ match_tests()
     assert(x == 123);
     mref.value() = 986;
     assert(x == 986);
+    
+    std::string s("hello");
+    match<int> mint(1, x);
+    assert(mint.value() == x);
+    match<std::string> mstr(1, s);
+    assert(mstr.value() == "hello");
+    mstr = mint;
+    mint = mstr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
