@@ -1,6 +1,7 @@
 /*=============================================================================
     Spirit V1.5.2
     Copyright (c) 2002-2003 Joel de Guzman
+    Copyright (c) 2003-2003 Aleksey Gurtovoy
     Copyright (c) 2002 Raghavendra Satish
     http://spirit.sourceforge.net/
 
@@ -19,6 +20,8 @@
 namespace boost { namespace spirit { namespace impl {
 
  #if !defined(BOOST_INTEL_CXX_VERSION)
+
+#if BOOST_MSVC <= 1200
 
        //////////////////////////////////
         template< typename T >
@@ -157,6 +160,171 @@ namespace boost { namespace spirit { namespace impl {
             };                                                              \
         };                                                                  \
     }                                                                       \
+
+#else
+
+struct int_convertible_
+{
+    int_convertible_(int);
+};
+
+template< typename T >
+struct is_msvc_70_ETI_arg
+{
+    typedef char (&no_tag)[1];
+    typedef char (&yes_tag)[2];
+
+    static no_tag test(...);
+    static yes_tag test(int_convertible_);
+    static T get();
+
+    BOOST_STATIC_CONSTANT(bool, value =
+          sizeof(test(get())) == sizeof(yes_tag)
+        );
+};
+
+template<>
+struct is_msvc_70_ETI_arg<int>
+{
+    BOOST_STATIC_CONSTANT(bool, value = true);
+};
+
+    #define BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER(name, templ)            \
+    namespace impl                                                          \
+    {                                                                       \
+        template <bool> struct name##_impl                                  \
+        {                                                                   \
+            template <typename F, typename T1>                              \
+            struct result_                                                  \
+            {                                                               \
+                typedef int type;                                           \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <> struct name##_impl<false>                               \
+        {                                                                   \
+            template <typename F, typename T1>                              \
+            struct result_                                                  \
+                : F::template templ<T1>                                     \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <typename F>                                               \
+        struct name                                                         \
+        {                                                                   \
+            template <typename T1>                                          \
+            struct result_                                                  \
+                : name##_impl< is_msvc_70_ETI_arg<F>::value >               \
+                    ::template result_<F,T1>                                \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+    }                                                                       \
+
+    #define BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER2(name, templ)           \
+    namespace impl                                                          \
+    {                                                                       \
+        template <bool> struct name##_impl                                  \
+        {                                                                   \
+            template <typename F, typename T1, typename T2>                 \
+            struct result_                                                  \
+            {                                                               \
+                typedef int type;                                           \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <> struct name##_impl<false>                               \
+        {                                                                   \
+            template <typename F, typename T1, typename T2>                 \
+            struct result_                                                  \
+                : F::template templ<T1,T2>                                  \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <typename F>                                               \
+        struct name                                                         \
+        {                                                                   \
+            template <typename T1, typename T2>                             \
+            struct result_                                                  \
+                : name##_impl< is_msvc_70_ETI_arg<F>::value >               \
+                    ::template result_<F,T1,T2>                             \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+    }                                                                       \
+
+    #define BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER3(name, templ)           \
+    namespace impl                                                          \
+    {                                                                       \
+        template <bool> struct name##_impl                                  \
+        {                                                                   \
+            template <typename F, typename T1, typename T2, typename T3>    \
+            struct result_                                                  \
+            {                                                               \
+                typedef int type;                                           \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <> struct name##_impl<false>                               \
+        {                                                                   \
+            template <typename F, typename T1, typename T2, typename T3>    \
+            struct result_                                                  \
+                : F::template templ<T1,T2,T3>                               \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <typename F>                                               \
+        struct name                                                         \
+        {                                                                   \
+            template <typename T1, typename T2, typename T3>                \
+            struct result_                                                  \
+                : name##_impl< is_msvc_70_ETI_arg<F>::value >               \
+                    ::template result_<F,T1,T2,T3>                          \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+    }                                                                       \
+
+    #define BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER4(name, templ)           \
+    namespace impl                                                          \
+    {                                                                       \
+        template <bool> struct name##_impl                                  \
+        {                                                                   \
+            template <typename F,                                           \
+                typename T1, typename T2, typename T3, typename T4>         \
+            struct result_                                                  \
+            {                                                               \
+                typedef int type;                                           \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <> struct name##_impl<false>                               \
+        {                                                                   \
+            template <typename F,                                           \
+                typename T1, typename T2, typename T3, typename T4>         \
+            struct result_                                                  \
+                : F::template templ<T1,T2,T3,T4>                            \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <typename F>                                               \
+        struct name                                                         \
+        {                                                                   \
+            template <typename T1, typename T2, typename T3, typename T4>   \
+            struct result_                                                  \
+                : name##_impl< is_msvc_70_ETI_arg<F>::value >               \
+                    ::template result_<F,T1,T2,T3,T4>                       \
+            {                                                               \
+            };                                                              \
+        };                                                                  \
+    }                                                                       \
+
+#endif // BOOST_MSVC <= 1200
+
 
 #endif
         ///////////////////////////////////////////////////////////////////////

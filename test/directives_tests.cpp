@@ -163,17 +163,11 @@ struct identifier : public grammar<identifier>
     {
         definition(identifier const& self)
         {
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
-            r = lexeme_d[+(alpha_p | '_')];
-#else
             rr = +(alpha_p | '_');
             r = lexeme_d[rr];
-#endif
         }
 
-#if !defined(BOOST_MSVC) || (BOOST_MSVC > 1300)
         rule<typename lexeme_scanner<ScannerT>::type> rr;
-#endif
         rule<ScannerT> r;
 
         rule<ScannerT> const&
