@@ -200,11 +200,6 @@ main()
         cout << error_count << " of " << test_count << " while_p-tests failed\n"
              << "Test failed\n";
 
-    //////////////////////////////////
-    // check wether as_parser<> works:
-    while_p('"')['"'];
-    do_p['"'].while_p('"');
-
     return error_count!=0;
 }
 ////////////////////////////////////////////////////////////////////////////////

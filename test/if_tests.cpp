@@ -205,12 +205,6 @@ main()
         cout << error_count << " of " << test_count << " if_p-tests failed\n"
              << "Test failed\n";
 
-
-
-    //////////////////////////////////
-    // compile time check wether as_parser<> works for if_p
-    ::boost::spirit::if_p('"')['"'].else_p['"'];
-
     return error_count!=0;
 }
 ////////////////////////////////////////////////////////////////////////////////

@@ -49,5 +49,6 @@
 ./scoped_lock_tests || exit 1
 
 # Spirit.Iterator
+./file_iterator_tests || exit 1
 ./fixed_size_queue_tests || exit 1
 ./multi_pass_tests || exit 1

@@ -8,108 +8,141 @@
     software is provided "as is" without express or implied warranty, and
     with no claim as to its suitability for any purpose.
 =============================================================================*/
-// vi:ts=4:sw=4:et
-// Tests for boost::spirit::epsilon_p
-// [30-Dec-2002]
-////////////////////////////////////////////////////////////////////////////////
-#define qDebug 0
+
 #include <iostream>
 #include <cstring>
 #include <cassert>
-#if qDebug
-#define BOOST_SPIRIT_DEBUG
-#endif
+
+// This test program only includes the epsilon.hpp header from Spirit
 #include <boost/spirit/core/composite/epsilon.hpp>
-#include <boost/ref.hpp>
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace local
-{
-    template <typename T>
-    struct var_wrapper
-        : public ::boost::reference_wrapper<T>
-    {
-        typedef ::boost::reference_wrapper<T> parent;
+#include "impl/unit_test.ipp"
+#include "impl/var.hpp"
 
-        explicit inline var_wrapper(T& t) : parent(t) {}
+namespace ut = boost::unit_test_framework;
+using namespace test;
 
-        inline T& operator()() const { return parent::get(); }
-    };
+////////////////////////////////////////////////////////////////////////////////
 
-    template <typename T>
-    inline var_wrapper<T>
-    var(T& t)
-    {
-        return var_wrapper<T>(t);
-    }
-}
+static boost::spirit::parse_info<char const *> pi;
 
-boost::spirit::parse_info<char const *> pi;
+////////////////////////////////////////////////
+// These macros are used with BOOST_CHECK
+#define matches (pi.hit)
+#define full_match (pi.hit && pi.full)
+#define partial_match (pi.hit && !pi.full)
+#define no_match (!pi.hit && !pi.full)
+#define zero_length_match (pi.length == 0)
+#define stop_equals_start (pi.stop == s)
 
 template<typename ParserT>
-void
+static void
 parse(char const *s, ParserT const &p, bool match)
 {
     using namespace std;
     pi = boost::spirit::parse(s, s+strlen(s), p);
     if (match)
     {
-        assert(pi.hit);
-        assert(pi.length == 0);
-        assert(pi.stop == s);
+        BOOST_CHECK(matches);
+        BOOST_CHECK(zero_length_match);
+        BOOST_CHECK(stop_equals_start);
     }
     else
     {
-        assert(!pi.hit);
+        BOOST_CHECK(no_match);
     }
 }
 
-int
-main()
+static char const empty[] = "";
+static char const not_empty[] = "asdfgh";
+
+////////////////////////////////////////////////
+// Test wether epsilon_p/eps_p work as
+// primitive parsers
+static void
+epsilon_as_primitive()
 {
-    using namespace std;
-
-    char const empty[]="";
-    char const not_empty[]="asdfgh";
-
-    ////////////////////////////////////////////////
-    // Test wether epsilon_p/eps_p work correctly as
-    // a primitive parser
+    // This test case also is a compile time check wether
+    // both eps_p and epsilon_p are present.
 
     parse(empty, boost::spirit::epsilon_p, true);
-    assert(pi.full);
+    BOOST_CHECK(full_match);
     parse(not_empty, boost::spirit::epsilon_p, true);
-    assert(!pi.full);
+    BOOST_CHECK(partial_match);
 
     parse(empty, boost::spirit::eps_p, true);
-    assert(pi.full);
+    BOOST_CHECK(full_match);
     parse(not_empty, boost::spirit::eps_p, true);
-    assert(!pi.full);
+    BOOST_CHECK(partial_match);
+}
 
-    ////////////////////////////////////////////////
-    // Test wether epsilon_p/eps_p work correctly as
-    // a parser generator for functors
-
+////////////////////////////////////////////////
+// Test wether epsilon_p/eps_p work correctly as
+// a parser generator for creating parsers from
+// functors
+static void
+epsilon_as_parser_generator_for_functors()
+{
     bool       flag = false;
-    parse(empty, boost::spirit::epsilon_p(local::var(flag)), flag);
-    assert(!pi.full);
+    parse(empty, boost::spirit::epsilon_p(var(flag)), flag);
+    BOOST_CHECK(no_match);
 
     flag = true;
-    parse(empty, boost::spirit::epsilon_p(local::var(flag)), flag);
-    assert(pi.full);
+    parse(empty, boost::spirit::epsilon_p(var(flag)), flag);
+    BOOST_CHECK(full_match);
+}
 
-    ////////////////////////////////////////////////
-    // Test wether epsilon_p/eps_p work correctly as
-    // a parser generator for creating parsers from
-    // other parsers
+////////////////////////////////////////////////
+// Test wether epsilon_p/eps_p work correctly as
+// a parser generator for creating parsers from
+// other parsers
+static void
+epsilon_as_parser_generator_for_parsers()
+{
+    // This test case uses a parser created by epsilon_p
+    // as body-parser for another invokation of epsilon_p
 
-    flag = false;
-    parse(empty, boost::spirit::epsilon_p(boost::spirit::epsilon_p(local::var(flag))), flag);
-    assert(!pi.full);
+    bool        flag = false;
+    parse(empty, boost::spirit::epsilon_p(
+            boost::spirit::epsilon_p(var(flag))), flag);
+    BOOST_CHECK(no_match);
 
     flag = true;
-    parse(empty, boost::spirit::epsilon_p(boost::spirit::epsilon_p(local::var(flag))), flag);
-    assert(pi.full);
+    parse(empty, boost::spirit::epsilon_p(
+            boost::spirit::epsilon_p(var(flag))), flag);
+    BOOST_CHECK(full_match);
+}
 
-    return 0;
+////////////////////////////////////////////////
+// Test wether epsilon_p/eps_p support negation
+static void
+negation_operator_for_epsilon()
+{
+    bool       flag = false;
+    parse(empty, ~boost::spirit::epsilon_p(var(flag)), !flag);
+    BOOST_CHECK(full_match);
+    parse(empty, ~~boost::spirit::epsilon_p(var(flag)), flag);
+    BOOST_CHECK(no_match);
+
+    flag = true;
+    parse(empty, ~boost::spirit::epsilon_p(var(flag)), !flag);
+    BOOST_CHECK(no_match);
+    parse(empty, ~~boost::spirit::epsilon_p(var(flag)), flag);
+    BOOST_CHECK(full_match);
+}
+
+////////////////////////////////////////////////
+// Definition of the test suite
+ut::test_suite*
+init_unit_test_suite( int argc, char* argv[] )
+{
+    ut::test_suite* test= BOOST_TEST_SUITE( "spirit::epsilon tests" );
+
+    test->add(BOOST_TEST_CASE(epsilon_as_primitive));
+    test->add(BOOST_TEST_CASE(epsilon_as_parser_generator_for_functors));
+    test->add(BOOST_TEST_CASE(epsilon_as_parser_generator_for_parsers));
+    test->add(BOOST_TEST_CASE(negation_operator_for_epsilon));
+
+    return test;
 }
