@@ -8,7 +8,7 @@
 =============================================================================*/
 
 //  This is a compile only test for verifying, whether the multi_pass<>
-//  iterator works ok with an input iterator, which returns a value_type and not 
+//  iterator works ok with an input iterator, which returns a value_type and not
 //  a reference from its dereferencing operator.
 
 #include <cstdio>
@@ -22,10 +22,14 @@
 #include <unistd.h>    // unlink()
 #endif
 
+#if defined(__MINGW32__)
+#include <io.h>    // unlink()
+#endif
+
 using namespace boost::spirit;
 using namespace std;
 
-int main () 
+int main ()
 {
     // create a sample file
     {
@@ -59,7 +63,7 @@ int main ()
 
         result = !m ? 1 : 0;
     }
-    
+
     unlink("./input_file.txt");
     return result;
 }
