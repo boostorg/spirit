@@ -75,6 +75,12 @@ namespace boost { namespace fusion
 
     template <typename Iterator>
     typename meta::deref<Iterator>::type
+    deref(Iterator const & i) {
+        return deref_detail::deref(i,is_const<Iterator const>());
+    }
+
+    template <typename Iterator>
+    typename meta::deref<Iterator>::type
     operator*(iterator_base<Iterator> const& i)
     {
         return fusion::deref(i.cast());
