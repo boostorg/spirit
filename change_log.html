@@ -4,8 +4,10 @@
   <li>__LINE__ macro now gets expanded in BOOST_SPIRIT_ASSERT_EXCEPTION</li>
   <li>Fixed a bug in the intersection parser <a href="http://article.gmane.org/gmane.comp.parsers.spirit.general/8544">reported by Yusaku Sugai</a></li>
   <li>The symbol parser uses the null character internally. Checks were added so that:
-  <li>tst.add asserts if string contains the null character</li>
-  <li>tst.find doesn't match null characters in the input</li>
+  <ul>
+    <li>tst.add asserts if string contains the null character</li>
+    <li>tst.find doesn't match null characters in the input</li>
+  </ul></li>
   <li>Fixed match_attr_traits.ipp to allow non-POD to pass through. The previous version taking in the ellipsis &quot;...&quot; does not allow PODs to pass through.</li>
   <li>Allow evaluation to int as condition to if_p parser.</li>
   <li>Applied  performance improvement changes to the PT/AST code as suggested by Stefan Slapeta. </li>
