@@ -38,7 +38,7 @@ namespace boost { namespace spirit {
         template <typename ScannerT>
         struct result
         {
-            typedef typename parser_t::result<ScannerT>::type type;
+            typedef typename parser_result<parser_t, ScannerT>::type type;
         };
 
         scoped_lock_parser(mutex_t &m, parser_t const &p)
