@@ -348,7 +348,6 @@ swap(node_iter_data<T, V>& a, node_iter_data<T, V>& b)
     a.swap(b);
 }
 
-
 //////////////////////////////////
 template <typename ValueT = nil_t>
 class node_iter_data_factory;
@@ -389,10 +388,13 @@ public:
     };
 };
 
+//////////////////////////////////
+template <typename ValueT = nil_t>
+class node_val_data_factory;
 
 //////////////////////////////////
 template <typename ValueT>
-class node_val_data_factory
+class node_val_data_factory 
 {
 public:
     // This inner class is so that node_val_data_factory can simluate
@@ -422,9 +424,10 @@ public:
         static node_t group_nodes(ContainerT const& nodes)
         {
             typename node_t::container_t c;
+            typename ContainerT::const_iterator i_end = nodes.end();
             // copy all the nodes text into a new one
             for (typename ContainerT::const_iterator i = nodes.begin();
-                    i != nodes.end(); ++i)
+                 i != i_end; ++i)
             {
                 // See docs: token_node_d or leaf_node_d cannot be used with a
                 // rule inside the [].
@@ -470,9 +473,10 @@ public:
         static node_t group_nodes(ContainerT const& nodes)
         {
             typename node_t::container_t c;
+			      typename ContainerT::const_iterator i_end = nodes.end();
             // copy all the nodes text into a new one
             for (typename ContainerT::const_iterator i = nodes.begin();
-                    i != nodes.end(); ++i)
+                    i != i_end; ++i)
             {
                 // See docs: token_node_d or leaf_node_d cannot be used with a
                 // rule inside the [].
@@ -541,11 +545,17 @@ public:
 
     tree_match(std::size_t length, parse_node_t const& n)
     : match<T>(length), trees()
-    { trees.push_back(node_t(n)); }
+    { 
+        trees.reserve(10); // this is more or less an arbitraty number...
+        trees.push_back(node_t(n)); 
+    }
 
     tree_match(std::size_t length, param_type val, parse_node_t const& n)
     : match<T>(length, val), trees()
-    { trees.push_back(node_t(n)); }
+    {
+        trees.reserve(10); // this is more or less an arbitraty number...
+        trees.push_back(node_t(n));
+    }
 
     template <typename T2>
     tree_match(match<T2> const& other)
@@ -694,7 +704,11 @@ struct common_tree_match_policy : public match_policy
             a = b;
             return;
         }
-        else if (b.length() == 0)
+        else if (b.length() == 0
+#ifdef BOOST_SPIRIT_NO_TREE_NODE_COLLAPSING
+            && !b.trees.begin()->value.id().to_long()
+#endif
+            )
         {
             return;
         }
@@ -940,7 +954,9 @@ struct infix_node_op
         // a new container of children.
         bool keep = true;
         container_t new_children;
-        for (iter_t i = m.trees.begin(); i != m.trees.end(); ++i)
+        new_children.reserve(m.trees.size());
+        iter_t i_end = m.trees.end();
+        for (iter_t i = m.trees.begin(); i != i_end; ++i)
         {
             if (keep)
             {
@@ -981,8 +997,9 @@ struct discard_first_node_op
         // m.trees.erase(m.trees.begin()) because, on a vector that will cause
         // all the nodes afterwards to be copied into the previous position.
         container_t new_children;
-        iter_t i = m.trees.begin();
-        for (++i; i != m.trees.end(); ++i)
+        new_children.reserve(m.trees.size() - 1);
+        iter_t i = m.trees.begin(), i_end = m.trees.end();
+        for (++i; i != i_end; ++i)
         {
             // move the child node
             new_children.push_back(value_t());
@@ -1027,8 +1044,10 @@ struct inner_node_op
         // all the nodes afterwards to be copied into the previous position.
         container_t new_children;
         m.trees.pop_back(); // erase the last element
+        new_children.reserve(m.trees.size() - 1);
         iter_t i = m.trees.begin(); // skip over the first element
-        for (++i; i != m.trees.end(); ++i)
+        iter_t i_end = m.trees.end();
+        for (++i; i != i_end; ++i)
         {
             // move the child node
             new_children.push_back(value_t());

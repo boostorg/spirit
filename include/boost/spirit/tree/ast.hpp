@@ -80,6 +80,8 @@ struct ast_tree_policy :
         else if (0 != a.trees.size() && a.trees.begin()->value.is_root())
         {
             BOOST_SPIRIT_ASSERT(a.trees.size() == 1);
+
+            a.trees.begin()->children.reserve(a.trees.begin()->children.size() + b.trees.size());
             std::copy(b.trees.begin(),
                  b.trees.end(),
                  std::back_insert_iterator<container_t>(
@@ -87,6 +89,7 @@ struct ast_tree_policy :
         }
         else
         {
+            a.trees.reserve(a.trees.size() + b.trees.size());
             std::copy(b.trees.begin(),
                  b.trees.end(),
                  std::back_insert_iterator<container_t>(a.trees));
@@ -111,7 +114,11 @@ struct ast_tree_policy :
         typedef typename container_t::iterator cont_iterator_t;
         typedef typename NodeFactoryT::template factory<iterator_t> factory_t;
 
-        if (m.trees.size() == 1)  // only one node, so don't make a new level
+        if (m.trees.size() == 1
+#ifdef BOOST_SPIRIT_NO_TREE_NODE_COLLAPSING
+            && !(id.to_long() && m.trees.begin()->value.id().to_long())
+#endif
+            )
         {
             // set rule_id's.  There may have been multiple nodes created.
             // Because of root_node[] they may be left-most children of the top
@@ -257,7 +264,7 @@ ast_parse(
     IteratorT const&        last_,
     parser<ParserT> const&  parser,
     SkipT const&            skip_,
-    AstFactoryT const &     /*dummy_*/ = AstFactoryT())
+    AstFactoryT const &   /*dummy_*/ = AstFactoryT())
 {
     typedef skip_parser_iteration_policy<SkipT> iter_policy_t;
     typedef ast_match_policy<IteratorT, AstFactoryT> ast_match_policy_t;
@@ -297,14 +304,15 @@ ast_parse(
     IteratorT const&        last,
     parser<ParserT> const&  parser)
 {
+    typedef ast_match_policy<IteratorT> ast_match_policy_t;
     IteratorT first = first_;
     scanner<
         IteratorT,
-        scanner_policies<iteration_policy, ast_match_policy<IteratorT> >
+        scanner_policies<iteration_policy, ast_match_policy_t>
     > scan(first, last);
     tree_match<IteratorT> hit = parser.derived().parse(scan);
-    return tree_parse_info<IteratorT>(first, hit, hit && (first == last),
-        hit.length(), hit.trees);
+    return tree_parse_info<IteratorT>(
+        first, hit, hit && (first == last), hit.length(), hit.trees);
 }
 
 //////////////////////////////////
