@@ -6,6 +6,24 @@ See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
 
+Sat Feb 22 20:52:06  2003
+- Bumped version to 0.9.0
+- Added test for invalid or not allowed universal character values (see
+  C++ Standard 2.2.2 [lex.charset] and Annex E)
+- Fixed a bug with newlines between a macro name and the opening paranthesis 
+  during the macro expansion and a bug with newlines inside the parameter list
+  during the macro expansion.
+- Added the following predefined macros:
+    __SPIRIT_PP__
+        expands to the version number of the pp-iterator lib (i.e. 0x0090 for 
+        V0.9.0)
+    __SPIRIT_PP_VERSION__
+        expands to the full version number of the pp-iterator lib (i.e.
+        0x00900436 for V0.9.0.436)
+    __SPIRIT_PP_VERSION_STR__
+        expands to the full version string of the pp-iterator lib (i.e. 
+        0.9.0.436)
+  
 Fri Feb 21 22:09:04  2003 (feature complete!)
 - Allowed to optionally compile the Re2c generated lexer in 'C' mode, because 
   at least the VC7.1 (final beta) compiler has problems to compile it in 'C++'
@@ -26,7 +44,7 @@ Fri Feb 21 22:09:04  2003 (feature complete!)
   Additionally there are now allowed the following preprocessor configuration 
   constants:
     CPP_RETURN_PRAGMA_DIRECTIVES
-        if defined, then the whole pragma directive is returned a a token
+        if defined, then the whole pragma directive is returned as a token
         sequence to the caller, if not defined the whole pragma directive is 
         skipped
     CPP_PREPROCESS_PRAGMA_BODY

@@ -34,9 +34,9 @@
 #include "list_includes.hpp"            // config data
 #include "list_includes_version.hpp"
 
+#include "util/time_conversion_helper.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_iterator.hpp"
-#include "cpplexer/slex/util/time_conversion_helper.hpp"
 
 #include "cpp/cpp_context.hpp"
 
@@ -86,7 +86,7 @@ namespace fs = boost::filesystem;
 int print_version()
 {
 // get time of last compilation of this file
-util::time_conversion_helper compilation_time(__DATE__ " " __TIME__);
+cpp::util::time_conversion_helper compilation_time(__DATE__ " " __TIME__);
 
 // calculate the number of days since Jan 29 2003 
 // (the day the list_includes project was started)

@@ -24,6 +24,7 @@
 #include <iterator>
 #include <algorithm>
 
+#include "util/time_conversion_helper.hpp"
 #include "cpp/unput_queue_iterator.hpp"
 #include "cpp/cpp_exceptions.hpp"
 #include "cpp/cpp_defined_grammar.hpp"
@@ -547,7 +548,7 @@ TokenT startof_argument_list = *next;
     token_id id = token_id(*next);
 
         if (0 == parameter_count && 
-            !IS_CATEGORY((*next), WhiteSpaceTokenType) &&
+            !IS_CATEGORY((*next), WhiteSpaceTokenType) && id != T_NEWLINE &&
             id != T_RIGHTPAREN && id != T_LEFTPAREN) 
         {
         // there shouldn't be any arguments
@@ -592,6 +593,7 @@ TokenT startof_argument_list = *next;
         case T_SPACE:
         case T_SPACE2:
         case T_CCOMMENT:
+        case T_NEWLINE:
             if (!was_whitespace) 
                 argument->push_back(TokenT(T_SPACE, " ", (*next).get_position()));
             was_whitespace = true;
@@ -632,7 +634,9 @@ namespace {
     {
         using namespace cpplexer;
         if (++it == end) return false;
-        while (IS_CATEGORY(*it, WhiteSpaceTokenType)) {
+        while (IS_CATEGORY(*it, WhiteSpaceTokenType) || 
+               T_NEWLINE == token_id(*it)) 
+        {
             if (++it == end)
                 return false;
         }
@@ -647,7 +651,9 @@ namespace {
             return true;
         if (++it == end) 
             return false;
-        while (IS_CATEGORY(*it, WhiteSpaceTokenType)) {
+        while (IS_CATEGORY(*it, WhiteSpaceTokenType) || 
+               T_NEWLINE == token_id(*it)) 
+        {
             if (++it == end)
                 return false;
         }
@@ -1129,6 +1135,69 @@ namespace predefined_macros {
         return timestr.c_str();
     }
 
+// __SPIRIT_PP__
+    inline char const *get_version(bool /*reset*/)
+    {
+    static std::string versionstr;
+    char buffer[sizeof("0x0000")+1];
+
+        std::sprintf(buffer, "0x%02d%1d%1d", CPP_VERSION_MAJOR, 
+            CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR);
+        versionstr = buffer;
+        return versionstr.c_str();
+    }
+    
+// __SPIRIT_PP_VERSION__
+    cpp::util::time_conversion_helper const 
+        compilation_time(__DATE__ " " __TIME__);
+        
+    inline char const *get_fullversion(bool /*reset*/)
+    {
+    static std::string versionstr;
+    char buffer[sizeof("0x00000000")+1];
+
+    // calculate the number of days since Dec 13 2001 
+    // (the day the cpp project was started)
+    std::tm first_day;
+
+        std::memset (&first_day, 0, sizeof(std::tm));
+        first_day.tm_mon = 11;           // Dec
+        first_day.tm_mday = 13;          // 13
+        first_day.tm_year = 101;         // 2001
+
+    long seconds = long(std::difftime(compilation_time.get_time(), 
+        std::mktime(&first_day)));
+
+        std::sprintf(buffer, "0x%02d%1d%1d%04d", CPP_VERSION_MAJOR,
+             CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR, seconds/(3600*24));
+        versionstr = buffer;
+        return versionstr.c_str();
+    }
+    
+// __SPIRIT_PP_VERSION_STR__
+    inline char const *get_versionstr(bool /*reset*/)
+    {
+    static std::string versionstr;
+    char buffer[sizeof("\"00.00.00.0000\"")+1];
+
+    // calculate the number of days since Dec 13 2001 
+    // (the day the cpp project was started)
+    std::tm first_day;
+
+        std::memset (&first_day, 0, sizeof(std::tm));
+        first_day.tm_mon = 11;           // Dec
+        first_day.tm_mday = 13;          // 13
+        first_day.tm_year = 101;         // 2001
+
+    long seconds = long(std::difftime(compilation_time.get_time(), 
+        std::mktime(&first_day)));
+
+        std::sprintf(buffer, "\"%d.%02d.%02d.%04d\"", CPP_VERSION_MAJOR,
+             CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR, seconds/(3600*24));
+        versionstr = buffer;
+        return versionstr.c_str();
+    }
+    
     struct dynamic_macros {
         char const *name;
         cpplexer::token_id token_id;
@@ -1137,6 +1206,9 @@ namespace predefined_macros {
     dynamic_data[] = {
         { "__DATE__", T_STRINGLIT, get_date },
         { "__TIME__", T_STRINGLIT, get_time },
+        { "__SPIRIT_PP__", T_INTLIT, get_version },
+        { "__SPIRIT_PP_VERSION__", T_INTLIT, get_fullversion },
+        { "__SPIRIT_PP_VERSION_STR__", T_STRINGLIT, get_versionstr },
         { 0, T_EOF, 0 }
     };
 

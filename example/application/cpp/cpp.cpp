@@ -26,7 +26,6 @@
 #include "cpplexer/cpplexer_exceptions.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_iterator.hpp"
-#include "cpplexer/slex/util/time_conversion_helper.hpp"
 
 #include "cpp/cpp_exceptions.hpp"
 #include "cpp/cpp_context.hpp"
@@ -77,26 +76,9 @@ namespace fs = boost::filesystem;
 
 int print_version()
 {
-// get time of last compilation of this file
-cpplexer::slex::util::time_conversion_helper compilation_time(__DATE__ " " __TIME__);
-
-// calculate the number of days since Dec 13 2001 
-// (the day the cpp project was started)
-std::tm first_day;
-
-    std::memset (&first_day, 0, sizeof(std::tm));
-    first_day.tm_mon = 11;           // Dec
-    first_day.tm_mday = 13;          // 13
-    first_day.tm_year = 101;         // 2001
-
-long seconds = long(std::difftime(compilation_time.get_time(), 
-    std::mktime(&first_day)));
-
-    cout 
-        << CPP_VERSION_MAJOR << '.' 
-        << CPP_VERSION_MINOR << '.'
-        << CPP_VERSION_SUBMINOR << '.'
-        << seconds/(3600*24);       // get number of days from seconds
+    typedef cpp::context<lex_token<std::string::iterator> > context_t;
+    string version (context_t::get_version_string());
+    cout << version.substr(1, version.size()-2) << endl;    // strip quotes
     return 1;                       // exit app
 }
 

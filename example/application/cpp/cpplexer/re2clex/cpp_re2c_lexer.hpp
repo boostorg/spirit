@@ -25,6 +25,7 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/iterator/position_iterator.hpp>
 
+#include "cpplexer/validate_universal_char.hpp"
 #include "cpplexer/cpplexer_exceptions.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_interface.hpp"
@@ -106,10 +107,14 @@ lexer<IteratorT, PositionT>::get()
 {
     using namespace cpplexer::re2clex;
     token_id id = token_id(scan(&scanner));
-    return lex_token<IteratorT, PositionT>(id, 
-                std::string((char const *)scanner.tok, scanner.cur-scanner.tok), 
-                PositionT(filename, scanner.line, -1)
-           );
+    std::string value((char const *)scanner.tok, scanner.cur-scanner.tok);
+    
+    if (T_IDENTIFIER == id) {
+    // test identifier characters for validity (throws if invalid chars found)
+        impl::validate_identifier_name(value, scanner.line, -1, filename); 
+    }
+    return lex_token<IteratorT, PositionT>(id, value, 
+        PositionT(filename, scanner.line, -1));
 }
 
 template <typename IteratorT, typename PositionT>

@@ -27,10 +27,11 @@
 
 #include "../slex/lexer.hpp"            // "spirit/lexer.hpp"
 
+#include "util/time_conversion_helper.hpp"
+#include "cpplexer/validate_universal_char.hpp"
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_interface.hpp"
 #include "cpplexer/slex/cpp_slex_token.hpp"
-#include "cpplexer/slex/util/time_conversion_helper.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpplexer {
@@ -70,7 +71,7 @@ private:
     static lexer_data const init_data[];
 
 // helper for calculation of the time of last compilation
-    static util::time_conversion_helper compilation_time;
+    static cpp::util::time_conversion_helper compilation_time;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -261,7 +262,7 @@ lexer<IteratorT, PositionT>::init_data[] =
     TOKEN_DATA(PP_PRAGMA, POUNDDEF PPSPACE "pragma"),
     TOKEN_DATA(PP_UNDEF, POUNDDEF PPSPACE "undef"),
     TOKEN_DATA(PP_WARNING, POUNDDEF PPSPACE "warning"),
-    TOKEN_DATA(IDENTIFIER, "[a-zA-Z_][a-zA-Z0-9_]*"),
+    TOKEN_DATA(IDENTIFIER, "([a-zA-Z_]" OR UNIVERSALCHAR ")([a-zA-Z0-9_]" OR UNIVERSALCHAR ")*"),
 //  TOKEN_DATA(OCTALINT, "0" OCTALDIGIT "*" INTEGER_SUFFIX "?"),
 //  TOKEN_DATA(DECIMALINT, "[1-9]" DIGIT "*" INTEGER_SUFFIX "?"),
 //  TOKEN_DATA(HEXAINT, "(0x|0X)" HEXDIGIT "+" INTEGER_SUFFIX "?"),
@@ -348,7 +349,7 @@ lexer<IteratorT, PositionT>::lexer()
 ///////////////////////////////////////////////////////////////////////////////
 // get time of last compilation of this file
 template <typename IteratorT, typename PositionT>
-util::time_conversion_helper 
+cpp::util::time_conversion_helper 
     lexer<IteratorT, PositionT>::compilation_time(__DATE__ " " __TIME__);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -418,8 +419,19 @@ public:
             if (-1 == id)
                 break;              // end of input reached
 
-            if (T_CONTLINE != id)   // generate and return the next token
-                return token_t(id, string_t(prev, first), prev.get_position());
+            if (T_CONTLINE != id) {
+            // generate and return the next token
+            string_t value(prev, first);
+
+                if (T_IDENTIFIER == id) {
+                // test identifier characters for validity (throws if invalid 
+                // chars found)
+                    PositionT const &pos = prev.get_position();
+                    impl::validate_identifier_name(value, pos.line, pos.column, 
+                        pos.file); 
+                }
+                return token_t(id, value, prev.get_position());
+            }
         
         // skip the T_CONTLINE token
         } while (true);

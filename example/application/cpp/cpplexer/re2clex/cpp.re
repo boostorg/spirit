@@ -491,7 +491,7 @@ Newline            = "\r\n" | "\n" | "\r";
     "->*"           { RET(T_ARROWSTAR); }
     "->"            { RET(T_ARROW); }
 
-    [a-zA-Z_] ([a-zA-Z_0-9])*        
+    ([a-zA-Z_] | UniversalChar) ([a-zA-Z_0-9] | UniversalChar)*        
         { RET(T_IDENTIFIER); }
     
     (("0" [xX] HexDigit+) | ("0" OctalDigit*) | ([1-9] Digit*)) IntegerSuffix?

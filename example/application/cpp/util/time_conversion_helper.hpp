@@ -19,8 +19,7 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/symbols.hpp>
 
-namespace cpplexer {
-namespace slex {
+namespace cpp {
 namespace util {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,7 +108,7 @@ namespace util {
             BOOST_ASSERT(0 != compile_time);        
         }
 
-        std::time_t get_time() { return compile_time; }
+        std::time_t get_time() const { return compile_time; }
         
     private:
         std::time_t compile_time; 
@@ -119,7 +118,6 @@ namespace util {
 #undef TRACE_CPP_TIME_CONVERSION
 
 }   // namespace util
-}   // namespace slex
-}   // namespace cpplexer
+}   // namespace cpp
 
 #endif // !defined(_TIME_CONVERSION_HELPER_HPP__DA97E389_1797_43BA_82AE_B071064B3EF4__INCLUDED_)

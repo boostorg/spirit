@@ -67,8 +67,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Decide, which C++ lexer to use (choose one!)
+//
 //#define USE_SLEX_CPP_LEXER         // use the SLex based C++ lexer
 #define USE_RE2C_CPP_LEXER       // use the Re2C based C++ lexer
+
+#if (defined(USE_SLEX_CPP_LEXER) && defined(USE_RE2C_CPP_LEXER)) || \
+    (!defined(USE_SLEX_CPP_LEXER) && !defined(USE_RE2C_CPP_LEXER))
+#error "Please choose exactly one C++ lexer to use" \
+    " (define USE_SLEX_CPP_LEXER or USE_RE2C_CPP_LEXER)"
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Undefine the following, if you need debug output, the 

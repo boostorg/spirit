@@ -18,4 +18,4 @@ General notes:
   the program_options library from Vladimir Prus, which is currently under 
   Boost review (http://zigzag.cs.msu.su:7813/program_options).
   
-Please look at the file doc/readme.html.
+Please look at the file doc/preprocessing_iterator.html.

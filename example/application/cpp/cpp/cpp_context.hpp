@@ -105,7 +105,13 @@ public:
     bool remove_macro_definition(typename TokenT::string_t const &name)
         { return macros.remove_macro(name); }
     void reset_macro_definitions() { macros.reset_macromap(); }
-        
+
+// get the pp-iterator version information 
+    static std::string get_version()  
+        { return util::predefined_macros::get_fullversion(false); }
+    static std::string get_version_string()  
+        { return util::predefined_macros::get_versionstr(false); }
+    
 protected:
     friend typename iterator_t::input_policy_t;
     
