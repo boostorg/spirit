@@ -1,4 +1,4 @@
-[doc Phoenix v1.0]
+[doc Phoenix v1.2]
 [/ QuickDoc Document version 0.5 ]
 
 [/  Images   ]
@@ -69,7 +69,7 @@ Please direct all questions to Spirit's mailing list. You can subscribe to the s
 
 [page Introduction]
 
-[h1 The Phoenix Framework v1.0]
+[h1 The Phoenix Framework v1.2]
 [h4 Preliminary Draft]
 February 2001, Joel de Guzman
 
