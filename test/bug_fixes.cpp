@@ -304,6 +304,22 @@ void sf_bug_742038()
     ::remove(tmpfilename);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+//  bug_009
+//
+//  limit_d bug
+//  http://article.gmane.org/gmane.comp.parsers.spirit.devel/1891/
+//
+///////////////////////////////////////////////////////////////////////////////
+void
+bug_009()
+{
+    parse(
+        "test"
+      , limit_d(1, 10)[uint_p] | str_p("test"));
+}
+
 int
 test_main(int, char *[])
 {
@@ -314,6 +330,7 @@ test_main(int, char *[])
     bug_005();
     bug_006();
     bug_007();
+    bug_009();
 
     sf_bug_718903();
     sf_bug_719322();

@@ -49,7 +49,7 @@ namespace boost { namespace spirit
     inline typename match<T>::return_t
     match<T>::value() const
     {
-        BOOST_SPIRIT_ASSERT(val);
+        BOOST_SPIRIT_ASSERT(val.is_initialized());
         return *val;
     }
 

@@ -467,7 +467,7 @@ namespace boost { namespace spirit {
         {
             typedef typename parser_result<self_t, ScannerT>::type result_t;
             result_t hit = this->subject().parse(scan);
-            if (hit.value() < min_)
+            if (hit.has_valid_attribute() && hit.value() < min_)
                 return scan.no_match();
             return hit;
         }
@@ -527,7 +527,7 @@ namespace boost { namespace spirit {
         {
             typedef typename parser_result<self_t, ScannerT>::type result_t;
             result_t hit = this->subject().parse(scan);
-            if (hit.value() > max_)
+            if (hit.has_valid_attribute() && hit.value() > max_)
                 return scan.no_match();
             return hit;
         }
@@ -589,8 +589,9 @@ namespace boost { namespace spirit {
         {
             typedef typename parser_result<self_t, ScannerT>::type result_t;
             result_t hit = this->subject().parse(scan);
-            if (hit.value() < min_ || hit.value() > max_)
-                return scan.no_match();
+            if (hit.has_valid_attribute() &&
+                (hit.value() < min_ || hit.value() > max_))
+                    return scan.no_match();
             return hit;
         }
 
