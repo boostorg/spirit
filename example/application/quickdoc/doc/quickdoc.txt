@@ -298,7 +298,7 @@ Hi Spirit :-)
 
 [pre
     '''
-    [blurb :-) [*An eye catching advertisement ornote...]
+    [blurb :-) [*An eye catching advertisement or note...]
     [br][br]
 
     Spirit is an object-oriented recursive-descent parser generator

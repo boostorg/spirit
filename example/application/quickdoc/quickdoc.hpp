@@ -314,15 +314,18 @@ namespace quickdoc
                     ;
 
                 preprocessor
-                    =   lexeme_d['#' >> ((alpha_p | '_') >> *(alnum_p | '_'))]
+                    =   lexeme_d['#' >> ((alpha_p | '_') >> *(alnum_p | '_'))
+                            >> *space_p]
                     ;
 
                 comment
-                    =   +lexeme_d[comment_p("//") | comment_p("/*", "*/")]
+                    =   +lexeme_d[(comment_p("//") | comment_p("/*", "*/"))
+                            >> *space_p]
                     ;
 
                 keyword
-                    =   lexeme_d[keyword_ >> (eps_p - (alnum_p | '_'))];
+                    =   lexeme_d[keyword_ >> (eps_p - (alnum_p | '_'))
+                            >> *space_p]
                     ;   // make sure we recognize whole words only
 
                 keyword_
@@ -343,7 +346,8 @@ namespace quickdoc
                     ;
 
                 special
-                    =   lexeme_d[(+chset_p("~!%^&*()+={[}]:;,<.>?/|\\-"))]
+                    =   lexeme_d[(+chset_p("~!%^&*()+={[}]:;,<.>?/|\\-"))
+                            >> *space_p]
                     ;
 
                 string_
@@ -363,7 +367,8 @@ namespace quickdoc
                     ;
 
                 identifier
-                    =   lexeme_d[((alpha_p | '_') >> *(alnum_p | '_'))]
+                    =   lexeme_d[((alpha_p | '_') >> *(alnum_p | '_'))
+                            >> *space_p]
                     ;
             }
 

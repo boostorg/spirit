@@ -101,19 +101,23 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             preprocessor
-                =   lexeme_d['#' >> ((alpha_p | '_') >> *(alnum_p | '_'))]
+                =   lexeme_d['#' >> ((alpha_p | '_') >> *(alnum_p | '_'))
+                    >> *space_p]
                 ;
 
             comment
-                = +lexeme_d
-                [
-                        ("//" >> *(anychar_p - eol_p) >> eol_p)
+                =
+                +lexeme_d[
+                    (   ("//" >> *(anychar_p - eol_p) >> eol_p)
                     |   ("/*" >> *(anychar_p - "*/") >> "*/")
+                    )
+                    >> *space_p
                 ]
                 ;
 
             keyword
-                =   lexeme_d[keyword_ >> (eps_p - (alnum_p | '_'))];
+                =   lexeme_d[keyword_ >> (eps_p - (alnum_p | '_'))
+                    >> *space_p]
                 ;   // make sure we recognize whole words only
 
             keyword_
@@ -134,12 +138,15 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             special
-                =   lexeme_d
-                [
-                    ch_p('~') | "!" | "%" | "^" | "&" | "*"
-                    | "(" | ")" | "+" | "=" | "{" | "["
-                    | "}" | "]" | ":" | ";" | "," | "<"
-                    | "." | ">" | "?" | "/" | "|" | "\\" | "-"
+                =
+                lexeme_d[
+                    (
+                        ch_p('~') | "!" | "%" | "^" | "&" | "*"
+                        | "(" | ")" | "+" | "=" | "{" | "["
+                        | "}" | "]" | ":" | ";" | "," | "<"
+                        | "." | ">" | "?" | "/" | "|" | "\\" | "-"
+                    )
+                    >> *space_p
                 ]
                 ;
 
@@ -160,7 +167,7 @@ struct cpp_to_html : public grammar<cpp_to_html>
                 ;
 
             identifier
-                =   lexeme_d[((alpha_p | '_') >> *(alnum_p | '_'))]
+                =   lexeme_d[((alpha_p | '_') >> *(alnum_p | '_')) >> *space_p]
                 ;
         }
 
