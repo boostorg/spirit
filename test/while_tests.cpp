@@ -130,7 +130,7 @@ inc_actor<T>
 inc(T &t)
 {
     return inc_actor<T>(t);
-};
+}
 
 int
 main()
