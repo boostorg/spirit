@@ -61,7 +61,7 @@ namespace boost { namespace spirit {
                     = this->subject().parse(scan);
                 if (!next)
                     return scan.no_match();
-                hit.concat(next);
+                scan.concat_match(hit, next);
             }
 
             return hit;
@@ -138,7 +138,7 @@ namespace boost { namespace spirit {
                     }
                 }
 
-                hit.concat(next);
+                scan.concat_match(hit, next);
             }
 
             return hit;
@@ -222,7 +222,7 @@ namespace boost { namespace spirit {
                     }
                 }
 
-                hit.concat(next);
+                scan.concat_match(hit, next);
             }
 
             return hit;
