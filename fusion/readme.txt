@@ -34,6 +34,9 @@ Iterators:
 
     single_view_iterator
         A single element iterator. See single_view below.
+        
+    cons_iterator
+        An iterator into a cons list. See cons below.
 
     transform_view_iterator
         Given a transform-function, transforms the elements being
@@ -63,6 +66,9 @@ Sequences and Views:
 
     joint_view
         A two-sequence view (concatenates two sequences)
+        
+    cons
+        A cons-cell that can be used to build a singly-linked list.
 
     range
         Holds an iterator pair that represents a begin/end range.

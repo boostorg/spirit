@@ -194,6 +194,12 @@ unit-test transform_tests
     :
     ;
 
+unit-test cons_tests
+    : cons_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
 
 
 
