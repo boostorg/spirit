@@ -1536,7 +1536,7 @@ public:
     {
         for (int i = 0; i < 256; ++i)
         {
-            if (parser.test(static_cast<char>(uchar(i))))
+            if (parser.test(static_cast<char_t>(uchar(i))))
                 rr.set(impl::range<char_t>(i, i));
         }
     }
