@@ -42,11 +42,10 @@ namespace boost { namespace spirit {
     //      see parser_id.hpp) that allows a rule to be tagged for
     //      identification.
     //
-    //      The definition of the rule (its right hand side, RHS) is
-    //      reference counted and held by the rule through a smart pointer.
-    //      When a rule is seen in the the RHS of an assignment or copy
-    //      construction EBNF expression, the rule is held by the LHS rule by
-    //      reference.
+    //      The definition of the rule (its right hand side, RHS) held by the
+    //      rule through a ::boost::scoped_ptr. When a rule is seen in the
+    //      the RHS of an assignment or copy construction EBNF expression,
+    //      the rule is held by the LHS rule by reference.
     //
     ///////////////////////////////////////////////////////////////////////////
     template <

@@ -407,7 +407,7 @@ namespace boost { namespace spirit {
                 bool        got_a_number = n_match;
                 match<>     e_hit;
 
-                if (!got_a_number && !RealPoliciesT::allow_trailing_left_dot)
+                if (!got_a_number && !RealPoliciesT::allow_leading_dot)
                      return scan.no_match();
                 else
                     count += n_match.length();
@@ -434,7 +434,7 @@ namespace boost { namespace spirit {
                     }
 
                     else if (!got_a_number ||
-                        !RealPoliciesT::allow_trailing_right_dot)
+                        !RealPoliciesT::allow_trailing_dot)
                         return scan.no_match();
 
                     e_hit = RealPoliciesT::parse_exp(scan);
