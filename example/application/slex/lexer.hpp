@@ -60,7 +60,7 @@
 #include "boost/spirit/core/impl/msvc.hpp"
 #endif
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
 #define BOOST_SPIRIT_IT_NS impl
 #else
 #define BOOST_SPIRIT_IT_NS std
@@ -2090,8 +2090,15 @@ struct regex_match_helper<false> // single byte char
     template <typename DfaT, typename IteratorT>
     static bool
     do_match(DfaT const& dfa, IteratorT &first, IteratorT const& last,
-        int& regex_index)
+        int& regex_index,     
+        std::basic_string<
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
+        > *token)
     {
+        typedef std::basic_string<
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
+        > string_t;
+        
         node_id_t s = 0;
         node_id_t last_accepting_index = invalid_node;
         IteratorT p = first;
@@ -2101,6 +2108,7 @@ struct regex_match_helper<false> // single byte char
             s = dfa.transition_table[s][(uchar)*p];
             if (s == invalid_node)
                 break;
+            if (token) token->append((string_t::size_type)1, *p);
             ++p;
             if (dfa.acceptance_index[s] != invalid_node)
             {
@@ -2130,11 +2138,15 @@ struct regex_match_helper<true> // wide char
     template <typename DfaT, typename IteratorT>
     static bool
     do_match(DfaT const& dfa, IteratorT &first, IteratorT const& last,
-        int& regex_index)
+        int& regex_index,
+        std::basic_string<
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
+        > *token)
     {
         typedef
             typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
             char_t;
+        typedef std::basic_string<char_t> string_t;
 
         node_id_t s = 0;
         node_id_t last_accepting_index = invalid_node;
@@ -2151,6 +2163,7 @@ struct regex_match_helper<true> // wide char
                     goto break_while;
                 }
             }
+            if (token) token->append((string_t::size_type)1, *wp);
             ++wp;
             if (dfa.acceptance_index[s] != invalid_node)
             {
@@ -2182,10 +2195,13 @@ struct regex_match
 {
     static bool
     do_match(DfaT const& dfa, IteratorT &first, IteratorT const& last,
-        int& regex_index)
+        int& regex_index,
+        std::basic_string<
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
+        > *token)
     {
         return regex_match_helper<wide_char>::do_match(
-            dfa, first, last, regex_index);
+            dfa, first, last, regex_index, token);
     }
 };
 
@@ -2239,7 +2255,8 @@ public:
             const TokenT& id, const CallbackT& cb = CallbackT(),
             unsigned int state = 0);
 
-    TokenT next_token(IteratorT &first, IteratorT const &last);
+    TokenT next_token(IteratorT &first, IteratorT const &last,
+        std::basic_string<char_t> *token = 0);
 
     void create_dfa();
     bool has_compiled_dfa() { return m_compiled_dfa; }
@@ -2313,7 +2330,10 @@ lexer<IteratorT, TokenT, CallbackT>::register_regex(
 template <typename IteratorT, typename TokenT, typename CallbackT>
 inline TokenT
 lexer<IteratorT, TokenT, CallbackT>::next_token(
-    IteratorT &first, IteratorT const& last)
+    IteratorT &first, IteratorT const& last,
+    std::basic_string<
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
+    > *token)
 {
     if (!m_compiled_dfa)
     {
@@ -2323,7 +2343,7 @@ lexer<IteratorT, TokenT, CallbackT>::next_token(
     IteratorT saved = first;
     int regex_index;
     if (!lexerimpl::regex_match<dfa_table, IteratorT, (sizeof(char_t) > 1)>::
-            do_match(m_dfa[m_state], first, last, regex_index))
+            do_match(m_dfa[m_state], first, last, regex_index, token))
         return -1;  // TODO: can't return -1, need to return some invalid token.
     // how to figure this out?  We can use traits I guess.
     else
@@ -2335,8 +2355,11 @@ lexer<IteratorT, TokenT, CallbackT>::next_token(
             // execute corresponding callback
             lexer_control<TokenT> controller(rval, m_state, m_state_stack);
             regex.callback(saved, first, last, regex.token, controller);
-            if (controller.ignore_current_token_set())
-                return next_token(first, last);
+            if (controller.ignore_current_token_set()) {
+                if (token)
+                    token->erase();
+                return next_token(first, last, token);
+            }
         }
         return rval;
     }
