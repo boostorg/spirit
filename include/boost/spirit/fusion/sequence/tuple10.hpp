@@ -119,6 +119,12 @@ namespace boost { namespace fusion
             , m1(_1)
         {}
 
+        template <typename A0, typename A1>
+        tuple_data2(detail::disambiguate_as_iterator, A0& _0, A1& _1)
+            : m0(*_0)
+            , m1(*_1)
+        {}
+
         T0 m0;
         T1 m1;
     };
@@ -150,6 +156,13 @@ namespace boost { namespace fusion
             , m2(_2)
         {}
 
+        template <typename A0, typename A1, typename A2>
+        tuple_data3(detail::disambiguate_as_iterator, A0& _0, A1& _1, A2& _2)
+            : m0(*_0)
+            , m1(*_1)
+            , m2(*_2)
+        {}
+        
         T0 m0;
         T1 m1;
         T2 m2;
@@ -198,7 +211,7 @@ namespace boost { namespace fusion
         {
             typedef typename meta::next<Iterator>::type i1_type;
             i1_type i1(fusion::next(i));
-            return tuple_data2<T0, T1>(*i, *i1);
+            return tuple_data2<T0, T1>(detail::disambiguate_as_iterator(), i, i1);
         }
 
         template <typename Tuple>
@@ -273,7 +286,7 @@ namespace boost { namespace fusion
             i1_type i1(fusion::next(i));
             i2_type i2(fusion::next(i1));
 #endif
-            return tuple_data3<T0, T1, T2>(*i, *i1, *i2);
+            return tuple_data3<T0, T1, T2>(detail::disambiguate_as_iterator(), i, i1, i2);
         }
 
         template <typename Tuple>

@@ -26,6 +26,11 @@ struct BOOST_PP_CAT(tuple_data, N)
         N, typename detail::call_param<T, >::type _))
         : BOOST_PP_ENUM(N, FUSION_TUPLE_MEMBER_INIT, _) {}
 
+    template <BOOST_PP_ENUM_PARAMS(N, typename A)>
+    BOOST_PP_CAT(tuple_data, N)(detail::disambiguate_as_iterator,
+        BOOST_PP_ENUM_BINARY_PARAMS(N, A, & _))
+        : BOOST_PP_ENUM(N, FUSION_TUPLE_MEMBER_ITERATOR_INIT, _) {}
+
     BOOST_PP_REPEAT(N, FUSION_TUPLE_MEMBER, _)
 };
 
@@ -65,7 +70,8 @@ private:
     construct(i0_type const& i0, void const*)
     {
         FUSION_TUPLE_CONSTRUCT_FROM_ITER(N)
-        return base_type(BOOST_PP_ENUM_PARAMS(N, *i));
+        return base_type(
+            detail::disambiguate_as_iterator(), BOOST_PP_ENUM_PARAMS(N, i));
     }
 
     template <typename Tuple>

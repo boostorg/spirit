@@ -44,6 +44,9 @@
 #define FUSION_TUPLE_MEMBER_INIT(z, n, _)                                       \
     BOOST_PP_CAT(m, n)(BOOST_PP_CAT(_, n))
 
+#define FUSION_TUPLE_MEMBER_ITERATOR_INIT(z, n, _)                              \
+    BOOST_PP_CAT(m, n)(*BOOST_PP_CAT(_, n))
+
 #define FUSION_TUPLE_MEMBER(z, n, _)                                            \
     BOOST_PP_CAT(T, n) BOOST_PP_CAT(m, n);
 
