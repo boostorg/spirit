@@ -70,6 +70,15 @@
     </span><span class=identifier>assert</span><span class=special>(</span><span class=identifier>parse</span><span class=special>(</span><span class=string>&quot;a b c d e f g h i j k&quot;</span><span class=special>, </span><span class=identifier>r</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>).</span><span class=identifier>full</span><span class=special>);</span></pre>
 <p>Notice how rule <tt>r</tt> is used in both the phrase and character levels. 
 </p>
+<p>By default support for multiple scanners is disabled.  The macro
+  <tt>BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT</tt> must be defined to the
+  maximum number of scanners allowed in a scanner_list.  The value must
+  be greater than 1 to enable multiple scanners.  Given the
+  example above, to define a limit of two scanners for the list, the
+  following line must be inserted into the source file before the
+  inclusion of Spirit headers:
+</p>
+<pre><span class=special>    </span><span class=preprocessor>#define </span><span class=identifier>BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT</span> <span class=literal>2</span></pre>
 <table width="80%" border="0" align="center">
   <tr> 
     <td class="note_box"><img src="theme/bulb.gif" width="13" height="18"> See 
