@@ -170,7 +170,7 @@ namespace boost { namespace spirit {
         >
         while_p(CondT cond) const
         {
-            typedef typename /*::boost::spirit::*/as_parser<CondT> cond_as_parser_t;
+            typedef /*typename ::boost::spirit::*/as_parser<CondT> cond_as_parser_t;
             typedef typename cond_as_parser_t::type condition_t;
 
             return while_parser<ParserT, condition_t, true>
