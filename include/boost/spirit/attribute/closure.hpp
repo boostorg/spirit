@@ -66,8 +66,9 @@ namespace boost { namespace spirit {
         typedef typename phoenix::tuple_element<0,
             typename ClosureT::tuple_t>::type attr_t;
         typedef ClosureT base_t;
-        typedef closure_context_linker<closure_context> context_linker_t;
-        
+        typedef closure_context_linker<closure_context<ClosureT> >
+        context_linker_t;
+
         closure_context(ClosureT const& clos)
         : frame(clos) {}
 
