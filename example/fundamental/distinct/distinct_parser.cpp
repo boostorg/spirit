@@ -52,7 +52,7 @@ struct my_grammar: public grammar<my_grammar>
 
 int main()
 {
-	my_grammar gram;
+    my_grammar gram;
     parse_info<> info;
 
     info = parse("declare ident", gram, space_p);
