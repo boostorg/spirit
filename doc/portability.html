@@ -23,7 +23,48 @@
     <td width="20"><a href="style_guide.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
-<p>&nbsp; </p>
+<p>Spirit has been tested to compile and run properly on various compilers:</p>
+<ol>
+  <li>g++ 2.95.3</li>
+  <li>g++ 3.1</li>
+  <li>g++ 3.2</li>
+  <li>Borland 5.5.1</li>
+  <li> Borland 5.6.1</li>
+  <li>Intel 5.0</li>
+  <li>Intel 6.0</li>
+  <li>Intel 7.0Visual Age C++ 5.02</li>
+  <li>Comeau 4.24.5 </li>
+  <li>Metrowerks CodeWarrior 7.2</li>
+  <li>Metrowerks CodeWarrior 8</li>
+  <li>MSVC 6 SP5</li>
+  <li>MSVC 7</li>
+  <li>MSVC 7.1</li>
+</ol>
+<p>Spirit is 100% ANSI/ISO C++ conformant. Unfortunately, some compilers do not 
+  support all the features of Spirit due to inadequate conformance to the standard. 
+  Finding workarounds for these non-conformance problems is a high priority but 
+  it takes time and a lot of effort. </p>
+<ul>
+  <li>MSVC 6 and 7 does not support partial template specialization (PTS). Some 
+    features that rely on PTS therefore does not compile on MSVC 6 and 7. This 
+    include Closures, Lambda expressions as semantic actions (Phoenix and BLL), 
+    and the Trees (Abtract Syntax Trees and Parse Trees). Hopefully, these features 
+    will be ported to support MSVC 6 and 7. However, The much anticipated MSVC 
+    do support PTS and was tested to fully compile Spirit.</li>
+  <li>The list parsers and comment parsers do not compile on MSVC6 yet. Use the 
+    <tt>%</tt> operator instead.</li>
+  <li>The multi_pass does not compile on MSVC6, MSVC 7 and Metrowerks 7.2 yet.</li>
+  <li>Comeau has a problem with the <tt>file_iterator</tt>.</li>
+  <li>The regular expression parsers does not compile on both MSVC6 and 7, Intel 
+    5.0 and Comeau 4.24.5 </li>
+  <li>Metrowerks CodeWarrior 7.2 does not compile all the meta-parsers and features 
+    that rely on it such as the dynamic parsers. This is because CodeWarrior 7.2 
+    gives wrong results on code that uses the <tt>sizeof</tt> trick such as the 
+    implementation of <tt>boost::is_base_and_derived</tt> and <tt>boost::is_convertible</tt>.</li>
+</ul>
+<p>For further details, you can check out the table of compilers vis-a-vis all 
+  the tests and examples in the Spirit distribution <a href="http://spirit.sourceforge.net/wiki/index.php?page=Compiler%2BTable">here</a>. 
+  This table is regularly being updated. </p>
 <table border="0">
   <tr> 
     <td width="10"></td>
