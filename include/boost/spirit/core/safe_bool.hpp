@@ -21,9 +21,14 @@ namespace boost { namespace spirit
         template <typename T>
         struct safe_bool_impl
         {
-            typedef T* TP; // workaround for MWCW
+#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
+            void stub(T*) {};
+            typedef void (safe_bool_impl::*type)(T*);
+#else
+            typedef T* TP; // workaround to make parsing easier
             TP stub;
             typedef TP safe_bool_impl::*type;
+#endif
         };
     }
 
