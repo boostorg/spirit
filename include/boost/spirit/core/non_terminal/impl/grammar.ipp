@@ -212,7 +212,9 @@ struct grammar_definition
     get_definition(grammar<DerivedT, ContextT> const*  self)
     {
 #if defined(BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE)
-        static definition def(self->derived());
+
+        typedef typename DerivedT::template definition<ScannerT> definition_t;
+        static definition_t def(self->derived());
         return def;
 #else
         typedef grammar<DerivedT, ContextT>                      self_t;
@@ -236,31 +238,31 @@ struct grammar_definition
 #if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
     template <int N>
     struct call_helper {
-    
+
         template <typename RT, typename DefinitionT, typename ScannerT>
         static void
         do_ (RT &result, DefinitionT &def, ScannerT const &scan)
-        { 
-            result = def.template get_start_parser<N>()->parse(scan); 
+        {
+            result = def.template get_start_parser<N>()->parse(scan);
         }
     };
 #else
-    //  The grammar_def stuff isn't supported for compilers, which do not 
+    //  The grammar_def stuff isn't supported for compilers, which do not
     //  support partial template specialization
     template <int N> struct call_helper;
-#endif 
-    
+#endif
+
     template <>
     struct call_helper<0> {
-    
+
         template <typename RT, typename DefinitionT, typename ScannerT>
-        static void 
+        static void
         do_ (RT &result, DefinitionT &def, ScannerT const &scan)
-        { 
-            result = def.start().parse(scan); 
+        {
+            result = def.start().parse(scan);
         }
     };
-    
+
     //////////////////////////////////
     template<int N, typename DerivedT, typename ContextT, typename ScannerT>
     inline typename parser_result<grammar<DerivedT, ContextT>, ScannerT>::type
@@ -268,14 +270,14 @@ struct grammar_definition
         grammar<DerivedT, ContextT> const*  self,
         ScannerT const &scan)
     {
-        typedef 
+        typedef
             typename parser_result<grammar<DerivedT, ContextT>, ScannerT>::type
             result_t;
         typedef typename DerivedT::template definition<ScannerT> definition_t;
 
         result_t result;
         definition_t &def = get_definition<DerivedT, ContextT, ScannerT>(self);
-        
+
         call_helper<N>::do_(result, def, scan);
         return result;
     }
@@ -344,12 +346,12 @@ struct grammar_definition
         {
             typedef typename parser_result<self_t, ScannerT>::type result_t;
             typedef parser_scanner_linker<ScannerT> scanner_t;
-            BOOST_SPIRIT_CONTEXT_PARSE(scan, *this, scanner_t, context_t, 
+            BOOST_SPIRIT_CONTEXT_PARSE(scan, *this, scanner_t, context_t,
                 result_t)
         }
 
     private:
-        DerivedT const &target_grammar; 
+        DerivedT const &target_grammar;
     };
 
     } // namespace impl
