@@ -35,17 +35,15 @@ A composite is more or less a tuple of 0..N actors plus an operation object (som
         </span><span class=keyword>typename </span><span class=identifier>A0 </span><span class=special>= </span><span class=identifier>nil_t</span><span class=special>,
         </span><span class=keyword>typename </span><span class=identifier>A1 </span><span class=special>= </span><span class=identifier>nil_t</span><span class=special>,
         </span><span class=keyword>typename </span><span class=identifier>A2 </span><span class=special>= </span><span class=identifier>nil_t</span><span class=special>,
-         </span><span class=special>...
+         ...
         </span><span class=keyword>typename </span><span class=identifier>AN </span><span class=special>= </span><span class=identifier>nil_t
     </span><span class=special>&gt;
     </span><span class=keyword>struct </span><span class=identifier>composite </span><span class=special>{
 
-        </span><span class=identifier>OperationT </span><span class=identifier>op</span><span class=special>;              </span><span class=comment>//  operation
-        </span><span class=identifier>A0 </span><span class=identifier>a0</span><span class=special>; </span><span class=identifier>A1 </span><span class=identifier>a1</span><span class=special>; </span><span class=special>... </span><span class=identifier>AN </span><span class=identifier>an</span><span class=special>;    </span><span class=comment>//  actors
+        </span><span class=identifier>OperationT </span><span class=identifier>op</span><span class=special>;              //  </span><span class=identifier>operation
+        </span><span class=identifier>A0 </span><span class=identifier>a0</span><span class=special>; </span><span class=identifier>A1 </span><span class=identifier>a1</span><span class=special>; ... </span><span class=identifier>AN </span><span class=identifier>an</span><span class=special>;    //  </span><span class=identifier>actors
     </span><span class=special>};
 </span></pre></code>
-<p>
-</p>
 <p>
 This can be recursive. As mentioned, each of the actors A0..AN can in turn be another composite since a composite is itself an actor superclass and conforms to its expected conceptual interface. Composite specializations are provided to handle different numbers of actors from zero (0) to a predefined maximum.</p>
 <p>

@@ -31,31 +31,25 @@ The set of lazy C++ cast template classes and functions provide a way of lazily 
     <span class=identifier>A </span><span class=special>*</span><span class=identifier>a </span><span class=special>= </span><span class=identifier>static_cast_</span><span class=special>&lt;</span><span class=identifier>A </span><span class=special>*&gt;(</span><span class=identifier>_a_lambda_expression_</span><span class=special>);
 </span></pre></code>
 <p>
-</p>
-<p>
 These casts parallel the ones in the C++ language. Take note however that the <i>lazy</i> versions have a trailing underscore.</p>
 <ul><li>static_cast_&lt;T&gt;(lambda_expression)</li><li>dynamic_cast_&lt;T&gt;(lambda_expression)</li><li>const_cast_&lt;T&gt;(lambda_expression)</li><li>reinterpret_cast_&lt;T&gt;(lambda_expression)</li></ul><table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/note.gif">
- <b>Acknowledgement:</b><br><br><b>Hartmut Kaiser</b> implemented the lazy casts and constructors based on his original work on <a href="http://spirit.sourceforge.net">
+<img src="theme/note.gif"></img> <b>Acknowledgement:</b><br><br><b>Hartmut Kaiser</b> implemented the lazy casts and constructors based on his original work on <a href="http://spirit.sourceforge.net">
 Spirit</a> SE &quot;semantic expressions&quot; (the precursor of Phoenix).    </td>
   </tr>
 </table>
 <a name="lazy_object_construction"></a><h2>Lazy object construction</h2><p>
 A set of lazy constructor template classes and functions provide a way of lazily constructing an object of a type from an arbitrary set of lazy arguments in the form of lambda expressions. The construct_ templates are (syntactically) used very much like the well known C++ casts:</p>
 <code><pre>
-    <span class=identifier>A </span><span class=identifier>a </span><span class=special>= </span><span class=identifier>construct_</span><span class=special>&lt;</span><span class=identifier>A</span><span class=special>&gt;(</span><span class=identifier>lambda_arg1</span><span class=special>, </span><span class=identifier>lambda_arg2</span><span class=special>, </span><span class=special>..., </span><span class=identifier>lambda_argN</span><span class=special>);
+    <span class=identifier>A </span><span class=identifier>a </span><span class=special>= </span><span class=identifier>construct_</span><span class=special>&lt;</span><span class=identifier>A</span><span class=special>&gt;(</span><span class=identifier>lambda_arg1</span><span class=special>, </span><span class=identifier>lambda_arg2</span><span class=special>, ..., </span><span class=identifier>lambda_argN</span><span class=special>);
 </span></pre></code>
-<p>
-</p>
 <p>
 where the given parameters are become the parameters to the contructor of the object of type A. (This implies, that type A is expected to have a constructor with a corresponsing set of parameter types.)</p>
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/bulb.gif">
- The ultimate maximum number of actual parameters is limited by the preprocessor constant PHOENIX_CONSTRUCT_LIMIT. Note though, that this limit should not be greater than PHOENIX_LIMIT.    </td>
+<img src="theme/bulb.gif"></img> The ultimate maximum number of actual parameters is limited by the preprocessor constant PHOENIX_CONSTRUCT_LIMIT. Note though, that this limit should not be greater than PHOENIX_LIMIT.    </td>
   </tr>
 </table>
 <table border="0">

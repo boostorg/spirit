@@ -33,8 +33,6 @@ This class provides a mechanism for lazily evaluating functions. Syntactically, 
     </span><span class=identifier>factorial</span><span class=special>(</span><span class=identifier>arg1 </span><span class=special>* </span><span class=number>6 </span><span class=special>/ </span><span class=identifier>factorial</span><span class=special>(</span><span class=identifier>var</span><span class=special>(</span><span class=identifier>i</span><span class=special>)))
 </span></pre></code>
 <p>
-</p>
-<p>
 These functions are automatically lazily bound unlike ordinary function pointers or functor objects that need to be explicitly bound through the bind function (see binders).</p>
 <p>
 A lazy function works in conjunction with a user defined functor (as usual with a member operator()). Only special forms of functor objects are allowed. This is required to enable true polymorphism (STL style monomorphic functors and function pointers can still be used through the bind facility (see binders)).</p>
@@ -48,15 +46,13 @@ Here's an example of a simple functor that computes the factorial of a number:</
     <span class=keyword>struct </span><span class=identifier>factorial_impl </span><span class=special>{
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>Arg</span><span class=special>&gt;
-        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=identifier>Arg </span><span class=identifier>type</span><span class=special>; </span><span class=special>};
+        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=identifier>Arg </span><span class=identifier>type</span><span class=special>; };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>Arg</span><span class=special>&gt;
         </span><span class=identifier>Arg </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>Arg </span><span class=identifier>n</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=special>(</span><span class=identifier>n </span><span class=special>&lt;= </span><span class=number>0</span><span class=special>) </span><span class=special>? </span><span class=number>1 </span><span class=special>: </span><span class=identifier>n </span><span class=special>* </span><span class=keyword>this</span><span class=special>-&gt;</span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>n</span><span class=special>-</span><span class=number>1</span><span class=special>); </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=special>{ </span><span class=keyword>return </span><span class=special>(</span><span class=identifier>n </span><span class=special>&lt;= </span><span class=number>0</span><span class=special>) ? </span><span class=number>1 </span><span class=special>: </span><span class=identifier>n </span><span class=special>* </span><span class=keyword>this</span><span class=special>-&gt;</span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>n</span><span class=special>-</span><span class=number>1</span><span class=special>); }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 As can be seen, the functor is polymorphic. Its arguments and return type are not fixed to a particular type. The example above for example, can handle any type as long as it can carry out the required operations (i.e. &lt;=, * and -).</p>
 <p>
@@ -65,14 +61,10 @@ We can now declare and instantiate a lazy 'factorial' function:</p>
     <span class=identifier>function</span><span class=special>&lt;</span><span class=identifier>factorial_impl</span><span class=special>&gt; </span><span class=identifier>factorial</span><span class=special>;
 </span></pre></code>
 <p>
-</p>
-<p>
 Invoking a lazy function 'factorial' does not immediately execute the functor factorial_impl. Instead, a composite object is created and returned to the caller. Example:</p>
 <code><pre>
     <span class=identifier>factorial</span><span class=special>(</span><span class=identifier>arg1</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 does nothing more than return a composite. A second function call will invoke the actual factorial function. Example:</p>
 <code><pre>
@@ -80,16 +72,12 @@ does nothing more than return a composite. A second function call will invoke th
     </span><span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=identifier>factorial</span><span class=special>(</span><span class=identifier>arg1</span><span class=special>)(</span><span class=identifier>i</span><span class=special>);
 </span></pre></code>
 <p>
-</p>
-<p>
 will print out &quot;24&quot;.</p>
 <p>
 Take note that in certain cases (e.g. for functors with state), an instance of the functor may be passed on to the constructor. Example:</p>
 <code><pre>
     <span class=identifier>function</span><span class=special>&lt;</span><span class=identifier>factorial_impl</span><span class=special>&gt; </span><span class=identifier>factorial</span><span class=special>(</span><span class=identifier>ftor</span><span class=special>);
 </span></pre></code>
-<p>
-</p>
 <p>
 where ftor is an instance of factorial_impl (this is not necessary in this case since factorial is a simple stateless functor). Take care though when using functors with state because the functors are taken in by value. It is best to keep the data manipulated by a functor outside the functor itself and keep a reference to this data inside the functor. Also, it is best to keep functors as small as possible.</p>
 <table border="0">

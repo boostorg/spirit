@@ -30,14 +30,12 @@ A composite is an actor base class composed of zero or more actors (see actor) a
 <p>
 Schematically:</p>
 <code><pre>
-    <span class=identifier>actor0</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) </span><span class=special>--&gt; </span><span class=identifier>arg0 </span><span class=special>--&gt; </span><span class=special>|
-    </span><span class=identifier>actor1</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) </span><span class=special>--&gt; </span><span class=identifier>arg1 </span><span class=special>--&gt; </span><span class=special>|
-    </span><span class=identifier>actor2</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) </span><span class=special>--&gt; </span><span class=identifier>arg3 </span><span class=special>--&gt; </span><span class=special>| </span><span class=special>--&gt; </span><span class=identifier>operation</span><span class=special>(</span><span class=identifier>arg0</span><span class=special>...</span><span class=identifier>argN</span><span class=special>)
-    </span><span class=special>...                                   </span><span class=special>|
-    </span><span class=identifier>actorN</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) </span><span class=special>--&gt; </span><span class=identifier>argN </span><span class=special>--&gt; </span><span class=special>|
+    <span class=identifier>actor0</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) --&gt; </span><span class=identifier>arg0 </span><span class=special>--&gt; |
+    </span><span class=identifier>actor1</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) --&gt; </span><span class=identifier>arg1 </span><span class=special>--&gt; |
+    </span><span class=identifier>actor2</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) --&gt; </span><span class=identifier>arg3 </span><span class=special>--&gt; | --&gt; </span><span class=identifier>operation</span><span class=special>(</span><span class=identifier>arg0</span><span class=special>...</span><span class=identifier>argN</span><span class=special>)
+    ...                                   |
+    </span><span class=identifier>actorN</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>tupled_args</span><span class=special>) --&gt; </span><span class=identifier>argN </span><span class=special>--&gt; |
 </span></pre></code>
-<p>
-</p>
 <p>
 Here's a typical example of the composite's eval member function for a 2-actor composite:</p>
 <code><pre>
@@ -48,10 +46,8 @@ Here's a typical example of the composite's eval member function for a 2-actor c
         </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>A0</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>r0 </span><span class=special>= </span><span class=identifier>a0</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>);
         </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>A1</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>r1 </span><span class=special>= </span><span class=identifier>a1</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>);
         </span><span class=keyword>return </span><span class=identifier>op</span><span class=special>(</span><span class=identifier>r0</span><span class=special>, </span><span class=identifier>r1</span><span class=special>);
-    </span><span class=special>}
+    }
 </span></pre></code>
-<p>
-</p>
 <p>
 where self_t is the composite's 'self' type, TupleT 'args' is the tuple-packed arguments passed to the actor (see actor) and op is the operation associated with the composite. r0 and r1 are the actual arguments un-funneled from 'args' and pre-processed by the composite's actors which are then passed on to the operation 'op'.</p>
 <p>
@@ -63,33 +59,29 @@ Here's a view on what happens when the eval function is called:</p>
 <code><pre>
     <span class=identifier>tupled </span><span class=identifier>arguments</span><span class=special>:                 </span><span class=identifier>args
                                        </span><span class=special>|
-                       </span><span class=special>+-------+-------+-------+-------+
-                       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|
-                       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|
+                       +-------+-------+-------+-------+
+                       |       |       |       |       |
+                       |       |       |       |       |
     </span><span class=identifier>actors</span><span class=special>:         </span><span class=identifier>actor0  </span><span class=identifier>actor1  </span><span class=identifier>actor2  </span><span class=identifier>actor3</span><span class=special>..</span><span class=identifier>actorN
-                       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|
-                       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|       </span><span class=special>|
+                       </span><span class=special>|       |       |       |       |
+                       |       |       |       |       |
     </span><span class=identifier>operation</span><span class=special>:   </span><span class=identifier>op</span><span class=special>( </span><span class=identifier>arg0</span><span class=special>,   </span><span class=identifier>arg1</span><span class=special>,   </span><span class=identifier>arg2</span><span class=special>,   </span><span class=identifier>arg3</span><span class=special>,...</span><span class=identifier>argN </span><span class=special>)
-                  </span><span class=special>|
-                  </span><span class=special>|
-    </span><span class=identifier>returns</span><span class=special>:      </span><span class=special>+---&gt; </span><span class=identifier>operation</span><span class=special>::</span><span class=identifier>result</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>...</span><span class=identifier>TN</span><span class=special>&gt;::</span><span class=identifier>type
+                  |
+                  |
+    </span><span class=identifier>returns</span><span class=special>:      +---&gt; </span><span class=identifier>operation</span><span class=special>::</span><span class=identifier>result</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>...</span><span class=identifier>TN</span><span class=special>&gt;::</span><span class=identifier>type
 </span></pre></code>
-<p>
-</p>
 <p>
 Here's an example of a simple operation that squares a number:</p>
 <code><pre>
     <span class=keyword>struct </span><span class=identifier>square </span><span class=special>{
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ArgT</span><span class=special>&gt;
-        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=identifier>ArgT </span><span class=identifier>type</span><span class=special>; </span><span class=special>};
+        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=identifier>ArgT </span><span class=identifier>type</span><span class=special>; };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ArgT</span><span class=special>&gt;
-        </span><span class=identifier>ArgT </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ArgT </span><span class=identifier>n</span><span class=special>) </span><span class=keyword>const </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>n </span><span class=special>* </span><span class=identifier>n</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=identifier>ArgT </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ArgT </span><span class=identifier>n</span><span class=special>) </span><span class=keyword>const </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>n </span><span class=special>* </span><span class=identifier>n</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 This is a perfect example of a polymorphic functor discussed before in the section on functions. As we can see, operations are polymorphic. Its arguments and return type are not fixed to a particular type. The example above for example, can handle any ArgT type as long as it has a multiplication operator.</p>
 <p>

@@ -39,45 +39,36 @@ So far we have presented only a few primitives 1) arguments 2) values and 3) var
     </span><span class=keyword>struct </span><span class=identifier>static_int </span><span class=special>{
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>TupleT</span><span class=special>&gt;
-        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=keyword>int </span><span class=identifier>type</span><span class=special>; </span><span class=special>};
+        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=keyword>int </span><span class=identifier>type</span><span class=special>; };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>TupleT</span><span class=special>&gt;
-        </span><span class=keyword>int </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>TupleT </span><span class=keyword>const</span><span class=special>&amp;) </span><span class=keyword>const </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>N</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=keyword>int </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>TupleT </span><span class=keyword>const</span><span class=special>&amp;) </span><span class=keyword>const </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>N</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 That's it. Done! Now we can use this as it is already a full- fledged Phoenix citizen due to interface conformance. Let us write a suitable generator to make it easier to use our static_int. Remember that it should be wrapped as an actor before it can be used. Let us call our generator int_const:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>int </span><span class=identifier>N</span><span class=special>&gt;
-    </span><span class=identifier>phoenix</span><span class=special>::</span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>static_int</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt; </span><span class=special>&gt;
+    </span><span class=identifier>phoenix</span><span class=special>::</span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>static_int</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt; &gt;
     </span><span class=identifier>int_const</span><span class=special>()
-    </span><span class=special>{
+    {
         </span><span class=keyword>return </span><span class=identifier>static_int</span><span class=special>&lt;</span><span class=identifier>N</span><span class=special>&gt;();
-    </span><span class=special>}
+    }
 </span></pre></code>
-<p>
-</p>
 <p>
 Now we are done. Let's use it:</p>
 <code><pre>
-    <span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=special>(</span><span class=identifier>int_const</span><span class=special>&lt;</span><span class=number>5</span><span class=special>&gt;() </span><span class=special>+ </span><span class=identifier>int_const</span><span class=special>&lt;</span><span class=number>6</span><span class=special>&gt;())() </span><span class=special>&lt;&lt; </span><span class=identifier>endl</span><span class=special>;
+    <span class=identifier>cout </span><span class=special>&lt;&lt; (</span><span class=identifier>int_const</span><span class=special>&lt;</span><span class=number>5</span><span class=special>&gt;() + </span><span class=identifier>int_const</span><span class=special>&lt;</span><span class=number>6</span><span class=special>&gt;())() &lt;&lt; </span><span class=identifier>endl</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 Prints out &quot;11&quot;. There are lots of things you can do with this form of extension. For instance, data type casts come to mind. Example:</p>
 <code><pre>
     <span class=identifier>lazy_cast</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>&gt;(</span><span class=identifier>some_lazy_expression</span><span class=special>)
 </span></pre></code>
 <p>
-</p>
-<p>
 2)  Write and deploy a new composite:</p>
 <p>
-This is more complicated than our first example (writing a primitive). Nevertheless, once you get the basics, writing a composite is almost mechanical and boring (read: easy <img src="theme/smiley.gif">
-. Check out statements.hpp. All the lazy statements are written in terms of the composite interface.</p>
+This is more complicated than our first example (writing a primitive). Nevertheless, once you get the basics, writing a composite is almost mechanical and boring (read: easy <img src="theme/smiley.gif"></img>. Check out statements.hpp. All the lazy statements are written in terms of the composite interface.</p>
 <p>
 Ok, let's get on with it. Recall that the if_ else_ lazy statement (and all statements for that matter) return void. What's missing, and will surely be useful, is something like C/C++'s &quot;cond ? a : b&quot; expression. It is really unfortunate that C++ fell short of allowing this to be overloaded. Sigh. Anyway here's the code (sample6.cpp):</p>
 <code><pre>
@@ -93,24 +84,22 @@ Ok, let's get on with it. Recall that the if_ else_ lazy statement (and all stat
                 </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>plain_type</span><span class=special>,
                 </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>plain_type
             </span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>type</span><span class=special>;
-        </span><span class=special>};
+        };
 
         </span><span class=identifier>if_else_composite</span><span class=special>(
             </span><span class=identifier>CondT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>cond_</span><span class=special>, </span><span class=identifier>TrueT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>true__</span><span class=special>, </span><span class=identifier>FalseT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>false__</span><span class=special>)
-        </span><span class=special>:   </span><span class=identifier>cond</span><span class=special>(</span><span class=identifier>cond_</span><span class=special>), </span><span class=identifier>true_</span><span class=special>(</span><span class=identifier>true__</span><span class=special>), </span><span class=identifier>false_</span><span class=special>(</span><span class=identifier>false__</span><span class=special>) </span><span class=special>{}
+        :   </span><span class=identifier>cond</span><span class=special>(</span><span class=identifier>cond_</span><span class=special>), </span><span class=identifier>true_</span><span class=special>(</span><span class=identifier>true__</span><span class=special>), </span><span class=identifier>false_</span><span class=special>(</span><span class=identifier>false__</span><span class=special>) {}
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>TupleT</span><span class=special>&gt;
         </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>self_t</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>type
         </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>TupleT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>args</span><span class=special>) </span><span class=keyword>const
         </span><span class=special>{
-            </span><span class=keyword>return </span><span class=identifier>cond</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) </span><span class=special>? </span><span class=identifier>true_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) </span><span class=special>: </span><span class=identifier>false_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>);
-        </span><span class=special>}
+            </span><span class=keyword>return </span><span class=identifier>cond</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) ? </span><span class=identifier>true_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) : </span><span class=identifier>false_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>);
+        }
 
-        </span><span class=identifier>CondT </span><span class=identifier>cond</span><span class=special>; </span><span class=identifier>TrueT </span><span class=identifier>true_</span><span class=special>; </span><span class=identifier>FalseT </span><span class=identifier>false_</span><span class=special>; </span><span class=comment>//  actors
+        </span><span class=identifier>CondT </span><span class=identifier>cond</span><span class=special>; </span><span class=identifier>TrueT </span><span class=identifier>true_</span><span class=special>; </span><span class=identifier>FalseT </span><span class=identifier>false_</span><span class=special>; //  </span><span class=identifier>actors
     </span><span class=special>};
 </span></pre></code>
-<p>
-</p>
 <p>
 Ok, this is quite a mouthfull. Let's digest this piecemeal.</p>
 <code><pre>
@@ -118,14 +107,10 @@ Ok, this is quite a mouthfull. Let's digest this piecemeal.</p>
     </span><span class=keyword>struct </span><span class=identifier>if_else_composite </span><span class=special>{
 </span></pre></code>
 <p>
-</p>
-<p>
 This is basically a specialized composite that has 3 actors. It has no operation since it is implied. The 3 actors are cond (condition of type CondT) true_ (the true branch of type TrueT), false_ the (false branch or type FalseT).</p>
 <code><pre>
     <span class=keyword>typedef </span><span class=identifier>if_else_composite</span><span class=special>&lt;</span><span class=identifier>CondT</span><span class=special>, </span><span class=identifier>TrueT</span><span class=special>, </span><span class=identifier>FalseT</span><span class=special>&gt; </span><span class=identifier>self_t</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 self_t is a typedef that declares its own type: &quot;What am I?&quot;</p>
 <code><pre>
@@ -136,10 +121,8 @@ self_t is a typedef that declares its own type: &quot;What am I?&quot;</p>
             </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>plain_type</span><span class=special>,
             </span><span class=keyword>typename </span><span class=identifier>actor_result</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>, </span><span class=identifier>TupleT</span><span class=special>&gt;::</span><span class=identifier>plain_type
         </span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>type</span><span class=special>;
-    </span><span class=special>};
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 We have seen result before. For actor base-classes such as composites and primitives, the parameter is a TupleT, i.e. the tupled arguments passed in from the actor.</p>
 <p>
@@ -151,10 +134,8 @@ Following this, finally, we have a return type typedef'd by result&lt;TupleT&gt;
 <code><pre>
     <span class=identifier>if_else_composite</span><span class=special>(
         </span><span class=identifier>CondT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>cond_</span><span class=special>, </span><span class=identifier>TrueT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>true__</span><span class=special>, </span><span class=identifier>FalseT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>false__</span><span class=special>)
-    </span><span class=special>:   </span><span class=identifier>cond</span><span class=special>(</span><span class=identifier>cond_</span><span class=special>), </span><span class=identifier>true_</span><span class=special>(</span><span class=identifier>true__</span><span class=special>), </span><span class=identifier>false_</span><span class=special>(</span><span class=identifier>false__</span><span class=special>) </span><span class=special>{}
+    :   </span><span class=identifier>cond</span><span class=special>(</span><span class=identifier>cond_</span><span class=special>), </span><span class=identifier>true_</span><span class=special>(</span><span class=identifier>true__</span><span class=special>), </span><span class=identifier>false_</span><span class=special>(</span><span class=identifier>false__</span><span class=special>) {}
 </span></pre></code>
-<p>
-</p>
 <p>
 This is our constructor. We just stuff the constructor arguments into our member variables.</p>
 <code><pre>
@@ -163,16 +144,12 @@ This is our constructor. We just stuff the constructor arguments into our member
     </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>TupleT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>args</span><span class=special>) </span><span class=keyword>const
 </span></pre></code>
 <p>
-</p>
-<p>
 Now, here is our main eval member function. Given a self_t, our type, and the TupleT, the return type deduction is almost canonical. Just ask actor_result, it'll surely know.</p>
 <code><pre>
     <span class=special>{
-        </span><span class=keyword>return </span><span class=identifier>cond</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) </span><span class=special>? </span><span class=identifier>true_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) </span><span class=special>: </span><span class=identifier>false_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>);
-    </span><span class=special>}
+        </span><span class=keyword>return </span><span class=identifier>cond</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) ? </span><span class=identifier>true_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>) : </span><span class=identifier>false_</span><span class=special>.</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>args</span><span class=special>);
+    }
 </span></pre></code>
-<p>
-</p>
 <p>
 We pass the tupled args to all of our actors: cond, args and args appropriately. Notice how this expression reflects the C/C++ version almost to the letter.</p>
 <p>
@@ -182,9 +159,9 @@ Well that's it. Now let's write a generator for this composite:</p>
     </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>if_else_composite</span><span class=special>&lt;
         </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>CondT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>,
         </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>,
-        </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&gt; </span><span class=special>&gt;
+        </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&gt; &gt;
     </span><span class=identifier>if_else_</span><span class=special>(</span><span class=identifier>CondT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>cond</span><span class=special>, </span><span class=identifier>TrueT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>true_</span><span class=special>, </span><span class=identifier>FalseT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>false_</span><span class=special>)
-    </span><span class=special>{
+    {
         </span><span class=keyword>typedef </span><span class=identifier>if_else_composite</span><span class=special>&lt;
             </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>CondT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>,
             </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>,
@@ -195,41 +172,31 @@ Well that's it. Now let's write a generator for this composite:</p>
             </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>CondT</span><span class=special>&gt;::</span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>cond</span><span class=special>),
             </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>&gt;::</span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>true_</span><span class=special>),
             </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>false_</span><span class=special>));
-    </span><span class=special>}
+    }
 </span></pre></code>
-<p>
-</p>
 <p>
 Now this should be trivial to explain. I hope. Again, let's digest this piecemeal.</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>CondT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>TrueT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>FalseT</span><span class=special>&gt;
 </span></pre></code>
 <p>
-</p>
-<p>
 Again, there are three elements involved: The CondT condition 'cond', the TrueT true branch 'true_, and the FalseT false branch 'false_'.</p>
 <code><pre>
     <span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>if_else_composite</span><span class=special>&lt;
         </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>CondT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>,
         </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>,
-        </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&gt; </span><span class=special>&gt;
+        </span><span class=keyword>typename </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>type</span><span class=special>&gt; &gt;
 </span></pre></code>
-<p>
-</p>
 <p>
 This is our target. We want to generate this actor. Now, given our arguments (cond, true_ and false_), we are not really sure if they are really actors. What if the user passes the boolean true as the cond? Surely, that has to be converted to an actor&lt;value&lt;bool&gt; &gt;, otherwise Phoenix will go berzerk and will not be able to accommodate this alien.</p>
 <code><pre>
     <span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>&gt;::</span><span class=identifier>type
 </span></pre></code>
 <p>
-</p>
-<p>
 is just what we need. This type computer converts from an arbitrary type T to a full-fledged actor citizen.</p>
 <code><pre>
     <span class=identifier>if_else_</span><span class=special>(</span><span class=identifier>CondT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>cond</span><span class=special>, </span><span class=identifier>TrueT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>true_</span><span class=special>, </span><span class=identifier>FalseT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>false_</span><span class=special>)
 </span></pre></code>
-<p>
-</p>
 <p>
 These are the arguments to our generator 'if_else_'.</p>
 <code><pre>
@@ -240,8 +207,6 @@ These are the arguments to our generator 'if_else_'.</p>
     </span><span class=identifier>result</span><span class=special>;
 </span></pre></code>
 <p>
-</p>
-<p>
 Same as before, this is our target return type, this time stripped off the actor. That's OK because the actor&lt;T&gt; has a constructor that takes in a BaseT object: 'result' in this case.</p>
 <code><pre>
     <span class=keyword>return </span><span class=identifier>result</span><span class=special>(
@@ -249,8 +214,6 @@ Same as before, this is our target return type, this time stripped off the actor
         </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>&gt;::</span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>true_</span><span class=special>),
         </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>false_</span><span class=special>));
 </span></pre></code>
-<p>
-</p>
 <p>
 Finally, we construct and return our result. Notice how we called the as_actor&lt;T&gt;::convert static function to do the conversion from T to a full-fledged actor for each of the arguments.</p>
 <p>
@@ -263,11 +226,9 @@ At last. Now we can use our brand new composite and its generator:</p>
         </span><span class=identifier>cout
             </span><span class=special>&lt;&lt; </span><span class=identifier>arg1
             </span><span class=special>&lt;&lt; </span><span class=identifier>if_else_</span><span class=special>(</span><span class=identifier>arg1 </span><span class=special>% </span><span class=number>2 </span><span class=special>== </span><span class=number>1</span><span class=special>, </span><span class=string>&quot; is odd&quot;</span><span class=special>, </span><span class=string>&quot; is even&quot;</span><span class=special>)
-            </span><span class=special>&lt;&lt; </span><span class=identifier>val</span><span class=special>(</span><span class=literal>'\n'</span><span class=special>)
-    </span><span class=special>);
+            &lt;&lt; </span><span class=identifier>val</span><span class=special>(</span><span class=literal>'\n'</span><span class=special>)
+    );
 </span></pre></code>
-<p>
-</p>
 <p>
 3)  Write an as_actor&lt;T&gt; converter for a specific type:</p>
 <p>
@@ -276,15 +237,13 @@ By default, an unknown type T is converted to an actor&lt;value&lt;T&gt; &gt;. S
 as_actor&lt;T&gt; is Phoenix's type converter. All facilities that need to convert from an unknown type to an actor passes through this class. Specializing as_actor&lt;T&gt; for my_class is just what we need. For example:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;&gt;
-    </span><span class=keyword>struct </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>my_class</span><span class=special>&gt; </span><span class=special>{
+    </span><span class=keyword>struct </span><span class=identifier>as_actor</span><span class=special>&lt;</span><span class=identifier>my_class</span><span class=special>&gt; {
 
         </span><span class=keyword>typedef </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>my_lazy_class</span><span class=special>&gt; </span><span class=identifier>type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>type </span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>my_class </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>x</span><span class=special>)
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>my_lazy_class</span><span class=special>(</span><span class=identifier>x</span><span class=special>); </span><span class=special>}
-    </span><span class=special>};
+        { </span><span class=keyword>return </span><span class=identifier>my_lazy_class</span><span class=special>(</span><span class=identifier>x</span><span class=special>); }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 For reference, here is the main is_actor&lt;T&gt; interface:</p>
 <code><pre>
@@ -293,17 +252,13 @@ For reference, here is the main is_actor&lt;T&gt; interface:</p>
 
         </span><span class=keyword>typedef </span><span class=special>??? </span><span class=identifier>type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>type </span><span class=identifier>convert</span><span class=special>(</span><span class=identifier>T </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>x</span><span class=special>);
-    </span><span class=special>};
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 where ??? is the actor type returned by the static convert function. By default, this is:</p>
 <code><pre>
     <span class=keyword>typedef </span><span class=identifier>value</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>&gt; </span><span class=identifier>type</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 4)  Write a specialized overloaded operator for a specific type:</p>
 <p>
@@ -311,8 +266,6 @@ Consider the handling of operator &lt;&lt; std::ostream such as cout. When we se
 <code><pre>
     <span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=string>&quot;Hello World\n&quot;
 </span></pre></code>
-<p>
-</p>
 <p>
 the operator overload actually takes in cout by reference, modifies it and returns the same cout again by reference. This does not conform to the standard behavior of the shift left operator for built-in ints.</p>
 <p>
@@ -322,23 +275,21 @@ We supply a special overload then (see special_ops.hpp):</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>BaseT</span><span class=special>&gt;
     </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>composite</span><span class=special>&lt;
-        </span><span class=identifier>shift_l_op</span><span class=special>,                     </span><span class=comment>//  an operator tag
-        </span><span class=identifier>variable</span><span class=special>&lt;</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&gt;,         </span><span class=comment>//  an actor LHS
-        </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt;,                   </span><span class=comment>//  an actor RHS
-    </span><span class=special>&gt; </span><span class=special>&gt;
+        </span><span class=identifier>shift_l_op</span><span class=special>,                     //  </span><span class=identifier>an </span><span class=keyword>operator </span><span class=identifier>tag
+        </span><span class=identifier>variable</span><span class=special>&lt;</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&gt;,         //  </span><span class=identifier>an </span><span class=identifier>actor </span><span class=identifier>LHS
+        </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt;,                   //  </span><span class=identifier>an </span><span class=identifier>actor </span><span class=identifier>RHS
+    </span><span class=special>&gt; &gt;
     </span><span class=keyword>operator</span><span class=special>&lt;&lt;(
-        </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&amp; </span><span class=identifier>_0</span><span class=special>,               </span><span class=comment>//  LHS argument
-        </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt; </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>_1</span><span class=special>)         </span><span class=comment>//  RHS argument
+        </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&amp; </span><span class=identifier>_0</span><span class=special>,               //  </span><span class=identifier>LHS </span><span class=identifier>argument
+        </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt; </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>_1</span><span class=special>)         //  </span><span class=identifier>RHS </span><span class=identifier>argument
     </span><span class=special>{
         </span><span class=keyword>return </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>composite</span><span class=special>&lt;
-            </span><span class=identifier>shift_l_op</span><span class=special>,                 </span><span class=comment>//  an operator tag
-            </span><span class=identifier>variable</span><span class=special>&lt;</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&gt;,     </span><span class=comment>//  an actor LHS
-            </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt;,               </span><span class=comment>//  an actor RHS
-        </span><span class=special>&gt; </span><span class=special>&gt;(</span><span class=identifier>var</span><span class=special>(</span><span class=identifier>_0</span><span class=special>), </span><span class=identifier>_1</span><span class=special>);               </span><span class=comment>//  construct 'em
+            </span><span class=identifier>shift_l_op</span><span class=special>,                 //  </span><span class=identifier>an </span><span class=keyword>operator </span><span class=identifier>tag
+            </span><span class=identifier>variable</span><span class=special>&lt;</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&gt;,     //  </span><span class=identifier>an </span><span class=identifier>actor </span><span class=identifier>LHS
+            </span><span class=identifier>actor</span><span class=special>&lt;</span><span class=identifier>BaseT</span><span class=special>&gt;,               //  </span><span class=identifier>an </span><span class=identifier>actor </span><span class=identifier>RHS
+        </span><span class=special>&gt; &gt;(</span><span class=identifier>var</span><span class=special>(</span><span class=identifier>_0</span><span class=special>), </span><span class=identifier>_1</span><span class=special>);               //  </span><span class=identifier>construct </span>#<span class=identifier>em
     </span><span class=special>}
 </span></pre></code>
-<p>
-</p>
 <p>
 Take note that the std::ostream reference is converted to a actor&lt;variable&lt;std::ostream&gt; &gt; instead of the default actor&lt;value&lt;std::ostream&gt; &gt; which is not appropriate in this case.</p>
 <p>
@@ -350,12 +301,10 @@ Scenario: We have a set of more specialized numeric classes with higher precisio
 <p>
 Solution: Write rank specializations for our numeric types. This is trivial and straightforward:</p>
 <code><pre>
-    <span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=identifier>integer</span><span class=special>&gt;    </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>10000</span><span class=special>; </span><span class=special>};
-    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=identifier>floating</span><span class=special>&gt;   </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>10020</span><span class=special>; </span><span class=special>};
-    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=identifier>rational</span><span class=special>&gt;   </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>10030</span><span class=special>; </span><span class=special>};
+    <span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=identifier>integer</span><span class=special>&gt;    { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>10000</span><span class=special>; };
+    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=identifier>floating</span><span class=special>&gt;   { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>10020</span><span class=special>; };
+    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=identifier>rational</span><span class=special>&gt;   { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>10030</span><span class=special>; };
 </span></pre></code>
-<p>
-</p>
 <p>
 Now, whenever there are mixed-type operations such as a + b where a is a primitive built-in int and b is our rational class, the correct promotion will be applied, and the result will be a rational. The type with the higher rank will win.</p>
 <p>
@@ -366,43 +315,37 @@ Scenario: We have a non-STL conforming iterator named my_iterator. Fortunately, 
 Solution, write a unary_operator specialization for our non- standard class:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;&gt;
-    </span><span class=keyword>struct </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>dereference_op</span><span class=special>, </span><span class=identifier>my_iterator</span><span class=special>&gt; </span><span class=special>{
+    </span><span class=keyword>struct </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>dereference_op</span><span class=special>, </span><span class=identifier>my_iterator</span><span class=special>&gt; {
 
         </span><span class=keyword>typedef </span><span class=identifier>my_class </span><span class=identifier>result_type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>result_type </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>my_iterator </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>iter</span><span class=special>)
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=special>*</span><span class=identifier>iter</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        { </span><span class=keyword>return </span><span class=special>*</span><span class=identifier>iter</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 Scenario: We have a legacy bigint implementation that we use for cryptography. The class design is totally brain-dead and disobeys all the rules. For example, its + operator is destructive and actually applies the += semantics for efficiency (yes, there are such brain-dead beasts!).</p>
 <p>
 Solution: write a binary_operator specialization for our non- standard class:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;&gt;
-    </span><span class=keyword>struct </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>bigint</span><span class=special>, </span><span class=identifier>bigint</span><span class=special>&gt; </span><span class=special>{
+    </span><span class=keyword>struct </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>bigint</span><span class=special>, </span><span class=identifier>bigint</span><span class=special>&gt; {
 
         </span><span class=keyword>typedef </span><span class=identifier>bigint</span><span class=special>&amp; </span><span class=identifier>result_type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>result_type </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>bigint</span><span class=special>&amp; </span><span class=identifier>lhs</span><span class=special>, </span><span class=identifier>bigint </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>rhs</span><span class=special>)
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>lhs </span><span class=special>+ </span><span class=identifier>rhs</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        { </span><span class=keyword>return </span><span class=identifier>lhs </span><span class=special>+ </span><span class=identifier>rhs</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 Going back to our example in no. 4, we also need to write a binary_operator&lt;TagT, T0, T1&gt; specialization for ostreams because the &lt;&lt; operator for ostreams deviate from the normal behavior.</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T1</span><span class=special>&gt;
-    </span><span class=keyword>struct </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>shift_l_op</span><span class=special>, </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt; </span><span class=special>{
+    </span><span class=keyword>struct </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>shift_l_op</span><span class=special>, </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt; {
 
         </span><span class=keyword>typedef </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&amp; </span><span class=identifier>result_type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>result_type </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream</span><span class=special>&amp; </span><span class=identifier>out</span><span class=special>, </span><span class=identifier>T1 </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>rhs</span><span class=special>)
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>out </span><span class=special>&lt;&lt; </span><span class=identifier>rhs</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        { </span><span class=keyword>return </span><span class=identifier>out </span><span class=special>&lt;&lt; </span><span class=identifier>rhs</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 7) Simply write a lazy-function.</p>
 <p>
@@ -414,18 +357,16 @@ Consider this:</p>
         </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{
 
             </span><span class=keyword>typedef </span><span class=keyword>typename </span><span class=identifier>higher_rank</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>, </span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>type </span><span class=identifier>type</span><span class=special>;
-        </span><span class=special>};
+        };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>CondT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>TrueT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>FalseT</span><span class=special>&gt;
         </span><span class=keyword>typename </span><span class=identifier>higher_rank</span><span class=special>&lt;</span><span class=identifier>TrueT</span><span class=special>, </span><span class=identifier>FalseT</span><span class=special>&gt;::</span><span class=identifier>type
         </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>CondT </span><span class=identifier>cond</span><span class=special>, </span><span class=identifier>TrueT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>t</span><span class=special>, </span><span class=identifier>FalseT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>f</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>cond </span><span class=special>? </span><span class=identifier>t </span><span class=special>: </span><span class=identifier>f</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>cond </span><span class=special>? </span><span class=identifier>t </span><span class=special>: </span><span class=identifier>f</span><span class=special>; }
+    };
 
     </span><span class=identifier>function</span><span class=special>&lt;</span><span class=identifier>if_else_func</span><span class=special>&gt; </span><span class=identifier>if_else_</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <p>
 And this corresponding usage:</p>
 <code><pre>
@@ -436,11 +377,9 @@ And this corresponding usage:</p>
         </span><span class=identifier>cout
             </span><span class=special>&lt;&lt; </span><span class=identifier>arg1
             </span><span class=special>&lt;&lt; </span><span class=identifier>if_else_</span><span class=special>(</span><span class=identifier>arg1 </span><span class=special>% </span><span class=number>2 </span><span class=special>== </span><span class=number>1</span><span class=special>, </span><span class=string>&quot; is odd&quot;</span><span class=special>, </span><span class=string>&quot; is even&quot;</span><span class=special>)
-            </span><span class=special>&lt;&lt; </span><span class=identifier>val</span><span class=special>(</span><span class=literal>'\n'</span><span class=special>)
-    </span><span class=special>);
+            &lt;&lt; </span><span class=identifier>val</span><span class=special>(</span><span class=literal>'\n'</span><span class=special>)
+    );
 </span></pre></code>
-<p>
-</p>
 <p>
 What the $%^!? If we can do this, why on earth did we go to all the trouble twisting our brains inside out with the if_else_ composite in no. 2? Hey, not so fast, there's a slight difference that justifies the if_else_ composite: It is not apparent in the example, but the composite version of the if_else_ evaluates either the true or the false branch, **but not both**. The lazy-function version above always eagerly evaluates all its arguments before the function is called. Thus, if we are to adhere strongly to C/C++ semantics, we need the composite version.</p>
 <p>

@@ -29,19 +29,17 @@
 The framework is organized in five (5) layers.</p>
 <code><pre>
                  <span class=special>+-----------+
-                 </span><span class=special>|  </span><span class=identifier>binders  </span><span class=special>|
-                 </span><span class=special>+-----------+-----------+------------+
-                 </span><span class=special>| </span><span class=identifier>functions </span><span class=special>| </span><span class=identifier>operators </span><span class=special>| </span><span class=identifier>statements </span><span class=special>|
-    </span><span class=special>+------------+-----------+-----------+------------+
-    </span><span class=special>| </span><span class=identifier>primitives </span><span class=special>|             </span><span class=identifier>composite              </span><span class=special>|
-    </span><span class=special>+------------+------------------------------------+
-    </span><span class=special>|                     </span><span class=identifier>actor                       </span><span class=special>|
-    </span><span class=special>+-------------------------------------------------+
-    </span><span class=special>|                     </span><span class=identifier>tuples                      </span><span class=special>|
-    </span><span class=special>+-------------------------------------------------+
+                 |  </span><span class=identifier>binders  </span><span class=special>|
+                 +-----------+-----------+------------+
+                 | </span><span class=identifier>functions </span><span class=special>| </span><span class=identifier>operators </span><span class=special>| </span><span class=identifier>statements </span><span class=special>|
+    +------------+-----------+-----------+------------+
+    | </span><span class=identifier>primitives </span><span class=special>|             </span><span class=identifier>composite              </span><span class=special>|
+    +------------+------------------------------------+
+    |                     </span><span class=identifier>actor                       </span><span class=special>|
+    +-------------------------------------------------+
+    |                     </span><span class=identifier>tuples                      </span><span class=special>|
+    +-------------------------------------------------+
 </span></pre></code>
-<p>
-</p>
 <p>
 The lowest level is the tuples library. Knowledge of tuples is not at all required in order to use the framework. In a nutshell, this small sub-library provides a mechanism for bundling heterogeneous types together. This is an implementation detail. Yet, in itself, it is quite useful in other applications as well. A more detailed explanation will be given later.</p>
 <p>
@@ -50,7 +48,7 @@ Actors are the main concept behind the framework. Lazy functions are abstracted 
 Composites are composed of zero or more actors. Each actor in a composite can again be another composite. Primitives are atomic units and are not decomposable.</p>
 <p>
 (lazy) functions, (lazy) operators and (lazy) statements are built on top of composites. To put it more accurately, a lazy function (lazy operators and statements are just specialized forms of lazy functions) has two stages:</p>
-<ol><li>(lazy) partial evaluation [ front-end ]</li><li>final evaluation [ back-end ]</li></ol><p>
+<ol><li>(lazy) partial evaluation </li><li>final evaluation </li></ol><p>
 The first stage is handled by a set of generator functions, generator functors and generator operator overloads. These are your front ends (in the client's perspective). These generators create the actors that can be passed on just like any other function pointer or functor object. The second stage, the actual function call, can be invoked or executed anytime just like any other function. These are the back-ends (often, the final invocation is never actually seen by the client).</p>
 <p>
 Binders, built on top of functions, create lazy functions from simple monomorphic (STL like) functors, function pointers, member function pointers or member variable pointers for deferred evaluation (variables are accessed through a function call that returns a reference to the data. These binders are built on top of (lazy) functions.</p>

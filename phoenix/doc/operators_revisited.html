@@ -46,17 +46,15 @@ Unary example:</p>
         </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{
 
             </span><span class=keyword>typedef </span><span class=keyword>typename </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>negative_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>&gt;
-                </span><span class=special>::</span><span class=identifier>result_type </span><span class=identifier>type</span><span class=special>;
-        </span><span class=special>};
+                ::</span><span class=identifier>result_type </span><span class=identifier>type</span><span class=special>;
+        };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T0</span><span class=special>&gt;
         </span><span class=keyword>typename </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>negative_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>&gt;::</span><span class=identifier>result_type
         </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>T0</span><span class=special>&amp; </span><span class=identifier>_0</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>negative_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>&gt;::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>_0</span><span class=special>); </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>negative_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>&gt;::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>_0</span><span class=special>); }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 Binary example:</p>
 <code><pre>
@@ -66,17 +64,15 @@ Binary example:</p>
         </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{
 
             </span><span class=keyword>typedef </span><span class=keyword>typename </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt;
-                </span><span class=special>::</span><span class=identifier>result_type </span><span class=identifier>type</span><span class=special>;
-        </span><span class=special>};
+                ::</span><span class=identifier>result_type </span><span class=identifier>type</span><span class=special>;
+        };
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T0</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>T1</span><span class=special>&gt;
         </span><span class=keyword>typename </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt;::</span><span class=identifier>result_type
         </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>T0</span><span class=special>&amp; </span><span class=identifier>_0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&amp; </span><span class=identifier>_1</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt;::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>_0</span><span class=special>, </span><span class=identifier>_1</span><span class=special>); </span><span class=special>}
-    </span><span class=special>};
+        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt;::</span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>_0</span><span class=special>, </span><span class=identifier>_1</span><span class=special>); }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 Notice that these are again perfect examples of a composite operation. This style of specialized function is ubiquitous in the framework. We shall see how the unary_operator&lt;negative_op, T0&gt; and the binary_operator&lt;plus_op, T0, T1&gt; template classes, work in a short while.</p>
 <p>
@@ -90,7 +86,7 @@ Here are the complete list of operator tags:</p>
     </span><span class=keyword>struct </span><span class=identifier>pre_incr_op</span><span class=special>;         </span><span class=keyword>struct </span><span class=identifier>pre_decr_op</span><span class=special>;
     </span><span class=keyword>struct </span><span class=identifier>post_incr_op</span><span class=special>;        </span><span class=keyword>struct </span><span class=identifier>post_decr_op</span><span class=special>;
 
-    </span><span class=comment>//  Binary operator tags
+    //  </span><span class=identifier>Binary </span><span class=keyword>operator </span><span class=identifier>tags
 
     </span><span class=keyword>struct </span><span class=identifier>assign_op</span><span class=special>;           </span><span class=keyword>struct </span><span class=identifier>index_op</span><span class=special>;
     </span><span class=keyword>struct </span><span class=identifier>plus_assign_op</span><span class=special>;      </span><span class=keyword>struct </span><span class=identifier>minus_assign_op</span><span class=special>;
@@ -108,23 +104,19 @@ Here are the complete list of operator tags:</p>
     </span><span class=keyword>struct </span><span class=identifier>gt_op</span><span class=special>;               </span><span class=keyword>struct </span><span class=identifier>gt_eq_op</span><span class=special>;
     </span><span class=keyword>struct </span><span class=identifier>logical_and_op</span><span class=special>;      </span><span class=keyword>struct </span><span class=identifier>logical_or_op</span><span class=special>;
 </span></pre></code>
-<p>
-</p>
 <a name="unary_operator"></a><h3>unary_operator</h3><p>
 The unary_operator class implements most of the C++ unary operators. Each specialization is basically a simple static eval function plus a result_type typedef that determines the return type of the eval function.</p>
 <p>
 TagT is one of the unary operator tags above and T is the data type (argument) involved in the operation. Here is an example:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T</span><span class=special>&gt;
-    </span><span class=keyword>struct </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>negative_op</span><span class=special>, </span><span class=identifier>T</span><span class=special>&gt; </span><span class=special>{
+    </span><span class=keyword>struct </span><span class=identifier>unary_operator</span><span class=special>&lt;</span><span class=identifier>negative_op</span><span class=special>, </span><span class=identifier>T</span><span class=special>&gt; {
 
         </span><span class=keyword>typedef </span><span class=identifier>T </span><span class=keyword>const </span><span class=identifier>result_type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>result_type </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>T </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>v</span><span class=special>)
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=special>-</span><span class=identifier>v</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        { </span><span class=keyword>return </span><span class=special>-</span><span class=identifier>v</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 This example is exactly what was being referred to by the first example we saw in the section on operator tags.</p>
 <p>
@@ -137,15 +129,13 @@ The binary_operator class implements most of the C++ binary operators. Each spec
 TagT is one of the binary operator tags above T0 and T1 are the (arguments') data types involved in the operation. Here is an example:</p>
 <code><pre>
     <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T0</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>T1</span><span class=special>&gt;
-    </span><span class=keyword>struct </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt; </span><span class=special>{
+    </span><span class=keyword>struct </span><span class=identifier>binary_operator</span><span class=special>&lt;</span><span class=identifier>plus_op</span><span class=special>, </span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt; {
 
         </span><span class=keyword>typedef </span><span class=keyword>typename </span><span class=identifier>higher_rank</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt;::</span><span class=identifier>type </span><span class=keyword>const </span><span class=identifier>result_type</span><span class=special>;
         </span><span class=keyword>static </span><span class=identifier>result_type </span><span class=identifier>eval</span><span class=special>(</span><span class=identifier>T0 </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>lhs</span><span class=special>, </span><span class=identifier>T1 </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>rhs</span><span class=special>)
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>lhs </span><span class=special>+ </span><span class=identifier>rhs</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
+        { </span><span class=keyword>return </span><span class=identifier>lhs </span><span class=special>+ </span><span class=identifier>rhs</span><span class=special>; }
+    };
 </span></pre></code>
-<p>
-</p>
 <p>
 This example is exactly what was being referred to by the second example we saw in the section on operator tags. higher_rank&lt;T0, T1&gt; is a type computer. We shall see how this works in a short while, pardon the forward information.</p>
 <p>
@@ -157,20 +147,17 @@ All binary_operator except the logical_and_op and logical_or_op have an eval sta
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/lens.gif">
- <b>Short Circuiting || and &amp;&amp;</b><br><br>The logical_and_op and logical_or_op are special due to the C/C++ short circuiting rule, i.e. a || b and a &amp;&amp; b are short circuit evaluated. A forwarding operation cannot be used because all function arguments are evaluated before a function is called. logical_and_op and logical_or_op are specialized composites with implied operations.    </td>
+<img src="theme/lens.gif"></img> <b>Short Circuiting || and &amp;&amp;</b><br><br>The logical_and_op and logical_or_op are special due to the C/C++ short circuiting rule, i.e. a || b and a &amp;&amp; b are short circuit evaluated. A forwarding operation cannot be used because all function arguments are evaluated before a function is called. logical_and_op and logical_or_op are specialized composites with implied operations.    </td>
   </tr>
 </table>
 <a name="rank"></a><h2>rank</h2><p>
 rank&lt;T&gt; class has a static int constant 'value' that defines the absolute rank of a type. rank&lt;T&gt; is used to choose the result type of binary operators such as +. The type with the higher rank wins and is used as the operator's return type. A generic user defined type has a very high rank and always wins when compared against a user defined type. If this is not desireable, one can write a rank specialization for the type. Here are some predefined examples:</p>
 <code><pre>
-    <span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>char</span><span class=special>&gt;           </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>20</span><span class=special>; </span><span class=special>};
-    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>signed </span><span class=keyword>char</span><span class=special>&gt;    </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>20</span><span class=special>; </span><span class=special>};
-    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>unsigned </span><span class=keyword>char</span><span class=special>&gt;  </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>30</span><span class=special>; </span><span class=special>};
-    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>wchar_t</span><span class=special>&gt;        </span><span class=special>{ </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>40</span><span class=special>; </span><span class=special>};
+    <span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>char</span><span class=special>&gt;           { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>20</span><span class=special>; };
+    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>signed </span><span class=keyword>char</span><span class=special>&gt;    { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>20</span><span class=special>; };
+    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>unsigned </span><span class=keyword>char</span><span class=special>&gt;  { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>30</span><span class=special>; };
+    </span><span class=keyword>template </span><span class=special>&lt;&gt; </span><span class=keyword>struct </span><span class=identifier>rank</span><span class=special>&lt;</span><span class=keyword>wchar_t</span><span class=special>&gt;        { </span><span class=keyword>static </span><span class=keyword>int </span><span class=keyword>const </span><span class=identifier>value </span><span class=special>= </span><span class=number>40</span><span class=special>; };
 </span></pre></code>
-<p>
-</p>
 <p>
 Take note that ranks 0..9999 are reserved by the framework.</p>
 <p>
@@ -178,8 +165,6 @@ A template type computer higher_rank&lt;T0, T1&gt; chooses the type (T0 or T1) w
 <code><pre>
     <span class=identifier>higher_rank</span><span class=special>&lt;</span><span class=identifier>T0</span><span class=special>, </span><span class=identifier>T1</span><span class=special>&gt;::</span><span class=identifier>type
 </span></pre></code>
-<p>
-</p>
 <p>
 returns either T0 or T1 depending on which has a higher rank. In some operator applications such as a + b, the result is actually the one with the higher rank. For example if a is of type int and b is of type double, the result will be of type double. This facility can also be quite useful for evaluating some functions. For instance if we have a sum(a, b, c, d, e) function, we can call this type computer to get the type with the highest rank:</p>
 <code><pre>
@@ -191,13 +176,10 @@ returns either T0 or T1 depending on which has a higher rank. In some operator a
         </span><span class=special>&gt;::</span><span class=identifier>type
     </span><span class=special>&gt;::</span><span class=identifier>type
 </span></pre></code>
-<p>
-</p>
 <table width="80%" border="0" align="center">
   <tr>
     <td class="note_box">
-<img src="theme/alert.gif">
- When used within templates, be sure to use 'typename' appropriately. See binary_operator&lt;plus_op, T0, T1&gt; above.    </td>
+<img src="theme/alert.gif"></img> When used within templates, be sure to use 'typename' appropriately. See binary_operator&lt;plus_op, T0, T1&gt; above.    </td>
   </tr>
 </table>
 <table border="0">
