@@ -36,6 +36,7 @@
   <li><strong><a href="#referencing_a_rule_at_construction">Referencing a rule 
     at construction time</a></strong></li>
   <li><strong><a href="#storing_rules">Storing Rules</a></strong></li>
+  <li><strong><a href="#parsing_ints_and_reals">Parsing ints and reals</a> </strong></li>
 </ul>
 <p><b> <a name="scanner_business" id="scanner_business"></a> The Scanner Business</b></p>
 <p><font color="#FF0000">Question:</font> Why doesn't this compile?</p>
@@ -339,6 +340,32 @@
   will own which.</p>
 <p>Ok... this will do for now. You'll definitely see more of the rule-holder in 
   the coming days.</p>
+<p><strong><a name="parsing_ints_and_reals"></a>Parsing Ints and Reals</strong></p>
+<p> <font color="#FF0000">Question:</font>  I was trying to parse an int or float value with the <tt>longest_d</tt> directive and put some actors on the alternatives to visualize the results. When I parse &quot;123.456&quot;, the ouput reports:</p>
+<ol>
+  <li>(int) has been matched: full match = false</li>
+  <li> (double) has been matched: full match = true</li>
+</ol>
+<p>That is not what I expected. What am I missing? </p>
+<p> Actually, the problem is that both semantic actions of the int and real branch will be triggered because both branches will be tried. This doesn't buy us much. What actually wins in the end is what you expected. But there's no easy way to know which one wins. The problem stems from the ambiguity. </p>
+<blockquote>
+  <p>Case1: Consider this input: &quot;2&quot;. Is it an int or a real? They are both (strictly following the grammar of a real). </p>
+  <p>Case2 : Now how about &quot;1.0&quot;? Is it an int or a real? They are both, albeit the int part gets a partial match: &quot;1&quot;. That is why you are getting a (partial) match for your <em>int</em> rule (full match = false). </p>
+</blockquote>
+<p>  Instead of using the <tt>longest_d</tt> to parse ints and reals, what I suggest is to remove the ambiguity and use the plain short-circuiting alternatives. The first step is to use <tt><a href="numerics.html#strict_reals">strict_real_p</a> </tt>to make the first case unambiguous. Unlike 
+
+
+  <tt>real_p</tt>, <tt>strict_real_p</tt> requires a dot to be present for a number to be considered a successful match.
+
+Your grammar can be written unambiguously as:</p>
+<pre>    strict_real_p<span class="special"> | </span>int_p</pre>
+<p> Note that because ambiguity is resolved, attaching actions to both branches is safe. Only one will be triggered:</p>
+<pre>    strict_real_p<span class="special">[</span>R<span class="special">] | </span>int_p<span class="special">[</span>I<span class="special">]</span></pre>
+<blockquote>
+  <p> &quot;1.0&quot; ---&gt; triggers R<br>
+&quot;2&quot; ---&gt; triggers I</p>
+</blockquote>
+<p> Again, as a rule of thumb, it is always best to resolve as much ambiguity as possible. The best grammars are those which involve no backtracking at all: an LL(1) grammar. Backtracking and semantic actions do not mix well.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
