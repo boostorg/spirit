@@ -9,6 +9,8 @@
 #ifndef BOOST_SPIRIT_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_HPP
 
+#include <boost/spirit/version.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Actors documentation and convention
