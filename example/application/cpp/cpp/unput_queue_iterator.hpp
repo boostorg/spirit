@@ -26,7 +26,7 @@ template <typename TokenT>
 class unput_queue_policies : public boost::default_iterator_policies
 {
 public:
-    unput_queue_policies(std::list<TokenT> &unput_queue_)
+    unput_queue_policies(std::list<TokenT> const &unput_queue_)
     :   unput_queue(unput_queue_)
     {}
     
@@ -72,7 +72,7 @@ public:
     { return unput_queue.size(); }
     
 private:
-    std::list<TokenT> &unput_queue;
+    std::list<TokenT> unput_queue;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -110,7 +110,7 @@ namespace impl {
         typedef unput_queue_iterator<IteratorT, TokenT> return_t;
         
         static return_t
-        do_(std::list<TokenT> &queue, IteratorT const &it)
+        do_(std::list<TokenT> const &queue, IteratorT const &it)
         {
             return return_t(it, unput_queue_policies<TokenT>(queue));
         }
@@ -123,7 +123,7 @@ namespace impl {
         typedef unput_queue_iterator<IteratorT, TokenT> return_t;
         
         static return_t const &
-        do_(std::list<TokenT> &queue, return_t const &it)
+        do_(std::list<TokenT> const &queue, return_t const &it)
         {
             return it;
         }

@@ -14,8 +14,18 @@
 
 #include "cpp.hpp"                  // global configuration
 
+#include <iterator>
+
+///////////////////////////////////////////////////////////////////////////////
+//  This sample requires the program_options library written by Vladimir Prus,
+//  which is currently under Boost review. 
+//  It is available here: http://zigzag.cs.msu.su:7813/program_options
+//
+#include <boost/program_options.hpp>
+
 #include "cpplexer/cpp_token_ids.hpp"
 #include "cpplexer/cpp_lex_iterator.hpp"
+#include "cpplexer/slex/util/time_conversion_helper.hpp"
 
 #include "cpp/cpp_context.hpp"
 
@@ -48,70 +58,129 @@ using namespace cpplexer::re2clex;
 using namespace boost::spirit;
 
 using std::string;
+using std::vector;
 using std::getline;
 using std::ifstream;
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::ostream;
+using std::istreambuf_iterator;
+
+namespace po = boost::program_options;
+namespace fs = boost::filesystem;
 
 ///////////////////////////////////////////////////////////////////////////////
-//  main program
-int
-main(int argc, char *argv[])
+// print the current version
+
+int print_version()
 {
-    if (2 != argc) {
-        cout << "Usage: <cpp file>" << endl;
-        return 1;
-    }
-    
-    ifstream infile(argv[1]);
-    string teststr;
-    if (infile.is_open()) {
-        string line;
-        for (getline(infile, line); infile.good(); getline(infile, line)) {
-            teststr += line;
-            teststr += '\n';
-        }
-    }
-    else {
-        teststr = argv[1];
-    }
+// get time of last compilation of this file
+util::time_conversion_helper compilation_time(__DATE__ " " __TIME__);
 
-// The template lex_token<> is defined in both namespaces: cpplexer::slex and 
-// cpplexer::re2clex. The 'using namespace' directive above tells the compiler,
-// which of them to use.
-    typedef cpp::context<lex_token<std::string::iterator> > context_t;
+// calculate the number of days since Dec 13 2001 
+// (the day the cpp project was started)
+std::tm first_day;
 
-// The C preprocessor iterator shouldn't be constructed directly. It is to be
-// generated through a cpp::context<> object. This cpp:context<> object is 
-// additionally to be used to initialize and define different parameters of 
-// the actual preprocessing.
-// The preprocessing of the input stream is done on the fly behind the scenes
-// during iteration over the context_t::iterator_t stream.
-context_t ctx (teststr.begin(), teststr.end(), argv[1]);
-context_t::iterator_t first = ctx.begin();
-context_t::iterator_t last = ctx.end();
-context_t::token_t current_token;
+    std::memset (&first_day, 0, sizeof(std::tm));
+    first_day.tm_mon = 11;           // Dec
+    first_day.tm_mday = 13;          // 13
+    first_day.tm_year = 101;         // 2001
+
+long seconds = long(std::difftime(compilation_time.get_time(), 
+    std::mktime(&first_day)));
+
+    cout 
+        << CPP_VERSION_MAJOR << '.' 
+        << CPP_VERSION_MINOR << '.'
+        << CPP_VERSION_SUBMINOR << '.'
+        << seconds/(3600*24);       // get number of days from seconds
+    return 1;                       // exit app
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+int do_actual_work (
+    po::options_and_arguments const opts, po::variables_map const &vm, 
+    vector<string> const &pathes, vector<string> const &syspathes)
+{
+// current file position is saved for exception handling
+file_position current_position;
 
     try {
-        while (first != last) {
-        // retrieve next token
-            current_token = *first;
-        
-        // find token name
-        string tokenname (cpplexer::get_token_name(cpplexer::token_id(current_token)));
+    // preprocess all given files 
+    vector<string> const &arguments = opts.arguments();
+    vector<string>::const_iterator lastfile = arguments.end();
 
-        // output token info
-            cout << "matched token " 
-                << tokenname 
-                << "(#" << cpplexer::token_id(ID_FROM_TOKEN(current_token)) 
-                << ") at " << current_token.get_position().file << " (" 
-                    << current_token.get_position().line << "/" 
-                    << current_token.get_position().column 
-                << "): >" << current_token.get_value() << "<"
-                << endl;
-            ++first;
+        for (vector<string>::const_iterator file_it = arguments.begin(); 
+             file_it != lastfile; ++file_it)
+        {
+        ifstream instream((*file_it).c_str());
+        string instring;
+
+            if (!instream.is_open()) {
+                cerr << "cpp: could not open input file: " << *file_it << endl;
+                continue;
+            }
+            instring = string(istreambuf_iterator<char>(instream.rdbuf()),
+                              istreambuf_iterator<char>());
+            
+        // The template lex_token<> is defined in several namespaces (here: 
+        // cpplexer::slex and cpplexer::re2clex). The 'using namespace' 
+        // directive above tells the compiler, which of them to use.
+            typedef cpp::context<lex_token<std::string::iterator> > context_t;
+
+        // The C preprocessor iterator shouldn't be constructed directly. It is 
+        // to be generated through a cpp::context<> object. This cpp:context<> 
+        // object is additionally to be used to initialize and define different 
+        // parameters of the actual preprocessing.
+        // The preprocessing of the input stream is done on the fly behind the 
+        // scenes during iteration over the context_t::iterator_t stream.
+        context_t ctx (instring.begin(), instring.end(), (*file_it).c_str());
+
+        // add include directories to the include path
+            if (vm.count("path")) {
+                vector<string>::const_iterator end = pathes.end();
+                for (vector<string>::const_iterator cit = pathes.begin(); 
+                     cit != end; ++cit)
+                {
+                    ctx.add_include_path((*cit).c_str());
+                }
+            }
+            
+        // add system include directories to the include path
+            if (vm.count("syspath")) {
+                vector<string>::const_iterator end = syspathes.end();
+                for (vector<string>::const_iterator cit = syspathes.begin(); 
+                     cit != end; ++cit)
+                {
+                    ctx.add_include_path((*cit).c_str(), true);
+                }
+            }
+            
+        // analyze the actual file
+        context_t::iterator_t first = ctx.begin();
+        context_t::iterator_t last = ctx.end();
+                
+            while (first != last) {
+            // print out the string representation of this token (skip comments)
+                using namespace cpplexer;
+                
+            token_id id = token_id(*first);
+            
+                if (id == T_CPPCOMMENT || id == T_NEWLINE) {
+                // C++ comment tokens contain the trailing newline
+                    cout << endl;
+                }
+                else if (id != T_CCOMMENT) {
+                // out the current token value
+                    cout << (*first).get_value();
+                }
+                ++first;        // advance to the next token
+            }
+        
+        // prepend endl before next file
+            cout << endl;
         }
     }
     catch (cpp::abort_preprocess_exception &e) {
@@ -132,19 +201,73 @@ context_t::token_t current_token;
     catch (std::exception &e) {
     // use last recognized token to retrieve the error position
         cerr 
-            << current_token.get_position().file 
-            << "(" << current_token.get_position().line << "): "
-            << "unexpected exception: " << e.what()
+            << current_position.file 
+            << "(" << current_position.line << "): "
+            << "exception caught: " << e.what()
             << endl;
         return 3;
     }
     catch (...) {
     // use last recognized token to retrieve the error position
         cerr 
-            << current_token.get_position().file 
-            << "(" << current_token.get_position().line << "): "
-            << "unexpected exception." << endl;
+            << current_position.file 
+            << "(" << current_position.line << "): "
+            << "unexpected exception caught." << endl;
         return 4;
     }
     return 0;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//  main entry point
+int
+main (int argc, char const *argv[])
+{
+    try {
+    // analyze the command line options and arguments
+    vector<string> pathes;
+    vector<string> syspathes;
+    po::options_description desc("Usage: cpp [options] file ...");
+        
+        desc.add_options()
+            ("help,h", "", "print out program usage")
+            ("version,v", "", "print the version number")
+            ("path,I", po::parameter<vector<string> >("dir", &pathes), 
+                "specify additional include directory")
+            ("syspath,S", po::parameter<vector<string> >("dir", &syspathes), 
+                "specify additional system include directory")
+        ;
+
+    po::options_and_arguments opts = po::parse_command_line(argc, argv, desc);
+    po::variables_map vm;
+    
+        po::store(opts, vm, desc);
+        if (vm.count("help")) {
+            cout << desc << endl;
+            return 1;
+        }
+        
+        if (vm.count("version")) {
+            return print_version();
+        }
+
+    // if there is no input file given, then exit
+        if (0 == opts.arguments().size()) {
+            cerr << "cpp: no input file given, "
+                 << "use --help to get a hint." << endl;
+            return 5;
+        }
+
+    // iterate over all given input files
+        return do_actual_work(opts, vm, pathes, syspathes);
+    }
+    catch (std::exception &e) {
+        cout << "cpp: exception caught: " << e.what() << endl;
+        return 6;
+    }
+    catch (...) {
+        cerr << "cpp: unexpected exception caught." << endl;
+        return 7;
+    }
+}
+
