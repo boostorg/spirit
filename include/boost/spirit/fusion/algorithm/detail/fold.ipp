@@ -21,7 +21,7 @@ namespace boost { namespace fusion { namespace detail
     template <typename Iterator, typename State, typename F>
     struct fold_apply
     {
-        typedef fusion_apply2<F,
+        typedef typename fusion_apply2<F,
             typename meta::value_of<Iterator>::type, State
         >::type type;
     };
