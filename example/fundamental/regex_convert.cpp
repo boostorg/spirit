@@ -1,7 +1,6 @@
 /*=============================================================================
     Spirit V1.5.2
-    Copyright (c) 2002-2003 Hartmut Kaiser
-    Copyright (c) 2002 Martin Wille
+    Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software is
