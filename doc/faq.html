@@ -386,7 +386,7 @@ Your grammar can be written unambiguously as:</p>
   spirit parsers. To this end it is expected that each closure member has the
   default output operator defined.</p>
 <p>You may provide the operator overload either in the namespace where the
-  class is declared (it will be found through ADL) or make it visible where it is
+  class is declared (will be found through Argument Dependent Lookup) or make it visible where it is
   used, that is <tt><span class="keyword">namespace</span> <span
   class="identifier">boost</span><span class="special">::</span><span
   class="identifier">spirit</span></tt>. Here's an example for <tt><span
