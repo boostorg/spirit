@@ -32,31 +32,31 @@ namespace boost { namespace spirit {
     //////////////////////////////////
     // while parser
     // object are created by while_parser_gen and do_parser_gen
-    template <typename ParserT, typename CondT, bool is_do_parser>
+    template <typename ParsableT, typename CondT, bool is_do_parser>
     struct while_parser
-        : public condition_evaluator<CondT>
+        : public condition_evaluator< typename as_parser<CondT>::type >
         , public unary // the parent stores a copy of the body parser
         <
-            ParserT,
-            parser<while_parser<ParserT, CondT, is_do_parser> >
+            typename as_parser<ParsableT>::type,
+            parser<while_parser<ParsableT, CondT, is_do_parser> >
         >
     {
-        typedef unary
-        <
-            ParserT,
-            parser<while_parser<ParserT, CondT, is_do_parser> >
-        > parent_t;
+        typedef while_parser<ParsableT, CondT, is_do_parser> self_t;
 
-        typedef while_parser<ParserT, CondT, is_do_parser> self_t;
-        typedef condition_evaluator<CondT>                 cond_t;
-        typedef CondT                                      condition_t;
+        typedef as_parser<ParsableT>            as_parser_t;
+        typedef typename as_parser_t::type      parser_t;
+        typedef as_parser<CondT>                cond_as_parser_t;
+        typedef typename cond_as_parser_t::type condition_t;
+
+        typedef unary<parser_t, parser<self_t> > base_t;
+        typedef condition_evaluator<condition_t> eval_t;
 
 
         //////////////////////////////
         // constructor, saves condition and body parser
-        while_parser(ParserT const &p_body, CondT const &cond_)
-            : cond_t(cond_)
-            , parent_t(p_body)
+        while_parser(ParsableT const &body, CondT const &cond)
+            : eval_t(cond_as_parser_t::convert(cond))
+            , base_t(as_parser_t::convert(body))
         {}
 
         //////////////////////////////
@@ -74,8 +74,8 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-            typedef typename parser_result<ParserT, ScannerT>::type sresult_t;
-            typedef typename ScannerT::iterator_t                   iterator_t;
+            typedef typename parser_result<parser_t, ScannerT>::type sresult_t;
+            typedef typename ScannerT::iterator_t                    iterator_t;
 
             iterator_t save(scan.first);
             int length = 0;
@@ -107,33 +107,17 @@ namespace boost { namespace spirit {
     template <typename CondT>
     struct while_parser_gen
     {
-        typedef typename /*::boost::spirit::*/as_parser<CondT>::type condition_t;
-
         //////////////////////////////
         // constructor, saves the condition for use by operator[]
         while_parser_gen(CondT const& cond_) : cond(cond_) {}
 
         //////////////////////////////
         // operator[] returns the actual while-parser object
-        template <typename ParserT>
-        while_parser
-        <
-            typename /*::boost::spirit::*/as_parser<ParserT>::type,
-            condition_t,
-            false
-        >
-        operator[](ParserT const &subject) const
+        template <typename ParsableT>
+        while_parser<ParsableT, CondT, false>
+        operator[](ParsableT const &subject) const
         {
-            typedef typename /*::boost::spirit::*/as_parser<ParserT>::type parser_t;
-
-            typedef char assert_argument_must_be_a_parser
-                [::boost::spirit::is_parser<parser_t>::value];
-
-            return while_parser<parser_t, condition_t, false>
-            (
-                ::boost::spirit::as_parser<ParserT>::convert(subject),
-                ::boost::spirit::as_parser<CondT>::convert(cond)
-            );
+            return while_parser<ParsableT, CondT, false>(subject, cond);
         }
     private:
 
@@ -150,31 +134,22 @@ namespace boost { namespace spirit {
     // do-while-parser generator, takes the condition as
     // parameter to while_p member function and returns the
     // actual do-while-parser.
-    template <typename ParserT>
+    template <typename ParsableT>
     struct do_while_parser_gen
     {
         //////////////////////////////
         // constructor. saves the body parser for use by while_p.
-        explicit do_while_parser_gen(ParserT const &body_parser)
+        explicit do_while_parser_gen(ParsableT const &body_parser)
             : body(body_parser)
         {}
 
         //////////////////////////////
         // while_p returns the actual while-parser object
         template <typename CondT>
-        while_parser
-        <
-            ParserT,
-            typename /*::boost::spirit::*/as_parser<CondT>::type,
-            true
-        >
+        while_parser<ParsableT, CondT, true>
         while_p(CondT cond) const
         {
-            typedef /*typename ::boost::spirit::*/as_parser<CondT> cond_as_parser_t;
-            typedef typename cond_as_parser_t::type condition_t;
-
-            return while_parser<ParserT, condition_t, true>
-                (body, ::boost::spirit::as_parser<CondT>::convert(cond));
+            return while_parser<ParsableT, CondT, true>(body, cond);
         }
     private:
 
@@ -184,27 +159,18 @@ namespace boost { namespace spirit {
         // do_while_parser_gen<> are only used as temporaries
         // the while-parser object constructed by the while_p
         // member function stores a copy of the body parser.
-        ParserT const &body;
+        ParsableT const &body;
     };
 
     struct do_parser_gen
     {
         inline do_parser_gen() {}
 
-        template <typename ParserT>
-        impl::do_while_parser_gen
-        <
-            typename /*::boost::spirit::*/as_parser<ParserT>::type
-        >
-        operator[](ParserT const& body) const
+        template <typename ParsableT>
+        impl::do_while_parser_gen<ParsableT>
+        operator[](ParsableT const& body) const
         {
-            typedef typename /*::boost::spirit::*/as_parser<ParserT>::type parser_t;
-
-            typedef char assert_argument_must_be_a_parser
-                [::boost::spirit::is_parser<parser_t>::value];
-
-            return impl::do_while_parser_gen<parser_t>
-                (::boost::spirit::as_parser<ParserT>::convert(body));
+            return impl::do_while_parser_gen<ParsableT>(body);
         }
     };
 } // namespace impl
