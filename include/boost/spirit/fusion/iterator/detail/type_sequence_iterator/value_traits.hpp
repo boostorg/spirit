@@ -22,7 +22,7 @@ namespace boost { namespace fusion
     struct value_traits<type_sequence_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
         {
             typedef typename mpl::deref<
                 typename Iterator::iterator_type>::type

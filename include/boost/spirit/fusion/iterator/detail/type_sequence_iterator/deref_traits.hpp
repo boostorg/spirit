@@ -44,7 +44,7 @@ namespace boost { namespace fusion
     struct deref_traits<type_sequence_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
             : type_sequence_iterator_detail::deref_traits_impl<Iterator> {};
     };
 }}

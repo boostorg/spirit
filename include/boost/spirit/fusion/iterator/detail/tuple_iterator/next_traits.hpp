@@ -52,7 +52,7 @@ namespace boost { namespace fusion
     struct next_traits<tuple_iterator_tag>
     {
         template <typename Iterator>
-        struct impl : detail::tuple_iterator_next_traits_impl<Iterator> {};
+        struct algorithm : detail::tuple_iterator_next_traits_impl<Iterator> {};
     };
 }}
 

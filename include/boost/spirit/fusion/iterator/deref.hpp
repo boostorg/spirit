@@ -17,7 +17,7 @@ namespace boost { namespace fusion
     struct deref_traits
     {
         template <typename Iterator>
-        struct impl {};
+        struct algorithm {};
     };
 
     template <typename Iterator>
@@ -25,7 +25,7 @@ namespace boost { namespace fusion
     {
         typedef typename
             deref_traits<FUSION_GET_TAG(Iterator)>::
-                template impl<Iterator>::type
+                template algorithm<Iterator>::type
         type;
     };
 
@@ -35,7 +35,7 @@ namespace boost { namespace fusion
     {
         typename result_of_deref<Iterator>::type result =
             deref_traits<FUSION_GET_TAG(Iterator)>::
-                template impl<Iterator>::apply(i.cast());
+                template algorithm<Iterator>::apply(i.cast());
         return result;
     }
 
@@ -45,7 +45,7 @@ namespace boost { namespace fusion
     {
         typename result_of_deref<Iterator>::type result =
             deref_traits<FUSION_GET_TAG(Iterator)>::
-                template impl<Iterator>::apply(i.cast());
+                template algorithm<Iterator>::apply(i.cast());
         return result;
     }
 

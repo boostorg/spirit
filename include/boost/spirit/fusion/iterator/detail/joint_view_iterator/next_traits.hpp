@@ -27,7 +27,7 @@ namespace boost { namespace fusion
     struct next_traits<joint_view_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
         {
             typedef typename Iterator::first_type first_type;
             typedef typename Iterator::last_type last_type;

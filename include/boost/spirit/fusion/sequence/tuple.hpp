@@ -15,6 +15,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
+#include <boost/spirit/fusion/sequence/tuple_forward.hpp>
 
 #define FUSION_TUPLE_CONSTRUCTOR(z, n, _)                                       \
     tuple(BOOST_PP_ENUM_BINARY_PARAMS(                                          \
@@ -26,10 +27,7 @@ namespace boost { namespace fusion
 {
     struct void_t;
 
-    template <
-        BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-            FUSION_MAX_TUPLE_SIZE, typename T, void_t)
-    >
+    template <BOOST_PP_ENUM_PARAMS(FUSION_MAX_TUPLE_SIZE, typename T)>
     struct tuple :
         detail::tuple_builder<
             BOOST_PP_ENUM_PARAMS(FUSION_MAX_TUPLE_SIZE, T)
@@ -45,7 +43,7 @@ namespace boost { namespace fusion
             : base_type() {}
 
         template <typename X>
-        explicit tuple(X const& x)
+        /*explicit*/ tuple(X const& x)
             : base_type(x) {}
 
         explicit tuple(typename detail::call_param<T0>::type _0)

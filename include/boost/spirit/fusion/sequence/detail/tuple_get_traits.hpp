@@ -50,7 +50,7 @@ namespace boost { namespace fusion
     struct tuple_get_traits<tuple_tag>
     {
         template <int N, typename Tuple>
-        struct impl : detail::tuple_get_traits_impl<N, Tuple> {};
+        struct algorithm : detail::tuple_get_traits_impl<N, Tuple> {};
     };
 }}
 

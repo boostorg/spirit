@@ -28,7 +28,7 @@ namespace boost { namespace fusion
     struct begin_traits<type_sequence_tag>
     {
         template <typename Sequence>
-        struct impl
+        struct algorithm
         {
             typedef type_sequence_iterator<
                 typename mpl::begin<typename Sequence::sequence_type>::type>
@@ -49,7 +49,7 @@ namespace boost { namespace fusion
     struct end_traits<type_sequence_tag>
     {
         template <typename Sequence>
-        struct impl
+        struct algorithm
         {
             typedef type_sequence_iterator<
                 typename mpl::end<typename Sequence::sequence_type>::type>
@@ -62,6 +62,23 @@ namespace boost { namespace fusion
             }
         };
     };
+}}
+
+namespace boost { namespace mpl
+{
+    template <typename Tag>
+    struct begin_traits;
+
+    template <typename Tag>
+    struct end_traits;
+
+    template <>
+    struct begin_traits<fusion::type_sequence_tag>
+        : fusion::begin_traits<fusion::type_sequence_tag> {};
+
+    template <>
+    struct end_traits<fusion::type_sequence_tag>
+        : fusion::end_traits<fusion::type_sequence_tag> {};
 }}
 
 #endif

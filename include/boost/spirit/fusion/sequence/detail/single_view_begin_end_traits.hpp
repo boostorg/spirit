@@ -66,7 +66,7 @@ namespace boost { namespace fusion
     struct begin_traits<single_view_tag>
     {
         template <typename Sequence>
-        struct impl : single_view_detail::begin_traits_impl<Sequence> {};
+        struct algorithm : single_view_detail::begin_traits_impl<Sequence> {};
     };
 
     template <typename Tag>
@@ -76,8 +76,25 @@ namespace boost { namespace fusion
     struct end_traits<single_view_tag>
     {
         template <typename Sequence>
-        struct impl : single_view_detail::end_traits_impl<Sequence> {};
+        struct algorithm : single_view_detail::end_traits_impl<Sequence> {};
     };
+}}
+
+namespace boost { namespace mpl
+{
+    template <typename Tag>
+    struct begin_traits;
+
+    template <typename Tag>
+    struct end_traits;
+
+    template <>
+    struct begin_traits<fusion::single_view_tag>
+        : fusion::begin_traits<fusion::single_view_tag> {};
+
+    template <>
+    struct end_traits<fusion::single_view_tag>
+        : fusion::end_traits<fusion::single_view_tag> {};
 }}
 
 #endif

@@ -27,7 +27,7 @@ namespace boost { namespace fusion
     struct next_traits<single_view_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
         {
             typedef single_view_iterator_end<
                 FUSION_GET_VALUE_TYPE(Iterator)>

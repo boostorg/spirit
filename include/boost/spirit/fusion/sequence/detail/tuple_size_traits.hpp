@@ -19,7 +19,7 @@ namespace boost { namespace fusion
     struct tuple_size_traits<tuple_tag>
     {
         template <typename Tuple>
-        struct impl : Tuple::size {};
+        struct algorithm : Tuple::size {};
     };
 
 }}

@@ -44,7 +44,7 @@ namespace boost { namespace fusion
     struct value_traits<tuple_iterator_tag>
     {
         template <typename Iterator>
-        struct impl : detail::tuple_iterator_value_traits_impl<Iterator> {};
+        struct algorithm : detail::tuple_iterator_value_traits_impl<Iterator> {};
     };
 
 }} // namespace boost::fusion

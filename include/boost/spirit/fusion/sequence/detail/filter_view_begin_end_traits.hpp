@@ -24,7 +24,7 @@ namespace boost { namespace fusion
     struct begin_traits<filter_view_tag>
     {
         template <typename Sequence>
-        struct impl
+        struct algorithm
         {
             typedef typename Sequence::first_type first_type;
             typedef typename Sequence::last_type last_type;
@@ -43,7 +43,7 @@ namespace boost { namespace fusion
     struct end_traits<filter_view_tag>
     {
         template <typename Sequence>
-        struct impl
+        struct algorithm
         {
             typedef typename Sequence::last_type last_type;
             typedef typename Sequence::pred_type pred_type;
@@ -56,6 +56,23 @@ namespace boost { namespace fusion
             }
         };
     };
+}}
+
+namespace boost { namespace mpl
+{
+    template <typename Tag>
+    struct begin_traits;
+
+    template <typename Tag>
+    struct end_traits;
+
+    template <>
+    struct begin_traits<fusion::filter_view_tag>
+        : fusion::begin_traits<fusion::filter_view_tag> {};
+
+    template <>
+    struct end_traits<fusion::filter_view_tag>
+        : fusion::end_traits<fusion::filter_view_tag> {};
 }}
 
 #endif

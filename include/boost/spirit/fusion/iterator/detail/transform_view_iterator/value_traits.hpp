@@ -10,6 +10,7 @@
 
 #include <boost/spirit/fusion/detail/config.hpp>
 #include <boost/spirit/fusion/iterator/detail/adapt_value_traits.hpp>
+#include <boost/spirit/fusion/iterator/value_of.hpp>
 
 namespace boost { namespace fusion
 {
@@ -17,7 +18,19 @@ namespace boost { namespace fusion
 
     template <>
     struct value_traits<transform_view_iterator_tag>
-        : detail::adapt_value_traits {};
+    {
+        template <typename Iterator>
+        struct algorithm
+        {
+            typedef typename
+                value_of<typename Iterator::first_type>::type
+            value_type;
+
+            typedef typename Iterator::transform_type transform_type;
+            typedef typename transform_type::
+                template result<value_type>::type type;
+        };
+    };
 }}
 
 #endif

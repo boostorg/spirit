@@ -29,6 +29,21 @@ namespace boost { namespace fusion { namespace detail
         for_each(fusion::next(first), last, f
             , equal_to<typename result_of_next<First>::type, Last>());
     }
+
+//    template <typename First, typename Last, typename F>
+//    inline void
+//    for_each_non_const(First&, Last&, F const&, mpl::true_)
+//    {
+//    }
+//
+//    template <typename First, typename Last, typename F>
+//    inline void
+//    for_each_non_const(First& first, Last& last, F const& f, mpl::false_)
+//    {
+//        f(*first);
+//        for_each(fusion::next(first), last, f
+//            , equal_to<typename result_of_next<First>::type, Last>());
+//    }
 }}}
 
 #endif

@@ -16,7 +16,7 @@ namespace boost { namespace fusion
     struct next_traits
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
         {
             // VC6 needs this
             typedef int type;
@@ -28,7 +28,7 @@ namespace boost { namespace fusion
     {
         typedef typename
             next_traits<FUSION_GET_TAG(Iterator)>::
-                template impl<Iterator>::type
+                template algorithm<Iterator>::type
         type;
     };
 
@@ -37,7 +37,7 @@ namespace boost { namespace fusion
     next(Iterator const& i)
     {
         return next_traits<FUSION_GET_TAG(Iterator)>::
-            template impl<Iterator>::apply(i);
+            template algorithm<Iterator>::apply(i);
     }
 }}
 

@@ -55,9 +55,9 @@ namespace boost { namespace fusion
     struct deref_traits<tuple_iterator_tag>
     {
         template <typename Iterator>
-        struct impl : detail::tuple_iterator_deref_traits_impl<Iterator> {};
+        struct algorithm : detail::tuple_iterator_deref_traits_impl<Iterator> {};
     };
 
-}} // namespace boost::fusion
+}}
 
 #endif

@@ -22,7 +22,7 @@ namespace boost { namespace fusion
     struct end_traits
     {
         template <typename Sequence>
-        struct impl {};
+        struct algorithm {};
     };
 
     template <typename Sequence>
@@ -30,7 +30,7 @@ namespace boost { namespace fusion
     {
         typedef typename
             end_traits<FUSION_GET_TAG(Sequence)>::
-                template impl<Sequence>::type
+                template algorithm<Sequence>::type
         type;
     };
 
@@ -39,7 +39,7 @@ namespace boost { namespace fusion
     end(sequence_base<Sequence> const& seq)
     {
         return end_traits<FUSION_GET_TAG(Sequence)>::
-            template impl<Sequence const>::apply(seq.cast());
+            template algorithm<Sequence const>::apply(seq.cast());
     }
 
     template <typename Sequence>
@@ -47,7 +47,7 @@ namespace boost { namespace fusion
     end(sequence_base<Sequence>& seq)
     {
         return end_traits<FUSION_GET_TAG(Sequence)>::
-            template impl<Sequence>::apply(seq.cast());
+            template algorithm<Sequence>::apply(seq.cast());
     }
 
 #ifdef FUSION_COMFORMING_COMPILER

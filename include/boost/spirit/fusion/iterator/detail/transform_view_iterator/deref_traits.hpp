@@ -19,7 +19,7 @@ namespace boost { namespace fusion
     struct deref_traits<transform_view_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
         {
             typedef typename
                 result_of_deref<typename Iterator::first_type>::type

@@ -63,14 +63,78 @@ namespace boost { namespace fusion
     struct begin_traits<tuple_tag>
     {
         template <typename Tuple>
-        struct impl : tuple_detail::begin_traits_impl<Tuple> {};
+        struct algorithm : tuple_detail::begin_traits_impl<Tuple> {};
     };
 
     template <>
     struct end_traits<tuple_tag>
     {
         template <typename Tuple>
-        struct impl : tuple_detail::end_traits_impl<Tuple> {};
+        struct algorithm : tuple_detail::end_traits_impl<Tuple> {};
+    };
+}}
+
+#include <boost/mpl/begin_end.hpp>
+#include <boost/mpl/clear.hpp>
+#include <boost/mpl/insert.hpp>
+#include <boost/mpl/empty.hpp>
+#include <boost/spirit/fusion/sequence/tuple_forward.hpp>
+
+namespace boost { namespace fusion
+{
+    template <typename Sequence>
+    struct result_of_generate;
+
+    template <typename Sequence, typename T>
+    struct result_of_push_front;
+}}
+
+namespace boost { namespace mpl
+{
+    // these mpl traits really ought to be placed somewhere else
+
+    template <typename Tag>
+    struct begin_traits;
+
+    template <>
+    struct begin_traits<fusion::tuple_tag>
+        : fusion::begin_traits<fusion::tuple_tag> {};
+
+    template <typename Tag>
+    struct end_traits;
+
+    template <>
+    struct end_traits<fusion::tuple_tag>
+        : fusion::end_traits<fusion::tuple_tag> {};
+
+    template <typename Tag>
+    struct clear_traits;
+
+    template <>
+    struct clear_traits<fusion::tuple_tag>
+    {
+        template <typename Tuple>
+        struct algorithm
+        {
+            typedef fusion::tuple<> type;
+        };
+    };
+
+    template <typename Tag>
+    struct push_front_traits;
+
+    template <>
+    struct push_front_traits<fusion::tuple_tag>
+    {
+        template <typename Tuple, typename T>
+        struct algorithm
+        {
+            typedef typename
+                fusion::result_of_generate<
+                    typename fusion::result_of_push_front<Tuple, T>::type
+                >::type
+            type;
+        };
     };
 }}
 

@@ -16,6 +16,8 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/range_c.hpp>
 
+#include <boost/spirit/fusion/sequence/generate.hpp>
+
 struct square
 {
     template <typename T>

@@ -25,7 +25,7 @@ namespace boost { namespace fusion
     struct next_traits<type_sequence_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
+        struct algorithm
         {
             typedef type_sequence_iterator<
                 typename mpl::next<typename Iterator::iterator_type>::type

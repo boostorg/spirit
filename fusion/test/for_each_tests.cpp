@@ -19,6 +19,15 @@ struct print
     }
 };
 
+struct increment
+{
+    template <typename T>
+    void operator()(T& v) const
+    {
+        ++v;
+    }
+};
+
 int
 test_main(int, char*[])
 {
@@ -30,6 +39,13 @@ test_main(int, char*[])
         typedef tuple<int, char, double, char const*> tuple_type;
         tuple_type t(1, 'x', 3.3, "Ruby");
         for_each(t, print());
+        std::cout << std::endl;
+    }
+
+    {
+        typedef tuple<int, char, double, char const*> tuple_type;
+        tuple_type t(1, 'x', 3.3, "Ruby");
+        for_each(t, increment());
         std::cout << std::endl;
     }
 

@@ -60,7 +60,7 @@ namespace boost { namespace fusion
     struct equal_to_traits<tuple_iterator_tag>
     {
         template <typename I1, typename I2>
-        struct impl : detail::tuple_iterator_equal_to<I1, I2> {};
+        struct algorithm : detail::tuple_iterator_equal_to<I1, I2> {};
     };
 }}
 

@@ -40,6 +40,19 @@ namespace boost { namespace fusion
                   , typename result_of_end<Sequence>::type>());
     }
 
+    template <typename Sequence, typename F>
+    inline void
+    for_each(sequence_base<Sequence>& seq, F const& f)
+    {
+        detail::for_each(
+                fusion::begin(seq.cast())
+              , fusion::end(seq.cast())
+              , f
+              , equal_to<
+                    typename result_of_begin<Sequence>::type
+                  , typename result_of_end<Sequence>::type>());
+    }
+
 #ifdef FUSION_COMFORMING_COMPILER
 
     template <typename Sequence, typename F>

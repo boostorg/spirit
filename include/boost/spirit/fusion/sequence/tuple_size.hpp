@@ -25,12 +25,12 @@ namespace boost { namespace fusion
     struct tuple_size_traits
     {
         template <typename Tuple>
-        struct impl {};
+        struct algorithm {};
     };
 
     template <typename Tuple>
     struct tuple_size
-        : tuple_size_traits<FUSION_GET_TAG(Tuple)>::template impl<Tuple>
+        : tuple_size_traits<FUSION_GET_TAG(Tuple)>::template algorithm<Tuple>
     {};
 
 }}

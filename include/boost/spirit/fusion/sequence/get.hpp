@@ -28,7 +28,7 @@ namespace boost { namespace fusion
     struct tuple_get_traits
     {
         template <int N, typename Sequence>
-        struct impl {};
+        struct algorithm {};
     };
 
     template <int N, typename Sequence>
@@ -38,7 +38,7 @@ namespace boost { namespace fusion
 
         typedef typename
             tuple_get_traits<tag>::
-                template impl<N, Sequence>::type
+                template algorithm<N, Sequence>::type
         type;
     };
 
@@ -49,7 +49,7 @@ namespace boost { namespace fusion
         typedef FUSION_GET_TAG(Sequence) tag;
 
         return tuple_get_traits<tag>::
-            template impl<N, Sequence const>::apply(seq.cast());
+            template algorithm<N, Sequence const>::apply(seq.cast());
     }
 
     template <int N, typename Sequence>
@@ -59,7 +59,7 @@ namespace boost { namespace fusion
         typedef FUSION_GET_TAG(Sequence) tag;
 
         return tuple_get_traits<tag>::
-            template impl<N, Sequence>::apply(seq.cast());
+            template algorithm<N, Sequence>::apply(seq.cast());
     }
 }}
 

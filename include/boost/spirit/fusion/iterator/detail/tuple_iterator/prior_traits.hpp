@@ -53,7 +53,7 @@ namespace boost { namespace fusion
     struct prior_traits<tuple_iterator_tag>
     {
         template <typename Iterator>
-        struct impl : detail::tuple_iterator_prior_traits_impl<Iterator> {};
+        struct algorithm : detail::tuple_iterator_prior_traits_impl<Iterator> {};
     };
 }}
 

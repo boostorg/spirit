@@ -24,7 +24,7 @@ namespace boost { namespace fusion
     struct begin_traits<range_tag>
     {
         template <typename Sequence>
-        struct impl
+        struct algorithm
         {
             typedef typename Sequence::begin_type type;
 
@@ -43,7 +43,7 @@ namespace boost { namespace fusion
     struct end_traits<range_tag>
     {
         template <typename Sequence>
-        struct impl
+        struct algorithm
         {
             typedef typename Sequence::end_type type;
 
@@ -54,6 +54,23 @@ namespace boost { namespace fusion
             }
         };
     };
+}}
+
+namespace boost { namespace mpl
+{
+    template <typename Tag>
+    struct begin_traits;
+
+    template <typename Tag>
+    struct end_traits;
+
+    template <>
+    struct begin_traits<fusion::range_tag>
+        : fusion::begin_traits<fusion::range_tag> {};
+
+    template <>
+    struct end_traits<fusion::range_tag>
+        : fusion::end_traits<fusion::range_tag> {};
 }}
 
 #endif
