@@ -36,7 +36,7 @@ namespace boost { namespace fusion
         next_traits_impl<Iterator>::call(Iterator)
         {
             FUSION_RETURN_DEFAULT_CONSTRUCTED;
-        };
+        }
     }
 
     namespace meta
