@@ -12,6 +12,9 @@
 #if !defined(BOOST_SPIRIT_ASSERT_HPP)
 #define BOOST_SPIRIT_ASSERT_HPP
 
+#include "boost/config.hpp"
+#include "boost/throw_exception.hpp"
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  BOOST_SPIRIT_ASSERT is used throughout the framework.  It can be
@@ -25,7 +28,7 @@
     #define BOOST_SPIRIT_ASSERT(x)
 #elif defined (BOOST_SPIRIT_ASSERT_EXCEPTION)
     #define BOOST_SPIRIT_ASSERT_AUX(f, l, x) \
-    do{ if (!(x)) throw BOOST_SPIRIT_ASSERT_EXCEPTION(f "(" #l "): " #x); } while(0)
+    do{ if (!(x)) boost::throw_exception(BOOST_SPIRIT_ASSERT_EXCEPTION(f "(" #l "): " #x)); } while(0)
     #define BOOST_SPIRIT_ASSERT(x) SPIRIT_ASSERT_AUX(__FILE__, __LINE__, x)
 #else
     #include <cassert>

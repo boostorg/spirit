@@ -12,6 +12,7 @@
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_HPP
 
 #include "boost/config.hpp"
+#include "boost/throw_exception.hpp"
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
 // The multi_pass for VC++ is currently broken
@@ -212,7 +213,7 @@ class buf_id_check
         {
             if (buf_id != *shared_buf_id)
             {
-                throw illegal_backtracking();
+                boost::throw_exception(illegal_backtracking());
             }
         }
 
