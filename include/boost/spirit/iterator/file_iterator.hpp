@@ -52,7 +52,11 @@
 #include <boost/config.hpp>
 #include <boost/iterator.hpp>
 #include <cstdio>
+#if _MSL_
+#include <sys/stat.h>
+#else
 #include <sys/types.h>
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
