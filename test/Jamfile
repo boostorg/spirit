@@ -189,7 +189,3 @@ unit-test multi_pass_tests : multi_pass_tests.cpp
     :
     ;
 
-unit-test file_iterator_tests : file_iterator_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;

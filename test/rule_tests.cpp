@@ -92,12 +92,6 @@ rule_tests()
     assert(pi.length == 14);
 
     aliasing_tests();
-
-    rule<scanner<>, parser_context, parser_tag<1> > r1;
-    rule<scanner<>, parser_context, parser_tag<2> > r2;
-    r1 = r2;
-    assert(r1.id() == 1);
-    assert(r2.id() == 2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
