@@ -1,3 +1,15 @@
+
+C Grammar checker
+Copyright (c) 2001-2003 Hartmut Kaiser
+http://spirit.sourceforge.net/
+
+Permission to copy, use, modify, sell and distribute this software is
+granted provided this copyright notice appears in all copies. This
+software is provided "as is" without express or implied warranty, and
+with no claim as to its suitability for any purpose.
+
+-------------------------------------------------------------------------------
+
 The C grammar parser is a full working example of using the Spirit
 library and is able to parse the full ANSI C language. 
 

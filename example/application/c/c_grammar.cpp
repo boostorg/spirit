@@ -1,13 +1,20 @@
-//
-// C Grammar checker implemented with Spirit (http://spirit.sourceforge.net/)
-//
-// Copyright© 2001 Hartmut Kaiser, All rights reserved
-// email: HartmutKaiser@t-online.de
-// Created: 15.10.2001 09:25:56
+/*=============================================================================
+    Spirit V1.5.2
+    
+    C Grammar checker
+    
+    Copyright (c) 2001-2003 Hartmut Kaiser
+    http://spirit.sourceforge.net/
 
-// Adapted from:
-//    http://www.lysator.liu.se/c/ANSI-C-grammar-y.html
-//    http://www.lysator.liu.se/c/ANSI-C-grammar-l.html
+    Adapted from:
+        http://www.lysator.liu.se/c/ANSI-C-grammar-y.html
+        http://www.lysator.liu.se/c/ANSI-C-grammar-l.html
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // version history
