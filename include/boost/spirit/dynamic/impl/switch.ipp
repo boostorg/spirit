@@ -80,8 +80,8 @@ struct default_delegate_parse<N, true, HasDefault> {
         typename ParserT, typename DefaultT,
         typename ValueT, typename ScannerT
     >
-    typename parser_result<ParserT, ScannerT>::type
-    static parse (ValueT const &value, ParserT const &, DefaultT const &d,
+    static typename parser_result<ParserT, ScannerT>::type
+    parse (ValueT const &value, ParserT const &, DefaultT const &d,
         ScannerT const &scan, typename ScannerT::iterator_t const save)
     {
         //  Since there is a default_p case branch defined, the corresponding
@@ -102,8 +102,8 @@ struct default_delegate_parse<N, false, true> {
         typename ParserT, typename DefaultT,
         typename ValueT, typename ScannerT
     >
-    typename parser_result<ParserT, ScannerT>::type
-    static parse (ValueT const &value, ParserT const &p, DefaultT const &d,
+    static typename parser_result<ParserT, ScannerT>::type
+    parse (ValueT const &value, ParserT const &p, DefaultT const &d,
         ScannerT const &scan, typename ScannerT::iterator_t const save)
     {
         //  Since there is a default_p case branch defined, the corresponding

@@ -144,13 +144,13 @@ struct case_parser
     typedef unary_parser_category               parser_category_t;
     typedef unary<ParserT, parser<self_t> >     base_t;
 
-    typedef typename self_t::subject_t          subject_t;
+    typedef typename self_t::subject_t          self_subject_t;
 
     BOOST_STATIC_CONSTANT(int, value = N);
     BOOST_STATIC_CONSTANT(bool, is_default = IsDefault);
     BOOST_STATIC_CONSTANT(bool, is_simple = true);
     BOOST_STATIC_CONSTANT(bool, is_epsilon = (
-        is_default && boost::is_same<subject_t, epsilon_parser>::value
+        is_default && boost::is_same<self_subject_t, epsilon_parser>::value
     ));
 
     case_parser(parser<ParserT> const &p)
