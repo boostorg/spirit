@@ -100,6 +100,15 @@ public:
         m_IsAtEnd(m_Iter == m_IterEnd)
     {
     }
+    position_iterator(IteratorT const& iter, IteratorT const& iterend,
+            file_position pos):
+        m_Iter(iter),
+        m_IterEnd(iterend),
+        m_Pos(pos),
+        m_CharsPerTab(4),
+        m_IsAtEnd(m_Iter == m_IterEnd)
+    {
+    }
     reference operator *() const { return *m_Iter; }
     pointer operator ->() const { return &*m_Iter; }
     bool is_equal(const position_iterator& i2) const {
