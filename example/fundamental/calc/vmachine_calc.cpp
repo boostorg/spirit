@@ -62,6 +62,7 @@ vmachine::execute(int code[])
 {
     int const*  pc = code;
     bool        running = true;
+    stackPtr = stack;
 
     while (running)
     {
