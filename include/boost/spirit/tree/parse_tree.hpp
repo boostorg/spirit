@@ -56,8 +56,8 @@ struct pt_tree_policy :
             std::back_insert_iterator<typename match_t::container_t>(a.trees));
     }
 
-    template <typename Iterator1T, typename Iterator2T>
-    static void group_match(match_t& m, parser_id const& id,
+    template <typename MatchT, typename Iterator1T, typename Iterator2T>
+    static void group_match(MatchT& m, parser_id const& id,
             Iterator1T const& first, Iterator2T const& last)
     {
         if (!m)
