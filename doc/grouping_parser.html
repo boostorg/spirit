@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Grouping Parser</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="theme/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" background="theme/bkd2.gif" cellspacing="2">
+  <tr> 
+    <td width="10"> </td>
+    <td width="85%"> <font size="6" face="Verdana, Arial, Helvetica, sans-serif"><b>Grouping 
+      Parser </b></font> </td>
+    <td width="112"><a href="http://spirit.sf.net"><img src="theme/spirit.gif" width="112" height="48" align="right" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<table border="0">
+  <tr> 
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><a href="closures.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="20"><a href="escape_char_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
+</table>
+<p>The grouping parser handles the composition of single parser results of a composite 
+  parser into one overall parser result, which can be used for accessing all the 
+  parser results from inside a single semantic action code attached to the grouping 
+  parser. For instance:</p>
+<pre><code>    std::pair&lt;double, double&gt; c;<br>    group_d[real_p &gt;&gt; ',' &gt;&gt; real_p]<br>    [<br>        c = construct&lt;std::pair&lt;double, double&gt; &gt;(arg1, arg3)<br>    ]</code></pre>
+<p>will parse two comma separated real numbers and assigns them after a successful 
+  match to the pair variable <tt>c</tt>. As you can see, the result of the first 
+  real_p parser is accessible through the <tt>'arg1'</tt> placeholder variable 
+  and the third parser result (the second <tt>real_p</tt>) is accessible through 
+  the <tt>'arg3'</tt> placeholder variable.</p>
+<p>If a single parser does not return a result value (the corresponding match&lt;&gt; 
+  result contains nil_t as its value), a std::pair of iterators pointing to the 
+  begin and the end of the corresponding matched input sequence will be stored 
+  as the parser result. For instance</p>
+<pre><code>    std::string result_string;<br>    rule&lt;&gt; esc_string = *(c_escape_ch_p - '&quot;');<br>    group_d[ch_p('&quot;') &gt;&gt; esc_string &gt;&gt; '&quot;']<br>    [<br>        result_string =<br>            construct&lt;std::string&gt;(first(arg2), second(arg2));<br>    ]</code></pre>
+<p>will fill the <tt>return_string</tt> variable with the C style escaped character 
+  string, which was embedded into the '&quot;'. For easier access to the parts 
+  of the std::pair there are predefined two lazy access functions <tt>first()</tt> 
+  and <tt>second()</tt>, as shown above.</p>
+<p>Note though, that the grouping parser acts only on <tt>binary_parser_category</tt> 
+  parsers, if applied to other parser category parsers it will resolve to a noop.</p>
+<p>The main work the grouping parser does, is to attach a special actor as a semantic 
+  action recursivly to all leaf parsers of the original binary parser. This is 
+  done by the help of the post_order parser traversal algorithm. So during the 
+  parsing process every leaf parser calls the corresponding operator() functions 
+  of its respective actor, providing it with its parser result. As the overall 
+  result the grouping parser will collect all the parser results into a tuple 
+  variable. </p>
+<p>The attached actors are constructed such, that they assign the parser result 
+  values to the corresponding member of the overall result tuple.</p>
+<p>The correct tuple member number is computed during the post_order parser traversal 
+  process such, that the leaf parsers are numbered from left to right. Such the 
+  most left leaf parser result is accessible as <tt>'arg1'</tt> inside the sematic 
+  action code attached to the grouped parser, the second leaf<br>
+  parser result is accessible <tt>'arg2'</tt> and so on.</p>
+<p>After a successful match the constructed tuple value is feeded into the usual 
+  Spirit semantic action mechanics and the tuple members are available from inside 
+  the semantic action code attached to the grouped parser. </p>
+<p>Note, since the results stored into a tuple variable, the number of the parser 
+  results combined is limited by the PHOENIX_TUPLE_LIMIT preprocessor constant, 
+  which defaults to 3. </p>
+<p>For a more complete usage sample of the grouping parser you should have a look 
+  at the grouping_calc.cpp file inside the Spirit calculator samples directory.<br>
+</p>
+<table border="0">
+  <tr> 
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><a href="closures.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="20"><a href="escape_char_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<hr size="1">
+<p class="copyright">Copyright &copy; 2001-2003 Hartmut Kaiser<br>
+  <br>
+  <font size="2">Permission to copy, use, modify, sell and distribute this document 
+  is granted provided this copyright notice appears in all copies. This document 
+  is provided &quot;as is&quot; without express or implied warranty, and with 
+  no claim as to its suitability for any purpose.</font></p>
+<p class="copyright">&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
