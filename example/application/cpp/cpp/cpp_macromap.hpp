@@ -41,7 +41,7 @@ namespace impl {
     escape_lit(StringT const &value)
     {
         StringT result(value);
-        StringT::size_type pos = 0;
+        typename StringT::size_type pos = 0;
         while ((pos = result.find_first_of ("\"\\", pos)) !=
             StringT::size_type(StringT::npos))
         {
@@ -61,8 +61,8 @@ namespace impl {
         
         string_t result("\"");
         bool was_whitespace = false;
-        ContainerT::const_iterator end = token_sequence.end();
-        for (ContainerT::const_iterator it = token_sequence.begin(); 
+        typename ContainerT::const_iterator end = token_sequence.end();
+        for (typename ContainerT::const_iterator it = token_sequence.begin(); 
              it != end; ++it) 
         {
             token_id id = token_id(*it);
@@ -167,16 +167,16 @@ struct macro_definition {
         using namespace cpplexer;
         
         if (!replaced_parameters) {
-            definition_container_t::iterator end = macrodefinition.end();
-            for (definition_container_t::iterator it = macrodefinition.begin(); 
-                 it != end; ++it)
-            {
+        typename definition_container_t::iterator end = macrodefinition.end();
+        typename definition_container_t::iterator it = macrodefinition.begin(); 
+
+            for (/**/; it != end; ++it) {
                 if (T_IDENTIFIER == token_id(*it)) {
                 // may be a parameter to replace
                     const_parameter_iterator_t cend = macroparameters.end();
                     const_parameter_iterator_t cit = macroparameters.begin();
-                    for (parameter_container_t::size_type i = 0; cit != cend; 
-                         ++cit, ++i) 
+                    for (typename parameter_container_t::size_type i = 0; 
+                         cit != cend; ++cit, ++i) 
                     {
                         if ((*it).get_value() == (*cit).get_value()) {
                             (*it).set_token_id(token_id(T_PARAMETERBASE+i));
@@ -300,7 +300,8 @@ inline bool
 macromap<TokenT>::add_macro(TokenT const &name, bool has_parameters,
     parameter_container_t &parameters, definition_container_t &definition)
 {
-    defined_macros_t::iterator it = defined_macros.find(name.get_value());
+typename defined_macros_t::iterator it = defined_macros.find(name.get_value());
+
     if (it != defined_macros.end()) {
     // redefinition, should not be different
         if ((*it).second.is_functionlike != has_parameters ||
@@ -314,7 +315,7 @@ macromap<TokenT>::add_macro(TokenT const &name, bool has_parameters,
     }
 
 // insert a new macro node
-    std::pair<defined_macros_t::iterator, bool> p = 
+    std::pair<typename defined_macros_t::iterator, bool> p = 
         defined_macros.insert(defined_macros_t::value_type(
             name.get_value(), macro_definition<TokenT>(name, has_parameters)));
             
@@ -704,9 +705,9 @@ macromap<TokenT>::expand_arguments (std::vector<ContainerT> &arguments,
 {
 std::vector<ContainerT>::size_type i = 0;
 
-    std::vector<ContainerT>::iterator arg_end = arguments.end();
-    for (std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
-        arg_it != arg_end; ++arg_it, ++i)
+    typename std::vector<ContainerT>::iterator arg_end = arguments.end();
+    for (typename std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
+         arg_it != arg_end; ++arg_it, ++i)
     {
         expand_whole_tokensequence(expanded_args[i], (*arg_it).begin(), 
             (*arg_it).end(), expand_undefined);
@@ -845,7 +846,8 @@ macromap<TokenT>::expand_macro(ContainerT &expanded, IteratorT &first,
 TokenT curr_token = *first;
 
     BOOST_SPIRIT_ASSERT(T_IDENTIFIER == token_id(curr_token));
-    defined_macros_t::iterator it = defined_macros.find(curr_token.get_value());
+    typename defined_macros_t::iterator it = 
+        defined_macros.find(curr_token.get_value());
     if (it == defined_macros.end()) {
         ++first;    // advance
 
@@ -974,7 +976,7 @@ macromap<TokenT>::resolve_defined(IteratorT &first, IteratorT const &last,
     
 TokenT result;
 cpp::grammars::defined_grammar<TokenT> g;
-parse_info<IteratorT> hit =
+boost::spirit::parse_info<IteratorT> hit =
     parse(first, last, g[assign(result)], ch_p(T_SPACE) | ch_p(T_CCOMMENT));
 
     if (!hit.hit) {

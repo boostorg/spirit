@@ -159,7 +159,7 @@ private:
 //
 //  operator()(): get the next preprocessed token
 //
-//      throws a pp_exception, if appropriate
+//      throws a preprocess_exception, if appropriate
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ContextT> 
@@ -178,8 +178,8 @@ pp_iterator_functor<ContextT>::operator()()
 bool returned_from_include = false;
 
     if (iter_ctx->first == iter_ctx->last && ctx.get_iteration_depth() > 0) {
-    // restore the previous iteration context after preprocessing the included
-    // file
+    // restore the previous iteration context after finishing the preprocessing 
+    // of the included file
         iter_ctx = ctx.pop_iteration_context();
         returned_from_include = true; // fake a newline to trigger pp_directive
 
@@ -210,8 +210,8 @@ bool returned_from_include = false;
                     cpp_grammar_t::pos_of_newline);
             }
             else if (ctx.get_if_block_status()) {
-                // preprocess this token, eat up more, if appropriate, return 
-                // the next preprocessed token
+            // preprocess this token, eat up more, if appropriate, return 
+            // the next preprocessed token
                 return pp_token();
             }
             else {
@@ -236,7 +236,7 @@ bool returned_from_include = false;
             typename result_type::string_t("\n"), 
             cpp_grammar_t::pos_of_newline);
     }
-    return act_token = result_type();   // return eof token
+    return act_token = eof;   // return eof token
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -403,16 +403,16 @@ pp_iterator_functor<ContextT>::on_include (result_type const &t, bool is_system)
 
 // strip quotes first, extract filename
 string_t const &s = t.get_value();
-string_t::size_type pos_end = s.find_last_of(is_system ? '>' : '\"');
+typename string_t::size_type pos_end = s.find_last_of(is_system ? '>' : '\"');
 
-    if (string_t::size_type(string::npos) == pos_end) {
+    if (string_t::size_type(string_t::npos) == pos_end) {
         CPP_THROW(preprocess_exception, bad_include_statement, s, act_token);
     }
 
-string_t::size_type pos_begin = 
+typename string_t::size_type pos_begin = 
     s.find_last_of(is_system ? '<' : '\"', pos_end-1);
 
-    if (string_t::size_type(string::npos) == pos_begin) {
+    if (string_t::size_type(string_t::npos) == pos_begin) {
         CPP_THROW(preprocess_exception, bad_include_statement, s, act_token);
     }
 
@@ -442,6 +442,81 @@ boost::shared_ptr<base_iteration_context_t> new_iter_ctx (
     iter_ctx = new_iter_ctx;
     seen_newline = true;    // fake a newline to trigger pp_directive
 }
+
+namespace {
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+//  Transform Iterator Adaptor
+//
+//  Upon deference, apply some unary function object and return the
+//  result by reference.
+//
+//  This class is adapted from the Boost.Iterator library, where a similar 
+//  class exists, which returns the next item by value
+
+    template <class AdaptableUnaryFunctionT>
+    struct ref_transform_iterator_policies 
+    :   public boost::default_iterator_policies
+    {
+        ref_transform_iterator_policies() 
+        {}
+        ref_transform_iterator_policies(const AdaptableUnaryFunctionT &f) 
+        : m_f(f) {}
+
+        template <class IteratorAdaptorT>
+        typename IteratorAdaptorT::reference
+        dereference(const IteratorAdaptorT &iter) const
+        { return m_f(*iter.base()); }
+
+        AdaptableUnaryFunctionT m_f;
+    };
+
+    template <class AdaptableUnaryFunctionT, class IteratorT>
+    class ref_transform_iterator_generator
+    {
+        typedef typename AdaptableUnaryFunctionT::result_type value_type;
+        
+    public:
+        typedef boost::iterator_adaptor<
+                IteratorT,
+                ref_transform_iterator_policies<AdaptableUnaryFunctionT>,
+                value_type, value_type const &, value_type const *, 
+                std::input_iterator_tag>
+            type;
+    };
+
+    template <class AdaptableUnaryFunctionT, class IteratorT>
+    inline 
+    typename ref_transform_iterator_generator<
+        AdaptableUnaryFunctionT, IteratorT>::type
+    make_ref_transform_iterator(
+        IteratorT base,
+        const AdaptableUnaryFunctionT &f = AdaptableUnaryFunctionT())
+    {
+        typedef typename ref_transform_iterator_generator<
+                    AdaptableUnaryFunctionT, IteratorT>::type 
+            result_t;
+        return result_t(base, f);
+    }
+
+    //  Retrieve the token value given a parse node
+    //  This is used in conjunctione with the ref_transform_iterator above, to
+    //  get the token values while iterating directly over the parse tree.
+    template <typename TokenT, typename ParseTreeNodeT>
+    struct get_token_value {
+
+        typedef TokenT result_type;
+        
+        TokenT const &operator()(ParseTreeNodeT const &node) const
+        {
+            BOOST_SPIRIT_ASSERT(1 == std::distance(node.value.begin(), 
+                node.value.end()));
+            return *node.value.begin();
+        }
+    };
+    
+}   // anonymous namespace
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
@@ -543,8 +618,11 @@ std::pair<const_tree_iterator, const_tree_iterator> nodes;
             typename ContainerT::iterator inserted = macrodefinition.insert(
                 macrodefinition.end(), *(*cit).value.begin());
                 
-                if (!IS_CATEGORY(macrodefinition.back(), WhiteSpaceTokenType))
+                if (!IS_CATEGORY(macrodefinition.back(), WhiteSpaceTokenType) &&
+                    T_NEWLINE != token_id(macrodefinition.back()))
+                {
                     last_nonwhite = inserted;
+                }
             }
         }
         
@@ -576,7 +654,8 @@ bool has_parameters = false;
         cpp_grammar_t::rule_ids.macro_parameters_id, macroparameters);
     retrieve_macrodefinition(node, cpp_grammar_t::rule_ids.macro_definition_id, 
         macrodefinition);
-    
+
+// add the new macro to the macromap
     ctx.add_macro_definition(macroname, has_parameters, macroparameters, 
         macrodefinition);
 }
@@ -659,77 +738,6 @@ pp_iterator_functor<ContextT>::on_endif()
 //  on_if(): handle #if directives
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-namespace {
-
-///////////////////////////////////////////////////////////////////////////////
-// 
-//  Transform Iterator Adaptor
-//
-//  Upon deference, apply some unary function object and return the
-//  result by reference.
-//
-//  This class is adapted from the Boost.Iterator library, where a similar 
-//  class exists, which returns the next item by value
-
-    template <class AdaptableUnaryFunctionT>
-    struct ref_transform_iterator_policies 
-    :   public boost::default_iterator_policies
-    {
-        ref_transform_iterator_policies() 
-        {}
-        ref_transform_iterator_policies(const AdaptableUnaryFunctionT &f) 
-        : m_f(f) {}
-
-        template <class IteratorAdaptorT>
-        typename IteratorAdaptorT::reference
-        dereference(const IteratorAdaptorT &iter) const
-        { return m_f(*iter.base()); }
-
-        AdaptableUnaryFunctionT m_f;
-    };
-
-    template <class AdaptableUnaryFunctionT, class IteratorT>
-    class ref_transform_iterator_generator
-    {
-        typedef typename AdaptableUnaryFunctionT::result_type value_type;
-        
-    public:
-        typedef boost::iterator_adaptor<
-                IteratorT,
-                ref_transform_iterator_policies<AdaptableUnaryFunctionT>,
-                value_type, value_type const &, value_type const *, 
-                std::input_iterator_tag>
-            type;
-    };
-
-    template <class AdaptableUnaryFunctionT, class IteratorT>
-    inline 
-    typename ref_transform_iterator_generator<
-        AdaptableUnaryFunctionT, IteratorT>::type
-    make_ref_transform_iterator(
-        IteratorT base,
-        const AdaptableUnaryFunctionT &f = AdaptableUnaryFunctionT())
-    {
-        typedef typename ref_transform_iterator_generator<
-                    AdaptableUnaryFunctionT, IteratorT>::type 
-            result_t;
-        return result_t(base, f);
-    }
-
-    template <typename TokenT, typename ParseTreeNodeT>
-    struct get_token_value {
-
-        typedef TokenT result_type;
-        
-        TokenT const &operator()(ParseTreeNodeT const &node) const
-        {
-            BOOST_SPIRIT_ASSERT(1 == std::distance(node.value.begin(), 
-                node.value.end()));
-            return *node.value.begin();
-        }
-    };
-}
 
 template <typename ContextT> 
 inline void  
@@ -861,8 +869,8 @@ pp_iterator_functor<ContextT>::on_line(
         return;
 
 // Try to extract the line number and file name from the given token list
-// directly. If that fails, preprocess the whole token sequence and try to 
-// extract this information again.
+// directly. If that fails, preprocess the whole token sequence and try again 
+// to extract this information.
 std::list<result_type> expanded;
 get_token_value<result_type, parse_node_t> get_value;
 
@@ -914,8 +922,8 @@ namespace {
     as_string (ContainerT const &token_sequence)
     {
         typename ContainerT::value_type::string_t result;
-        ContainerT::const_iterator end = token_sequence.end();
-        for (ContainerT::const_iterator it = token_sequence.begin(); 
+        typename ContainerT::const_iterator end = token_sequence.end();
+        for (typename ContainerT::const_iterator it = token_sequence.begin(); 
              it != end; ++it) 
         {
             result += (*it).get_value();
@@ -1017,8 +1025,9 @@ pp_iterator_functor<ContextT>::on_pragma(
         return true;
 
 #if defined(CPP_RETURN_PRAGMA_DIRECTIVES)
-// Look at pragam the token sequence and decide, if the first token is STDC
-// (see C99 standard (6.10.6.2)
+// Look at the pragma token sequence and decide, if the first token is STDC
+// (see C99 standard (6.10.6.2), if it is, the sequence must _not_ be
+// preprocessed.
 std::list<result_type> expanded;
 get_token_value<result_type, parse_node_t> get_value;
 

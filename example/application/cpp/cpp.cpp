@@ -55,6 +55,17 @@ using namespace cpplexer::re2clex;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
+//  include the grammar definitions, if these shouldn't be compiled separately
+//  (ATTENTION: _very_ large compilation times!)
+#if !defined(CPP_SEPARATE_GRAMMAR_INSTANTIATION)
+#include "cpp/cpp_intlit_grammar.hpp"
+#include "cpp/cpp_chlit_grammar.hpp"
+#include "cpp/cpp_floatlit_grammar.hpp"
+#include "cpp/cpp_grammar.hpp"
+#include "cpp/cpp_expression_grammar.hpp"
+#endif // defined(CPP_SEPARATE_GRAMMAR_INSTANTIATION)
+
+///////////////////////////////////////////////////////////////////////////////
 //  import required names
 using namespace boost::spirit;
 
@@ -69,7 +80,6 @@ using std::ostream;
 using std::istreambuf_iterator;
 
 namespace po = boost::program_options;
-namespace fs = boost::filesystem;
 
 ///////////////////////////////////////////////////////////////////////////////
 // print the current version
@@ -133,7 +143,7 @@ file_position current_position;
             for (vector<string>::const_iterator cit = syspathes.begin(); 
                     cit != end; ++cit)
             {
-                ctx.add_include_path((*cit).c_str(), true);
+                ctx.add_sysinclude_path((*cit).c_str());
             }
         }
         
