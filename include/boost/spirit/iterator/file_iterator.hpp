@@ -162,7 +162,8 @@ namespace fileiter_impl {
 
 template<typename CharT, typename BaseIteratorT>
 class file_iterator
-    : public fileiter_impl::file_iter_generator<CharT, BaseIteratorT>::type
+    : public fileiter_impl::file_iter_generator<CharT, BaseIteratorT>::type,
+      public safe_bool<file_iterator<CharT, BaseIteratorT> >
 {
 private:
     typedef typename
@@ -171,9 +172,6 @@ private:
     typedef typename
         fileiter_impl::file_iter_generator<CharT, BaseIteratorT>::adapted_t
         adapted_t;
-    typedef typename
-        safe_bool<base_t>::type
-        safe_bool;
 
 public:
     file_iterator()
@@ -192,8 +190,8 @@ public:
 
     // operator bool. This borrows a trick from boost::shared_ptr to avoid
     //   to interfere with arithmetic operations.
-    operator safe_bool()
-    { return make_safe_bool<base_t>(this->base()); }
+    bool operator_bool(void) const
+    { return this->base(); }
 
 private:
     friend class ::boost::iterator_core_access;

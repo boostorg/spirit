@@ -13,38 +13,21 @@
 
 namespace boost { namespace spirit
 {
-#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
-
-    template <typename T>
-    struct safe_bool
+    template <typename DerivedT>
+    class safe_bool
     {
-        typedef bool type;
+        void dummy_func(DerivedT*) {}
+        typedef void (safe_bool::*bool_type)(DerivedT*);
+
+    public:
+        operator bool_type() const
+        { return static_cast<const DerivedT*>(this)->operator_bool() ?
+            &safe_bool::dummy_func : 0; }
+
+        operator bool_type()
+        { return static_cast<DerivedT*>(this)->operator_bool() ?
+            &safe_bool::dummy_func : 0; }
     };
-
-    template <typename T>
-    inline bool
-    make_safe_bool(bool cond)
-    {
-        return cond;
-    }
-
-#else
-
-    template <typename T>
-    struct safe_bool
-    {
-        T* dummy;
-        typedef T* safe_bool::*type;
-    };
-
-    template <typename T>
-    inline typename safe_bool<T>::type
-    make_safe_bool(bool cond)
-    {
-        return cond ? &safe_bool<T>::dummy : 0;
-    }
-
-#endif
 
 }}
 

@@ -58,12 +58,11 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename T = nil_t>
-    class match
+    class match : public safe_bool<match<T> >
     {
 
     public:
 
-        typedef typename safe_bool<match<T> >::type safe_bool;
         typedef typename boost::optional<T> optional_type;
         typedef typename optional_type::argument_type ctor_param_t;
         typedef typename optional_type::reference_const_type return_t;
@@ -110,9 +109,9 @@ namespace boost { namespace spirit
             impl::match_attr_traits<T>::set_value(val, val_, is_reference<T>());
         }
 
-        operator safe_bool() const
+        bool operator_bool() const
         {
-            return make_safe_bool<match<T> >(len >= 0);
+            return len >= 0;
         }
 
     private:
@@ -127,13 +126,12 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    class match<nil_t>
+    class match<nil_t> : public safe_bool<match<nil_t> >
     {
     public:
 
         typedef nil_t attr_t;
         typedef nil_t return_t;
-        typedef safe_bool<match<nil_t> >::type safe_bool;
 
                                 match();
         explicit                match(std::size_t length);
@@ -166,9 +164,9 @@ namespace boost { namespace spirit
             len += other.length();
         }
 
-        operator safe_bool() const
+        bool operator_bool() const
         {
-            return make_safe_bool<match<nil_t> >(len >= 0);
+            return len >= 0;
         }
 
     private:
