@@ -4,6 +4,8 @@ http://spirit.sourceforge.net/
 
 See Copyright.txt for full copyright notices and acknowledgements.
 
+-------------------------------------------------------------------------------
+
 General notes:
 - The directory structure of this sample resembles the namespace structure
   of the different classes/templates out of which this sample consists.

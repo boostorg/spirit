@@ -1,3 +1,10 @@
+A Standard compliant C preprocessor
+Copyright (c) 2001-2003 Hartmut Kaiser
+http://spirit.sourceforge.net/
+
+See Copyright.txt for full copyright notices and acknowledgements.
+
+-------------------------------------------------------------------------------
 Fri Jan 31 21:30:55  2003
 - Fixed different minor issues and a border case (#include statement at the 
   last line of a included file)

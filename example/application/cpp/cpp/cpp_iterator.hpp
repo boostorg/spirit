@@ -49,11 +49,24 @@ class pp_iterator_functor {
     typedef typename result_type::string_t          string_t;
     typedef cpp::cpp_grammar_gen<result_type>       cpp_grammar_t;
 
+//  iteration context related types (an iteration context represents a current
+//  position in an included file)
     typedef base_iteration_context<lex_t>           base_iteration_context_t;
     typedef 
         iteration_context<lex_t, typename ContextT::input_policy_t>
         iteration_context_t;
-    
+
+// parse tree related types
+    typedef 
+        boost::spirit::node_val_data_factory<boost::spirit::nil_t> 
+        node_factory_t;
+    typedef 
+        boost::spirit::tree_match<lex_t, node_factory_t> 
+        parse_tree_match_t;
+    typedef typename parse_tree_match_t::node_t         parse_node_t;
+    typedef typename parse_tree_match_t::parse_node_t   parse_node_value_t;
+    typedef typename parse_tree_match_t::container_t    parse_tree_t;
+
 public:
     template <typename IteratorT>
     pp_iterator_functor(ContextT &ctx_, IteratorT const &first_, 
@@ -76,6 +89,7 @@ protected:
     void dispatch_directive(boost::spirit::tree_parse_info<lex_t> const &hit);
 
     void on_include (result_type const &t, bool is_system);
+    void on_define (parse_node_t const &node);
                     
 private:
     ContextT &ctx;              // context, this iterator is assicciated with
@@ -213,32 +227,29 @@ pp_iterator_functor<ContextT>::dispatch_directive(
     boost::spirit::tree_parse_info<lex_t> const &hit)
 {
     using namespace boost::spirit;
-
-    typedef node_val_data_factory<nil_t> node_factory_t;
-    typedef tree_match<lex_t, node_factory_t> parse_tree_match_t;
-    typedef typename parse_tree_match_t::container_t parse_tree_t;
-    typedef typename parse_tree_match_t::parse_node_t parse_node_t;
-        
+    
+// this iterator points to the root node of the parse tree
 parse_tree_t::const_iterator begin = hit.trees.begin();
 
 // decide, which preprocessor directive was found
 parse_tree_t const &root = (*begin).children;
-parse_node_t const &node = boost::spirit::get_first_leaf(*root.begin()).value;
-long node_id = node.id().to_long();
+parse_node_value_t const &nodeval = get_first_leaf(*root.begin()).value;
+long node_id = nodeval.id().to_long();
 
     if (node_id == cpp_grammar_t::rule_ids.include_file_id) {
     // #include "..."
-        on_include (*node.begin(), false);
+        on_include (*nodeval.begin(), false);
     }
     else if (node_id == cpp_grammar_t::rule_ids.sysinclude_file_id) {
     // #include <...>
-        on_include (*node.begin(), true);
+        on_include (*nodeval.begin(), true);
     }
     else if (node_id == cpp_grammar_t::rule_ids.macroinclude_file_id) {
     // #include ...
     }
     else if (node_id == cpp_grammar_t::rule_ids.plain_define_id) {
     // #define
+        on_define (*begin);
     }
     else if (node_id == cpp_grammar_t::rule_ids.undefine_id) {
     // #undef
@@ -336,6 +347,18 @@ boost::shared_ptr<base_iteration_context_t> new_iter_ctx (
     ctx.push_iteration_context(iter_ctx);
     iter_ctx = new_iter_ctx;
     seen_newline = true;    // fake a newline to trigger pp_directive
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  on_define(): handle #define statements
+//
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename ContextT> 
+inline void  
+pp_iterator_functor<ContextT>::on_define (parse_node_t const &node) 
+{
 }
 
 ///////////////////////////////////////////////////////////////////////////////
