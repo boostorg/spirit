@@ -12,6 +12,10 @@
 // Tests for spirit::for_p
 // [13-Jan-2003]
 ////////////////////////////////////////////////////////////////////////////////
+#if defined (__BORLANDC__)
+#define _RWSTD_COMPILE_INSTANTIATE // Borland Workaround [JDG]
+#endif
+
 #define qDebug 0
 #include <iostream>
 #include <cstring>

@@ -14,7 +14,6 @@
 
 using namespace std;
 
-//#define BOOST_SPIRIT_DEBUG
 #include "boost/spirit/core.hpp"
 using namespace boost::spirit;
 
