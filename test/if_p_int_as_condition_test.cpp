@@ -1,6 +1,6 @@
-#include <boost\spirit\core.hpp>
-#include <boost\spirit\dynamic.hpp>
-#include <boost\spirit\tree\ast.hpp>
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/dynamic.hpp>
+#include <boost/spirit/tree/ast.hpp>
 #include <iostream>
 
 using namespace boost::spirit;
