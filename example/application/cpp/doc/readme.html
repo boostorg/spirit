@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <title>CPP - A Standard conformant C++ preprocessor</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <link rel="stylesheet" href="theme/style.css" type="text/css">
+    </head>
+    <body text="#000000" background="theme/bkd.gif">
+        <h1>CPP - A Standard conformant C preprocessor</h1>
+        <blockquote>
+            <p><b>Introduction</b></p>
+            <p align="justify">The <b>CPP</b> sample uses the <a href="http://spirit.sourceforge.net/">
+                    Spirit</a><b> </b>parser construction library to implement an ISO/ANSI 
+                standard conformant C preprocessor.
+            </p>
+            <p align="justify">
+                During the last time many new features were developed as additions to Spirit 
+                and we felt more and more, that it would be very helpful, to have a 'real 
+                world' sample, which could be used as a sandbox for testing the usability of 
+                certain features. Additionally&nbsp;a recent discussion on the Boost mailing 
+                list showed widespread interest of developers to have a modern C preprocessor 
+                library to play with.&nbsp;
+            </p>
+            <p align="justify">
+            </p>
+            <p align="justify">
+                The main goals for this project are:</p>
+            <P></P>
+            <blockquote>
+                <p><b><img src="theme/bullet.gif" width="13" height="13" id="IMG1">&nbsp;</b>full 
+                    compliance with the C++ standard (ISO/IEC 14882)<br>
+                    <b><img src="theme/bullet.gif" width="13" height="13">&nbsp;</b>usage of Spirit 
+                    for the parsing parts of the game (certainly :-)<br>
+                    <b><img src="theme/bullet.gif" width="13" height="13">&nbsp;</b>maximal usage 
+                    of STL and/or boost libraries (for compactness and maintainability)<br>
+                    <b><img src="theme/bullet.gif" width="13" height="13">&nbsp;</b>straightforward 
+                    extendibility for implementation of additional features (as vararg macros etc.)</p>
+            </blockquote>
+            <p>At the first steps it is not planned to make a very high performance or very 
+                small C preprocessor. If you are looking for these objectives you probably have 
+                to look at other places. Although our C preprocessor should work as expected 
+                and will be usable as a reference implementation, for instance for testing of 
+                other preprocessor oriented libraries as Boost.Preprocessor et.al.</p>
+            <p>
+                <b>How to use the C preprocessor in your own projects</b></p>
+            <p>The preprocessor is implemented through an iterator interface, which returns the 
+                current preprocessed token from the input stream. This preprocessed token is 
+                generated on the fly while iterating over the preprocessor iterator sequence.</p>
+            <P>The actual preprocessing itself is a highly configurable process, so you 
+                obviously have to define a couple of parameters to&nbsp;control the process 
+                itself, such as:</P>
+            <BLOCKQUOTE dir="ltr" style="MARGIN-RIGHT: 0px">
+                <P><STRONG><IMG id="IMG1" height="13" src="theme/bullet.gif" width="13"></STRONG>&nbsp;include 
+                    search pathes, which define, where to search for files to be included with <tt>#include&nbsp;&lt;...&gt;</tt>
+                    and <tt>#include&nbsp;"..."</tt> directives<br>
+                    <STRONG><img src="theme/bullet.gif" width="13" height="13">&nbsp;</STRONG>which 
+                    macros to predefine and which of the predefined macros to undefine<br>
+                    <STRONG><img src="theme/bullet.gif" width="13" height="13">&nbsp;</STRONG>several 
+                    other options as for instance to control, whether to generate <tt>#line</tt> statements 
+                    in the preprocessed stream or not.</P>
+            </BLOCKQUOTE>
+            <P dir="ltr">So the main preprocessing iterators are not to be instantiated 
+                directly, but should be generated through a context object, which holds all the 
+                preprocessing parameters.</P>
+            <PRE>    <span class="keyword">using namespace</span> cpplexer::slex;
+  
+    <span class="comment">// The template lex_token&lt;&gt; is defined in both namespaces: 
+    // cpplexer::slex and cpplexer::re2clex. The 'using namespace' 
+    // directive above tells the compiler, which of them to use. </span>
+    typedef 
+        cpp::context&lt;lex_token&lt;<span class=keyword>std::string::iterator</span>&gt; 
+        &gt;
+        context_t;
+
+    <span class="comment">// The C preprocessor iterator shouldn't be constructed directly. 
+    // It is to be generated through a cpp::context&lt;&gt; object. 
+    // Additionally this cpp:context&lt;&gt; object is to be used to
+    // initialize and define different parameters of the actual 
+    // preprocessing.
+    // The preprocessing of the input stream is done on the fly 
+    // behind the scenes during iteration over the 
+    // context_t::iterator_t stream. </span>
+    context_t ctx(input.begin(), input.end(), argv[1]);
+    context_t::iterator_t first = ctx.begin();
+    context_t::iterator_t last = ctx.end();
+</PRE>
+            <p>
+            </p>
+            <P dir="ltr"><B>Structure of the&nbsp;C preprocessing library</B></P>
+            <P dir="ltr">The C preprocessor iterator itself is feeded by a unified C++ lexer 
+                iterator. BTW, this C++ lexer iterator could be used standalone and is not tied 
+                to the C preprocessor. There are two different C++ lexers implemented by 
+                now,&nbsp;these are functionally completely identical. These expose a similar 
+                interface, so the C preprocessor could be used with both of them. The 
+                abstaction of the C++ lexer from the C preprocessing library was done to allow 
+                to plug in different C++ lexers without the need to reimplement the 
+                preprocessor. This will allow for benchmarking and specific finetuning of the 
+                preprocessing process.</P>
+            <P dir="ltr">The first of this C++ lexers is implemented with the help of the 
+                wellknown <tt>re2c</tt> tool, which generates C code from given regular 
+                expressions. The lexers generated with <tt>re2c</tt> are known to be very fast, 
+                because these are not&nbsp;table driven but the whole token building logic is 
+                coded directly (very similar to hand coded lexers).
+            </P>
+            <P dir="ltr">The second of this C++ lexers is build around a table driven lexer, 
+                where the DFA tables are generated from regular expressions with the help of a 
+                Spirit based lexer generating framework named Slex. The Slex is during runtime 
+                feeded with the token definitions (regular expressions) and generates the 
+                resulting DFA table. This table is used to combine the input characters into 
+                corresponding lexems (tokens). The generated DFA table can be saved to disc to 
+                avoid the generation process at program startup.</P>
+            <P dir="ltr">It is possible to build other C++ lexers if needed.</P>
+            <P dir="ltr"><STRONG>Separation and inclusion compilation models</STRONG></P>
+            <P dir="ltr">The C preprocessor library is build as a header only library. If 
+                you're trying to include all required files at once you will mention, that the 
+                resulting compilation times are very large (up to an hour - depending on your 
+                system configuration). This straightforward method we'll call the inclusion 
+                compilation model. If you do not pay attention to compilation times, that's the 
+                way to go, no special handling is needed.</P>
+            
+  <P dir="ltr">If you're interested in decreasing compilation times, the following 
+    method is to be used. This we will call the separation compilation model. 
+    The trick is to separate the different objects such, that they are compilable 
+    separately. The function, which instantiates the templated object in question 
+    is factored out such, that its definition is visible to only one translation 
+    unit. To simplify this further this creation function is packaged into a small 
+    generator template structure.</P>
+            
+  <P dir="ltr">There are two levels of separation implemented: the separation 
+    of the compilation of the C++ lexer and the separation of the compilation 
+    of the different Spirit grammars used. To use these separations you will have 
+    to define two preprocessor constants while compiling the whole application 
+    and you will have to explicitely instantiate some helper templates. The following 
+    tables shows these steps in detail.</P>
+            
+  <table width="90%" border="0" align="center">
+    <tr> 
+      <td colspan="2" class="table_title"><b>Summary of required constant required 
+        <br>to enable the sparation compilation model</b></td>
+    </tr>
+    <tr class="table_title"> 
+      <td width="22%"><b>Separate</b></td>
+      <td width="78%"><p><code><font face="Verdana, Arial, Helvetica, sans-serif">Preprocessor<br>
+          constant</font></code></p></td>
+    </tr>
+    <tr> 
+      <td width="22%" class="table_cells"><code>C++ lexer</code></td>
+      <td width="78%" class="table_cells"> <p><code>CPP_SEPARATE_LEXER_INSTANTIATION</code></p></td>
+    </tr>
+    <tr> 
+      <td width="22%" class="table_cells"><code>Spirit grammars</code></td>
+      <td width="78%" class="table_cells"> <p><code>CPP_SEPARATE_GRAMMAR_INSTANTIATION</code></p></td>
+    </tr>
+  </table>
+  <P dir="ltr">&nbsp;</P>
+        </blockquote>
+    </body>
+</html>
