@@ -6,18 +6,18 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <boost/test/minimal.hpp>
-#include <boost/spirit/fusion/tuple.hpp>
-#include <boost/spirit/fusion/generate.hpp>
-#include <boost/spirit/fusion/io.hpp>
-#include <boost/spirit/fusion/single_view.hpp>
+#include <boost/spirit/fusion/sequence/tuple.hpp>
+#include <boost/spirit/fusion/sequence/io.hpp>
+#include <boost/spirit/fusion/sequence/single_view.hpp>
 
-struct X
+struct X {};
+
+template <typename OS>
+OS& operator<<(OS& os, X const& x)
 {
-    operator char const*() const
-    {
-        return "<X-object>";
-    }
-};
+    os << "<X-object>";
+    return os;
+}
 
 int
 test_main(int, char*[])
@@ -32,10 +32,10 @@ test_main(int, char*[])
 
     {
         single_view<int> view1(3);
-        std::cout << generate(view1) << std::endl;
+        std::cout << view1 << std::endl;
 
         single_view<X> view2;
-        std::cout << generate(view2) << std::endl;
+        std::cout << view2 << std::endl;
     }
 
     return 0;

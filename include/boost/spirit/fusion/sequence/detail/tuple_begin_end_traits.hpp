@@ -23,7 +23,7 @@ namespace boost { namespace fusion
     template <typename Tag>
     struct end_traits;
 
-    namespace detail
+    namespace tuple_detail
     {
         template <typename Tuple>
         struct begin_traits_impl
@@ -63,14 +63,14 @@ namespace boost { namespace fusion
     struct begin_traits<tuple_tag>
     {
         template <typename Tuple>
-        struct impl : detail::begin_traits_impl<Tuple> {};
+        struct impl : tuple_detail::begin_traits_impl<Tuple> {};
     };
 
     template <>
     struct end_traits<tuple_tag>
     {
         template <typename Tuple>
-        struct impl : detail::end_traits_impl<Tuple> {};
+        struct impl : tuple_detail::end_traits_impl<Tuple> {};
     };
 
 }}

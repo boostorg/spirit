@@ -8,7 +8,7 @@
 #if !defined(FUSION_SEQUENCE_DETAIL_GENERATE_HPP)
 #define FUSION_SEQUENCE_DETAIL_GENERATE_HPP
 
-#include <boost/spirit/fusion/tuple.hpp>
+#include <boost/spirit/fusion/sequence/tuple.hpp>
 #include <boost/spirit/fusion/iterator/value_of.hpp>
 #include <boost/spirit/fusion/iterator/next.hpp>
 #include <boost/spirit/fusion/iterator/equal_to.hpp>

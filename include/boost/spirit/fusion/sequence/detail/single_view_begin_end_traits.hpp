@@ -13,6 +13,8 @@
 namespace boost { namespace fusion
 {
     struct single_view_tag;
+
+    template <typename T>
     struct single_view_iterator_end;
 
     template <typename T>
@@ -21,20 +23,50 @@ namespace boost { namespace fusion
     template <typename Tag>
     struct begin_traits;
 
+    namespace single_view_detail
+    {
+        template <typename Sequence>
+        struct begin_traits_impl
+        {
+            typedef single_view_iterator<
+                FUSION_GET_VALUE_TYPE(Sequence)>
+            type;
+
+            static type
+            apply(Sequence const& s);
+        };
+
+        template <typename Sequence>
+        inline typename begin_traits_impl<Sequence>::type
+        begin_traits_impl<Sequence>::apply(Sequence const& s)
+        {
+            return type(s.val);
+        }
+
+        template <typename Sequence>
+        struct end_traits_impl
+        {
+            typedef single_view_iterator_end<
+                FUSION_GET_VALUE_TYPE(Sequence)>
+            type;
+
+            static type
+            apply(Sequence const&);
+        };
+
+        template <typename Sequence>
+        inline typename end_traits_impl<Sequence>::type
+        end_traits_impl<Sequence>::apply(Sequence const&)
+        {
+            FUSION_RETURN_DEFAULT_CONSTRUCTED;
+        }
+    }
+
     template <>
     struct begin_traits<single_view_tag>
     {
         template <typename Sequence>
-        struct impl
-        {
-            typedef single_view_iterator<FUSION_GET_VALUE_TYPE(Sequence)> type;
-
-            static type
-            apply(Sequence const& s)
-            {
-                return type(s.val);
-            }
-        };
+        struct impl : single_view_detail::begin_traits_impl<Sequence> {};
     };
 
     template <typename Tag>
@@ -44,16 +76,7 @@ namespace boost { namespace fusion
     struct end_traits<single_view_tag>
     {
         template <typename Sequence>
-        struct impl
-        {
-            typedef single_view_iterator_end type;
-
-            static type
-            apply(Sequence const&)
-            {
-                FUSION_RETURN_DEFAULT_CONSTRUCTED;
-            }
-        };
+        struct impl : single_view_detail::end_traits_impl<Sequence> {};
     };
 }}
 

@@ -74,3 +74,9 @@ unit-test io_tests
     :
     ;
 
+unit-test single_view_tests
+    : single_view_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+

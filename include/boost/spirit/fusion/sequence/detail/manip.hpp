@@ -157,6 +157,7 @@ namespace boost { namespace fusion
     } // detail
 
 #if defined (BOOST_NO_TEMPLATED_STREAMS)
+
 #define STD_TUPLE_DEFINE_MANIPULATOR(name)                                      \
     namespace detail                                                            \
     {                                                                           \
@@ -182,26 +183,96 @@ namespace boost { namespace fusion
             string_ios_manip<name##_tag, Stream>(s).set(m.data);                \
             return s;                                                           \
         }                                                                       \
-    }                                                                           \
-                                                                                \
-    detail::name##_type                                                         \
+    }
+
+#define STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS(name)                            \
+    inline detail::name##_type                                                  \
     name(const std::string& s)                                                  \
     {                                                                           \
         return detail::name##_type(s);                                          \
     }                                                                           \
                                                                                 \
-    detail::name##_type                                                         \
-    name(const char c[])                                                        \
+    inline detail::name##_type                                                  \
+    name(const char* s)                                                         \
     {                                                                           \
-        return detail::name##_type(std::string(c));                             \
+        return detail::name##_type(std::string(s));                             \
     }                                                                           \
                                                                                 \
-    detail::name##_type                                                         \
+    inline detail::name##_type                                                  \
     name(char c)                                                                \
     {                                                                           \
         return detail::name##_type(std::string(1, c));                          \
     }
-#else
+
+#else // defined(BOOST_NO_TEMPLATED_STREAMS)
+
+#if defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
+
+#define STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS(name)                            \
+    template <class Char, class Traits>                                         \
+    inline detail::name##_type<Char, Traits>                                    \
+    name(const std::basic_string<Char, Traits>& s)                              \
+    {                                                                           \
+        return detail::name##_type<Char, Traits>(s);                            \
+    }                                                                           \
+                                                                                \
+    inline detail::name##_type<char>                                            \
+    name(char const* s)                                                         \
+    {                                                                           \
+        return detail::name##_type<char>(std::basic_string<char>(s));           \
+    }                                                                           \
+                                                                                \
+    inline detail::name##_type<wchar_t>                                         \
+    name(wchar_t const* s)                                                      \
+    {                                                                           \
+        return detail::name##_type<wchar_t>(std::basic_string<wchar_t>(s));     \
+    }                                                                           \
+                                                                                \
+    inline detail::name##_type<char>                                            \
+    name(char c)                                                                \
+    {                                                                           \
+        return detail::name##_type<char>(std::basic_string<char>(1, c));        \
+    }                                                                           \
+                                                                                \
+    inline detail::name##_type<wchar_t>                                         \
+    name(wchar_t c)                                                             \
+    {                                                                           \
+        return detail::name##_type<wchar_t>(std::basic_string<wchar_t>(1, c));  \
+    }
+
+#else // defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
+
+#define STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS(name)                            \
+    template <class Char, class Traits>                                         \
+    inline detail::name##_type<Char, Traits>                                    \
+    name(const std::basic_string<Char, Traits>& s)                              \
+    {                                                                           \
+        return detail::name##_type<Char, Traits>(s);                            \
+    }                                                                           \
+                                                                                \
+    template <class Char>                                                       \
+    inline detail::name##_type<Char>                                            \
+    name(Char s[])                                                              \
+    {                                                                           \
+        return detail::name##_type<Char>(std::basic_string<Char>(s));           \
+    }                                                                           \
+                                                                                \
+    template <class Char>                                                       \
+    inline detail::name##_type<Char>                                            \
+    name(Char const s[])                                                        \
+    {                                                                           \
+        return detail::name##_type<Char>(std::basic_string<Char>(s));           \
+    }                                                                           \
+                                                                                \
+    template <class Char>                                                       \
+    inline detail::name##_type<Char>                                            \
+    name(Char c)                                                                \
+    {                                                                           \
+        return detail::name##_type<Char>(std::basic_string<Char>(1, c));        \
+    }
+
+#endif
+
 #define STD_TUPLE_DEFINE_MANIPULATOR(name)                                      \
     namespace detail                                                            \
     {                                                                           \
@@ -229,34 +300,19 @@ namespace boost { namespace fusion
             return s;                                                           \
         }                                                                       \
     }                                                                           \
-                                                                                \
-    template <class Char, class Traits>                                         \
-    detail::name##_type<Char, Traits>                                           \
-    name(const std::basic_string<Char, Traits>& s)                              \
-    {                                                                           \
-        return detail::name##_type<Char, Traits>(s);                            \
-    }                                                                           \
-                                                                                \
-    template <class Char>                                                       \
-    detail::name##_type<Char>                                                   \
-    name(const Char c[])                                                        \
-    {                                                                           \
-        return detail::name##_type<Char>(std::basic_string<Char>(c));           \
-    }                                                                           \
-                                                                                \
-    template <class Char>                                                       \
-    detail::name##_type<Char>                                                   \
-    name(Char c)                                                                \
-    {                                                                           \
-        return detail::name##_type<Char>(std::basic_string<Char>(1, c));        \
-    }
-#endif
+
+#endif // defined(BOOST_NO_TEMPLATED_STREAMS)
 
     STD_TUPLE_DEFINE_MANIPULATOR(tuple_open)
     STD_TUPLE_DEFINE_MANIPULATOR(tuple_close)
     STD_TUPLE_DEFINE_MANIPULATOR(tuple_delimiter)
 
+    STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS(tuple_open)
+    STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS(tuple_close)
+    STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS(tuple_delimiter)
+
 #undef STD_TUPLE_DEFINE_MANIPULATOR
+#undef STD_TUPLE_DEFINE_MANIPULATOR_FUNCTIONS
 #undef FUSION_STRING_OF_STREAM
 #undef FUSION_GET_CHAR_TYPE
 #undef FUSION_GET_TRAITS_TYPE

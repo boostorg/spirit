@@ -9,21 +9,26 @@
 #define FUSION_ITERATOR_SINGLE_VIEW_ITERATOR_HPP
 
 #include <boost/spirit/fusion/detail/access.hpp>
-#include <boost/spirit/fusion/detail/as_tuple_element.hpp>
+#include <boost/spirit/fusion/sequence/detail/as_tuple_element.hpp>
+#include <boost/spirit/fusion/iterator/detail/iterator_base.hpp>
 #include <boost/spirit/fusion/iterator/detail/single_view_iterator/deref_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/single_view_iterator/next_traits.hpp>
+#include <boost/spirit/fusion/iterator/detail/single_view_iterator/value_traits.hpp>
 
 namespace boost { namespace fusion
 {
     struct single_view_iterator_tag;
 
+    template <typename T>
     struct single_view_iterator_end
+        : iterator_base<single_view_iterator_end<T> >
     {
         typedef single_view_iterator_tag tag;
     };
 
     template <typename T>
     struct single_view_iterator
+        : iterator_base<single_view_iterator<T> >
     {
         typedef single_view_iterator_tag tag;
         typedef typename detail::as_tuple_element<T>::type value_type;

@@ -9,15 +9,17 @@
 #define FUSION_SEQUENCE_SINGLE_VIEW_HPP
 
 #include <boost/spirit/fusion/detail/access.hpp>
-#include <boost/spirit/fusion/detail/as_tuple_element.hpp>
+#include <boost/spirit/fusion/sequence/detail/as_tuple_element.hpp>
 #include <boost/spirit/fusion/sequence/detail/single_view_begin_end_traits.hpp>
+#include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
+#include <boost/spirit/fusion/iterator/single_view_iterator.hpp>
 
 namespace boost { namespace fusion
 {
     struct single_view_tag;
 
     template <typename T>
-    struct single_view
+    struct single_view : sequence_base<single_view<T> >
     {
         typedef single_view_tag tag;
         typedef typename detail::as_tuple_element<T>::type value_type;

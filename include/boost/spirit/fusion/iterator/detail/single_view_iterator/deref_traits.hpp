@@ -14,6 +14,27 @@
 
 namespace boost { namespace fusion
 {
+    namespace single_view_iterator_detail
+    {
+        template <typename Iterator>
+        struct deref_traits_impl
+        {
+            typedef typename detail::cref_result<
+                mpl::identity<FUSION_GET_VALUE_TYPE(Iterator)> >::type
+            type;
+
+            static type
+            apply(Iterator const& i);
+        };
+
+        template <typename Iterator>
+        inline typename deref_traits_impl<Iterator>::type
+        deref_traits_impl<Iterator>::apply(Iterator const& i)
+        {
+            return detail::ref(i.val);
+        }
+    }
+
     struct single_view_iterator_tag;
 
     template <typename Tag>
@@ -23,18 +44,7 @@ namespace boost { namespace fusion
     struct deref_traits<single_view_iterator_tag>
     {
         template <typename Iterator>
-        struct impl
-        {
-            typedef typename detail::cref_result<
-                mpl::identity<FUSION_GET_VALUE_TYPE(Iterator)> >::type
-            type;
-
-            static type
-            apply(Iterator const& i)
-            {
-                return i.val;
-            }
-        };
+        struct impl : single_view_iterator_detail::deref_traits_impl<Iterator> {};
     };
 }}
 
