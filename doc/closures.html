@@ -3,6 +3,11 @@
 <title>Closures</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="theme/style.css" type="text/css">
+<style type="text/css">
+<!--
+.style1 {font-family: "Courier New", Courier, mono}
+-->
+</style>
 </head>
 
 <body>
@@ -125,6 +130,17 @@
         </span><span class=identifier>member1 </span><span class=identifier>val</span><span class=special>;
     </span><span class=special>};</span></pre>
 <p><tt>calc_closure</tt> has a single variable <tt>val</tt> of type <span class=keyword>double</span><span class=special></span>.</p>
+<table width="80%" border="0" align="center">
+  <tr>
+    <td class="note_box"><p><img src="theme/alert.gif" width="16" height="16"> <tt>BOOST_SPIRIT_CLOSURE_LIMIT</tt><br>
+        <br>
+      Spirit predefined maximum closure limit. This limit defines the maximum number of elements a closure can hold. This number defaults to 3. The actual maximum is rounded up in multiples of 3. Thus, if this value is 4, the actual limit is 6. The ultimate maximum limit in this implementation is 15. It should <strong>NOT</strong> be greater than <tt>PHOENIX_LIMIT</tt> (see <a href="../phoenix/index.html">phoenix</a>). Example:<br>
+      <br>
+      <span class="comment style1">// Define these before including anything else       <br> 
+        </span><span class="preprocessor style1">#define</span><span class="style1"> PHOENIX_LIMIT 10<br>
+      </span><span class="preprocessor">#define</span><span class="style1"> BOOST_SPIRIT_CLOSURE_LIMIT 10</span></p>      </td>
+  </tr>
+</table>
 <p><strong>Attaching closures</strong></p>
 <p>Closures can be applied to rules, subrules and grammars (non-terminals). The closure has a 
   special <a href="indepth_the_parser_context.html">parser context</a> that can be used with these non-terminals. The closure's 

@@ -3,6 +3,12 @@
 <title>The Switch Parser</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="theme/style.css" type="text/css">
+<style type="text/css">
+<!--
+.style1 {font-family: "Courier New", Courier, mono}
+.style3 {font-family: "Courier New", Courier, mono; color: #FF0000; }
+-->
+</style>
 </head>
 
 <body>
@@ -82,7 +88,16 @@
         ;</pre>
 <p>where <tt>cond</tt> is a parser or a nullary function or function object (functor). If it is a parser, then it is tried  and its return value is used to match against the <tt>case_p</tt> branches. If it is a nullary function or functor, then its return value will be used. </p>
 <p>Please note that during its compilation, the <tt>switch_p</tt> construct is transformed  into a real C++ <tt>switch</tt> statement. This makes the runtime execution very efficient. </p>
-<p>The number of possible <tt>case_p</tt>/<tt>default_p</tt> branches is limited by the Spirit compile time constant <tt>BOOST_SPIRIT_SWITCH_CASE_LIMIT</tt>, which defaults to 3. There is no theoretical upper limit for this constant, but most compilers won't allow to specify a very large number.</p>
+<table width="80%" border="0" align="center">
+  <tr>
+    <td class="note_box"><p><img src="theme/alert.gif" width="16" height="16"> <tt>BOOST_SPIRIT_SWITCH_CASE_LIMIT</tt><br>
+        <br>
+    The number of possible <tt>case_p</tt>/<tt>default_p</tt> branches is limited by the Spirit compile time constant <tt>BOOST_SPIRIT_SWITCH_CASE_LIMIT</tt>, which defaults to 3. There is no theoretical upper limit for this constant, but most compilers won't allow you to specify a very large number.</p>
+    <p>Example:</p>
+    <p class="style1"><span class="comment">// Define these before including switch.hpp <br>
+      </span><span class="preprocessor">#define</span> BOOST_SPIRIT_SWITCH_CASE_LIMIT 10 </p></td>
+  </tr>
+</table><br>
 <table border="0">
   <tr>
     <td width="10"></td>
@@ -96,6 +111,5 @@
 <p class="copyright">Copyright &copy; 2003-2004 Hartmut Kaiser <br>
   <br>
   <font size="2">Use, modification and distribution is subject to the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt) </font> </p>
-<p>&nbsp;</p>
 </body>
 </html>
