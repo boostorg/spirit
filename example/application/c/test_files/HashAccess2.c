@@ -18,21 +18,21 @@ int main(int argc, char *argv[]) {
     struct ht_node *node;
 
     for (i=0; i<=9999; ++i) {
-	sprintf(buf, "foo_%d", i);
-	ht_find_new(ht1, buf)->val = i;
+    sprintf(buf, "foo_%d", i);
+    ht_find_new(ht1, buf)->val = i;
     }
 
     for (i=0; i<n; ++i) {
-	for (node=ht_first(ht1); node; node=ht_next(ht1)) {
-	    ht_find_new(ht2, node->key)->val += node->val;
-	}
+    for (node=ht_first(ht1); node; node=ht_next(ht1)) {
+        ht_find_new(ht2, node->key)->val += node->val;
+    }
     }
 
     printf("%d %d %d %d\n",
-	   (ht_find(ht1, "foo_1"))->val,
-	   (ht_find(ht1, "foo_9999"))->val,
-	   (ht_find(ht2, "foo_1"))->val,
-	   (ht_find(ht2, "foo_9999"))->val);
+       (ht_find(ht1, "foo_1"))->val,
+       (ht_find(ht1, "foo_9999"))->val,
+       (ht_find(ht2, "foo_1"))->val,
+       (ht_find(ht2, "foo_9999"))->val);
 
     ht_destroy(ht1);
     ht_destroy(ht2);

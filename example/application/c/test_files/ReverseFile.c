@@ -29,10 +29,10 @@ int main(int argc, char *argv[]) {
     if(nread == -1) return(fprintf(stderr,"read\n"),EXIT_FAILURE);
 
     for (cp = buf+len-1; cp != buf; --cp,nread++)
-	if ('\n' == *cp) {
+    if ('\n' == *cp) {
             fwrite(cp+1,nread,1,stdout);
             nread = 0;
-	}
+    }
 
     fwrite(cp,nread+1,1,stdout);
     free(buf);

@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     int N = ((argc == 2) ? atoi(argv[1]) : 1) - 1;
     
     while (N--) {
-	gen_random(100.0);
+    gen_random(100.0);
     }
     printf("%.9f\n", gen_random(100.0));
     return(0);

@@ -18,17 +18,17 @@ int
 main(int argc, char *argv[]) {
     int n = ((argc == 2) ? atoi(argv[1]) : 1);
     int i, k, *x, *y;
-	
+
     x = (int *) calloc(n, sizeof(int));
     y = (int *) calloc(n, sizeof(int));
 
     for (i = 0; i < n; i++) {
-	x[i] = i + 1;
+    x[i] = i + 1;
     }
     for (k=0; k<1000; k++) {
-	for (i = n-1; i >= 0; i--) {
-	    y[i] += x[i];
-	}
+    for (i = n-1; i >= 0; i--) {
+        y[i] += x[i];
+    }
     }
 
     fprintf(stdout, "%d %d\n", y[0], y[n-1]);

@@ -31,17 +31,17 @@ int main() {
     while((cnt=read(0,buff,BSIZ))) {
         unsigned long tcnt = 0;
 
-	b_cnt += cnt;
-	pe = buff + cnt;
-	pp = buff;
+    b_cnt += cnt;
+    pe = buff + cnt;
+    pp = buff;
 
-	while(pp < pe) {
-	    tcnt += ws[*pp] ^ was_sp;
-	    was_sp = ws[*pp] & 0xFFFF;
-	    pp ++;
-	}
-	w_cnt += tcnt  & 0xFFFF;
-	l_cnt += tcnt >> 16;
+    while(pp < pe) {
+        tcnt += ws[*pp] ^ was_sp;
+        was_sp = ws[*pp] & 0xFFFF;
+        pp ++;
+    }
+    w_cnt += tcnt  & 0xFFFF;
+    l_cnt += tcnt >> 16;
     }
 
     w_cnt += (ws[ buff[b_cnt&(BSIZ-1)-1] ]^1)&1;

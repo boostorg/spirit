@@ -22,15 +22,15 @@ main(int argc, char *argv[]) {
 
     if (!strbuf) { perror("calloc strbuf"); exit(1); }
     for (i=0; i<n; i++) {
-	if (((strbuf+buflen)-strend) < (stufflen+1)) {
-	    buflen = 2*buflen;
-	    strbuf = realloc(strbuf, buflen);
-	    if (!strbuf) { perror("realloc strbuf"); exit(1); }
-	    strend = strbuf + strlen(strbuf);
-	}
-	/* much faster to strcat to strend than to strbuf */
-	strcat(strend, STUFF);
-	strend += stufflen;
+    if (((strbuf+buflen)-strend) < (stufflen+1)) {
+        buflen = 2*buflen;
+        strbuf = realloc(strbuf, buflen);
+        if (!strbuf) { perror("realloc strbuf"); exit(1); }
+        strend = strbuf + strlen(strbuf);
+    }
+    /* much faster to strcat to strend than to strbuf */
+    strcat(strend, STUFF);
+    strend += stufflen;
     }
     fprintf(stdout, "%d\n", strlen(strbuf));
     free(strbuf);

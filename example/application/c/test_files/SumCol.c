@@ -16,7 +16,7 @@ main() {
     char line[128];
 
     while (fgets(line, MAXLINELEN, stdin)) {
-	sum += atoi(line);
+    sum += atoi(line);
     }
     printf("%d\n", sum);
     return(0);
