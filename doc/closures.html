@@ -101,7 +101,7 @@
 <h2>What are Closures?</h2>
 <p> Interestingly, nested functions demonstrate the flexibility of accessing a 
   local variable existing in an outer scope. However, Spirit closures (inherited 
-  from <a href="../../phoenix/index.html">Phoenix</a>) are more powerful than 
+  from <a href="../phoenix/index.html">Phoenix</a>) are more powerful than 
   what the nested function example suggests. </p>
 <p>The closure as an object that <span class="quotes">&quot;closes&quot;</span> 
   over the local variables of a function making them visible and accessible outside 
@@ -160,10 +160,10 @@
   and <tt>clos.y</tt>:</p>
 <pre>
     <code><span class=identifier>c </span><span class=special>= </span><span class=identifier>real_p</span><span class=special>[</span><span class=identifier>clos</span><span class=special>.</span><span class=identifier>x </span><span class=special>= </span><span class=identifier>arg1</span><span class=special>];</span></code></pre>
-<p> Using <a href="../../phoenix/index.html">Phoenix</a>, the result of real_p 
+<p> Using <a href="../phoenix/index.html">Phoenix</a>, the result of real_p 
   is assigned to clos's closure member x. Again, <code><span class=identifier><tt>arg1</tt></span></code> 
   is a placeholder for the first argument that the semantic action will receive 
-  (see <a href="../../phoenix/doc/place_holders.html">Phoenix Place-holders</a>). 
+  (see <a href="../phoenix/doc/place_holders.html">Phoenix Place-holders</a>). 
   In Boost.Lambda (BLL), this corresponds to <tt>_1</tt>.</p>
 <p> The closure member1 is the closure's return value. This return value, like 
   the one returned by real_p, for example, can be used to propagate data up the 
