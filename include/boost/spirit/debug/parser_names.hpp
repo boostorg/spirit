@@ -192,9 +192,9 @@ namespace boost { namespace spirit {
 
 ///////////////////////////////////////////////////////////////////////////////
 //  from rule.hpp
-    template<typename ContextT, typename ScannerT>
+    template<typename ContextT, typename ScannerT, typename TagT>
     std::string
-    parser_name(rule<ContextT, ScannerT> const& p);
+    parser_name(rule<ContextT, ScannerT, TagT> const& p);
 
 ///////////////////////////////////////////////////////////////////////////////
 //  from subrule.hpp
@@ -218,9 +218,9 @@ namespace boost { namespace spirit {
 //  Decide, if a node is to be traced or not
 //
 ///////////////////////////////////////////////////////////////////////////////
-    template<typename ContextT, typename ScannerT>
+    template<typename ContextT, typename ScannerT, typename TagT>
     bool
-    trace_parser(rule<ContextT, ScannerT> const& p);
+    trace_parser(rule<ContextT, ScannerT, TagT> const& p);
 
     template <typename DerivedT, typename ContextT>
     bool

@@ -12,15 +12,10 @@
 #ifndef BOOST_SPIRIT_TREE_TREE_ITERATOR_HPP
 #define BOOST_SPIRIT_TREE_TREE_ITERATOR_HPP
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
 #define BOOST_SPIRIT_IT_NS impl
 #else
 #define BOOST_SPIRIT_IT_NS std
-#endif
-
-#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
-#undef BOOST_SPIRIT_IT_NS
-#define BOOST_SPIRIT_IT_NS impl
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -13,6 +13,10 @@
 
 #include <vector>
 
+#if defined(BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS)
+#include <algorithm>
+#endif
+
 #include <boost/ref.hpp>
 #include <boost/call_traits.hpp>
 
@@ -24,19 +28,15 @@
 #define BOOST_SPIRIT_MP_TYPE_COMPUTER_ARGS typename T
 #endif
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
 #include <iostream>
 #endif
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
 #define BOOST_SPIRIT_IT_NS impl
 #else
 #define BOOST_SPIRIT_IT_NS std
-#endif
-
-#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
-#undef BOOST_SPIRIT_IT_NS
-#define BOOST_SPIRIT_IT_NS impl
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,8 @@ struct tree_node
     }
 };
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
 template <typename T>
 inline std::ostream&
 operator<<(std::ostream& o, tree_node<T> const& n)
@@ -206,7 +207,8 @@ private:
 public:
 };
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
 // value is default nil_t, so provide an operator<< for nil_t
 inline std::ostream&
 operator<<(std::ostream& o, nil_t const&)
@@ -244,6 +246,21 @@ struct node_val_data
         : text(), is_root_(false), parser_id_(), value_()
         {}
 
+#if defined(BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS)
+    node_val_data(IteratorT const& _first, IteratorT const& _last)
+        : text(), is_root_(false), parser_id_(), value_()
+        {
+            std::copy(_first, _last, std::inserter(text, text.end()));
+        }
+
+    // This constructor is for building text out of vector iterators
+    template <typename IteratorT2>
+    node_val_data(IteratorT2 const& _first, IteratorT2 const& _last)
+        : text(), is_root_(false), parser_id_(), value_()
+        {
+            std::copy(_first, _last, std::inserter(text, text.end()));
+        }
+#else
     node_val_data(IteratorT const& _first, IteratorT const& _last)
         : text(_first, _last), is_root_(false), parser_id_(), value_()
         {}
@@ -253,6 +270,7 @@ struct node_val_data
     node_val_data(IteratorT2 const& _first, IteratorT2 const& _last)
         : text(_first, _last), is_root_(false), parser_id_(), value_()
         {}
+#endif
 
     void swap(node_val_data& x)
     {
@@ -319,7 +337,8 @@ private:
     ValueT value_;
 };
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
 template <typename IteratorT, typename ValueT>
 inline std::ostream&
 operator<<(std::ostream& o, node_val_data<IteratorT, ValueT> const& n)
@@ -673,7 +692,8 @@ public:
     T   val;
 };
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
 template <typename IteratorT, typename NodeFactoryT, typename T>
 inline std::ostream&
 operator<<(std::ostream& o, tree_match<IteratorT, NodeFactoryT, T> const& m)
@@ -738,7 +758,8 @@ struct common_tree_match_policy
         Iterator1T const& first,
         Iterator2T const& last)
     {
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
         BOOST_SPIRIT_DEBUG_OUT << "create_node.  creating node"
             " text: \"";
         for (Iterator1T it = first; it != last; ++it)

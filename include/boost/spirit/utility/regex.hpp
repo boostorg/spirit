@@ -13,7 +13,7 @@
 
 #include "boost/spirit/core/impl/msvc.hpp"
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
 #define BOOST_SPIRIT_IT_NS impl
 #else
 #define BOOST_SPIRIT_IT_NS std

@@ -29,16 +29,12 @@
 
 #include "fixed_size_queue.hpp"
 #include "boost/spirit/core/assert.hpp" // for BOOST_SPIRIT_ASSERT
+#include "boost/spirit/core/impl/msvc.hpp"  
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
 #define BOOST_SPIRIT_IT_NS impl
 #else
 #define BOOST_SPIRIT_IT_NS std
-#endif
-
-#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
-#undef BOOST_SPIRIT_IT_NS
-#define BOOST_SPIRIT_IT_NS impl
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -795,6 +791,13 @@ class multi_pass
         typedef typename IP::difference_type difference_type;
         typedef typename IP::pointer pointer;
         typedef typename IP::reference reference;
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
+    // VC++6/Dinkumware STL has incorrect iterator_traits, which are to be
+    // taken from the boost::spirit::impl namespace instead 
+    // (see spirit/core/impl/msvc.hpp), but these rely on the distance_type
+    // instead of the difference_type
+        typedef typename IP::difference_type distance_type;
+#endif // defined(BOOST_NO_STD_ITERATOR_TRAITS
 
         typedef InputT iterator_type;
 

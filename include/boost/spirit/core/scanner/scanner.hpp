@@ -1,6 +1,6 @@
 /*=============================================================================
     Spirit v1.6.0
-    Copyright (c) 1998-2002 Joel de Guzman
+    Copyright (c) 1998-2002 Spirit-Dev
     Copyright (c) 2001 Daniel Nuffer
     http://spirit.sourceforge.net/
 
@@ -26,7 +26,7 @@
 #endif
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
-#define BOOST_SPIRIT_IT_NS impl
+//#define BOOST_SPIRIT_IT_NS impl
 #define BOOST_SPIRIT_MP_TYPE_COMPUTER_ARGS \
     typename T, typename Pizza = nil_t
 #define BOOST_SPIRIT_P_TYPE_COMPUTER_ARGS \
@@ -40,9 +40,10 @@
 #define BOOST_SPIRIT_I_TYPE_COMPUTER_ARGS typename IteratorT2
 #endif
 
-#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
-#undef BOOST_SPIRIT_IT_NS
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
 #define BOOST_SPIRIT_IT_NS impl
+#else
+#define BOOST_SPIRIT_IT_NS std
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
