@@ -127,7 +127,7 @@ This is part of the Spirit distribution.</p>
     Lambda expressions are actually unnamed partially applied functions where placeholders (e.g. arg1, arg2) are provided in place of some of the arguments. The reason this is called a lambda expression is that traditionally, such placeholders are written using the Greek letter lambda <img src="theme/lambda.png" width="15" height="22">.</td>
   </tr>
 </table>
-<p>Phoenix uses tricks not unlike those used by Spirit to mimick C++ such that you can define the function body inlined in the code. It's wierd, but as mentioned, Phoenix actually mimicks C++ in C++ using expression templates. Surely, there are limitations...</p>
+<p>Phoenix uses tricks not unlike those used by Spirit to mimick C++ such that you can define the function body inlined in the code. It's weird, but as mentioned, Phoenix actually mimicks C++ in C++ using expression templates. Surely, there are limitations...</p>
 <p>All components in a Phoenix expression must be an <strong>actor</strong> (in phoenix parlance) in the same way that components in Spirit should be a <tt>parser</tt>. In Spirit, you can write:</p>
 <pre><span class=number>    </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'x'</span><span class=special>) </span><span class=special>&gt;&gt; </span><span class=literal>'y'</span><span class=special>;</span></pre>
 <p>But not:</p>

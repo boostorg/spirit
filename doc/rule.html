@@ -109,7 +109,7 @@
     </span><span class=identifier>b </span><span class=special>= </span><span class=identifier>a</span><span class=special>;
     </span><span class=identifier>c </span><span class=special>= </span><span class=identifier>int_p </span><span class=special>&gt;&gt; </span><span class=identifier>b</span><span class=special>;</span></pre>
 <h3>Copying Rules</h3>
-<p>The rule is a wierd C++ citizen, unlike any other C++ object. It does not have 
+<p>The rule is a weird C++ citizen, unlike any other C++ object. It does not have 
   the proper copy and assignment semantics and cannot be stored and passed around 
   by value. If you need to copy a rule you have to explicitly call its member 
   function <tt>copy()</tt>:</p>
@@ -122,7 +122,7 @@
 <p>If you copy a rule, then you'll want to place it in a storage somewhere. The 
   problem is how? The storage can't be another rule:</p>
 <pre>    <code><font color="#000000"><span class=identifier>rule</span><span class=special>&lt;&gt;</span></font></code> r2 <span class="special">=</span> <span class=identifier>r</span><span class="special">.</span><span class=identifier>copy()</span><span class=special>; </span><span class="comment">// BAD!</span></pre>
-<p>because rules are wierd and does not have the expected C++ copy-constructor 
+<p>because rules are weird and does not have the expected C++ copy-constructor 
   and assignment semantics! As a general rule: <strong>Don't put a copied rule 
   into another rule! </strong>Instead, use the <a href="stored_rule.html">stored_rule</a> 
   for that purpose.</p>
