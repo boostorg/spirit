@@ -1,0 +1,16 @@
+#~ Copyright (C) 2002-2003, David Abrahams.
+#~ Copyright (C) 2002-2003, Vladimir Prus.
+#~ Copyright (C) 2003, Rene Rivera.
+#~ Use, modification and distribution are subject to the
+#~ Boost Software License, Version 1.0. (See accompanying file
+#~ LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+if --v2 in $(ARGV)
+{
+    JAMFILE = [Jj]amfile.v2 ;
+    boost-build miniboost/tools/build/v2 ;
+}
+else
+{
+    boost-build miniboost/tools/build/v1 ;
+}    

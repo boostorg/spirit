@@ -1,0 +1,52 @@
+README for Spirit v1.8.2
+
+==============================================================================
+The docs for Spirit are located in the libs/spirit/doc subdirectory.
+The code is under the boost subdirectory.
+The examples are in libs/spirit/example, and the test suite is in 
+libs/spirit/test.
+The Spirit homepage is http://spirit.sourceforge.net/
+
+==============================================================================
+Simply point your compiler's include path to the spirit directory.
+
+There are no libraries to build, Spirit is a header-only library.
+
+The examples can be built and the testsuite can be executed by using the 
+Boost.Build system as described on the Boost pages: http://www.boost.org.
+
+For example, using MSVC 7.1:
+
+1) Download the Spirit distrib (you've already done that) and unpack it
+   somewhere.
+2) Download a prebuilt executable of bjam.exe here:
+   http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=72941
+   With the latest Boost Build, you don't have to configure the tool if you
+   installed VC7.1 in the default location. Put it somewhere in your path.
+3) Change to the directory to *this* directory.
+4) Call bjam from the command line:
+   
+   bjam -sTOOLS=vc-7_1 test
+
+==============================================================================
+If you want to build spirit as thread safe, you have to define the 
+BOOST_SPIRIT_THREADSAFE macro. Spirit uses the boost thread library, which 
+is not distributed together with spirit. You will have to add the boost
+headers to your include path.  You will also need to link with
+libboost_thread library and your platform threading library.  
+
+Of course this assumes that you already have boost_thread built, and you will
+have to use the correct boost path.
+
+==============================================================================
+Here is a list of the examples that depend on software not in the main
+spirit distribution:
+application/slex/callback.cpp depends on boost/function.hpp
+fundamental/regular_expression.cpp depends on boost regex (see docs)
+
+None of these examples are built by default.
+
+==============================================================================
+Questions, comments, complaints, bug-fixes?  Please send them to the Spirit
+mailing list: spirit-general@lists.sourceforge.net
+
