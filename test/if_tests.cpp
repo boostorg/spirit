@@ -71,6 +71,10 @@ test_number(char const *s, unsigned int wanted, rule_t const &r)
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
+    if (m.full && !m.length == strlen(s))
+        result = bad;
+        
+
     if (result==good)
         cout << "PASSED";
     else
@@ -99,6 +103,13 @@ main()
     using ::boost::spirit::str_p;
     using ::boost::spirit::ch_p;
     using ::boost::spirit::assign;
+
+    cout << "/////////////////////////////////////////////////////////\n";
+    cout << "\n";
+    cout << "          if_p test\n";
+    cout << "\n";
+    cout << "/////////////////////////////////////////////////////////\n";
+    cout << "\n";
 
     bool    as_hex;
 
@@ -132,13 +143,6 @@ main()
 
     hex_or_dec_number_rule =
         if_p(local::var(as_hex))[hex_prefix>>hex_rule].else_p[dec_rule];
-
-    cout << "/////////////////////////////////////////////////////////\n";
-    cout << "\n";
-    cout << "          if_p test\n";
-    cout << "\n";
-    cout << "/////////////////////////////////////////////////////////\n";
-    cout << "\n";
 
     cout << "auto:\n";
     test_number("",   kError, auto_number_rule);
