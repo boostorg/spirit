@@ -65,6 +65,12 @@ exe error_handling
     :
     ;
 
+exe error_reporting
+    : fundamental/error_reporting.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
 exe file_parser
     : fundamental/file_parser.cpp
     : <sysinclude>$(BOOST_ROOT)
