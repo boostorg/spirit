@@ -689,20 +689,12 @@ struct common_tree_match_policy : public match_policy
         BOOST_SPIRIT_DEBUG_OUT << ">>> concat_match(end) <<<\n";
 #endif
         BOOST_SPIRIT_ASSERT(a && b);
-        if (a.length() == 0
-#ifdef BOOST_SPIRIT_NO_TREE_NODE_COLLAPSING
-            && !a.trees.begin()->value.id().to_long()
-#endif
-            )
+        if (a.length() == 0)
         {
             a = b;
             return;
         }
-        else if (b.length() == 0
-#ifdef BOOST_SPIRIT_NO_TREE_NODE_COLLAPSING
-            && !b.trees.begin()->value.id().to_long()
-#endif
-            )
+        else if (b.length() == 0)
         {
             return;
         }
