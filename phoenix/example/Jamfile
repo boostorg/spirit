@@ -11,13 +11,13 @@
 #  Joel de Guzman [Sept 27, 2002]
 #
 
-subproject libs/phoenix/example ;
+subproject libs/spirit/phoenix/example ;
 
-unit-test sample1
-    : fundamental/sample1.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
+#unit-test sample1
+#    : fundamental/sample1.cpp
+#    : <sysinclude>$(BOOST_ROOT)
+#    :
+#    ;
 
 unit-test sample2
     : fundamental/sample2.cpp
