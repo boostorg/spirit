@@ -190,11 +190,11 @@ namespace impl {
                 parser_t;
 
             static parser_t p =
-                ( (anychar_p - CharT('\\'))
-                | (CharT('\\') >>
+                ( (anychar_p - chlit<CharT>(CharT('\\')))
+                | (chlit<CharT>(CharT('\\')) >>
                     (  oct_parser_t()
-                     | as_lower_d[CharT('x')] >> hex_parser_t()
-                     | (anychar_p - as_lower_d[CharT('x')] - oct_parser_t())
+                     | as_lower_d[chlit<CharT>(CharT('x'))] >> hex_parser_t()
+                     | (anychar_p - as_lower_d[chlit<CharT>(CharT('x'))] - oct_parser_t())
                     )
                 ));
 
