@@ -27,7 +27,8 @@ The framework has a number of predefined semantic action functors.
 Experience shows that these functors are so often used that they were included 
 as part of the core framework to spare the user from having to reinvent the 
 same functionality over and over again.</p>
-<h2>Quick example: <tt>append_a</tt> actor</h2><code>
+<h2>Quick example: <tt>assign_a</tt> actor</h2>
+<code>
 <pre>    <span class=keyword>int </span><span class=identifier>i</span><span class=special>,</span><span class=identifier> j</span><span class=special>;
     </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string </span><span class=identifier>s</span><span class=special>;
     </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>assign_a</span><span class=special>(</span><span class=identifier>i</span><span class=special>)] &gt;&gt; (+</span><span class=identifier>alpha_p</span><span class=special>)[</span><span class=identifier>assign_a</span><span class=special>(</span><span class=identifier>s</span><span class=special>)] &gt;&gt; </span><span class=identifier>int_p</span><span class=special>[</span><span class=identifier>assign_a</span><span class=special>(</span><span class=identifier>j</span><span class=special>,</span><span class=identifier>i</span><span class=special>)];</span></pre>
