@@ -77,7 +77,7 @@ namespace boost { namespace spirit {
     // as template parameter.
     template <typename ConditionT>
     struct condition_evaluator
-        : private subject_type
+        : public subject_type
         <
             typename condition_parser_selector<ConditionT>::embed_t,
             nil_t
