@@ -219,8 +219,8 @@ inline std::ostream&
 operator<<(std::ostream& o, node_iter_data<IteratorT, ValueT> const& n)
 {
     o << "(id = " << n.id() << " text = \"";
-    typedef 
-        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type 
+    typedef
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
         iterator_t;
     std::copy(n.begin(), n.end(), std::ostream_iterator<iterator_t>(o));
     o << "\" is_root = " << n.is_root()
@@ -233,8 +233,8 @@ operator<<(std::ostream& o, node_iter_data<IteratorT, ValueT> const& n)
 template <typename IteratorT = char const*, typename ValueT = nil_t>
 struct node_val_data
 {
-    typedef 
-        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type 
+    typedef
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
         value_type;
     typedef std::vector<value_type> container_t;
     typedef typename container_t::iterator iterator_t;
@@ -325,8 +325,8 @@ inline std::ostream&
 operator<<(std::ostream& o, node_val_data<IteratorT, ValueT> const& n)
 {
     o << "(id = " << n.id() << " text = \"";
-    typedef 
-        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type 
+    typedef
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type
         iterator_t;
     std::copy(n.begin(), n.end(), std::ostream_iterator<iterator_t>(o));
     o << "\" is_root = " << n.is_root()
@@ -631,7 +631,7 @@ public:
     }
 
     tree_match(tree_match const& x)
-    : len(x.len), trees()
+    : len(x.len), trees(), val(impl::tree_match_attr<T>::get_default())
     {
         // use auto_ptr like ownership for the trees data member
         impl::cp_swap(trees, x.trees);
@@ -962,7 +962,7 @@ struct leaf_node_op
     }
 };
 
-const node_parser_gen<leaf_node_op> leaf_node_d = 
+const node_parser_gen<leaf_node_op> leaf_node_d =
     node_parser_gen<leaf_node_op>();
 const node_parser_gen<leaf_node_op> token_node_d =
     node_parser_gen<leaf_node_op>();

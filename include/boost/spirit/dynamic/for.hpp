@@ -127,8 +127,8 @@ namespace boost { namespace spirit
                 int length = 0;
                 int eval_length = 0;
 
-                init();
-                while ((eval_length = evaluate(scan))>=0)
+                this->init();
+                while ((eval_length = this->evaluate(scan))>=0)
                 {
                     length += eval_length;
                     body_result_t tmp(this->subject().parse(scan));
@@ -140,10 +140,12 @@ namespace boost { namespace spirit
                     {
                         return scan.no_match();
                     }
-                    step();
+                    this->step();
                 }
+
+                boost::spirit::nil_t attr;
                 return scan.create_match
-                    (length, boost::spirit::nil_t(), save, scan.first);
+                    (length, attr, save, scan.first);
             }
         };
 

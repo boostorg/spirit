@@ -83,7 +83,7 @@ namespace boost { namespace spirit {
 
             bool dont_check_condition = is_do_parser;
 
-            while (dont_check_condition || (eval_length=evaluate(scan))>=0)
+            while (dont_check_condition || (eval_length=this->evaluate(scan))>=0)
             {
                 dont_check_condition = false;
                 length += eval_length;

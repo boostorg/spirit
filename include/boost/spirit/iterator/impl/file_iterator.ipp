@@ -28,10 +28,10 @@
 #include <cassert>
 #include <fcntl.h>
 
-#if (defined (__COMO_VERSION__) && defined (BOOST_MSVC))        \
-    || defined __BORLANDC__ || defined BOOST_INTEL_CXX_VERSION  \
-    || defined BOOST_MSVC
-   #include <io.h>
+#if (defined (__COMO_VERSION__) && !defined (BOOST_DISABLE_WIN32)) \
+      || defined _BORLANDC_ || defined BOOST_INTEL_CXX_VERSION  \
+      || defined BOOST_MSVC
+    #include <io.h>
 #elif defined (__GLIBC__) && (__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 3)
 
    #include <unistd.h>

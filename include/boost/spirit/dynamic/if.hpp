@@ -85,7 +85,7 @@ namespace boost { namespace spirit {
 
             typename ScannerT::iterator_t const  save(scan.first);
 
-            int length = evaluate(scan);
+            int length = this->evaluate(scan);
             if (length >= 0)
             {
                 then_result_t then_result(this->left().parse(scan));
@@ -179,7 +179,7 @@ namespace boost { namespace spirit {
             typedef typename parser_result<parser_t, ScannerT>::type t_result_t;
             typename ScannerT::iterator_t const save(scan.first);
 
-            int length = evaluate(scan);
+            int length = this->evaluate(scan);
             if (length >= 0)
             {
                 t_result_t then_result(this->subject().parse(scan));
