@@ -86,7 +86,7 @@ struct unpack_tuple : public TupleT {
 //
 //          arg0 ---------|
 //          arg1 ---------|
-//          arg3 ---------|---> tupled_args ---> base.eval
+//          arg2 ---------|---> tupled_args ---> base.eval
 //          ...           |
 //          argN ---------|
 //
