@@ -115,7 +115,7 @@ struct gen_pt_node_parser
     typedef gen_pt_node_parser<T> self_t;
     typedef gen_pt_node_parser_gen parser_generator_t;
     typedef unary_parser_category parser_category_t;
-    typedef gen_pt_node_parser<T> const &embed_t;
+//    typedef gen_pt_node_parser<T> const &embed_t;
 
     gen_pt_node_parser(T const& a)
     : unary<T, parser<gen_pt_node_parser<T> > >(a) {}

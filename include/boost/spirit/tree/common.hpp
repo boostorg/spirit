@@ -802,7 +802,7 @@ struct no_tree_gen_node_parser
     typedef no_tree_gen_node_parser<T> self_t;
     typedef no_tree_gen_node_parser_gen parser_generator_t;
     typedef unary_parser_category parser_category_t;
-    typedef no_tree_gen_node_parser<T> const &embed_t;
+//    typedef no_tree_gen_node_parser<T> const &embed_t;
 
     no_tree_gen_node_parser(T const& a)
     : unary<T, parser<no_tree_gen_node_parser<T> > >(a) {}
@@ -873,7 +873,7 @@ struct node_parser
     typedef node_parser<T, NodeParserT> self_t;
     typedef node_parser_gen<NodeParserT> parser_generator_t;
     typedef unary_parser_category parser_category_t;
-    typedef node_parser<T, NodeParserT> const &embed_t;
+//    typedef node_parser<T, NodeParserT> const &embed_t;
 
     node_parser(T const& a)
     : unary<T, parser<node_parser<T, NodeParserT> > >(a) {}
@@ -1087,7 +1087,7 @@ struct action_directive_parser
     typedef action_directive_parser<T, ActionParserT> self_t;
     typedef action_directive_parser_gen<ActionParserT> parser_generator_t;
     typedef unary_parser_category parser_category_t;
-    typedef action_directive_parser<T, ActionParserT> const &embed_t;
+//    typedef action_directive_parser<T, ActionParserT> const &embed_t;
 
     action_directive_parser(T const& a)
         : unary<T, parser<action_directive_parser<T, ActionParserT> > >(a) {}
