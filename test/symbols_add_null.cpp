@@ -7,11 +7,11 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#define BOOST_SPIRIT_ASSERT_EXCEPTION ::exception
+#define BOOST_SPIRIT_ASSERT_EXCEPTION ::spirit_exception
 
-struct exception
+struct spirit_exception
 {
-    exception(char const * msg)
+    spirit_exception(char const * msg)
         : message(msg)
     {
     }
@@ -47,7 +47,7 @@ int main()
         symbols_.add(begin, end, (void*) boost::addressof(symbols_));
         assert(0);
     }
-    catch (exception &e)
+    catch (spirit_exception &e)
     {
     }
 }
