@@ -11,6 +11,7 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/tree/ast.hpp>
 #include <boost/spirit/tree/tree_to_xml.hpp>
+#include <boost/detail/workaround.hpp>
 
 #include <iostream>
 #include <stack>
@@ -144,8 +145,18 @@ long eval_expression(iter_t const& i)
         {
             assert(i->children.size() == 0);
             // extract integer (not always delimited by '\0')
+#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
+            // std::string(iter,iter) constructor has a bug in MWCW 8.3: 
+            //  in some situations, the null terminator won't be added
+            //  and c_str() will return bogus data. Conservatively, I 
+            //  activate this workaround up to version 8.3.
+            std::vector<char> value(i->value.begin(), i->value.end());
+            value.push_back('\0');
+            return strtol(&value[0], 0, 10);
+#else
             string integer(i->value.begin(), i->value.end());
             return strtol(integer.c_str(), 0, 10);
+#endif
         }
 
         case calculator::factorID:

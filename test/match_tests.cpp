@@ -109,10 +109,11 @@ match_tests()
 
     // let's try a match with a reference:
     int i;
-    match<int&> mr4(4, ri);
+    match<int&> mr4(4, i);
     assert(mr4.has_valid_attribute());
     mr4.value(3);
     assert(mr4.value() == 3);
+    assert(i == 3);
     (void)i;
 
     int x = 456;

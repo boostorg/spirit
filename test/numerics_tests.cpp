@@ -32,13 +32,13 @@ struct ts_real_parser_policies : public ureal_parser_policies<T>
     parse_frac_n(ScannerT& scan)
     { return uint2_t().parse(scan); }
 
-    //////////////////////////////////
+    //////////////////////////////////  No exponent
     template <typename ScannerT>
     static typename parser_result<chlit<>, ScannerT>::type
     parse_exp(ScannerT& scan)
     { return scan.no_match(); }
 
-    //////////////////////////////////
+    //////////////////////////////////  No exponent
     template <typename ScannerT>
     static typename parser_result<int_parser_t, ScannerT>::type
     parse_exp_n(ScannerT& scan)
@@ -50,17 +50,21 @@ struct ts_real_parser_policies : public ureal_parser_policies<T>
     parse_n(ScannerT& scan)
     {
         typedef typename parser_result<uint_parser_t, ScannerT>::type RT;
-        uint_parser<unsigned, 10, 1, 3> uint3_p;
-        uint_parser<unsigned, 10, 3, 3> uint3_3_p;
+        static uint_parser<unsigned, 10, 1, 3> uint3_p;
+        static uint_parser<unsigned, 10, 3, 3> uint3_3_p;
 
         if (RT hit = uint3_p.parse(scan))
         {
             T n;
+            typedef typename ScannerT::iterator_t iterator_t;
+            iterator_t save = scan.first;
             while (match<> next = (',' >> uint3_3_p[assign_a(n)]).parse(scan))
             {
                 hit.value((hit.value() * 1000) + n);
                 scan.concat_match(hit, next);
+                save = scan.first;
             }
+            scan.first = save;
             return hit;
         }
         return scan.no_match();
@@ -210,6 +214,7 @@ main()
     assert(parse("123,456,789,000", r).full);   //  OK
     assert(!parse("1000,234,567,890", r).full); //  Bad
     assert(!parse("1,234,56,890", r).full);     //  Bad
+    assert(!parse("1,66", r).full);             //  Bad
 
 //  long long
 
@@ -289,6 +294,7 @@ main()
     assert(!parse("1234,567,890", ts_real_p).full);     //  Bad.
     assert(!parse("1,234,5678,9", ts_real_p).full);     //  Bad.
     assert(!parse("1,234,567.89e6", ts_real_p).full);   //  Bad.
+    assert(!parse("1,66", ts_real_p).full);             //  Bad.
 
 //  END TESTS.
 

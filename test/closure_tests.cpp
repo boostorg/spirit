@@ -56,7 +56,9 @@ struct my_closure4 : boost::spirit::closure<my_closure4, X>
     member1 x;
 };
 
-struct Y { Y(int) {} };
+// MWCW8.3 needs the default constructor here or it won't compile.
+// It should not be needed.
+struct Y { Y() {} Y(int) {} };
 
 #if defined(BOOST_SPIRIT_DEBUG)
 //  If debugging is switched on, all closure members should have a 

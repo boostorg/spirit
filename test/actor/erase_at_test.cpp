@@ -31,7 +31,7 @@ void erase_test()
     map_string_type c;
     map_string_type::const_iterator it_find;
 
-    scanner<char const*> scan( cp_first, cp_last );
+    scanner<char const*> scan(cp_first, cp_last);
     match<> hit;
 
     c["one"]=1;
@@ -55,7 +55,7 @@ void erase_test()
 
 void erase_action_test(boost::unit_test_framework::test_suite* test)
 {
-    test->add( BOOST_TEST_CASE(&erase_test ) );
+    test->add( BOOST_TEST_CASE(&erase_test));
 }
 
 

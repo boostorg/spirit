@@ -177,11 +177,17 @@ namespace boost { namespace spirit {
             parse_main(ScannerT const& scan) const
             {
                 typename parser_result<DerivedT, ScannerT>::type hit;
-                if (rule_base_access::get(static_cast<DerivedT const&>(*this)))
+                
+                // MWCW 8.3 needs this cast to be done through a pointer,
+                //  not a reference. Otherwise, it will silently construct
+                //  a temporary, causing an infinite runtime recursion.
+                DerivedT const * derivedThis = 
+                    static_cast<DerivedT const *>(this);
+                
+                if (rule_base_access::get(*derivedThis))
                 {
                     typename ScannerT::iterator_t s(scan.first);
-                    hit = 
-                        rule_base_access::get(static_cast<DerivedT const&>(*this))
+                    hit = rule_base_access::get(*derivedThis)
                             ->do_parse_virtual(scan);
                     scan.group_match(hit, this->id(), s, scan.first);
                 }

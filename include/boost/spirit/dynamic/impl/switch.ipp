@@ -209,7 +209,7 @@ struct default_case<CaseT, true> {
     ));
 
     typedef typename boost::mpl::if_c<
-            value, CaseT, nothing_parser
+            CaseT::is_default, CaseT, nothing_parser
         >::type type;
 
     template <typename ParserT>

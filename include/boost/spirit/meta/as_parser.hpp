@@ -102,7 +102,7 @@ namespace boost { namespace spirit {
     struct as_parser<char const[N]> : impl::string_as_parser {};
 
     template<int N>
-    struct as_parser<wchar_t const[N]> : impl::string_as_parser {};
+    struct as_parser<wchar_t const[N]> : impl::wstring_as_parser {};
 
 }} // namespace boost::spirit
 
