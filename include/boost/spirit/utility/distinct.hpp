@@ -119,7 +119,11 @@ public:
     typedef typename ScannerT::value_t char_t;
 
     typedef
-        rule<typename lexeme_scanner<ScannerT>::type>
+        rule<
+            typename no_actions_scanner<
+                typename lexeme_scanner<ScannerT>::type
+            >::type
+        >
             tail_t;
 
     typedef
@@ -167,7 +171,11 @@ public:
     typedef typename ScannerT::value_t char_t;
 
     typedef
-        rule<typename lexeme_scanner<ScannerT>::type>
+        rule<
+            typename no_actions_scanner<
+                typename lexeme_scanner<ScannerT>::type
+            >::type
+        >
             tail_t;
 
     template<typename ParserT>
