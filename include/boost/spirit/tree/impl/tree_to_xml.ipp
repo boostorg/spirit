@@ -235,28 +235,30 @@ namespace impl {
 
     // look up the rule name from the given parser_id
     template <typename AssocContainerT>
-    inline typename AssocContainerT::data_type
-    get_rulename (AssocContainerT const &id_to_name_map, parser_id const &id)
+    inline typename AssocContainerT::value_type::second_type
+    get_rulename (AssocContainerT const &id_to_name_map, 
+        boost::spirit::parser_id const &id)
     {
         typename AssocContainerT::const_iterator it = id_to_name_map.find(id);
         if (it != id_to_name_map.end())
-            return(*it).second;
-        return typename AssocContainerT::data_type();
+            return (*it).second;
+        return typename AssocContainerT::value_type::second_type();
     }
 
     // dump a parse tree as xml
     template <typename IteratorT, typename GetIdT, typename GetValueT>
     inline void
     token_to_xml (std::ostream &ostrm, IteratorT const &it, bool is_root,
-    GetIdT const &get_token_id, GetValueT const &get_token_value)
+        GetIdT const &get_token_id, GetValueT const &get_token_value)
     {
         BOOST_SPIRIT_OSSTREAM stream;
 
         stream << get_token_id(*it) << std::ends;
         xml::attribute token_id ("id", BOOST_SPIRIT_GETSTRING(stream).c_str());
-        xml::attribute is_root_attr ("is_root", is_root ? "1" : "0");
+        xml::attribute is_root_attr ("is_root", is_root ? "1" : "");
+        xml::attribute nil;
         xml::text(ostrm, "token", get_token_value(*it).c_str(),
-        token_id, is_root_attr);
+            token_id, is_root_attr.has_value() ? is_root_attr : nil);
     }
 
     template <
@@ -265,13 +267,13 @@ namespace impl {
     >
     inline void
     tree_node_to_xml (std::ostream &ostrm, TreeNodeT const &node,
-    AssocContainerT const& id_to_name_map, GetIdT const &get_token_id,
-            GetValueT const &get_token_value)
+        AssocContainerT const& id_to_name_map, GetIdT const &get_token_id,
+        GetValueT const &get_token_value)
     {
         typedef typename TreeNodeT::const_iterator node_iter_t;
         typedef
-        typename TreeNodeT::value_type::parse_node_t::const_iterator_t
-        value_iter_t;
+            typename TreeNodeT::value_type::parse_node_t::const_iterator_t
+            value_iter_t;
 
         xml::attribute nil;
         node_iter_t end = node.end();
@@ -279,9 +281,9 @@ namespace impl {
         {
             // output a node
             xml::attribute id ("rule",
-            get_rulename(id_to_name_map, (*it).value.id()).c_str());
+                get_rulename(id_to_name_map, (*it).value.id()).c_str());
             xml::node currnode (ostrm, "parsenode",
-            (*it).value.id() != 0 && id.has_value() ? id : nil);
+                (*it).value.id() != 0 && id.has_value() ? id : nil);
 
             // first dump the value
             size_t cnt = std::distance ((*it).value.begin(), (*it).value.end());
@@ -289,7 +291,7 @@ namespace impl {
             if (1 == cnt)
             {
                 token_to_xml (ostrm, (*it).value.begin(),
-                (*it).value.is_root(), get_token_id, get_token_value);
+                    (*it).value.is_root(), get_token_id, get_token_value);
             }
             else if (cnt > 1)
             {
@@ -301,11 +303,11 @@ namespace impl {
                 val_it != val_end; ++val_it)
                 {
                     token_to_xml (ostrm, val_it, is_root, get_token_id,
-                    get_token_value);
+                        get_token_value);
                 }
             }
             tree_node_to_xml(ostrm, (*it).children, id_to_name_map,
-            get_token_id, get_token_value);      // dump all subnodes
+                get_token_id, get_token_value);      // dump all subnodes
         }
     }
 
@@ -315,9 +317,6 @@ namespace impl {
             AssocContainerT const& id_to_name_map)
     {
         typedef typename TreeNodeT::const_iterator node_iter_t;
-        typedef
-        typename TreeNodeT::value_type::parse_node_t::const_iterator_t
-        value_iter_t;
 
         xml::attribute nil;
         node_iter_t end = node.end();
@@ -325,9 +324,9 @@ namespace impl {
         {
             // output a node
             xml::attribute id ("rule",
-            get_rulename(id_to_name_map, (*it).value.id()).c_str());
+                get_rulename(id_to_name_map, (*it).value.id()).c_str());
             xml::node currnode (ostrm, "parsenode",
-            (*it).value.id() != parser_id() && id.has_value() ? id : nil);
+                (*it).value.id() != parser_id() && id.has_value() ? id : nil);
 
             // first dump the value
             if ((*it).value.begin() != (*it).value.end())
@@ -338,10 +337,9 @@ namespace impl {
                 {
                     // output all subtokens as one string (for better readability)
                     xml::attribute is_root ("is_root",
-                    (*it).value.is_root() ? "1" : "");
-
+                        (*it).value.is_root() ? "1" : "");
                     xml::text(ostrm, "value", tokens.c_str(),
-                    is_root.has_value() ? is_root : nil);
+                        is_root.has_value() ? is_root : nil);
                 }
 
             }
@@ -369,7 +367,7 @@ std::string const &input_line, AssocContainerT const& id_to_name,
     xml::node mainnode (ostrm, "parsetree", ver);
 
     impl::tree_node_to_xml (ostrm, tree, id_to_name, get_token_id,
-    get_token_value);
+        get_token_value);
 }
 
 // dump a parse tree as a xml steam (for character based parsers)
@@ -393,7 +391,7 @@ tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
         std::string const &input_line)
 {
     return tree_to_xml(ostrm, tree, input_line,
-    std::map<parser_id, std::string>());
+        std::map<boost::spirit::parser_id, std::string>());
 }
 
 }} // namespace boost::spirit

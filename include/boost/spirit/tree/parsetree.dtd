@@ -13,4 +13,5 @@
 <!ELEMENT token (#PCDATA)>
 <!ATTLIST token
 	id CDATA #REQUIRED
+	is_root CDATA "0"
 >

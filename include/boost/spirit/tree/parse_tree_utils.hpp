@@ -35,7 +35,7 @@ get_first_leaf (tree_node<T> const &node);
 //
 //  The function 'find_node' finds a specified node through recursive search.
 //  If the return value is true, the variable to which points the parameter
-//  'found_node' will contains the address of the node with the given rule_id.
+//  'found_node' will contain the address of the node with the given rule_id.
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
