@@ -96,7 +96,7 @@ tree_node<T> const &node = *start;
         const_tree_iterator end = node.children.end();
         for (const_tree_iterator it = node.children.begin(); it != end; ++it)
         {
-            if (get_node_range<T>(it, node_to_search, nodes))
+            if (impl::get_node_range<T>(it, node_to_search, nodes))
                 return true;
         }
     }
