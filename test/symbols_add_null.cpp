@@ -32,7 +32,11 @@ char_type data_[] = "whatever";
 
 iterator begin = data_;
 iterator end = data_
-    + sizeof(data_)/sizeof(char_type); // Yes, this is an intencional bug ;)
+    + sizeof(data_)/sizeof(char_type); // Yes, this is an intentional bug ;)
+
+char_type data2_[] = "\0something";
+iterator begin2 = data2_;
+iterator end2 = data2_ + sizeof(data2_)/sizeof(char_type) - 1;
 
 int main()
 {
@@ -45,6 +49,16 @@ int main()
     {
         // It is not ok to add strings containing the null character.
         symbols_.add(begin, end, (void*) boost::addressof(symbols_));
+        assert(0);
+    }
+    catch (spirit_exception &e)
+    {
+    }
+
+    try
+    {
+        // It is not ok to add strings containing the null character.
+        symbols_.add(begin2, end2, (void*) boost::addressof(symbols_));
         assert(0);
     }
     catch (spirit_exception &e)
