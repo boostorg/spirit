@@ -11,6 +11,7 @@
 #  Joel de Guzman [Sept 27, 2002]   : created
 #  Joel de Guzman [Oct 30, 2003]    : separated the applications
 #  Martin Wille   [Jan 15, 2004]    : changes for new directory structure
+#  Martin Wille   [Jan 20, 2004]    : more changes for new directory structure
 #
 
 subproject libs/spirit/example ;
@@ -29,12 +30,12 @@ exe "bind"
     :
     ;
 
-exe boiler_plate
-    : fundamental/boiler_plate.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    : <borland><*><cxxflags>-Ve-
-    :
-    ;
+#exe boiler_plate
+#    : fundamental/boiler_plate.cpp
+#    : <sysinclude>$(BOOST_ROOT)
+#    : <borland><*><cxxflags>-Ve-
+#    :
+#    ;
 
 exe calc_plain
     : fundamental/calc_plain.cpp
@@ -192,6 +193,48 @@ exe sum
 
 exe thousand_separated
     : fundamental/thousand_separated.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe ast_calc2
+	: fundamental/more_calculators/ast_calc2.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe calc_with_variables
+	: fundamental/more_calculators/calc_with_variables.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe phoenix_subrule_calc
+	: fundamental/more_calculators/phoenix_subrule_calc.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe primitive_calc
+	: fundamental/more_calculators/primitive_calc.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe rpn_calc
+	: fundamental/more_calculators/rpn_calc.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    : <borland><*><cxxflags>-Ve-
+    :
+    ;
+
+exe vmachine_calc
+	: fundamental/more_calculators/vmachine_calc.cpp
     : <sysinclude>$(BOOST_ROOT)
     : <borland><*><cxxflags>-Ve-
     :

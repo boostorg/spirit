@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 #==============================================================================
+# Spirit V1.8.0
 # Copyright (c) 2003 Martin Wille
 # http://spirit.sourceforge.net/
 #
@@ -27,10 +28,10 @@ assert(os.path.isdir(boost_root))
 test_tools = os.environ.get('TEST_TOOLS')
 
 if not test_tools:
-    if os.name == "posix":
-        test_tools = "intel-7.1 gcc-2.95.3 gcc-2.95.3-stlport-4.5.3 gcc-3.1 gcc-3.2.2 gcc-3.2.3 gcc-3.3.1 gcc-3.4-cvs como-4.3.3beta8-libcomobeta29-posix"
-    else:
-        test_tools = "msvc"
+	if os.name == "posix":
+		test_tools = "intel-7.1 intel-8.0 gcc-2.95.3 gcc-2.95.3-stlport-4.5.3 gcc-3.1 gcc-3.2.2 gcc-3.2.3 gcc-3.3.1 gcc-3.3.2 gcc-3.4-cvs como-4.3.3beta8-libcomobeta29-posix"
+	else:
+		test_tools = "msvc"
 
 build_tool = os.environ.get('BUILD_TOOL')
 
@@ -99,7 +100,7 @@ def uname():
 
 srcdir = os.getcwd()
 bjamdir = os.path.join(boost_root, "tools/build/jam_src")
-bjam = os.path.join(bjamdir, "spirit_bin/bjam")
+bjam = os.path.join(bjamdir, "spirit_1_8_bin/bjam")
 buildscriptname = "build"
 
 if os.name == "posix":
@@ -113,7 +114,7 @@ tools_path = os.path.join(boost_root, "tools/regression/build")
 process_jam_log = os.path.join(tools_path, "run/process_jam_log");
 compiler_status = os.path.join(tools_path, "run/compiler_status");
 
-testdir = os.path.join(boost_root, "libs/spirit_test")
+testdir = os.path.join(boost_root, "libs/spirit_1_8_test")
 
 spirit_header_include = os.path.abspath(dirname(dirname(dirname(srcdir))))
 spirit_header_include = " -sSPIRIT_HEADER_INCLUDE=" + spirit_header_include
@@ -123,7 +124,7 @@ spirit_src_include = " -sSPIRIT_SRC_INCLUDE=" + os.path.abspath(srcdir)
 print "preparing jamfile"
 
 jamfile = readfile("Jamfile")
-jamfile = string.replace(jamfile, "/spirit/", "/spirit_test/")
+jamfile = string.replace(jamfile, "/spirit/", "/spirit_1_8_test/")
 
 #===============================================================================
 print "preparing test directory"
@@ -139,7 +140,7 @@ replacefile(os.path.join(testdir,"test/Jamfile"), jamfile)
 print "rebuilding jam"
 
 os.chdir(bjamdir)
-os.environ['LOCATE_TARGET'] = "spirit_bin"
+os.environ['LOCATE_TARGET'] = "spirit_1_8_bin"
 os.spawnl(os.P_WAIT, os.path.abspath(bjambuild), bjambuild, build_tool)
 os.environ['LOCATE_TARGET'] = "bin"
 os.chdir(srcdir)
