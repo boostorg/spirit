@@ -1,4 +1,5 @@
 /*=============================================================================
+    Copyright (c) 2004 Stefan Slapeta
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
@@ -93,6 +94,45 @@ test_number(char const *s, unsigned int wanted, rule_t const &r)
         cout << number_result;
 
     cout << "\n";
+}
+
+void
+test_enclosed_fail()
+{
+    using namespace std;
+
+    using ::boost::spirit::if_p;
+    using ::boost::spirit::str_p;
+    using ::boost::spirit::nothing_p;
+
+	cout << "\nfail enclosed parser:\n";
+
+    const char *p = "abc";
+
+    ::boost::spirit::strlit<const char*> success_p = str_p(p);
+    ::boost::spirit::strlit<const char*> fail_p = str_p("xxx");
+
+    ::boost::spirit::rule<> r = if_p(success_p)[nothing_p];
+
+    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(p, r);
+
+    if (m.full) {
+        cout << "FAILED: if --> match" << endl;
+        ++error_count;
+    } else {
+        cout << "PASSED: if --> no_match" << endl;
+    }
+
+    r = if_p(fail_p)[success_p].else_p[nothing_p];
+
+    m = ::boost::spirit::parse(p, r);
+
+    if (m.full) {
+        cout << "FAILED: else --> match" << endl;
+        ++error_count;
+    } else {
+        cout << "PASSED: else --> no_match" << endl;
+    }
 }
 
 int
@@ -196,6 +236,8 @@ main()
     }
     else
         std::cout << "PASSED: \"junk\" ==> <empty match>\n";
+
+    test_enclosed_fail();
 
 
     //////////////////////////////////
