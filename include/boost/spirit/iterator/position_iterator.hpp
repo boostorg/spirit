@@ -71,7 +71,7 @@ struct file_position {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template < class IteratorT >
+template < typename IteratorT, typename PositionT = file_position >
 class position_iterator {
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)) \
     || (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
@@ -101,7 +101,7 @@ public:
     {
     }
     position_iterator(IteratorT const& iter, IteratorT const& iterend,
-            file_position pos):
+            PositionT const &pos):
         m_Iter(iter),
         m_IterEnd(iterend),
         m_Pos(pos),
@@ -115,13 +115,13 @@ public:
         return (m_IsAtEnd && i2.m_IsAtEnd) ||
                (!m_IsAtEnd && !i2.m_IsAtEnd && m_Iter == i2.m_Iter);
     }
-    void set_position(file_position const& newpos) {
+    void set_position(PositionT const& newpos) {
         m_Pos = newpos;
     }
-    file_position& get_position() {
+    PositionT& get_position() {
         return m_Pos;
     }
-    file_position const& get_position() const {
+    PositionT const& get_position() const {
         return m_Pos;
     }
     position_iterator& operator ++() {
@@ -146,7 +146,7 @@ private:
     IteratorT m_Iter;
     IteratorT m_IterEnd;
 
-    file_position m_Pos;
+    PositionT m_Pos;
     unsigned int m_CharsPerTab;
     bool m_IsAtEnd;
 
@@ -178,22 +178,22 @@ private:
     }
 };
 
-template < class IteratorT >
+template < typename IteratorT, typename PositionT >
 class position_iterator;
 
 
-template < class IteratorT >
+template < typename IteratorT, typename PositionT >
 inline bool operator ==(
-    const position_iterator<IteratorT>& i1,
-    const position_iterator<IteratorT>& i2)
+    const position_iterator<IteratorT, PositionT>& i1,
+    const position_iterator<IteratorT, PositionT>& i2)
 {
     return i1.is_equal(i2);
 }
 
-template < class IteratorT >
+template < typename IteratorT, typename PositionT >
 inline bool operator !=(
-    const position_iterator<IteratorT>& i1,
-    const position_iterator<IteratorT>& i2)
+    const position_iterator<IteratorT, PositionT>& i1,
+    const position_iterator<IteratorT, PositionT>& i2)
 {
     return !(i1 == i2);
 }
