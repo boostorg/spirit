@@ -107,6 +107,9 @@ test_for
 
     bool result = (succeed==m.full)?good:bad;
 
+    if (m.full && (m.length != strlen(s)))
+        result = bad;
+
     result &= iterations_expected == iterations_performed;
 
     if (result==good)
