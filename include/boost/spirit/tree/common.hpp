@@ -642,7 +642,7 @@ template <
     typename NodeFactoryT,
     typename TreePolicyT
 >
-struct common_tree_match_policy
+struct common_tree_match_policy : public match_policy
 {
     template <typename T>
     struct result { typedef tree_match<IteratorT, NodeFactoryT, T> type; };
@@ -792,7 +792,7 @@ struct no_tree_gen_node_parser
             action_policy_t
         > policies_t;
 
-        return this->subject().parse(scanner.change_policies(policies_t()));
+        return this->subject().parse(scanner.change_policies(policies_t(scanner)));
     }
 };
 
