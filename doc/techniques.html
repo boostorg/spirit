@@ -114,10 +114,10 @@
 <p> we are tied to the rule as RHS placeholders. However.... in some occasions 
   we can get by without rules! For instance, rather than writing:</p>
 <pre>
-    <code><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>x </span><span class=special>= </span><span class=identifier>ch_p</span><span class=special>&lt;&gt;(</span><span class=literal>'x'</span><span class=special>);</span></code></pre>
+    <code><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>x </span><span class=special>= </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'x'</span><span class=special>);</span></code></pre>
 <p> It's better to write:</p>
 <pre>
-    <code><span class=identifier>chlit</span><span class=special>&lt;&gt; </span><span class=identifier>x </span><span class=special>= </span><span class=identifier>ch_p</span><span class=special>&lt;&gt;(</span><span class=literal>'x'</span><span class=special>);</span></code></pre>
+    <code><span class=identifier>chlit</span><span class=special>&lt;&gt; </span><span class=identifier>x </span><span class=special>= </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'x'</span><span class=special>);</span></code></pre>
 <p> That's trivial. But what if the rule is rather complicated? Ok, let's proceed 
   stepwise... I'll investigate a simple skip_parser based on the C grammar from 
   Hartmut Kaiser. Basically, the grammar is written as (see <a href="../example/techniques/no_rules/no_rule1.cpp">no_rule1.cpp</a>):</p>
