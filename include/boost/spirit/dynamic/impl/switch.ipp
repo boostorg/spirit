@@ -542,7 +542,7 @@ struct get_next_token_cond {
     operator()(ScannerT const &scan) const
     {
         typename ScannerT::value_t val(*scan);
-        ++scan;
+        ++scan.first;
         return val;
     }
 };
