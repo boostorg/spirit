@@ -95,6 +95,14 @@ namespace boost { namespace spirit {
         { return static_cast<unsigned char>(c); }
     };
 
+    template<> struct char_traits<unsigned char>
+    {
+        typedef int int_type;
+
+        static int to_int_type(unsigned char c)
+        { return c; }
+    };
+
 #ifndef BOOST_NO_CWCHAR
 
     template<> struct char_traits<wchar_t>
@@ -160,37 +168,37 @@ namespace boost { namespace spirit {
         { using namespace std; return toupper(to_int_type(c)); }
 
     ///////////////////////////////////////////////////////////////////////////
-    inline bool isalnum_(int c)
+    inline bool isalnum_(unsigned char c)
 		{ using namespace std; return isalnum(c); }
 
-    inline bool isalpha_(int c)
+    inline bool isalpha_(unsigned char c)
 		{ using namespace std; return isalpha(c); }
 
-    inline bool iscntrl_(int c)
+    inline bool iscntrl_(unsigned char c)
 		{ using namespace std; return iscntrl(c); }
 
-    inline bool isdigit_(int c)
+    inline bool isdigit_(unsigned char c)
 		{ using namespace std; return isdigit(c); }
 
-    inline bool isgraph_(int c)
+    inline bool isgraph_(unsigned char c)
 		{ using namespace std; return isgraph(c); }
 
-    inline bool islower_(int c)
+    inline bool islower_(unsigned char c)
 		{ using namespace std; return islower(c); }
 
-    inline bool isprint_(int c)
+    inline bool isprint_(unsigned char c)
 		{ using namespace std; return isprint(c); }
 
-    inline bool ispunct_(int c)
+    inline bool ispunct_(unsigned char c)
 		{ using namespace std; return ispunct(c); }
 
-    inline bool isspace_(int c)
+    inline bool isspace_(unsigned char c)
 		{ using namespace std; return isspace(c); }
 
-    inline bool isupper_(int c)
+    inline bool isupper_(unsigned char c)
 		{ using namespace std; return isupper(c); }
 
-    inline bool isxdigit_(int c)
+    inline bool isxdigit_(unsigned char c)
 		{ using namespace std; return isxdigit(c); }
 
 #if !defined(BOOST_NO_CWCTYPE)
