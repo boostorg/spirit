@@ -325,7 +325,7 @@ struct grammar_definition
 
     public:
         typedef entry_grammar<DerivedT, N, ContextT>    self_t;
-        typedef DerivedT const&                         embed_t;
+        typedef self_t                                  embed_t;
         typedef typename ContextT::context_linker_t     context_t;
         typedef typename context_t::attr_t              attr_t;
 

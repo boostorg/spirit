@@ -168,6 +168,7 @@ else
           [ spirit-run $(spirit-src)symbols_find_null.cpp <template>normal ]
           [ spirit-run $(spirit-src)escape_char_parser_tests.cpp <template>opt ]
           [ spirit-run $(spirit-src)distinct_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)grammar_def_test.cpp <template>normal ]
         ;
 
     test-suite "spirit.utility.support"
