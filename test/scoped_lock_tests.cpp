@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (C) 2003 Martin Wille
     http://spirit.sourceforge.net/
 
@@ -12,6 +12,7 @@
 // Nota bene: the actual locking is _not_ tested here!
 
 #include <iostream>
+#include <boost/config.hpp>
 
 void banner()
 {
@@ -23,7 +24,7 @@ void banner()
     std::cout << "\n";
 }
 
-#if defined(DONT_HAVE_BOOST)
+#if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS)
 // if boost libraries are not available we have to skip the tests
 int
 main()

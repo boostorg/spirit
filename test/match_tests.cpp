@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -21,6 +21,8 @@ using namespace boost::spirit;
 //  Match tests
 //
 ///////////////////////////////////////////////////////////////////////////////
+struct X {};
+
 void
 match_tests()
 {
@@ -56,6 +58,10 @@ match_tests()
     mr = mr2;
     match<boost::reference_wrapper<int> > mr3(mr);  // should compile
     mr2 = mr3;
+
+    match<X> mx;
+    m1 = mx;            //  should compile
+    m0 = mx;            //  should compile
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -69,6 +69,7 @@ int main (int argc, char *argv[])
     cout << endl;
 
     // 2. use of regex_p predefined parser object
+    str.empty();
     result = parse (ptest, regex_p(prx)[assign(str)]);
     if (result.hit)
     {
@@ -82,6 +83,21 @@ int main (int argc, char *argv[])
     }
     cout << endl;
 
+    // 3. test the regression reported by Grzegorz Marcin Koczyk (gkoczyk@echostar.pl)
+    string str1;
+    string str2;
+    char const *ptest1 = "Token whatever \nToken";
+
+    result = parse(ptest1, rxstrlit<>("Token")[assign(str1)] 
+        >> rxstrlit<>("Token")[assign(str2)]);
+    
+    if (!result.hit)
+        cout << "Parsed regular expression successfully!" << endl;
+    else
+        cout << "Failed to parse regular expression!" << endl;
+
+    cout << endl;
+    
     return 0;
 }
 

@@ -1,7 +1,8 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     Copyright (c) 2001-2003 Daniel Nuffer
+    Copyright (c) 2003      Martin Wille
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software is
@@ -11,28 +12,15 @@
 =============================================================================*/
 #include <iostream>
 #include <cassert>
-#include "boost/config.hpp"
-#ifdef BOOST_NO_STRINGSTREAM
-#include <strstream>
-#define SSTREAM strstream
-std::string GETSTRING(std::strstream& ss)
-{
-    ss << ends;
-    std::string rval = ss.str();
-    ss.freeze(false);
-    return rval;
-}
-#else
-#include <sstream>
-#define GETSTRING(ss) ss.str()
-#define SSTREAM stringstream
-#endif
+#include <boost/test/included/unit_test_framework.hpp>
+#include "impl/util.ipp"
+#include "impl/sstream.hpp"
+
+#include <boost/spirit/utility/chset.hpp>
 
 using namespace std;
-
-//#define BOOST_SPIRIT_DEBUG
-#include "boost/spirit/utility/chset.hpp"
 using namespace boost::spirit;
+namespace ut = boost::unit_test_framework;
 
 namespace
 {
@@ -42,7 +30,7 @@ namespace
     //
     ///////////////////////////////////////////////////////////////////////////
     void
-    DrawRuler(SSTREAM& out, char const* str)
+    DrawRuler(sstream_t& out, char const* str)
     {
         out << std::endl << std::endl;
         out << "\t_____________________________________________________________\n";
@@ -57,7 +45,7 @@ namespace
     //////////////////////////////////
     template <typename CharT>
     void
-    Draw(SSTREAM& out, chset<CharT> a, char const* str)
+    Draw(sstream_t& out, chset<CharT> a, char const* str)
     {
         out << "\t";
 
@@ -73,51 +61,89 @@ namespace
     //////////////////////////////////
     template <typename CharT>
     void
-    chset_tests(SSTREAM& out, CharT const* a_, CharT b1_, CharT b2_)
+    chset_tests(sstream_t& out, CharT const* a_, CharT b1_, CharT b2_, CharT e1_)
     {
         chset<CharT>    a(a_);
         range<CharT>    b_(b1_, b2_);
         chset<CharT>    b(b_);
         chset<CharT>    c(~a);  // ~char_parser code must not interfere
                                 // with chset
+        negated_char_parser<range<CharT> > d_(~b_);
+        chset<CharT>    d(d_);
+        chlit<CharT>    e_(e1_);
+        chset<CharT>    e(e_);
+        negated_char_parser<chlit<CharT> > f_(e1_);
+        chset<CharT>    f(f_);
 
         DrawRuler(out, "Initial");
-        Draw(out, a, "a \tchset<CharT>  a(\"0-9A-Z\");");
-        Draw(out, b, "b_ \trange<CharT>  b_('5', 'J');");
-        Draw(out, b, "b \tchset<CharT>  b(b_);");
+        Draw(out, a, "a");
+        Draw(out, b, "b");
+        Draw(out, d, "d");
+        Draw(out, e, "e");
+        Draw(out, f, "f");
 
         DrawRuler(out, "Inverse");
         Draw(out, ~a, "~a");
         Draw(out, c, "chset<>(~a)");
         Draw(out, ~~a, "~~a");
         Draw(out, ~b, "~b");
-        Draw(out, ~b_, "~b_");
 
         DrawRuler(out, "Union");
         Draw(out, a, "a");
         Draw(out, b, "b");
+        Draw(out, d, "d");
+        Draw(out, e, "e");
+        Draw(out, f, "f");
         Draw(out, a | b, "a | b");
         Draw(out, a | b_, "a | b_");
         Draw(out, b_ | a, "b_ | a");
         Draw(out, a | anychar_p, "a | anychar_p");
         Draw(out, b | anychar_p, "b | anychar_p");
+        Draw(out, a | d, "a | d");
+        Draw(out, a | d_, "a | d_");
+        Draw(out, d_ | a, "d_ | a");
+        Draw(out, a | e_, "a | e_");
+        Draw(out, e_ | b, "e_ | b");
+        Draw(out, a | f_, "a | f_");
+        Draw(out, f_ | b, "f_ | b");
 
         DrawRuler(out, "Intersection");
         Draw(out, a, "a");
         Draw(out, b, "b");
+        Draw(out, d, "d");
+        Draw(out, e, "e");
+        Draw(out, f, "f");
         Draw(out, a & b, "a & b");
         Draw(out, a & b_, "a & b_");
         Draw(out, b_ & a, "b_ & a");
+        Draw(out, a & d, "a & d");
+        Draw(out, a & d_, "a & d_");
+        Draw(out, d_ & a, "d_ & a");
+        Draw(out, a & e_, "a & e_");
+        Draw(out, e_ & b, "e_ & b");
+        Draw(out, a & f_, "a & f_");
+        Draw(out, f_ & b, "f_ & b");
         Draw(out, a & anychar_p, "a & anychar_p");
         Draw(out, b & anychar_p, "b & anychar_p");
 
         DrawRuler(out, "Difference");
         Draw(out, a, "a");
         Draw(out, b, "b");
+        Draw(out, d, "d");
+        Draw(out, e, "e");
+        Draw(out, f, "f");
         Draw(out, a - b, "a - b");
         Draw(out, b - a, "b - a");
         Draw(out, a - b_, "a - b_");
         Draw(out, b_ - a, "b_ - a");
+        Draw(out, a - d, "a - d");
+        Draw(out, d - a, "d - a");
+        Draw(out, a - d_, "a - d_");
+        Draw(out, d_ - a, "d_ - a");
+        Draw(out, a - e_, "a - e_");
+        Draw(out, e_ - b, "e_ - b");
+        Draw(out, a - f_, "a - f_");
+        Draw(out, f_ - b, "f_ - b");
         Draw(out, a - anychar_p, "a - anychar_p");
         Draw(out, anychar_p - a, "anychar_p - a");
         Draw(out, b - anychar_p, "b - anychar_p");
@@ -126,25 +152,37 @@ namespace
         DrawRuler(out, "Xor");
         Draw(out, a, "a");
         Draw(out, b, "b");
+        Draw(out, d, "d");
+        Draw(out, e, "e");
+        Draw(out, f, "f");
         Draw(out, a ^ b, "a ^ b");
         Draw(out, a ^ b_, "a ^ b_");
         Draw(out, b_ ^ a, "b_ ^ a");
+        Draw(out, a ^ d, "a ^ d");
+        Draw(out, a ^ d_, "a ^ d_");
+        Draw(out, d_ ^ a, "d_ ^ a");
+        Draw(out, a ^ e_, "a ^ e_");
+        Draw(out, e_ ^ b, "e_ ^ b");
+        Draw(out, a ^ f_, "a ^ f_");
+        Draw(out, f_ ^ b, "f_ ^ b");
         Draw(out, a ^ nothing_p, "a ^ nothing_p");
         Draw(out, a ^ anychar_p, "a ^ anychar_p");
         Draw(out, b ^ nothing_p, "b ^ nothing_p");
         Draw(out, b ^ anychar_p, "b ^ anychar_p");
     }
 
-    char const* test =
+    char const* expected_output =
         "\n\n"
         "\t_____________________________________________________________\n"
         "\tInitial\n"
         "\t!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]\n"
         "\t_____________________________________________________________\n"
         "\n"
-        "\t               **********       **************************   \ta \tchset<CharT>  a(\"0-9A-Z\");\n"
-        "\t                    **********************                   \tb_ \trange<CharT>  b_('5', 'J');\n"
-        "\t                    **********************                   \tb \tchset<CharT>  b(b_);\n"
+        "\t               **********       **************************   \ta\n"
+        "\t                    **********************                   \tb\n"
+        "\t********************                      *******************\td\n"
+        "\t                 *                                           \te\n"
+        "\t***************** *******************************************\tf\n"
         "\n"
         "\n"
         "\t_____________________________________________________________\n"
@@ -156,7 +194,6 @@ namespace
         "\t***************          *******                          ***\tchset<>(~a)\n"
         "\t               **********       **************************   \t~~a\n"
         "\t********************                      *******************\t~b\n"
-        "\t********************                      *******************\t~b_\n"
         "\n"
         "\n"
         "\t_____________________________________________________________\n"
@@ -166,11 +203,21 @@ namespace
         "\n"
         "\t               **********       **************************   \ta\n"
         "\t                    **********************                   \tb\n"
+        "\t********************                      *******************\td\n"
+        "\t                 *                                           \te\n"
+        "\t***************** *******************************************\tf\n"
         "\t               *******************************************   \ta | b\n"
         "\t               *******************************************   \ta | b_\n"
         "\t               *******************************************   \tb_ | a\n"
         "\t*************************************************************\ta | anychar_p\n"
         "\t*************************************************************\tb | anychar_p\n"
+        "\t*************************       *****************************\ta | d\n"
+        "\t*************************       *****************************\ta | d_\n"
+        "\t*************************       *****************************\td_ | a\n"
+        "\t               **********       **************************   \ta | e_\n"
+        "\t                 *  **********************                   \te_ | b\n"
+        "\t*************************************************************\ta | f_\n"
+        "\t***************** *******************************************\tf_ | b\n"
         "\n"
         "\n"
         "\t_____________________________________________________________\n"
@@ -180,9 +227,19 @@ namespace
         "\n"
         "\t               **********       **************************   \ta\n"
         "\t                    **********************                   \tb\n"
+        "\t********************                      *******************\td\n"
+        "\t                 *                                           \te\n"
+        "\t***************** *******************************************\tf\n"
         "\t                    *****       **********                   \ta & b\n"
         "\t                    *****       **********                   \ta & b_\n"
         "\t                    *****       **********                   \tb_ & a\n"
+        "\t               *****                      ****************   \ta & d\n"
+        "\t               *****                      ****************   \ta & d_\n"
+        "\t               *****                      ****************   \td_ & a\n"
+        "\t                 *                                           \ta & e_\n"
+        "\t                                                             \te_ & b\n"
+        "\t               ** *******       **************************   \ta & f_\n"
+        "\t                    **********************                   \tf_ & b\n"
         "\t               **********       **************************   \ta & anychar_p\n"
         "\t                    **********************                   \tb & anychar_p\n"
         "\n"
@@ -194,10 +251,21 @@ namespace
         "\n"
         "\t               **********       **************************   \ta\n"
         "\t                    **********************                   \tb\n"
+        "\t********************                      *******************\td\n"
+        "\t                 *                                           \te\n"
+        "\t***************** *******************************************\tf\n"
         "\t               *****                      ****************   \ta - b\n"
         "\t                         *******                             \tb - a\n"
         "\t               *****                      ****************   \ta - b_\n"
         "\t                         *******                             \tb_ - a\n"
+        "\t                    *****       **********                   \ta - d\n"
+        "\t***************                                           ***\td - a\n"
+        "\t                    *****       **********                   \ta - d_\n"
+        "\t***************                                           ***\td_ - a\n"
+        "\t               ** *******       **************************   \ta - e_\n"
+        "\t                 *                                           \te_ - b\n"
+        "\t                 *                                           \ta - f_\n"
+        "\t***************** **                      *******************\tf_ - b\n"
         "\t                                                             \ta - anychar_p\n"
         "\t***************          *******                          ***\tanychar_p - a\n"
         "\t                                                             \tb - anychar_p\n"
@@ -211,14 +279,50 @@ namespace
         "\n"
         "\t               **********       **************************   \ta\n"
         "\t                    **********************                   \tb\n"
+        "\t********************                      *******************\td\n"
+        "\t                 *                                           \te\n"
+        "\t***************** *******************************************\tf\n"
         "\t               *****     *******          ****************   \ta ^ b\n"
         "\t               *****     *******          ****************   \ta ^ b_\n"
         "\t               *****     *******          ****************   \tb_ ^ a\n"
+        "\t***************     *****       **********                ***\ta ^ d\n"
+        "\t***************     *****       **********                ***\ta ^ d_\n"
+        "\t***************     *****       **********                ***\td_ ^ a\n"
+        "\t               ** *******       **************************   \ta ^ e_\n"
+        "\t                 *  **********************                   \te_ ^ b\n"
+        "\t***************  *       *******                          ***\ta ^ f_\n"
+        "\t***************** **                      *******************\tf_ ^ b\n"
         "\t               **********       **************************   \ta ^ nothing_p\n"
         "\t***************          *******                          ***\ta ^ anychar_p\n"
         "\t                    **********************                   \tb ^ nothing_p\n"
         "\t********************                      *******************\tb ^ anychar_p\n"
     ;
+
+    void chset_tests()
+    {
+        sstream_t tout, aout, bout;
+
+        tout << expected_output;
+
+        chset_tests(aout, "0-9A-Z", '5', 'J', '2');
+        chset_tests(bout, L"0-9A-Z", L'5', L'J', L'2');
+
+#define narrow_chset_works (getstring(aout) == getstring(tout))
+#define wide_chset_works   (getstring(bout) == getstring(tout))
+
+        if (!narrow_chset_works || !wide_chset_works)
+        {
+            std::cout << "EXPECTED:\n" <<
+                getstring(tout);
+            std::cout << "GOT:\n" <<
+                getstring(aout);
+            std::cout << "AND:\n" <<
+                getstring(bout);
+        }
+
+        BOOST_CHECK(narrow_chset_works);
+        BOOST_CHECK(wide_chset_works);
+    }
 
 } // namespace
 
@@ -227,25 +331,20 @@ namespace
 //  Main
 //
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
+
+char const banner_name[]="Character set tests";
+char const suite_name[]="spirit::chset tests";
+
+ut::test_suite *
+init_unit_test_suite(int argc, char *argv[])
 {
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "\t\tCharacter sets test...\n\n";
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
+    test::init(argc, argv);
+    test::banner(banner_name);
 
-    SSTREAM tout, aout, bout;
+    ut::test_suite* suite = BOOST_TEST_SUITE(suite_name);
 
-    tout << test;
+    suite->add(BOOST_TEST_CASE(chset_tests));
 
-    chset_tests(aout, "0-9A-Z", '5', 'J');
-    chset_tests(bout, L"0-9A-Z", L'5', L'J');
-    assert(GETSTRING(aout) == GETSTRING(tout));
-    assert(GETSTRING(aout) == GETSTRING(bout));
-
-    cout << GETSTRING(tout);
-    std::cout << "\n\n/////////////////////////////////////////////////////////\n\n";
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return suite;
 }
 

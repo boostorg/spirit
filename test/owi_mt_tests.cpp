@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
 
@@ -11,10 +11,9 @@
 // vim:ts=4:sw=4:et
 
 #include <iostream>
-#if !defined(DONT_HAVE_BOOST)
-#include <boost/thread/thread.hpp>
-#endif
-#if !defined(BOOST_HAS_THREADS)
+#include <boost/config.hpp>
+
+#if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS)
 int
 main()
 {
@@ -33,6 +32,7 @@ main()
 #undef BOOST_SPIRIT_THREADSAFE
 #define BOOST_SPIRIT_THREADSAFE
 
+#include <boost/thread/thread.hpp>
 #include <boost/spirit/core/non_terminal/impl/object_with_id.ipp>
 #include <boost/ref.hpp>
 #include <vector>

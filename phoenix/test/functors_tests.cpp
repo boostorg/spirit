@@ -12,10 +12,10 @@
 #include <cassert>
 
 #define PHOENIX_LIMIT 15
-#include "boost/spirit/phoenix/primitives.hpp"
-#include "boost/spirit/phoenix/composite.hpp"
-#include "boost/spirit/phoenix/functions.hpp"
-#include "boost/spirit/phoenix/operators.hpp"
+#include <boost/spirit/phoenix/primitives.hpp>
+#include <boost/spirit/phoenix/composite.hpp>
+#include <boost/spirit/phoenix/functions.hpp>
+#include <boost/spirit/phoenix/operators.hpp>
 
 using namespace phoenix;
 using namespace std;
@@ -82,8 +82,8 @@ main()
     test()();
     assert(sqr(arg1)(i5) == (i5*i5));
     assert(fact(4)() == 24);
-    assert(fact(arg1)(i5) == 120);
-    assert(power(arg1, arg2)(d5, d3) == pow(d5, d3));
+    assert(fact(arg1)(i5) == 120);    
+    assert((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
     assert((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
 
 ///////////////////////////////////////////////////////////////////////////////

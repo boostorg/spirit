@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2003 Martin Wille
     http://spirit.sourceforge.net/
 
@@ -82,7 +82,7 @@ unsigned int iterations_performed;
 unsigned int iterations_desired;
 std::string  input_matched;
 
-static const unsigned int kError = 999;
+//static const unsigned int kError = 999;
 static const bool good = true;
 static const bool bad = false;
 

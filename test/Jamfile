@@ -1,6 +1,7 @@
 #==============================================================================
-#   Spirit v1.6.0
+#   Spirit v1.6.1
 #   Copyright (c) 2002 Joel de Guzman
+#   Copyright (c) 2003 Martin Wille
 #   http://spirit.sourceforge.net/
 #
 #   Permission to copy, use, modify, sell and distribute this software
@@ -15,177 +16,137 @@
 
 subproject libs/spirit/test ;
 
-# Spirit.Core.Kernel
-unit-test match_tests : match_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
+SEARCH on testing.jam = $(BOOST_BUILD_PATH) ;
+include testing.jam ;
 
-# Spirit.Core.Scanner
-unit-test scanner_tests : scanner_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
+spirit-header-include = ;
+if ($SPIRIT_HEADER_INCLUDE)
+{
+    spirit-header-include = <include>$(SPIRIT_HEADER_INCLUDE) ;
+}
 
-# Spirit.Core.Primitive
-unit-test primitives_tests : primitives_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
+spirit-src = ./ ;
+if $(SPIRIT_SRC_INCLUDE)
+{
+    spirit-src = $(SPIRIT_SRC_INCLUDE)/ ;
+}
 
-unit-test numerics_tests : numerics_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :   <vc7><*><optimization>speed
+
+{
+    template opt : : :
+        <vc7><*><optimization>speed
         <vc7><*><inlining>on
         <metrowerks><*><optimization>speed
-    :
-    ;
+        $(spirit-header-include)
+        ;
 
-# Spirit.Core.Meta
-unit-test fundamental_tests : fundamental_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test parser_traits_tests : parser_traits_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test traverse_tests : traverse_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-# Spirit.Core.Composite
-unit-test composite_tests : composite_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test epsilon_tests : epsilon_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test actions_tests : actions_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test operators_tests : operators_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test directives_tests : directives_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-# Spirit.Core.Non_Terminal
-unit-test rule_tests : rule_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test grammar_tests : grammar_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :   <metrowerks><*><optimization>speed
-    :
-    ;
-
-unit-test subrule_tests : subrule_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test owi_st_tests : owi_st_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test owi_mt_tests : owi_mt_tests.cpp
-      <dll>../../thread/build/boost_thread
-    : <sysinclude>$(BOOST_ROOT)
-    : <threading>multi
-	:
-    ;
-
-# Spirit.Attribute
-unit-test closure_tests : closure_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :   <metrowerks><*><optimization>speed
-    :
-    ;
-
-unit-test parametric_tests : parametric_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-# Spirit.Error_Handling
-unit-test exception_tests : exception_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-# Spirit.Dynamic
-unit-test if_tests : if_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-	:
-    ;
-
-unit-test for_tests : for_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test while_tests : while_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-# Spirit.Utility
-unit-test chset_tests : chset_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test loops_tests : loops_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test symbols_tests : symbols_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
-
-unit-test escape_char_parser_tests : escape_char_parser_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :   <vc7><*><optimization>speed
-        <vc7><*><inlining>on
+    template opt-metrowerks : : :
         <metrowerks><*><optimization>speed
-    :
+        $(spirit-header-include)
+        ;
+
+if ($(COMO_BASE) && $(UNIX))
+{   # no MT support available
+    template multi-threading : : :
+        $(spirit-header-include)
+    ;
+}
+else
+{
+    template multi-threading : <dll>../../thread/build/boost_thread : :
+        <threading>multi
+        $(spirit-header-include)
+    ;
+}
+
+    template normal : : :
+        $(spirit-header-include)
     ;
 
-unit-test scoped_lock_tests : scoped_lock_tests.cpp
-      <dll>../../thread/build/boost_thread
-    : <sysinclude>$(BOOST_ROOT)
-    : <threading>multi
-    ;
+    test-suite "spirit.core.kernel"
+        : [ run $(spirit-src)match_tests.cpp <template>normal ]
+          [ run $(spirit-src)bug_000002.cpp <template>normal ]
+        ;
 
-# Spirit.Iterator
-unit-test fixed_size_queue_tests : fixed_size_queue_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :
-    ;
+    test-suite "spirit.core.scanner"
+        : [ run $(spirit-src)scanner_tests.cpp <template>normal ]
+        ;
 
-unit-test multi_pass_tests : multi_pass_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
-    :   <metrowerks><*><optimization>speed
-    :
-    ;
+    test-suite "spirit.core.primitive"
+        : [ run $(spirit-src)primitives_tests.cpp <template>normal ]
+          [ run $(spirit-src)numerics_tests.cpp <template>opt ]
+        ;
 
+    test-suite "spirit.core.meta"
+        : [ run $(spirit-src)fundamental_tests.cpp <template>normal ]
+          [ run $(spirit-src)parser_traits_tests.cpp <template>normal ]
+          [ run $(spirit-src)traverse_tests.cpp <template>normal ]
+          [ run $(spirit-src)bug_000005.cpp <template>normal ]
+        ;
+
+    test-suite "spirit.core.composite"
+        : [ run $(spirit-src)composite_tests.cpp <template>opt ]
+          [ run $(spirit-src)epsilon_tests.cpp <template>normal ]
+          [ compile $(spirit-src)sf_bug_718903.cpp <template>normal ]
+          [ run $(spirit-src)actions_tests.cpp <template>normal ]
+          [ run $(spirit-src)operators_tests.cpp <template>normal ]
+          [ run $(spirit-src)directives_tests.cpp <template>normal ]
+        ;
+
+    test-suite "spirit.core.non_terminal"
+        : [ run $(spirit-src)rule_tests.cpp <template>normal ]
+          [ run $(spirit-src)owi_st_tests.cpp <template>normal ]
+          [ run $(spirit-src)grammar_tests.cpp <template>opt-metrowerks ]
+          [ run $(spirit-src)subrule_tests.cpp <template>normal ]
+          [ run $(spirit-src)owi_mt_tests.cpp <template>multi-threading ]
+          [ run $(spirit-src)grammar_mt_tests.cpp <template>multi-threading ]
+        ;
+
+    test-suite "spirit.attribute"
+        : [ run $(spirit-src)closure_tests.cpp <template>opt-metrowerks ]
+          [ run $(spirit-src)bug_000008.cpp <template>multi-threading ]
+          [ run $(spirit-src)parametric_tests.cpp <template>normal ]
+        ;
+
+    test-suite "spirit.error_handling"
+        : [ run $(spirit-src)exception_tests.cpp <template>normal ]
+        ;
+
+    test-suite "spirit.tree"
+        : [ run $(spirit-src)bug_000001.cpp <template>normal ]
+          [ run $(spirit-src)ast_calc_tests.cpp <template>normal ]
+        ;
+# temporarily removed from the test suite. tree_tests are not finished, yet.
+#         [ run $(spirit-src)tree_tests.cpp <template>normal ]
+
+    test-suite "spirit.dynamic"
+        : [ compile $(spirit-src)if_p_as_parser_tests.cpp <template>normal ]
+          [ compile $(spirit-src)while_p_as_parser_tests.cpp <template>normal ]
+          [ compile $(spirit-src)for_p_as_parser_tests.cpp <template>normal ]
+          [ run $(spirit-src)if_tests.cpp <template>normal ]
+          [ run $(spirit-src)for_tests.cpp <template>normal ]
+          [ run $(spirit-src)while_tests.cpp <template>normal ]
+        ;
+
+    test-suite "spirit.utility"
+        : [ run $(spirit-src)chset_tests.cpp <template>normal ]
+          [ run $(spirit-src)sf_bug_719322.cpp <template>normal ]
+          [ compile $(spirit-src)bug_000003.cpp <template>normal ]
+          [ run $(spirit-src)bug_000004.cpp <template>normal ]
+          [ run $(spirit-src)bug_000006.cpp <template>normal ]
+          [ run $(spirit-src)bug_000007.cpp <template>normal ]
+          [ run $(spirit-src)confix_tests.cpp <template>normal ]
+          [ run $(spirit-src)loops_tests.cpp <template>normal ]
+          [ run $(spirit-src)symbols_tests.cpp <template>normal ]
+          [ run $(spirit-src)escape_char_parser_tests.cpp <template>opt ]
+          [ run $(spirit-src)scoped_lock_tests.cpp <template>multi-threading ]
+        ;
+
+    test-suite "spirit.iterator"
+        : [ run $(spirit-src)fixed_size_queue_tests.cpp <template>normal ]
+          [ run $(spirit-src)file_iterator_tests.cpp <template>normal ]
+          [ run $(spirit-src)multi_pass_tests.cpp <template>opt-metrowerks ]
+          [ run $(spirit-src)sf_bug_720917.cpp <template>opt-metrowerks ]
+          [ run $(spirit-src)position_iterator_tests.cpp <template>opt-metrowerks ]
+        ;
+}
