@@ -19,7 +19,7 @@
 #define SPIRIT_HPP
 
 #define SPIRIT_VERSION 0x1502
-#define SPIRIT_PIZZA_VERSION HAWAIIAN_COMBO  // :-)
+#define SPIRIT_PIZZA_VERSION SPIRIT_PIZZA_EVERYTHING_EXCEPT_FISH  // :-)
 
 ///////////////////////////////////////////////////////////////////////////////
 //
