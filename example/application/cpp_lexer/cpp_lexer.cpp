@@ -321,8 +321,16 @@ namespace {
         return get_file_position_parser(filePos);
     }
 
+    enum { MaxTokenLookup = 2 };
+    struct TokenLookup {
+        Token token[MaxTokenLookup];
+        unsigned num;
+
+        TokenLookup(): num(MaxTokenLookup) {}
+    };
+
     struct token_lexer:
-        grammar<token_lexer, result_closure<Token>::context_t>
+        grammar<token_lexer, result_closure<TokenLookup>::context_t>
     {
         template < typename ScannerT >
         struct definition {
@@ -333,8 +341,9 @@ namespace {
                 return main;
             }
 
-            Token token;
+            TokenLookup lookup;
             file_position filePos;
+            file_position filePos2;
 
             definition(token_lexer const& self);
         };
@@ -353,22 +362,25 @@ namespace {
             submain =
                 *(blank_p | ('\\' >> eol_p))
              >> get_file_position_p(filePos)
+             >> epsilon_p
+                    [SetUnknownToken(lookup.token[1], filePos)]
+                    [var(lookup.num) = 1]
              >> (
-                    eol_p >> (
-                        // TODO: Don't ignore directives like this.
-                        directive         [SetEOLToken       (token, filePos)]
-                      | epsilon_p         [SetEOLToken       (token, filePos)]
-                    )
-                  | singleline_comment    [SetCommentToken   (token, filePos)]
-                  | multiline_comment     [SetCommentToken   (token, filePos)]
-                  | CHARACTER_LITERAL     [SetStringToken    (token, filePos)]
-                  | STRING_LITERAL        [SetStringToken    (token, filePos)]
-                  | FLOAT_CONSTANT        [SetFloatingToken  (token, filePos)]
-                  | INT_CONSTANT          [SetIntegerToken   (token, filePos)]
-                  | IDENTIFIER            [SetIdentifierToken(token, filePos)]
-                  | cpp_operator_p        [SetOperatorToken  (token, filePos)]
+                    eol_p                 [SetEOLToken       (lookup.token[0], filePos)]
+                    >> *blank_p
+                    >> get_file_position_p(filePos2)
+                    >> !directive         [SetDirectiveToken (lookup.token[1], filePos2)]
+                                          [var(lookup.num) = 2]
+                  | singleline_comment    [SetCommentToken   (lookup.token[0], filePos)]
+                  | multiline_comment     [SetCommentToken   (lookup.token[0], filePos)]
+                  | CHARACTER_LITERAL     [SetStringToken    (lookup.token[0], filePos)]
+                  | STRING_LITERAL        [SetStringToken    (lookup.token[0], filePos)]
+                  | FLOAT_CONSTANT        [SetFloatingToken  (lookup.token[0], filePos)]
+                  | INT_CONSTANT          [SetIntegerToken   (lookup.token[0], filePos)]
+                  | IDENTIFIER            [SetIdentifierToken(lookup.token[0], filePos)]
+                  | cpp_operator_p        [SetOperatorToken  (lookup.token[0], filePos)]
                 )
-             >> epsilon_p [self.result_ = var(token)],
+             >> epsilon_p [self.result_ = var(lookup)],
 
             skip_until_eol = *(('\\' >> eol_p) | (anychar_p - eol_p)),
 
@@ -376,7 +388,7 @@ namespace {
 
             multiline_comment = "/*" >> *(anychar_p - "*/") >> "*/",
 
-            directive = *blank_p >> '#' >> skip_until_eol
+            directive = '#' >> skip_until_eol
         );
     }
 
@@ -384,12 +396,15 @@ namespace {
     struct lex_input_interface_iterator: lex_input_interface {
     public:
         typedef Token result_type;
+        TokenLookup lookup;
+        unsigned lookupPos;
         unsigned refCount;
         IteratorT first;
         scanner<IteratorT> scan;
 
         lex_input_interface_iterator(IteratorT const& first_,
                                      IteratorT const& last_):
+            lookupPos(MaxTokenLookup),
             refCount(1),
             first(first_),
             scan (first, last_)
@@ -406,9 +421,12 @@ namespace {
         }
 
         virtual Token get() {
-            Token result;
-            if (token_lexer[assign(result)].parse(scan)) {
-                return result;
+            if (lookupPos < lookup.num) {
+                return lookup.token[lookupPos++];
+            }
+            if (token_lexer[assign(lookup)].parse(scan)) {
+                lookupPos = 1;
+                return lookup.token[0];
             } else {
                 return eof();
             }

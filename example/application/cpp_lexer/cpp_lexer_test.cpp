@@ -1,16 +1,23 @@
 //
 // C++ Lexer implemented with Spirit (http://spirit.sourceforge.net/)
 //
+// Example test. Shows how to use a lexer to feed a simple Spirit
+// grammar that works on lexer tokens and uses Phoenix.
+//
 // Copyright© 2002 Juan Carlos Arevalo-Baeza, All rights reserved
 // email: jcab@JCABs-Rumblings.com
 // Created: 8-Nov-2002
 //
 
-#include "cpp_lexer.hpp"
+#include "cpp_lexer.hpp"    // The main lexer API include.
 
+// Some necessary Spirit includes.
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/functor_parser.hpp>
 
+// Some necessary Phoenix includes.
+// Actually, some of those have to be not necessary.
+// TODO: Weed them out.
 #include <boost/spirit/phoenix/primitives.hpp>
 #include <boost/spirit/phoenix/composite.hpp>
 #include <boost/spirit/phoenix/functions.hpp>
@@ -20,13 +27,27 @@
 #include <boost/spirit/phoenix/statements.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// used namespaces
+// used namespaces and identifiers.
 using namespace boost::spirit;
 
 using phoenix::var;
 
 ///////////////////////////////////////////////////////////////////////////////
-
+// This is a custom parser that extracts the current file position into a
+// variable. Typically, this variable will be just a temporary value to be
+// used later on within the parser
+//
+// To use, for instance:
+//
+//    boost::spirit::file_position tempFilePos;
+//    ...
+//    rule myrule = get_file_position_p(tempFilePos) >>
+//        (parseSomething | error_p(tempFilePos, "parseSomething failed");
+//
+// Presumably (if error_p is implemented accordingly), this can result in the
+// error message "parseSomething failed", prefixed with the file, line AND
+// column where the parsing failed.
+//
 struct get_file_position_parser {
     boost::spirit::file_position& filePos;
     get_file_position_parser(boost::spirit::file_position& filePos_):
@@ -50,7 +71,17 @@ get_file_position_p(boost::spirit::file_position& filePos)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-
+// Simple test grammar.
+//
+// This just outputs the input tokens just as they are found, prefixing each
+// line with the file, line and column where they start.
+//
+// It also shows recognition of individual tokens by recognizing the "using"
+// C++ keyword and outputing it surrounded by extra spaces.
+//
+// If the line prefixes are removed, the resulting output should be
+// compilable, just like the input.
+//
 struct test_grammar: grammar<test_grammar> {
     template < typename ScannerT >
     struct definition {
@@ -75,22 +106,23 @@ struct test_grammar: grammar<test_grammar> {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-// main entrypoint
+// Main entrypoint.
+//
+// Usage is:
+//    cpp_lexer_test [<input filename>]
+//
+// If not given, the input filename will be cpp_lexer.cpp.
+//
 int
 main(int argc, char* argv[])
 {
-    // Start grammar definition
-    std::cerr << "C++ Lexer implemented with Spirit ..." << std::endl;
+    // Welcome message.
+    std::cerr << "Parsaing test for the C++ Lexer implemented with Spirit ..." << std::endl;
 
-    char const* rule = "";
-    char const* fname = "";
+    char const* fname = ""; // The input filename.
 
-    // main driver code
-    if (3 == argc) {
-        std::cerr << "Using rule " << argv[2] << std::endl;
-        fname = argv[1];
-        rule = argv[2];
-    } else if (2 == argc) {
+    // Parse command line arguments.
+    if (2 == argc) {
         fname = argv[1];
     } else {
         std::cerr << "No filename given" << std::endl;
@@ -98,9 +130,11 @@ main(int argc, char* argv[])
         std::cerr << "Parsing " << fname << std::endl;
     }
 
+    // Read the input file into a buffer.
     FILE* f = fopen(fname, "rb");
     if (!f) {
         std::cerr << "Cannot open input file: " << fname << std::endl;
+        exit(1);
     }
     fseek(f, 0, SEEK_END);
     int const size = ftell(f);
@@ -111,21 +145,24 @@ main(int argc, char* argv[])
 
     std::cout << "File size: " << size << " bytes\n";
 
-    Token token;
-
-    test_grammar grammar;
-
+    // Initialize the lexer iterators.
     lex_iterator first(buf, buf+size, fname);
     lex_iterator last;
 
+    test_grammar grammar;   // The grammar object.
+
+    // And do the parsing.
+    // Note that comment tokens are skipped here.
     parse_info<lex_iterator> result =
         parse(
             first, last,
             grammar,
             ch_p(Comment_token)
         )
-    ;
+        ;
 
+    // Check the result of parsing. If an error is found, then print the
+    // tokens following the error.
     if (result.full) {
         std::cerr << "\n" << fname << " Parses OK" << std::endl;
     } else {
@@ -133,11 +170,7 @@ main(int argc, char* argv[])
 
         std::cerr << "These tokens follow:\n";
 
-        for (int i = 0; i < 10; i++)
-        {
-            if (result.stop == last) {
-                break;
-            }
+        for (int i = 0; i < 10 && result.stop == last; ++i) {
             PrintToken(*result.stop++);
         }
     }

@@ -49,7 +49,8 @@ enum TokenType {
     FloatingTokenType   = 0x30000000,
     StringTokenType     = 0x40000000,
 
-    UnknownTokenType    = 0xC0000000,
+    UnknownTokenType    = 0x80000000,
+    DirectiveTokenType  = 0xC0000000,
     EOLTokenType        = 0xD0000000,
     EOFTokenType        = 0xE0000000,
     CommentTokenType    = 0xF0000000,
@@ -198,6 +199,8 @@ enum TokenID {
 
     Op_At           ,                    // @
     Op_Dollar       ,                    // $
+    Op_DoblePound   ,                    // ##
+    Op_Pound        ,                    // #
 
     Op_next         ,
 
@@ -215,10 +218,14 @@ enum TokenID {
     String_next      = String_first,
 
     Unknown_token    = UnknownTokenType,
+    Directive_token  = DirectiveTokenType,
     EOL_token        = EOLTokenType,
     EOF_token        = EOFTokenType,
     Comment_token    = CommentTokenType,
 };
+
+std::string GetIdentifierName(TokenID id);
+std::string GetOperatorName  (TokenID id);
 
 // Identifier construction function.
 // TODO: Add others (integer, float...).
@@ -296,9 +303,7 @@ struct SetIdentifierToken {
         dest   (dest_),
         filePos(filePos_)
     {}
-    void operator()(std::string const& text) const {
-        dest = Token(filePos, text, MakeIdentifierTokenID(text));
-    }
+    void operator()(std::string const& text) const;
 };
 
 // Create an operator (symbol) token.
@@ -360,6 +365,22 @@ struct SetSpecialToken {
         dest = Token(filePos, std::string(first, last), id);
     }
 };
+
+// Create a special unknown token.
+inline
+SetSpecialToken
+SetUnknownToken(Token& dest, boost::spirit::file_position const& filePos)
+{
+    return SetSpecialToken(dest, filePos, Unknown_token);
+}
+
+// Create a special directive token.
+inline
+SetSpecialToken
+SetDirectiveToken(Token& dest, boost::spirit::file_position const& filePos)
+{
+    return SetSpecialToken(dest, filePos, Directive_token);
+}
 
 // Create a special newline token.
 inline

@@ -178,6 +178,7 @@ namespace {
     struct c_operators_db: TokenDB {
         c_operators_db(): TokenDB(Op_next) {
             add("...", Op_Ellipsis      );
+            add("...", Op_Ellipsis      );
             add(">>=", Op_Right_Assign  );
             add("<<=", Op_Left_Assign   );
             add("+=" , Op_Add_Assign    );
@@ -228,6 +229,18 @@ namespace {
             add("|"  , Op_BitOr         );
             add("?"  , Op_Question      );
 
+            add("##" , Op_DoblePound    );
+            add("#"  , Op_Pound         );
+
+            add("??="  , Op_Pound         );
+            add("??’"  , Op_BitXor        );
+            add("??("  , Op_Left_Bracket  );
+            add("??)"  , Op_Right_Bracket );
+            add("??!"  , Op_BitOr         );
+            add("??<"  , Op_Left_Brace    );
+            add("??>"  , Op_Right_Brace   );
+            add("??-"  , Op_Tilde         );
+
             add("@"  , Op_At            );
             add("$"  , Op_Dollar        );
         }
@@ -260,6 +273,16 @@ extern
 boost::spirit::parser<boost::spirit::symbols<TokenID> > const&
 cpp_operator_p = operatorDB;
 
+std::string GetIdentifierName(TokenID id)
+{
+    return identifierDB.find(id);
+}
+
+std::string GetOperatorName(TokenID id)
+{
+    return operatorDB.find(id);
+}
+
 TokenID MakeIdentifierTokenID(std::string const& text)
 {
     TokenID const* kwdID;
@@ -275,6 +298,9 @@ void PrintToken_class::operator()(Token const& token) const {
         void operator()(char const* str, Token const& token) {
             std::cout << str << "'" << token.text << "'\n";
         }
+        void operator()(char const* str, std::string const& text) {
+            std::cout << str << "'" << text << "'\n";
+        }
     } OutText;
 
     std::cout << token.filePos;
@@ -289,6 +315,7 @@ void PrintToken_class::operator()(Token const& token) const {
         case IntegerTokenType   : OutText("Integer:    ", token); break;
         case FloatingTokenType  : OutText("Floating:   ", token); break;
         case StringTokenType    : OutText("String:     ", token); break;
+        case DirectiveTokenType : OutText("Directive:  ", token); break;
         case EOLTokenType       : std::cout << "EOL\n"    ; break;
         case CommentTokenType   : std::cout << "Comment\n"; break;
     }
@@ -312,8 +339,19 @@ void OutToken_class::operator()(Token const& token) const {
                     }
             }
             break;
+        case DirectiveTokenType : std::cout << token.text; break;
         case EOLTokenType       : std::cout << "\n"    ; break;
 //        case CommentTokenType   : std::cout << "Comment\n"; break;
+    }
+}
+
+void SetIdentifierToken::operator()(std::string const& text) const
+{
+    TokenID const id = MakeIdentifierTokenID(text);
+    if ((id & TokenTypeMask) == OperatorTokenType) {
+        dest = Token(filePos, GetOperatorName(id), id);
+    } else {
+        dest = Token(filePos, text, id);
     }
 }
 
@@ -321,7 +359,7 @@ void SetOperatorToken::operator()(std::string const& text) const
 {
     TokenID const* kwdID;
     if (kwdID = operatorDB.find(text)) {
-        dest = Token(filePos, text, *kwdID);
+        operator()(*kwdID);
     } else {
         dest = Token(filePos, text, Op_unknown);
     }
@@ -329,7 +367,7 @@ void SetOperatorToken::operator()(std::string const& text) const
 
 void SetOperatorToken::operator()(TokenID id) const
 {
-    std::string const& text = operatorDB.find(id);
+    std::string const& text = GetOperatorName(id);
     if (!text.empty()) {
         dest = Token(filePos, text, id);
     } else {
