@@ -20,10 +20,8 @@ using namespace std;
 using namespace boost::spirit;
 using namespace phoenix;
 
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/util.ipp"
-
-namespace ut = boost::unit_test_framework;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -61,13 +59,13 @@ narrow_f_ch_p()
     parse_info<char const*> pi;
 
     pi = parse("aaaaaaaaa", r);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("aaaaabaaa", r);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(!pi.full);
-    BOOST_CHECK(is_equal(pi.stop, "baaa"));
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(is_equal(pi.stop, "baaa"));
 }
 
 void
@@ -78,13 +76,13 @@ wide_f_ch_p()
     parse_info<wchar_t const*> pi;
 
     pi = parse(L"aaaaaaaaa", r);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse(L"aaaaabaaa", r);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(!pi.full);
-    BOOST_CHECK(is_equal(pi.stop, L"baaa"));
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(is_equal(pi.stop, L"baaa"));
 }
 
 void
@@ -97,13 +95,13 @@ narrow_f_range_p()
 
     rule<> r2 = *f_range_p(const_(from), const_(to));
     pi = parse("abcdefghijklmnopqrstuvwxyz", r2);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("abcdefghijklmnopqrstuvwxyz123", r2);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(!pi.full);
-    BOOST_CHECK(is_equal(pi.stop, "123"));
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(is_equal(pi.stop, "123"));
 }
 
 void
@@ -116,13 +114,13 @@ wide_f_range_p()
 
     wrule_t r2 = *f_range_p(const_(from), const_(to));
     pi = parse(L"abcdefghijklmnopqrstuvwxyz", r2);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse(L"abcdefghijklmnopqrstuvwxyz123", r2);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(!pi.full);
-    BOOST_CHECK(is_equal(pi.stop, L"123"));
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(is_equal(pi.stop, L"123"));
 }
 
 void
@@ -135,16 +133,16 @@ narrow_f_str_p()
     rule<> r3 = +f_str_p(const_(start), const_(end));
 
     pi = parse("kimkimkimkimkimkimkimkimkim", r3);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("kimkimkimkimkimkimkimkimkimmama", r3);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(!pi.full);
-    BOOST_CHECK(is_equal(pi.stop, "mama"));
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(is_equal(pi.stop, "mama"));
 
     pi = parse("joel", r3);
-    BOOST_CHECK(!pi.hit);
+    BOOST_TEST(!pi.hit);
 }
 
 void
@@ -157,16 +155,16 @@ wide_f_str_p()
     wrule_t r3 = +f_str_p(const_(start), const_(end));
 
     pi = parse(L"kimkimkimkimkimkimkimkimkim", r3);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse(L"kimkimkimkimkimkimkimkimkimmama", r3);
-    BOOST_CHECK(pi.hit);
-    BOOST_CHECK(!pi.full);
-    BOOST_CHECK(is_equal(pi.stop, L"mama"));
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(is_equal(pi.stop, L"mama"));
 
     pi = parse(L"joel", r3);
-    BOOST_CHECK(!pi.hit);
+    BOOST_TEST(!pi.hit);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -174,20 +172,16 @@ wide_f_str_p()
 //  test suite
 //
 ///////////////////////////////////////////////////////////////////////////////
-ut::test_suite *
-init_unit_test_suite(int argc, char *argv[])
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner("parametric tests");
-    ut::test_suite *suite = BOOST_TEST_SUITE("spirit::parametric_tests");
+    narrow_f_ch_p();
+    wide_f_ch_p();
+    narrow_f_range_p();
+    wide_f_range_p();
+    narrow_f_str_p();
+    wide_f_str_p();
 
-    suite->add(BOOST_TEST_CASE(narrow_f_ch_p));
-    suite->add(BOOST_TEST_CASE(wide_f_ch_p));
-    suite->add(BOOST_TEST_CASE(narrow_f_range_p));
-    suite->add(BOOST_TEST_CASE(wide_f_range_p));
-    suite->add(BOOST_TEST_CASE(narrow_f_str_p));
-    suite->add(BOOST_TEST_CASE(wide_f_str_p));
-
-    return suite;
+    return boost::report_errors();
 }
 

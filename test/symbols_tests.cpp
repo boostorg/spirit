@@ -12,10 +12,8 @@
 #include <cassert>
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/symbols/symbols.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/util.ipp"
-
-namespace ut = boost::unit_test_framework;
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
@@ -52,16 +50,16 @@ check
 #define correct_match_length unsigned(length) == info.length
 #define correct_tail equal(candidate + (hit?1:0)*length, result)
 
-    BOOST_CHECK(correctly_matched);
+    BOOST_TEST(correctly_matched);
 
     if (hit)
     {
-        BOOST_CHECK(correct_match_length);
-        BOOST_CHECK(correct_tail);
+        BOOST_TEST(correct_match_length);
+        BOOST_TEST(correct_tail);
     }
     else
     {
-        BOOST_CHECK(correct_tail);
+        BOOST_TEST(correct_tail);
     }
 }
 
@@ -87,7 +85,7 @@ struct check_action
     check_action(T const &v) : value(v) {}
 
 #define correct_value_stored (v==value)
-    void operator()(T const &v) const { BOOST_CHECK(correct_value_stored); }
+    void operator()(T const &v) const { BOOST_TEST(correct_value_stored); }
 private:
     T const value;
 };
@@ -194,15 +192,15 @@ narrow_free_functions_tests()
 #define find_returned_null (res==0)
 
     int *res = add(sym,"pineapple");
-    BOOST_CHECK(add_returned_non_null_value);
+    BOOST_TEST(add_returned_non_null_value);
     res = add(sym,"pineapple");
-    BOOST_CHECK(add_returned_null);
+    BOOST_TEST(add_returned_null);
 
     res = find(sym, "pineapple");
-    BOOST_CHECK(find_returned_non_null_value);
+    BOOST_TEST(find_returned_non_null_value);
     res = find(sym, "banana");
-    BOOST_CHECK(find_returned_null);
-};
+    BOOST_TEST(find_returned_null);
+}
 
 static void
 wide_match_tests()
@@ -282,34 +280,29 @@ wide_free_functions_tests()
     symbols<int, wchar_t>   sym;
 
     int *res = add(sym,L"pineapple");
-    BOOST_CHECK(add_returned_non_null_value);
+    BOOST_TEST(add_returned_non_null_value);
     res = add(sym,L"pineapple");
-    BOOST_CHECK(add_returned_null);
+    BOOST_TEST(add_returned_null);
 
     res = find(sym, L"pineapple");
-    BOOST_CHECK(find_returned_non_null_value);
+    BOOST_TEST(find_returned_non_null_value);
     res = find(sym, L"banana");
-    BOOST_CHECK(find_returned_null);
-};
+    BOOST_TEST(find_returned_null);
+}
 
-///////////////////////////////////////
-ut::test_suite *
-init_unit_test_suite(int argc, char *argv[])
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner("symbols_tests");
-
-    ut::test_suite *suite = BOOST_TEST_SUITE("spirit::symbols tests");
-    suite->add(BOOST_TEST_CASE(default_constructible));
-    suite->add(BOOST_TEST_CASE(narrow_match_tests));
-    suite->add(BOOST_TEST_CASE(narrow_copy_ctor_tests));
-    suite->add(BOOST_TEST_CASE(narrow_assigment_operator_tests));
-    suite->add(BOOST_TEST_CASE(narrow_value_tests));
-    suite->add(BOOST_TEST_CASE(narrow_free_functions_tests));
-    suite->add(BOOST_TEST_CASE(wide_match_tests));
-    suite->add(BOOST_TEST_CASE(wide_copy_ctor_tests));
-    suite->add(BOOST_TEST_CASE(wide_assigment_operator_tests));
-    suite->add(BOOST_TEST_CASE(wide_value_tests));
-    suite->add(BOOST_TEST_CASE(wide_free_functions_tests));
-    return suite;
+    default_constructible();
+    narrow_match_tests();
+    narrow_copy_ctor_tests();
+    narrow_assigment_operator_tests();
+    narrow_value_tests();
+    narrow_free_functions_tests();
+    wide_match_tests();
+    wide_copy_ctor_tests();
+    wide_assigment_operator_tests();
+    wide_value_tests();
+    wide_free_functions_tests();
+    return boost::report_errors();
 }

@@ -11,22 +11,21 @@
 // Test suite for push_back_actor
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "action_tests.hpp"
 #include <string>
 #include <vector>
 #include <deque>
 #include <cstring>
 #include <iostream>
-#include <boost/spirit.hpp>
+#include <boost/spirit/core.hpp>
 #include <algorithm>
 #include <boost/bind.hpp>
-#include <boost/test/unit_test.hpp>
-
 #include <boost/spirit/actor/push_back_actor.hpp>
+#include <boost/spirit/utility/lists.hpp>
 
 template<typename ContainerT>
 void push_back_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "one,two,three";
@@ -49,9 +48,9 @@ void push_back_test()
     scan.first = cp;
 }
 
-void push_back_action_test(boost::unit_test_framework::test_suite* test)
+void push_back_action_test()
 {
-    test->add( BOOST_TEST_CASE(push_back_test< std::deque<std::string> > ) );
-    test->add( BOOST_TEST_CASE(push_back_test< std::vector<std::string> > ) );
+    push_back_test< std::deque<std::string> >();
+    push_back_test< std::vector<std::string> >();
 }
 

@@ -29,9 +29,7 @@ void banner(char const *text)
     if (!verbose_runtests)
         return;
 
-    using namespace std;
-
-    int len = strlen(text);
+    int len = std::strlen(text);
     std::cout << "/////////////////////////////////////////////////////////\n";
     len = (57-len)/2;
     while(len-->0) std::cout << ' ';

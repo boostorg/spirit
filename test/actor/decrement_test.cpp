@@ -11,14 +11,12 @@
 // Test suite for increment_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/spirit.hpp>
-#include <boost/test/unit_test.hpp>
-
+#include "action_tests.hpp"
+#include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/decrement_actor.hpp>
 
-void decrement_test()
+void decrement_action_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     BOOST_MESSAGE("decrement_test");
@@ -38,10 +36,5 @@ void decrement_test()
 
     --h;
     BOOST_CHECK_EQUAL( hm,h);
-}
-
-void decrement_action_test(boost::unit_test_framework::test_suite* test)
-{
-    test->add( BOOST_TEST_CASE(&decrement_test) );
 }
 

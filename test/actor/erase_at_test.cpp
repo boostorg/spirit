@@ -11,15 +11,13 @@
 // Test suite for push_front_actor, pop_front_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/spirit.hpp>
-#include <boost/test/unit_test.hpp>
-
+#include "action_tests.hpp"
+#include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/erase_actor.hpp>
 #include <map>
 
-void erase_test()
+void erase_action_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "one,two,three";
@@ -53,9 +51,5 @@ void erase_test()
 
 }
 
-void erase_action_test(boost::unit_test_framework::test_suite* test)
-{
-    test->add( BOOST_TEST_CASE(&erase_test));
-}
 
 

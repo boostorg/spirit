@@ -93,6 +93,7 @@ test_for
 )
 {
     using namespace std;
+    using std::strlen;
     ++test_count;
 
     iterations_performed = 0;

@@ -62,7 +62,7 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
         $(spirit-header-include)
         ;
 
-if ($(COMO_BASE) && $(UNIX))
+if ($(COMO_BASE)) # MT is not available on both Unix and Windows on Comeau
 {   # no MT support available
     template multi-threading : : :
         $(spirit-header-include)
@@ -194,7 +194,6 @@ else
         push_back_test
         push_front_test
         swap_test
-        unit_test
         ;
 
     test-suite "spirit.utility.actors"

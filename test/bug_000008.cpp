@@ -22,14 +22,10 @@
 
 #include <iostream>
 #include <boost/config.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/util.ipp"
 
-namespace ut = boost::unit_test_framework;
 using namespace test;
-
-static char const test_banner_name[]="bug_000008 (closure MT) test";
-static char const test_suite_name[]="spirit::bug_000008";
 
 #if defined(DONT_HAVE_BOOST) || !defined(BOOST_HAS_THREADS)
 // we end here if we can't do multithreading
@@ -39,14 +35,11 @@ static void skipped()
         std::cout << "skipped\n";
 }
 
-ut::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner(test_banner_name);
-    ut::test_suite* test= BOOST_TEST_SUITE(test_suite_name);
-    test->add(BOOST_TEST_CASE(skipped));
-    return test;
+    skipped();
+    return boost::report_errors();
 }
 
 #else
@@ -115,16 +108,12 @@ bug_000008()
     t4.join();
 }
 
-ut::test_suite *
-init_unit_test_suite( int argc, char *argv[] )
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner(test_banner_name);
-
-    ut::test_suite *suite = BOOST_TEST_SUITE(test_suite_name);
-
-    suite->add(BOOST_TEST_CASE(bug_000008));
-    return suite;
+    bug_000008();
+    return boost::report_errors();
 }
 
 #endif
+

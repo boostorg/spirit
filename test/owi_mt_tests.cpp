@@ -12,10 +12,8 @@
 
 #include <iostream>
 #include <boost/config.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/util.ipp"
-
-namespace ut = boost::unit_test_framework;
 
 #if !defined(BOOST_HAS_THREADS) || defined(DONT_HAVE_BOOST)
 static void skipped()
@@ -24,14 +22,11 @@ static void skipped()
         std::cout << "skipped\n";
 }
 
-ut::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner("object_with_id tests (MT)");
-    ut::test_suite* test= BOOST_TEST_SUITE( "spirit::object_with_id tests" );
-    test->add(BOOST_TEST_CASE(skipped));
-    return test;
+    skipped();
+    return 0;
 }
 #else
 
@@ -222,19 +217,13 @@ void global_uniqueness()
     check_not_contained_in(test3,test1);
 }
 
-ut::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner("object_with_id tests (MT)");
-
-    ut::test_suite* test= BOOST_TEST_SUITE( "spirit::object_with_id tests" );
-
-    test->add(BOOST_TEST_CASE(concurrent_creation_of_objects));
-    test->add(BOOST_TEST_CASE(local_ordering_and_uniqueness));
-    test->add(BOOST_TEST_CASE(global_uniqueness));
-
-    return test;
+    concurrent_creation_of_objects();
+    local_ordering_and_uniqueness();
+    global_uniqueness();
+    return boost::report_errors();
 }
 
 #endif // BOOST_HAS_THREADS

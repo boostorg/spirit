@@ -10,16 +10,14 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/dynamic.hpp>
 #include <boost/spirit/phoenix.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
-
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <string>
 
 using namespace boost::spirit;
-using namespace boost::unit_test_framework;
 using namespace phoenix;
 
-void negated_eps_test()
+int main()
 {
     using std::cout;
     using std::endl;
@@ -34,13 +32,8 @@ void negated_eps_test()
     ];
 
     parse("This goes to prove my point.", start);
-    BOOST_CHECK(f == false);
+    BOOST_TEST(f == false);
+    return boost::report_errors();
 }
 
-test_suite*
-init_unit_test_suite(int /*argc*/, char* /*argv*/[])
-{
-    test_suite* test = BOOST_TEST_SUITE("negated eps test");
-    test->add(BOOST_TEST_CASE(&negated_eps_test));
-    return test;
-}
+

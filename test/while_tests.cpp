@@ -88,6 +88,7 @@ test_while(
     unsigned int iterations_wanted)
 {
     using namespace std;
+    using std::strlen;
     ++test_count;
 
     number_result = 0;

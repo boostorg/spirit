@@ -11,7 +11,7 @@
 #include <iterator>
 #include "impl/util.ipp"
 #include "impl/sstream.hpp"
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
 using namespace boost::spirit;
@@ -105,19 +105,12 @@ void construct_string_from<functor_multi_pass_t>(void)
 
 ////////////////////////////////////////////////
 // Definition of the test suite
-boost::unit_test_framework::test_suite*
-init_unit_test_suite( int argc, char* argv[] )
+int
+main()
 {
-    test::init(argc, argv);
-    test::banner("sf_bug_720917");
-
-    boost::unit_test_framework::test_suite* s =
-        BOOST_TEST_SUITE("spirit::sf_bug_720917");
-
-    s->add(BOOST_TEST_CASE(construct_string_from<default_multi_pass_t>));
-    s->add(BOOST_TEST_CASE(construct_string_from<fixed_multi_pass_t>));
-    s->add(BOOST_TEST_CASE(construct_string_from<first_owner_multi_pass_t>));
-    s->add(BOOST_TEST_CASE(construct_string_from<functor_multi_pass_t>));
-
-    return s;
+    construct_string_from<default_multi_pass_t>();
+    construct_string_from<fixed_multi_pass_t>();
+    construct_string_from<first_owner_multi_pass_t>();
+    construct_string_from<functor_multi_pass_t>();
+    return boost::report_errors();
 }

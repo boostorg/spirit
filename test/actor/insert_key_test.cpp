@@ -11,19 +11,18 @@
 // Test suite for insert_key_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/spirit.hpp>
+#include "action_tests.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/utility/confix.hpp>
+#include <boost/spirit/utility/lists.hpp>
 #include <map>
 #include <cstring>
 #include <iostream>
 #include <boost/spirit/actor/insert_key_actor.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
 
-#include <boost/test/unit_test.hpp>
-
-
 void insert_key_single_argument_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "(one,0),(two,1),(three,2)";
@@ -66,7 +65,6 @@ void insert_key_single_argument_test()
 
 void insert_key_two_arguments_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "(0,one),(1,two),(2,three)";
@@ -110,9 +108,9 @@ void insert_key_two_arguments_test()
 
 }
 
-void insert_key_action_test(boost::unit_test_framework::test_suite* test)
+void insert_key_action_test()
 {
-    test->add( BOOST_TEST_CASE(&insert_key_single_argument_test ) );
-    test->add( BOOST_TEST_CASE(&insert_key_two_arguments_test ) );
+    insert_key_single_argument_test();
+    insert_key_two_arguments_test();
 }
 

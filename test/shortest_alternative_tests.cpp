@@ -7,9 +7,8 @@
 //
 
 #include <boost/spirit/core.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 
-using namespace boost::unit_test_framework;
 using namespace boost::spirit;
 
 void shortest_alternative_parser_test()
@@ -32,10 +31,10 @@ void shortest_alternative_parser_test()
             | str_p("aaaa")
         ];
 
-    BOOST_CHECK(parse("a", short_rule).full);
-    BOOST_CHECK(parse("aa", short_rule).length == 1);
-    BOOST_CHECK(parse("aaa", short_rule).length == 1);
-    BOOST_CHECK(parse("aaaa", short_rule).length == 1);
+    BOOST_TEST(parse("a", short_rule).full);
+    BOOST_TEST(parse("aa", short_rule).length == 1);
+    BOOST_TEST(parse("aaa", short_rule).length == 1);
+    BOOST_TEST(parse("aaaa", short_rule).length == 1);
 
     short_rule =
         shortest_d[
@@ -45,18 +44,15 @@ void shortest_alternative_parser_test()
             | str_p("abcd")
         ];
 
-    BOOST_CHECK(parse("d", short_rule).full);
-    BOOST_CHECK(parse("cd", short_rule).full);
-    BOOST_CHECK(parse("bcd", short_rule).full);
-    BOOST_CHECK(parse("abcd", short_rule).full);
-
+    BOOST_TEST(parse("d", short_rule).full);
+    BOOST_TEST(parse("cd", short_rule).full);
+    BOOST_TEST(parse("bcd", short_rule).full);
+    BOOST_TEST(parse("abcd", short_rule).full);
 }
 
-test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
+int 
+main()
 {
-    test_suite* test = BOOST_TEST_SUITE("shortest_alternative parser test");
-
-    test->add(BOOST_TEST_CASE(&shortest_alternative_parser_test));
-
-    return test;
+    shortest_alternative_parser_test();
+    return boost::report_errors();
 }

@@ -11,20 +11,19 @@
 // Test suite for push_front_actor
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "action_tests.hpp"
 #include <string>
 #include <vector>
 #include <deque>
 #include <cstring>
 #include <iostream>
-#include <boost/spirit.hpp>
-#include <boost/test/unit_test.hpp>
-
+#include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/push_front_actor.hpp>
+#include <boost/spirit/utility/lists.hpp>
 
 template<typename ContainerT>
 void push_front_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "one,two,three";
@@ -47,8 +46,8 @@ void push_front_test()
     scan.first = cp;
 }
 
-void push_front_action_test(boost::unit_test_framework::test_suite* test)
+void push_front_action_test()
 {
-    test->add( BOOST_TEST_CASE(push_front_test< std::deque<std::string> > ) );
+    push_front_test< std::deque<std::string> >();
 }
 

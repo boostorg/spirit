@@ -8,10 +8,9 @@
 =============================================================================*/
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/confix.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace boost;
-using namespace unit_test_framework;
 using namespace spirit;
 
 typedef
@@ -28,36 +27,34 @@ void comment_nest_p_test()
 
     {
         parse_info<> info = parse("{a{b}c{d}e}", r, space_p);
-        BOOST_CHECK(info.full);
+        BOOST_TEST(info.full);
     }
 
     {
         parse_info<> info = parse("{a{b}c{d}e}x", r, space_p);
-        BOOST_CHECK(info.hit);
-        BOOST_CHECK(info.length == 11);
+        BOOST_TEST(info.hit);
+        BOOST_TEST(info.length == 11);
     }
 
     {
         char const* str = "x{a{b}c{d}e}";
         parse_info<> info = parse(str, r, space_p);
-        BOOST_CHECK(!info.hit);
-        BOOST_CHECK(info.stop == str);
+        BOOST_TEST(!info.hit);
+        BOOST_TEST(info.stop == str);
     }
 
     {
         char const* str = "{a{b}c{d}e";
         parse_info<> info = parse(str, r, space_p);
-        BOOST_CHECK(!info.hit);
-        BOOST_CHECK(info.stop == (str + 10));
+        BOOST_TEST(!info.hit);
+        BOOST_TEST(info.stop == (str + 10));
     }
 }
 
-test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
+int 
+main()
 {
-    test_suite* test = BOOST_TEST_SUITE("confix tests");
-
-    test->add(BOOST_TEST_CASE(&comment_nest_p_test));
-
-    return test;
+    comment_nest_p_test();
+    return boost::report_errors();
 }
 

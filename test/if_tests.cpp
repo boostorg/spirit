@@ -65,6 +65,7 @@ void
 test_number(char const *s, unsigned int wanted, rule_t const &r)
 {
     using namespace std;
+    using std::strlen;
     ++test_count;
 
     number_result = wanted-1;

@@ -8,22 +8,19 @@
 =============================================================================*/
 #include "action_tests.hpp"
 
-boost::unit_test_framework::test_suite*
-init_unit_test_suite( int /*argc*/, char* /*argv*/[] )
+int
+main()
 {
-    boost::unit_test_framework::test_suite* test=
-        BOOST_TEST_SUITE( "Spirit Actor Test Suite" );
+    assign_action_test();
+    assign_key_action_test();
+    clear_action_test();
+    decrement_action_test();
+    erase_action_test();
+    increment_action_test();
+    insert_key_action_test();
+    push_front_action_test();
+    push_back_action_test();
+    swap_action_test();
 
-    assign_action_test(test);
-    assign_key_action_test(test);
-    clear_action_test(test);
-    decrement_action_test(test);
-    erase_action_test(test);
-    increment_action_test(test);
-    insert_key_action_test(test);
-    push_front_action_test(test);
-    push_back_action_test(test);
-    swap_action_test(test);
-
-    return test;
+    return boost::report_errors();
 }

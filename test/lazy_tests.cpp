@@ -11,31 +11,17 @@
 #include <boost/spirit/dynamic/lazy.hpp>
 #include <boost/spirit/phoenix/primitives.hpp>
 #include <boost/spirit/phoenix/operators.hpp>
-#include <boost/test/included/unit_test_framework.hpp>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace boost;
-using namespace unit_test_framework;
 using namespace spirit;
 using namespace phoenix;
 
-//-----------------------------------------------------------------------------
-
-void lazy_p_test()
+int main()
 {
     int result;
-    BOOST_CHECK(parse("123", lazy_p(val(int_p))[assign_a(result)]).full);
-    BOOST_CHECK_EQUAL(result, 123);
+    BOOST_TEST(parse("123", lazy_p(val(int_p))[assign_a(result)]).full);
+    BOOST_TEST((result == 123));
+    return boost::report_errors();
 }
 
-//-----------------------------------------------------------------------------
-
-test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
-{
-    test_suite* test = BOOST_TEST_SUITE("lazy test");
-
-    test->add(BOOST_TEST_CASE(&lazy_p_test));
-
-    return test;
-}
-
-//-----------------------------------------------------------------------------

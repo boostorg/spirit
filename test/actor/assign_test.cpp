@@ -11,14 +11,12 @@
 // Test suite for assign_actor
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/spirit.hpp>
-#include <boost/test/unit_test.hpp>
-
+#include "action_tests.hpp"
+#include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
 
 void assign_test()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "63";
@@ -40,7 +38,6 @@ void assign_test()
 
 void assign_test_ref()
 {
-    using namespace boost::unit_test_framework;
     using namespace boost::spirit;
 
     const char* cp = "63";
@@ -59,9 +56,9 @@ void assign_test_ref()
     BOOST_CHECK_EQUAL( hm,h);
 }
 
-void assign_action_test(boost::unit_test_framework::test_suite* test)
+void assign_action_test()
 {
-    test->add( BOOST_TEST_CASE(&assign_test) );
-    test->add( BOOST_TEST_CASE(&assign_test_ref) );
+    assign_test();
+    assign_test_ref();
 }
 
