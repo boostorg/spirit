@@ -82,7 +82,7 @@
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////
-//  debug flags for CPP library, possible flags:
+//  debug flags for the pp-iterator library, possible flags:
 #define BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR        0x0001
 #define BOOST_SPIRIT_DEBUG_FLAGS_TIME_CONVERSION    0x0002
 #define BOOST_SPIRIT_DEBUG_FLAGS_CPP_EXPR_GRAMMAR   0x0004
@@ -90,6 +90,7 @@
 #define BOOST_SPIRIT_DEBUG_FLAGS_FLOATLIT_GRAMMAR   0x0010
 #define BOOST_SPIRIT_DEBUG_FLAGS_CHLIT_GRAMMAR      0x0020
 #define BOOST_SPIRIT_DEBUG_FLAGS_DEFINED_GRAMMAR    0x0040
+#define BOOST_SPIRIT_DEBUG_FLAGS_PREDEF_MACROS_GRAMMAR  0x0080
 
 #define BOOST_SPIRIT_DEBUG_FLAGS_CPP \
     BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR \

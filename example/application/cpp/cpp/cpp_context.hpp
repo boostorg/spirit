@@ -114,9 +114,11 @@ public:
     static std::string get_version_string()  
         { return util::predefined_macros::get_versionstr(false); }
     
+#if !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
 protected:
     typedef typename iterator_t::input_policy_t pp_iterator_policy_t;
     friend pp_iterator_policy_t;
+#endif
     
 // maintain include pathes (helper functions)
     bool find_include_file (std::string &s, bool is_system) const

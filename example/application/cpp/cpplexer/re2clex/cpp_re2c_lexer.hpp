@@ -158,7 +158,8 @@ public:
             PositionT const &pos)
     :   lexer(first, last, pos)
     {}
-
+    virtual ~lex_functor() {}
+    
 // get the next token from the input stream
     token_t get() { return lexer.get(); }
     void set_position(PositionT const &pos) 

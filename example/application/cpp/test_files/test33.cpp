@@ -12,6 +12,6 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-// Tests, if a diagnostic is emitted, if a predefined token is to be undefined.
+// Tests, if a diagnostic is emitted, if a predefined macro is to be undefined.
 
-#undef __cplusplus    // should emit a warning
+#undef __cplusplus     // should emit a warning

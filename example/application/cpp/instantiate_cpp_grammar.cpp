@@ -17,7 +17,9 @@
 #if defined(CPP_SEPARATE_GRAMMAR_INSTANTIATION)
 
 #include <string>
+
 #include "cpp/cpp_grammar.hpp"
+#include "cpp/cpp_predef_macros_grammar.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  decide, which C++ lexer to use
@@ -40,8 +42,18 @@ using namespace cpplexer::re2clex;
 //  in turn instantiates the cpp_grammar object (see cpp/cpp_grammar.hpp)
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 template cpp::grammars::cpp_grammar_gen<lex_token<std::string::iterator> >;
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  Explicit instantiation of the cpp_predefined_macros_grammar_gen template 
+//  with the correct token type. This instantiates the corresponding pt_parse 
+//  function, which in turn instantiates the cpp_predefined_macros_grammar 
+//  object (see cpp/cpp_predef_macros_grammar.hpp)
+//
+///////////////////////////////////////////////////////////////////////////////
+template cpp::grammars::cpp_predefined_macros_grammar_gen<
+    lex_token<std::string::iterator> >;
 
 #endif // #if defined(CPP_SEPARATE_GRAMMAR_INSTANTIATION)
 

@@ -93,10 +93,18 @@ int print_version()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//  add an additional predefined macro
+template <typename ContextT>
+void add_predefined_macro(ContextT &ctx, string const &macrostring)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  do the actual preprocessing
 int do_actual_work (
     po::options_and_arguments const opts, po::variables_map const &vm, 
-    vector<string> const &pathes, vector<string> const &syspathes)
+    vector<string> const &pathes, vector<string> const &syspathes, 
+    vector<string> const &macros)
 {
 // current file position is saved for exception handling
 file_position current_position;
@@ -146,7 +154,17 @@ file_position current_position;
                 ctx.add_sysinclude_path((*cit).c_str());
             }
         }
-        
+
+    // add additional predefined macros 
+        if (vm.count("define")) {
+            vector<string>::const_iterator end = macros.end();
+            for (vector<string>::const_iterator cit = macros.begin(); 
+                    cit != end; ++cit)
+            {
+                add_predefined_macro(ctx, *cit);
+            }
+        }
+            
     // analyze the input file
     context_t::iterator_t first = ctx.begin();
     context_t::iterator_t last = ctx.end();
@@ -214,6 +232,7 @@ main (int argc, char const *argv[])
     // analyze the command line options and arguments
     vector<string> pathes;
     vector<string> syspathes;
+    vector<string> macros;
     po::options_description desc("Usage: cpp [options] file ...");
         
         desc.add_options()
@@ -223,6 +242,8 @@ main (int argc, char const *argv[])
                 "specify additional include directory")
             ("syspath,S", po::parameter<vector<string> >("dir", &syspathes), 
                 "specify additional system include directory")
+//            ("define,D", po::parameter<vector<string> >("macro[=value]", &macros),
+//                "specify additional macros to predefine")
         ;
 
     po::options_and_arguments opts = po::parse_command_line(argc, argv, desc);
@@ -246,7 +267,7 @@ main (int argc, char const *argv[])
         }
 
     // iterate over all given input files
-        return do_actual_work(opts, vm, pathes, syspathes);
+        return do_actual_work(opts, vm, pathes, syspathes, macros);
     }
     catch (std::exception &e) {
         cout << "cpp: exception caught: " << e.what() << endl;

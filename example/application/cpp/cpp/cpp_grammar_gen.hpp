@@ -90,6 +90,51 @@ template <typename TokenT>
 typename TokenT::position_t cpp_grammar_gen<TokenT>::pos_of_newline;
 
 ///////////////////////////////////////////////////////////////////////////////
+//  
+//  store parser_id's of all rules of the cpp_predefined_macros_grammar here 
+//  for later access
+//
+///////////////////////////////////////////////////////////////////////////////
+struct cpp_predefined_macros_grammar_rule_ids {
+    long plain_define_id;       // #define
+    long macro_parameters_id;
+    long macro_definition_id;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+//  cpp_predefined_macros_grammar_gen template class
+//
+//      This template helps separating the compilation of the 
+//      cpp_predefined_macros_grammar class from the compilation of the 
+//      main pp_iterator. This is done to safe compilation time.
+//
+//      This class helps parsing command line given macro definitions in a
+//      similar way, as macros are parsed by the cpp_grammar class.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename TokenT>
+struct cpp_predefined_macros_grammar_gen
+{
+    typedef cpplexer::lex_iterator<TokenT>  iterator_t;
+
+//  the parser_id's of all rules of the cpp_grammar are stored here
+//  note: these are valid only after the first call to parse_cpp_grammar
+    static cpp_predefined_macros_grammar_rule_ids rule_ids;
+
+//  parse the cpp_grammar and return the resulting parse tree    
+    static boost::spirit::tree_parse_info<iterator_t> 
+    parse_predefined_macro (iterator_t const &first, iterator_t const &last);
+};
+
+///////////////////////////////////////////////////////////////////////////////
+//  definitions of the static members
+template <typename TokenT>
+cpp_predefined_macros_grammar_rule_ids 
+    cpp_predefined_macros_grammar_gen<TokenT>::rule_ids;
+
+///////////////////////////////////////////////////////////////////////////////
 }   // namespace grammars
 }   // namespace cpp
 

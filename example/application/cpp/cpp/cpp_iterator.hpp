@@ -142,8 +142,8 @@ private:
     ContextT &ctx;              // context, this iterator is associated with
     boost::shared_ptr<base_iteration_context_t> iter_ctx;
     
-    result_type &act_token;     // current token (references the macromap)
     bool seen_newline;          // needed for recognizing begin of line
+    result_type &act_token;     // current token (references the macromap)
     
     std::list<result_type> unput_queue;     // tokens to be preprocessed again
     std::list<result_type> pending_queue;   // tokens already preprocessed
@@ -202,8 +202,8 @@ bool returned_from_include = false;
             if (T_NEWLINE == act_token || T_CPPCOMMENT == act_token) {   
             // a newline is to be returned asap, a C++ comment too
             // (the C++ comment token includes the trailing newline)
-                seen_newline = true;
                 ++iter_ctx->first;
+                seen_newline = true;
                 whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                 return act_token;
             }
@@ -227,8 +227,8 @@ bool returned_from_include = false;
                 // newline, return it, otherwise discard the actual token and 
                 // try the next one
                 if (act_token == T_NEWLINE) {
-                    whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                     seen_newline = true;
+                    whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                     return act_token;
                 }
 
@@ -241,6 +241,7 @@ bool returned_from_include = false;
     else if (returned_from_include) {
     // if there was an '#include' statement on the last line of a file we have
     // to return an additional newline token
+        seen_newline = true;
         whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
         return act_token = result_type(T_NEWLINE, 
             typename result_type::string_t("\n"), 
@@ -278,12 +279,12 @@ pp_iterator_functor<ContextT>::pp_token()
     
 token_id id = token_id(act_token);
 
-    if (T_NONREPLACABLE_IDENTIFIER == token_id(act_token))
+    if (T_NONREPLACABLE_IDENTIFIER == id)
         act_token.set_token_id(T_IDENTIFIER);
     else if (T_NEWLINE == id || T_CPPCOMMENT == id)
         seen_newline = true;
 
-    whitespace.shift_tokens(token_id(act_token));
+    whitespace.shift_tokens(id);
     return act_token;
 }
 

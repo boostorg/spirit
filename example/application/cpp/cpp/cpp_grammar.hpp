@@ -201,14 +201,20 @@ struct cpp_grammar :
                             )
                             >>  no_node_d
                                 [
-                                   *ppspace >> ch_p(T_NEWLINE)
-                                    [
-                                        store_pos_t(self.pos_of_newline)
-                                    ]
-                                |   ch_p(T_CPPCOMMENT)
-                                    [
-                                        store_pos_t(self.pos_of_newline)
-                                    ]
+                                   *ppspace 
+                                    >>  (   ch_p(T_NEWLINE)
+                                            [
+                                                store_pos_t(self.pos_of_newline)
+                                            ]
+                                        |   ch_p(T_CPPCOMMENT)
+                                            [
+                                                store_pos_t(self.pos_of_newline)
+                                            ]
+                                        |   ch_p(T_EOF)
+                                            [
+                                                store_pos_t(self.pos_of_newline)
+                                            ]
+                                        )
                                 ]
 #if defined(BOOST_SPIRIT_DEBUG) && !(BOOST_SPIRIT_DEBUG_FLAGS_CPP & BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR)
                             >>  impl::flush_underlying_parser_p
@@ -227,7 +233,9 @@ struct cpp_grammar :
 
             macro_include_file      // include ...anything else...
                 =   no_node_d[ch_p(T_PP_INCLUDE)]
-                    >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> *(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
         // #define FOO foo (with optional parameters)
@@ -256,7 +264,9 @@ struct cpp_grammar :
         // macro body (anything left until eol)
             macro_definition
                 =   no_node_d[+ppspace]
-                    >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> *(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
         // #undef FOO 
@@ -278,7 +288,9 @@ struct cpp_grammar :
 
             ppif
                 =   no_node_d[ch_p(T_PP_IF) >> +ppspace]
-                    >> +( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> +(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
             ppelse
@@ -287,7 +299,9 @@ struct cpp_grammar :
 
             ppelif
                 =   no_node_d[ch_p(T_PP_ELIF) >> +ppspace]
-                    >> +( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> +(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
             ppendif
@@ -297,7 +311,9 @@ struct cpp_grammar :
         // #line ...
             ppline 
                 =   no_node_d[ch_p(T_PP_LINE) >> +ppspace]
-                    >>  *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> +(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
         // # (empty preprocessor directive)
@@ -308,29 +324,39 @@ struct cpp_grammar :
         // # something else (ill formed preprocessor directive)
             illformed           // for error reporting
                 =   no_node_d[ch_p(T_POUND) >> *ppspace]
-                    >> (anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)))
+                    >>  (   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                     >> no_node_d
-                       [
-                           *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
-                       ]
+                        [
+                           *(   anychar_p -
+                                (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                            )
+                        ]
                 ;
 
         // #error
             pperror
                 =   no_node_d[ch_p(T_PP_ERROR) >> +ppspace]
-                    >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> *(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
         // #warning
             ppwarning
                 =   no_node_d[ch_p(T_PP_WARNING) >> +ppspace]
-                    >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> *(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
         // #pragma ...
             pppragma
                 =   no_node_d[ch_p(T_PP_PRAGMA)] 
-                    >> *( anychar_p - (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT)) )
+                    >> *(   anychar_p -
+                            (ch_p(T_NEWLINE) | ch_p(T_CPPCOMMENT) | ch_p(T_EOF)) 
+                        )
                 ;
 
         // auxiliary helper rules

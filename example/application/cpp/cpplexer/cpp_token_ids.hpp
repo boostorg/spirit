@@ -409,9 +409,9 @@ static char const *tok_names[] = {
         "MSEXT_ASM",
     };   
      
-    int id = ID_FROM_TOKEN(tokid)-T_FIRST_TOKEN;
+    unsigned int id = ID_FROM_TOKEN(tokid)-T_FIRST_TOKEN;
 
-    BOOST_ASSERT(id >= 0 && id < T_LAST_TOKEN-T_FIRST_TOKEN);
+    BOOST_ASSERT(/*id >= 0 && */id < T_LAST_TOKEN-T_FIRST_TOKEN);
     return tok_names[id];
 }
 #endif // defined(__cplusplus)

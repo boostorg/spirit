@@ -6,11 +6,20 @@ See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
 
+Tue Feb 25 21:44:19     2003
+- Fixed the warnings emitted by gcc -Wall.
+- Fixed a bug in the cpp grammar, which causes to failing the recognition of 
+  certain preprocessor directives if at the end of this directive were placed 
+  a C++ comment.
+- Simplified and extended the insertiom of whitespace tokens at places, where
+  otherwise two adjacent tokens would form a new different token, if 
+  retokenized.
+
 Mon Feb 24 19:13:46     2003
 - defined() functionality was broken
 - added missing typename keywords
 - added missing using namespace statements, where appropriate
-- added warning, when a predefined macro is to be undefined
+- added a warning, when a predefined macro is to be undefined
 - removed the 'compile in C mode' hack for the re2c generated lexer (VC7.1 
   (final beta) is not able to compile it with optimizations switched on 
   anyway :( )

@@ -223,9 +223,9 @@ struct macro_definition {
     TokenT macroname;
     parameter_container_t macroparameters;
     definition_container_t macrodefinition;
-    bool is_available_for_replacement;
     bool is_functionlike;
     bool replaced_parameters;
+    bool is_available_for_replacement;
     bool is_predefined;
 };
 
@@ -1220,7 +1220,7 @@ namespace predefined_macros {
         std::mktime(&first_day)));
 
         using namespace std;    // for some systems sprintf is in namespace std
-        sprintf(buffer, "0x%02d%1d%1d%04d", CPP_VERSION_MAJOR,
+        sprintf(buffer, "0x%02d%1d%1d%04ld", CPP_VERSION_MAJOR,
              CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR, seconds/(3600*24));
         versionstr = buffer;
         return versionstr.c_str();
@@ -1246,7 +1246,7 @@ namespace predefined_macros {
         std::mktime(&first_day)));
 
         using namespace std;    // for some systems sprintf is in namespace std
-        sprintf(buffer, "\"%d.%d.%d.%d\"", CPP_VERSION_MAJOR,
+        sprintf(buffer, "\"%d.%d.%d.%ld\"", CPP_VERSION_MAJOR,
              CPP_VERSION_MINOR, CPP_VERSION_SUBMINOR, seconds/(3600*24));
         versionstr = buffer;
         return versionstr.c_str();

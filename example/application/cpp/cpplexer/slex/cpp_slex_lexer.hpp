@@ -407,6 +407,7 @@ public:
     {
         init_lexer(lexer);  // initialize lexer dfa tables
     }
+    virtual ~lex_functor() {}
 
 // get the next token from the input stream
     token_t get()
