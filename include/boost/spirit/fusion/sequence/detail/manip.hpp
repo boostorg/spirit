@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cctype>
 
 // Tuple I/O manipulators
 
@@ -102,10 +103,10 @@ namespace boost { namespace fusion
                 stream_data_t::attach(stream, s);
             }
 
-            template <typename Default>
             void
-            print(Default const& default_) const
+            print(char const* default_) const
             {
+                // print a delimiter
                 string_type const* p = stream_data_t::get(stream);
                 if (p)
                     stream << *p;
@@ -113,7 +114,42 @@ namespace boost { namespace fusion
                     stream << default_;
             }
 
+            void
+            read(char const* default_) const
+            {
+                // read a delimiter
+                string_type const* p = stream_data_t::get(stream);
+                using namespace std;
+                ws(stream);
+
+                if (p)
+                {
+                    typedef typename string_type::const_iterator iterator;
+                    for (iterator i = p->begin(); i != p->end(); ++i)
+                        check_delim(*i);
+                }
+                else
+                {
+                    while (*default_)
+                        check_delim(*default_++);
+                }
+            }
+
         private:
+
+            template <typename Char>
+            void
+            check_delim(Char c) const
+            {
+                if (!isspace(c))
+                {
+                    if (stream.get() != c)
+                    {
+	                    stream.unget();
+	                    stream.setstate(std::ios::failbit);
+                    }
+                }
+            }
 
             Stream& stream;
         };

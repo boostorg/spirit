@@ -56,13 +56,6 @@ test_main(int argc, char * argv[])
 
     useThisOStringStream os1;
 
-    std::cout << tuple_open('[');
-    std::cout << tuple_close(']');
-    std::cout << tuple_delimiter(',');
-    std::cout << make_tuple(1, 2, 3);
-
-
-
     // Set format [a, b, c] for os1
     os1 << tuple_open('[');
     os1 << tuple_close(']');
@@ -97,33 +90,33 @@ test_main(int argc, char * argv[])
 
     tmp.close();
 
-//    // When teading tuples from a stream, manipulators must be set correctly:
-//    ifstream tmp3("temp.tmp");
-//    tuple<string, string, int> j;
-//
-//#if !defined (BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-//    tmp3 >> j;
-//    BOOST_TEST (tmp3.good() );
-//#endif
-//
-//    tmp3 >> tuple_delimiter(':');
-//    tuple<int, int, int> i;
-//    tmp3 >> i;
-//    BOOST_TEST (tmp3.good() );
-//
-//    tmp3.close();
-//
-//    // reading tuple<int, int, int> in format (a b c);
-//    useThisIStringStream is("(100 200 300)");
-//
-//    tuple<int, int, int> ti;
-//    BOOST_TEST(bool((is >> ti) != 0));
-//    BOOST_TEST(ti == make_tuple(100, 200, 300));
-//
-//    // Note that strings are problematic:
-//    // writing a tuple on a stream and reading it back doesn't work in
-//    // general. If this is wanted, some kind of a parseable string class
-//    // should be used.
+    // When teading tuples from a stream, manipulators must be set correctly:
+    ifstream tmp3("temp.tmp");
+    tuple<string, string, int> j;
+
+#if !defined (BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
+    tmp3 >> j;
+    BOOST_TEST (tmp3.good() );
+#endif
+
+    tmp3 >> tuple_delimiter(':');
+    tuple<int, int, int> i;
+    tmp3 >> i;
+    BOOST_TEST (tmp3.good() );
+
+    tmp3.close();
+
+    // reading tuple<int, int, int> in format (a b c);
+    useThisIStringStream is("(100 200 300)");
+
+    tuple<int, int, int> ti;
+    BOOST_TEST(bool((is >> ti) != 0));
+    BOOST_TEST(ti == make_tuple(100, 200, 300));
+
+    // Note that strings are problematic:
+    // writing a tuple on a stream and reading it back doesn't work in
+    // general. If this is wanted, some kind of a parseable string class
+    // should be used.
 
     return 0;
 }

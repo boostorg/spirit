@@ -39,6 +39,21 @@ namespace boost { namespace fusion { namespace detail
         print(OS& os, char const* delim, mpl::true_)
         {
         }
+
+        // read a delimiter
+        template <typename IS>
+        static void
+        read(IS& is, char const* delim, mpl::false_ = mpl::false_())
+        {
+            detail::string_ios_manip<Tag, IS> manip(is);
+            manip.read(delim);
+        }
+
+        template <typename IS>
+        static void
+        read(IS& is, char const* delim, mpl::true_)
+        {
+        }
     };
 
     struct print_sequence_loop
@@ -74,6 +89,39 @@ namespace boost { namespace fusion { namespace detail
         }
     };
 
+    struct read_sequence_loop
+    {
+        template <typename IS, typename First, typename Last>
+        static void
+        apply(IS& is, First const&, Last const&, mpl::true_)
+        {
+        }
+
+        template <typename IS, typename First, typename Last>
+        static void
+        apply(IS& is, First const& first, Last const& last, mpl::false_)
+        {
+            typename
+                equal_to<
+                    BOOST_DEDUCED_TYPENAME result_of_next<First>::type
+                  , Last
+                >::type
+            is_last;
+
+            is >> *first;
+            delimiter_io<tuple_delimiter_tag>::read(is, " ", is_last);
+            apply(is, fusion::next(first), last, is_last);
+        }
+
+        template <typename IS, typename First, typename Last>
+        static void
+        apply(IS& is, First const& first, Last const& last)
+        {
+            typename equal_to<First, Last>::type eq;
+            apply(is, first, last, eq);
+        }
+    };
+
     template <typename OS, typename Sequence>
     inline void
     print_sequence(OS& os, Sequence const& seq)
@@ -81,6 +129,15 @@ namespace boost { namespace fusion { namespace detail
         delimiter_io<tuple_open_tag>::print(os, "(");
         print_sequence_loop::apply(os, fusion::begin(seq), fusion::end(seq));
         delimiter_io<tuple_close_tag>::print(os, ")");
+    }
+
+    template <typename IS, typename Sequence>
+    inline void
+    read_sequence(IS& is, Sequence& seq)
+    {
+        delimiter_io<tuple_open_tag>::read(is, "(");
+        read_sequence_loop::apply(is, fusion::begin(seq), fusion::end(seq));
+        delimiter_io<tuple_close_tag>::read(is, ")");
     }
 }}}
 
