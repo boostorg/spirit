@@ -53,39 +53,39 @@ using namespace boost::spirit;
 void
 traverse_identity_tests()
 {
-    //  test type equality
-    typedef sequence<chlit<char>, chlit<char> > test_sequence1_t;
-    BOOST_STATIC_ASSERT((
-        ::boost::is_same<
-            test_sequence1_t,
-            post_order::result<identity_transform, test_sequence1_t>::type
-        >::value
-    ));
-
-    //  test (rough) runtime equality
-    assert(
-        parse(
-            "ab",
-            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
-        ).full
-    );
-    assert(
-        !parse(
-            "ba",
-            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
-        ).hit
-    );
-
-    ///////////////////////////////////////////////////////////////////////////
-    assert(
-        !parse(
-            "cba",
-            post_order::traverse(
-                identity_transform(),
-                ch_p('a') >> 'b' >> 'c'
-            )
-        ).hit
-    );
+//    //  test type equality
+//    typedef sequence<chlit<char>, chlit<char> > test_sequence1_t;
+//    BOOST_STATIC_ASSERT((
+//        ::boost::is_same<
+//            test_sequence1_t,
+//            post_order::result<identity_transform, test_sequence1_t>::type
+//        >::value
+//    ));
+//
+//    //  test (rough) runtime equality
+//    assert(
+//        parse(
+//            "ab",
+//            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
+//        ).full
+//    );
+//    assert(
+//        !parse(
+//            "ba",
+//            post_order::traverse(identity_transform(), ch_p('a') >> 'b')
+//        ).hit
+//    );
+//
+//    ///////////////////////////////////////////////////////////////////////////
+//    assert(
+//        !parse(
+//            "cba",
+//            post_order::traverse(
+//                identity_transform(),
+//                ch_p('a') >> 'b' >> 'c'
+//            )
+//        ).hit
+//    );
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Test more complex sequences

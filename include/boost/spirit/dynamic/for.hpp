@@ -50,7 +50,7 @@ namespace boost { namespace spirit
 
             for_init_functor(param_t f) : base_t(f) {}
             for_init_functor() : base_t() {}
-            void init() const { return base_t::get()(); }
+            void init() const { /*return*/ base_t::get()(); }
         };
 
         template <typename StepF>
@@ -61,7 +61,7 @@ namespace boost { namespace spirit
 
             for_step_functor(param_t f) : base_t(f) {}
             for_step_functor() : base_t() {}
-            void step() const { return base_t::get()(); }
+            void step() const { /*return*/ base_t::get()(); }
         };
 
         //////////////////////////////////
