@@ -563,7 +563,7 @@ class inner
         void advance_input()
         {
             BOOST_SPIRIT_ASSERT(0 != data);
-            data->curtok = *data->input;          // get the next token
+            data->was_initialized = false;        // should get the next token
             ++data->input;
         }
 
