@@ -13,6 +13,7 @@
 #include <boost/spirit/fusion/iterator/detail/iterator_base.hpp>
 #include <boost/spirit/fusion/iterator/as_fusion_iterator.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_const.hpp>
 
 namespace boost { namespace fusion
 {

@@ -11,6 +11,7 @@
 
 #include <boost/spirit/fusion/detail/config.hpp>
 #include <boost/spirit/fusion/sequence/as_fusion_sequence.hpp>
+#include <boost/type_traits/is_const.hpp>
 
 namespace boost { namespace fusion
 {

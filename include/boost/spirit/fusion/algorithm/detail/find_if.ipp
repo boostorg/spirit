@@ -10,6 +10,7 @@
 #define FUSION_ALGORITHM_DETAIL_FIND_IF_HPP
 
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/apply.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/spirit/fusion/iterator/value_of.hpp>
