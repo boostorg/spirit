@@ -23,7 +23,7 @@
 
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/logical/and.hpp>
+#include <boost/mpl/and.hpp>
 #include <boost/spirit/core/primitives/primitives.hpp> // for iscntrl_
 
 namespace boost { namespace spirit {
@@ -87,7 +87,7 @@ namespace impl {
       #if !defined(BOOST_SPIRIT_DEBUG_TOKEN_PRINTER)
 
          typedef typename
-           mpl::if_<mpl::logical_and<is_convertible<CharT, char>,
+           mpl::if_<mpl::and_<is_convertible<CharT, char>,
                                      is_convertible<char, CharT> >,
                     token_printer_aux_for_chars,
                     token_printer_aux_for_other_types>::type aux_t;

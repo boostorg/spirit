@@ -178,17 +178,17 @@ namespace boost { namespace spirit {
         {
             template <typename ListT>
             static void
-            do_parse(RT& r, ScannerT const& scan, ListT const& list, mpl::true_c)
+            do_parse(RT& r, ScannerT const& scan, ListT const& list, mpl::true_)
             {
                 r = list.first.rhs.parse(scan);
             }
 
             template <typename ListT>
             static void
-            do_parse(RT& r, ScannerT const& scan, ListT const& list, mpl::false_c)
+            do_parse(RT& r, ScannerT const& scan, ListT const& list, mpl::false_)
             {
                 typedef typename ListT::rest_t::first_t subrule_t;
-                mpl::bool_c<same_subrule_id<subrule_t, ID>::value> same_id;
+                mpl::bool_<same_subrule_id<subrule_t, ID>::value> same_id;
                 do_parse(r, scan, list.rest, same_id);
             }
 
@@ -196,7 +196,7 @@ namespace boost { namespace spirit {
             do_(RT& r, ScannerT const& scan)
             {
                 typedef typename ScannerT::list_t::first_t subrule_t;
-                mpl::bool_c<same_subrule_id<subrule_t, ID>::value> same_id;
+                mpl::bool_<same_subrule_id<subrule_t, ID>::value> same_id;
                 do_parse(r, scan, scan.list, same_id);
             }
         };

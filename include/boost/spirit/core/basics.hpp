@@ -27,8 +27,8 @@ namespace boost { namespace spirit { namespace borland_only {
 #include <boost/config.hpp>
 #include <boost/mpl/apply_if.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/int_c.hpp>
-#include <boost/mpl/bool_c.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/mpl/bool.hpp>
 
 #if defined(BOOST_MSVC) || defined(BOOST_INTEL_CXX_VERSION)
 #include "boost/spirit/core/impl/msvc.hpp"
