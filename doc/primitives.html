@@ -262,7 +262,7 @@
 <p>Not strictly a primitive parser, <tt>epsilon_p</tt>, <tt>eps_p</tt> are parsers 
   that match the null string and return a match of zero length:</p>
 <pre><code><span class=special>    </span><span class="identifier">epsilon_p </span><span class="comment">// always returns a zero-length match</span></code></pre>
-<p>The eplsilon also operates as a parser generator. In this role, they take an 
+<p>The epsilon also operates as a parser generator. In this role, they take an 
   argument that is a 0-ary function/functor or another parser. They construct 
   parsers that will report either an empty (zero length) match or a failure.</p>
 <p>A failure will be reported when the function/functor result evaluates to false 
