@@ -1,0 +1,223 @@
+<html>
+<head>
+<title>The Rule</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="theme/style.css" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" background="theme/bkd2.gif" cellspacing="2">
+  <tr> 
+    <td width="10"> 
+    </td>
+    <td width="85%"> 
+      <font size="6" face="Verdana, Arial, Helvetica, sans-serif"><b>The Rule</b></font>
+    </td>
+    <td width="112"><a href="http://spirit.sf.net"><img src="theme/spirit.gif" width="112" height="48" align="right" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<table border="0">
+  <tr>
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><a href="numerics.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="20"><a href="directives.html"><img src="theme/r_arr.gif" border="0"></a></td>
+   </tr>
+</table>
+<p>The <b>rule</b> is a polymorphic parser that acts as a named place-holder capturing 
+  the behavior of an EBNF expression assigned to it. Naming an EBNF expression 
+  allows it to be referenced later. The <tt>rule</tt> is a template class parameterized 
+  by the type of the scanner (<tt>ScannerT</tt>) and the rule's context (<tt>ContextT</tt>, 
+  to be discussed later). Default template parameters are provided to make it 
+  easy to use the rule.</p>
+<pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>template
+    </span><span class=special>&lt;
+        </span><span class=keyword>typename </span><span class=identifier>ScannerT </span><span class=special>= </span><span class=identifier>scanner</span><span class=special>&lt;&gt;,
+        </span><span class=keyword>typename </span><span class=identifier>ContextT </span><span class=special>= </span><span class=identifier>parser_context
+    </span><span class=special>&gt;
+    </span><span class=keyword>class </span><span class=identifier>rule</span><span class=special>;</span></font></code></pre>
+<p>Default template parameters are supplied to handle the most common case. <tt>ScannerT</tt> 
+  defaults to <tt>scanner&lt;&gt;</tt>, a plain vanilla scanner that uses <tt>char 
+  const<span class="operators">*</span></tt> iterators and does nothing special 
+  at all other than iterate through all the chars in the null terminated input 
+  a character at a time. <tt>ContextT</tt> defaults to <tt>parser_context</tt>, 
+  a predefined context that also does nothing special. In trivial cases, declaring 
+  a rule as <tt>rule&lt;&gt;</tt> is enough.</p>
+<p>The rule class models EBNF's production rule. Example:</p>
+<pre><code><font color="#000000">    <span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>a_rule </span><span class=special>= </span><span class=special>*(</span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b</span><span class=special>) </span><span class=special>& </span><span class=special>+(</span><span class=identifier>c </span><span class=special>| </span><span class=identifier>d </span><span class=special>| </span><span class=identifier>e</span><span class=special>);</span></font></code></pre>
+<p>The type and functionality of the right-hand (rhs) EBNF expression, which may 
+  be arbitrarily complex, is encoded in the rule named a_rule. a_rule may now 
+  be referenced elsewhere in the grammar:</p>
+<pre><code><font color="#000000">    <span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>another_rule </span><span class=special>= </span><span class=identifier>f </span><span class=special>&gt;&gt; </span><span class=identifier>g </span><span class=special>&gt;&gt; </span><span class=identifier>h </span><span class=special>&gt;&gt; </span><span class=identifier>a_rule</span><span class=special>;</span></font></code></pre>
+<p>The definition of the rule (its right hand side) is reference counted and held 
+  by the rule through a smart pointer. Rules may share definitions. However, when 
+  a rule itself is referenced by an EBNF expression, the rule is held by the expression 
+  by reference. It is the responsibility of the client to ensure that the referenced 
+  rule stays in scope and does not get destructed while it is being referenced. 
+  Here, we cannot share the reference counted definition because grammars are 
+  highly recursive in nature. We use weak references instead to prevent memory 
+  leaks. The following diagram depicts the scenario:</p>
+<pre><span class=special>    </span><span class=identifier>a </span><span class=special>= </span><span class=identifier>int_p</span><span class=special>;
+    </span><span class=identifier>b </span><span class=special>= </span><span class=identifier>a</span><span class=special>;
+    </span><span class=identifier>c </span><span class=special>= </span><span class=identifier>int_p </span><span class=special>&gt;&gt; </span><span class=identifier>b</span><span class=special>;</span></pre>
+<table width="33%" border="0" align="center">
+  <tr>
+    <td><img src="theme/rule1.png" width="347" height="236"></td>
+  </tr>
+</table>
+<h3>Forward declarations</h3>
+<p>A <tt>rule</tt> may be declared before being defined to allow cyclic structures 
+  typically found in BNF declarations. Example:</p>
+<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>a</span><span class=special>, </span><span class=identifier>b</span><span class=special>, </span><span class=identifier>c</span><span class=special>;
+
+    </span><span class=identifier>a </span><span class=special>= </span><span class=identifier>b </span><span class=special>| </span><span class=identifier>a</span><span class=special>;
+    </span><span class=identifier>b </span><span class=special>= </span><span class=identifier>c </span><span class=special>| </span><span class=identifier>a</span><span class=special>;</span></font></code></pre>
+<h3>Recursion</h3>
+<p>The right-hand side of a rule may reference other rules, including itself. 
+  The limitation is that direct or indirect left recursion is not allowed (this 
+  is an unchecked run-time error that results in an infinite loop). This is typical 
+  of top-down parsers. Example:</p>
+<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>a </span><span class=special>= </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b</span><span class=special>; </span><span class=comment>// infinite loop!</span></font></code></pre>
+<h3>Undefined rules</h3>
+<p>An undefined rule matches nothing and is semantically equivalent to <tt>nothing_p</tt>.</p>
+<h3>Redeclarations</h3>
+<p>Like any other C++ assignment, a second assignment to a rule is destructive 
+  and will redefine it. The old definition is lost. This allows rules to be copied 
+  and passed around by value. Copying and assignment are both inexpensive since 
+  the rule stores its data using a reference counted smart pointer.</p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/lens.gif" width="15" height="16"> <b>Multiple 
+      declaration<br>
+      </b><br>
+      Some BNF variants allow multiple declarations of a <tt>rule</tt>. The declarations 
+      are taken as alternatives. Example:<br>
+      <br>
+      <span class=identifier><code>r </code></span><code><span class=special>= 
+      </span><span class=identifier>a</span><span class=special>; </span><span class=identifier><br>
+      r </span><span class=special>= </span><span class=identifier>b</span><span class=special>;</span></code><br>
+      <br>
+      is equivalent to: <br>
+      <br>
+      <span class=identifier><code>r </code></span><code><span class=special>= 
+      </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b</span><span class=special>;</span></code><br>
+      <br>
+      Spirit v1.3 allowed this behavior. However, the current version of Spirit 
+      <b>no longer</b> allows this because experience shows that this behavior 
+      leads to unwanted gotchas (for instance, it does not allow rules to be held 
+      in containers). In the current release of Spirit, a second assignment to 
+      a rule will simply redefine it. The old definition is destructed. This follows 
+      more closely C++ semantics and is more in line with what the user expects 
+      the rule to behave.</td>
+  </tr>
+</table>
+<h3>Virtual functions: From static to dynamic C++</h3>
+<p>Rules straddle the border between static and dynamic C++. In effect, a rule 
+  transforms compile-time polymorphism (using templates) into run-time polymorphism 
+  (using virtual functions). This is necessary due to C++'s inability to automatically 
+  declare a variable of a type deduced from an arbitrarily complex expression 
+  in the right-hand side (rhs) of an assignment. Basically, we want to do something 
+  like:</p>
+<pre><code><font color="#000000">    <span class=identifier>T </span><span class=identifier>rule </span><span class=special>= </span><span class=identifier>an_arbitrarily_complex_expression</span><span class=special>;</span></font></code></pre>
+<p>without having to know or care about the resulting type of the right-hand side 
+  (rhs) of the assignment expression. Apart from this, we also need a facility 
+  to forward declare an unknown type:</p>
+<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>T </span><span class=identifier>rule</span><span class=special>;
+    </span><span class=special>...
+    </span><span class=identifier>rule </span><span class=special>= </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b</span><span class=special>;</span></font></code></pre>
+<p>These limitations lead us to this implementation of rules. This comes at the 
+  expense of the overhead of a virtual function call, once through each invocation 
+  of a rule.</p>
+<h3>Dynamic Parsers</h3>
+<p>Hosting declarative EBNF in imperative C++ yields an interesting blend. We 
+  have the best of both worlds. We have the ability to conveniently modify the 
+  grammar at run time using imperative constructs such as <tt>if</tt>, <tt>else</tt> 
+  statements. Example:</p>
+<pre><code><font color="#000000"><span class=special>    </span><span class=keyword>if </span><span class=special>(</span><span class=identifier>feature_is_available</span><span class=special>)
+        </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>add_this_feature</span><span class=special>;</span></font></code></pre>
+<p>Rules are essentially dynamic parsers. A dynamic parser is characterized by 
+  its ability to modify its behavior at run time. Initially, an undefined rule 
+  matches nothing. At any time, the rule may be defined and redefined, thus, dynamically 
+  altering its behavior.</p>
+<h3>Aliasing rules</h3>
+<p>Rules are dynamic. A rule can change its definition anytime:</p>
+<pre><code><font color="#000000"><span class=identifier>    r </span><span class=special>= </span><span class=identifier>a_definition</span><span class=special>;
+</span><span class=identifier>    r </span><span class=special>= </span><span class=identifier>another_definition</span><span class=special>;</span></font></code></pre>
+<p>Rule <tt>r</tt> loses the old definition when the second assignment is made. 
+  As mentioned, an undefined rule matches nothing and is semantically equivalent 
+  to <tt>nothing_p</tt>. When a rule is assigned to another rule:
+<pre><code><font color="#000000"><span class=identifier>    r1 </span><span class=special>= </span><span class=identifier>r2</span><span class=special>;</span></font></code></pre>
+<p>The LHS rule will hold the current dynamic state state of the RHS rule. This 
+  means that if the RHS rule is not yet defined at the point of assignment, the 
+  LHS rule will be undefined regardless if the RHS rule is defined later:
+<pre><code><font color="#000000"><span class=identifier>    </span><span class=identifier>r1 </span><span class=special>= </span><span class=identifier>r2</span><span class=special>;</span> <span class=comment>// r1 and r2 are undefined</span><br><span class=identifier>    r2 </span><span class=special>= </span><span class=identifier>define_r2</span><span class=special>; </span><span class=comment>// r2 is defined, WARNING! r1 is still undefined!!!</span></font></code></pre>
+<p>If we really want r1 to alias r2, whereby following its definition all the 
+  time, instead of assignment, we need to alias r2:
+<pre><code><font color="#000000"><span class=identifier>    r1 </span><span class=special>= </span><span class=identifier>r2</span><span class=special>.</span><span class=identifier>alias()</span><span class=special>;</span> <span class=comment>// r1 and r2 are undefined</span><br><span class=identifier>    r2 </span><span class=special>= </span><span class=identifier>define_r2</span><span class=special>; </span><span class=comment> // r2 is defined, r1 follows r2's definition</span></font></code></pre>
+<h3>No start rule</h3>
+<p>Typically, parsers have what is called a start symbol, chosen to be the root 
+  of the grammar where parsing starts. The Spirit parser framework has no notion 
+  of a start symbol. Any rule can be a start symbol. This feature promotes step-wise 
+  creation of parsers. We can build parsers from the bottom up while fully testing 
+  each level or module up untill we get to the top-most level.</p>
+<h3>parser_id</h3>
+<p>Each rule has an id of type parser_id. The default id of each rule is set to 
+  the address of that rule (converted to an integer). This is not always the most 
+  convenient, since it is not always possible to get the address of a rule to 
+  compare against. So, you can override the default id used by each rule by calling 
+  <tt>set_id(parser_id)</tt> on a rule. Example:</p>
+<pre><code><font color="#000000"><span class=identifier>    a_rule</span><span class=special>.</span><span class=identifier>set_id</span><span class=special>(</span><span class=identifier>123</span><span class=special>); </span><span class=comment>//  set a_rule's id to 123</span></font></code></pre>
+<h3><a name="context"></a>Detail: The context</h3>
+<p>We have touched on the scanner before (see <a href="basic_concepts.html">Basic 
+  Concepts</a>). The rule's <b>context</b> however is a new concept. An instance 
+  (object) of the <tt>context</tt> class is created before the rule starts parsing 
+  and is destructed after parsing has concluded. The following pseudo code depicts 
+  what's happening when a rule is invoked:</p>
+<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>return_type
+    </span><span class=identifier>rule</span><span class=special>::</span><span class=identifier>parse</span><span class=special>(</span><span class=identifier>ScannerT </span><span class=keyword>const</span><span class=special>& </span><span class=identifier>scan</span><span class=special>)
+    </span><span class=special>{
+        </span><span class=identifier>context_t </span><span class=identifier>ctx</span><span class=special>(/**/);
+        </span><span class=identifier>ctx</span><span class=special>.</span><span class=identifier>pre_parse</span><span class=special>(/**/);
+
+        </span><span class=comment>//  main parse code of the rule here...
+
+        </span><span class=keyword>return </span><span class=identifier>ctx</span><span class=special>.</span><span class=identifier>post_parse</span><span class=special>(/**/);
+    </span><span class=special>}</span></font></code></pre>
+<p>The context is provided for extensibility. Its purpose is to expose the start 
+  and end of the rule's parse member function to accomodate external hooks. We 
+  can extend the rule in a multitude of ways by writing specialized context classes, 
+  without modifying the rule class itself. For example, we can make the rule emit 
+  debug diagnostics information by writing a context class that prints out the 
+  current state of the scanner at each point in the parse traversal where the 
+  rule is invoked.</p>
+<p>Example of a <tt>rule </tt>context that prints out debug information:</p>
+<pre><code><font color="#000000">    pre_parse</font>:<font color="#000000">      rule XXX is entered<font color="#0000ff">.</font> The current state of the input
+                    is <font color="#616161"><i>&quot;hello world, this is a test&quot;</i></font>
+
+    post_parse</font>:<font color="#000000">     rule XXX has concluded<font color="#0000ff">,</font> the rule matched <font color="#616161"><i>&quot;hello world&quot;</i></font><font color="#0000ff">.</font>
+                    The current state of the input is <font color="#616161"><i>&quot;, this is a test&quot;</i></font></font></code></pre>
+<p>Most of the time, the context will be invisible from the user's view. In general, 
+  clients of the framework need not deal directly nor even know about contexts. 
+  Power users might find some use of contexts though, thus, this has become part 
+  of the rule's public API. Other parts of the framework in other layers above 
+  the core take advantage of the context to extend the rule. The context will 
+  be covered in further detail later.</p>
+<table border="0">
+  <tr> 
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><a href="numerics.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="20"><a href="directives.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<hr size="1">
+<p class="copyright">Copyright &copy; 1998-2002 Joel de Guzman<br>
+  <br>
+  <font size="2">Permission to copy, use, modify, sell and distribute this document 
+  is granted provided this copyright notice appears in all copies. This document 
+  is provided &quot;as is&quot; without express or implied warranty, and with 
+  no claim as to its suitability for any purpose.</font></p>
+</body>
+</html>

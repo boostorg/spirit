@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>Debugging</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="theme/style.css" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" background="theme/bkd2.gif" cellspacing="2">
+  <tr> 
+    <td width="10"> 
+    </td>
+    <td width="85%"> <font size="6" face="Verdana, Arial, Helvetica, sans-serif"><b>Debugging</b></font> 
+    </td>
+    <td width="112"><a href="http://spirit.sf.net"><img src="theme/spirit.gif" width="112" height="48" align="right" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<table border="0">
+  <tr>
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><a href="position_iterator.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="20"><a href="error_handling.html"><img src="theme/r_arr.gif" border="0"></a></td>
+   </tr>
+</table>
+<p>The top-down nature of Spirit makes the generated parser easy to micro- debug 
+  using the standard debugger bundled with the C++ compiler we are using. With 
+  recursive-descent, the parse traversal utilizes the hardware stack through C++ 
+  function call mechanisms. There are no difficult to debug tables or state machines 
+  that obscure the parsing logic flow. The stack trace we see in the debugger 
+  follows faithfully the hierarchical grammar structure.</p>
+<p> Since any production rule can initiate a parse traversal , it is a lot easier 
+  to pinpoint the bugs by focusing on one or a few rules. For relatively complex 
+  parsing tasks, the same way we write robust C++ programs, it is advisable to 
+  develop a grammar iteratively on a per-module basis where each module is a small 
+  subset of the complete grammar. That way, we can stress-test individual modules 
+  piecemeal until we reach the top-most module. For instance, when developing 
+  a scripting language, we can start with expressions, then move on to statements, 
+  then functions, upwards until we have a complete grammar. </p>
+<p> At some point when the grammar gets quite complicated, it is desirable to 
+  visualize the parse traversal and see what's happening. There are some facilities 
+  in the framework that aid in the visualisation of the parse traversal for the 
+  purpose of debugging. The following macros enable these features.</p>
+<a name="debugging_macros"></a>
+<h2>Debugging Macros</h2>
+<a name="spirit_assert_exception"></a>
+<h3>BOOST_SPIRIT_ASSERT_EXCEPTION</h3>
+<p> Spirit contains assertions that may activate when spirit is used incorrectly. 
+  By default these assertions use the assert macro from the standard library. 
+  If you want spirit to throw an exception instead, define <tt>BOOST_SPIRIT_ASSERT_EXCEPTION</tt> 
+  to the name of the class that you want to be thrown. This class's constructor 
+  will be passed a <tt>const char*</tt> stringified version of the file, line, 
+  and assertion condition, when it is thrown. If you want to totally disable the 
+  assertion, <tt>#define NDEBUG</tt>.</p>
+<a name="spirit_debug"></a>
+<h3>BOOST_SPIRIT_DEBUG</h3>
+<p> Define this to enable debugging.</p>
+<a name="spirit_debug_out"></a>
+<h3>BOOST_SPIRIT_DEBUG_OUT</h3>
+<p> Define this to redirect the debugging diagnostics printout to somewhere else 
+  (e.g. a file or stream). Defaults to <tt>std::cout</tt>.</p>
+<a name="spirit_debug_print_some"></a>
+<h3>BOOST_SPIRIT_DEBUG_PRINT_SOME</h3>
+<p> The <tt>BOOST_SPIRIT_DEBUG_PRINT_SOME</tt> constant defines the number of characters 
+  from the stream to be printed for diagnosis. This defaults to the first 20 characters.</p>
+<a name="spirit_debug_tracenode"></a>
+<h3>BOOST_SPIRIT_DEBUG_TRACENODE</h3>
+<p> By default all parser nodes are traced. This constant may be used to redefine 
+  this default. If this is <tt>1</tt> (<tt>true</tt>), then tracing is enabled 
+  by default, if this constant is <tt>0</tt> (<tt>false</tt>), the tracing is 
+  disabled by default. This preprocessor constant is set to <tt>1 </tt>(<tt>true</tt>) 
+  by default.</p>
+<a name="spirit_debug_node_p_"></a>
+<h3>BOOST_SPIRIT_DEBUG_NODE(p)</h3>
+<p> Define this to print some debugging diagnostics for parser p. This macro</p>
+<ul>
+  <li>Registers the parser name for debugging</li>
+  <li>Enables/disables the tracing for parser depending on <tt>BOOST_SPIRIT_DEBUG_TRACENODE</tt></li>
+</ul>
+<p> <b>Pre-parse</b>: Before entering the rule, the rule name followed by a peek 
+  into the data at the current iterator position is printed.</p>
+<p> <b>Post-parse</b>: After parsing the rule, the rule name followed by a peek 
+  into the data at the current iterator position is printed. Here, <tt>'/'</tt> 
+  before the rule name flags a succesful match while <tt>'#'</tt> before the rule 
+  name flags an unsuccesful match.</p>
+<p> The following are synonyms for <tt>BOOST_SPIRIT_DEBUG_NODE</tt></p>
+<ol>
+  <li>BOOST_SPIRIT_DEBUG_RULE</li>
+  <li>BOOST_SPIRIT_DEBUG_GRAMMAR</li>
+</ol>
+<a name="spirit_trace_node_p__flag_"></a>
+<h3>BOOST_SPIRIT_TRACE_NODE(p, flag)</h3>
+<p> Similar to <tt>BOOST_SPIRIT_DEBUG_NODE</tt>. Additionally allows selective debugging. 
+  This is useful in situations where we want to debug just a hand picked set of 
+  nodes.</p>
+<p> The following are synonyms for <tt>BOOST_SPIRIT_TRACE_NODE</tt></p>
+<ol>
+  <li>BOOST_SPIRIT_TRACE_RULE</li>
+  <li>BOOST_SPIRIT_TRACE_GRAMMAR</li>
+</ol>
+<p> Here's the original calculator with debugging features enabled:</p>
+<pre>
+    <code><span class=preprocessor>#define </span><span class=identifier>BOOST_SPIRIT_DEBUG  </span><span class=comment>///$$$ DEFINE THIS BEFORE ANYTHING ELSE $$$///
+    </span><span class=preprocessor>#include </span><span class=string>&quot;boost/spirit.hpp&quot;
+
+    </span><span class=comment>/***/
+
+    /*** CALCULATOR GRAMMAR DEFINITIONS HERE ***/
+
+    </span><span class=identifier>BOOST_SPIRIT_DEBUG_RULE</span><span class=special>(</span><span class=identifier>integer</span><span class=special>);
+    </span><span class=identifier>BOOST_SPIRIT_DEBUG_RULE</span><span class=special>(</span><span class=identifier>group</span><span class=special>);
+    </span><span class=identifier>BOOST_SPIRIT_DEBUG_RULE</span><span class=special>(</span><span class=identifier>factor</span><span class=special>);
+    </span><span class=identifier>BOOST_SPIRIT_DEBUG_RULE</span><span class=special>(</span><span class=identifier>term</span><span class=special>);
+    </span><span class=identifier>BOOST_SPIRIT_DEBUG_RULE</span><span class=special>(</span><span class=identifier>expr</span><span class=special>);
+</span></code></pre>
+<p> Now here's a sample session with the calculator.</p>
+<pre><code>
+    <font color="#FF0000">Type an expression...or [q or Q] to quit</font>
+
+    <font color="#FF0000">1 + 2</font>
+    expr:   &quot;1 + 2 &quot;
+        term:   &quot;1 + 2 &quot;
+            factor: &quot;1 + 2 &quot;
+                integer: &quot;1 + 2 &quot;
+    <font color="#FF0000">push    1</font>
+                /integer:   &quot;+ 2 &quot;
+            /factor:    &quot;+ 2 &quot;
+        /term:  &quot;+ 2 &quot;
+        term:   &quot;2 &quot;
+            factor: &quot;2 &quot;
+                integer:    &quot;2 &quot;
+    <font color="#FF0000">push    2</font>
+                /integer:   &quot; &quot;
+            /factor:   &quot; &quot;
+        /term:  &quot; &quot;
+    <font color="#FF0000">popped 1 and 2 from the stack. pushing 3 onto the stack.</font>
+    /expr:  &quot; &quot;
+    <font color="#FF0000">parsing succeeded
+    result = 3</font>
+</code></pre>
+<p> We typed in &quot;1 + 2&quot;. Notice that there are two successful branches 
+  from the top rule <tt>expr</tt>. The text in red is generated by the parser's 
+  semantic actions while the others are generated by the debug-diagnostics of 
+  our rules. Notice how the first <tt>integer</tt> rule took &quot;1&quot;, the 
+  first <tt>term</tt> rule took &quot;+&quot; and finally the second <tt>integer</tt> 
+  rule took &quot;2&quot;.</p>
+<table border="0">
+  <tr> 
+    <td width="10"></td>
+    <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
+    <td width="30"><a href="position_iterator.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="20"><a href="error_handling.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
+</table>
+<br>
+<hr size="1">
+<p class="copyright">Copyright &copy; 1998-2002 Joel de Guzman<br>
+  <br>
+  <font size="2">Permission to copy, use, modify, sell and distribute this document 
+  is granted provided this copyright notice appears in all copies. This document 
+  is provided &quot;as is&quot; without express or implied warranty, and with 
+  no claim as to its suitability for any purpose.</font></p>
+<p class="copyright">&nbsp;</p>
+</body>
+</html>
