@@ -3,15 +3,15 @@
 <!-- the boost::spirit::tree_to_xml functions. -->
 <!ELEMENT parsetree (parsenode)>
 <!ATTLIST parsetree
-	version CDATA "1.0"
+    version CDATA "1.0"
 >
 <!ELEMENT parsenode ((value | token)?, parsenode*)>
 <!ATTLIST parsenode
-	rule CDATA #IMPLIED
+    rule CDATA #IMPLIED
 >
 <!ELEMENT value (#PCDATA | token)*>
 <!ELEMENT token (#PCDATA)>
 <!ATTLIST token
-	id CDATA #REQUIRED
-	is_root CDATA "0"
+    id CDATA #REQUIRED
+    is_root CDATA "0"
 >

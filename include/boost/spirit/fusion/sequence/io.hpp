@@ -25,8 +25,8 @@ namespace boost { namespace fusion
     inline OStream&
     operator<<(OStream& os, sequence_base<Sequence> const& seq)
     {
-	    detail::print_sequence(os, static_cast<Sequence const&>(seq));
-	    return os;
+        detail::print_sequence(os, static_cast<Sequence const&>(seq));
+        return os;
     }
 
     template <typename IStream, typename Sequence>
@@ -44,8 +44,8 @@ namespace boost { namespace fusion
 //        std::basic_ostream<CharType, CharTrait>& os
 //      , sequence_base<Sequence> const& seq)
 //    {
-//	    detail::print_sequence(os, static_cast<Sequence const&>(seq));
-//	    return os;
+//        detail::print_sequence(os, static_cast<Sequence const&>(seq));
+//        return os;
 //    }
 //
 //    template <typename CharType, typename CharTrait, typename Sequence>
