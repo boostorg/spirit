@@ -98,7 +98,7 @@ namespace boost { namespace spirit
     match<nil_t>::value(nil_t) {}
 
     inline void
-    match<nil_t>::swap(match& other)
+    match<nil_t>::swap(match<nil_t>& other)
     {
         std::swap(len, other.len);
     }
