@@ -285,7 +285,7 @@ namespace impl {
                 (*it).value.id() != 0 && id.has_value() ? id : nil);
 
             // first dump the value
-            size_t cnt = std::distance ((*it).value.begin(), (*it).value.end());
+            std::size_t cnt = std::distance((*it).value.begin(), (*it).value.end());
 
             if (1 == cnt)
             {
