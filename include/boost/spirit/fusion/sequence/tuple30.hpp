@@ -22,6 +22,7 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/vector/vector30.hpp>
+#include <boost/preprocessor/iteration/iterate.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
 # include <boost/spirit/fusion/iterator/next.hpp>
@@ -49,7 +50,8 @@ namespace boost { namespace fusion
 
     struct tuple_tag;
 
-    BOOST_PP_REPEAT_FROM_TO(21, 31, FUSION_TUPLE_N, _)
+#  define BOOST_PP_ITERATION_PARAMS_1 (3, (21, 30, <boost/spirit/fusion/sequence/detail/tuple_body.hpp>))
+#  include BOOST_PP_ITERATE()
 }}
 
 #endif
