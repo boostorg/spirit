@@ -30,6 +30,9 @@ namespace boost { namespace spirit {
 
             virtual RT
             do_parse_virtual(ScannerT const& scan) const = 0;
+
+            virtual abstract_parser *
+            clone() const = 0;
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -46,6 +49,12 @@ namespace boost { namespace spirit {
             virtual RT
             do_parse_virtual(ScannerT const& scan) const
             { return p.parse(scan); }
+
+            virtual abstract_parser<ScannerT, RT> *
+            clone() const
+            {
+                return new concrete_parser(p);
+            }
 
             typename ParserT::embed_t p;
         };
