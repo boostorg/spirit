@@ -18,9 +18,9 @@
 #include <boost/spirit/attribute.hpp>
 #include <boost/spirit/symbols.hpp>
 
-#include <boost/phoenix/primitives.hpp>
-#include <boost/phoenix/casts.hpp>
-#include <boost/phoenix/binders.hpp>
+#include <boost/spirit/phoenix/primitives.hpp>
+#include <boost/spirit/phoenix/casts.hpp>
+#include <boost/spirit/phoenix/binders.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // used namespaces

@@ -18,9 +18,9 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/symbols/symbols.hpp>
 
-#include <boost/phoenix/tuples.hpp>
-#include <boost/phoenix/tuple_helpers.hpp>
-#include <boost/phoenix/primitives.hpp>
+#include <boost/spirit/phoenix/tuples.hpp>
+#include <boost/spirit/phoenix/tuple_helpers.hpp>
+#include <boost/spirit/phoenix/primitives.hpp>
 #include <boost/spirit/attribute/closure.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

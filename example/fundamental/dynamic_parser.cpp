@@ -5,11 +5,9 @@
 //  [ JCAB 7/26/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/utility/dynamic_parser.hpp>
+#include <boost/spirit/dynamic/if.hpp>
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/functor_parser.hpp>
-//#include <boost/lambda/lambda.hpp>
-//#include <boost/phoenix/primitives.hpp>
 #include <iostream>
 #include <vector>
 #include <string>

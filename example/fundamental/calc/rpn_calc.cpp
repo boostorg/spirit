@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/attribute.hpp>
-#include <boost/phoenix/functions.hpp>
+#include <boost/spirit/phoenix/functions.hpp>
 #include <iostream>
 #include <string>
 

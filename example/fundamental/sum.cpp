@@ -7,8 +7,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/core.hpp>
-#include <boost/phoenix/primitives.hpp>
-#include <boost/phoenix/operators.hpp>
+#include <boost/spirit/phoenix/primitives.hpp>
+#include <boost/spirit/phoenix/operators.hpp>
 #include <iostream>
 #include <string>
 
