@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
@@ -157,15 +157,15 @@ struct grammar_definition
         { p = self; }
 
         definition_t&
-        define(grammar_t const* grammar)
+        define(grammar_t const* target_grammar)
         {
             grammar_helper_list<GrammarT> &helpers =
 #if !defined(__GNUC__) || (__GNUC__ > 2)
-                grammar_extract_helper_list::do_(grammar);
+                grammar_extract_helper_list::do_(target_grammar);
 #else
-                grammar->helpers;
+                target_grammar->helpers;
 #endif
-            typename grammar_t::object_id id = grammar->get_object_id();
+            typename grammar_t::object_id id = target_grammar->get_object_id();
 
             if (definitions.size()<=id)
                 definitions.resize(id*3/2+1);
@@ -173,10 +173,10 @@ struct grammar_definition
                 return *definitions[id];
 
             std::auto_ptr<definition_t>
-                result(new definition_t(grammar->derived()));
+                result(new definition_t(target_grammar->derived()));
 
 #ifdef BOOST_SPIRIT_THREADSAFE
-            boost::mutex::scoped_lock(helpers.mutex());
+            boost::mutex::scoped_lock lock(helpers.mutex());
 #endif
             helpers.push_back(this);
 
@@ -186,9 +186,9 @@ struct grammar_definition
         }
 
         int
-        undefine(grammar_t* grammar)
+        undefine(grammar_t* target_grammar)
         {
-            typename grammar_t::object_id id = grammar->get_object_id();
+            typename grammar_t::object_id id = target_grammar->get_object_id();
 
             if (definitions.size()<=id)
                 return 0;
@@ -206,7 +206,7 @@ struct grammar_definition
         helper_ptr_t                self;
     };
 
-#endif /* defined(BOOST_SPIRIT_NO_MULTIPLE_GRAMMAR_INSTANCES) */
+#endif /* defined(BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE) */
 
     //////////////////////////////////
     template<typename DerivedT, typename ContextT, typename ScannerT>

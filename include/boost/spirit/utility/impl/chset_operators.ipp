@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -12,9 +12,7 @@
 #define BOOST_SPIRIT_CHSET_OPERATORS_IPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#if !defined(BOOST_LIMITS_HPP)
-#include "boost/limits.hpp"
-#endif
+#include <boost/limits.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -68,38 +66,6 @@ operator^(chset<CharT> const& a, chset<CharT> const& b)
 //  range <--> chset free operators implementation
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace impl {
-
-    //////////////////////////////////
-    template <typename CharT>
-    inline CharT
-    decr(CharT v)
-    {
-        return v == std::numeric_limits<CharT>::min() ? v : v-1;
-    }
-
-    //////////////////////////////////
-    template <typename CharT>
-    inline CharT
-    incr(CharT v)
-    {
-        return v == std::numeric_limits<CharT>::max() ? v : v+1;
-    }
-}
-
-template <typename CharT>
-inline chset<CharT>
-operator~(range<CharT> const& a)
-{
-    chset<CharT> a_;
-    a_.set(range<CharT>(std::numeric_limits<CharT>::min(),
-                impl::decr(a.first)));
-    a_.set(range<CharT>(impl::incr(a.last),
-                std::numeric_limits<CharT>::max()));
-    return a_;
-}
-
-//////////////////////////////////
 template <typename CharT>
 inline chset<CharT>
 operator|(chset<CharT> const& a, range<CharT> const& b)
@@ -115,10 +81,12 @@ inline chset<CharT>
 operator&(chset<CharT> const& a, range<CharT> const& b)
 {
     chset<CharT> a_(a);
-    a_.clear(range<CharT>(std::numeric_limits<CharT>::min(),
-                impl::decr(b.first)));
-    a_.clear(range<CharT>(impl::incr(b.last),
-                std::numeric_limits<CharT>::max()));
+    if(b.first != std::numeric_limits<CharT>::min()) {
+        a_.clear(range<CharT>(std::numeric_limits<CharT>::min(), b.first - 1));
+    }
+    if(b.last != std::numeric_limits<CharT>::max()) {
+        a_.clear(range<CharT>(b.last + 1, std::numeric_limits<CharT>::max()));
+    }
     return a_;
 }
 
@@ -156,10 +124,12 @@ inline chset<CharT>
 operator&(range<CharT> const& a, chset<CharT> const& b)
 {
     chset<CharT> b_(b);
-    b_.clear(range<CharT>(std::numeric_limits<CharT>::min(),
-                impl::decr(a.first)));
-    b_.clear(range<CharT>(impl::incr(a.last),
-                std::numeric_limits<CharT>::max()));
+    if(a.first != std::numeric_limits<CharT>::min()) {
+        b_.clear(range<CharT>(std::numeric_limits<CharT>::min(), a.first - 1));
+    }
+    if(a.last != std::numeric_limits<CharT>::max()) {
+        b_.clear(range<CharT>(a.last + 1, std::numeric_limits<CharT>::max()));
+    }
     return b_;
 }
 
@@ -254,14 +224,6 @@ operator^(CharT a, chset<CharT> const& b)
 ///////////////////////////////////////////////////////////////////////////////
 template <typename CharT>
 inline chset<CharT>
-operator~(chlit<CharT> const& a)
-{
-    return ~range<CharT>(a.ch, a.ch);
-}
-
-//////////////////////////////////
-template <typename CharT>
-inline chset<CharT>
 operator|(chset<CharT> const& a, chlit<CharT> const& b)
 {
     return a | b.ch;
@@ -323,6 +285,216 @@ operator^(chlit<CharT> const& a, chset<CharT> const& b)
     return a.ch ^ b;
 }
 
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  negated_char_parser <--> chset free operators implementation
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator|(chset<CharT> const& a, negated_char_parser<ParserT> const& b)
+{
+    return a | chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator&(chset<CharT> const& a, negated_char_parser<ParserT> const& b)
+{
+    return a & chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator-(chset<CharT> const& a, negated_char_parser<ParserT> const& b)
+{
+    return a - chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator^(chset<CharT> const& a, negated_char_parser<ParserT> const& b)
+{
+    return a ^ chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator|(negated_char_parser<ParserT> const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) | b;
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator&(negated_char_parser<ParserT> const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) & b;
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator-(negated_char_parser<ParserT> const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) - b;
+}
+
+//////////////////////////////////
+template <typename CharT, typename ParserT>
+inline chset<CharT>
+operator^(negated_char_parser<ParserT> const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) ^ b;
+}
+
+#else // BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  negated_char_parser<range> <--> chset free operators implementation
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator|(chset<CharT> const& a, negated_char_parser<range<CharT> > const& b)
+{
+    return a | chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator&(chset<CharT> const& a, negated_char_parser<range<CharT> > const& b)
+{
+    return a & chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator-(chset<CharT> const& a, negated_char_parser<range<CharT> > const& b)
+{
+    return a - chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator^(chset<CharT> const& a, negated_char_parser<range<CharT> > const& b)
+{
+    return a ^ chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator|(negated_char_parser<range<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) | b;
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator&(negated_char_parser<range<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) & b;
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator-(negated_char_parser<range<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) - b;
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator^(negated_char_parser<range<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) ^ b;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  negated_char_parser<chlit> <--> chset free operators implementation
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator|(chset<CharT> const& a, negated_char_parser<chlit<CharT> > const& b)
+{
+    return a | chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator&(chset<CharT> const& a, negated_char_parser<chlit<CharT> > const& b)
+{
+    return a & chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator-(chset<CharT> const& a, negated_char_parser<chlit<CharT> > const& b)
+{
+    return a - chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator^(chset<CharT> const& a, negated_char_parser<chlit<CharT> > const& b)
+{
+    return a ^ chset<CharT>(b);
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator|(negated_char_parser<chlit<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) | b;
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator&(negated_char_parser<chlit<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) & b;
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator-(negated_char_parser<chlit<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) - b;
+}
+
+//////////////////////////////////
+template <typename CharT>
+inline chset<CharT>
+operator^(negated_char_parser<chlit<CharT> > const& a, chset<CharT> const& b)
+{
+    return chset<CharT>(a) ^ b;
+}
+
+#endif // BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  anychar_parser <--> chset free operators
@@ -330,10 +502,6 @@ operator^(chlit<CharT> const& a, chset<CharT> const& b)
 //      Where a is chset and b is a anychar_parser, and vice-versa, implements:
 //
 //          a | b, a & b, a - b, a ^ b
-//
-//      Where a is a chlit, implements:
-//
-//          ~a
 //
 ///////////////////////////////////////////////////////////////////////////////
 namespace impl {
@@ -355,13 +523,6 @@ namespace impl {
         static boost::spirit::range<CharT> empty_;
         return empty_;
     }
-}
-
-//////////////////////////////////
-inline nothing_parser
-operator~(anychar_parser)
-{
-    return nothing_p;
 }
 
 //////////////////////////////////

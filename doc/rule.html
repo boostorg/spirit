@@ -29,20 +29,23 @@
   the behavior of an EBNF expression assigned to it. Naming an EBNF expression 
   allows it to be referenced later. The <tt>rule</tt> is a template class parameterized 
   by the type of the scanner (<tt>ScannerT</tt>) , the rule's <a href="indepth_the_parser_context.html">context</a> 
-  and its tag. Default template parameters are provided to make it easy to use 
-  the rule.</p>
+  and its <a href="#tag">tag</a>. Default template parameters are provided to 
+  make it easy to use the rule.</p>
 <pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>template</span><span class=special>&lt;
         </span><span class=keyword>typename </span><span class=identifier>ScannerT </span><span class=special>= </span><span class=identifier>scanner</span><span class=special>&lt;&gt;,
-        </span><span class=keyword>typename </span><span class=identifier>ContextT </span><span class=special>= </span><span class=identifier>parser_context</span><span class=special>&gt;
+        </span><span class=keyword>typename </span><span class=identifier>ContextT </span><span class=special>= </span><span class=identifier>parser_context,
+        </span><span class="keyword">typename</span><span class=identifier> TagT </span><span class="special">=</span><span class=identifier> parser_address_tag</span><span class=special>&gt;
     </span><span class=keyword>class </span><span class=identifier>rule</span><span class=special>;</span></font></code></pre>
 <p>Default template parameters are supplied to handle the most common case. <tt>ScannerT</tt> 
   defaults to <tt>scanner&lt;&gt;</tt>, a plain vanilla scanner that uses <tt>char 
   const<span class="operators">*</span></tt> iterators and does nothing special 
   at all other than iterate through all the chars in the null terminated input 
-  a character at a time. In trivial cases, declaring a rule as <tt>rule&lt;&gt;</tt> 
-  is enough. You need not be concerned at all with the <tt>ContextT</tt> template 
-  parameter unless you wish to tweak the low level behavior of the rule. Detailed 
-  information on the <tt>ContextT</tt> template parameter is provided <a href="indepth_the_parser_context.html">elsewhere</a>. 
+  a character at a time. The rule tag, <tt>TagT</tt>, typically used with <a href="trees.html">ASTs</a>, 
+  is used to identify a rule. It is explained <a href="#tag">here</a>. In trivial 
+  cases, declaring a rule as <tt>rule&lt;&gt;</tt> is enough. You need not be 
+  concerned at all with the <tt>ContextT</tt> template parameter unless you wish 
+  to tweak the low level behavior of the rule. Detailed information on the <tt>ContextT</tt> 
+  template parameter is provided <a href="indepth_the_parser_context.html">elsewhere</a>. 
 </p>
 <p>Presented above is the public API. There may actually be more template parameters 
   after <tt>ContextT</tt>. Everything after the <tt>ContextT</tt> parameter should 
@@ -119,13 +122,26 @@
   of a start symbol. Any rule can be a start symbol. This feature promotes step-wise 
   creation of parsers. We can build parsers from the bottom up while fully testing 
   each level or module up untill we get to the top-most level.</p>
-<h3>parser_id</h3>
-<p>Each rule has an id of type parser_id. The default id of each rule is set to 
-  the address of that rule (converted to an integer). This is not always the most 
-  convenient, since it is not always possible to get the address of a rule to 
-  compare against. So, you can override the default id used by each rule by calling 
-  <tt>set_id(parser_id)</tt> on a rule. Example:</p>
-<pre><code><font color="#000000"><span class=identifier>    a_rule</span><span class=special>.</span><span class=identifier>set_id</span><span class=special>(</span><span class=identifier>123</span><span class=special>); </span><span class=comment>//  set a_rule's id to 12</span></font></code></pre>
+<h3><a name="tag"></a>Parser Tag</h3>
+<p>Rules may be tagged for identification purposes. This is necessary, especially 
+  when dealing with <a href="trees.html">parse trees and ASTs</a> to see which 
+  rule created a specific AST/parse tree node. Each rule has an ID of type <tt>parser_id</tt>. 
+  This ID can be obtained through the rule's <tt>id()</tt> member function:</p>
+<pre><code><font color="#000000"><span class=identifier>    my_rule</span><span class=special>.</span><span class=identifier>id</span><span class=special>(); </span><span class=comment>//  get my_rule's id</span></font></code></pre>
+<p>The <tt>parser_id</tt> class is declared as:</p>
+<pre>    <span class="keyword">class</span> <span class="identifier">parser_id</span><br>    <span class="special">{</span><br>    <span class="keyword">public</span><span class="special">:</span><br>                    parser_id<span class="special">();</span><br>        <span class="keyword">explicit</span>    parser_id<span class="special">(</span><span class="keyword">void const</span><span class="special">*</span> p<span class="special">);</span><br>                    parser_id<span class="special">(</span><span class="keyword">long</span> l<span class="special">);</span>
+    
+        <span class="keyword">bool</span>        <span class="keyword">operator</span><span class="special">==(</span><span class="identifier">parser_id</span> <span class="keyword">const</span><span class="special">&amp;</span> x<span class="special">)</span> const<span class="special">;</span><br>        <span class="keyword">bool</span>        <span class="keyword">operator</span><span class="special">!=(</span><span class="identifier">parser_id</span> <span class="keyword">const</span><span class="special">&amp;</span> x<span class="special">)</span> const<span class="special">;</span>
+        <span class="keyword">bool</span> <span class="keyword">       operator</span><span class="special">&lt;(</span><span class="keyword">parser_id</span> <span class="keyword">const</span><span class="special">&amp;</span> x<span class="special">)</span> const<span class="special">;</span>
+        <span class="keyword">long</span> <span class="identifier">       to_long</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;
+    };</span></pre>
+<p>The rule's <tt>TagT</tt> template parameter supplies this ID. This defaults 
+  to <tt>parser_address_tag</tt>. The <tt>parser_address_tag</tt> uses the address 
+  of the rule as its ID. This is not often the most convenient, since it is not 
+  always possible to get the address of a rule to compare against. It is possible 
+  to have specific constant integers to identify a rule. For this purpose, we 
+  can use the <tt>parser_tag&lt;N&gt;</tt>, where N is a constant integer:</p>
+<pre><code><font color="#000000"><span class=identifier>    rule</span><span class=special>&lt;</span><span class=identifier>scanner</span><span class=special>&lt;&gt;, </span><span class=identifier>parser_context</span><span class="special">,</span><span class=identifier> parser_tag</span><span class="special">&lt;</span><span class=identifier>123</span><span class="special">&gt; &gt; </span><span class="identifier">my_rule</span><span class="special">; </span><span class="comment">//  set my_rule's id to 123</span></font></code></pre>
 <table border="0">
   <tr> 
     <td width="10"></td>

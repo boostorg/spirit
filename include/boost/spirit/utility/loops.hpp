@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     Copyright (c) 2002 Raghavendra Satish
     Copyright (c) 2002 Jeff Westfahl
@@ -299,7 +299,8 @@ namespace boost { namespace spirit {
        typename impl::loop_traits<ParserT, MinT, MaxT>::type
        operator[](parser <ParserT> const & subject) const
        {
-            return impl::loop_traits<ParserT, MinT, MaxT>::type(
+           typedef typename impl::loop_traits<ParserT, MinT, MaxT>::type ret_t;
+           return ret_t(
                 subject.derived(),
                 m_min,
                 m_max);

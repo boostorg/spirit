@@ -1,7 +1,7 @@
 /*=============================================================================
     Phoenix V1.0
     Copyright (c) 2001-2002 Joel de Guzman
-    MT code Copyright (c) 2002 Martin Wille
+    MT code Copyright (c) 2002-2003 Martin Wille
 
     Permission to copy, use, modify, sell and distribute this software
     is granted provided this copyright notice appears in all copies.
@@ -144,6 +144,69 @@ namespace phoenix {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+namespace impl
+{
+    ///////////////////////////////////////////////////////////////////////
+    // closure_frame_holder is a simple class that encapsulates the
+    // storage for a frame pointer. It uses thread specific data in
+    // case when multithreading is enabled, an ordinary pointer otherwise
+    //
+    // it has get() and set() member functions. set() has to be used
+    // _after_ get(). get() contains intialisation code in the multi
+    // threading case
+    //
+    // closure_frame_holder is used by the closure<> class to store
+    // the pointer to the current frame.
+    //
+#ifndef PHOENIX_THREADSAFE
+    template <typename FrameT>
+    struct closure_frame_holder
+    {
+        typedef FrameT frame_t;
+        typedef frame_t *frame_ptr;
+
+        closure_frame_holder() : frame(0) {}
+
+        frame_ptr &get() { return frame; }
+        void set(frame_t *f) { frame = f; }
+
+    private:
+        frame_ptr frame;
+
+        // no copies, no assignments
+        closure_frame_holder(closure_frame_holder const &);
+        closure_frame_holder &operator=(closure_frame_holder const &);
+    };
+#else
+    template <typename FrameT>
+    struct closure_frame_holder
+    {
+        typedef FrameT   frame_t;
+        typedef frame_t *frame_ptr;
+
+        closure_frame_holder() : tsp_frame() {}
+
+        frame_ptr &get()
+        {
+            if (!tsp_frame.get())
+                tsp_frame.reset(new frame_ptr(0));
+            return *tsp_frame;
+        }
+        void set(frame_ptr f)
+        {
+            *tsp_frame = f;
+        }
+
+    private:
+        boost::thread_specific_ptr<frame_ptr> tsp_frame;
+
+        // no copies, no assignments
+        closure_frame_holder(closure_frame_holder const &);
+        closure_frame_holder &operator=(closure_frame_holder const &);
+    };
+#endif
+} // namespace phoenix::impl
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  closure_frame class
@@ -155,16 +218,16 @@ class closure_frame : public ClosureT::tuple_t {
 public:
 
     closure_frame(ClosureT const& clos)
-    : ClosureT::tuple_t(), save(clos.frame), frame(clos.frame)
-    { clos.frame = this; }
+    : ClosureT::tuple_t(), save(clos.frame.get()), frame(clos.frame)
+    { clos.frame.set(this); }
 
     template <typename TupleT>
     closure_frame(ClosureT const& clos, TupleT const& init)
-    : ClosureT::tuple_t(init), save(clos.frame), frame(clos.frame)
-    { clos.frame = this; }
+    : ClosureT::tuple_t(init), save(clos.frame.get()), frame(clos.frame)
+    { clos.frame.set(this); }
 
     ~closure_frame()
-    { frame = save; }
+    { frame.set(save); }
 
 private:
 
@@ -172,7 +235,7 @@ private:
     closure_frame& operator=(closure_frame const&); // no assign
 
     closure_frame* save;
-    closure_frame*& frame;
+    impl::closure_frame_holder<closure_frame>& frame;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -188,7 +251,7 @@ public:
     typedef typename ClosureT::tuple_t tuple_t;
 
     closure_member()
-    : frame(ClosureT::closure_frame_ref()) {}
+    : frame(ClosureT::closure_frame_holder_ref()) {}
 
     template <typename TupleT>
     struct result {
@@ -203,13 +266,12 @@ public:
     eval(TupleT const& /*args*/) const
     {
         using namespace std;
-        assert(frame != 0);
-        return (*frame)[tuple_index<N>()];
+        assert(frame.get() != 0);
+        return (*frame.get())[tuple_index<N>()];
     }
 
 private:
-
-    typename ClosureT::closure_frame_t*& frame;
+    impl::closure_frame_holder<typename ClosureT::closure_frame_t> &frame;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -286,9 +348,9 @@ public:
     typedef closure_frame<self_t> closure_frame_t;
 
                             closure()
-                            : frame(0)      { closure_frame_ref(&frame); }
-    closure_frame_t&        context()       { assert(frame!=0); return frame; }
-    closure_frame_t const&  context() const { assert(frame!=0); return frame; }
+                            : frame()       { closure_frame_holder_ref(&frame); }
+    closure_frame_t&        context()       { assert(frame!=0); return frame.get(); }
+    closure_frame_t const&  context() const { assert(frame!=0); return frame.get(); }
 
     typedef actor<closure_member<0, self_t> > member1;
     typedef actor<closure_member<1, self_t> > member2;
@@ -334,23 +396,25 @@ private:
     friend class closure_frame;
 #endif
 
-    static closure_frame_t*&
-    closure_frame_ref(closure_frame_t** frame_ = 0)
+    typedef impl::closure_frame_holder<closure_frame_t> holder_t;
+
+    static holder_t &
+    closure_frame_holder_ref(holder_t* holder_ = 0)
     {
 #ifdef PHOENIX_THREADSAFE
-        static boost::thread_specific_ptr<closure_frame_t **> tsp_frame;
+        static boost::thread_specific_ptr<holder_t*> tsp_frame;
         if (!tsp_frame.get())
-            tsp_frame.reset(new closure_frame_t **(0));
-        closure_frame_t **& frame = *tsp_frame;
+            tsp_frame.reset(new holder_t *(0));
+        holder_t *& holder = *tsp_frame;
 #else
-        static closure_frame_t** frame = 0;
+        static holder_t* holder = 0;
 #endif
-        if (frame_ != 0)
-            frame = frame_;
-        return *frame;
+        if (holder_ != 0)
+            holder = holder_;
+        return *holder;
     }
 
-    mutable closure_frame_t* frame;
+    mutable holder_t frame;
 };
 
 }

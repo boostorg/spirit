@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -31,12 +31,16 @@ namespace boost { namespace spirit {
         //      elsewhere.
         //
         ///////////////////////////////////////////////////////////////////////
-        template <typename T1>
-        struct convert
+        template <typename DestT>
+        struct match_attr_traits
         {
-            template <typename T>
-            static T
-            to_result(T1 const &t) { return T(t); }
+            static DestT
+            convert(DestT const& attr)  //  case where input *IS*
+            { return DestT(attr); }     //  convertible to DestT
+
+            static DestT
+            convert(...)                //  case where input *IS NOT*
+            { return DestT(); }         //  convertible to DestT
         };
 
     #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
@@ -48,7 +52,7 @@ namespace boost { namespace spirit {
             {
                 template <typename MatchT>
                 static T get(MatchT const& m)
-                { return T(m.value()); }
+                { return match_attr_traits<T>::convert(m.value()); }
 
                 static T get(match<nil_t> const&)
                 { return T(); }
@@ -66,8 +70,7 @@ namespace boost { namespace spirit {
                 template <typename MatchT>
                 static T get(MatchT const& m)
                 {
-                    return convert<typename MatchT::attr_t>
-                        ::template to_result<T>(m.value());
+                    return T(m.value());
                 }
 
                 static T get(match<nil_t> const&)
@@ -113,10 +116,7 @@ namespace boost { namespace spirit {
         {
             template <typename MatchT>
             static T get(MatchT const& m)
-            {
-                return convert<typename MatchT::attr_t>
-                    ::template to_result<T>(m.value());
-            }
+            { return match_attr_traits<T>::convert(m.value()); }
 
             static T get(match<nil_t> const&)
             { return T(); }
@@ -135,17 +135,11 @@ namespace boost { namespace spirit {
 
             static boost::reference_wrapper<T>
             get(match<nil_t> const&)
-            {
-                static T v;
-                return boost::reference_wrapper<T>(v);
-            }
+            { static T v; return boost::reference_wrapper<T>(v); }
 
             static boost::reference_wrapper<T>
             get_default()
-            {
-                static T v;
-                return boost::reference_wrapper<T>(v);
-            }
+            { static T v; return boost::reference_wrapper<T>(v); }
         };
 
     #endif // defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
@@ -159,7 +153,6 @@ namespace boost { namespace spirit {
             static nil_t get_default()
             { return nil_t(); }
         };
-
 
     #if !defined(__BORLANDC__)
         struct dummy { void nonnull() {}; };

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -94,7 +94,7 @@ namespace impl {
 
             return select_confix_parse_lexeme<LexemeT>::parse((
                             open
-                        >>  this_ | refactor_body_d[expr - close]
+                        >>  (this_ | refactor_body_d[expr - close])
                         >>  close
                     ),  scan);
         }
@@ -143,7 +143,7 @@ namespace impl {
         {
             return select_confix_parse_lexeme<LexemeT>::parse((
                             open
-                        >>  this_ | (expr - close)
+                        >>  (this_ | (expr - close))
                         >>  close
                     ),  scan);
         }

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -301,7 +301,8 @@ namespace quickdoc
             {
                 program
                     =
-                   *(   preprocessor    [ProcessT("preprocessor", self.out)]
+                    *space_p >>
+                    *(  preprocessor    [ProcessT("preprocessor", self.out)]
                     |   comment         [ProcessT("comment", self.out)]
                     |   keyword         [ProcessT("keyword", self.out)]
                     |   identifier      [ProcessT("identifier", self.out)]
@@ -345,7 +346,7 @@ namespace quickdoc
                     ;
 
                 special
-                    =   +(chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p)
+                    =   +chset_p("~!%^&*()+={[}]:;,<.>?/|\\-") >> *space_p
                     ;
 
                 string_

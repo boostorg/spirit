@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     Copyright (c) 2003 Martin Wille
     http://spirit.sourceforge.net/

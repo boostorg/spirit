@@ -65,11 +65,11 @@ Will generate:</p>
 </pre></code><a name="anchors"></a><h4>Anchors</h4><code><pre>
     [#named_anchor]
 </pre></code><a name="links"></a><h4>Links</h4><code><pre>
-    [@http://www.boost.org this is [*boost's] website....]
+    [@http&quot;//www.boost.org this is [*boost's] website....]
 </pre></code><p>
 Will generate:</p>
 <p>
-<a href="http://www.boost.org">
+<a href="http&quot;//www.boost.org">
 this is <b>boost's</b> website....</a></p>
 <a name="escape"></a><h4>Escape</h4><p>
 The escape mark-up is used when we don't want to do any processing.</p>
@@ -133,11 +133,11 @@ Will generate:</p>
 
     </span><span class=keyword>int </span><span class=identifier>main</span><span class=special>()
     </span><span class=special>{
-        </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=string>&quot;Hello World\n&quot;</span><span class=special>;
+        </span><span class=comment>// Sample code
+        </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>cout </span><span class=special>&lt;&lt; </span><span class=string>&quot;Hello, World\n&quot;</span><span class=special>;
     </span><span class=special>}
 </span></pre></code>
 <p>
-
 Preformatted code starts with a space or a tab. The code will be syntax
 highlighted.</p>
 <a name="preformatted"></a><h4>Preformatted</h4><p>
@@ -201,7 +201,7 @@ Hi <a href="http://spirit.sourceforge.net">
 Spirit</a> <img src="theme/smiley.gif"></img></p>
 <a name="blurbs"></a><h4>Blurbs</h4><code><pre>
     
-    [blurb :-) [*An eye catching advertisement ornote...]
+    [blurb :-) [*An eye catching advertisement or note...]
     [br][br]
 
     Spirit is an object-oriented recursive-descent parser generator

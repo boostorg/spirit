@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -15,7 +15,7 @@
 #include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace impl {
+namespace boost { namespace spirit { namespace utility { namespace impl {
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -36,7 +36,7 @@ namespace boost { namespace spirit { namespace impl {
         bool            is_valid() const;
         bool            includes(CharT v) const;
         bool            includes(range const& r) const;
-        bool            is_adjacent(range const& r) const;
+        bool            overlaps(range const& r) const;
         void            merge(range const& r);
 
         CharT first;
@@ -103,10 +103,8 @@ namespace boost { namespace spirit { namespace impl {
         run_t run;
     };
 
-}}} // namespace boost::spirit::impl
+}}}} // namespace boost::spirit::utility::impl
 
 #endif
 
-#if !defined(BOOST_SPIRIT_RANGE_RUN_IPP)
-#include "boost/spirit/utility/impl/chset/range_run.ipp"
-#endif
+#include <boost/spirit/utility/impl/chset/range_run.ipp>

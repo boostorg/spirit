@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
@@ -14,10 +14,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <bitset>
-
-#if !defined(BOOST_SPIRIT_BASIC_CHSET_HPP)
-#include "boost/spirit/utility/impl/chset/basic_chset.hpp"
-#endif
+#include <boost/spirit/utility/impl/chset/basic_chset.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -45,19 +42,19 @@ basic_chset<CharT>::test(CharT v) const
 template <typename CharT>
 inline void
 basic_chset<CharT>::set(CharT from, CharT to)
-{ rr.set(impl::range<CharT>(from, to)); }
+{ rr.set(utility::impl::range<CharT>(from, to)); }
 
 //////////////////////////////////
 template <typename CharT>
 inline void
 basic_chset<CharT>::set(CharT c)
-{ rr.set(impl::range<CharT>(c, c)); }
+{ rr.set(utility::impl::range<CharT>(c, c)); }
 
 //////////////////////////////////
 template <typename CharT>
 inline void
 basic_chset<CharT>::clear(CharT from, CharT to)
-{ rr.clear(impl::range<CharT>(from, to)); }
+{ rr.clear(utility::impl::range<CharT>(from, to)); }
 
 //////////////////////////////////
 template <typename CharT>
@@ -90,7 +87,7 @@ template <typename CharT>
 inline basic_chset<CharT>&
 basic_chset<CharT>::operator|=(basic_chset<CharT> const& x)
 {
-    typedef typename impl::range_run<CharT>::const_iterator const_iterator;
+    typedef typename utility::impl::range_run<CharT>::const_iterator const_iterator;
     for (const_iterator iter = x.rr.begin(); iter != x.rr.end(); ++iter)
         rr.set(*iter);
     return *this;
@@ -116,7 +113,7 @@ template <typename CharT>
 inline basic_chset<CharT>&
 basic_chset<CharT>::operator-=(basic_chset<CharT> const& x)
 {
-    typedef typename impl::range_run<CharT>::const_iterator const_iterator;
+    typedef typename utility::impl::range_run<CharT>::const_iterator const_iterator;
     for (const_iterator iter = x.rr.begin(); iter != x.rr.end(); ++iter)
         rr.clear(*iter);
     return *this;

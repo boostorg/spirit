@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -107,6 +107,7 @@ namespace boost { namespace spirit {
                 IteratorT first = first_;
                 scanner_t scan(first, last, policies);
                 match<nil_t> hit = p.parse(scan);
+                scan.skip(scan);
                 return parse_info<IteratorT>(
                     first, hit, hit && (first == last), hit.length());
             }
@@ -130,6 +131,7 @@ namespace boost { namespace spirit {
                 IteratorT first = first_;
                 scanner_t scan(first, last);
                 match<nil_t> hit = p.parse(scan);
+                scan.skip(scan);
                 return parse_info<IteratorT>(
                     first, hit, hit && (first == last), hit.length());
             }

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002 Jeff Westfahl
     http://spirit.sourceforge.net/
 
@@ -28,14 +28,10 @@
 #include <cassert>
 #include <fcntl.h>
 
-#if (defined (__COMO_VERSION__) && !defined (BOOST_DISABLE_WIN32)) \
-      || defined _BORLANDC_ || defined BOOST_INTEL_CXX_VERSION  \
-      || defined BOOST_MSVC
-    #include <io.h>
-#elif defined (__GLIBC__) && (__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 3)
-
-   #include <unistd.h>
-
+#ifdef BOOST_HAS_UNISTD_H
+#  include <unistd.h>
+#else
+#  include <io.h>
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,43 +41,33 @@ namespace boost { namespace spirit {
 namespace impl {
 
 // Systems that have _lseeki64, such as Win32.
-#if defined BOOST_MSVC              \
- || defined __MINGW32_VERSION       \
- || defined BOOST_INTEL_CXX_VERSION
-
-   // These systems default to CR-LF translation for opened files. Using
-   // O_BINARY turns off this translation.
-   static const int kOpenFlags = O_RDONLY | O_BINARY;
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#  if defined BOOST_MSVC              \
+   || defined __MINGW32_VERSION       \
+   || defined BOOST_INTEL_CXX_VERSION
 
    // Import _lseeki64 into this namespace under the name lseek
    inline off_t lseek (int File, off_t Offset, int Whence)
    {
       return _lseeki64 (File, Offset, Whence);
    }
+#  define BOOST_SPIRIT_ITERATORS_FILE_ITERATOR_HAVE_LSEEKI64
+#  endif
+#endif
 
-// Systems that have lseek, whether it is 64-bit or 32-bit
-#else
-
-   // Some non-POSIX systems default to CR-LF translation for opened
-   // files. Using O_BINARY turns off this translation.
-   #if defined __CYGWIN__ || defined __BORLANDC__
-
-      static const int kOpenFlags = O_RDONLY | O_BINARY;
-
-   // POSIX systems don't do any CR-LF translation, and don't have an
-   // O_BINARY flag. POSIX systems don't do this because it is ignored
-   // on all POSIX conforming systems, according to the Linux man page
-   // for fopen.
-   #else
-
-      static const int kOpenFlags = O_RDONLY;
-
-   #endif
-
+#ifndef BOOST_SPIRIT_ITERATORS_FILE_ITERATOR_HAVE_LSEEKI64
    // Import lseek into this namespace
    using ::lseek;
-
 #endif
+
+
+#ifdef O_BINARY
+   // Windows defaults to using CR-LF translation, use O_BINARY to suppress it.
+   static const int kOpenFlags = O_RDONLY | O_BINARY;
+#else
+   static const int kOpenFlags = O_RDONLY;
+#endif
+
 
 ///////////////////////////////////////////////////////////////////////////////
 } // namespace impl
@@ -148,13 +134,6 @@ inline file_iterator <CharT> file_iterator <CharT>::make_end ()
    _Iterator.m_Offset = m_Filesize - (m_Filesize % kCharSize);
 
    return _Iterator;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename CharT>
-inline file_iterator <CharT>::operator bool () const
-{
-   return (-1 != m_File);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -394,9 +373,9 @@ inline typename file_iterator <CharT>::value_type
 
    CharT _ReturnValue;
 
-   impl::lseek (m_File, m_Offset, SEEK_SET);
+   impl::lseek (m_File, m_Offset+Index, SEEK_SET);
 
-   read (m_File, &m_NextChar, kCharSize);
+   read (m_File, &_ReturnValue, kCharSize);
 
    return _ReturnValue;
 }

@@ -1,8 +1,8 @@
 /*=============================================================================
-    Spirit v1.6.0
-    
+    Spirit v1.6.1
+
     C Grammar checker
-    
+
     Copyright (c) 2001-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -45,12 +45,30 @@
 #include <vector>
 
 #if defined(_DEBUG)
-//#define BOOST_SPIRIT_DEBUG
+#define BOOST_SPIRIT_DEBUG
 #endif // defined(_DEBUG)
 
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility.hpp>
 #include <boost/spirit/symbols.hpp>
+
+// There is a g++ (3.1 and 3.2) bug on MINGW that prohibits
+// the use of the identifiers below. The following is a workaround.
+
+#if ((__GNUC__ == 3) && (__GNUC_MINOR__ == 1 || __GNUC_MINOR__ == 2) \
+    && defined(_WINNT_H))
+#  ifdef CONST
+#    undef CONST
+#  endif
+#  ifdef VOID
+#    undef VOID
+#  endif
+#  define CHAR CHAR_RULE
+#  define CONST CONST_RULE
+#  define FLOAT FLOAT_RULE
+#  define INT INT_RULE
+#  define VOID VOID_RULE
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // used namespaces
@@ -71,7 +89,8 @@ struct skip_grammar : public grammar<skip_grammar>
 #if defined(BOOST_MSVC) && (BOOST_MSVC <= 1200)
 
             skip
-                =   "//" >> *(anychar_p - '\n') >> '\n'     // C++ comment
+                =   space_p
+                |   "//" >> *(anychar_p - '\n') >> '\n'     // C++ comment
                 |   "/*" >> *(anychar_p - "*/") >> "*/"     // C comment
                 |   "#line" >> *(anychar_p - '\n') >> '\n'  // added for correctly
                                                             // handling preprocessed

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
 
@@ -732,9 +732,9 @@ struct common_tree_match_policy
     { return match_t(0, tree_policy_t::empty_node()); }
 
     template <typename AttrT, typename Iterator1T, typename Iterator2T>
-    static match_t create_match(
+    static tree_match<IteratorT, NodeFactoryT, AttrT> create_match(
         unsigned length,
-        AttrT const& /*val*/,
+        AttrT const& val,
         Iterator1T const& first,
         Iterator2T const& last)
     {
@@ -745,7 +745,7 @@ struct common_tree_match_policy
             BOOST_SPIRIT_DEBUG_OUT << *it;
         BOOST_SPIRIT_DEBUG_OUT << "\"" << std::endl;
 #endif
-        return match_t(length, /*val,*/
+        return tree_match<IteratorT, NodeFactoryT, AttrT>(length, val,
             tree_policy_t::create_node(length, first, last, true));
     }
 
@@ -1195,11 +1195,13 @@ typename parser_result<access_match_action::action<ParserT, ActionT>, ScannerT>:
 access_match_action::action<ParserT, ActionT>::
 parse(ScannerT const& scan) const
 {
+    typedef typename ScannerT::iterator_t iterator_t;
     typedef typename parser_result<self_t, ScannerT>::type result_t;
     if (!scan.at_end())
     {
+        iterator_t save = scan.first;
         result_t hit = this->subject().parse(scan);
-        actor(hit, scan.first, scan.last);
+        actor(hit, save, scan.first);
         return hit;
     }
     return scan.no_match();
@@ -1261,12 +1263,14 @@ typename parser_result<access_node_action::action<ParserT, ActionT>, ScannerT>::
 access_node_action::action<ParserT, ActionT>::
 parse(ScannerT const& scan) const
 {
+    typedef typename ScannerT::iterator_t iterator_t;
     typedef typename parser_result<self_t, ScannerT>::type result_t;
     if (!scan.at_end())
     {
+        iterator_t save = scan.first;
         result_t hit = this->subject().parse(scan);
         if (hit && hit.trees.size() > 0)
-            actor(*hit.trees.begin(), scan.first, scan.last);
+            actor(*hit.trees.begin(), save, scan.first);
         return hit;
     }
     return scan.no_match();

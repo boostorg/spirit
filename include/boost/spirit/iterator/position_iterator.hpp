@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002 Juan Carlos Arevalo-Baeza
     http://spirit.sourceforge.net/
 
@@ -16,10 +16,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <string>
 #include <iterator>
+#include <boost/iterator.hpp>
 
 #include "boost/config.hpp"
 
+#if defined(BOOST_MSVC)
 #include "boost/spirit/core/impl/msvc.hpp"
+#endif
+
+#if defined(BOOST_NO_STD_ITERATOR_TRAITS)
+#define BOOST_SPIRIT_IT_NS impl
+#else
+#define BOOST_SPIRIT_IT_NS std
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -44,6 +53,13 @@ struct file_position {
         line    (line_),
         column  (column_)
     {}
+
+	bool operator==(const file_position& pos) const
+	{
+		return this->file == pos.file &&
+			this->line == pos.line &&
+			this->column == pos.column;
+	}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,24 +87,41 @@ struct file_position {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template < typename IteratorT, typename PositionT = file_position>
-class position_iterator {
-#if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)) \
-    || (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
-    typedef impl::iterator_traits<IteratorT> traits_t;
-#else
-    typedef std::iterator_traits<IteratorT> traits_t;
-#endif
+namespace impl {
+
+template <typename IteratorT>
+struct position_iterator_base_generator
+{
+private:
+	typedef BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT> traits_t;
+
 public:
-    typedef typename traits_t::value_type value_type;
-    typedef typename traits_t::pointer pointer;
-    typedef typename traits_t::reference reference;
+	//  regardless of the underlying iterator type the position_iterator is a
+	//  forward iterator only
+	typedef boost::iterator<
+		std::forward_iterator_tag,
+		typename traits_t::value_type,
+		typename traits_t::difference_type,
+		typename traits_t::pointer,
+		typename traits_t::reference
+	> type;
+};
 
-    typedef typename traits_t::difference_type difference_type;
+} /* namespace impl */
 
-//  regardless of the underlying iterator type the position_iterator is a
-//  forward iterator only
-    typedef typename std::forward_iterator_tag iterator_category;
+template < typename IteratorT, typename PositionT = file_position >
+class position_iterator 
+	: public impl::position_iterator_base_generator<IteratorT>::type
+{
+	typedef typename impl::position_iterator_base_generator<IteratorT>::type
+		base_t;
+
+public:
+    typedef typename base_t::value_type value_type;
+    typedef typename base_t::pointer pointer;
+    typedef typename base_t::reference reference;
+    typedef typename base_t::difference_type difference_type;
+	typedef typename base_t::iterator_category iterator_category;
 
     position_iterator(): m_CharsPerTab(4), m_IsAtEnd(true) {}
     position_iterator(IteratorT const& iter, IteratorT const& iterend,
@@ -133,10 +166,6 @@ public:
         inc_current();
         return result;
     }
-    friend difference_type operator -(const position_iterator& i1,
-                                      const position_iterator& i2) {
-        return i1.m_Iter - i2.m_Iter;
-    }
 
     void set_tabchars(unsigned int chars) {
         m_CharsPerTab = chars;
@@ -151,30 +180,29 @@ private:
     bool m_IsAtEnd;
 
     void inc_current() {
-        if (!m_IsAtEnd) {
-            value_type val = *m_Iter;
-            if (val == '\n' || val == '\r') {
-                ++m_Pos.line;
-                m_Pos.column = 1;
-                ++m_Iter;
-                if (m_Iter != m_IterEnd) {
-                    value_type val2 = *m_Iter;
-                    if ((val == '\n' && val2 == '\r')
-                     || (val == '\r' && val2 == '\n')) {
-                        ++m_Iter;
-                    }
+        value_type val = *m_Iter;
+        if (val == '\n' || val == '\r') {
+            ++m_Pos.line;
+            m_Pos.column = 1;
+            ++m_Iter;
+            if (m_Iter != m_IterEnd) {
+                value_type val2 = *m_Iter;
+                if ((val == '\n' && val2 == '\r')
+                    || (val == '\r' && val2 == '\n')) {
+                    ++m_Iter;
                 }
-            } else if (val == '\t') {
-                m_Pos.column += m_CharsPerTab - (m_Pos.column - 1) % m_CharsPerTab;
-                ++m_Iter;
-            } else {
-                ++m_Pos.column;
-                ++m_Iter;
             }
-            if (m_Iter == m_IterEnd) {
-                m_IsAtEnd = true;
-            }
+        } else if (val == '\t') {
+            m_Pos.column += m_CharsPerTab - (m_Pos.column - 1) % m_CharsPerTab;
+            ++m_Iter;
+        } else {
+            ++m_Pos.column;
+            ++m_Iter;
         }
+
+		// Incrementing after end makes the iterator no more "at end". This
+		//  makes the behaviour consistent, and helps catching bugs.
+		m_IsAtEnd = (m_Iter == m_IterEnd);
     }
 };
 

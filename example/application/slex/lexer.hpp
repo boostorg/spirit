@@ -1,7 +1,7 @@
 /*=============================================================================
     Lexer
 
-    Spirit v1.6.0
+    Spirit v1.7.0
     Copyright (c) 2001, Daniel C. Nuffer
     Copyright (c) 2002-2003, Hartmut Kaiser
 
@@ -42,10 +42,10 @@
 #define BOOST_SPIRIT_LEXER_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#include "boost/spirit/core.hpp"
-#include "boost/spirit/symbols/symbols.hpp"
-#include "boost/spirit/utility/chset.hpp"
-#include "boost/spirit/utility/escape_char.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/symbols/symbols.hpp>
+#include <boost/spirit/utility/chset.hpp>
+#include <boost/spirit/utility/escape_char.hpp>
 
 #include <set>
 #include <map>
@@ -54,10 +54,10 @@
 #include <utility> // for pair
 #include <iostream>
 #include <fstream>
-#include "boost/limits.hpp"
+#include <boost/limits.hpp>
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
-#include "boost/spirit/core/impl/msvc.hpp"
+#include <boost/spirit/core/impl/msvc.hpp>
 #endif
 
 #if defined(BOOST_NO_STD_ITERATOR_TRAITS)
@@ -1167,10 +1167,10 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 //  utility function
 template <typename CharT>
-inline impl::range<CharT> const&
+inline utility::impl::range<CharT> const&
 full_range()
 {
-    static impl::range<CharT> full(std::numeric_limits<CharT>::min(),
+    static utility::impl::range<CharT> full(std::numeric_limits<CharT>::min(),
         std::numeric_limits<CharT>::max());
     return full;
 }
@@ -1178,13 +1178,13 @@ full_range()
 namespace ccl_utils
 {
     template <typename char_t>
-    inline impl::range_run<char_t>
+    inline utility::impl::range_run<char_t>
     negate_range_run(
-            const impl::range_run<char_t>& rr)
+            const utility::impl::range_run<char_t>& rr)
     {
-        impl::range_run<char_t> newrr;
+        utility::impl::range_run<char_t> newrr;
         newrr.set(full_range<char_t>());
-        for (typename impl::range_run<char_t>::const_iterator iter = rr.begin();
+        for (typename utility::impl::range_run<char_t>::const_iterator iter = rr.begin();
                 iter != rr.end(); ++iter)
             newrr.clear(*iter);
         return newrr;
@@ -1233,7 +1233,7 @@ namespace ccl_utils
 
     template <typename char_t>
     inline void
-    create_nodes(const impl::range_run<char_t>& rr,
+    create_nodes(const utility::impl::range_run<char_t>& rr,
             std::stack<node*>& stack)
     {
 
@@ -1241,7 +1241,7 @@ namespace ccl_utils
         {
             std::vector<uchar> ccl;
             ccl.resize(256);
-            for (typename impl::range_run<char_t>::const_iterator iter = rr.begin();
+            for (typename utility::impl::range_run<char_t>::const_iterator iter = rr.begin();
                     iter != rr.end(); ++iter)
             {
                 for (int i = iter->first; i <= iter->last; ++i)
@@ -1257,7 +1257,7 @@ namespace ccl_utils
         else
         {
             bool mb_first_time = true;
-            for (typename impl::range_run<char_t>::const_iterator iter = rr.begin();
+            for (typename utility::impl::range_run<char_t>::const_iterator iter = rr.begin();
                     iter != rr.end(); ++iter)
             {
                 if (iter->first == iter->last)
@@ -1532,12 +1532,12 @@ public:
     }
 
     template <typename ParserT>
-    static void fill_ccl(impl::range_run<char_t>& rr, const ParserT& parser)
+    static void fill_ccl(utility::impl::range_run<char_t>& rr, const ParserT& parser)
     {
         for (int i = 0; i < 256; ++i)
         {
             if (parser.test(static_cast<char_t>(uchar(i))))
-                rr.set(impl::range<char_t>(i, i));
+                rr.set(utility::impl::range<char_t>(i, i));
         }
     }
 
@@ -1554,7 +1554,7 @@ public:
             ++first;
         }
 
-        impl::range_run<char_t> rr;
+        utility::impl::range_run<char_t> rr;
         while (first != last &&*first != ']')
         {
             if (*first == '[') // it's a ccl_expr like [:space:]
@@ -1631,11 +1631,11 @@ public:
                     char_t c2;
                     lex_escape_ch[assign(c2)].parse(scan);
                     BOOST_SPIRIT_ASSERT(c1 < c2); // Throw exception?
-                    rr.set(impl::range<char_t>(c1, c2));
+                    rr.set(utility::impl::range<char_t>(c1, c2));
                 }
                 else // insert 1 char
                 {
-                    rr.set(impl::range<char_t>(c1, c1));
+                    rr.set(utility::impl::range<char_t>(c1, c1));
                 }
             }
         }
@@ -1675,10 +1675,10 @@ public:
 
     void do_any_char() const
     {
-        static impl::range_run<char_t> rr;
+        static utility::impl::range_run<char_t> rr;
         rr.set(full_range<char_t>());
         char_t newline = '\n';
-        rr.clear(impl::range<char_t>(newline, newline));
+        rr.clear(utility::impl::range<char_t>(newline, newline));
 
         ccl_utils::create_nodes(rr, m_stack);
     }

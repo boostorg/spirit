@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002 Jeff Westfahl
     http://spirit.sourceforge.net/
 
@@ -118,8 +118,15 @@ class file_iterator
       // Make an end of file iterator for the current file
       file_iterator make_end ();
 
-      // Returns false if no file is associated with this iterator
-      operator bool () const;
+      // operator bool. Returns false if no file is associated with this 
+      // iterator. This borrows a trick from boost::shared_ptr to avoid
+      // to interfere with arithmetic operations. 
+   private:
+      typedef void (file_iterator::*bool_wrap)(void);
+      void dummy_func(void) {}
+   public:
+      operator bool_wrap() 
+      { return (-1 != m_File) ? &file_iterator::dummy_func : 0; }
 
       // Returns file size in bytes
       difference_type size () const;

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
@@ -14,8 +14,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <bitset>
-
-#include "boost/spirit/utility/impl/chset/range_run.hpp"
+#include <boost/spirit/utility/impl/chset/range_run.hpp>
 
 namespace boost { namespace spirit {
 
@@ -46,7 +45,7 @@ namespace boost { namespace spirit {
         basic_chset&        operator-=(basic_chset const& x);
         basic_chset&        operator^=(basic_chset const& x);
 
-        private: impl::range_run<CharT> rr;
+        private: utility::impl::range_run<CharT> rr;
     };
 
     #if (CHAR_BIT == 8)
@@ -102,6 +101,4 @@ namespace boost { namespace spirit {
 
 #endif
 
-#if !defined(BOOST_SPIRIT_BASIC_CHSET_IPP)
-#include "boost/spirit/utility/impl/chset/basic_chset.ipp"
-#endif
+#include <boost/spirit/utility/impl/chset/basic_chset.ipp>

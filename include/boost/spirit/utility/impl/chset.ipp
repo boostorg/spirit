@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
@@ -13,9 +13,8 @@
 #define BOOST_SPIRIT_CHSET_IPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#if !defined(BOOST_SPIRIT_CHSET_HPP)
-#include "boost/spirit/utility/chset.hpp"
-#endif
+#include <boost/limits.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -25,8 +24,7 @@ namespace boost { namespace spirit {
 //  chset class
 //
 ///////////////////////////////////////////////////////////////////////////////
-namespace impl
-{
+namespace utility { namespace impl {
     template <typename CharT>
     inline void
     detach(boost::shared_ptr<basic_chset<CharT> >& ptr)
@@ -43,7 +41,7 @@ namespace impl
         if (ptr.unique())
             ptr->clear();
         else
-            ptr = new basic_chset<CharT>();
+            ptr.reset(new basic_chset<CharT>());
     }
 
     template <typename CharT, typename CharT2>
@@ -72,7 +70,40 @@ namespace impl
             ch = next;
         }
     }
-}
+
+    //////////////////////////////////
+
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+    template <typename CharT, typename FakeT>
+    void chset_negated_set(boost::shared_ptr<basic_chset<CharT> > &ptr, chlit<CharT> const &ch,
+            FakeT)
+    {
+        if(ch.ch != std::numeric_limits<CharT>::min()) {
+            ptr->set(std::numeric_limits<CharT>::min(), ch.ch - 1);
+        }
+        if(ch.ch != std::numeric_limits<CharT>::max()) {
+            ptr->set(ch.ch + 1, std::numeric_limits<CharT>::max());
+        }
+    }
+    
+    template <typename CharT, typename FakeT>
+    void chset_negated_set(boost::shared_ptr<basic_chset<CharT> > &ptr,
+            spirit::range<CharT> const &rng, FakeT)
+    {
+        if(rng.first != std::numeric_limits<CharT>::min()) {
+            ptr->set(std::numeric_limits<CharT>::min(), rng.first - 1);
+        }
+        if(rng.last != std::numeric_limits<CharT>::max()) {
+            ptr->set(rng.last + 1, std::numeric_limits<CharT>::max());
+        }
+    }
+
+#endif // BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+//////////////////////////////////
+
+}} // namespace utility::impl
 
 template <typename CharT>
 inline chset<CharT>::chset()
@@ -111,6 +142,24 @@ inline chset<CharT>::chset(range<CharT> const& arg)
 : ptr(new basic_chset<CharT>())
 { ptr->set(arg.first, arg.last); }
 
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+template <typename CharT>
+inline chset<CharT>::chset(negated_char_parser<chlit<CharT> > const& arg)
+: ptr(new basic_chset<CharT>())
+{
+    set(arg);
+}
+
+template <typename CharT>
+inline chset<CharT>::chset(negated_char_parser<range<CharT> > const& arg)
+: ptr(new basic_chset<CharT>())
+{
+    set(arg);
+}
+
+#endif // !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
 template <typename CharT>
 inline chset<CharT>::~chset() {}
 
@@ -126,7 +175,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator=(CharT rhs)
 {
-    impl::detach_clear(ptr);
+    utility::impl::detach_clear(ptr);
     ptr->set(rhs);
     return *this;
 }
@@ -135,7 +184,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator=(anychar_parser rhs)
 {
-    impl::detach_clear(ptr);
+    utility::impl::detach_clear(ptr);
     ptr->set(
         std::numeric_limits<CharT>::min(),
         std::numeric_limits<CharT>::max()
@@ -147,7 +196,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator=(nothing_parser rhs)
 {
-    impl::detach_clear(ptr);
+    utility::impl::detach_clear(ptr);
     return *this;
 }
 
@@ -155,7 +204,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator=(chlit<CharT> const& rhs)
 {
-    impl::detach_clear(ptr);
+    utility::impl::detach_clear(ptr);
     ptr->set(rhs.ch);
     return *this;
 }
@@ -164,25 +213,93 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator=(range<CharT> const& rhs)
 {
-    impl::detach_clear(ptr);
+    utility::impl::detach_clear(ptr);
     ptr->set(rhs.first, rhs.last);
     return *this;
 }
+
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+template <typename CharT>
+inline chset<CharT>&
+chset<CharT>::operator=(negated_char_parser<chlit<CharT> > const& rhs)
+{
+    utility::impl::detach_clear(ptr);
+    set(rhs);
+    return *this;
+}
+
+template <typename CharT>
+inline chset<CharT>&
+chset<CharT>::operator=(negated_char_parser<range<CharT> > const& rhs)
+{
+    utility::impl::detach_clear(ptr);
+    set(rhs);
+    return *this;
+}
+
+#endif // !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
 
 template <typename CharT>
 inline void
 chset<CharT>::set(range<CharT> const& arg)
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     ptr->set(arg.first, arg.last);
 }
+
+#if !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+
+template <typename CharT>
+inline void
+chset<CharT>::set(negated_char_parser<chlit<CharT> > const& arg)
+{
+    utility::impl::detach(ptr);
+    
+    if(arg.positive.ch != std::numeric_limits<CharT>::min()) {
+        ptr->set(std::numeric_limits<CharT>::min(), arg.positive.ch - 1);
+    }
+    if(arg.positive.ch != std::numeric_limits<CharT>::max()) {
+        ptr->set(arg.positive.ch + 1, std::numeric_limits<CharT>::max());
+    }
+}
+
+template <typename CharT>
+inline void
+chset<CharT>::set(negated_char_parser<range<CharT> > const& arg)
+{
+    utility::impl::detach(ptr);
+    
+    if(arg.positive.first != std::numeric_limits<CharT>::min()) {
+        ptr->set(std::numeric_limits<CharT>::min(), arg.positive.first - 1);
+    }
+    if(arg.positive.last != std::numeric_limits<CharT>::max()) {
+        ptr->set(arg.positive.last + 1, std::numeric_limits<CharT>::max());
+    }
+}
+
+#endif // !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
 
 template <typename CharT>
 inline void
 chset<CharT>::clear(range<CharT> const& arg)
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     ptr->clear(arg.first, arg.last);
+}
+
+template <typename CharT>
+inline void
+chset<CharT>::clear(negated_char_parser<range<CharT> > const& arg)
+{
+    utility::impl::detach(ptr);
+
+    if(arg.positive.first != std::numeric_limits<CharT>::min()) {
+        ptr->clear(std::numeric_limits<CharT>::min(), arg.positive.first - 1);
+    }
+    if(arg.positive.last != std::numeric_limits<CharT>::max()) {
+        ptr->clear(arg.positive.last + 1, std::numeric_limits<CharT>::max());
+    }
 }
 
 template <typename CharT>
@@ -194,7 +311,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::inverse()
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     ptr->inverse();
     return *this;
 }
@@ -208,7 +325,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator|=(chset const& x)
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     *ptr |= *x.ptr;
     return *this;
 }
@@ -217,7 +334,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator&=(chset const& x)
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     *ptr &= *x.ptr;
     return *this;
 }
@@ -226,7 +343,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator-=(chset const& x)
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     *ptr -= *x.ptr;
     return *this;
 }
@@ -235,7 +352,7 @@ template <typename CharT>
 inline chset<CharT>&
 chset<CharT>::operator^=(chset const& x)
 {
-    impl::detach(ptr);
+    utility::impl::detach(ptr);
     *ptr ^= *x.ptr;
     return *this;
 }

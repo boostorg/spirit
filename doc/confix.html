@@ -24,24 +24,18 @@
   </tr>
 </table>
 <p><a name="confix_parser"></a><b>Confix Parsers</b></p>
-<p>Confix Parsers recognize a (possibly nested) sequence out of three independent 
-  elements: an opening, an expression and a closing. This utility parser may be 
-  used to parse structures where the opening is possibly contained in the expression 
-  and the whole sequence is only matched after seeing the closing part that matches 
-  the first opening subsequence. A simple example is a nested PASCAL comment: 
+<p>Confix Parsers recognize a sequence out of three independent elements: an
+	opening, an expression and a closing. A simple example is a C comment:
 </p>
-<pre><code class="comment">    { This is a { nested } PASCAL-comment }</code></pre>
+<pre><code class="comment">    /* This is a C comment */</code></pre>
 <p>which could be parsed through the following rule definition:<code><font color="#000000"> 
   </font></code> </p>
-<pre><span class=identifier>    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>pascal_comment_rule
-        </span><span class=special>=   </span><span class=identifier>confix_nest_p</span><span class=special>(</span><span class=literal>'{'</span><span class=special>, </span><span class=special>*</span><span class=identifier>anychar_p</span><span class=special>, </span><span class=literal>'}'</span><span class=special>)
+<pre><span class=identifier>    </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>c_comment_rule
+        </span><span class=special>=   </span><span class=identifier>confix_p</span><span class=special>(</span><span class=literal>"/*"</span><span class=special>, </span><span class=special>*</span><span class=identifier>anychar_p</span><span class=special>, </span><span class=literal>"*/"</span><span class=special>)
         </span><span class=special>;</span></pre>
-<p>If a non-nested Confix Parser is needed, the <tt>confix_p</tt> parser generator 
-  should be used for generating the required Confix Parser. If 
-  the expression part may contain a valid confix sequence
-  (the confix sequence is allowed to be nested), the <tt>confix_nest_p</tt> parser 
-  generator template should be used to generate the parser. The 
-  three parameters to <tt>confix_p</tt> and <tt>confix_nest_p</tt> can be single 
+<p>The <tt>confix_p</tt> parser generator 
+  should be used for generating the required Confix Parser. The 
+  three parameters to <tt>confix_p</tt> can be single 
   characters (as above), strings or, if more complex parsing logic is required, 
   auxiliary parsers, each of which is automatically converted to the corresponding 
   parser type needed for successful parsing.</p>
@@ -56,7 +50,7 @@
   If we would do nothing, the resulting code would parse the sequence as follows:</p>
 <pre><code>    <span class=identifier>open </span><span class=special>&gt;&gt; (</span><span class=identifier>expr</span><span class=special>[</span><span class=identifier>func</span><span class=special>] - </span><span class=identifier>close</span><span class=special>) &gt;&gt; </span><span class=identifier>close</span></code></pre>
 <p>which in most cases is not what the user expects. (If this <u>is</u> what you've 
-  expected, then please use the <tt>confix_p</tt> or <tt>confix_nest_p</tt> generator 
+  expected, then please use the <tt>confix_p</tt> generator 
   function <tt>direct()</tt>, which will inhibit the parser refactoring). To make 
   the confix parser behave as expected:</p> 
 <pre><code><span class=identifier>    open </span><span class=special>&gt;&gt; (</span><span class=identifier>expr </span><span class=special>- </span><span class=identifier>close</span><span class=special>)[</span><span class=identifier>func</span><span class=special>] &gt;&gt; </span><span class=identifier>close</span></code></pre>
@@ -127,27 +121,27 @@ to the end of the input stream). So we have to refactor this into:
   </tr>
 </table>
 <p><a name="comment_parsers"></a><b>Comment Parsers</b></p>
-<p>The Comment Parser generator templates <tt>comment_p</tt> and <tt>comment_nest_p</tt> 
-  are helpers for generating a correct <a href="#confix_parser">Confix Parser</a> 
+<p>The Comment Parser generator template <tt>comment_p</tt>
+  is helper for generating a correct <a href="#confix_parser">Confix Parser</a> 
   from auxiliary parameters, which is able to parse comment constructs as follows: 
 </p>
 <pre><code>    StartCommentToken <span class="special">&gt;&gt;</span> Comment text <span class="special">&gt;&gt;</span> EndCommentToken</code></pre>
 <p>There are the following types supported as parameters: parsers, single 
-  characters and strings (see as_parser). There are two diffenerent predefined 
-  comment parser generators: <tt>comment_p</tt> and <tt>comment_nest_p</tt>, which 
-  may be used for creating special comment parsers in two different ways. If these 
-  are used with one parameter, a comment starting with the given first parser 
+  characters and strings (see as_parser). If it
+  is used with one parameter, a comment starting with the given first parser 
   parameter up to the end of the line is matched. So for instance the following 
   parser matches C++ style comments:</p>
   
 <pre><code><span class=identifier>    comment_p</span><span class=special>(</span><span class=string>"//"</span><span class=special>)</span></code></pre>
-<p>If these are used with two parameters, a comment starting with the first parser 
+<p>If it is used with two parameters, a comment starting with the first parser 
   parameter up to the second parser parameter is matched. For instance a C style 
   comment parser could be constrcuted as:</p>
 <pre><code>    <span class=identifier>comment_p</span><span class=special>(</span><span class=string>"/*"</span><span class=special>, </span><span class=string>"*/"</span><span class=special>)</span></code></pre>
 <p>The <tt>comment_p</tt> parser generator allows to generate parsers for matching 
   non-nested comments (as for C/C++ comments). Sometimes it is necessary to parse 
-  nested comments as for instance allowed in Pascal. Such nested comments are 
+  nested comments as for instance allowed in Pascal.</p>
+<pre><code class="comment">    { This is a { nested } PASCAL-comment }</code></pre>
+<p>Such nested comments are 
   parseable through parsers generated by the <tt>comment_nest_p</tt> generator 
   template functor. The following example shows a parser, which can be used for 
   parsing the two different (nestable) Pascal comment styles:</p>

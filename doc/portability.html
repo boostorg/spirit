@@ -32,7 +32,8 @@
   <li> Borland 5.6.1</li>
   <li>Intel 5.0</li>
   <li>Intel 6.0</li>
-  <li>Intel 7.0Visual Age C++ 5.02</li>
+  <li>Intel 7.0</li>
+  <li>Visual Age C++ 5.02</li>
   <li>Comeau 4.24.5 </li>
   <li>Metrowerks CodeWarrior 7.2</li>
   <li>Metrowerks CodeWarrior 8.3</li>
@@ -53,11 +54,7 @@
     7.1 do support PTS and was tested to fully compile Spirit.</li>
   <li>The list parsers and comment parsers do not compile on MSVC6 yet. Use the 
     <tt>%</tt> operator instead.</li>
-  <li>The multi_pass does not compile on MSVC6, MSVC 7 and Metrowerks 7.2 yet.</li>
-  <li>Comeau has a problem with the <tt>file_iterator</tt>. The problem is not 
-    related to conformance to the standard at all. Comeau, an EDG based compiler, 
-    is one of the most conformant compiler in existence. The problem is the <tt>file_iterator</tt>'s 
-    use of posix API calls.</li>
+  <li>The multi_pass does not compile on MSVC6 and Metrowerks 7.2 yet.</li>
   <li>The regular expression parsers does not compile on both MSVC6 and 7, Intel 
     5.0 and Comeau 4.24.5 </li>
   <li>Metrowerks CodeWarrior 7.2 does not compile all the meta-parsers and features 

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
 
@@ -247,17 +247,22 @@ const node_parser_gen<root_node_op> root_node_d =
 //  Parse functions for ASTs
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <typename IteratorT, typename ParserT, typename SkipT>
-tree_parse_info<IteratorT>
+template <
+    typename AstFactoryT, typename IteratorT, typename ParserT, 
+    typename SkipT
+>
+inline tree_parse_info<IteratorT, AstFactoryT>
 ast_parse(
     IteratorT const&        first_,
     IteratorT const&        last_,
     parser<ParserT> const&  parser,
-    SkipT const&            skip_)
+    SkipT const&            skip_,
+    AstFactoryT const &     dummy_ = AstFactoryT())
 {
     typedef skip_parser_iteration_policy<SkipT> iter_policy_t;
+    typedef ast_match_policy<IteratorT, AstFactoryT> ast_match_policy_t;
     typedef
-        scanner_policies<iter_policy_t, ast_match_policy<IteratorT> >
+        scanner_policies<iter_policy_t, ast_match_policy_t>
         scanner_policies_t;
     typedef scanner<IteratorT, scanner_policies_t> scanner_t;
 
@@ -265,14 +270,28 @@ ast_parse(
     scanner_policies_t policies(iter_policy);
     IteratorT first = first_;
     scanner_t scan(first, last_, policies);
-    tree_match<IteratorT> hit = parser.derived().parse(scan);
-    return tree_parse_info<IteratorT>(
+    tree_match<IteratorT, AstFactoryT> hit = parser.derived().parse(scan);
+    scan.skip(scan);
+    return tree_parse_info<IteratorT, AstFactoryT>(
         first, hit, hit && (first == last_), hit.length(), hit.trees);
 }
 
 //////////////////////////////////
+template <typename IteratorT, typename ParserT, typename SkipT>
+inline tree_parse_info<IteratorT>
+ast_parse(
+    IteratorT const&        first_,
+    IteratorT const&        last_,
+    parser<ParserT> const&  parser,
+    SkipT const&            skip_)
+{
+    typedef node_val_data_factory<nil_t> default_factory_t;
+    return ast_parse(first_, last_, parser, skip_, default_factory_t());
+}
+  
+//////////////////////////////////
 template <typename IteratorT, typename ParserT>
-tree_parse_info<IteratorT>
+inline tree_parse_info<IteratorT>
 ast_parse(
     IteratorT const&        first_,
     IteratorT const&        last,
@@ -290,7 +309,7 @@ ast_parse(
 
 //////////////////////////////////
 template <typename CharT, typename ParserT, typename SkipT>
-tree_parse_info<CharT const*>
+inline tree_parse_info<CharT const*>
 ast_parse(
     CharT const*            str,
     parser<ParserT> const&  parser,
@@ -304,7 +323,7 @@ ast_parse(
 
 //////////////////////////////////
 template <typename CharT, typename ParserT>
-tree_parse_info<CharT const*>
+inline tree_parse_info<CharT const*>
 ast_parse(
     CharT const*            str,
     parser<ParserT> const&  parser)

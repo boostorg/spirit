@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
@@ -12,22 +12,16 @@
 #define BOOST_SPIRIT_RANGE_RUN_IPP
 
 ///////////////////////////////////////////////////////////////////////////////
-#if !defined(BOOST_SPIRIT_RANGE_RUN_HPP)
-#include "boost/spirit/utility/impl/chset/range_run.hpp"
-#endif
-
-#if !defined(BOOST_SPIRIT_MAIN_DEBUG_HPP)
-#include "boost/spirit/debug.hpp"
-#endif
-
-#if !defined(BOOST_LIMITS_HPP)
-#include "boost/limits.hpp"
-#endif
+#include <algorithm> // for std::lower_bound
+#include <boost/spirit/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
+#include <boost/spirit/utility/impl/chset/range_run.hpp>
+#include <boost/spirit/debug.hpp>
+#include <boost/limits.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
-    namespace impl {
+    namespace utility { namespace impl {
 
         ///////////////////////////////////////////////////////////////////////
         //
@@ -59,15 +53,14 @@ namespace boost { namespace spirit {
         //////////////////////////////////
         template <typename CharT>
         inline bool
-        range<CharT>::is_adjacent(range const& r) const
+        range<CharT>::overlaps(range const& r) const
         {
             CharT decr_first =
                 first == std::numeric_limits<CharT>::min() ? first : first-1;
             CharT incr_last =
                 last == std::numeric_limits<CharT>::max() ? last : last+1;
 
-            return ((decr_first <= r.first) && (incr_last >= r.first))
-                || ((decr_first <= r.last) && (incr_last >= r.last));
+            return (decr_first <= r.last) && (incr_last >= r.first);
         }
 
         //////////////////////////////////
@@ -118,7 +111,7 @@ namespace boost { namespace spirit {
             iter->merge(r);
             iterator i = iter + 1;
 
-            while (i != run.end() && iter->is_adjacent(*i))
+            while (i != run.end() && iter->overlaps(*i))
                 iter->merge(*i++);
 
             run.erase(iter+1, i);
@@ -142,10 +135,10 @@ namespace boost { namespace spirit {
                     ((iter != run.begin()) && (iter - 1)->includes(r)))
                     return;
 
-                if (iter != run.begin() && (iter - 1)->is_adjacent(r))
+                if (iter != run.begin() && (iter - 1)->overlaps(r))
                     merge(--iter, r);
 
-                else if (iter != run.end() && iter->is_adjacent(r))
+                else if (iter != run.end() && iter->overlaps(r))
                     merge(iter, r);
 
                 else
@@ -214,7 +207,7 @@ namespace boost { namespace spirit {
         range_run<CharT>::end() const
         { return run.end(); }
 
-    } // namespace impl
+    }} // namespace utility::impl
 
 }} // namespace boost::spirit
 

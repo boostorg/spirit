@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001, Daniel C. Nuffer
     http://spirit.sourceforge.net/
 
@@ -11,11 +11,12 @@
 #ifndef BOOST_SPIRIT_ITERATOR_MULTI_PASS_HPP
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_HPP
 
-#include "boost/config.hpp"
-#include "boost/throw_exception.hpp"
+#include <boost/config.hpp>
+#include <boost/throw_exception.hpp>
+#include <boost/detail/workaround.hpp>
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
-// The multi_pass for VC++ is currently broken
+#if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
+#  error multi_pass iterator supported only on MSVC 7.0 and above.
 #else
 // the newer version of multi_pass
 
@@ -26,17 +27,20 @@
 #include <exception>    // for std::exception
 
 #include <boost/limits.hpp>
+#include <boost/iterator.hpp>
 
 #include "fixed_size_queue.hpp"
 #include "boost/spirit/core/assert.hpp" // for BOOST_SPIRIT_ASSERT
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
+# include "boost/spirit/core/impl/msvc.hpp"  // for more compatible iterator_traits
 #define BOOST_SPIRIT_IT_NS impl
 #else
 #define BOOST_SPIRIT_IT_NS std
 #endif
 
 #if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
+# include "boost/spirit/core/impl/msvc.hpp"  // for more compatible iterator_traits
 #undef BOOST_SPIRIT_IT_NS
 #define BOOST_SPIRIT_IT_NS impl
 #endif
@@ -97,7 +101,7 @@ class ref_counted
 
     public:
         // returns true if there is only one iterator in existence.
-        // std_dequeu StoragePolicy will free it's buffered data if this
+        // std_deque StoragePolicy will free it's buffered data if this
         // returns true.
         bool unique() const
         {
@@ -261,7 +265,7 @@ class std_deque
 template <typename ValueT>
 class inner
 {
-#ifdef __BORLANDC__
+#if defined(__BORLANDC__) || BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
     public:
 #else
     private:
@@ -403,7 +407,7 @@ class fixed_size_queue
 template <typename ValueT>
 class inner
 {
-#ifdef __BORLANDC__
+#if defined(__BORLANDC__) || BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
     public:
 #else
     private:
@@ -751,6 +755,36 @@ class inner
 } // namespace multi_pass_policies
 
 ///////////////////////////////////////////////////////////////////////////////
+// iterator_base_creator
+///////////////////////////////////////////////////////////////////////////////
+
+namespace iterator_ { namespace impl {
+
+// Meta-function to generate a std::iterator<> base class for multi_pass. This
+//  is used mainly to improve conformance of compilers not supporting PTS
+//  and thus relying on inheritance to recognize an iterator.
+// We are using boost::iterator<> because it offers an automatic workaround
+//  for broken std::iterator<> implementations.
+template <typename InputPolicyT, typename InputT>
+struct iterator_base_creator
+{
+    typedef typename InputPolicyT::BOOST_NESTED_TEMPLATE inner<InputT> input_t;
+
+    typedef boost::iterator
+    <
+        std::forward_iterator_tag,
+        typename input_t::value_type,
+        typename input_t::difference_type,
+        typename input_t::pointer,
+        typename input_t::reference
+    > type;
+};
+
+}}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
 // class template multi_pass (declaration)
 ///////////////////////////////////////////////////////////////////////////////
 template
@@ -782,24 +816,30 @@ class multi_pass
     , public StoragePolicy::template inner<
                 typename InputPolicy::template inner<InputT>::value_type>
     , public InputPolicy::template inner<InputT>
+    , public iterator_::impl::iterator_base_creator<InputPolicy, InputT>::type
 {
         typedef OwnershipPolicy OP;
         typedef CheckingPolicy CHP;
         typedef typename StoragePolicy::template inner<
             typename InputPolicy::template inner<InputT>::value_type> SP;
         typedef typename InputPolicy::template inner<InputT> IP;
+        typedef typename 
+            iterator_::impl::iterator_base_creator<InputPolicy, InputT>::type
+            IB;
 
     public:
-    typedef std::forward_iterator_tag iterator_category;
-        typedef typename IP::value_type value_type;
-        typedef typename IP::difference_type difference_type;
-        typedef typename IP::pointer pointer;
-        typedef typename IP::reference reference;
-
+        typedef typename IB::value_type value_type;
+        typedef typename IB::difference_type difference_type;
+        typedef typename IB::reference reference;
+        typedef typename IB::pointer pointer;
         typedef InputT iterator_type;
 
         multi_pass();
         explicit multi_pass(InputT input);
+
+#if BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
+        multi_pass(int);
+#endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
         ~multi_pass();
 
@@ -857,6 +897,32 @@ multi_pass(InputT input)
     , IP(input)
 {
 }
+
+#if BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
+    // The standard library shipped with gcc-3.1 has a bug in
+    // bits/basic_string.tcc. It tries  to use iter::iter(0) to
+    // construct an iterator. Ironically, this  happens in sanity
+    // checking code that isn't required by the standard.
+    // The workaround is to provide an additional constructor that
+    // ignores its int argument and behaves like the default constructor.
+template
+<
+    typename InputT,
+    typename InputPolicy,
+    typename OwnershipPolicy,
+    typename CheckingPolicy,
+    typename StoragePolicy
+>
+inline
+multi_pass<InputT, InputPolicy, OwnershipPolicy, CheckingPolicy, StoragePolicy>::
+multi_pass(int)
+    : OP()
+    , CHP()
+    , SP()
+    , IP()
+{
+}
+#endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
 template
 <
@@ -1201,6 +1267,11 @@ class look_ahead :
 
         look_ahead(look_ahead const& x)
             : base_t(x) {}
+
+#if BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
+        look_ahead(int)         // workaround for a bug in the library
+            : base_t() {}       // shipped with gcc 3.1
+#endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
     // default generated operators destructor and assignment operator are okay.
 };

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Daniel Nuffer
     Copyright (c) 2002 Jeff Westfahl
     http://spirit.sourceforge.net/

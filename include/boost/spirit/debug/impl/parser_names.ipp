@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
@@ -424,9 +424,9 @@ namespace boost { namespace spirit {
         }
     }   // namespace impl
 
-    template<typename ContextT, typename ScannerT>
+    template<typename ContextT, typename ScannerT, typename TagT>
     inline std::string
-    parser_name(rule<ContextT, ScannerT> const& p)
+    parser_name(rule<ContextT, ScannerT, TagT> const& p)
     {
         return std::string("rule")
             + std::string("(")
@@ -483,9 +483,9 @@ namespace boost { namespace spirit {
 
 ///////////////////////////////////////////////////////////////////////////////
 //  decide, if a node is to be traced or not
-    template<typename ContextT, typename ScannerT>
+    template<typename ContextT, typename ScannerT, typename TagT>
     inline bool
-    trace_parser(rule<ContextT, ScannerT> const& p)
+    trace_parser(rule<ContextT, ScannerT, TagT> const& p)
     {
         return impl::get_node_registry().trace_node(&p);
     }

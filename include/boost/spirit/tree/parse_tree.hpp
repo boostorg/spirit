@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
 
@@ -172,17 +172,22 @@ const gen_pt_node_parser_gen gen_pt_node_d = gen_pt_node_parser_gen();
 //  Parse functions for parse trees
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <typename IteratorT, typename ParserT, typename SkipT>
-tree_parse_info<IteratorT>
+template <
+    typename NodeFactoryT, typename IteratorT, typename ParserT, 
+    typename SkipT
+>
+inline tree_parse_info<IteratorT, NodeFactoryT>
 pt_parse(
     IteratorT const&        first_,
     IteratorT const&        last,
     parser<ParserT> const&  p,
-    SkipT const&            skip)
+    SkipT const&            skip,
+    NodeFactoryT const &    dummy_ = NodeFactoryT())
 {
     typedef skip_parser_iteration_policy<SkipT> iter_policy_t;
+    typedef pt_match_policy<IteratorT, NodeFactoryT> pt_match_policy_t;
     typedef
-        scanner_policies<iter_policy_t, pt_match_policy<IteratorT> >
+        scanner_policies<iter_policy_t, pt_match_policy_t>
         scanner_policies_t;
     typedef scanner<IteratorT, scanner_policies_t> scanner_t;
 
@@ -190,14 +195,27 @@ pt_parse(
     scanner_policies_t policies(iter_policy);
     IteratorT first = first_;
     scanner_t scan(first, last, policies);
-    tree_match<IteratorT> hit = p.derived().parse(scan);
-    return tree_parse_info<IteratorT>(
+    tree_match<IteratorT, NodeFactoryT> hit = p.derived().parse(scan);
+    scan.skip(scan);
+    return tree_parse_info<IteratorT, NodeFactoryT>(
         first, hit, hit && (first == last), hit.length(), hit.trees);
+}
+
+template <typename IteratorT, typename ParserT, typename SkipT>
+inline tree_parse_info<IteratorT>
+pt_parse(
+    IteratorT const&        first,
+    IteratorT const&        last,
+    parser<ParserT> const&  p,
+    SkipT const&            skip)
+{
+    typedef node_val_data_factory<nil_t> default_node_factory_t;
+    return pt_parse(first, last, p, skip, default_node_factory_t());
 }
 
 //////////////////////////////////
 template <typename IteratorT, typename ParserT>
-tree_parse_info<IteratorT>
+inline tree_parse_info<IteratorT>
 pt_parse(
     IteratorT const&        first_,
     IteratorT const&        last,
@@ -215,7 +233,7 @@ pt_parse(
 
 //////////////////////////////////
 template <typename CharT, typename ParserT, typename SkipT>
-tree_parse_info<CharT const*>
+inline tree_parse_info<CharT const*>
 pt_parse(
     CharT const*            str,
     parser<ParserT> const&  p,
@@ -229,7 +247,7 @@ pt_parse(
 
 //////////////////////////////////
 template <typename CharT, typename ParserT>
-tree_parse_info<CharT const*>
+inline tree_parse_info<CharT const*>
 pt_parse(
     CharT const*            str,
     parser<ParserT> const&  parser)

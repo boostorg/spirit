@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002-2003 Joel de Guzman
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
@@ -12,12 +12,10 @@
 #if !defined(BOOST_SPIRIT_PARSER_TYPE_HPP)
 #define BOOST_SPIRIT_PARSER_TYPE_HPP
 
+#include "boost/spirit/core/primitives/primitives.hpp"
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
-
-#if !defined(BOOST_SPIRIT_PRIMITIVES_IPP)
-#include "boost/spirit/core/primitives/primitives.hpp"
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //

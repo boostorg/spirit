@@ -1,4 +1,3 @@
-<!-- saved from url=(0022)http://internet.e-mail -->
 <html>
 <head>
 <title>Numerics</title>
@@ -160,14 +159,14 @@
       point reals) and <tt>bigint</tt> (unlimited precision integers).</td>
   </tr>
 </table>
-<p>The second template parameter is a class that groups all the policies and defaults 
-  to <tt>ureal_parser_policies&lt;T&gt;</tt>. As already mentioned, policies control 
-  the real number parsers' behavior. The default policies provided are designed 
-  to parse C/C++ style real numbers of the form <b>nnn.fff.Eeee</b> where <b>nnn</b> 
-  is the whole number part, <b>fff</b> is the fractional part, <b>E</b> is <tt class="quotes">'e'</tt> 
-  or <tt class="quotes">'E'</tt> and <b>eee</b> is the exponent optionally preceded 
-  by <tt class="quotes">'-'</tt> or <tt><span class="quotes">'+'</span></tt>. 
-  This corresponds to the following grammar, with the exception that plain integers 
+<p>The second template parameter is a class that groups all the policies and defaults
+  to <tt>ureal_parser_policies&lt;T&gt;</tt>. As already mentioned, policies control
+  the real number parsers' behavior. The default policies provided are designed
+  to parse C/C++ style real numbers of the form <b>nnn.fff.Eeee</b> where <b>nnn</b>
+  is the whole number part, <b>fff</b> is the fractional part, <b>E</b> is <tt class="quotes">'e'</tt>
+  or <tt class="quotes">'E'</tt> and <b>eee</b> is the exponent optionally preceded
+  by <tt class="quotes">'-'</tt> or <tt><span class="quotes">'+'</span></tt>.
+  This corresponds to the following grammar, with the exception that plain integers
   without the decimal point are also accepted by default.</p>
 <pre><code><font color="#000000"><span class=keyword>    </span><span class=identifier>floatingliteral
         </span><span class=special>=   </span><span class=identifier>fractionalconstant </span><span class=special>&gt;&gt; </span><span class=special>!</span><span class=identifier>exponentpart
@@ -220,9 +219,9 @@
   </tr>
 </table>
 <p>We've seen <tt>real_p</tt> before. <tt>ureal_p</tt> is its unsigned variant.</p>
-<p>Integer numbers are considered a subset of real numbers, so <tt>real_p</tt> 
-  and <tt>ureal_p</tt> recognize integer numbers (without any dot) as real numbers. 
-  <tt>strict_real_p</tt> and <tt>strict_ureal_p</tt> are the equivalent parsers 
+<p>Integer numbers are considered a subset of real numbers, so <tt>real_p</tt>
+  and <tt>ureal_p</tt> recognize integer numbers (without any dot) as real numbers.
+  <tt>strict_real_p</tt> and <tt>strict_ureal_p</tt> are the equivalent parsers
   that require a dot to be present for a number to considered a successful match.</p>
 <h2>Advanced: real_parser policies</h2>
 <p>The parser policies break down real number parsing into 6 steps:</p>
@@ -317,9 +316,9 @@
         </span><span class=keyword>typedef </span><span class=identifier>uint_parser</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>, </span><span class=number>10</span><span class=special>, </span><span class=number>1</span><span class=special>, -</span><span class=number>1</span><span class=special>&gt;   </span><span class=identifier>uint_parser_t</span><span class=special>;
         </span><span class=keyword>typedef </span><span class=identifier>int_parser</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>, </span><span class=number>10</span><span class=special>, </span><span class=number>1</span><span class=special>, -</span><span class=number>1</span><span class=special>&gt;    </span><span class=identifier>int_parser_t</span><span class=special>;
 
-        </span><span class=keyword>static const bool</span> <span class=identifier>allow_trailing_left_dot</span> <span class=special> =</span> <span class=literal>true</span><span class=special>;</span><span class=special>
-        </span><span class=keyword>static const bool</span> <span class=identifier>allow_trailing_right_dot </span><span class=special>=</span> <span class=literal>true</span><span class=special>;</span><span class=special></span>
-<span class=special>        </span><span class=keyword>static const bool</span> <span class=identifier>expect_dot</span> <span class=special>              =</span> <span class=literal>false</span><span class=special>;</span><span class=special></span><span class=special><br>
+        </span><span class=keyword>static const bool</span> <span class=identifier>allow_leading_dot</span> <span class=special> =</span> <span class=literal>true</span><span class=special>;</span><span class=special>
+        </span><span class=keyword>static const bool</span> <span class=identifier>allow_trailing_dot </span><span class=special>=</span> <span class=literal>true</span><span class=special>;</span><span class=special></span>
+<span class=special>        </span><span class=keyword>static const bool</span> <span class=identifier>expect_dot</span> <span class=special>        =</span> <span class=literal>false</span><span class=special>;</span><span class=special></span><span class=special><br>
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
         </span><span class=keyword>static typename </span><span class=identifier>match_result</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>, </span><span class="identifier">nil_t</span><span class=special>&gt;::</span><span class=identifier>type
         parse_sign</span><span class=special>(</span><span class=identifier>ScannerT</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>)

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2001-2003 Joel de Guzman
     Copyright (c) 2002-2003 Martin Wille
     http://spirit.sourceforge.net/
@@ -33,6 +33,7 @@ template <typename DerivedT, typename ContextT = parser_context>
 struct grammar
     : public parser<DerivedT>
     , public ContextT::base_t
+    , public context_aux<ContextT, DerivedT>
     BOOST_SPIRIT_GRAMMAR_ID
 {
     typedef grammar<DerivedT, ContextT>         self_t;

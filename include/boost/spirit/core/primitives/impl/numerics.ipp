@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 1998-2003 Joel de Guzman
     Copyright (c) 2001-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
@@ -24,6 +24,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+    ///////////////////////////////////////////////////////////////////////////
+    struct sign_parser;     // forward declaration only
+    
     namespace impl
     {
         ///////////////////////////////////////////////////////////////////////
@@ -397,15 +400,20 @@ namespace boost { namespace spirit {
                 if (scan.at_end())
                     return scan.no_match();
                 typename ScannerT::iterator_t save = scan.first;
+                
+                typedef typename parser_result<sign_parser, ScannerT>::type 
+                    sign_match_t; 
+                typedef typename parser_result<chlit<>, ScannerT>::type
+                    exp_match_t;
+                
+                sign_match_t    sign_match = RealPoliciesT::parse_sign(scan);
+                unsigned        count = sign_match ? sign_match.length() : 0;
+                bool            neg = sign_match.value();
 
-                match<bool> sign_match = RealPoliciesT::parse_sign(scan);
-                unsigned    count = sign_match ? sign_match.length() : 0;
-                bool        neg = sign_match.value();
-
-                RT          n_match = RealPoliciesT::parse_n(scan);
-                T           n = n_match.value();
-                bool        got_a_number = n_match;
-                match<>     e_hit;
+                RT              n_match = RealPoliciesT::parse_n(scan);
+                T               n = n_match.value();
+                bool            got_a_number = n_match;
+                exp_match_t     e_hit;
 
                 if (!got_a_number && !RealPoliciesT::allow_leading_dot)
                      return scan.no_match();

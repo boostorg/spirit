@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002-2003 Joel de Guzman
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
@@ -254,6 +254,7 @@ namespace boost { namespace spirit {
     struct subrule
         : public parser<subrule<ID, ContextT> >
         , public ContextT::base_t
+        , public context_aux<ContextT, subrule<ID, ContextT> >
     {
         typedef subrule<ID, ContextT> self_t;
         typedef subrule<ID, ContextT> const&  embed_t;

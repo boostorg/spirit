@@ -1355,9 +1355,11 @@ namespace impl {
         static type
         construct(actor<BaseT> const& _0)
         {
-            return impl::make_composite
-                <OperationT, actor<BaseT> >::composite_type
-                (OperationT(), _0);
+            typedef typename make_composite
+                    <OperationT, actor<BaseT> >::composite_type
+                ret_t;
+
+            return ret_t(OperationT(), _0);
         }
     };
 
@@ -1371,9 +1373,11 @@ namespace impl {
         static type
         construct(actor<BaseT> const& _0, B const& _1)
         {
-            return impl::make_composite
-                <OperationT, actor<BaseT>, B>::composite_type
-                (OperationT(), _0, as_actor<B>::convert(_1));
+            typedef typename make_composite
+                    <OperationT, actor<BaseT>, B>::composite_type
+                ret_t;
+            
+            return ret_t(OperationT(), _0, as_actor<B>::convert(_1));
         }
     };
 
@@ -1387,9 +1391,11 @@ namespace impl {
         static type
         construct(A const& _0, actor<BaseT> const& _1)
         {
-            return impl::make_composite
-                <OperationT, A, actor<BaseT> >::composite_type
-                (OperationT(), as_actor<A>::convert(_0), _1);
+            typedef typename make_composite
+                    <OperationT, A, actor<BaseT> >::composite_type
+                ret_t;
+
+            return ret_t(OperationT(), as_actor<A>::convert(_0), _1);
         }
     };
 
@@ -1403,11 +1409,14 @@ namespace impl {
         static type
         construct(actor<BaseA> const& _0, actor<BaseB> const& _1)
         {
-            return impl::make_composite
-                <OperationT, actor<BaseA>, actor<BaseB> >::composite_type
-                (OperationT(), _0, _1);
+            typedef typename make_composite
+                    <OperationT, actor<BaseA>, actor<BaseB> >::composite_type
+                ret_t;
+
+            return ret_t(OperationT(), _0, _1);
         }
     };
+
 }
 
 }   //  namespace phoenix

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Spirit v1.6.0
+    Spirit v1.6.1
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
@@ -32,10 +32,10 @@ public:
     typedef rx_parser<CharT> self_t;
 
     rx_parser(CharT const *first, CharT const *last)
-    { rxstr = string_t("^") + string_t(first, last); }
+    { rxstr = string_t("\\A") + string_t(first, last); }
 
     rx_parser(CharT const *first)
-    { rxstr = string_t("^") + string_t(first, impl::get_last(first)); }
+    { rxstr = string_t("\\A") + string_t(first, impl::get_last(first)); }
 
     template <typename ScannerT>
     typename parser_result<self_t, ScannerT>::type
