@@ -29,6 +29,17 @@
 #include "fixed_size_queue.hpp"
 #include "boost/spirit/core/assert.hpp" // for BOOST_SPIRIT_ASSERT
 
+#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#define BOOST_SPIRIT_IT_NS impl
+#else
+#define BOOST_SPIRIT_IT_NS std
+#endif
+
+#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
+#undef BOOST_SPIRIT_IT_NS
+#define BOOST_SPIRIT_IT_NS impl
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
@@ -500,11 +511,18 @@ template <typename InputT>
 class inner
 {
     public:
-        typedef typename std::iterator_traits<InputT>::value_type value_type;
-        typedef typename std::iterator_traits<InputT>::difference_type
+        typedef 
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<InputT>::value_type 
+            value_type;
+        typedef 
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<InputT>::difference_type
             difference_type;
-        typedef typename std::iterator_traits<InputT>::pointer pointer;
-        typedef typename std::iterator_traits<InputT>::reference reference;
+        typedef 
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<InputT>::pointer 
+            pointer;
+        typedef 
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<InputT>::reference 
+            reference;
 
     protected:
         inner()
@@ -535,7 +553,9 @@ class inner
             return input == x.input;
         }
 
-        typedef typename std::iterator_traits<InputT>::value_type value_t;
+        typedef 
+            typename BOOST_SPIRIT_IT_NS::iterator_traits<InputT>::value_type 
+            value_t;
         void swap(inner& x)
         {
             impl::mp_swap(input, x.input);
@@ -1219,6 +1239,7 @@ namespace impl {
 ///////////////////////////////////////////////////////////////////////////////
 }} // namespace boost::spirit
 
+#undef BOOST_SPIRIT_IT_NS
 #endif  // defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
 #endif  // BOOST_SPIRIT_ITERATOR_MULTI_PASS_HPP
 

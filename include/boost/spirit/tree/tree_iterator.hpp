@@ -12,6 +12,17 @@
 #ifndef BOOST_SPIRIT_TREE_TREE_ITERATOR_HPP
 #define BOOST_SPIRIT_TREE_TREE_ITERATOR_HPP
 
+#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#define BOOST_SPIRIT_IT_NS impl
+#else
+#define BOOST_SPIRIT_IT_NS std
+#endif
+
+#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
+#undef BOOST_SPIRIT_IT_NS
+#define BOOST_SPIRIT_IT_NS impl
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
@@ -35,7 +46,8 @@ public:
         const_tree_iterator_t;
 
     typedef typename parse_node_t::const_iterator_t const_iterator_t;
-    typedef std::iterator_traits<const_iterator_t> iterator_traits;
+    typedef BOOST_SPIRIT_IT_NS::iterator_traits<const_iterator_t> 
+        iterator_traits;
 
     typedef typename iterator_traits::value_type value_type;
     typedef typename iterator_traits::pointer pointer;
@@ -92,4 +104,6 @@ private:
 
 }} // namespace boost::spirit
 
+#undef BOOST_SPIRIT_IT_NS
+#endif // BOOST_SPIRIT_TREE_TREE_ITERATOR_HPP
 

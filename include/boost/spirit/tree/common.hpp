@@ -28,6 +28,17 @@
 #include <iostream>
 #endif
 
+#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
+#define BOOST_SPIRIT_IT_NS impl
+#else
+#define BOOST_SPIRIT_IT_NS std
+#endif
+
+#if (defined(BOOST_INTEL_CXX_VERSION) && !defined(_STLPORT_VERSION))
+#undef BOOST_SPIRIT_IT_NS
+#define BOOST_SPIRIT_IT_NS impl
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
@@ -208,7 +219,9 @@ inline std::ostream&
 operator<<(std::ostream& o, node_iter_data<IteratorT, ValueT> const& n)
 {
     o << "(id = " << n.id() << " text = \"";
-    typedef typename std::iterator_traits<IteratorT>::value_type iterator_t;
+    typedef 
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type 
+        iterator_t;
     std::copy(n.begin(), n.end(), std::ostream_iterator<iterator_t>(o));
     o << "\" is_root = " << n.is_root()
         << " value = " << n.value() << ")";
@@ -220,7 +233,9 @@ operator<<(std::ostream& o, node_iter_data<IteratorT, ValueT> const& n)
 template <typename IteratorT = char const*, typename ValueT = nil_t>
 struct node_val_data
 {
-    typedef typename std::iterator_traits<IteratorT>::value_type value_type;
+    typedef 
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type 
+        value_type;
     typedef std::vector<value_type> container_t;
     typedef typename container_t::iterator iterator_t;
     typedef typename container_t::const_iterator const_iterator_t;
@@ -310,7 +325,9 @@ inline std::ostream&
 operator<<(std::ostream& o, node_val_data<IteratorT, ValueT> const& n)
 {
     o << "(id = " << n.id() << " text = \"";
-    typedef typename std::iterator_traits<IteratorT>::value_type iterator_t;
+    typedef 
+        typename BOOST_SPIRIT_IT_NS::iterator_traits<IteratorT>::value_type 
+        iterator_t;
     std::copy(n.begin(), n.end(), std::ostream_iterator<iterator_t>(o));
     o << "\" is_root = " << n.is_root()
         << " value = " << n.value() << ")";
@@ -1354,6 +1371,8 @@ struct tree_parse_info {
 
 }} // namespace boost::spirit
 
+#undef BOOST_SPIRIT_IT_NS
+#undef BOOST_SPIRIT_MP_TYPE_COMPUTER_ARGS
+
 #endif
 
-#undef BOOST_SPIRIT_MP_TYPE_COMPUTER_ARGS
