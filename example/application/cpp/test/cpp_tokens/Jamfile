@@ -1,0 +1,32 @@
+# =============================================================================
+#   A Standard compliant C++ preprocessor
+#
+#   Sample: prints out the preprocessed tokens returned by the pp iterator
+#
+#   Copyright (c) 2001-2003 Hartmut Kaiser
+#   http://spirit.sourceforge.net/
+#
+#   Permission to copy, use, modify, sell and distribute this software
+#   is granted provided this copyright notice appears in all copies.
+#   This software is provided "as is" without express or implied
+#   warranty, and with no claim as to its suitability for any purpose.
+#
+#   See Copyright.txt for full copyright notices and acknowledgements.
+# =============================================================================
+
+subproject libs/spirit/example/application/cpp_tokens ;
+
+exe cpp_tokens :
+        cpp_tokens.cpp
+        instantiate_cpp_grammar.cpp
+        instantiate_cpp_exprgrammar.cpp
+        instantiate_cpp_literalgrammars.cpp
+        instantiate_slex_lexer.cpp
+        instantiate_re2c_lexer.cpp
+        ./cpp_lexer/re2clex/aq.cpp
+        ./cpp_lexer/re2clex/cpp.re.cpp
+    :   <include>../..
+        <sysinclude>$(BOOST_ROOT)
+        <lib>fs
+    ;
+
