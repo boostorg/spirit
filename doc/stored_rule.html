@@ -31,7 +31,7 @@
 <p>EBNF is primarily declarative. Like in functional programming, an EBNF grammar
   is a static recipe and there's no notion of do this then that. However, in Spirit,
   we managed to coax imperative C++ to take in declarative EBNF. Hah! Fun!...
-  We did that by masquerading the C++ assignment operator to mimick EBNF's <tt>::=</tt>.
+  We did that by masquerading the C++ assignment operator to mimic EBNF's <tt>::=</tt>.
   To do that, we gave the rule class' assignment operator and copy constructor
   a different meaning and semantics. The downside is that doing so made the rule
   unlike any other C++ object. You can't copy it. You can't assign it. </p>
