@@ -25,19 +25,19 @@
     <td width="30"><a href="rule.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
-<p>Similar to <tt>chlit</tt>, <tt>strlit</tt> etc. numeric parsers are also primitives. 
-  Numeric parsers are placed on 
+<p>Similar to <tt>chlit</tt>, <tt>strlit</tt> etc. numeric parsers are also primitives.
+  Numeric parsers are placed on
 
 
  a section of their own
 
- to give this important building 
-  block better focus. The framework includes a couple of predefined objects for 
-  parsing signed and unsigned integers and real numbers. These parsers are fully 
-  parametric. Most of the important aspects of numeric parsing can be finely adjusted 
-  to suit. This includes the radix base, the minimum and maximum number of allowable 
-  digits, the exponent, the fraction etc. Policies control the real number parsers' 
-  behavior. There are some predefined policies covering the most common real number 
+ to give this important building
+  block better focus. The framework includes a couple of predefined objects for
+  parsing signed and unsigned integers and real numbers. These parsers are fully
+  parametric. Most of the important aspects of numeric parsing can be finely adjusted
+  to suit. This includes the radix base, the minimum and maximum number of allowable
+  digits, the exponent, the fraction etc. Policies control the real number parsers'
+  behavior. There are some predefined policies covering the most common real number
   formats but the user can supply her own when needed. </p>
 <h2>uint_parser</h2>
 <p>This class is the simplest among the members of the numerics package. The <tt>uint_parser</tt>
@@ -59,7 +59,7 @@
   </tr>
   <tr>
     <td class="table_cells" width="21%"><b>T</b></td>
-    <td class="table_cells" width="79%">The numeric base type of the numeric parser. 
+    <td class="table_cells" width="79%">The numeric base type of the numeric parser.
       Defaults to <tt>unsigned</tt></td>
   </tr>
   <tr>
@@ -118,8 +118,8 @@
 <pre><code><span class=identifier>    </span><span class=identifier>list_of_numbers </span><span class=special>=</span> <span class=identifier>real_p </span><span class=special>&gt;&gt; *(</span><span class=literal>','</span> <span class=special>&gt;&gt; </span><span class=identifier>real_p</span><span class=special>)</span></code>;
 </pre>
 <p></p>
-<p>Later, we shall see how we can extract the actual numbers parsed by the numeric 
-  parsers. We shall deal with this when we get to the section on <a href="semantic_actions.html#specialized_actions">specialized 
+<p>Later, we shall see how we can extract the actual numbers parsed by the numeric
+  parsers. We shall deal with this when we get to the section on <a href="semantic_actions.html#specialized_actions">specialized
   actions</a>.</p>
 <h2>int_parser</h2>
 <p>The <tt>int_parser</tt> can parse signed integers of arbitrary length and size.
@@ -140,8 +140,8 @@
   </tr>
 </table>
 <h2>real_parser</h2>
-<p>The <tt>real_parser</tt> can parse real numbers of arbitrary length and size 
-  limited by its parametric type <tt>T</tt>. The <tt>real_parser</tt> is a template 
+<p>The <tt>real_parser</tt> can parse real numbers of arbitrary length and size
+  limited by its parametric type <tt>T</tt>. The <tt>real_parser</tt> is a template
   class with 2 template parameters. Here's the <tt>real_parser</tt> template interface:</p>
 <pre><span class=keyword>    template</span><span class=special>&lt;
         </span><span class=keyword>typename </span><span class=identifier>T </span><span class=special>= </span><span class=keyword>double</span><span class=special>,
@@ -154,20 +154,20 @@
     <td class="note_box"><img src="theme/bulb.gif" width="13" height="18"><b>
       Parsing special numeric types</b><br>
       <br>
-      Notice that the numeric base type <tt>T</tt> can be specified by the user. 
-      This means that we can use the numeric parsers to parse user defined numeric 
-      types such as <tt>fixed_point</tt> (fixed point reals) and <tt>bigint</tt> 
+      Notice that the numeric base type <tt>T</tt> can be specified by the user.
+      This means that we can use the numeric parsers to parse user defined numeric
+      types such as <tt>fixed_point</tt> (fixed point reals) and <tt>bigint</tt>
       (unlimited precision integers).</td>
   </tr>
 </table>
-<p>The second template parameter is a class that groups all the policies and defaults 
-  to <tt>ureal_parser_policies&lt;T&gt;</tt>. Policies control the real number 
-  parsers' behavior. The default policies provided are designed to parse C/C++ 
-  style real numbers of the form <b>nnn.fff.Eeee</b> where <b>nnn</b> is the whole 
-  number part, <b>fff</b> is the fractional part, <b>E</b> is <tt class="quotes">'e'</tt> 
-  or <tt class="quotes">'E'</tt> and <b>eee</b> is the exponent optionally preceded 
-  by <tt class="quotes">'-'</tt> or <tt><span class="quotes">'+'</span></tt>. 
-  This corresponds to the following grammar, with the exception that plain integers 
+<p>The second template parameter is a class that groups all the policies and defaults
+  to <tt>ureal_parser_policies&lt;T&gt;</tt>. Policies control the real number
+  parsers' behavior. The default policies provided are designed to parse C/C++
+  style real numbers of the form <b>nnn.fff.Eeee</b> where <b>nnn</b> is the whole
+  number part, <b>fff</b> is the fractional part, <b>E</b> is <tt class="quotes">'e'</tt>
+  or <tt class="quotes">'E'</tt> and <b>eee</b> is the exponent optionally preceded
+  by <tt class="quotes">'-'</tt> or <tt><span class="quotes">'+'</span></tt>.
+  This corresponds to the following grammar, with the exception that plain integers
   without the decimal point are also accepted by default.</p>
 <pre><code><font color="#000000"><span class=keyword>    </span><span class=identifier>floatingliteral
         </span><span class=special>=   </span><span class=identifier>fractionalconstant </span><span class=special>&gt;&gt; </span><span class=special>!</span><span class=identifier>exponentpart
@@ -182,10 +182,10 @@
     </span><span class=identifier>exponentpart
         </span><span class=special>=   </span><span class=special>(</span><span class=literal>'e' </span><span class=special>| </span><span class=literal>'E'</span><span class=special>) </span><span class=special>&gt;&gt; </span><span class=special>!(</span><span class=literal>'+' </span><span class=special>| </span><span class=literal>'-'</span><span class=special>) </span><span class=special>&gt;&gt; </span><span class=special>+</span><span class=identifier>digit_p
         </span><span class=special>;</span></font></code></pre>
-<p>The default policies are provided to take care of the most common case (there 
-  are many ways to represent, and hence parse, real numbers). In most cases, the 
-  default setting of the <tt>real_parser</tt> is sufficient and can be used straight 
-  out of the box. Actually, there are four <tt>real_parser</tt>s pre-defined for 
+<p>The default policies are provided to take care of the most common case (there
+  are many ways to represent, and hence parse, real numbers). In most cases, the
+  default setting of the <tt>real_parser</tt> is sufficient and can be used straight
+  out of the box. Actually, there are four <tt>real_parser</tt>s pre-defined for
   immediate use:</p>
 <table width="90%" border="0" align="center">
   <tr>
@@ -218,10 +218,10 @@
 </table>
 <p>We've seen <tt>real_p</tt> before. <tt>ureal_p</tt> is its unsigned variant.</p>
 <h3><a name="strict_reals"></a>Strict Reals </h3>
-<p>Integer numbers are considered a subset of real numbers, so <tt>real_p</tt> 
-  and <tt>ureal_p</tt> recognize integer numbers (without a dot) as real numbers. 
-  <tt>strict_real_p</tt> and <tt>strict_ureal_p</tt> are the equivalent parsers 
-  that <strong>require</strong> a dot to be present for a number to be considered 
+<p>Integer numbers are considered a subset of real numbers, so <tt>real_p</tt>
+  and <tt>ureal_p</tt> recognize integer numbers (without a dot) as real numbers.
+  <tt>strict_real_p</tt> and <tt>strict_ureal_p</tt> are the equivalent parsers
+  that <strong>require</strong> a dot to be present for a number to be considered
   a successful match.</p>
 <h2>Advanced: real_parser policies</h2>
 <p>The parser policies break down real number parsing into 6 steps:</p>
@@ -288,10 +288,10 @@
   of the <span class="quotes">'-'</span> or <span class="quotes">'+'</span> sign.
   While it is easy to write one:</p>
 <pre>    <span class=identifier>sign_p </span><span class=special>= </span><span class=special>(</span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'+'</span>) <span class=special>| </span><span class=literal>'-'</span><span class="special">)</span><span class=literal>;</span></pre>
-<p>it is not possible to extract the actual sign (positive or negative) without 
-  resorting to semantic actions. The sign_p parser has a bool attribute returned 
-  to the caller through the match object which, after parsing, is set to <strong>true</strong> 
-  if the parsed sign is negative. This attribute detects if the negative sign 
+<p>it is not possible to extract the actual sign (positive or negative) without
+  resorting to semantic actions. The sign_p parser has a bool attribute returned
+  to the caller through the match object which, after parsing, is set to <strong>true</strong>
+  if the parsed sign is negative. This attribute detects if the negative sign
   has been parsed. Examples:</p>
 <pre><span class=special>    </span><span class=keyword>bool </span><span class=identifier>is_negative</span><span class=special>;
     </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>sign_p</span><span class=special>[</span><span class=identifier>assign_a</span><span class=special>(</span><span class=identifier>is_negative</span><span class=special>)]</span><span class=special>;</span></pre>
@@ -360,9 +360,9 @@
         </span><span class=identifier>parse_sign</span><span class=special>(</span><span class=identifier>ScannerT</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>)
         </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>sign_p</span><span class=special>.</span><span class=identifier>parse</span><span class=special>(</span><span class=identifier>scan</span><span class=special>); </span><span class=special>}
     </span><span class=special>};</span></pre>
-<p>Notice how the real_parser_policies replaced <b><tt>parse_sign</tt></b> of 
-  the <b>u</b>real_parser_policies from which it is subclassed. The default real_parser_policies 
-  simply uses a <tt>sign_p</tt> instead of <tt>scan.no_match()</tt> in the <tt>parse_sign 
+<p>Notice how the real_parser_policies replaced <b><tt>parse_sign</tt></b> of
+  the <b>u</b>real_parser_policies from which it is subclassed. The default real_parser_policies
+  simply uses a <tt>sign_p</tt> instead of <tt>scan.no_match()</tt> in the <tt>parse_sign
   </tt> step. </p>
 <h2><span class=identifier>strict_ureal_parser_policies and strict_real_parser_policies</span></h2>
 <pre>    <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T</span><span class=special>&gt;
@@ -376,13 +376,13 @@
     </span><span class=special>{</span>
 <span class=special>        </span><span class=keyword>static const bool</span> <span class=identifier>expect_dot</span><span class=special> =</span> <span class=literal>true</span><span class=special>;</span><span class=special></span><span class=special></span>
     <span class=special>};</span></pre>
-<p>Again, these policies replaced just the policies they wanted different from 
+<p>Again, these policies replaced just the policies they wanted different from
   their superclasses.</p>
-<p><i>Specialized</i> real parser policies can reuse some of the defaults while 
-  replacing a few. For example, the following is a real number parser policy that 
-  parses thousands separated numbers with at most two decimal places and no exponent. 
+<p><i>Specialized</i> real parser policies can reuse some of the defaults while
+  replacing a few. For example, the following is a real number parser policy that
+  parses thousands separated numbers with at most two decimal places and no exponent.
 </p>
-<p><img src="theme/lens.gif" width="15" height="16">The full source code can be 
+<p><img src="theme/lens.gif" width="15" height="16">The full source code can be
   viewed <a href="../example/fundamental/thousand_separated.cpp">here</a>. </p>
 <pre>
 <span class=identifier>    </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T</span><span class=special>&gt;

@@ -29,43 +29,43 @@
     <td width="30"><a href="switch_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
-<p>Select parsers may be used to identify a single parser from a given list 
+<p>Select parsers may be used to identify a single parser from a given list
   of parsers, which successfully recognizes the current input sequence. Example:</p>
-<pre>    rule<span class="special">&lt;&gt;</span> rule_select <span class="special">=</span> 
+<pre>    rule<span class="special">&lt;&gt;</span> rule_select <span class="special">=</span>
         select_p<span class="special">
-        (</span> 
+        (</span>
             parser_a<span class="special">
           ,</span> parser_b<span class="special">
             <span class="comment">/* ... */</span>
           ,</span> parser_n
         <span class="special">)</span><span class="special">;</span></pre>
-<p>The parsers (parser_a, parser_b etc.) are tried sequentially from left to right  until a parser matches the current input sequence. 
-  If there is a matching parser found, the <tt>select_p</tt> parser returns 
-  the parser's position (zero based index). For instance, in the example above, <tt>1</tt>  is returned if parser_b 
+<p>The parsers (parser_a, parser_b etc.) are tried sequentially from left to right  until a parser matches the current input sequence.
+  If there is a matching parser found, the <tt>select_p</tt> parser returns
+  the parser's position (zero based index). For instance, in the example above, <tt>1</tt>  is returned if parser_b
   matches.</p>
-<p>There are two predefined parsers of the select parser family: <tt>select_p</tt> 
-  and <tt>select_fail_p</tt>. These parsers differ in the way the no match 
-  case is handled (when none of the  parsers match the current input sequence). 
-  While the <tt>select_p</tt> parser will return <tt>-1</tt> 
-  if no matching parser is found, the <tt>select_fail_p</tt> parser will not match 
+<p>There are two predefined parsers of the select parser family: <tt>select_p</tt>
+  and <tt>select_fail_p</tt>. These parsers differ in the way the no match
+  case is handled (when none of the  parsers match the current input sequence).
+  While the <tt>select_p</tt> parser will return <tt>-1</tt>
+  if no matching parser is found, the <tt>select_fail_p</tt> parser will not match
   at all.</p>
-<p>The following sample shows how the select parser may be used very conveniently 
+<p>The following sample shows how the select parser may be used very conveniently
   in conjunction with a <a href="switch_parser.html">switch parser</a>:</p>
 <pre>    <span class="keyword">int</span> choice <span class="special">=</span> <span class="literal">-1</span><span class="special">;</span>
-    rule<span class="special">&lt;&gt;</span> rule_select <span class="special">=</span> 
+    rule<span class="special">&lt;&gt;</span> rule_select <span class="special">=</span>
             select_fail_p<span class="special">(</span><span class="literal">'a'</span><span class="special">,</span> <span class="literal">'b'</span><span class="special">,</span> <span class="literal">'c'</span><span class="special">,</span> <span class="literal">'d'</span><span class="special">)[</span>assign_a<span class="special">(</span>choice<span class="special">)]</span>
         &gt;&gt;  switch_p(var<span class="special">(</span>choice)) <span class="special">
             [</span><br>                case_p<span class="special">&lt;</span><span class="literal">0</span><span class="special">&gt;(</span>int_p<span class="special">),</span><br>                case_p<span class="special">&lt;</span><span class="literal">1</span><span class="special">&gt;(</span>ch_p<span class="special">(</span><span class="literal">','</span><span class="special">)),</span><br>                case_p<span class="special">&lt;</span><span class="literal">2</span><span class="special">&gt;(</span>str_p<span class="special">(</span><span class="string">&quot;bcd&quot;</span><span class="special">)),</span><br>                default_p<br>            <span class="special">]</span><br><span class="special">        ;</span></pre>
 <p>This example shows a rule, which matches:</p>
 <ul>
-  <li><span class="literal"> 'a' </span>followed 
+  <li><span class="literal"> 'a' </span>followed
       by an integer</li>
-  <li><span class="literal">'b' </span>followed by a<span class="literal"> 
+  <li><span class="literal">'b' </span>followed by a<span class="literal">
     ','</span></li>
   <li><span class="literal">'c'</span> followed by <span class="string">&quot;bcd&quot;</span></li>
   <li>a single <span class="literal">'d'</span>. </li>
 </ul>
-<p>For other input sequences the 
+<p>For other input sequences the
         give rule does not match at all.</p>
 <table width="80%" border="0" align="center">
   <tr>
