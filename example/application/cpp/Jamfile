@@ -23,9 +23,9 @@ exe cpp :
         instantiate_re2c_lexer.cpp
         ./cpplexer/re2clex/aq.cpp
         ./cpplexer/re2clex/cpp.re.cpp
+		<lib>../../../../../libs/filesystem/build/fs
+		<lib>../../../../../libs/program_options/build/program_options
     :   <include>.
         <sysinclude>$(BOOST_ROOT)
-        <lib>program_options
-        <lib>fs
     ;
 
