@@ -39,7 +39,7 @@
   recursive rules, global variables simply won't be adequate. We need a machanism 
   to attach local variables to our rules.</p>
 <p>Closures provide an environment, a stack frame, for local variables to reside. 
-  Most importantly, the closure variables are acessible from the EBNF grammar 
+  Most importantly, the closure variables are accessible from the EBNF grammar 
   specification and can be used to pass parser information upstream or downstream 
   from the topmost rule down to the terminals in a top-down recursive descent. 
   For one, closures provide a parser with the ability to have inherited and synthetic 
@@ -101,7 +101,7 @@
     </span><span class=special>};
 
     </span><span class=identifier>my_grammar</span> g;</code></pre>
-<p><strong>Acessing closure members</strong></p>
+<p><strong>Accessing closure members</strong></p>
 <p>Closure members can be accessed from within semantic actions just like you 
   would struct members: by qualifying the member name with its owner rule, subrule 
   or grammar. Examples:</p>
@@ -205,7 +205,7 @@
   What this means is that function <tt>B</tt> is reliant on function <tt>A</tt> 
   (If <tt>B</tt> is a nested function of <tt>A</tt>, this will always be the case). 
   The free form nature of Spirit rules allows access to a closure variable anytime, 
-  anywhere. Acessing <tt>A.x</tt> is equivalent to referring to the topmost stack 
+  anywhere. Accessing <tt>A.x</tt> is equivalent to referring to the topmost stack 
   variable <tt>x</tt> of function <tt>A</tt>. If function <tt>A</tt> is not active 
   when <tt>A.x</tt> is referenced, a runtime exception will be thrown.</p>
 <p><strong>Nested Functions</strong></p>
