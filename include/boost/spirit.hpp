@@ -18,8 +18,8 @@
 #if !defined(SPIRIT_HPP)
 #define SPIRIT_HPP
 
-#define SPIRIT_VERSION 0x1501
-#define SPIRIT_PIZZA_VERSION PEPPERONI_PLUS  // :-)
+#define SPIRIT_VERSION 0x1502
+#define SPIRIT_PIZZA_VERSION HAWAIIAN_COMBO  // :-)
 
 ///////////////////////////////////////////////////////////////////////////////
 //
