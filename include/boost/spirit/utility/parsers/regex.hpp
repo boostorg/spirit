@@ -9,8 +9,6 @@
 #ifndef BOOST_SPIRIT_REGEX_HPP
 #define BOOST_SPIRIT_REGEX_HPP
 
-#include <boost/spirit/core/impl/msvc.hpp>
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Include the regular expression library of boost (Boost.Regex)
