@@ -348,8 +348,8 @@ struct grammar_definition
         {
             typedef typename parser_result<self_t, ScannerT>::type result_t;
             typedef parser_scanner_linker<ScannerT> scanner_t;
-            BOOST_SPIRIT_CONTEXT_PARSE(scan, *this, scanner_t, context_t,
-                result_t)
+            BOOST_SPIRIT_CONTEXT_PARSE(scan, target_grammar, scanner_t,
+                context_t, result_t)
         }
 
     private:
