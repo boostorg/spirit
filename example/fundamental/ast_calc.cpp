@@ -125,7 +125,7 @@ main()
     string str;
     while (getline(cin, str))
     {
-        if (str[0] == 'q' || str[0] == 'Q')
+        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
         tree_parse_info<> info = ast_parse(str.c_str(), calc);

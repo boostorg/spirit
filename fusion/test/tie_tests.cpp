@@ -67,6 +67,13 @@ main()
 #endif
 
     dummy(ta);
+    
+    // ties cannot be rebound
+    int d = 3;
+    tuple<int&> ti(a);
+    BOOST_TEST(&get<0>(ti) == &a);
+    ti = tuple<int&>(d);
+    BOOST_TEST(&get<0>(ti) == &a);
 
     return boost::report_errors();
 }

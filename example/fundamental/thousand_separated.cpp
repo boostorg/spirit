@@ -107,7 +107,7 @@ main()
     double n;
     while (getline(cin, str))
     {
-        if (str[0] == 'q' || str[0] == 'Q')
+        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
         if (parse(str.c_str(), ts_real_p[assign_a(n)]).full)

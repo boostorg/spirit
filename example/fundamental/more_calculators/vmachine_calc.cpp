@@ -257,7 +257,7 @@ main()
     string str;
     while (getline(cin, str))
     {
-        if (str[0] == 'q' || str[0] == 'Q')
+        if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
         code.clear();
