@@ -663,10 +663,13 @@ pp_iterator_functor<ContextT>::on_if(
 // copy the sequence to preprocess into the provided list
 std::list<result_type> expanded;
 get_token_value<result_type, parse_node_t> get_value;
+typename ref_transform_iterator_generator<
+        get_token_value<result_type, parse_node_t>, 
+        typename parse_tree_t::const_iterator
+    >::type first = make_ref_transform_iterator(begin, get_value);
     
     ctx.expand_tokensequence(
-        make_ref_transform_iterator(begin, get_value),
-        make_ref_transform_iterator(end, get_value), 
+        first, make_ref_transform_iterator(end, get_value), 
         expanded, false, true);
     
 // parse the expression and enter the #if block
@@ -697,10 +700,13 @@ pp_iterator_functor<ContextT>::on_elif(
 // copy the sequence to preprocess into the provided list
 std::list<result_type> expanded;
 get_token_value<result_type, parse_node_t> get_value;
+typename ref_transform_iterator_generator<
+        get_token_value<result_type, parse_node_t>, 
+        typename parse_tree_t::const_iterator
+    >::type first = make_ref_transform_iterator(begin, get_value);
     
     ctx.expand_tokensequence(
-        make_ref_transform_iterator(begin, get_value),
-        make_ref_transform_iterator(end, get_value), 
+        first, make_ref_transform_iterator(end, get_value), 
         expanded, false, true);
     
 // parse the expression and enter the #elif block

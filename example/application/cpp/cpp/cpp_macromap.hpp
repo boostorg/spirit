@@ -127,6 +127,7 @@ class macromap {
 public:
     BOOST_STATIC_CONSTANT(int, must_continue = 0x1);
     BOOST_STATIC_CONSTANT(int, replaced_tokens = 0x2);
+    BOOST_STATIC_CONSTANT(int, must_rescan = 0x4);
     
     macromap() {}
     ~macromap() {}
@@ -137,15 +138,20 @@ public:
     bool remove_macro(string_t const &name);
     
     template <typename IteratorT, typename ContainerT>
-    void expand_tokensequence(IteratorT &first, IteratorT const &last,
+    int expand_tokensequence(IteratorT &first, IteratorT const &last,
         ContainerT &expanded, bool one_token_only, 
         bool expand_undefined);
 
 protected:
     template <typename IteratorT, typename ContainerT>
     int expand_tokensequence(IteratorT &first, IteratorT const &last,
-        std::insert_iterator<ContainerT> &insert_iter, 
-        std::set<string_t> &replaced, bool one_token_only, 
+        ContainerT &expanded, std::set<typename TokenT::string_t> &replaced_names,
+        bool one_token_only, bool expand_undefined);
+
+    template <typename IteratorT, typename ContainerT>
+    int expand_tokensequence_worker(IteratorT &first, IteratorT const &last,
+        std::insert_iterator<ContainerT> insert_iter, 
+        std::set<string_t> replaced, bool one_token_only, 
         bool expand_undefined);
 
     template <typename IteratorT, typename ContainerT, typename SizeT>
@@ -155,15 +161,18 @@ protected:
 
     template <typename IteratorT, typename ContainerT>
     int expand_macro(IteratorT &first, IteratorT const &last,
-        std::insert_iterator<ContainerT> &insert_iter, 
+        std::insert_iterator<ContainerT> insert_iter, 
         std::set<string_t> &replaced, bool expand_undefined);
 
     template <typename IteratorT, typename ContainerT>
     bool resolve_defined(IteratorT &first, IteratorT const &last,
-        std::insert_iterator<ContainerT> &insert_iter);
+        std::insert_iterator<ContainerT> insert_iter);
 
     template <typename ContainerT>
-    void concat_tokensequence(ContainerT &expanded);
+    int concat_tokensequence(ContainerT &expanded);
+
+    template <typename ContainerT>
+    void rescan_tokensequence(ContainerT &expanded);
 
 private:
     defined_macros_t defined_macros;
@@ -245,35 +254,50 @@ macromap<TokenT>::remove_macro(typename TokenT::string_t const &name)
 
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT>
-inline void 
+inline int 
 macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last,
     ContainerT &expanded, bool one_token_only, bool expand_undefined)
 {
 std::set<TokenT::string_t> replaced_names;
 
-    if (expand_tokensequence(first, last, 
+    return expand_tokensequence(first, last, expanded, replaced_names, 
+        one_token_only, expand_undefined);
+}
+
+template <typename TokenT>
+template <typename IteratorT, typename ContainerT>
+inline int 
+macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last,
+    ContainerT &expanded, std::set<typename TokenT::string_t> &replaced_names,
+    bool one_token_only, bool expand_undefined)
+{
+    int return_flags = 0;
+    int rescan_flags = 0;
+    
+    if (return_flags = expand_tokensequence_worker(first, last, 
         std::inserter(expanded, expanded.begin()), replaced_names, 
         one_token_only, expand_undefined)) 
     {
-        int replaced_flags = 0;
+        typedef impl::gen_unput_queue_iterator<IteratorT, TokenT> gen_t;
+
         ContainerT eof_queue;
+        int replaced_flags = 0;
         
         do {
         ContainerT expanded_list;
         
-            concat_tokensequence(expanded);     // handle '##' and '#' operators
+            rescan_flags |= concat_tokensequence(expanded);     // handle '##'
             BOOST_SPIRIT_DEBUG_OUT << as_string(expanded) << std::endl;
        
-        unput_queue_iterator<IteratorT, TokenT> first_it = 
-                make_unput_queue_iterator(expanded, first);
-                
-            replaced_flags = expand_tokensequence(
-                first_it,  make_unput_queue_iterator(eof_queue, last),
-                std::inserter(expanded_list, expanded_list.begin()), 
-                replaced_names, one_token_only, expand_undefined
-            );
-            first = first_it.base();
+            typename gen_t::return_t first_it = gen_t::do_(expanded, first);
+            replaced_flags = expand_tokensequence_worker(
+                first_it,  gen_t::do_(eof_queue, last),
+                std::inserter(expanded_list, expanded_list.begin()),
+                replaced_names, one_token_only, expand_undefined);
+            return_flags |= replaced_flags;
             
+            impl::assign_iterator<IteratorT>::do_(first, first_it.base());
+
             if (replaced_flags & macromap<TokenT>::replaced_tokens)
                 std::swap(expanded, expanded_list);
 
@@ -281,20 +305,27 @@ std::set<TokenT::string_t> replaced_names;
         
         BOOST_SPIRIT_DEBUG_OUT << as_string(expanded) << std::endl;
     }
+
+// there were '##' operators while expanding macros, so we need to re-scan
+// the whole token sequence
+    if (must_rescan & rescan_flags)
+        rescan_tokensequence(expanded);
+        
+    return return_flags;
 }
 
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT>
 inline int
-macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last, 
-    std::insert_iterator<ContainerT> &insert_iter, std::set<string_t> &replaced, 
+macromap<TokenT>::expand_tokensequence_worker(IteratorT &first, IteratorT const &last, 
+    std::insert_iterator<ContainerT> insert_iter, std::set<string_t> replaced, 
     bool one_token_only, bool expand_undefined)
 {
     using namespace cpplexer;
     
 //  Iterate over all the elements of the given sequence, if it is an 
 //  T_IDENTIFIER token, try to replace this as a macro
-int return_replaced = 0;       // return, whether a replacement occured
+int return_flags = 0;       // return, whether a replacement occured
 
     while(first != last) {
     token_id id = token_id(*first);
@@ -313,8 +344,8 @@ int return_replaced = 0;       // return, whether a replacement occured
             if (is_defined((*first).get_value())) {
             // the current token contains an identifier, which is currently 
             // defined as a macro
-                return_replaced = expand_macro(first, last, insert_iter, 
-                    replaced, expand_undefined) | return_replaced;
+                return_flags = expand_macro(first, last, insert_iter, 
+                    replaced, expand_undefined) | return_flags;
 
             // expand only the current macro, if requested
                 if (one_token_only && impl::is_fresh_token<IteratorT>::test_(first))
@@ -329,11 +360,11 @@ int return_replaced = 0;       // return, whether a replacement occured
                 new_token.set_token_id(T_INTLIT);
                 new_token.set_value("0");
                 *insert_iter = new_token;
-                return_replaced |= (replaced_tokens | must_continue);
+                return_flags |= (replaced_tokens | must_continue);
             }
             else {
                 *insert_iter = *first;
-                return_replaced |= replaced_tokens;
+                return_flags |= replaced_tokens;
             }
         }
         else if (expand_undefined && IS_CATEGORY(*first, KeywordTokenType) && 
@@ -346,11 +377,11 @@ int return_replaced = 0;       // return, whether a replacement occured
             new_token.set_token_id(T_INTLIT);
             new_token.set_value("0");
             *insert_iter = new_token;
-            return_replaced |= (replaced_tokens | must_continue);
+            return_flags |= (replaced_tokens | must_continue);
         }
         else {
             *insert_iter = *first;
-            return_replaced |= replaced_tokens;
+            return_flags |= replaced_tokens;
         }
         ++first;
         
@@ -358,7 +389,7 @@ int return_replaced = 0;       // return, whether a replacement occured
         if (one_token_only && impl::is_fresh_token<IteratorT>::test_(first))
             break;
     }
-    return return_replaced;
+    return return_flags;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -366,6 +397,30 @@ int return_replaced = 0;       // return, whether a replacement occured
 //  collect_arguments(): collect the actual arguments of a macro invocation
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+namespace {
+
+    template <typename ContainerT>
+    inline void
+    trim_argument (ContainerT *argument)
+    {
+        using namespace cpplexer;
+        
+    // strip leading whitespace (should be only one token)
+        if (argument->size() > 0 &&
+            IS_CATEGORY((*argument->begin()), WhiteSpaceTokenType))
+        {
+            argument->pop_front();
+        }
+        
+    // strip trailing whitespace (should be only one token)
+        if (argument->size() > 0 &&
+            IS_CATEGORY((*argument->rend()), WhiteSpaceTokenType))
+        {
+            argument->pop_back();
+        }
+    }
+}
 
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT, typename SizeT>
@@ -381,23 +436,33 @@ macromap<TokenT>::collect_arguments (
 // collect the actual arguments
 int nested_parenthesis_level = 1;
 ContainerT *argument = &arguments[0];
-    
+bool was_whitespace = false;
+
     while (++next != end && nested_parenthesis_level) {
-        if (0 == parameter_count && !IS_CATEGORY((*next), WhiteSpaceTokenType)) {
+    token_id id = token_id(*next);
+    
+        if (0 == parameter_count && 
+            !IS_CATEGORY((*next), WhiteSpaceTokenType) &&
+            id != T_RIGHTPAREN && id != T_LEFTPAREN) 
+        {
         // there shouldn't be any arguments
             CPP_THROW(preprocess_exception, too_many_macroarguments, 
                 "", (*next));
         }
         
-        switch (token_id(*next)) {
+        switch (id) {
         case T_LEFTPAREN:
             ++nested_parenthesis_level;
             argument->push_back(*next);
+            was_whitespace = false;
             break;
             
         case T_RIGHTPAREN:
             if (--nested_parenthesis_level >= 1)
                 argument->push_back(*next);
+            else
+                trim_argument(argument);
+            was_whitespace = false;
             break;
         
         case T_COMMA:
@@ -408,6 +473,7 @@ ContainerT *argument = &arguments[0];
                     CPP_THROW(preprocess_exception, too_many_macroarguments, 
                         "", (*next));
                 }
+                trim_argument(argument);
                 arguments.push_back(ContainerT()); // add new arg
                 argument = &arguments[arguments.size()-1];
             }
@@ -415,15 +481,20 @@ ContainerT *argument = &arguments[0];
             // surrounded by parenthesises, so store to current argument
                 argument->push_back(*next);
             }
+            was_whitespace = false;
             break;
 
         case T_SPACE:
         case T_SPACE2:
         case T_CCOMMENT:
+            if (!was_whitespace)
+                argument->push_back(*next);
+            was_whitespace = true;
             break;      // skip whitespace
             
         default:
             argument->push_back(*next);
+            was_whitespace = false;
             break;
         }
     }
@@ -437,18 +508,33 @@ ContainerT *argument = &arguments[0];
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-//  expand_macro(): expandes a defined macro
+//  expand_macro(): expands a defined macro
 //
 //      This functions tries to expand the macro, to which points the 'first'
 //      iterator. The functions eats up more tokens, if the macro to expand is
 //      a function-like macro.
 //
 ///////////////////////////////////////////////////////////////////////////////
+namespace {
+
+    template <typename IteratorT>
+    bool next_is_concat(IteratorT it, IteratorT const &end)
+    {
+        using namespace cpplexer;
+        if (++it == end) return false;
+        while (T_SPACE == token_id(*it) || T_SPACE2 == token_id(*it)) {
+            if (++it == end)
+                return false;
+        }
+        return (token_id(*it) == T_POUND_POUND) ? true : false;
+    }
+}
+
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT>
 inline int 
 macromap<TokenT>::expand_macro(IteratorT &first, IteratorT const &last, 
-    std::insert_iterator<ContainerT> &insert_iter, 
+    std::insert_iterator<ContainerT> insert_iter, 
     std::set<string_t> &replaced, bool expand_undefined) 
 {
     using namespace cpplexer;
@@ -466,10 +552,14 @@ std::set<string_t>::const_iterator it_replaced =
     replaced.find(act_token.get_value());
 bool no_expansion = it_replaced != replaced.end();;
 
-    if (!no_expansion)  // do not expand the actual macro 
+    if (!no_expansion) { 
+    // save the macro name, to avoid expansion of this macro during replacement
         replaced.insert(std::set<string_t>::value_type(act_token.get_value()));
-    else
+    }
+    else {
+    // do not expand this instance of the actual macro 
         *insert_iter = act_token;      // copy macroname itself
+    }
 
     if (T_LEFTPAREN == *++first) {
     // called as a function-like macro 
@@ -513,34 +603,56 @@ bool no_expansion = it_replaced != replaced.end();;
                 }
 
             // try to expand the arguments itself
+            std::vector<ContainerT> expanded_args(arguments.size());
+            std::vector<ContainerT>::size_type i = 0;
+            
                 std::vector<ContainerT>::iterator arg_end = arguments.end();
                 for (std::vector<ContainerT>::iterator arg_it = arguments.begin(); 
-                    arg_it != arg_end; ++arg_it)
+                    arg_it != arg_end; ++arg_it, ++i)
                 {
-                    //std::set<string_t> replaced;
-                    ContainerT expanded_arg;
-                    if (replaced_tokens & expand_tokensequence(
-                            (*arg_it).begin(), (*arg_it).end(),
-                            std::inserter(expanded_arg, expanded_arg.begin()),
-                            replaced, false, expand_undefined))
-                    {
-                        std::swap(*arg_it, expanded_arg);
-                    }
+                    std::set<string_t> arg_replaced;//(replaced);
+                    typename ContainerT::iterator begin = (*arg_it).begin();
+                    expand_tokensequence(begin, (*arg_it).end(),
+                        expanded_args[i], arg_replaced, false, expand_undefined);
                 }
                         
             // replace macro
                 typedef typename macro_definition_t::const_iterator_t 
                     macro_definition_iter_t;
-                    
+
+                bool adjacent_concat = false;
                 macro_definition_iter_t cend = (*it).second.macrodefinition.end();
                 for (macro_definition_iter_t cit = (*it).second.macrodefinition.begin();
                     cit != cend; ++cit)
                 {
+                bool use_replaced_arg = true;
+                token_id id = token_id(*cit);
+                
+                    if (id == T_POUND_POUND) {
+                        adjacent_concat = true;
+                    }
+                    else {
+                        if (adjacent_concat || next_is_concat(cit, cend))
+                            use_replaced_arg = false;
+                            
+                        if (adjacent_concat)    // spaces after '##' ?
+                            adjacent_concat = (id == T_SPACE || id == T_SPACE2);
+                    }
+
                     if (IS_CATEGORY((*cit), ParameterTokenType)) {
                     // copy argument 'i' instead of the parameter token i
-                    ContainerT &arg = arguments[token_id(*cit) - T_PARAMETERBASE];
+                    std::vector<TokenT>::size_type i = token_id(*cit) - T_PARAMETERBASE;
                     
-                        std::copy(arg.begin(), arg.end(), insert_iter);
+                        if (use_replaced_arg && expanded_args[i].size() > 0) {
+                        ContainerT &arg = expanded_args[i];
+                        
+                            std::copy(arg.begin(), arg.end(), insert_iter);
+                        }
+                        else {
+                        ContainerT &arg = arguments[i];
+                        
+                            std::copy(arg.begin(), arg.end(), insert_iter);
+                        }
                     }
                     else {
                     // insert the actual replacement token
@@ -555,10 +667,17 @@ bool no_expansion = it_replaced != replaced.end();;
         }
     }
     else {
-    // defined as an object-like macro
         if (!no_expansion) {
-            std::copy ((*it).second.macrodefinition.begin(), 
-                (*it).second.macrodefinition.end(), insert_iter);
+            if ((*it).second.is_function_like()) {
+            // defined as a function-like macro
+                *insert_iter = act_token;
+                return replaced_tokens;
+            }
+            else {
+            // defined as an object-like macro
+                std::copy ((*it).second.macrodefinition.begin(), 
+                    (*it).second.macrodefinition.end(), insert_iter);
+            }
         }
     }
     return replaced_tokens | (no_expansion ? 0 : must_continue);
@@ -575,7 +694,7 @@ template <typename IteratorT, typename ContainerT>
 inline bool 
 macromap<TokenT>::resolve_defined(
     IteratorT &first, IteratorT const &last,
-    std::insert_iterator<ContainerT> &insert_iter) 
+    std::insert_iterator<ContainerT> insert_iter) 
 {
     using namespace cpplexer;
     
@@ -600,7 +719,7 @@ TokenT new_token(T_INTLIT, isdefined ? "1" : "0", result.get_position());
 
 template <typename TokenT>
 template <typename ContainerT>
-inline void 
+inline int 
 macromap<TokenT>::concat_tokensequence(ContainerT &expanded)
 {
     using namespace cpplexer;
@@ -624,11 +743,13 @@ bool found_concat = false;
         // replace prev##next with the concatenated value, skip whitespace
         // before and after the '##' operator
             while (T_SPACE == token_id(*next) || T_SPACE2 == token_id(*next)) {
+            typename ContainerT::iterator temp_it = next;
+            
                 ++next;
                 if (next == end) {
                 // error, '##' should be in between two tokens
                     CPP_THROW(preprocess_exception, ill_formed_operator,
-                        "concat ('##')", (*next));
+                        "concat ('##')", (*temp_it));
                 }
             }
             
@@ -647,22 +768,31 @@ bool found_concat = false;
         if (T_SPACE != token_id(*it) && T_SPACE2 != token_id(*it))        
             prev = it;
     }
+    return found_concat ? must_rescan : 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  re-scan the sequence, if necessary
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename TokenT>
+template <typename ContainerT>
+inline void 
+macromap<TokenT>::rescan_tokensequence(ContainerT &expanded)
+{
+    typedef cpplexer::lex_iterator<TokenT> lex_t;
     
-// re-scan the sequence, if necessary
-    if (found_concat) {
-        typedef cpplexer::lex_iterator<TokenT> lex_t;
-        
-        typename TokenT::string_t str (as_string(expanded));
-        ContainerT rescanned;
-        
-        lex_t it = lex_t(str.begin(), str.end(), 
-            (*expanded.begin()).get_position());
-        lex_t end = lex_t();
-        for (/**/; it != end; ++it) 
-            rescanned.push_back(*it);
+    typename TokenT::string_t str (as_string(expanded));
+    ContainerT rescanned;
     
-        std::swap(expanded, rescanned);
-    }
+    lex_t it = lex_t(str.begin(), str.end(), 
+        (*expanded.begin()).get_position());
+    lex_t end = lex_t();
+    for (/**/; it != end; ++it) 
+        rescanned.push_back(*it);
+
+    std::swap(expanded, rescanned);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -134,7 +134,7 @@ public:
 //
 ///////////////////////////////////////////////////////////////////////////////
     template <typename IteratorT>
-    void expand_tokensequence(IteratorT &first, IteratorT const &last,
+    int expand_tokensequence(IteratorT &first, IteratorT const &last,
         std::list<token_t> &expanded, bool one_token_only = true,
         bool expand_undefined = false)
     {

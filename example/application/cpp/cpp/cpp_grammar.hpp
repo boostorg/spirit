@@ -172,12 +172,14 @@ struct cpp_grammar :
                             )
                             >>  no_node_d
                                 [
-                                    *ppspace 
-                                    >> !ch_p(T_CPPCOMMENT) 
-                                    >>  ch_p(T_NEWLINE)
-                                        [
-                                            store_pos_t(self.pos_of_newline)
-                                        ]
+                                   *ppspace >> ch_p(T_NEWLINE)
+                                    [
+                                        store_pos_t(self.pos_of_newline)
+                                    ]
+                                |   ch_p(T_CPPCOMMENT)
+                                    [
+                                        store_pos_t(self.pos_of_newline)
+                                    ]
                                 ]
                         )
                 ;

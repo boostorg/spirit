@@ -1,3 +1,6 @@
+
+// Tests macro expansion order
+
 #define A(x, y) x, y
 #define B(x, y) [x][y]
 #define C(x) B(x)

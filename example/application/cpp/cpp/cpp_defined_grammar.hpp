@@ -30,7 +30,7 @@ namespace {
 
     template <typename TokenT>
     struct cpp_defined_closure 
-    :   boost::spirit::closure<cpp_defined_closure, TokenT> 
+    :   boost::spirit::closure<cpp_defined_closure<TokenT>, TokenT> 
     {
         member1 val;
     };
@@ -46,7 +46,7 @@ namespace {
 template <typename TokenT>
 struct defined_grammar :
     public boost::spirit::grammar<
-        defined_grammar, 
+        defined_grammar<TokenT>, 
         typename cpp_defined_closure<TokenT>::context_t
     >
 {

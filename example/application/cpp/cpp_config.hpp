@@ -33,7 +33,7 @@
 //  undefine the following, if you need debug output, the 
 //  BOOST_SPIRIT_DEBUG_FLAGS constants below help to fine control the amount of 
 //  the generated debug output
-#define BOOST_SPIRIT_DEBUG
+//#define BOOST_SPIRIT_DEBUG
 
 ///////////////////////////////////////////////////////////////////////////////
 //  debug rules, subrules and grammars only, for possible flags see 
@@ -53,7 +53,7 @@
 #define BOOST_SPIRIT_DEBUG_FLAGS_DEFINED_GRAMMAR    0x0040
 
 #define BOOST_SPIRIT_DEBUG_FLAGS_CPP \
-    BOOST_SPIRIT_DEBUG_FLAGS_DEFINED_GRAMMAR \
+    BOOST_SPIRIT_DEBUG_FLAGS_CPP_GRAMMAR \
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////

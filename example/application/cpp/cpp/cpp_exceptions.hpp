@@ -34,8 +34,8 @@
     if (msg[0] != 0) stream << ": " << msg; \
     stream << std::ends; \
     std::string throwmsg = stream.str(); stream.freeze(false); \
-    throw cls(throwmsg.c_str(), cls::code, act_tok.get_position().line, \
-        act_tok.get_position().column, act_tok.get_position().file.c_str()); \
+    throw cls(throwmsg.c_str(), cls::code, (act_tok).get_position().line, \
+        (act_tok).get_position().column, (act_tok).get_position().file.c_str()); \
     } \
     /**/
 #else
@@ -48,8 +48,8 @@
         << cls::error_text(cls::code); \
     if (msg[0] != 0) stream << ": " << msg; \
     stream << std::ends; \
-    throw cls(stream.str().c_str(), cls::code, act_tok.get_position().line, \
-        act_tok.get_position().column, act_tok.get_position().file.c_str()); \
+    throw cls(stream.str().c_str(), cls::code, (act_tok).get_position().line, \
+        (act_tok).get_position().column, (act_tok).get_position().file.c_str()); \
     } \
     /**/
 #endif // BOOST_NO_STRINGSTREAM

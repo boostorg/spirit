@@ -96,7 +96,7 @@ class unput_queue_iterator
         
 public:
     unput_queue_iterator(IteratorT const &it, 
-            unput_queue_policies<TokenT> &policies)
+            unput_queue_policies<TokenT> policies)
     :   base_t(it, policies)
     {}
 };
@@ -122,7 +122,7 @@ namespace impl {
     
         typedef unput_queue_iterator<IteratorT, TokenT> return_t;
         
-        static return_t
+        static return_t const &
         do_(std::list<TokenT> &queue, return_t const &it)
         {
             return it;
@@ -151,6 +151,12 @@ namespace impl {
             dest.base() = src.base();
             dest.policies() = src.policies();
         }
+        
+//        static void 
+//        do_ (iterator_t &dest, IteratorT const &src)
+//        {
+//            dest.base() = src;
+//        }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -175,13 +181,6 @@ namespace impl {
             return 0 == it.policies().queuesize();
         }
     };
-}
-
-template <typename IteratorT, typename TokenT>
-inline unput_queue_iterator<IteratorT, TokenT> 
-make_unput_queue_iterator(std::list<TokenT> &queue, IteratorT const &it)
-{
-    return impl::gen_unput_queue_iterator<IteratorT, TokenT>::do_(queue, it);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
