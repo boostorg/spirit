@@ -2,7 +2,6 @@
     A Standard compliant C++ preprocessor
 
     Copyright (c) 2001-2003 Hartmut Kaiser
-    Copyright (c) 2003 Paul Mensonides
     http://spirit.sourceforge.net/
 
     Permission to copy, use, modify, sell and distribute this software
@@ -13,10 +12,8 @@
     See Copyright.txt for full copyright notices and acknowledgements.
 =============================================================================*/
 
-// Tests macro expansion order
+// Tests, if the recursive replacement of a macro is correctly handled
 
-#define A(x, y) x, y
-#define B(x, y) [x][y]
-#define C(x) B(x)
+#define f(x) (4-f(x))
 
-C( A(2, 3) )	        // should expand to [2][3]
+f(f(1))  	// (4-f((4-f(1))))

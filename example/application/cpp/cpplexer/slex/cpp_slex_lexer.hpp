@@ -74,15 +74,6 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-// several callback functions for the lexing process
-template <typename IteratorT>
-void ignore_callback(IteratorT const &, IteratorT &,
-        IteratorT const&, const int &, boost::spirit::lexer_control<int>& ctl)
-{
-    ctl.ignore_current_token();
-}
-
-///////////////////////////////////////////////////////////////////////////////
 //  data required for initialization of the lexer (token definitions)
 #define OR      "|"
 #define Q(c)    "\\" c
@@ -288,7 +279,7 @@ lexer<IteratorT, PositionT>::init_data[] =
                 "(" ESCAPESEQ OR "[^\\n\\r\"]" OR UNIVERSALCHAR ")*" Q("\"")),
     TOKEN_DATA(SPACE, BLANK "+"),
     TOKEN_DATA(SPACE2, "[\\v\\f]+"),
-    TOKEN_DATA_EX(CONTLINE, Q("\\") "\\n", ignore_callback<iterator_t>),
+    TOKEN_DATA(CONTLINE, Q("\\") "\\n"), 
     TOKEN_DATA(NEWLINE, NEWLINEDEF),
     TOKEN_DATA(POUND_POUND, "##" OR "#" TRI("=") OR TRI("=#") OR 
                 TRI("=") TRI("=") OR Q("%:") Q("%:")),
@@ -419,19 +410,21 @@ public:
 // get the next token from the input stream
     token_t get()
     {
-    token_t token;
-    iterator_t prev = first;
-    token_id id = token_id(lexer.next_token(first, last));
+        token_t token;
+        do {
+        iterator_t prev = first;
+        token_id id = token_id(lexer.next_token(first, last));
 
-        if (-1 != id)
-            token = token_t(id, string_t(prev, first), prev.get_position());
+            if (-1 == id)
+                break;              // end of input reached
 
-        return token;
+            if (T_CONTLINE != id)   // generate and return the next token
+                return token_t(id, string_t(prev, first), prev.get_position());
+        
+        // skip the T_CONTLINE token
+        } while (true);
+        return token;       // return T_EOF
     }
-    
-// get the position of the actual token
-    //PositionT get_position()
-    //{ return first.get_position(); }
     
 private:
     iterator_t first;

@@ -6,18 +6,31 @@ See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
 
+Still missing features
+- #include directive with macro argument (C++ standard 16.2.4)
+- #line directive (C++ standard 16.4)
+- #error and #warning directive (C++ standard 16.5)
+- #pragma directive (C++ standard 16.6)
+- # (null) directive (C++ standard 16.7)
+- predefinded macros (__LINE__ et.al.) (C++ standard 16.8)
+
 Sun Feb 16 08:40:38  2003
-- Added a macro expansion engine which expands macros with arguments
+- Added a macro expansion engine which expands macros with arguments 
+  C++ standard 16.3 [cpp.replace]
 - Added a new sample: cpp_tokens. This sample preprocesses a given file and
   prints out the string representations of all tokens returned from the pp 
   iterator
 - Added documentation (to be continued!)
 - Added a couple of small test files to test elementary functionality
+  (the tests mainly were contributed by Paul Mensonides)
 - The main cpp sample is now a simple preprocessor driver program, which 
   outputs the string representation of the preprocessed input stream. Use 
   cpp --help to get a hint, how to use it.
 - Fixed a bug in the preprocessor grammar which failed to recognize a pp 
   statement, if there was a C++ comment at the end of the line
+- Added '#' operator (C++ standard 16.3.2) [cpp.stringize]
+- Fixed a bug in the slex based C++ lexer to handle the concatination 
+  characters correctly ('\\' followed by a '\n')
 
 Sun Feb  9 23:01:00  2003
 - Improved error handling for #if et.al.

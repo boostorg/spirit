@@ -222,8 +222,9 @@ enum token_id {
     T_LAST_TOKEN_ID,
     T_LAST_TOKEN = ID_FROM_TOKEN(T_LAST_TOKEN_ID),
     
-// pseudo token to help streamlining macro replacement
-    T_PARAMETERBASE = TOKEN_FROM_ID(T_LAST_TOKEN+1, ParameterTokenType),
+// pseudo tokens to help streamlining macro replacement
+    T_NONREPLACABLE_IDENTIFIER = TOKEN_FROM_ID(T_LAST_TOKEN+1, IdentifierTokenType),
+    T_PARAMETERBASE = TOKEN_FROM_ID(T_LAST_TOKEN+2, ParameterTokenType),
 };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -44,6 +44,61 @@ namespace {
         }
         return result;
     }
+
+    // escape a string literal (insert '\\' before every '\"' and '\\'
+    template <typename StringT>
+    StringT
+    escape_lit(StringT const &value)
+    {
+        StringT result(value);
+        StringT::size_type pos = 0;
+        while ((pos = result.find_first_of ("\"\\", pos)) !=
+            StringT::size_type(StringT::npos))
+        {
+            result.insert (pos, 1, '\\');
+            pos += 2;
+        }
+        return result;
+    }
+    
+    // return the string representation of a token sequence
+    template <typename ContainerT>
+    typename ContainerT::value_type::string_t
+    as_stringlit (ContainerT const &token_sequence)
+    {
+        using namespace cpplexer;
+        typedef typename ContainerT::value_type::string_t string_t;
+        
+        string_t result("\"");
+        bool was_whitespace = false;
+        ContainerT::const_iterator end = token_sequence.end();
+        for (ContainerT::const_iterator it = token_sequence.begin(); 
+             it != end; ++it) 
+        {
+            token_id id = token_id(*it);
+            if (IS_CATEGORY(*it, WhiteSpaceTokenType) || T_NEWLINE == id) {
+                if (!was_whitespace) {
+                // C++ standard 16.3.2.2 [cpp.stringize]
+                // Each occurrence of white space between the argument’s 
+                // preprocessing tokens becomes a single space character in the 
+                // character string literal.
+                    result += " ";
+                    was_whitespace = true;
+                }
+            }
+            else if (T_STRINGLIT == id || T_CHARLIT == id) {
+            // a string literals and character literals have to be escaped
+                result += escape_lit((*it).get_value());
+                was_whitespace = false;
+            }
+            else {
+                result += (*it).get_value();
+                was_whitespace = false;
+            }
+        }
+        result += "\"";
+        return result;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -68,13 +123,15 @@ struct macro_definition {
     // generated destructor
     // generated assignment operator
 
-    // replace all occurences of the parameters throughout the macrodefinition
-    // with special parameter tokens to simplify later macro replacement
+    // Replace all occurences of the parameters throughout the macrodefinition
+    // with special parameter tokens to simplify later macro replacement.
+    // Additionally mark all occurences of the macro name itself throughout
+    // the macro definition
     void replace_parameters()
     {
         using namespace cpplexer;
         
-        if (macroparameters.size() > 0 && !replaced_parameters) {
+        if (!replaced_parameters) {
             container_t::iterator end = macrodefinition.end();
             for (container_t::iterator it = macrodefinition.begin(); 
                  it != end; ++it)
@@ -89,6 +146,10 @@ struct macro_definition {
                             break;
                         }
                     }
+                    
+                // maybe a recursive call of the macro itself
+                    if ((*it).get_value() == macroname.get_value())
+                        (*it).set_token_id(T_NONREPLACABLE_IDENTIFIER);
                 }
             }
             replaced_parameters = true;     // do it only once
@@ -127,7 +188,7 @@ class macromap {
 public:
     BOOST_STATIC_CONSTANT(int, must_continue = 0x1);
     BOOST_STATIC_CONSTANT(int, replaced_tokens = 0x2);
-    BOOST_STATIC_CONSTANT(int, must_rescan = 0x4);
+    BOOST_STATIC_CONSTANT(int, must_relex = 0x4);
     
     macromap() {}
     ~macromap() {}
@@ -172,7 +233,10 @@ protected:
     int concat_tokensequence(ContainerT &expanded);
 
     template <typename ContainerT>
-    void rescan_tokensequence(ContainerT &expanded);
+    void relex_tokensequence(ContainerT &expanded);
+
+    template <typename ContainerT>
+    void reset_nonreplacable_identifiers(ContainerT &expanded);
 
 private:
     defined_macros_t defined_macros;
@@ -259,8 +323,10 @@ macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last,
     ContainerT &expanded, bool one_token_only, bool expand_undefined)
 {
     string_t replaced_name;
-    return expand_tokensequence(first, last, expanded, replaced_name, 
+    int return_flags = expand_tokensequence(first, last, expanded, replaced_name, 
         one_token_only, expand_undefined);
+    reset_nonreplacable_identifiers(expanded);        
+    return return_flags;
 }
 
 template <typename TokenT>
@@ -280,36 +346,33 @@ macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last,
     // re-scanning is required
         typedef impl::gen_unput_queue_iterator<IteratorT, TokenT> gen_t;
 
-        ContainerT eof_queue;
-        int replaced_flags = 0;
+    int replaced_flags = 0;
+    ContainerT eof_queue;
+    ContainerT expanded_list;
+    
+        rescan_flags |= concat_tokensequence(expanded);     // handle '##'
+
+        typename gen_t::return_t first_it = gen_t::do_(expanded, first);
+//        string_t replaced_name_next;
         
-        do {
-        ContainerT expanded_list;
-        
-            rescan_flags |= concat_tokensequence(expanded);     // handle '##'
+        replaced_flags = expand_tokensequence_worker(
+            first_it,  gen_t::do_(eof_queue, last),
+            std::inserter(expanded_list, expanded_list.begin()),
+            replaced_name, one_token_only, expand_undefined);
+        return_flags |= replaced_flags;
 
-            typename gen_t::return_t first_it = gen_t::do_(expanded, first);
-            string_t replaced_name_next;
-            
-            replaced_flags = expand_tokensequence_worker(
-                first_it,  gen_t::do_(eof_queue, last),
-                std::inserter(expanded_list, expanded_list.begin()),
-                replaced_name_next, one_token_only, expand_undefined);
-            return_flags |= replaced_flags;
+        first = first_it.base();    // adjust iterator
 
-            first = first_it.base();    // adjust iterator
-
-            if (replaced_flags & replaced_tokens)
-                std::swap(expanded, expanded_list);
-
-        } while (replaced_flags & must_continue);
+        if (replaced_flags & replaced_tokens)
+            std::swap(expanded, expanded_list);
     }
+    rescan_flags |= concat_tokensequence(expanded);         // handle '##'
 
 // there were '##' operators while expanding macros, so we need to re-lex
 // the whole token sequence to rebuild the C++ tokens
-    if (must_rescan & rescan_flags)
-        rescan_tokensequence(expanded);
-        
+    if (must_relex & rescan_flags)
+        relex_tokensequence(expanded);
+
     return return_flags;
 }
 
@@ -634,6 +697,7 @@ bool no_expansion = replaced_name == act_token.get_value();
                     macro_definition_iter_t;
 
                 bool adjacent_concat = false;
+                bool adjacent_stringize = false;
                 macro_definition_iter_t cend = (*it).second.macrodefinition.end();
                 for (macro_definition_iter_t cit = (*it).second.macrodefinition.begin();
                     cit != cend; ++cit)
@@ -641,15 +705,22 @@ bool no_expansion = replaced_name == act_token.get_value();
                 bool use_replaced_arg = true;
                 token_id id = token_id(*cit);
                 
-                    if (id == T_POUND_POUND) {
+                    if (T_POUND_POUND == id) {
+                    // conactination operator
                         adjacent_concat = true;
                     }
+                    else if (T_POUND == id) {
+                    // stringize operator
+                        adjacent_stringize = true;
+                    }
                     else {
-                        if (adjacent_concat || next_token_is(cit, cend, T_POUND_POUND))
+                        if (adjacent_stringize || adjacent_concat || 
+                            next_token_is(cit, cend, T_POUND_POUND))
+                        {
                             use_replaced_arg = false;
-                            
+                        }
                         if (adjacent_concat)    // spaces after '##' ?
-                            adjacent_concat = (id == T_SPACE || id == T_SPACE2);
+                            adjacent_concat = (T_SPACE == id || T_SPACE2 == id);
                     }
 
                     if (IS_CATEGORY((*cit), ParameterTokenType)) {
@@ -657,9 +728,20 @@ bool no_expansion = replaced_name == act_token.get_value();
                     std::vector<TokenT>::size_type i = token_id(*cit) - T_PARAMETERBASE;
                     
                         if (use_replaced_arg && expanded_args[i].size() > 0) {
+                        // replace argument
                         ContainerT &arg = expanded_args[i];
                         
                             std::copy(arg.begin(), arg.end(), insert_iter);
+                        }
+                        else if (adjacent_stringize && 
+                                !(T_SPACE == id || T_SPACE2 == id)) 
+                        {
+                        // stringize the current argument
+                            BOOST_SPIRIT_ASSERT(arguments[i].size() > 0);
+                            *insert_iter = TokenT(T_STRINGLIT, 
+                                as_stringlit(arguments[i]), 
+                                (*arguments[i].begin()).get_position());
+                            adjacent_stringize = false;
                         }
                         else {
                         ContainerT &arg = arguments[i];
@@ -675,8 +757,11 @@ bool no_expansion = replaced_name == act_token.get_value();
             }
         }
         else {
-        // defined as an object-like macro: no replacement at all
-            return no_expansion ? replaced_tokens : 0;
+        // defined as an object-like macro
+            if (!no_expansion) {
+                std::copy ((*it).second.macrodefinition.begin(), 
+                    (*it).second.macrodefinition.end(), insert_iter);
+            }
         }
     }
     else {
@@ -744,7 +829,8 @@ bool found_concat = false;
     typename ContainerT::iterator prev = end;
     for (typename ContainerT::iterator it = expanded.begin(); it != end; ++it) 
     {
-        if (T_POUND_POUND == token_id(*it)) {
+        token_id id = token_id(*it);
+        if (T_POUND_POUND == id) {
         typename ContainerT::iterator next = it;
     
             ++next;
@@ -768,7 +854,7 @@ bool found_concat = false;
             }
             
         // we leave the token_id unchanged, because the whole sequence is to be
-        // re-scanned anyway
+        // re-lexed anyway
             (*prev).set_value((*prev).get_value() + (*next).get_value());
 
         // remove the '##' and the next tokens from the sequence
@@ -777,23 +863,35 @@ bool found_concat = false;
             found_concat = true;
             continue;
         }
+        else if (T_POUND == id) {
+        // handle stringize operator (remove this token)
+        typename ContainerT::iterator pound_it = it;
+
+            ++it;
+            if (pound_it == end) {
+            // error, '#' should not be the last token
+                CPP_THROW(preprocess_exception, ill_formed_operator,
+                    "stringize ('#')", (*pound_it));
+            }
+            expanded.erase(pound_it);           
+        }
 
     // save last non-whitespace token position
         if (T_SPACE != token_id(*it) && T_SPACE2 != token_id(*it))        
             prev = it;
     }
-    return found_concat ? must_rescan : 0;
+    return found_concat ? must_relex : 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  re-scan the sequence, if necessary
+//  re-lex the sequence, if necessary
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TokenT>
 template <typename ContainerT>
 inline void 
-macromap<TokenT>::rescan_tokensequence(ContainerT &expanded)
+macromap<TokenT>::relex_tokensequence(ContainerT &expanded)
 {
     typedef cpplexer::lex_iterator<TokenT> lex_t;
     
@@ -807,6 +905,25 @@ macromap<TokenT>::rescan_tokensequence(ContainerT &expanded)
         rescanned.push_back(*it);
 
     std::swap(expanded, rescanned);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  reset_nonreplacable_identifiers() 
+//      reset the T_NONREPLACABLE_IDENTIFIER token_id's
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename TokenT>
+template <typename ContainerT>
+inline void 
+macromap<TokenT>::reset_nonreplacable_identifiers(ContainerT &expanded)
+{
+    typename ContainerT::iterator end = expanded.end();
+    for (typename ContainerT::iterator it = expanded.begin(); it != end; ++it) 
+    {
+        if (T_NONREPLACABLE_IDENTIFIER == token_id(*it))
+            (*it).set_token_id(T_IDENTIFIER);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

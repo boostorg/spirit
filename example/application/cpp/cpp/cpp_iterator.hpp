@@ -468,16 +468,27 @@ pp_iterator_functor<ContextT>::retrieve_macrodefinition(
 {
     typedef typename parse_node_t::const_tree_iterator const_tree_iterator;
 
-// find macro parameters inside the parse tree
+// find macro parameters/macro definition inside the parse tree
 std::pair<const_tree_iterator, const_tree_iterator> nodes;
 
     using boost::spirit::get_node_range;
     if (get_node_range(node, id, nodes)) {
     // copy all parameters to the supplied parameter vector
+        typename std::vector<result_type>::size_type last_nonwhite = ~0;
         const_tree_iterator end = nodes.second;
+        
         for (const_tree_iterator cit = nodes.first; cit != end; ++cit) {
-            if ((*cit).value.begin() != (*cit).value.end())
+            if ((*cit).value.begin() != (*cit).value.end()) {
                 macrodefinition.push_back(*(*cit).value.begin());
+                if (!IS_CATEGORY(macrodefinition.back(), WhiteSpaceTokenType))
+                    last_nonwhite = macrodefinition.size();
+            }
+        }
+        
+    // trim trailing whitespace (leading whitespace is trimmed by the grammar)
+        if (last_nonwhite != ~0 && last_nonwhite != macrodefinition.size()) {
+            macrodefinition.erase(macrodefinition.begin() + last_nonwhite, 
+                macrodefinition.end());
         }
         return true;
     }
