@@ -1,11 +1,15 @@
 /*=============================================================================
-    Copyright (c) 2002-2003 Martin Wille
+    Copyright (c) 2002-2004 Martin Wille
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+
+// std::lower_bound seems to perform awfully slow with _GLIBCXX_DEBUG enabled
+#undef _GLIBCXX_DEBUG
+
 #include <iostream>
 #include <boost/config.hpp>
 #include <boost/test/included/unit_test_framework.hpp>
