@@ -31,6 +31,10 @@ namespace boost { namespace spirit { namespace impl
         convert(boost::optional<T>& dest, .../*src*/)
         { dest.reset(); }
 
+        static void
+        convert(boost::optional<T>& dest, nil_t/*src*/)
+        { dest.reset(); }
+
         template <typename OtherMatchT>
         static void
         copy(boost::optional<T>& dest, OtherMatchT const& src)
