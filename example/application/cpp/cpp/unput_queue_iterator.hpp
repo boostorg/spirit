@@ -64,9 +64,12 @@ public:
     // are equal and the base iterators too
         return 
            (x.policies().unput_queue.begin() == y.policies().unput_queue.begin() ||
-            (0 == x.policies().unput_queue.size() && 0 == y.policies().unput_queue.size())) &&
+            (0 == x.policies().queuesize() && 0 == y.policies().queuesize())) &&
             x.base() == y.base(); 
     }
+    
+    typename std::list<TokenT>::size_type queuesize() const 
+    { return unput_queue.size(); }
     
 private:
     std::list<TokenT> &unput_queue;
@@ -147,6 +150,29 @@ namespace impl {
         {
             dest.base() = src.base();
             dest.policies() = src.policies();
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename IteratorT>
+    struct is_fresh_token {
+
+        static bool
+        test_(IteratorT const &it)
+        {
+            return true;
+        }
+    };
+    
+    template <typename IteratorT, typename TokenT>
+    struct is_fresh_token<unput_queue_iterator<IteratorT, TokenT> > {
+
+        typedef unput_queue_iterator<IteratorT, TokenT> iterator_t;
+
+        static bool
+        test_(iterator_t const &it)
+        {
+            return 0 == it.policies().queuesize();
         }
     };
 }

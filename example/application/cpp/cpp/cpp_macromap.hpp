@@ -21,11 +21,30 @@
 #include <iterator>
 #include <algorithm>
 
+#include "cpp/unput_queue_iterator.hpp"
 #include "cpp/cpp_exceptions.hpp"
 #include "cpp/cpp_defined_grammar.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace cpp {
+
+namespace {
+
+    // return the string representation of a token sequence
+    template <typename ContainerT>
+    typename ContainerT::value_type::string_t
+    as_string (ContainerT const &token_sequence)
+    {
+        typename ContainerT::value_type::string_t result;
+        ContainerT::const_iterator end = token_sequence.end();
+        for (ContainerT::const_iterator it = token_sequence.begin(); 
+             it != end; ++it) 
+        {
+            result += (*it).get_value();
+        }
+        return result;
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -118,11 +137,17 @@ public:
     bool remove_macro(string_t const &name);
     
     template <typename IteratorT, typename ContainerT>
-    int expand_tokensequence(IteratorT &first, IteratorT const &last,
-        std::insert_iterator<ContainerT> &insert_iter, 
-        std::set<string_t> &replaced, bool one_token_only, bool expand_undefined);
+    void expand_tokensequence(IteratorT &first, IteratorT const &last,
+        ContainerT &expanded, bool one_token_only, 
+        bool expand_undefined);
 
 protected:
+    template <typename IteratorT, typename ContainerT>
+    int expand_tokensequence(IteratorT &first, IteratorT const &last,
+        std::insert_iterator<ContainerT> &insert_iter, 
+        std::set<string_t> &replaced, bool one_token_only, 
+        bool expand_undefined);
+
     template <typename IteratorT, typename ContainerT, typename SizeT>
     void collect_arguments (std::vector<ContainerT> &arguments, 
         IteratorT &next, IteratorT const &end, 
@@ -136,7 +161,10 @@ protected:
     template <typename IteratorT, typename ContainerT>
     bool resolve_defined(IteratorT &first, IteratorT const &last,
         std::insert_iterator<ContainerT> &insert_iter);
-    
+
+    template <typename ContainerT>
+    void concat_tokensequence(ContainerT &expanded);
+
 private:
     defined_macros_t defined_macros;
 };
@@ -211,9 +239,49 @@ macromap<TokenT>::remove_macro(typename TokenT::string_t const &name)
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-//  expand_macro(): expandes a defined macro
+//  expand_tokensequence(): expands a sequence of tokens
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+template <typename TokenT>
+template <typename IteratorT, typename ContainerT>
+inline void 
+macromap<TokenT>::expand_tokensequence(IteratorT &first, IteratorT const &last,
+    ContainerT &expanded, bool one_token_only, bool expand_undefined)
+{
+std::set<TokenT::string_t> replaced_names;
+
+    if (expand_tokensequence(first, last, 
+        std::inserter(expanded, expanded.begin()), replaced_names, 
+        one_token_only, expand_undefined)) 
+    {
+        int replaced_flags = 0;
+        ContainerT eof_queue;
+        
+        do {
+        ContainerT expanded_list;
+        
+            concat_tokensequence(expanded);     // handle '##' and '#' operators
+            BOOST_SPIRIT_DEBUG_OUT << as_string(expanded) << std::endl;
+       
+        unput_queue_iterator<IteratorT, TokenT> first_it = 
+                make_unput_queue_iterator(expanded, first);
+                
+            replaced_flags = expand_tokensequence(
+                first_it,  make_unput_queue_iterator(eof_queue, last),
+                std::inserter(expanded_list, expanded_list.begin()), 
+                replaced_names, one_token_only, expand_undefined
+            );
+            first = first_it.base();
+            
+            if (replaced_flags & macromap<TokenT>::replaced_tokens)
+                std::swap(expanded, expanded_list);
+
+        } while (replaced_flags & macromap<TokenT>::must_continue);
+        
+        BOOST_SPIRIT_DEBUG_OUT << as_string(expanded) << std::endl;
+    }
+}
 
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT>
@@ -235,8 +303,8 @@ int return_replaced = 0;       // return, whether a replacement occured
         // resolve operator defined()
             resolve_defined(first, last, insert_iter);
 
-        // expand one token only if requested
-            if (one_token_only)
+        // expand only the current macro, if requested
+            if (one_token_only && impl::is_fresh_token<IteratorT>::test_(first))
                 break;
             continue;           // 'it' is already adjusted correctly
         }
@@ -248,8 +316,8 @@ int return_replaced = 0;       // return, whether a replacement occured
                 return_replaced = expand_macro(first, last, insert_iter, 
                     replaced, expand_undefined) | return_replaced;
 
-            // expand one token only if requested
-                if (one_token_only)
+            // expand only the current macro, if requested
+                if (one_token_only && impl::is_fresh_token<IteratorT>::test_(first))
                     break;
                 continue;       // 'it' is already adjusted correctly
             }
@@ -262,6 +330,10 @@ int return_replaced = 0;       // return, whether a replacement occured
                 new_token.set_value("0");
                 *insert_iter = new_token;
                 return_replaced |= (replaced_tokens | must_continue);
+            }
+            else {
+                *insert_iter = *first;
+                return_replaced |= replaced_tokens;
             }
         }
         else if (expand_undefined && IS_CATEGORY(*first, KeywordTokenType) && 
@@ -282,12 +354,18 @@ int return_replaced = 0;       // return, whether a replacement occured
         }
         ++first;
         
-    // expand one token only if requested
-        if (one_token_only)
+    // expand only the current macro, if requested
+        if (one_token_only && impl::is_fresh_token<IteratorT>::test_(first))
             break;
     }
     return return_replaced;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+//  collect_arguments(): collect the actual arguments of a macro invocation
+//
+///////////////////////////////////////////////////////////////////////////////
 
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT, typename SizeT>
@@ -357,6 +435,15 @@ ContainerT *argument = &arguments[0];
     }
 }        
 
+///////////////////////////////////////////////////////////////////////////////
+// 
+//  expand_macro(): expandes a defined macro
+//
+//      This functions tries to expand the macro, to which points the 'first'
+//      iterator. The functions eats up more tokens, if the macro to expand is
+//      a function-like macro.
+//
+///////////////////////////////////////////////////////////////////////////////
 template <typename TokenT>
 template <typename IteratorT, typename ContainerT>
 inline int 
@@ -384,7 +471,6 @@ bool no_expansion = it_replaced != replaced.end();;
     else
         *insert_iter = act_token;      // copy macroname itself
 
-//    IteratorT next = first;
     if (T_LEFTPAREN == *++first) {
     // called as a function-like macro 
         if ((*it).second.is_function_like()) {
@@ -510,6 +596,73 @@ TokenT new_token(T_INTLIT, isdefined ? "1" : "0", result.get_position());
 
     *insert_iter = new_token;
     return true;
+}
+
+template <typename TokenT>
+template <typename ContainerT>
+inline void 
+macromap<TokenT>::concat_tokensequence(ContainerT &expanded)
+{
+    using namespace cpplexer;
+    
+bool found_concat = false;
+
+    typename ContainerT::iterator end = expanded.end();
+    typename ContainerT::iterator prev = end;
+    for (typename ContainerT::iterator it = expanded.begin(); it != end; ++it) 
+    {
+        if (T_POUND_POUND == token_id(*it)) {
+        typename ContainerT::iterator next = it;
+    
+            ++next;
+            if (prev == end || next == end) {
+            // error, '##' should be in between two tokens
+                CPP_THROW(preprocess_exception, ill_formed_operator,
+                    "concat ('##')", (*it));
+            }
+
+        // replace prev##next with the concatenated value, skip whitespace
+        // before and after the '##' operator
+            while (T_SPACE == token_id(*next) || T_SPACE2 == token_id(*next)) {
+                ++next;
+                if (next == end) {
+                // error, '##' should be in between two tokens
+                    CPP_THROW(preprocess_exception, ill_formed_operator,
+                        "concat ('##')", (*next));
+                }
+            }
+            
+        // we leave the token_id unchanged, because the whole sequence is to be
+        // re-scanned anyway
+            (*prev).set_value((*prev).get_value() + (*next).get_value());
+
+        // remove the '##' and the next tokens from the sequence
+            expanded.erase(++prev, ++next);     // remove not needed tokens
+            prev = it = next;
+            found_concat = true;
+            continue;
+        }
+
+    // save last non-whitespace token position
+        if (T_SPACE != token_id(*it) && T_SPACE2 != token_id(*it))        
+            prev = it;
+    }
+    
+// re-scan the sequence, if necessary
+    if (found_concat) {
+        typedef cpplexer::lex_iterator<TokenT> lex_t;
+        
+        typename TokenT::string_t str (as_string(expanded));
+        ContainerT rescanned;
+        
+        lex_t it = lex_t(str.begin(), str.end(), 
+            (*expanded.begin()).get_position());
+        lex_t end = lex_t();
+        for (/**/; it != end; ++it) 
+            rescanned.push_back(*it);
+    
+        std::swap(expanded, rescanned);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
