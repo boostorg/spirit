@@ -67,8 +67,10 @@ namespace boost { namespace spirit {
         inline void
         range<CharT>::merge(range const& r)
         {
-            first = std_min(first, r.first);
-            last = std_max(last, r.last);
+            BOOST_USING_STD_MIN();
+            BOOST_USING_STD_MAX();
+            first = min BOOST_PREVENT_MACRO_SUBSTITUTION(first, r.first);
+            last = max BOOST_PREVENT_MACRO_SUBSTITUTION(last, r.last);
         }
 
         ///////////////////////////////////////////////////////////////////////
