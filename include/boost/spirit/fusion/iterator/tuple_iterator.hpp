@@ -42,6 +42,8 @@ namespace boost { namespace fusion
     template <int N, typename Tuple>
     struct tuple_iterator : tuple_iterator_base<N,Tuple>
     {
+        typedef typename tuple_iterator_base<N,Tuple>::tuple tuple;
+        typedef typename tuple_iterator_base<N,Tuple>::index index;
         typedef typename
             mpl::eval_if<
                 mpl::less<index, typename Tuple::size>

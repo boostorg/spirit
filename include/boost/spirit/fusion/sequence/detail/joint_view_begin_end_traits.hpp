@@ -53,7 +53,7 @@ namespace boost { namespace fusion
         template<typename Sequence>
         typename begin_traits_impl<Sequence>::type
         call(Sequence& s, boost::mpl::false_) {
-            typedef begin_traits_impl<Sequence>::type type;
+            typedef BOOST_DEDUCED_TYPENAME begin_traits_impl<Sequence>::type type;
             return type(s.first, s.concat);
         }
 

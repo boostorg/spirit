@@ -21,18 +21,19 @@ namespace boost { namespace fusion
         template<typename Iterator>
         struct deref_traits_impl {
             typedef typename
-                meta::deref<typename Iterator::first_type>::type
-            deref_type;
+                meta::value_of<typename Iterator::first_type>::type
+            value_type;
 
             typedef typename Iterator::transform_type transform_type;
-            typedef typename fusion_apply1<transform_type,deref_type>::type type;
+            typedef typename fusion_apply1<transform_type, value_type>::type type;
 
             static type
             call(Iterator const& i);
         };
         
         template<typename Iterator>
-        deref_traits_impl<Iterator>::type deref_traits_impl<Iterator>::call(Iterator const& i) 
+        BOOST_DEDUCED_TYPENAME deref_traits_impl<Iterator>::type 
+        deref_traits_impl<Iterator>::call(Iterator const& i) 
         {
             return i.f(*i.first);
         }
