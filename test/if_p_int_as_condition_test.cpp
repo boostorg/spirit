@@ -2,6 +2,7 @@
 #include <boost/spirit/dynamic.hpp>
 #include <boost/spirit/tree/ast.hpp>
 #include <iostream>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace boost::spirit;
 int the_var_to_be_tested = 0;
@@ -57,19 +58,22 @@ int main()
     result = ast_parse("1.50", gram, space_p);
     std::cout << "Testing if_p against: " << the_var_to_be_tested << std::endl;
     std::cout << "success: " << result.full << std::endl;
+    BOOST_TEST(!result.full);
 
     //predicatably succeeds
     the_var_to_be_tested = 1;
     result = ast_parse("1.50", gram, space_p);
     std::cout << "Testing if_p against: " << the_var_to_be_tested << std::endl;
     std::cout << "success: " << result.full << std::endl;
+    BOOST_TEST(result.full);
 
-    //unpredictably fails
+    //should succeed
     the_var_to_be_tested = 2;
     result = ast_parse("1.50", gram, space_p);
     std::cout << "Testing if_p against: " << the_var_to_be_tested << std::endl;
     std::cout << "success: " << result.full << std::endl;
-    
-    return 0;
+    BOOST_TEST(result.full);
+
+    return boost::report_errors();
 }
 
