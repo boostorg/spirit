@@ -39,67 +39,72 @@ namespace impl {
 
     struct token_printer_aux_for_chars
     {
-      template<typename CharT>
-      void operator()(CharT c)
-      {
-        if (c == static_cast<CharT>('\a'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\a";
+        template<typename CharT>
+        static void print(CharT c)
+        {
+            if (c == static_cast<CharT>('\a'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\a";
 
-        else if (c == static_cast<CharT>('\b'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\b";
+            else if (c == static_cast<CharT>('\b'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\b";
 
-        else if (c == static_cast<CharT>('\f'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\f";
+            else if (c == static_cast<CharT>('\f'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\f";
 
-        else if (c == static_cast<CharT>('\n'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\n";
+            else if (c == static_cast<CharT>('\n'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\n";
 
-        else if (c == static_cast<CharT>('\r'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\r";
+            else if (c == static_cast<CharT>('\r'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\r";
 
-        else if (c == static_cast<CharT>('\t'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\t";
+            else if (c == static_cast<CharT>('\t'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\t";
 
-        else if (c == static_cast<CharT>('\v'))
-          BOOST_SPIRIT_DEBUG_OUT << "\\v";
+            else if (c == static_cast<CharT>('\v'))
+                BOOST_SPIRIT_DEBUG_OUT << "\\v";
 
-        else if (iscntrl_(c))
-          BOOST_SPIRIT_DEBUG_OUT << "\\" << static_cast<int>(c);
+            else if (iscntrl_(c))
+                BOOST_SPIRIT_DEBUG_OUT << "\\" << static_cast<int>(c);
 
-        else
-          BOOST_SPIRIT_DEBUG_OUT << static_cast<char>(c);
-      }
+            else
+                BOOST_SPIRIT_DEBUG_OUT << static_cast<char>(c);
+        }
     };
 
     // for token types where the comparison with char constants wouldn't work
     struct token_printer_aux_for_other_types
     {
-      template<typename CharT>
-      inline void operator()(CharT c)
-      {
-        BOOST_SPIRIT_DEBUG_OUT << c;
-      }
+        template<typename CharT>
+        static void print(CharT c)
+        {
+            BOOST_SPIRIT_DEBUG_OUT << c;
+        }
+    };
+
+    template <typename CharT>
+    struct token_printer_aux
+    :   mpl::if_<
+            mpl::and_<
+                is_convertible<CharT, char>,
+                is_convertible<char, CharT> >,
+            token_printer_aux_for_chars,
+            token_printer_aux_for_other_types
+        >::type
+    {
     };
 
     template<typename CharT>
     inline void token_printer(CharT c)
     {
-      #if !defined(BOOST_SPIRIT_DEBUG_TOKEN_PRINTER)
+    #if !defined(BOOST_SPIRIT_DEBUG_TOKEN_PRINTER)
 
-         typedef typename
-           mpl::if_<mpl::and_<is_convertible<CharT, char>,
-                                     is_convertible<char, CharT> >,
-                    token_printer_aux_for_chars,
-                    token_printer_aux_for_other_types>::type aux_t;
+        token_printer_aux<CharT>::print(c);
 
-         aux_t aux;
-         aux(c);
-
-      #else
+    #else
 
         BOOST_SPIRIT_DEBUG_TOKEN_PRINTER(BOOST_SPIRIT_DEBUG_OUT, c);
 
-      #endif
+    #endif
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -136,7 +141,7 @@ namespace impl {
                 token_printer(*iter);
                 ++iter;
             }
-            BOOST_SPIRIT_DEBUG_OUT << " \"\n";
+            BOOST_SPIRIT_DEBUG_OUT << "\"\n";
         }
     }
 #endif  // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
@@ -151,7 +156,7 @@ namespace impl {
                 BOOST_SPIRIT_DEBUG_OUT << "  ";
 
         // for now, print out the return value only
-            BOOST_SPIRIT_DEBUG_OUT 
+            BOOST_SPIRIT_DEBUG_OUT
                 << "^" << name << ":\t" << hit.value() << "\n";
         }
         return hit;
@@ -163,7 +168,7 @@ namespace impl {
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Implementation note: The parser_context_linker, parser_scanner_linker and
-//  closure_context_linker classes are wrapped by a PP constant to allow 
+//  closure_context_linker classes are wrapped by a PP constant to allow
 //  redefinition of this classes outside of Spirit
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -232,26 +237,25 @@ namespace impl {
 ///////////////////////////////////////////////////////////////////////////////
 //  This class is to avoid linker problems and to ensure a real singleton
 //  'level' variable
-    struct debug_support {
-
-        int &get_level() {
-        static int level = 0;
-
+    struct debug_support
+    {
+        int& get_level()
+        {
+            static int level = 0;
             return level;
         }
     };
 
     template<typename ScannerT>
-    struct parser_scanner_linker : public ScannerT {
-
+    struct parser_scanner_linker : public ScannerT
+    {
         parser_scanner_linker(ScannerT const &scan_) : ScannerT(scan_)
         {}
 
         int &get_level()
         { return debug.get_level(); }
 
-    private:
-        debug_support debug;
+        private: debug_support debug;
     };
 
 #endif // !defined(BOOST_SPIRIT_PARSER_SCANNER_LINKER_DEFINED)
@@ -261,11 +265,11 @@ namespace impl {
 
     ///////////////////////////////////////////////////////////////////////////
     //
-    //  closure_context_linker is a debug wrapper for the closure template 
+    //  closure_context_linker is a debug wrapper for the closure template
     //  parameter of the rule<>, subrule<> and grammar classes
     //
     ///////////////////////////////////////////////////////////////////////////
-    
+
     template<typename ContextT>
     struct closure_context_linker : public parser_context_linker<ContextT>
     {
@@ -282,19 +286,19 @@ namespace impl {
         template <typename ResultT, typename ParserT, typename ScannerT>
         ResultT&
         post_parse(ResultT& hit, ParserT const& p, ScannerT &scan)
-        { 
+        {
 #if BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
-            if (hit && trace_parser(p)) {    
+            if (hit && trace_parser(p)) {
             // for now, print out the return value only
                 return impl::print_closure_info(
-                    this->base_t::post_parse(hit, p, scan), 
-                    scan.get_level(), 
+                    this->base_t::post_parse(hit, p, scan),
+                    scan.get_level(),
                     parser_name(p)
                 );
             }
 #endif // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES
 
-            return this->base_t::post_parse(hit, p, scan); 
+            return this->base_t::post_parse(hit, p, scan);
         }
     };
 
