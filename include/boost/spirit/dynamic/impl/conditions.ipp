@@ -35,40 +35,31 @@ namespace boost { namespace spirit {
     // If the template argument is a parser then that parser is used.
     // If the template argument is a functor then a condition parser using
     // the functor is chosen
-    struct select_identity
+
+    template <typename T> struct embed_t_accessor
     {
-        template <typename ConditionT>
-        struct result
-        {
-            typedef ConditionT type;
-        };
+        typedef typename T::embed_t type;
     };
 
-    struct select_condition_parser
+#if defined(BOOST_MSVC) && BOOST_MSVC <= 1300
+    template <> struct embed_t_accessor<int>
     {
-        template <typename ConditionT>
-        struct result
-        {
-            typedef condition_parser<ConditionT> type;
-        };
+        typedef int type;
     };
+#endif
 
     template <typename ConditionT>
     struct condition_parser_selector
     {
-    private:
-
         typedef
             typename mpl::if_<
                     is_parser<ConditionT>,
-                    select_identity,
-                    select_condition_parser
+                    ConditionT,
+                    condition_parser<ConditionT>
                 >::type
-            func_;
-    public:
+            type;
 
-        typedef typename func_::template result<ConditionT>::type type;
-        typedef typename type::embed_t                            embed_t;
+        typedef typename embed_t_accessor<type>::type embed_t;
     };
 
     //////////////////////////////////

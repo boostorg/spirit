@@ -51,6 +51,14 @@ namespace boost { namespace spirit { namespace impl {
                     template templ<T> param_t;                              \
             };                                                              \
         };                                                                  \
+                                                                            \
+        template <> struct name<int>                                        \
+        {                                                                   \
+            template <typename T> struct result_                            \
+            {                                                               \
+                typedef T type;                                             \
+            };                                                              \
+        };                                                                  \
     }                                                                       \
 
     #define BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER2(name, templ)           \
@@ -72,6 +80,15 @@ namespace boost { namespace spirit { namespace impl {
             {                                                               \
                 typedef f_<msvc_never_true<F>::value>::                     \
                     template templ<T1, T2> param_t;                         \
+            };                                                              \
+                                                                            \
+        };                                                                  \
+                                                                            \
+        template <> struct name<int>                                        \
+        {                                                                   \
+            template <typename T1, typename T2> struct result_              \
+            {                                                               \
+                typedef T1 type;                                            \
             };                                                              \
         };                                                                  \
     }                                                                       \
@@ -97,6 +114,14 @@ namespace boost { namespace spirit { namespace impl {
                     template templ<T1, T2, T3> param_t;                     \
             };                                                              \
         };                                                                  \
+                                                                            \
+        template <> struct name<int>                                        \
+        {                                                                   \
+            template <typename T1, typename T2, typename T3> struct result_ \
+            {                                                               \
+                typedef T1 type;                                            \
+            };                                                              \
+        };                                                                  \
     }                                                                       \
 
     #define BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER4(name, templ)           \
@@ -120,6 +145,15 @@ namespace boost { namespace spirit { namespace impl {
             {                                                               \
                 typedef f_<msvc_never_true<F>::value>::                     \
                     template templ<T1, T2, T3, T4> param_t;                 \
+            };                                                              \
+        };                                                                  \
+                                                                            \
+        template <> struct name<int>                                        \
+        {                                                                   \
+            template <typename T1, typename T2, typename T3, typename T4>   \
+            struct result_                                                  \
+            {                                                               \
+                typedef T1 type;                                            \
             };                                                              \
         };                                                                  \
     }                                                                       \
