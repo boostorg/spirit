@@ -98,53 +98,53 @@ main()
         if (str[0] == 'q' || str[0] == 'Q')
             break;
 
-		else if (str[0] == 'a' || str[0] == 'A')
-		{
-			int n;
-			if (parse_number(str.c_str()+1, n))
-			{
-				cout << "-------------------------\n";
-				cout << "Parsing succeeded\n";
-				cout << str << " Parses OK: " << n << endl;
-				cout << "-------------------------\n";
-			}
-			else
-			{
-				cout << "-------------------------\n";
-				cout << "Parsing failed\n";
-				cout << "-------------------------\n";
-			}
-		}
+        else if (str[0] == 'a' || str[0] == 'A')
+        {
+            int n;
+            if (parse_number(str.c_str()+1, n))
+            {
+                cout << "-------------------------\n";
+                cout << "Parsing succeeded\n";
+                cout << str << " Parses OK: " << n << endl;
+                cout << "-------------------------\n";
+            }
+            else
+            {
+                cout << "-------------------------\n";
+                cout << "Parsing failed\n";
+                cout << "-------------------------\n";
+            }
+        }
 
-		else if (str[0] == 'b' || str[0] == 'B')
-		{
-			std::vector<int> n;
-			if (parse_numbers(str.c_str()+1, n))
-			{
-				cout << "-------------------------\n";
-				cout << "Parsing succeeded\n";
-				int size = n.size();
-				cout << str << " Parses OK: " << size << " number(s): " << n[0];
-				for (int i = 1; i < size; ++i) {
-					cout << ", " << n[i];
-				}
-				cout << endl;
-				cout << "-------------------------\n";
-			}
-			else
-			{
-				cout << "-------------------------\n";
-				cout << "Parsing failed\n";
-				cout << "-------------------------\n";
-			}
-		}
+        else if (str[0] == 'b' || str[0] == 'B')
+        {
+            std::vector<int> n;
+            if (parse_numbers(str.c_str()+1, n))
+            {
+                cout << "-------------------------\n";
+                cout << "Parsing succeeded\n";
+                int size = n.size();
+                cout << str << " Parses OK: " << size << " number(s): " << n[0];
+                for (int i = 1; i < size; ++i) {
+                    cout << ", " << n[i];
+                }
+                cout << endl;
+                cout << "-------------------------\n";
+            }
+            else
+            {
+                cout << "-------------------------\n";
+                cout << "Parsing failed\n";
+                cout << "-------------------------\n";
+            }
+        }
 
-		else
-		{
-			cout << "-------------------------\n";
-			cout << "Unrecognized command!!";
-			cout << "-------------------------\n";
-		}
+        else
+        {
+            cout << "-------------------------\n";
+            cout << "Unrecognized command!!";
+            cout << "-------------------------\n";
+        }
     }
 
     cout << "Bye... :-) \n\n";

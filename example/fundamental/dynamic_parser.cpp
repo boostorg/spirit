@@ -17,13 +17,13 @@ namespace local
 {
     template <typename T>
     struct var_wrapper
-        : public boost::reference_wrapper<T>
+        : public ::boost::reference_wrapper<T>
     {
-        explicit inline var_wrapper(T& t)
-            : boost::reference_wrapper<T>(t)
-        {}
+        typedef  ::boost::reference_wrapper<T> parent;
 
-        inline T& operator()() const { return get(); }
+        explicit inline var_wrapper(T& t) : parent(t) {}
+
+        inline T& operator()() const { return parent::get(); }
     };
 
     template <typename T>
@@ -78,14 +78,14 @@ parse_numbers(char const* str, std::vector<int>& n, bool many)
     return parse(str,
                 lexeme_d[number_parser_p[append(n)]] >>
 
-				/////////////////////////
-				// functors as condition
-				if_p(local::var(many)) [
+                /////////////////////////
+                // functors as condition
+                if_p(local::var(many)) [
                 //if_p (phoenix::var(many)) [
                 //if_p (boost::lambda::var(many)) [
 
-				/////////////////////////
-				// parser as condition
+                /////////////////////////
+                // parser as condition
                 //if_p (boost::spirit::ch_p(',')) [
 
                     *(',' >> lexeme_d[number_parser_p[append(n)]])

@@ -9,7 +9,7 @@ using namespace std;
 ostream& operator<<(ostream& out, wchar_t c)
 {
     if (boost::spirit::impl::isgraph_(char(c)) || boost::spirit::impl::isspace_(char(c)))
-	    out << char(c);
+        out << char(c);
     else
         out << '.';
     return out;
@@ -18,7 +18,7 @@ ostream& operator<<(ostream& out, wchar_t c)
 ostream& operator<<(ostream& out, wchar_t const* c)
 {
     while (*c)
-	    out << char(*c++);
+        out << char(*c++);
     return out;
 }
 

@@ -150,19 +150,19 @@ struct var_decl_list :
         definition(var_decl_list const &self)
         {
         // pass variable type returned from 'type' to list closure member 0
-	        decl = type[self.val = arg1] >> +space_p >> list(self.val);
+            decl = type[self.val = arg1] >> +space_p >> list(self.val);
 
         // m0 to access arg 0 of list --> passing variable type down to ident
-	        list = ident(list.val) >> *(',' >> ident(list.val));
+            list = ident(list.val) >> *(',' >> ident(list.val));
 
         // store identifier and type into the symbol table
-	        ident = (*alnum_p)[symbols_gen(symtab.add, ident.val)];
+            ident = (*alnum_p)[symbols_gen(symtab.add, ident.val)];
 
         // the type of the decl is returned in type's closure member 0
-	        type =
-	                str_p("int")[type.val = construct_<string>(arg1, arg2)]
-	            |   str_p("real")[type.val = construct_<string>(arg1, arg2)]
-	            ;
+            type =
+                    str_p("int")[type.val = construct_<string>(arg1, arg2)]
+                |   str_p("real")[type.val = construct_<string>(arg1, arg2)]
+                ;
 
             BOOST_SPIRIT_DEBUG_RULE(decl);
             BOOST_SPIRIT_DEBUG_RULE(list);

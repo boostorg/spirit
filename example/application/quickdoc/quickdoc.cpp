@@ -134,7 +134,7 @@ namespace
     {
         string out_name;
 #if (defined(BOOST_INTEL_CXX_VERSION) && (BOOST_INTEL_CXX_VERSION <= 500)) \
-	|| defined(__GNUC__) && (__GNUC__ == 2)
+    || defined(__GNUC__) && (__GNUC__ == 2)
         filter_identifier_char filter;
         for (IteratorT i = first; i != last; ++i)
             out_name += filter(*i);

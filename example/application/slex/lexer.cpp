@@ -8,7 +8,7 @@ using namespace std;
 char to_char(wchar_t c)
 {
     if (boost::spirit::impl::isgraph_(char(c)) || boost::spirit::impl::isspace_(char(c)))
-	    return char(c);
+        return char(c);
     else
         return '.';
 }
@@ -16,7 +16,7 @@ char to_char(wchar_t c)
 ostream& operator<<(ostream& out, wchar_t const* c)
 {
     while (*c)
-	    out << to_char(*c++);
+        out << to_char(*c++);
     return out;
 }
 
@@ -46,17 +46,17 @@ void test_match(LexerT& lexer, const CharT* str)
 int main(int , char** )
 {
     /*
-	g.parse("[[:blank:]]+");
-	g.parse("[[:blank:]]*");
-	g.parse("[^[:blank:]\\n]");
-	g.parse("\\r?\\n");
-	g.parse("([[:alpha:]_][[:alnum:]_-]*)");
-	g.parse("[^[:alpha:]_*\\n]+");
-	g.parse("(\\\\([^\\n]|[0-7]{1,3}|x[[:xdigit:]]{1,2}))");
-	g.parse("(\"[:\"[[:alpha:]]+\":]\")");
-	node* n = g.parse("a*b*c*");
-	n = g.parse("a*b*c*|c*b*a*");
-	n = g.parse("(a|b)*abb+c?");
+    g.parse("[[:blank:]]+");
+    g.parse("[[:blank:]]*");
+    g.parse("[^[:blank:]\\n]");
+    g.parse("\\r?\\n");
+    g.parse("([[:alpha:]_][[:alnum:]_-]*)");
+    g.parse("[^[:alpha:]_*\\n]+");
+    g.parse("(\\\\([^\\n]|[0-7]{1,3}|x[[:xdigit:]]{1,2}))");
+    g.parse("(\"[:\"[[:alpha:]]+\":]\")");
+    node* n = g.parse("a*b*c*");
+    n = g.parse("a*b*c*|c*b*a*");
+    n = g.parse("(a|b)*abb+c?");
 
     */
 
@@ -104,7 +104,7 @@ int main(int , char** )
 
 #define WCHAR_TESTS
 #ifdef WCHAR_TESTS
-	lexer<wchar_t const *> wlex;
+    lexer<wchar_t const *> wlex;
     //wg.register_regex(L"(a|b)*abb+c?(ab(c|d)*)?");
     //wg.register_regex(L"d*a*b*c*d*");
     //wg.register_regex(L"[^\x01020304-\x05060708]+");
@@ -119,7 +119,7 @@ int main(int , char** )
 
 // only compile this if the compiler has 4-byte wide chars.
 #if defined(__GNUC__) && defined(linux)
-	lexer<wchar_t const *> wlex2;
+    lexer<wchar_t const *> wlex2;
     //wlex2.register_regex(L"[^\\x07020304-\\x08060708]*", 1);
     wlex2.register_regex(L"[\\x07020304-\\x08060708]*", 1);
 

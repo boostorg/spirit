@@ -86,7 +86,7 @@ main()
     cout << "Type [q or Q] to quit\n\n";
 
     string str;
-	while (getline(cin, str))
+    while (getline(cin, str))
     {
         if (str[0] == 'q' || str[0] == 'Q')
             break;

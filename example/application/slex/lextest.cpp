@@ -53,7 +53,7 @@ void test_match(lexer<IteratorT>& lexer, const StrT& str)
     while ((token = lexer.next_token(first, end)) != -1 && first != end)
     {
         cout << "matched token #" << token << " :" <<
-			  basic_string<CharT>(prev, first) << '\n';
+              basic_string<CharT>(prev, first) << '\n';
         prev = first;
     }
     if (token == -1)
@@ -63,7 +63,7 @@ void test_match(lexer<IteratorT>& lexer, const StrT& str)
     else
     {
         cout << "matched token #" << token << " :" <<
-			  basic_string<CharT>(prev, first) << '\n';
+              basic_string<CharT>(prev, first) << '\n';
     }
 }
 
