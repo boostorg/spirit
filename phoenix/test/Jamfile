@@ -13,7 +13,7 @@
 #  Joel de Guzman [Sept 27, 2002]
 #
 
-subproject libs/phoenix/test ;
+subproject libs/spirit/phoenix/test ;
 
 unit-test binary_tests
     : binary_tests.cpp
