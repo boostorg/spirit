@@ -71,7 +71,7 @@ test_number(char const *s, unsigned int wanted, rule_t const &r)
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
-    if (m.full && !m.length == strlen(s))
+    if (m.full && (m.length != strlen(s)))
         result = bad;
         
 
