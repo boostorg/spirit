@@ -105,7 +105,7 @@
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_RULE)
     #define BOOST_SPIRIT_DEBUG_TRACE_RULE(r, t)    \
-        ::boost::spirit::impl::BOOST_SPIRIT_DEBUG_TRACE_RULE().register_node(&r, #r, (t))
+        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, (t))
     #endif // !defined(BOOST_SPIRIT_TRACE_RULE)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE)
@@ -124,7 +124,7 @@
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_RULE_NAME)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME)
-    #defineBOOST_SPIRIT_DEBUG_TRACE_NODE_NAME(r, n, t)    \
+    #define BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME(r, n, t)    \
         ::boost::spirit::impl::get_node_registry().register_node(&r, (n), (t))
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME)
 

@@ -2293,7 +2293,7 @@ lexer<IteratorT, TokenT, CallbackT>::lexer(unsigned int states)
     , m_state_stack()
     , m_num_states(states)
 {
-    BOOST_SPIRIT_DEBUG_TRACE_NODE(g, "slex::lexer", 
+    BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME(g, "slex::lexer", 
         BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_SLEX);
 }
 
