@@ -27,7 +27,7 @@ namespace boost { namespace spirit {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
+#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
 
 ///////////////////////////////////////////////////////////////////////////////
 //  conformant compilers support PTS
@@ -149,15 +149,21 @@ struct as_parser
         >::type
         type;
 
-    static as_parser::type::embed_t convert(arg_type const &t)
+    static 
+    typename as_parser::type::embed_t 
+    convert(arg_type const &t)
     { return convert(t, selector_t()); }
 
 private:
 
-    static as_parser::type::embed_t convert(arg_type str, int_t<0> sel)
+    static 
+    typename as_parser::type::embed_t 
+    convert(arg_type str, int_t<0> sel)
     { return type(str); }
 
-    static as_parser::type::embed_t convert(arg_type const &p, int_t<1> sel)
+    static 
+    typename as_parser::type::embed_t 
+    convert(arg_type const &p, int_t<1> sel)
     { return p; }
 };
 
