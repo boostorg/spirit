@@ -1,7 +1,7 @@
 //
 // C++ Lexer implemented with Spirit (http://spirit.sourceforge.net/)
 //
-// Copyright© 2002 Juan Carlos Arevalo-Baeza, All rights reserved
+// Copyright© 2002-2003 Juan Carlos Arevalo-Baeza, All rights reserved
 // email: jcab@JCABs-Rumblings.com
 // Created: 8-Nov-2002
 //
@@ -23,10 +23,9 @@
 #include <boost/spirit/phoenix/binders.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// used namespaces
+// Used namespaces and identifiers.
+
 using namespace boost::spirit;
-//using namespace phoenix;
-//using namespace std;
 
 using std::stringstream;
 using std::string;
@@ -43,11 +42,18 @@ using phoenix::arg2;
 using phoenix::construct_;
 using phoenix::function_ptr;
 
+namespace cpp {
+
 ///////////////////////////////////////////////////////////////////////////////
 // Utility parsers for debugging and error handling.
 
-namespace {
+namespace { // Private stuff.
 
+    // Trace parser used for debugging.
+    // Just include trace_p(<arg>) parsers in the middle of a grammar,
+    // and it will print out a useful diagnosting whenever it's
+    // executed. The argument can be a string or an actor that
+    // evaluates to a string.
     template <typename ErrorDescrT>
     class trace_ {
 
@@ -60,7 +66,7 @@ namespace {
         int
         operator()(ScannerT const& scan, result_t& result) const {
             file_position lc = (*scan).filePos;
-            cout << lc << "Trace: " << info() << "\n";
+            cout << lc << ": Trace: " << info() << "\n";
             return 0;
         }
 
@@ -88,13 +94,8 @@ namespace {
         return trace_<actor<value<char const*> > >(val(str));
     }
 
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// The C++ lexer grammars.
-
-namespace {
-
+    // Utility closure that defines a result value.
+    // Used to return values from grammars.
     template < typename ResultT >
     struct result_closure: closure<result_closure<ResultT>, ResultT> {
         member1 result_;
@@ -104,6 +105,40 @@ namespace {
     struct result_closure<nil_t> {
         typedef parser_context context_t;
     };
+
+    // Parser to extract the current file position from the scanner.
+    struct get_file_position_parser {
+        file_position& filePos;
+        get_file_position_parser(file_position& filePos_):
+            filePos(filePos_)
+        {}
+        typedef nil_t result_t;
+        template < typename ScannerT >
+        int operator()(ScannerT const& scan, result_t& result) const {
+            filePos = scan.first.get_position();
+            return 0;
+        }
+    };
+
+    functor_parser<get_file_position_parser>
+    get_file_position_p(file_position& filePos)
+    {
+        return get_file_position_parser(filePos);
+    }
+
+} // Private stuff.
+
+///////////////////////////////////////////////////////////////////////////////
+// The C++ lexer grammars.
+//
+// These parse all the basic terminal tokens: identifiers, characters, strings,
+// integers and floats. Symbols are dealt with separately: there's just a
+// pre-set number of them, so they are parsed using the token DB's
+// symbols<> class.
+//
+// All these grammars return a std::string with the extracted token's text.
+
+namespace { // Private stuff.
 
     struct IDENTIFIER:
         grammar<IDENTIFIER, result_closure<std::string>::context_t>
@@ -214,37 +249,35 @@ namespace {
                 subrule<5> suffix_part;
 
                 main = (
-                    (
-                        submain =
-                            (hex_int | oct_int | dec_int | char_int) [
-                                self.result_ =
-                                    construct_<std::string>(arg1, arg2)
-                            ],
+                    submain =
+                        (hex_int | oct_int | dec_int | char_int) [
+                            self.result_ =
+                                construct_<std::string>(arg1, arg2)
+                        ],
 
-                        hex_int =
-                            lexeme_d[
-                                '0' >> nocase_d[chlit<>('x')]   // prefix
-                             >> +xdigit_p                       // the number
-                             >> suffix_part                     // suffix
-                            ],
+                    hex_int =
+                        lexeme_d[
+                            '0' >> nocase_d[chlit<>('x')]   // prefix
+                         >> +xdigit_p                       // the number
+                         >> suffix_part                     // suffix
+                        ],
 
-                        oct_int =
-                            lexeme_d[
-                                '0'                             // prefix
-                             >> +range<>('0', '7')              // the number
-                             >> suffix_part                     // suffix
-                            ],
+                    oct_int =
+                        lexeme_d[
+                            '0'                             // prefix
+                         >> +range<>('0', '7')              // the number
+                         >> suffix_part                     // suffix
+                        ],
 
-                        dec_int =
-                            lexeme_d[
-                                +digit_p                        // the number
-                             >> suffix_part                     // suffix
-                            ],
+                    dec_int =
+                        lexeme_d[
+                            +digit_p                        // the number
+                         >> suffix_part                     // suffix
+                        ],
 
-                        char_int = CHARACTER_LITERAL,
+                    char_int = CHARACTER_LITERAL,
 
-                        suffix_part = !nocase_d[chlit<>('l') | chlit<>('u')]
-                    )
+                    suffix_part = !nocase_d[chlit<>('l') | chlit<>('u')]
                 );
             }
         };
@@ -267,59 +300,47 @@ namespace {
                 subrule<1> exponent_part;
 
                 main = (
-                    (
-                        submain =
-                            lexeme_d[
-                                (
-                                    chlit<>('.') >> +digit_p >> !exponent_part
-                                  | +digit_p >> (
-                                        (chlit<>('.') >> *digit_p)
-                                     || exponent_part
-                                    )
-                                ) >> !nocase_d[chlit<>('l') | chlit<>('f')]
-                            ]
-                            [
-                                self.result_ =
-                                    construct_<std::string>(arg1, arg2)
-                            ],
+                    submain =
+                        lexeme_d[
+                            (
+                                chlit<>('.') >> +digit_p >> !exponent_part
+                              | +digit_p >> (
+                                    (chlit<>('.') >> *digit_p)
+                                 || exponent_part
+                                )
+                            ) >> !nocase_d[chlit<>('l') | chlit<>('f')]
+                        ]
+                        [
+                            self.result_ =
+                                construct_<std::string>(arg1, arg2)
+                        ],
 
-                        exponent_part =
-                                nocase_d[chlit<>('e')]
-                             >> !(chlit<>('+') | chlit<>('-')) >> +digit_p
-                    )
+                    exponent_part =
+                            nocase_d[chlit<>('e')]
+                         >> !(chlit<>('+') | chlit<>('-')) >> +digit_p
                 );
             }
         };
     } FLOAT_CONSTANT;
 
-}
+} // Private stuff.
 
 ///////////////////////////////////////////////////////////////////////////////
-// TokenID type tag.
+// Main lexer grammar.
+//
+// This is the main workhorse. It returns an array of Token's wrapped in a
+// TokenLookup structure. This is done so that a single pass of the grammar
+// may generate more than one token. Currently, this is only used with
+// directives, so that both EOL tokens (before and after) can be generated.
+// Directives can only happen after an EOL token, so both the previous EOL
+// and the directive are returned.
+//
+// TODO: This could be obviated by adding context data to the scanner.
 
 // Internal transfer. Defined in cpp_lexer_tokens.cpp.
-extern boost::spirit::parser<boost::spirit::symbols<TokenID> > const& cpp_operator_p;
+extern parser<symbols<TokenID> > const& cpp_operator_p;
 
-namespace {
-
-    struct get_file_position_parser {
-        file_position& filePos;
-        get_file_position_parser(file_position& filePos_):
-            filePos(filePos_)
-        {}
-        typedef nil_t result_t;
-        template < typename ScannerT >
-        int operator()(ScannerT const& scan, result_t& result) const {
-            filePos = scan.first.get_position();
-            return 0;
-        }
-    };
-
-    functor_parser<get_file_position_parser>
-    get_file_position_p(file_position& filePos)
-    {
-        return get_file_position_parser(filePos);
-    }
+namespace { // Private stuff.
 
     enum { MaxTokenLookup = 2 };
     struct TokenLookup {
@@ -392,18 +413,27 @@ namespace {
         );
     }
 
+} // Private stuff.
+
+///////////////////////////////////////////////////////////////////////////////
+// Opaque lexer interface's implementation.
+
+namespace { // Private stuff.
+
     template < typename IteratorT >
-    struct lex_input_interface_iterator: lex_input_interface {
+    struct cpp_lex_input_interface: lexer::input_interface<Token> {
     public:
+        typedef lexer::input_interface<Token> base_t;
         typedef Token result_type;
         TokenLookup lookup;
         unsigned lookupPos;
         unsigned refCount;
         IteratorT first;
         scanner<IteratorT> scan;
+        file_position curFilePos;
 
-        lex_input_interface_iterator(IteratorT const& first_,
-                                     IteratorT const& last_):
+        cpp_lex_input_interface(IteratorT const& first_,
+                                IteratorT const& last_):
             lookupPos(MaxTokenLookup),
             refCount(1),
             first(first_),
@@ -420,7 +450,7 @@ namespace {
             }
         }
 
-        virtual Token get() {
+        virtual Token const& get() {
             if (lookupPos < lookup.num) {
                 return lookup.token[lookupPos++];
             }
@@ -432,13 +462,15 @@ namespace {
             }
         }
 
-        virtual boost::spirit::file_position get_position() {
-            return scan.first.get_position();
+        virtual file_position const& get_position() {
+            curFilePos = scan.first.get_position();
+            return curFilePos;
         }
     };
 
+    // This allocates a new lexer implementation for an arbitrary iterator.
     template < typename IteratorT >
-    lex_input_interface*
+    lexer::input_interface<Token>*
     NewLexerImpl(IteratorT const& first,
                  IteratorT const& last,
                  char const* fname = "<filename>")
@@ -448,22 +480,19 @@ namespace {
         Iterator pfirst(first, last, fname);
         Iterator plast;
 
-        return new lex_input_interface_iterator<Iterator>(pfirst, plast);
+        return new cpp_lex_input_interface<Iterator>(pfirst, plast);
     }
 
-}
+} // Private stuff.
 
-Token const& lex_input_interface::eof()
-{
-    static Token const result = Token(file_position(), "", EOF_token);
-    return result;
-}
+///////////////////////////////////////////////////////////////////////////////
+// Lexer implementation's opaque constructors.
 
-lex_input_interface*
+lexer::input_interface<Token>*
 NewLexer(char const* first, char const* last, char const* fname)
 {
     return NewLexerImpl(first, last, fname);
 }
 
-Token const lex_input_policy::eof
-    = Token(boost::spirit::file_position(), "", EOF_token);
+} // cpp
+

@@ -1,7 +1,7 @@
 //
 // C++ Lexer token definitions
 //
-// Copyright© 2002 Juan Carlos Arevalo-Baeza, All rights reserved
+// Copyright© 2002-2003 Juan Carlos Arevalo-Baeza, All rights reserved
 // email: jcab@JCABs-Rumblings.com
 // Created: 8-Nov-2002
 //
@@ -9,39 +9,65 @@
 #include "cpp_lexer_token.hpp"
 
 #include <boost/spirit/symbols.hpp>
-#include <map>
+#include <vector>
 #include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////////
 // File position tools.
+//
+// TODO: Move this to the definition within Spirit?
 
 namespace std {
-std::ostream& operator<<(std::ostream& out, boost::spirit::file_position const& lc)
-{
-    return out <<
-            lc.file   << ":" <<
-            lc.line   << ":" <<
-            lc.column << ": ";
-}
-}
+
+    std::ostream& operator<<(std::ostream& out, boost::spirit::file_position const& lc)
+    {
+        return out <<
+                lc.file   << ":" <<
+                lc.line   << ":" <<
+                lc.column;
+    }
+
+} // std
+
+namespace cpp {
+
+using boost::spirit::parser;
+using boost::spirit::symbols;
 
 ///////////////////////////////////////////////////////////////////////////////
 // TokenID database definition.
+//
+// The implementation of this class is private.
+// It holds the relationship between unique IDs and their text representation.
+// It allows TOkenIDs to be properly reused.
+//
+// TODO: This should properly reformat literals as needed to improve sharing.
 
-class TokenDB: public boost::spirit::symbols<TokenID> {
+class TokenDB: public symbols<TokenID> {
 public:
-    typedef boost::spirit::symbols<TokenID> super_t;
+    typedef symbols<TokenID> super_t;
 
     TokenID next;
-    std::map<TokenID, std::string> list;
+    std::vector<std::string> list;
 
     TokenDB(TokenID next_): next(next_) {}
 
     TokenID add(char const* text, TokenID id)
     {
-        std::map<TokenID, std::string>::const_iterator it = list.find(id);
-        if (it == list.end()) {
-            list[id] = text;
+        unsigned const type  = id & TokenTypeMask;
+        unsigned const index = id & TokenIndexMask;
+        unsigned const dbtype = next & TokenTypeMask;
+        if (type == dbtype) {
+            if (list.size() <= index) {
+                list.resize(index+1);
+            }
+            std::string& dest = list[index];
+            if (dest.empty()) {
+                list[index] = text;
+            }
+            if (id >= next) {
+                next = TokenID(id + 1);
+            }
         }
         super_t::add(text, id);
         return id;
@@ -76,17 +102,18 @@ public:
     }
 
     std::string const& find(TokenID id) const {
-        std::map<TokenID, std::string>::const_iterator it = list.find(id);
-        if (it == list.end()) {
-            static std::string const dummy;
-            return dummy;
-        } else {
-            return it->second;
-        }
+        unsigned const type  = id & TokenTypeMask;
+        unsigned const index = id & TokenIndexMask;
+        unsigned const dbtype = next & TokenTypeMask;
+        assert(type == dbtype);
+        assert(list.size() > index);
+        return list[index];
     }
 };
 
 namespace {
+
+    // Definition of the keywords and symbols.
 
     struct c_keywords_db: TokenDB {
         c_keywords_db(): TokenDB(Ident_next) {
@@ -178,7 +205,6 @@ namespace {
     struct c_operators_db: TokenDB {
         c_operators_db(): TokenDB(Op_next) {
             add("...", Op_Ellipsis      );
-            add("...", Op_Ellipsis      );
             add(">>=", Op_Right_Assign  );
             add("<<=", Op_Left_Assign   );
             add("+=" , Op_Add_Assign    );
@@ -260,6 +286,12 @@ namespace {
         }
     };
 
+    // The actual database.
+    //
+    // Note that this is implemented as global variables.
+    // TODO: Somehow make this stack-based. That will later require to keep
+    // it to be a context in the lexer grammar's scanner.
+
     cpp_keywords_db  identifierDB;
     cpp_operators_db operatorDB;
     integers_db      integerDB;
@@ -270,8 +302,11 @@ namespace {
 
 // Internal transfer. Used in cpp_lexer.cpp.
 extern
-boost::spirit::parser<boost::spirit::symbols<TokenID> > const&
+parser<symbols<TokenID> > const&
 cpp_operator_p = operatorDB;
+
+///////////////////////////////////////////////////////////////////////////////
+// Token ID definitions.
 
 std::string GetIdentifierName(TokenID id)
 {
@@ -293,6 +328,23 @@ TokenID MakeIdentifierTokenID(std::string const& text)
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Token structure definitions.
+
+} // cpp
+
+namespace lexer {
+
+    // Required lexer token traits.
+    cpp::Token const token_traits<cpp::Token>::eof_token
+        = cpp::Token(cpp::file_position(), "", cpp::EOF_token);
+
+} // lexer
+
+namespace cpp {
+
+// Implementation of the simple actions that can be used in Spirit parsers.
+
 void PrintToken_class::operator()(Token const& token) const {
     struct { // Local function.
         void operator()(char const* str, Token const& token) {
@@ -303,7 +355,7 @@ void PrintToken_class::operator()(Token const& token) const {
         }
     } OutText;
 
-    std::cout << token.filePos;
+    std::cout << token.filePos << ": ";
     switch(int(token.id & TokenTypeMask)) {
         case IdentifierTokenType:
             if (token.id >= Kwd_last) {
@@ -377,21 +429,21 @@ void SetOperatorToken::operator()(TokenID id) const
 
 // Create a literal integer token.
 SetLiteralToken
-SetIntegerToken(Token& dest, boost::spirit::file_position const& filePos)
+SetIntegerToken(Token& dest, file_position const& filePos)
 {
     return SetLiteralToken(dest, filePos, integerDB);
 }
 
 // Create a literal float token.
 SetLiteralToken
-SetFloatingToken(Token& dest, boost::spirit::file_position const& filePos)
+SetFloatingToken(Token& dest, file_position const& filePos)
 {
     return SetLiteralToken(dest, filePos, floatingDB);
 }
 
 // Create a literal string token.
 SetLiteralToken
-SetStringToken(Token& dest, boost::spirit::file_position const& filePos)
+SetStringToken(Token& dest, file_position const& filePos)
 {
     return SetLiteralToken(dest, filePos, stringDB);
 }
@@ -406,3 +458,5 @@ void SetLiteralToken::operator()(std::string const& text) const
         dest = Token(filePos, text, id);
     }
 }
+
+} // cpp

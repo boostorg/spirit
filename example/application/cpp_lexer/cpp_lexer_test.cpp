@@ -1,36 +1,34 @@
 //
 // C++ Lexer implemented with Spirit (http://spirit.sourceforge.net/)
 //
-// Example test. Shows how to use a lexer to feed a simple Spirit
-// grammar that works on lexer tokens and uses Phoenix.
-//
-// Copyright© 2002 Juan Carlos Arevalo-Baeza, All rights reserved
+// Copyright© 2002-2003 Juan Carlos Arevalo-Baeza, All rights reserved
 // email: jcab@JCABs-Rumblings.com
 // Created: 8-Nov-2002
 //
+// Example test. Shows how to use a lexer to feed a simple Spirit
+// grammar that works on lexer tokens and uses Phoenix.
+//
 
 #include "cpp_lexer.hpp"    // The main lexer API include.
+
+#include <iostream>
 
 // Some necessary Spirit includes.
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/functor_parser.hpp>
 
 // Some necessary Phoenix includes.
-// Actually, some of those have to be not necessary.
-// TODO: Weed them out.
 #include <boost/spirit/phoenix/primitives.hpp>
-#include <boost/spirit/phoenix/composite.hpp>
-#include <boost/spirit/phoenix/functions.hpp>
-#include <boost/spirit/phoenix/operators.hpp>
 #include <boost/spirit/phoenix/special_ops.hpp>
-#include <boost/spirit/phoenix/binders.hpp>
-#include <boost/spirit/phoenix/statements.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-// used namespaces and identifiers.
+// Used namespaces and identifiers.
+
 using namespace boost::spirit;
 
 using phoenix::var;
+
+using namespace cpp;
 
 ///////////////////////////////////////////////////////////////////////////////
 // This is a custom parser that extracts the current file position into a
@@ -39,7 +37,7 @@ using phoenix::var;
 //
 // To use, for instance:
 //
-//    boost::spirit::file_position tempFilePos;
+//    cpp::file_position tempFilePos;
 //    ...
 //    rule myrule = get_file_position_p(tempFilePos) >>
 //        (parseSomething | error_p(tempFilePos, "parseSomething failed");
@@ -47,10 +45,10 @@ using phoenix::var;
 // Presumably (if error_p is implemented accordingly), this can result in the
 // error message "parseSomething failed", prefixed with the file, line AND
 // column where the parsing failed.
-//
+
 struct get_file_position_parser {
-    boost::spirit::file_position& filePos;
-    get_file_position_parser(boost::spirit::file_position& filePos_):
+    cpp::file_position& filePos;
+    get_file_position_parser(cpp::file_position& filePos_):
         filePos(filePos_)
     {}
     typedef nil_t result_t;
@@ -65,7 +63,7 @@ struct get_file_position_parser {
 };
 
 boost::spirit::functor_parser<get_file_position_parser>
-get_file_position_p(boost::spirit::file_position& filePos)
+get_file_position_p(cpp::file_position& filePos)
 {
     return get_file_position_parser(filePos);
 }
@@ -81,7 +79,7 @@ get_file_position_p(boost::spirit::file_position& filePos)
 //
 // If the line prefixes are removed, the resulting output should be
 // compilable, just like the input.
-//
+
 struct test_grammar: grammar<test_grammar> {
     template < typename ScannerT >
     struct definition {
@@ -92,13 +90,13 @@ struct test_grammar: grammar<test_grammar> {
             return main;
         }
 
-        boost::spirit::file_position filePos;
+        cpp::file_position filePos;
 
         definition(test_grammar const& self) {
             main =
                 *(
                     ch_p(Kwd_using)[var(std::cout) << "   using   "]
-                  | ch_p(EOL_token) >> get_file_position_p(filePos)[var(std::cout) << "\n" << var(filePos)]
+                  | ch_p(EOL_token) >> get_file_position_p(filePos)[var(std::cout) << "\n" << var(filePos) << ": "]
                   | anychar_p[OutToken][var(std::cout) << " "]
                 );
         }
@@ -112,7 +110,7 @@ struct test_grammar: grammar<test_grammar> {
 //    cpp_lexer_test [<input filename>]
 //
 // If not given, the input filename will be cpp_lexer.cpp.
-//
+
 int
 main(int argc, char* argv[])
 {
@@ -146,14 +144,14 @@ main(int argc, char* argv[])
     std::cout << "File size: " << size << " bytes\n";
 
     // Initialize the lexer iterators.
-    lex_iterator first(buf, buf+size, fname);
-    lex_iterator last;
+    cpp::lexer_iterator first(cpp::NewLexer(buf, buf+size, fname));
+    cpp::lexer_iterator last;
 
     test_grammar grammar;   // The grammar object.
 
     // And do the parsing.
     // Note that comment tokens are skipped here.
-    parse_info<lex_iterator> result =
+    parse_info<cpp::lexer_iterator> result =
         parse(
             first, last,
             grammar,

@@ -1,7 +1,7 @@
 //
 // C++ Lexer token definitions
 //
-// Copyright© 2002 Juan Carlos Arevalo-Baeza, All rights reserved
+// Copyright© 2002-2003 Juan Carlos Arevalo-Baeza, All rights reserved
 // email: jcab@JCABs-Rumblings.com
 // Created: 8-Nov-2002
 //
@@ -14,6 +14,8 @@
 #ifndef cpp_lexer_token_hpp_included
 #define cpp_lexer_token_hpp_included
 
+#include "lexer_token_base.hpp"
+
 #include <boost/spirit/iterator/position_iterator.hpp>
 #include <string>
 #include <iosfwd>
@@ -24,8 +26,18 @@
 // TODO: Move this to the definition within Spirit?
 
 namespace std {
-std::ostream& operator<<(std::ostream& out, boost::spirit::file_position const& lc);
-}
+
+    std::ostream& operator<<(std::ostream& out, boost::spirit::file_position const& lc);
+
+} // std
+
+namespace cpp {
+
+///////////////////////////////////////////////////////////////////////////////
+// File position structure.
+
+typedef boost::spirit::file_position file_position;
+//typedef int file_position;
 
 ///////////////////////////////////////////////////////////////////////////////
 // TokenID database definition.
@@ -241,12 +253,12 @@ TokenID MakeIdentifierTokenID(std::string const& text);
 // error reporting.
 
 struct Token {
-    boost::spirit::file_position filePos; // Where in which file the token was found.
-    std::string           text;    // The actual text in the file.
-    TokenID               id;      // The ID of this token.
+    file_position filePos; // Where in which file the token was found.
+    std::string   text;    // The actual text in the file.
+    TokenID       id;      // The ID of this token.
 
     Token() {}
-    Token(boost::spirit::file_position const& filePos_,
+    Token(file_position const& filePos_,
           std::string const& text_,
           TokenID id_):
         filePos(filePos_),
@@ -254,10 +266,8 @@ struct Token {
         id     (id_)
     {}
 
-    // Conversion to ID.
-    operator TokenID() const {
-        return id;
-    }
+    // Automatic conversion to ID.
+    operator TokenID() const { return id; }
 };
 
 // Token comparison functions.
@@ -280,6 +290,22 @@ inline bool operator==(TokenID t1, Token const& t2)
 inline bool operator!=(TokenID t1, Token const& t2)
     { return t1 != t2.id; }
 
+// Required lexer token traits.
+
+} // cpp
+
+namespace lexer {
+
+    template <>
+    struct token_traits<cpp::Token> {
+        static cpp::Token const eof_token;
+        typedef cpp::file_position file_position;
+    };
+
+} // lexer
+
+namespace cpp {
+
 // Simple actions that can be used in Spirit parsers.
 // For examples of usage, look into cpp_lexer.cpp
 
@@ -298,8 +324,8 @@ OutToken_class const OutToken = OutToken_class();
 // Create an identifier token.
 struct SetIdentifierToken {
     Token& dest;
-    boost::spirit::file_position const& filePos;
-    SetIdentifierToken(Token& dest_, boost::spirit::file_position const& filePos_):
+    file_position const& filePos;
+    SetIdentifierToken(Token& dest_, file_position const& filePos_):
         dest   (dest_),
         filePos(filePos_)
     {}
@@ -309,8 +335,8 @@ struct SetIdentifierToken {
 // Create an operator (symbol) token.
 struct SetOperatorToken {
     Token& dest;
-    boost::spirit::file_position const& filePos;
-    SetOperatorToken(Token& dest_, boost::spirit::file_position const& filePos_):
+    file_position const& filePos;
+    SetOperatorToken(Token& dest_, file_position const& filePos_):
         dest   (dest_),
         filePos(filePos_)
     {}
@@ -321,10 +347,10 @@ struct SetOperatorToken {
 // Create a literal token.
 struct SetLiteralToken {
     Token& dest;
-    boost::spirit::file_position const& filePos;
+    file_position const& filePos;
     TokenDB& db;
     SetLiteralToken(Token& dest_,
-                    boost::spirit::file_position const& filePos_,
+                    file_position const& filePos_,
                     TokenDB& db_):
         dest   (dest_),
         filePos(filePos_),
@@ -335,23 +361,23 @@ struct SetLiteralToken {
 
 // Create a literal integer token.
 SetLiteralToken
-SetIntegerToken(Token& dest, boost::spirit::file_position const& filePos);
+SetIntegerToken(Token& dest, file_position const& filePos);
 
 // Create a literal float token.
 SetLiteralToken
-SetFloatingToken(Token& dest, boost::spirit::file_position const& filePos);
+SetFloatingToken(Token& dest, file_position const& filePos);
 
 // Create a literal string token.
 SetLiteralToken
-SetStringToken(Token& dest, boost::spirit::file_position const& filePos);
+SetStringToken(Token& dest, file_position const& filePos);
 
 // Create a special token.
 struct SetSpecialToken {
     Token& dest;
-    boost::spirit::file_position const& filePos;
+    file_position const& filePos;
     TokenID id;
     SetSpecialToken(Token& dest_,
-                    boost::spirit::file_position const& filePos_,
+                    file_position const& filePos_,
                     TokenID id_):
         dest   (dest_),
         filePos(filePos_),
@@ -369,7 +395,7 @@ struct SetSpecialToken {
 // Create a special unknown token.
 inline
 SetSpecialToken
-SetUnknownToken(Token& dest, boost::spirit::file_position const& filePos)
+SetUnknownToken(Token& dest, file_position const& filePos)
 {
     return SetSpecialToken(dest, filePos, Unknown_token);
 }
@@ -377,7 +403,7 @@ SetUnknownToken(Token& dest, boost::spirit::file_position const& filePos)
 // Create a special directive token.
 inline
 SetSpecialToken
-SetDirectiveToken(Token& dest, boost::spirit::file_position const& filePos)
+SetDirectiveToken(Token& dest, file_position const& filePos)
 {
     return SetSpecialToken(dest, filePos, Directive_token);
 }
@@ -385,7 +411,7 @@ SetDirectiveToken(Token& dest, boost::spirit::file_position const& filePos)
 // Create a special newline token.
 inline
 SetSpecialToken
-SetEOLToken(Token& dest, boost::spirit::file_position const& filePos)
+SetEOLToken(Token& dest, file_position const& filePos)
 {
     return SetSpecialToken(dest, filePos, EOL_token);
 }
@@ -393,7 +419,7 @@ SetEOLToken(Token& dest, boost::spirit::file_position const& filePos)
 // Create a special end-of-file token.
 inline
 SetSpecialToken
-SetEOFToken(Token& dest, boost::spirit::file_position const& filePos)
+SetEOFToken(Token& dest, file_position const& filePos)
 {
     return SetSpecialToken(dest, filePos, EOF_token);
 }
@@ -401,9 +427,11 @@ SetEOFToken(Token& dest, boost::spirit::file_position const& filePos)
 // Create a special comment token.
 inline
 SetSpecialToken
-SetCommentToken(Token& dest, boost::spirit::file_position const& filePos)
+SetCommentToken(Token& dest, file_position const& filePos)
 {
     return SetSpecialToken(dest, filePos, Comment_token);
 }
+
+} // cpp
 
 #endif

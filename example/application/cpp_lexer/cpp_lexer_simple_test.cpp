@@ -1,6 +1,10 @@
 //
 // C++ Lexer implemented with Spirit (http://spirit.sourceforge.net/)
 //
+// Copyright© 2003 Juan Carlos Arevalo-Baeza, All rights reserved
+// email: jcab@JCABs-Rumblings.com
+// Created: 5-Feb-2003
+//
 // Example test. Shows the minimum code needed to to use a lexer.
 // Works on input stored in a memory buffer.
 //
@@ -12,10 +16,6 @@
 // (shouldn't) include any of the parser code. It is needed to
 // implement the lexer as a forward iterator.
 //
-// Copyright© 2003 Juan Carlos Arevalo-Baeza, All rights reserved
-// email: jcab@JCABs-Rumblings.com
-// Created: 5-Feb-2003
-//
 
 #include "cpp_lexer.hpp"
 
@@ -23,6 +23,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // main entrypoint
+
 int
 main(int argc, char* argv[])
 {
@@ -56,14 +57,14 @@ main(int argc, char* argv[])
     std::cout << "File size: " << size << " bytes\n";
 
     // Initialize the lexer iterators.
-    lex_iterator first(buf, buf+size, fname);
-    lex_iterator last;
+    cpp::lexer_iterator first(cpp::NewLexer(buf, buf+size, fname));
+    cpp::lexer_iterator last;
 
     // And just loop through the sequence printing the tokens.
     // PrintToken prefixes the tokens with the file, line and column.
     while (first != last) {
-        Token const& token = *first;
-        PrintToken(token);
+        cpp::Token const& token = *first;
+        cpp::PrintToken(token);
         ++first;
     }
 
