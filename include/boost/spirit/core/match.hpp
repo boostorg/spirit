@@ -114,7 +114,7 @@ namespace boost { namespace spirit {
 
     public:
 
-    	typedef nil_t attr_t;
+        typedef nil_t attr_t;
 
         match()
         : len(-1) {}

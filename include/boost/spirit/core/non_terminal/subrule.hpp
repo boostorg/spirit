@@ -108,7 +108,7 @@ namespace boost { namespace spirit {
     template <typename ScannerT, typename ListT>
     struct subrules_scanner_finder
     {
-    	  typedef subrules_scanner<ScannerT, ListT> type;
+          typedef subrules_scanner<ScannerT, ListT> type;
     };
 
     #if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
@@ -120,7 +120,7 @@ namespace boost { namespace spirit {
     template <typename ScannerT, typename ListT>
     struct subrules_scanner_finder<subrules_scanner<ScannerT, ListT>, ListT>
     {
-    	  typedef subrules_scanner<ScannerT, ListT> type;
+          typedef subrules_scanner<ScannerT, ListT> type;
     };
 
     #endif
@@ -151,8 +151,8 @@ namespace boost { namespace spirit {
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
-    		    typedef typename subrules_scanner_finder<ScannerT, self_t>::type
-    		    subrules_scanner_t;
+                typedef typename subrules_scanner_finder<ScannerT, self_t>::type
+                subrules_scanner_t;
             subrules_scanner_t g_arg(scan, *this);
             return first.rhs.parse(g_arg);
         }

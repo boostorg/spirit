@@ -114,8 +114,8 @@ public:
     typename parser_result<self_t, ScannerT>::type
     parse_main(ScannerT const& scan) const
     {
-    	typedef typename ScannerT::iterator_t iterator_t;
-    	iterator_t first = scan.first;
+        typedef typename ScannerT::iterator_t iterator_t;
+        iterator_t first = scan.first;
         typename SetT::search_info result = SetT::find(scan);
 
         if (result.data)
@@ -127,7 +127,7 @@ public:
                     scan.first);
         else
             return scan.no_match();
-	}
+    }
 
     template <typename ScannerT>
     typename parser_result<self_t, ScannerT>::type

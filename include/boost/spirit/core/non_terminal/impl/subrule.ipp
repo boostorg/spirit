@@ -30,30 +30,30 @@ namespace boost { namespace spirit {
         template <int N, typename ListT>
         struct get_subrule_chooser
         {
-        		static ListT t();
-        		static char test(nil_t);
-        		static int	test(...);
+                static ListT t();
+                static char test(nil_t);
+                static int  test(...);
 
-    		    //  Set value to
-    		    //      0: ListT is empty
-    		    //      1: ListT's first item has same ID
-    		    //      2: ListT's first item has a different ID
+                //  Set value to
+                //      0: ListT is empty
+                //      1: ListT's first item has same ID
+                //      2: ListT's first item has a different ID
 
-        		enum
-        		{
+                enum
+                {
                 id = ListT::first_t::id,
                 is_same_id = N == id,
-        		    is_nil_t = sizeof(char) == sizeof(test(t())),
-        		    value = is_nil_t ? 0 : (is_same_id ? 1 : 2)
-        		};
-    	  };
+                    is_nil_t = sizeof(char) == sizeof(test(t())),
+                    value = is_nil_t ? 0 : (is_same_id ? 1 : 2)
+                };
+          };
 
-      	template <int N>
-      	struct subrule_chooser;
+        template <int N>
+        struct subrule_chooser;
 
-      	template <>
-      	struct subrule_chooser<0>
-      	{
+        template <>
+        struct subrule_chooser<0>
+        {
             //  First case. ListT is empty
 
             template <int N, typename ListT>
@@ -61,27 +61,27 @@ namespace boost { namespace spirit {
             { typedef nil_t type; };
         };
 
-      	template <>
-      	struct subrule_chooser<1>
-      	{
+        template <>
+        struct subrule_chooser<1>
+        {
             //  Second case. ListT is non-empty and the list's
             //  first item has the ID we are looking for.
 
             template <int N, typename ListT>
             struct result
             { typedef typename ListT::first_t::def_t type; };
-      	};
+        };
 
-      	template <>
-      	struct subrule_chooser<2>
-      	{
+        template <>
+        struct subrule_chooser<2>
+        {
             //  Third case. ListT is non-empty but the list's
             //  first item does not have the ID we are looking for.
 
             template <int N, typename ListT>
             struct result
             { typedef typename get_subrule<N, ListT::rest_t>::type type; };
-      	};
+        };
 
         template <int N, typename ListT>
         struct get_subrule

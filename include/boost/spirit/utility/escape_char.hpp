@@ -52,8 +52,8 @@ struct escape_char_action
 {
     typedef escape_char_action
         <ParserT, ActionT, Flags, CharT>        self_t;
-	typedef action_parser_category              parser_category_t;
-	typedef unary<ParserT, parser<self_t> >     base_t;
+    typedef action_parser_category              parser_category_t;
+    typedef unary<ParserT, parser<self_t> >     base_t;
 
     template <typename ScannerT>
     struct result
@@ -74,7 +74,7 @@ struct escape_char_action
             parse(scan, *this);
     }
 
-	ActionT const& predicate() const { return actor; }
+    ActionT const& predicate() const { return actor; }
 
 private:
 

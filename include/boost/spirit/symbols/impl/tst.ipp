@@ -188,7 +188,7 @@ namespace boost { namespace spirit {
                 return result;
             }
 
-        	typedef typename ScannerT::iterator_t iterator_t;
+            typedef typename ScannerT::iterator_t iterator_t;
             node_t*     np = root;
             CharT       ch = *scan;
             iterator_t  save = scan.first;

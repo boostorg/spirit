@@ -73,7 +73,7 @@ namespace impl {
             BOOST_SPIRIT_DEBUG_OUT << " \"\n";
         }
     }
-#endif	// BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
+#endif  // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
 
 }
 
@@ -118,7 +118,7 @@ namespace impl {
                     scan.last);
             }
             scan.get_level()++;
-#endif	// BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
+#endif  // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
         }
 
         template <typename ResultT, typename ParserT, typename ScannerT>
@@ -135,7 +135,7 @@ namespace impl {
                     scan.first,
                     scan.last);
             }
-#endif	// BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
+#endif  // BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES
 
             return this->base_t::post_parse(hit, p, scan);
         }

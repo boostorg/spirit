@@ -41,9 +41,9 @@ struct file_position {
     file_position(std::string const& file_ = std::string(),
                   int line_ = 1, int column_ = 1):
         file    (file_),
-		line	(line_),
-		column	(column_)
-	{}
+        line    (line_),
+        column  (column_)
+    {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////

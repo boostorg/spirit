@@ -556,10 +556,10 @@ public:
     typedef typename container_t::iterator tree_iterator;
     typedef typename container_t::const_iterator const_tree_iterator;
 
-	typedef T attr_t;
-	typedef typename boost::call_traits<T>::param_type      param_type;
-	typedef typename boost::call_traits<T>::reference       reference;
-	typedef typename boost::call_traits<T>::const_reference const_reference;
+    typedef T attr_t;
+    typedef typename boost::call_traits<T>::param_type      param_type;
+    typedef typename boost::call_traits<T>::reference       reference;
+    typedef typename boost::call_traits<T>::const_reference const_reference;
 
     tree_match()
     :   len(-1), trees(), val(impl::tree_match_attr<T>::get_default())

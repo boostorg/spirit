@@ -249,8 +249,8 @@ public:
         iter_param_t        last_,
         PoliciesT const&    policies = PoliciesT())
     : PoliciesT(policies), first(first_), last(last_) {
-		at_end();
-	}
+        at_end();
+    }
 
     scanner(scanner const& other)
     : PoliciesT(other), first(other.first), last(other.last) {}

@@ -408,8 +408,8 @@ namespace impl {
     template <typename T>
     struct as_ptr {
 
-	    typedef T* pointer_type;
-	
+        typedef T* pointer_type;
+    
         static T* get(T& ref)
         { return &ref; }
     };
@@ -418,8 +418,8 @@ namespace impl {
     template <typename T>
     struct as_ptr<T*> {
 
-	    typedef T* pointer_type;
-	
+        typedef T* pointer_type;
+    
         static T* get(T* ptr)
         { return ptr; }
     };

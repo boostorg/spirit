@@ -254,7 +254,7 @@ class inner
 #else
     private:
 #endif
-	    typedef std::deque<ValueT> queue_type;
+        typedef std::deque<ValueT> queue_type;
         queue_type* queuedElements;
         mutable typename queue_type::size_type queuePosition;
 
@@ -581,7 +581,7 @@ class inner
 {
     public:
         typedef int value_type;
-	typedef std::ptrdiff_t difference_type;
+    typedef std::ptrdiff_t difference_type;
         typedef int* pointer;
         typedef int& reference;
 
@@ -656,7 +656,7 @@ class inner
     typedef typename FunctorT::result_type result_type;
     public:
         typedef result_type value_type;
-	typedef std::ptrdiff_t difference_type;
+    typedef std::ptrdiff_t difference_type;
         typedef result_type* pointer;
         typedef result_type& reference;
 
@@ -769,7 +769,7 @@ class multi_pass
         typedef typename InputPolicy::template inner<InputT> IP;
 
     public:
-	typedef std::forward_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
         typedef typename IP::value_type value_type;
         typedef typename IP::difference_type difference_type;
         typedef typename IP::pointer pointer;
@@ -1211,7 +1211,7 @@ namespace impl {
     inline void mp_swap(T& t1, T& t2)
     {
         using std::swap;
-	    using boost::spirit::swap;
+        using boost::spirit::swap;
         swap(t1, t2);
     }
 }

@@ -36,7 +36,7 @@ namespace boost
 
     ///////////////////////////////////////////////////////////////////////////
     //
-    //	Parser categories
+    //  Parser categories
     //
     //      Helper template classes to distinguish different types of
     //      parsers. The following categories are the most generic. More

@@ -59,7 +59,7 @@ private:
 
     public:
         void push (tree_t const &target, const_tree_iterator_t iter);
-	    void adjust_forward();
+        void adjust_forward();
         void go_up();       // goes up, 'till the next parse_node is found
         void go_down();     // goes down, 'till a leaf node is found
 
@@ -80,11 +80,11 @@ public:
     parse_tree_iterator& operator++();
     parse_tree_iterator operator++(int);
 
-	bool operator==(tree_iterator_t const &rhs) const;
-	bool operator!=(tree_iterator_t const &rhs) const;
+    bool operator==(tree_iterator_t const &rhs) const;
+    bool operator!=(tree_iterator_t const &rhs) const;
 
-	bool operator==(parse_tree_iterator const &rhs) const;
-	bool operator!=(parse_tree_iterator const &rhs) const;
+    bool operator==(parse_tree_iterator const &rhs) const;
+    bool operator!=(parse_tree_iterator const &rhs) const;
 
 private:
     node_stack nodes;

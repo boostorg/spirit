@@ -93,8 +93,8 @@ inline chset<CharT>::chset(anychar_parser arg)
 {
     ptr->set(
         std::numeric_limits<CharT>::min(),
-	    std::numeric_limits<CharT>::max()
-	);
+        std::numeric_limits<CharT>::max()
+    );
 }
 
 template <typename CharT>
@@ -138,8 +138,8 @@ chset<CharT>::operator=(anychar_parser rhs)
     impl::detach_clear(ptr);
     ptr->set(
         std::numeric_limits<CharT>::min(),
-	    std::numeric_limits<CharT>::max()
-	);
+        std::numeric_limits<CharT>::max()
+    );
     return *this;
 }
 
