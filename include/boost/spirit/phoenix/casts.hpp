@@ -195,6 +195,16 @@ const_cast_(actor<BaseAT> const& a)
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
+struct construct_l_0 {
+    typedef T result_type;
+
+    T operator()() const {
+        return T();
+    }
+};
+
+
+template <typename T>
 struct construct_l {
 
     template <
@@ -824,7 +834,7 @@ struct construct_15 {
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename TupleT>
-struct composite0_result<construct_l<T>, TupleT> {
+struct composite0_result<construct_l_0<T>, TupleT> {
 
     typedef T type;
 };
@@ -988,13 +998,13 @@ struct composite15_result<construct_l<T>, TupleT,
 
 //////////////////////////////////
 template <typename T>
-inline typename impl::make_composite<construct_l<T> >::type
+inline typename impl::make_composite<construct_l_0<T> >::type
 construct_()
 {
-    typedef impl::make_composite<construct_l<T> > make_composite_t;
+    typedef impl::make_composite<construct_l_0<T> > make_composite_t;
 
     return make_composite_t::type(
-        make_composite_t::composite_type(construct_l<T>()));
+        make_composite_t::composite_type(construct_l_0<T>()));
 }
 
 //////////////////////////////////
