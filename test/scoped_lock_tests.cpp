@@ -1,11 +1,13 @@
 /*=============================================================================
-  Copyright (C) 2003 Martin Wille
+    Spirit V1.5.2
+    Copyright (C) 2003 Martin Wille
+    http://spirit.sourceforge.net/
 
-  Permission to copy, use, modify, sell and distribute this software
-  is granted provided this copyright notice appears in all copies.
-  This software is provided "as is" without express or implied
-  warranty, and with no claim as to its suitability for any purpose.
- =============================================================================*/
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 
 // Nota bene: the actual locking is _not_ tested here!
 

@@ -1,3 +1,13 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2003 Martin Wille
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 // vi:ts=4:sw=4:et
 // Tests for spirit::for_p
 // [13-Jan-2003]
@@ -108,7 +118,7 @@ test_for
         cout << "<error>";
     else
         cout << '"' << input_matched << '"';
-   
+
     cout << "     " << iterations_performed << " of "
          << iterations_desired << " iterations\n";
 }

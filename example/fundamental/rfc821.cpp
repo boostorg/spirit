@@ -1,3 +1,13 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2002-2003 Martijn W. van der Lee
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  RFC821-compliant SMTP e-mail address parser

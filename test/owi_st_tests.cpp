@@ -1,3 +1,13 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2002-2003 Martin Wille
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 // vim:ts=4:sw=4:et
 
 #undef BOOST_SPIRIT_THREADSAFE
@@ -22,7 +32,7 @@ main()
     std::cout << "\n";
     std::cout << "/////////////////////////////////////////////////////////\n";
     std::cout << "\n";
-    
+
     class1 *c1o1 = new class1;
     class1 *c1o2 = new class1;
     class1 *c1o3 = new class1;

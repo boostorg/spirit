@@ -1,3 +1,14 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2002-2003 Hartmut Kaiser
+    Copyright (c) 2002 Martin Wille
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 // vim:ts=4:sw=4:et
 //
@@ -44,7 +55,7 @@
 using namespace boost::spirit;
 using namespace std;
 
-namespace {   
+namespace {
     long triple(long val)
     {
         return 3*val;
@@ -54,7 +65,7 @@ namespace {
     // actions
     //
     struct emit_constant
-    { 
+    {
         emit_constant(string const &text)
             : msg(text)
         {}
@@ -96,13 +107,13 @@ namespace {
         }
 
     private:
-        
+
         boost::function<long (long)> modifier;
     };
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-//  The grammar 'conversion_grammar' serves as a working horse for match based 
+//  The grammar 'conversion_grammar' serves as a working horse for match based
 //  text conversion. It does the following:
 //
 //      - converts the word "class" into the word "struct"
@@ -152,7 +163,7 @@ struct conversion_grammar
 
 int
 main()
-{   
+{
     //  this would print "struct foo {}; foo bar[9];":
     //  parse("class foo {}; foo bar[3];", conversion_grammar());
 

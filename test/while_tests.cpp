@@ -1,3 +1,12 @@
+/*=============================================================================
+    Phoenix V1.0
+    Copyright (c) 2002-2003 Martin Wille
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+==============================================================================*/
 // vi:ts=4:sw=4:et
 // Tests for boost::spirit::while_p
 // [28-Dec-2002]

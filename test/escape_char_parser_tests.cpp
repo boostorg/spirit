@@ -1,4 +1,14 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2001-2003 Daniel Nuffer
+    Copyright (c) 2001-2003 Hartmut Kaiser
+    http://spirit.sourceforge.net/
 
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/escape_char.hpp>
 
@@ -88,7 +98,7 @@ main()
     assert(parse("\\377", lex_escape_ch_p[assign(c)]).full);
     assert(c == '\377');
 #endif
-    
+
     // test out of range hex escape
     assert(!parse("\\xFFF", lex_escape_ch_p[assign(c)]).hit);
 
@@ -148,7 +158,7 @@ main()
     //assert(lex_escape_ch_p[assign(wc)].parse(str, end));
     assert(wc == std::numeric_limits<wchar_t>::max());
 
-    sprintf(octmax, "\\%o", (unsigned int)std::numeric_limits<wchar_t>::max() 
+    sprintf(octmax, "\\%o", (unsigned int)std::numeric_limits<wchar_t>::max()
             + 1);
     assert(!parse(octmax, wlep[assign(wc)]).hit);
 
@@ -158,7 +168,7 @@ main()
     assert(parse(hexmax, wlep[assign(wc)]).full);
     assert(wc == std::numeric_limits<wchar_t>::max());
 
-    sprintf(hexmax, "\\x%x", (unsigned int)std::numeric_limits<wchar_t>::max() 
+    sprintf(hexmax, "\\x%x", (unsigned int)std::numeric_limits<wchar_t>::max()
             + 1);
     assert(!parse(hexmax, wlep[assign(wc)]).hit);
 

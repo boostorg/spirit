@@ -1,3 +1,14 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2001-2003 Joel de Guzman
+    Copyright (c) 2001-2003 Hartmut Kaiser
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 #include "boost/spirit/core.hpp"
 #include <iostream>
 #include <assert.h>

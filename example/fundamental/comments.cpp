@@ -1,3 +1,13 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2001-2003 Hartmut Kaiser
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  This example shows:
@@ -9,7 +19,7 @@
 //  3.  Parsing tagged data with the help of the confix_parser but the semantic
 //      action is directly attached to the body sequence parser
 //
-///////////////////////////////////////////////////////////////////////////////  
+///////////////////////////////////////////////////////////////////////////////
 
 #include <string>
 #include <iostream>
@@ -75,21 +85,21 @@ int main ()
 
     rule<> cpp_comment;
 
-    cpp_comment = 
+    cpp_comment =
             comment_p("/*", "*/")           // rule for C-comments
         |   comment_p("//")                 // rule for C++ comments
         ;
 
     std::string comment_c;
     parse_info<> result;
-    
+
     result = parse (pCComment, cpp_comment[actor_string(comment_c)]);
-    if (result.hit) 
+    if (result.hit)
     {
         cout << "Parsed C-comment successfully!" << endl;
         cout << "Matched (" << (int)comment_c.size() << ") characters: ";
         cout << "\"" << comment_c << "\"" << endl;
-    } 
+    }
     else
     {
         cout << "Failed to parse C/C++-comment!" << endl;
@@ -122,12 +132,12 @@ int main ()
     std::string comment_pascal;
 
     result = parse (pPComment, pascal_comment[actor_string(comment_pascal)]);
-    if (result.hit) 
+    if (result.hit)
     {
         cout << "Parsed PASCAL-comment successfully!" << endl;
         cout << "Matched (" << (int)comment_pascal.size() << ") characters: ";
         cout << "\"" << comment_pascal << "\"" << endl;
-    } 
+    }
     else
     {
         cout << "Failed to parse PASCAL-comment!" << endl;
@@ -146,47 +156,47 @@ int main ()
     open_tag =
             str_p("<b>")
         ;
-        
-    body_text = 
+
+    body_text =
             anychar_p
         ;
 
     close_tag =
             str_p("</b>")
         ;
-        
-    html_tag = 
+
+    html_tag =
             confix_p (open_tag, (*body_text)[actor_string(body)], close_tag)
         ;
 
     char const* pTag = "<b>Body text</b>";
 
     result = parse (pTag, html_tag);
-    if (result.hit) 
+    if (result.hit)
     {
         cout << "Parsed HTML snippet \"<b>Body text</b>\" successfully "
             "(with re-attached actor)!" << endl;
         cout << "Found body (" << (int)body.size() << " characters): ";
         cout << "\"" << body << "\"" << endl;
-    } 
+    }
     else
     {
-        cout << "Failed to parse HTML snippet (with re-attached actor)!" 
+        cout << "Failed to parse HTML snippet (with re-attached actor)!"
             << endl;
     }
     cout << endl;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  3.  Parsing tagged data with the help of the confix_parser but the 
-//      semantic action is directly attached to the body sequence parser 
+//  3.  Parsing tagged data with the help of the confix_parser but the
+//      semantic action is directly attached to the body sequence parser
 //      (see comment in confix.hpp) and out of the usage of the 'direct()'
 //      construction function no automatic refactoring takes place.
 //
 //      As you can see, for successful parsing it is required to refactor the
 //      confix parser by hand. To see, how it fails, you can try the following:
 //
-//          html_tag_direct = 
+//          html_tag_direct =
 //              confix_p.direct(
 //                  str_p("<b>"),
 //                  (*body_text)[actor_string(bodydirect)],
@@ -202,7 +212,7 @@ int main ()
     rule<> html_tag_direct;
     std::string bodydirect;
 
-    html_tag_direct = 
+    html_tag_direct =
             confix_p.direct(
                 str_p("<b>"),
                 (*(body_text - str_p("</b>")))[actor_string(bodydirect)],
@@ -213,13 +223,13 @@ int main ()
     char const* pTagDirect = "<b>Body text</b>";
 
     result = parse (pTagDirect, html_tag_direct);
-    if (result.hit) 
+    if (result.hit)
     {
         cout << "Parsed HTML snippet \"<b>Body text</b>\" successfully "
             "(with direct actor)!" << endl;
         cout << "Found body (" << (int)bodydirect.size() << " characters): ";
         cout << "\"" << bodydirect << "\"" << endl;
-    } 
+    }
     else
     {
         cout << "Failed to parse HTML snippet (with direct actor)!" << endl;

@@ -1,7 +1,17 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2002-2003 Hartmut Kaiser
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//
 //  Traversal tests
-//  
+//
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
@@ -48,20 +58,20 @@ traverse_identity_tests()
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
             test_sequence1_t,
-            post_order::result<identity_transform, test_sequence1_t>::type 
+            post_order::result<identity_transform, test_sequence1_t>::type
         >::value
     ));
 
-    //  test (rough) runtime equality    
+    //  test (rough) runtime equality
     assert(
         parse(
-            "ab", 
+            "ab",
             post_order::traverse(identity_transform(), ch_p('a') >> 'b')
         ).full
     );
     assert(
         !parse(
-            "ba", 
+            "ba",
             post_order::traverse(identity_transform(), ch_p('a') >> 'b')
         ).hit
     );
@@ -69,9 +79,9 @@ traverse_identity_tests()
     ///////////////////////////////////////////////////////////////////////////
     assert(
         !parse(
-            "cba", 
+            "cba",
             post_order::traverse(
-                identity_transform(), 
+                identity_transform(),
                 ch_p('a') >> 'b' >> 'c'
             )
         ).hit
@@ -83,31 +93,31 @@ char c;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: ((a >> b) >> c) >> d
-    typedef 
+    typedef
         sequence<
             sequence<
                 sequence<
-                    kleene_star<chlit<> >, 
-                    action<chlit<>, assign_actor<char> > 
-                >, 
-                chlit<> 
-            >, 
-            optional<chlit<> > 
+                    kleene_star<chlit<> >,
+                    action<chlit<>, assign_actor<char> >
+                >,
+                chlit<>
+            >,
+            optional<chlit<> >
         > test_sequence2_t;
 
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
             test_sequence2_t,
-            post_order::result<identity_transform, test_sequence2_t>::type 
+            post_order::result<identity_transform, test_sequence2_t>::type
         >::value
     ));
 
     c = 0;
     assert(
         parse(
-            "aabcd", 
+            "aabcd",
             post_order::traverse(
-                identity_transform(), 
+                identity_transform(),
                 ((*ch_p('a') >> ch_p('b')[assign(c)]) >> 'c') >> !ch_p('d')
             )
         ).full
@@ -116,31 +126,31 @@ char c;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: (a >> (b >> c)) >> d
-    typedef 
+    typedef
         sequence<
             sequence<
-                kleene_star<chlit<> >,  
+                kleene_star<chlit<> >,
                 sequence<
                     action<chlit<>, assign_actor<char> >,
-                    chlit<> 
+                    chlit<>
                 >
             >,
-            optional<chlit<char> > 
+            optional<chlit<char> >
         > test_sequence3_t;
 
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
             test_sequence3_t,
-            post_order::result<identity_transform, test_sequence3_t>::type 
+            post_order::result<identity_transform, test_sequence3_t>::type
         >::value
     ));
 
     c = 0;
     assert(
         parse(
-            "aabcd", 
+            "aabcd",
             post_order::traverse(
-                identity_transform(), 
+                identity_transform(),
                 (*ch_p('a') >> (ch_p('b')[assign(c)] >> 'c')) >> !ch_p('d')
             )
         ).full
@@ -149,31 +159,31 @@ char c;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: a >> (b >> (c >> d))
-    typedef 
+    typedef
         sequence<
             kleene_star<chlit<> >,
             sequence<
                 action<chlit<>, assign_actor<char> >,
                 sequence<
-                    chlit<>, 
-                    optional<chlit<> > 
-                > 
-            > 
+                    chlit<>,
+                    optional<chlit<> >
+                >
+            >
         > test_sequence4_t;
 
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
             test_sequence4_t,
-            post_order::result<identity_transform, test_sequence4_t>::type 
+            post_order::result<identity_transform, test_sequence4_t>::type
         >::value
     ));
 
     c = 0;
     assert(
         parse(
-            "aabcd", 
+            "aabcd",
             post_order::traverse(
-                identity_transform(), 
+                identity_transform(),
                 *ch_p('a') >> (ch_p('b')[assign(c)] >> ('c' >> !ch_p('d')))
             )
         ).full
@@ -188,25 +198,25 @@ char c;
             sequence<
                 sequence<
                     action<chlit<>, assign_actor<char> >,
-                    chlit<> 
+                    chlit<>
                 >,
-                optional<chlit<> > 
-            > 
+                optional<chlit<> >
+            >
         > test_sequence5_t;
 
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
             test_sequence5_t,
-            post_order::result<identity_transform, test_sequence5_t>::type 
+            post_order::result<identity_transform, test_sequence5_t>::type
         >::value
     ));
 
     c = 0;
     assert(
         parse(
-            "aabcd", 
+            "aabcd",
             post_order::traverse(
-                identity_transform(), 
+                identity_transform(),
                 *ch_p('a') >> ((ch_p('b')[assign(c)] >> 'c') >> !ch_p('d'))
             )
         ).full
@@ -219,27 +229,27 @@ char c;
         sequence<
             sequence<
                 kleene_star<chlit<> >,
-                action<chlit<>, assign_actor<char> > 
+                action<chlit<>, assign_actor<char> >
             >,
             sequence<
                 chlit<>,
-                optional<chlit<> > 
-            > 
+                optional<chlit<> >
+            >
         > test_sequence6_t;
 
     BOOST_STATIC_ASSERT((
         ::boost::is_same<
             test_sequence6_t,
-            post_order::result<identity_transform, test_sequence6_t>::type 
+            post_order::result<identity_transform, test_sequence6_t>::type
         >::value
     ));
 
     c = 0;
     assert(
         parse(
-            "aabcd", 
+            "aabcd",
             post_order::traverse(
-                identity_transform(), 
+                identity_transform(),
                 (*ch_p('a') >> ch_p('b')[assign(c)]) >> ('c' >> !ch_p('d'))
             )
         ).full
@@ -253,27 +263,27 @@ char c;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-class trace_identity_transform 
+class trace_identity_transform
 :   public transform_policies<trace_identity_transform> {
 
 public:
     typedef trace_identity_transform self_t;
     typedef transform_policies<trace_identity_transform> base_t;
-    
+
     template <typename ParserT, typename EnvT>
     typename parser_traversal_plain_result<self_t, ParserT, EnvT>::type
     generate_plain(ParserT const &parser_, EnvT const &env) const
     {
         OSSTREAM strout;
-        strout 
-            << EnvT::node 
-                << ": plain (" 
-                << EnvT::level << ", " 
-                << EnvT::index 
+        strout
+            << EnvT::node
+                << ": plain ("
+                << EnvT::level << ", "
+                << EnvT::index
                 << "): "
             << parser_name(parser_);
         traces.push_back(GETSTRING(strout));
-            
+
         return this->base_t::generate_plain(parser_, env);
     }
 
@@ -283,9 +293,9 @@ public:
         EnvT const &env) const
     {
         OSSTREAM strout;
-        strout 
-            << EnvT::node << ": unary (" 
-                << EnvT::level 
+        strout
+            << EnvT::node << ": unary ("
+                << EnvT::level
                 << "): "
             << parser_name(unary_);
         traces.push_back(GETSTRING(strout));
@@ -299,8 +309,8 @@ public:
         EnvT const &env) const
     {
         OSSTREAM strout;
-        strout 
-            << EnvT::node << ": action(" 
+        strout
+            << EnvT::node << ": action("
                 << EnvT::level
                 << "): "
             << parser_name(action_);
@@ -311,17 +321,17 @@ public:
 
     template <typename BinaryT, typename LeftT, typename RightT, typename EnvT>
     typename parser_traversal_binary_result<self_t, BinaryT, LeftT, RightT, EnvT>::type
-    generate_binary(BinaryT const &binary_, LeftT const& left_, 
+    generate_binary(BinaryT const &binary_, LeftT const& left_,
         RightT const& right_, EnvT const &env) const
     {
         OSSTREAM strout;
-        strout 
-            << EnvT::node << ": binary(" 
+        strout
+            << EnvT::node << ": binary("
                 << EnvT::level
                 << "): "
             << parser_name(binary_);
         traces.push_back(GETSTRING(strout));
-        
+
         return this->base_t::generate_binary(binary_, left_, right_, env);
     }
 
@@ -342,7 +352,7 @@ trace_identity_transform trace_vector;
 
 // The following two re-find loops ensure, that both string arrays contain the
 // same entries, only their order may differ. The differences in the trace
-// string order is based on the different parameter evaluation order as it is 
+// string order is based on the different parameter evaluation order as it is
 // implemented by different compilers.
 
 // re-find all trace strings in the array of expected strings
@@ -350,14 +360,14 @@ std::vector<std::string>::const_iterator it = trace_vector.get_output().begin();
 std::vector<std::string>::const_iterator end = trace_vector.get_output().end();
 
     assert(cnt == trace_vector.get_output().size());
-    for (/**/;  it != end; ++it) 
+    for (/**/;  it != end; ++it)
     {
-        if (std::find(first, first + cnt, *it) == first + cnt) 
+        if (std::find(first, first + cnt, *it) == first + cnt)
             cerr << "node in question: " << *it << endl;
 
         assert(std::find(first, first + cnt, *it) != first + cnt);
     }
-    
+
 // re-find all expected strings in the vector of trace strings
 std::vector<std::string>::const_iterator begin = trace_vector.get_output().begin();
 char const *expected = first[0];
@@ -381,12 +391,12 @@ const char *test_result1[] = {
         "1: plain (1, 1): chlit('b')",
         "2: binary(0): sequence[chlit('a'), chlit('b')]",
     };
-    
+
     post_order_trace_test(
         ch_p('a') >> 'b',
         test_result1, _countof(test_result1)
     );
-    
+
 char c = 0;
 
 // test: ((a >> b) >> c) >> d
@@ -421,7 +431,7 @@ const char *test_result3[] = {
         "8: unary (1): optional[chlit('d')]",
         "9: binary(0): sequence[sequence[kleene_star[chlit('a')], sequence[action[chlit('b')], chlit('c')]], optional[chlit('d')]]",
     };
-    
+
     post_order_trace_test(
         (*ch_p('a') >> (ch_p('b')[assign(c)] >> 'c')) >> !ch_p('d'),
         test_result3, _countof(test_result3)
@@ -440,7 +450,7 @@ const char *test_result4[] = {
         "8: binary(1): sequence[action[chlit('b')], sequence[chlit('c'), optional[chlit('d')]]]",
         "9: binary(0): sequence[kleene_star[chlit('a')], sequence[action[chlit('b')], sequence[chlit('c'), optional[chlit('d')]]]]",
     };
-    
+
     post_order_trace_test(
         *ch_p('a') >> (ch_p('b')[assign(c)] >> ('c' >> !ch_p('d'))),
         test_result4, _countof(test_result4)
@@ -459,7 +469,7 @@ const char *test_result5[] = {
         "8: binary(1): sequence[sequence[action[chlit('b')], chlit('c')], optional[chlit('d')]]",
         "9: binary(0): sequence[kleene_star[chlit('a')], sequence[sequence[action[chlit('b')], chlit('c')], optional[chlit('d')]]]",
     };
-    
+
     post_order_trace_test(
         *ch_p('a') >> ((ch_p('b')[assign(c)] >> 'c') >> !ch_p('d')),
         test_result5, _countof(test_result5)
@@ -478,7 +488,7 @@ const char *test_result6[] = {
         "8: binary(1): sequence[chlit('c'), optional[chlit('d')]]",
         "9: binary(0): sequence[sequence[kleene_star[chlit('a')], action[chlit('b')]], sequence[chlit('c'), optional[chlit('d')]]]",
     };
-    
+
     post_order_trace_test(
         (*ch_p('a') >> ch_p('b')[assign(c)]) >> ('c' >> !ch_p('d')),
         test_result6, _countof(test_result6)
@@ -495,7 +505,7 @@ main()
 {
     traverse_identity_tests();
     traverse_trace_tests();
-    
+
     cout << "Tests concluded successfully\n";
     return 0;
 }

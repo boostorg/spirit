@@ -1,3 +1,13 @@
+/*=============================================================================
+    Spirit V1.5.2
+    Copyright (c) 2001-2003 Daniel Nuffer
+    http://spirit.sourceforge.net/
+
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
+=============================================================================*/
 #include "boost/spirit/core.hpp"
 #include "boost/spirit/tree/parse_tree.hpp"
 
@@ -25,7 +35,7 @@ typedef rule<scanner_t> rule_t;
 rule_t expression, term, factor, integer;
 
 ////////////////////////////////////////////////////////////////////////////
-// Here's the function prototypes that we'll use.  One function for each 
+// Here's the function prototypes that we'll use.  One function for each
 // grammar rule.
 long evaluate(const tree_parse_info<>& info);
 long eval_expression(iter_t const& i);
@@ -49,7 +59,7 @@ long eval_expression(iter_t const& i)
     long lhs = eval_term(chi);
     for (++chi; chi != i->children.end(); ++chi)
     {
-        // next node points to the operator.  The text of the operator is 
+        // next node points to the operator.  The text of the operator is
         // stored in value (a vector<char>)
         char op = *(chi->value.begin());
         ++chi;

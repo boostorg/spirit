@@ -1,11 +1,12 @@
 /*=============================================================================
     Phoenix V1.0
-    Copyright (c) 2001-2002 Joel de Guzman
+    Copyright (c) 2001-2003 Joel de Guzman
+    Copyright (c) 2001-2003 Hartmut Kaiser
 
-    Permission to copy, use, modify, sell and distribute this software
-    is granted provided this copyright notice appears in all copies.
-    This software is provided "as is" without express or implied
-    warranty, and with no claim as to its suitability for any purpose.
+    Permission to copy, use, modify, sell and distribute this software is
+    granted provided this copyright notice appears in all copies. This
+    software is provided "as is" without express or implied warranty, and
+    with no claim as to its suitability for any purpose.
 ==============================================================================*/
 
 #ifndef PHOENIX_CASTS_HPP
