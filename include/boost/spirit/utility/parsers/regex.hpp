@@ -44,6 +44,7 @@
 #include <boost/spirit/meta/as_parser.hpp>
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/utility/parsers/impl/regex.ipp>
+#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -69,7 +70,7 @@ struct rxstrlit : public parser<rxstrlit<CharT> > {
     //  forward iterators do not work here.
         typedef typename ScannerT::iterator_t iterator_t;
         typedef
-            typename std::iterator_traits<iterator_t>::iterator_category
+            typename boost::detail::iterator_traits<iterator_t>::iterator_category
             iterator_category;
 
         BOOST_STATIC_ASSERT((

@@ -17,6 +17,7 @@
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/core/nil.hpp>  // for nil_t
+#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 namespace boost { namespace spirit {
 
@@ -108,7 +109,7 @@ template <typename MainIterT, typename ForwardIterT, typename PositionT>
 struct position_iterator_generator
 {
 private:
-    typedef std::iterator_traits<ForwardIterT> traits;
+    typedef boost::detail::iterator_traits<ForwardIterT> traits;
     typedef typename traits::value_type value_type;
     typedef typename traits::iterator_category iter_category_t;
 

@@ -20,6 +20,7 @@
 #include <boost/iterator.hpp>
 #include "fixed_size_queue.hpp"
 #include <boost/spirit/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
+#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 namespace boost { namespace spirit {
 
@@ -486,16 +487,16 @@ class inner
 {
     public:
         typedef
-            typename std::iterator_traits<InputT>::value_type
+            typename boost::detail::iterator_traits<InputT>::value_type
             value_type;
         typedef
-            typename std::iterator_traits<InputT>::difference_type
+            typename boost::detail::iterator_traits<InputT>::difference_type
             difference_type;
         typedef
-            typename std::iterator_traits<InputT>::pointer
+            typename boost::detail::iterator_traits<InputT>::pointer
             pointer;
         typedef
-            typename std::iterator_traits<InputT>::reference
+            typename boost::detail::iterator_traits<InputT>::reference
             reference;
 
     protected:
@@ -528,7 +529,7 @@ class inner
         }
 
         typedef
-            typename std::iterator_traits<InputT>::value_type
+            typename boost::detail::iterator_traits<InputT>::value_type
             value_t;
         void swap(inner& x)
         {

@@ -13,6 +13,7 @@
 #include <boost/ref.hpp>
 #include <boost/call_traits.hpp>
 #include <boost/spirit/core.hpp>
+#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
     (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
@@ -200,7 +201,7 @@ operator<<(std::ostream& o, node_iter_data<IteratorT, ValueT> const& n)
 {
     o << "(id = " << n.id() << " text = \"";
     typedef
-        typename std::iterator_traits<IteratorT>::value_type
+        typename boost::detail::iterator_traits<IteratorT>::value_type
         iterator_t;
     std::copy(n.begin(), n.end(), std::ostream_iterator<iterator_t>(o));
     o << "\" is_root = " << n.is_root()
@@ -214,7 +215,7 @@ template <typename IteratorT = char const*, typename ValueT = nil_t>
 struct node_val_data
 {
     typedef
-        typename std::iterator_traits<IteratorT>::value_type
+        typename boost::detail::iterator_traits<IteratorT>::value_type
         value_type;
     typedef std::vector<value_type> container_t;
     typedef typename container_t::iterator iterator_t;
@@ -323,7 +324,7 @@ operator<<(std::ostream& o, node_val_data<IteratorT, ValueT> const& n)
 {
     o << "(id = " << n.id() << " text = \"";
     typedef
-        typename std::iterator_traits<IteratorT>::value_type
+        typename boost::detail::iterator_traits<IteratorT>::value_type
         iterator_t;
     std::copy(n.begin(), n.end(), std::ostream_iterator<iterator_t>(o));
     o << "\" is_root = " << n.is_root()

@@ -13,6 +13,7 @@
 #include <boost/config.hpp>
 #include <boost/spirit/core/match.hpp>
 #include <boost/spirit/core/non_terminal/parser_id.hpp>
+#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 namespace boost { namespace spirit
 {
@@ -214,9 +215,9 @@ namespace boost { namespace spirit
         typedef IteratorT iterator_t;
         typedef PoliciesT policies_t;
 
-        typedef typename std::
+        typedef typename boost::detail::
             iterator_traits<IteratorT>::value_type value_t;
-        typedef typename std::
+        typedef typename boost::detail::
             iterator_traits<IteratorT>::reference ref_t;
         typedef typename boost::
             call_traits<IteratorT>::param_type iter_param_t;
