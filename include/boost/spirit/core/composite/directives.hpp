@@ -374,7 +374,7 @@ namespace boost { namespace spirit {
 
             if (l || r)
             {
-                if (l.length() < r.length())
+                if (l.length() < r.length() && l || !r)
                 {
                     scan.first = save;
                     return l;
