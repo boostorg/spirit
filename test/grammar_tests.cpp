@@ -13,6 +13,7 @@
 using namespace std;
 
 //#define BOOST_SPIRIT_DEBUG
+#define BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/support/grammar_def.hpp>
 using namespace boost::spirit;
