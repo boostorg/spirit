@@ -6,6 +6,8 @@ See Copyright.txt for full copyright notices and acknowledgements.
 
 -------------------------------------------------------------------------------
 
+- Fixed a bug while expanding macros without any definition part (empty macros)
+
 Tue Feb 25 21:44:19     2003
 - Fixed the warnings emitted by gcc -Wall.
 - Fixed a bug in the cpp grammar, which causes to failing the recognition of 

@@ -58,6 +58,15 @@ namespace impl {
         case T_FLOATLIT:
          // avoid constructing universal characters (\u1234)
         case TOKEN_FROM_ID('\\', UnknownTokenType):
+        case T_COMPL_ALT:
+        case T_OR_ALT:
+        case T_AND_ALT:
+        case T_NOT_ALT:
+        case T_XOR_ALT:
+        case T_ANDASSIGN_ALT:
+        case T_ORASSIGN_ALT:
+        case T_XORASSIGN_ALT:
+        case T_NOTEQUAL_ALT:
             return would_form_universal_char(value);
         }
         return false;
@@ -166,12 +175,6 @@ public:
     bool must_insert(cpplexer::token_id current, std::string const &value)
     {
         using namespace cpplexer;
-        if (IS_CATEGORY(current, OperatorTokenType) && 
-            IS_CATEGORY(prev, OperatorTokenType))
-        {
-            return true;    // operators must be delimited always
-        }
-        
         switch (current) {
         case T_NONREPLACABLE_IDENTIFIER:
         case T_IDENTIFIER: 
@@ -181,9 +184,9 @@ public:
         case T_FLOATLIT:
             return impl::handle_floatlit(prev, beforeprev); 
             
-        case T_LEFTBRACE:
+        case T_LEFTBRACE_ALT:
             return impl::handle_alt_leftbrace(prev, beforeprev); 
-        case T_LEFTBRACKET:
+        case T_LEFTBRACKET_ALT:
             return impl::handle_alt_leftbracket(prev, beforeprev); 
         case T_DOT:
             return impl::handle_dot(prev, beforeprev); 
@@ -192,6 +195,51 @@ public:
         case T_NEWLINE:
             return impl::handle_newline(prev, beforeprev); 
 
+        case T_LEFTPAREN:
+        case T_RIGHTPAREN:
+        case T_LEFTBRACKET:
+        case T_RIGHTBRACKET:
+        case T_SEMICOLON:
+        case T_COMMA:
+        case T_COLON:
+            switch (prev) {
+            case T_LEFTPAREN:
+            case T_RIGHTPAREN:
+            case T_LEFTBRACKET:
+            case T_RIGHTBRACKET:
+            case T_LEFTBRACE:
+            case T_RIGHTBRACE:
+                return false;   // no insertion between parens/brackets/braces
+
+            default:
+                break;
+            }        
+            break;
+            
+        case T_LEFTBRACE:
+        case T_RIGHTBRACE:
+            switch (prev) {
+            case T_LEFTPAREN:
+            case T_RIGHTPAREN:
+            case T_LEFTBRACKET:
+            case T_RIGHTBRACKET:
+            case T_LEFTBRACE:
+            case T_RIGHTBRACE:
+            case T_SEMICOLON:
+            case T_COMMA:
+            case T_COLON:
+                return false;   // no insertion between parens/brackets/braces
+
+            case T_QUESTION_MARK:
+                if (T_QUESTION_MARK == beforeprev)
+                    return true;
+                break;
+                
+            default:
+                break;
+            }
+            break;
+                            
         case T_MINUS:
         case T_MINUSMINUS:
         case T_MINUSASSIGN:
@@ -202,13 +250,31 @@ public:
         case T_DIVIDE:
         case T_DIVIDEASSIGN:
         case T_CHARLIT:
-        case T_LEFTPAREN:
-        case T_RIGHTPAREN:
         case T_NOT:
         case T_NOTEQUAL:
             if (T_QUESTION_MARK == prev && T_QUESTION_MARK == beforeprev)
                 return true;    // ??{op}
             break;
+
+        case T_COMPL_ALT:
+        case T_OR_ALT:
+        case T_AND_ALT:
+        case T_NOT_ALT:
+        case T_XOR_ALT:
+        case T_ANDASSIGN_ALT:
+        case T_ORASSIGN_ALT:
+        case T_XORASSIGN_ALT:
+        case T_NOTEQUAL_ALT:
+            if (T_IDENTIFIER == prev || T_NONREPLACABLE_IDENTIFIER == prev)
+                return true;
+            break;
+        }
+
+    // else, handle operators separately
+        if (IS_CATEGORY(current, OperatorTokenType) && 
+            IS_CATEGORY(prev, OperatorTokenType))
+        {
+            return true;    // operators must be delimited always
         }
         return false;
     }

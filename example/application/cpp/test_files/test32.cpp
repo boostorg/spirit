@@ -15,9 +15,13 @@
 // Tests, if macro expansion eats up follow up tokens under certain conditions
 // (which it shouldn't).
 
-#define SCAN(x)
+BEGINNING OF THE FILE
+
+#define SCAN(x) x
 
 #define BUG BUG_2
 #define BUG_2
 
-SCAN(BUG) 1 2 3 4 5	// expands to  1 2 3 4 5
+SCAN(BUG) 1 2 3 4 5
+
+END OF THE FILE

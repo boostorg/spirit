@@ -57,6 +57,17 @@
 #define CPP_PREPROCESS_PRAGMA_BODY
 
 ///////////////////////////////////////////////////////////////////////////////
+//  Allow to return an empty line in place of recognized preprocessor 
+//  directives. If this constant is not defined, then for recognized 
+//  preprocessor directives is returned no token at all. This allows to make 
+//  the overall output more condensed
+//
+//  Undefining the following will return a single newline token in place of a
+//  recognized preprocessor directive
+//
+#define CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES
+
+///////////////////////////////////////////////////////////////////////////////
 // Decide, which C++ lexer to use (choose one!)
 //
 //#define USE_SLEX_CPP_LEXER         // use the SLex based C++ lexer

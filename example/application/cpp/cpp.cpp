@@ -168,13 +168,33 @@ file_position current_position;
     // analyze the input file
     context_t::iterator_t first = ctx.begin();
     context_t::iterator_t last = ctx.end();
-            
+#if !defined(CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES)
+    bool is_first_token = true;
+    file_position prev_position;
+#endif // !defined(CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES)
+
         while (first != last) {
         // print out the string representation of this token (skip comments)
             using namespace cpplexer;
             
+#if !defined(CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES)
+        // if recognized directives have to be eaten completely by the
+        // pp-iterator, we probably have to emit #line directives
+            prev_position = current_position;
+            current_position = (*first).get_position();
+            if (current_position.file != prev_position.file ||
+                current_position.line > prev_position.line+1)
+            {
+            // we have to emit a #line statement, because of internally skipped
+            // newlines
+                cout << "#line " << current_position.line << " \""
+                     << current_position.file << "\"" << endl;
+            }
+#else
         // store last known good position
             current_position = (*first).get_position();
+#endif // !defined(CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES)
+
 
         token_id id = token_id(*first);
 

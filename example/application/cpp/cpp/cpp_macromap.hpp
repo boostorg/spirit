@@ -468,9 +468,11 @@ macromap<TokenT>::expand_tokensequence_worker(
 
     // ignore placeholder tokens
         if (T_PLACEHOLDER == id) {
+        TokenT placeholder = *first;
+        
             ++first;
             if (first == last)
-                return act_token = TokenT();
+                return act_token = placeholder;
             id = token_id(*first);
         }
             

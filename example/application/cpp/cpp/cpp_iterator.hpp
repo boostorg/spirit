@@ -210,12 +210,18 @@ bool returned_from_include = false;
             seen_newline = false;
 
             if (was_seen_newline && pp_directive()) {
-            // a pp directive was found, return the corresponding eol only
+            // a pp directive was found
                 seen_newline = true;
+                
+#if defined(CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES)
+            // return the corresponding eol only, if requested
                 whitespace.shift_tokens(T_NEWLINE);  // whitespace controller
                 return act_token = result_type(T_NEWLINE, 
                     typename result_type::string_t("\n"), 
                     cpp_grammar_t::pos_of_newline);
+#endif // defined(CPP_RETURN_EMPTY_LINES_FOR_DIRECTIVES)
+            // else loop to the next token to analyze
+            // ...
             }
             else if (ctx.get_if_block_status()) {
             // preprocess this token, eat up more, if appropriate, return 
