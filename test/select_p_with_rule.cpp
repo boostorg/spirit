@@ -80,9 +80,10 @@ int main(int argc, char* argv[])
  
     if (pi.full) {
         cout << "Test concluded successful" << endl;
+        return 0;
     } 
     else {
         BOOST_SPIRIT_ASSERT(false);     // Test fails
+        return -1;
     }
-    return 0;
 }
