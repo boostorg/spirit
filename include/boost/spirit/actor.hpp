@@ -104,6 +104,7 @@
 #include <boost/spirit/actor/push_front_actor.hpp>
 #include <boost/spirit/actor/erase_actor.hpp>
 #include <boost/spirit/actor/insert_key_actor.hpp>
+#include <boost/spirit/actor/insert_at_actor.hpp>
 #include <boost/spirit/actor/assign_key_actor.hpp>
 #include <boost/spirit/actor/swap_actor.hpp>
 
