@@ -216,7 +216,7 @@ namespace boost { namespace spirit {
                 else if (ch == np->value) // => go middle!
                 {
                     // Matching the null character is not allowed.
-                    if (scan.at_end() || np->value == 0)
+                    if (np->value == 0)
                     {
                         result.data = np->middle.data;
                         if (result.data)
