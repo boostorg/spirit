@@ -72,7 +72,6 @@ namespace boost { namespace fusion
         template <typename Tuple>
         struct impl : tuple_detail::end_traits_impl<Tuple> {};
     };
-
 }}
 
 #endif

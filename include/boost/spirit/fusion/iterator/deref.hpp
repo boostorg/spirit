@@ -37,7 +37,6 @@ namespace boost { namespace fusion
             template impl<Iterator>::apply(
                 static_cast<Iterator const&>(i));
     }
-
 }}
 
 #endif

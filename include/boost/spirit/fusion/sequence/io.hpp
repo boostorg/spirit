@@ -36,7 +36,6 @@ namespace boost { namespace fusion
         detail::read_sequence(is, static_cast<Sequence&>(seq));
         return is;
     }
-
 }}
 
 #endif

@@ -42,6 +42,6 @@ namespace boost { namespace fusion
 #undef BOOST_FUSION_AS_TUPLE_ELEMENT
 #undef FUSION_MAKE_TUPLE
 
-}} // namespace boost::fusion
+}}
 
 #endif

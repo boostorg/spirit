@@ -36,6 +36,6 @@ namespace boost { namespace fusion
             template impl<Iterator>::apply(i);
     }
 
-}} // namespace boost::fusion
+}}
 
 #endif

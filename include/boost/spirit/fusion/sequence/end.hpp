@@ -46,7 +46,6 @@ namespace boost { namespace fusion
             template impl<Sequence>::apply(
                 static_cast<Sequence&>(seq));
     }
-
 }}
 
 #endif

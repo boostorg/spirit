@@ -30,6 +30,6 @@ namespace boost { namespace fusion
     template <typename T>
     struct is_tuple : is_base_and_derived<sequence_root, T> {};
 
-}} // namespace boost::fusion
+}}
 
 #endif

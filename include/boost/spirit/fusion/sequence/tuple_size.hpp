@@ -33,6 +33,6 @@ namespace boost { namespace fusion
         : tuple_size_traits<FUSION_GET_TAG(Tuple)>::template impl<Tuple>
     {};
 
-}} // namespace boost::fusion
+}}
 
 #endif

@@ -53,6 +53,6 @@ namespace boost { namespace fusion
 #undef FUSION_REFERENCE_TYPE
 #undef FUSION_TIE
 
-}} // namespace boost::fusion
+}}
 
 #endif

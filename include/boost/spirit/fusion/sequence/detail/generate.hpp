@@ -12,8 +12,10 @@
 #include <boost/spirit/fusion/iterator/value_of.hpp>
 #include <boost/spirit/fusion/iterator/next.hpp>
 #include <boost/spirit/fusion/iterator/equal_to.hpp>
-#include <boost/preprocessor/repetition/enum_shifted.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
+#include <boost/preprocessor/arithmetic/inc.hpp>
+#include <boost/preprocessor/arithmetic/dec.hpp>
 #include <boost/mpl/apply_if.hpp>
 #include <boost/mpl/identity.hpp>
 
@@ -22,9 +24,9 @@
         BOOST_PP_CAT(T, n), Last>::type
 
 #define FUSION_NEXT_ITERATOR(z, n, data)                                        \
-    typename BOOST_PP_CAT(T, n) =                                               \
-        typename checked_next_iterator<                                         \
-            BOOST_PP_CAT(T, BOOST_PP_DEC(n)), Last>::type
+    typedef typename checked_next_iterator<                                     \
+        BOOST_PP_CAT(T, n), Last>::type                                         \
+    BOOST_PP_CAT(T, BOOST_PP_INC(n));
 
 namespace boost { namespace fusion { namespace detail
 {
@@ -52,14 +54,12 @@ namespace boost { namespace fusion { namespace detail
         type;
     };
 
-    template <
-        typename First
-      , typename Last
-      , typename T0 = First
-      , BOOST_PP_ENUM_SHIFTED(FUSION_MAX_TUPLE_SIZE, FUSION_NEXT_ITERATOR, _)
-    >
+    template <typename First, typename Last>
     struct result_of_generate
     {
+        typedef First T0;
+        BOOST_PP_REPEAT(
+            BOOST_PP_DEC(FUSION_MAX_TUPLE_SIZE), FUSION_NEXT_ITERATOR, _)
         typedef tuple<BOOST_PP_ENUM(FUSION_MAX_TUPLE_SIZE
             , FUSION_DEREF_ITERATOR, _)> type;
     };

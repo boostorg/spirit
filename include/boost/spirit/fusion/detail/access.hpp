@@ -49,7 +49,6 @@ namespace boost { namespace fusion { namespace detail
             >::type
         type;
     };
-
 }}}
 
 #endif

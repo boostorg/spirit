@@ -40,7 +40,6 @@ namespace boost { namespace fusion
 
         tuple& t;
     };
-
 }}
 
 #endif

@@ -16,7 +16,10 @@ namespace boost { namespace fusion
     struct next_traits
     {
         template <typename Iterator>
-        struct impl {};
+        struct impl
+        {
+            typedef int type;
+        };
     };
 
     template <typename Iterator>
@@ -35,7 +38,6 @@ namespace boost { namespace fusion
         return next_traits<FUSION_GET_TAG(Iterator)>::
             template impl<Iterator>::apply(i);
     }
-
 }}
 
 #endif

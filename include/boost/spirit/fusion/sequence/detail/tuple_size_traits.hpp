@@ -22,6 +22,6 @@ namespace boost { namespace fusion
         struct impl : Tuple::size {};
     };
 
-}} // namespace boost::fusion
+}}
 
 #endif

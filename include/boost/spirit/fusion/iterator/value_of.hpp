@@ -16,7 +16,10 @@ namespace boost { namespace fusion
     struct value_traits
     {
         template <typename Iterator>
-        struct impl {};
+        struct impl
+        {
+            typedef int type;
+        };
     };
 
     template <typename Iterator>
@@ -27,7 +30,6 @@ namespace boost { namespace fusion
                 template impl<Iterator>::type
         type;
     };
-
-}} // namespace boost::fusion
+}}
 
 #endif

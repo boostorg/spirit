@@ -55,6 +55,19 @@ namespace boost { namespace fusion { namespace borland_only {
 # define FUSION_RETURN_DEFAULT_CONSTRUCTED return type()
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+//
+//  Borland does not like the T::value syntax. Instead, we use a metafunction
+//  get_value<T>::value. The explicit qualification (::boost::fusion::detail::)
+//  also makes Borland happy.
+//
+//  VC6/7 on the other hand chokes with ETI (early instantiation bug). So we
+//  forward the call to get_value<T>::value and fix the ETI bug there (see
+//  get_value below).
+//
+///////////////////////////////////////////////////////////////////////////////
+#if BOOST_WORKAROUND(__BORLANDC__, <= 0x551)                                    \
+    || BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
 namespace boost { namespace fusion { namespace detail
 {
     template <typename T>
@@ -66,27 +79,15 @@ namespace boost { namespace fusion { namespace detail
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
 
     // VC6 ETI (early template instantiation) bug workaround.
-
     template <>
     struct get_value<int>
     {
         BOOST_STATIC_CONSTANT(int, value = 0);
     };
 #endif
-
 }}}
+#endif
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Borland does not like the T::value syntax. Instead, we use a metafunction
-//  get_value<T>::value. The explicit qualification (::boost::fusion::detail::)
-//  also makes Borland happy.
-//
-//  VC6 on the other hand chokes with ETI (early instantiation bug). So we
-//  forward the call to get_value<T>::value and fix the ETI bug there (see
-//  get_value above).
-//
-///////////////////////////////////////////////////////////////////////////////
 #if BOOST_WORKAROUND(__BORLANDC__, <= 0x551)                                    \
     || BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
 # define FUSION_GET_VALUE(T) ::boost::fusion::detail::get_value<T>::value
@@ -124,13 +125,14 @@ namespace boost { namespace fusion { namespace detail
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  FUSION_MSVC_ETI_WRAPPER (VC6 only)
+//  FUSION_MSVC_ETI_WRAPPER (VC6 and VC7)
 //
-//  VC6 chokes with ETI (early instantiation bug) with typename T::name. So,
-//  we forward the call to get_name<T>::type and fix the ETI bug by providing
-//  a specialization for <int>.
+//  VC6/VC7 chokes with ETI (early instantiation bug) with typename T::name.
+//  So, we forward the call to get_name<T>::type and fix the ETI bug.
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+// VC6 ETI (early template instantiation) bug workaround.
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
 #define FUSION_MSVC_ETI_WRAPPER(name)                                           \
 namespace boost { namespace fusion { namespace detail                           \
@@ -141,7 +143,6 @@ namespace boost { namespace fusion { namespace detail                           
         typedef typename T::name type;                                          \
     };                                                                          \
                                                                                 \
-    /* VC6 ETI (early template instantiation) bug workaround. */                \
     template <>                                                                 \
     struct BOOST_PP_CAT(get_, name)<int>                                        \
     {                                                                           \
@@ -150,12 +151,69 @@ namespace boost { namespace fusion { namespace detail                           
 }}}
 #endif
 
+//  is_msvc_70_ETI_arg: Detect a VC7 ETI arg
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1300)
+namespace boost { namespace fusion { namespace detail
+{
+    struct int_convertible_
+    {
+        int_convertible_(int);
+    };
+
+    template< typename T >
+    struct is_msvc_70_ETI_arg
+    {
+        typedef char (&no_tag)[1];
+        typedef char (&yes_tag)[2];
+
+        static no_tag test(...);
+        static yes_tag test(int_convertible_);
+        static T get();
+
+        BOOST_STATIC_CONSTANT(bool, value =
+              sizeof(test(get())) == sizeof(yes_tag)
+            );
+    };
+}}}
+#endif
+
+// VC7 ETI (early template instantiation) bug workaround.
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1300)
+#define FUSION_MSVC_ETI_WRAPPER(name)                                           \
+namespace boost { namespace fusion { namespace detail                           \
+{                                                                               \
+    template <bool>                                                             \
+    struct BOOST_PP_CAT(get_impl_, name)                                        \
+    {                                                                           \
+        template <typename T>                                                   \
+        struct result                                                           \
+        {                                                                       \
+            typedef int type;                                                   \
+        };                                                                      \
+    };                                                                          \
+                                                                                \
+    struct BOOST_PP_CAT(get_impl_, name)<false>                                 \
+    {                                                                           \
+        template <typename T>                                                   \
+        struct result                                                           \
+        {                                                                       \
+            typedef typename T::name type;                                      \
+        };                                                                      \
+    };                                                                          \
+                                                                                \
+    template <typename T>                                                       \
+    struct BOOST_PP_CAT(get_, name)                                             \
+        : BOOST_PP_CAT(get_impl_, name)<is_msvc_70_ETI_arg<T>::value>           \
+            ::template result<T> {};                                            \
+}}}
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  T::tag wrapper
 //
 ///////////////////////////////////////////////////////////////////////////////
-#if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
 FUSION_MSVC_ETI_WRAPPER(tag)
 # define FUSION_GET_TAG(T) ::boost::fusion::detail::get_tag<T>::type
 #else
@@ -167,7 +225,7 @@ FUSION_MSVC_ETI_WRAPPER(tag)
 //  T::type wrapper
 //
 ///////////////////////////////////////////////////////////////////////////////
-#if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
 FUSION_MSVC_ETI_WRAPPER(type)
 # define FUSION_GET_TYPE(T) ::boost::fusion::detail::get_type<T>::type
 #else

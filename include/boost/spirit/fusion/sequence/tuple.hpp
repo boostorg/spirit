@@ -64,7 +64,6 @@ namespace boost { namespace fusion
         base_type& base() { return *this; }
         base_type const& base() const { return *this; }
     };
-
 }}
 
 #endif

@@ -84,7 +84,6 @@ namespace boost { namespace fusion { namespace detail
             apply<BOOST_PP_ENUM_PARAMS(FUSION_MAX_TUPLE_SIZE, T)>::type
         type;
     };
-
 }}}
 
 #endif

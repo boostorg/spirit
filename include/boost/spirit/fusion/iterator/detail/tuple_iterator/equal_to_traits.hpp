@@ -55,7 +55,6 @@ namespace boost { namespace fusion
         template <typename I1, typename I2>
         struct impl : detail::tuple_iterator_equal_to<I1, I2> {};
     };
-
 }}
 
 #endif
