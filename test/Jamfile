@@ -191,6 +191,7 @@ else
         erase_at_test
         increment_test
         insert_key_test
+        insert_at_test
         push_back_test
         push_front_test
         swap_test

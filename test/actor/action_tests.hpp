@@ -21,6 +21,7 @@ void decrement_action_test();
 void erase_action_test();
 void increment_action_test();
 void insert_key_action_test();
+void insert_at_action_test();
 void push_back_action_test();
 void push_front_action_test();
 void swap_action_test();
