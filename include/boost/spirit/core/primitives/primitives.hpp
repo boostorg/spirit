@@ -123,6 +123,17 @@ namespace boost { namespace spirit {
         return chlit<CharT>(ch); 
     }
 
+    // This should take care of ch_p("a") "bugs"
+    template <typename CharT, std::size_t N>
+    inline chlit<CharT>
+    ch_p(CharT const (& str)[N])
+    {
+        //  ch_p's argument should be a single character or a null-terminated
+        //  string with a single character
+        BOOST_STATIC_ASSERT(N < 3);
+        return chlit<CharT>(str[0]);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  range class
@@ -248,6 +259,14 @@ namespace boost { namespace spirit {
     str_p(IteratorT first, IteratorT last)
     { 
         return strlit<IteratorT>(first, last); 
+    }
+
+    // This should take care of str_p('a') "bugs"
+    template <typename CharT>
+    inline chlit<CharT>
+    str_p(CharT ch)
+    {
+        return chlit<CharT>(ch);
     }
 
     ///////////////////////////////////////////////////////////////////////////
