@@ -343,7 +343,7 @@
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
         </span><span class=keyword>static typename </span><span class=identifier>parser_result</span><span class=special>&lt;</span><span class=identifier>chlit</span><span class=special>&lt;&gt;, </span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class=identifier>type
         parse_exp</span><span class=special>(</span><span class=identifier>ScannerT</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>)
-        { </span><span class=keyword>return </span><span class=identifier>nocase_d</span><span class=special>[</span><span class=literal>'e'</span><span class=special>].</span><span class=identifier>parse</span><span class=special>(</span><span class=identifier>scan</span><span class=special>); }
+        { </span><span class=keyword>return </span><span class=identifier>as_lower_d</span><span class=special>[</span><span class=literal>'e'</span><span class=special>].</span><span class=identifier>parse</span><span class=special>(</span><span class=identifier>scan</span><span class=special>); }
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
         </span><span class=keyword>static typename </span><span class=identifier>parser_result</span><span class=special>&lt;</span><span class=keyword>int</span><span class=identifier>_parser_t</span><span class=special>, </span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class=identifier>type

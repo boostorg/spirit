@@ -179,8 +179,8 @@ namespace impl {
 
         static rule<ScannerT> escape
                 =   oct_parser_t()
-                |   nocase_d['x'] >> hex_parser_t()
-                |   (anychar_p - nocase_d['x'] - oct_parser_t())
+                |   as_lower_d['x'] >> hex_parser_t()
+                |   (anychar_p - as_lower_d['x'] - oct_parser_t())
                 ;
 
             BOOST_SPIRIT_DEBUG_TRACE_NODE(escape,

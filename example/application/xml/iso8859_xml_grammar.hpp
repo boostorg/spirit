@@ -123,7 +123,7 @@ struct xml_grammar : public boost::spirit::grammar<xml_grammar>
             ;
 
             PITarget =
-                Name - (nocase_d["xml"])
+                Name - (as_lower_d["xml"])
             ;
 
             CDSect =

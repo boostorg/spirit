@@ -121,6 +121,29 @@ namespace boost { namespace spirit {
 
     ///////////////////////////////////////////////////////////////////////////
     //
+    //  lexeme_scanner
+    //
+    //      Given a Scanner, return the correct scanner type that
+    //      the lexeme_d uses. Scanner is assumed to be a phrase
+    //      level scanner (see skipper.hpp)
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename ScannerT>
+    struct lexeme_scanner
+    {
+        typedef scanner_policies<
+            no_skipper_iteration_policy<
+                typename ScannerT::iteration_policy_t>,
+            typename ScannerT::match_policy_t,
+            typename ScannerT::action_policy_t
+        > policies_t;
+
+        typedef typename
+            rebind_scanner_policies<ScannerT, policies_t>::type type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
     //  inhibit_case_iteration_policy class
     //
     ///////////////////////////////////////////////////////////////////////////
@@ -237,7 +260,34 @@ namespace boost { namespace spirit {
     };
 
     //////////////////////////////////
+    //  Depracated
     const inhibit_case_parser_gen nocase_d = inhibit_case_parser_gen();
+
+    //  Preferred syntax
+    const inhibit_case_parser_gen as_lower_d = inhibit_case_parser_gen();
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  as_lower_scanner
+    //
+    //      Given a Scanner, return the correct scanner type that
+    //      the as_lower_d uses. Scanner is assumed to be a scanner
+    //      with an inhibit_case_iteration_policy.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename ScannerT>
+    struct as_lower_scanner
+    {
+        typedef scanner_policies<
+            inhibit_case_iteration_policy<
+                typename ScannerT::iteration_policy_t>,
+            typename ScannerT::match_policy_t,
+            typename ScannerT::action_policy_t
+        > policies_t;
+
+        typedef typename
+            rebind_scanner_policies<ScannerT, policies_t>::type type;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     //

@@ -68,7 +68,7 @@ struct rfcdate_parser : public boost::spirit::grammar<rfcdate_parser, rfcdate_cl
                 (
                     date_time = !(    lexeme_d
                                       [
-                                          nocase_d
+                                          as_lower_d
                                           [
                                               wday_p [ASSIGN(tm_wday, arg1)]
                                           ]
@@ -82,7 +82,7 @@ struct rfcdate_parser : public boost::spirit::grammar<rfcdate_parser, rfcdate_cl
                     date      =  uint_p [ASSIGN(tm_mday, arg1)]
                                  >> lexeme_d
                                     [
-                                        nocase_d
+                                        as_lower_d
                                         [
                                             month_p [ASSIGN(tm_mon, arg1)]
                                         ]
@@ -117,7 +117,7 @@ struct rfcdate_parser : public boost::spirit::grammar<rfcdate_parser, rfcdate_cl
                                                ]
                               | lexeme_d
                                 [
-                                    nocase_d
+                                    as_lower_d
                                     [
                                         timezone_p [ASSIGN(tzoffset, arg1)]
                                     ]

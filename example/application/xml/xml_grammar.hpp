@@ -223,7 +223,7 @@ struct xml_grammar : public boost::spirit::grammar<xml_grammar>
                 ];
 
             PITarget =
-                Name - (nocase_d[L"xml"]);
+                Name - (as_lower_d[L"xml"]);
 
             CDSect =
                 L"<![CDATA[" >> CData >> L"]]>";

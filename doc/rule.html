@@ -76,10 +76,21 @@
     </span><span class=identifier>b </span><span class=special>= </span><span class=identifier>c </span><span class=special>| </span><span class=identifier>a</span><span class=special>;</span></font></code></pre>
 <h3>Recursion</h3>
 <p>The right-hand side of a rule may reference other rules, including itself. 
-  The limitation is that direct or indirect <a href="faq.html#left_recursion">left 
-  recursion</a> is not allowed (this is an unchecked run-time error that results 
-  in an infinite loop). This is typical of top-down parsers. Example:</p>
+  The limitation is that direct or indirect left recursion is not allowed (this 
+  is an unchecked run-time error that results in an infinite loop). This is typical 
+  of top-down parsers. Example:</p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=identifier>a </span><span class=special>= </span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b</span><span class=special>; </span><span class=comment>// infinite loop!</span></font></code></pre>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/lens.gif" width="15" height="16"> <b>What 
+      is left recursion?<br>
+      </b><br>
+      Left recursion happens when you have a rule that calls itself before anything 
+      else. A top-down parser will go into an infinite loop when this happens. 
+      See the <a href="faq.html#left_recursion">FAQ</a> for details on how to 
+      eliminate left recursion.</td>
+  </tr>
+</table>
 <h3>Undefined rules</h3>
 <p>An undefined rule matches nothing and is semantically equivalent to <tt>nothing_p</tt>.</p>
 <h3>Redeclarations</h3>

@@ -70,7 +70,7 @@ struct floatlit_grammar :
             
             float_lit
                 =   real_p[self.val = arg1]
-                    >> !nocase_d
+                    >> !as_lower_d
                         [
                             (ch_p('f') || ch_p('l')) | (ch_p('l') || ch_p('f'))
                         ]

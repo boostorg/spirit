@@ -233,7 +233,7 @@
 <h2>Directives and Actions</h2>
 <p>Directives inherit the the function/functor interface of the subject it is
   enclosing. Example:</p>
-<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>nocase_d</span><span class=special>[</span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'x'</span><span class=special>)][</span><span class=identifier>f</span><span class=special>]</span></font></code></pre>
+<pre><code><font color="#000000"><span class=special>    </span><span class=identifier>as_lower_d</span><span class=special>[</span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'x'</span><span class=special>)][</span><span class=identifier>f</span><span class=special>]</span></font></code></pre>
 <p>Here, the functor <tt>f</tt> expects the signature <tt>void operator()(char
   ch) const</tt>, assuming that the iterator used is a <tt>char const*</tt>.</p>
 <h2>Templatized Functors</h2>

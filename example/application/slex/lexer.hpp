@@ -2002,7 +2002,7 @@ public:
                     ch_p('\\')
                     >>  (
                             oct_parser_t()
-                        |   nocase_d['x'] >> hex_parser_t()
+                        |   as_lower_d['x'] >> hex_parser_t()
                         |   (anychar_p - chset<>('\n'))
                         )
                 ;

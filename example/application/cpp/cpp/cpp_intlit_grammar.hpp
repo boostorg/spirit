@@ -77,7 +77,7 @@ struct intlit_grammar :
                         (    ch_p('0')[self.val = 0] >> (hex_lit | oct_lit)
                         |   dec_lit
                         )
-                        >> !nocase_d[(ch_p('u') || 'l') | (ch_p('l') || 'u')]
+                        >> !as_lower_d[(ch_p('u') || 'l') | (ch_p('l') || 'u')]
                     ,
 
                     hex_lit =

@@ -61,7 +61,7 @@ struct polynomial_grammar :
 
 
             IDENT =
-                nocase_d
+                as_lower_d
                 [
                     lexeme_d
                     [
@@ -82,7 +82,7 @@ struct polynomial_grammar :
                 ]
             ;
 
-            VAR = nocase_d[ lexeme_d[ alpha_p ] ] ;
+            VAR = as_lower_d[ lexeme_d[ alpha_p ] ] ;
 
 
             //-----------------------------------------------------------------

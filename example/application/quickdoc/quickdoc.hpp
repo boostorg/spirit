@@ -349,21 +349,21 @@ namespace quickdoc
                     ;
 
                 string_
-                    =   !nocase_d['l'] >> confix_p('"', *c_escape_ch_p, '"')
+                    =   !as_lower_d['l'] >> confix_p('"', *c_escape_ch_p, '"')
                         >> *space_p
                     ;
 
                 literal
-                    =   !nocase_d['l'] >> confix_p('\'', *c_escape_ch_p, '\'')
+                    =   !as_lower_d['l'] >> confix_p('\'', *c_escape_ch_p, '\'')
                         >> *space_p
                     ;
 
                 number
                     =   (   real_p
-                        |   nocase_d["0x"] >> hex_p
+                        |   as_lower_d["0x"] >> hex_p
                         |   '0' >> oct_p
                         )
-                        >>  *nocase_d[chset_p("ldfu")]
+                        >>  *as_lower_d[chset_p("ldfu")]
                         >>  *space_p
                     ;
 

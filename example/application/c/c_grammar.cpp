@@ -229,9 +229,9 @@ struct c_grammar : public grammar<c_grammar>
             INT_CONSTANT_HEX
                 = lexeme_d[
                     chlit<>('0')
-                    >> nocase_d[chlit<>('x')]
+                    >> as_lower_d[chlit<>('x')]
                     >> +xdigit_p
-                    >> !nocase_d[chlit<>('l') | chlit<>('u')]
+                    >> !as_lower_d[chlit<>('l') | chlit<>('u')]
                 ]
                 ;
 
@@ -239,14 +239,14 @@ struct c_grammar : public grammar<c_grammar>
                 = lexeme_d[
                     chlit<>('0')
                     >> +range<>('0', '7')
-                    >> !nocase_d[chlit<>('l') | chlit<>('u')]
+                    >> !as_lower_d[chlit<>('l') | chlit<>('u')]
                 ]
                 ;
 
             INT_CONSTANT_DEC
                 = lexeme_d[
                     +digit_p
-                    >> !nocase_d[chlit<>('l') | chlit<>('u')]
+                    >> !as_lower_d[chlit<>('l') | chlit<>('u')]
                 ]
                 ;
 
@@ -279,7 +279,7 @@ struct c_grammar : public grammar<c_grammar>
                     >> (chlit<>('e') | chlit<>('E'))
                     >> !(chlit<>('+') | chlit<>('-'))
                     >> +digit_p
-                    >> !nocase_d[chlit<>('l') | chlit<>('f')]
+                    >> !as_lower_d[chlit<>('l') | chlit<>('f')]
                 ]
                 ;
 
@@ -292,7 +292,7 @@ struct c_grammar : public grammar<c_grammar>
                             >> !(chlit<>('+') | chlit<>('-'))
                             >> +digit_p
                         )
-                    >> !nocase_d[chlit<>('l') | chlit<>('f')]
+                    >> !as_lower_d[chlit<>('l') | chlit<>('f')]
                 ]
                 ;
 
@@ -305,7 +305,7 @@ struct c_grammar : public grammar<c_grammar>
                             >> !(chlit<>('+') | chlit<>('-'))
                             >> +digit_p
                         )
-                    >> !nocase_d[chlit<>('l') | chlit<>('f')]
+                    >> !as_lower_d[chlit<>('l') | chlit<>('f')]
                 ]
                 ;
 

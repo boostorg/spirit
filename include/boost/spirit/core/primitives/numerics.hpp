@@ -212,7 +212,7 @@ struct ureal_parser_policies
     template <typename ScannerT>
     static typename parser_result<chlit<>, ScannerT>::type
     parse_exp(ScannerT& scan)
-    { return nocase_d['e'].parse(scan); }
+    { return as_lower_d['e'].parse(scan); }
 
     template <typename ScannerT>
     static BOOST_SPIRIT_NUMP_RESULT(int_parser_t, ScannerT, T)

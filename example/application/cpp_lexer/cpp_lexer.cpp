@@ -181,14 +181,14 @@ namespace { // Private stuff.
                 main = (
                     lexeme_d[
                         (
-                            !(nocase_d[chlit<>('L')] [var(is_wchar) = true])
+                            !(as_lower_d[chlit<>('L')] [var(is_wchar) = true])
                          >> '\"'
                          >> *(str_p("\\\\") | "\\\"" | anychar_p - '\"' )
                         )
                         [self.result_ = construct_<std::string>(arg1, arg2)]
                      >> chlit<>('\"')
                     ] >> *lexeme_d[
-                        !nocase_d[chlit<>('L')] >> '\"'
+                        !as_lower_d[chlit<>('L')] >> '\"'
                      >> ( *( str_p("\\\\") | "\\\"" | anychar_p - '\"' ) )
                         [self.result_ += construct_<std::string>(arg1, arg2)]
                      >> chlit<>('\"')
@@ -216,7 +216,7 @@ namespace { // Private stuff.
                 main = (
                     lexeme_d[
                         (
-                            !(nocase_d[chlit<>('L')] [var(is_wchar) = true])
+                            !(as_lower_d[chlit<>('L')] [var(is_wchar) = true])
                          >> '\''
                          >> +(str_p("\\\\") | "\\\'" | anychar_p - '\'' )
                         )
@@ -257,7 +257,7 @@ namespace { // Private stuff.
 
                     hex_int =
                         lexeme_d[
-                            '0' >> nocase_d[chlit<>('x')]   // prefix
+                            '0' >> as_lower_d[chlit<>('x')]   // prefix
                          >> +xdigit_p                       // the number
                          >> suffix_part                     // suffix
                         ],
@@ -277,7 +277,7 @@ namespace { // Private stuff.
 
                     char_int = CHARACTER_LITERAL,
 
-                    suffix_part = !nocase_d[chlit<>('l') | chlit<>('u')]
+                    suffix_part = !as_lower_d[chlit<>('l') | chlit<>('u')]
                 );
             }
         };
@@ -308,7 +308,7 @@ namespace { // Private stuff.
                                     (chlit<>('.') >> *digit_p)
                                  || exponent_part
                                 )
-                            ) >> !nocase_d[chlit<>('l') | chlit<>('f')]
+                            ) >> !as_lower_d[chlit<>('l') | chlit<>('f')]
                         ]
                         [
                             self.result_ =
@@ -316,7 +316,7 @@ namespace { // Private stuff.
                         ],
 
                     exponent_part =
-                            nocase_d[chlit<>('e')]
+                            as_lower_d[chlit<>('e')]
                          >> !(chlit<>('+') | chlit<>('-')) >> +digit_p
                 );
             }

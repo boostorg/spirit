@@ -82,51 +82,51 @@ struct pascal_grammar : public grammar<pascal_grammar>
             //-----------------------------------------------------------------
             typedef inhibit_case<strlit<> > token_t;
 
-            token_t IN_         = nocase_d["in"];
-            token_t DIV         = nocase_d["div"];
-            token_t MOD         = nocase_d["mod"];
-            token_t AND         = nocase_d["and"];
-            token_t OR          = nocase_d["or"];
-            token_t NOT         = nocase_d["not"];
-            token_t NIL         = nocase_d["nil"];
-            token_t GOTO        = nocase_d["goto"];
-            token_t IF          = nocase_d["if"];
-            token_t THEN        = nocase_d["then"];
-            token_t ELSE        = nocase_d["else"];
-            token_t CASE        = nocase_d["case"];
-            token_t WHILE       = nocase_d["while"];
-            token_t REPEAT      = nocase_d["repeat"];
-            token_t UNTIL       = nocase_d["until"];
-            token_t FOR         = nocase_d["for"];
-            token_t DO          = nocase_d["do"];
-            token_t TO          = nocase_d["to"];
-            token_t DOWNTO      = nocase_d["downto"];
-            token_t WITH        = nocase_d["with"];
-            token_t PROGRAM     = nocase_d["program"];
-            token_t LABEL       = nocase_d["label"];
-            token_t CONST_      = nocase_d["const"];
-            token_t TYPE        = nocase_d["type"];
-            token_t CHAR        = nocase_d["char"];
-            token_t BOOLEAN     = nocase_d["boolean"];
-            token_t INTEGER     = nocase_d["integer"];
-            token_t REAL        = nocase_d["real"];
-            token_t PACKED_     = nocase_d["packed"];
-            token_t ARRAY       = nocase_d["array"];
-            token_t OF          = nocase_d["of"];
-            token_t RECORD      = nocase_d["record"];
-            token_t END         = nocase_d["end"];
-            token_t SET         = nocase_d["set"];
-            token_t FILE        = nocase_d["file"];
-            token_t VAR         = nocase_d["var"];
-            token_t PROCEDURE   = nocase_d["procedure"];
-            token_t FUNCTION    = nocase_d["function"];
-            token_t BEGIN       = nocase_d["begin"];
+            token_t IN_         = as_lower_d["in"];
+            token_t DIV         = as_lower_d["div"];
+            token_t MOD         = as_lower_d["mod"];
+            token_t AND         = as_lower_d["and"];
+            token_t OR          = as_lower_d["or"];
+            token_t NOT         = as_lower_d["not"];
+            token_t NIL         = as_lower_d["nil"];
+            token_t GOTO        = as_lower_d["goto"];
+            token_t IF          = as_lower_d["if"];
+            token_t THEN        = as_lower_d["then"];
+            token_t ELSE        = as_lower_d["else"];
+            token_t CASE        = as_lower_d["case"];
+            token_t WHILE       = as_lower_d["while"];
+            token_t REPEAT      = as_lower_d["repeat"];
+            token_t UNTIL       = as_lower_d["until"];
+            token_t FOR         = as_lower_d["for"];
+            token_t DO          = as_lower_d["do"];
+            token_t TO          = as_lower_d["to"];
+            token_t DOWNTO      = as_lower_d["downto"];
+            token_t WITH        = as_lower_d["with"];
+            token_t PROGRAM     = as_lower_d["program"];
+            token_t LABEL       = as_lower_d["label"];
+            token_t CONST_      = as_lower_d["const"];
+            token_t TYPE        = as_lower_d["type"];
+            token_t CHAR        = as_lower_d["char"];
+            token_t BOOLEAN     = as_lower_d["boolean"];
+            token_t INTEGER     = as_lower_d["integer"];
+            token_t REAL        = as_lower_d["real"];
+            token_t PACKED_     = as_lower_d["packed"];
+            token_t ARRAY       = as_lower_d["array"];
+            token_t OF          = as_lower_d["of"];
+            token_t RECORD      = as_lower_d["record"];
+            token_t END         = as_lower_d["end"];
+            token_t SET         = as_lower_d["set"];
+            token_t FILE        = as_lower_d["file"];
+            token_t VAR         = as_lower_d["var"];
+            token_t PROCEDURE   = as_lower_d["procedure"];
+            token_t FUNCTION    = as_lower_d["function"];
+            token_t BEGIN       = as_lower_d["begin"];
 
             //-----------------------------------------------------------------
             //  Start grammar definition
             //-----------------------------------------------------------------
             identifier
-                = nocase_d[
+                = as_lower_d[
                     lexeme_d[
                         (alpha_p >> *(alnum_p | '_'))
                         - (keywords >> anychar_p - (alnum_p | '_'))
@@ -194,7 +194,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
             unsignedNumber
                 =   lexeme_d[uint_p
                 >>  !('.' >> uint_p)
-                >>  !(nocase_d['e'] >> (ch_p('+') | '-') >> uint_p)]
+                >>  !(as_lower_d['e'] >> (ch_p('+') | '-') >> uint_p)]
                 ;
 
             unsignedInteger

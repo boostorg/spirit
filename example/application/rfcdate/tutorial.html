@@ -303,7 +303,7 @@ zone      = ch_p('+')  &gt;&gt;  uint4_p
           | ch_p('-')  &gt;&gt;  uint4_p
           | lexeme_d
             [
-                nocase_d
+                as_lower_d
                 [
                     timezone_p
                 ]
@@ -339,7 +339,7 @@ boost::spirit::parse(input, zone, boost::spirit::space_p);
 what we want.</p>
 
 <p>The second directive deployed is more obvious: <a href=
-"../../../doc/directives.html" target="_top"><tt>nocase_d</tt></a>
+"../../../doc/directives.html" target="_top"><tt>as_lower_d</tt></a>
 will turn the symbol parser case-insensitive matching-mode. Thus,
 the inputs &ldquo;GmT&rdquo; and &ldquo;gMt&rdquo; are
 equivalest.</p>
@@ -358,7 +358,7 @@ really straight-forward:</p>
 date      =  uint_p
              &gt;&gt; lexeme_d
                 [
-                    nocase_d
+                    as_lower_d
                     [
                         month_p
                     ]
@@ -451,7 +451,7 @@ struct rfcdate_parser : public boost::spirit::grammar&lt;rfcdate_parser&gt;
                 (
                     date_time = !(    lexeme_d
                                       [
-                                          nocase_d
+                                          as_lower_d
                                           [
                                               wday_p
                                           ]
@@ -465,7 +465,7 @@ struct rfcdate_parser : public boost::spirit::grammar&lt;rfcdate_parser&gt;
                     date      =  uint_p
                                  &gt;&gt; lexeme_d
                                     [
-                                        nocase_d
+                                        as_lower_d
                                         [
                                             month_p
                                         ]
@@ -492,7 +492,7 @@ struct rfcdate_parser : public boost::spirit::grammar&lt;rfcdate_parser&gt;
                               | ch_p('-')  &gt;&gt;  uint4_p
                               | lexeme_d
                                 [
-                                    nocase_d
+                                    as_lower_d
                                     [
                                         timezone_p
                                     ]
