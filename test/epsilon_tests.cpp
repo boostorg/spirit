@@ -9,7 +9,6 @@
 #if qDebug
 #define BOOST_SPIRIT_DEBUG
 #endif
-//#include <boost/spirit/core.hpp>
 #include <boost/spirit/core/composite/epsilon.hpp>
 #include <boost/ref.hpp>
 ////////////////////////////////////////////////////////////////////////////////
@@ -18,13 +17,13 @@ namespace local
 {
     template <typename T>
     struct var_wrapper
-        : public boost::reference_wrapper<T>
+        : public ::boost::reference_wrapper<T>
     {
-        explicit inline var_wrapper(T& t)
-            : boost::reference_wrapper<T>(t)
-        {}
+        typedef ::boost::reference_wrapper<T> parent;
 
-        inline T& operator()() const { return get(); }
+        explicit inline var_wrapper(T& t) : parent(t) {}
+
+        inline T& operator()() const { return parent::get(); }
     };
 
     template <typename T>
@@ -41,6 +40,7 @@ template<typename ParserT>
 void
 parse(char const *s, ParserT const &p, bool match)
 {
+    using namespace std;
     pi = boost::spirit::parse(s, s+strlen(s), p);
     if (match)
     {
