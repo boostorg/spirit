@@ -235,6 +235,7 @@ main()
 
     double  d;
 
+    assert(parse("1234", ureal_p[assign(d)]).full && d == 1234);        //  Good.
     assert(parse("1.2e3", ureal_p[assign(d)]).full && d == 1.2e3);      //  Good.
     assert(parse("1.2e-3", ureal_p[assign(d)]).full && d == 1.2e-3);    //  Good.
     assert(parse("1.e2", ureal_p[assign(d)]).full && d == 1.e2);        //  Good.
@@ -246,6 +247,7 @@ main()
     assert(!parse("1.2e", ureal_p).full);                               //  Bad! No exponent
     assert(!parse("-.3", ureal_p).full);                                //  Bad! Negative
 
+    assert(parse("-1234", real_p[assign(d)]).full && d == -1234);       //  Good.
     assert(parse("-1.2e3", real_p[assign(d)]).full && d == -1.2e3);     //  Good.
     assert(parse("+1.2e3", real_p[assign(d)]).full && d == 1.2e3);      //  Good.
     assert(parse("-0.1", real_p[assign(d)]).full && d == -0.1);         //  Good.
@@ -255,6 +257,12 @@ main()
     assert(parse("-2e3", real_p[assign(d)]).full && d == -2e3);         //  Good. No fraction
     assert(!parse("-e3", real_p).full);                                 //  Bad! No number
     assert(!parse("-1.2e", real_p).full);                               //  Bad! No exponent
+
+    assert(!parse("1234", strict_ureal_p[assign(d)]).full);             //  Bad. Strict real
+    assert(parse("1.2", strict_ureal_p[assign(d)]).full && d == 1.2);   //  Good.
+    assert(!parse("-1234", strict_real_p[assign(d)]).full);             //  Bad. Strict real
+    assert(parse("123.", strict_real_p[assign(d)]).full && d == 123);   //  Good.
+    assert(parse("3.E6", strict_real_p[assign(d)]).full && d == 3e6);   //  Good.
 
 //  Special thousands separated numbers
 

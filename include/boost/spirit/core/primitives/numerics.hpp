@@ -171,7 +171,6 @@ struct sign_parser : public parser<sign_parser>
     }
 };
 
-///////////////////////////////////////
 sign_parser const sign_p = sign_parser();
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -185,6 +184,7 @@ struct ureal_parser_policies
     // trailing dot policy suggested suggested by Gustavo Guerra
     BOOST_STATIC_CONSTANT(bool, allow_trailing_left_dot = true);
     BOOST_STATIC_CONSTANT(bool, allow_trailing_right_dot = true);
+    BOOST_STATIC_CONSTANT(bool, expect_dot = false);
 
     typedef uint_parser<T, 10, 1, -1>   uint_parser_t;
     typedef int_parser<T, 10, 1, -1>    int_parser_t;
@@ -220,7 +220,6 @@ struct ureal_parser_policies
     { return int_parser_t().parse(scan); }
 };
 
-//////////////////////////////////
 template <typename T>
 struct real_parser_policies : public ureal_parser_policies<T>
 {
@@ -271,6 +270,31 @@ real_parser<double, ureal_parser_policies<double> > const
 
 real_parser<double, real_parser_policies<double> > const
     real_p      = real_parser<double, real_parser_policies<double> >();
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//  strict reals (do not allow plain integers (no decimal point))
+//
+///////////////////////////////////////////////////////////////////////////////
+template <typename T>
+struct strict_ureal_parser_policies : public ureal_parser_policies<T>
+{
+    BOOST_STATIC_CONSTANT(bool, expect_dot = true);
+};
+
+template <typename T>
+struct strict_real_parser_policies : public real_parser_policies<T>
+{
+    BOOST_STATIC_CONSTANT(bool, expect_dot = true);
+};
+
+real_parser<double, strict_ureal_parser_policies<double> > const
+    strict_ureal_p
+        = real_parser<double, strict_ureal_parser_policies<double> >();
+
+real_parser<double, strict_real_parser_policies<double> > const
+    strict_real_p
+        = real_parser<double, strict_real_parser_policies<double> >();
 
 ///////////////////////////////////////////////////////////////////////////////
 }} // namespace boost::spirit

@@ -405,6 +405,7 @@ namespace boost { namespace spirit {
                 RT          n_match = RealPoliciesT::parse_n(scan);
                 T           n = n_match.value();
                 bool        got_a_number = n_match;
+                match<>     e_hit;
 
                 if (!got_a_number && !RealPoliciesT::allow_trailing_left_dot)
                      return scan.no_match();
@@ -435,17 +436,25 @@ namespace boost { namespace spirit {
                     else if (!got_a_number ||
                         !RealPoliciesT::allow_trailing_right_dot)
                         return scan.no_match();
+
+                    e_hit = RealPoliciesT::parse_exp(scan);
                 }
                 else
                 {
-                    if (!got_a_number)
-                        return scan.no_match();
                     //  We have reached a point where we
                     //  still haven't seen a number at all.
                     //  We return early with a no-match.
+                    if (!got_a_number)
+                        return scan.no_match();
+
+                    //  If we must expect a dot and we didn't see
+                    //  an exponent, return early with a no-match.
+                    e_hit = RealPoliciesT::parse_exp(scan);
+                    if (RealPoliciesT::expect_dot && !e_hit)
+                        return scan.no_match();
                 }
 
-                if (match<> e_hit = RealPoliciesT::parse_exp(scan))
+                if (e_hit)
                 {
                     //  We got the exponent prefix. Now we will try to parse the
                     //  actual exponent. It is an error if it is not there.
@@ -460,6 +469,7 @@ namespace boost { namespace spirit {
                         return scan.no_match();
                     }
                 }
+
                 return scan.create_match(count, n, save, scan.first);
             }
 
