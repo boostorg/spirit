@@ -96,7 +96,7 @@
       that are composed of other parsers which can in turn be a primitive or
       another composite. To illustrate, consider the Spirit expression:
     </p>
-    
+
 <pre><code><font color="#000000">    </font></code><code><span class="identifier">real_p</span> <span class=
 "special">&gt;&gt;</span> <span class="special">*(</span><span class=
 "literal">','</span> <span class="special">&gt;&gt;</span> <span class=
@@ -123,7 +123,7 @@
     <p>
       The expression:
     </p>
-    
+
 <pre><code><font color="#000000">    </font></code><span class=
      "literal">','</span> <span class="special">&gt;&gt;</span> <span class=
      "identifier">real_p</span>
@@ -156,7 +156,7 @@
     <p>
       The expression:
     </p>
-    
+
 <pre><code><font color="#000000">    </font></code><code><span class=
 "special">*(</span><span class="literal">','</span> <span class=
 "special">&gt;&gt;</span> <span class=
@@ -196,7 +196,7 @@
       calls the leftmost <tt>real_p</tt> parser. If successful, the
       <tt>kleene_star</tt> is called next. The <tt>kleene_star</tt> calls the
       inner <tt>sequence</tt> repeatedly in a loop until it fails to match, or
-      the input is exhausted. Inside, <tt>ch_p('x')</tt> and then
+      the input is exhausted. Inside, <tt>ch_p(',')</tt> and then
       <tt>real_p</tt> are called in sequence. The following diagram illustrates
       what is happening, somewhat reminiscent of Pascal syntax diagrams.
     </p>
@@ -287,7 +287,7 @@
     <p>
       Recall our example above:
     </p>
-    
+
 <pre><code><font color="#000000">    </font></code><code><span class=
 "identifier">real_p</span> <span class=
       "special">&gt;&gt;</span> <span class="special">*(</span><span class=
@@ -298,7 +298,7 @@
       By hooking a function (or functor) into the real_p parsers, we can
       extract the numbers from the input:
     </p>
-    
+
 <pre><code><font color="#000000">    </font></code><span class=
 "identifier">real_p</span><span class="special">[&amp;</span><span class=
 "identifier">f</span><span class="special">]</span> <span class=
@@ -314,14 +314,14 @@
         </td>
       </tr>
     </table>
-    
+
 <p> where <tt>f</tt> is a function that takes in a single argument. The <tt><span class="operators">[&amp;</span>f<span class=
-      "operators">]</span></tt> hooks the parser with the function such that when 
-  <tt>real_p</tt> recognizes a valid number, the function <tt>f</tt> is called. 
-  It is up to the function then to do what is appropriate. For example, it can 
-  stuff the numbers in a vector. Or perhaps, if the grammar is changed slightly 
-  by replacing <tt class="quotes">','</tt> with <tt class="quotes">'+'</tt>, then 
-  we have a primitive calculator that computes sums. The function <tt>f</tt> then 
+      "operators">]</span></tt> hooks the parser with the function such that when
+  <tt>real_p</tt> recognizes a valid number, the function <tt>f</tt> is called.
+  It is up to the function then to do what is appropriate. For example, it can
+  stuff the numbers in a vector. Or perhaps, if the grammar is changed slightly
+  by replacing <tt class="quotes">','</tt> with <tt class="quotes">'+'</tt>, then
+  we have a primitive calculator that computes sums. The function <tt>f</tt> then
   can then be made to add all incoming numbers.<br>
 </p>
 <table border="0">
@@ -348,7 +348,7 @@
       copy at http://www.boost.org/LICENSE_1_0.txt)</font>
     </p>
     <p>&nbsp;
-      
+
     </p>
   </body>
 </html>
