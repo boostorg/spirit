@@ -110,8 +110,12 @@ struct ast_tree_policy :
             container_t;
         typedef typename container_t::iterator cont_iterator_t;
         typedef typename NodeFactoryT::template factory<iterator_t> factory_t;
-        // only one node, so don't make a new level
-        if (m.trees.size() == 1)
+
+        if (m.trees.empty())
+        {
+            m = match_t(m.length(), factory_t::empty_node());
+        }
+        else if (m.trees.size() == 1)  // only one node, so don't make a new level
         {
             // set rule_id's.  There may have been multiple nodes created.
             // Because of root_node[] they may be left-most children of the top
