@@ -20,6 +20,12 @@ namespace boost { namespace fusion
     template <typename First, typename F>
     struct transform_view_iterator;
 
+    template <typename Tag>
+    struct begin_traits;
+
+    template <typename Tag>
+    struct end_traits;
+
     template <>
     struct begin_traits<transform_view_tag>
     {
