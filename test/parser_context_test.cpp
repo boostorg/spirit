@@ -26,7 +26,7 @@ void attr_parser_context_test()
 
 //-----------------------------------------------------------------------------
 
-test_suite* init_unit_test_suite(int argc, char* argv[])
+test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
 {
     test_suite* test = BOOST_TEST_SUITE("attr_parser_context test");
 

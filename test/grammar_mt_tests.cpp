@@ -56,7 +56,7 @@ struct simple : public boost::spirit::grammar<simple>
     template <typename ScannerT>
     struct definition
     {
-        definition(simple const &self)
+        definition(simple const& /*self*/)
         {
             top = boost::spirit::epsilon_p;
             boost::mutex::scoped_lock lock(simple_mutex);

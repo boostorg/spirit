@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/parsers/confix.hpp>
+#include <boost/spirit/utility/confix.hpp>
 #include <boost/test/included/unit_test_framework.hpp>
 
 using namespace boost;
@@ -52,7 +52,7 @@ void comment_nest_p_test()
     }
 }
 
-test_suite* init_unit_test_suite(int argc, char* argv[])
+test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
 {
     test_suite* test = BOOST_TEST_SUITE("confix tests");
 

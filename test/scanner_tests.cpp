@@ -23,7 +23,7 @@ using namespace boost::spirit;
 struct to_upper_iter_policy : public iteration_policy {
 
     char filter(char ch) const
-    { return toupper(ch); }
+    { return char(toupper(ch)); }
 };
 
 inline bool test_isspace(char c)

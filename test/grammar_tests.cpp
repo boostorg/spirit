@@ -15,7 +15,7 @@ using namespace std;
 //#define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE
 #include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/support/grammar_def.hpp>
+#include <boost/spirit/utility/grammar_def.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ struct num_list : public grammar<num_list>
     :   public grammar_def<rule<ScannerT>, same>
 #endif
     {
-        definition(num_list const& self)
+        definition(num_list const& /*self*/)
         {
             num = int_p;
             r = num >> *(',' >> num);
@@ -79,7 +79,7 @@ struct num_list_ex : public grammar<num_list_ex>
     :   public grammar_def<rule<ScannerT>, same, int_parser<int, 10, 1, -1> >
 #endif
     {
-        definition(num_list_ex const& self)
+        definition(num_list_ex const& /*self*/)
         {
             num = integer;
             r = num >> *(',' >> num);

@@ -14,7 +14,7 @@
 #include "impl/util.ipp"
 #include "impl/sstream.hpp"
 
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 using namespace std;
 using namespace boost::spirit;
@@ -48,7 +48,7 @@ namespace
         out << "\t";
 
         for (int i = '!'; i < '^'; i++)
-            if (a.test(i))
+            if (a.test(CharT(i)))
                 out << '*';
             else
                 out << " ";

@@ -255,7 +255,7 @@ void test_default_multi_pass()
             res << **mp3; // this should throw illegal_backtracking
             assert(0);
         }
-        catch (const boost::spirit::multi_pass_policies::illegal_backtracking& e)
+        catch (const boost::spirit::multi_pass_policies::illegal_backtracking& /*e*/)
         {
         }
         res << endl;
@@ -618,7 +618,7 @@ void test_first_owner_multi_pass()
             res << **mp3; // this should throw illegal_backtracking
             assert(0);
         }
-        catch (const boost::spirit::multi_pass_policies::illegal_backtracking& e)
+        catch (const boost::spirit::multi_pass_policies::illegal_backtracking& /*e*/)
         {
         }
         res << endl;

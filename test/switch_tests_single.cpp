@@ -41,7 +41,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_direct_single const &self)
+            definition(switch_grammar_direct_single const& /*self*/)
             {
                 r = switch_p [
                         case_p<'a'>(int_p)
@@ -59,7 +59,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_direct_default_single1 const &self)
+            definition(switch_grammar_direct_default_single1 const& /*self*/)
             {
                 r = switch_p [
                         default_p(str_p("default"))
@@ -77,7 +77,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_direct_default_single2 const &self)
+            definition(switch_grammar_direct_default_single2 const& /*self*/)
             {
                 r = switch_p [
                         default_p
@@ -97,7 +97,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_parser_single const &self)
+            definition(switch_grammar_parser_single const& /*self*/)
             {
                 r = switch_p(anychar_p) [
                         case_p<'a'>(int_p)
@@ -115,7 +115,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_parser_default_single1 const &self)
+            definition(switch_grammar_parser_default_single1 const& /*self*/)
             {
                 r = switch_p(anychar_p) [
                         default_p(str_p("default"))
@@ -133,7 +133,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_parser_default_single2 const &self)
+            definition(switch_grammar_parser_default_single2 const& /*self*/)
             {
                 r = switch_p(anychar_p) [
                         default_p
@@ -158,7 +158,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_actor_single const &self)
+            definition(switch_grammar_actor_single const& /*self*/)
             {
                 using phoenix::arg1;
                 r = select_p('a')[r.val = arg1] >>
@@ -179,7 +179,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_actor_default_single1 const &self)
+            definition(switch_grammar_actor_default_single1 const& /*self*/)
             {
                 using phoenix::arg1;
                 r = select_p('d')[r.val = arg1] >>
@@ -200,7 +200,7 @@ namespace test_grammars {
         template <typename ScannerT>
         struct definition 
         {
-            definition(switch_grammar_actor_default_single2 const &self)
+            definition(switch_grammar_actor_default_single2 const& /*self*/)
             {
                 using phoenix::arg1;
                 r = select_p('d')[r.val = arg1] >>

@@ -30,7 +30,7 @@ using namespace std;
 struct my_action
 {
     template <typename TreeT, typename IterT>
-    void operator()(TreeT& t, IterT begin, IterT end) const
+    void operator()(TreeT& /*t*/, IterT begin, IterT end) const
     {
         BOOST_TEST(*begin == '1');
         BOOST_TEST(*end == '2');
@@ -77,7 +77,7 @@ void bug_002()
 //  http://sourceforge.net/mailarchive/forum.php?thread_id=2008510&forum_id=25901
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 void bug_003()
 {
@@ -95,7 +95,7 @@ void bug_003()
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/limits.hpp>
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 void bug_004()
 {
@@ -163,7 +163,7 @@ void bug_005()
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/limits.hpp>
-#include <boost/spirit/utility/parsers/confix.hpp>
+#include <boost/spirit/utility/confix.hpp>
 
 void bug_006()
 {
@@ -196,7 +196,7 @@ void bug_007()
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/cstdlib.hpp>
-#include <boost/spirit/utility/parsers/chset.hpp>
+#include <boost/spirit/utility/chset.hpp>
 
 void sf_bug_718903()
 {
@@ -213,7 +213,7 @@ void sf_bug_718903()
 //  ?func=detail&aid=719322&group_id=28447&atid=393386
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/utility/parsers/impl/chset/basic_chset.hpp>
+#include <boost/spirit/utility/impl/chset/basic_chset.hpp>
 
 void sf_bug_719322()
 {

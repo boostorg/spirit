@@ -13,7 +13,7 @@ using namespace std;
 
 //#define BOOST_SPIRIT_DEBUG
 #include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/parsers/loops.hpp>
+#include <boost/spirit/utility/loops.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////
