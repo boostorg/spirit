@@ -7,7 +7,6 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include "action_tests.hpp"
-#include <boost/test/unit_test.hpp>
 
 boost::unit_test_framework::test_suite*
 init_unit_test_suite( int /*argc*/, char* /*argv*/[] )

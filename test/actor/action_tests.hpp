@@ -6,13 +6,9 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_XOR_ASSIGN_ACTOR_TEST_HPP
-#define BOOST_SPIRIT_XOR_ASSIGN_ACTOR_TEST_HPP
-
-namespace boost{ namespace unit_test_framework{
-    class test_suite;
-}
-}
+#ifndef BOOST_SPIRIT_ACTOR_TEST_HPP
+#define BOOST_SPIRIT_ACTOR_TEST_HPP
+#include <boost/test/unit_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Test suite for actors

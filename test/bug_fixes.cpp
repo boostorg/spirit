@@ -99,8 +99,8 @@ void bug_003()
 
 void bug_004()
 {
-    const char min = numeric_limits<char>::min();
-    const char max = numeric_limits<char>::max();
+    const char min = (numeric_limits<char>::min)();
+    const char max = (numeric_limits<char>::max)();
 
     {
         chset<> set(~range<>(min, max));
