@@ -13,7 +13,7 @@
 #define BOOST_SPIRIT_PRIMITIVES_IPP
 
 // This should eventually go to a config file.
-#if defined(_GNUC_) && (_GNUC_ < 3) && !defined(_STLPORT_VERSION)
+#if defined(__GNUC__) && (__GNUC__ < 3) && !defined(_STLPORT_VERSION)
 #  ifndef BOOST_SPIRIT_NO_CHAR_TRAITS
 #    define BOOST_SPIRIT_NO_CHAR_TRAITS
 #  endif
@@ -94,7 +94,7 @@ namespace boost { namespace spirit {
         static int to_int_type(char c)
         { return static_cast<unsigned char>(c); }
     };
-      
+
 #ifndef BOOST_NO_CWCHAR
 
     template<> struct char_traits<wchar_t>
@@ -105,7 +105,7 @@ namespace boost { namespace spirit {
     };
 
 #endif
-      
+
 #endif // BOOST_SPIRIT_NO_CHAR_TRAITS
 
     template <typename CharT>
