@@ -107,7 +107,7 @@ namespace boost { namespace spirit {
     template <typename CondT>
     struct while_parser_gen
     {
-        typedef typename ::boost::spirit::as_parser<CondT>::type condition_t;
+        typedef typename /*::boost::spirit::*/as_parser<CondT>::type condition_t;
 
         //////////////////////////////
         // constructor, saves the condition for use by operator[]
@@ -118,13 +118,13 @@ namespace boost { namespace spirit {
         template <typename ParserT>
         while_parser
         <
-            typename ::boost::spirit::as_parser<ParserT>::type,
+            typename /*::boost::spirit::*/as_parser<ParserT>::type,
             condition_t,
             false
         >
         operator[](ParserT const &subject) const
         {
-            typedef typename ::boost::spirit::as_parser<ParserT>::type parser_t;
+            typedef typename /*::boost::spirit::*/as_parser<ParserT>::type parser_t;
 
             typedef char assert_argument_must_be_a_parser
                 [::boost::spirit::is_parser<parser_t>::value];
@@ -165,12 +165,12 @@ namespace boost { namespace spirit {
         while_parser
         <
             ParserT,
-            typename ::boost::spirit::as_parser<CondT>::type,
+            typename /*::boost::spirit::*/as_parser<CondT>::type,
             true
         >
         while_p(CondT cond) const
         {
-            typedef typename ::boost::spirit::as_parser<CondT> cond_as_parser_t;
+            typedef typename /*::boost::spirit::*/as_parser<CondT> cond_as_parser_t;
             typedef typename cond_as_parser_t::type condition_t;
 
             return while_parser<ParserT, condition_t, true>
@@ -194,11 +194,11 @@ namespace boost { namespace spirit {
         template <typename ParserT>
         impl::do_while_parser_gen
         <
-            typename ::boost::spirit::as_parser<ParserT>::type
+            typename /*::boost::spirit::*/as_parser<ParserT>::type
         >
         operator[](ParserT const& body) const
         {
-            typedef typename ::boost::spirit::as_parser<ParserT>::type parser_t;
+            typedef typename /*::boost::spirit::*/as_parser<ParserT>::type parser_t;
 
             typedef char assert_argument_must_be_a_parser
                 [::boost::spirit::is_parser<parser_t>::value];

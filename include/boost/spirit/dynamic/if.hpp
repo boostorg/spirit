@@ -92,7 +92,7 @@ namespace boost { namespace spirit {
         if_else_parser
         <
             ParserT_true,
-            typename ::boost::spirit::as_parser<ParserT_false>::type,
+            typename /*::boost::spirit::*/as_parser<ParserT_false>::type,
             CondT
         >
         operator[](ParserT_false const& subject) const
@@ -169,7 +169,7 @@ namespace boost { namespace spirit {
         template <typename ParserT>
         if_parser
         <
-            typename ::boost::spirit::as_parser<ParserT>::type,
+            typename /*::boost::spirit::*/as_parser<ParserT>::type,
             condition_t
         >
         operator[](ParserT const& subject) const

@@ -159,7 +159,7 @@ namespace boost { namespace spirit
             for_parser
             <
                 InitF, cond_p, StepF,
-                typename ::boost::spirit::as_parser<ParserT>::type
+                typename /*::boost::spirit::*/as_parser<ParserT>::type
             >
             operator[](ParserT const &p) const
             {

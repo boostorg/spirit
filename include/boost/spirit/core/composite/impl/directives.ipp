@@ -170,7 +170,7 @@ namespace boost { namespace spirit {
             static char test_(alternative<A, B> const&);    // no implementation
             static int  test_(...);                         // no implementation
             enum { r = sizeof(char) == sizeof(test_(t())) };
-            typedef bool_t<r> value;
+            typedef mpl::bool_c<r> value;
         };
 
         template <typename T> struct select_to_longest;
@@ -187,14 +187,14 @@ namespace boost { namespace spirit {
         template <typename T>
         struct to_longest_generic
         {
-            typedef T const&    result_t;
-            typedef T           plain_t;
-            typedef false_t     choose_t;
+            typedef T const&        result_t;
+            typedef T               plain_t;
+            typedef mpl::false_c    choose_t;
         };
 
         template <typename T>
         inline T const&
-        to_longest_convert(T const& a, false_t)
+        to_longest_convert(T const& a, mpl::false_c)
         { return a; }
 
         template <typename T>
@@ -207,13 +207,13 @@ namespace boost { namespace spirit {
 
             typedef longest_alternative<a_t, b_t>   result_t;
 
-            typedef result_t plain_t;
-            typedef true_t choose_t;
+            typedef result_t    plain_t;
+            typedef mpl::true_c choose_t;
         };
 
         template <typename A, typename B>
         inline typename to_longest_alternative<alternative<A, B> >::result_t
-        to_longest_convert(alternative<A, B> const& alt, true_t)
+        to_longest_convert(alternative<A, B> const& alt, mpl::true_c)
         {
             typedef typename to_longest_alternative<
                 alternative<A, B> >::result_t result_t;
@@ -258,14 +258,14 @@ namespace boost { namespace spirit {
         template <typename T>
         struct to_shortest_generic
         {
-            typedef T const&    result_t;
-            typedef T           plain_t;
-            typedef false_t     choose_t;
+            typedef T const&        result_t;
+            typedef T               plain_t;
+            typedef mpl::false_c    choose_t;
         };
 
         template <typename T>
         inline T const&
-        to_shortest_convert(T const& a, false_t) { return a; }
+        to_shortest_convert(T const& a, mpl::false_c) { return a; }
 
         template <typename T>
         struct to_shortest_recursive
@@ -277,13 +277,13 @@ namespace boost { namespace spirit {
 
             typedef shortest_alternative<a_t, b_t>  result_t;
 
-            typedef result_t    plain_t;
-            typedef true_t      choose_t;
+            typedef result_t        plain_t;
+            typedef mpl::true_c     choose_t;
         };
 
         template <typename A, typename B>
         inline typename to_shortest_alternative<alternative<A, B> >::result_t
-        to_shortest_convert(alternative<A, B> const& alt, true_t)
+        to_shortest_convert(alternative<A, B> const& alt, mpl::true_c)
         {
             typedef typename to_shortest_alternative<
                 alternative<A, B> >::result_t result_t;
