@@ -21,7 +21,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="position_iterator.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="error_handling.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="error_handling.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
 <p>The top-down nature of Spirit makes the generated parser easy to micro- debug 
@@ -205,23 +205,33 @@ instead of a newline).</p>
   our rules. Notice how the first <tt>integer</tt> rule took &quot;1&quot;, the 
   first <tt>term</tt> rule took &quot;+&quot; and finally the second <tt>integer</tt> 
   rule took &quot;2&quot;.</p>
+<p>Please note the special meaning of the first characters appearing on the printed 
+  lines:</p>
+<ul>
+  <li>a single <span class="literal">'/'</span> starts a line containing the information 
+    about a successfully matched parser node (<tt>rule&lt;&gt;</tt>, <tt>grammar&lt;&gt;</tt> 
+    or <tt>subrule&lt;&gt;</tt>)</li>
+  <li>a single <span class="literal">'#'</span> starts a line containing the information 
+    about a failed parser node</li>
+  <li>a single <span class="literal">'^'</span> starts a line containing the first member (return value/synthesised 
+    attribute) of the closure of a successfully matched parser node.</li>
+</ul>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="position_iterator.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="error_handling.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="error_handling.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
-<p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>Copyright &copy; 
-  2003 Hartmut Kaiser<br>
+<p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
+  Copyright &copy; 2003 Hartmut Kaiser<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

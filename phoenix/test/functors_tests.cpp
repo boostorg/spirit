@@ -1,21 +1,20 @@
 /*=============================================================================
-    Phoenix V1.0
+    Phoenix v1.1
     Copyright (c) 2001-2003 Joel de Guzman
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
 #include <cmath>
 #include <cassert>
 
 #define PHOENIX_LIMIT 15
-#include "boost/spirit/phoenix/primitives.hpp"
-#include "boost/spirit/phoenix/composite.hpp"
-#include "boost/spirit/phoenix/functions.hpp"
-#include "boost/spirit/phoenix/operators.hpp"
+#include <boost/spirit/phoenix/primitives.hpp>
+#include <boost/spirit/phoenix/composite.hpp>
+#include <boost/spirit/phoenix/functions.hpp>
+#include <boost/spirit/phoenix/operators.hpp>
 
 using namespace phoenix;
 using namespace std;
@@ -82,8 +81,8 @@ main()
     test()();
     assert(sqr(arg1)(i5) == (i5*i5));
     assert(fact(4)() == 24);
-    assert(fact(arg1)(i5) == 120);
-    assert(power(arg1, arg2)(d5, d3) == pow(d5, d3));
+    assert(fact(arg1)(i5) == 120);    
+    assert((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
     assert((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
 
 ///////////////////////////////////////////////////////////////////////////////

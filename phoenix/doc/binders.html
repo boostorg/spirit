@@ -101,10 +101,12 @@ or</p>
 member_function_ptr&lt;void, xyz, int&gt; xyz_foo = &amp;xyz::foo;</p>
 <p>
 The template parameter of the member_function_ptr is the return, class and argument types of actual signature of the function to be bound, read from left to right:</p>
-<code><pre>
+<code>
+<pre>
     <span class=keyword>void </span><span class=identifier>xyz</span><span class=special>::</span><span class=identifier>foo_</span><span class=special>(</span><span class=keyword>int</span><span class=special>);            ---&gt; </span><span class=identifier>member_function_ptr</span><span class=special>&lt;</span><span class=keyword>void</span><span class=special>, </span><span class=identifier>xyz</span><span class=special>, </span><span class=keyword>int</span><span class=special>&gt;
-    </span><span class=keyword>int </span><span class=identifier>abc</span><span class=special>::</span><span class=identifier>bar_</span><span class=special>(</span><span class=keyword>double</span><span class=special>, </span><span class=keyword>char</span><span class=special>);    ---&gt; </span><span class=identifier>member_function_ptr</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>, </span><span class=identifier>abc</span><span class=special>, </span><span class=keyword>int</span><span class=special>, </span><span class=keyword>double</span><span class=special>, </span><span class=keyword>char</span><span class=special>&gt;
-</span></pre></code>
+    </span><span class=keyword>int </span><span class=identifier>abc</span><span class=special>::</span><span class=identifier>bar_</span><span class=special>(</span><span class=keyword>double</span><span class=special>, </span><span class=keyword>char</span><span class=special>);    ---&gt; </span><span class=identifier>member_function_ptr</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>, </span><span class=identifier>abc</span><span class=special>, </span><span class=keyword>double</span><span class=special>, </span><span class=keyword>char</span><span class=special>&gt;
+</span></pre>
+</code>
 <p>
 Take note that a member_function_ptr lazy-function expects the first argument to be a pointer or reference to an object. Both the object (reference or pointer) and the arguments can be lazily bound. Examples:</p>
 <code><pre>
@@ -169,10 +171,11 @@ Be reminded once more that binders are monomorphic. This layer is provided only 
    </tr>
 </table>
 <br>
-<hr size="1"><p class="copyright">Copyright &copy; 2001-2002 Joel de Guzman<br><br>
-<font size="2">Permission to copy, use, modify, sell and distribute this document
- is granted provided this copyright notice appears in all copies. This document
- is provided &quot;as is&quot; without express or implied warranty, and with
- no claim as to its suitability for any purpose. </font> </p>
+<hr size="1">
+<p class="copyright">Copyright &copy; 2001-2002 Joel de Guzman<font size="2"><br>
+  <br>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt) </font> </font></p>
 </body>
 </html>

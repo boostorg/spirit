@@ -22,42 +22,43 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="subrules.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="predefined_actions.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="indepth_the_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
 <p>Semantic actions have the form: <b>expression[action]</b></p>
-<p>Ultimately, after having defined our grammar and having generated a corresponding
-  parser, we'll need to produce some output and do some work besides syntax analysis.
-  Unless of course what we want is merely to check for the conformance of an input
-  with our grammar, which is very seldom the case.</p>
-<p>What we need is a mechanism that will instruct the parser on what work should
-  be done as it traverses the grammar while in the process of parsing an input
-  stream. This mechanism is put in place through semantic actions.</p>
-<p>Semantic actions may be attached to any expression at any level within the
-  parser hierarchy. An action is a C/C++ function or function object that will
-  be called if a match is found in the particular context where it is attached.
-  The action function may be serve as a hook into the parser and may be used to,
-  for example:</p>
+<p>Ultimately, after having defined our grammar and having generated a corresponding 
+  parser, we will need to produce some output and do some work besides syntax 
+  analysis; unless, of course, what we want is merely to check for the conformance 
+  of an input with our grammar, which is very seldom the case. Semantic actions 
+  may be attached to any expression at any level within the parser hierarchy. 
+  An action is a C/C++ function or function object that will be called if a match 
+  is found in the particular context where it is attached. The action function 
+  serves as a hook into the parser and may be used to, for example:</p>
 <blockquote>
   <p><img src="theme/bullet.gif" width="13" height="13"> Generate output from 
     the parser (ASTs, for example)<br>
     <img src="theme/bullet.gif" width="13" height="13"> Report warnings or errors<br>
     <img src="theme/bullet.gif" width="13" height="13"> Manage symbol tables</p>
 </blockquote>
-<h2>Generic Semantic Actions</h2>
+<h2>Generic Semantic Actions (Transduction Interface)</h2>
 <p>A generic semantic action can be any free function or function object that
   is compatible with the interface:</p>
 <pre><code><font color="#000000"><span class=identifier></span><span class=keyword>    void </span><span class=identifier>f</span><span class=special>(</span><span class=identifier>IteratorT </span><span class=identifier>first</span><span class=special>, </span><span class=identifier>IteratorT </span><span class=identifier>last</span><span class=special>);</span></font></code></pre>
-<p>where <tt>IteratorT</tt> is the type of iterator used, <tt>first</tt> points
-  to the current input and <tt>last</tt> points to one after the end of the input
-  (identical to STL iterator ranges). A functor should have a member <tt>operator()</tt>
-  with the same signature as above:</p>
+<p>where <tt>IteratorT</tt> is the type of iterator used, <tt>first</tt> points 
+  to the current input and <tt>last</tt> points to one after the end of the input 
+  (identical to STL iterator ranges). A function object (functor) should have 
+  a member <tt>operator()</tt> with the same signature as above:</p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=keyword>struct </span><span class=identifier>my_functor
     </span><span class=special>{
         </span><span class=keyword>void </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>IteratorT </span><span class=identifier>first</span><span class=special>, </span><span class=identifier>IteratorT </span><span class=identifier>last</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
     </span><span class=special>};</span></font></code></pre>
-<p>Iterators pointing to the matching portion of the input are passed into the
+<p>Iterators pointing to the matching portion of the input are passed into the 
   function/functor.</p>
+<p>In general, semantic actions accept the first-last iterator pair. This is the 
+  transduction interface. The action functions or functors receive the unprocessed 
+  data representing the matching production directly from the input. In many cases, 
+  this is sufficient. Examples are source to source translation, pre-processing, 
+  etc. </p>
 <h3>Example:</h3>
 <pre><code><font color="#000000"><span class=special>    </span><span class=keyword>void
     </span><span class=identifier>my_action</span><span class=special>(</span><span class=keyword>char const</span><span class=special>* </span><span class=identifier>first</span><span class=special>, </span><span class=keyword>char const</span><span class=special>* </span><span class=identifier>last</span><span class=special>)
@@ -67,10 +68,10 @@
     }
 
     </span><span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>myrule </span><span class=special>= (</span><span class=identifier>a </span><span class=special>| </span><span class=identifier>b </span><span class=special>| *(</span><span class=identifier>c </span><span class=special>&gt;&gt; </span><span class=identifier>d</span><span class=special>))[&</span><span class=identifier>my_action</span><span class=special>];</span></font></code></pre>
-<p>The function <tt>my_action</tt> will be called whenever the expression <tt>(a
-  | b | *(c &gt;&gt; d)</tt> matches a portion of the input stream while parsing.
-  Two iterators <tt>first</tt> and <tt>last</tt>, are passed into the function.
-  These iterators point to the start and end, respectively, of the portion of
+<p>The function <tt>my_action</tt> will be called whenever the expression <tt>(a 
+  | b | *(c &gt;&gt; d)</tt> matches a portion of the input stream while parsing. 
+  Two iterators, <tt>first</tt> and <tt>last</tt>, are passed into the function. 
+  These iterators point to the start and end, respectively, of the portion of 
   input stream where the match is found.</p>
 <h3>Const-ness:</h3>
 <p>With functors, take note that the <tt>operator()</tt> should be <tt>const</tt>.
@@ -93,7 +94,7 @@
         </span><span class=keyword>void
         </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>IteratorT </span><span class=identifier>first</span><span class=special>, </span><span class=identifier>IteratorT </span><span class=identifier>last</span><span class=special>) </span><span class=keyword>const
         </span><span class=special>{
-            </span><span class=identifier>str</span><span class=special>.</span><span class=identifier>assign</span><span class=special>(</span><span class=identifier>first</span><span class=special>, </span><span class=identifier>last</span><span class=special>);
+            </span><span class=identifier>str</span><span class=special>.</span><span class=identifier>assign_a</span><span class=special>(</span><span class=identifier>first</span><span class=special>, </span><span class=identifier>last</span><span class=special>);
         </span><span class=special>}
 
         </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string</span><span class=special>& </span><span class=identifier>str</span><span class=special>;
@@ -161,23 +162,26 @@
 </span><span class=identifier>MULT</span></code></pre>
 <p>which, by the way, is the Reverse Polish Notation (RPN) of the given expression, 
   reminiscent of some primitive calculators and the language Forth.</p>
-<p><img src="theme/lens.gif" width="15" height="16"> <a href="calc_plain.cpp.html">View 
+<p><img src="theme/lens.gif" width="15" height="16"> <a href="../example/fundamental/calc_plain.cpp">View 
   the complete source code here</a>. This is part of the Spirit distribution. 
-  <br>
-  [ See libs/spirit/example/fundamental/calc/calc_plain.cpp ]</p>
+</p>
 <h2><a name="specialized_actions"></a>Specialized Actions</h2>
-<p>In general, semantic actions accept the first-last iterator pair. The action
-  functions or functors receive the unprocessed data representing the matching
-  production directly from the input. There are situations though where we might
-  want to pass data in its processed form. A concrete example is the numeric parser.
-  It is unwise to pass unprocessed data to a semantic action attached to a numeric
-  parser and just throw away what has been done by the parser. Here, we want to
-  pass the actual parsed number.</p>
-<p>The function and functor signature of a semantic action varies depending on
-  the parser where it is attached. The following table lists the parsers that
-  accept unique signatures. Unless explicitly stated in the documentation of a
-  specific parser type, parsers not included in the list by default expect the
-  generic signature as explained above.</p>
+<p>In general, semantic actions accept the first-last iterator pair. There are 
+  situations though where we might want to pass data in its processed form. A 
+  concrete example is the numeric parser. It is unwise to pass unprocessed data 
+  to a semantic action attached to a numeric parser and just throw away what has 
+  been parsed by the parser. We want to pass the actual parsed number.</p>
+<p>The function and functor signature of a semantic action varies depending on 
+  the parser where it is attached to. The following table lists the parsers that 
+  accept unique signatures.</p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/note.gif" width="16" height="16"> Unless 
+      explicitly stated in the documentation of a specific parser type, parsers 
+      not included in the list by default expect the generic signature as explained 
+      above.</td>
+  </tr>
+</table>
 <h3>Numeric Actions</h3>
 <p><b>Applies to:</b></p>
 <blockquote>
@@ -188,9 +192,7 @@
 </blockquote>
 <p><b>Signature for functions:</b></p>
 <pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>void </span><span class=identifier>func</span><span class=special>(</span><span class=identifier>NumT </span><span class=identifier>val</span><span class=special>);</span></font></code></pre>
-<p><br>
-  <b>Signature for functors:</b><b><br>
-  </b> </p>
+<p><b>Signature for functors:</b> </p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=keyword>struct </span><span class=identifier>ftor
     </span><span class=special>{
         </span><span class=keyword>void </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>NumT </span><span class=identifier>val</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
@@ -215,8 +217,7 @@
 </blockquote>
 <p><b>Signature for functions:</b></p>
 <pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>void </span><span class=identifier>func</span><span class=special>(</span><span class=identifier>CharT </span><span class=identifier>ch</span><span class=special>);</span></font></code></pre>
-<p><b>Signature for functors:</b><br>
-</p>
+<p><b>Signature for functors:</b></p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=keyword>struct </span><span class=identifier>ftor
     </span><span class=special>{
         </span><span class=keyword>void </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>CharT </span><span class=identifier>ch</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
@@ -234,38 +235,23 @@
 <p>Directives inherit the the function/functor interface of the subject it is
   enclosing. Example:</p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=identifier>as_lower_d</span><span class=special>[</span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'x'</span><span class=special>)][</span><span class=identifier>f</span><span class=special>]</span></font></code></pre>
-<p>Here, the functor <tt>f</tt> expects the signature <tt>void operator()(char
+<p>Here, the functor <tt>f</tt> expects the signature <tt>void operator()(char 
   ch) const</tt>, assuming that the iterator used is a <tt>char const*</tt>.</p>
-<h2>Templatized Functors</h2>
-<p>For the sake of genericity, it is often better to make the functor's member
-  <tt>operator()</tt> a template. That way, we do not have to concern ourselves
-  with the type of the argument to expect as long as the behavior is appropriate.
-  For instance, rather than hard-coding <tt>char const*</tt> as the argument of
-  a generic semantic action, it is better to make it a template member function.
-  That way, it can accept any type of iterator:</p>
-<pre><code><font color="#000000"><span class=special>    </span><span class=keyword>struct </span><span class=identifier>my_functor
-    </span><span class=special>{
-        </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>IteratorT</span><span class=special>&gt;
-        </span><span class=keyword>void </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>IteratorT </span><span class=identifier>first</span><span class=special>, </span><span class=identifier>IteratorT </span><span class=identifier>last</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
-    </span><span class=special>};</span></font></code></pre>
-<p>Take note that this is only possible with functors, however. Which clearly 
-  shows that functors are superior to plain function.</p>
 <table border="0">
   <tr>
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="subrules.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="predefined_actions.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="indepth_the_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 </body>

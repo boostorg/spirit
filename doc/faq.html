@@ -19,9 +19,9 @@
   <tr>
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
-    <td width="30"><a href="style_guide.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="rationale.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="techniques.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="30"><a href="rationale.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
 <ul>
   <li><a href="#scanner_business">The Scanner Business</a></li>
@@ -29,6 +29,13 @@
   <li><a href="#lexeme_and_rules">The lexeme_d directive and rules</a></li>
   <li><a href="#kleene_star">Kleene Star infinite loop</a></li>
   <li><a href="#CVS">Boost CVS and Spirit CVS</a></li>
+  <li><a href="#compilation_times">How to reduce compilation times with complex 
+    Spirit grammars</a></li>
+  <li><strong><a href="#frame_assertion">Closure frame assertion</a></strong></li>
+  <li><strong><a href="#greedy_rd">Greedy RD</a></strong></li>
+  <li><strong><a href="#referencing_a_rule_at_construction">Referencing a rule 
+    at construction time</a></strong></li>
+  <li><strong><a href="#storing_rules">Storing Rules</a></strong></li>
 </ul>
 <p><b> <a name="scanner_business" id="scanner_business"></a> The Scanner Business</b></p>
 <p><font color="#FF0000">Question:</font> Why doesn't this compile?</p>
@@ -49,11 +56,8 @@
   passed in. In the first call to parse, the scanner created is a plain vanilla 
   <tt>scanner&lt;&gt;</tt>. This is compatible with the default scanner type of 
   <tt>rule&lt;&gt;</tt> [see default template parameters of <a href="rule.html">the 
-  rule</a>]. The second call creates a scanner of type <tt>phrase_scanner_t</tt>:</p>
-<pre><span class=special>    </span><span class=keyword>typedef </span><span class=identifier>skipper_iteration_policy</span><span class=special>&lt;&gt;                  </span><span class=identifier>iter_policy_t</span><span class=special>;
-    </span><span class=keyword>typedef </span><span class=identifier>scanner_policies</span><span class=special>&lt;</span><span class=identifier>iter_policy_t</span><span class=special>&gt;             </span><span class=identifier>scanner_policies_t</span><span class=special>;
-    </span><span class=keyword>typedef </span><span class=identifier>scanner</span><span class=special>&lt;</span><span class=keyword>char </span><span class=keyword>const</span><span class=special>*, </span><span class=identifier>scanner_policies_t</span><span class=special>&gt;    </span><span class=identifier>phrase_scanner_t</span><span class=special>;</span></pre>
-<p>Thus, in order for the second call to succeed, the rule must be parameterized 
+  rule</a>]. The second call creates a scanner of type <tt><a href="scanner.html#phrase_scanner_t">phrase_scanner_t</a></tt>. 
+  Thus, in order for the second call to succeed, the rule must be parameterized 
   as <tt>rule&lt;phrase_scanner_t&gt;</tt>:</p>
 <pre><code><font color="#000000"><span class=comment>    </span><span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>phrase_scanner_t</span><span class=special>&gt; </span><span class=identifier>r </span><span class=special>= </span><span class=special>*</span><span class=identifier>anychar_p</span><span class=special>;
     </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, </span><span class=identifier>r</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>);       </span><span class=comment>//  OK [phrase level parsing]</span></font></code></pre>
@@ -66,14 +70,31 @@
   scanner type. For instance:</p>
 <pre><span class=comment>    </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, *</span><span class=identifier>anychar_p</span><span class=special>);           </span><span class=comment><code><font color="#000000"><span class=comment>//  OK  [character level parsing</span></font></code>]
     </span><span class=identifier>parse</span><span class=special>(</span><span class=string>"hello world"</span><span class=special>, *</span><span class=identifier>anychar_p</span><span class=special>, </span><span class=identifier>space_p</span><span class=special>);  </span><span class="comment">//  OK  [phrase level parsing</span></pre>
-<p><b> <a name="left_recursion" id="left_recursion"></a> Eliminating Left 
-  Recursion </b></p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"> <strong><img src="theme/note.gif" width="16" height="16"> 
+      Multiple Scanner Support</strong><br>
+      <br>
+      As of v1.8.0, rules can use one or more scanner types. There are cases, 
+      for instance, where we need a rule that can work on the phrase and character 
+      levels. Rule/scanner mismatch has been a source of confusion and is the 
+      no. 1 <a href="faq.html#scanner_business">FAQ</a>. To address this issue, 
+      we now have <a href="rule.html#multiple_scanner_support">multiple scanner 
+      support</a>. <br>
+      <br>
+      <img src="theme/bulb.gif" width="13" height="18"> See the techniques section 
+      for an <a href="techniques.html#multiple_scanner_support">example</a> of 
+      a <a href="grammar.html">grammar</a> using a multiple scanner enabled rule, 
+      <a href="scanner.html#lexeme_scanner">lexeme_scanner</a> and <a href="scanner.html#as_lower_scanner">as_lower_scanner.</a></td>
+  </tr>
+</table>
+<p><b> Eliminating Left Recursion </b></p>
 <p><font color="#FF0000">Question:</font> I ported a grammar from YACC. It's &quot;kinda&quot; 
   working - the parser itself compiles with no errors. But when I try to parse, 
   it gives me an &quot;invalid page fault&quot;. I tracked down the problem to 
   this grammar snippet:</p>
 <pre>    <span class=identifier>or_expr </span><span class=special>= </span><span class=identifier>xor_expr </span><span class=special>| (</span><span class=identifier>or_expr </span><span class=special>&gt;&gt; </span><span class=identifier>VBAR </span><span class=special>&gt;&gt; </span><span class=identifier>xor_expr</span><span class=special>);</span></pre>
-<p>What you should do is to elliminate direct and indirect left-recursion. This 
+<p>What you should do is to eliminate direct and indirect left-recursion. This 
   causes the invalid page fault because the program enters an infinite loop. The 
   code above is good for bottom up parsers such as YACC but not for LL parsers 
   such as Spirit.</p>
@@ -139,7 +160,7 @@
 <span class=identifier>    rule</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt; </span><span class=identifier>compositeRule</span>
         <span class=special>= </span><span class=identifier>lexeme_d</span><span class=special>[(</span><span class=identifier>alpha_p </span><span class=special>| </span><span class=literal>'_'</span><span class=special>) &gt;&gt; *(</span><span class=identifier>ch</span><span class=special>)]; </span><span class="comment">// &lt;- error source</span></pre>
 <p>You might get the impression that the <tt>lexeme_d</tt> directive and rules 
-  do not mix. Actually, this problem is related the the first FAQ entry: The Scanner 
+  do not mix. Actually, this problem is related to the first FAQ entry: The Scanner 
   Business. More precisely, the <tt>lexeme_d</tt> directive and rules with incompatible 
   scanner types do not mix. This problem is more subtle. What's causing the scanner 
   incompatibility is the directive itself. The <tt>lexeme_d</tt> directive transforms 
@@ -159,6 +180,15 @@
 <p>The same thing happens when rules are used inside the <tt>as_lower_d</tt> directive. 
   In such cases, you can use the <tt>as_lower_scanner</tt>. See the <span class=identifier><tt><a href="scanner.html#lexeme_scanner">lexeme_scanner</a></tt></span> 
   and <tt><a href="scanner.html#as_lower_scanner">as_lower_scanner</a></tt>.</p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/bulb.gif" width="13" height="18"> See 
+      the techniques section for an <a href="techniques.html#multiple_scanner_support">example</a> 
+      of a <a href="grammar.html">grammar</a> using a <a href="rule.html#multiple_scanner_support">multiple 
+      scanner enabled rule,</a> <a href="scanner.html#lexeme_scanner">lexeme_scanner</a> 
+      and <a href="scanner.html#as_lower_scanner">as_lower_scanner.</a></td>
+  </tr>
+</table>
 <p><strong><a name="kleene_star"></a>Kleene Star infinite loop</strong></p>
 <p><font color="#FF0000">Question</font>: Why Does This Loop Forever?</p>
 <pre>    <span class=identifier>rule</span><span class=special>&lt;&gt; </span><span class=identifier>optional </span><span class=special>= !(</span>str_p<span class="special">(</span><span class="string">&quot;optional&quot;</span><span class="special">));
@@ -178,22 +208,154 @@
   development takes place in the Boost CVS. There will be announcements on the 
   Spirit mailing lists whenever the status of the Spirit CVS changes.<br>
 </p>
+<p><strong><a name="compilation_times"></a>How to reduce compilation times with 
+  complex Spirit grammars </strong></p>
+<p><font color="#FF0000">Question:</font> Are there any techniques to minimize 
+  compile times using spirit? For simple parsers compile time doesn't seem to 
+  be a big issue, but recently I created a parser with about 78 rules 
+  and it took about 2 hours to compile. I would like to break the grammar up into 
+  smaller chunks, but it is not as easy as I thought it would be because rules 
+  in two grammar capsules are defined in terms of each other. Any thoughts?</p>
+<p> The only way to reduce compile times is </p>
+<ul>
+  <li> to split up your grammars into smaller chunks</li>
+  <li> prevent the compiler from seeing all grammar definitions at the same time 
+    (in the same compilation unit)</li>
+</ul>
+<p>The first task is merely logistical, the second is rather a technical one. </p>
+<p>A good example of solving the first task is given in the Spirit cpp_lexer example 
+  written by JCAB, which you can find <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/spirit/spirit/libs/spirit/example/application/cpp_lexer/">here</a>. 
+</p>
+<p>The cross referencing problems may be solved by some kind of forward declaration, 
+  or, if this does not work, by introducing some dummy template argument to the 
+  non-templated grammars. Thus allows the instantiation time to be defered until the 
+  compiler has seen all the defintions:</p>
+<pre>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>&gt;<br>    grammar2;</p>
+
+    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>&gt;<br>    <span class="keyword">struct</span> grammar1 : <span class="keyword">public</span> grammar&lt;grammar1&gt;<br>    {
+    <span class="comment">// refers to grammar2&lt;&gt;</span>
+    };
+
+    <span class="keyword">template</span> &lt;typename T&gt;
+    <span class="keyword">struct</span> grammar2 : <span class="keyword">public</span> grammar&lt;grammar2&gt;
+    {
+    <span class="comment">// refers to grammar1&lt;&gt;</span>
+    };
+
+    //...
+    grammar1&lt;&gt; g; <span class="comment">// both grammars instantiated here</span>
+</pre>
+<p>The second task is slightly more complex. You must ensure that in the first 
+  compilation unit the compiler sees only some function/template <strong>declaration</strong> 
+  and in the second compilation unit the function/template <strong>definition</strong>. 
+  Still no problem, if no templates are involved. If templates are involved, 
+  you need to manually (explicitly) instantiate these templates with the correct 
+  template parameters inside a separate compilation unit. This way the compilation 
+  time is split between several compilation units, reducing the overall 
+  required time drastically too. </p>
+<p>For a sample, showing how to achieve this, you may want to look at the <tt>Wave</tt> 
+  preprocessor library, where this technique is used extensively. You can find 
+  <tt>Wave</tt> <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/spirit/spirit/wave/">here</a>.</p>
+<p><strong><a name="frame_assertion" id="frame_assertion"></a>Closure frame assertion</strong></p>
+<p><font color="#FF0000">Question:</font> When I run the parser I get an assertion 
+  <span class="string">&quot;frame.get() != 0 in file closures.hpp&quot;</span>. 
+  What am I doing wrong?</p>
+<p>Basically, the assertion fires when you are accessing a closure variable that 
+  is not constructed yet. Here's an example. We have three rules <tt>a</tt>, <tt>b</tt> 
+  and <tt>c</tt>. Consider that the rule <tt>a</tt> has a closure member <tt>m</tt>. 
+  Now:</p>
+<pre>    <span class="identifier">a</span> <span class="special">=</span> <span class="identifier">b</span><span class="special">;</span>
+    <span class="identifier">b</span> <span class="special">=</span> <span class="identifier">int_p</span><span class="special">[</span><span class="identifier">a</span><span class="special">.</span><span class="identifier">m</span> <span class="special">=</span> 123<span class="special">];</span>
+    <span class="identifier">c</span> <span class="special">=</span> <span class="identifier">b</span><span class="special">;</span></pre>
+<p>When the rule <tt>a</tt> is invoked, its frame is set, along with its member 
+  <tt>m</tt>. So, when <tt>b</tt> is called from <tt>a</tt>, the semantic action 
+  <tt>[a.m = 123]</tt>will store <tt>123</tt> into <tt>a</tt>'s closure member 
+  <tt>m</tt>. On the other hand, when <tt>c</tt> is invoked, and <tt>c</tt> attempts 
+  to call <tt>b</tt>, no frame for <tt>a</tt> is set. Thus, when <tt>b</tt> is 
+  called from <tt>c</tt>, the semantic action <tt>[a.m = 123]</tt>will fire the 
+  <span class="string">&quot;frame.get() != 0 in file closures.hpp&quot;</span> 
+  assertion.</p>
+<p><strong><a name="greedy_rd" id="greedy_rd"></a>Greedy RD</strong></p>
+<p><font color="#FF0000">Question:</font> I'm wondering why the this won't work 
+  when parsed:</p>
+<pre>
+<span class="identifier">    a</span> <span class="special">= +</span><span class="identifier">anychar_p</span><span class="special">;</span>
+    <span class="identifier">b</span> = <span class="string">'('</span> <span class="special">&gt;&gt;</span> <span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="string">')'</span><span class="special">;</span></pre>
+<p>Try this:</p>
+<pre>
+<span class="identifier">    a</span> <span class="special">= +(</span><span class="identifier">anychar_p - </span><span class="string">')'</span><span class="special">);</span>
+    <span class="identifier">b</span> <span class="special">=</span> <span class="string">'('</span> <span class="special">&gt;&gt;</span> <span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="string">')'</span><span class="special">;</span></pre>
+<p>David Held writes: That's because it's like the langoliers--it eats everything 
+  up. You usually want to say what it shouldn't eat up by subtracting the terminating 
+  character from the parser. The moral being: Using <tt>*anychar_p</tt> or <tt>+anychar_p</tt> 
+  all by itself is usually a <em>Bad Thing</em>&#8482;.</p>
+<p>In other words: Recursive Descent is inherently greedy (however, see <a href="rationale.html#exhaustive_rd">Exhaustive 
+  backtracking and greedy RD</a>).</p>
+<p><span class="special"></span><strong><a name="referencing_a_rule_at_construction" id="referencing_a_rule_at_construction"></a>Referencing 
+  a rule at construction time</strong></p>
+<p><font color="#FF0000">Question:</font> The code below terminates with a segmentation 
+  fault, but I'm (obviously) confused about what I'm doing wrong.</p>
+<pre>    rule<span class="special">&lt;</span>ScannerT<span class="special">,</span> clos<span class="special">::</span>context_t<span class="special">&gt;</span> id <span class="special">=</span> int_p<span class="special">[</span>id<span class="special">.</span>i <span class="special">=</span> arg1<span class="special">];</span></pre>
+<p>You have a rule <tt>id</tt> being constructed. Before it is constructed, you 
+  reference <tt>id.i</tt> in the RHS of the constructor. It's a chicken and egg 
+  thing. The closure member <tt>id.i</tt> is not yet constructed at that point. 
+  Using assignment will solve the problem. Try this instead:</p>
+<pre>    rule<span class="special">&lt;</span>ScannerT<span class="special">,</span> clos<span class="special">::</span>context_t<span class="special">&gt;</span> id<span class="special">;</span>
+    id <span class="special">=</span> int_p<span class="special">[</span>id<span class="special">.</span>i <span class="special">=</span> arg1<span class="special">];</span></pre>
+<p><span class="special"></span><strong><a name="storing_rules" id="storing_rules"></a>Storing 
+  Rules </strong></p>
+<p><font color="#FF0000">Question:</font> Why can't I store rules in STL containers 
+  for later use and why can't I pass and return rules to and from functions by 
+  value? </p>
+<p>EBNF is primarily declarative. Like in functional programming, It's a static 
+  recipe and there's no notion of do this then that. However, in Spirit, we managed 
+  to coax imperative C++ to take in declarative EBNF. Hah! Fun!... We did that 
+  by masquerading the C++ assignment operator to mimick EBNF's <tt>::=</tt>, among 
+  other things (e.g. <tt>&gt;&gt;</tt>, <tt>|</tt>, <tt>&amp;</tt> etc.). We used 
+  the rule class to let us do that by giving its assignment operator (and copy 
+  constructor) a different meaning and semantics. Doing so made the rule unlike 
+  any other C++ object. You can't copy it. You can't assign it. You can't place 
+  it in a container (vector, stack, etc).Heck, you can't even return it from a 
+  function *by value*.</p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/alert.gif" width="16" height="16"> The 
+      rule is a wierd object, unlike any other C++ object. It does not have the 
+      proper copy and assignment semantics and cannot be stored and passed around 
+      by value.</td>
+  </tr>
+</table>
+<p>However nice declarative EBNF is, the dynamic nature of C++ can be an advantage. 
+  We've seen this in action here and there. There are indeed some interesting 
+  applications of dynamic parsers using Spirit. Yet, we haven't fully utilized 
+  the power of dynamic parsing, unless(!), we have a rule that's not so alien 
+  to C++ (i.e. behaves as a good C++ object). With such a beast, we can write 
+  parsers that's defined at run time, as opposed to at compile time.</p>
+<p>Now that I started focusing on rules (hey, check out the hunky new rule features), 
+  it might be a good time to implement the rule-holder. It is basically just a 
+  rule, but with C++ object semantics. Yet it's not as simple. Without true garbage 
+  collection, the implementation will be a bit tricky. We can't simply use reference 
+  counting because a rule-holder (hey, anyone here has a better name?) *is-a* 
+  rule, and rules are typically recursive and thus cyclic. The problem is which 
+  will own which.</p>
+<p>Ok... this will do for now. You'll definitely see more of the rule-holder in 
+  the coming days.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
-    <td width="30"><a href="style_guide.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="rationale.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="techniques.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="30"><a href="rationale.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
+<span class="copyright">Copyright &copy; 2002-2003 Hartmut Kaiser </span><br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+      License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

@@ -1,16 +1,15 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Demonstrate regular expression parser objects
+//  See the "Regular Expression Parser" chapter in the User's Guide.
 //
 //  This sample requires an installed version of the boost regex library
 //  (http://www.boost.org) The sample was tested with boost V1.28.0
@@ -69,6 +68,7 @@ int main (int argc, char *argv[])
     cout << endl;
 
     // 2. use of regex_p predefined parser object
+    str.empty();
     result = parse (ptest, regex_p(prx)[assign(str)]);
     if (result.hit)
     {
@@ -82,6 +82,21 @@ int main (int argc, char *argv[])
     }
     cout << endl;
 
+    // 3. test the regression reported by Grzegorz Marcin Koczyk (gkoczyk@echostar.pl)
+    string str1;
+    string str2;
+    char const *ptest1 = "Token whatever \nToken";
+
+    result = parse(ptest1, rxstrlit<>("Token")[assign(str1)] 
+        >> rxstrlit<>("Token")[assign(str2)]);
+    
+    if (!result.hit)
+        cout << "Parsed regular expression successfully!" << endl;
+    else
+        cout << "Failed to parse regular expression!" << endl;
+
+    cout << endl;
+    
     return 0;
 }
 

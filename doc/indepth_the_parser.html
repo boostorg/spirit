@@ -21,19 +21,18 @@
   <tr>
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
-    <td width="30"><a href="predefined_actions.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="indepth_the_scanner.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="semantic_actions.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="30"><a href="indepth_the_scanner.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
-<p>What makes Spirit tick? Now on to some details. The parser class is the most 
-  fundamental entity in the framework. Basically, a parser accepts a scanner comprised 
-  of a first-last iterator pair and returns a match object as its result. The 
-  iterators delimit the data currently being parsed. The match object evaluates 
-  to true if the parse succeeds, in which case the input is advanced accordingly. 
-  Each parser can represent a specific pattern or algorithm, or it can be a more 
-  complex parser formed as a composition of other parsers.</p>
+<p>What makes Spirit tick? Now on to some details... The parser class is the most 
+  fundamental entity in the framework. A parser accepts a scanner comprised of 
+  a first-last iterator pair and returns a match object as its result. The iterators 
+  delimit the data currently being parsed. The match object evaluates to true 
+  if the parse succeeds, in which case the input is advanced accordingly. Each 
+  parser can represent a specific pattern or algorithm, or it can be a more complex 
+  parser formed as a composition of other parsers.</p>
 <p>All parsers inherit from the base template class, parser:</p>
-<p></p>
 <pre>
 <span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>DerivedT</span><span class=special>&gt;
 </span><span class=keyword>struct </span><span class=identifier>parser
@@ -43,21 +42,20 @@
     </span><span class=identifier>DerivedT</span><span class=special>&amp; </span><span class=identifier>derived</span><span class=special>();
     </span><span class=identifier>DerivedT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>derived</span><span class=special>() </span><span class=keyword>const</span><span class=special>;
 </span><span class=special>};</span></pre>
-<p>This class is a protocol base class for all parsers. This is essentially an 
-  interface contract. The parser class does not really know how to parse anything 
-  but instead relies on the template parameter <tt>DerivedT</tt> to do the actual 
-  parsing. This technique is known as the <a href="references.html#curious_recurring">&quot;Curiously 
-  Recurring Template Pattern&quot;</a> in meta-programming circles. This inheritance 
-  strategy gives us the power of polymorphism without the virtual function overhead. 
-  In essence this is a way to implement <a href="references.html#generic_patterns">compile 
+<p>This class is a protocol base class for all parsers. The parser class does 
+  not really know how to parse anything but instead relies on the template parameter 
+  <tt>DerivedT</tt> to do the actual parsing. This technique is known as the <a href="references.html#curious_recurring">&quot;Curiously 
+  Recurring Template Pattern&quot;</a> in template meta-programming circles. This 
+  inheritance strategy gives us the power of polymorphism without the virtual 
+  function overhead. In essence this is a way to implement <a href="references.html#generic_patterns">compile 
   time polymorphism</a>.</p>
 <h2> parser_category_t</h2>
-<p> Each parser has a typedef <tt>parser_category_t</tt> that defines its category. 
-  By default, if one is not specified, it will inherit from the base parser class 
-  which typedefs its parser_category_t as <tt>plain_parser_category</tt>. Some 
-  template classes are provided to distinguish different types of parsers. The 
-  following categories are the most generic. More specific types may inherit from 
-  these. </p>
+<p> Each derived parser has a typedef <tt>parser_category_t</tt> that defines 
+  its category. By default, if one is not specified, it will inherit from the 
+  base parser class which typedefs its parser_category_t as <tt>plain_parser_category</tt>. 
+  Some template classes are provided to distinguish different types of parsers. 
+  The following categories are the most generic. More specific types may inherit 
+  from these.</p>
 <table width="90%" border="0" align="center">
   <tr> 
     <td colspan="2" class="table_title">Parser categories</td>
@@ -96,12 +94,34 @@
 <p>The match holds the result of a parser. A match object evaluates to true when 
   a succesful match is found, otherwise false. The length of the match is the 
   number of characters (or tokens) that is successfully matched. This can be queried 
-  through its length() member function. A negative value means that the match 
-  is unsucessful. </p>
-<p>Each parser may have an associated attribute. This attribute is also returned 
-  back to the client on a successful parse through the match object. The match's 
-  value() member function returns a reference to this value.</p>
-<p>The match class:</p>
+  through its <tt>length()</tt> member function. A negative value means that the 
+  match is unsucessful. </p>
+<p> Each parser may have an associated attribute. This attribute is also returned 
+  back to the client on a successful parse through the match object. We can get 
+  this attribute via the match's <tt>value()</tt> member function. Be warned though 
+  that the match's attribute may be invalid, in which case, getting the attribute 
+  will result in an exception. The member function <tt>has_valid_attribute()</tt> 
+  can be queried to know if it is safe to get the match's attribute. The attribute 
+  may be set anytime through the member function <tt>value(v)</tt>where <tt>v</tt> 
+  is the new attribute value.<br>
+  <br>
+  A match attribute is valid:</p>
+<ul>
+  <li> on a successful match</li>
+  <li>when its value is set through the <tt>value(val)</tt> member function</li>
+  <li> if it is assigned or copied from a compatible match object (e.g. <tt>match&lt;double&gt;</tt> 
+    from <tt>match&lt;int&gt;</tt>) with a valid attribute. A match object <tt>A</tt> 
+    is compatible with another match object <tt>B</tt> if the attribute type of 
+    <tt>A</tt> can be assigned from the attribute type of <tt></tt> <tt>B</tt> 
+    (i.e. <tt>a = b;</tt> must compile).</li>
+</ul>
+<p>The match attribute is undefined:</p>
+<ul>
+  <li>on an unsuccessful match </li>
+  <li>when an attempt to copy or assign from another match object with an incompatible 
+    attribute type (e.g. <tt>match&lt;std::string&gt;</tt> from <tt>match&lt;int&gt;</tt>).</li>
+</ul>
+<h3>The match class:</h3>
 <pre><span class=keyword>    template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T</span><span class=special>&gt;
 </span><span class=keyword>    class </span><span class=identifier>match
 </span><span class=keyword>    </span><span class=special>{
@@ -109,12 +129,13 @@
 
     </span><span class=keyword>    </span><span class=comment>/*...*/
 
-</span><span class=special>    </span><span class=keyword>    </span><span class="keyword">typedef</span><span class="identifier"> T attr_t</span><span class="special">;<br>
-             </span><span class=keyword>    </span><span class="special">   </span><span class=keyword>operator bool</span><span class=special>() </span><span class=keyword>const</span>;
-    <span class=keyword>    </span><span class=keyword>int         </span><span class=identifier>length</span><span class=special>() </span><span class=keyword>const</span>;
-   <span class=keyword>    </span> <span class=identifier>T</span><span class=special>&amp;          </span><span class=identifier>value</span><span class=special>() </span><span class=keyword>const;
-        </span><span class=special></span><span class=identifier>T </span><span class=keyword>const</span><span class=special>&amp;    </span><span class=identifier>value</span><span class=special>();
-</span><span class=special></span><span class=keyword>    </span><span class=special>};</span></pre>
+</span><span class=special>    </span><span class=keyword>    typedef</span><span class="identifier"> T attr_t</span><span class="special">;<br>
+             </span><span class=keyword>    </span><span class="special">   </span><span class=keyword>operator safe_bool</span><span class=special>() </span><span class=keyword>const</span>; <span class="comment">// convertible to a bool</span>
+    <span class=keyword>    int         </span><span class=identifier>length</span><span class=special>() </span><span class=keyword>const</span>;
+        <span class="keyword">bool</span>        has_valid_attribute<span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
+   <span class=keyword>    </span> <span class=identifier>void</span><span class=special>        </span><span class=identifier>value</span><span class=special>(</span><span class="identifier">T </span><span class="keyword">const</span><span class=special>&amp;) </span><span class=keyword>const;
+        </span><span class=identifier>T </span><span class=keyword>const</span><span class=special>&amp;    </span><span class=identifier>value</span><span class=special>();
+</span><span class=keyword>    </span><span class=special>};</span></pre>
 <h2>match_result</h2>
 <p>It has been mentioned repeatedly that the parser returns a match object as 
   its result. This is a simplification. Actually, for the sake of genericity, 
@@ -195,8 +216,7 @@
         </span><span class=keyword>typedef typename </span><span class=identifier>match_result</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>, </span><span class="keyword">int</span><span class=special>&gt;::</span><span class=identifier>type type</span><span class=special>;
     };</span></pre>
 <p>If a parser does not supply a result metafunction, a default is provided by 
-  the base parser class.<span class=special> </span>The default is declared as:<span class=special><br>
-  </span></p>
+  the base parser class.<span class=special> </span>The default is declared as:</p>
 <pre><span class=keyword>    template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
     </span><span class=keyword>struct </span><span class=identifier>result
     </span><span class=special>{
@@ -226,8 +246,7 @@
   function almost canonical:</p>
 <pre><span class=identifier>    </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
     </span><span class=keyword>typename </span><span class=identifier>parser_result</span><span class=special>&lt;</span><span class=identifier>self_t, ScannerT</span><span class=special>&gt;::</span><span class=identifier>type</span><br>    <span class=identifier>parse</span><span class=special>(</span><span class=identifier>ScannerT</span><span class=special></span> const<span class=special>&amp; </span>scan<span class=identifier></span><span class=special>) </span><span class=keyword>const</span><span class=special>;</span></pre>
-<p>where<span class=special></span> <tt>self_t</tt> is a typedef to the parser.<br>
-</p>
+<p>where<span class=special></span> <tt>self_t</tt> is a typedef to the parser.</p>
 <h2>parser class declaration</h2>
 <pre><span class=identifier>    </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>DerivedT</span><span class=special>&gt;
     </span><span class=keyword>struct </span><span class=identifier>parser
@@ -253,17 +272,16 @@
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
-    <td width="30"><a href="predefined_actions.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="indepth_the_scanner.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="semantic_actions.html"><img src="theme/l_arr.gif" border="0"></a></td>
+    <td width="30"><a href="indepth_the_scanner.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose. </font> </p>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt) </font> </p>
 </body>
 </html>

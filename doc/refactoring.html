@@ -20,7 +20,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="functor_parser.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="regular_expression_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="regular_expression_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <p><a name="refactoring_parsers"></a>There are three types of Refactoring Parsers 
@@ -31,7 +31,7 @@
   introduced to allow a simple and more expressive notation while using <a href="confix.html">Confix 
   Parsers</a> and <a href="list_parsers.html">List Parsers</a>. The third Refactoring 
   Parser (<tt>attach_action_parser</tt>) is implemented to abstract some functionality 
-  required for the <a href="grouping_parser.html">Grouping Parser</a>. Nevertheless 
+  required for the Grouping Parser. Nevertheless 
   these Refactoring Parsers may help in solving other complex parsing tasks too.</p>
 <h3>Refactoring unary parsers</h3>
 <p>The <tt>refactor_unary_d</tt> parser generator, which should be used to generate 
@@ -40,7 +40,7 @@
 <p>to </p> 
 <pre><code>    <span class=special>*(</span><span class=identifier>some_parser</span> <span class=special>- </span><span class=identifier>another_parser</span><span class=special>)</span></code></pre>
 <blockquote>
-  <p>where <tt>refactor_action_d</tt> is a predefined object of the parser generator 
+  <p>where <tt>refactor_unary_d</tt> is a predefined object of the parser generator 
     struct <tt>refactor_unary_gen&lt;&gt;</tt></p>
 </blockquote>
 <p>The <tt>refactor_unary_d</tt> parser generator generates a new parser as shown 
@@ -75,7 +75,7 @@
 <blockquote> 
   <p>where <tt>attach_action_d</tt> is a predefined object of the parser generator 
     struct <tt>attach_action_gen&lt;&gt;</tt></p>
-  </blockquote> 
+</blockquote> 
   
 <p>The <tt>attach_action_d</tt> parser generator generates a new parser as shown 
   above, only if the original construct is an auxilliary action parser and the 
@@ -104,22 +104,22 @@
   particular refactoring parser with itself. This is achieved by providing the 
   predefined helper structure <tt>self_nested_refactoring</tt> as the template 
   parameter to the corresponding refactoring parser generator template.</p>
+<p><img src="theme/lens.gif" width="15" height="16"> See <a href="../example/fundamental/refactoring.cpp">refactoring.cpp</a> for a compilable example. This is part of the Spirit distribution. </p>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="functor_parser.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="regular_expression_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="regular_expression_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
-<p class="copyright">Copyright &copy; 2001-2002 Hartmut Kaiser<br>
+<p class="copyright">Copyright &copy; 2001-2003 Hartmut Kaiser<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p>&nbsp;</p>
 </body>
 </html>

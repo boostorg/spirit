@@ -22,8 +22,8 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="scoped_lock.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="trees.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="trees.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
 <p>This class symbols implements a symbol table. The symbol table holds a dictionary 
   of symbols where each symbol is a sequence of CharTs (a <tt>char</tt>, <tt>wchar_t</tt>, 
@@ -115,12 +115,12 @@
   A function or functor, as usual, may be attached to the symbol table. The symbol 
   table expects a function or functor compatible with the signature:</p>
 <p><b>Signature for functions:</b></p>
-<pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>void </span><span class=identifier>func</span><span class=special>(</span><span class=identifier>T data</span><span class=special>);</span></font></code></pre>
+<pre><code><font color="#000000"><span class=identifier>    </span><span class=keyword>void </span><span class=identifier>func</span><span class=special>(</span><span class=identifier>T</span><span class="special">&amp;</span><span class=identifier> data</span><span class=special>);</span></font></code></pre>
 <p><b>Signature for functors:</b><br>
 </p>
 <pre><code><font color="#000000"><span class=special>    </span><span class=keyword>struct </span><span class=identifier>ftor
     </span><span class=special>{
-        </span><span class=keyword>void </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>T data</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
+        </span><span class=keyword>void </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>T</span><span class="special">&amp;</span><span class=identifier> data</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
     </span><span class=special>};</span></font></code></pre>
 <p>Where <tt>T</tt> is the data type of the symbol table (the <tt>T</tt> in its 
   template parameter list). When the symbol table successfully matches something 
@@ -178,7 +178,7 @@
     </span><span class=special>} </span><span class=identifier>ones_p</span><span class=special>;</span></pre>
 <p>Notice that a user defined struct <tt>ones</tt> is subclassed from <tt>symbols</tt>. 
   Then at construction time, we added all the symbols using the <tt>add</tt> symbol_inserter.</p>
-<p>[See libs/spirit/example/fundamental/roman_numerals.cpp]</p>
+<p> <img height="16" width="15" src="theme/lens.gif"> The full source code can be <a href="../example/fundamental/roman_numerals.cpp">viewed here</a>. This is part of the Spirit distribution.</p>
 <p>Again, <tt>add</tt> may also be used as a semantic action since it conforms 
   to the action interface (see semantic actions):<br>
 </p>
@@ -190,16 +190,15 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="scoped_lock.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="trees.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="trees.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 </body>
 </html>

@@ -22,8 +22,8 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="directives.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="grammar.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="grammar.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
 <p>The <b>scanner</b>'s task is to feed the sequential input data stream to the 
   parser. The scanner extracts data from the input, parceling, potentially modifying 
@@ -46,8 +46,8 @@
 </blockquote>
 <p>These policies are mostly hidden from view and users generally need not know 
   about them. Advanced users might however provide their own policies that override 
-  the ones that are already in place in order to fine tune the parsing process 
-  to fit her own needs. We shall see how this can be done. This will be covered 
+  the ones that are already in place to fine tune the parsing process 
+  to fit their own needs. We shall see how this can be done. This will be covered 
   in further detail later.</p>
 <p>The <tt>scanner</tt> is a template class expecting two parameters: <tt>IteratorT</tt>, 
   the iterator type and <tt>PoliciesT</tt>, its set of policies. <tt>IteratorT</tt> 
@@ -70,7 +70,7 @@
   The second works on the <b>phrase level</b> and asks for a <b>skip parser</b>.</p>
 <p>The <b>skip parser</b> is just about any parser primitive or composite. Its 
   purpose is to move the scanner's <tt>first</tt> iterator to valid tokens by 
-  skipping what are considered white spaces. In C for instance, the tab <tt class="quotes">'\t'</tt>, 
+  skipping white spaces. In C for instance, the tab <tt class="quotes">'\t'</tt>, 
   the newline <tt class="quotes">'\n'</tt>, return <tt><span class="quotes">'\r'</span></tt>, 
   space <tt class="quotes">' '</tt> and characters inside comments <tt class="quotes">/*...*/</tt> 
   are considered as white spaces.</p>
@@ -146,13 +146,25 @@
       or full). </td>
   </tr>
 </table>
+<h2><a name="phrase_scanner_t" id="phrase_scanner_t"></a><img src="theme/lens.gif" width="15" height="16"> 
+  The phrase_scanner_t and wide_phrase_scanner_t</h2>
+<p>For convenience, Spirit declares these typedefs:</p>
+<pre>
+    <span class="keyword">typedef</span> scanner<span class="special">&lt;</span><span class="keyword">char const</span><span class="special">*,</span> unspecified<span class="special">&gt;</span> phrase_scanner_t<span class="special">;</span>
+    <span class="keyword">typedef</span> scanner<span class="special">&lt;</span><span class="keyword">wchar_t const</span><span class="special">*,</span> <span class="identifier">unspecified</span><span class="special">&gt;</span> wide_phrase_scanner_t<span class="special">;</span>
+</pre>
+<p>These are the exact scanner types used by Spirit on calls to the parse function 
+  passing in a <tt>char const*</tt> (C string) or a <tt>wchar_t const*</tt> (wide 
+  string) as the first parameter and a <tt>space_p</tt> as skip-parser (the third 
+  parameter). For instance, we can use these typedefs to declare some rules. Example:</p>
+<pre>    rule<span class="special">&lt;</span>phrase_scanner_t<span class="special">&gt; </span><span class="identifier">my_rule</span><span class="special">;
+    </span><span class="identifier">parse</span><span class="special">(</span><span class="string">&quot;abrakadabra&quot;</span><span class="special">, </span><span class="identifier">my_rule</span><span class="special">,</span> <span class="identifier">space_p</span><span class="special">);</span></pre>
 <h2><img src="theme/lens.gif" width="15" height="16"> Direct parsing with Iterators</h2>
-<p>On some occassions, we may wish to go low-level and call the parser's parse 
-  member function directly. Since we have the free parse functions to begin with, 
-  the truth is, we might not even need to know about these scanner intricacies. 
-  We might come across it, however, sometime in the future when we need to get 
-  under the hood. So, it's nice that we know what we are dealing with when that 
-  need comes. </p>
+<p>The free parse functions make it easy for us. By using them, we need not bother 
+  with the scanner intricacies. The free parse functions hide the dirty details. 
+  However, sometime in the future, we will need to get under the hood. It's nice 
+  that we know what we are dealing with when that need comes. We will need to 
+  go low-level and call the parser's parse member function directly. </p>
 <p>If we wish to work on the <b>character level</b>, the procedure is quite simple:</p>
 <pre><span class=identifier>    </span><span class=identifier>scanner</span><span class=special>&lt;</span><span class=identifier>IteratorT</span><span class=special>&gt; </span><span class=identifier>scan</span><span class=special>(</span><span class=identifier>first</span><span class=special>, </span><span class=identifier>last</span><span class=special>);
 
@@ -165,6 +177,22 @@
     </span><span class=special>{
         </span><span class=comment>//  Parsing failure. The parser failed to recognize the input
     </span><span class=special>}</span></pre>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/alert.gif" width="16" height="16"> <strong>The 
+      scanner position on an unsucessful match</strong><br> <br>
+      On a successful match, the input is advanced accordingly. But what happens 
+      on an unsuccessful match? Be warned. It might be intuitive to think that 
+      the scanner position is reset to its initial position prior to parsing. 
+      No, the position is not reset. On an unsuccessful match, the position of 
+      the scanner is <strong>undefined</strong>! Usually, it is positioned at 
+      the farthest point where the error was found somewhere down the recursive 
+      descent. If this behavior is not desired, you may need to position the scanner 
+      yourself. The <a href="numerics.html#scanner_save">example in the numerics 
+      chapter</a> illustrates how the scanner position can be saved and later 
+      restored.</td>
+  </tr>
+</table>
 <p>Where <tt>p</tt> is the parser we want to use, and <tt>first</tt>/<tt>last</tt> 
   are the iterator pairs referring to the input. We just create a scanner given 
   the iterators. The scanner type we will use here uses the default <tt>scanner_policies&lt;&gt;</tt>.</p>
@@ -204,35 +232,56 @@
   the rule's type must be:</p>
 <pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>lexeme_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span>r<span class=special>;</span></pre>
 <p>where <span class=identifier><tt>ScannerT</tt></span> is the actual type of 
-  the scanner used. Note: make sure to add &quot;<tt>typename</tt>&quot; before 
-  <tt>lexeme_scanner</tt> when this is used inside a template class or function.</p>
+  the scanner used. </p>
 <h2><a name="as_lower_scanner"></a>as_lower_scanner</h2>
 <p>Similarly, the <tt>as_lower_d</tt> does its work by filtering and converting 
   all characters received from the scanner to lower case. This is also done by 
   tweaking the <a href="scanner.html">scanner</a>. Then again, all parsers inside 
   the <tt>as_lower_d</tt> gets a transformed scanner type. If a rule must be used 
-  inside a <tt>lexeme_d</tt>, the rule's type must be:</p>
+  inside a <tt>as_lower_d</tt>, the rule's type must be:</p>
 <pre>    <span class=identifier>rule</span><span class=special>&lt;</span><span class=identifier>as_lower_scanner</span><span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span>r<span class=special>;</span></pre>
 <p>where <span class=identifier><tt>ScannerT</tt></span> is the actual type of 
-  the scanner used. Note: again, make sure to add &quot;<tt>typename</tt>&quot; 
-  before <tt>lexeme_scanner</tt> when this is used inside a template class or 
-  function.</p>
+  the scanner used. </p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/bulb.gif" width="13" height="18"> See 
+      the techniques section for an <a href="techniques.html#multiple_scanner_support">example</a> 
+      of a <a href="grammar.html">grammar</a> using a <a href="rule.html#multiple_scanner_support">multiple 
+      scanner enabled rule</a>, <a href="scanner.html#lexeme_scanner">lexeme_scanner</a> 
+      and <a href="scanner.html#as_lower_scanner">as_lower_scanner.</a></td>
+  </tr>
+</table>
+<h3><a name="no_actions_scanner"></a>no_actions_scanner</h3>
+<p>Again, <tt>no_actions_d</tt> directive tweaks the scanner to disable firing 
+  semantic actions. Like before, all parsers inside the <tt>no_actions_d</tt> 
+  gets a transformed scanner type. If a rule must be used inside a <tt>no_actions_d</tt>, 
+  the rule's type must be:</p>
+<pre>    <span class=identifier>rule</span><span class=special>&lt;</span>no_actions_scanner<span class="special">&lt;</span><span class=identifier>ScannerT</span><span class=special>&gt;::</span><span class="identifier">type</span><span class=special>&gt; </span>r<span class=special>;</span></pre>
+<p>where <tt>ScannerT</tt> is the actual type of the scanner used. <span class=special></span></p>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td class="note_box"><img src="theme/note.gif" width="16" height="16"> Be 
+      sure to add &quot;<tt>typename</tt>&quot; before <tt><span class=identifier><tt>lexeme_scanner</tt>, 
+      <tt>as_lower_scanner</tt></span></tt> and <tt>no_actions_scanner</tt> when 
+      these are used inside a template class or function.</td>
+  </tr>
+</table>
+<p><img src="theme/lens.gif" width="15" height="16"> See <a href="../example/fundamental/no_actions.cpp">no_actions.cpp</a>. This is part of the Spirit distribution.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="directives.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="grammar.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="grammar.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 </body>

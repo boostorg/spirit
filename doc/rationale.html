@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Functor Parser</title>
+<title>Rationale</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="theme/style.css" type="text/css">
 </head>
@@ -20,7 +20,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="faq.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="acknowledgments.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="acknowledgments.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
 <p><img src="theme/lens.gif" width="15" height="16"> <strong>Virtual functions: 
@@ -100,22 +100,63 @@
   to encode the RHS parser expression in an opaque abstract parser type. While 
   it serves its purpose well, the rule's virtual functions are the stumbling blocks 
   to more advanced metaprogramming. Subrules are free from virtual functions.</p>
+<p><img src="theme/lens.gif" width="15" height="16"><b> <a name="exhaustive_rd"></a>Exhaustive 
+  backtracking and greedy RD</b></p>
+<p>Spirit doesn't do exhaustive backtracking like regular expressions are expected 
+  to. For example:</p>
+<pre>    <span class="special">*</span>chlit_p<span class="special">(</span><span class="quotes">'a'</span><span class="special">) &gt;&gt;</span> chlit_p<span class="special">(</span><span class="quotes">'a'</span><span class="special">);</span></pre>
+<p>will always fail to match because Spirit's Kleene star does not back off when 
+  the rest of the rule fails to match. </p>
+<p>Actually, there's a solution to this greedy RD problem. Such a scheme is discussed 
+  in section 6.6.2 of <a 
+href="http://www.cs.vu.nl/%7Edick/PTAPG.html">Parsing Techniques: A Practical 
+  Guide</a>. The trick involves passing a <em>tail</em> parser (in addition to 
+  the scanner) to each parser. The start parser will then simply be: <tt>start 
+  &gt;&gt; end_p;</tt> (end_p is the start's tail). </p>
+<p>Spirit is greedy --using straight forward, naive RD. It is certainly possible 
+  to implement the fully backtracking scheme presented above, but there will be 
+  also certainly be a performance hit. The scheme will always try to match all 
+  possible parser paths (full parser hierarchy traversal) until it reaches a point 
+  of certainty, that the whole thing matches or fails to match. </p>
+<table border="0" width="80%" align="center">
+  <tr> 
+    <td class="note_box"><p><img src="theme/note.gif" width="16" height="16"><b>Backtracking 
+        and Greedy RD </b><br>
+        <br>
+        Spirit is quite consistent and intuitive about when it backtracks and 
+        to where, although it may not be obvious to those coming from different 
+        backgrounds. In general, any (sub)parser will, given the same input, always 
+        match the same portion of the input (or fail to match the input at all). 
+        This means that Spirit is inherently greedy. Spirit will only backtrack 
+        when a (sub)parser fails to match the input, and it will always backtrack 
+        to the next choice point upward (not backward) in the parser structure. 
+        In other words abb|ab will match &quot;ab&quot;, as will a(bb|b), but 
+        (ab|a)b won't because the (ab|a) subparser will always match the 'b' after 
+        the 'a' if it is available.</p>
+      <p>--Rainer Deyke</p>
+      </td>
+  </tr>
+</table>
+<p>There's a strong preference on &quot;simplicity with all the knobs when you 
+  need them&quot; approach, right now. On the other hand, the flexibility of Spirit 
+  makes it possible to have different optional schemes available. It might be 
+  possible to implement an exhaustive backtracking RD scheme as an optional feature 
+  in the future. </p>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="faq.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="acknowledgments.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="acknowledgments.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

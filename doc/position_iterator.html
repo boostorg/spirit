@@ -21,8 +21,8 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="file_iterator.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="debugging.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="debugging.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
 <p>Often, when writing a parser that is able to detect errors in the format of 
   the input stream, we want it to communicate to the user where the error happened 
@@ -34,7 +34,7 @@
   this class is an iterator wrapper that keeps track of the current position within 
   the file, including current file, line and column. It requires a single template 
   parameter, which should be the type of the iterator that is to be wrapped.</p>
-<p> In order to use it, you'll need to add the following include:</p>
+<p> To use it, you'll need to add the following include:</p>
 <pre>
     <code><span class=preprocessor>#include </span><span class=special>&lt;</span><span class=identifier>boost</span><span class=special>/</span><span class=identifier>spirit</span><span class=special>/</span><span class=identifier>iterator</span><span class=special>/</span><span class=identifier>position_iterator</span><span class=special>.</span><span class=identifier>hpp</span><span class=special>&gt;</span></code></pre>
 <p> Or include all the iterators in Spirit:</p>
@@ -98,22 +98,21 @@
       column is 1</td>
   </tr>
 </table>
-<br>
+<p><img src="theme/lens.gif" width="15" height="16"> See <a href="../example/fundamental/position_iterator/position_iterator.cpp">position_iterator.cpp</a> for a compilable example. This is part of the Spirit distribution.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="file_iterator.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="debugging.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="debugging.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <hr size="1">
 <p class="copyright">Copyright &copy; 2002 Juan Carlos Arevalo-Baeza<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose. </font> </p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt) </font> </p>
 <p class="copyright">&nbsp; </p>
 <p>&nbsp;</p>
 </body>

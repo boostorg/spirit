@@ -22,7 +22,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="primitives.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="numerics.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="numerics.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
 <p>Operators are used as a means for object composition and embedding. Simple 
@@ -39,6 +39,7 @@
 <pre><code><font color="#000000">    <span class=identifier>op</span><span class=special>&lt;</span><span class=identifier>parser1</span><span class=special>, </span><span class=identifier>parser2</span><span class=special>&gt;</span></font></code></pre>
 <p>where parser1 and parser2 can be arbitrarily complex parsers themselves, with 
   the only limitations being what your compiler imposes. </p>
+<h3>Set Operators</h3>
 <table width="90%" border="0" align="center">
   <tr> 
     <td class="table_title" colspan="3">Set operators</td>
@@ -69,7 +70,7 @@
     <td class="table_cells" width="56%">Match a or b, but not both</td>
   </tr>
 </table>
-<p> <b>Short-circuiting</b></p>
+<p><b>Short-circuiting</b></p>
 <p>Alternative operands are tried one by one on a first come first served basis 
   starting from the leftmost operand. After a successfully matched alternative 
   is found, the parser concludes its search, essentially short-circuiting the 
@@ -104,7 +105,7 @@
       character parsers</a> for examples).</td>
   </tr>
 </table>
-<br>
+<h3>Sequencing Operators</h3>
 <table width="90%" border="0" align="center">
   <tr> 
     <td class="table_title" colspan="3">Sequencing operators</td>
@@ -134,10 +135,8 @@
   b</tt> reads as match a and b in sequence. Continuing this logic, we can also 
   have a sequential-or operator where the expression <tt>a <span class="operators">||</span> 
   b</tt> reads as match a or b and in sequence. That is, if both a and b match, 
-  it must be in sequence; this is equivalent to <tt>a <span class="operators">|</span> 
-  b <span class="operators">|</span> a <span class="operators">&gt;&gt;</span> 
-  b</tt>.</p>
-<br>
+  it must be in sequence; this is equivalent to <tt>a &gt;&gt; !b | b</tt>. </p>
+<h3>Optional and Loops</h3>
 <table width="90%" border="0" align="center">
   <tr> 
     <td class="table_title" colspan="3">Optional and Loops</td>
@@ -169,7 +168,7 @@
 <p><img src="theme/note.gif" width="16" height="16"> If we look more closely, 
   take note that we generalized the optional expression of the form <tt>!a</tt> 
   in the same category as loops. This is logical, considering that the optional 
-  matches the expression following it zero (0) or (1) time. </p>
+  matches the expression following it zero (0) or one (1) time. </p>
 <p><b>Primitive type operands</b></p>
 <p> For binary operators, one of the operands but not both may be a <tt>char</tt>, 
   <tt> wchar_t</tt>, <tt>char const<span class="operators">*</span></tt> or <tt>wchar_t 
@@ -183,7 +182,7 @@
   if at least one argument is a user-defined type. Typically, in an expression 
   involving multiple operators, explicitly typing the leftmost operand as a parser 
   is enough to cause propagation to all the rest of the operands to its right 
-  to be acceptable. Examples:</p>
+  to be regarded as parsers. Examples:</p>
 <pre><code><font color="#000000"><span class=identifier>    </span><span class=identifier>r </span><span class=special>= </span><span class=literal>'a' </span><span class=special>| </span><span class=literal>'b' </span><span class=special>| </span><span class=literal>'c' </span><span class=special>| </span><span class=literal>'d'</span><span class=special>;          </span><span class=comment>// ill formed
     </span><span class=identifier>r </span><span class=special>= </span><span class=identifier>ch_p</span><span class=special>(</span><span class=literal>'a'</span><span class=special>)  </span><span class=special>| </span><span class=literal>'b' </span><span class=special>| </span><span class=literal>'c' </span><span class=special>| </span><span class=literal>'d'</span><span class=special>;   </span><span class=comment>// OK</span></font></code></pre>
 <p>The second case is parsed as follows:</p>
@@ -208,17 +207,16 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="primitives.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="numerics.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="numerics.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose. </font> </p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt) </font> </p>
 <p>&nbsp;</p>
 </body>
 </html>

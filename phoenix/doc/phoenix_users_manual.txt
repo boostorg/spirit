@@ -449,7 +449,7 @@ Lazy variables are actors. As such, variables can be evaluated through the actor
 
 prints out "3 Hello World"
 
-Finally, another free function const_ref(cv) may also be used. const_ref(cv) creates an actor<variable<T const&> > object where the data is referenced using a constant reference. This is similar to value<T> but when the data to be passed as argument to a function is heavy and expensive to copy by value, the const_ref(cv) offers a low overhead alternative.
+Finally, another free function const_(cv) may also be used. const_(cv) creates an actor<variable<T const&> > object where the data is referenced using a constant reference. This is similar to value<T> but when the data to be passed as argument to a function is heavy and expensive to copy by value, the const_(cv) offers a low overhead alternative.
 
 [page Composites]
 
@@ -475,7 +475,7 @@ This can be recursive. As mentioned, each of the actors A0..AN can in turn be an
 
 Except for specialized composites, like the actor and unlike the primitives, the composite is a protocol class. A composite does not really know how to perform anything. The actual operation is handled by its actors and finally its operation 'op'. After it has received the arguments passed in by the actor (see actor), all of the arguments are broadcasted to all of the composite's actors for preprocessing. Each of the composite's actors in turn returns a result. These results are then transfered to the composite's operation 'op'.
 
-If this may seem confusing at first, don't fret. Further details will be provided later for those who are inclined to learn more about the framework inside out. However, such information is not at all required to use the framework. After all, composites are not created directly. Instead, some facilities are provided for the generation of composites. These generators are the front-ends. We have seen the var(x), the val(x) and the const_ref(x). These are really generators that create primitives. Likewise, we also have generators that create composites.
+If this may seem confusing at first, don't fret. Further details will be provided later for those who are inclined to learn more about the framework inside out. However, such information is not at all required to use the framework. After all, composites are not created directly. Instead, some facilities are provided for the generation of composites. These generators are the front-ends. We have seen the var(x), the val(x) and the const_(x). These are really generators that create primitives. Likewise, we also have generators that create composites.
 
 Just think of composites as your backbone. You don't really have to scrutinize it to use it; it simply works. The composite is indeed the backbone of the Phoenix framework.
 
@@ -588,7 +588,7 @@ Example:
 
 Lazy-operator application is highly contagious. In most cases, a single argN actor infects all its immediate neighbors within a group (first level or parenthesized expression).
 
-Take note that although at least one of the operands must be a valid actor class in order for lazy evaluation to take effect, if this is not the case and we still want to lazily evaluate an expression, we can use var(x), val(x) or const_ref(x) to transform the operand into a valid action object (see primitives). Example:
+Take note that although at least one of the operands must be a valid actor class in order for lazy evaluation to take effect, if this is not the case and we still want to lazily evaluate an expression, we can use var(x), val(x) or const_(x) to transform the operand into a valid action object (see primitives). Example:
 
     val(1) << 3;
 

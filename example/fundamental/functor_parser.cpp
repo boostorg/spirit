@@ -1,20 +1,24 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Joel de Guzman
     Copyright (c) 2002 Juan Carlos Arevalo-Baeza
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/functor_parser.hpp>
+#include <boost/spirit/actor/assign_actor.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
 
+///////////////////////////////////////////////////////////////////////////////
+//
+//  Demonstrates the functor_parser. This is discussed in the
+//  "Functor Parser" chapter in the Spirit User's Guide.
+//
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
 using namespace boost::spirit;
@@ -62,7 +66,7 @@ functor_parser<number_parser> number_parser_p;
 bool
 parse_number(char const* str, int& n)
 {
-    return parse(str, lexeme_d[number_parser_p[assign(n)]], space_p).full;
+    return parse(str, lexeme_d[number_parser_p[assign_a(n)]], space_p).full;
 }
 
 bool
@@ -71,8 +75,8 @@ parse_numbers(char const* str, std::vector<int>& n)
     return
         parse(
             str,
-            lexeme_d[number_parser_p[append(n)]]
-                >> *(',' >> lexeme_d[number_parser_p[append(n)]]),
+            lexeme_d[number_parser_p[push_back_a(n)]]
+                >> *(',' >> lexeme_d[number_parser_p[push_back_a(n)]]),
             space_p
         ).full;
 }

@@ -21,7 +21,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="indepth_the_parser.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="indepth_the_parser_context.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="indepth_the_parser_context.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </table>
 <h2>Basic Scanner API </h2>
@@ -69,7 +69,7 @@
   make it possible to extend Spirit non-intrusively. The scanner policies allow 
   the core-functionality to be extended without requiring any potentially destabilizing 
   changes to the code. A library writer might provide her own policies that override 
-  the ones that are already in place in order to fine tune the parsing process 
+  the ones that are already in place to fine tune the parsing process 
   to fit her own needs. Layers above the core might also want to take advantage 
   of this policy based machanism. Abstract syntax tree generation, debuggers and 
   lexers come to mind.</p>
@@ -102,8 +102,7 @@
         </span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>::</span><span class=identifier>ref_t
         </span><span class=identifier>get</span><span class=special>(</span><span class=identifier>ScannerT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>) </span><span class=keyword>const
         </span><span class=special>{ </span><span class=keyword>return </span><span class=special>*</span><span class=identifier>scan</span><span class=special>.</span><span class=identifier>first</span><span class=special>; </span><span class=special>}
-    </span><span class=special>};
-</span></code></pre>
+    </span><span class=special>};</span></code></pre>
 <table width="90%" border="0" align="center">
   <tr> 
     <td class="table_title" colspan="8"> Iteration and filtering policies </td>
@@ -130,9 +129,10 @@
     </span><span class=special>{
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>CharT</span><span class=special>&gt;
         </span><span class=identifier>CharT filter</span><span class=special>(</span><span class=identifier>CharT ch</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span>std::<span class=identifier>tolower</span><span class=special>(</span><span class=identifier>ch</span><span class=special>); }
-    };
-</span></code></pre>
+        </span><span class=special>{ 
+            </span><span class=keyword>return </span>std::<span class=identifier>tolower</span><span class=special>(</span><span class=identifier>ch</span><span class=special>); 
+        }
+    };</span></code></pre>
 <a name="match_policy"></a>
 <h2>match_policy</h2>
 <p> Here are the default policies that govern recognition and matching:</p>
@@ -140,24 +140,33 @@
     <code><span class=keyword>struct </span><span class=identifier>match_policy
     </span><span class=special>{
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>T</span><span class=special>&gt;
-        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>{ </span><span class=keyword>typedef </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>&gt; </span><span class=identifier>type</span><span class=special>; </span><span class=special>};
+        </span><span class=keyword>struct </span><span class=identifier>result </span><span class=special>
+        { 
+            </span><span class=keyword>typedef </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>T</span><span class=special>&gt; </span><span class=identifier>type</span><span class=special>; </span><span class=special>
+        };
 
         </span><span class=keyword>const </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>nil_t</span><span class=special>&gt;
         </span><span class=identifier>no_match</span><span class=special>() </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>nil_t</span><span class=special>&gt;(); </span><span class=special>}
+        </span><span class=special>{ </span><span class=keyword>
+            return </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>nil_t</span><span class=special>&gt;(); </span><span class=special>
+        }
 
         </span><span class=keyword>const </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>nil_t</span><span class=special>&gt;
         </span><span class=identifier>empty_match</span><span class=special>() </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>nil_t</span><span class=special>&gt;(</span><span class=number>0</span><span class=special>, </span><span class=identifier>nil_t</span><span class=special>()); </span><span class=special>}
+        </span><span class=special>{ </span><span class=keyword>
+            return </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>nil_t</span><span class=special>&gt;(</span><span class=number>0</span><span class=special>, </span><span class=identifier>nil_t</span><span class=special>()); 
+        </span><span class=special>}
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>AttrT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>IteratorT</span><span class=special>&gt;
         </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>AttrT</span><span class=special>&gt;
         </span><span class=identifier>create_match</span><span class=special>(
-            </span><span class=keyword>unsigned            </span><span class=identifier>length</span><span class=special>,
+            </span><span class=keyword>std::size_t         </span><span class=identifier>length</span><span class=special>,
             </span><span class=identifier>AttrT </span><span class=keyword>const</span><span class=special>&amp;        </span><span class=identifier>val</span><span class=special>,
             </span><span class=identifier>IteratorT </span><span class=keyword>const</span><span class=special>&amp;    </span><span class=comment>/*first*/</span><span class=special>,
             </span><span class=identifier>IteratorT </span><span class=keyword>const</span><span class=special>&amp;    </span><span class=comment>/*last*/</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=keyword>return </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>AttrT</span><span class=special>&gt;(</span><span class=identifier>length</span><span class=special>, </span><span class=identifier>val</span><span class=special>); </span><span class=special>}
+        </span><span class=special>{ </span><span class=keyword>
+            return </span><span class=identifier>match</span><span class=special>&lt;</span><span class=identifier>AttrT</span><span class=special>&gt;(</span><span class=identifier>length</span><span class=special>, </span><span class=identifier>val</span><span class=special>); </span><span class=special>
+        }
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>MatchT</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>IteratorT</span><span class=special>&gt;
         </span><span class=keyword>void
@@ -170,9 +179,10 @@
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>Match1T</span><span class=special>, </span><span class=keyword>typename </span><span class=identifier>Match2T</span><span class=special>&gt;
         </span><span class=keyword>void
         </span><span class=identifier>concat_match</span><span class=special>(</span><span class=identifier>Match1T</span><span class=special>&amp; </span><span class=identifier>l</span><span class=special>, </span><span class=identifier>Match2T </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>r</span><span class=special>) </span><span class=keyword>const
-        </span><span class=special>{ </span><span class=identifier>l</span><span class=special>.</span><span class=identifier>concat</span><span class=special>(</span><span class=identifier>r</span><span class=special>); </span><span class=special>}
-    </span><span class=special>};
-</span></code></pre>
+        </span><span class=special>{ </span><span class=identifier>
+            l</span><span class=special>.</span><span class=identifier>concat</span><span class=special>(</span><span class=identifier>r</span><span class=special>); 
+        </span><span class=special>}
+    </span><span class=special>};</span></code></pre>
 <table width="90%" border="0" align="center">
   <tr> 
     <td class="table_title" colspan="12"> Recognition and matching </td>
@@ -215,16 +225,13 @@
             </span><span class=identifier>AttrT </span><span class=keyword>const</span><span class=special>&amp;        </span><span class=identifier>val</span><span class=special>,
             </span><span class=identifier>IteratorT </span><span class=keyword>const</span><span class=special>&amp;    </span><span class=identifier>first</span><span class=special>,
             </span><span class=identifier>IteratorT </span><span class=keyword>const</span><span class=special>&amp;    </span><span class=identifier>last</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
-    </span><span class=special>};
-</span></code></pre>
+    </span><span class=special>};</span></code></pre>
 <p> The default action policy forwards to:</p>
 <pre>
-    <code><span class=identifier>actor</span><span class=special>(</span><span class=identifier>first</span><span class=special>, </span><span class=identifier>last</span><span class=special>);
-</span></code></pre>
+    <code><span class=identifier>actor</span><span class=special>(</span><span class=identifier>first</span><span class=special>, </span><span class=identifier>last</span><span class=special>);</span></code></pre>
 <p> If the attribute <tt>val</tt> is of type nil_t. Otherwise:</p>
 <pre>
-    <code><span class=identifier>actor</span><span class=special>(</span><span class=identifier>val</span><span class=special>);
-</span></code></pre>
+    <code><span class=identifier>actor</span><span class=special>(</span><span class=identifier>val</span><span class=special>);</span></code></pre>
 <a name="scanner_policies_mixer"></a>
 <h3>scanner_policies mixer</h3>
 <p> The class <tt>scanner_policies</tt> combines the three scanner policy classes 
@@ -253,8 +260,7 @@
   of policies. The result type of the <i>rebound</i> scanner can be can be obtained 
   by calling the metafunction:</p>
 <pre>
-    <code><span class=identifier>rebind_scanner_policies</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>, </span><span class=identifier>PoliciesT</span><span class=special>&gt;::</span><span class=identifier>type
-</span></code></pre>
+    <code><span class=identifier>rebind_scanner_policies</span><span class=special>&lt;</span><span class=identifier>ScannerT</span><span class=special>, </span><span class=identifier>PoliciesT</span><span class=special>&gt;::</span><span class=identifier>type</span></code></pre>
 <a name="rebinding_iterators"></a>
 <h3>Rebinding Iterators</h3>
 <p> The scanner can also be made to rebind to a different iterator type anytime. 
@@ -269,17 +275,16 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="indepth_the_parser.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="indepth_the_parser_context.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="indepth_the_parser_context.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

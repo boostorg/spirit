@@ -21,8 +21,8 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="debugging.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="portability.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="quickref.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
 <p>C++'s exception handling mechanism is a perfect match for error handling in 
   the framework. Imagine a complete parser as a maze. At each branch, the input 
@@ -48,9 +48,9 @@
     </span><span class=keyword>class </span><span class=identifier>parser_error </span><span class=special>
     {
     </span><span class=keyword>public</span><span class=special>:
-                        </span><span class=identifier>    parser_error</span><span class=special>(</span><span class=identifier>IteratorT </span><span class=identifier>where</span><span class=special>, </span><span class=identifier>ErrorDescrT </span><span class=identifier>descriptor</span><span class=special>);
-        </span><span class=identifier>IteratorT </span><span class=keyword>const</span><span class=special></span><span class=identifier>     </span><span class=identifier>where</span><span class=special>;
-        </span><span class=identifier>ErrorDescrT </span><span class=keyword>const</span><span class=special></span><span class=identifier>  </span><span class=identifier> descriptor</span><span class=special>;
+        </span><span class=identifier>parser_error</span><span class=special>(</span><span class=identifier>IteratorT </span><span class=identifier>where</span><span class=special>, </span><span class=identifier>ErrorDescrT </span><span class=identifier>descriptor</span><span class=special>);
+        </span><span class=identifier>IteratorT </span><span class=identifier>where</span><span class=special>;
+        </span><span class=identifier>ErrorDescrT</span><span class=identifier> descriptor</span><span class=special>;
     </span><span class=special>};
 </span></code></pre>
 <p> The exception holds the iterator position where the error was encountered 
@@ -189,8 +189,7 @@
   <td class="table_cells">rethrows the error</td>
   </tr>
 </table>
-<br>
-<br>
+<p><img src="theme/lens.gif" width="15" height="16"> See <a href="../example/fundamental/error_handling.cpp">error_handling.cpp</a> for a compilable example. This is part of the Spirit distribution.</p>
 <table width="80%" border="0" align="center">
 </table>
 <table border="0">
@@ -198,17 +197,16 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="debugging.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="portability.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="quickref.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

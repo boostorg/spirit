@@ -21,8 +21,8 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="list_parsers.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="refactoring.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="refactoring.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
 <p>The simplest way to write your hand coded parser that works well with the rest 
   of the Spirit library is to simply write a functor parser.</p>
@@ -33,20 +33,22 @@
         </span><span class=keyword>typedef </span><span class=identifier>T </span><span class=identifier>result_t</span><span class=special>;
 
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
-        </span><span class=keyword>int </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ScannerT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>, </span><span class=identifier>result_t</span><span class=special>&amp; </span><span class=identifier>result</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
+        </span><span class=keyword>std::ptrdiff_t
+        </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ScannerT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>, </span><span class=identifier>result_t</span><span class=special>&amp; </span><span class=identifier>result</span><span class=special>) </span><span class=keyword>const</span><span class=special>;
     </span><span class=special>};
 </span></code></pre>
 <p> where typedef T result_t; is the attribute type of the parser that will be 
   passed back to the match result (see <a href="indepth_the_parser.html">In-depth: 
   The Parser</a>). If the parser does not need to return an attribute, this can 
-  simply be nil_t. The int result is the number of matching characters matched 
-  by your parser. A negative value flags an unsucessful match.</p>
+  simply be nil_t. The <span class=keyword><tt>std::ptrdiff_t</tt></span> result 
+  is the number of matching characters matched by your parser. A negative value 
+  flags an unsucessful match.</p>
 <p> A conforming functor parser can transformed into a well formed Spirit parser 
   by wrapping it in the functor_parser template:</p>
 <pre>
     <code><span class=identifier>functor_parser</span><span class=special>&lt;</span><span class=identifier>functor</span><span class=special>&gt; </span><span class=identifier>functor_p</span><span class=special>;
 </span></code></pre>
-<a name="example"></a>
+
 <h2>Example</h2>
 <p> The following example puts the functor_parser into action:</p>
 <pre>
@@ -54,8 +56,8 @@
     </span><span class=special>{
         </span><span class=keyword>typedef </span><span class=keyword>int </span><span class=identifier>result_t</span><span class=special>;
         </span><span class=keyword>template </span><span class=special>&lt;</span><span class=keyword>typename </span><span class=identifier>ScannerT</span><span class=special>&gt;
-        </span><span class=keyword>int
-        </span><span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ScannerT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>, </span><span class=identifier>result_t</span><span class=special>&amp; </span><span class=identifier>result</span><span class=special>) </span><span class=keyword>const
+        </span><span class=keyword>std::ptrdiff_t</span>
+        <span class=keyword>operator</span><span class=special>()(</span><span class=identifier>ScannerT </span><span class=keyword>const</span><span class=special>&amp; </span><span class=identifier>scan</span><span class=special>, </span><span class=identifier>result_t</span><span class=special>&amp; </span><span class=identifier>result</span><span class=special>) </span><span class=keyword>const
         </span><span class=special>{
             </span><span class=keyword>if </span><span class=special>(</span><span class=identifier>scan</span><span class=special>.</span><span class=identifier>at_end</span><span class=special>())
                 </span><span class=keyword>return </span><span class=special>-</span><span class=number>1</span><span class=special>;
@@ -65,7 +67,7 @@
                 </span><span class=keyword>return </span><span class=special>-</span><span class=number>1</span><span class=special>;
 
             </span><span class=identifier>result </span><span class=special>= </span><span class=number>0</span><span class=special>;
-            </span><span class=keyword>int </span><span class=identifier>len </span><span class=special>= </span><span class=number>0</span><span class=special>;
+            </span><span class=keyword>std::ptrdiff_t</span> <span class=identifier>len </span><span class=special>= </span><span class=number>0</span><span class=special>;
 
             </span><span class=keyword>do
             </span><span class=special>{
@@ -80,9 +82,9 @@
 
     </span><span class=identifier>functor_parser</span><span class=special>&lt;</span><span class=identifier>number_parser</span><span class=special>&gt; </span><span class=identifier>number_parser_p</span><span class=special>;
 </span></code></pre>
-<p> To further understand the implementation, see <a href="indepth_the_scanner.html">In-depth: 
-  The Scanner</a> for the scanner API details. We now have a parser <tt>number_parser_p</tt> 
-  that we can use just like any other Spirit parser. Example:</p>
+<p>  <img src="theme/lens.gif" width="15" height="16"> The full source code can be <a href="../example/fundamental/functor_parser.cpp">viewed here</a>. This is part of the Spirit distribution. </p>
+<p>To further understand the implementation, see <a href="indepth_the_scanner.html">In-depth: 
+    The Scanner</a> for the scanner API details. We now have a parser <tt>number_parser_p</tt> that we can use just like any other Spirit parser. Example:</p>
 <pre>
     <code><span class=identifier>r </span><span class=special>= </span><span class=identifier>number_parser_p </span><span class=special>&gt;&gt; </span><span class=special>*(</span><span class=literal>',' </span><span class=special>&gt;&gt; </span><span class=identifier>number_parser_p</span><span class=special>);
 </span></code></pre>
@@ -91,17 +93,16 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="list_parsers.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="refactoring.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="refactoring.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

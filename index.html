@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Spirit v1.6</title>
+<title>Spirit v1.8</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="doc/theme/style.css" type="text/css">
 </head>
@@ -12,7 +12,7 @@
       <h1></h1>
     </td>
     <td width="85%"> <font face="Verdana, Arial, Helvetica, sans-serif"><b><font size="6">Spirit 
-      v1.6.0 </font></b></font></td>
+      v1.8.0 User's Guide</font></b></font></td>
     <td width="112"><a href="http://spirit.sf.net"><img src="doc/theme/spirit.gif" width="112" height="48" align="right" border="0"></a></td>
   </tr>
 </table>
@@ -51,6 +51,9 @@
   <tr> 
     <td class="toc_cells_L1"><a href="doc/rule.html">The Rule</a></td>
   </tr>
+  <tr>
+    <td class="toc_cells_L1"><a href="doc/epsilon.html">Epsilon</a></td>
+  </tr>
   <tr> 
     <td class="toc_cells_L1"><a href="doc/directives.html">Directives</a></td>
   </tr>
@@ -68,10 +71,6 @@
     </td>
   </tr>
   <tr> 
-    <td class="toc_cells_L1"><a href="doc/predefined_actions.html">Predefined 
-      Actions</a> </td>
-  </tr>
-  <tr> 
     <td class="toc_cells_L1"><a href="doc/indepth_the_parser.html">In-depth: The 
       Parser</a></td>
   </tr>
@@ -84,14 +83,24 @@
       The Parser Context</a></td>
   </tr>
   <tr> 
+    <td class="toc_cells_L0"><strong>Actors</strong></td>
+  </tr>
+  <tr> 
+    <td class="toc_cells_L1"><a href="doc/predefined_actors.html">Predefined Actions</a> 
+    </td>
+  </tr>
+  <tr> 
     <td class="toc_cells_L0"><b>Attribute</b></td>
   </tr>
   <tr> 
     <td class="toc_cells_L1"><a href="doc/parametric_parsers.html">Parametric 
       Parsers</a></td>
   </tr>
+  <tr>
+    <td class="toc_cells_L1"><a href="doc/functional.html">Functional</a></td>
+  </tr>
   <tr> 
-    <td class="toc_cells_L1"><a href="doc/functional.html">Functional</a><a href="doc/parametric_parsers.html"></a></td>
+    <td class="toc_cells_L1"><a href="doc/phoenix.html">Phoenix</a><a href="doc/parametric_parsers.html"></a></td>
   </tr>
   <tr> 
     <td class="toc_cells_L1"><a href="doc/closures.html">Closures</a></td>
@@ -101,6 +110,18 @@
   </tr>
   <tr> 
     <td class="toc_cells_L1"><a href="doc/dynamic_parsers.html">Dynamic Parsers</a></td>
+  </tr>
+  <tr> 
+    <td class="toc_cells_L1"><a href="doc/stored_rule.html">Storable Rules</a></td>
+  </tr>
+  <tr> 
+    <td class="toc_cells_L1"><a href="doc/the_lazy_parser.html">The Lazy Parser</a></td>
+  </tr>
+  <tr> 
+    <td class="toc_cells_L1"><a href="doc/select_parser.html">The Select Parser</a></td>
+  </tr>
+  <tr> 
+    <td class="toc_cells_L1"><a href="doc/switch_parser.html">The Switch Parser</a></td>
   </tr>
   <tr> 
     <td class="toc_cells_L0"><b>Utility</b></td>
@@ -166,10 +187,19 @@
     <td class="toc_cells_L0"><a href="doc/error_handling.html">Error Handling</a></td>
   </tr>
   <tr> 
+    <td class="toc_cells_L0"><a href="doc/quickref.html">Quick Reference</a></td>
+  </tr>
+  <tr>
+    <td class="toc_cells_L0"><a href="doc/includes.html">Includes</a></td>
+  </tr>
+  <tr> 
     <td class="toc_cells_L0"><a href="doc/portability.html">Portability</a></td>
   </tr>
   <tr> 
     <td class="toc_cells_L0"><a href="doc/style_guide.html">Style Guide</a></td>
+  </tr>
+  <tr> 
+    <td class="toc_cells_L0"><a href="doc/techniques.html">Techniques</a></td>
   </tr>
   <tr> 
     <td class="toc_cells_L0"><a href="doc/faq.html">FAQ</a></td>
@@ -198,13 +228,15 @@
         Copyright &copy; 2002 Jeff Westfahl<br>
         Copyright &copy; 2002 Juan Carlos Arevalo-Baeza<br>
         </font><font size="2"><font color="#666666">Copyright &copy; 2003 Martin 
-        Wille </font></font><font color="#666666"> </font> </font></div>
-      <p><font size="2"> <font color="#666666">Permission to copy, use, modify, 
-        sell and distribute this document is granted provided this copyright notice 
-        appears in all copies. This document is provided &quot;as is&quot; without 
-        express or implied warranty, and with no claim as to its suitability for 
-        any purpose. </font> </font></p>
-      </td>
+        Wille <br>
+        Copyright &copy; 2003 Ross Smith<br>
+        <font size="2"><font size="2">Copyright &copy; 2003</font></font></font> 
+        <font color="#666666">Jonathan de Halleux </font></font></font></div>
+      <p><font size="2"> <font color="#666666"> Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
+ </font> </font></p>
+    </td>
   </tr>
 </table>
 <br>

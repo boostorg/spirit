@@ -21,12 +21,13 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="closures.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="escape_char_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
-   </tr>
+    <td width="30"><a href="the_lazy_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
+  </tr>
 </table>
-<p>Dynamic parsers allow to adjust parsing according to conditions. Constructing 
-  dynamic parsers requires a condition argument and a body parser argument. Additional 
-  arguments are required by some parsers.</p>
+<p>We see dynamic parsing everywhere in Spirit. A special group of parsers, aptly named dynamic parsers, form the most basic building blocks to dynamic parsing. This chapter focuses on these  critters. You'll notice the similarity of these parsers with C++'s control structures. The similarity is not a coincidence. These parsers give an imperative flavor to parsing, and, since imperative constructs are not native to declarative EBNF, mimicking the host language, C++, should make their use immediately familiar. </p>
+<p>Dynamic parsers modify the parsing behavior according to conditions. Constructing 
+    dynamic parsers requires a condition argument and a body parser argument. Additional 
+    arguments are required by some parsers.</p>
 <h2>Conditions</h2>
 <p>Functions or functors returning values convertable to bool can be used as conditions. 
   When the evaluation of the function/functor yields true it will be considered 
@@ -58,8 +59,8 @@
   A failure to match the body-parser will cause a failure to be reported by the 
   while/do-parser.</p>
 <p>Example:</p>
-<pre><span class=special>    </span><span class=identifier>uint_p</span><span class=special>[</span><span class=identifier>assign</span><span class=special>(</span><span class=identifier>sum</span><span class=special>)] &gt;&gt; </span><span class=identifier>while_p</span><span class=special>(</span><span class=literal>'+'</span><span class=special>)[</span><span class=identifier>uint_p</span><span class=special>(</span><span class=identifier>add</span><span class=special>(</span><span class=identifier>sum</span><span class=special>)]
-    </span><span class=literal>'&quot;' </span><span class=special>&gt;&gt; </span><span class="identifier">while_p</span><span class=special>(~</span><span class=identifier>eps_p</span><span class=special>(</span><span class=literal>'&quot;'</span><span class=special>))[</span><span class=identifier>c_escape_ch_p</span><span class=special>[</span><span class=identifier>append</span><span class=special>(</span><span class=identifier>result</span><span class=special>)]] &gt;&gt; </span><span class=literal>'&quot;'</span>
+<pre><span class=special>    </span><span class=identifier>uint_p</span><span class=special>[</span><span class=identifier>assign_a</span><span class=special>(</span><span class=identifier>sum</span><span class=special>)] &gt;&gt; </span><span class=identifier>while_p</span><span class=special>(</span><span class=literal>'+'</span><span class=special>)[</span><span class=identifier>uint_p</span><span class=special>(</span><span class=identifier>add</span><span class=special>(</span><span class=identifier>sum</span><span class=special>)]
+    </span><span class=literal>'&quot;' </span><span class=special>&gt;&gt; </span><span class="identifier">while_p</span><span class=special>(~</span><span class=identifier>eps_p</span><span class=special>(</span><span class=literal>'&quot;'</span><span class=special>))[</span><span class=identifier>c_escape_ch_p</span><span class=special>[</span><span class=identifier>push_back_a</span><span class=special>(</span><span class=identifier>result</span><span class=special>)]] &gt;&gt; </span><span class=literal>'&quot;'</span>
 </pre>
 <h2>for_p</h2>
 <p><tt>for_p</tt> requires four arguments. The syntax is:</p>
@@ -68,11 +69,8 @@
   will:</p>
 <ol>
   <li> call init</li>
-  <li>check the condition, if the condition isn't met then<br>
-    a match is returned. The match will cover everything that<br>
-    has been matched successfully up to this point.</li>
-  <li> tries to match the body-parser. A failure to match the body-parser will<br>
-    cause a failure to be reported by the for-parser</li>
+  <li>check the condition, if the condition isn't met then a match is returned. The match will cover everything that has been matched successfully up to this point.</li>
+  <li> tries to match the body-parser. A failure to match the body-parser will cause a failure to be reported by the for-parser</li>
   <li> calls step</li>
   <li> goes to 2.</li>
 </ol>
@@ -81,7 +79,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="closures.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="escape_char_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="the_lazy_parser.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
@@ -89,10 +87,9 @@
 <p class="copyright">Copyright &copy; 2002-2003 Joel de Guzman<br>
   Copyright &copy; 2002-2003 Martin Wille<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 <p class="copyright">&nbsp;</p>
 </body>
 </html>

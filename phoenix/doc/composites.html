@@ -49,7 +49,7 @@ This can be recursive. As mentioned, each of the actors A0..AN can in turn be an
 <p>
 Except for specialized composites, like the actor and unlike the primitives, the composite is a protocol class. A composite does not really know how to perform anything. The actual operation is handled by its actors and finally its operation 'op'. After it has received the arguments passed in by the actor (see actor), all of the arguments are broadcasted to all of the composite's actors for preprocessing. Each of the composite's actors in turn returns a result. These results are then transfered to the composite's operation 'op'.</p>
 <p>
-If this may seem confusing at first, don't fret. Further details will be provided later for those who are inclined to learn more about the framework inside out. However, such information is not at all required to use the framework. After all, composites are not created directly. Instead, some facilities are provided for the generation of composites. These generators are the front-ends. We have seen the var(x), the val(x) and the const_ref(x). These are really generators that create primitives. Likewise, we also have generators that create composites.</p>
+If this may seem confusing at first, don't fret. Further details will be provided later for those who are inclined to learn more about the framework inside out. However, such information is not at all required to use the framework. After all, composites are not created directly. Instead, some facilities are provided for the generation of composites. These generators are the front-ends. We have seen the var(x), the val(x) and the const(x). These are really generators that create primitives. Likewise, we also have generators that create composites.</p>
 <p>
 Just think of composites as your backbone. You don't really have to scrutinize it to use it; it simply works. The composite is indeed the backbone of the Phoenix framework.</p>
 <table border="0">
@@ -60,10 +60,11 @@ Just think of composites as your backbone. You don't really have to scrutinize i
    </tr>
 </table>
 <br>
-<hr size="1"><p class="copyright">Copyright &copy; 2001-2002 Joel de Guzman<br><br>
-<font size="2">Permission to copy, use, modify, sell and distribute this document
- is granted provided this copyright notice appears in all copies. This document
- is provided &quot;as is&quot; without express or implied warranty, and with
- no claim as to its suitability for any purpose. </font> </p>
+<hr size="1">
+<p class="copyright">Copyright &copy; 2001-2002 Joel de Guzman<br>
+  <br>
+<font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt) </font> </p>
 </body>
 </html>

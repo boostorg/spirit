@@ -1,7 +1,16 @@
+/*=============================================================================
+    Copyright (c) 2002 Juan Carlos Arevalo-Baeza
+    http://spirit.sourceforge.net/
+
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
+=============================================================================*/
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  A parser for a comma separated list of numbers,
 //  with positional error reporting
+//  See the "Position Iterator" chapter in the User's Guide.
 //
 //  [ JCAB 9/28/2002 ]
 //
@@ -100,10 +109,10 @@ parse_numbers(char const* filename, char const* str, vector<double>& v)
 
         //  Begin grammar
         (
-            (real_p[append(v)] | error_badnumber)
+            (real_p[push_back_a(v)] | error_badnumber)
          >> *(
                 (',' | error_comma)
-             >> (real_p[append(v)] | error_badnumber_or_eol)
+             >> (real_p[push_back_a(v)] | error_badnumber_or_eol)
             )
         )
         ,

@@ -20,7 +20,7 @@
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="refactoring.html"><img src="theme/l_arr.gif" width="20" height="19" border="0"></a></td>
-    <td width="20"><a href="scoped_lock.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="scoped_lock.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <p><a name="regular_expression_parser"></a>Regular expressions are a form of pattern-matching 
@@ -40,10 +40,10 @@
   <tt>rxstrlit</tt> has two constructors. The first accepts a null-terminated 
   character pointer. This constructor may be used to build <tt>rxstrlit's</tt> 
   from quoted regular expression literals. The second constructor takes in a first/last 
-  iterator pair. The function generator version is <tt>rxstr_p</tt>. </p>
+  iterator pair. The function generator version is <tt>regex_p</tt>. </p>
 <p>Here are some examples:</p>
 <pre><code><span class=comment>    </span><span class=identifier>rxstrlit</span><span class=special>&lt;&gt;(</span><span class=string>"Hello[[:space:]]+[W|w]orld"</span><span class=special>)
-    rx</span><span class=identifier>str_p</span><span class=special>(</span><span class=string>"Hello[[:space:]]+[W|w]orld"</span><span class=special>)
+    </span><span class=identifier>regex_p</span><span class=special>(</span><span class=string>"Hello[[:space:]]+[W|w]orld"</span><span class=special>)
 
     </span><span class=identifier>std</span><span class=special>::</span><span class=identifier>string </span><span class=identifier>msg</span><span class=special>(</span><span class=string>"Hello[[:space:]]+[W|w]orld"</span><span class=special>);
     rx</span><span class=identifier>strlit</span><span class=special>&lt;&gt;(</span><span class=identifier>msg</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(), </span><span class=identifier>msg</span><span class=special>.</span><span class=identifier>end</span><span class=special>());</span></code></pre>
@@ -52,7 +52,6 @@
   (see <a href="faq.html#scanner_business">The Scanner Business</a>).</p>
 <p>The Regular Expression Parser is implemented by the help of the <a href="http://www.boost.org/libs/regex/index.htm">Boost 
   Regex++ library</a>, so you have to have some limitations in mind. </p>
-  
 <blockquote>
   <p><img src="theme/bullet.gif" width="12" height="12"> Boost libraries have 
     to be installed on your computer and the Boost root directory has to be added 
@@ -72,21 +71,21 @@
     define this constant and must link your application against the regex library 
     as described in the related documentation.</p>
 </blockquote>
+<p> <img src="theme/lens.gif" width="15" height="16"> See <a href="../example/fundamental/regular_expression.cpp">regular_expression.cpp</a> for a compilable example. This is part of the Spirit distribution.</p>
 <table border="0">
   <tr> 
     <td width="10"></td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="refactoring.html"><img src="theme/l_arr.gif" width="20" height="19" border="0"></a></td>
-    <td width="20"><a href="scoped_lock.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="scoped_lock.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 2001-2002 Hartmut Kaiser<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided &quot;as is&quot; without express or implied warranty, and with 
-  no claim as to its suitability for any purpose.</font></p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)</font></p>
 </body>
 </html>

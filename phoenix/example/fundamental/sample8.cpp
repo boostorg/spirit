@@ -1,22 +1,21 @@
 /*=============================================================================
-    Phoenix V1.0
+    Phoenix v1.1
     Copyright (c) 2001-2003 Joel de Guzman
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <vector>
 #include <algorithm>
 #include <iostream>
 
 #define PHOENIX_LIMIT 5
-#include "boost/spirit/phoenix/operators.hpp"
-#include "boost/spirit/phoenix/primitives.hpp"
-#include "boost/spirit/phoenix/composite.hpp"
-#include "boost/spirit/phoenix/special_ops.hpp"
-#include "boost/spirit/phoenix/statements.hpp"
+#include <boost/spirit/phoenix/operators.hpp>
+#include <boost/spirit/phoenix/primitives.hpp>
+#include <boost/spirit/phoenix/composite.hpp>
+#include <boost/spirit/phoenix/special_ops.hpp>
+#include <boost/spirit/phoenix/statements.hpp>
 
 namespace phoenix {
 

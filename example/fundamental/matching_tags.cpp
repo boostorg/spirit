@@ -1,23 +1,22 @@
 /*=============================================================================
-    Spirit v1.6.0
     Copyright (c) 2002-2003 Joel de Guzman
     http://spirit.sourceforge.net/
 
-    Permission to copy, use, modify, sell and distribute this software is
-    granted provided this copyright notice appears in all copies. This
-    software is provided "as is" without express or implied warranty, and
-    with no claim as to its suitability for any purpose.
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 ////////////////////////////////////////////////////////////////////////////
 //
 //  HTML/XML like tag matching grammar
-//  { demonstrates phoenix and closures and parametric parsers ]
+//  Demonstrates phoenix and closures and parametric parsers
+//  This is discussed in the "Closures" chapter in the Spirit User's Guide.
 //
 //  [ JDG 6/30/2002 ]
 //
 ////////////////////////////////////////////////////////////////////////////
-#include "boost/spirit/core.hpp"
-#include "boost/spirit/attribute.hpp"
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/attribute.hpp>
 #include <iostream>
 #include <string>
 
@@ -31,13 +30,13 @@ using namespace phoenix;
 //  HTML/XML like tag matching grammar
 //
 ////////////////////////////////////////////////////////////////////////////
-struct tags_closure : boost::spirit::closure<tags_closure, string> {
-
+struct tags_closure : boost::spirit::closure<tags_closure, string> 
+{
     member1 tag;
 };
 
-struct tags : public grammar<tags> {
-
+struct tags : public grammar<tags> 
+{
     template <typename ScannerT>
     struct definition {
 

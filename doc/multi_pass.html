@@ -20,7 +20,7 @@
 </td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="trees.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="file_iterator.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="file_iterator.html"><img src="theme/r_arr.gif" border="0"></a></td>
    </tr>
 </tbody></table>
 <p>Backtracking in Spirit requires the use of the following types of iterator: 
@@ -80,8 +80,31 @@ not the case. &nbsp;If your grammar is deterministic, you can make use of flush_
 <p> Again, following up the example we started to use in the section on the scanner 
   . Here's an example using the multi_pass: This time around we are extracting 
   our input from the input stream using an istreambuf_iterator.</p>
-<pre>    <code><span class="preprocessor">#include </span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">iterator</span><span class="special">/</span><span class="identifier">multi_pass</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span><span class="comment"><br>    </span><span class="keyword">using </span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">multi_pass</span><span class="special">;<br>    </span><span class="keyword">using </span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">make_multi_pass</span><span class="special">;<br></span><span class="comment"><br>    </span><span class="identifier">ifstream in</span><span class="special">(</span><span class="string">"input_file.txt"</span><span class="special">); </span><span class="comment">// we get our input from this file<br><br>    </span><span class="keyword">typedef char </span><span class="identifier">char_t</span><span class="special">;<br>    </span><span class="keyword">typedef </span><span class="identifier">multi_pass</span><span class="special">&lt;</span><span class="identifier">istreambuf_iterator</span><span class="special">&lt;</span><span class="identifier">char_t</span><span class="special">&gt; &gt; </span><span class="identifier">iterator_t</span><span class="special">;<br><br>    </span><span class="keyword">typedef </span><span class="identifier">skipper</span><span class="special">&lt;</span><span class="identifier">iterator_t</span><span class="special">&gt; </span><span class="identifier">skipper_t</span><span class="special">;<br>    </span><span class="keyword">typedef </span><span class="identifier">scanner</span><span class="special">&lt;</span><span class="identifier">iterator_t</span><span class="special">&gt; </span><span class="identifier">scanner_t</span><span class="special">;<br>    </span><span class="keyword">typedef </span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">scanner_t</span><span class="special">&gt; </span><span class="identifier">rule_t</span><span class="special">;<br><br>    </span><span class="identifier">skipper_t   skip</span><span class="special">(</span><span class="identifier">space</span><span class="special">, </span><span class="identifier">make_multi_pass</span><span class="special">(</span><span class="identifier">istreambuf_iterator</span><span class="special">&lt;</span><span class="identifier">char_t</span><span class="special">&gt;());<br><br>    </span><span class="identifier">scanner_t   first</span><span class="special">(</span><span class="identifier">make_multi_pass</span><span class="special">(</span><span class="identifier">istreambuf_iterator</span><span class="special">&lt;</span><span class="identifier">char_t</span><span class="special">&gt;(</span><span class="identifier">in</span><span class="special">)), &amp;</span><span class="identifier">skip</span><span class="special">);<br>    </span><span class="identifier">scanner_t   last</span><span class="special">(</span><span class="identifier">make_multi_pass</span><span class="special">(</span><span class="identifier">istreambuf_iterator</span><span class="special">&lt;</span><span class="identifier">char_t</span><span class="special">&gt;()), &amp;</span><span class="identifier">skip</span><span class="special">);<br><br>    </span><span class="identifier">rule_t      n_list </span><span class="special">= </span><span class="identifier">real_p </span><span class="special">&gt;&gt; *(</span><span class="literal">',' </span><span class="special">&gt;&gt; </span><span class="identifier">real_p</span><span class="special">);<br>    </span><span class="identifier">match       m </span><span class="special">= </span><span class="identifier">n_list</span><span class="special">.</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">, </span><span class="identifier">last</span><span class="special">);<br></span></code></pre>
-<a name="flush_multi_pass"></a>
+<pre>    <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>    
+<code><span class="preprocessor">    #include </span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">iterator</span><span class="special">/</span><span class="identifier">multi_pass</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span><span class="comment">
+
+    </span><span class="keyword">using namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;
+    </span><span class="keyword">using namespace</span> <span class="identifier">std</span><span class="special">;</span>
+    
+    <span class="identifier">ifstream in</span><span class="special">(</span><span class="string">"input_file.txt"</span><span class="special">); </span><span class="comment">// we get our input from this file<br><br>    </span><span class="keyword">typedef char </span><span class="identifier">char_t</span><span class="special">;</span>
+    <span class="keyword">typedef </span><span class="identifier">multi_pass</span><span class="special">&lt;</span><span class="identifier">istreambuf_iterator</span><span class="special">&lt;</span><span class="identifier">char_t</span><span class="special">&gt; &gt; </span><span class="identifier">iterator_t</span><span class="special">;</span>
+
+    <span class="keyword">typedef</span> <span class="identifier">skip_parser_iteration_policy</span><span class="special">&lt;</span><span class="identifier">space_parser</span><span class="special">&gt;</span> <span class="identifier">iter_policy_t</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">scanner_policies</span><span class="special">&lt;</span>iter_policy_t<span class="special">&gt;</span> <span class="identifier">scanner_policies_t</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">scanner</span><span class="special">&lt;</span>iterator_t, scanner_policies_t<span class="special">&gt;</span> <span class="identifier">scanner_t</span><span class="special">;</span>
+
+    <span class="keyword">typedef</span> rule<span class="special">&lt;</span>scanner_t<span class="special">&gt;</span> <span class="identifier">rule_t</span><span class="special">;</span>
+
+    <span class="identifier">iter_policy_t</span> <span class="identifier">iter_policy</span><span class="special">(</span><span class="identifier">space_p</span><span class="special">);</span>
+    <span class="identifier">scanner_policies_t</span> <span class="identifier">policies</span><span class="special">(</span><span class="identifier">iter_policy</span><span class="special">);</span>
+    iterator_t first(
+        make_multi_pass(std::istreambuf_iterator&lt;char_t&gt;(in)));
+
+    scanner_t <span class="identifier">scan</span><span class="special">(</span>
+        first<span class="special">,</span> make_multi_pass(std::istreambuf_iterator<span class="special">&lt;</span><span class="identifier">char_t</span><span class="special">&gt;()),</span>
+        <span class="identifier">policies</span><span class="special">)</span>;
+<span class="special"><br>    </span><span class="identifier">rule_t      n_list </span><span class="special">= </span><span class="identifier">real_p </span><span class="special">&gt;&gt; *(</span><span class="literal">',' </span><span class="special">&gt;&gt; </span><span class="identifier">real_p</span><span class="special">);<br>    </span><span class="identifier">match</span><span class="special">&lt;&gt;</span><span class="identifier">     m </span><span class="special">= </span><span class="identifier">n_list</span><span class="special">.</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">scan</span><span class="special">);<br></span></code></pre>
+<a name="flush_multi_pass"></a> 
 <h2>flush_multi_pass</h2>
 <p> There is a predefined pseudo-parser called flush_multi_pass. When this parser 
   is used with multi_pass, it will call multi_pass::clear_queue(). This will cause 
@@ -238,17 +261,16 @@ not the case. &nbsp;If your grammar is deterministic, you can make use of flush_
 </td>
     <td width="30"><a href="../index.html"><img src="theme/u_arr.gif" border="0"></a></td>
     <td width="30"><a href="trees.html"><img src="theme/l_arr.gif" border="0"></a></td>
-    <td width="20"><a href="file_iterator.html"><img src="theme/r_arr.gif" border="0"></a></td>
+    <td width="30"><a href="file_iterator.html"><img src="theme/r_arr.gif" border="0"></a></td>
   </tr>
 </tbody></table>
 <br>
 <hr size="1">
 <p class="copyright">Copyright &copy; 2001-2002 Daniel C. Nuffer<br>
   <br>
-  <font size="2">Permission to copy, use, modify, sell and distribute this document 
-  is granted provided this copyright notice appears in all copies. This document 
-  is provided "as is" without express or implied warranty, and with 
-  no claim as to its suitability for any purpose. </font> </p>
+  <font size="2">Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt) </font> </p>
 <p class="copyright">&nbsp;</p>
 <br>
 </body></html>
