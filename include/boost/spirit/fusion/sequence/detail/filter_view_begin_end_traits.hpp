@@ -20,8 +20,8 @@ namespace boost { namespace fusion
     template <typename First, typename Last, typename Pred>
     struct filter_iterator;
 
-	namespace meta
-	{
+    namespace meta
+    {
         template <typename Tag>
         struct begin_impl;
 
@@ -64,7 +64,7 @@ namespace boost { namespace fusion
                 }
             };
         };
-	}
+    }
 }}
 
 namespace boost { namespace mpl

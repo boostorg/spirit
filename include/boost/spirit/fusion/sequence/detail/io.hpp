@@ -100,7 +100,7 @@ namespace boost { namespace fusion { namespace detail
         static void
         call(IS& is, First const& first, Last const& last, mpl::false_)
         {
-          	meta::equal_to<
+            meta::equal_to<
                 BOOST_DEDUCED_TYPENAME meta::next<First>::type
               , Last
             >
