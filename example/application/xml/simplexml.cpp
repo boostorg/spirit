@@ -32,8 +32,10 @@
 using namespace boost::spirit;
 using namespace std;
 
+// JDG 2-14-2003. Made Parse a template to make Borland happy.
+template <typename RuleT, typename InputT>
 static void
-Parse(rule<> const& rule, char const* expr)
+Parse(RuleT const& rule, InputT expr)
 {
     cout << "/////////////////////////////////////////////////////////\n\n";
 
@@ -84,22 +86,22 @@ main()
     S =
         +(Sch)
     ;
-    
-    Name = 
-        (Letter | '_' | ':') 
+
+    Name =
+        (Letter | '_' | ':')
         >> *(NameChar)
     ;
 
-    AttValue =   
-            '"' 
+    AttValue =
+            '"'
             >> *(
-                    (anychar_p - (chset_t('<') | '&' | '"')) 
+                    (anychar_p - (chset_t('<') | '&' | '"'))
                   | Reference
                 )
             >> '"'
-        |   '\'' 
+        |   '\''
             >> *(
-                    (anychar_p - (chset_t('<') | '&' | '\'')) 
+                    (anychar_p - (chset_t('<') | '&' | '\''))
                   | Reference
                 )
             >> '\''
@@ -107,22 +109,22 @@ main()
 
     chset_t CharDataChar(anychar_p - (chset_t('<') | chset_t('&')));
 
-    CharData =        
+    CharData =
         *(CharDataChar - str_p("]]>"))
     ;
 
-    Comment1 = 
+    Comment1 =
         *(
-              (Char - ch_p('-')) 
+              (Char - ch_p('-'))
             | (ch_p('-') >> (Char - ch_p('-')))
          )
     ;
-    
+
     Comment =
         str_p("<!--") >> Comment1 >> str_p("-->")
     ;
 
-    CDSect = 
+    CDSect =
         str_p("<![CDATA[") >> CData >> str_p("]]>")
     ;
 
@@ -130,109 +132,109 @@ main()
         *(Char - str_p("]]>"))
     ;
 
-    prolog = 
+    prolog =
         !XMLDecl >> *Misc >> !(doctypedecl >> *Misc)
     ;
 
-    XMLDecl = 
-           str_p("<?xml") 
-        >> VersionInfo 
-        >> !EncodingDecl 
-        >> !SDDecl 
-        >> !S 
+    XMLDecl =
+           str_p("<?xml")
+        >> VersionInfo
+        >> !EncodingDecl
+        >> !SDDecl
+        >> !S
         >> str_p("?>")
     ;
-    
+
     VersionInfo =
-           S 
-        >> str_p("version") 
-        >> Eq 
+           S
+        >> str_p("version")
+        >> Eq
         >> (
                 ch_p('\'') >> VersionNum >> '\''
             |   ch_p('"')  >> VersionNum >> '"'
            )
     ;
 
-    Eq = 
+    Eq =
         !S >> '=' >> !S
     ;
 
     chset_t VersionNumCh("A-Za-z0-9_.:-");
 
-    VersionNum = 
+    VersionNum =
         +(VersionNumCh)
     ;
 
-    Misc = 
+    Misc =
         Comment | S
     ;
 
-    doctypedecl = 
-           str_p("<!DOCTYPE") 
-        >> *(Char - (chset_t('[') | '>')) 
-        >> !('[' >> *(Char - ']') >> ']') 
+    doctypedecl =
+           str_p("<!DOCTYPE")
+        >> *(Char - (chset_t('[') | '>'))
+        >> !('[' >> *(Char - ']') >> ']')
         >> '>'
     ;
 
-    SDDecl = 
-           S 
-        >> str_p("standalone") 
-        >> Eq 
+    SDDecl =
+           S
+        >> str_p("standalone")
+        >> Eq
         >> (
                 (ch_p('\'') >> (str_p("yes") | str_p("no")) >> '\'')
              |  (ch_p('"')  >> (str_p("yes") | str_p("no")) >> '"')
            )
     ;
 
-    element = 
+    element =
             EmptyElemTag
         |   STag >> content >> ETag
     ;
 
-    STag = 
-           '<' 
-        >> Name 
-        >> *(S >> Attribute) 
-        >> !S 
+    STag =
+           '<'
+        >> Name
+        >> *(S >> Attribute)
+        >> !S
         >> '>'
     ;
 
-    Attribute = 
+    Attribute =
         Name >> Eq >> AttValue
     ;
 
-    ETag = 
+    ETag =
         str_p("</") >> Name >> !S >> '>'
     ;
 
-    content = 
-        !CharData 
+    content =
+        !CharData
         >> *(
               (
-                 element 
-                 | Reference 
-                 | CDSect 
+                 element
+                 | Reference
+                 | CDSect
                  | Comment
-              ) 
+              )
               >> !CharData
             )
     ;
-    
-    EmptyElemTag = 
-           '<' 
-        >> Name 
-        >> *(S >> Attribute) 
-        >> !S 
+
+    EmptyElemTag =
+           '<'
+        >> Name
+        >> *(S >> Attribute)
+        >> !S
         >> str_p("/>")
     ;
 
-    CharRef = 
+    CharRef =
           str_p("&#") >> +digit_p >> ';'
         | str_p("&#x") >> +xdigit_p >> ';'
     ;
 
-    Reference = 
-          EntityRef 
+    Reference =
+          EntityRef
         | CharRef
     ;
 
@@ -240,15 +242,15 @@ main()
         '&' >> Name >> ';'
     ;
 
-    EncodingDecl = 
-           S 
-        >> str_p("encoding") 
-        >> Eq 
-        >> (   ch_p('"')  >> EncName >> '"' 
+    EncodingDecl =
+           S
+        >> str_p("encoding")
+        >> Eq
+        >> (   ch_p('"')  >> EncName >> '"'
              | ch_p('\'') >> EncName >> '\''
            )
     ;
-    
+
     chset_t EncNameCh = VersionNumCh - chset_t(':');
 
     EncName =
