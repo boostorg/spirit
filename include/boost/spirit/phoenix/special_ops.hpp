@@ -49,7 +49,7 @@ namespace phoenix
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  The following specializations take into account the C++ standard
-//  library components. There are a couple of issues that has to be
+//  library components. There are a couple of issues that have to be
 //  dealt with to enable lazy operator overloads for the standard
 //  library classes.
 //
