@@ -24,7 +24,7 @@ void erase_action_test()
     const char* cp_first = cp;
     const char* cp_last = cp + string_length(cp);
     const char* cp_i[] = {"one","two","three"};
-    size_t i;
+    std::size_t i;
     typedef std::map<std::string, int> map_string_type;
     map_string_type c;
     map_string_type::const_iterator it_find;
