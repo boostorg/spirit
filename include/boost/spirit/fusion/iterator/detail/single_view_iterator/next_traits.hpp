@@ -15,10 +15,10 @@ namespace boost { namespace fusion
 {
     struct single_view_iterator_tag;
 
-    template <typename T>
+    template <typename SingleView>
     struct single_view_iterator_end;
 
-    template <typename T>
+    template <typename SingleView>
     struct single_view_iterator;
 
     namespace single_view_detail 
@@ -27,7 +27,7 @@ namespace boost { namespace fusion
         struct next_traits_impl 
         {
             typedef single_view_iterator_end<
-                FUSION_GET_VALUE_TYPE(Iterator)>
+                typename Iterator::single_view_type>
             type;
 
             static type
