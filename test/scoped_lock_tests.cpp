@@ -23,7 +23,7 @@ void banner()
     std::cout << "\n";
 }
 
-#if !defined(HAVE_BOOST)
+#if defined(DONT_HAVE_BOOST)
 // if boost libraries are not available we have to skip the tests
 int
 main()
@@ -61,4 +61,4 @@ main()
     return 0;
 }
 
-#endif // defined(HAVE_BOOST)
+#endif // !defined(HAVE_BOOST)

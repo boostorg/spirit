@@ -106,8 +106,10 @@ unit-test owi_st_tests : owi_st_tests.cpp
     ;
 
 unit-test owi_mt_tests : owi_mt_tests.cpp
+      <dll>../../thread/build/boost_thread
     : <sysinclude>$(BOOST_ROOT)
-    :
+    : <threading>multi
+	:
     ;
 
 # Spirit.Attribute
@@ -132,6 +134,7 @@ unit-test exception_tests : exception_tests.cpp
 unit-test if_tests : if_tests.cpp
     : <sysinclude>$(BOOST_ROOT)
     :
+	:
     ;
 
 unit-test for_tests : for_tests.cpp
@@ -169,8 +172,9 @@ unit-test escape_char_parser_tests : escape_char_parser_tests.cpp
     ;
 
 unit-test scoped_lock_tests : scoped_lock_tests.cpp
+      <dll>../../thread/build/boost_thread
     : <sysinclude>$(BOOST_ROOT)
-    :
+    : <threading>multi
     ;
 
 # Spirit.Iterator

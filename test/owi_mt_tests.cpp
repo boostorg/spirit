@@ -11,7 +11,7 @@
 // vim:ts=4:sw=4:et
 
 #include <iostream>
-#if defined(HAVE_BOOST)
+#if !defined(DONT_HAVE_BOOST)
 #include <boost/thread/thread.hpp>
 #endif
 #if !defined(BOOST_HAS_THREADS)
@@ -162,4 +162,4 @@ main()
     std::cout << "Test concluded successfully\n";
 }
 
-#endif
+#endif // !defined(DONT_HAVE_BOOST)
