@@ -10,6 +10,7 @@
 
 #include <boost/spirit/fusion/detail/config.hpp>
 #include <boost/spirit/fusion/iterator/deref.hpp>
+#include <boost/spirit/fusion/iterator/value_of.hpp>
 
 namespace boost { namespace fusion
 {
@@ -27,12 +28,12 @@ namespace boost { namespace fusion
             struct apply
             {
                 typedef typename
-                    meta::deref<typename Iterator::first_type>::type
-                deref_type;
+                    meta::value_of<typename Iterator::first_type>::type
+                value_type;
 
                 typedef typename Iterator::transform_type transform_type;
                 typedef typename transform_type::
-                    template apply<deref_type>::type type;
+                    template apply<value_type>::type type;
 
                 static type
                 call(Iterator const& i)

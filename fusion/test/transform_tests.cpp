@@ -18,11 +18,15 @@
 
 #include <boost/spirit/fusion/sequence/generate.hpp>
 
+#include <boost/type_traits/is_reference.hpp>
+
 struct square
 {
+    
     template <typename T>
     struct apply
     {
+        BOOST_STATIC_ASSERT(!boost::is_reference<T>::value);
         typedef int type;
     };
 
@@ -58,6 +62,12 @@ test_main(int, char*[])
         typedef range_c<int, 5, 9> mpl_list1;
         std::cout << transform(mpl_list1(), square()) << std::endl;
         BOOST_TEST((transform(mpl_list1(), square()) == make_tuple(25, 36, 49, 64)));
+    }
+    
+    {
+        tuple<int, int, int> tup(1, 2, 3);
+        std::cout << transform(tup, square()) << std::endl;
+        BOOST_TEST((transform(tup, square()) == make_tuple(1, 4, 9)));
     }
 
     return 0;
