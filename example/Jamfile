@@ -8,10 +8,11 @@
 #==============================================================================
 #
 #  Spirit examples boost-jam file
-#  Joel de Guzman [Sept 27, 2002]   : created
+#  Joel de Guzman [Sep 27, 2002]    : created
 #  Joel de Guzman [Oct 30, 2003]    : separated the applications
 #  Martin Wille   [Jan 15, 2004]    : changes for new directory structure
 #  Martin Wille   [Jan 20, 2004]    : more changes for new directory structure
+#  Joel de Guzman [Jul 29, 2004]    : added calc_debug.cpp
 #
 
 subproject libs/spirit/example ;
@@ -36,6 +37,12 @@ exe boiler_plate
 
 exe calc_plain
     : fundamental/calc_plain.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+exe calc_debug
+    : fundamental/calc_debug.cpp
     : <sysinclude>$(BOOST_ROOT)
     :
     ;
