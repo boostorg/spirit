@@ -153,7 +153,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             fileIdentifier
-                =   identifier.alias()
+                =   identifier
                 ;
 
             block
@@ -171,7 +171,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             label
-                =   unsignedInteger.alias()
+                =   unsignedInteger
                 ;
 
             constantDefinitionPart
@@ -210,7 +210,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             constantIdentifier
-                =   identifier.alias()
+                =   identifier
                 ;
 
             typeDefinitionPart
@@ -272,11 +272,11 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             indexType
-                =   simpleType.alias()
+                =   simpleType
                 ;
 
             componentType
-                =   type.alias()
+                =   type
                 ;
 
             recordType
@@ -321,7 +321,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             caseLabel
-                =   constant.alias()
+                =   constant
                 ;
 
             setType
@@ -329,7 +329,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             baseType
-                =   simpleType.alias()
+                =   simpleType
                 ;
 
             fileType
@@ -395,11 +395,11 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             resultType
-                =   typeIdentifier.alias()
+                =   typeIdentifier
                 ;
 
             statementPart
-                =   compoundStatement.alias()
+                =   compoundStatement
                 ;
 
             statement
@@ -433,11 +433,11 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             entireVariable
-                =   variableIdentifier.alias()
+                =   variableIdentifier
                 ;
 
             variableIdentifier
-                =   identifier.alias()
+                =   identifier
                 ;
 
             componentVariable
@@ -452,7 +452,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             arrayVariable
-                =   identifier.alias()
+                =   identifier
                 ;
 
             fieldDesignator
@@ -460,11 +460,11 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             recordVariable
-                =   identifier.alias()
+                =   identifier
                 ;
 
             fieldIdentifier
-                =   identifier.alias()
+                =   identifier
                 ;
 
             fileBuffer
@@ -472,7 +472,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             fileVariable
-                =   identifier.alias()
+                =   identifier
                 ;
 
             referencedVariable
@@ -480,7 +480,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             pointerVariable
-                =   identifier.alias()
+                =   identifier
                 ;
 
             expression
@@ -540,7 +540,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             functionIdentifier
-                =   identifier.alias()
+                =   identifier
                 ;
 
             set
@@ -568,7 +568,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             procedureIdentifier
-                =   identifier.alias()
+                =   identifier
                 ;
 
             actualParameter
@@ -583,7 +583,7 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             emptyStatement
-                =   empty.alias()
+                =   empty
                 ;
 
             empty
@@ -653,15 +653,15 @@ struct pascal_grammar : public grammar<pascal_grammar>
                 ;
 
             controlVariable
-                =   identifier.alias()
+                =   identifier
                 ;
 
             initialValue
-                =   expression.alias()
+                =   expression
                 ;
 
             finalValue
-                =   expression.alias()
+                =   expression
                 ;
 
             withStatement

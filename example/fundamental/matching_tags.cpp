@@ -49,7 +49,7 @@ struct tags : public grammar<tags> {
                     ]
                 >> '>';
 
-            end_tag = "</" >> fstr_p(element.tag) >> '>';
+            end_tag = "</" >> f_str_p(element.tag) >> '>';
         }
 
         rule<ScannerT, tags_closure::context_t> element;
