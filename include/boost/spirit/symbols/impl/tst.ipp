@@ -215,14 +215,8 @@ namespace boost { namespace spirit {
                 }
                 else if (ch == np->value) // => go middle!
                 {
-                    if (np->value == 0)
-                    {
-                        // null character is an implementation detail
-                        // of the tst. It is not part of the match
-                        break;
-                    }
-
-                    if (scan.at_end())
+                    // Matching the null character is not allowed.
+                    if (scan.at_end() || np->value == 0)
                     {
                         result.data = np->middle.data;
                         if (result.data)
