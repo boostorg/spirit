@@ -14,47 +14,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  Compiler check:
-//
-//  Yes, we try to code in pure ANSI/ISO C++. However, in reality, we really
-//  can't --we always struggle with compiler quirks. We regularly have to
-//  deal with compiler and platform specific code. The problem is that we
-//  can't fix all problems for our code to work with all compilers out there.
-//  This gives us library implementers a bad reputation when someone attempts
-//  to compile the code on some compiler we haven't tested with. Chances are,
-//  her compiler is not fully C++ conforming and she'll be confronted with
-//  tons of compiler errors that will somehow make less informed users to
-//  conclude that the code is poorly written.
-//
-//  We'll still code with pure ANSI/ISO C++, plus some workarounds here and
-//  there for known deficient compilers. However, to be on the safe side, we
-//  shall disallow the use of this library for compilers we are not aware of
-//  or we haven't tested with yet. It's better for the user to see a message
-//  "sorry, this code has not been ported to your compiler yet", than to see
-//  pages and pages of compiler eror messages.
-//
-//  If you got here somehow, it does not really mean that the code will not
-//  work on your compiler. Please contact the author(s) for updates. Probably
-//  a port is already available. If not, then you might want to request a port
-//  to your compiler. Unless your compiler is truly broken, chances are, the
-//  code here can be made to work with your compiler.
+//  BOOST_NO_TEMPLATED_STREAMS macro. This ought to be in boost.config
 //
 ///////////////////////////////////////////////////////////////////////////////
-#if defined(__BORLANDC__) && (__BORLANDC__ != 0x551)
-# error "Compiler not supported yet. See note above."
-
-#elif defined(BOOST_MSVC) && ((BOOST_MSVC < 1200) || (BOOST_MSVC > 1310))
-# error "Compiler not supported yet. See note above."
-
-#elif defined(__GNUC__) &&                                                      \
-    (__GNUC__ < 2) || (__GNUC__ > 3) ||                                         \
-    (__GNUC__ == 2 && __GNUC_MINOR__ < 95) ||                                   \
-    (__GNUC__ == 3 && __GNUC_MINOR__ > 2)
-# error "Compiler not supported yet. See note above."
-
-#elif defined(__EDG_VERSION__) && (__EDG_VERSION__ < 244)
-# error "Compiler not supported yet. See note above."
-
+#if defined __GNUC__ && __GNUC__ == 2 && __GNUC_MINOR__ <= 97
+#define BOOST_NO_TEMPLATED_STREAMS
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////

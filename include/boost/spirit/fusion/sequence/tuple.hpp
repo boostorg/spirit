@@ -67,5 +67,4 @@ namespace boost { namespace fusion
 
 }}
 
-#undef FUSION_TUPLE_CONSTRUCTOR
 #endif

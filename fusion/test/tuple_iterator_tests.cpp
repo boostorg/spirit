@@ -43,6 +43,11 @@ test_main(int, char*[])
         tuple_type t(1, 'x', 3.3, s);
         tuple_iterator<0, tuple_type> i(t);
 
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
+        // ?%$# VC6 I don't know why this is needed! $$$LOOK$$$
+        next(i);
+#endif
+
         BOOST_TEST(*i == 1);
         BOOST_TEST(*(next(i)) == 'x');
         BOOST_TEST(*(next(next(i))) == 3.3);

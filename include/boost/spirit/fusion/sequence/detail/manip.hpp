@@ -17,10 +17,6 @@
 
 // Tuple I/O manipulators
 
-// Based partially on Matt Austern's article at
-// http://www.cuj.com/experts/1902/austern.htm?topic=experts
-// and Langer's and Kreft's book: Standard C++ IOStreams and Locales
-
 #include <boost/spirit/fusion/detail/config.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1200)
@@ -33,176 +29,143 @@ FUSION_MSVC_ETI_WRAPPER(traits_type)
 # define FUSION_GET_TRAITS_TYPE(T) typename T::traits_type
 #endif
 
+#if defined (BOOST_NO_TEMPLATED_STREAMS)
+#define FUSION_STRING_OF_STREAM(Stream) std::string
+#else
+#define FUSION_STRING_OF_STREAM(Stream)                                         \
+    std::basic_string<                                                          \
+        FUSION_GET_CHAR_TYPE(Stream)                                            \
+      , FUSION_GET_TRAITS_TYPE(Stream)                                          \
+    >
+#endif
+
 namespace boost { namespace fusion
 {
     namespace detail
     {
-        template <class Tag>
-        struct string_ios_manip_helper
+        template <typename Tag>
+        int get_xalloc_index(Tag* = 0)
         {
-            static int index()
-            {
-                static int index_ = std::ios_base::xalloc();
-                return index_;
-            }
-        };
-
-#if !BOOST_WORKAROUND(__BORLANDC__, <= 0x551)
-
-        // The type of string that is stored can vary (wchar streams etc.)
-        // The pword mechanism need to be able to allocate/clone/etc.
-        // objects of some fixed type. Hence this virtual construction
-        // wrapper.
-        struct any_string
-        {
-            virtual ~any_string() {} // [JDG] Added 2003-09-09
-            virtual any_string* clone() = 0;
-        };
-
-        template <class Str>
-        class string_holder : public any_string
-        {
-            Str s;
-
-        public:
-
-            string_holder(const Str& s_) : s(s_) {}
-            Str const& get() const { return s; }
-            virtual any_string* clone() { return new string_holder(s); }
-        };
-
-        void
-        string_manip_callback(
-            std::ios_base::event ev
-          , std::ios_base& b
-          , int n)
-        {
-            any_string*  p = (any_string*) b.pword(n);
-
-            if (ev == std::ios_base::erase_event)
-            {
-                // maybe the delete should be wrapped in a try_catch as well?
-                delete p;
-                b.pword(n) = 0;
-            }
-            else if (ev == std::ios_base::copyfmt_event && p != 0)
-            {
-                try
-                {
-                    b.pword(n) = p->clone();
-                }
-                catch(std::bad_alloc&)
-                {
-                    // Standard prohibits this callback function from
-                    // throwing exceptions. Bad_alloc could occur, so it must
-                    // be supressed.  We cannot directly set the stream state
-                    // into bad, as the we only have access to ios_base, not
-                    // the stream :( One way to indicate that error has
-                    // occurred is to set the corresponding iword slot into
-                    // some error value and examine that after cpyfmt
-                    // call. That is not specified in the tr1 though and we
-                    // just suppress the exception for now. It is a hack :(
-                }
-            }
+            // each Tag will have a unique index
+            static int index = std::ios::xalloc();
+            return index;
         }
 
-        template <class Tag, class Stream>
-        class string_ios_manip
+        template <typename Stream, typename Tag, typename T>
+        struct stream_data
         {
-            int index; Stream& stream;
-
-        public:
-
-            typedef std::basic_string<
-                FUSION_GET_CHAR_TYPE(Stream)
-              , FUSION_GET_TRAITS_TYPE(Stream)
-            > string_type;
-
-            typedef string_holder<string_type> string_holder;
-
-            string_ios_manip(Stream& str_)
-                : stream(str_)
+            struct arena
             {
-                index = string_ios_manip_helper<Tag>::index();
-            }
-
-            void
-            set(const string_type& s)
-            {
-                int registered = stream.iword(index);
-                // avoid registering the callback twice
-                if (!registered)
+                ~arena()
                 {
-                    stream.iword(index) = 1;
-                    stream.register_callback(&string_manip_callback, index);
+                    for (
+                        typename std::vector<T*>::iterator i = data.begin()
+                      ; i != data.end()
+                      ; ++i)
+                    {
+                        delete *i;
+                    }
                 }
-                any_string* p = (any_string*)(stream.pword(index));
-                if (p) delete p;
-                stream.pword(index) = (void*)(new string_holder(s));
+
+                std::vector<T*> data;
+            };
+
+            static void attach(Stream& stream, T const& data)
+            {
+                static arena ar; // our arena
+                ar.data.push_back(new T(data));
+                stream.pword(get_xalloc_index<Tag>()) = ar.data.back();
             }
 
-            template <typename Default>
-            void
-            print(Default const& default_) const
+            static T const* get(Stream& stream)
             {
-                any_string* a = (any_string*)stream.pword(index);
-                if (a)
-                    stream << (static_cast<string_holder* >(a))->get();
-                else
-                    stream << default_;
+                return (T const*)stream.pword(get_xalloc_index<Tag>());
             }
         };
 
-#else // borland 5.5.1
-
         template <class Tag, class Stream>
         class string_ios_manip
         {
-            int index; Stream& stream;
-
         public:
 
-            typedef std::basic_string<
-                FUSION_GET_CHAR_TYPE(Stream)
-              , FUSION_GET_TRAITS_TYPE(Stream)
-            > string_type;
+            typedef FUSION_STRING_OF_STREAM(Stream) string_type;
+
+            typedef stream_data<Stream, Tag, string_type> stream_data_t;
 
             string_ios_manip(Stream& str_)
                 : stream(str_)
-            {
-                index = string_ios_manip_helper<Tag>::index();
-            }
-
-            static string_type*
-            new_string(string_type const& s)
-            {
-                // our arena of strings
-                static std::vector<string_type> formats;
-                formats.push_back(s);
-                return &formats.back();
-            }
+            {}
 
             void
             set(string_type const& s)
             {
-                stream.pword(index) = (void*)(new_string(s));
+                stream_data_t::attach(stream, s);
             }
 
             template <typename Default>
             void
             print(Default const& default_) const
             {
-                string_type* p = (string_type*)stream.pword(index);
+                string_type const* p = stream_data_t::get(stream);
                 if (p)
                     stream << *p;
                 else
                     stream << default_;
             }
+
+        private:
+
+            Stream& stream;
         };
-#endif
 
     } // detail
 
+#if defined (BOOST_NO_TEMPLATED_STREAMS)
+#define STD_TUPLE_DEFINE_MANIPULATOR(name)                                      \
+    namespace detail                                                            \
+    {                                                                           \
+        struct name##_tag;                                                      \
+                                                                                \
+        struct name##_type                                                      \
+        {                                                                       \
+            typedef std::string string_type;                                    \
+            string_type data;                                                   \
+            name##_type(const string_type& d): data(d) {}                       \
+        };                                                                      \
+                                                                                \
+        template <class Stream>                                                 \
+        Stream& operator>>(Stream& s, const name##_type& m)                     \
+        {                                                                       \
+            string_ios_manip<name##_tag, Stream>(s).set(m.data);                \
+            return s;                                                           \
+        }                                                                       \
+                                                                                \
+        template <class Stream>                                                 \
+        Stream& operator<<(Stream& s, const name##_type& m)                     \
+        {                                                                       \
+            string_ios_manip<name##_tag, Stream>(s).set(m.data);                \
+            return s;                                                           \
+        }                                                                       \
+    }                                                                           \
+                                                                                \
+    detail::name##_type                                                         \
+    name(const std::string& s)                                                  \
+    {                                                                           \
+        return detail::name##_type(s);                                          \
+    }                                                                           \
+                                                                                \
+    detail::name##_type                                                         \
+    name(const char c[])                                                        \
+    {                                                                           \
+        return detail::name##_type(std::string(c));                             \
+    }                                                                           \
+                                                                                \
+    detail::name##_type                                                         \
+    name(char c)                                                                \
+    {                                                                           \
+        return detail::name##_type(std::string(1, c));                          \
+    }
+#else
 #define STD_TUPLE_DEFINE_MANIPULATOR(name)                                      \
     namespace detail                                                            \
     {                                                                           \
@@ -211,7 +174,7 @@ namespace boost { namespace fusion
         template <class Char, class Traits = std::char_traits<Char> >           \
         struct name##_type                                                      \
         {                                                                       \
-            typedef std::basic_string<Char,Traits> string_type;                 \
+            typedef std::basic_string<Char, Traits> string_type;                \
             string_type data;                                                   \
             name##_type(const string_type& d): data(d) {}                       \
         };                                                                      \
@@ -232,10 +195,10 @@ namespace boost { namespace fusion
     }                                                                           \
                                                                                 \
     template <class Char, class Traits>                                         \
-    detail::name##_type<Char,Traits>                                            \
-    name(const std::basic_string<Char,Traits>& s)                               \
+    detail::name##_type<Char, Traits>                                           \
+    name(const std::basic_string<Char, Traits>& s)                              \
     {                                                                           \
-        return detail::name##_type<Char,Traits>(s);                             \
+        return detail::name##_type<Char, Traits>(s);                            \
     }                                                                           \
                                                                                 \
     template <class Char>                                                       \
@@ -249,13 +212,19 @@ namespace boost { namespace fusion
     detail::name##_type<Char>                                                   \
     name(Char c)                                                                \
     {                                                                           \
-        return detail::name##_type<Char>(std::basic_string<Char>(1,c));         \
+        return detail::name##_type<Char>(std::basic_string<Char>(1, c));        \
     }
+#endif
 
     STD_TUPLE_DEFINE_MANIPULATOR(tuple_open)
     STD_TUPLE_DEFINE_MANIPULATOR(tuple_close)
     STD_TUPLE_DEFINE_MANIPULATOR(tuple_delimiter)
-    #undef STD_TUPLE_DEFINE_MANIPULATOR
+
+#undef STD_TUPLE_DEFINE_MANIPULATOR
+#undef FUSION_STRING_OF_STREAM
+#undef FUSION_GET_CHAR_TYPE
+#undef FUSION_GET_TRAITS_TYPE
+
 }}
 
 #endif

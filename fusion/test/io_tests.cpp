@@ -16,8 +16,6 @@
 #include <algorithm>
 #include <string>
 
-
-
 #if defined BOOST_NO_STRINGSTREAM
 # include <strstream>
 #else
@@ -87,17 +85,17 @@ test_main(int argc, char * argv[])
 
     // The format is still [a, b, c] for os1
     os1 << make_tuple(1, 2, 3);
-//    BOOST_TEST (os1.str() == std::string("[1,2,3][1,2,3]") );
+    BOOST_TEST (os1.str() == std::string("[1,2,3][1,2,3]") );
 
-//    std::ofstream tmp("temp.tmp");
-//
-//#if !defined (BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-//    tmp << make_tuple("One", "Two", 3);
-//#endif
-//    tmp << tuple_delimiter(':');
-//    tmp << make_tuple(1000, 2000, 3000) << endl;
-//
-//    tmp.close();
+    std::ofstream tmp("temp.tmp");
+
+#if !defined (BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
+    tmp << make_tuple("One", "Two", 3);
+#endif
+    tmp << tuple_delimiter(':');
+    tmp << make_tuple(1000, 2000, 3000) << endl;
+
+    tmp.close();
 
 //    // When teading tuples from a stream, manipulators must be set correctly:
 //    ifstream tmp3("temp.tmp");
