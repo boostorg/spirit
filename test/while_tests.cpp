@@ -100,6 +100,9 @@ test_while(
 
     result &= iterations_performed == iterations_wanted;
 
+    if (m.full && (m.length != strlen(s)))
+        result = bad;
+
     if (result==good)
         cout << "PASSED";
     else
