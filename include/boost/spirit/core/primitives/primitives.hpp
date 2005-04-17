@@ -587,7 +587,8 @@ namespace boost { namespace spirit {
                 ++len;
             }
 
-            if (!scan.at_end() && *scan == '\n')    // LF
+            // Don't call skipper here
+            if (scan.first != scan.last && *scan == '\n')    // LF
             {
                 ++scan.first;
                 ++len;
