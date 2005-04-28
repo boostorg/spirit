@@ -1,7 +1,7 @@
 <h2>Spirit Change Log</h2>
 <h2>???</h2>
 <ul>
-  <li>Fixed bug that prevents the use of closures with grammars with multiple entry points, <a href="http://article.gmane.org/gmane.comp.parsers.spirit.general/8868">reported by David Pierre</a></li>
+  <li>Fixed multi_pass_iterator for 64 platforms, where sizeof(int) != sizeof(ptr_type).Fixed bug that prevents the use of closures with grammars with multiple entry points, <a href="http://article.gmane.org/gmane.comp.parsers.spirit.general/8868">reported by David Pierre</a></li>
   <li>Fixed bug that prevented embedding of grammars with multiple entry points, <a href="http://article.gmane.org/gmane.comp.parsers.spirit.general/8860">reported by David Pierre</a></li>
   <li>Added '\0' to the set of valid escaped characters for escape_ch_p.</li>
   <li>Fixed a switch_p bug when used with a phoenix::actor as the conditional expression.</li>
@@ -15,6 +15,7 @@
   <li>Fixed match_attr_traits.ipp to allow non-POD to pass through. The previous version taking in the ellipsis &quot;...&quot; does not allow PODs to pass through.</li>
   <li>Allow evaluation to int as condition to if_p parser.</li>
   <li>Applied  performance improvement changes to the PT/AST code as suggested by Stefan Slapeta. </li>
+  <li></li>
 </ul>
 <h2>1.8.2</h2>
 <p>Maintenance release (almost the same as 1.8.1 plus a few fixes here and there)</p>
