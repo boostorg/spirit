@@ -31,7 +31,11 @@ main()
 ////////////////////////////////////////////////////////////////////////////////
 
 static const unsigned long initial_test_size = 5000UL;
+#if defined(_DEBUG) && (BOOST_MSVC >= 1400)
+static const unsigned long maximum_test_size = 10000UL;
+#else
 static const unsigned long maximum_test_size = 1000000UL;
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
