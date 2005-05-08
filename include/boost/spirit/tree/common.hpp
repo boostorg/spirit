@@ -473,7 +473,7 @@ public:
         static node_t group_nodes(ContainerT const& nodes)
         {
             typename node_t::container_t c;
-			      typename ContainerT::const_iterator i_end = nodes.end();
+            typename ContainerT::const_iterator i_end = nodes.end();
             // copy all the nodes text into a new one
             for (typename ContainerT::const_iterator i = nodes.begin();
                     i != i_end; ++i)
