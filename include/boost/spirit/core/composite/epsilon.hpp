@@ -59,7 +59,9 @@ namespace boost { namespace spirit {
         CondT cond;
     };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, == 1310) // VC 7.1
+#if BOOST_WORKAROUND(BOOST_MSVC, == 1310) || \
+    BOOST_WORKAROUND(BOOST_MSVC, == 1400)
+// VC 7.1 and VC8
     template <typename CondT>
     inline condition_parser<CondT, false>
     operator~(condition_parser<CondT, true> const& p)
@@ -69,12 +71,12 @@ namespace boost { namespace spirit {
     inline condition_parser<CondT, true>
     operator~(condition_parser<CondT, false> const& p)
     { return p.negate(); }
-#else // BOOST_WORKAROUND(BOOST_MSVC, == 1310)
+#else // BOOST_WORKAROUND(BOOST_MSVC, == 1310) || == 1400
     template <typename CondT, bool positive>
     inline condition_parser<CondT, !positive>
     operator~(condition_parser<CondT, positive> const& p)
     { return p.negate(); }
-#endif // BOOST_WORKAROUND(BOOST_MSVC, == 1310)
+#endif // BOOST_WORKAROUND(BOOST_MSVC, == 1310) || == 1400
 
 ///////////////////////////////////////////////////////////////////////////////
 //
