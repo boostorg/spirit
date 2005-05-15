@@ -52,9 +52,10 @@ struct ast_tree_policy :
     {
         BOOST_SPIRIT_ASSERT(a && b);
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
-        BOOST_SPIRIT_DEBUG_OUT << "concat. a = " << a <<
-            "\n\tb = " << b << std::endl;
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
+        BOOST_SPIRIT_DEBUG_OUT << "\n>>>AST concat. a = " << a <<
+            "\n\tb = " << b << "<<<\n";
 #endif
         typedef typename tree_match<iterator_t, NodeFactoryT>::container_t
             container_t;
@@ -95,8 +96,9 @@ struct ast_tree_policy :
                  std::back_insert_iterator<container_t>(a.trees));
         }
 
-#if defined(BOOST_SPIRIT_DEBUG) && (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
-        BOOST_SPIRIT_DEBUG_OUT << "after concat. a = " << a << std::endl;
+#if defined(BOOST_SPIRIT_DEBUG) && \
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
+        BOOST_SPIRIT_DEBUG_OUT << ">>>after AST concat. a = " << a << "<<<\n\n";
 #endif
 
         return;
