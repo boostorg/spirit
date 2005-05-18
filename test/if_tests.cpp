@@ -105,7 +105,7 @@ test_enclosed_fail()
     using ::boost::spirit::str_p;
     using ::boost::spirit::nothing_p;
 
-	cout << "\nfail enclosed parser:\n";
+  cout << "\nfail enclosed parser:\n";
 
     const char *p = "abc";
 

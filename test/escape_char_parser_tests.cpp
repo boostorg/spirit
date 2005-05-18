@@ -161,13 +161,13 @@ main()
     wchar_t octmax[octmax_size];
 
     swprintf(octmax, octmax_size,
-      L"\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max());
+      L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)());
     assert(parse(octmax, wlep[assign_a(wc)]).full);
     //assert(lex_escape_ch_p[assign_a(wc)].parse(str, end));
     assert(wc == std::numeric_limits<wchar_t>::max());
 
     swprintf(octmax, octmax_size,
-      L"\\%lo", (unsigned long)std::numeric_limits<wchar_t>::max() + 1);
+      L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
     assert(!parse(octmax, wlep[assign_a(wc)]).hit);
 
     // test out of range hex escape
@@ -175,12 +175,12 @@ main()
     wchar_t hexmax[hexmax_size];
 
     swprintf(hexmax, hexmax_size,
-      L"\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max());
+      L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)());
     assert(parse(hexmax, wlep[assign_a(wc)]).full);
     assert(wc == std::numeric_limits<wchar_t>::max());
 
     swprintf(hexmax, hexmax_size,
-      L"\\x%lx", (unsigned long)std::numeric_limits<wchar_t>::max() + 1);
+      L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
     assert(!parse(hexmax, wlep[assign_a(wc)]).hit);
 
 #endif
