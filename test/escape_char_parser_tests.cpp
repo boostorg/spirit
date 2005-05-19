@@ -164,7 +164,7 @@ main()
       L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)());
     assert(parse(octmax, wlep[assign_a(wc)]).full);
     //assert(lex_escape_ch_p[assign_a(wc)].parse(str, end));
-    assert(wc == std::numeric_limits<wchar_t>::max());
+    assert(wc == (std::numeric_limits<wchar_t>::max)());
 
     swprintf(octmax, octmax_size,
       L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
@@ -177,7 +177,7 @@ main()
     swprintf(hexmax, hexmax_size,
       L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)());
     assert(parse(hexmax, wlep[assign_a(wc)]).full);
-    assert(wc == std::numeric_limits<wchar_t>::max());
+    assert(wc == (std::numeric_limits<wchar_t>::max)());
 
     swprintf(hexmax, hexmax_size,
       L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
