@@ -171,7 +171,7 @@ namespace boost { namespace spirit {
                             }
                        }
                         ++first;
-                        ch = (first == last) ? 0 : *first;
+                        ch = (first == last) ? CharT(0) : *first;
                         BOOST_SPIRIT_ASSERT(first == last || ch != 0
                             && "Won't add string containing null character");
                         np = &(**np).middle.link;
@@ -231,7 +231,7 @@ namespace boost { namespace spirit {
                     }
 
                     ++scan;
-                    ch = scan.at_end() ? 0 : *scan;
+                    ch = scan.at_end() ? CharT(0) : *scan;
                     np = np->middle.link;
                     ++result.length;
                 }
