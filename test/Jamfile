@@ -51,14 +51,13 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
 
 {
     template opt : : :
-        <vc7><*><optimization>speed
-        <vc7><*><inlining>on
-        <metrowerks><*><optimization>speed
+        <optimization>speed
+        <inlining>on
         $(spirit-header-include)
         ;
 
     template opt-metrowerks : : :
-        <metrowerks><*><optimization>speed
+        <cw><*><optimization>speed
         $(spirit-header-include)
         ;
 
