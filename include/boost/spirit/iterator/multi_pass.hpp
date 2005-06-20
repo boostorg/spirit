@@ -500,6 +500,12 @@ class inner
             bool was_initialized;
         };
 
+       // Needed by compilers not implementing the resolution to DR45. For
+       // reference, see
+       // http://www.open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#45.
+
+       friend struct Data;
+
     public:
         typedef result_type value_type;
         typedef
