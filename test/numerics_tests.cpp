@@ -245,8 +245,17 @@ main()
     parse(min_long_long, long_long_p[assign_a(ll)]);
     assert(ll == LONG_LONG_MIN);
 
+#if defined(__GNUG__) && (__GNUG__ == 3) && (__GNUC_MINOR__ < 3) \
+    && !defined(__EDG__)
+    // gcc 3.2.3 crashes on parse(long_long_overflow, long_long_p)
+    // wrapping long_long_p into a rule avoids the crash
+    rule<> gcc_3_2_3_long_long_r = long_long_p;
+    assert(!parse(long_long_overflow, gcc_3_2_3_long_long_r).full);
+    assert(!parse(long_long_underflow, gcc_3_2_3_long_long_r).full);
+#else
     assert(!parse(long_long_overflow, long_long_p).full);
     assert(!parse(long_long_underflow, long_long_p).full);
+#endif
 
 #endif
 
