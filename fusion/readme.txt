@@ -34,6 +34,9 @@ Iterators:
 
     single_view_iterator
         A single element iterator. See single_view below.
+        
+    cons_iterator
+        An iterator into a cons list. See cons below.
 
     transform_view_iterator
         Given a transform-function, transforms the elements being
@@ -63,6 +66,9 @@ Sequences and Views:
 
     joint_view
         A two-sequence view (concatenates two sequences)
+        
+    cons
+        A cons-cell that can be used to build a singly-linked list.
 
     range
         Holds an iterator pair that represents a begin/end range.
@@ -80,7 +86,7 @@ Basic functions and meta_functions on sequences:
     operator        : tuple operators ==, !=, <, >, <=, >=
     begin           : start of sequence
     end             : end of sequence
-    make-tuple      : make a tuple
+    make_tuple      : make a tuple
     tie             : make a tuple of references
     generate        : given a fusion sequence, generate a tuple
     get<N>          : get the nth element of a tuple
@@ -116,6 +122,7 @@ Algorithms:
         remove_if
         replace
         transform
+        any
 
 TODO:
     iteration is limited to input_iterator

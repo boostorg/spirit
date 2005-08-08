@@ -10,13 +10,15 @@
 #define BOOST_SPIRIT_TREE_COMMON_HPP
 
 #include <vector>
+#include <algorithm>
+
 #include <boost/ref.hpp>
 #include <boost/call_traits.hpp>
 #include <boost/spirit/core.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 #include <iostream>
 #include <boost/spirit/debug/debug_node.hpp>
 #endif
@@ -81,7 +83,7 @@ struct tree_node
 };
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 template <typename T>
 inline std::ostream&
 operator<<(std::ostream& o, tree_node<T> const& n)
@@ -188,7 +190,7 @@ public:
 };
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 // value is default nil_t, so provide an operator<< for nil_t
 inline std::ostream&
 operator<<(std::ostream& o, nil_t const&)
@@ -206,7 +208,7 @@ operator<<(std::ostream& o, node_iter_data<IteratorT, ValueT> const& n)
     for (iterator_t it = n.begin(); it != n.end(); ++it)
         impl::token_printer(o, *it);
     o << "\" is_root = " << n.is_root()
-        << " value = " << n.value() << ")";
+        << /*" value = " << n.value() << */")";
     return o;
 }
 #endif
@@ -223,12 +225,12 @@ struct node_val_data
     typedef typename container_t::const_iterator const_iterator_t;
 
     node_val_data()
-        : text_(), is_root_(false), parser_id_(), value_()
+        : text(), is_root_(false), parser_id_(), value_()
         {}
 
 #if defined(BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS)
     node_val_data(IteratorT const& _first, IteratorT const& _last)
-        : text_(), is_root_(false), parser_id_(), value_()
+        : text(), is_root_(false), parser_id_(), value_()
         {
             std::copy(_first, _last, std::inserter(text, text.end()));
         }
@@ -236,25 +238,25 @@ struct node_val_data
     // This constructor is for building text out of vector iterators
     template <typename IteratorT2>
     node_val_data(IteratorT2 const& _first, IteratorT2 const& _last)
-        : text_(), is_root_(false), parser_id_(), value_()
+        : text(), is_root_(false), parser_id_(), value_()
         {
             std::copy(_first, _last, std::inserter(text, text.end()));
         }
 #else
     node_val_data(IteratorT const& _first, IteratorT const& _last)
-        : text_(_first, _last), is_root_(false), parser_id_(), value_()
+        : text(_first, _last), is_root_(false), parser_id_(), value_()
         {}
 
     // This constructor is for building text out of vector iterators
     template <typename IteratorT2>
     node_val_data(IteratorT2 const& _first, IteratorT2 const& _last)
-        : text_(_first, _last), is_root_(false), parser_id_(), value_()
+        : text(_first, _last), is_root_(false), parser_id_(), value_()
         {}
 #endif
 
     void swap(node_val_data& x)
     {
-        impl::cp_swap(text_, x.text_);
+        impl::cp_swap(text, x.text);
         impl::cp_swap(is_root_, x.is_root_);
         impl::cp_swap(parser_id_, x.parser_id_);
         impl::cp_swap(value_, x.value_);
@@ -262,22 +264,22 @@ struct node_val_data
 
     typename container_t::iterator begin()
     {
-        return text_.begin();
+        return text.begin();
     }
 
     typename container_t::const_iterator begin() const
     {
-        return text_.begin();
+        return text.begin();
     }
 
     typename container_t::iterator end()
     {
-        return text_.end();
+        return text.end();
     }
 
     typename container_t::const_iterator end() const
     {
-        return text_.end();
+        return text.end();
     }
 
     bool is_root() const
@@ -310,25 +312,15 @@ struct node_val_data
         value_ = v;
     }
 
-    container_t const &text() const
-    { 
-        return text_; 
-    }
-    
-    void text(container_t const &t) 
-    { 
-        text_ = t; 
-    }
-
 private:
-    container_t text_;
+    container_t text;
     bool is_root_;
     parser_id parser_id_;
     ValueT value_;
 };
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 template <typename IteratorT, typename ValueT>
 inline std::ostream&
 operator<<(std::ostream& o, node_val_data<IteratorT, ValueT> const& n)
@@ -357,7 +349,6 @@ swap(node_iter_data<T, V>& a, node_iter_data<T, V>& b)
 {
     a.swap(b);
 }
-
 
 //////////////////////////////////
 template <typename ValueT = nil_t>
@@ -399,10 +390,13 @@ public:
     };
 };
 
+//////////////////////////////////
+template <typename ValueT = nil_t>
+class node_val_data_factory;
 
 //////////////////////////////////
 template <typename ValueT>
-class node_val_data_factory
+class node_val_data_factory 
 {
 public:
     // This inner class is so that node_val_data_factory can simluate
@@ -432,9 +426,10 @@ public:
         static node_t group_nodes(ContainerT const& nodes)
         {
             typename node_t::container_t c;
+            typename ContainerT::const_iterator i_end = nodes.end();
             // copy all the nodes text into a new one
             for (typename ContainerT::const_iterator i = nodes.begin();
-                    i != nodes.end(); ++i)
+                 i != i_end; ++i)
             {
                 // See docs: token_node_d or leaf_node_d cannot be used with a
                 // rule inside the [].
@@ -480,9 +475,10 @@ public:
         static node_t group_nodes(ContainerT const& nodes)
         {
             typename node_t::container_t c;
+            typename ContainerT::const_iterator i_end = nodes.end();
             // copy all the nodes text into a new one
             for (typename ContainerT::const_iterator i = nodes.begin();
-                    i != nodes.end(); ++i)
+                    i != i_end; ++i)
             {
                 // See docs: token_node_d or leaf_node_d cannot be used with a
                 // rule inside the [].
@@ -551,11 +547,30 @@ public:
 
     tree_match(std::size_t length, parse_node_t const& n)
     : match<T>(length), trees()
-    { trees.push_back(node_t(n)); }
+    { 
+        trees.reserve(10); // this is more or less an arbitraty number...
+        trees.push_back(node_t(n)); 
+    }
 
     tree_match(std::size_t length, param_type val, parse_node_t const& n)
     : match<T>(length, val), trees()
-    { trees.push_back(node_t(n)); }
+    {
+        trees.reserve(10); // this is more or less an arbitraty number...
+        trees.push_back(node_t(n));
+    }
+
+    // attention, these constructors will change the second parameter!
+    tree_match(std::size_t length, container_t& c)
+    : match<T>(length), trees()
+    { 
+        impl::cp_swap(trees, c);
+    }
+
+    tree_match(std::size_t length, param_type val, container_t& c)
+    : match<T>(length, val), trees()
+    {
+        impl::cp_swap(trees, c);
+    }
 
     template <typename T2>
     tree_match(match<T2> const& other)
@@ -608,7 +623,7 @@ public:
 };
 
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 template <typename IteratorT, typename NodeFactoryT, typename T>
 inline std::ostream&
 operator<<(std::ostream& o, tree_match<IteratorT, NodeFactoryT, T> const& m)
@@ -617,13 +632,13 @@ operator<<(std::ostream& o, tree_match<IteratorT, NodeFactoryT, T> const& m)
         typename tree_match<IteratorT, NodeFactoryT, T>::container_t::iterator
         iterator;
 
-    o << "(length = " << m.length();
+    o << "(length = " << (int)m.length();
     int c = 0;
     for (iterator i = m.trees.begin(); i != m.trees.end(); ++i)
     {
         o << " trees[" << c++ << "] = " << *i;
     }
-    o << ")";
+    o << "\n)";
     return o;
 }
 #endif
@@ -674,14 +689,14 @@ struct common_tree_match_policy : public match_policy
         Iterator2T const& last)
     {
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS_NODES & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 
-        BOOST_SPIRIT_DEBUG_OUT << ">>> create_node(begin) <<<\n" 
+        BOOST_SPIRIT_DEBUG_OUT << "\n>>> create_node(begin) <<<\n" 
             "creating node text: \"";
         for (Iterator1T it = first; it != last; ++it)
             impl::token_printer(BOOST_SPIRIT_DEBUG_OUT, *it);
         BOOST_SPIRIT_DEBUG_OUT << "\"\n";
-        BOOST_SPIRIT_DEBUG_OUT << ">>> create_node(end) <<<\n"; 
+        BOOST_SPIRIT_DEBUG_OUT << ">>> create_node(end) <<<\n\n"; 
 #endif
         return tree_match<IteratorT, NodeFactoryT, AttrT>(length, val,
             tree_policy_t::create_node(length, first, last, true));
@@ -691,12 +706,12 @@ struct common_tree_match_policy : public match_policy
     static void concat_match(Match1T& a, Match2T const& b)
     {
 #if defined(BOOST_SPIRIT_DEBUG) && \
-    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
+    (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_NODES)
 
-        BOOST_SPIRIT_DEBUG_OUT << ">>> concat_match(begin) <<<\n";
+        BOOST_SPIRIT_DEBUG_OUT << "\n>>> concat_match(begin) <<<\n";
         BOOST_SPIRIT_DEBUG_OUT << "tree a:\n" << a << "\n";
         BOOST_SPIRIT_DEBUG_OUT << "tree b:\n" << b << "\n";
-        BOOST_SPIRIT_DEBUG_OUT << ">>> concat_match(end) <<<\n";
+        BOOST_SPIRIT_DEBUG_OUT << ">>> concat_match(end) <<<\n\n";
 #endif
         BOOST_SPIRIT_ASSERT(a && b);
         if (a.length() == 0)
@@ -704,7 +719,11 @@ struct common_tree_match_policy : public match_policy
             a = b;
             return;
         }
-        else if (b.length() == 0)
+        else if (b.length() == 0
+#ifdef BOOST_SPIRIT_NO_TREE_NODE_COLLAPSING
+            && !b.trees.begin()->value.id().to_long()
+#endif
+            )
         {
             return;
         }
@@ -725,7 +744,7 @@ struct common_tree_match_policy : public match_policy
 #if defined(BOOST_SPIRIT_DEBUG) && \
     (BOOST_SPIRIT_DEBUG_FLAGS & BOOST_SPIRIT_DEBUG_FLAGS_TREES)
 
-        BOOST_SPIRIT_DEBUG_OUT << ">>> group_match(begin) <<<\n"
+        BOOST_SPIRIT_DEBUG_OUT << "\n>>> group_match(begin) <<<\n"
             "new node(" << id << ") \"";
         for (IteratorT2 it = first; it != last; ++it)
             impl::token_printer(BOOST_SPIRIT_DEBUG_OUT, *it);
@@ -735,7 +754,7 @@ struct common_tree_match_policy : public match_policy
         tree_policy_t::group_match(m, id, first, last);
 
         BOOST_SPIRIT_DEBUG_OUT << "new child tree (after grouping):\n" << m << "\n";
-        BOOST_SPIRIT_DEBUG_OUT << ">>> group_match(end) <<<\n";
+        BOOST_SPIRIT_DEBUG_OUT << ">>> group_match(end) <<<\n\n";
 #else
         tree_policy_t::group_match(m, id, first, last);
 #endif
@@ -837,13 +856,14 @@ const no_tree_gen_node_parser_gen no_node_d = no_tree_gen_node_parser_gen();
 //////////////////////////////////
 namespace impl {
 
-template <typename MatchPolicyT>
-struct tree_policy_selector
-{
-    typedef tree_policy type;
-};
+    template <typename MatchPolicyT>
+    struct tree_policy_selector
+    {
+        typedef tree_policy type;
+    };
 
 } // namespace impl
+
 //////////////////////////////////
 template <typename NodeParserT>
 struct node_parser_gen;
@@ -948,24 +968,34 @@ struct infix_node_op
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
         // a new container of children.
-        bool keep = true;
         container_t new_children;
-        for (iter_t i = m.trees.begin(); i != m.trees.end(); ++i)
+        std::size_t length = 0;
+        std::size_t tree_size = m.trees.size();
+
+        // the infix_node_d[] make no sense for nodes with no subnodes
+        BOOST_SPIRIT_ASSERT(tree_size >= 1);
+
+        bool keep = true;
+        new_children.reserve((tree_size+1)/2);
+        iter_t i_end = m.trees.end();
+        for (iter_t i = m.trees.begin(); i != i_end; ++i)
         {
-            if (keep)
-            {
+            if (keep) {
+                // adjust the length
+                length += std::distance((*i).value.begin(), (*i).value.end());
+
                 // move the child node
                 new_children.push_back(value_t());
                 swap(new_children.back(), *i);
                 keep = false;
             }
-            else
-            {
+            else {
                 // ignore this child node
                 keep = true;
             }
         }
-        swap(m.trees, new_children);
+
+        m = MatchT(length, new_children);
     }
 };
 
@@ -991,14 +1021,42 @@ struct discard_first_node_op
         // m.trees.erase(m.trees.begin()) because, on a vector that will cause
         // all the nodes afterwards to be copied into the previous position.
         container_t new_children;
-        iter_t i = m.trees.begin();
-        for (++i; i != m.trees.end(); ++i)
-        {
-            // move the child node
-            new_children.push_back(value_t());
-            swap(new_children.back(), *i);
+        std::size_t length = 0;
+        std::size_t tree_size = m.trees.size();
+
+        // the discard_first_node_d[] make no sense for nodes with no subnodes
+        BOOST_SPIRIT_ASSERT(tree_size >= 1);
+
+        if (tree_size > 1) {
+            new_children.reserve(tree_size - 1);
+            iter_t i = m.trees.begin(), i_end = m.trees.end();
+            for (++i; i != i_end; ++i)
+            {
+                // adjust the length
+                length += std::distance((*i).value.begin(), (*i).value.end());
+
+                // move the child node
+                new_children.push_back(value_t());
+                swap(new_children.back(), *i);
+            }
         }
-        swap(m.trees, new_children);
+        else {
+        // if there was a tree and now there isn't any, insert an empty node
+            iter_t i = m.trees.begin(); 
+
+        // This isn't entirely correct, since the empty node will reference
+        // the end of the discarded node, but I currently don't see any way to 
+        // get at the begin of the node following this subnode.
+        // This should be safe anyway because the it shouldn't get dereferenced
+        // under any circumstances.
+            typedef typename value_t::parse_node_t::iterator_t iterator_type;
+            iterator_type it = (*i).value.end();
+            
+            new_children.push_back(
+                value_t(typename value_t::parse_node_t(it, it)));
+        }
+        
+        m = MatchT(length, new_children);
     }
 };
 
@@ -1010,7 +1068,53 @@ struct discard_last_node_op
     template <typename MatchT>
     void operator()(MatchT& m) const
     {
-        m.trees.pop_back();
+        typedef typename MatchT::container_t container_t;
+        typedef typename MatchT::container_t::iterator iter_t;
+        typedef typename MatchT::container_t::value_type value_t;
+
+        using std::swap;
+        using boost::swap;
+        using boost::spirit::swap;
+
+        // copying the tree nodes is expensive, since it may copy a whole
+        // tree.  swapping them is cheap, so swap the nodes we want into
+        // a new container of children, instead of saying
+        // m.trees.erase(m.trees.begin()) because, on a vector that will cause
+        // all the nodes afterwards to be copied into the previous position.
+        container_t new_children;
+        std::size_t length = 0;
+        std::size_t tree_size = m.trees.size();
+
+        // the discard_last_node_d[] make no sense for nodes with no subnodes
+        BOOST_SPIRIT_ASSERT(tree_size >= 1);
+
+        if (tree_size > 1) {
+            m.trees.pop_back();
+            new_children.reserve(tree_size - 1);
+            
+            iter_t i_end = m.trees.end();
+            for (iter_t i = m.trees.begin(); i != i_end; ++i)
+            {
+                // adjust the length
+                length += std::distance((*i).value.begin(), (*i).value.end());
+
+                // move the child node
+                new_children.push_back(value_t());
+                swap(new_children.back(), *i);
+            }
+        }
+        else {
+        // if there was a tree and now there isn't any, insert an empty node
+            iter_t i = m.trees.begin(); 
+
+            typedef typename value_t::parse_node_t::iterator_t iterator_type;
+            iterator_type it = (*i).value.begin();
+            
+            new_children.push_back(
+                value_t(typename value_t::parse_node_t(it, it)));
+        }
+        
+        m = MatchT(length, new_children);
     }
 };
 
@@ -1036,15 +1140,39 @@ struct inner_node_op
         // m.trees.erase(m.trees.begin()) because, on a vector that will cause
         // all the nodes afterwards to be copied into the previous position.
         container_t new_children;
-        m.trees.pop_back(); // erase the last element
-        iter_t i = m.trees.begin(); // skip over the first element
-        for (++i; i != m.trees.end(); ++i)
-        {
-            // move the child node
-            new_children.push_back(value_t());
-            swap(new_children.back(), *i);
+        std::size_t length = 0;
+        std::size_t tree_size = m.trees.size();
+        
+        // the inner_node_d[] make no sense for nodes with less then 2 subnodes
+        BOOST_SPIRIT_ASSERT(tree_size >= 2);
+
+        if (tree_size > 2) {
+            m.trees.pop_back(); // erase the last element
+            new_children.reserve(tree_size - 1);
+            iter_t i = m.trees.begin(); // skip over the first element
+            iter_t i_end = m.trees.end();
+            for (++i; i != i_end; ++i)
+            {
+                // adjust the length
+                length += std::distance((*i).value.begin(), (*i).value.end());
+                
+                // move the child node
+                new_children.push_back(value_t());
+                swap(new_children.back(), *i);
+            }
         }
-        swap(m.trees, new_children);
+        else {
+        // if there was a tree and now there isn't any, insert an empty node
+            iter_t i = m.trees.begin(); // skip over the first element
+
+            typedef typename value_t::parse_node_t::iterator_t iterator_type;
+            iterator_type it = (*++i).value.begin();
+            
+            new_children.push_back(
+                value_t(typename value_t::parse_node_t(it, it)));
+        }
+        
+        m = MatchT(length, new_children);
     }
 };
 

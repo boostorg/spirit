@@ -16,12 +16,7 @@ subproject libs/spirit/test ;
 
 SPIRIT_HEADER_INCLUDE ?= ../../.. ;
 
-spirit-header-include = <sysinclude>$(SPIRIT_HEADER_INCLUDE) ;
-
-if $(SPIRIT_BOOST_HEADER_INCLUDE)
-{
-    spirit-header-include += <sysinclude>$(SPIRIT_BOOST_HEADER_INCLUDE) ;
-}
+spirit-header-include = <include>$(SPIRIT_HEADER_INCLUDE) ;
 
 spirit-src = ./ ;
 if $(SPIRIT_SRC_INCLUDE)
@@ -56,32 +51,31 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
 
 {
     template opt : : :
-        <vc7><*><optimization>speed
-        <vc7><*><inlining>on
-        <metrowerks><*><optimization>speed
+        <optimization>speed
+        <inlining>on
         $(spirit-header-include)
         ;
 
     template opt-metrowerks : : :
-        <metrowerks><*><optimization>speed
+        <cw><*><optimization>speed
         $(spirit-header-include)
         ;
 
-    if ( $(COMO_BASE) || $(SPIRIT_HAVE_BOOST_THREAD) = "FALSE" )
-    # MT is not available on both Unix and Windows on Comeau
-    {   # no MT support available
-        template multi-threading : : :
-            $(spirit-header-include)
-        ;
-    }
-    else
-    {
-        template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
-            <threading>multi
-            <define>BOOST_ALL_NO_LIB=1
-            $(spirit-header-include)
-        ;
-    }
+if ($(COMO_BASE)) # MT is not available on both Unix and Windows on Comeau
+{   # no MT support available
+    template multi-threading : : :
+        $(spirit-header-include)
+    ;
+}
+else
+{
+    #template multi-threading : <dll>../../thread/build/boost_thread : :
+    template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
+        <threading>multi
+        <define>BOOST_ALL_NO_LIB=1
+        $(spirit-header-include)
+    ;
+}
 
     template normal : : :
         $(spirit-header-include)
@@ -140,8 +134,8 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
 
     test-suite "spirit.tree"
         : [ spirit-run $(spirit-src)ast_calc_tests.cpp <template>normal ]
-          [ spirit-run $(spirit-src)repeat_ast_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)group_match_bug.cpp <template>normal ]
+          [ spirit-run $(spirit-src)repeat_ast_tests.cpp <template>normal ]
         ;
 
 # temporarily removed from the test suite. tree_tests are not finished, yet.
@@ -152,6 +146,7 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
           [ compile $(spirit-src)while_p_as_parser_tests.cpp <template>normal ]
           [ compile $(spirit-src)for_p_as_parser_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)if_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)if_p_int_as_condition_test.cpp <template>normal ]
           [ spirit-run $(spirit-src)for_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)while_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)lazy_tests.cpp <template>normal ]
@@ -168,8 +163,11 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
           [ spirit-run $(spirit-src)confix_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)loops_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)symbols_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)symbols_add_null.cpp <template>normal ]
+          [ spirit-run $(spirit-src)symbols_find_null.cpp <template>normal ]
           [ spirit-run $(spirit-src)escape_char_parser_tests.cpp <template>opt ]
           [ spirit-run $(spirit-src)distinct_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)grammar_def_test.cpp <template>normal ]
         ;
 
     test-suite "spirit.utility.support"

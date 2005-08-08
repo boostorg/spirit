@@ -29,7 +29,7 @@
 //  shaved off another 20k. Now the code compiles to 16k on MSVC7.1.
 //
 //  Could we have done better? Yes, but only if only we had typeof! << See
-//  the techniques section of the 1.8.0 User's guide >> ... Someday... :-)
+//  the techniques section of the User's guide >> ... Someday... :-)
 //
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;

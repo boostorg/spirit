@@ -8,198 +8,201 @@
 
 subproject libs/spirit/fusion/test ;
 
-SPIRIT_HEADER_INCLUDE ?= ../../../.. ;
-
-spirit-header-include = <sysinclude>$(SPIRIT_HEADER_INCLUDE) ;
-
-if $(SPIRIT_BOOST_HEADER_INCLUDE)
-{
-    spirit-header-include += <sysinclude>$(SPIRIT_BOOST_HEADER_INCLUDE) ;
-}
-
 unit-test fixed_tuple_tests
     : fixed_tuple_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tuple_construction_tests
     : tuple_construction_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tuple_element_access_tests
     : tuple_element_access_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tuple_copy_tests
     : tuple_copy_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tuple_comparison_tests
     : tuple_comparison_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test vc6_bug_001
     : vc6_bug_001.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tuple_mutate_tests
     : tuple_mutate_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test misc_tuple_tests
     : misc_tuple_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test make_tuple_tests
     : make_tuple_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tie_tests
     : tie_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test tuple_iterator_tests
     : tuple_iterator_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test io_tests
     : io_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test single_view_tests
     : single_view_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test type_sequence_tests
     : type_sequence_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test joint_view_tests
     : joint_view_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test push_back_tests
     : push_back_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test push_front_tests
     : push_front_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test find_tests
     : find_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test find_if_tests
     : find_if_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test filter_view_tests
     : filter_view_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test filter_tests
     : filter_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test range_tests
     : range_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test erase_tests
     : erase_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test for_each_tests
     : for_each_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test fold_tests
     : fold_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test insert_tests
     : insert_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test remove_tests
     : remove_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test remove_if_tests
     : remove_if_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test replace_tests
     : replace_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test transform_view_tests
     : transform_view_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test transform_tests
     : transform_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+unit-test cons_tests
+    : cons_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+unit-test any_tests
+    : any_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 

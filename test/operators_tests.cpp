@@ -71,6 +71,11 @@ operators_tests()
     pi = parse("abcdefghij", +alpha_p & +digit_p);
     assert(!pi.hit);
 
+    // Test for bug reported by Yusaku Sugai here:
+    // http://article.gmane.org/gmane.comp.parsers.spirit.general/8544
+    pi = parse( "foo", (anychar_p & anychar_p), ch_p(' ') );
+    assert(pi.hit);
+
     pi = parse("F", xdigit_p - range_p('5','8'));
     assert(pi.hit);
     assert(pi.length == 1);

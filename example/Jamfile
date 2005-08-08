@@ -13,236 +13,223 @@
 #  Martin Wille   [Jan 15, 2004]    : changes for new directory structure
 #  Martin Wille   [Jan 20, 2004]    : more changes for new directory structure
 #  Joel de Guzman [Jul 29, 2004]    : added calc_debug.cpp
-#  Joao Abecasis  [Nov 20, 2004]    : changes for compiling with miniboost
 #
 
 subproject libs/spirit/example ;
 
-SPIRIT_HEADER_INCLUDE ?= ../../.. ;
-
-spirit-header-include = <sysinclude>$(SPIRIT_HEADER_INCLUDE) ;
-
-if $(SPIRIT_BOOST_HEADER_INCLUDE)
-{
-    spirit-header-include += <sysinclude>$(SPIRIT_BOOST_HEADER_INCLUDE) ;
-}
-
 exe ast_calc
     : fundamental/ast_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe "bind"
     : fundamental/bind.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe boiler_plate
     : fundamental/boiler_plate.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe calc_plain
     : fundamental/calc_plain.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe calc_debug
     : fundamental/calc_debug.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe comments
     : fundamental/comments.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe complex_number
     : fundamental/complex_number.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe error_handling
     : fundamental/error_handling.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe error_reporting
     : fundamental/error_reporting.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe file_parser
     : fundamental/file_parser.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe full_calc
     : fundamental/full_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe functor_parser
     : fundamental/functor_parser.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe list_parser
     : fundamental/list_parser.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe matching_tags
     : fundamental/matching_tags.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe no_actions
     : fundamental/no_actions.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe number_list
     : fundamental/number_list.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe parse_tree_calc1
     : fundamental/parse_tree_calc1.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe parser_context
     : fundamental/parser_context.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe phoenix_calc
     : fundamental/phoenix_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe position_iterator
     : fundamental/position_iterator/position_iterator.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe refactoring
     : fundamental/refactoring.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
-if $(SPIRIT_HAVE_BOOST_REGEX) != "FALSE"
-{
-    exe regular_expression
-        : fundamental/regular_expression.cpp
-        : <template>spirit-boost-regex
-        :
-        ;
-}
+exe regular_expression
+    : fundamental/regular_expression.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
 
 exe roman_numerals
     : fundamental/roman_numerals.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe stuff_vector
     : fundamental/stuff_vector.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe stuff_vector2
     : fundamental/stuff_vector2.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe subrule_calc
     : fundamental/subrule_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe sum
     : fundamental/sum.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe thousand_separated
     : fundamental/thousand_separated.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe ast_calc2
     : fundamental/more_calculators/ast_calc2.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe calc_with_variables
     : fundamental/more_calculators/calc_with_variables.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe phoenix_subrule_calc
     : fundamental/more_calculators/phoenix_subrule_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe primitive_calc
     : fundamental/more_calculators/primitive_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe rpn_calc
     : fundamental/more_calculators/rpn_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe vmachine_calc
     : fundamental/more_calculators/vmachine_calc.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe distinct_parser
     : fundamental/distinct/distinct_parser.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe distinct_parser_dynamic
     : fundamental/distinct/distinct_parser_dynamic.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
@@ -250,84 +237,81 @@ exe distinct_parser_dynamic
 
 exe ipv4
     : intermediate/ipv4.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe ipv4_opt
     : intermediate/ipv4_opt.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe lazy_parser
     : intermediate/lazy_parser.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe parameters
     : intermediate/parameters.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
-if $(SPIRIT_HAVE_BOOST_REGEX) != "FALSE"
-{
-    exe regex_convert
-        : intermediate/regex_convert.cpp
-        : <template>spirit-boost-regex
-        :
-        ;
-}
+exe regex_convert
+    : intermediate/regex_convert.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
 
 ################################################################################
 
 exe dynamic_rule
     : techniques/dynamic_rule.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe epsilon
     : techniques/epsilon.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe multiple_scanners
     : techniques/multiple_scanners.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe nabialek
     : techniques/nabialek.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe no_rule1
     : techniques/no_rules/no_rule1.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe no_rule2
     : techniques/no_rules/no_rule2.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe no_rule3
     : techniques/no_rules/no_rule3.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 exe typeof
     : techniques/typeof.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 

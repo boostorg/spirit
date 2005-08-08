@@ -13,97 +13,83 @@
 
 subproject libs/spirit/phoenix/test ;
 
-SPIRIT_HEADER_INCLUDE ?= ../../../.. ;
-
-spirit-header-include = <sysinclude>$(SPIRIT_HEADER_INCLUDE) ;
-
-if $(SPIRIT_BOOST_HEADER_INCLUDE)
-{
-    spirit-header-include += <sysinclude>$(SPIRIT_BOOST_HEADER_INCLUDE) ;
-}
-
 unit-test binary_tests
     : binary_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test binders_tests
     : binders_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test functors_tests
     : functors_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test iostream_tests
     : iostream_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test mixed_binary_tests
     : mixed_binary_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test more_expressions_tests
     : more_expressions_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test primitives_tests
     : primitives_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test statements_tests
     : statements_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test stl_tests
     : stl_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test tuples_tests
     : tuples_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test unary_tests
     : unary_tests.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
-unit-test unary_tests
+unit-test new_tests
     : new_test.cpp
-    : $(spirit-header-include)
+    : <sysinclude>$(BOOST_ROOT)
     :
     ;
-
-
-
-
-
 
