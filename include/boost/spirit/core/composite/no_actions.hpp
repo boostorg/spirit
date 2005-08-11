@@ -47,13 +47,29 @@ struct no_actions_action_policy:
 //-----------------------------------------------------------------------------
 // no_actions_scanner
 
+
+namespace detail
+{
+    template <typename ActionPolicy>
+    struct compute_no_actions_action_policy
+    {
+        typedef no_actions_action_policy<ActionPolicy> type;
+    };
+
+    template <typename ActionPolicy>
+    struct compute_no_actions_action_policy<no_actions_action_policy<ActionPolicy> >
+    {
+        typedef no_actions_action_policy<ActionPolicy> type;
+    };
+}
+
 template<typename ScannerT = scanner<> >
 struct no_actions_scanner
 {
     typedef scanner_policies<
         typename ScannerT::iteration_policy_t,
         typename ScannerT::match_policy_t,
-        no_actions_action_policy<typename ScannerT::action_policy_t>
+        typename detail::compute_no_actions_action_policy<typename ScannerT::action_policy_t>::type
     > policies_t;
 
     typedef typename
