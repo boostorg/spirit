@@ -30,7 +30,7 @@ namespace boost { namespace spirit {
 template <typename DerivedT, typename ContextT>
 struct grammar;
 
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1200)
+#if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 
 BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER(grammar_definition_wrapper, definition);
 
@@ -299,7 +299,7 @@ struct grammar_definition
             self->helpers;
 # endif
 
-# if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1200)) \
+# if (defined(BOOST_MSVC) && (BOOST_MSVC < 1300)) \
     || defined(BOOST_INTEL_CXX_VERSION)
         for (iterator_t i = helpers.rbegin(); i != helpers.rend(); ++i)
             (*i)->undefine(self);
