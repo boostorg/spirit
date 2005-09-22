@@ -18,16 +18,12 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <vector>
 
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/confix.hpp>
 #include <boost/spirit/utility/lists.hpp>
 #include <boost/spirit/utility/escape_char.hpp>
-
-#include <iostream>
-#include <cassert>
-#include <string>
-#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
