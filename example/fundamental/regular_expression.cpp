@@ -18,6 +18,7 @@
 #include <string>
 #include <iostream>
 
+#include <boost/version.hpp>
 #include <boost/spirit/core.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,8 +31,13 @@
 //  you have to link with the Boost.Regex library as defined in the related
 //  documentation (see. http://www.boost.org).
 //
+//  For Boost > V1.32.0 you'll always have to link against the Boost.Regex 
+//  libraries.
+//
 ///////////////////////////////////////////////////////////////////////////////
+#if BOOST_VERSION <= 103200
 #define BOOST_SPIRIT_NO_REGEX_LIB
+#endif
 #include <boost/spirit/utility/regex.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
