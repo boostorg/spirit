@@ -75,21 +75,21 @@ local rule turn-off-intel-debug-symbols ( toolset variant : properties * )
 
 if ($(COMO_BASE)) # MT is not available on both Unix and Windows on Comeau
 {   # no MT support available
-    template multi-threading : : :
+    template multi-threading : :
         $(spirit-header-include)
     ;
 }
 else
 {
     #template multi-threading : <dll>../../thread/build/boost_thread : :
-    template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
+    template multi-threading : <dll>@boost/libs/thread/build/boost_thread :
         <threading>multi
         <define>BOOST_ALL_NO_LIB=1
         $(spirit-header-include)
     ;
 }
 
-    template normal : : :
+    template normal : :
         $(spirit-header-include)
     ;
 
