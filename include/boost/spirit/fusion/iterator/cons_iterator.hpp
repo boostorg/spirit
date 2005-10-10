@@ -41,6 +41,8 @@ namespace boost { namespace fusion
             : cons(cons_) {}
 
         cons_type& cons;
+    private:
+        cons_iterator& operator=(cons_iterator const&);
     };
 
     template <>
