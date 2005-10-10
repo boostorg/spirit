@@ -50,34 +50,34 @@ rule spirit-run ( sources + : args * : input-files * : requirements * : name ? :
 ############################################################
 
 {
-    template opt : : :
+    template opt : :
         <optimization>speed
         <inlining>on
         $(spirit-header-include)
         ;
 
-    template opt-metrowerks : : :
+    template opt-metrowerks : :
         <cw><*><optimization>speed
         $(spirit-header-include)
         ;
 
 if ($(COMO_BASE)) # MT is not available on both Unix and Windows on Comeau
 {   # no MT support available
-    template multi-threading : : :
+    template multi-threading : :
         $(spirit-header-include)
     ;
 }
 else
 {
     #template multi-threading : <dll>../../thread/build/boost_thread : :
-    template multi-threading : <dll>@boost/libs/thread/build/boost_thread : :
+    template multi-threading : <dll>@boost/libs/thread/build/boost_thread :
         <threading>multi
         <define>BOOST_ALL_NO_LIB=1
         $(spirit-header-include)
     ;
 }
 
-    template normal : : :
+    template normal : :
         $(spirit-header-include)
     ;
 
@@ -209,3 +209,4 @@ else
         ;
 
 }
+
