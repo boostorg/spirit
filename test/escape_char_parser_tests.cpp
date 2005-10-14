@@ -15,7 +15,7 @@
 #include <cassert>
 #include <cstdio>       // for sprintf
 
-#ifndef BOOST_NO_CWCHAR
+#if !defined(BOOST_NO_CWCHAR) && !defined(BOOST_NO_SWPRINTF)
 # include <cwchar>      // for swprintf
 #endif
 
@@ -160,6 +160,7 @@ main()
     size_t const octmax_size = 16;
     wchar_t octmax[octmax_size];
 
+#if !defined(BOOST_NO_SWPRINTF)
     swprintf(octmax, octmax_size,
       L"\\%lo", (unsigned long)(std::numeric_limits<wchar_t>::max)());
     assert(parse(octmax, wlep[assign_a(wc)]).full);
@@ -182,6 +183,7 @@ main()
     swprintf(hexmax, hexmax_size,
       L"\\x%lx", (unsigned long)(std::numeric_limits<wchar_t>::max)() + 1);
     assert(!parse(hexmax, wlep[assign_a(wc)]).hit);
+#endif // !defined(BOOST_NO_SWPRINTF)
 
 #endif
 
