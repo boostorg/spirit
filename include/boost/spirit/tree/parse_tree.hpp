@@ -194,7 +194,6 @@ pt_parse(
     IteratorT first = first_;
     scanner_t scan(first, last, policies);
     tree_match<IteratorT, NodeFactoryT> hit = p.derived().parse(scan);
-    scan.skip(scan);
     return tree_parse_info<IteratorT, NodeFactoryT>(
         first, hit, hit && (first == last), hit.length(), hit.trees);
 }
