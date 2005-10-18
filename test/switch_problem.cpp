@@ -85,7 +85,8 @@ int main()
     std::string const data("NNODES 3\n"
                    "1 s 1\n"
                    "2 d 2\n"
-                   "3 n 3\n");
+                   "3 n 3"); // JDG 10-18-2005 removed trailing \n to
+                             // avoid post skip problems
 
     typedef spirit::position_iterator<std::string::const_iterator>
         iterator_t;

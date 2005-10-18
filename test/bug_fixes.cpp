@@ -127,6 +127,15 @@ void bug_004()
 //
 //  Most trailing space bug
 //  http://article.gmane.org/gmane.comp.parsers.spirit.general/4029
+//  JDG: Oct 18, 2005. We shall revert to the previous behavior where
+//                     Post skips are not allowed. The reason is that
+//                     there is a valid use case where input is obtained
+//                     from cin and multi_pass which results in an infinite
+//                     loop while the post skipper waits for a whitespace.
+//                     For examples like below, the grammar must explicitly
+//                     include the post whitespace. One possible way is to
+//                     place an end_p at the end of the grammar. The end_p
+//                     will trigger the post-skip.
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/core.hpp>
@@ -138,11 +147,11 @@ using namespace spirit;
 void bug_005()
 {
     BOOST_TEST(
-        parse("   aaaaaaaaa     ", *ch_p('a'), space_p).full
+        parse("   aaaaaaaaa     ", *ch_p('a') >> end_p, space_p).full
     );
 
     BOOST_TEST(
-        parse("   aaaaaaaaa     ", lexeme_d[*ch_p('a')], space_p).full
+        parse("   aaaaaaaaa     ", lexeme_d[*ch_p('a')] >> end_p, space_p).full
     );
 
 #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3206))
@@ -152,11 +161,11 @@ void bug_005()
 #else
 
     BOOST_TEST(
-        parse("   aaaaaaaaa     ", *ch_p('a'), ch_p(' ')).full
+        parse("   aaaaaaaaa     ", *ch_p('a') >> end_p, ch_p(' ')).full
     );
 
     BOOST_TEST(
-        parse("   aaaaaaaaa     ", lexeme_d[*ch_p('a')], ch_p(' ')).full
+        parse("   aaaaaaaaa     ", lexeme_d[*ch_p('a')] >> end_p, ch_p(' ')).full
     );
 
 #endif
@@ -182,6 +191,15 @@ void bug_006()
 //  bug_007
 //
 //  handling of trailing whitespace bug (ast_parse/pt_parse related)
+//  JDG: Oct 18, 2005. We shall revert to the previous behavior where
+//                     Post skips are not allowed. The reason is that
+//                     there is a valid use case where input is obtained
+//                     from cin and multi_pass which results in an infinite
+//                     loop while the post skipper waits for a whitespace.
+//                     For examples like below, the grammar must explicitly
+//                     include the post whitespace. One possible way is to
+//                     place an end_p at the end of the grammar. The end_p
+//                     will trigger the post-skip.
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/tree/ast.hpp>
@@ -189,9 +207,9 @@ void bug_006()
 
 void bug_007()
 {
-    BOOST_TEST(parse("test ", str_p("test"), space_p).full);
-    BOOST_TEST(pt_parse("test ", str_p("test"), space_p).full);
-    BOOST_TEST(ast_parse("test ", str_p("test"), space_p).full);
+    BOOST_TEST(parse("test ", str_p("test") >> end_p, space_p).full);
+    BOOST_TEST(pt_parse("test ", str_p("test") >> end_p, space_p).full);
+    BOOST_TEST(ast_parse("test ", str_p("test") >> end_p, space_p).full);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

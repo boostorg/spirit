@@ -158,9 +158,11 @@ namespace tests {
             assert(parse("d 1", g, space_p).hit);
             assert(parse("d ,", g, space_p).hit);
             assert(parse("d bcd", g, space_p).hit);
-            assert(parse("d ", g, space_p).full);
+            assert(parse(" d", g, space_p).full); // JDG 10-18-2005 removed trailing ' ' to
+                                                  // avoid post skip problems
 
-            assert(parse(" a 1 b , c bcd d ", *g, space_p).full);
+            assert(parse(" a 1 b , c bcd d", *g, space_p).full); 
+            // JDG 10-18-2005 removed trailing ' ' to avoid post skip problems
         }
     };
 

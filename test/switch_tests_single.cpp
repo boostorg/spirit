@@ -276,7 +276,8 @@ namespace tests {
             GrammarT g;
             
             assert(parse("d", g).full);
-            assert(parse("d ", g, space_p).full);
+            assert(parse(" d", g, space_p).full); // JDG 10-18-2005 removed trailing ' ' to
+                                                  // avoid post skip problems
         }
     };
     
