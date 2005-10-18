@@ -17,7 +17,7 @@ namespace boost { namespace fusion
     struct prepend_view : joint_view<single_view<T>, View>
     {
         prepend_view(View& view, T const& val)
-            : joint_view<single_view<T>, View>(view, held)
+            : joint_view<single_view<T>, View>(held, view)
             , held(val) {}
         single_view<T> held;
     };

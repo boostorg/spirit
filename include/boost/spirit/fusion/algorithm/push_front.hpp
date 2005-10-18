@@ -40,7 +40,7 @@ namespace boost { namespace fusion
             inline typename apply<Sequence, T>::type
             operator()(Sequence& seq, T const& x) const
             {
-                typedef prepend_view<Sequence const, T> result;
+                typedef prepend_view<Sequence, T> result;
                 return result(seq, x);
             }
         };
