@@ -105,9 +105,10 @@ namespace boost { namespace spirit {
                 IteratorT first = first_;
                 scanner_t scan(first, last, policies);
                 match<nil_t> hit = p.parse(scan);
+                IteratorT current = first;
                 scan.skip(scan);
                 return parse_info<IteratorT>(
-                    first, hit, hit && (first == last),
+                    current, hit, hit && (first == last),
                     hit.length());
             }
         };
@@ -130,9 +131,10 @@ namespace boost { namespace spirit {
                 IteratorT first = first_;
                 scanner_t scan(first, last);
                 match<nil_t> hit = p.parse(scan);
+                IteratorT current = first;
                 scan.skip(scan);
                 return parse_info<IteratorT>(
-                    first, hit, hit && (first == last),
+                    current, hit, hit && (first == last),
                     hit.length());
             }
         };

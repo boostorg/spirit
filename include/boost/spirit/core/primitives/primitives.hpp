@@ -16,6 +16,10 @@
 #include <boost/spirit/core/composite/impl/directives.ipp>
 #include <boost/spirit/core/primitives/impl/primitives.ipp>
 
+#ifdef BOOST_MSVC
+#pragma warning(disable : 4512)
+#endif
+
 namespace boost { namespace spirit {
 
     ///////////////////////////////////////////////////////////////////////////
