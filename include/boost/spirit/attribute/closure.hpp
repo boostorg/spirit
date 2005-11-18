@@ -13,6 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/core/composite/composite.hpp>
+#include <boost/spirit/core/non_terminal/parser_context.hpp>
 #include <boost/spirit/attribute/parametric.hpp>
 #include <boost/spirit/attribute/closure_context.hpp>
 
