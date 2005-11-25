@@ -270,6 +270,68 @@ template <typename CaseT>
 struct chain_parser<0, CaseT>;      // shouldn't be instantiated
 
 ///////////////////////////////////////////////////////////////////////////////
+//  Type computing meta function for calculating the type of the return value
+//  of the used conditional switch expression
+template <typename TargetT, typename ScannerT>
+struct condition_result {
+
+    typedef typename TargetT::template result<ScannerT>::type type;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename LeftT, typename RightT, bool IsDefault>
+struct compound_case_parser
+:   public binary<LeftT, RightT,
+        parser<compound_case_parser<LeftT, RightT, IsDefault> > >
+{
+    typedef compound_case_parser<LeftT, RightT, IsDefault>    self_t;
+    typedef binary_parser_category                  parser_category_t;
+    typedef binary<LeftT, RightT, parser<self_t> >  base_t;
+
+    BOOST_STATIC_CONSTANT(int, value = RightT::value);
+    BOOST_STATIC_CONSTANT(bool, is_default = IsDefault);
+    BOOST_STATIC_CONSTANT(bool, is_simple = false);
+    BOOST_STATIC_CONSTANT(bool, is_epsilon = (
+        is_default &&
+            boost::is_same<typename RightT::subject_t, epsilon_parser>::value
+    ));
+
+    compound_case_parser(parser<LeftT> const &lhs, parser<RightT> const &rhs)
+    :   base_t(lhs.derived(), rhs.derived())
+    {}
+
+    template <typename ScannerT>
+    struct result
+    {
+        typedef typename match_result<ScannerT, nil_t>::type type;
+    };
+
+    template <typename ScannerT, typename CondT>
+    typename parser_result<self_t, ScannerT>::type
+    parse(ScannerT const& scan, CondT const &cond) const;
+
+    template <int N1, typename ParserT1, bool IsDefault1>
+    compound_case_parser<
+        self_t, case_parser<N1, ParserT1, IsDefault1>, IsDefault1
+    >
+    operator, (case_parser<N1, ParserT1, IsDefault1> const &p) const
+    {
+        //  If the following compile time assertion fires, you've probably used
+        //  more than one default_p case inside the switch_p parser construct.
+        BOOST_STATIC_ASSERT(!default_case<self_t>::value || !IsDefault1);
+
+        //  If this compile time assertion fires, you've probably want to use
+        //  more case_p/default_p case branches, than possible.
+        BOOST_STATIC_ASSERT(
+            case_chain<self_t>::depth < BOOST_SPIRIT_SWITCH_CASE_LIMIT
+        );
+
+        typedef case_parser<N1, ParserT1, IsDefault1> right_t;
+        return compound_case_parser<self_t, right_t, IsDefault1>(*this, p);
+    }
+};
+
+///////////////////////////////////////////////////////////////////////////////
 //  The parse_switch::do_ functions dispatch to the correct parser, which is
 //  selected through the given conditional switch value.
 template <int Value, int Depth, bool IsDefault>
@@ -373,72 +435,18 @@ BOOST_PP_REPEAT(BOOST_PP_DEC(BOOST_SPIRIT_SWITCH_CASE_LIMIT),
 #undef BOOST_SPIRIT_PARSE_SWITCHES
 ///////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-//  Type computing meta function for calculating the type of the return value
-//  of the used conditional switch expression
-template <typename TargetT, typename ScannerT>
-struct condition_result {
-
-    typedef typename TargetT::template result<ScannerT>::type type;
-};
-
-///////////////////////////////////////////////////////////////////////////////
 template <typename LeftT, typename RightT, bool IsDefault>
-struct compound_case_parser
-:   public binary<LeftT, RightT,
-        parser<compound_case_parser<LeftT, RightT, IsDefault> > >
-{
-    typedef compound_case_parser<LeftT, RightT, IsDefault>    self_t;
-    typedef binary_parser_category                  parser_category_t;
-    typedef binary<LeftT, RightT, parser<self_t> >  base_t;
-
-    BOOST_STATIC_CONSTANT(int, value = RightT::value);
-    BOOST_STATIC_CONSTANT(bool, is_default = IsDefault);
-    BOOST_STATIC_CONSTANT(bool, is_simple = false);
-    BOOST_STATIC_CONSTANT(bool, is_epsilon = (
-        is_default &&
-            boost::is_same<typename RightT::subject_t, epsilon_parser>::value
-    ));
-
-    compound_case_parser(parser<LeftT> const &lhs, parser<RightT> const &rhs)
-    :   base_t(lhs.derived(), rhs.derived())
-    {}
-
-    template <typename ScannerT>
-    struct result
-    {
-        typedef typename match_result<ScannerT, nil_t>::type type;
-    };
-
-    template <typename ScannerT, typename CondT>
-    typename parser_result<self_t, ScannerT>::type
+template <typename ScannerT, typename CondT>
+inline typename parser_result<
+    compound_case_parser<LeftT, RightT, IsDefault>, ScannerT
+>::type
+compound_case_parser<LeftT, RightT, IsDefault>::
     parse(ScannerT const& scan, CondT const &cond) const
-    {
-        scan.at_end();    // allow skipper to take effect
-        return parse_switch<value, case_chain<self_t>::depth, is_default>::
-            do_(*this, scan, cond(scan), scan.first);
-    }
-
-    template <int N1, typename ParserT1, bool IsDefault1>
-    compound_case_parser<
-        self_t, case_parser<N1, ParserT1, IsDefault1>, IsDefault1
-    >
-    operator, (case_parser<N1, ParserT1, IsDefault1> const &p) const
-    {
-        //  If the following compile time assertion fires, you've probably used
-        //  more than one default_p case inside the switch_p parser construct.
-        BOOST_STATIC_ASSERT(!default_case<self_t>::value || !IsDefault1);
-
-        //  If this compile time assertion fires, you've probably want to use
-        //  more case_p/default_p case branches, than possible.
-        BOOST_STATIC_ASSERT(
-            case_chain<self_t>::depth < BOOST_SPIRIT_SWITCH_CASE_LIMIT
-        );
-
-        typedef case_parser<N1, ParserT1, IsDefault1> right_t;
-        return compound_case_parser<self_t, right_t, IsDefault1>(*this, p);
-    }
-};
+{
+    scan.at_end();    // allow skipper to take effect
+    return parse_switch<value, case_chain<self_t>::depth, is_default>::
+        do_(*this, scan, cond(scan), scan.first);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  The switch condition is to be evaluated from a parser result value.
