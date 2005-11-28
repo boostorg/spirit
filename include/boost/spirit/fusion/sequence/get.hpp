@@ -11,10 +11,54 @@
 #define FUSION_SEQUENCE_GET_HPP
 
 #include <boost/spirit/fusion/sequence/at.hpp>
+#include <boost/spirit/fusion/sequence/tuple_element.hpp>
 #include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
+#include <boost/type_traits/add_reference.hpp>
 
 namespace boost { namespace fusion
 {
+    namespace detail
+    {
+        template<int N>
+        struct pair_element;
+
+        template<>
+        struct pair_element<0>
+        {
+            template<typename T1, typename T2>
+            static BOOST_DEDUCED_TYPENAME add_reference<T1>::type 
+            get(std::pair<T1, T2>& pr)
+            {
+                return pr.first;
+            }
+
+            template<typename T1, typename T2>
+            static BOOST_DEDUCED_TYPENAME add_reference<const T1>::type
+            get(const std::pair<T1, T2>& pr)
+            {
+                return pr.first;
+            }
+        };
+
+        template<>
+        struct pair_element<1>
+        {
+            template<typename T1, typename T2>
+            static BOOST_DEDUCED_TYPENAME add_reference<T2>::type
+            get(std::pair<T1, T2>& pr)
+            {
+                return pr.second;
+            }
+
+            template<typename T1, typename T2>
+            static BOOST_DEDUCED_TYPENAME add_reference<const T2>::type
+            get(const std::pair<T1, T2>& pr)
+            {
+                return pr.second;
+            }
+        };
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  get function
@@ -49,6 +93,22 @@ namespace boost { namespace fusion
             template apply<BOOST_DEDUCED_TYPENAME at_meta::seq, N>::call(
                 at_meta::seq_converter::convert(seq.cast()));
 //        return at<N>(seq.cast());
+    }
+
+    template<int N, typename T1, typename T2>
+    inline BOOST_DEDUCED_TYPENAME boost::add_reference<
+        BOOST_DEDUCED_TYPENAME tuple_element<N, std::pair<T1, T2> >::type>::type
+    get(std::pair<T1, T2>& pr)
+    {
+        return detail::pair_element<N>::get(pr);
+    }
+
+    template<int N, typename T1, typename T2>
+    inline BOOST_DEDUCED_TYPENAME boost::add_reference<
+        const BOOST_DEDUCED_TYPENAME tuple_element<N, std::pair<T1, T2> >::type>::type
+    get(const std::pair<T1, T2>& pr)
+    {
+        return detail::pair_element<N>::get(pr);
     }
 }}
 

@@ -9,6 +9,7 @@
 #define FUSION_SEQUENCE_TUPLE_ELEMENT_HPP
 
 #include <boost/spirit/fusion/sequence/value_at.hpp>
+#include <utility>
 
 namespace boost { namespace fusion
 {
@@ -28,6 +29,18 @@ namespace boost { namespace fusion
     ///////////////////////////////////////////////////////////////////////////
     template <int N, typename Sequence>
     struct tuple_element : meta::value_at_c<Sequence, N> {};
+
+    template<typename T1, typename T2>
+    struct tuple_element<0, std::pair<T1, T2> >
+    {
+        typedef T1 type;
+    };
+
+    template<typename T1, typename T2>
+    struct tuple_element<1, std::pair<T1, T2> >
+    {
+        typedef T2 type;
+    };
 }}
 
 #endif
