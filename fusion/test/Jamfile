@@ -206,6 +206,13 @@ unit-test any_tests
     :
     ;
 
+unit-test pair_tests
+    : pair_tests.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+
 
 
 
