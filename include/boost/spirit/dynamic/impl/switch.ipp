@@ -385,7 +385,7 @@ struct parse_switch;
     /**/
 
 #define BOOST_SPIRIT_PARSE_SWITCH_CASES(z, N, _)                            \
-    case BOOST_PP_CAT(left_t, N)::value:                                    \
+    case (long)BOOST_PP_CAT(left_t, N)::value:                              \
         return delegate_parse(chain_parser<N, left_t1>::right(p.left()),    \
             scan, save);                                                    \
     /**/
@@ -404,7 +404,7 @@ struct parse_switch;
                 BOOST_SPIRIT_PARSE_SWITCH_TYPEDEFS, _)                      \
                                                                             \
             switch (cond_value) {                                           \
-            case BOOST_PP_CAT(left_t, BOOST_PP_INC(N))::value:              \
+            case (long)BOOST_PP_CAT(left_t, BOOST_PP_INC(N))::value:        \
                 return delegate_parse(                                      \
                     chain_parser<                                           \
                         case_chain<ParserT>::depth, ParserT                 \
@@ -413,7 +413,7 @@ struct parse_switch;
             BOOST_PP_REPEAT_FROM_TO_ ## z(1, BOOST_PP_INC(N),               \
                 BOOST_SPIRIT_PARSE_SWITCH_CASES, _)                         \
                                                                             \
-            case left_t0::value:                                            \
+            case (long)left_t0::value:                                      \
             default:                                                        \
                 typedef default_case<ParserT> default_t;                    \
                 typedef                                                     \
