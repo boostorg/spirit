@@ -21,7 +21,7 @@ namespace boost { namespace fusion { namespace detail
     namespace sequence_not_equal_to_detail {
         template <typename T,typename I1, typename I2>
         bool call(T const& self,I1 const& a, I2 const& b) {
-            return *a != *b
+            return !(*a == *b)
                 || T::call(fusion::next(a), fusion::next(b));
         }
     }
