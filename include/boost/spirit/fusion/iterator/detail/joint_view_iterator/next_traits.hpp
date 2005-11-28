@@ -18,9 +18,6 @@ namespace boost { namespace fusion
 {
     struct joint_view_iterator_tag;
 
-    template <typename View1, typename View2>
-    struct joint_view;
-
     template <typename First, typename Last, typename Concat>
     struct joint_view_iterator;
 

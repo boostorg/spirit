@@ -17,12 +17,17 @@
 #include <boost/spirit/fusion/sequence/detail/sequence_base.hpp>
 #include <boost/spirit/fusion/sequence/as_fusion_sequence.hpp>
 
+#include <boost/mpl/if.hpp>
+
 namespace boost { namespace fusion
 {
     struct joint_view_tag;
 
-    template <typename View1, typename View2>
-    struct joint_view : sequence_base<joint_view<View1, View2> >
+    template<typename View1, typename View2, bool copy1, bool copy2>
+    struct joint_view;
+
+    template <typename View1, typename View2, bool copy1 = false, bool copy2 = false>
+    struct joint_view : sequence_base<joint_view<View1, View2, copy1, copy2> >
     {
         typedef as_fusion_sequence<View1> view1_converter;
         typedef typename view1_converter::type view1;
@@ -37,16 +42,18 @@ namespace boost { namespace fusion
 
         joint_view(View1& view1, View2& view2);
 
-        first_type first;
-        concat_type concat;
-        concat_last_type concat_last;
+        first_type first() const { return boost::fusion::begin(view1_); }
+        concat_type concat() const { return boost::fusion::begin(view2_); }
+        concat_last_type concat_last() const { return boost::fusion::end(view2_); }
+
+    private:
+        typename boost::mpl::if_c<copy1, View1, View1&>::type view1_;
+        typename boost::mpl::if_c<copy2, View2, View2&>::type view2_;
     };
 
-    template <typename View1, typename View2>
-    joint_view<View1,View2>::joint_view(View1& view1, View2& view2)
-        : first(fusion::begin(view1))
-        , concat(fusion::begin(view2))
-        , concat_last(fusion::end(view2))
+    template <typename View1, typename View2, bool copy1, bool copy2>
+    joint_view<View1,View2,copy1,copy2>::joint_view(View1& view1, View2& view2)
+        : view1_(view1), view2_(view2)
     {}
 
 }}

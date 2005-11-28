@@ -17,9 +17,6 @@ namespace boost { namespace fusion
 {
     struct joint_view_tag;
 
-    template <typename View1, typename View2>
-    struct joint_view;
-
     template <typename First, typename Last, typename Concat>
     struct joint_view_iterator;
 
@@ -47,14 +44,14 @@ namespace boost { namespace fusion
         template<typename Sequence>
         typename begin_traits_impl<Sequence>::type
         call(Sequence& s, boost::mpl::true_) {
-            return s.concat;
+            return s.concat();
         }
 
         template<typename Sequence>
         typename begin_traits_impl<Sequence>::type
         call(Sequence& s, boost::mpl::false_) {
             typedef BOOST_DEDUCED_TYPENAME begin_traits_impl<Sequence>::type type;
-            return type(s.first, s.concat);
+            return type(s.first(), s.concat());
         }
 
         template<typename Sequence>
@@ -77,7 +74,7 @@ namespace boost { namespace fusion
         typename end_traits_impl<Sequence>::type 
         end_traits_impl<Sequence>::call(Sequence& s)
         {
-            return s.concat_last;
+            return s.concat_last();
         }
     }
 

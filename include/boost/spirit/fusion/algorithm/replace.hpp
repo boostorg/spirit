@@ -29,11 +29,11 @@ namespace boost { namespace fusion
 #if! BOOST_WORKAROUND(BOOST_MSVC,<=1300)
             BOOST_STATIC_ASSERT((!meta::equal_to<Position, last_type>::value));
 #endif
-            typedef single_view<T> insert_type;
+            typedef const single_view<T> insert_type;
             typedef range<first_type, Position> left_type;
             typedef range<next_type, last_type> right_type;
-            typedef joint_view<left_type, insert_type> left_replace_type;
-            typedef joint_view<left_replace_type, right_type> type;
+            typedef joint_view<left_type, insert_type, true, true> left_replace_type;
+            typedef joint_view<left_replace_type, right_type, true, true> type;
         };
     }
 

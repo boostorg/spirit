@@ -25,11 +25,11 @@ namespace boost { namespace fusion
             typedef typename meta::begin<Sequence>::type first_type;
             typedef typename meta::end<Sequence>::type last_type;
 
-            typedef single_view<T> insert_type;
+            typedef const single_view<T> insert_type;
             typedef range<first_type, Position> left_type;
             typedef range<Position, last_type> right_type;
-            typedef joint_view<left_type, insert_type> left_insert_type;
-            typedef joint_view<left_insert_type, right_type> type;
+            typedef joint_view<left_type, insert_type, true, true> left_insert_type;
+            typedef joint_view<left_insert_type, right_type, true, true> type;
         };
     }
 
