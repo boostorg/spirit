@@ -69,6 +69,12 @@ namespace boost { namespace fusion
             return *this;
         }
 
+        tuple1& operator=(tuple1 const& t)
+        {
+            m0 = t.m0;
+            return *this;
+        }
+
         T0 m0;
 
     private:
