@@ -50,10 +50,130 @@ ordering_test()
     BOOST_TEST(t3 >= t2);
 }
 
+void extended_tests()
+{
+    using namespace boost::fusion;
+    typedef tuple<char,int> test_tuple;
+    const test_tuple a0('a',0), a1('a',1), a2('a',2),
+        b0('b',0), b1('b',1), b2('b',2),
+        c0('c',0), c1('c',1), c2('c',2);
+
+    BOOST_TEST(b1 == b1);
+    BOOST_TEST(!(b1 == a0));
+    BOOST_TEST(!(b1 == a1));
+    BOOST_TEST(!(b1 == a2));
+    BOOST_TEST(!(b1 == b0));
+    BOOST_TEST(!(b1 == b2));
+    BOOST_TEST(!(b1 == c0));
+    BOOST_TEST(!(b1 == c1));
+    BOOST_TEST(!(b1 == c2));
+    BOOST_TEST(!(a0 == b1));
+    BOOST_TEST(!(a1 == b1));
+    BOOST_TEST(!(a2 == b1));
+    BOOST_TEST(!(b0 == b1));
+    BOOST_TEST(!(b2 == b1));
+    BOOST_TEST(!(c0 == b1));
+    BOOST_TEST(!(c1 == b1));
+    BOOST_TEST(!(c2 == b1));
+
+    BOOST_TEST(!(b1 != b1));
+    BOOST_TEST(b1 != a0);
+    BOOST_TEST(b1 != a1);
+    BOOST_TEST(b1 != a2);
+    BOOST_TEST(b1 != b0);
+    BOOST_TEST(b1 != b2);
+    BOOST_TEST(b1 != c0);
+    BOOST_TEST(b1 != c1);
+    BOOST_TEST(b1 != c2);
+    BOOST_TEST(a0 != b1);
+    BOOST_TEST(a1 != b1);
+    BOOST_TEST(a2 != b1);
+    BOOST_TEST(b0 != b1);
+    BOOST_TEST(b2 != b1);
+    BOOST_TEST(c0 != b1);
+    BOOST_TEST(c1 != b1);
+    BOOST_TEST(c2 != b1);
+    
+    BOOST_TEST(!(b1 < b1));
+    BOOST_TEST(!(b1 < a0));
+    BOOST_TEST(!(b1 < a1));
+    BOOST_TEST(!(b1 < a2));
+    BOOST_TEST(!(b1 < b0));
+    BOOST_TEST(b1 < b2);
+    BOOST_TEST(b1 < c0);
+    BOOST_TEST(b1 < c1);
+    BOOST_TEST(b1 < c2);
+    BOOST_TEST(a0 < b1);
+    BOOST_TEST(a1 < b1);
+    BOOST_TEST(a2 < b1);
+    BOOST_TEST(b0 < b1);
+    BOOST_TEST(!(b2 < b1));
+    BOOST_TEST(!(c0 < b1));
+    BOOST_TEST(!(c1 < b1));
+    BOOST_TEST(!(c2 < b1));
+
+    BOOST_TEST(b1 <=  b1);
+    BOOST_TEST(!(b1 <= a0));
+    BOOST_TEST(!(b1 <= a1));
+    BOOST_TEST(!(b1 <= a2));
+    BOOST_TEST(!(b1 <= b0));
+    BOOST_TEST(b1 <= b2);
+    BOOST_TEST(b1 <= c0);
+    BOOST_TEST(b1 <= c1);
+    BOOST_TEST(b1 <= c2);
+    BOOST_TEST(a0 <= b1);
+    BOOST_TEST(a1 <= b1);
+    BOOST_TEST(a2 <= b1);
+    BOOST_TEST(b0 <= b1);
+    BOOST_TEST(!(b2 <= b1));
+    BOOST_TEST(!(c0 <= b1));
+    BOOST_TEST(!(c1 <= b1));
+    BOOST_TEST(!(c2 <= b1));
+
+    BOOST_TEST(!(b1 > b1));
+    BOOST_TEST(b1 > a0);
+    BOOST_TEST(b1 > a1);
+    BOOST_TEST(b1 > a2);
+    BOOST_TEST(b1 > b0);
+    BOOST_TEST(!(b1 > b2));
+    BOOST_TEST(!(b1 > c0));
+    BOOST_TEST(!(b1 > c1));
+    BOOST_TEST(!(b1 > c2));
+    BOOST_TEST(!(a0 > b1));
+    BOOST_TEST(!(a1 > b1));
+    BOOST_TEST(!(a2 > b1));
+    BOOST_TEST(!(b0 > b1));
+    BOOST_TEST(b2 > b1);
+    BOOST_TEST(c0 > b1);
+    BOOST_TEST(c1 > b1);
+    BOOST_TEST(c2 > b1);
+
+    BOOST_TEST(b1 >= b1);
+    BOOST_TEST(b1 >= a0);
+    BOOST_TEST(b1 >= a1);
+    BOOST_TEST(b1 >= a2);
+    BOOST_TEST(b1 >= b0);
+    BOOST_TEST(!(b1 >= b2));
+    BOOST_TEST(!(b1 >= c0));
+    BOOST_TEST(!(b1 >= c1));
+    BOOST_TEST(!(b1 >= c2));
+    BOOST_TEST(!(a0 >= b1));
+    BOOST_TEST(!(a1 >= b1));
+    BOOST_TEST(!(a2 >= b1));
+    BOOST_TEST(!(b0 >= b1));
+    BOOST_TEST(b2 >= b1);
+    BOOST_TEST(c0 >= b1);
+    BOOST_TEST(c1 >= b1);
+    BOOST_TEST(c2 >= b1);
+
+    return;
+}
+
 int
 main()
 {
     equality_test();
     ordering_test();
+    extended_tests();
     return boost::report_errors();
 }
