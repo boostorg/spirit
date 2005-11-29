@@ -22,7 +22,7 @@ namespace boost { namespace fusion { namespace detail
         template <typename T,typename I1, typename I2>
         bool call(T const& self,I1 const& a, I2 const& b) {
             return *a < *b
-                || !(*b > *a)
+                || !(*b < *a)
                 && T::call(fusion::next(a), fusion::next(b));
         }
     }
