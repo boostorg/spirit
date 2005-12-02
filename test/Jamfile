@@ -99,6 +99,7 @@ else
 
     test-suite "spirit.core.scanner"
         : [ spirit-run $(spirit-src)scanner_tests.cpp <template>normal ]
+        : [ spirit-run $(spirit-src)scanner_value_type_tests.cpp <template>normal ]
         ;
 
     test-suite "spirit.core.primitive"
