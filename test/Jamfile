@@ -62,13 +62,13 @@ local rule turn-off-intel-debug-symbols ( toolset variant : properties * )
 }
 
 {
-    template opt : : :
+    template opt : :
         <optimization>speed
         <inlining>on
         $(spirit-header-include)
         ;
 
-    template opt-metrowerks : : :
+    template opt-metrowerks : :
         <cw><*><optimization>speed
         $(spirit-header-include)
         ;
@@ -222,3 +222,4 @@ else
         ;
 
 }
+
