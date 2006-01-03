@@ -14,6 +14,7 @@
 #include <boost/spirit/fusion/iterator/detail/filter_view_iterator/deref_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/filter_view_iterator/next_traits.hpp>
 #include <boost/spirit/fusion/iterator/detail/filter_view_iterator/value_traits.hpp>
+#include <boost/spirit/fusion/iterator/detail/filter_view_iterator/equal_to_traits.hpp>
 #include <boost/spirit/fusion/algorithm/detail/find_if.ipp>
 
 namespace boost { namespace fusion
