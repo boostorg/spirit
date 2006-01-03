@@ -73,6 +73,14 @@ main()
             == make_tuple(y, x)));
     }
 
+    {
+        typedef tuple<int> tuple_type;
+        typedef meta::filter<tuple_type, is_class<_> >::type none_remain_type;
+        BOOST_MPL_ASSERT((meta::equal_to<meta::begin<none_remain_type>::type, meta::end<none_remain_type>::type>));
+        typedef meta::filter<tuple_type, not_<is_class<_> > >::type some_remain_type;
+        BOOST_MPL_ASSERT_NOT((meta::equal_to<meta::begin<some_remain_type>::type, meta::end<some_remain_type>::type>));
+    }
+
     return boost::report_errors();
 }
 
