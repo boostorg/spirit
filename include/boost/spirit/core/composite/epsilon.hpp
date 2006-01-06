@@ -60,8 +60,10 @@ namespace boost { namespace spirit {
     };
 
 #if BOOST_WORKAROUND(BOOST_MSVC, == 1310) || \
-    BOOST_WORKAROUND(BOOST_MSVC, == 1400)
-// VC 7.1 and VC8
+    BOOST_WORKAROUND(BOOST_MSVC, == 1400) || \
+    BOOST_WORKAROUND(__SUNPRO_CC, <= 0x580)
+// VC 7.1, VC8 and Sun CC <= 5.8 do not support general
+// expressions of non-type template parameters in instantiations
     template <typename CondT>
     inline condition_parser<CondT, false>
     operator~(condition_parser<CondT, true> const& p)
