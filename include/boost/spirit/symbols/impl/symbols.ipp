@@ -15,6 +15,7 @@
 
 // MSVC: void warning about the use of 'this' pointer in constructors
 #if defined(BOOST_MSVC)
+#pragma warning(push)
 #pragma warning(disable : 4355)
 #endif
 
@@ -107,7 +108,7 @@ add(symbols<T, CharT, SetT>& table, CharT const* sym, T const& data)
 }} // namespace boost::spirit
 
 #if defined(BOOST_MSVC)
-#pragma warning(default : 4355)
+#pragma warning(pop)
 #endif
 
 #endif
