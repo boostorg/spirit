@@ -52,6 +52,7 @@ local multi-threading = <library>/boost/thread//boost_thread
 
     test-suite "spirit.core.scanner"
         : [ spirit-run scanner_tests.cpp ]
+          [ spirit-run scanner_value_type_tests.cpp ]
         ;
 
     test-suite "spirit.core.primitive"
