@@ -38,8 +38,6 @@ namespace boost { namespace spirit {
 ///////////////////////////////////////////////////////////////////////////////
 namespace fileiter_impl {
 
-using namespace std;
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  std_file_iterator
@@ -66,6 +64,7 @@ public:
 
     explicit std_file_iterator(std::string fileName)
     {
+        using namespace std;
         FILE* f = fopen(fileName.c_str(), "rb");
 
         // If the file was opened, store it into
@@ -122,6 +121,7 @@ public:
 
     void seek_end(void)
     {
+        using namespace std;
         fseek(m_file.get(), 0, SEEK_END);
         m_pos = ftell(m_file.get()) / sizeof(CharT);
         m_eof = true;
@@ -146,6 +146,7 @@ private:
 
     void update_char(void)
     {
+        using namespace std;
         if ((std::size_t)ftell(m_file.get()) != m_pos)
             fseek(m_file.get(), m_pos, SEEK_SET);
 
