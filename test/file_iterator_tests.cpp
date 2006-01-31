@@ -12,6 +12,13 @@
 #include <boost/concept_check.hpp>
 #include <boost/spirit/iterator/file_iterator.hpp>
 
+// This checks for a namespace related problem in VC8
+// The problem can be avoided by not using "using namespace std;" in the
+// Spirit headers
+namespace vc8_bug_1 { struct plus {}; }
+namespace vc8_bug_2 { using namespace vc8_bug_1; struct test : plus {}; }
+
+
 using namespace std;
 using namespace boost::spirit;
 
