@@ -139,7 +139,7 @@ public:
     }
 
 private:
-    boost::shared_ptr<FILE> m_file;
+    boost::shared_ptr<std::FILE> m_file;
     std::size_t m_pos;
     CharT m_curChar;
     bool m_eof;
