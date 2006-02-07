@@ -669,6 +669,16 @@ template <
 >
 struct common_tree_match_policy : public match_policy
 {
+    common_tree_match_policy()
+    {
+    }
+
+    template <typename PolicyT>
+    common_tree_match_policy(PolicyT const & policies)
+        : match_policy(policies)
+    {
+    }
+
     template <typename T>
     struct result { typedef tree_match<IteratorT, NodeFactoryT, T> type; };
 

@@ -35,6 +35,27 @@ struct pt_match_policy :
         >
     >
 {
+    typedef
+        common_tree_match_policy<
+            pt_match_policy<IteratorT, NodeFactoryT>,
+            IteratorT,
+            NodeFactoryT,
+            pt_tree_policy<
+                pt_match_policy<IteratorT, NodeFactoryT>,
+                NodeFactoryT
+            >
+        >
+    common_tree_match_policy_;
+
+    pt_match_policy()
+    {
+    }
+
+    template <typename PolicyT>
+    pt_match_policy(PolicyT const & policies)
+        : common_tree_match_policy_(policies)
+    {
+    }
 };
 
 //////////////////////////////////
