@@ -149,6 +149,7 @@ else
         : [ spirit-run $(spirit-src)ast_calc_tests.cpp <template>normal ]
           [ spirit-run $(spirit-src)group_match_bug.cpp <template>normal ]
           [ spirit-run $(spirit-src)repeat_ast_tests.cpp <template>normal ]
+          [ compile $(spirit-src)mix_and_match_trees.cpp <template>normal ]
         ;
 
 # temporarily removed from the test suite. tree_tests are not finished, yet.

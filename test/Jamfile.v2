@@ -102,6 +102,7 @@ local multi-threading = <library>/boost/thread//boost_thread
         : [ spirit-run ast_calc_tests.cpp ]
           [ spirit-run group_match_bug.cpp ]
           [ spirit-run repeat_ast_tests.cpp ]
+          [ compile mix_and_match_trees.cpp ]
         ;
 
 # temporarily removed from the test suite. tree_tests are not finished, yet.
