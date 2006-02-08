@@ -15,6 +15,8 @@
 
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/core/non_terminal/parser_context.hpp>
+
+#include <boost/spirit/core/non_terminal/subrule_fwd.hpp>
 #include <boost/spirit/core/non_terminal/impl/subrule.ipp>
 
 namespace boost { namespace spirit {
@@ -166,9 +168,6 @@ namespace boost { namespace spirit {
     //  subrule_parser class
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <int ID, typename ContextT = parser_context<> >
-    struct subrule; // Forward declaration
-
     template <int ID, typename DefT, typename ContextT>
     struct subrule_parser
     : public parser<subrule_parser<ID, DefT, ContextT> >

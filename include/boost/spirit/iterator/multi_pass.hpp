@@ -23,6 +23,8 @@
 #include <boost/spirit/iterator/fixed_size_queue.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
+#include <boost/spirit/iterator/multi_pass_fwd.hpp>
+
 namespace boost { namespace spirit {
 
 namespace impl {
@@ -774,26 +776,11 @@ struct iterator_base_creator
 
 }}
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
-// class template multi_pass (declaration)
+// class template multi_pass 
 ///////////////////////////////////////////////////////////////////////////////
-template
-<
-    typename InputT,
-    typename InputPolicy = multi_pass_policies::input_iterator,
-    typename OwnershipPolicy = multi_pass_policies::ref_counted,
-    typename CheckingPolicy = multi_pass_policies::buf_id_check,
-    typename StoragePolicy = multi_pass_policies::std_deque
->
-class multi_pass;
 
 // The default multi_pass instantiation uses a ref-counted std_deque scheme.
-
-///////////////////////////////////////////////////////////////////////////////
-// class template multi_pass (definition)
-///////////////////////////////////////////////////////////////////////////////
 template
 <
     typename InputT,

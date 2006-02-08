@@ -15,6 +15,8 @@
 #include <boost/spirit/core/non_terminal/parser_id.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
+#include <boost/spirit/core/scanner/scanner_fwd.hpp>
+
 namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -166,9 +168,9 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename IterationPolicyT   = iteration_policy,
-        typename MatchPolicyT       = match_policy,
-        typename ActionPolicyT      = action_policy>
+        typename IterationPolicyT,
+        typename MatchPolicyT,
+        typename ActionPolicyT>
     struct scanner_policies :
         public IterationPolicyT,
         public MatchPolicyT,
@@ -206,8 +208,8 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename IteratorT  = char const*,
-        typename PoliciesT  = scanner_policies<> >
+        typename IteratorT,
+        typename PoliciesT>
     class scanner : public PoliciesT, public scanner_base
     {
     public:

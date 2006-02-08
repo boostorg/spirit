@@ -55,6 +55,8 @@
 #include <boost/iterator_adaptors.hpp>
 #include <boost/spirit/core/safe_bool.hpp>
 
+#include <boost/spirit/iterator/file_iterator_fwd.hpp>
+
 #if !defined(BOOST_SPIRIT_FILEITERATOR_STD)
 #  if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__)) \
       && !defined(BOOST_DISABLE_WIN32)
@@ -77,21 +79,6 @@ extern "C"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
-
-///////////////////////////////////////////////////////////////////////////////
-namespace fileiter_impl {
-
-    // Forward declarations
-    template <typename CharT = char>
-    class std_file_iterator;
-
-#if !defined(BOOST_SPIRIT_FILEITERATOR_STD)
-    template <typename CharT = char>
-    class mmap_file_iterator;
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
-}   // namespace fileiter_impl
 
 template <
     typename CharT = char,

@@ -14,6 +14,8 @@
 #include <boost/spirit/dynamic/rule_alias.hpp>
 #include <boost/shared_ptr.hpp>
 
+#include <boost/spirit/dynamic/stored_rule_fwd.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
@@ -23,10 +25,10 @@ namespace boost { namespace spirit {
     //
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename T0 = nil_t
-      , typename T1 = nil_t
-      , typename T2 = nil_t
-      , bool EmbedByValue = false
+        typename T0 
+      , typename T1
+      , typename T2
+      , bool EmbedByValue
     >
     class stored_rule
         : public impl::rule_base<

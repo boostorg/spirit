@@ -15,6 +15,8 @@
 #include <boost/spirit/core/composite/composite.hpp>
 #include <exception>
 
+#include <boost/spirit/error_handling/exceptions_fwd.hpp>
+
 namespace boost { namespace spirit {
 
     ///////////////////////////////////////////////////////////////////////////
@@ -61,7 +63,7 @@ namespace boost { namespace spirit {
     //      an iterator and an error descriptor.
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename ErrorDescrT, typename IteratorT = char const*>
+    template <typename ErrorDescrT, typename IteratorT>
     struct parser_error : public parser_error_base
     {
         typedef ErrorDescrT error_descr_t;
@@ -211,7 +213,7 @@ namespace boost { namespace spirit {
     //          rethrow:    rethrows the error.
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T = nil_t>
+    template <typename T>
     struct error_status
     {
         enum result_t { fail, retry, accept, rethrow };
@@ -310,9 +312,6 @@ namespace boost { namespace spirit {
     //      fallback_parser's HandlerT (see above).
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename ErrorDescrT>
-    struct guard;
-
     template <typename ErrorDescrT, typename ParserT>
     struct guard_gen : public unary<ParserT, nil_t>
     {

@@ -17,20 +17,11 @@
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/core/composite/directives.hpp>
 
+#include <boost/spirit/symbols/symbols_fwd.hpp>
+
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
-
-///////////////////////////////////////////////////////////////////////////////
-//  Forward Declarations
-
-namespace impl
-{
-    template <typename CharT, typename T>
-    class tst;
-}
-
-template <typename T, typename SetT>
-class symbol_inserter;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -74,12 +65,7 @@ class symbol_inserter;
 //          sym.add("hello", 1)("crazy", 2)("world", 3);
 //
 ///////////////////////////////////////////////////////////////////////////////
-template
-<
-    typename T = int,
-    typename CharT = char,
-    typename SetT = impl::tst<T, CharT>
->
+template <typename T, typename CharT, typename SetT>
 class symbols
 :   private SetT
 ,   public parser<symbols<T, CharT, SetT> >

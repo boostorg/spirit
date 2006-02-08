@@ -18,12 +18,14 @@
 #include <boost/spirit/core/non_terminal/rule.hpp>
 #include <boost/spirit/utility/chset.hpp>
 
+#include <boost/spirit/utility/distinct_fwd.hpp>
+
 namespace boost {
     namespace spirit {
 //-----------------------------------------------------------------------------
 // distinct_parser class
 
-template <typename CharT = char, typename TailT = chset<CharT> >
+template <typename CharT, typename TailT>
 class distinct_parser
 {
 public:
@@ -64,7 +66,7 @@ public:
 //-----------------------------------------------------------------------------
 // distinct_directive class
 
-template <typename CharT = char, typename TailT = chset<CharT> >
+template <typename CharT, typename TailT>
 class distinct_directive
 {
 public:
@@ -111,7 +113,7 @@ public:
 //-----------------------------------------------------------------------------
 // dynamic_distinct_parser class
 
-template <typename ScannerT = scanner<> >
+template <typename ScannerT>
 class dynamic_distinct_parser
 {
 public:
@@ -163,7 +165,7 @@ public:
 //-----------------------------------------------------------------------------
 // dynamic_distinct_directive class
 
-template <typename ScannerT = scanner<> >
+template <typename ScannerT>
 class dynamic_distinct_directive
 {
 public:

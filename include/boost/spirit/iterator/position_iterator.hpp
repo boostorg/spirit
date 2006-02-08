@@ -15,6 +15,8 @@
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>
 
+#include <boost/spirit/iterator/position_iterator_fwd.hpp>
+
 namespace boost { namespace spirit {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -81,13 +83,7 @@ struct file_position : public file_position_without_column {
 //      been reached.
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <typename PositionT>
-class position_policy;
-
-
-// Forward declaration
-template <typename ForwardIteratorT, typename PositionT, typename SelfT>
-class position_iterator;
+template <typename PositionT> class position_policy;
 
 ///////////////////////////////////////////////////////////////////////////////
 }} /* namespace boost::spirit */
@@ -142,8 +138,8 @@ namespace boost { namespace spirit {
 ///////////////////////////////////////////////////////////////////////////////
 template <
     typename ForwardIteratorT,
-    typename PositionT = file_position,
-    typename SelfT = nil_t
+    typename PositionT,
+    typename SelfT
 >
 class position_iterator
 :   public iterator_::impl::position_iterator_base_generator<
@@ -318,7 +314,7 @@ protected:
 template
 <
     typename ForwardIteratorT,
-    typename PositionT = file_position
+    typename PositionT 
 >
 class position_iterator2
     : public position_iterator

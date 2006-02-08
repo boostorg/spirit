@@ -13,6 +13,8 @@
 #include <boost/config.hpp>
 #include <boost/spirit/meta/as_parser.hpp>
 #include <boost/spirit/core/composite/operators.hpp>
+
+#include <boost/spirit/utility/confix_fwd.hpp>
 #include <boost/spirit/utility/impl/confix.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,7 +39,7 @@ struct confix_parser_gen;
 
 template <
     typename OpenT, typename ExprT, typename CloseT, typename CategoryT,
-    typename NestedT = non_nested, typename LexemeT = non_lexeme
+    typename NestedT, typename LexemeT
 >
 struct confix_parser :
     public parser<

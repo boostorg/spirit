@@ -14,6 +14,8 @@
 #include <boost/spirit/meta/as_parser.hpp>
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/core/composite/composite.hpp>
+
+#include <boost/spirit/utility/lists_fwd.hpp>
 #include <boost/spirit/utility/impl/lists.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,8 +94,7 @@ namespace boost { namespace spirit {
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <
-    typename ItemT, typename DelimT, typename EndT = no_list_endtoken,
-    typename CategoryT = plain_parser_category
+    typename ItemT, typename DelimT, typename EndT, typename CategoryT
 >
 struct list_parser :
     public parser<list_parser<ItemT, DelimT, EndT, CategoryT> > {

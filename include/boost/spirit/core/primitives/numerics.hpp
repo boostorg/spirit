@@ -13,6 +13,8 @@
 #include <boost/config.hpp>
 #include <boost/spirit/core/parser.hpp>
 #include <boost/spirit/core/composite/directives.hpp>
+
+#include <boost/spirit/core/primitives/numerics_fwd.hpp>
 #include <boost/spirit/core/primitives/impl/numerics.ipp>
 
 namespace boost { namespace spirit 
@@ -23,10 +25,10 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename T = unsigned,
-        int Radix = 10,
-        unsigned MinDigits = 1,
-        int MaxDigits = -1
+        typename T, 
+        int Radix, 
+        unsigned MinDigits,
+        int MaxDigits
     >
     struct uint_parser : parser<uint_parser<T, Radix, MinDigits, MaxDigits> >
     {
@@ -54,10 +56,10 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename T = unsigned,
-        int Radix = 10,
-        unsigned MinDigits = 1,
-        int MaxDigits = -1
+        typename T,
+        int Radix,
+        unsigned MinDigits,
+        int MaxDigits
     >
     struct int_parser : parser<int_parser<T, Radix, MinDigits, MaxDigits> >
     {
@@ -217,8 +219,8 @@ namespace boost { namespace spirit
     //
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename T = double,
-        typename RealPoliciesT = ureal_parser_policies<T>
+        typename T,
+        typename RealPoliciesT
     >
     struct real_parser
     :   public parser<real_parser<T, RealPoliciesT> >

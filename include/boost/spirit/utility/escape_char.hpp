@@ -17,6 +17,7 @@
 
 #include <boost/spirit/debug.hpp>
 
+#include <boost/spirit/utility/escape_char_fwd.hpp>
 #include <boost/spirit/utility/impl/escape_char.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -112,7 +113,7 @@ private:
 template <unsigned long Flags, typename CharT>
 struct escape_char_action_parser_gen;
 
-template <unsigned long Flags, typename CharT = char>
+template <unsigned long Flags, typename CharT>
 struct escape_char_parser :
     public parser<escape_char_parser<Flags, CharT> > {
 
