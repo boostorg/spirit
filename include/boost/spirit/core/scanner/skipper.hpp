@@ -15,17 +15,16 @@
 #include <boost/spirit/core/scanner/scanner.hpp>
 #include <boost/spirit/core/primitives/impl/primitives.ipp>
 
+#include <boost/spirit/core/scanner/skipper_fwd.hpp>
+
 namespace boost { namespace spirit {
 
-    template <typename BaseT>
-    struct no_skipper_iteration_policy; // forward
-    
     ///////////////////////////////////////////////////////////////////////////
     //
     //  skipper_iteration_policy class
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename BaseT = iteration_policy>
+    template <typename BaseT>
     struct skipper_iteration_policy : public BaseT
     {
         typedef BaseT base_t;
@@ -64,7 +63,29 @@ namespace boost { namespace spirit {
     
     ///////////////////////////////////////////////////////////////////////////
     //
-    //  skipper_iteration_policy class
+    //  no_skipper_iteration_policy class
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename BaseT>
+    struct no_skipper_iteration_policy : public BaseT
+    {
+        typedef BaseT base_t;
+
+        no_skipper_iteration_policy()
+        : BaseT() {}
+
+        template <typename PolicyT>
+        no_skipper_iteration_policy(PolicyT const& other)
+        : BaseT(other) {}
+
+        template <typename ScannerT>
+        void
+        skip(ScannerT const& /*scan*/) const {}
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  skip_parser_iteration_policy class
     //
     ///////////////////////////////////////////////////////////////////////////
     namespace impl
@@ -91,7 +112,7 @@ namespace boost { namespace spirit {
             iteration_policy const&);
     }
 
-    template <typename ParserT, typename BaseT = iteration_policy>
+    template <typename ParserT, typename BaseT>
     class skip_parser_iteration_policy : public skipper_iteration_policy<BaseT>
     {
     public:

@@ -14,33 +14,12 @@
 #include <algorithm>
 
 #include <boost/spirit/core/parser.hpp>
+#include <boost/spirit/core/scanner/skipper.hpp> 
 #include <boost/spirit/core/primitives/primitives.hpp>
 #include <boost/spirit/core/composite/composite.hpp>
 #include <boost/spirit/core/composite/impl/directives.ipp>
 
 namespace boost { namespace spirit {
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  no_skipper_iteration_policy class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename BaseT>
-    struct no_skipper_iteration_policy : public BaseT
-    {
-        typedef BaseT base_t;
-
-        no_skipper_iteration_policy()
-        : BaseT() {}
-
-        template <typename PolicyT>
-        no_skipper_iteration_policy(PolicyT const& other)
-        : BaseT(other) {}
-
-        template <typename ScannerT>
-        void
-        skip(ScannerT const& /*scan*/) const {}
-    };
 
     ///////////////////////////////////////////////////////////////////////////
     //
