@@ -13,27 +13,25 @@
 
 namespace boost { namespace spirit {
 
-    template<typename T, typename ActionT> 
-    class ref_actor;
+    template<typename T, typename ActionT> class ref_actor;
 
-    template<typename T, typename ActionT> 
-    class ref_value_actor;
+    template<typename T, typename ActionT> class ref_value_actor;
 
     template<typename T, typename ValueT, typename ActionT> 
+
     class ref_const_ref_actor;
-
-    struct assign_action;
-    struct push_back_action;
-
     template<typename T, typename ValueT, typename ActionT> 
-    class ref_const_ref_value_actor;
 
+    class ref_const_ref_value_actor;
     template<typename T, typename Value1T, typename Value2T, typename ActionT> 
+
     class ref_const_ref_const_ref_actor;
 
+    struct assign_action; 
     struct clear_action;
     struct increment_action;
     struct decrement_action;
+    struct push_back_action;
     struct push_front_action;
     struct insert_key_action;
     struct insert_at_action;
