@@ -19,9 +19,11 @@
 
 namespace boost { namespace spirit {
 
+    // external (from core)
+    struct nil_t;
+
     // fixed_size_queue.hpp
-    template<typename T, std::size_t N>
-    class fixed_size_queue;
+    template<typename T, std::size_t N> class fixed_size_queue;
     template<typename QueueT, typename T, typename PointerT>
     class fsq_iterator;
 
@@ -30,6 +32,12 @@ namespace boost { namespace spirit {
 
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+
+#if !defined(BOOST_SPIRIT_NIL_T_TYPEOF_REGISTERED)
+BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::nil_t)
+#   define BOOST_SPIRIT_NIL_T_TYPEOF_REGISTERED
+#endif
 
 
 // multi_pass.hpp (has forward header)
