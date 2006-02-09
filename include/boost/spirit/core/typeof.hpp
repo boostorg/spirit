@@ -23,6 +23,7 @@
 namespace boost { namespace spirit {
 
     // parser.hpp
+    template <typename IteratorT> struct parse_info;
     struct plain_parser_category;
     struct binary_parser_category;
     struct unary_parser_category;
@@ -101,8 +102,7 @@ namespace boost { namespace spirit {
     // deprecated assign/push_back actor -- they live somewhere else, now
     struct assign_action;
     struct push_back_action;
-    template<typename T, typename ActionT> 
-    class ref_value_actor;
+    template<typename T, typename ActionT> class ref_value_actor;
     template<typename T, typename ValueT, typename ActionT> 
     class ref_const_ref_actor;
 
@@ -115,6 +115,7 @@ namespace boost { namespace spirit {
 
 // parser.hpp
 
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::parse_info,1)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::plain_parser_category)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::binary_parser_category)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::unary_parser_category)
@@ -123,8 +124,11 @@ BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::action_parser_category)
 
 // nil.hpp (included directly)
 
+#if !defined(BOOST_SPIRIT_NIL_T_TYPEOF_REGISTERED)
+// registration guard to decouple the iterators from the core
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::nil_t)
-
+#   define BOOST_SPIRIT_NIL_T_TYPEOF_REGISTERED
+#endif
 
 // match.hpp
 
