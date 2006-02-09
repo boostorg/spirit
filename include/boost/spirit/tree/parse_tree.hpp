@@ -12,17 +12,17 @@
 #include <boost/spirit/tree/common.hpp>
 #include <boost/spirit/core/scanner/scanner.hpp>
 
+#include <boost/spirit/tree/parse_tree_fwd.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
-template <typename MatchPolicyT, typename NodeFactoryT>
-struct pt_tree_policy;
 
 //////////////////////////////////
 // pt_match_policy is simply an id so the correct specialization of tree_policy can be found.
 template <
     typename IteratorT,
-    typename NodeFactoryT = node_val_data_factory<nil_t>
+    typename NodeFactoryT 
 >
 struct pt_match_policy :
     public common_tree_match_policy<

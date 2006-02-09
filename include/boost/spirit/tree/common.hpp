@@ -23,13 +23,9 @@
 #include <boost/spirit/debug/debug_node.hpp>
 #endif
 
+#include <boost/spirit/tree/common_fwd.hpp>
+
 namespace boost { namespace spirit {
-
-template <typename T>
-struct tree_node;
-
-template <typename IteratorT = char const*, typename ValueT = nil_t>
-struct node_iter_data;
 
 template <typename T>
 void swap(tree_node<T>& a, tree_node<T>& b);
@@ -351,10 +347,6 @@ swap(node_iter_data<T, V>& a, node_iter_data<T, V>& b)
 }
 
 //////////////////////////////////
-template <typename ValueT = nil_t>
-class node_iter_data_factory;
-
-//////////////////////////////////
 template <typename ValueT>
 class node_iter_data_factory
 {
@@ -389,10 +381,6 @@ public:
         }
     };
 };
-
-//////////////////////////////////
-template <typename ValueT = nil_t>
-class node_val_data_factory;
 
 //////////////////////////////////
 template <typename ValueT>
@@ -441,11 +429,6 @@ public:
     };
 };
 
-
-//////////////////////////////////
-template <typename ValueT = nil_t>
-class node_all_val_data_factory;
-
 //////////////////////////////////
 template <typename ValueT>
 class node_all_val_data_factory
@@ -489,14 +472,6 @@ public:
         }
     };
 };
-
-//  forward declaration
-template <
-    typename IteratorT,
-    typename NodeFactoryT = node_val_data_factory<nil_t>,
-    typename T = nil_t
->
-class tree_match;
 
 namespace impl {
 
@@ -1257,29 +1232,27 @@ struct action_directive_parser_gen
 
 //////////////////////////////////
 // Calls the attached action passing it the match from the parser
-// and the first and last iterators
-struct access_match_action
+// and the first and last iterators.
+// The inner template class is used to simulate template-template parameters
+// (declared in common_fwd.hpp).
+template <typename ParserT, typename ActionT>
+struct access_match_action::action
+:   public unary<ParserT, parser<access_match_action::action<ParserT, ActionT> > >
 {
-    // inner template class to simulate template-template parameters
-    template <typename ParserT, typename ActionT>
-    struct action
-    :   public unary<ParserT, parser<access_match_action::action<ParserT, ActionT> > >
-    {
-        typedef action_parser_category parser_category;
-        typedef action<ParserT, ActionT> self_t;
+    typedef action_parser_category parser_category;
+    typedef action<ParserT, ActionT> self_t;
 
-        action( ParserT const& subject,
-                ActionT const& actor_);
+    action( ParserT const& subject,
+            ActionT const& actor_);
 
-        template <typename ScannerT>
-        typename parser_result<self_t, ScannerT>::type
-        parse(ScannerT const& scanner) const;
+    template <typename ScannerT>
+    typename parser_result<self_t, ScannerT>::type
+    parse(ScannerT const& scanner) const;
 
-        ActionT const &predicate() const;
+    ActionT const &predicate() const;
 
-        private:
-        ActionT actor;
-    };
+    private:
+    ActionT actor;
 };
 
 //////////////////////////////////
@@ -1326,28 +1299,26 @@ const action_directive_parser_gen<access_match_action> access_match_d
 //////////////////////////////////
 // Calls the attached action passing it the node from the parser
 // and the first and last iterators
-struct access_node_action
+// The inner template class is used to simulate template-template parameters
+// (declared in common_fwd.hpp).
+template <typename ParserT, typename ActionT>
+struct access_node_action::action
+:   public unary<ParserT, parser<access_node_action::action<ParserT, ActionT> > >
 {
-    // inner template class to simulate template-template parameters
-    template <typename ParserT, typename ActionT>
-    struct action
-    :   public unary<ParserT, parser<access_node_action::action<ParserT, ActionT> > >
-    {
-        typedef action_parser_category parser_category;
-        typedef action<ParserT, ActionT> self_t;
+    typedef action_parser_category parser_category;
+    typedef action<ParserT, ActionT> self_t;
 
-        action( ParserT const& subject,
-                ActionT const& actor_);
+    action( ParserT const& subject,
+            ActionT const& actor_);
 
-        template <typename ScannerT>
-        typename parser_result<self_t, ScannerT>::type
-        parse(ScannerT const& scanner) const;
+    template <typename ScannerT>
+    typename parser_result<self_t, ScannerT>::type
+    parse(ScannerT const& scanner) const;
 
-        ActionT const &predicate() const;
+    ActionT const &predicate() const;
 
-        private:
-        ActionT actor;
-    };
+    private:
+    ActionT actor;
 };
 
 //////////////////////////////////
@@ -1419,12 +1390,12 @@ const action_directive_parser_gen<access_node_action> access_node_d
 //
 ///////////////////////////////////////////////////////////////////////////////
 template <
-    typename IteratorT = char const *,
-    typename NodeFactoryT = node_val_data_factory<nil_t>,
-    typename T = nil_t
+    typename IteratorT,
+    typename NodeFactoryT,
+    typename T
 >
-struct tree_parse_info {
-
+struct tree_parse_info 
+{
     IteratorT   stop;
     bool        match;
     bool        full;
