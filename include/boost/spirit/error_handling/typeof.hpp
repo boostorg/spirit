@@ -11,11 +11,15 @@
 
 #include <boost/typeof/typeof.hpp>
 
+#include <boost/spirit/core/typeof.hpp>
+
 #include <boost/spirit/error_handling/exceptions_fwd.hpp>
 
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
+
+// exceptions.hpp (has forward header)
 
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::parser_error,2)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::assertive_parser,2)
