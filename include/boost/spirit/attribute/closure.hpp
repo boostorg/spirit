@@ -16,6 +16,7 @@
 #include <boost/spirit/core/non_terminal/parser_context.hpp>
 #include <boost/spirit/attribute/parametric.hpp>
 #include <boost/spirit/attribute/closure_context.hpp>
+#include <boost/spirit/attribute/closure_fwd.hpp>
 
 #include <boost/spirit/phoenix/closures.hpp>
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -178,30 +179,29 @@ namespace boost { namespace spirit {
     ///////////////////////////////////////////////////////////////////////////
     template <
             typename DerivedT
-        ,   typename T0 = phoenix::nil_t
-        ,   typename T1 = phoenix::nil_t
-        ,   typename T2 = phoenix::nil_t
+        ,   typename T0
+        ,   typename T1
+        ,   typename T2
 
     #if BOOST_SPIRIT_CLOSURE_LIMIT > 3
-        ,   typename T3 = phoenix::nil_t
-        ,   typename T4 = phoenix::nil_t
-        ,   typename T5 = phoenix::nil_t
+        ,   typename T3
+        ,   typename T4
+        ,   typename T5
 
     #if BOOST_SPIRIT_CLOSURE_LIMIT > 6
-        ,   typename T6 = phoenix::nil_t
-        ,   typename T7 = phoenix::nil_t
-        ,   typename T8 = phoenix::nil_t
+        ,   typename T6
+        ,   typename T7
+        ,   typename T8
 
     #if BOOST_SPIRIT_CLOSURE_LIMIT > 9
-        ,   typename T9 = phoenix::nil_t
-        ,   typename T10 = phoenix::nil_t
-        ,   typename T11 = phoenix::nil_t
+        ,   typename T9
+        ,   typename T10
+        ,   typename T11
 
     #if BOOST_SPIRIT_CLOSURE_LIMIT > 12
-        ,   typename T12 = phoenix::nil_t
-        ,   typename T13 = phoenix::nil_t
-        ,   typename T14 = phoenix::nil_t
-
+        ,   typename T12
+        ,   typename T13
+        ,   typename T14
     #endif
     #endif
     #endif
