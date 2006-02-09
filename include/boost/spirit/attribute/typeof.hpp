@@ -11,7 +11,8 @@
 
 #include <boost/typeof/typeof.hpp>
 
-#include <boost/detail/workaround.hpp>
+#include <boost/spirit/core/typeof.hpp>
+
 #include <boost/spirit/attribute/closure_fwd.hpp>
 
 namespace boost { namespace spirit {
