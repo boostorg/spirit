@@ -11,13 +11,14 @@
 
 #include <boost/typeof/typeof.hpp>
 
+#include <boost/spirit/core/typeof.hpp>
+
 #include <boost/spirit/dynamic/stored_rule_fwd.hpp>
 
 namespace boost { namespace spirit {
 
     // if.hpp
-    template <class ParsableT, typename CondT>
-    struct if_parser;
+    template <class ParsableT, typename CondT> struct if_parser;
     template <class ParsableTrueT, class ParsableFalseT, typename CondT>
     struct if_else_parser;
 
@@ -32,21 +33,17 @@ namespace boost { namespace spirit {
     struct while_parser;
 
     // lazy.hpp
-    template<typename ActorT>
-    struct lazy_parser;
+    template<typename ActorT> struct lazy_parser;
 
     // rule_alias.hpp
-    template <typename ParserT>
-    class rule_alias; 
+    template <typename ParserT> class rule_alias; 
 
     // switch.hpp
-    template <typename CaseT, typename CondT>
-    struct switch_parser;
-    template <int N, class ParserT, bool IsDefault>
-    struct case_parser;
+    template <typename CaseT, typename CondT>       struct switch_parser;
+    template <int N, class ParserT, bool IsDefault> struct case_parser;
 
     // select.hpp
-    template <typename TupleT, typename BehaviourT, typename T>
+    template <typename TupleT, typename BehaviourT, typename T> 
     struct select_parser;
 
 }} // namespace boost::spirit
