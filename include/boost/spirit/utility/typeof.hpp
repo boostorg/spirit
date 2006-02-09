@@ -11,6 +11,8 @@
 
 #include <boost/typeof/typeof.hpp>
 
+#include <boost/spirit/core/typeof.hpp>
+
 #include <boost/spirit/utility/escape_char_fwd.hpp>
 #include <boost/spirit/utility/confix_fwd.hpp>
 #include <boost/spirit/utility/lists_fwd.hpp>
@@ -40,7 +42,9 @@ namespace boost { namespace spirit {
 
 }} // namespace boost::spirit
 
+
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
 
 // chset.hpp
 
