@@ -11,22 +11,22 @@
 
 namespace boost { namespace spirit {
 
-  namespace impl
-  {
-      template <typename CharT, typename T>
-      class tst;
-  }
+    namespace impl
+    {
+        template <typename CharT, typename T>
+        class tst;
+    }
 
-  template
-  <
-      typename T = int,
-      typename CharT = char,
-      typename SetT = impl::tst<T, CharT>
-  >
-  class symbols;
+    template
+    <
+        typename T = int,
+        typename CharT = char,
+        typename SetT = impl::tst<T, CharT>
+    >
+    class symbols;
 
-  template <typename T, typename SetT>
-  class symbol_inserter;
+    template <typename T, typename SetT>
+    class symbol_inserter;
 
 }} // namespace boost::spirit
 
