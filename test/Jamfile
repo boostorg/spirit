@@ -223,16 +223,16 @@ else
         ;
 
     test-suite "spirit.typeof-support"
-        : [ compile $(spirit-src)typeof_support/actor_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/attribute_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/core_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/debug_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/dynamic_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/error_handling_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/iterator_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/symbols_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/tree_typeof.cpp ]
-          [ compile $(spirit-src)typeof_support/utility_typeof.cpp ]
+        : [ compile $(spirit-src)typeof_support/typeof_actor.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_attribute.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_core.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_debug.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_dynamic.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_error_handling.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_iterator.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_symbols.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_tree.cpp ]
+          [ compile $(spirit-src)typeof_support/typeof_utility.cpp ]
         ; 
 }
 
