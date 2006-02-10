@@ -175,3 +175,17 @@ local multi-threading = <library>/boost/thread//boost_thread
         : [ spirit-run actor/$(actor_test_sources).cpp ]
         ;
 
+    test-suite "spirit.typeof-support"
+        : [ compile typeof_support/actor_typeof.cpp ]
+          [ compile typeof_support/attribute_typeof.cpp ]
+          [ compile typeof_support/core_typeof.cpp ]
+          [ compile typeof_support/debug_typeof.cpp ]
+          [ compile typeof_support/dynamic_typeof.cpp ]
+          [ compile typeof_support/error_handling_typeof.cpp ]
+          [ compile typeof_support/iterator_typeof.cpp ]
+          [ compile typeof_support/symbols_typeof.cpp ]
+          [ compile typeof_support/tree_typeof.cpp ]
+          [ compile typeof_support/utility_typeof.cpp ]
+        ; 
+
+
