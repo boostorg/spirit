@@ -321,6 +321,15 @@ BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::push_back_action)
 #endif
 
 
+#if BOOST_WORKAROUND(BOOST_MSVC,BOOST_TESTED_AT(1400)) && BOOST_MSVC >= 1400
+namespace boost { namespace spirit {
+
+    nil_t & operator* (nil_t);
+    nil_t & operator+ (nil_t);
+
+} } // namespace ::boost::spirit::type_of
 #endif
 
+
+#endif
  
