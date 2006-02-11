@@ -7,7 +7,9 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #if !defined(BOOST_SPIRIT_SKIPPER_FWD_HPP)
-#define BOOST_SPIRIT_SKIPPER_HPP
+#define BOOST_SPIRIT_SKIPPER_FWD_HPP
+
+#include <boost/spirit/core/scanner/scanner_fwd.hpp>
 
 namespace boost { namespace spirit {
 
