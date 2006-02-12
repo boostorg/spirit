@@ -1,13 +1,11 @@
+/*==============================================================================
+    Copyright (c) 2006 Tobias Schwinger
+    http://spirit.sourceforge.net/
 
-// (C) Copyright Tobias Schwinger
-//
-// Use modification and distribution are subject to the boost Software License,
-// Version 1.0. (See http://www.boost.org/LICENSE_1_0.txt).
-
-//------------------------------------------------------------------------------
-#if !defined(BOOST_SPIRIT_UTILITY_RULE_PARSER_HPP_INCLUDED)
-#   define BOOST_SPIRIT_UTILITY_RULE_PARSER_HPP_INCLUDED
-// --- --- - - --- - - --- - - - - --- - - - - - - - - - - - - - - - - - - - - -
+    Use, modification and distribution is subject to the Boost Software
+    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================*/
 //
 // About:
 // =====
@@ -256,6 +254,9 @@
 // There is also a function template to create a wrapped parser which can deduce
 // the parser's type from its argument.
 //
+// --- --- - - --- - - --- - - - - --- - - - - - - - - - - - - - - - - - - - - -
+#if !defined(BOOST_SPIRIT_UTILITY_RULE_PARSER_HPP_INCLUDED)
+#   define BOOST_SPIRIT_UTILITY_RULE_PARSER_HPP_INCLUDED
 //==============================================================================
 // Dependencies
 //==============================================================================
