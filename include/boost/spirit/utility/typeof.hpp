@@ -17,6 +17,7 @@
 #include <boost/spirit/utility/confix_fwd.hpp>
 #include <boost/spirit/utility/lists_fwd.hpp>
 #include <boost/spirit/utility/distinct_fwd.hpp>
+#include <boost/spirit/utility/grammar_def_fwd.hpp>
 
 namespace boost { namespace spirit {
 
@@ -119,6 +120,24 @@ BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::flush_multi_pass_parser)
 // scoped_lock.hpp
 
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scoped_lock_parser,2)
+
+
+// grammar_gen.hpp (has forward header)
+
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::grammar_def,BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT)
+
+#if BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 12
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::grammar_def,12)
+#endif
+#if BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT >  9
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::grammar_def, 9)
+#endif
+#if BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT >  6
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::grammar_def, 6)
+#endif
+#if BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT >  3
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::grammar_def, 3)
+#endif
 
 
 #endif
