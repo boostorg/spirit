@@ -17,12 +17,11 @@
 #include <boost/preprocessor/arithmetic/dec.hpp>
 #include <boost/preprocessor/enum.hpp>
 #include <boost/preprocessor/enum_params.hpp>
-#include <boost/preprocessor/enum_params_with_defaults.hpp>
-#include <boost/preprocessor/facilities/intercept.hpp>
 #include <boost/preprocessor/repeat.hpp>
 #include <boost/preprocessor/repeat_from_to.hpp>
 #include <boost/spirit/phoenix/tuples.hpp>
 #include <boost/spirit/core/assert.hpp>
+#include <boost/spirit/utility/grammar_def_fwd.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -50,23 +49,6 @@
 BOOST_STATIC_ASSERT(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT <= PHOENIX_LIMIT);
 BOOST_STATIC_ASSERT(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT <= 15);
 BOOST_STATIC_ASSERT(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 0);
-
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Calculate an integer rounded up to the nearest integer dividable by 3
-//
-///////////////////////////////////////////////////////////////////////////////
-#if BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 12
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     15
-#elif BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 9
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     12
-#elif BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 6
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     9
-#elif BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 3
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     6
-#else
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     3
-#endif
 
 //////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
@@ -171,10 +153,8 @@ namespace impl {
 ///////////////////////////////////////////////////////////////////////////////
 template <
     typename T,
-    BOOST_PP_ENUM_BINARY_PARAMS(
-        BOOST_PP_DEC(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A),
-        typename T, = phoenix::nil_t BOOST_PP_INTERCEPT
-    )
+    BOOST_PP_ENUM_PARAMS(
+        BOOST_PP_DEC(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A), typename T)
 >
 class grammar_def {
 
