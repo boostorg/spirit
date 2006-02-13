@@ -315,3 +315,27 @@ exe typeof
     :
     ;
 
+exe rule_parser_1_1
+    : techniques/no_rules_with_typeof/rule_parser_1_1.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+exe rule_parser_1_2
+    : techniques/no_rules_with_typeof/rule_parser_1_2.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+exe rule_parser_2_1
+    : techniques/no_rules_with_typeof/rule_parser_2_1.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
+exe rule_parser_2_2
+    : techniques/no_rules_with_typeof/rule_parser_2_2.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
