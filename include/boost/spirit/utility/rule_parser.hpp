@@ -378,8 +378,6 @@ namespace boost
             ::boost::spirit::type_of::depend_on_type<__Dummy>(x) ) type;       \
         };                                                                     \
                                                                                \
-        typename __rule::type::embed_t __parser;                               \
-                                                                               \
       public:                                                                  \
                                                                                \
         typedef name_t self_t;                                                 \
@@ -390,6 +388,8 @@ namespace boost
                                                                                \
         BOOST_SPIRIT_RP_EMIT(MV_NONSTATIC,mbrs,-)                              \
         BOOST_SPIRIT_RP_IF(na,SPIRIT_RP_AP_EXTRA_MBRS,2)(np,na)                \
+                                                                               \
+        typename __rule::type::embed_t __parser;                               \
                                                                                \
       public:                                                                  \
                                                                                \
