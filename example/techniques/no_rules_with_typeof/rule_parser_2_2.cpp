@@ -16,6 +16,17 @@
 #include <string>
 #include <iostream>
 
+#include <boost/config.hpp>
+
+#if defined(BOOST_MSVC)
+// Disable MSVC's "'this' used in base/member initializer" warning.
+// It's perfectly safe to use 'this' in a base/member initializer [ 12.6.2-7 ]. 
+// The warning tries to prevent undefined behaviour when the 'this'-pointer is
+// used to do illegal things during construction [ 12.6.2-8 ] -- we don't.
+#   pragma warning(disable:4355) 
+#endif
+
+
 // Note that typeof is applied on a per-rule basis, so the number of rules has
 // no effect on the complexity of the types used with typeof.
 // This is why we can set this macro to a comparatively low value (see the 
