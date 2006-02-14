@@ -309,7 +309,7 @@ namespace boost
 {
   namespace spirit
   {
-    template<class P> struct parser_reference;
+    template<class P> class parser_reference;
     template<class P> parser_reference<P> embed_by_reference(parser<P> const &);
   }
 }
