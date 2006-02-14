@@ -339,3 +339,9 @@ exe rule_parser_2_2
     :
     ;
 
+exe opaque_rule_parser
+    : techniques/no_rules_with_typeof/opaque_rule_parser.cpp
+    : <sysinclude>$(BOOST_ROOT)
+    :
+    ;
+
