@@ -245,7 +245,29 @@
 // 
 //   ((type)),name,(constructor argument(s)))
 // 
-// 
+//
+// 2.4. The opaque rule parser
+//
+// Rule parsers usually are templates. Building large grammars pushes the 
+// compiler really hard (and eventually to its limits) because of the 
+// metafunction complexity involved.
+// If a rule parser without parameters and action placeholders is defined, a 
+// non-template class is created. Non-templated rule parsers can also be created
+// explicitly by using BOOST_SPIRIT_OPAQUE_RULE_PARSER. 
+// Opaque rule parsers can have parameters and member variables (note: no action
+// placeholders are possible). The parameters of an opaque rule parsers are 
+// strictly typed, e.g:
+//
+//   BOOST_SPIRIT_OPAQUE_RULE_PARSER(new_identifier,
+//     (1,( ((my_symbol_table_t &),symbol_table) ))
+//     ,-,
+//     (alpha_p >> *alnum_p) [ symbol_table.add ]
+//   ) 
+//
+// Note it's also possible to have opaque rule parsers accept parameters of 
+// non-const reference types which is not possible with regular rule parsers.
+//
+//
 // 3. Utilities for by-reference embedding
 // 
 // When using parsers mutiple times or recursively it can be helpful to embed 
@@ -277,6 +299,7 @@
 #   include <boost/preprocessor/control/expr_iif.hpp>
 #   include <boost/preprocessor/logical/or.hpp>
 #   include <boost/preprocessor/logical/nor.hpp>
+#   include <boost/preprocessor/logical/not.hpp>
 #   include <boost/preprocessor/logical/compl.hpp>
 #   include <boost/preprocessor/arithmetic/inc.hpp>
 #   include <boost/preprocessor/arithmetic/dec.hpp>
@@ -300,6 +323,10 @@
 #   define BOOST_SPIRIT_RULE_PARSER(name,params,actions,members,rule)          \
       BOOST_SPIRIT_RP_IMPL_I(name,params,actions,members,rule)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Creates a non-templated rule parser. Use at namespace scope.
+#   define BOOST_SPIRIT_OPAQUE_RULE_PARSER(name,params,members,rule)           \
+      BOOST_SPIRIT_RP_OPAQUE_IMPL_I(name,params,members,rule)
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Defines an action placeholder. Use at namespace scope.
 #   define BOOST_SPIRIT_ACTION_PLACEHOLDER(name)                               \
       BOOST_SPIRIT_RP_AP_IMPL(name,::boost::spirit::type_of)
@@ -318,7 +345,7 @@ namespace boost
 //==============================================================================
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// RP_REGISTER_TYPE 
+// RP_REGISTER_TEMPLATE
 //
 // Boost.Typeof registration from within BOOST_SPIRIT__NAMESPACE 
 #   define BOOST_SPIRIT_RP_REGISTER_TEMPLATE(name,params)                      \
@@ -326,6 +353,15 @@ namespace boost
     BOOST_TYPEOF_REGISTER_TEMPLATE(                                            \
         BOOST_SPIRIT_RP_EMIT(NS_QUALIFY,BOOST_SPIRIT__NAMESPACE,-) name,       \
         params)                                                                \
+      BOOST_SPIRIT_RP_EMIT(NS_OPEN,BOOST_SPIRIT__NAMESPACE,-)     
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// RP_REGISTER_TYPE
+//
+// Boost.Typeof registration from within BOOST_SPIRIT__NAMESPACE 
+#   define BOOST_SPIRIT_RP_REGISTER_TYPE(name)                                 \
+      BOOST_SPIRIT_RP_EMIT(NS_CLOSE,BOOST_SPIRIT__NAMESPACE,-)                 \
+    BOOST_TYPEOF_REGISTER_TYPE(                                                \
+        BOOST_SPIRIT_RP_EMIT(NS_QUALIFY,BOOST_SPIRIT__NAMESPACE,-) name )      \
       BOOST_SPIRIT_RP_EMIT(NS_OPEN,BOOST_SPIRIT__NAMESPACE,-)     
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // RP_AP_IMPL
@@ -359,9 +395,15 @@ namespace boost
                               mbrs, BOOST_SPIRIT_RP_ARRAY_SIZE(mbrs), expr)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // RP_IMPL_II
+#   define BOOST_SPIRIT_RP_IMPL_II(name,name_t,pars,np,acts,na,mbrs,nm,x)      \
+      BOOST_PP_IIF(BOOST_PP_OR(np,na),BOOST_SPIRIT_RP_IMPL_III,                \
+                                      BOOST_SPIRIT_RP_OPAQUE_IMPL_II)          \
+                                         (name,name_t,pars,np,acts,na,mbrs,nm,x)
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// RP_IMPL_III
 //
 // The rule parser definition
-#   define BOOST_SPIRIT_RP_IMPL_II(name,name_t,pars,np,acts,na,mbrs,nm,x)      \
+#   define BOOST_SPIRIT_RP_IMPL_III(name,name_t,pars,np,acts,na,mbrs,nm,x)     \
                                                                                \
       template< BOOST_SPIRIT_RP_TPL_PARAMS(pars,acts,typename __,1) >          \
       class name_t                                                             \
@@ -372,7 +414,7 @@ namespace boost
         {                                                                      \
           BOOST_SPIRIT_RP_EMIT(PM_STATIC,pars,__T)                             \
           BOOST_SPIRIT_RP_EMIT(AP_STATIC,acts,-)                               \
-          BOOST_SPIRIT_RP_EMIT(MV_STATIC,mbrs,-)                               \
+          BOOST_SPIRIT_RP_EMIT(MV_STATIC,mbrs,BOOST_PP_IDENTITY(typename))     \
         public:                                                                \
           typedef BOOST_TYPEOF_TPL(                                            \
             ::boost::spirit::type_of::depend_on_type<__Dummy>(x) ) type;       \
@@ -386,7 +428,7 @@ namespace boost
                                                                                \
       protected:                                                               \
                                                                                \
-        BOOST_SPIRIT_RP_EMIT(MV_NONSTATIC,mbrs,-)                              \
+        BOOST_SPIRIT_RP_EMIT(MV_NONSTATIC,mbrs,BOOST_PP_IDENTITY(typename))    \
         BOOST_SPIRIT_RP_IF(na,SPIRIT_RP_AP_EXTRA_MBRS,2)(np,na)                \
                                                                                \
         typename __rule::type::embed_t __parser;                               \
@@ -427,7 +469,67 @@ namespace boost
       BOOST_SPIRIT_RP_REGISTER_TEMPLATE                                        \
         (name_t,BOOST_PP_INC(BOOST_PP_ADD(np,na))) 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// RP_AP_HANDLER                                                                               
+// RP_OPAQUE_IMPL_I
+//
+#   define BOOST_SPIRIT_RP_OPAQUE_IMPL_I(name,pars,mbrs,expr)                  \
+      BOOST_SPIRIT_RP_OPAQUE_IMPL_II(name, name ## _t,                         \
+                                     pars,BOOST_SPIRIT_RP_ARRAY_SIZE(pars),-,-,\
+                                     mbrs,BOOST_SPIRIT_RP_ARRAY_SIZE(mbrs),expr)
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// RP_OPAQUE_IMPL_II
+//
+#   define BOOST_SPIRIT_RP_OPAQUE_IMPL_II(name,name_t,pars,np,_1,_2,mbrs,nm,x) \
+      class name_t                                                             \
+        : public ::boost::spirit::parser< name_t >                             \
+      {                                                                        \
+        class __rule                                                           \
+        {                                                                      \
+          BOOST_SPIRIT_RP_EMIT(PM_OPAQUE_STATIC,pars,-)                        \
+          BOOST_SPIRIT_RP_EMIT(MV_STATIC,mbrs,BOOST_PP_EMPTY)                  \
+        public:                                                                \
+          typedef BOOST_TYPEOF(x) type;                                        \
+        };                                                                     \
+                                                                               \
+      public:                                                                  \
+                                                                               \
+        typedef name_t self_t;                                                 \
+        typedef __rule::type::parser_category_t parser_category_t;             \
+        BOOST_PP_EXPR_IIF(BOOST_PP_NOT(np),typedef self_t const & embed_t;)    \
+                                                                               \
+      protected:                                                               \
+                                                                               \
+        BOOST_SPIRIT_RP_EMIT(MV_NONSTATIC,mbrs,BOOST_PP_EMPTY)                 \
+                                                                               \
+        __rule::type::embed_t __parser;                                        \
+                                                                               \
+      public:                                                                  \
+                                                                               \
+        explicit name_t (BOOST_SPIRIT_RP_EMIT(PM_OPAQUE_CTOR_PARAMS,pars,-))   \
+          : BOOST_SPIRIT_RP_EMIT(MV_CTOR_INIT_LIST,mbrs,-)                     \
+            BOOST_PP_COMMA_IF(nm) __parser(x)                                  \
+        { }                                                                    \
+                                                                               \
+        name_t(name_t const & that)                                            \
+          : BOOST_SPIRIT_RP_EMIT(MV_CTOR_COPY_INIT_LIST,mbrs,that)             \
+            BOOST_PP_COMMA_IF(nm) __parser(that.__parser)                      \
+        { }                                                                    \
+                                                                               \
+        template<typename Scanner> struct result                               \
+        {                                                                      \
+          typedef typename ::boost::spirit::parser_result<                     \
+                                           __rule::type, Scanner>::type type;  \
+        };                                                                     \
+                                                                               \
+        template<typename Scanner>                                             \
+        typename ::boost::spirit::parser_result<self_t, Scanner>::type         \
+        parse(Scanner const & s) const { return __parser.parse(s); }           \
+      };                                                                       \
+                                                                               \
+      BOOST_PP_IF(np,BOOST_SPIRIT_RP_GEN_OPAQUE,BOOST_SPIRIT_RP_GLOB_OPAQUE)   \
+                                                         (name,name_t,np,pars) \
+      BOOST_SPIRIT_RP_REGISTER_TYPE(name_t)
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// RP_AP_HANDLER 
 //
 // Part of the rule parser definition for handling action placeholders
 #   define BOOST_SPIRIT_RP_AP_HANDLER(name_t,np,acts,na,ns)                    \
@@ -525,6 +627,12 @@ namespace boost
                  (BOOST_PP_ENUM_PARAMS(np,p) BOOST_PP_ENUM_TRAILING_PARAMS(na, \
                 ::boost::spirit::type_of::nop_functor() BOOST_PP_INTERCEPT) ); \
       }
+// RP_GEN_OPAQUE
+//
+// non-templated version for opaque rule parsers.
+#   define BOOST_SPIRIT_RP_GEN_OPAQUE(name,name_t,np,pars)                     \
+      inline name_t name( BOOST_SPIRIT_RP_EMIT(PM_OPAQUE_GEN_PARAMS,pars,p))   \
+      { return name_t (BOOST_PP_ENUM_PARAMS(np,p)); }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // RP_GLOB_VAR
 //
@@ -533,6 +641,12 @@ namespace boost
 #   define BOOST_SPIRIT_RP_GLOB_VAR(name,name_t,np,na)                         \
       static name_t <void> const name = name_t <void>(BOOST_PP_ENUM_PARAMS(na, \
                 ::boost::spirit::type_of::nop_functor() BOOST_PP_INTERCEPT) );
+
+// RP_GLOB_OPAQUE
+//
+// non-templated version for opaque rule parsers.
+#   define BOOST_SPIRIT_RP_GLOB_OPAQUE(name,name_t,np,pars)                    \
+      static name_t const name = name_t () ;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // PP_EMIT operations (fragment emittion based on array input)
 
@@ -576,18 +690,38 @@ namespace boost
 // PM_TEMPLATE_PARAMS
 #   define BOOST_SPIRIT_RP__PM_TEMPLATE_PARAMS(r,data,i,elem) , data ## i
 
+// - strictly typed parameters of the opaque rule_parser
+
+// PM_OPAQUE_STATIC
+#   define BOOST_SPIRIT_RP__PM_OPAQUE_STATIC(r,data,i,elem)                    \
+      static ::boost::call_traits<                                             \
+          BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(2,0,elem))                  \
+        >::reference BOOST_PP_TUPLE_ELEM(2,1,elem) ;
+
+// PM_OPAQUE_CTOR_PARAMS
+#   define BOOST_SPIRIT_RP__PM_OPAQUE_CTOR_PARAMS(r,data,i,elem)               \
+      BOOST_PP_COMMA_IF(i) ::boost::call_traits<                               \
+          BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(2,0,elem))                  \
+        >::param_type BOOST_PP_TUPLE_ELEM(2,1,elem)
+
+// PM_OPAQUE_GEN_PARAMS
+#   define BOOST_SPIRIT_RP__PM_OPAQUE_GEN_PARAMS(r,data,i,elem)                \
+      BOOST_PP_COMMA_IF(i) ::boost::call_traits<                               \
+          BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(2,0,elem))                  \
+        >::param_type data ## i
+
 // - - Member variable handling
 
 // MV_NONSTATIC
 #   define BOOST_SPIRIT_RP__MV_NONSTATIC(r,data,i,elem)                        \
-      BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(3,0,elem))                      \
+      data() BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(3,0,elem))               \
         BOOST_PP_TUPLE_ELEM(3,1,elem) ;
 
 // MV_STATIC
 #   define BOOST_SPIRIT_RP__MV_STATIC(r,data,i,elem)                           \
-      static typename ::boost::call_traits<                                    \
-            BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(3,0,elem)) >::reference   \
-        BOOST_PP_TUPLE_ELEM(3,1,elem) ;
+      static data() ::boost::call_traits<                                      \
+            data() BOOST_SPIRIT_RP_TYPE(BOOST_PP_TUPLE_ELEM(3,0,elem))         \
+        >::reference BOOST_PP_TUPLE_ELEM(3,1,elem) ;
 
 // MV_CTOR_INIT_LIST
 #   define BOOST_SPIRIT_RP__MV_CTOR_INIT_LIST(r,data,i,elem)                   \
@@ -724,7 +858,7 @@ namespace boost { namespace spirit {
       : ref_that(that)
     { }
 
-    typedef parser_reference<P>         self_t;
+    typedef parser_reference<P>           self_t;
     typedef self_t const &                embed_t; 
     typedef typename P::parser_category_t parser_category_t;
 
@@ -964,7 +1098,7 @@ namespace boost { namespace spirit { namespace type_of {
   // trick.
 
   #define BOOST_SPIRIT_RP_TYPE(x) \
-    typename ::boost::spirit::type_of::remove_special_fptr \
+    ::boost::spirit::type_of::remove_special_fptr \
       < ::boost::spirit::type_of::special_result & (*) x >::type
 
   struct special_result;
