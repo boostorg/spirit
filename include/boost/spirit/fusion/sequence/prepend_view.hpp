@@ -8,6 +8,7 @@
 #if !defined(FUSION_SEQUENCE_PREPEND_VIEW_HPP)
 #define FUSION_SEQUENCE_PREPEND_VIEW_HPP
 
+#include <boost/spirit/fusion/detail/access.hpp>
 #include <boost/spirit/fusion/sequence/joint_view.hpp>
 #include <boost/spirit/fusion/sequence/single_view.hpp>
 
@@ -16,7 +17,7 @@ namespace boost { namespace fusion
     template <typename View, typename T>
     struct prepend_view : joint_view<single_view<T>, View>
     {
-        prepend_view(View& view, T const& val)
+        prepend_view(View& view, typename detail::call_param<T>::type val)
             : joint_view<single_view<T>, View>(held, view)
             , held(val) {}
         single_view<T> held;

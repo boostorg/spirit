@@ -8,6 +8,7 @@
 #if !defined(FUSION_SEQUENCE_APPEND_VIEW_HPP)
 #define FUSION_SEQUENCE_APPEND_VIEW_HPP
 
+#include <boost/spirit/fusion/detail/access.hpp>
 #include <boost/spirit/fusion/sequence/joint_view.hpp>
 #include <boost/spirit/fusion/sequence/single_view.hpp>
 
@@ -16,7 +17,7 @@ namespace boost { namespace fusion
     template <typename View, typename T>
     struct append_view : joint_view<View, single_view<T> >
     {
-        append_view(View& view, T const& val)
+        append_view(View& view, typename detail::call_param<T>::type val)
             : joint_view<View, single_view<T> >(view, held)
             , held(val) {}
         single_view<T> held;
