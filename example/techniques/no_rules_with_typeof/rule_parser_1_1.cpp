@@ -43,8 +43,8 @@ namespace my_project { namespace my_module {
   BOOST_SPIRIT_RULE_PARSER(skipper,
     -,-,-, 
 
-    (   confix_p("//",*anychar_p,eol_p) 
-      | confix_p("/*",*anychar_p,"*/") 
+    (   confix_p(str_p("//"),*anychar_p,eol_p) 
+      | confix_p(str_p("/*"),*anychar_p,str_p("*/")) 
       | space_p 
     )
   )
