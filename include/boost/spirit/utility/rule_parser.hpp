@@ -472,6 +472,10 @@ namespace boost
 // RP_OPAQUE_IMPL_II
 //
 #   define BOOST_SPIRIT_RP_OPAQUE_IMPL_II(name,name_t,pars,np,_1,_2,mbrs,nm,x) \
+      class name_t;                                                            \
+                                                                               \
+      BOOST_SPIRIT_RP_REGISTER_TYPE(name_t)                                    \
+                                                                               \
       class name_t                                                             \
         : public ::boost::spirit::parser< name_t >                             \
       {                                                                        \
@@ -519,8 +523,7 @@ namespace boost
       };                                                                       \
                                                                                \
       BOOST_PP_IF(np,BOOST_SPIRIT_RP_GEN_OPAQUE,BOOST_SPIRIT_RP_GLOB_OPAQUE)   \
-                                                         (name,name_t,np,pars) \
-      BOOST_SPIRIT_RP_REGISTER_TYPE(name_t)
+                                                         (name,name_t,np,pars)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // RP_AP_HANDLER 
 //
