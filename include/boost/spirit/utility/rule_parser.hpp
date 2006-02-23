@@ -32,13 +32,6 @@
 // grammars that can be recursive and arbitrarily complex.
 //
 //
-// Note:
-// ====
-//
-// This code is still experimental and is known to work considerably stable with
-// GCC and MSVC8. MSVC7.1 currently can't handle it properly.
-//
-//
 // Quick manual:
 // ============
 // 
