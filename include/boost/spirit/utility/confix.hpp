@@ -139,28 +139,23 @@ struct confix_parser_gen
     // Generic generator function for creation of concrete confix parsers
 
     template<typename StartT, typename ExprT, typename EndT>
-    confix_parser<
-        typename as_parser<StartT>::type,
-        typename as_parser<ExprT>::type,
-        typename as_parser<EndT>::type,
-        typename as_parser<ExprT>::type::parser_category_t,
-        NestedT,
-        LexemeT
-    >
-    operator()(
-        StartT const &start_, ExprT const &expr_, EndT const &end_) const
+    struct paren_op_result_type
     {
-        typedef typename as_parser<StartT>::type start_t;
-        typedef typename as_parser<ExprT>::type expr_t;
-        typedef typename as_parser<EndT>::type end_t;
-        typedef
-            typename as_parser<ExprT>::type::parser_category_t
-            parser_category_t;
-
-        typedef
-            confix_parser<
-                start_t, expr_t, end_t, parser_category_t, NestedT, LexemeT
-            >
+        typedef confix_parser<
+            typename as_parser<StartT>::type,
+            typename as_parser<ExprT>::type,
+            typename as_parser<EndT>::type,
+            typename as_parser<ExprT>::type::parser_category_t,
+            NestedT,
+            LexemeT
+        > type;
+    };
+  
+    template<typename StartT, typename ExprT, typename EndT>
+    typename paren_op_result_type<StartT, ExprT, EndT>::type 
+    operator()(StartT const &start_, ExprT const &expr_, EndT const &end_) const
+    {
+        typedef typename paren_op_result_type<StartT,ExprT,EndT>::type 
             return_t;
 
         return return_t(
@@ -175,25 +170,23 @@ struct confix_parser_gen
     // parser (see comment above, no automatic refactoring)
 
     template<typename StartT, typename ExprT, typename EndT>
-    confix_parser<
-        typename as_parser<StartT>::type,
-        typename as_parser<ExprT>::type,
-        typename as_parser<EndT>::type,
-        plain_parser_category,   // do not re-attach action
-        NestedT,
-        LexemeT
-    >
+    struct direct_result_type
+    {
+        typedef confix_parser<
+            typename as_parser<StartT>::type,
+            typename as_parser<ExprT>::type,
+            typename as_parser<EndT>::type,
+            plain_parser_category,   // do not re-attach action
+            NestedT,
+            LexemeT
+        > type;
+    };
+
+    template<typename StartT, typename ExprT, typename EndT>
+    typename direct_result_type<StartT,ExprT,EndT>::type
     direct(StartT const &start_, ExprT const &expr_, EndT const &end_) const
     {
-        typedef typename as_parser<StartT>::type start_t;
-        typedef typename as_parser<ExprT>::type expr_t;
-        typedef typename as_parser<EndT>::type end_t;
-        typedef plain_parser_category parser_category_t;
-
-        typedef
-            confix_parser<
-                start_t, expr_t, end_t, parser_category_t, NestedT, LexemeT
-            >
+        typedef typename direct_result_type<StartT,ExprT,EndT>::type
             return_t;
 
         return return_t(
@@ -253,25 +246,24 @@ struct comment_parser_gen
     // closing token.
 
     template<typename StartT>
-    confix_parser<
-        typename as_parser<StartT>::type,
-        kleene_star<anychar_parser>,
-        alternative<eol_parser, end_parser>,
-        unary_parser_category,          // there is no action to re-attach
-        NestedT,
-        is_lexeme                       // insert implicit lexeme_d[]
-    >
+    struct paren_op1_result_type
+    {
+        typedef confix_parser<
+            typename as_parser<StartT>::type,
+            kleene_star<anychar_parser>,
+            alternative<eol_parser, end_parser>,
+            unary_parser_category,          // there is no action to re-attach
+            NestedT,
+            is_lexeme                       // insert implicit lexeme_d[]
+        >
+        type;
+    };
+
+    template<typename StartT>
+    typename paren_op1_result_type<StartT>::type 
     operator() (StartT const &start_) const
     {
-        typedef typename as_parser<StartT>::type start_t;
-        typedef kleene_star<anychar_parser> expr_t;
-        typedef alternative<eol_parser, end_parser> end_t;
-        typedef unary_parser_category parser_category_t;
-
-        typedef
-            confix_parser<
-                start_t, expr_t, end_t, parser_category_t, NestedT, is_lexeme
-            >
+        typedef typename paren_op1_result_type<StartT>::type
             return_t;
 
         return return_t(
@@ -285,25 +277,23 @@ struct comment_parser_gen
     // from an open and a close tokens.
 
     template<typename StartT, typename EndT>
-    confix_parser<
-        typename as_parser<StartT>::type,
-        kleene_star<anychar_parser>,
-        typename as_parser<EndT>::type,
-        unary_parser_category,          // there is no action to re-attach
-        NestedT,
-        is_lexeme                       // insert implicit lexeme_d[]
-    >
+    struct paren_op2_result_type
+    {
+        typedef confix_parser<
+            typename as_parser<StartT>::type,
+            kleene_star<anychar_parser>,
+            typename as_parser<EndT>::type,
+            unary_parser_category,          // there is no action to re-attach
+            NestedT,
+            is_lexeme                       // insert implicit lexeme_d[]
+        > type;
+    };
+
+    template<typename StartT, typename EndT>
+    typename paren_op2_result_type<StartT,EndT>::type
     operator() (StartT const &start_, EndT const &end_) const
     {
-        typedef typename as_parser<StartT>::type start_t;
-        typedef kleene_star<anychar_parser> expr_t;
-        typedef typename as_parser<EndT>::type end_t;
-        typedef unary_parser_category parser_category_t;
-
-        typedef
-            confix_parser<
-                start_t, expr_t, end_t, parser_category_t, NestedT, is_lexeme
-            >
+        typedef typename paren_op2_result_type<StartT,EndT>::type
             return_t;
 
         return return_t(
@@ -360,7 +350,7 @@ private:
     {
         return
             impl::contiguous_parser_parse<
-                BOOST_DEDUCED_TYPENAME parser_result<ParserT, ScannerT>::type
+                typename parser_result<ParserT, ScannerT>::type
             >(p, scan, scan);
     }
 
@@ -375,21 +365,25 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 
 template<typename OpenT, typename CloseT>
-inline
-comment_nest_parser<
-    typename as_parser<OpenT>::type,
-    typename as_parser<CloseT>::type
->
-    comment_nest_p(OpenT const &open, CloseT const &close)
+struct comment_nest_p_result
 {
-    return
-        comment_nest_parser<
-            BOOST_DEDUCED_TYPENAME as_parser<OpenT>::type,
-            BOOST_DEDUCED_TYPENAME as_parser<CloseT>::type
-        >(
-            as_parser<OpenT>::convert(open),
-            as_parser<CloseT>::convert(close)
-        );
+    typedef comment_nest_parser<
+        typename as_parser<OpenT>::type,
+        typename as_parser<CloseT>::type
+    > type;
+};
+
+template<typename OpenT, typename CloseT>
+inline typename comment_nest_p_result<OpenT,CloseT>::type 
+comment_nest_p(OpenT const &open, CloseT const &close)
+{
+    typedef typename comment_nest_p_result<OpenT,CloseT>::type
+        result_t;
+
+    return result_t(
+        as_parser<OpenT>::convert(open),
+        as_parser<CloseT>::convert(close)
+    );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
