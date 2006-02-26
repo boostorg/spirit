@@ -43,8 +43,8 @@ namespace my_project { namespace my_module {
   BOOST_SPIRIT_RULE_PARSER(skipper,
     -,-,-, 
 
-    (   confix_p(str_p("//"),*anychar_p,eol_p) 
-      | confix_p(str_p("/*"),*anychar_p,str_p("*/")) 
+    (   confix_p("//",*anychar_p,eol_p) 
+      | confix_p("/*",*anychar_p,"*/") 
       | space_p 
     )
   )
@@ -53,8 +53,8 @@ namespace my_project { namespace my_module {
   BOOST_SPIRIT_RULE_PARSER(uint_literal,
     -,-,-,
 
-      str_p("0x") >> hex_p[ & echo_uint ]
-    | str_p("0b") >> bin_p[ & echo_uint ]
+      "0x" >> hex_p[ & echo_uint ]
+    | "0b" >> bin_p[ & echo_uint ]
     | uint_p[ & echo_uint ]
   ) 
 
