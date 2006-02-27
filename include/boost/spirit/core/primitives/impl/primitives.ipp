@@ -174,98 +174,112 @@ namespace boost { namespace spirit {
         //
         ///////////////////////////////////////////////////////////////////////
 
+        template <typename CharT>
         inline bool 
-        isalnum_(char c)
+        isalnum_(CharT c)
         { 
             using namespace std; 
             return isalnum(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        isalpha_(char c)
+        isalpha_(CharT c)
         { 
             using namespace std; 
             return isalpha(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        iscntrl_(char c)
+        iscntrl_(CharT c)
         { 
             using namespace std; 
             return iscntrl(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        isdigit_(char c)
+        isdigit_(CharT c)
         { 
             using namespace std; 
             return isdigit(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        isgraph_(char c)
+        isgraph_(CharT c)
         { 
             using namespace std; 
             return isgraph(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        islower_(char c)
+        islower_(CharT c)
         { 
             using namespace std; 
             return islower(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        isprint_(char c)
+        isprint_(CharT c)
         { 
             using namespace std; 
             return isprint(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        ispunct_(char c)
+        ispunct_(CharT c)
         { 
             using namespace std; 
             return ispunct(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        isspace_(char c)
+        isspace_(CharT c)
         { 
             using namespace std; 
             return isspace(to_int_type(c)) ? true : false; 
         }
     
+        template <typename CharT>
         inline bool 
-        isupper_(char c)
+        isupper_(CharT c)
         { 
             using namespace std; 
             return isupper(to_int_type(c)) ? true : false;  
         }
     
+        template <typename CharT>
         inline bool 
-        isxdigit_(char c)
+        isxdigit_(CharT c)
         { 
             using namespace std; 
             return isxdigit(to_int_type(c)) ? true : false;  
         }
     
+        template <typename CharT>
         inline bool 
-        isblank_(char c)
+        isblank_(CharT c)
         { 
             return (c == ' ' || c == '\t'); 
         }
         
-        inline char 
-        tolower_(char c)
+        template <typename CharT>
+        inline CharT 
+        tolower_(CharT c)
         { 
             using namespace std; 
             return to_char_type<char>(tolower(to_int_type(c))); 
         }
     
-        inline char 
-        toupper_(char c)
+        template <typename CharT>
+        inline CharT 
+        toupper_(CharT c)
         { 
             using namespace std; 
             return to_char_type<char>(toupper(to_int_type(c))); 
