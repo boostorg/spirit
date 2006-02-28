@@ -23,7 +23,7 @@
 #include <string>
 
 #include <fstream>
-#include <assert.h>
+#include <boost/detail/lightweight_test.hpp>
 #include "impl/string_length.hpp"
 
 #define DEBUG_DUMP_TREES    (1)
@@ -335,7 +335,7 @@ struct run_test
         tree_parse_info<iterator_t, factory_t> info =
             ast_parse(text_begin, text_end, gram);
 
-        assert(info.full);
+        BOOST_TEST(info.full);
 
         tree_t expected = gram.template expected_tree<tree_t>();
 
@@ -344,7 +344,7 @@ struct run_test
         dump(cout, expected);
 #endif
 
-        assert(equal(info.trees[0], expected));
+        BOOST_TEST(equal(info.trees[0], expected));
     }
 };
 
@@ -357,7 +357,7 @@ namespace boost
     void throw_exception(std::exception const & )
     {
         std::cerr << "Exception caught" << std::endl;
-        assert(0);
+        BOOST_TEST(0);
     }
 }
 
@@ -379,7 +379,5 @@ int main()
 
     mpl::for_each<tests_t, mpl::_> (run_test());
 
-    cout << "Test completed successfully" << endl;
-
-    return 0;
+    return boost::report_errors();
 }

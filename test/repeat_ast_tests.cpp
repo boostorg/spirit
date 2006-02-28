@@ -10,7 +10,7 @@
 // This test verifies, that reapeat_p et.al. work correctly while using AST's
 
 # include <map>
-# include <cassert>
+# include <boost/detail/lightweight_test.hpp>
 # include <iostream>
 # include <string>
 
@@ -76,7 +76,7 @@ int main() {
 // case 1
     grammar_fail g_fail;
     tree_parse_info<> info1 = ast_parse(test.c_str(), g_fail, space_p);
-    assert(info1.full);
+    BOOST_TEST(info1.full);
 
     //std::cout << "...Case 1: Using repeat_p\n";
     //tree_to_xml(std::cerr, info1.trees, test, rule_names);
@@ -84,11 +84,12 @@ int main() {
 // case 2
     grammar_success g_success;
     tree_parse_info<> info2 = ast_parse(test.c_str(), g_success, space_p);
-    assert(info2.full);
+    BOOST_TEST(info2.full);
 
     //std::cout << "...Case 2: No repeat_p\n";
     //tree_to_xml(std::cerr, info2.trees, test, rule_names);
     // could be used for test case instead of printing the xml stuff:
-    assert(info2.trees.begin()->children.size() == 2);
-    assert(info1.trees.begin()->children.size() == 2);
+    BOOST_TEST(info2.trees.begin()->children.size() == 2);
+    BOOST_TEST(info1.trees.begin()->children.size() == 2);
+    return boost::report_errors();
 }

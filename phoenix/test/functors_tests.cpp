@@ -8,7 +8,7 @@
 ==============================================================================*/
 #include <iostream>
 #include <cmath>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -79,11 +79,11 @@ main()
 ///////////////////////////////////////////////////////////////////////////////
 
     test()();
-    assert(sqr(arg1)(i5) == (i5*i5));
-    assert(fact(4)() == 24);
-    assert(fact(arg1)(i5) == 120);    
-    assert((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
-    assert((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
+    BOOST_TEST(sqr(arg1)(i5) == (i5*i5));
+    BOOST_TEST(fact(4)() == 24);
+    BOOST_TEST(fact(arg1)(i5) == 120);    
+    BOOST_TEST((int)power(arg1, arg2)(d5, d3) == (int)pow(d5, d3));
+    BOOST_TEST((sqr(arg1) + 5)(i5) == ((i5*i5)+5));
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -91,8 +91,5 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();
 }

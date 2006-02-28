@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -27,24 +27,21 @@ main()
 //  Unary operators
 //
 ///////////////////////////////////////////////////////////////////////////////
-    assert((!val(true))() == false);
-    assert((-val(1))() == -1);
-    assert((+val(1))() == +1);
-    assert((~val(1))() == ~1);
-    assert(*(&arg1)(i1) == *(&i1));
-    assert((&arg1)(i1) == &i1);
+    BOOST_TEST((!val(true))() == false);
+    BOOST_TEST((-val(1))() == -1);
+    BOOST_TEST((+val(1))() == +1);
+    BOOST_TEST((~val(1))() == ~1);
+    BOOST_TEST(*(&arg1)(i1) == *(&i1));
+    BOOST_TEST((&arg1)(i1) == &i1);
 
-    assert((*val(&i1))() == *(&i1));
-    assert((*&arg1)(i1) == *(&i1));
-    assert((++var(i))() == 6);
-    assert((--var(i))() == 5);
-    assert((var(i)++)() == 5);
-    assert(i == 6);
-    assert((var(i)--)() == 6);
-    assert(i == 5);
+    BOOST_TEST((*val(&i1))() == *(&i1));
+    BOOST_TEST((*&arg1)(i1) == *(&i1));
+    BOOST_TEST((++var(i))() == 6);
+    BOOST_TEST((--var(i))() == 5);
+    BOOST_TEST((var(i)++)() == 5);
+    BOOST_TEST(i == 6);
+    BOOST_TEST((var(i)--)() == 6);
+    BOOST_TEST(i == 5);
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

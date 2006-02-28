@@ -6,7 +6,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <cstdio>
 #include <iostream>
 #include <boost/concept_check.hpp>
@@ -53,79 +53,79 @@ void RunTest(void)
 {
     // Check constructor opening a file
     ITER a(TMP_FILE);
-    assert(!!a);
+    BOOST_TEST(!!a);
 
     // Assert dereference (twice: derefence
     //  must not move the iterator)
-    assert(*a == 0);
-    assert(*a == 0);
+    BOOST_TEST(*a == 0);
+    BOOST_TEST(*a == 0);
 
     // Check random access
-    assert(a[123] == 123);
+    BOOST_TEST(a[123] == 123);
 
     // Check copy constructor and operator==
     ITER c(a);
-    assert(c == a);
-    assert(!(c != a));
+    BOOST_TEST(c == a);
+    BOOST_TEST(!(c != a));
 
     // Check assignment operator
     ITER d; d = a;
-    assert(d == a);
-    assert(!(d != a));
+    BOOST_TEST(d == a);
+    BOOST_TEST(!(d != a));
 
     // Check make_end()
     ITER b(a.make_end());
-    assert(!!b);
-    assert(a != b);
-    assert(a+256 == b);
-    assert(a == b-256);
+    BOOST_TEST(!!b);
+    BOOST_TEST(a != b);
+    BOOST_TEST(a+256 == b);
+    BOOST_TEST(a == b-256);
 
     // Check copy constructor on non-trivial position
-    assert(*ITER(a+67) == 67);
+    BOOST_TEST(*ITER(a+67) == 67);
 
     // Check increment
     ++a; ++a; a++; a++;
-    assert(*a == 4);
-    assert(a == c+4);
+    BOOST_TEST(*a == 4);
+    BOOST_TEST(a == c+4);
 
     // Check decrement
     --a; --a; a--; a--;
-    assert(*a == 0);
-    assert(a == c);
+    BOOST_TEST(*a == 0);
+    BOOST_TEST(a == c);
 
     // Check end iterator increment/decrement
     --b; b--;
-    assert(*b == 254);
-    assert(a+254 == b);
+    BOOST_TEST(*b == 254);
+    BOOST_TEST(a+254 == b);
     ++b; b++;
-    assert(a+256 == b);
+    BOOST_TEST(a+256 == b);
 
     // Check order
     a += 128;
-    assert(c < a);
-    assert(a < b);
-    assert(a > c);
-    assert(b > a);
+    BOOST_TEST(c < a);
+    BOOST_TEST(a < b);
+    BOOST_TEST(a > c);
+    BOOST_TEST(b > a);
 
     // Check assignment
     a = b;
-    assert(a == b);
+    BOOST_TEST(a == b);
     a = c;
-    assert(a == c);
+    BOOST_TEST(a == c);
 
     // Check weak order
-    assert(a <= c);
-    assert(a >= c);
-    assert(a <= b);
-    assert(!(a >= b));
+    BOOST_TEST(a <= c);
+    BOOST_TEST(a >= c);
+    BOOST_TEST(a <= b);
+    BOOST_TEST(!(a >= b));
 
     // Check increment through end
     a += 255;
-    assert(a != b);
+    BOOST_TEST(a != b);
     ++a;
-    assert(a == b);
+    BOOST_TEST(a == b);
     ++a;
-    assert(a != b);
+    BOOST_TEST(a != b);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -169,10 +169,9 @@ int main(void)
 #endif
 
     // Check if the file handles were closed correctly
-    assert(remove(TMP_FILE) == 0);
+    BOOST_TEST(remove(TMP_FILE) == 0);
 
-    cerr << "Test completed successfully" << endl;
-    return 0;
+    return boost::report_errors();
 }
 
 #ifdef BOOST_NO_EXCEPTIONS
@@ -180,7 +179,7 @@ int main(void)
 namespace boost {
     void throw_exception(std::exception const& e)
     {
-        assert(0);
+        BOOST_EROR("throw_exception");
     }
 }
 

@@ -36,7 +36,7 @@ main()
 #include <boost/thread/mutex.hpp>
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/scoped_lock.hpp>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 int
 main()
@@ -52,12 +52,10 @@ main()
     mutex m;
     rule<> r = scoped_lock_d(m)['x'];
     parse_info<> pi = parse("x", r);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
-    std::cout  << "Test concluded successfully\n";
-
-    return 0;
+    return boost::report_errors();
 }
 
 #endif // defined(DONT_HAVE_BOOST)

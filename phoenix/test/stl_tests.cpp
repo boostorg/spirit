@@ -10,7 +10,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -53,7 +53,7 @@ main()
     for (int m = 0; m < 5; ++m, (cout << ','))
     {
         cout << v[m];
-        assert(v[m] == (m+1)*2);
+        BOOST_TEST(v[m] == (m+1)*2);
     }
     cout << endl;
 
@@ -69,8 +69,8 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    assert((arg1[0])(v) == v[0]);
-    assert((arg1[1])(v) == v[1]);
+    BOOST_TEST((arg1[0])(v) == v[0]);
+    BOOST_TEST((arg1[1])(v) == v[1]);
 
     list<int> l;
     l.push_back(1);
@@ -82,8 +82,8 @@ main()
     list<int>::iterator first = l.begin();
     list<int>::iterator last = l.end();
 
-    assert((*(++arg1))(first) == 2);
-    assert((*(----arg1))(last) == 4);
+    BOOST_TEST((*(++arg1))(first) == 2);
+    BOOST_TEST((*(----arg1))(last) == 4);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -91,8 +91,5 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

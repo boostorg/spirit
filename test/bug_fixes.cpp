@@ -261,7 +261,7 @@ void sf_bug_719322()
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <assert.h>
+#include <boost/detail/lightweight_test.hpp>
 #include <stdio.h>
 
 template <typename IterT>

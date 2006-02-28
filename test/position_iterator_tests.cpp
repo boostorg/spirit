@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <assert.h>
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -82,8 +82,7 @@ int main(void)
     CheckColumnCounting();
     CheckLineExtraction();
 
-    cout << "Test completed successfully" << endl;
-    return 0;
+    return boost::report_errors();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -99,39 +98,39 @@ void CheckIncrement(IterT iter)
     IterT iter2(iter);
     IterT iter3 = iter;
 
-    assert(iter != end);
-    assert(iter2 != end);
-    assert(iter3 != end);
-    assert(*iter == '0');
+    BOOST_TEST(iter != end);
+    BOOST_TEST(iter2 != end);
+    BOOST_TEST(iter3 != end);
+    BOOST_TEST(*iter == '0');
 
     ++iter;
     ++iter2;
     ++iter3;
-    assert(iter == iter2);
-    assert(iter == iter3);
-    assert(*iter == *iter2);
-    assert(*iter == *iter3);
-    assert(iter.get_position() == iter2.get_position());
-    assert(iter.get_position() == iter3.get_position());
-    assert(*iter == '1');
+    BOOST_TEST(iter == iter2);
+    BOOST_TEST(iter == iter3);
+    BOOST_TEST(*iter == *iter2);
+    BOOST_TEST(*iter == *iter3);
+    BOOST_TEST(iter.get_position() == iter2.get_position());
+    BOOST_TEST(iter.get_position() == iter3.get_position());
+    BOOST_TEST(*iter == '1');
 
-    assert(*iter++ == '1');
-    assert(*iter2++ == '1');
-    assert(*iter3++ == '1');
-    assert(*iter == *iter2);
-    assert(*iter == *iter3);
-    assert(iter.get_position() == iter2.get_position());
-    assert(iter.get_position() == iter3.get_position());
-    assert(*iter == '2');
+    BOOST_TEST(*iter++ == '1');
+    BOOST_TEST(*iter2++ == '1');
+    BOOST_TEST(*iter3++ == '1');
+    BOOST_TEST(*iter == *iter2);
+    BOOST_TEST(*iter == *iter3);
+    BOOST_TEST(iter.get_position() == iter2.get_position());
+    BOOST_TEST(iter.get_position() == iter3.get_position());
+    BOOST_TEST(*iter == '2');
 
     ++iter; ++iter; ++iter; ++iter; ++iter; ++iter; ++iter;
-    assert(*iter == '9');
+    BOOST_TEST(*iter == '9');
     ++iter;
-    assert(iter == end);
+    BOOST_TEST(iter == end);
 
     // Check that one after end is no more end
     ++iter;
-    assert(iter != end);
+    BOOST_TEST(iter != end);
 }
 
 template <typename IterT>
@@ -139,29 +138,29 @@ void CheckLineCounting(IterT iter)
 {
     IterT end;
 
-    assert(*iter == '\n' || *iter == '\r');
-    assert(iter.get_position().line == 1);
+    BOOST_TEST(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(iter.get_position().line == 1);
     ++iter; // 0
-    assert(iter.get_position().line == 2);
+    BOOST_TEST(iter.get_position().line == 2);
     ++iter; // 1
     ++iter; // 2
     ++iter; // 3
     ++iter; // newline
-    assert(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(*iter == '\n' || *iter == '\r');
     ++iter; // 4
-    assert(iter.get_position().line == 3);
+    BOOST_TEST(iter.get_position().line == 3);
     ++iter; // 5
     ++iter; // 6
     ++iter; // 7
     ++iter; // newline
-    assert(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(*iter == '\n' || *iter == '\r');
     ++iter; // 8
-    assert(iter.get_position().line == 4);
+    BOOST_TEST(iter.get_position().line == 4);
     ++iter; // 9
     ++iter; // newline
-    assert(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(*iter == '\n' || *iter == '\r');
     ++iter; // end
-    assert(iter == end);
+    BOOST_TEST(iter == end);
 }
 
 template <typename IterT>
@@ -171,31 +170,31 @@ void CheckColumnCounting_Tab4(IterT iter)
 
     // Don't call set_tabchars() here because
     //  default must be 3.
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 1);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 1);
     ++iter; // 0
-    assert(iter.get_position().column == 5);
+    BOOST_TEST(iter.get_position().column == 5);
     ++iter; // 1
-    assert(iter.get_position().column == 6);
+    BOOST_TEST(iter.get_position().column == 6);
     ++iter; // 2
-    assert(iter.get_position().column == 7);
+    BOOST_TEST(iter.get_position().column == 7);
     ++iter; // 3
-    assert(iter.get_position().column == 8);
+    BOOST_TEST(iter.get_position().column == 8);
     ++iter; // tab
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 9);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 9);
     ++iter; // 4
-    assert(iter.get_position().column == 13);
+    BOOST_TEST(iter.get_position().column == 13);
     ++iter; // tab
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 14);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 14);
     ++iter; // 5
-    assert(iter.get_position().column == 17);
+    BOOST_TEST(iter.get_position().column == 17);
     ++iter; // tab
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 18);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 18);
     ++iter; // end
-    assert(iter == end);
+    BOOST_TEST(iter == end);
 }
 
 template <typename IterT>
@@ -210,34 +209,34 @@ void CheckColumnCounting_Tab3(IterT iter)
     IterT iter2(iter);
     IterT iter3; iter3 = iter2;
 
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 1);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 1);
     ++iter; // 0
     ++iter2; ++iter3;
-    assert(iter.get_position().column == 4);
-    assert(iter2.get_position().column == 4);
-    assert(iter3.get_position().column == 4);
+    BOOST_TEST(iter.get_position().column == 4);
+    BOOST_TEST(iter2.get_position().column == 4);
+    BOOST_TEST(iter3.get_position().column == 4);
     ++iter; // 1
-    assert(iter.get_position().column == 5);
+    BOOST_TEST(iter.get_position().column == 5);
     ++iter; // 2
-    assert(iter.get_position().column == 6);
+    BOOST_TEST(iter.get_position().column == 6);
     ++iter; // 3
-    assert(iter.get_position().column == 7);
+    BOOST_TEST(iter.get_position().column == 7);
     ++iter; // tab
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 8);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 8);
     ++iter; // 4
-    assert(iter.get_position().column == 10);
+    BOOST_TEST(iter.get_position().column == 10);
     ++iter; // tab
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 11);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 11);
     ++iter; // 5
-    assert(iter.get_position().column == 13);
+    BOOST_TEST(iter.get_position().column == 13);
     ++iter; // tab
-    assert(*iter == '\t');
-    assert(iter.get_position().column == 14);
+    BOOST_TEST(*iter == '\t');
+    BOOST_TEST(iter.get_position().column == 14);
     ++iter; // end
-    assert(iter == end);
+    BOOST_TEST(iter == end);
 }
 
 const string line1 = "abcd";
@@ -247,7 +246,7 @@ const string linebuf = "\n" + line1 + "\n" + line2 + "\n";
 template <typename IterT>
 void AssertIterString(IterT begin, IterT end, string s)
 {
-    assert(string(begin, end) == s);
+    BOOST_TEST(string(begin, end) == s);
 }
 
 template <typename IterT>
@@ -257,15 +256,15 @@ void CheckLineExtractionOne(IterT iter)
 
     // At the start, we are on a newline, which is an empty
     //  string
-    assert(iter.get_currentline() == string());
-    assert(
+    BOOST_TEST(iter.get_currentline() == string());
+    BOOST_TEST(
         string(iter.get_currentline_begin(), iter.get_currentline_end())
         == string());
 
     ++iter; // a
     ++iter; // b
     ++iter; // c
-    assert(iter.get_currentline() == line1);
+    BOOST_TEST(iter.get_currentline() == line1);
     AssertIterString(
         iter.get_currentline_begin(),
         iter.get_currentline_end(),
@@ -279,8 +278,8 @@ void CheckLineExtractionOne(IterT iter)
     //  not interfere with get_currentline
     IterT iter2(iter);
     IterT iter3; iter3 = iter;
-    assert(iter2.get_currentline() == line2);
-    assert(iter3.get_currentline() == line2);
+    BOOST_TEST(iter2.get_currentline() == line2);
+    BOOST_TEST(iter3.get_currentline() == line2);
     AssertIterString(
         iter2.get_currentline_begin(),
         iter2.get_currentline_end(),
@@ -296,14 +295,14 @@ void CheckLineExtractionOne(IterT iter)
     ++iter; // newline
 
     // Check when the iterator is on a newline
-    assert(iter.get_currentline() == line2);
+    BOOST_TEST(iter.get_currentline() == line2);
     AssertIterString(
         iter.get_currentline_begin(),
         iter.get_currentline_end(),
         line2);
 
     ++iter;
-    assert(iter == end);
+    BOOST_TEST(iter == end);
 }
 
 
@@ -332,9 +331,9 @@ void CheckEmptySequence(void)
     iter_t iter2(iter);
     iter_t iter3; iter3 = iter;
 
-    assert(iter == iter_t());
-    assert(iter2 == iter_t());
-    assert(iter3 == iter_t());
+    BOOST_TEST(iter == iter_t());
+    BOOST_TEST(iter2 == iter_t());
+    BOOST_TEST(iter3 == iter_t());
 }
 
 template <typename IterC, typename Iter>
@@ -348,31 +347,31 @@ void CheckConstructors(void)
     typedef IterC iterc_t;
     typedef Iter iter_t;
 
-    assert(iterc_t(a,a+20,name).get_position() == posc);
-    assert(iterc_t(a,a+20,name,1).get_position() == posc);
-    assert(iterc_t(a,a+20,name,1,1).get_position() == posc);
-    assert(iterc_t(a,a+20,posc).get_position() == posc);
-    assert(iter_t(a,a+20,name).get_position() == pos);
-    assert(iter_t(a,a+20,name,1).get_position() == pos);
-    assert(iter_t(a,a+20,pos).get_position() == pos);
+    BOOST_TEST(iterc_t(a,a+20,name).get_position() == posc);
+    BOOST_TEST(iterc_t(a,a+20,name,1).get_position() == posc);
+    BOOST_TEST(iterc_t(a,a+20,name,1,1).get_position() == posc);
+    BOOST_TEST(iterc_t(a,a+20,posc).get_position() == posc);
+    BOOST_TEST(iter_t(a,a+20,name).get_position() == pos);
+    BOOST_TEST(iter_t(a,a+20,name,1).get_position() == pos);
+    BOOST_TEST(iter_t(a,a+20,pos).get_position() == pos);
 
     // Check copy constructor and assignment. Notice that we want
     //  an implicit copy constructor.
     iterc_t ic1(a,a+20,name);
     iterc_t ic2 = ic1;
     iterc_t ic3; ic3 = ic1;
-    assert(ic1 == ic2);
-    assert(ic1 == ic3);
-    assert(ic1.get_position() == ic2.get_position());
-    assert(ic1.get_position() == ic3.get_position());
+    BOOST_TEST(ic1 == ic2);
+    BOOST_TEST(ic1 == ic3);
+    BOOST_TEST(ic1.get_position() == ic2.get_position());
+    BOOST_TEST(ic1.get_position() == ic3.get_position());
 
     iter_t i1(a,a+20,name);
     iter_t i2 = i1;
     iter_t i3; i3 = i1;
-    assert(i1 == i2);
-    assert(i1 == i3);
-    assert(i1.get_position() == i2.get_position());
-    assert(i1.get_position() == i3.get_position());
+    BOOST_TEST(i1 == i2);
+    BOOST_TEST(i1 == i3);
+    BOOST_TEST(i1.get_position() == i2.get_position());
+    BOOST_TEST(i1.get_position() == i3.get_position());
 
     // Check construction with an empty sequence
     CheckEmptySequence<iter_t>();

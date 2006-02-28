@@ -11,7 +11,7 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 
 typedef boost::spirit::fixed_size_queue<int, 5> queue_t;
@@ -34,25 +34,25 @@ int main(int, char**)
     q.push_back(2);
     q.push_back(3);
     q.push_back(4);
-    assert(q.front() == 1);
+    BOOST_TEST(q.front() == 1);
     q.pop_front();
-    assert(q.front() == 2);
+    BOOST_TEST(q.front() == 2);
     q.pop_front();
-    assert(q.front() == 3);
+    BOOST_TEST(q.front() == 3);
     q.pop_front();
-    assert(q.front() == 4);
+    BOOST_TEST(q.front() == 4);
     q.pop_front();
     q.push_back(5);
     q.push_back(6);
     q.push_back(7);
     q.push_back(8);
-    assert(q.front() == 5);
+    BOOST_TEST(q.front() == 5);
     q.pop_front();
-    assert(q.front() == 6);
+    BOOST_TEST(q.front() == 6);
     q.pop_front();
-    assert(q.front() == 7);
+    BOOST_TEST(q.front() == 7);
     q.pop_front();
-    assert(q.front() == 8);
+    BOOST_TEST(q.front() == 8);
     q.pop_front();
 
     q.push_front(5);
@@ -65,33 +65,33 @@ int main(int, char**)
 
     // Check iterator
     iter_t b = q.begin();
-    assert(*b++ == 1);
-    assert(*b++ == 2);
-    assert(*b++ == 3);
-    assert(*b++ == 4);
-    assert(*b++ == 5);
-    assert(b == q.end());
-    assert(*--b == 5);
-    assert(*--b == 4);
-    assert(*--b == 3);
-    assert(*--b == 2);
-    assert(*--b == 1);
-    assert(b == q.begin());
+    BOOST_TEST(*b++ == 1);
+    BOOST_TEST(*b++ == 2);
+    BOOST_TEST(*b++ == 3);
+    BOOST_TEST(*b++ == 4);
+    BOOST_TEST(*b++ == 5);
+    BOOST_TEST(b == q.end());
+    BOOST_TEST(*--b == 5);
+    BOOST_TEST(*--b == 4);
+    BOOST_TEST(*--b == 3);
+    BOOST_TEST(*--b == 2);
+    BOOST_TEST(*--b == 1);
+    BOOST_TEST(b == q.begin());
 
     // Check const_iterator
     const_iter_t c = cq.begin();
-    assert(*c++ == 1);
-    assert(*c++ == 2);
-    assert(*c++ == 3);
-    assert(*c++ == 4);
-    assert(*c++ == 5);
-    assert(c == cq.end());
-    assert(*--c == 5);
-    assert(*--c == 4);
-    assert(*--c == 3);
-    assert(*--c == 2);
-    assert(*--c == 1);
-    assert(c == cq.begin());
+    BOOST_TEST(*c++ == 1);
+    BOOST_TEST(*c++ == 2);
+    BOOST_TEST(*c++ == 3);
+    BOOST_TEST(*c++ == 4);
+    BOOST_TEST(*c++ == 5);
+    BOOST_TEST(c == cq.end());
+    BOOST_TEST(*--c == 5);
+    BOOST_TEST(*--c == 4);
+    BOOST_TEST(*--c == 3);
+    BOOST_TEST(*--c == 2);
+    BOOST_TEST(*--c == 1);
+    BOOST_TEST(c == cq.begin());
 
 #if 0
 
@@ -118,22 +118,20 @@ int main(int, char**)
 
     //  Check comparisons and interoperations (we are comparing
     //  const and non-const iterators)
-    assert(c == b);
-    assert(c+4 > b);
-    assert(c < b+4);
+    BOOST_TEST(c == b);
+    BOOST_TEST(c+4 > b);
+    BOOST_TEST(c < b+4);
 
 #endif
 
     // Check that you can actually modify the queue with an iterator
     *b = 123;
-    assert(*c == 123);
+    BOOST_TEST(*c == 123);
 
     // Check random access
-    assert(*((c+4)-4) == 123);
-    assert(*((c-4)+4) == 123);
+    BOOST_TEST(*((c+4)-4) == 123);
+    BOOST_TEST(*((c-4)+4) == 123);
 
-    std::cout << "Test completed succesfully" << std::endl;
-
-    return 0;
+    return boost::report_errors();
 }
 

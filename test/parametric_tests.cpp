@@ -8,7 +8,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <string>
 
 using namespace std;

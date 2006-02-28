@@ -9,7 +9,7 @@
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/error_handling/exceptions.hpp>
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
 using namespace boost::spirit;
@@ -43,7 +43,7 @@ main()
             ]
         ).full;
 
-    assert(!r);
-    return 0;
+    BOOST_TEST(!r);
+    return boost::report_errors();
 }
 

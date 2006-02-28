@@ -11,7 +11,7 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 
 typedef boost::spirit::fixed_size_queue<int, 5> queue_t;
@@ -59,8 +59,6 @@ int main(int, char**)
     (void) c+4 > b;
     (void) c < b+4;
 
-    std::cout << "Test completed succesfully" << std::endl;
-
-    return 0;
+    return boost::report_errors();
 }
 

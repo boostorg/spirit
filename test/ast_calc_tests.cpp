@@ -17,7 +17,7 @@
 #include <stack>
 #include <functional>
 #include <string>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace boost::spirit;
 
@@ -143,7 +143,7 @@ long eval_expression(iter_t const& i)
     {
         case calculator::integerID:
         {
-            assert(i->children.size() == 0);
+            BOOST_TEST(i->children.size() == 0);
             // extract integer (not always delimited by '\0')
 #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
             // std::string(iter,iter) constructor has a bug in MWCW 8.3: 
@@ -162,7 +162,7 @@ long eval_expression(iter_t const& i)
         case calculator::factorID:
         {
             // factor can only be unary minus
-            assert(*i->value.begin() == '-');
+            BOOST_TEST(*i->value.begin() == '-');
             return - eval_expression(i->children.begin());
         }
 
@@ -170,40 +170,40 @@ long eval_expression(iter_t const& i)
         {
             if (*i->value.begin() == '*')
             {
-                assert(i->children.size() == 2);
+                BOOST_TEST(i->children.size() == 2);
                 return eval_expression(i->children.begin()) *
                     eval_expression(i->children.begin()+1);
             }
             else if (*i->value.begin() == '/')
             {
-                assert(i->children.size() == 2);
+                BOOST_TEST(i->children.size() == 2);
                 return eval_expression(i->children.begin()) /
                     eval_expression(i->children.begin()+1);
             }
             else
-                assert(0);
+                BOOST_TEST(0);
         }
 
         case calculator::expressionID:
         {
             if (*i->value.begin() == '+')
             {
-                assert(i->children.size() == 2);
+                BOOST_TEST(i->children.size() == 2);
                 return eval_expression(i->children.begin()) +
                     eval_expression(i->children.begin()+1);
             }
             else if (*i->value.begin() == '-')
             {
-                assert(i->children.size() == 2);
+                BOOST_TEST(i->children.size() == 2);
                 return eval_expression(i->children.begin()) -
                     eval_expression(i->children.begin()+1);
             }
             else
-                assert(0);
+                BOOST_TEST(0);
         }
 
         default:
-            assert(0); // error
+            BOOST_TEST(0); // error
     }
 
     return 0;
@@ -238,41 +238,40 @@ int
 main()
 {
 // test the calculator with statically assigned rule ID's
-    assert(parse("12345") == 12345);
-    assert(parse("-12345") == -12345);
-    assert(parse("1 + 2") == 1 + 2);
-    assert(parse("1 * 2") == 1 * 2);
-    assert(parse("1/2 + 3/4") == 1/2 + 3/4);
-    assert(parse("1 + 2 + 3 + 4") == 1 + 2 + 3 + 4);
-    assert(parse("1 * 2 * 3 * 4") == 1 * 2 * 3 * 4);
-    assert(parse("(1 + 2) * (3 + 4)") == (1 + 2) * (3 + 4));
-    assert(parse("(-1 + 2) * (3 + -4)") == (-1 + 2) * (3 + -4));
-    assert(parse("1 + ((6 * 200) - 20) / 6") == 1 + ((6 * 200) - 20) / 6);
-    assert(parse("(1 + (2 + (3 + (4 + 5))))") == (1 + (2 + (3 + (4 + 5)))));
-    assert(parse("1 + 2 + 3 + 4 + 5") == 1 + 2 + 3 + 4 + 5);
-    assert(parse("(12 * 22) + (36 + -4 + 5)") == (12 * 22) + (36 + -4 + 5));
-    assert(parse("(12 * 22) / (5 - 10 + 15)") == (12 * 22) / (5 - 10 + 15));
-    assert(parse("12 * 6 * 15 + 5 - 25") == 12 * 6 * 15 + 5 - 25);
+    BOOST_TEST(parse("12345") == 12345);
+    BOOST_TEST(parse("-12345") == -12345);
+    BOOST_TEST(parse("1 + 2") == 1 + 2);
+    BOOST_TEST(parse("1 * 2") == 1 * 2);
+    BOOST_TEST(parse("1/2 + 3/4") == 1/2 + 3/4);
+    BOOST_TEST(parse("1 + 2 + 3 + 4") == 1 + 2 + 3 + 4);
+    BOOST_TEST(parse("1 * 2 * 3 * 4") == 1 * 2 * 3 * 4);
+    BOOST_TEST(parse("(1 + 2) * (3 + 4)") == (1 + 2) * (3 + 4));
+    BOOST_TEST(parse("(-1 + 2) * (3 + -4)") == (-1 + 2) * (3 + -4));
+    BOOST_TEST(parse("1 + ((6 * 200) - 20) / 6") == 1 + ((6 * 200) - 20) / 6);
+    BOOST_TEST(parse("(1 + (2 + (3 + (4 + 5))))") == (1 + (2 + (3 + (4 + 5)))));
+    BOOST_TEST(parse("1 + 2 + 3 + 4 + 5") == 1 + 2 + 3 + 4 + 5);
+    BOOST_TEST(parse("(12 * 22) + (36 + -4 + 5)") == (12 * 22) + (36 + -4 + 5));
+    BOOST_TEST(parse("(12 * 22) / (5 - 10 + 15)") == (12 * 22) / (5 - 10 + 15));
+    BOOST_TEST(parse("12 * 6 * 15 + 5 - 25") == 12 * 6 * 15 + 5 - 25);
 
 // test the calculator with dynamically assigned rule ID's
-    assert(parse_dyn("12345") == 12345);
-    assert(parse_dyn("-12345") == -12345);
-    assert(parse_dyn("1 + 2") == 1 + 2);
-    assert(parse_dyn("1 * 2") == 1 * 2);
-    assert(parse_dyn("1/2 + 3/4") == 1/2 + 3/4);
-    assert(parse_dyn("1 + 2 + 3 + 4") == 1 + 2 + 3 + 4);
-    assert(parse_dyn("1 * 2 * 3 * 4") == 1 * 2 * 3 * 4);
-    assert(parse_dyn("(1 + 2) * (3 + 4)") == (1 + 2) * (3 + 4));
-    assert(parse_dyn("(-1 + 2) * (3 + -4)") == (-1 + 2) * (3 + -4));
-    assert(parse_dyn("1 + ((6 * 200) - 20) / 6") == 1 + ((6 * 200) - 20) / 6);
-    assert(parse_dyn("(1 + (2 + (3 + (4 + 5))))") == (1 + (2 + (3 + (4 + 5)))));
-    assert(parse_dyn("1 + 2 + 3 + 4 + 5") == 1 + 2 + 3 + 4 + 5);
-    assert(parse_dyn("(12 * 22) + (36 + -4 + 5)") == (12 * 22) + (36 + -4 + 5));
-    assert(parse_dyn("(12 * 22) / (5 - 10 + 15)") == (12 * 22) / (5 - 10 + 15));
-    assert(parse_dyn("12 * 6 * 15 + 5 - 25") == 12 * 6 * 15 + 5 - 25);
+    BOOST_TEST(parse_dyn("12345") == 12345);
+    BOOST_TEST(parse_dyn("-12345") == -12345);
+    BOOST_TEST(parse_dyn("1 + 2") == 1 + 2);
+    BOOST_TEST(parse_dyn("1 * 2") == 1 * 2);
+    BOOST_TEST(parse_dyn("1/2 + 3/4") == 1/2 + 3/4);
+    BOOST_TEST(parse_dyn("1 + 2 + 3 + 4") == 1 + 2 + 3 + 4);
+    BOOST_TEST(parse_dyn("1 * 2 * 3 * 4") == 1 * 2 * 3 * 4);
+    BOOST_TEST(parse_dyn("(1 + 2) * (3 + 4)") == (1 + 2) * (3 + 4));
+    BOOST_TEST(parse_dyn("(-1 + 2) * (3 + -4)") == (-1 + 2) * (3 + -4));
+    BOOST_TEST(parse_dyn("1 + ((6 * 200) - 20) / 6") == 1 + ((6 * 200) - 20) / 6);
+    BOOST_TEST(parse_dyn("(1 + (2 + (3 + (4 + 5))))") == (1 + (2 + (3 + (4 + 5)))));
+    BOOST_TEST(parse_dyn("1 + 2 + 3 + 4 + 5") == 1 + 2 + 3 + 4 + 5);
+    BOOST_TEST(parse_dyn("(12 * 22) + (36 + -4 + 5)") == (12 * 22) + (36 + -4 + 5));
+    BOOST_TEST(parse_dyn("(12 * 22) / (5 - 10 + 15)") == (12 * 22) / (5 - 10 + 15));
+    BOOST_TEST(parse_dyn("12 * 6 * 15 + 5 - 25") == 12 * 6 * 15 + 5 - 25);
 
-    cout << "SUCCESS!!!\n";
-    return 0;
+    return boost::report_errors();    
 }
 
 

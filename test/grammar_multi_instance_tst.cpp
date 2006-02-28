@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/core.hpp>
 
 using namespace boost::spirit;
@@ -43,9 +43,8 @@ main()
     grammar_tests();
     grammar_tests();
     grammar_tests();
-    assert(g_count == 3);
+    BOOST_TEST(g_count == 3);
 
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 

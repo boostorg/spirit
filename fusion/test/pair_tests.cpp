@@ -6,6 +6,8 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+#include <boost/detail/lightweight_test.hpp>
+
 #include <utility>
 #include <iostream>
 #include <string>
@@ -19,17 +21,17 @@ int main()
     BOOST_MPL_ASSERT((boost::is_same<tuple_element<1, std::pair<int, float> >::type, float>));
 
     std::pair<int, std::string> pr(1, "hello");
-    assert(get<0>(pr) == 1);
-    assert(get<1>(pr) == "hello");
+    BOOST_TEST(get<0>(pr) == 1);
+    BOOST_TEST(get<1>(pr) == "hello");
 
     get<0>(pr) = 2;
     get<1>(pr) = "world";
-    assert(get<0>(pr) == 2);
-    assert(get<1>(pr) == "world");
+    BOOST_TEST(get<0>(pr) == 2);
+    BOOST_TEST(get<1>(pr) == "world");
 
     const std::pair<int, std::string> pr2(pr);
-    assert(get<0>(pr2) == 2);
-    assert(get<1>(pr2) == "world");
+    BOOST_TEST(get<0>(pr2) == 2);
+    BOOST_TEST(get<1>(pr2) == "world");
     
     return 0;
 }

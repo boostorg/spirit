@@ -48,7 +48,7 @@ static const unsigned long maximum_test_size = 1000000UL;
 #include <boost/thread/xtime.hpp>
 #include <vector>
 #include <algorithm>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 using boost::spirit::impl::object_with_id;
 
@@ -184,9 +184,9 @@ void local_uniqueness()
 {
 
 
-    assert(test1.data().size()==test_size);
-    assert(test2.data().size()==test_size);
-    assert(test3.data().size()==test_size);
+    BOOST_TEST(test1.data().size()==test_size);
+    BOOST_TEST(test2.data().size()==test_size);
+    BOOST_TEST(test3.data().size()==test_size);
 }
 
 void local_ordering_and_uniqueness()

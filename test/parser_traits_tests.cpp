@@ -12,7 +12,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
@@ -253,20 +253,20 @@ parser_extraction_tests()
             >::value));
 
 // parser object extraction functions
-    assert(1 == parse("aaaa", get_unary_subject(*ch_p('a'))).length);
+    BOOST_TEST(1 == parse("aaaa", get_unary_subject(*ch_p('a'))).length);
 
 char c = 'b';
 
-    assert(1 == parse("aaaa", get_action_subject(ch_p('a')[assign(c)])).length);
-    assert(c == 'b');
+    BOOST_TEST(1 == parse("aaaa", get_action_subject(ch_p('a')[assign(c)])).length);
+    BOOST_TEST(c == 'b');
 
-    assert(1 == parse("aaaa",
+    BOOST_TEST(1 == parse("aaaa",
         ch_p('a')[ get_semantic_action(ch_p('b')[assign(c)]) ]).length);
-    assert(c == 'a');
+    BOOST_TEST(c == 'a');
 
-    assert(1 == parse("abab",
+    BOOST_TEST(1 == parse("abab",
         get_binary_left_subject(ch_p('a') >> ch_p('b'))).length);
-    assert(1 == parse("baba",
+    BOOST_TEST(1 == parse("baba",
         get_binary_right_subject(ch_p('a') >> ch_p('b'))).length);
 }
 
@@ -281,7 +281,6 @@ main()
     parser_traits_tests();
     parser_extraction_tests();
 
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 

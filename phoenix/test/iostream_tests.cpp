@@ -10,7 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #include <boost/config.hpp>
 #ifdef BOOST_NO_STRINGSTREAM
@@ -74,7 +74,7 @@ main()
     SSTREAM sstr;
     (sstr << arg1)(out);
     (sstr >> arg1)(in);
-    assert(in == out);
+    BOOST_TEST(in == out);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -82,8 +82,5 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

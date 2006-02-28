@@ -8,7 +8,7 @@
 ==============================================================================*/
 #include <iostream>
 #include <string>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/phoenix/tuples.hpp>
 
 using namespace std;
@@ -26,8 +26,8 @@ main()
         tuple_element<0, tuple_t>::type& e0 = ttt[_1];
         tuple_element<1, tuple_t>::type& e1 = ttt[_2];
 
-        assert(e0 == 3);
-        assert(e1 == 'c');
+        BOOST_TEST(e0 == 3);
+        BOOST_TEST(e1 == 'c');
 
         cout << e0 << endl;
         cout << e1 << endl;
@@ -42,15 +42,15 @@ main()
         tuple_element<1, tuple_t>::type& e1 = ttt[_2];
         tuple_element<2, tuple_t>::type& e2 = ttt[_3];
 
-        assert(e0 == 3);
-        assert(e1 == 'c');
-        assert(string(e2) == "hello world");
+        BOOST_TEST(e0 == 3);
+        BOOST_TEST(e1 == 'c');
+        BOOST_TEST(string(e2) == "hello world");
 
         cout << e0 << endl;
         cout << e1 << endl;
         cout << e2 << endl;
     }
 
-    return 0;
+    return boost::report_errors();    
 }
 

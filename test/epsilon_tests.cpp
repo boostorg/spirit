@@ -8,7 +8,7 @@
 =============================================================================*/
 #include <iostream>
 #include <cstring>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 // This test program only includes the epsilon.hpp header from Spirit
 #include <boost/spirit/core/composite/epsilon.hpp>

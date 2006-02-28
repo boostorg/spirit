@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <list>
 
 using namespace std;
@@ -94,7 +94,7 @@ scanner_tests()
     while (!pp3.at_end())
     {
         cout << *pp3;
-        assert(!test_islower(*pp3));
+        BOOST_TEST(!test_islower(*pp3));
         ++pp3;
     }
     cout << '\n';
@@ -110,7 +110,7 @@ scanner_tests()
     while (!pp4.at_end())
     {
         cout << *pp4;
-        assert(!test_isspace(*pp4));
+        BOOST_TEST(!test_isspace(*pp4));
         ++pp4;
     }
     cout << '\n';
@@ -119,12 +119,12 @@ scanner_tests()
     cout << "sizeof(scanner<>) == " << sizeof(scanner<>) << '\n';
 
     parse_info<> pi = parse("12abcdefg12345ABCDEFG789", +digit_p, alpha_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("abcdefg12345ABCDEFG789", +digit_p, alpha_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,6 @@ int
 main()
 {
     scanner_tests();
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 

@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
 
@@ -256,29 +256,29 @@ namespace tests {
         {
             GrammarT g;
             
-            assert(parse("a1", g).full);
-            assert(!parse("a,", g).hit);
-            assert(!parse("abcd", g).hit);
+            BOOST_TEST(parse("a1", g).full);
+            BOOST_TEST(!parse("a,", g).hit);
+            BOOST_TEST(!parse("abcd", g).hit);
             
-            assert(parse("a 1", g, space_p).full);
-            assert(!parse("a ,", g, space_p).hit);
-            assert(!parse("a bcd", g, space_p).hit);
+            BOOST_TEST(parse("a 1", g, space_p).full);
+            BOOST_TEST(!parse("a ,", g, space_p).hit);
+            BOOST_TEST(!parse("a bcd", g, space_p).hit);
             
-            assert(!parse("b1", g).hit);
-            assert(parse("b,", g).full);
-            assert(!parse("bbcd", g).hit);
+            BOOST_TEST(!parse("b1", g).hit);
+            BOOST_TEST(parse("b,", g).full);
+            BOOST_TEST(!parse("bbcd", g).hit);
             
-            assert(!parse("b 1", g, space_p).hit);
-            assert(parse("b ,", g, space_p).full);
-            assert(!parse("b bcd", g, space_p).hit);
+            BOOST_TEST(!parse("b 1", g, space_p).hit);
+            BOOST_TEST(parse("b ,", g, space_p).full);
+            BOOST_TEST(!parse("b bcd", g, space_p).hit);
             
-            assert(!parse("c1", g).hit);
-            assert(!parse("c,", g).hit);
-            assert(parse("cbcd", g).full);
+            BOOST_TEST(!parse("c1", g).hit);
+            BOOST_TEST(!parse("c,", g).hit);
+            BOOST_TEST(parse("cbcd", g).full);
             
-            assert(!parse("c 1", g, space_p).hit);
-            assert(!parse("c ,", g, space_p).hit);
-            assert(parse("c bcd", g, space_p).full);
+            BOOST_TEST(!parse("c 1", g, space_p).hit);
+            BOOST_TEST(!parse("c ,", g, space_p).hit);
+            BOOST_TEST(parse("c bcd", g, space_p).full);
         }
     };
 
@@ -290,13 +290,13 @@ namespace tests {
         {
             GrammarT g;
             
-            assert(!parse("d1", g).hit);
-            assert(!parse("d,", g).hit);
-            assert(!parse("dbcd", g).hit);
+            BOOST_TEST(!parse("d1", g).hit);
+            BOOST_TEST(!parse("d,", g).hit);
+            BOOST_TEST(!parse("dbcd", g).hit);
 
-            assert(!parse("d 1", g, space_p).hit);
-            assert(!parse("d ,", g, space_p).hit);
-            assert(!parse("d bcd", g, space_p).hit);
+            BOOST_TEST(!parse("d 1", g, space_p).hit);
+            BOOST_TEST(!parse("d ,", g, space_p).hit);
+            BOOST_TEST(!parse("d bcd", g, space_p).hit);
         }
     };
     
@@ -308,8 +308,8 @@ namespace tests {
         {
             GrammarT g;
             
-            assert(parse("ddefault", g).full);
-            assert(parse("d default", g, space_p).full);
+            BOOST_TEST(parse("ddefault", g).full);
+            BOOST_TEST(parse("d default", g, space_p).full);
         }
     };
     
@@ -340,5 +340,5 @@ main()
     boost::mpl::for_each<default_list_t>(tests::check_grammar_unknown_default());
     boost::mpl::for_each<default_list_t>(tests::check_grammar_default());
 
-    return 0;
+    return boost::report_errors();
 }

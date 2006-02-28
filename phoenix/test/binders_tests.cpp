@@ -8,7 +8,7 @@
 ==============================================================================*/
 #include <iostream>
 #include <functional>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -102,11 +102,11 @@ main()
 //  Member var binders
 
     printer.x = 3;
-    assert(bind(&print_::x)(arg1)(printer) == 3);
-    assert(print_x(arg1)(printer) == 3);
-    assert(print_x(printer)() == 3);
-    assert(0 != (print_x(var(printer))() = 4));
-    assert(printer.x == 4);
+    BOOST_TEST(bind(&print_::x)(arg1)(printer) == 3);
+    BOOST_TEST(print_x(arg1)(printer) == 3);
+    BOOST_TEST(print_x(printer)() == 3);
+    BOOST_TEST(0 != (print_x(var(printer))() = 4));
+    BOOST_TEST(printer.x == 4);
 
 //  Bound member functions
 
@@ -118,8 +118,5 @@ main()
     bound_print_foo2(111, 222)();
     bound_print_foo2(111, arg1)(i100);
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();
 }

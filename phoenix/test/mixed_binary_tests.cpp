@@ -8,7 +8,7 @@
 ==============================================================================*/
 #include <iostream>
 #include <string>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -31,14 +31,14 @@ main()
 //  Mixed type operators
 //
 ///////////////////////////////////////////////////////////////////////////////
-    assert((arg1 + arg2)(i100, i50) == (i100 + i50));
-    assert((arg1 + 3)(i100) == (3 + i100));
-    assert((arg1 + arg2)(hello, world) == "hello world");
-    assert((arg1 + arg2)(i1, d2_5) == (i1 + d2_5));
+    BOOST_TEST((arg1 + arg2)(i100, i50) == (i100 + i50));
+    BOOST_TEST((arg1 + 3)(i100) == (3 + i100));
+    BOOST_TEST((arg1 + arg2)(hello, world) == "hello world");
+    BOOST_TEST((arg1 + arg2)(i1, d2_5) == (i1 + d2_5));
 
-    assert((*(arg1 + arg2))(world, i2) == *(world + i2));
-    assert((*(arg1 + arg2))(i2, world) == *(i2 + world));
-    assert((*(val(world+i2) - arg1))(i2) == *world);
+    BOOST_TEST((*(arg1 + arg2))(world, i2) == *(world + i2));
+    BOOST_TEST((*(arg1 + arg2))(i2, world) == *(i2 + world));
+    BOOST_TEST((*(val(world+i2) - arg1))(i2) == *world);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -46,8 +46,5 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

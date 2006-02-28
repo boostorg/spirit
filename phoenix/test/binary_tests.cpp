@@ -13,7 +13,7 @@
 #endif
 
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -34,59 +34,59 @@ main()
 //  Binary operators
 //
 ///////////////////////////////////////////////////////////////////////////////
-    assert((var(i) = var(i))() == 5);
-    assert((var(i) = 3)() == 3);
-    assert(i == 3);
+    BOOST_TEST((var(i) = var(i))() == 5);
+    BOOST_TEST((var(i) = 3)() == 3);
+    BOOST_TEST(i == 3);
     i = 5;
     int x, y, z;
     (var(x) = var(y) = var(z) = 10)();
-    assert(x == 10 && y == 10 && z == 10);
-    assert((val(world)[3])() == world[3]);
+    BOOST_TEST(x == 10 && y == 10 && z == 10);
+    BOOST_TEST((val(world)[3])() == world[3]);
 
-    assert((var(i) += 5)() == 10);
-    assert((var(i) -= 5)() == 5);
-    assert((var(i) *= 5)() == 25);
-    assert((var(i) /= 5)() == 5);
-    assert((var(i) %= 2)() == 1);
+    BOOST_TEST((var(i) += 5)() == 10);
+    BOOST_TEST((var(i) -= 5)() == 5);
+    BOOST_TEST((var(i) *= 5)() == 25);
+    BOOST_TEST((var(i) /= 5)() == 5);
+    BOOST_TEST((var(i) %= 2)() == 1);
 
-    assert((var(i) <<= 3)() == 8);
-    assert((var(i) >>= 1)() == 4);
-    assert((var(i) |= 0xFF)() == 0xFF);
-    assert((var(i) &= 0xF0)() == 0xF0);
-    assert((var(i) ^= 0xFFFFFFFF)() == int(0xFFFFFF0F));
+    BOOST_TEST((var(i) <<= 3)() == 8);
+    BOOST_TEST((var(i) >>= 1)() == 4);
+    BOOST_TEST((var(i) |= 0xFF)() == 0xFF);
+    BOOST_TEST((var(i) &= 0xF0)() == 0xF0);
+    BOOST_TEST((var(i) ^= 0xFFFFFFFF)() == int(0xFFFFFF0F));
 
-    assert((val(5) == val(5))());
-    assert((val(5) == 5)());
+    BOOST_TEST((val(5) == val(5))());
+    BOOST_TEST((val(5) == 5)());
 
-    assert((arg1 + arg2)(i2, i3) == i2 + i3);
-    assert((arg1 - arg2)(i2, i3) == i2 - i3);
-    assert((arg1 * arg2)(i2, i3) == i2 * i3);
-    assert((arg1 / arg2)(i2, i3) == i2 / i3);
-    assert((arg1 % arg2)(i2, i3) == i2 % i3);
-    assert((arg1 & arg2)(i2, i3) == i2 & i3);
-    assert((arg1 | arg2)(i2, i3) == i2 | i3);
-    assert((arg1 ^ arg2)(i2, i3) == i2 ^ i3);
-    assert((arg1 << arg2)(i2, i3) == i2 << i3);
-    assert((arg1 >> arg2)(i2, i3) == i2 >> i3);
+    BOOST_TEST((arg1 + arg2)(i2, i3) == i2 + i3);
+    BOOST_TEST((arg1 - arg2)(i2, i3) == i2 - i3);
+    BOOST_TEST((arg1 * arg2)(i2, i3) == i2 * i3);
+    BOOST_TEST((arg1 / arg2)(i2, i3) == i2 / i3);
+    BOOST_TEST((arg1 % arg2)(i2, i3) == i2 % i3);
+    BOOST_TEST((arg1 & arg2)(i2, i3) == i2 & i3);
+    BOOST_TEST((arg1 | arg2)(i2, i3) == i2 | i3);
+    BOOST_TEST((arg1 ^ arg2)(i2, i3) == i2 ^ i3);
+    BOOST_TEST((arg1 << arg2)(i2, i3) == i2 << i3);
+    BOOST_TEST((arg1 >> arg2)(i2, i3) == i2 >> i3);
 
-    assert((val(5) != val(6))());
-    assert((val(5) < val(6))());
-    assert(!(val(5) > val(6))());
-    assert((val(5) < val(6))());
-    assert((val(5) <= val(6))());
-    assert((val(5) <= val(5))());
-    assert((val(7) >= val(6))());
-    assert((val(7) >= val(7))());
+    BOOST_TEST((val(5) != val(6))());
+    BOOST_TEST((val(5) < val(6))());
+    BOOST_TEST(!(val(5) > val(6))());
+    BOOST_TEST((val(5) < val(6))());
+    BOOST_TEST((val(5) <= val(6))());
+    BOOST_TEST((val(5) <= val(5))());
+    BOOST_TEST((val(7) >= val(6))());
+    BOOST_TEST((val(7) >= val(7))());
 
-    assert((val(false) && val(false))() == false);
-    assert((val(true) && val(false))() == false);
-    assert((val(false) && val(true))() == false);
-    assert((val(true) && val(true))() == true);
+    BOOST_TEST((val(false) && val(false))() == false);
+    BOOST_TEST((val(true) && val(false))() == false);
+    BOOST_TEST((val(false) && val(true))() == false);
+    BOOST_TEST((val(true) && val(true))() == true);
 
-    assert((val(false) || val(false))() == false);
-    assert((val(true) || val(false))() == true);
-    assert((val(false) || val(true))() == true);
-    assert((val(true) || val(true))() == true);
+    BOOST_TEST((val(false) || val(false))() == false);
+    BOOST_TEST((val(true) || val(false))() == true);
+    BOOST_TEST((val(false) || val(true))() == true);
+    BOOST_TEST((val(true) || val(true))() == true);
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -94,8 +94,5 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();
 }

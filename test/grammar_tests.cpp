@@ -8,7 +8,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
 
@@ -108,8 +108,8 @@ grammar_tests()
 
     parse_info<char const*> pi;
     pi = parse("123, 456, 789", nlist, space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
 #if defined(BOOST_SPIRIT_USE_GRAMMARDEF)
     num_list_ex nlistex;
@@ -117,30 +117,30 @@ grammar_tests()
 
     pi = parse("123, 456, 789", nlist.use_parser<num_list::default_rule>(),
         space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("123", nlist.use_parser<num_list::num_rule>(), space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("123, 456, 789", nlistex, space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("123, 456, 789",
         nlistex.use_parser<num_list_ex::default_rule>(), space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("123", nlistex.use_parser<num_list_ex::num_rule>(), space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 
     pi = parse("123", nlistex.use_parser<num_list_ex::integer_rule>(),
         space_p);
-    assert(pi.hit);
-    assert(pi.full);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
 #endif // defined(BOOST_SPIRIT_USE_GRAMMARDEF)
 }
 
@@ -153,7 +153,6 @@ int
 main()
 {
     grammar_tests();
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 

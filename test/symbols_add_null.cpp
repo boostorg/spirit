@@ -23,7 +23,7 @@ struct spirit_exception
 #include <boost/spirit/symbols/impl/tst.ipp>
 #include <boost/utility/addressof.hpp>
 
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 typedef char char_type;
 typedef char const * iterator;
@@ -49,7 +49,7 @@ int main()
     {
         // It is not ok to add strings containing the null character.
         symbols_.add(begin, end, (void*) boost::addressof(symbols_));
-        assert(0);
+        BOOST_TEST(0);
     }
     catch (spirit_exception &e)
     {
@@ -59,9 +59,10 @@ int main()
     {
         // It is not ok to add strings containing the null character.
         symbols_.add(begin2, end2, (void*) boost::addressof(symbols_));
-        assert(0);
+        BOOST_TEST(0);
     }
     catch (spirit_exception &e)
     {
     }
+    return boost::report_errors();
 }

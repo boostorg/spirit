@@ -9,7 +9,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include "impl/sstream.hpp"
 

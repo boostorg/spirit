@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -55,18 +55,18 @@ main()
 //  More complex expressions
 //
 ///////////////////////////////////////////////////////////////////////////////
-    assert((10 - arg1)(i100) == (10 - i100));
-    assert((20 - arg1)(i100) == (20 - i100));
-    assert((arg1 - 10)(i100) == (i100 - 10));
-    assert((arg1 - 20)(i100) == (i100 - 20));
-    assert((arg1 - arg2)(i100, i50) == (i100 - i50));
-    assert((arg1 - var(i))(i10) == (i10 - i));
-    assert((arg1 + arg2 - arg3)(i100, i50, i20) == (i100 + i50 - i20));
-    assert((sqr(arg1) + arg2 - arg3)(i100, i50, i20) == ((i100*i100) + i50 - i20));
+    BOOST_TEST((10 - arg1)(i100) == (10 - i100));
+    BOOST_TEST((20 - arg1)(i100) == (20 - i100));
+    BOOST_TEST((arg1 - 10)(i100) == (i100 - 10));
+    BOOST_TEST((arg1 - 20)(i100) == (i100 - 20));
+    BOOST_TEST((arg1 - arg2)(i100, i50) == (i100 - i50));
+    BOOST_TEST((arg1 - var(i))(i10) == (i10 - i));
+    BOOST_TEST((arg1 + arg2 - arg3)(i100, i50, i20) == (i100 + i50 - i20));
+    BOOST_TEST((sqr(arg1) + arg2 - arg3)(i100, i50, i20) == ((i100*i100) + i50 - i20));
 
     int ii = i;
-    assert((var(i) += arg1)(i2) == (ii += i2));
-    assert((sqr(sqr(arg1)))(i100) == (i100*i100*i100*i100));
+    BOOST_TEST((var(i) += arg1)(i2) == (ii += i2));
+    BOOST_TEST((sqr(sqr(arg1)))(i100) == (i100*i100*i100*i100));
 
 
 #if 0   /*** SHOULD NOT COMPILE ***/
@@ -74,15 +74,15 @@ main()
     (val(3) = 3)();
 #endif
 
-    assert(((adder(arg1, arg2, arg3) + arg2 - arg3)(i100, i50, i20)) == (i100 + i50 + i20) + i50 - i20);
-    assert((adder(arg1, arg2, arg3)(i100, i50, i20)) == (i100 + i50 + i20));
-    assert((sqr(sqr(sqr(sqr(arg1)))))(d10) == 1e16);
-    assert((sqr(sqr(arg1)) / arg1 / arg1)(d5) == 25);
+    BOOST_TEST(((adder(arg1, arg2, arg3) + arg2 - arg3)(i100, i50, i20)) == (i100 + i50 + i20) + i50 - i20);
+    BOOST_TEST((adder(arg1, arg2, arg3)(i100, i50, i20)) == (i100 + i50 + i20));
+    BOOST_TEST((sqr(sqr(sqr(sqr(arg1)))))(d10) == 1e16);
+    BOOST_TEST((sqr(sqr(arg1)) / arg1 / arg1)(d5) == 25);
 
     for (int j = 0; j < 20; ++j)
     {
         cout << (10 < arg1)(j);
-        assert((10 < arg1)(j) == (10 < j));
+        BOOST_TEST((10 < arg1)(j) == (10 < j));
     }
     cout << endl;
 
@@ -90,7 +90,7 @@ main()
     {
         bool r = ((arg1 % 2 == 0) && (arg1 < 15))(k);
         cout << r;
-        assert(r == ((k % 2 == 0) && (k < 15)));
+        BOOST_TEST(r == ((k % 2 == 0) && (k < 15)));
     }
     cout << endl;
 
@@ -100,8 +100,5 @@ main()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

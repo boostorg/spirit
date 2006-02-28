@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
 
@@ -46,17 +46,17 @@ aliasing_tests()
 
     start = *(a | b | c);
     pi = parse("abcabcacb", d);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 9);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 9);
+    BOOST_TEST(*pi.stop == 0);
 
     start   = (a | b) >> (start | b);
     pi = parse("aaaabababaaabbb", d);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 15);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 15);
+    BOOST_TEST(*pi.stop == 0);
 }
 
 void
@@ -114,13 +114,13 @@ rule_2_or_more_scanners_tests()
         typedef scanner_list<scanner<>, phrase_scanner_t> scanners;
 
         rule<scanners>  r = +anychar_p;
-        assert(parse("abcdefghijk", r).full);
-        assert(parse("a b c d e f g h i j k", r, space_p).full);
+        BOOST_TEST(parse("abcdefghijk", r).full);
+        BOOST_TEST(parse("a b c d e f g h i j k", r, space_p).full);
     }
 
     { // 3 scanners
         my_grammar g;
-        assert(parse("abcdef aBc d e f aBc d E f", g, space_p).full);
+        BOOST_TEST(parse("abcdef aBc d e f aBc d E f", g, space_p).full);
     }
 }
 
@@ -142,22 +142,22 @@ rule_basic_tests()
     BOOST_SPIRIT_DEBUG_RULE(start);
 
     pi = parse("abcabcacb", start);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 9);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 9);
+    BOOST_TEST(*pi.stop == 0);
 
     start   = (a | b) >> (start | b);
     pi = parse("aaaabababaaabbb", start);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 15);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 15);
+    BOOST_TEST(*pi.stop == 0);
 
     pi = parse("aaaabababaaabba", start);
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 14);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 14);
 }
 
 void
@@ -178,22 +178,22 @@ stored_rule_basic_tests()
     BOOST_SPIRIT_DEBUG_RULE(start);
 
     pi = parse("abcabcacb", start);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 9);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 9);
+    BOOST_TEST(*pi.stop == 0);
 
     start   = (a | b) >> (start | b);
     pi = parse("aaaabababaaabbb", start);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 15);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 15);
+    BOOST_TEST(*pi.stop == 0);
 
     pi = parse("aaaabababaaabba", start);
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 14);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 14);
 }
 
 void
@@ -220,10 +220,10 @@ stored_rule_dynamic_tests()
     BOOST_SPIRIT_DEBUG_RULE(start);
 
     pi = parse("abcabcacb", start);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 9);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 9);
+    BOOST_TEST(*pi.stop == 0);
 
     // The FF is the dynamic equivalent of start = (a | b) >> (start | b);
     start = b;
@@ -231,15 +231,15 @@ stored_rule_dynamic_tests()
     start = start.copy() >> (start | b);
 
     pi = parse("aaaabababaaabbb", start);
-    assert(pi.hit);
-    assert(pi.full);
-    assert(pi.length == 15);
-    assert(*pi.stop == 0);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(pi.full);
+    BOOST_TEST(pi.length == 15);
+    BOOST_TEST(*pi.stop == 0);
 
     pi = parse("aaaabababaaabba", start);
-    assert(pi.hit);
-    assert(!pi.full);
-    assert(pi.length == 14);
+    BOOST_TEST(pi.hit);
+    BOOST_TEST(!pi.full);
+    BOOST_TEST(pi.length == 14);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -257,7 +257,6 @@ main()
     stored_rule_basic_tests();
     stored_rule_dynamic_tests();
 
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 

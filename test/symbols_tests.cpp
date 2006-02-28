@@ -9,7 +9,7 @@
 =============================================================================*/
 #include <iostream>
 #include <string>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/symbols/symbols.hpp>
 #include <boost/detail/lightweight_test.hpp>

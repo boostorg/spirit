@@ -12,7 +12,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <boost/static_assert.hpp>
 #include <boost/spirit/core.hpp>
@@ -90,7 +90,6 @@ main()
     node_count_tests();
     leaf_count_tests();
 
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 

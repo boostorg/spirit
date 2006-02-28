@@ -8,7 +8,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -34,16 +34,13 @@ main()
     int i2 = 2;
     X   x3(3);
 
-    assert(new_<int>()() != NULL);
-    assert(*new_<int>(arg1)(i2) == 2);
+    BOOST_TEST(new_<int>()() != NULL);
+    BOOST_TEST(*new_<int>(arg1)(i2) == 2);
 
-    assert(new_<X>()() != NULL);
-    assert(new_<X>()()->i == 1);
-    assert(new_<X>(arg1)(i2)->i == 2);
-    assert(new_<X>(arg1)(x3)->i == 3);
+    BOOST_TEST(new_<X>()() != NULL);
+    BOOST_TEST(new_<X>()()->i == 1);
+    BOOST_TEST(new_<X>(arg1)(i2)->i == 2);
+    BOOST_TEST(new_<X>(arg1)(x3)->i == 3);
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

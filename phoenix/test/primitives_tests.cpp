@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
 #include <boost/spirit/phoenix/primitives.hpp>
@@ -30,16 +30,13 @@ main()
 ///////////////////////////////////////////////////////////////////////////////
     cout << val("Hello")() << val(' ')() << val("World")() << endl;
 
-    assert(arg1(c1) == c1);
-    assert(arg1(i1, i2) == i1);
-    assert(arg2(i1, s2) == s2);
+    BOOST_TEST(arg1(c1) == c1);
+    BOOST_TEST(arg1(i1, i2) == i1);
+    BOOST_TEST(arg2(i1, s2) == s2);
 
-    assert(val(3)() == 3);
-    assert(var(i)() == 4);
-    assert(var(++i)() == 5);
+    BOOST_TEST(val(3)() == 3);
+    BOOST_TEST(var(i)() == 4);
+    BOOST_TEST(var(++i)() == 5);
 
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
-    cout << "\t\tTests concluded\n";
-    cout << "\t\tSUCCESS!!!\n";
-    cout << "///////////////////////////////////////////////////////////////////////////////\n";
+    return boost::report_errors();    
 }

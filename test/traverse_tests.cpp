@@ -12,7 +12,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -67,13 +67,13 @@ traverse_identity_tests()
     ));
 
     //  test (rough) runtime equality
-    assert(
+    BOOST_TEST(
         parse(
             "ab",
             post_order::traverse(identity_transform(), ch_p('a') >> 'b')
         ).full
     );
-    assert(
+    BOOST_TEST(
         !parse(
             "ba",
             post_order::traverse(identity_transform(), ch_p('a') >> 'b')
@@ -81,7 +81,7 @@ traverse_identity_tests()
     );
 
     ///////////////////////////////////////////////////////////////////////////
-    assert(
+    BOOST_TEST(
         !parse(
             "cba",
             post_order::traverse(
@@ -117,7 +117,7 @@ char c;
     ));
 
     c = 0;
-    assert(
+    BOOST_TEST(
         parse(
             "aabcd",
             post_order::traverse(
@@ -126,7 +126,7 @@ char c;
             )
         ).full
     );
-    assert(c == 'b');
+    BOOST_TEST(c == 'b');
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: (a >> (b >> c)) >> d
@@ -150,7 +150,7 @@ char c;
     ));
 
     c = 0;
-    assert(
+    BOOST_TEST(
         parse(
             "aabcd",
             post_order::traverse(
@@ -159,7 +159,7 @@ char c;
             )
         ).full
     );
-    assert(c == 'b');
+    BOOST_TEST(c == 'b');
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: a >> (b >> (c >> d))
@@ -183,7 +183,7 @@ char c;
     ));
 
     c = 0;
-    assert(
+    BOOST_TEST(
         parse(
             "aabcd",
             post_order::traverse(
@@ -192,7 +192,7 @@ char c;
             )
         ).full
     );
-    assert(c == 'b');
+    BOOST_TEST(c == 'b');
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: a >> ((b >> c) >> d)
@@ -216,7 +216,7 @@ char c;
     ));
 
     c = 0;
-    assert(
+    BOOST_TEST(
         parse(
             "aabcd",
             post_order::traverse(
@@ -225,7 +225,7 @@ char c;
             )
         ).full
     );
-    assert(c == 'b');
+    BOOST_TEST(c == 'b');
 
 ///////////////////////////////////////////////////////////////////////////////
 //  test: (a >> b) >> (c >> d)
@@ -249,7 +249,7 @@ char c;
     ));
 
     c = 0;
-    assert(
+    BOOST_TEST(
         parse(
             "aabcd",
             post_order::traverse(
@@ -258,7 +258,7 @@ char c;
             )
         ).full
     );
-    assert(c == 'b');
+    BOOST_TEST(c == 'b');
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -363,13 +363,13 @@ trace_identity_transform trace_vector;
 std::vector<std::string>::const_iterator it = trace_vector.get_output().begin();
 std::vector<std::string>::const_iterator end = trace_vector.get_output().end();
 
-    assert(cnt == trace_vector.get_output().size());
+    BOOST_TEST(cnt == trace_vector.get_output().size());
     for (/**/;  it != end; ++it)
     {
         if (std::find(first, first + cnt, *it) == first + cnt)
             cerr << "node in question: " << *it << endl;
 
-        assert(std::find(first, first + cnt, *it) != first + cnt);
+        BOOST_TEST(std::find(first, first + cnt, *it) != first + cnt);
     }
 
 // re-find all expected strings in the vector of trace strings
@@ -381,7 +381,7 @@ char const *expected = first[0];
         if (std::find(begin, end, std::string(expected)) == end)
             cerr << "node in question: " << expected << endl;
 
-        assert(std::find(begin, end, std::string(expected)) != end);
+        BOOST_TEST(std::find(begin, end, std::string(expected)) != end);
     }
 }
 
@@ -510,7 +510,6 @@ main()
     traverse_identity_tests();
     traverse_trace_tests();
 
-    cout << "Tests concluded successfully\n";
-    return 0;
+    return boost::report_errors();
 }
 
