@@ -102,6 +102,7 @@ BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::non_lexeme)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::list_parser,4)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::list_parser,3)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::list_parser,2)
+BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::no_list_endtoken)
 
 
 // distinct.hpp (has forward header)
