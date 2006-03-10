@@ -20,7 +20,8 @@
 #ifdef BOOST_NO_STRINGSTREAM
 #include <strstream>
 #define BOOST_SPIRIT_OSSTREAM std::ostrstream
-inline std::string BOOST_SPIRIT_GETSTRING(std::ostrstream& ss)
+inline 
+std::string BOOST_SPIRIT_GETSTRING(std::ostrstream& ss)
 {
     ss << ends;
     std::string rval = ss.str();
@@ -30,7 +31,7 @@ inline std::string BOOST_SPIRIT_GETSTRING(std::ostrstream& ss)
 #else
 #include <sstream>
 #define BOOST_SPIRIT_GETSTRING(ss) ss.str()
-#define BOOST_SPIRIT_OSSTREAM std::ostringstream
+#define BOOST_SPIRIT_OSSTREAM std::basic_ostringstream<CharT>
 #endif
 
 namespace boost { namespace spirit {
@@ -38,20 +39,22 @@ namespace boost { namespace spirit {
 // xml formatting helper classes
 namespace xml {
 
+    template <typename CharT>
     inline void
-    encode (std::string &str, char s, char const *r, int len)
+    encode (std::basic_string<CharT> &str, char s, char const *r, int len)
     {
-        std::string::size_type pos = 0;
+        typename std::basic_string<CharT>::size_type pos = 0;
         while ((pos = str.find_first_of (s, pos)) !=
-        std::string::size_type(std::string::npos))
+        std::basic_string<CharT>::size_type(std::basic_string<CharT>::npos))
         {
             str.replace (pos, 1, r);
             pos += len;
         }
     }
 
-    inline std::string
-    encode (std::string str)
+    template <typename CharT>
+    inline std::basic_string<CharT>
+    encode (std::basic_string<CharT> str)
     {
         encode(str, '&', "&amp;", 3);
         encode(str, '<', "&lt;", 2);
@@ -61,13 +64,15 @@ namespace xml {
         return str;
     }
 
-    inline std::string
-    encode (char const *text)
+    template <typename CharT>
+    inline std::basic_string<CharT>
+    encode (CharT const *text)
     {
-        return encode (std::string(text));
+        return encode (std::basic_string<CharT>(text));
     }
 
     // format a xml attribute
+    template <typename CharT>
     struct attribute
     {
         attribute()
@@ -84,12 +89,13 @@ namespace xml {
             return value.size() > 0;
         }
 
-        std::string key;
-        std::string value;
+        std::basic_string<CharT> key;
+        std::basic_string<CharT> value;
     };
 
-    inline std::ostream&
-    operator<< (std::ostream &ostrm, attribute const &attr)
+    template <typename CharT>
+    inline std::basic_ostream<CharT>&
+    operator<< (std::basic_ostream<CharT> &ostrm, attribute<CharT> const &attr)
     {
         if (0 == attr.key.size())
             return ostrm;
@@ -98,11 +104,12 @@ namespace xml {
     }
 
     // output a xml element (base class, not used directly)
+    template <typename CharT>
     class element
     {
     protected:
-        element(std::ostream &ostrm_, bool incr_indent_ = true) :
-        ostrm(ostrm_), incr_indent(incr_indent_)
+        element(std::basic_ostream<CharT> &ostrm_, bool incr_indent_ = true) 
+        :   ostrm(ostrm_), incr_indent(incr_indent_)
         {
             if (incr_indent) ++get_indent();
         }
@@ -126,22 +133,24 @@ namespace xml {
             return indent;
         }
 
-        std::ostream &ostrm;
+        std::basic_ostream<CharT> &ostrm;
         bool incr_indent;
     };
 
     // a xml node
-    class node : public element
+    template <typename CharT>
+    class node : public element<CharT>
     {
     public:
-        node (std::ostream &ostrm_, char const *tag_, attribute &attr) :
-        element(ostrm_), tag(tag_)
+        node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_, 
+                attribute<CharT> &attr) 
+        :   element<CharT>(ostrm_), tag(tag_)
         {
             output_space();
             ostrm << "<" << tag_ << attr << ">\n";
         }
-        node (std::ostream &ostrm_, char const *tag_) :
-        element(ostrm_), tag(tag_)
+        node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_) 
+        :   element<CharT>(ostrm_), tag(tag_)
         {
             output_space();
             ostrm << "<" << tag_ << ">\n";
@@ -153,66 +162,73 @@ namespace xml {
         }
 
     private:
-        std::string tag;
+        std::basic_string<CharT> tag;
     };
 
-    class text : public element
+    template <typename CharT>
+    class text : public element<CharT>
     {
     public:
-        text (std::ostream &ostrm, char const *tag, char const *text) :
-        element(ostrm)
+        text (std::basic_ostream<CharT> &ostrm, CharT const *tag, 
+                CharT const *textlit) 
+        :   element<CharT>(ostrm)
         {
             output_space();
-            ostrm << "<" << tag << ">" << encode(text)
+            ostrm << "<" << tag << ">" << encode(textlit)
             << "</" << tag << ">\n";
         }
 
-        text (std::ostream &ostrm, char const *tag, char const *text,
-                attribute &attr) :
-            element(ostrm)
+        text (std::basic_ostream<CharT> &ostrm, CharT const *tag, 
+                CharT const *textlit, attribute<CharT> &attr) 
+        :   element<CharT>(ostrm)
         {
             output_space();
-            ostrm << "<" << tag << attr << ">" << encode(text)
+            ostrm << "<" << tag << attr << ">" << encode(textlit)
             << "</" << tag << ">\n";
         }
 
-        text (std::ostream &ostrm, char const *tag, char const *text,
-                attribute &attr1, attribute &attr2) :
-            element(ostrm)
+        text (std::basic_ostream<CharT> &ostrm, CharT const *tag, 
+                CharT const *textlit, attribute<CharT> &attr1, 
+                attribute<CharT> &attr2) 
+        :   element<CharT>(ostrm)
         {
             output_space();
-            ostrm << "<" << tag << attr1 << attr2 << ">" << encode(text)
+            ostrm << "<" << tag << attr1 << attr2 << ">" << encode(textlit)
             << "</" << tag << ">\n";
         }
     };
 
     // a xml comment
-    class comment : public element
+    template <typename CharT>
+    class comment : public element<CharT>
     {
     public:
-        comment (std::ostream &ostrm, char const *comment) :
-            element(ostrm, false)
+        comment (std::basic_ostream<CharT> &ostrm, CharT const *commentlit) 
+        :   element<CharT>(ostrm, false)
         {
-            if ('\0' != comment[0])
+            if ('\0' != commentlit[0])
             {
                 output_space();
-                ostrm << "<!-- " << encode(comment) << " -->\n";
+                ostrm << "<!-- " << encode(commentlit) << " -->\n";
             }
         }
     };
 
     // a xml document
-    class document : public element
+    template <typename CharT>
+    class document : public element<CharT>
     {
     public:
-        document (std::ostream &ostrm) : element(ostrm)
+        document (std::basic_ostream<CharT> &ostrm) 
+        :   element<CharT>(ostrm)
         {
             get_indent() = -1;
             ostrm << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
         }
 
-        document (std::ostream &ostrm, char const *mainnode, char const *dtd) :
-            element(ostrm)
+        document (std::basic_ostream<CharT> &ostrm, CharT const *mainnode, 
+                CharT const *dtd) 
+        :   element<CharT>(ostrm)
         {
             get_indent() = -1;
             ostrm << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
@@ -245,27 +261,29 @@ namespace impl {
     }
 
     // dump a parse tree as xml
-    template <typename IteratorT, typename GetIdT, typename GetValueT>
+    template <
+        typename CharT, typename IteratorT, typename GetIdT, typename GetValueT
+    >
     inline void
-    token_to_xml (std::ostream &ostrm, IteratorT const &it, bool is_root,
-        GetIdT const &get_token_id, GetValueT const &get_token_value)
+    token_to_xml (std::basic_ostream<CharT> &ostrm, IteratorT const &it, 
+        bool is_root, GetIdT const &get_token_id, GetValueT const &get_token_value)
     {
         BOOST_SPIRIT_OSSTREAM stream;
 
         stream << get_token_id(*it) << std::ends;
-        xml::attribute token_id ("id", BOOST_SPIRIT_GETSTRING(stream).c_str());
-        xml::attribute is_root_attr ("is_root", is_root ? "1" : "");
-        xml::attribute nil;
-        xml::text(ostrm, "token", get_token_value(*it).c_str(),
+        xml::attribute<CharT> token_id ("id", BOOST_SPIRIT_GETSTRING(stream).c_str());
+        xml::attribute<CharT> is_root_attr ("is_root", is_root ? "1" : "");
+        xml::attribute<CharT> nil;
+        xml::text<CharT>(ostrm, "token", get_token_value(*it).c_str(),
             token_id, is_root_attr.has_value() ? is_root_attr : nil);
     }
 
     template <
-        typename TreeNodeT, typename AssocContainerT,
+        typename CharT, typename TreeNodeT, typename AssocContainerT,
         typename GetIdT, typename GetValueT
     >
     inline void
-    tree_node_to_xml (std::ostream &ostrm, TreeNodeT const &node,
+    tree_node_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &node,
         AssocContainerT const& id_to_name_map, GetIdT const &get_token_id,
         GetValueT const &get_token_value)
     {
@@ -274,14 +292,14 @@ namespace impl {
             typename TreeNodeT::value_type::parse_node_t::const_iterator_t
             value_iter_t;
 
-        xml::attribute nil;
+        xml::attribute<CharT> nil;
         node_iter_t end = node.end();
         for (node_iter_t it = node.begin(); it != end; ++it)
         {
             // output a node
-            xml::attribute id ("rule",
+            xml::attribute<CharT> id ("rule",
                 get_rulename(id_to_name_map, (*it).value.id()).c_str());
-            xml::node currnode (ostrm, "parsenode",
+            xml::node<CharT> currnode (ostrm, "parsenode",
                 (*it).value.id() != 0 && id.has_value() ? id : nil);
 
             // first dump the value
@@ -294,7 +312,7 @@ namespace impl {
             }
             else if (cnt > 1)
             {
-                xml::node value (ostrm, "value");
+                xml::node<CharT> value (ostrm, "value");
                 bool is_root = (*it).value.is_root();
 
                 value_iter_t val_end = (*it).value.end();
@@ -310,34 +328,34 @@ namespace impl {
         }
     }
 
-    template <typename TreeNodeT, typename AssocContainerT>
+    template <typename CharT, typename TreeNodeT, typename AssocContainerT>
     inline void
-    tree_node_to_xml (std::ostream &ostrm, TreeNodeT const &node,
+    tree_node_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &node,
             AssocContainerT const& id_to_name_map)
     {
         typedef typename TreeNodeT::const_iterator node_iter_t;
 
-        xml::attribute nil;
+        xml::attribute<CharT> nil;
         node_iter_t end = node.end();
         for (node_iter_t it = node.begin(); it != end; ++it)
         {
             // output a node
-            xml::attribute id ("rule",
+            xml::attribute<CharT> id ("rule",
                 get_rulename(id_to_name_map, (*it).value.id()).c_str());
-            xml::node currnode (ostrm, "parsenode",
+            xml::node<CharT> currnode (ostrm, "parsenode",
                 (*it).value.id() != parser_id() && id.has_value() ? id : nil);
 
             // first dump the value
             if ((*it).value.begin() != (*it).value.end())
             {
-                std::string tokens ((*it).value.begin(), (*it).value.end());
+                std::basic_string<CharT> tokens ((*it).value.begin(), (*it).value.end());
 
                 if (tokens.size() > 0)
                 {
                     // output all subtokens as one string (for better readability)
-                    xml::attribute is_root ("is_root",
+                    xml::attribute<CharT> is_root ("is_root",
                         (*it).value.is_root() ? "1" : "");
-                    xml::text(ostrm, "value", tokens.c_str(),
+                    xml::text<CharT>(ostrm, "value", tokens.c_str(),
                         is_root.has_value() ? is_root : nil);
                 }
 
@@ -347,50 +365,68 @@ namespace impl {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename CharT> 
+    struct default_string;
+    
+    template <> 
+    struct default_string<char>
+    {
+        static char const* get() { return ""; }
+    };
+
+    template <> 
+    struct default_string<wchar_t>
+    {
+        static wchar_t const* get() { return L""; }
+    };
+    
 } // namespace impl
 
+///////////////////////////////////////////////////////////////////////////////
 // dump a parse tree as a xml stream (generic variant)
 template <
-    typename TreeNodeT, typename AssocContainerT,
+    typename CharT, typename TreeNodeT, typename AssocContainerT,
     typename GetIdT, typename GetValueT
 >
 inline void
-tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
-std::string const &input_line, AssocContainerT const& id_to_name,
+basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
+std::basic_string<CharT> const &input_line, AssocContainerT const& id_to_name,
         GetIdT const &get_token_id, GetValueT const &get_token_value)
 {
     // generate xml dump
-    xml::document doc (ostrm, "parsetree", "parsetree.dtd");
-    xml::comment input (ostrm, input_line.c_str());
-    xml::attribute ver ("version", "1.0");
-    xml::node mainnode (ostrm, "parsetree", ver);
+    xml::document<CharT> doc (ostrm, "parsetree", "parsetree.dtd");
+    xml::comment<CharT> input (ostrm, input_line.c_str());
+    xml::attribute<CharT> ver ("version", "1.0");
+    xml::node<CharT> mainnode (ostrm, "parsetree", ver);
 
     impl::tree_node_to_xml (ostrm, tree, id_to_name, get_token_id,
         get_token_value);
 }
 
 // dump a parse tree as a xml steam (for character based parsers)
-template <typename TreeNodeT, typename AssocContainerT>
+template <typename CharT, typename TreeNodeT, typename AssocContainerT>
 inline void
-tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
-        std::string const &input_line, AssocContainerT const& id_to_name)
+basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
+        std::basic_string<CharT> const &input_line, 
+        AssocContainerT const& id_to_name)
 {
     // generate xml dump
-    xml::document doc (ostrm, "parsetree", "parsetree.dtd");
-    xml::comment input (ostrm, input_line.c_str());
-    xml::attribute ver ("version", "1.0");
-    xml::node mainnode (ostrm, "parsetree", ver);
+    xml::document<CharT> doc (ostrm, "parsetree", "parsetree.dtd");
+    xml::comment<CharT> input (ostrm, input_line.c_str());
+    xml::attribute<CharT> ver ("version", "1.0");
+    xml::node<CharT> mainnode (ostrm, "parsetree", ver);
 
-    impl::tree_node_to_xml (ostrm, tree, id_to_name);
+    impl::tree_node_to_xml(ostrm, tree, id_to_name);
 }
 
-template <typename TreeNodeT>
+template <typename CharT, typename TreeNodeT>
 inline void
-tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
-        std::string const &input_line)
+basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
+        std::basic_string<CharT> const &input_line)
 {
-    return tree_to_xml(ostrm, tree, input_line,
-        std::map<boost::spirit::parser_id, std::string>());
+    return basic_tree_to_xml<CharT>(ostrm, tree, input_line,
+        std::map<boost::spirit::parser_id, std::basic_string<CharT> >());
 }
 
 }} // namespace boost::spirit

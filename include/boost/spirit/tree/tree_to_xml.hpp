@@ -13,6 +13,10 @@
 
 namespace boost { namespace spirit {
 
+    namespace impl {
+        template <typename CharT> struct default_string;
+    }
+    
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Dump a parse tree as a xml stream
@@ -48,20 +52,56 @@ namespace boost { namespace spirit {
 ///////////////////////////////////////////////////////////////////////////////
 
     template <
+        typename CharT, typename TreeNodeT, typename AssocContainerT,
+        typename GetIdT, typename GetValueT
+    >
+    inline void 
+    basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
+        std::basic_string<CharT> const &input_line, 
+        AssocContainerT const& id_to_name, GetIdT const &get_token_id, 
+        GetValueT const &get_token_value);
+
+    template <typename CharT, typename TreeNodeT, typename AssocContainerT>
+    inline void 
+    basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
+        std::basic_string<CharT> const &input_line, 
+        AssocContainerT const& id_to_name);
+
+    template <typename CharT, typename TreeNodeT>
+    inline void 
+    basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
+        std::basic_string<CharT> const &input_line = 
+            impl::default_string<CharT>::get());
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <
         typename TreeNodeT, typename AssocContainerT,
         typename GetIdT, typename GetValueT
     >
-    void tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
-        std::string const &input_line, AssocContainerT const& id_to_name,
-        GetIdT const &get_token_id, GetValueT const &get_token_value);
+    inline void 
+    tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
+        std::string const &input_line, AssocContainerT const& id_to_name, 
+        GetIdT const &get_token_id, GetValueT const &get_token_value)
+    {
+        basic_tree_to_xml<char>(ostrm, tree, input_line, id_to_name, 
+            get_token_id, get_token_value);
+    }
 
     template <typename TreeNodeT, typename AssocContainerT>
-    void tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
-        std::string const &input_line, AssocContainerT const& id_to_name);
-
+    inline void 
+    tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
+        std::string const &input_line, AssocContainerT const& id_to_name)
+    {
+        basic_tree_to_xml<char>(ostrm, tree, input_line, id_to_name);
+    }
+    
     template <typename TreeNodeT>
-    void tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
-        std::string const &input_line = "");
+    inline void 
+    tree_to_xml (std::ostream &ostrm, TreeNodeT const &tree,
+        std::string const &input_line = "")
+    {
+        basic_tree_to_xml<char>(ostrm, tree, input_line);
+    }
 
 }} // namespace boost::spirit
 
