@@ -146,19 +146,19 @@ namespace xml {
                 attribute<CharT> &attr) 
         :   element<CharT>(ostrm_), tag(tag_)
         {
-            output_space();
-            ostrm << "<" << tag_ << attr << ">\n";
+            this->output_space();
+            this->ostrm << "<" << tag_ << attr << ">\n";
         }
         node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_) 
         :   element<CharT>(ostrm_), tag(tag_)
         {
-            output_space();
-            ostrm << "<" << tag_ << ">\n";
+            this->output_space();
+            this->ostrm << "<" << tag_ << ">\n";
         }
         ~node()
         {
-            output_space();
-            ostrm << "</" << tag << ">\n";
+            this->output_space();
+            this->ostrm << "</" << tag << ">\n";
         }
 
     private:
@@ -169,31 +169,31 @@ namespace xml {
     class text : public element<CharT>
     {
     public:
-        text (std::basic_ostream<CharT> &ostrm, CharT const *tag, 
+        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
                 CharT const *textlit) 
-        :   element<CharT>(ostrm)
+        :   element<CharT>(ostrm_)
         {
-            output_space();
-            ostrm << "<" << tag << ">" << encode(textlit)
+            this->output_space();
+            this->ostrm << "<" << tag << ">" << encode(textlit)
             << "</" << tag << ">\n";
         }
 
-        text (std::basic_ostream<CharT> &ostrm, CharT const *tag, 
+        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
                 CharT const *textlit, attribute<CharT> &attr) 
-        :   element<CharT>(ostrm)
+        :   element<CharT>(ostrm_)
         {
-            output_space();
-            ostrm << "<" << tag << attr << ">" << encode(textlit)
+            this->output_space();
+            this->ostrm << "<" << tag << attr << ">" << encode(textlit)
             << "</" << tag << ">\n";
         }
 
-        text (std::basic_ostream<CharT> &ostrm, CharT const *tag, 
+        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
                 CharT const *textlit, attribute<CharT> &attr1, 
                 attribute<CharT> &attr2) 
-        :   element<CharT>(ostrm)
+        :   element<CharT>(ostrm_)
         {
-            output_space();
-            ostrm << "<" << tag << attr1 << attr2 << ">" << encode(textlit)
+            this->output_space();
+            this->ostrm << "<" << tag << attr1 << attr2 << ">" << encode(textlit)
             << "</" << tag << ">\n";
         }
     };
@@ -203,13 +203,13 @@ namespace xml {
     class comment : public element<CharT>
     {
     public:
-        comment (std::basic_ostream<CharT> &ostrm, CharT const *commentlit) 
-        :   element<CharT>(ostrm, false)
+        comment (std::basic_ostream<CharT> &ostrm_, CharT const *commentlit) 
+        :   element<CharT>(ostrm_, false)
         {
             if ('\0' != commentlit[0])
             {
-                output_space();
-                ostrm << "<!-- " << encode(commentlit) << " -->\n";
+                this->output_space();
+                this->ostrm << "<!-- " << encode(commentlit) << " -->\n";
             }
         }
     };
@@ -219,27 +219,27 @@ namespace xml {
     class document : public element<CharT>
     {
     public:
-        document (std::basic_ostream<CharT> &ostrm) 
-        :   element<CharT>(ostrm)
+        document (std::basic_ostream<CharT> &ostrm_) 
+        :   element<CharT>(ostrm_)
         {
-            get_indent() = -1;
-            ostrm << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+            this->get_indent() = -1;
+            this->ostrm << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
         }
 
-        document (std::basic_ostream<CharT> &ostrm, CharT const *mainnode, 
+        document (std::basic_ostream<CharT> &ostrm_, CharT const *mainnode, 
                 CharT const *dtd) 
-        :   element<CharT>(ostrm)
+        :   element<CharT>(ostrm_)
         {
-            get_indent() = -1;
-            ostrm << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+            this->get_indent() = -1;
+            this->ostrm << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
 
-            output_space();
-            ostrm << "<!DOCTYPE " << mainnode << " SYSTEM \"" << dtd
+            this->output_space();
+            this->ostrm << "<!DOCTYPE " << mainnode << " SYSTEM \"" << dtd
             << "\">\n";
         }
         ~document()
         {
-            BOOST_SPIRIT_ASSERT(-1 == get_indent());
+            BOOST_SPIRIT_ASSERT(-1 == this->get_indent());
         }
     };
 
