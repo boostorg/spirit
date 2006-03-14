@@ -62,8 +62,10 @@ namespace impl {
             size_t len = strlen(source);
             BOOST_ASSERT(len < sizeof(result)/sizeof(result[0]));
 
-            return std::use_facet<ctype_t>(std::locale())
+            std::use_facet<ctype_t>(std::locale())
                 .widen(source, source + len, result);
+
+            return result;
         }
 
         static wchar_t get(char c) 
