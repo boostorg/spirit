@@ -409,14 +409,16 @@ namespace boost
           BOOST_SPIRIT_RP_EMIT(AP_STATIC,acts,-)                               \
           BOOST_SPIRIT_RP_EMIT(MV_STATIC,mbrs,BOOST_PP_IDENTITY(typename))     \
         public:                                                                \
-          typedef BOOST_TYPEOF_TPL(                                            \
-            ::boost::spirit::type_of::depend_on_type<__Dummy>(x) ) type;       \
+          BOOST_TYPEOF_NESTED_TYPEDEF_TPL(__expr,                              \
+            ::boost::spirit::type_of::depend_on_type<__Dummy>(x) );            \
         };                                                                     \
                                                                                \
       public:                                                                  \
                                                                                \
         typedef name_t self_t;                                                 \
-        typedef typename __rule::type::parser_category_t parser_category_t;    \
+        typedef typename __rule::__expr::type::parser_category_t               \
+                                                           parser_category_t;  \
+                                                                               \
         BOOST_PP_EXPR_IIF(BOOST_PP_NOR(np,na),typedef self_t const & embed_t;) \
                                                                                \
       protected:                                                               \
@@ -424,7 +426,7 @@ namespace boost
         BOOST_SPIRIT_RP_EMIT(MV_NONSTATIC,mbrs,BOOST_PP_IDENTITY(typename))    \
         BOOST_SPIRIT_RP_IF(na,SPIRIT_RP_AP_EXTRA_MBRS,2)(np,na)                \
                                                                                \
-        typename __rule::type::embed_t __parser;                               \
+        typename __rule::__expr::type::embed_t __parser;                       \
                                                                                \
       public:                                                                  \
                                                                                \
@@ -446,7 +448,7 @@ namespace boost
         template<typename Scanner> struct result                               \
         {                                                                      \
           typedef typename ::boost::spirit::parser_result<                     \
-                                  typename __rule::type, Scanner>::type type;  \
+                           typename __rule::__expr::type, Scanner>::type type; \
         };                                                                     \
                                                                                \
         template<typename Scanner>                                             \
@@ -484,20 +486,20 @@ namespace boost
           BOOST_SPIRIT_RP_EMIT(PM_OPAQUE_STATIC,pars,-)                        \
           BOOST_SPIRIT_RP_EMIT(MV_STATIC,mbrs,BOOST_PP_EMPTY)                  \
         public:                                                                \
-          typedef BOOST_TYPEOF(x) type;                                        \
+          BOOST_TYPEOF_NESTED_TYPEDEF(__expr,x)  ;                             \
         };                                                                     \
                                                                                \
       public:                                                                  \
                                                                                \
         typedef name_t self_t;                                                 \
-        typedef __rule::type::parser_category_t parser_category_t;             \
+        typedef __rule::__expr::type::parser_category_t parser_category_t;     \
         BOOST_PP_EXPR_IIF(BOOST_PP_NOT(np),typedef self_t const & embed_t;)    \
                                                                                \
       protected:                                                               \
                                                                                \
         BOOST_SPIRIT_RP_EMIT(MV_NONSTATIC,mbrs,BOOST_PP_EMPTY)                 \
                                                                                \
-        __rule::type::embed_t __parser;                                        \
+        __rule::__expr::type::embed_t __parser;                                \
                                                                                \
       public:                                                                  \
                                                                                \
@@ -514,7 +516,7 @@ namespace boost
         template<typename Scanner> struct result                               \
         {                                                                      \
           typedef typename ::boost::spirit::parser_result<                     \
-                                           __rule::type, Scanner>::type type;  \
+                                   __rule::__expr::type, Scanner>::type type;  \
         };                                                                     \
                                                                                \
         template<typename Scanner>                                             \
