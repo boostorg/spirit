@@ -351,7 +351,7 @@ template <typename ValueT>
 class node_iter_data_factory
 {
 public:
-    // This inner class is so that node_iter_data_factory can simluate
+    // This inner class is so that node_iter_data_factory can simulate
     // a template template parameter
     template <typename IteratorT>
     class factory
@@ -387,7 +387,7 @@ template <typename ValueT>
 class node_val_data_factory 
 {
 public:
-    // This inner class is so that node_val_data_factory can simluate
+    // This inner class is so that node_val_data_factory can simulate
     // a template template parameter
     template <typename IteratorT>
     class factory
@@ -434,7 +434,7 @@ template <typename ValueT>
 class node_all_val_data_factory
 {
 public:
-    // This inner class is so that node_all_val_data_factory can simluate
+    // This inner class is so that node_all_val_data_factory can simulate
     // a template template parameter
     template <typename IteratorT>
     class factory
