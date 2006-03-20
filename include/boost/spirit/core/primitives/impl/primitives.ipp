@@ -1,7 +1,6 @@
 /*=============================================================================
     Copyright (c) 1998-2003 Joel de Guzman
     Copyright (c) 2003 Martin Wille
-    Copyright (c) 2006 Stefan Slapeta
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -10,8 +9,6 @@
 =============================================================================*/
 #if !defined(BOOST_SPIRIT_PRIMITIVES_IPP)
 #define BOOST_SPIRIT_PRIMITIVES_IPP
-
-#include <boost/type_traits/is_pod.hpp>
 
 // This should eventually go to a config file.
 #if defined(__GNUC__) && (__GNUC__ < 3) && !defined(_STLPORT_VERSION)
@@ -161,7 +158,7 @@ namespace boost { namespace spirit {
             return BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
                 ::char_traits<CharT>::to_int_type(c);
         }
-
+    
         template <typename CharT>
         inline CharT
         to_char_type(typename 
@@ -182,23 +179,23 @@ namespace boost { namespace spirit {
         isalnum_(CharT c)
         { 
             using namespace std; 
-            return isalnum(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return isalnum(to_int_type(c)) ? true : false; 
         }
-
+    
         template <typename CharT>
-        inline bool
+        inline bool 
         isalpha_(CharT c)
-        {
+        { 
             using namespace std; 
-            return isalpha(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return isalpha(to_int_type(c)) ? true : false; 
         }
-
+    
         template <typename CharT>
         inline bool 
         iscntrl_(CharT c)
         { 
             using namespace std; 
-            return iscntrl(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return iscntrl(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -206,7 +203,7 @@ namespace boost { namespace spirit {
         isdigit_(CharT c)
         { 
             using namespace std; 
-            return isdigit(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return isdigit(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -214,7 +211,7 @@ namespace boost { namespace spirit {
         isgraph_(CharT c)
         { 
             using namespace std; 
-            return isgraph(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return isgraph(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -222,7 +219,7 @@ namespace boost { namespace spirit {
         islower_(CharT c)
         { 
             using namespace std; 
-            return islower(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return islower(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -230,7 +227,7 @@ namespace boost { namespace spirit {
         isprint_(CharT c)
         { 
             using namespace std; 
-            return isprint(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return isprint(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -238,7 +235,7 @@ namespace boost { namespace spirit {
         ispunct_(CharT c)
         { 
             using namespace std; 
-            return ispunct(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return ispunct(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -246,7 +243,7 @@ namespace boost { namespace spirit {
         isspace_(CharT c)
         { 
             using namespace std; 
-            return isspace(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false; 
+            return isspace(to_int_type(c)) ? true : false; 
         }
     
         template <typename CharT>
@@ -254,7 +251,7 @@ namespace boost { namespace spirit {
         isupper_(CharT c)
         { 
             using namespace std; 
-            return isupper(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false;  
+            return isupper(to_int_type(c)) ? true : false;  
         }
     
         template <typename CharT>
@@ -262,7 +259,7 @@ namespace boost { namespace spirit {
         isxdigit_(CharT c)
         { 
             using namespace std; 
-            return isxdigit(boost::is_pod<CharT>::value ? to_int_type(c) : c) ? true : false;  
+            return isxdigit(to_int_type(c)) ? true : false;  
         }
     
         template <typename CharT>
@@ -277,15 +274,15 @@ namespace boost { namespace spirit {
         tolower_(CharT c)
         { 
             using namespace std; 
-            return tolower(boost::is_pod<CharT>::value ? to_int_type(c) : c); 
+            return to_char_type<char>(tolower(to_int_type(c))); 
         }
-
+    
         template <typename CharT>
         inline CharT 
         toupper_(CharT c)
         { 
             using namespace std; 
-            return toupper(boost::is_pod<CharT>::value ? to_int_type(c) : c); 
+            return to_char_type<char>(toupper(to_int_type(c))); 
         }
 
 #if !defined(BOOST_NO_CWCTYPE)
@@ -296,14 +293,14 @@ namespace boost { namespace spirit {
             using namespace std; 
             return iswalnum(to_int_type(c)) ? true : false;  
         }
-
+    
         inline bool 
         isalpha_(wchar_t c)
         { 
             using namespace std; 
             return iswalpha(to_int_type(c)) ? true : false;  
         }
-
+    
         inline bool 
         iscntrl_(wchar_t c)
         { 
