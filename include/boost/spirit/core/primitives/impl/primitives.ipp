@@ -126,7 +126,7 @@ namespace boost { namespace spirit {
         };
 
 #  define BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE impl
-#  ifndef BOOST_NO_CWCHAR
+#  ifndef BOOST_NO_CWCTYPE
 
         template<>
         struct char_traits<wchar_t>
@@ -150,22 +150,96 @@ namespace boost { namespace spirit {
 #  endif
 #endif // BOOST_SPIRIT_NO_CHAR_TRAITS
 
+        //  Use char_traits for char and wchar_t only, as these are the only
+        //  specializations provided in the standard. Other types are on their
+        //  own.
+        //
+        //  For UDT, one may override:
+        //
+        //      isalnum
+        //      isalpha
+        //      iscntrl
+        //      isdigit
+        //      isgraph
+        //      islower
+        //      isprint
+        //      ispunct
+        //      isspace
+        //      isupper
+        //      isxdigit
+        //      isblank
+        //      isupper
+        //      tolower
+        //      toupper
+        //
+        //  in a namespace suitable for Argument Dependent lookup or in
+        //  namespace std (disallowed by the standard).
+        
         template <typename CharT>
-        inline typename
-        BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE::char_traits<CharT>::int_type
+        struct char_type_char_traits_helper
+        {
+            typedef CharT char_type;
+            typedef typename BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
+                ::char_traits<CharT>::int_type int_type;
+
+            static int_type to_int_type(CharT c)
+            {
+                return BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
+                    ::char_traits<CharT>::to_int_type(c);
+            }
+
+            static char_type to_char_type(int_type i)
+            {
+                return BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
+                    ::char_traits<CharT>::to_char_type(i);
+            }
+        };
+
+        template <typename CharT>
+        struct char_traits_helper
+        {
+            typedef CharT char_type;
+            typedef CharT int_type;
+
+            static CharT & to_int_type(CharT & c)
+            {
+                return c;
+            }
+
+            static CharT & to_char_type(CharT & c)
+            {
+                return c;
+            }
+        };
+
+        template <>
+        struct char_traits_helper<char>
+            : char_type_char_traits_helper<char>
+        {
+        };
+
+#if !defined(BOOST_NO_CWCTYPE)
+
+        template <>
+        struct char_traits_helper<wchar_t>
+            : char_type_char_traits_helper<wchar_t>
+        {
+        };
+
+#endif
+
+        template <typename CharT>
+        inline typename char_traits_helper<CharT>::int_type
         to_int_type(CharT c)
         {
-            return BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
-                ::char_traits<CharT>::to_int_type(c);
+            return char_traits_helper<CharT>::to_int_type(c);
         }
-    
+
         template <typename CharT>
         inline CharT
-        to_char_type(typename 
-            BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE::char_traits<CharT>::int_type c)
+        to_char_type(typename char_traits_helper<CharT>::int_type c)
         {
-            return BOOST_SPIRIT_CHAR_TRAITS_NAMESPACE
-                ::char_traits<CharT>::to_char_type(c);
+            return char_traits_helper<CharT>::to_char_type(c);
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -274,7 +348,7 @@ namespace boost { namespace spirit {
         tolower_(CharT c)
         { 
             using namespace std; 
-            return to_char_type<char>(tolower(to_int_type(c))); 
+            return to_char_type<CharT>(tolower(to_int_type(c))); 
         }
     
         template <typename CharT>
@@ -282,7 +356,7 @@ namespace boost { namespace spirit {
         toupper_(CharT c)
         { 
             using namespace std; 
-            return to_char_type<char>(toupper(to_int_type(c))); 
+            return to_char_type<CharT>(toupper(to_int_type(c))); 
         }
 
 #if !defined(BOOST_NO_CWCTYPE)
