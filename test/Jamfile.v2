@@ -85,7 +85,7 @@ local multi-threading = <library>/boost/thread//boost_thread
     test-suite "spirit.meta"
         : [ spirit-run fundamental_tests.cpp ]
           [ spirit-run parser_traits_tests.cpp ]
-          [ spirit-run traverse_tests.cpp ]
+          [ spirit-run traverse_tests.cpp : : : <toolset>intel:<debug-symbols>off ]
         ;
 
     test-suite "spirit.attribute"
