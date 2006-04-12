@@ -87,9 +87,11 @@ namespace xml {
     inline void
     encode (std::basic_string<CharT> &str, char s, char const *r, int len)
     {
-        typename std::basic_string<CharT>::size_type pos = 0;
+        typedef typename std::basic_string<CharT>::size_type size_type;
+
+        size_type pos = 0;
         while ((pos = str.find_first_of (impl::string_lit<CharT>::get(s), pos)) !=
-                std::basic_string<CharT>::size_type(std::basic_string<CharT>::npos))
+                size_type(std::basic_string<CharT>::npos))
         {
             str.replace (pos, 1, impl::string_lit<CharT>::get(r));
             pos += len;
