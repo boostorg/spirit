@@ -9,7 +9,16 @@
 #ifndef BOOST_SPIRIT_TREE_COMMON_HPP
 #define BOOST_SPIRIT_TREE_COMMON_HPP
 
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
 #include <vector>
+#else
+#include <list>
+#endif
+
+#if defined(BOOST_SPIRIT_USE_BOOST_ALLOCATOR_FOR_TREES)
+#include <boost/pool/pool_alloc.hpp>
+#endif
+
 #include <algorithm>
 
 #include <boost/ref.hpp>
@@ -42,7 +51,21 @@ template <typename T>
 struct tree_node
 {
     typedef T parse_node_t;
-    typedef std::vector<tree_node<T> > children_t;
+    
+#if !defined(BOOST_SPIRIT_USE_BOOST_ALLOCATOR_FOR_TREES)
+    typedef std::allocator<tree_node<T> > allocator_type;
+#elif !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
+    typedef boost::pool_allocator<tree_node<T> > allocator_type;
+#else
+    typedef boost::fast_pool_allocator<tree_node<T> > allocator_type;
+#endif
+
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
+    typedef std::vector<tree_node<T>, allocator_type> children_t;
+#else
+    typedef std::list<tree_node<T>, allocator_type> children_t;
+#endif  // BOOST_SPIRIT_USE_LIST_FOR_TREES
+
     typedef typename children_t::iterator tree_iterator;
     typedef typename children_t::const_iterator const_tree_iterator;
 
@@ -216,7 +239,21 @@ struct node_val_data
     typedef
         typename boost::detail::iterator_traits<IteratorT>::value_type
         value_type;
-    typedef std::vector<value_type> container_t;
+
+#if !defined(BOOST_SPIRIT_USE_BOOST_ALLOCATOR_FOR_TREES)
+    typedef std::allocator<value_type> allocator_type;
+#elif !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
+    typedef boost::pool_allocator<value_type> allocator_type;
+#else
+    typedef boost::fast_pool_allocator<value_type> allocator_type;
+#endif
+
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
+    typedef std::vector<value_type, allocator_type> container_t;
+#else
+    typedef std::list<value_type, allocator_type> container_t;
+#endif
+
     typedef typename container_t::iterator iterator_t;
     typedef typename container_t::const_iterator const_iterator_t;
 
@@ -231,7 +268,7 @@ struct node_val_data
             std::copy(_first, _last, std::inserter(text, text.end()));
         }
 
-    // This constructor is for building text out of vector iterators
+    // This constructor is for building text out of iterators
     template <typename IteratorT2>
     node_val_data(IteratorT2 const& _first, IteratorT2 const& _last)
         : text(), is_root_(false), parser_id_(), value_()
@@ -243,7 +280,7 @@ struct node_val_data
         : text(_first, _last), is_root_(false), parser_id_(), value_()
         {}
 
-    // This constructor is for building text out of vector iterators
+    // This constructor is for building text out of iterators
     template <typename IteratorT2>
     node_val_data(IteratorT2 const& _first, IteratorT2 const& _last)
         : text(_first, _last), is_root_(false), parser_id_(), value_()
@@ -523,14 +560,18 @@ public:
     tree_match(std::size_t length, parse_node_t const& n)
     : match<T>(length), trees()
     { 
-        trees.reserve(10); // this is more or less an arbitraty number...
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
+        trees.reserve(10); // this is more or less an arbitrary number...
+#endif
         trees.push_back(node_t(n)); 
     }
 
     tree_match(std::size_t length, param_type val, parse_node_t const& n)
     : match<T>(length, val), trees()
     {
-        trees.reserve(10); // this is more or less an arbitraty number...
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
+        trees.reserve(10); // this is more or less an arbitrary number...
+#endif
         trees.push_back(node_t(n));
     }
 
@@ -961,7 +1002,9 @@ struct infix_node_op
         BOOST_SPIRIT_ASSERT(tree_size >= 1);
 
         bool keep = true;
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
         new_children.reserve((tree_size+1)/2);
+#endif
         iter_t i_end = m.trees.end();
         for (iter_t i = m.trees.begin(); i != i_end; ++i)
         {
@@ -1003,8 +1046,9 @@ struct discard_first_node_op
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
         // a new container of children, instead of saying
-        // m.trees.erase(m.trees.begin()) because, on a vector that will cause
-        // all the nodes afterwards to be copied into the previous position.
+        // m.trees.erase(m.trees.begin()) because, on a container_t that will 
+        // cause all the nodes afterwards to be copied into the previous 
+        // position.
         container_t new_children;
         std::size_t length = 0;
         std::size_t tree_size = m.trees.size();
@@ -1013,7 +1057,9 @@ struct discard_first_node_op
         BOOST_SPIRIT_ASSERT(tree_size >= 1);
 
         if (tree_size > 1) {
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
             new_children.reserve(tree_size - 1);
+#endif
             iter_t i = m.trees.begin(), i_end = m.trees.end();
             for (++i; i != i_end; ++i)
             {
@@ -1064,8 +1110,9 @@ struct discard_last_node_op
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
         // a new container of children, instead of saying
-        // m.trees.erase(m.trees.begin()) because, on a vector that will cause
-        // all the nodes afterwards to be copied into the previous position.
+        // m.trees.erase(m.trees.begin()) because, on a container_t that will 
+        // cause all the nodes afterwards to be copied into the previous 
+        // position.
         container_t new_children;
         std::size_t length = 0;
         std::size_t tree_size = m.trees.size();
@@ -1075,8 +1122,9 @@ struct discard_last_node_op
 
         if (tree_size > 1) {
             m.trees.pop_back();
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
             new_children.reserve(tree_size - 1);
-            
+#endif            
             iter_t i_end = m.trees.end();
             for (iter_t i = m.trees.begin(); i != i_end; ++i)
             {
@@ -1122,8 +1170,9 @@ struct inner_node_op
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
         // a new container of children, instead of saying
-        // m.trees.erase(m.trees.begin()) because, on a vector that will cause
-        // all the nodes afterwards to be copied into the previous position.
+        // m.trees.erase(m.trees.begin()) because, on a container_t that will 
+        // cause all the nodes afterwards to be copied into the previous 
+        // position.
         container_t new_children;
         std::size_t length = 0;
         std::size_t tree_size = m.trees.size();
@@ -1133,7 +1182,9 @@ struct inner_node_op
 
         if (tree_size > 2) {
             m.trees.pop_back(); // erase the last element
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
             new_children.reserve(tree_size - 1);
+#endif
             iter_t i = m.trees.begin(); // skip over the first element
             iter_t i_end = m.trees.end();
             for (++i; i != i_end; ++i)
