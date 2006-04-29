@@ -26,14 +26,6 @@
 #   pragma warning(disable:4355) 
 #endif
 
-
-// Note that typeof is applied on a per-rule basis, so the number of rules has
-// no effect on the complexity of the types used with typeof.
-// This is why we can set this macro to a comparatively low value (see the 
-// documentation of Boost.Typeof for details).
-// The previous example (rule_parser_2_1.cpp) requires more than twice of the 
-// complexity...
-#define BOOST_TYPEOF_LIMIT_SIZE 40
 #include <boost/typeof/typeof.hpp>
 
 #include <boost/spirit/core.hpp>
@@ -95,7 +87,7 @@ BOOST_SPIRIT_RULE_PARSER(factor,
   -,
   (1,( ((parser_reference<factor_t>),factor,(*this)) )),
 
-    (   int_p[&do_int]
+    (   int_p[& do_int]           
     |   ('(' >> expression >> ')')
     |   ('-' >> factor)[&do_neg]
     |   ('+' >> factor)
