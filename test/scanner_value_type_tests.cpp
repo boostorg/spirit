@@ -30,16 +30,7 @@ namespace {
             {
                 foo
                     = sp::alpha_p
-                      | sp::alnum_p
-                      | sp::cntrl_p
-                      | sp::print_p
-                      | sp::blank_p
-                      | sp::digit_p
-                      | sp::graph_p
-                      | sp::lower_p
-                      | sp::upper_p
-                      | sp::xdigit_p
-                      | sp::punct_p
+                    | sp::punct_p
                     ;
             }
 
