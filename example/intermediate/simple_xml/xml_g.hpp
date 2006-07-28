@@ -1,3 +1,7 @@
+//  Copyright (c) 2005 Carl Barron. Distributed under the Boost
+//  Software License, Version 1.0. (See accompanying file
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
 #ifndef XML_G_H
 #define XML_G_H
 #define BOOST_SPIRIT_DEBUG
