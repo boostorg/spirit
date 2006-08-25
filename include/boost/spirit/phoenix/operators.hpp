@@ -239,7 +239,7 @@ struct unary_operator<positive_op, T> {
 template <typename T>
 struct unary_operator<logical_not_op, T> {
 
-    typedef bool result_type;
+    typedef T const result_type;
     static result_type eval(T const& v)
     { return !v; }
 };
