@@ -99,11 +99,11 @@ test_for
 
     iterations_performed = 0;
 
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+string_length(s), r);
+    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+impl::string_length(s), r);
 
     bool result = (succeed==m.full)?good:bad;
 
-    if (m.full && (m.length != string_length(s)))
+    if (m.full && (m.length != impl::string_length(s)))
         result = bad;
 
     result &= iterations_expected == iterations_performed;

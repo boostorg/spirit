@@ -25,7 +25,7 @@ primitives_tests()
 {
     char const* cp = "xyz.Jambalaya";
     char const* cp_first = cp;
-    char const* cp_last = cp + string_length(cp);
+    char const* cp_last = cp + impl::string_length(cp);
 
     chlit<> cpx('x');
     parse_info<char const*> pi = parse(cp_first, cp_last, cpx);
