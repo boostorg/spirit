@@ -22,7 +22,7 @@ void erase_action_test()
 
     const char* cp = "one,two,three";
     const char* cp_first = cp;
-    const char* cp_last = cp + string_length(cp);
+    const char* cp_last = cp + impl::string_length(cp);
     const char* cp_i[] = {"one","two","three"};
     typedef std::map<std::string, int> map_string_type;
     map_string_type c;
