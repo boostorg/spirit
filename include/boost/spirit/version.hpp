@@ -25,7 +25,7 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x1803
+#define SPIRIT_VERSION 0x1804
 #define SPIRIT_PIZZA_VERSION SPIRIT_DOUBLE_CHEESE  // :-)
 
 #endif // defined(SPIRIT_VERSION_HPP)
