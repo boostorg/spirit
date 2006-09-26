@@ -37,7 +37,7 @@ namespace boost { namespace spirit {
     template <
         typename ScannerT, 
         unsigned long ID = 0,
-        typename ContextT = parser_context>
+        typename ContextT = parser_context<> >
     class rule_id 
         : public rule<ScannerT, ContextT, parser_tag<ID> >
     {
