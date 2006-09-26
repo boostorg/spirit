@@ -96,13 +96,13 @@ test_while(
     number_result = 0;
     iterations_performed = 0;
 
-    boost::spirit::parse_info<> m = boost::spirit::parse(s, s+ testimpl::string_length(s), r);
+    boost::spirit::parse_info<> m = boost::spirit::parse(s, s+ test_impl::string_length(s), r);
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
     result &= iterations_performed == iterations_wanted;
 
-    if (m.full && (m.length != testimpl::string_length(s)))
+    if (m.full && (m.length != test_impl::string_length(s)))
         result = bad;
 
     if (result==good)
