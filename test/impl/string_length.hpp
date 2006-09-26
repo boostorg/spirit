@@ -13,7 +13,7 @@
 // to avoid the namespace confusion on different compilers. Some
 // have it in namespace std. Some have it in global namespace. 
 // Some have it in both.
-namespace impl
+namespace test_impl
 {
     template <typename Char>
     inline unsigned int

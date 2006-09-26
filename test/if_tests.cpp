@@ -71,11 +71,11 @@ test_number(char const *s, unsigned int wanted, rule_t const &r)
     ++test_count;
 
     number_result = wanted-1;
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s+impl::string_length(s), r);
+    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s + test_impl::string_length(s), r);
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
-    if (m.full && (m.length != impl::string_length(s)))
+    if (m.full && (m.length != test_impl::string_length(s)))
         result = bad;
 
 

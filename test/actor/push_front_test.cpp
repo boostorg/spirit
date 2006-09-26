@@ -28,7 +28,7 @@ void push_front_test()
 
     const char* cp = "one,two,three";
     const char* cp_first = cp;
-    const char* cp_last = cp + ::impl::string_length(cp);
+    const char* cp_last = cp + test_impl::string_length(cp);
     const char* cp_i[] = {"one","two","three"};;
     int i;
     ContainerT c;

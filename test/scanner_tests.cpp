@@ -54,7 +54,7 @@ scanner_tests()
 {
     char const* cp = "The Big Brown Fox Jumped \n\tOver The Lazy Dog's Back";
     char const* cp_first = cp;
-    char const* cp_last = cp + ::impl::string_length(cp);
+    char const* cp_last = cp + test_impl::string_length(cp);
 
     scanner<char const*>
         pp1(cp_first, cp_last);

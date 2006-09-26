@@ -33,7 +33,7 @@ static void
 parse(char const *s, ParserT const &p, bool match)
 {
     
-    pi = boost::spirit::parse(s, s+impl::string_length(s), p);
+    pi = boost::spirit::parse(s, s + test_impl::string_length(s), p);
     if (match)
     {
         BOOST_TEST(matches);

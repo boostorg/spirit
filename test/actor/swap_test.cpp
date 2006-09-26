@@ -21,7 +21,7 @@ void swap_action_test()
 
     const char* cp = "63";
     const char* cp_first = cp;
-    const char* cp_last = cp + ::impl::string_length(cp);
+    const char* cp_last = cp + test_impl::string_length(cp);
     std::vector<int> v1,v2;
 
     v1.push_back(0);
