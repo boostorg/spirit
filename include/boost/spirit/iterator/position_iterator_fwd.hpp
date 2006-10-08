@@ -10,6 +10,7 @@
 #if !defined(BOOST_SPIRIT_POSITION_ITERATOR_FWD_HPP)
 #define BOOST_SPIRIT_POSITION_ITERATOR_FWD_HPP
 
+#include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 #include <boost/spirit/core/nil.hpp>
 
 namespace boost { namespace spirit {
@@ -24,7 +25,7 @@ namespace boost { namespace spirit {
         typename ForwardIteratorT,
         typename PositionT = file_position_base<
             std::basic_string<
-                typename std::iterator_traits<ForwardIteratorT>::value_type
+                typename boost::detail::iterator_traits<ForwardIteratorT>::value_type
             > 
         >,
         typename SelfT = nil_t
@@ -36,7 +37,7 @@ namespace boost { namespace spirit {
         typename ForwardIteratorT,
         typename PositionT = file_position_base<
             std::basic_string<
-                typename std::iterator_traits<ForwardIteratorT>::value_type
+                typename boost::detail::iterator_traits<ForwardIteratorT>::value_type
             > 
         >
     >
