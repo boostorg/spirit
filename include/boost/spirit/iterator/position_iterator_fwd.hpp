@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2006 Tobias Schwinger
+    Copyright (c) 2002-2006 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -13,12 +14,19 @@
 
 namespace boost { namespace spirit {
 
-    struct file_position;
-    struct file_position_without_column;
+    template <typename String = std::string> 
+    struct file_position_base;
+    
+    template <typename String = std::string> 
+    struct file_position_without_column_base;
 
     template <
         typename ForwardIteratorT,
-        typename PositionT = file_position,
+        typename PositionT = file_position_base<
+            std::basic_string<
+                typename std::iterator_traits<ForwardIteratorT>::value_type
+            > 
+        >,
         typename SelfT = nil_t
     >
     class position_iterator;
@@ -26,7 +34,11 @@ namespace boost { namespace spirit {
     template
     <
         typename ForwardIteratorT,
-        typename PositionT = file_position
+        typename PositionT = file_position_base<
+            std::basic_string<
+                typename std::iterator_traits<ForwardIteratorT>::value_type
+            > 
+        >
     >
     class position_iterator2;
 

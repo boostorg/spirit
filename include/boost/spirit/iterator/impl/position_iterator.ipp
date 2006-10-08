@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2002 Juan Carlos Arevalo-Baeza
-    Copyright (c) 2002-2003 Hartmut Kaiser
+    Copyright (c) 2002-2006 Hartmut Kaiser
     Copyright (c) 2003 Giovanni Bajo
     http://spirit.sourceforge.net/
 
@@ -29,18 +29,18 @@ namespace boost { namespace spirit {
 //  newlines since no column tracking is needed.
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <>
-class position_policy<file_position_without_column> {
+template <typename String>
+class position_policy<file_position_without_column_base<String> > {
 
 public:
-    void next_line(file_position_without_column& pos)
+    void next_line(file_position_without_column_base<String>& pos)
     {
         ++pos.line;
     }
 
     void set_tab_chars(unsigned int /*chars*/){}
-    void next_char(file_position_without_column& /*pos*/)    {}
-    void tabulation(file_position_without_column& /*pos*/)   {}
+    void next_char(file_position_without_column_base<String>& /*pos*/)    {}
+    void tabulation(file_position_without_column_base<String>& /*pos*/)   {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -54,15 +54,15 @@ public:
 //  of position_iterator.
 //
 ///////////////////////////////////////////////////////////////////////////////
-template <>
-class position_policy<file_position> {
+template <typename String>
+class position_policy<file_position_base<String> > {
 
 public:
     position_policy()
         : m_CharsPerTab(4)
     {}
 
-    void next_line(file_position& pos)
+    void next_line(file_position_base<String>& pos)
     {
         ++pos.line;
         pos.column = 1;
@@ -73,12 +73,12 @@ public:
         m_CharsPerTab = chars;
     }
 
-    void next_char(file_position& pos)
+    void next_char(file_position_base<String>& pos)
     {
         ++pos.column;
     }
 
-    void tabulation(file_position& pos)
+    void tabulation(file_position_base<String>& pos)
     {
         pos.column += m_CharsPerTab - (pos.column - 1) % m_CharsPerTab;
     }

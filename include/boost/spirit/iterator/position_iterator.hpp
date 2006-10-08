@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2002 Juan Carlos Arevalo-Baeza
-    Copyright (c) 2002-2003 Hartmut Kaiser
+    Copyright (c) 2002-2006 Hartmut Kaiser
     Copyright (c) 2003 Giovanni Bajo
     http://spirit.sourceforge.net/
 
@@ -27,19 +27,22 @@ namespace boost { namespace spirit {
 //  and the line number
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct file_position_without_column {
-    std::string file;
+template <typename String>
+struct file_position_without_column_base {
+    String file;
     int line;
 
-    file_position_without_column(std::string const& file_ = std::string(),
+    file_position_without_column_base(String const& file_ = String(),
                   int line_ = 1):
         file    (file_),
         line    (line_)
     {}
 
-    bool operator==(const file_position_without_column& fp) const
+    bool operator==(const file_position_without_column_base& fp) const
     { return line == fp.line && file == fp.file; }
 };
+
+typedef file_position_without_column_base<std::string> file_position_without_column;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -49,19 +52,21 @@ struct file_position_without_column {
 //  line and column number
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct file_position : public file_position_without_column {
+template <typename String>
+struct file_position_base : public file_position_without_column_base<String> {
     int column;
 
-    file_position(std::string const& file_ = std::string(),
-                  int line_ = 1, int column_ = 1):
-        file_position_without_column (file_, line_),
+    file_position_base(String const& file_ = String(),
+                       int line_ = 1, int column_ = 1):
+        file_position_without_column_base<String> (file_, line_),
         column                       (column_)
     {}
 
-    bool operator==(const file_position& fp) const
-    { return column == fp.column && line == fp.line && file == fp.file; }
+    bool operator==(const file_position_base& fp) const
+    { return column == fp.column && this->line == fp.line && this->file == fp.file; }
 };
 
+typedef file_position_base<std::string> file_position;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
