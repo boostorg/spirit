@@ -488,17 +488,22 @@ class input_iterator
 template <typename InputT>
 class inner
 {
+    private:
         typedef
             typename boost::detail::iterator_traits<InputT>::value_type
             result_type;
 
+    public:
+        typedef result_type value_type;
+
+    private:
         struct Data {
             Data(InputT const &input_) 
             :   input(input_), was_initialized(false)
             {}
             
             InputT input;
-            result_type curtok;
+            value_type curtok;
             bool was_initialized;
         };
 
@@ -509,7 +514,6 @@ class inner
        friend struct Data;
 
     public:
-        typedef result_type value_type;
         typedef
             typename boost::detail::iterator_traits<InputT>::difference_type
             difference_type;
