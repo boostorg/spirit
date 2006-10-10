@@ -18,8 +18,12 @@ namespace boost { namespace spirit {
     template <typename String = std::string> 
     struct file_position_base;
     
+    typedef file_position_base<std::string> file_position;
+
     template <typename String = std::string> 
     struct file_position_without_column_base;
+
+    typedef file_position_without_column_base<std::string> file_position_without_column;
 
     template <
         typename ForwardIteratorT,
