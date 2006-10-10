@@ -83,8 +83,5 @@ BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::position_policy,1)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_without_column)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::position_iterator,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::position_iterator2,1)
-
 #endif
 
