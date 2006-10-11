@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2002 Juan Carlos Arevalo-Baeza
-    Copyright (c) 2002-2003 Hartmut Kaiser
+    Copyright (c) 2002-2006 Hartmut Kaiser
     Copyright (c) 2003 Giovanni Bajo
     http://spirit.sourceforge.net/
 
@@ -42,8 +42,6 @@ struct file_position_without_column_base {
     { return line == fp.line && file == fp.file; }
 };
 
-typedef file_position_without_column_base<std::string> file_position_without_column;
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  file_position
@@ -65,8 +63,6 @@ struct file_position_base : public file_position_without_column_base<String> {
     bool operator==(const file_position_base& fp) const
     { return column == fp.column && this->line == fp.line && this->file == fp.file; }
 };
-
-typedef file_position_base<std::string> file_position;
 
 ///////////////////////////////////////////////////////////////////////////////
 //

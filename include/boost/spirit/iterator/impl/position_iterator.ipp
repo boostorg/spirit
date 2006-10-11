@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2002 Juan Carlos Arevalo-Baeza
-    Copyright (c) 2002-2003 Hartmut Kaiser
+    Copyright (c) 2002-2006 Hartmut Kaiser
     Copyright (c) 2003 Giovanni Bajo
     http://spirit.sourceforge.net/
 
