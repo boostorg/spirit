@@ -80,8 +80,13 @@ BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::fsq_iterator,3)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::position_iterator,3)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::position_iterator2,2)
 BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::position_policy,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::file_position_base,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::file_position_without_column_base,1)
+
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position)
+BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_base<std::basic_string<wchar_t> >)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_without_column)
+BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_without_column_base<std::basic_string<wchar_t> >)
 
 #endif
 
