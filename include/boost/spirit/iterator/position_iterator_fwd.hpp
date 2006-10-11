@@ -10,6 +10,7 @@
 #if !defined(BOOST_SPIRIT_POSITION_ITERATOR_FWD_HPP)
 #define BOOST_SPIRIT_POSITION_ITERATOR_FWD_HPP
 
+#include <string>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 #include <boost/spirit/core/nil.hpp>
 
