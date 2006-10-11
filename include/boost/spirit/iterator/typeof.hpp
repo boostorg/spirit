@@ -88,8 +88,5 @@ BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_base<std::basic_string<w
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_without_column)
 BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::file_position_without_column_base<std::basic_string<wchar_t> >)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::file_position_base,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::file_position_without_column_base,1)
-
 #endif
 
