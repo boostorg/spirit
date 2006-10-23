@@ -181,6 +181,8 @@ public:
     symbol_inserter(SetT& set_)
     : set(set_) {}
 
+    typedef symbol_inserter const & result_type;
+
     template <typename IteratorT>
     symbol_inserter const&
     operator()(IteratorT first, IteratorT const& last, T const& data = T()) const
