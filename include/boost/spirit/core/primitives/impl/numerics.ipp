@@ -520,7 +520,6 @@ namespace boost { namespace spirit {
 
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
 #pragma warning(pop)
-#pragma warning(disable:4127)
 #endif
 
     }   //  namespace impl
