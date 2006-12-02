@@ -125,7 +125,7 @@ namespace xml {
         {
         }
 
-        attribute (char const *key_, char const *value_) :
+        attribute (CharT const *key_, CharT const *value_) :
         key (key_), value(value_)
         {
         }
