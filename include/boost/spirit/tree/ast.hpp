@@ -103,7 +103,9 @@ struct ast_tree_policy :
         {
             BOOST_SPIRIT_ASSERT(a.trees.size() == 1);
 
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
             a.trees.begin()->children.reserve(a.trees.begin()->children.size() + b.trees.size());
+#endif
             std::copy(b.trees.begin(),
                  b.trees.end(),
                  std::back_insert_iterator<container_t>(
@@ -111,7 +113,9 @@ struct ast_tree_policy :
         }
         else
         {
+#if !defined(BOOST_SPIRIT_USE_LIST_FOR_TREES)
             a.trees.reserve(a.trees.size() + b.trees.size());
+#endif
             std::copy(b.trees.begin(),
                  b.trees.end(),
                  std::back_insert_iterator<container_t>(a.trees));
