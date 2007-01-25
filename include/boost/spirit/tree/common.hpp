@@ -875,6 +875,22 @@ const no_tree_gen_node_parser_gen no_node_d = no_tree_gen_node_parser_gen();
 
 struct leaf_node_parser_gen;
 
+namespace impl
+{
+    template<typename ScannerT, typename IterPolicyT>
+    void call_skip(ScannerT const & s, IterPolicyT const &)
+    {
+        s.skip(s);
+    }
+
+    template<typename ScannerT>
+    void call_skip(ScannerT const & s, iteration_policy const &) {}
+
+    template<typename ScannerT, typename IterPolicyT>
+    void call_skip(ScannerT const & s, 
+        no_skipper_iteration_policy<IterPolicyT> const &) {}
+}
+
 template<typename T>
 struct leaf_node_parser
 :   public unary<T, parser<leaf_node_parser<T> > >
@@ -899,7 +915,7 @@ struct leaf_node_parser
         typedef typename parser_result<self_t, ScannerT>::type leaf_match_t;
         typedef typename leaf_match_t::node_factory_t factory_t;
 
-        scanner.skip(scanner);
+        impl::call_skip(scanner, typename ScannerT::iteration_policy_t());
         typename ScannerT::iterator_t from = scanner.first;
         typename parser_result<self_t, scan_t>::type match =
             this->subject().parse(scanner.change_policies(policies_t(scanner)));
