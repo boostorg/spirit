@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Daniel Nuffer
+    Revised 2007, Copyright (c) Tobias Schwinger
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
