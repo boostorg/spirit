@@ -876,22 +876,6 @@ const no_tree_gen_node_parser_gen no_node_d = no_tree_gen_node_parser_gen();
 
 struct leaf_node_parser_gen;
 
-namespace impl
-{
-    template<typename ScannerT, typename IterPolicyT>
-    void call_skip(ScannerT const & s, IterPolicyT const &)
-    {
-        s.skip(s);
-    }
-
-    template<typename ScannerT>
-    void call_skip(ScannerT const & s, iteration_policy const &) {}
-
-    template<typename ScannerT, typename IterPolicyT>
-    void call_skip(ScannerT const & s, 
-        no_skipper_iteration_policy<IterPolicyT> const &) {}
-}
-
 template<typename T>
 struct leaf_node_parser
 :   public unary<T, parser<leaf_node_parser<T> > >
@@ -907,25 +891,23 @@ struct leaf_node_parser
     typename parser_result<self_t, ScannerT>::type
     parse(ScannerT const& scanner) const
     {
-        typedef scanner_policies< no_skipper_iteration_policy< 
-            typename ScannerT::iteration_policy_t >, match_policy,
-            typename ScannerT::action_policy_t > policies_t;
+        typedef scanner_policies< typename ScannerT::iteration_policy_t,
+            match_policy, typename ScannerT::action_policy_t > policies_t;
 
-        typedef typename ScannerT::template rebind_policies< 
-            policies_t >::type scan_t;
-        typedef typename parser_result<self_t, ScannerT>::type leaf_match_t;
-        typedef typename leaf_match_t::node_factory_t factory_t;
+        typedef typename ScannerT::iterator_t iterator_t;
+        typedef typename parser_result<self_t, ScannerT>::type result_t;
+        typedef typename result_t::node_factory_t factory_t;
 
-        impl::call_skip(scanner, typename ScannerT::iteration_policy_t());
-        typename ScannerT::iterator_t from = scanner.first;
-        typename parser_result<self_t, scan_t>::type match =
-            this->subject().parse(scanner.change_policies(policies_t(scanner)));
+        iterator_t from = scanner.first;
+        result_t hit = impl::contiguous_parser_parse<result_t>(this->subject(),
+            scanner.change_policies(policies_t(scanner,match_policy(),scanner)),
+            scanner);
 
-        if (match)
-            return leaf_match_t(match.length(), 
+        if (hit)
+            return result_t(hit.length(), 
                 factory_t::create_node(from, scanner.first, true));
         else
-            return leaf_match_t(match.length());
+            return result_t(hit.length());
     }
 };
 
