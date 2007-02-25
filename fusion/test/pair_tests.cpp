@@ -40,5 +40,5 @@ int main()
     BOOST_TEST(get<0>(pr2) == 2);
     BOOST_TEST(get<1>(pr2) == "world");
     
-    return 0;
+    return boost::report_errors();
 }
