@@ -20,8 +20,8 @@ namespace boost { namespace spirit {
     // parametric.hpp
     template<typename ChGenT>                        struct f_chlit;
     template<typename ChGenAT, typename ChGenBT>     struct f_range;
-    template<typename IterGenAT, typename IterGenBT> struct f_chseq;
-    template<typename IterGenAT, typename IterGenBT> struct f_strlit;
+    template<typename IterGenAT, typename IterGenBT> class f_chseq;
+    template<typename IterGenAT, typename IterGenBT> class f_strlit;
 
 }} // namespace boost::spirit
 
