@@ -41,7 +41,8 @@ namespace boost { namespace spirit {
         typename MatchPolicyT,
         typename IteratorT,
         typename NodeFactoryT,
-        typename TreePolicyT
+        typename TreePolicyT, 
+        typename T = nil_t
     >
     struct common_tree_match_policy;
 

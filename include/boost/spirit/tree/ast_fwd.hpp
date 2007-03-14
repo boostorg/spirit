@@ -18,7 +18,8 @@ namespace boost { namespace spirit {
 
     template <
         typename IteratorT,
-        typename NodeFactoryT = node_val_data_factory<nil_t>
+        typename NodeFactoryT = node_val_data_factory<nil_t>,
+        typename T = nil_t
     >
     struct ast_match_policy;
 

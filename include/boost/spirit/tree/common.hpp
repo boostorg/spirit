@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Daniel Nuffer
+    Copyright (c) 2001-2007 Hartmut Kaiser
     Revised 2007, Copyright (c) Tobias Schwinger
     http://spirit.sourceforge.net/
 
@@ -677,7 +678,8 @@ template <
     typename MatchPolicyT,
     typename IteratorT,
     typename NodeFactoryT,
-    typename TreePolicyT
+    typename TreePolicyT, 
+    typename T
 >
 struct common_tree_match_policy : public match_policy
 {
@@ -694,7 +696,7 @@ struct common_tree_match_policy : public match_policy
     template <typename T>
     struct result { typedef tree_match<IteratorT, NodeFactoryT, T> type; };
 
-    typedef tree_match<IteratorT, NodeFactoryT> match_t;
+    typedef tree_match<IteratorT, NodeFactoryT, T> match_t;
     typedef IteratorT iterator_t;
     typedef TreePolicyT tree_policy_t;
     typedef NodeFactoryT factory_t;
@@ -825,7 +827,6 @@ struct no_tree_gen_node_parser
     typedef no_tree_gen_node_parser<T> self_t;
     typedef no_tree_gen_node_parser_gen parser_generator_t;
     typedef unary_parser_category parser_category_t;
-//    typedef no_tree_gen_node_parser<T> const &embed_t;
 
     no_tree_gen_node_parser(T const& a)
     : unary<T, parser<no_tree_gen_node_parser<T> > >(a) {}
@@ -959,10 +960,15 @@ struct node_parser
     typedef node_parser<T, NodeParserT> self_t;
     typedef node_parser_gen<NodeParserT> parser_generator_t;
     typedef unary_parser_category parser_category_t;
-//    typedef node_parser<T, NodeParserT> const &embed_t;
 
     node_parser(T const& a)
     : unary<T, parser<node_parser<T, NodeParserT> > >(a) {}
+
+    template <typename ScannerT>
+    struct result
+    {
+        typedef typename parser_result<T, ScannerT>::type type;
+    };
 
     template <typename ScannerT>
     typename parser_result<self_t, ScannerT>::type
@@ -1289,10 +1295,15 @@ struct action_directive_parser
     typedef action_directive_parser<T, ActionParserT> self_t;
     typedef action_directive_parser_gen<ActionParserT> parser_generator_t;
     typedef unary_parser_category parser_category_t;
-//    typedef action_directive_parser<T, ActionParserT> const &embed_t;
 
     action_directive_parser(T const& a)
         : unary<T, parser<action_directive_parser<T, ActionParserT> > >(a) {}
+
+    template <typename ScannerT>
+    struct result
+    {
+        typedef typename parser_result<T, ScannerT>::type type;
+    };
 
     template <typename ScannerT>
     typename parser_result<self_t, ScannerT>::type
@@ -1348,6 +1359,12 @@ struct access_match_action::action
 {
     typedef action_parser_category parser_category;
     typedef action<ParserT, ActionT> self_t;
+    
+    template <typename ScannerT>
+    struct result
+    {
+        typedef typename parser_result<ParserT, ScannerT>::type type;
+    };
 
     action( ParserT const& subject,
             ActionT const& actor_);
@@ -1414,6 +1431,12 @@ struct access_node_action::action
 {
     typedef action_parser_category parser_category;
     typedef action<ParserT, ActionT> self_t;
+    
+    template <typename ScannerT>
+    struct result
+    {
+        typedef typename parser_result<ParserT, ScannerT>::type type;
+    };
 
     action( ParserT const& subject,
             ActionT const& actor_);

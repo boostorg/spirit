@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Daniel Nuffer
+    Copyright (c) 2001-2007 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -22,28 +23,31 @@ namespace boost { namespace spirit {
 // pt_match_policy is simply an id so the correct specialization of tree_policy can be found.
 template <
     typename IteratorT,
-    typename NodeFactoryT 
+    typename NodeFactoryT,
+    typename T 
 >
 struct pt_match_policy :
     public common_tree_match_policy<
-        pt_match_policy<IteratorT, NodeFactoryT>,
+        pt_match_policy<IteratorT, NodeFactoryT, T>,
         IteratorT,
         NodeFactoryT,
         pt_tree_policy<
-            pt_match_policy<IteratorT, NodeFactoryT>,
+            pt_match_policy<IteratorT, NodeFactoryT, T>,
             NodeFactoryT
-        >
+        >,
+        T
     >
 {
     typedef
         common_tree_match_policy<
-            pt_match_policy<IteratorT, NodeFactoryT>,
+            pt_match_policy<IteratorT, NodeFactoryT, T>,
             IteratorT,
             NodeFactoryT,
             pt_tree_policy<
-                pt_match_policy<IteratorT, NodeFactoryT>,
+                pt_match_policy<IteratorT, NodeFactoryT, T>,
                 NodeFactoryT
-            >
+            >,
+            T
         >
     common_tree_match_policy_;
 
@@ -105,8 +109,8 @@ struct pt_tree_policy :
         m = newmatch;
     }
 
-    template <typename FunctorT>
-    static void apply_op_to_match(FunctorT const& op, match_t& m)
+    template <typename FunctorT, typename MatchT>
+    static void apply_op_to_match(FunctorT const& op, MatchT& m)
     {
         op(m);
     }
@@ -114,11 +118,11 @@ struct pt_tree_policy :
 
 namespace impl {
 
-    template <typename IteratorT, typename NodeFactoryT>
-    struct tree_policy_selector<pt_match_policy<IteratorT, NodeFactoryT> >
+    template <typename IteratorT, typename NodeFactoryT, typename T>
+    struct tree_policy_selector<pt_match_policy<IteratorT, NodeFactoryT, T> >
     {
         typedef pt_tree_policy<
-            pt_match_policy<IteratorT, NodeFactoryT>, NodeFactoryT> type;
+            pt_match_policy<IteratorT, NodeFactoryT, T>, NodeFactoryT> type;
     };
 
 } // namespace impl
@@ -134,7 +138,6 @@ struct gen_pt_node_parser
     typedef gen_pt_node_parser<T> self_t;
     typedef gen_pt_node_parser_gen parser_generator_t;
     typedef unary_parser_category parser_category_t;
-//    typedef gen_pt_node_parser<T> const &embed_t;
 
     gen_pt_node_parser(T const& a)
     : unary<T, parser<gen_pt_node_parser<T> > >(a) {}
