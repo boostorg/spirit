@@ -34,7 +34,8 @@ struct ast_match_policy :
         NodeFactoryT,
         ast_tree_policy<
             ast_match_policy<IteratorT, NodeFactoryT, T>,
-            NodeFactoryT
+            NodeFactoryT,
+            T
         >,
         T
     >
@@ -46,7 +47,8 @@ struct ast_match_policy :
             NodeFactoryT,
             ast_tree_policy<
                 ast_match_policy<IteratorT, NodeFactoryT, T>,
-                NodeFactoryT
+                NodeFactoryT,
+                T
             >,
             T
         >
@@ -64,16 +66,15 @@ struct ast_match_policy :
 };
 
 //////////////////////////////////
-template <typename MatchPolicyT, typename NodeFactoryT>
+template <typename MatchPolicyT, typename NodeFactoryT, typename T>
 struct ast_tree_policy :
     public common_tree_tree_policy<MatchPolicyT, NodeFactoryT>
 {
-    typedef
-        typename common_tree_tree_policy<MatchPolicyT, NodeFactoryT>::match_t
-        match_t;
+    typedef typename MatchPolicyT::match_t match_t;
     typedef typename MatchPolicyT::iterator_t iterator_t;
 
-    static void concat(match_t& a, match_t const& b)
+    template<typename MatchAT, typename MatchBT>
+    static void concat(MatchAT& a, MatchBT const& b)
     {
         BOOST_SPIRIT_ASSERT(a && b);
 
@@ -82,7 +83,7 @@ struct ast_tree_policy :
         BOOST_SPIRIT_DEBUG_OUT << "\n>>>AST concat. a = " << a <<
             "\n\tb = " << b << "<<<\n";
 #endif
-        typedef typename tree_match<iterator_t, NodeFactoryT>::container_t
+        typedef typename tree_match<iterator_t, NodeFactoryT, T>::container_t
             container_t;
 
         // test for size() is nessecary, because no_tree_gen_node leaves a.trees
@@ -140,7 +141,7 @@ struct ast_tree_policy :
         if (!m)
             return;
 
-        typedef typename tree_match<iterator_t, NodeFactoryT>::container_t
+        typedef typename tree_match<iterator_t, NodeFactoryT, T>::container_t
             container_t;
         typedef typename container_t::iterator cont_iterator_t;
         typedef typename NodeFactoryT::template factory<iterator_t> factory_t;
@@ -198,7 +199,10 @@ namespace impl {
     struct tree_policy_selector<ast_match_policy<IteratorT, NodeFactoryT, T> >
     {
         typedef ast_tree_policy<
-            ast_match_policy<IteratorT, NodeFactoryT, T>, NodeFactoryT> type;
+            ast_match_policy<IteratorT, NodeFactoryT, T>, 
+            NodeFactoryT, 
+            T
+        > type;
     };
 
 } // namespace impl

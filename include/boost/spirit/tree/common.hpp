@@ -689,7 +689,7 @@ struct common_tree_match_policy : public match_policy
 
     template <typename PolicyT>
     common_tree_match_policy(PolicyT const & policies)
-        : match_policy(policies)
+        : match_policy((match_policy const &)policies)
     {
     }
 

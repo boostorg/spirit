@@ -13,7 +13,11 @@
 
 namespace boost { namespace spirit {
 
-    template <typename MatchPolicyT, typename NodeFactoryT>
+    template <
+        typename MatchPolicyT, 
+        typename NodeFactoryT, 
+        typename T = nil_t
+    >
     struct ast_tree_policy;
 
     template <
