@@ -693,8 +693,8 @@ struct common_tree_match_policy : public match_policy
     {
     }
 
-    template <typename T>
-    struct result { typedef tree_match<IteratorT, NodeFactoryT, T> type; };
+    template <typename U>
+    struct result { typedef tree_match<IteratorT, NodeFactoryT, U> type; };
 
     typedef tree_match<IteratorT, NodeFactoryT, T> match_t;
     typedef IteratorT iterator_t;
