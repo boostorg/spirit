@@ -229,9 +229,9 @@ struct grammar_definition
 # else
         static ptr_t helper;
 # endif
-        if (!boost::make_shared(helper).get())
+        if (helper.expired())
             new helper_t(helper);
-        return boost::make_shared(helper)->define(self);
+        return helper.lock()->define(self);
 #endif
     }
 
