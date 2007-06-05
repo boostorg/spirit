@@ -123,7 +123,7 @@ namespace fileiter_impl {
             value_type const,
             std::random_access_iterator_tag,
             boost::use_default,
-            signed long
+            std::ptrdiff_t
         > type;
     };
 
