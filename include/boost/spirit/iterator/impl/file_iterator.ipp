@@ -127,15 +127,15 @@ public:
         m_eof = true;
     }
 
-    void advance(signed long n)
+    void advance(std::ptrdiff_t n)
     {
         m_pos += n * sizeof(CharT);
         update_char();
     }
 
-    long distance(const std_file_iterator& iter) const
+    std::ptrdiff_t distance(const std_file_iterator& iter) const
     {
-        return (long)(m_pos - iter.m_pos) / sizeof(CharT);
+        return (std::ptrdiff_t)(m_pos - iter.m_pos) / sizeof(CharT);
     }
 
 private:
@@ -269,10 +269,10 @@ public:
     void prev_char(void)
     { m_curChar--; }
 
-    void advance(signed long n)
+    void advance(std::ptrdiff_t n)
     { m_curChar += n; }
 
-    long distance(const mmap_file_iterator& iter) const
+    std::ptrdiff_t distance(const mmap_file_iterator& iter) const
     { return m_curChar - iter.m_curChar; }
 
     void seek_end(void)
