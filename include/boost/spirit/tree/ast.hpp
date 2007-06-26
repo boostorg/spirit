@@ -312,7 +312,6 @@ ast_parse(
     IteratorT first = first_;
     scanner_t scan(first, last_, policies);
     tree_match<IteratorT, AstFactoryT> hit = parser.derived().parse(scan);
-    scan.skip(scan);
     return tree_parse_info<IteratorT, AstFactoryT>(
         first, hit, hit && (first == last_), hit.length(), hit.trees);
 }
