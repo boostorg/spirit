@@ -47,35 +47,28 @@ namespace impl {
     struct string_lit<char>
     {
         static char get(char c) { return c; }
-        static char const* get(char const* str = "") { return str; }
+        static std::string get(char const* str = "") { return str; }
     };
 
     template <> 
     struct string_lit<wchar_t>
     {
-        static wchar_t const *to_wchar_t(char const* source)
-        {
-            typedef std::ctype<wchar_t> ctype_t;
-            static wchar_t result[64];
-            
-            using namespace std;        // some systems have size_t in ns std
-            size_t len = strlen(source);
-            BOOST_ASSERT(len < sizeof(result)/sizeof(result[0]));
-
-            std::use_facet<ctype_t>(std::locale())
-                .widen(source, source + len, result);
-
-            return result;
-        }
-
         static wchar_t get(char c) 
         { 
             typedef std::ctype<wchar_t> ctype_t;
             return std::use_facet<ctype_t>(std::locale()).widen(c); 
         }
-        static wchar_t const* get(char const* str = "") 
+        static std::wstring get(char const* source = "") 
         { 
-            return to_wchar_t(str); 
+            typedef std::ctype<wchar_t> ctype_t;
+            
+            using namespace std;        // some systems have size_t in ns std
+            size_t len = strlen(source);
+            std::auto_ptr<wchar_t> result (new wchar_t[len+1]);
+            std::use_facet<ctype_t>(std::locale())
+                .widen(source, source + len, result.get());
+
+            return result.get();
         }
     };
 }
