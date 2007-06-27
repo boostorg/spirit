@@ -95,6 +95,7 @@ else
 
     test-suite "spirit.core.kernel"
         : [ spirit-run $(spirit-src)match_tests.cpp <template>normal ]
+          [ spirit-run $(spirit-src)post_skips.cpp <template>normal ]
         ;
 
     test-suite "spirit.core.scanner"
