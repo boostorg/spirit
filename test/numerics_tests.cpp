@@ -111,7 +111,11 @@ main()
     char const* int_underflow = "-2147483649";
     char const* max_binary = "11111111111111111111111111111111";
     char const* binary_overflow = "100000000000000000000000000000000";
+#if defined(__hpux)
+    char const* max_octal = "37777777777";
+#else
     char const* max_octal = "77777777777";
+#endif
     char const* octal_overflow = "100000000000";
     char const* max_hex = "FFFFFFFF";
     char const* hex_overflow = "100000000";
