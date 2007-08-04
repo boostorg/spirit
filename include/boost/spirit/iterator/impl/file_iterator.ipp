@@ -13,7 +13,6 @@
 #define BOOST_SPIRIT_FILE_ITERATOR_IPP
 
 #ifdef BOOST_SPIRIT_FILEITERATOR_WINDOWS
-#  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 #endif
 
