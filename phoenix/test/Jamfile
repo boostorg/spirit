@@ -11,85 +11,71 @@
 #  Joel de Guzman [Sept 27, 2002]
 #
 
-subproject libs/spirit/phoenix/test ;
-
 unit-test binary_tests
     : binary_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test binders_tests
     : binders_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test functors_tests
     : functors_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 unit-test iostream_tests
     : iostream_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test mixed_binary_tests
     : mixed_binary_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test more_expressions_tests
     : more_expressions_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test primitives_tests
     : primitives_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test statements_tests
     : statements_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test stl_tests
     : stl_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test tuples_tests
     : tuples_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test unary_tests
     : unary_tests.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
 
 unit-test new_tests
     : new_test.cpp
-    : <sysinclude>$(BOOST_ROOT)
     :
     ;
 
