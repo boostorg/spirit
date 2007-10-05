@@ -418,7 +418,7 @@ private:
     {
 #ifdef PHOENIX_THREADSAFE
         static boost::once_flag been_here = BOOST_ONCE_INIT;
-        boost::call_once(tsp_frame_instance_init, been_here);
+        boost::call_once(been_here, tsp_frame_instance_init);
         boost::thread_specific_ptr<holder_t*> &tsp_frame = tsp_frame_instance();
         if (!tsp_frame.get())
             tsp_frame.reset(new holder_t *(0));
