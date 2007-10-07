@@ -132,7 +132,7 @@ check_ascending(test_task<ClassT> const &t)
         }
         p = n;
     }
-};
+}
 
 struct less1
 {
@@ -164,7 +164,7 @@ check_not_contained_in(
         }
         ++p;
     }
-};
+}
 
 void concurrent_creation_of_objects()
 {
