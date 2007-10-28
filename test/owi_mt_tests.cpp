@@ -109,6 +109,24 @@ private:
     unsigned int         progress;
 };
 
+template <typename T>
+class callable_reference_wrapper
+    : public boost::reference_wrapper<T>
+{
+public:
+    explicit callable_reference_wrapper(T& t)
+        : boost::reference_wrapper<T>(t)
+    {}
+    inline void operator()() { this->get().operator()(); }
+};
+
+template <typename T>
+callable_reference_wrapper<T>
+callable_ref(T &t)
+{
+    return callable_reference_wrapper<T>(t);
+}
+
 test_task<class1> test1;
 test_task<class1> test2;
 test_task<class1> test3;
@@ -170,9 +188,9 @@ void concurrent_creation_of_objects()
 {
     {
         boost::xtime_get(&start_time, boost::TIME_UTC);
-        boost::thread thread1(boost::ref(test1));
-        boost::thread thread2(boost::ref(test2));
-        boost::thread thread3(boost::ref(test3));
+        boost::thread thread1(callable_ref(test1));
+        boost::thread thread2(callable_ref(test2));
+        boost::thread thread3(callable_ref(test3));
 
         thread1.join();
         thread2.join();

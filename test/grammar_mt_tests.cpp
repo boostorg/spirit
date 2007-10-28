@@ -152,7 +152,25 @@ struct single_grammar_object_task
 
     simple simple1_p;
 };
+////////////////////////////////////////////////////////////////////////////////
+template <typename T>
+class callable_reference_wrapper
+    : public boost::reference_wrapper<T>
+{
+public:
+    explicit callable_reference_wrapper(T& t)
+        : boost::reference_wrapper<T>(t)
+    {}
+    inline void operator()() { this->get().operator()(); }
+};
 
+template <typename T>
+callable_reference_wrapper<T>
+callable_ref(T &t)
+{
+    return callable_reference_wrapper<T>(t);
+}
+////////////////////////////////////////////////////////////////////////////////
 static void
 single_local_grammar_object_multiple_threads()
 {
@@ -161,10 +179,10 @@ single_local_grammar_object_multiple_threads()
     count_guard guard(simple_definition_count);
     single_grammar_object_task task1, task2, task3, task4;
 
-    boost::thread t1(boost::ref(task1));
-    boost::thread t2(boost::ref(task2));
-    boost::thread t3(boost::ref(task3));
-    boost::thread t4(boost::ref(task4));
+    boost::thread t1(callable_ref(task1));
+    boost::thread t2(callable_ref(task2));
+    boost::thread t3(callable_ref(task3));
+    boost::thread t4(callable_ref(task4));
 
     t1.join();
     t2.join();
@@ -195,10 +213,10 @@ multiple_local_grammar_objects_multiple_threads()
     count_guard guard(simple_definition_count);
     two_grammar_objects_task task1, task2, task3, task4;
 
-    boost::thread t1(boost::ref(task1));
-    boost::thread t2(boost::ref(task2));
-    boost::thread t3(boost::ref(task3));
-    boost::thread t4(boost::ref(task4));
+    boost::thread t1(callable_ref(task1));
+    boost::thread t2(callable_ref(task2));
+    boost::thread t3(callable_ref(task3));
+    boost::thread t4(callable_ref(task4));
 
     t1.join();
     t2.join();
@@ -227,10 +245,10 @@ single_global_grammar_object_multiple_threads()
     count_guard guard(simple_definition_count);
     single_global_grammar_object_task task1, task2, task3, task4;
 
-    boost::thread t1(boost::ref(task1));
-    boost::thread t2(boost::ref(task2));
-    boost::thread t3(boost::ref(task3));
-    boost::thread t4(boost::ref(task4));
+    boost::thread t1(callable_ref(task1));
+    boost::thread t2(callable_ref(task2));
+    boost::thread t3(callable_ref(task3));
+    boost::thread t4(callable_ref(task4));
 
     t1.join();
     t2.join();
@@ -261,10 +279,10 @@ multiple_global_grammar_objects_multiple_threads()
     count_guard guard(simple_definition_count);
     multiple_global_grammar_objects_task task1, task2, task3, task4;
 
-    boost::thread t1(boost::ref(task1));
-    boost::thread t2(boost::ref(task2));
-    boost::thread t3(boost::ref(task3));
-    boost::thread t4(boost::ref(task4));
+    boost::thread t1(callable_ref(task1));
+    boost::thread t2(callable_ref(task2));
+    boost::thread t3(callable_ref(task3));
+    boost::thread t4(callable_ref(task4));
 
     t1.join();
     t2.join();
