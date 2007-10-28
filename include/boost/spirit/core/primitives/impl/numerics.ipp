@@ -13,12 +13,6 @@
 #include <cmath>
 #include <limits>
 
-#if defined(BOOST_NO_STDC_NAMESPACE)
-#  define BOOST_SPIRIT_IMPL_STD_NS
-#else
-#  define BOOST_SPIRIT_IMPL_STD_NS std
-#endif
-
 namespace boost { namespace spirit {
 
     struct sign_parser; // forward declaration only
@@ -383,9 +377,11 @@ namespace boost { namespace spirit {
 
                     if (RT hit = RealPoliciesT::parse_frac_n(scan))
                     {
+#if !defined(BOOST_NO_STDC_NAMESPACE)
+                        using namespace std;  // allow for ADL to find pow()
+#endif
                         hit.value(hit.value()
-                            * BOOST_SPIRIT_IMPL_STD_NS::
-                                pow(T(10), T(-hit.length())));
+                            * pow(T(10), T(-hit.length())));
                         if (neg)
                             n -= hit.value();
                         else
@@ -421,8 +417,10 @@ namespace boost { namespace spirit {
                     //  actual exponent. It is an error if it is not there.
                     if (RT e_n_hit = RealPoliciesT::parse_exp_n(scan))
                     {
-                        n *= BOOST_SPIRIT_IMPL_STD_NS::
-                            pow(T(10), T(e_n_hit.value()));
+#if !defined(BOOST_NO_STDC_NAMESPACE)
+                        using namespace std;    // allow for ADL to find pow()
+#endif
+                        n *= pow(T(10), T(e_n_hit.value()));
                         count += e_n_hit.length() + e_hit.length();
                     }
                     else
@@ -453,4 +451,3 @@ namespace boost { namespace spirit {
 }} // namespace boost::spirit
 
 #endif
-#undef BOOST_SPIRIT_IMPL_STD_NS
