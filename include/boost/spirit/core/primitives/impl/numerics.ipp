@@ -46,7 +46,7 @@ namespace boost { namespace spirit {
         //  Traits class for radix specific number conversion
         //
         //      Convert a digit from character representation, ch, to binary
-        //      representation, returned in val. 
+        //      representation, returned in val.
         //      Returns whether the conversion was successful.
         //
         //        template<typename CharT> static bool digit(CharT ch, T& val);
@@ -62,7 +62,7 @@ namespace boost { namespace spirit {
             template<typename CharT, typename T>
             static bool digit(CharT ch, T& val)
             {
-                val = ch - '0'; 
+                val = ch - '0';
                 return ('0' == ch || '1' == ch);
             }
         };
@@ -130,6 +130,9 @@ namespace boost { namespace spirit {
         //          numeric type can hold it. Accumulate is either
         //          positive_accumulate<Radix> (default) for parsing positive
         //          numbers or negative_accumulate<Radix> otherwise.
+        //          Checking is only performed when std::numeric_limits<T>::
+        //          is_specialized is true. Otherwise, there's no way to
+        //          do the check.
         //
         //          scan.first and scan.last are iterators as usual (i.e.
         //          first is mutable and is moved forward when a match is
@@ -152,57 +155,75 @@ namespace boost { namespace spirit {
             //  Use this accumulator if number is positive
             static bool add(T& n, T digit)
             {
-                static T const max = (std::numeric_limits<T>::max)();
-                static T const max_div_radix = max/Radix;
-                
-                if (n > max_div_radix)
-                    return false;
-                n *= Radix;
-                
-                if (n > max - digit)
-                    return false;
-                n += digit;
-                
-                return true;
+                if (std::numeric_limits<T>::is_specialized)
+                {
+                    static T const max = (std::numeric_limits<T>::max)();
+                    static T const max_div_radix = max/Radix;
+
+                    if (n > max_div_radix)
+                        return false;
+                    n *= Radix;
+
+                    if (n > max - digit)
+                        return false;
+                    n += digit;
+
+                    return true;
+                }
+                else
+                {
+                    n *= Radix;
+                    n += digit;
+                    return true;
+                }
             }
         };
-        
+
         template <typename T, int Radix>
         struct negative_accumulate
         {
             //  Use this accumulator if number is negative
             static bool add(T& n, T digit)
             {
-                typedef std::numeric_limits<T> num_limits;
-                static T const min = 
-                    (!num_limits::is_integer && num_limits::is_signed && num_limits::has_denorm) ?
-                    -(num_limits::max)() : (num_limits::min)();
-                static T const min_div_radix = min/Radix;
-            
-                if (n < min_div_radix)
-                    return false;
-                n *= Radix;
-                
-                if (n < min + digit)
-                    return false;
-                n -= digit;
+                if (std::numeric_limits<T>::is_specialized)
+                {
+                    typedef std::numeric_limits<T> num_limits;
+                    static T const min =
+                        (!num_limits::is_integer && num_limits::is_signed && num_limits::has_denorm) ?
+                        -(num_limits::max)() : (num_limits::min)();
+                    static T const min_div_radix = min/Radix;
 
-                return true;
+                    if (n < min_div_radix)
+                        return false;
+                    n *= Radix;
+
+                    if (n < min + digit)
+                        return false;
+                    n -= digit;
+
+                    return true;
+                }
+                else
+                {
+                    n *= Radix;
+                    n -= digit;
+                    return true;
+                }
             }
         };
 
-        template <int MaxDigits> 
-        inline bool allow_more_digits(std::size_t i) 
-        { 
-            return i < MaxDigits; 
+        template <int MaxDigits>
+        inline bool allow_more_digits(std::size_t i)
+        {
+            return i < MaxDigits;
         }
-        
+
         template <>
         inline bool allow_more_digits<-1>(std::size_t)
         {
             return true;
         }
-        
+
         //////////////////////////////////
         template <
             int Radix, unsigned MinDigits, int MaxDigits,
@@ -258,7 +279,7 @@ namespace boost { namespace spirit {
                     T n = 0;
                     std::size_t count = 0;
                     typename ScannerT::iterator_t save = scan.first;
-                    if (extract_int<Radix, MinDigits, MaxDigits, 
+                    if (extract_int<Radix, MinDigits, MaxDigits,
                         positive_accumulate<T, Radix> >::f(scan, n, count))
                     {
                         return scan.create_match(count, n, save, scan.first);
@@ -297,7 +318,7 @@ namespace boost { namespace spirit {
             {
                 typedef extract_int<Radix, MinDigits, MaxDigits,
                     negative_accumulate<T, Radix> > extract_int_neg_t;
-                typedef extract_int<Radix, MinDigits, MaxDigits, 
+                typedef extract_int<Radix, MinDigits, MaxDigits,
                     positive_accumulate<T, Radix> > extract_int_pos_t;
 
                 if (!scan.at_end())
