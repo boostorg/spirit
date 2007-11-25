@@ -15,8 +15,6 @@
 #include <string>
 #include <iostream>
 
-// The type of our parser expression is complex...
-#define BOOST_TYPEOF_LIMIT_SIZE 100
 #include <boost/typeof/typeof.hpp>
 
 #include <boost/spirit/core.hpp>

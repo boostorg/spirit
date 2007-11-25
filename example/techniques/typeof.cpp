@@ -11,20 +11,13 @@
 // *** the Spirit documentation for information regarding
 // *** this snippet.
 
-#ifdef __MWERKS__
-#define typeof __typeof__
-#endif
-
-#if !defined(__MWERKS__) && !defined(__GNUC__)
-#error "typeof not supported by your compiler"
-#endif
-
 #include <iostream>
 #include <boost/spirit/core.hpp>
+#include <boost/typeof/typeof.hpp>
 
 using namespace boost::spirit;
 
-#define RULE(name, definition) typeof(definition) name = definition
+#define RULE(name, definition) BOOST_TYPEOF(definition) name = definition
 
 int
 main()

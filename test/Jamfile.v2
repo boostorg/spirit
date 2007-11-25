@@ -48,6 +48,7 @@ local multi-threading = <library>/boost/thread//boost_thread
 
     test-suite "spirit.core.kernel"
         : [ spirit-run match_tests.cpp ]
+          [ spirit-run post_skips.cpp ]
         ;
 
     test-suite "spirit.core.scanner"
@@ -60,6 +61,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run char_strings_test.cpp ]
           [ compile-fail char_strings_test_fail.cpp ]
           [ spirit-run numerics_tests.cpp : : : $(opt) ]
+          [ spirit-run custom_real_parser.cpp ]
         ;
 
     test-suite "spirit.core.composite"

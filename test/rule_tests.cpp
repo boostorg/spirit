@@ -158,6 +158,9 @@ rule_basic_tests()
     BOOST_TEST(pi.hit);
     BOOST_TEST(!pi.full);
     BOOST_TEST(pi.length == 14);
+
+    rule<> r = anychar_p;
+    r.copy(); // copy test (compile only)
 }
 
 void

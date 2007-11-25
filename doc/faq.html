@@ -26,6 +26,7 @@
 <ul>
   <li><a href="#scanner_business">The Scanner Business</a></li>
   <li><a href="#left_recursion">Eliminating Left Recursion</a> </li>
+  <li><a href="#right_associativity">Implementing Right Associativity</a></li>
   <li><a href="#lexeme_and_rules">The lexeme_d directive and rules</a></li>
   <li><a href="#kleene_star">Kleene Star infinite loop</a></li>
   <li><a href="#CVS">Boost CVS and Spirit CVS</a></li>
@@ -147,6 +148,50 @@
 <pre>    <span class=identifier>a </span><span class=special>= </span><span class=identifier>b </span><span class=special>&gt;&gt; *(</span><span class=identifier>op </span><span class=special>&gt;&gt; </span><span class=identifier>b</span><span class=special>);</span></pre>
 <p><span class=special></span>in Spirit. What could be simpler? Look Ma, no recursion,
   just iteration.</p>
+<p><b> <a name="right_associativity" id="right_associativity"></a> Implementing Right Associativity </b></p>
+<p> <font color="#FF0000">Question:</font> I tried adding <tt>'^'</tt> as an operator to compute the power to a calculator grammer. The following code
+</p>
+<pre>    <span class=identifier>pow_expression 
+    </span><span class=special>= </span><span class=identifier>pow_operand </span><span class=special>&gt;&gt; </span><span class=special>*( </span><span class=literal>'^' </span><span class=special>&gt;&gt; </span><span class=identifier>pow_operand </span><span class=special>[ </span><span class=special>&amp; </span><span class=identifier>do_pow </span><span class=special>]
+                      </span><span class=special>)
+    </span><span class=special>;</span>
+</pre>
+<p>parses the input correctly, but I want the operator to be evalutated from right to left. In other words, the expression <tt>2^3^4</tt> is supposed to have the same semantics as <tt>2^(3^4)</tt> instead of <tt>(2^3)^4</tt>. How do I do it?
+</p>
+<p> The "textbook recipe" for Right Associativity is Right Recursion. In BNF that means:
+<pre>    &lt;pow_expression&gt; ::=  &lt;pow_operand&gt; '^' &lt;pow_expression&gt; | &lt;pow_operand&gt;
+</pre>
+<p>But we better don't take the theory too literally here, because if the first alternative fails, the semantic actions within <tt>pow_operand</tt> might have been executed already and will then be executed again when trying the second alternative. So let's apply Left Factorization to factor out <tt>pow_operand</tt>:
+<pre>    &lt;pow_expression&gt; ::=  &lt;pow_operand&gt; &lt;pow_expression_helper&gt;
+    &lt;pow_expression_helper&gt; ::= '^' &lt;pow_expression&gt; | <i>&#949;</i> 
+</pre>
+<p>The production <tt>pow_expression_helper</tt> matches the empty string <i>&#949;</i>, so we can replace the alternative with the optional operator in Spirit code.
+</p>
+<pre>    <span class=identifier>pow_expression 
+    </span><span class=special>= </span><span class=identifier>pow_operand </span><span class=special>&gt;&gt; </span><span class=special>!( </span><span class=literal>'^' </span><span class=special>&gt;&gt; </span><span class=identifier>pow_expression </span><span class=special>[ </span><span class=special>&amp; </span><span class=identifier>do_pow </span><span class=special>]
+                      </span><span class=special>)
+    </span><span class=special>;</span>
+</pre>
+<p>Now any semantic actions within <tt>pow_operand</tt> can safely be executed. For stack-based evaluation that means that each match of <tt>pow_operand</tt> will leave one value on the stack and the recursion makes sure there are (at least) two values on the stack when <tt>do_pow</tt> is fired to reduce these two values to their power.
+</p>
+<p>In cases where this technique isn't applicable, such as C-style assignment
+<pre>    <span class=identifier>assignment
+    </span><span class=special>= </span><span class=identifier>lvalue </span><span class=special>&gt;&gt; </span><span class=literal>'=' </span><span class=special>&gt;&gt; </span><span class=identifier>assignment 
+    </span><span class=special>| </span><span class=identifier>ternary_conditional 
+    </span><span class=special>;</span>
+</pre>
+<p>you can append <tt>| epsilon_p [ <i>action</i> ] &gt;&gt; nothing_p</tt> to a parser to correct the semantic context when backtracking occurs (in the example case that would be dropping the address pushed by <tt>lvalue</tt> off the evaluation stack):
+</p>
+<pre>    <span class=identifier>assignment
+    </span><span class=special>= </span><span class=identifier>lvalue </span><span class=special>&gt;&gt; </span><span class=special>( </span><span class=literal>'=' </span><span class=special>&gt;&gt; </span><span class=identifier>assignment    </span></span><span class=special>[ </span><span class=special>&amp; </span><span class=identifier>do_store </span><span class=special>]
+                </span><span class=special>| </span><span class=identifier>epsilon_p            </span><span class=special>[ </span><span class=special>&amp; </span><span class=identifier>do_drop  </span><span class=special>]
+                  </span><span class=special>&gt;&gt; </span><span class=identifier>nothing_p
+                </span><span class=special>) 
+    </span><span class=special>| </span><span class=identifier>ternary_conditional 
+    </span><span class=special>;</span>
+</pre>
+<p>However, this trick compromises the clear separation of syntax and semantics, so you also might want to consider using an <a href="trees.html">AST</a> instead of semantic actions so you can just go with the first definition of <tt>assignment</tt>.
+</p>
 <p><b> <a name="lexeme_and_rules" id="lexeme_and_rules"></a> The lexeme_d directive
   and rules</b></p>
 <p> <font color="#FF0000">Question:</font> Does lexeme_d not support expressions
@@ -451,6 +496,7 @@ Your grammar can be written unambiguously as:</p>
 <hr size="1">
 <p class="copyright">Copyright &copy; 1998-2003 Joel de Guzman<br>
 <span class="copyright">Copyright &copy; 2002-2003 Hartmut Kaiser </span><br>
+<span class="copyright">Copyright &copy; 2006-2007 Tobias Schwinger </span><br>
   <br>
   <font size="2">Use, modification and distribution is subject to the Boost Software
       License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at

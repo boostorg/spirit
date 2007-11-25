@@ -54,7 +54,7 @@ struct my_grammar : grammar<my_grammar>
 
         typedef rule<ast_scanner> ast_rule;
         typedef rule<pt_scanner> pt_rule;
-        typedef rule<Scanner> rule_;
+        typedef rule<Scanner> rule;
 
         definition(my_grammar const & /* self */)
         {
@@ -62,12 +62,12 @@ struct my_grammar : grammar<my_grammar>
             start_ = gen_pt_node_d[ pt_rule_ ];
         }
 
-        rule_ const & start() const
+        rule const & start() const
         {
             return start_;
         }
 
-        rule_ start_;
+        rule start_;
         ast_rule ast_rule_;
         pt_rule pt_rule_;
     };
