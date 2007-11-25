@@ -10,6 +10,7 @@
 #define BOOST_SPIRIT_ITERATOR_TYPEOF_HPP
 
 #include <boost/typeof/typeof.hpp>
+#include <boost/typeof/std/string.hpp>
 
 #include <boost/spirit/iterator/multi_pass_fwd.hpp>
 #include <boost/spirit/iterator/file_iterator_fwd.hpp>

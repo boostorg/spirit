@@ -41,7 +41,8 @@ namespace boost { namespace spirit {
         typename MatchPolicyT,
         typename IteratorT,
         typename NodeFactoryT,
-        typename TreePolicyT
+        typename TreePolicyT, 
+        typename T = nil_t
     >
     struct common_tree_match_policy;
 
@@ -51,11 +52,14 @@ namespace boost { namespace spirit {
     template <typename T>
     struct no_tree_gen_node_parser;
 
+    template <typename T>
+    struct leaf_node_parser;
+
     template <typename T, typename NodeParserT>
     struct node_parser;
 
     struct discard_node_op;
-    struct leaf_node_op;
+    struct reduced_node_op;
     struct infix_node_op;
     struct discard_first_node_op;
     struct discard_last_node_op;

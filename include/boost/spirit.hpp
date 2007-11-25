@@ -11,10 +11,13 @@
     Copyright (c) 2003 Vaclav Vesely
     Copyright (c) 2003 Jonathan de Halleux
     http://spirit.sourceforge.net/
+    http://www.boost.org/libs/spirit
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
+
+    See http://www.boost.org/libs/spirit for documentation
 =============================================================================*/
 #if !defined(SPIRIT_HPP)
 #define SPIRIT_HPP

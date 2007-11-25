@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Daniel Nuffer
-    Copyright (c) 2001-2003 Hartmut Kaiser
+    Copyright (c) 2001-2007 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
