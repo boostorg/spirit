@@ -173,7 +173,10 @@ bool test(char const *text)
 
 int main() 
 { 
-    BOOST_TEST(test(L"1+2"));
     BOOST_TEST(test("1+2"));
+    if (std::has_facet<std::ctype<wchar_t> >(std::locale()))
+    {
+        BOOST_TEST(test(L"1+2"));
+    }
     return boost::report_errors();
 }

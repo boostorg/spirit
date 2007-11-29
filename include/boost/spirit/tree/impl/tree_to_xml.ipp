@@ -19,13 +19,15 @@
 #include <map>
 #include <iostream>
 #include <boost/config.hpp>
+#include <boost/assert.hpp>
+
 #ifdef BOOST_NO_STRINGSTREAM
 #include <strstream>
 #define BOOST_SPIRIT_OSSTREAM std::ostrstream
 inline 
 std::string BOOST_SPIRIT_GETSTRING(std::ostrstream& ss)
 {
-    ss << ends;
+    ss << std::ends;
     std::string rval = ss.str();
     ss.freeze(false);
     return rval;
@@ -61,15 +63,17 @@ namespace impl {
         }
         static std::basic_string<wchar_t> get(char const* source = "") 
         { 
-            typedef std::ctype<wchar_t> ctype_t;
-            
             using namespace std;        // some systems have size_t in ns std
             size_t len = strlen(source);
             std::auto_ptr<wchar_t> result (new wchar_t[len+1]);
             result.get()[len] = '\0';
-            std::use_facet<ctype_t>(std::locale())
-                .widen(source, source + len, result.get());
 
+            // working with wide character streams is supported only if the 
+            // platform provides the std::ctype<wchar_t> facet
+            BOOST_ASSERT(std::has_facet<std::ctype<wchar_t> >(std::locale()));
+
+            std::use_facet<std::ctype<wchar_t> >(std::locale())
+                .widen(source, source + len, result.get());
             return result.get();
         }
     };
