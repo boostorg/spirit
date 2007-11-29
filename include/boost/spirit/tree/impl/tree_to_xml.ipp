@@ -14,6 +14,7 @@
 #include <cstdio>
 #include <cstdarg>
 #include <locale>
+#include <string>
 
 #include <map>
 #include <iostream>
@@ -58,7 +59,7 @@ namespace impl {
             typedef std::ctype<wchar_t> ctype_t;
             return std::use_facet<ctype_t>(std::locale()).widen(c); 
         }
-        static std::wstring get(char const* source = "") 
+        static std::basic_string<wchar_t> get(char const* source = "") 
         { 
             typedef std::ctype<wchar_t> ctype_t;
             

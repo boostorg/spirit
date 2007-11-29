@@ -131,19 +131,19 @@ private:
 
 bool test(wchar_t const *text)
 {
-    typedef std::wstring::iterator iterator_t; 
+    typedef std::basic_string<wchar_t>::iterator iterator_t; 
     typedef tree_match<iterator_t> parse_tree_match_t; 
     typedef parse_tree_match_t::tree_iterator iter_t; 
 
-    std::wstring input(text); 
+    std::basic_string<wchar_t> input(text); 
     calculator calc; 
     tree_parse_info<iterator_t> ast_info = 
         ast_parse(iterator_t(input.begin()), iterator_t(input.end()), 
             calc >> end_p, space_p); 
 
-    std::wstring out;
+    std::basic_string<wchar_t> out;
     {
-        typedef container_device<std::wstring> device_type;
+        typedef container_device<std::basic_string<wchar_t> > device_type;
         boost::iostreams::stream<device_type> outsink(out);
         basic_tree_to_xml<wchar_t>(outsink, ast_info.trees, input); 
     }
