@@ -65,6 +65,7 @@ namespace impl {
             using namespace std;        // some systems have size_t in ns std
             size_t len = strlen(source);
             std::auto_ptr<wchar_t> result (new wchar_t[len+1]);
+            result.get()[len] = '\0';
             std::use_facet<ctype_t>(std::locale())
                 .widen(source, source + len, result.get());
 
@@ -118,8 +119,9 @@ namespace xml {
         {
         }
 
-        attribute (CharT const *key_, CharT const *value_) :
-        key (key_), value(value_)
+        attribute (std::basic_string<CharT> const& key_, 
+                   std::basic_string<CharT> const& value_) 
+          : key (key_), value(value_)
         {
         }
 
@@ -183,8 +185,8 @@ namespace xml {
     class node : public element<CharT>
     {
     public:
-        node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_, 
-                attribute<CharT> &attr) 
+        node (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag_, attribute<CharT> &attr) 
         :   element<CharT>(ostrm_), tag(tag_)
         {
             this->output_space();
@@ -192,7 +194,8 @@ namespace xml {
                   << impl::string_lit<CharT>::get("<") << tag_ << attr 
                   << impl::string_lit<CharT>::get(">\n");
         }
-        node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_) 
+        node (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag_) 
         :   element<CharT>(ostrm_), tag(tag_)
         {
             this->output_space();
@@ -216,8 +219,9 @@ namespace xml {
     class text : public element<CharT>
     {
     public:
-        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
-                CharT const *textlit) 
+        text (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag, 
+              std::basic_string<CharT> const& textlit) 
         :   element<CharT>(ostrm_)
         {
             this->output_space();
@@ -228,8 +232,10 @@ namespace xml {
                   << impl::string_lit<CharT>::get(">\n");
         }
 
-        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
-                CharT const *textlit, attribute<CharT> &attr) 
+        text (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag, 
+              std::basic_string<CharT> const& textlit, 
+              attribute<CharT> &attr) 
         :   element<CharT>(ostrm_)
         {
             this->output_space();
@@ -240,9 +246,10 @@ namespace xml {
                   << impl::string_lit<CharT>::get(">\n");
         }
 
-        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
-                CharT const *textlit, attribute<CharT> &attr1, 
-                attribute<CharT> &attr2) 
+        text (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag, 
+              std::basic_string<CharT> const& textlit, 
+              attribute<CharT> &attr1, attribute<CharT> &attr2) 
         :   element<CharT>(ostrm_)
         {
             this->output_space();
@@ -259,7 +266,8 @@ namespace xml {
     class comment : public element<CharT>
     {
     public:
-        comment (std::basic_ostream<CharT> &ostrm_, CharT const *commentlit) 
+        comment (std::basic_ostream<CharT> &ostrm_, 
+                 std::basic_string<CharT> const& commentlit) 
         :   element<CharT>(ostrm_, false)
         {
             if ('\0' != commentlit[0])
@@ -285,8 +293,9 @@ namespace xml {
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
         }
 
-        document (std::basic_ostream<CharT> &ostrm_, CharT const *mainnode, 
-                CharT const *dtd) 
+        document (std::basic_ostream<CharT> &ostrm_, 
+                  std::basic_string<CharT> const& mainnode, 
+                  std::basic_string<CharT> const& dtd) 
         :   element<CharT>(ostrm_)
         {
             this->get_indent() = -1;
