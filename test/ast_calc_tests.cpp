@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Daniel Nuffer
+    Copyright (c) 2001-2008 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -13,6 +14,7 @@
 #include <boost/spirit/tree/tree_to_xml.hpp>
 #include <boost/detail/workaround.hpp>
 
+#include <stdlib.h>
 #include <iostream>
 #include <stack>
 #include <functional>

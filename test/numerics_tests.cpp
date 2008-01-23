@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2003 Joel de Guzman
-    Copyright (c) 2001-2003 Hartmut Kaiser
+    Copyright (c) 2001-2008 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
@@ -9,6 +9,7 @@
 =============================================================================*/
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/actor/assign_actor.hpp>
+#include <climits>
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 

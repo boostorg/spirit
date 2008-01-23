@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Hartmut Kaiser
+    Copyright (c) 2001-2008 Hartmut Kaiser
     Copyright (c) 2001-2003 Daniel Nuffer
     http://spirit.sourceforge.net/
 
@@ -14,6 +14,8 @@
 #include <cstdio>
 #include <cstdarg>
 #include <locale>
+#include <string.h>    // for strlen()
+#include <string>
 
 #include <map>
 #include <iostream>
