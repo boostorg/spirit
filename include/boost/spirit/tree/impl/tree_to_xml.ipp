@@ -14,19 +14,20 @@
 #include <cstdio>
 #include <cstdarg>
 #include <locale>
-#include <string.h>    // for strlen()
 #include <string>
 
 #include <map>
 #include <iostream>
 #include <boost/config.hpp>
+#include <boost/assert.hpp>
+
 #ifdef BOOST_NO_STRINGSTREAM
 #include <strstream>
 #define BOOST_SPIRIT_OSSTREAM std::ostrstream
 inline 
 std::string BOOST_SPIRIT_GETSTRING(std::ostrstream& ss)
 {
-    ss << ends;
+    ss << std::ends;
     std::string rval = ss.str();
     ss.freeze(false);
     return rval;
@@ -60,16 +61,19 @@ namespace impl {
             typedef std::ctype<wchar_t> ctype_t;
             return std::use_facet<ctype_t>(std::locale()).widen(c); 
         }
-        static std::wstring get(char const* source = "") 
+        static std::basic_string<wchar_t> get(char const* source = "") 
         { 
-            typedef std::ctype<wchar_t> ctype_t;
-            
             using namespace std;        // some systems have size_t in ns std
             size_t len = strlen(source);
             std::auto_ptr<wchar_t> result (new wchar_t[len+1]);
-            std::use_facet<ctype_t>(std::locale())
-                .widen(source, source + len, result.get());
+            result.get()[len] = '\0';
 
+            // working with wide character streams is supported only if the 
+            // platform provides the std::ctype<wchar_t> facet
+            BOOST_ASSERT(std::has_facet<std::ctype<wchar_t> >(std::locale()));
+
+            std::use_facet<std::ctype<wchar_t> >(std::locale())
+                .widen(source, source + len, result.get());
             return result.get();
         }
     };
@@ -120,8 +124,9 @@ namespace xml {
         {
         }
 
-        attribute (CharT const *key_, CharT const *value_) :
-        key (key_), value(value_)
+        attribute (std::basic_string<CharT> const& key_, 
+                   std::basic_string<CharT> const& value_) 
+          : key (key_), value(value_)
         {
         }
 
@@ -185,8 +190,8 @@ namespace xml {
     class node : public element<CharT>
     {
     public:
-        node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_, 
-                attribute<CharT> &attr) 
+        node (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag_, attribute<CharT> &attr) 
         :   element<CharT>(ostrm_), tag(tag_)
         {
             this->output_space();
@@ -194,7 +199,8 @@ namespace xml {
                   << impl::string_lit<CharT>::get("<") << tag_ << attr 
                   << impl::string_lit<CharT>::get(">\n");
         }
-        node (std::basic_ostream<CharT> &ostrm_, CharT const *tag_) 
+        node (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag_) 
         :   element<CharT>(ostrm_), tag(tag_)
         {
             this->output_space();
@@ -218,8 +224,9 @@ namespace xml {
     class text : public element<CharT>
     {
     public:
-        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
-                CharT const *textlit) 
+        text (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag, 
+              std::basic_string<CharT> const& textlit) 
         :   element<CharT>(ostrm_)
         {
             this->output_space();
@@ -230,8 +237,10 @@ namespace xml {
                   << impl::string_lit<CharT>::get(">\n");
         }
 
-        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
-                CharT const *textlit, attribute<CharT> &attr) 
+        text (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag, 
+              std::basic_string<CharT> const& textlit, 
+              attribute<CharT> &attr) 
         :   element<CharT>(ostrm_)
         {
             this->output_space();
@@ -242,9 +251,10 @@ namespace xml {
                   << impl::string_lit<CharT>::get(">\n");
         }
 
-        text (std::basic_ostream<CharT> &ostrm_, CharT const *tag, 
-                CharT const *textlit, attribute<CharT> &attr1, 
-                attribute<CharT> &attr2) 
+        text (std::basic_ostream<CharT> &ostrm_, 
+              std::basic_string<CharT> const& tag, 
+              std::basic_string<CharT> const& textlit, 
+              attribute<CharT> &attr1, attribute<CharT> &attr2) 
         :   element<CharT>(ostrm_)
         {
             this->output_space();
@@ -261,7 +271,8 @@ namespace xml {
     class comment : public element<CharT>
     {
     public:
-        comment (std::basic_ostream<CharT> &ostrm_, CharT const *commentlit) 
+        comment (std::basic_ostream<CharT> &ostrm_, 
+                 std::basic_string<CharT> const& commentlit) 
         :   element<CharT>(ostrm_, false)
         {
             if ('\0' != commentlit[0])
@@ -287,8 +298,9 @@ namespace xml {
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
         }
 
-        document (std::basic_ostream<CharT> &ostrm_, CharT const *mainnode, 
-                CharT const *dtd) 
+        document (std::basic_ostream<CharT> &ostrm_, 
+                  std::basic_string<CharT> const& mainnode, 
+                  std::basic_string<CharT> const& dtd) 
         :   element<CharT>(ostrm_)
         {
             this->get_indent() = -1;
