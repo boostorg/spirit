@@ -58,6 +58,6 @@ get_node_range (tree_node<T> const &node, parser_id node_to_search,
 }   // namespace spirit
 }   // namespace boost
 
-#include "boost/spirit/tree/impl/parse_tree_utils.ipp"
+#include "boost/spirit/home/classic/tree/impl/parse_tree_utils.ipp"
 
 #endif // !defined(PARSE_TREE_UTILS_HPP)
