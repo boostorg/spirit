@@ -9,7 +9,7 @@
 // vim:ts=4:sw=4:et
 
 #undef BOOST_SPIRIT_THREADSAFE
-#include <boost/spirit/core/non_terminal/impl/object_with_id.ipp>
+#include <boost/spirit/home/classic/core/non_terminal/impl/object_with_id.ipp>
 #include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 

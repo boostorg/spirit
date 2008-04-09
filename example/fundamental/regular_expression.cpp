@@ -19,7 +19,7 @@
 #include <iostream>
 
 #include <boost/version.hpp>
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -38,7 +38,7 @@
 #if BOOST_VERSION <= 103200
 #define BOOST_SPIRIT_NO_REGEX_LIB
 #endif
-#include <boost/spirit/utility/regex.hpp>
+#include <boost/spirit/include/regex.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  used namespaces

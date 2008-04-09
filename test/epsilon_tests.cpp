@@ -11,7 +11,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 // This test program only includes the epsilon.hpp header from Spirit
-#include <boost/spirit/core/composite/epsilon.hpp>
+#include <boost/spirit/include/epsilon.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include "impl/var.hpp"
 #include "impl/string_length.hpp"

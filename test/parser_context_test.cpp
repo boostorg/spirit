@@ -7,8 +7,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/assign_actor.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/assign_actor.hpp>
 
 using namespace boost;
 using namespace spirit;

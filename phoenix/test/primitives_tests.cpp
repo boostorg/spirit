@@ -10,7 +10,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
-#include <boost/spirit/phoenix/primitives.hpp>
+#include <boost/spirit/include/phx1_primitives.hpp>
 
 using namespace phoenix;
 using namespace std;

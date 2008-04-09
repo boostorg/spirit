@@ -15,8 +15,8 @@
 //  [ JDG 6/30/2002 ]
 //
 ////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/attribute.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/attribute.hpp>
 #include <iostream>
 #include <string>
 

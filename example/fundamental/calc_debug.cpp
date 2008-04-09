@@ -20,7 +20,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #define BOOST_SPIRIT_DEBUG
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 #include <iostream>
 #include <stack>
 #include <functional>

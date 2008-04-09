@@ -3,7 +3,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include "xml_g.hpp"
-#include <boost/spirit/utility.hpp>
+#include <boost/spirit/include/utility.hpp>
 #include <iostream>
 
 namespace std

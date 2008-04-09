@@ -7,7 +7,7 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/spirit/iterator/fixed_size_queue.hpp>
+#include <boost/spirit/include/fixed_size_queue.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/concept_check.hpp>

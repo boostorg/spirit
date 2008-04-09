@@ -14,9 +14,9 @@
 //  [ JDG 6/28/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/phoenix/primitives.hpp>
-#include <boost/spirit/phoenix/operators.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/primitives.hpp>
+#include <boost/spirit/include/operators.hpp>
 #include <iostream>
 #include <string>
 

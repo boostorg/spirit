@@ -14,7 +14,7 @@
 #define BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT 3
 
 #include <iostream>
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 
 using namespace boost::spirit;
 

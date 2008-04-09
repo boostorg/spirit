@@ -8,11 +8,11 @@
 =============================================================================*/
 
 #define BOOST_TYPEOF_EMULATION
-#include <boost/spirit/utility/typeof.hpp>
+#include <boost/spirit/include/typeof.hpp>
 
-#include <boost/spirit/utility.hpp>
+#include <boost/spirit/include/utility.hpp>
 
 // currently not in the masted header
-#include <boost/spirit/utility/regex.hpp>
-#include <boost/spirit/utility/grammar_def.hpp>
+#include <boost/spirit/include/regex.hpp>
+#include <boost/spirit/include/grammar_def.hpp>
 

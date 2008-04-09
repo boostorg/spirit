@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/phoenix/tuples.hpp>
+#include <boost/spirit/include/phx1_tuples.hpp>
 
 using namespace std;
 using namespace phoenix;

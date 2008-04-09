@@ -18,9 +18,9 @@
 #endif
 
 #include "impl/string_length.hpp"
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/assign_actor.hpp>
-#include <boost/spirit/dynamic/while.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/assign_actor.hpp>
+#include <boost/spirit/include/while.hpp>
 #include <boost/ref.hpp>
 
 namespace local

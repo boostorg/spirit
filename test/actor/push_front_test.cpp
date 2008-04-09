@@ -17,9 +17,9 @@
 #include <deque>
 #include <cstring>
 #include <iostream>
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/push_front_actor.hpp>
-#include <boost/spirit/utility/lists.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/push_front_actor.hpp>
+#include <boost/spirit/include/lists.hpp>
 
 template<typename ContainerT>
 void push_front_test()

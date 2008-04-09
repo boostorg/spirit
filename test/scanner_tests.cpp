@@ -12,7 +12,7 @@
 
 using namespace std;
 
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 #include "impl/string_length.hpp"
 using namespace boost::spirit;
 

@@ -13,10 +13,10 @@
 
 using namespace std;
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/attribute/parametric.hpp>
-#include <boost/spirit/phoenix/primitives.hpp>
-#include <boost/spirit/phoenix/operators.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/parametric.hpp>
+#include <boost/spirit/include/phx1_primitives.hpp>
+#include <boost/spirit/include/phx1_operators.hpp>
 using namespace boost::spirit;
 using namespace phoenix;
 

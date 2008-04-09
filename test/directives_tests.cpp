@@ -13,8 +13,8 @@
 using namespace std;
 
 #include "impl/string_length.hpp"
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/assign_actor.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/assign_actor.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////

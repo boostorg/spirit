@@ -33,7 +33,7 @@
 #include <iterator>
 
 #include <boost/function.hpp>
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -47,7 +47,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #define BOOST_SPIRIT_NO_REGEX_LIB
-#include <boost/spirit/utility/regex.hpp>
+#include <boost/spirit/include/regex.hpp>
 
 using namespace boost::spirit;
 using namespace std;

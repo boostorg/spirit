@@ -12,7 +12,7 @@
 using namespace std;
 
 //#define BOOST_SPIRIT_DEBUG
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////

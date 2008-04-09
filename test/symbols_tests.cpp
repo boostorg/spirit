@@ -10,8 +10,8 @@
 #include <iostream>
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/symbols/symbols.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/symbols.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

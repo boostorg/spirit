@@ -9,7 +9,7 @@
 ==============================================================================*/
 //------------------------------------------------------------------------------
 //  This example shows a recursive grammar built using subrules and typeof.
-//  See boost/spirit/utility/rule_parser.hpp for details.
+//  See boost/spirit/include/rule_parser.hpp for details.
 //  This example is based on subrule_calc.cpp.
 //------------------------------------------------------------------------------
 #include <string>
@@ -17,10 +17,10 @@
 
 #include <boost/typeof/typeof.hpp>
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/core/typeof.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/typeof.hpp>
 
-#include <boost/spirit/utility/rule_parser.hpp>
+#include <boost/spirit/include/rule_parser.hpp>
 
 // Don't forget to
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()

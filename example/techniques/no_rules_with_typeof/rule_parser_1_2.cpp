@@ -8,20 +8,20 @@
 ==============================================================================*/
 //------------------------------------------------------------------------------
 //  This example uses typeof to build a nonrecursive grammar.
-//  See boost/spirit/utility/rule_parser.hpp for details.
+//  See boost/spirit/include/rule_parser.hpp for details.
 //------------------------------------------------------------------------------
 #include <string>
 #include <iostream>
 
 #include <boost/typeof/typeof.hpp>
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/core/typeof.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/typeof.hpp>
 
-#include <boost/spirit/utility/confix.hpp>
-#include <boost/spirit/utility/typeof.hpp>
+#include <boost/spirit/include/confix.hpp>
+#include <boost/spirit/include/typeof.hpp>
 
-#include <boost/spirit/utility/rule_parser.hpp>
+#include <boost/spirit/include/rule_parser.hpp>
 
 // It's important to create an own registration group, even if there are no
 // manual Typeof registrations like in this case.

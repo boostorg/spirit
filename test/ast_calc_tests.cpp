@@ -8,9 +8,9 @@
 =============================================================================*/
 // JDG 4-16-03 Modified from ast_calc.cpp as a test
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/tree/ast.hpp>
-#include <boost/spirit/tree/tree_to_xml.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/ast.hpp>
+#include <boost/spirit/include/tree_to_xml.hpp>
 #include <boost/detail/workaround.hpp>
 
 #include <iostream>

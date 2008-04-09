@@ -12,9 +12,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "action_tests.hpp"
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 #include <vector>
-#include <boost/spirit/actor/clear_actor.hpp>
+#include <boost/spirit/include/clear_actor.hpp>
 
 void clear_action_test()
 {

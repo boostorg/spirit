@@ -14,7 +14,7 @@
 //  [ JDG 9/29/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
 #include <vector>

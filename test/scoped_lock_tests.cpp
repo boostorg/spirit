@@ -34,8 +34,8 @@ main()
 #else
 
 #include <boost/thread/mutex.hpp>
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/utility/scoped_lock.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/scoped_lock.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 int

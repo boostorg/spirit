@@ -43,7 +43,7 @@ static const unsigned long maximum_test_size = 1000000UL;
 #define BOOST_SPIRIT_THREADSAFE
 
 #include <boost/thread/thread.hpp>
-#include <boost/spirit/core/non_terminal/impl/object_with_id.ipp>
+#include <boost/spirit/home/classic/core/non_terminal/impl/object_with_id.ipp>
 #include <boost/ref.hpp>
 #include <boost/thread/xtime.hpp>
 #include <vector>

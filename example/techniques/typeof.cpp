@@ -12,7 +12,7 @@
 // *** this snippet.
 
 #include <iostream>
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 #include <boost/typeof/typeof.hpp>
 
 using namespace boost::spirit;

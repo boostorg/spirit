@@ -7,8 +7,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/spirit/core/scanner/scanner.hpp>
-#include <boost/spirit/symbols/impl/tst.ipp>
+#include <boost/spirit/include/scanner.hpp>
+#include <boost/spirit/home/classic/symbols/impl/tst.ipp>
 #include <boost/utility/addressof.hpp>
 
 typedef char char_type;

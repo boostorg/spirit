@@ -14,8 +14,8 @@ using namespace std;
 //#define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT 3
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/dynamic/stored_rule.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/stored_rule.hpp>
 using namespace boost::spirit;
 
 ///////////////////////////////////////////////////////////////////////////////

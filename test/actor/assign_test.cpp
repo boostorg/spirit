@@ -12,8 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "action_tests.hpp"
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/assign_actor.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/assign_actor.hpp>
 
 void assign_test()
 {

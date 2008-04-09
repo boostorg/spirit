@@ -8,6 +8,6 @@
 =============================================================================*/
 
 #define BOOST_TYPEOF_EMULATION
-#include <boost/spirit/iterator/typeof.hpp>
-#include <boost/spirit/iterator.hpp>
+#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/iterator.hpp>
 

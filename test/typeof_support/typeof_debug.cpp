@@ -10,6 +10,6 @@
 #define BOOST_TYPEOF_EMULATION
 #define BOOST_SPIRIT_DEBUG
 
-#include <boost/spirit/debug/typeof.hpp>
-#include <boost/spirit/debug.hpp>
+#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/debug.hpp>
 

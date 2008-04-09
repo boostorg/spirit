@@ -8,6 +8,6 @@
 =============================================================================*/
 
 #define BOOST_TYPEOF_EMULATION
-#include <boost/spirit/symbols/typeof.hpp>
-#include <boost/spirit/symbols.hpp>
+#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/symbols.hpp>
 

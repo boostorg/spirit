@@ -7,12 +7,12 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/spirit/core.hpp>
+#include <boost/spirit/include/core.hpp>
 
-#include <boost/spirit/attribute/closure.hpp>
+#include <boost/spirit/include/closure.hpp>
 
-#include <boost/spirit/tree/ast.hpp>
-#include <boost/spirit/tree/parse_tree.hpp>
+#include <boost/spirit/include/ast.hpp>
+#include <boost/spirit/include/parse_tree.hpp>
 
 using namespace boost::spirit;
 

@@ -13,8 +13,8 @@
 #include <iostream>
 #include <string>
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/meta/refactoring.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/refactoring.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // used namespaces

@@ -10,7 +10,7 @@
 #include <cstdio>
 #include <iostream>
 #include <boost/concept_check.hpp>
-#include <boost/spirit/iterator/file_iterator.hpp>
+#include <boost/spirit/include/file_iterator.hpp>
 
 // This checks for a namespace related problem in VC8
 // The problem can be avoided by not using "using namespace std;" in the

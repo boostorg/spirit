@@ -14,8 +14,8 @@
 //  [ JDG 5/10/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/push_back_actor.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/push_back_actor.hpp>
 #include <iostream>
 #include <vector>
 #include <string>

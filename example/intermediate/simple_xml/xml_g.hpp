@@ -30,9 +30,9 @@
 #define BOOST_SPIRIT_DEBUG_FLAGS (BOOST_SPIRIT_DEBUG_FLAGS_MAX - BOOST_SPIRIT_DEBUG_FLAGS_CLOSURES)
 #endif
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/attribute.hpp>
-#include <boost/spirit/phoenix.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/attribute.hpp>
+#include <boost/spirit/include/phoenix.hpp>
 #include "tag.hpp"
 #include "actions.hpp"
 #include <boost/variant.hpp>

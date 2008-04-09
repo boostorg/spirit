@@ -15,8 +15,8 @@
 #include <fstream>
 #include <iterator>
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/iterator/multi_pass.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/multi_pass.hpp>
 
 #if defined(BOOST_HAS_UNISTD_H)
 #include <unistd.h>    // unlink()

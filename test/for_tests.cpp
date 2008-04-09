@@ -17,9 +17,9 @@
 #define SPIRIT_DEBUG
 #endif
 #include <string>
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/actor/assign_actor.hpp>
-#include <boost/spirit/dynamic/for.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/assign_actor.hpp>
+#include <boost/spirit/include/for.hpp>
 #include <boost/ref.hpp>
 #include "impl/string_length.hpp"
 

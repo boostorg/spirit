@@ -16,9 +16,9 @@
 //  [ JDG 6/29/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/attribute.hpp>
-#include <boost/spirit/phoenix/functions.hpp>
+#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/attribute.hpp>
+#include <boost/spirit/include/functions.hpp>
 #include <iostream>
 #include <string>
 
