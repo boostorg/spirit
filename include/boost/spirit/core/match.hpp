@@ -10,7 +10,7 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_MATCH
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/match.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/match.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
 #  warning "This header is deprecated. Please use: boost/spirit/include/match.hpp"
 #endif

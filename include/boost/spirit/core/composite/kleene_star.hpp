@@ -10,7 +10,7 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_KLEENE_STAR
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/kleene_star.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/kleene_star.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
 #  warning "This header is deprecated. Please use: boost/spirit/include/kleene_star.hpp"
 #endif

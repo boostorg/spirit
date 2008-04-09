@@ -10,7 +10,7 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_PARSE_TREE_UTILS
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/parse_tree_utils.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/parse_tree_utils.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
 #  warning "This header is deprecated. Please use: boost/spirit/include/parse_tree_utils.hpp"
 #endif

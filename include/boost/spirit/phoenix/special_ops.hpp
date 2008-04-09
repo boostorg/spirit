@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_SPECIAL_OPS
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/phx_special_ops.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phx1_special_ops.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/phx_special_ops.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/phx1_special_ops.hpp"
 #endif
 
-#include <boost/spirit/include/phx_special_ops.hpp>
+#include <boost/spirit/include/phx1_special_ops.hpp>
 
 #endif

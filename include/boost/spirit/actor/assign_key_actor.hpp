@@ -10,7 +10,7 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_ASSIGN_KEY_ACTOR
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/assign_key_actor.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/assign_key_actor.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
 #  warning "This header is deprecated. Please use: boost/spirit/include/assign_key_actor.hpp"
 #endif
