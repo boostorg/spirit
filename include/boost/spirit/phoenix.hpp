@@ -1,26 +1,20 @@
 /*=============================================================================
-    Phoenix V1.2.1
-    Copyright (c) 2001-2002 Joel de Guzman
+    Copyright (c) 2002-2008 Joel de Guzman
+    http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
-==============================================================================*/
-#if !defined(BOOST_SPIRIT_PHOENIX_HPP)
-#define BOOST_SPIRIT_PHOENIX_HPP
+=============================================================================*/
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_PHOENIX
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_PHOENIX
 
-#include <boost/spirit/phoenix/tuples.hpp>
-#include <boost/spirit/phoenix/tuple_helpers.hpp>
-#include <boost/spirit/phoenix/actor.hpp>
-#include <boost/spirit/phoenix/primitives.hpp>
-#include <boost/spirit/phoenix/composite.hpp>
-#include <boost/spirit/phoenix/functions.hpp>
-#include <boost/spirit/phoenix/operators.hpp>
-#include <boost/spirit/phoenix/special_ops.hpp>
-#include <boost/spirit/phoenix/statements.hpp>
-#include <boost/spirit/phoenix/binders.hpp>
-#include <boost/spirit/phoenix/closures.hpp>
-#include <boost/spirit/phoenix/casts.hpp>
-#include <boost/spirit/phoenix/new.hpp>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/phoenix.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/phoenix.hpp"
+#endif
 
-#endif // !defined(BOOST_SPIRIT_PHOENIX_HPP)
+#include <boost/spirit/include/phoenix.hpp>
+
+#endif

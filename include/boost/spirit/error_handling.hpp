@@ -1,22 +1,20 @@
 /*=============================================================================
-    Copyright (c) 2001-2003 Joel de Guzman
+    Copyright (c) 2002-2008 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_ERROR_HANDLING_MAIN_HPP)
-#define BOOST_SPIRIT_ERROR_HANDLING_MAIN_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_ERROR_HANDLING
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_ERROR_HANDLING
 
-#include <boost/spirit/version.hpp>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/error_handling.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/error_handling.hpp"
+#endif
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  Master header for Spirit.ErrorHandling
-//
-///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/include/error_handling.hpp>
 
-#include <boost/spirit/error_handling/exceptions.hpp>
-
-#endif // !defined(BOOST_SPIRIT_ERROR_HANDLING_MAIN_HPP)
+#endif

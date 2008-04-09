@@ -1,48 +1,20 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
+    Copyright (c) 2002-2008 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_SCANNER_FWD_HPP)
-#define BOOST_SPIRIT_SCANNER_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_SCANNER_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_SCANNER_FWD
 
-namespace boost { namespace spirit 
-{
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  policy classes
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    struct iteration_policy;
-    struct action_policy;
-    struct match_policy;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  scanner_policies class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename IterationPolicyT   = iteration_policy,
-        typename MatchPolicyT       = match_policy,
-        typename ActionPolicyT      = action_policy>
-    struct scanner_policies;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  scanner class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename IteratorT  = char const*,
-        typename PoliciesT  = scanner_policies<> >
-    class scanner;
-
-}} // namespace boost::spirit
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/scanner_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/scanner_fwd.hpp"
 #endif
 
+#include <boost/spirit/include/scanner_fwd.hpp>
+
+#endif

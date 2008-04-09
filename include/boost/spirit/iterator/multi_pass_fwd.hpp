@@ -1,42 +1,20 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
+    Copyright (c) 2002-2008 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_HPP)
-#define BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_MULTI_PASS_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_MULTI_PASS_FWD
 
-#include <cstddef>
-
-namespace boost { namespace spirit {
-
-    namespace multi_pass_policies
-    {
-        class ref_counted;
-        class first_owner;
-        class buf_id_check;
-        class no_check;
-        class std_deque;
-        template<std::size_t N> class fixed_size_queue;
-        class input_iterator;
-        class lex_input;
-        class functor_input;
-    }
-
-    template
-    <
-        typename InputT,
-        typename InputPolicy = multi_pass_policies::input_iterator,
-        typename OwnershipPolicy = multi_pass_policies::ref_counted,
-        typename CheckingPolicy = multi_pass_policies::buf_id_check,
-        typename StoragePolicy = multi_pass_policies::std_deque
-    >
-    class multi_pass;
-
-}} // namespace boost::spirit
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/multi_pass_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/multi_pass_fwd.hpp"
 #endif
 
+#include <boost/spirit/include/multi_pass_fwd.hpp>
+
+#endif

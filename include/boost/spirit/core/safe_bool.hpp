@@ -1,59 +1,20 @@
 /*=============================================================================
-    Copyright (c) 2003 Joel de Guzman
+    Copyright (c) 2002-2008 Joel de Guzman
     http://spirit.sourceforge.net/
 
     Use, modification and distribution is subject to the Boost Software
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_SAFE_BOOL_HPP)
-#define BOOST_SPIRIT_SAFE_BOOL_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_SAFE_BOOL
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_SAFE_BOOL
 
-#include <boost/config.hpp>
-#include <boost/detail/workaround.hpp>
-
-namespace boost { namespace spirit
-{
-    namespace impl
-    {
-        template <typename T>
-        struct no_base {};
-
-        template <typename T>
-        struct safe_bool_impl
-        {
-#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
-            void stub(T*) {};
-            typedef void (safe_bool_impl::*type)(T*);
-#else
-            typedef T* TP; // workaround to make parsing easier
-            TP stub;
-            typedef TP safe_bool_impl::*type;
-#endif
-        };
-    }
-
-    template <typename DerivedT, typename BaseT = impl::no_base<DerivedT> >
-    struct safe_bool : BaseT
-    {
-    private:
-        typedef impl::safe_bool_impl<DerivedT> impl_t;
-        typedef typename impl_t::type bool_type;
-
-    public:
-        operator bool_type() const
-        {
-            return static_cast<const DerivedT*>(this)->operator_bool() ?
-                &impl_t::stub : 0;
-        }
-
-        operator bool_type()
-        {
-            return static_cast<DerivedT*>(this)->operator_bool() ?
-                &impl_t::stub : 0;
-        }
-    };
-}}
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message (warning "This header is deprecated. Please use: boost/spirit/include/safe_bool.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/safe_bool.hpp"
 #endif
 
+#include <boost/spirit/include/safe_bool.hpp>
+
+#endif
