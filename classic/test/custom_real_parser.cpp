@@ -8,8 +8,8 @@
 =============================================================================*/
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_actor.hpp>
 #include <boost/math/concepts/real_concept.hpp>
 
 using namespace boost::spirit;

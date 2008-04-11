@@ -8,6 +8,6 @@
 =============================================================================*/
 
 #define BOOST_TYPEOF_EMULATION
-#include <boost/spirit/include/typeof.hpp>
-#include <boost/spirit/include/actor.hpp>
+#include <boost/spirit/include/classic_typeof.hpp>
+#include <boost/spirit/include/classic_actor.hpp>
 

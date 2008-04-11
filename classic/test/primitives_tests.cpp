@@ -10,7 +10,7 @@
 #include <iostream>
 
 using namespace std;
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include "impl/string_length.hpp"
 using namespace boost::spirit;

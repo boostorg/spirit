@@ -6,9 +6,9 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/attribute.hpp>
-#include <boost/spirit/include/grammar_def.hpp> 
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_attribute.hpp>
+#include <boost/spirit/include/classic_grammar_def.hpp> 
 
 struct my_grammar1
     : boost::spirit::grammar<my_grammar1>

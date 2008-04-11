@@ -7,13 +7,13 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/spirit/include/parser.hpp>
-#include <boost/spirit/include/skipper.hpp>
-#include <boost/spirit/include/primitives.hpp>
-#include <boost/spirit/include/optional.hpp>
-#include <boost/spirit/include/sequence.hpp>
-#include <boost/spirit/include/ast.hpp>
-#include <boost/spirit/include/parse_tree.hpp>
+#include <boost/spirit/include/classic_parser.hpp>
+#include <boost/spirit/include/classic_skipper.hpp>
+#include <boost/spirit/include/classic_primitives.hpp>
+#include <boost/spirit/include/classic_optional.hpp>
+#include <boost/spirit/include/classic_sequence.hpp>
+#include <boost/spirit/include/classic_ast.hpp>
+#include <boost/spirit/include/classic_parse_tree.hpp>
 
 #include <boost/detail/lightweight_test.hpp>
 

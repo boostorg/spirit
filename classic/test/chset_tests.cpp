@@ -13,7 +13,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include "impl/sstream.hpp"
 
-#include <boost/spirit/include/chset.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
 
 using namespace std;
 using namespace boost::spirit;

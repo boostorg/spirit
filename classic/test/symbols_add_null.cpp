@@ -19,7 +19,7 @@ struct spirit_exception
     char const * message;
 };
 
-#include <boost/spirit/include/scanner.hpp>
+#include <boost/spirit/include/classic_scanner.hpp>
 #include <boost/spirit/home/classic/symbols/impl/tst.ipp>
 #include <boost/utility/addressof.hpp>
 

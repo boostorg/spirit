@@ -10,9 +10,9 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/preprocessor/cat.hpp>
-#include <boost/spirit/include/core.hpp> 
-#include <boost/spirit/include/ast.hpp> 
-#include <boost/spirit/include/tree_to_xml.hpp> 
+#include <boost/spirit/include/classic_core.hpp> 
+#include <boost/spirit/include/classic_ast.hpp> 
+#include <boost/spirit/include/classic_tree_to_xml.hpp> 
 
 #include <iostream>
 #include <fstream>

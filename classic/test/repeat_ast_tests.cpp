@@ -14,10 +14,10 @@
 # include <iostream>
 # include <string>
 
-# include <boost/spirit/include/core.hpp>
-# include <boost/spirit/include/loops.hpp>
-# include <boost/spirit/include/ast.hpp>
-# include <boost/spirit/include/tree_to_xml.hpp>
+# include <boost/spirit/include/classic_core.hpp>
+# include <boost/spirit/include/classic_loops.hpp>
+# include <boost/spirit/include/classic_ast.hpp>
+# include <boost/spirit/include/classic_tree_to_xml.hpp>
 
 using namespace boost::spirit;
 

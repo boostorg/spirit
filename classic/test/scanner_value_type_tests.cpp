@@ -13,7 +13,7 @@
 // break when the scanner::value_t is some sort of non-char.
 #define SPIRIT_DEBUG_NODE
 
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <deque>

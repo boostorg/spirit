@@ -12,8 +12,8 @@
 //  Error Handling" chapter in the User's Guide.
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/exceptions.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_exceptions.hpp>
 #include <iostream>
 #include <cassert>
 

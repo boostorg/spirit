@@ -15,9 +15,9 @@
 //  [ JCAB 9/28/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/position_iterator.hpp>
-#include <boost/spirit/include/functor_parser.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
+#include <boost/spirit/include/classic_functor_parser.hpp>
 #include <iostream>
 #include <fstream>
 #include <vector>

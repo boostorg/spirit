@@ -6,11 +6,11 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/push_back_actor.hpp>
-#include <boost/spirit/include/if.hpp>
-#include <boost/spirit/include/for.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_push_back_actor.hpp>
+#include <boost/spirit/include/classic_if.hpp>
+#include <boost/spirit/include/classic_for.hpp>
+#include <boost/spirit/include/phoenix1.hpp>
 #include <iostream>
 #include <string>
 #include <vector>

@@ -14,10 +14,10 @@
 
 #include <boost/typeof/typeof.hpp>
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_typeof.hpp>
 
-#include <boost/spirit/include/rule_parser.hpp>
+#include <boost/spirit/include/classic_rule_parser.hpp>
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 

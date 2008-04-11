@@ -46,8 +46,8 @@ main()
 #undef PHOENIX_THREADSAFE
 #define PHOENIX_THREADSAFE
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/closure.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_closure.hpp>
 #include <boost/thread.hpp>
 
 static const int number_of_calls_to_parse_per_thread=20000;

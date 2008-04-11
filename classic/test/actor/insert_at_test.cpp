@@ -15,7 +15,7 @@
 #include <map>
 #include <cstring>
 #include <iostream>
-#include <boost/spirit/include/insert_at_actor.hpp>
+#include <boost/spirit/include/classic_insert_at_actor.hpp>
 
 void insert_at_single_argument_test()
 {

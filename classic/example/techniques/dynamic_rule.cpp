@@ -20,7 +20,7 @@
 #define BOOST_SPIRIT_DEBUG
 #include <boost/spirit.hpp>
 
-#include <boost/spirit/include/assign_actor.hpp>
+#include <boost/spirit/include/classic_assign_actor.hpp>
 
 int main(int argc, char* argv[])
 {

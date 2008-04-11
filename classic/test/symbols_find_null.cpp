@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <boost/spirit/include/scanner.hpp>
+#include <boost/spirit/include/classic_scanner.hpp>
 #include <boost/spirit/home/classic/symbols/impl/tst.ipp>
 #include <boost/utility/addressof.hpp>
 

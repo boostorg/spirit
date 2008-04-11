@@ -8,7 +8,7 @@
 =============================================================================*/
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 
 using namespace boost::spirit;
 using namespace std;

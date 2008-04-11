@@ -40,9 +40,9 @@ std::string GETSTRING(std::ostrstream& ss)
 #define BOOST_SPIRIT_DEBUG    // needed for parser_name functions
 #endif
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/assign_actor.hpp>
-#include <boost/spirit/include/meta.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_assign_actor.hpp>
+#include <boost/spirit/include/classic_meta.hpp>
 
 using namespace std;
 using namespace boost::spirit;

@@ -11,9 +11,9 @@
 
 using namespace std;
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/closure.hpp>
-#include <boost/spirit/include/parametric.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_closure.hpp>
+#include <boost/spirit/include/classic_parametric.hpp>
 #include <boost/spirit/include/phx1_binders.hpp>
 using namespace boost::spirit;
 using namespace phoenix;

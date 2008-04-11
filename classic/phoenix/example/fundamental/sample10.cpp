@@ -11,12 +11,12 @@
 #include <iostream>
 
 #define PHOENIX_LIMIT 5
-#include <boost/spirit/include/operators.hpp>
-#include <boost/spirit/include/primitives.hpp>
-#include <boost/spirit/include/composite.hpp>
-#include <boost/spirit/include/special_ops.hpp>
-#include <boost/spirit/include/statements.hpp>
-#include <boost/spirit/include/functions.hpp>
+#include <boost/spirit/include/phx1_operators.hpp>
+#include <boost/spirit/include/phx1_primitives.hpp>
+#include <boost/spirit/include/phx1_composite.hpp>
+#include <boost/spirit/include/phx1_special_ops.hpp>
+#include <boost/spirit/include/phx1_statements.hpp>
+#include <boost/spirit/include/phx1_functions.hpp>
 
 namespace phoenix {
 

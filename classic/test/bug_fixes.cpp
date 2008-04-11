@@ -9,8 +9,8 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/assign_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_assign_actor.hpp>
 
 using namespace boost;
 using namespace boost::spirit;
@@ -25,7 +25,7 @@ using namespace std;
 //  http://sf.net/mailarchive/forum.php?thread_id=1966224&forum_id=1595
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/ast.hpp>
+#include <boost/spirit/include/classic_ast.hpp>
 
 struct my_action
 {
@@ -53,7 +53,7 @@ void bug_001()
 //  http://article.gmane.org/gmane.comp.parsers.spirit.general/3678
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/attribute.hpp>
+#include <boost/spirit/include/classic_attribute.hpp>
 #include <string>
 
 typedef std::string member_type;
@@ -77,7 +77,7 @@ void bug_002()
 //  http://sourceforge.net/mailarchive/forum.php?thread_id=2008510&forum_id=25901
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/chset.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
 
 void bug_003()
 {
@@ -138,7 +138,7 @@ void bug_004()
 //                     will trigger the post-skip.
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 
 using namespace std;
 using namespace boost;
@@ -179,7 +179,7 @@ void bug_005()
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/limits.hpp>
-#include <boost/spirit/include/confix.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
 
 void bug_006()
 {
@@ -202,8 +202,8 @@ void bug_006()
 //                     will trigger the post-skip.
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/ast.hpp>
-#include <boost/spirit/include/parse_tree.hpp>
+#include <boost/spirit/include/classic_ast.hpp>
+#include <boost/spirit/include/classic_parse_tree.hpp>
 
 void bug_007()
 {
@@ -221,7 +221,7 @@ void bug_007()
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/cstdlib.hpp>
-#include <boost/spirit/include/chset.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
 
 void sf_bug_718903()
 {
@@ -238,7 +238,7 @@ void sf_bug_718903()
 //  ?func=detail&aid=719322&group_id=28447&atid=393386
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/basic_chset.hpp>
+#include <boost/spirit/include/classic_basic_chset.hpp>
 
 void sf_bug_719322()
 {
@@ -256,8 +256,8 @@ void sf_bug_719322()
 //  ?func=detail&atid=393386&aid=742038&group_id=28447
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/position_iterator.hpp>
-#include <boost/spirit/include/file_iterator.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
+#include <boost/spirit/include/classic_file_iterator.hpp>
 #include <string>
 #include <fstream>
 #include <iostream>

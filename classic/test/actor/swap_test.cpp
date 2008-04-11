@@ -12,8 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "action_tests.hpp"
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/swap_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_swap_actor.hpp>
 
 void swap_action_test()
 {

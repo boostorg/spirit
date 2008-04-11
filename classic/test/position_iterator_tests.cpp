@@ -18,7 +18,7 @@
 #include <boost/mpl/for_each.hpp>
 
 // Our baby
-#include <boost/spirit/include/position_iterator.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
 
 using namespace std;
 using namespace boost::spirit;

@@ -14,8 +14,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #define BOOST_SPIRIT_DUMP_PARSETREE_AS_XML
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/parse_tree.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_parse_tree.hpp>
 
 #include <iostream>
 #include <stack>
@@ -23,7 +23,7 @@
 #include <string>
 
 #ifdef BOOST_SPIRIT_DUMP_PARSETREE_AS_XML
-#include <boost/spirit/include/tree_to_xml.hpp>
+#include <boost/spirit/include/classic_tree_to_xml.hpp>
 #include <map>
 #endif
 

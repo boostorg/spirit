@@ -17,8 +17,8 @@
 
 //#define BOOST_SPIRIT_DEBUG        // define this for debug output
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/attribute.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_attribute.hpp>
 #include <iostream>
 #include <string>
 

@@ -7,9 +7,9 @@
     License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/dynamic.hpp>
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_dynamic.hpp>
+#include <boost/spirit/include/phoenix1.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 #include <string>

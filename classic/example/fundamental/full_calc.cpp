@@ -16,7 +16,7 @@
 //  [ JDG 9/18/2002 ]
 //
 ////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <iostream>
 #include <stack>
 #include <functional>

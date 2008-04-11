@@ -15,8 +15,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/file_iterator.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_file_iterator.hpp>
 #include <iostream>
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -12,8 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "action_tests.hpp"
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/increment_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_increment_actor.hpp>
 
 void increment_action_test()
 {

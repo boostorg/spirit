@@ -24,8 +24,8 @@
 //-----------------------------------------------------------------------------
 #include <iostream>
 #include <boost/cstdlib.hpp>
-#include <boost/spirit/include/phoenix.hpp>
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/phoenix1.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 
 using namespace std;
 using namespace boost;

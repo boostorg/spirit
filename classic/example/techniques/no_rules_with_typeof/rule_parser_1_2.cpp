@@ -15,13 +15,13 @@
 
 #include <boost/typeof/typeof.hpp>
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_typeof.hpp>
 
-#include <boost/spirit/include/confix.hpp>
-#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
+#include <boost/spirit/include/classic_typeof.hpp>
 
-#include <boost/spirit/include/rule_parser.hpp>
+#include <boost/spirit/include/classic_rule_parser.hpp>
 
 // It's important to create an own registration group, even if there are no
 // manual Typeof registrations like in this case.

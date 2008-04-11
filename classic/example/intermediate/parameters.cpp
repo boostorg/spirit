@@ -23,13 +23,13 @@
 #pragma warning(disable: 4355)
 #endif // defined(_MSC_VER) && !defined(__COMO__)
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/symbols.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_symbols.hpp>
 
-#include <boost/spirit/include/tuples.hpp>
-#include <boost/spirit/include/tuple_helpers.hpp>
-#include <boost/spirit/include/primitives.hpp>
-#include <boost/spirit/include/closure.hpp>
+#include <boost/spirit/include/classic_phx1_tuples.hpp>
+#include <boost/spirit/include/classic_phx1_tuple_helpers.hpp>
+#include <boost/spirit/include/classic_primitives.hpp>
+#include <boost/spirit/include/classic_closure.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // used namespaces

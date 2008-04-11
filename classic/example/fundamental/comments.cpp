@@ -23,9 +23,9 @@
 #include <iostream>
 #include <cassert>
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/include/confix.hpp>
-#include <boost/spirit/include/include/chset.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
 
 
 ///////////////////////////////////////////////////////////////////////////////

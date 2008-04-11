@@ -12,9 +12,9 @@
 #define BOOST_SPIRIT_SELECT_LIMIT 2
 #define BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT 2
  
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/lists.hpp>
-#include <boost/spirit/include/select.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_lists.hpp>
+#include <boost/spirit/include/classic_select.hpp>
  
 using namespace boost::spirit;
 using namespace std;

@@ -15,13 +15,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/for.hpp>
-#include <boost/spirit/include/switch.hpp>
-#include <boost/spirit/include/position_iterator.hpp>
-#include <boost/spirit/include/confix.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_for.hpp>
+#include <boost/spirit/include/classic_switch.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
 
-#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/phoenix1.hpp>
 
 #include <iostream>
 #include <string>

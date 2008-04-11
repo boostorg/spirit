@@ -14,8 +14,8 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <iostream>
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/assign_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_assign_actor.hpp>
 
 using namespace std;
 using namespace boost::spirit;

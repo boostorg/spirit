@@ -13,7 +13,7 @@
 //  [ JDG 5/10/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
+#include <boost/spirit/include/classic_core.hpp>
 #include <iostream>
 #include <complex>
 #include <string>

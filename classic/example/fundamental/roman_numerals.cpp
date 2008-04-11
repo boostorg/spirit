@@ -14,8 +14,8 @@
 //  [ JDG 8/22/2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/symbols.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_symbols.hpp>
 #include <iostream>
 #include <string>
 

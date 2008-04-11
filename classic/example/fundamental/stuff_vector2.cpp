@@ -15,11 +15,11 @@
 //  [ JDG 1/12/2004 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/primitives.hpp>
-#include <boost/spirit/include/operators.hpp>
-#include <boost/spirit/include/functions.hpp>
-#include <boost/spirit/include/casts.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_primitives.hpp>
+#include <boost/spirit/include/classic_operators.hpp>
+#include <boost/spirit/include/classic_functions.hpp>
+#include <boost/spirit/include/classic_casts.hpp>
 #include <iostream>
 #include <string>
 

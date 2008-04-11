@@ -20,10 +20,10 @@
 #include <cassert>
 #include <vector>
 
-#include <boost/spirit/include/core.hpp>
-#include <boost/spirit/include/confix.hpp>
-#include <boost/spirit/include/lists.hpp>
-#include <boost/spirit/include/escape_char.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
+#include <boost/spirit/include/classic_lists.hpp>
+#include <boost/spirit/include/classic_escape_char.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
