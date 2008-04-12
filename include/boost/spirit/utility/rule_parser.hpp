@@ -1,10 +1,10 @@
 /*=============================================================================
-    Copyright (c) 2002-2008 Joel de Guzman
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_RULE_PARSER
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_RULE_PARSER
@@ -15,6 +15,9 @@
 #  warning "This header is deprecated. Please use: boost/spirit/include/classic_rule_parser.hpp"
 #endif
 
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
 #include <boost/spirit/include/classic_rule_parser.hpp>
 
 #endif
