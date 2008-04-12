@@ -12,11 +12,11 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
-#include <boost/spirit/include/phx1_primitives.hpp>
-#include <boost/spirit/include/phx1_functions.hpp>
-#include <boost/spirit/include/phx1_operators.hpp>
-#include <boost/spirit/include/phx1_special_ops.hpp>
-#include <boost/spirit/include/phx1_statements.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include <boost/spirit/include/phoenix1_functions.hpp>
+#include <boost/spirit/include/phoenix1_operators.hpp>
+#include <boost/spirit/include/phoenix1_special_ops.hpp>
+#include <boost/spirit/include/phoenix1_statements.hpp>
 
 using namespace phoenix;
 using namespace std;

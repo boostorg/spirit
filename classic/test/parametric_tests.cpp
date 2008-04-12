@@ -15,8 +15,8 @@ using namespace std;
 
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_parametric.hpp>
-#include <boost/spirit/include/phx1_primitives.hpp>
-#include <boost/spirit/include/phx1_operators.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include <boost/spirit/include/phoenix1_operators.hpp>
 using namespace boost::spirit;
 using namespace phoenix;
 

@@ -11,9 +11,9 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #define PHOENIX_LIMIT 15
-#include <boost/spirit/include/phx1_primitives.hpp>
-#include <boost/spirit/include/phx1_composite.hpp>
-#include <boost/spirit/include/phx1_binders.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
+#include <boost/spirit/include/phoenix1_composite.hpp>
+#include <boost/spirit/include/phoenix1_binders.hpp>
 
 using namespace phoenix;
 using namespace std;
