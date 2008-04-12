@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_STORED_RULE_FWD
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/stored_rule_fwd.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_stored_rule_fwd.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/stored_rule_fwd.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_stored_rule_fwd.hpp"
 #endif
 
-#include <boost/spirit/include/stored_rule_fwd.hpp>
+#include <boost/spirit/include/classic_stored_rule_fwd.hpp>
 
 #endif

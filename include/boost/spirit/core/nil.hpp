@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_NIL
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/nil.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_nil.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/nil.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_nil.hpp"
 #endif
 
-#include <boost/spirit/include/nil.hpp>
+#include <boost/spirit/include/classic_nil.hpp>
 
 #endif

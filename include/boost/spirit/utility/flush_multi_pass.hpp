@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_FLUSH_MULTI_PASS
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/flush_multi_pass.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_flush_multi_pass.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/flush_multi_pass.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_flush_multi_pass.hpp"
 #endif
 
-#include <boost/spirit/include/flush_multi_pass.hpp>
+#include <boost/spirit/include/classic_flush_multi_pass.hpp>
 
 #endif

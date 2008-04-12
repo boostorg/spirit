@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_FUNCTOR_PARSER
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/functor_parser.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_functor_parser.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/functor_parser.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_functor_parser.hpp"
 #endif
 
-#include <boost/spirit/include/functor_parser.hpp>
+#include <boost/spirit/include/classic_functor_parser.hpp>
 
 #endif

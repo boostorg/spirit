@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_TYPEOF
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/typeof.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_typeof.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/typeof.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_typeof.hpp"
 #endif
 
-#include <boost/spirit/include/typeof.hpp>
+#include <boost/spirit/include/classic_typeof.hpp>
 
 #endif

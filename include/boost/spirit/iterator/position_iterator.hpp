@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_POSITION_ITERATOR
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/position_iterator.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_position_iterator.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/position_iterator.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_position_iterator.hpp"
 #endif
 
-#include <boost/spirit/include/position_iterator.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
 
 #endif

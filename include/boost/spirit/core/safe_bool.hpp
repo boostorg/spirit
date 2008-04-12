@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_SAFE_BOOL
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/safe_bool.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_safe_bool.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/safe_bool.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_safe_bool.hpp"
 #endif
 
-#include <boost/spirit/include/safe_bool.hpp>
+#include <boost/spirit/include/classic_safe_bool.hpp>
 
 #endif

@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_SEQUENTIAL_AND
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/sequential_and.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_sequential_and.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/sequential_and.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_sequential_and.hpp"
 #endif
 
-#include <boost/spirit/include/sequential_and.hpp>
+#include <boost/spirit/include/classic_sequential_and.hpp>
 
 #endif

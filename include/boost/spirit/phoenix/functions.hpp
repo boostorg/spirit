@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_FUNCTIONS
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phx1_functions.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phoenix1_functions.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/phx1_functions.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/phoenix1_functions.hpp"
 #endif
 
-#include <boost/spirit/include/phx1_functions.hpp>
+#include <boost/spirit/include/phoenix1_functions.hpp>
 
 #endif

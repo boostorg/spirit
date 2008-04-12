@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_ACTOR
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phx1_actor.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phoenix1_actor.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/phx1_actor.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/phoenix1_actor.hpp"
 #endif
 
-#include <boost/spirit/include/phx1_actor.hpp>
+#include <boost/spirit/include/phoenix1_actor.hpp>
 
 #endif

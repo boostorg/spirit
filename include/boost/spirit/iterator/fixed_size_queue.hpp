@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_FIXED_SIZE_QUEUE
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/fixed_size_queue.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_fixed_size_queue.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/fixed_size_queue.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_fixed_size_queue.hpp"
 #endif
 
-#include <boost/spirit/include/fixed_size_queue.hpp>
+#include <boost/spirit/include/classic_fixed_size_queue.hpp>
 
 #endif

@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_COMPOSITE
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/composite.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_composite.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/composite.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_composite.hpp"
 #endif
 
-#include <boost/spirit/include/composite.hpp>
+#include <boost/spirit/include/classic_composite.hpp>
 
 #endif

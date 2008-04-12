@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_CONFIG
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/config.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_config.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/config.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_config.hpp"
 #endif
 
-#include <boost/spirit/include/config.hpp>
+#include <boost/spirit/include/classic_config.hpp>
 
 #endif

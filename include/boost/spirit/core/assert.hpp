@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_ASSERT
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/assert.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_assert.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/assert.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_assert.hpp"
 #endif
 
-#include <boost/spirit/include/assert.hpp>
+#include <boost/spirit/include/classic_assert.hpp>
 
 #endif

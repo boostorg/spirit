@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_PARSER_ID
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/parser_id.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_parser_id.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/parser_id.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_parser_id.hpp"
 #endif
 
-#include <boost/spirit/include/parser_id.hpp>
+#include <boost/spirit/include/classic_parser_id.hpp>
 
 #endif

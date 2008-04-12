@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_PARSER_CONTEXT
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/parser_context.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_parser_context.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/parser_context.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_parser_context.hpp"
 #endif
 
-#include <boost/spirit/include/parser_context.hpp>
+#include <boost/spirit/include/classic_parser_context.hpp>
 
 #endif

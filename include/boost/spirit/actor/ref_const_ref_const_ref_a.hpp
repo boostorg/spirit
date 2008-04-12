@@ -10,11 +10,11 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_REF_CONST_REF_CONST_REF_A
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/ref_const_ref_const_ref_a.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_ref_const_ref_const_ref_a.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/ref_const_ref_const_ref_a.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_ref_const_ref_const_ref_a.hpp"
 #endif
 
-#include <boost/spirit/include/ref_const_ref_const_ref_a.hpp>
+#include <boost/spirit/include/classic_ref_const_ref_const_ref_a.hpp>
 
 #endif
