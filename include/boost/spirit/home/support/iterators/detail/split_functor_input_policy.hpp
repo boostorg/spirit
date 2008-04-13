@@ -13,7 +13,7 @@
 
 namespace boost { namespace spirit { namespace multi_pass_policies
 {
-    namespace is_valid_test_
+    namespace split_functor_input_is_valid_test_
     {
         template <typename Token>
         inline bool token_is_valid(Token const&)
@@ -96,7 +96,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             template <typename MultiPass>
             static bool input_is_valid(MultiPass const&, value_type const& t) 
             {
-                using namespace is_valid_test_;
+                using namespace split_functor_input_is_valid_test_;
                 return token_is_valid(t);
             }
 

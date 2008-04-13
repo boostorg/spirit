@@ -1222,10 +1222,14 @@ bool operator<=(
 
 ///// Generator function
 template <typename InputT>
-inline multi_pass<InputT>
+inline multi_pass<InputT, 
+    multi_pass_policies::input_iterator, multi_pass_policies::ref_counted,
+    multi_pass_policies::buf_id_check, multi_pass_policies::std_deque>
 make_multi_pass(InputT i)
 {
-    return multi_pass<InputT>(i);
+    return multi_pass<InputT, 
+        multi_pass_policies::input_iterator, multi_pass_policies::ref_counted,
+        multi_pass_policies::buf_id_check, multi_pass_policies::std_deque>(i);
 }
 
 // this could be a template typedef, since such a thing doesn't

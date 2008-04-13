@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
     //  is done, except on creation of the queue (fixed_size_queue constructor).
     ///////////////////////////////////////////////////////////////////////////
     template <std::size_t N>
-    class fixed_size_queue
+    struct fixed_size_queue
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename Value>
@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
               : queuePosition(x.queuePosition)
             {}
 
-            void swap(inner& x)
+            void swap(unique& x)
             {
                 spirit::detail::swap(queuePosition, x.queuePosition);
             }
