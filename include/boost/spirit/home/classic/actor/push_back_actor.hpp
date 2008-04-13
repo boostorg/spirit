@@ -8,10 +8,13 @@
 #ifndef BOOST_SPIRIT_ACTOR_PUSH_BACK_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_PUSH_BACK_ACTOR_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/actor/ref_value_actor.hpp>
 #include <boost/spirit/home/classic/actor/ref_const_ref_actor.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //  Summary:
@@ -90,6 +93,8 @@ namespace boost { namespace spirit {
     {
         return ref_const_ref_actor<T,ValueT,push_back_action>(ref_,value_);
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }}
 

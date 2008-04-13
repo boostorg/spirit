@@ -8,10 +8,13 @@
 #ifndef BOOST_SPIRIT_ACTOR_ASSIGN_KEY_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_ASSIGN_KEY_ACTOR_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/actor/ref_const_ref_value_actor.hpp>
 #include <boost/spirit/home/classic/actor/ref_const_ref_const_ref_a.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     struct assign_key_action
     {
@@ -85,6 +88,8 @@ namespace boost { namespace spirit {
             key_
             );
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }}
 

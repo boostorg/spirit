@@ -16,7 +16,7 @@
 #include <boost/spirit/include/classic_chset.hpp>
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 namespace
 {

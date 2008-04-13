@@ -23,7 +23,7 @@
 
 namespace my_project { namespace my_grammar {
 
-  using namespace boost::spirit;
+  using namespace BOOST_SPIRIT_CLASSIC_NS;
 
   #define BOOST_SPIRIT__NAMESPACE (2,(my_project,my_grammar))
 
@@ -56,7 +56,7 @@ int main()
 
     str += '\n';
 
-    if (boost::spirit::parse(str.c_str(), my_project::my_grammar::main).full)
+    if (BOOST_SPIRIT_CLASSIC_NS::parse(str.c_str(), my_project::my_grammar::main).full)
       std::cout << "\nOK." << std::endl;
     else
       std::cout << "\nERROR." << std::endl;

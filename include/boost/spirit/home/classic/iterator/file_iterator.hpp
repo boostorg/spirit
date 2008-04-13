@@ -52,6 +52,7 @@
 #include <string>
 #include <boost/config.hpp>
 #include <boost/iterator_adaptors.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/safe_bool.hpp>
 
 #include <boost/spirit/home/classic/iterator/file_iterator_fwd.hpp>
@@ -78,6 +79,8 @@ extern "C"
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 template <
     typename CharT = char,
@@ -215,7 +218,9 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-}} /* namespace boost::spirit */
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} /* namespace BOOST_SPIRIT_CLASSIC_NS */
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/classic/iterator/impl/file_iterator.ipp> /* implementation */

@@ -27,7 +27,7 @@
 // manual Typeof registrations like in this case.
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 namespace my_project { namespace my_module {
 
@@ -72,7 +72,7 @@ namespace my_project { namespace my_module {
 
   bool parse_line(char const * str)
   {
-    return boost::spirit::parse(str,line,space_p).full;
+    return BOOST_SPIRIT_CLASSIC_NS::parse(str,line,space_p).full;
   }
 
   #undef BOOST_SPIRIT__NAMESPACE

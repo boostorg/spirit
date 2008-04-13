@@ -11,9 +11,12 @@
 
 #include <string>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     template <typename String = std::string> 
     struct file_position_base;
@@ -49,7 +52,9 @@ namespace boost { namespace spirit {
 
     template <typename PositionT> class position_policy;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

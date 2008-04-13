@@ -8,10 +8,13 @@
 #if !defined(BOOST_SPIRIT_FUNDAMENTAL_HPP)
 #define BOOST_SPIRIT_FUNDAMENTAL_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/meta/impl/fundamental.ipp>
 
-namespace boost { namespace spirit 
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  Helper template for counting the number of nodes contained in a
@@ -46,6 +49,8 @@ namespace boost { namespace spirit
         BOOST_STATIC_CONSTANT(int, value = count_t::value);
     };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // !defined(BOOST_SPIRIT_FUNDAMENTAL_HPP)

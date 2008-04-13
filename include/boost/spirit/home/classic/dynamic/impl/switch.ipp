@@ -29,6 +29,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 // forward declaration
 template <int N, typename ParserT, bool IsDefault> struct case_parser;
 
@@ -564,6 +566,9 @@ struct make_cond_functor<get_next_token_cond> {
 
 ///////////////////////////////////////////////////////////////////////////////
 }   // namespace impl
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }}  // namespace boost::spirit
 
 #endif  // BOOST_SPIRIT_SWITCH_IPP

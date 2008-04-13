@@ -10,11 +10,14 @@
 #ifndef BOOST_SPIRIT_IF_HPP
 #define BOOST_SPIRIT_IF_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/dynamic/impl/conditions.ipp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace impl {
 
@@ -219,6 +222,8 @@ if_p(CondT const& cond)
     return impl::if_parser_gen<CondT>(cond);
 }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_IF_HPP

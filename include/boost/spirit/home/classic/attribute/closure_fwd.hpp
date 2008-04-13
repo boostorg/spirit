@@ -8,6 +8,7 @@
 #if !defined(BOOST_SPIRIT_CLOSURE_FWD_HPP)
 #define BOOST_SPIRIT_CLOSURE_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/phoenix/tuples.hpp>
 
 #if !defined(BOOST_SPIRIT_CLOSURE_LIMIT)
@@ -15,6 +16,8 @@
 #endif
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     template<typename ClosureT>
     class closure_context;
@@ -58,7 +61,9 @@ namespace boost { namespace spirit {
     >
     struct closure;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

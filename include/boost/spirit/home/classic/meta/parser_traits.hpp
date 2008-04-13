@@ -13,11 +13,14 @@
 #include <boost/type_traits/is_base_and_derived.hpp>
 #include <boost/static_assert.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/meta/impl/parser_traits.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -94,8 +97,8 @@ template <typename CompositeT>
 struct is_composite_parser {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::is_unary_composite<CompositeT>::value ||
-        ::boost::spirit::is_binary_composite<CompositeT>::value));
+        ::BOOST_SPIRIT_CLASSIC_NS::is_unary_composite<CompositeT>::value ||
+        ::BOOST_SPIRIT_CLASSIC_NS::is_binary_composite<CompositeT>::value));
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,63 +106,63 @@ template <typename ParserT>
 struct is_alternative {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_alternative));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_alternative));
 };
 
 template <typename ParserT>
 struct is_sequence {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_sequence));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_sequence));
 };
 
 template <typename ParserT>
 struct is_sequential_or {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_sequential_or));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_sequential_or));
 };
 
 template <typename ParserT>
 struct is_intersection {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_intersection));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_intersection));
 };
 
 template <typename ParserT>
 struct is_difference {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_difference));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_difference));
 };
 
 template <typename ParserT>
 struct is_exclusive_or {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_exclusive_or));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_exclusive_or));
 };
 
 template <typename ParserT>
 struct is_optional {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_optional));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_optional));
 };
 
 template <typename ParserT>
 struct is_kleene_star {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_kleene_star));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_kleene_star));
 };
 
 template <typename ParserT>
 struct is_positive {
 
     BOOST_STATIC_CONSTANT(bool, value = (
-        ::boost::spirit::impl::parser_type_traits<ParserT>::is_positive));
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::parser_type_traits<ParserT>::is_positive));
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -179,7 +182,7 @@ struct is_positive {
 template <typename UnaryT>
 struct unary_subject {
 
-    BOOST_STATIC_ASSERT(::boost::spirit::is_unary_composite<UnaryT>::value);
+    BOOST_STATIC_ASSERT(BOOST_SPIRIT_CLASSIC_NS::is_unary_composite<UnaryT>::value);
     typedef typename UnaryT::subject_t type;
 };
 
@@ -195,7 +198,7 @@ template <typename UnaryT>
 inline typename unary_subject<UnaryT>::type const &
 get_unary_subject(UnaryT const &unary_)
 {
-    BOOST_STATIC_ASSERT(::boost::spirit::is_unary_composite<UnaryT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_unary_composite<UnaryT>::value);
     return unary_.subject();
 }
 
@@ -211,14 +214,14 @@ get_unary_subject(UnaryT const &unary_)
 template <typename BinaryT>
 struct binary_left_subject {
 
-    BOOST_STATIC_ASSERT(::boost::spirit::is_binary_composite<BinaryT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_binary_composite<BinaryT>::value);
     typedef typename BinaryT::left_t type;
 };
 
 template <typename BinaryT>
 struct binary_right_subject {
 
-    BOOST_STATIC_ASSERT(::boost::spirit::is_binary_composite<BinaryT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_binary_composite<BinaryT>::value);
     typedef typename BinaryT::right_t type;
 };
 
@@ -235,7 +238,7 @@ template <typename BinaryT>
 inline typename binary_left_subject<BinaryT>::type const &
 get_binary_left_subject(BinaryT const &binary_)
 {
-    BOOST_STATIC_ASSERT(::boost::spirit::is_binary_composite<BinaryT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_binary_composite<BinaryT>::value);
     return binary_.left();
 }
 
@@ -243,7 +246,7 @@ template <typename BinaryT>
 inline typename binary_right_subject<BinaryT>::type const &
 get_binary_right_subject(BinaryT const &binary_)
 {
-    BOOST_STATIC_ASSERT(::boost::spirit::is_binary_composite<BinaryT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_binary_composite<BinaryT>::value);
     return binary_.right();
 }
 
@@ -258,7 +261,7 @@ get_binary_right_subject(BinaryT const &binary_)
 template <typename ActionT>
 struct action_subject {
 
-    BOOST_STATIC_ASSERT(::boost::spirit::is_action_parser<ActionT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_action_parser<ActionT>::value);
     typedef typename ActionT::subject_t type;
 };
 
@@ -274,7 +277,7 @@ template <typename ActionT>
 inline typename action_subject<ActionT>::type const &
 get_action_subject(ActionT const &action_)
 {
-    BOOST_STATIC_ASSERT(::boost::spirit::is_action_parser<ActionT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_action_parser<ActionT>::value);
     return action_.subject();
 }
 
@@ -289,7 +292,7 @@ get_action_subject(ActionT const &action_)
 template <typename ActionT>
 struct semantic_action {
 
-    BOOST_STATIC_ASSERT(::boost::spirit::is_action_parser<ActionT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_action_parser<ActionT>::value);
     typedef typename ActionT::predicate_t type;
 };
 
@@ -305,11 +308,13 @@ template <typename ActionT>
 inline typename semantic_action<ActionT>::type const &
 get_semantic_action(ActionT const &action_)
 {
-    BOOST_STATIC_ASSERT(::boost::spirit::is_action_parser<ActionT>::value);
+    BOOST_STATIC_ASSERT(::BOOST_SPIRIT_CLASSIC_NS::is_action_parser<ActionT>::value);
     return action_.predicate();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // !defined(BOOST_SPIRIT_PARSER_TRAITS_HPP)

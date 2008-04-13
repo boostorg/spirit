@@ -17,6 +17,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template <typename BaseT>
     struct no_skipper_iteration_policy;
 
@@ -363,6 +365,8 @@ namespace boost { namespace spirit {
         };
 #endif
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

@@ -12,7 +12,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 struct handler
 {

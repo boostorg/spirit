@@ -8,9 +8,16 @@
 #if !defined(BOOST_SPIRIT_NIL_HPP)
 #define BOOST_SPIRIT_NIL_HPP
 
-namespace boost { namespace spirit
-{
+#include <boost/spirit/home/classic/namespace.hpp>
+
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     struct nil_t {};
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }}
 
 #endif

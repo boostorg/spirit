@@ -15,6 +15,8 @@
 namespace boost {
 namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  Returnes the first leaf node of the given parsetree.
@@ -125,6 +127,8 @@ get_node_range (tree_node<T> const &node, parser_id node_to_search,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }   // namespace spirit
 }   // namespace boost
 

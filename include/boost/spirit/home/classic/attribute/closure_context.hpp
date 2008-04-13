@@ -9,8 +9,12 @@
 #if !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_HPP)
 #define BOOST_SPIRIT_CLOSURE_CONTEXT_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 #if !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
 #define BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED
@@ -45,6 +49,8 @@ struct closure_context_linker : public ContextT
 #endif // !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_CLOSURE_CONTEXT_HPP

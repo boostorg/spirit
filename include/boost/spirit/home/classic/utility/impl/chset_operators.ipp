@@ -15,6 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  chset free operators implementation
@@ -505,20 +507,20 @@ operator^(negated_char_parser<chlit<CharT> > const& a, chset<CharT> const& b)
 namespace impl {
 
     template <typename CharT>
-    inline boost::spirit::range<CharT> const&
+    inline BOOST_SPIRIT_CLASSIC_NS::range<CharT> const&
     full()
     {
-        static boost::spirit::range<CharT> full_(
+        static BOOST_SPIRIT_CLASSIC_NS::range<CharT> full_(
             (std::numeric_limits<CharT>::min)(),
             (std::numeric_limits<CharT>::max)());
         return full_;
     }
 
     template <typename CharT>
-    inline boost::spirit::range<CharT> const&
+    inline BOOST_SPIRIT_CLASSIC_NS::range<CharT> const&
     empty()
     {
-        static boost::spirit::range<CharT> empty_;
+        static BOOST_SPIRIT_CLASSIC_NS::range<CharT> empty_;
         return empty_;
     }
 }
@@ -656,6 +658,8 @@ operator^(nothing_parser, chset<CharT> const& b)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #endif

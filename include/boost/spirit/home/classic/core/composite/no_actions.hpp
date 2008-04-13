@@ -15,6 +15,8 @@
 
 namespace boost {
 namespace spirit {
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 //-----------------------------------------------------------------------------
 // no_actions_action_policy
 
@@ -156,6 +158,7 @@ struct no_actions_parser_gen
 const no_actions_parser_gen no_actions_d = no_actions_parser_gen();
 
 //-----------------------------------------------------------------------------
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 } // namespace spirit
 } // namespace boost
 

@@ -9,7 +9,11 @@
 #if !defined(BOOST_SPIRIT_FILE_ITERATOR_FWD_HPP)
 #define BOOST_SPIRIT_FILE_ITERATOR_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace fileiter_impl 
     {
@@ -27,7 +31,9 @@ namespace boost { namespace spirit {
         typename BaseIterator
     > class file_iterator;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////
 // This example shows how to use a parse tree
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 // Here's some typedefs to simplify things
 typedef char const*         iterator_t;

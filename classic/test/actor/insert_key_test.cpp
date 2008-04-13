@@ -23,7 +23,7 @@
 
 void insert_key_single_argument_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "(one,0),(two,1),(three,2)";
     const char* cp_first = cp;
@@ -65,7 +65,7 @@ void insert_key_single_argument_test()
 
 void insert_key_two_arguments_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "(0,one),(1,two),(2,three)";
     const char* cp_first = cp;

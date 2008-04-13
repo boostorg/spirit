@@ -10,6 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/static_assert.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/meta/as_parser.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
@@ -17,6 +18,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -267,7 +270,9 @@ private:
 const attach_action_gen<> attach_action_d = attach_action_gen<>();
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_REFACTORING_HPP
 

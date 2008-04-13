@@ -8,9 +8,12 @@
 #ifndef BOOST_SPIRIT_ACTOR_DECREMENT_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_DECREMENT_ACTOR_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/actor/ref_actor.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //  Summary:
@@ -49,6 +52,8 @@ namespace boost { namespace spirit {
     {
         return ref_actor<T,decrement_action>(ref_);
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }}
 

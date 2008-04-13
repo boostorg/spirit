@@ -8,6 +8,7 @@
 #if !defined(BOOST_SPIRIT_MATCH_HPP)
 #define BOOST_SPIRIT_MATCH_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/config.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>
 #include <boost/call_traits.hpp>
@@ -18,8 +19,10 @@
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/is_reference.hpp>
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  match class
@@ -173,7 +176,9 @@ namespace boost { namespace spirit
         std::ptrdiff_t len;
     };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 #include <boost/spirit/home/classic/core/impl/match.ipp>

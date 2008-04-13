@@ -24,7 +24,7 @@
 
 int main(int argc, char* argv[])
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
     using namespace std;
 
     rule<> a,b,c,next;

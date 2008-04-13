@@ -14,7 +14,7 @@
 #include "impl/sstream.hpp"
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 sstream_t res;
 
@@ -255,7 +255,7 @@ void test_default_multi_pass()
             res << **mp3; // this should throw illegal_backtracking
             BOOST_TEST(0);
         }
-        catch (const boost::spirit::multi_pass_policies::illegal_backtracking& /*e*/)
+        catch (const BOOST_SPIRIT_CLASSIC_NS::multi_pass_policies::illegal_backtracking& /*e*/)
         {
         }
         res << endl;
@@ -618,7 +618,7 @@ void test_first_owner_multi_pass()
             res << **mp3; // this should throw illegal_backtracking
             BOOST_TEST(0);
         }
-        catch (const boost::spirit::multi_pass_policies::illegal_backtracking& /*e*/)
+        catch (const BOOST_SPIRIT_CLASSIC_NS::multi_pass_policies::illegal_backtracking& /*e*/)
         {
         }
         res << endl;

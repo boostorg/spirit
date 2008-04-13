@@ -9,11 +9,14 @@
 #define BOOST_SPIRIT_FLUSH_MULTI_PASS_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core.hpp>
 #include <boost/spirit/home/classic/iterator/multi_pass.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace impl {
 
@@ -21,8 +24,8 @@ namespace boost { namespace spirit {
         void flush_iterator(T &) {}
 
         template <typename T1, typename T2, typename T3, typename T4>
-        void flush_iterator(boost::spirit::multi_pass<
-            T1, T2, T3, T4, boost::spirit::multi_pass_policies::std_deque> &i)
+        void flush_iterator(BOOST_SPIRIT_CLASSIC_NS::multi_pass<
+            T1, T2, T3, T4, BOOST_SPIRIT_CLASSIC_NS::multi_pass_policies::std_deque> &i)
         {
             i.clear_queue();
         }
@@ -67,6 +70,8 @@ namespace boost { namespace spirit {
     flush_multi_pass_parser const
         flush_multi_pass_p = flush_multi_pass_parser();
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_FLUSH_MULTI_PASS_HPP

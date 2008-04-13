@@ -10,6 +10,7 @@
 #define BOOST_SPIRIT_PRIMITIVES_HPP
 
 #include <boost/ref.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/impl/directives.ipp>
@@ -21,6 +22,8 @@
 #endif
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -640,7 +643,9 @@ namespace boost { namespace spirit {
         return your_favorite_pizza;
     }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #ifdef BOOST_MSVC
 #pragma warning (pop)

@@ -13,6 +13,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 #if defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
     BOOST_SPIRIT_DEPENDENT_TEMPLATE_WRAPPER2(count_wrapper, count);
 #endif // defined(BOOST_MSVC) && (BOOST_MSVC <= 1300)
@@ -300,6 +302,8 @@ namespace impl
 }   // namespace impl
 
 ///////////////////////////////////////////////////////////////////////////////
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #endif // !defined(BOOST_SPIRIT_FUNDAMENTAL_IPP)

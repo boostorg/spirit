@@ -8,9 +8,12 @@
 #if !defined(BOOST_SPIRIT_SUBRULE_FWD_HPP)
 #define BOOST_SPIRIT_SUBRULE_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/parser_context.hpp>
 
 namespace boost { namespace spirit  {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     template <int ID, typename ContextT = parser_context<> >
     struct subrule; 
@@ -24,7 +27,9 @@ namespace boost { namespace spirit  {
     template <typename FirstT, typename RestT>
     struct subrule_list; 
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

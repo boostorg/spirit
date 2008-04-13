@@ -14,7 +14,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 
-typedef boost::spirit::fixed_size_queue<int, 5> queue_t;
+typedef BOOST_SPIRIT_CLASSIC_NS::fixed_size_queue<int, 5> queue_t;
 typedef queue_t::iterator iter_t;
 typedef queue_t::const_iterator const_iter_t;
 BOOST_CLASS_REQUIRE(const_iter_t, boost, RandomAccessIteratorConcept);

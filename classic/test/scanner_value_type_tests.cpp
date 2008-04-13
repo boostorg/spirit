@@ -19,7 +19,7 @@
 #include <deque>
 #include <iostream>
 
-namespace sp = boost::spirit;
+namespace sp = BOOST_SPIRIT_CLASSIC_NS;
 
 namespace {
 

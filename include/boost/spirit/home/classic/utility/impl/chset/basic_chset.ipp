@@ -17,6 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  basic_chset: character set implementation
@@ -235,6 +237,9 @@ basic_chset_8bit<CharT>::operator^=(basic_chset_8bit const& x)
 }
 
 #endif
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #endif

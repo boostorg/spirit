@@ -18,6 +18,7 @@
 #include <boost/limits.hpp>
 #include <boost/iterator.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
 #include <boost/spirit/home/classic/iterator/fixed_size_queue.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
@@ -25,6 +26,8 @@
 #include <boost/spirit/home/classic/iterator/multi_pass_fwd.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 namespace impl {
     template <typename T>
@@ -153,7 +156,7 @@ public:
 
     virtual const char*
     what() const throw()
-    { return "boost::spirit::illegal_backtracking"; }
+    { return "BOOST_SPIRIT_CLASSIC_NS::illegal_backtracking"; }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -367,7 +370,7 @@ class inner
 // class fixed_size_queue
 // Implementation of the StoragePolicy used by multi_pass
 // fixed_size_queue keeps a circular buffer (implemented by
-// boost::spirit::fixed_size_queue class) that is size N+1 and stores N elements.
+// BOOST_SPIRIT_CLASSIC_NS::fixed_size_queue class) that is size N+1 and stores N elements.
 // It is up to the user to ensure that there is enough look ahead for their
 // grammar.  Currently there is no way to tell if an iterator is pointing
 // to forgotten data.  The leading iterator will put an item in the queue
@@ -384,7 +387,7 @@ class inner
 {
     private:
 
-        typedef boost::spirit::fixed_size_queue<ValueT, N> queue_type;
+        typedef BOOST_SPIRIT_CLASSIC_NS::fixed_size_queue<ValueT, N> queue_type;
         queue_type * queuedElements;
         mutable typename queue_type::iterator queuePosition;
 
@@ -1286,12 +1289,14 @@ namespace impl {
     inline void mp_swap(T& t1, T& t2)
     {
         using std::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
         swap(t1, t2);
     }
 }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_ITERATOR_MULTI_PASS_HPP
 

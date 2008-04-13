@@ -12,7 +12,7 @@
 #include <boost/spirit/include/classic_actor.hpp>
 #include <boost/math/concepts/real_concept.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using boost::math::concepts::real_concept;
 
 int main(int argc, char* argv[])

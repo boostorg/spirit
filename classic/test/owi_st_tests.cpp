@@ -13,7 +13,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <iostream>
 
-using boost::spirit::impl::object_with_id;
+using BOOST_SPIRIT_CLASSIC_NS::impl::object_with_id;
 
 struct tag1 {};
 struct tag2 {};

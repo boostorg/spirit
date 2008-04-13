@@ -25,7 +25,7 @@
 // Don't forget to
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 // Semantic actions
 namespace 

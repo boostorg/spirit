@@ -12,6 +12,7 @@
 #include <boost/config.hpp>
 #include <boost/static_assert.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/parser_context.hpp>
 
@@ -19,6 +20,8 @@
 #include <boost/spirit/home/classic/core/non_terminal/impl/subrule.ipp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -289,7 +292,9 @@ namespace boost { namespace spirit {
         subrule& operator=(subrule<ID2, ContextT2> const&);
     };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

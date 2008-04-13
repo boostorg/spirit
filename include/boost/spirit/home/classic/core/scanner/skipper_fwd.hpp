@@ -8,9 +8,12 @@
 #if !defined(BOOST_SPIRIT_SKIPPER_FWD_HPP)
 #define BOOST_SPIRIT_SKIPPER_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/scanner/scanner_fwd.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     template <typename BaseT = iteration_policy>
     struct skipper_iteration_policy;
@@ -21,7 +24,9 @@ namespace boost { namespace spirit {
     template <typename ParserT, typename BaseT = iteration_policy>
     class skip_parser_iteration_policy;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

@@ -11,7 +11,7 @@
 #define BOOST_SPIRIT_DEBUG
 #include <boost/spirit/include/classic_core.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 struct non_greedy_kleene : public grammar<non_greedy_kleene>
 {

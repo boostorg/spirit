@@ -45,7 +45,7 @@ std::string GETSTRING(std::ostrstream& ss)
 #include <boost/spirit/include/classic_meta.hpp>
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef ref_value_actor<char, assign_action> assign_actor;
 
@@ -385,6 +385,9 @@ char const *expected = first[0];
     }
 }
 
+#if defined(_countof)
+#undef  _countof
+#endif
 #define _countof(x) (sizeof(x)/sizeof(x[0]))
 
 void

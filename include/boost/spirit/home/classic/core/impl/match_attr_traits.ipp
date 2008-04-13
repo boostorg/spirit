@@ -15,7 +15,11 @@
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/type_traits/is_same.hpp>
 
-namespace boost { namespace spirit { namespace impl
+namespace boost { namespace spirit { 
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
+namespace impl
 {
     template <typename T>
     struct match_attr_traits
@@ -88,7 +92,11 @@ namespace boost { namespace spirit { namespace impl
         }
     };
 
-}}} // namespace boost::spirit::impl
+}
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace boost::spirit::impl
 
 #endif
 

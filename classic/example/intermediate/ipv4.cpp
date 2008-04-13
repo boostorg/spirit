@@ -121,7 +121,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 struct ipv4_prefix_data

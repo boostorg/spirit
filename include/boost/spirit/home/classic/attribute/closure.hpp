@@ -10,6 +10,7 @@
 #define BOOST_SPIRIT_CLOSURE_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/parser_context.hpp>
@@ -51,6 +52,8 @@ BOOST_STATIC_ASSERT(BOOST_SPIRIT_CLOSURE_LIMIT <= 15);
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -1073,6 +1076,8 @@ namespace boost { namespace spirit {
         return result_t(container_begin_t(a), container_end_t(a));
     }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

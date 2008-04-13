@@ -22,7 +22,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 template <typename T>
 struct ts_real_parser_policies : public ureal_parser_policies<T>

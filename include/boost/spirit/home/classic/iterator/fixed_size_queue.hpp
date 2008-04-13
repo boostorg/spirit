@@ -13,6 +13,7 @@
 #include <iterator>
 #include <cstddef>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
 
 // FIXES for broken compilers
@@ -25,6 +26,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace impl {
@@ -390,7 +393,9 @@ fixed_size_queue<T, N>::pop_front()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #undef BOOST_SPIRIT_ASSERT_FSQ_SIZE
 

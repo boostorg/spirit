@@ -12,7 +12,7 @@
 using namespace std;
 
 #include <boost/spirit/include/classic_core.hpp>
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
 //

@@ -16,7 +16,7 @@ using namespace std;
 #define BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_grammar_def.hpp>
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  This feature is disabled on non compliant compilers (e.g. Borland 5.5.1

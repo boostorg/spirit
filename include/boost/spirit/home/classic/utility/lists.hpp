@@ -10,6 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/config.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/meta/as_parser.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
@@ -19,6 +20,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -330,6 +333,8 @@ struct list_parser_gen :
 const list_parser_gen<> list_p = list_parser_gen<>();
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

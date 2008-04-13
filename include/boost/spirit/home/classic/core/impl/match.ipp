@@ -10,8 +10,10 @@
 #define BOOST_SPIRIT_MATCH_IPP
 #include <algorithm>
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template <typename T>
     inline match<T>::match()
     : len(-1), val() {}
@@ -102,6 +104,8 @@ namespace boost { namespace spirit
     {
         std::swap(len, other.len);
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

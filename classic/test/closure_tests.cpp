@@ -15,7 +15,7 @@ using namespace std;
 #include <boost/spirit/include/classic_closure.hpp>
 #include <boost/spirit/include/classic_parametric.hpp>
 #include <boost/spirit/include/phoenix1_binders.hpp>
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -23,17 +23,17 @@ using namespace phoenix;
 //  Closure tests
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct my_closure1 : boost::spirit::closure<my_closure1, double>
+struct my_closure1 : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure1, double>
 {
     member1 val;
 };
 
-struct my_closure2 : boost::spirit::closure<my_closure2, char>
+struct my_closure2 : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure2, char>
 {
     member1 ch;
 };
 
-struct my_closure3 : boost::spirit::closure<my_closure3, char>
+struct my_closure3 : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure3, char>
 {
     member1 ch;
 };
@@ -51,7 +51,7 @@ operator<< (std::ostream& o, X const &x)
 }
 #endif // defined(BOOST_SPIRIT_DEBUG)
 
-struct my_closure4 : boost::spirit::closure<my_closure4, X>
+struct my_closure4 : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure4, X>
 {
     member1 x;
 };
@@ -71,12 +71,12 @@ operator<< (std::ostream& o, Y const &x)
 }
 #endif // defined(BOOST_SPIRIT_DEBUG)
 
-struct my_closure5 : boost::spirit::closure<my_closure5, int, Y>
+struct my_closure5 : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure5, int, Y>
 {
     member1 y;
 };
 
-struct my_closure6 : boost::spirit::closure<my_closure6, int, int, int>
+struct my_closure6 : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure6, int, int, int>
 {
     member1 x;
     member2 y;

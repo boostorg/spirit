@@ -9,12 +9,15 @@
 #define BOOST_SPIRIT_UTILITY_SCOPED_LOCK_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #if !defined(BOOST_SPIRIT_COMPOSITE_HPP)
 #include <boost/spirit/home/classic/core/composite.hpp>
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -78,7 +81,7 @@ namespace boost { namespace spirit {
         >
         operator[](ParserT const &p) const
         {
-            typedef ::boost::spirit::as_parser<ParserT> as_parser_t;
+            typedef ::BOOST_SPIRIT_CLASSIC_NS::as_parser<ParserT> as_parser_t;
             typedef typename as_parser_t::type parser_t;
 
             return scoped_lock_parser<mutex_t, parser_t>
@@ -103,5 +106,7 @@ namespace boost { namespace spirit {
         return scoped_lock_parser_gen<MutexT>(mutex);
     }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 #endif // BOOST_SPIRIT_UTILITY_SCOPED_LOCK_HPP

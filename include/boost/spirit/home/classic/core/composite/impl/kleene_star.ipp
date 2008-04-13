@@ -13,6 +13,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  kleene_star class implementation
@@ -24,6 +26,8 @@ namespace boost { namespace spirit {
     {
         return kleene_star<S>(a.derived());
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

@@ -8,6 +8,7 @@
 #if !defined(BOOST_SPIRIT_GRAMMAR_DEF_FWD_HPP)
 #define BOOST_SPIRIT_GRAMMAR_DEF_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/phoenix/tuples.hpp>
 
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
@@ -32,6 +33,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template <
         typename T,
         BOOST_PP_ENUM_BINARY_PARAMS(
@@ -41,7 +44,9 @@ namespace boost { namespace spirit {
     >
     class grammar_def;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

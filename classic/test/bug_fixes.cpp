@@ -13,7 +13,7 @@
 #include <boost/spirit/include/classic_assign_actor.hpp>
 
 using namespace boost;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ void bug_003()
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/limits.hpp>
-#include <boost/spirit/include/chset.hpp>
+#include <boost/spirit/include/classic_chset.hpp>
 
 void bug_004()
 {

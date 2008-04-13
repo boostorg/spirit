@@ -10,14 +10,17 @@
 
 #include <iterator>
 #include <boost/config.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/match.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/parser_id.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
 #include <boost/spirit/home/classic/core/scanner/scanner_fwd.hpp>
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  iteration_policy class
@@ -318,6 +321,9 @@ namespace boost { namespace spirit
         typedef typename ScannerT::template
             rebind_iterator<IteratorT>::type type;
     };
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }}
 
 #endif

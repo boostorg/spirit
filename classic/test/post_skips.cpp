@@ -17,7 +17,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 char const * test1 = "  12345  ";
 char const * test2 = "  12345  x";

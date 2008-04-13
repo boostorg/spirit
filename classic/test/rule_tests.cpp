@@ -16,7 +16,7 @@ using namespace std;
 
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_stored_rule.hpp>
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
 //

@@ -40,7 +40,7 @@
 #include <string>
 #include <utility>
 
-namespace SP = boost::spirit;
+namespace SP = BOOST_SPIRIT_CLASSIC_NS;
 using phoenix::arg1;
 using phoenix::arg2;
 using phoenix::construct_;

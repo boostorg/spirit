@@ -11,7 +11,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef
     scanner<char const*, scanner_policies<skipper_iteration_policy<> > >

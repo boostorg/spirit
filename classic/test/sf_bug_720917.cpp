@@ -13,7 +13,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 // Test for bug #720917 
 // http://sf.net/tracker/index.php?func=detail&aid=720917&group_id=28447&atid=393386

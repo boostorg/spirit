@@ -9,7 +9,7 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 void shortest_alternative_parser_test()
 {

@@ -17,7 +17,7 @@
 
 void increment_action_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     BOOST_MESSAGE("increment_test");
 

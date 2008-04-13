@@ -9,7 +9,11 @@
 #ifndef BOOST_SPIRIT_EXCEPTIONS_IPP
 #define BOOST_SPIRIT_EXCEPTIONS_IPP
 
-namespace boost { namespace spirit { namespace impl {
+namespace boost { namespace spirit { 
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
+namespace impl {
 
 #ifdef __BORLANDC__
     template <typename ParserT, typename ScannerT>
@@ -78,7 +82,11 @@ namespace boost { namespace spirit { namespace impl {
 
 #endif
 
-}}} // namespace boost::spirit::impl
+}
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace boost::spirit::impl
 
 ///////////////////////////////////////////////////////////////////////////////
 #endif

@@ -17,7 +17,7 @@
 #include <boost/spirit/include/classic_symbols.hpp>
 #include <boost/spirit/include/classic_utility.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 template <typename Rule>
 struct SetRest

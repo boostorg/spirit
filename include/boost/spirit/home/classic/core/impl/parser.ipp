@@ -9,8 +9,10 @@
 #if !defined(BOOST_SPIRIT_PARSER_IPP)
 #define BOOST_SPIRIT_PARSER_IPP
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  Generic parse function implementation
@@ -44,6 +46,8 @@ namespace boost { namespace spirit
             last++;
         return parse(str, last, p);
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

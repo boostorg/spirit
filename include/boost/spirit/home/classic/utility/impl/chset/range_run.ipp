@@ -19,6 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     namespace utility { namespace impl {
 
         ///////////////////////////////////////////////////////////////////////
@@ -208,6 +210,8 @@ namespace boost { namespace spirit {
         { return run.end(); }
 
     }} // namespace utility::impl
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

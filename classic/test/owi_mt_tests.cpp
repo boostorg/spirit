@@ -50,7 +50,7 @@ static const unsigned long maximum_test_size = 1000000UL;
 #include <algorithm>
 #include <boost/detail/lightweight_test.hpp>
 
-using boost::spirit::impl::object_with_id;
+using BOOST_SPIRIT_CLASSIC_NS::impl::object_with_id;
 
 struct tag1 {};
 typedef object_with_id<tag1> class1;

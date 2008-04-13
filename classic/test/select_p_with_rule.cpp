@@ -16,7 +16,7 @@
 #include <boost/spirit/include/classic_lists.hpp>
 #include <boost/spirit/include/classic_select.hpp>
  
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace std;
  
 struct format_grammar : public grammar<format_grammar>

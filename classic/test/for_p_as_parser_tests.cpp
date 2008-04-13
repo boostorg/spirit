@@ -43,10 +43,10 @@ main()
     //////////////////////////////////
     // compile time check wether as_parser<> works for for_p
 
-    ::boost::spirit::rule<> r;
+    ::BOOST_SPIRIT_CLASSIC_NS::rule<> r;
 
-    r = boost::spirit::for_p(&init_fun, &cmp_fun, &step_fun)['-'];
-    r = boost::spirit::for_p(init_ftor(), cmp_ftor(), step_ftor())["-"];
+    r = BOOST_SPIRIT_CLASSIC_NS::for_p(&init_fun, &cmp_fun, &step_fun)['-'];
+    r = BOOST_SPIRIT_CLASSIC_NS::for_p(init_ftor(), cmp_ftor(), step_ftor())["-"];
 
-    r = boost::spirit::for_p(init_ftor(), r, step_ftor())[r];
+    r = BOOST_SPIRIT_CLASSIC_NS::for_p(init_ftor(), r, step_ftor())[r];
 }

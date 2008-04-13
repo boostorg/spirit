@@ -21,6 +21,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  position_policy<file_position_without_column>
@@ -126,6 +128,10 @@ public:
     > type;
 };
 
-}}}} /* namespace boost::spirit::iterator_::impl */
+}}
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} /* namespace boost::spirit::iterator_::impl */
 
 #endif

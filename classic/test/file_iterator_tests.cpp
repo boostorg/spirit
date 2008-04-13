@@ -20,7 +20,7 @@ namespace vc8_bug_2 { using namespace vc8_bug_1; struct test : plus {}; }
 
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 namespace {
 

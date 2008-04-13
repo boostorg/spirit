@@ -10,6 +10,7 @@
 #define BOOST_SPIRIT_EPSILON_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/meta/parser_traits.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
@@ -17,6 +18,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -266,6 +269,8 @@ namespace boost { namespace spirit {
     epsilon_parser const eps_p = epsilon_parser();
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

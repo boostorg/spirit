@@ -15,7 +15,7 @@ using namespace std;
 #include "impl/string_length.hpp"
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
 //

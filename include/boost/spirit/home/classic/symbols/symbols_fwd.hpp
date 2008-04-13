@@ -8,7 +8,11 @@
 #if !defined(BOOST_SPIRIT_SYMBOLS_FWD_HPP)
 #define BOOST_SPIRIT_SYMBOLS_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace impl
     {
@@ -27,7 +31,9 @@ namespace boost { namespace spirit {
     template <typename T, typename SetT>
     class symbol_inserter;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

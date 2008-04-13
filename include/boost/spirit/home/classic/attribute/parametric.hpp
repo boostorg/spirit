@@ -9,11 +9,14 @@
 #define BOOST_SPIRIT_PARAMETRIC_HPP
 
 ///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/core/primitives/primitives.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -134,6 +137,8 @@ namespace boost { namespace spirit {
     f_str_p(IterGenAT first, IterGenBT last)
     { return f_strlit<IterGenAT, IterGenBT>(first, last); }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

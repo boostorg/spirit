@@ -15,12 +15,15 @@
 #undef BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE
 #endif
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/parser_context.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/impl/grammar.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -71,7 +74,9 @@ struct grammar
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #undef BOOST_SPIRIT_GRAMMAR_ID
 #undef BOOST_SPIRIT_GRAMMAR_ACCESS

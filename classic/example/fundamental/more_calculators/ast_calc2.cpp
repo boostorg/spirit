@@ -18,7 +18,7 @@
 // tree_val_node
 ////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef char const*         iterator_t;
 typedef tree_match<iterator_t, node_iter_data_factory<> >

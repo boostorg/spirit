@@ -63,7 +63,7 @@ namespace boost { namespace spirit {
 // Framework setup
 
 namespace mpl = boost::mpl;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace std;
 
 

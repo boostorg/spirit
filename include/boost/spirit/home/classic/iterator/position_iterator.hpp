@@ -14,9 +14,12 @@
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/iterator/position_iterator_fwd.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -86,7 +89,9 @@ struct file_position_base : public file_position_without_column_base<String> {
 template <typename PositionT> class position_policy;
 
 ///////////////////////////////////////////////////////////////////////////////
-}} /* namespace boost::spirit */
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} /* namespace BOOST_SPIRIT_CLASSIC_NS */
 
 
 // This must be included here for full compatibility with old MSVC
@@ -94,6 +99,8 @@ template <typename PositionT> class position_policy;
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -423,6 +430,8 @@ protected:
     { _startline = this->base(); }
 };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

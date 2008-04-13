@@ -12,6 +12,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template <typename FirstT, typename RestT>
     struct subrule_list;
 
@@ -199,7 +201,11 @@ namespace boost { namespace spirit {
             }
         };
 
-}}} // namespace boost::spirit::impl
+}
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace boost::spirit::impl
 
 #endif
 

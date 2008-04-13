@@ -13,6 +13,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  operator% is defined as:
@@ -83,6 +85,8 @@ namespace boost { namespace spirit {
     {
         return a >> *(b.derived() >> a);
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

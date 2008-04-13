@@ -13,6 +13,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  alternative class implementation
@@ -80,6 +82,8 @@ namespace boost { namespace spirit {
     {
         return alternative<strlit<wchar_t const*>, B>(a, b.derived());
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

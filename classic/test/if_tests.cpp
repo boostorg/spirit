@@ -8,7 +8,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 // vi:ts=4:sw=4:et
-// Tests for boost::spirit::if_p
+// Tests for BOOST_SPIRIT_CLASSIC_NS::if_p
 // [28-Dec-2002]
 ////////////////////////////////////////////////////////////////////////////////
 #define qDebug 0
@@ -44,8 +44,8 @@ namespace local
     }
 }
 
-typedef ::boost::spirit::rule<> rule_t;
-typedef ::boost::spirit::rule<boost::spirit::no_actions_scanner<>::type >
+typedef ::BOOST_SPIRIT_CLASSIC_NS::rule<> rule_t;
+typedef ::BOOST_SPIRIT_CLASSIC_NS::rule<BOOST_SPIRIT_CLASSIC_NS::no_actions_scanner<>::type >
     no_actions_rule_t;
 
 unsigned int test_count = 0;
@@ -71,7 +71,7 @@ test_number(char const *s, unsigned int wanted, rule_t const &r)
     ++test_count;
 
     number_result = wanted-1;
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s + test_impl::string_length(s), r);
+    ::BOOST_SPIRIT_CLASSIC_NS::parse_info<> m = ::BOOST_SPIRIT_CLASSIC_NS::parse(s, s + test_impl::string_length(s), r);
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
@@ -101,20 +101,20 @@ test_enclosed_fail()
 {
     using namespace std;
 
-    using ::boost::spirit::if_p;
-    using ::boost::spirit::str_p;
-    using ::boost::spirit::nothing_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::if_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::str_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::nothing_p;
 
   cout << "\nfail enclosed parser:\n";
 
     const char *p = "abc";
 
-    ::boost::spirit::strlit<const char*> success_p = str_p(p);
-    ::boost::spirit::strlit<const char*> fail_p = str_p("xxx");
+    ::BOOST_SPIRIT_CLASSIC_NS::strlit<const char*> success_p = str_p(p);
+    ::BOOST_SPIRIT_CLASSIC_NS::strlit<const char*> fail_p = str_p("xxx");
 
-    ::boost::spirit::rule<> r = if_p(success_p)[nothing_p];
+    ::BOOST_SPIRIT_CLASSIC_NS::rule<> r = if_p(success_p)[nothing_p];
 
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(p, r);
+    ::BOOST_SPIRIT_CLASSIC_NS::parse_info<> m = ::BOOST_SPIRIT_CLASSIC_NS::parse(p, r);
 
     if (m.full) {
         cout << "FAILED: if --> match" << endl;
@@ -125,7 +125,7 @@ test_enclosed_fail()
 
     r = if_p(fail_p)[success_p].else_p[nothing_p];
 
-    m = ::boost::spirit::parse(p, r);
+    m = ::BOOST_SPIRIT_CLASSIC_NS::parse(p, r);
 
     if (m.full) {
         cout << "FAILED: else --> match" << endl;
@@ -139,13 +139,13 @@ int
 main()
 {
     using namespace std;
-    using ::boost::spirit::if_p;
-    using ::boost::spirit::uint_p;
-    using ::boost::spirit::oct_p;
-    using ::boost::spirit::hex_p;
-    using ::boost::spirit::str_p;
-    using ::boost::spirit::ch_p;
-    using ::boost::spirit::assign_a;
+    using ::BOOST_SPIRIT_CLASSIC_NS::if_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::uint_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::oct_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::hex_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::str_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::ch_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::assign_a;
 
     cout << "/////////////////////////////////////////////////////////\n";
     cout << "\n";
@@ -178,7 +178,7 @@ main()
             [hex_rule]
         .else_p
         [
-            if_p(::boost::spirit::eps_p(oct_prefix))
+            if_p(::BOOST_SPIRIT_CLASSIC_NS::eps_p(oct_prefix))
                 [oct_rule]
             .else_p
                 [dec_rule]
@@ -213,12 +213,12 @@ main()
     //////////////////////////////////
     // tests for if_p without else-parser
     cout << "\nno-else:\n";
-    rule_t r = if_p(::boost::spirit::eps_p('0'))[oct_rule];
+    rule_t r = if_p(::BOOST_SPIRIT_CLASSIC_NS::eps_p('0'))[oct_rule];
 
     test_number("0", 0, r);
 
     ++test_count;
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse("", r);
+    ::BOOST_SPIRIT_CLASSIC_NS::parse_info<> m = ::BOOST_SPIRIT_CLASSIC_NS::parse("", r);
     if (!m.hit || !m.full || m.length!=0)
     {
         std::cout << "FAILED: \"\" ==> <error>\n";
@@ -228,7 +228,7 @@ main()
         std::cout << "PASSED: \"\" ==> <empty match>\n";
 
     ++test_count;
-    m = ::boost::spirit::parse("junk", r);
+    m = ::BOOST_SPIRIT_CLASSIC_NS::parse("junk", r);
     if (!m.hit || m.full || m.length!=0)
     {
         std::cout << "FAILED: \"junk\" ==> <error>\n";

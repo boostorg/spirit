@@ -68,7 +68,7 @@ namespace
     }
 }
 
-typedef ::boost::spirit::rule<> rule_t;
+typedef ::BOOST_SPIRIT_CLASSIC_NS::rule<> rule_t;
 
 unsigned int test_count = 0;
 unsigned int error_count = 0;
@@ -99,7 +99,7 @@ test_for
 
     iterations_performed = 0;
 
-    ::boost::spirit::parse_info<> m = ::boost::spirit::parse(s, s + test_impl::string_length(s), r);
+    ::BOOST_SPIRIT_CLASSIC_NS::parse_info<> m = ::BOOST_SPIRIT_CLASSIC_NS::parse(s, s + test_impl::string_length(s), r);
 
     bool result = (succeed==m.full)?good:bad;
 
@@ -148,9 +148,9 @@ main()
 {
     using namespace std;
 
-    using boost::spirit::uint_p;
-    using boost::spirit::for_p;
-    using boost::spirit::assign_a;
+    using BOOST_SPIRIT_CLASSIC_NS::uint_p;
+    using BOOST_SPIRIT_CLASSIC_NS::for_p;
+    using BOOST_SPIRIT_CLASSIC_NS::assign_a;
 
 #if qDebug
     SPIRIT_DEBUG_RULE(for_rule);

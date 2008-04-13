@@ -53,13 +53,13 @@ main()
 static const int number_of_calls_to_parse_per_thread=20000;
 
 struct test_closure
-    : boost::spirit::closure<test_closure, char const*>
+    : BOOST_SPIRIT_CLASSIC_NS::closure<test_closure, char const*>
 {
     member1 b;
 };
 
 struct test_grammar
-    : boost::spirit::grammar<test_grammar, test_closure::context_t>
+    : BOOST_SPIRIT_CLASSIC_NS::grammar<test_grammar, test_closure::context_t>
 {
     test_grammar() {}
 
@@ -69,12 +69,12 @@ struct test_grammar
         definition(test_grammar const &self)
         {
             using namespace phoenix;
-            rule = boost::spirit::epsilon_p[self.b = arg1];
+            rule = BOOST_SPIRIT_CLASSIC_NS::epsilon_p[self.b = arg1];
         }
 
-        boost::spirit::rule<ScannerT> const &start() const { return rule; }
+        BOOST_SPIRIT_CLASSIC_NS::rule<ScannerT> const &start() const { return rule; }
 
-        boost::spirit::rule<ScannerT> rule;
+        BOOST_SPIRIT_CLASSIC_NS::rule<ScannerT> rule;
     };
 };
 
@@ -86,7 +86,7 @@ in_thread(void)
     char const text[]="foo";
     for(int i=0; i<number_of_calls_to_parse_per_thread; ++i)
     {
-        boost::spirit::parse(&text[0], text+sizeof(text), g);
+        BOOST_SPIRIT_CLASSIC_NS::parse(&text[0], text+sizeof(text), g);
     }
 }
 

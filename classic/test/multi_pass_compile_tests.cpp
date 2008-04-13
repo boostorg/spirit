@@ -26,7 +26,7 @@
 #include <io.h>    // unlink()
 #endif
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace std;
 
 int main ()

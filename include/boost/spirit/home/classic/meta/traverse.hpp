@@ -9,10 +9,13 @@
 #if !defined(BOOST_SPIRIT_TRAVERSE_HPP)
 #define BOOST_SPIRIT_TRAVERSE_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/meta/impl/traverse.ipp>
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  Post-order traversal of auxilliary parsers.
@@ -212,6 +215,8 @@ namespace boost { namespace spirit
 
     struct identity_transform : transform_policies<identity_transform> {};
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // !defined(BOOST_SPIRIT_TRAVERSE_HPP)

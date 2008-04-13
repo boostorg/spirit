@@ -14,7 +14,7 @@
 #include <boost/detail/lightweight_test.hpp>
 
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 int main()

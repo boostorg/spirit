@@ -18,6 +18,7 @@
 #include <boost/preprocessor/enum_params.hpp>
 #include <boost/preprocessor/repeat.hpp>
 #include <boost/preprocessor/repeat_from_to.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/phoenix/tuples.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp>
 #include <boost/spirit/home/classic/utility/grammar_def_fwd.hpp>
@@ -51,6 +52,8 @@ BOOST_STATIC_ASSERT(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 0);
 
 //////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 struct same {};
 
@@ -297,6 +300,8 @@ private:
 
 #undef BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_GRAMMAR_DEF_HPP

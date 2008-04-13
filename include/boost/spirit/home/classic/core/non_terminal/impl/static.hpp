@@ -19,8 +19,11 @@
 
 #include <memory>   // for placement new
 
-namespace boost { namespace spirit
-{
+#include <boost/spirit/home/classic/namespace.hpp>
+
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     //
     //  Provides thread-safe initialization of a single static instance of T.
@@ -106,6 +109,8 @@ namespace boost { namespace spirit
     template <class T, class Tag>
     once_flag static_<T, Tag>::constructed_ = BOOST_ONCE_INIT;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // include guard

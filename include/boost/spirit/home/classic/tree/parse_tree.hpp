@@ -9,6 +9,7 @@
 #ifndef BOOST_SPIRIT_TREE_PARSE_TREE_HPP
 #define BOOST_SPIRIT_TREE_PARSE_TREE_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/tree/common.hpp>
 #include <boost/spirit/home/classic/core/scanner/scanner.hpp>
 
@@ -17,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 //////////////////////////////////
 // pt_match_policy is simply an id so the correct specialization of tree_policy can be found.
@@ -286,7 +288,9 @@ pt_parse(
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

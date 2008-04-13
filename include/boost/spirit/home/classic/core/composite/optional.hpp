@@ -10,12 +10,15 @@
 #if !defined(BOOST_SPIRIT_OPTIONAL_HPP)
 #define BOOST_SPIRIT_OPTIONAL_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/primitives/primitives.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/meta/as_parser.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -82,7 +85,9 @@ namespace boost { namespace spirit {
     optional<S>
     operator!(parser<S> const& a);
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

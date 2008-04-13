@@ -10,9 +10,12 @@
 
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     namespace impl
     {
         template <typename T>
@@ -52,6 +55,9 @@ namespace boost { namespace spirit
                 &impl_t::stub : 0;
         }
     };
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }}
 
 #endif

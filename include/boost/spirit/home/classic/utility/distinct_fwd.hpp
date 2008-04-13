@@ -8,7 +8,11 @@
 #if !defined(BOOST_SPIRIT_DISTINCT_FWD_HPP)
 #define BOOST_SPIRIT_DISTINCT_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     template<typename CharT> class chset;
 
@@ -24,7 +28,9 @@ namespace boost { namespace spirit {
     template <typename ScannerT = scanner<> >
     class dynamic_distinct_directive;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

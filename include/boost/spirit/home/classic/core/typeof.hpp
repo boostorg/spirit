@@ -13,6 +13,7 @@
 
 #include <boost/typeof/typeof.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>
 #include <boost/spirit/home/classic/core/primitives/numerics_fwd.hpp>
 #include <boost/spirit/home/classic/core/scanner/scanner_fwd.hpp>
@@ -20,6 +21,8 @@
 #include <boost/spirit/home/classic/core/non_terminal/subrule_fwd.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     // parser.hpp
     template <typename IteratorT> struct parse_info;
@@ -105,7 +108,9 @@ namespace boost { namespace spirit {
     template<typename T, typename ValueT, typename ActionT> 
     class ref_const_ref_actor;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 
 
@@ -114,219 +119,223 @@ namespace boost { namespace spirit {
 
 // parser.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::parse_info,1)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::plain_parser_category)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::binary_parser_category)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::unary_parser_category)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::action_parser_category)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::parse_info,1)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::plain_parser_category)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::binary_parser_category)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::unary_parser_category)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::action_parser_category)
 
 
 // nil.hpp (included directly)
 
 #if !defined(BOOST_SPIRIT_NIL_T_TYPEOF_REGISTERED)
 // registration guard to decouple the iterators from the core
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::nil_t)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::nil_t)
 #   define BOOST_SPIRIT_NIL_T_TYPEOF_REGISTERED
 #endif
 
 // match.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::match, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::match, 1)
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::match<boost::spirit::nil_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::match<BOOST_SPIRIT_CLASSIC_NS::nil_t>)
 
 
 // primitives/primitives.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::negated_char_parser, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::chlit, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::range, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::chseq, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::strlit, 1)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::nothing_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::anychar_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::alnum_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::alpha_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::cntrl_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::digit_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::xdigit_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::graph_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::upper_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::lower_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::print_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::punct_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::blank_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::space_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::eol_parser)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::end_parser)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::negated_char_parser, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::chlit, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::range, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::chseq, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::strlit, 1)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::nothing_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::anychar_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::alnum_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::alpha_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::cntrl_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::digit_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::xdigit_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::graph_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::upper_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::lower_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::print_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::punct_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::blank_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::space_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::eol_parser)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::end_parser)
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::chlit<char>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::chlit<wchar_t>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::range<char>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::range<wchar_t>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::chseq<char const *>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::chseq<wchar_t const *>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::strlit<char const *>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::strlit<wchar_t const *>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::chlit<char>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::chlit<wchar_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::range<char>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::range<wchar_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::chseq<char const *>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::chseq<wchar_t const *>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::strlit<char const *>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::strlit<wchar_t const *>)
 
 
 // primitives/numerics.hpp (has forward header)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::int_parser, (class)(int)(unsigned)(int))
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::uint_parser, (class)(int)(unsigned)(int))
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::sign_parser)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::real_parser, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::real_parser_policies, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::ureal_parser_policies, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::strict_real_parser_policies, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::strict_ureal_parser_policies, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::int_parser, (class)(int)(unsigned)(int))
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::uint_parser, (class)(int)(unsigned)(int))
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::sign_parser)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::real_parser, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::real_parser_policies, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::ureal_parser_policies, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::strict_real_parser_policies, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::strict_ureal_parser_policies, 1)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::int_parser, (class)(int))
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::uint_parser, (class)(int))
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::int_parser<boost::int32_t>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::uint_parser<boost::uint32_t>)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::int_parser, (class)(int))
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::uint_parser, (class)(int))
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::int_parser<boost::int32_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::uint_parser<boost::uint32_t>)
 #if !defined(BOOST_NO_INT64_T)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::int_parser<boost::int64_t>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::uint_parser<boost::uint64_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::int_parser<boost::int64_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::uint_parser<boost::uint64_t>)
 #endif
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::real_parser_policies<float>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::real_parser_policies<double>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::ureal_parser_policies<float>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::ureal_parser_policies<double>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::strict_real_parser_policies<float>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::strict_real_parser_policies<double>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::strict_ureal_parser_policies<float>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::strict_ureal_parser_policies<double>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::real_parser_policies<float>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::real_parser_policies<double>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::ureal_parser_policies<float>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::ureal_parser_policies<double>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::strict_real_parser_policies<float>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::strict_real_parser_policies<double>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::strict_ureal_parser_policies<float>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::strict_ureal_parser_policies<double>)
 
 
 // scanner/scanner.hpp (has forward header)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scanner,2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scanner_policies,3)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::iteration_policy)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::action_policy)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::match_policy)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::scanner,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::scanner_policies,3)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::iteration_policy)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::action_policy)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::match_policy)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scanner,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scanner_policies,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::scanner,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::scanner_policies,2)
 
 
 // scanner/skipper.hpp (has forward header)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::skipper_iteration_policy,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::no_skipper_iteration_policy,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::skip_parser_iteration_policy,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::skipper_iteration_policy,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::no_skipper_iteration_policy,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::skip_parser_iteration_policy,2)
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::skipper_iteration_policy<>)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::skip_parser_iteration_policy,1)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::skipper_iteration_policy<>)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::skip_parser_iteration_policy,1)
 
 
 // non_terminal/parser_context.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::parser_context,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::parser_context,1)
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::parser_context<boost::spirit::nil_t>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::parser_context<BOOST_SPIRIT_CLASSIC_NS::nil_t>)
 
 
 // non_terminal/parser_id.hpp
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::parser_id)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::parser_tag, (int))
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::dynamic_parser_tag)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::parser_address_tag)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::parser_id)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::parser_tag, (int))
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::dynamic_parser_tag)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::parser_address_tag)
 
 
 // non_terminal/subrule.hpp (has forward header)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::subrule,(int)(class))
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::subrule_parser,(int)(class)(class))
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::subrule_list,2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::subrules_scanner,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::subrule,(int)(class))
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::subrule_parser,(int)(class)(class))
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::subrule_list,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::subrules_scanner,2)
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::subrule,(int))
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::subrule_parser,(int)(class))
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<0>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<1>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<2>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<3>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<4>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<5>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<6>)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::subrule<7>)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::subrule,(int))
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::subrule_parser,(int)(class))
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<0>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<1>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<2>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<3>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<4>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<5>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<6>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::subrule<7>)
 
 
 // non_terminal/rule.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::rule,3)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::rule,3)
 #if BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 1
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scanner_list,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::scanner_list,BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::scanner_list,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::scanner_list,BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT)
 #endif
 
 
 // non_terminal/grammar.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::grammar,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::grammar,2)
 
 
 // composite.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::action, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::alternative, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::difference, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::exclusive_or, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::intersection, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::sequence, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::sequential_or, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::kleene_star, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::positive, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::optional, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::action, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::alternative, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::difference, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::exclusive_or, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::intersection, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::sequence, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::sequential_or, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::kleene_star, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::positive, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::optional, 1)
 
 
 // composite/directives.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::contiguous, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::inhibit_case, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::inhibit_case_iteration_policy,1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::longest_alternative, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::shortest_alternative, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::min_bounded, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::max_bounded, 2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::bounded, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::contiguous, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::inhibit_case, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::inhibit_case_iteration_policy,1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::longest_alternative, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::shortest_alternative, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::min_bounded, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::max_bounded, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::bounded, 2)
 
 
 // composite/no_actions.hpp
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::no_actions_parser, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::no_actions_action_policy, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::no_actions_parser, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::no_actions_action_policy, 1)
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::no_actions_action_policy<boost::spirit::action_policy>)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::no_actions_action_policy<BOOST_SPIRIT_CLASSIC_NS::action_policy>)
 
 
 // composite/epsilon.hpp
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::epsilon_parser)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::condition_parser, (class)(bool))
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::empty_match_parser, 1)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::negated_empty_match_parser, 1)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::epsilon_parser)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::condition_parser, (class)(bool))
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::empty_match_parser, 1)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::negated_empty_match_parser, 1)
 
 
 #if !defined(BOOST_SPIRIT_ACTOR_TYPEOF_HPP)
 // deprecated assign/push_back actor -- they live somewhere else, now
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::ref_value_actor,2)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::ref_const_ref_actor,3)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::assign_action)
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::push_back_action)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::ref_value_actor,2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::ref_const_ref_actor,3)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::assign_action)
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::push_back_action)
 #endif
 
 
 #if BOOST_WORKAROUND(BOOST_MSVC,BOOST_TESTED_AT(1400)) && BOOST_MSVC >= 1400
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     nil_t & operator* (nil_t);
     nil_t & operator+ (nil_t);
 
-} } // namespace ::boost::spirit::type_of
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+} } // namespace ::BOOST_SPIRIT_CLASSIC_NS
 #endif
 
 

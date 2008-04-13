@@ -33,7 +33,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // used namespaces
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 using namespace std;
 
@@ -99,7 +99,7 @@ private:
 //  used closure type
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct var_decl_closure : boost::spirit::closure<var_decl_closure, declaration_type>
+struct var_decl_closure : BOOST_SPIRIT_CLASSIC_NS::closure<var_decl_closure, declaration_type>
 {
     member1 val;
 };
@@ -116,7 +116,7 @@ class symbols_with_data
 {
 public:
     typedef
-        symbol_inserter<T, boost::spirit::impl::tst<T, char> >
+        symbol_inserter<T, BOOST_SPIRIT_CLASSIC_NS::impl::tst<T, char> >
         symbol_inserter_t;
 
     symbols_with_data(symbol_inserter_t const &add_, InitT const &data_) :
@@ -140,7 +140,7 @@ private:
 template <typename T, typename CharT, typename InitT>
 inline
 symbols_with_data<T, InitT>
-symbols_gen(symbol_inserter<T, boost::spirit::impl::tst<T, CharT> > const &add_,
+symbols_gen(symbol_inserter<T, BOOST_SPIRIT_CLASSIC_NS::impl::tst<T, CharT> > const &add_,
     InitT const &data_)
 {
     return symbols_with_data<T, InitT>(add_, data_);

@@ -16,6 +16,7 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/facilities/intercept.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 
 #include <boost/spirit/home/classic/phoenix/tuples.hpp>
@@ -65,6 +66,8 @@ BOOST_STATIC_ASSERT(BOOST_SPIRIT_SELECT_LIMIT <= 15);
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  The select_default_no_fail and select_default_fail structs are used to 
@@ -83,13 +86,17 @@ namespace boost { namespace spirit {
 struct select_default_no_fail {};
 struct select_default_fail {};
 
-}}  // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}}  // namespace BOOST_SPIRIT_CLASSIC_NS
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/classic/dynamic/impl/select.ipp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TupleT, typename BehaviourT, typename T>
@@ -231,6 +238,8 @@ select_parser_gen<select_default_fail> const select_fail_p =
 #undef BOOST_SPIRIT_SELECT_LIMIT_A
 
 ///////////////////////////////////////////////////////////////////////////////
-}}  // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}}  // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_SELECT_HPP

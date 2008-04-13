@@ -8,7 +8,11 @@
 #ifndef BOOST_SPIRIT_ACTOR_REF_CONST_REF_ACTOR_HPP
 #define BOOST_SPIRIT_ACTOR_REF_CONST_REF_ACTOR_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //  Summary:
@@ -66,6 +70,8 @@ namespace boost { namespace spirit {
             this->act(ref,value_ref); // defined in ActionT
         }
     };
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }}
 

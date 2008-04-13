@@ -10,7 +10,11 @@
 #if !defined(TREE_TO_XML_HPP)
 #define TREE_TO_XML_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace impl {
         template <typename CharT> struct default_string;
@@ -102,7 +106,9 @@ namespace boost { namespace spirit {
         basic_tree_to_xml<char>(ostrm, tree, input_line);
     }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #include <boost/spirit/home/classic/tree/impl/tree_to_xml.ipp>
 

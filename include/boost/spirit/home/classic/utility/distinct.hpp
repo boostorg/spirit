@@ -21,6 +21,8 @@
 
 namespace boost {
     namespace spirit {
+    BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 //-----------------------------------------------------------------------------
 // distinct_parser class
 
@@ -220,6 +222,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
+    BOOST_SPIRIT_CLASSIC_NAMESPACE_END
     } // namespace spirit
 } // namespace boost
 

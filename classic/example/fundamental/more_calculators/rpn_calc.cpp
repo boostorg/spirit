@@ -24,7 +24,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ struct pow_
 //  Notice how power(x, y) is lazily implemented using Phoenix function.
 function<pow_> power;
 
-struct calc_closure : boost::spirit::closure<calc_closure, double, double>
+struct calc_closure : BOOST_SPIRIT_CLASSIC_NS::closure<calc_closure, double, double>
 {
     member1 x;
     member2 y;

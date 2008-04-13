@@ -26,7 +26,7 @@
 #include <iostream>
 #include <string>
 
-namespace spirit = boost::spirit;
+namespace spirit = BOOST_SPIRIT_CLASSIC_NS;
 
 typedef unsigned int uint;
 

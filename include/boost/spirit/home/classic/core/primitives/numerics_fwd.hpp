@@ -8,8 +8,12 @@
 #if !defined(BOOST_SPIRIT_NUMERICS_FWD_HPP)
 #   define BOOST_SPIRIT_NUMERICS_FWD_HPP
 
-namespace boost { namespace spirit 
-{
+#include <boost/spirit/home/classic/namespace.hpp>
+
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  uint_parser class
@@ -76,7 +80,9 @@ namespace boost { namespace spirit
     template <typename T>
     struct strict_real_parser_policies;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

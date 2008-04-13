@@ -33,6 +33,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template <typename DrivedT> struct char_parser;
 
     namespace impl
@@ -461,7 +463,11 @@ namespace boost { namespace spirit {
 
 #endif // !defined(BOOST_NO_CWCTYPE)
 
-}}} // namespace boost::spirit::impl
+}
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace boost::spirit::impl
 
 #ifdef BOOST_MSVC
 #pragma warning (pop)

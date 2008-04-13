@@ -22,7 +22,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace boost;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ public:
     bool
     parse(char const* str)
     {
-        return boost::spirit::parse(str,
+        return BOOST_SPIRIT_CLASSIC_NS::parse(str,
 
             //  Begin grammar
             (

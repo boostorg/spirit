@@ -11,11 +11,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/shared_ptr.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/primitives/primitives.hpp>
 #include <boost/spirit/home/classic/utility/impl/chset/basic_chset.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 namespace utility { namespace impl {
 
@@ -174,7 +177,9 @@ chset_p( ::boost::ulong_long_type ch)
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

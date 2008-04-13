@@ -19,7 +19,7 @@
 # include <boost/spirit/include/classic_ast.hpp>
 # include <boost/spirit/include/classic_tree_to_xml.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 static const int numID = 1;
 static const int funcID = 2;

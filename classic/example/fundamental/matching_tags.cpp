@@ -22,7 +22,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ using namespace phoenix;
 //  HTML/XML like tag matching grammar
 //
 ////////////////////////////////////////////////////////////////////////////
-struct tags_closure : boost::spirit::closure<tags_closure, string> 
+struct tags_closure : BOOST_SPIRIT_CLASSIC_NS::closure<tags_closure, string> 
 {
     member1 tag;
 };

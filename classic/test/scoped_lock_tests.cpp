@@ -43,10 +43,10 @@ main()
 {
     banner();
 
-    using boost::spirit::rule;
-    using boost::spirit::scoped_lock_d;
-    using boost::spirit::parse_info;
-    using boost::spirit::parse;
+    using BOOST_SPIRIT_CLASSIC_NS::rule;
+    using BOOST_SPIRIT_CLASSIC_NS::scoped_lock_d;
+    using BOOST_SPIRIT_CLASSIC_NS::parse_info;
+    using BOOST_SPIRIT_CLASSIC_NS::parse;
     using boost::mutex;
 
     mutex m;

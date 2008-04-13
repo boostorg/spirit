@@ -9,12 +9,15 @@
 #ifndef BOOST_SPIRIT_WHILE_HPP
 #define BOOST_SPIRIT_WHILE_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/dynamic/impl/conditions.ipp>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace impl {
 
@@ -179,6 +182,8 @@ while_p(CondT const& cond)
 // Usage: spirit::do_p[Body].while_p(Condition)
 impl::do_parser_gen const do_p = impl::do_parser_gen();
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_WHILE_HPP

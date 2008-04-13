@@ -10,14 +10,17 @@
 #define BOOST_SPIRIT_NUMERICS_HPP
 
 #include <boost/config.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/directives.hpp>
 
 #include <boost/spirit/home/classic/core/primitives/numerics_fwd.hpp>
 #include <boost/spirit/home/classic/core/primitives/impl/numerics.ipp>
 
-namespace boost { namespace spirit 
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  uint_parser class
@@ -279,6 +282,8 @@ namespace boost { namespace spirit
         strict_real_p
             = real_parser<double, strict_real_parser_policies<double> >();
     
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

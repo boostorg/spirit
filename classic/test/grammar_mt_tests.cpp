@@ -40,20 +40,20 @@ main()
 static boost::mutex simple_mutex;
 static int simple_definition_count = 0;
 
-struct simple : public boost::spirit::grammar<simple>
+struct simple : public BOOST_SPIRIT_CLASSIC_NS::grammar<simple>
 {
     template <typename ScannerT>
     struct definition
     {
         definition(simple const& /*self*/)
         {
-            top = boost::spirit::epsilon_p;
+            top = BOOST_SPIRIT_CLASSIC_NS::epsilon_p;
             boost::mutex::scoped_lock lock(simple_mutex);
             simple_definition_count++;
         }
 
-        boost::spirit::rule<ScannerT> top;
-        boost::spirit::rule<ScannerT> const &start() const { return top; }
+        BOOST_SPIRIT_CLASSIC_NS::rule<ScannerT> top;
+        BOOST_SPIRIT_CLASSIC_NS::rule<ScannerT> const &start() const { return top; }
     };
 };
 
@@ -94,7 +94,7 @@ static void
 make_definition(GrammarT &g)
 {
     char const *text="blah";
-    boost::spirit::scanner<> s(text, text+4);
+    BOOST_SPIRIT_CLASSIC_NS::scanner<> s(text, text+4);
 
     g.parse(s);
 }
@@ -104,7 +104,7 @@ static void
 make_definition3(GrammarT &g)
 {
     char const *text="blah";
-    boost::spirit::scanner<> s(text, text+4);
+    BOOST_SPIRIT_CLASSIC_NS::scanner<> s(text, text+4);
 
     g.parse(s);
     nap();
@@ -306,7 +306,7 @@ main()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-static boost::spirit::parse_info<char const *> pi;
+static BOOST_SPIRIT_CLASSIC_NS::parse_info<char const *> pi;
 
 ////////////////////////////////////////////////
 // These macros are used with BOOST_TEST

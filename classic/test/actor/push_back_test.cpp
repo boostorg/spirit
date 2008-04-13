@@ -26,7 +26,7 @@
 template<typename ContainerT>
 void push_back_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "one,two,three";
     const char* cp_first = cp;

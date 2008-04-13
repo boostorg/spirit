@@ -22,8 +22,8 @@ iterator end = data_
 
 int main()
 {
-    typedef boost::spirit::scanner<> scanner;
-    typedef boost::spirit::impl::tst<void *, char_type> symbols;
+    typedef BOOST_SPIRIT_CLASSIC_NS::scanner<> scanner;
+    typedef BOOST_SPIRIT_CLASSIC_NS::impl::tst<void *, char_type> symbols;
 
     symbols symbols_;
 

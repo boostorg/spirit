@@ -28,6 +28,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 #if BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 1
 
         template <
@@ -401,6 +403,8 @@ namespace boost { namespace spirit {
 #endif // BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 1
 
     } // namespace impl
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

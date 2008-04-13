@@ -12,7 +12,7 @@
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 int the_var_to_be_tested = 0;
 
 namespace local

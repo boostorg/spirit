@@ -14,6 +14,8 @@ namespace boost
 {
     namespace spirit
     {
+    BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -139,6 +141,8 @@ namespace boost
             context_wrap.pre_parse(this_, scan_wrap);                               \
             result_t hit = parse_main(scan);                                        \
             return context_wrap.post_parse(hit, this_, scan_wrap);
+
+    BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
     } // namespace spirit
 } // namespace boost

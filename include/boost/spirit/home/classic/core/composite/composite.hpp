@@ -10,9 +10,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/compressed_pair.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -132,6 +135,8 @@ namespace boost { namespace spirit {
         boost::compressed_pair<left_embed_t, right_embed_t> subj;
     };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

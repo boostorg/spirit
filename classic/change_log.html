@@ -8,6 +8,36 @@
 <body>
 
 <h2>Spirit Change Log</h2>
+<h2>1.8.7</h2>
+<ul>
+  <li>Integrated the Spirit V1.8.x code base with Spirit V2. Spirit V1.8.x is
+      now called 
+    <strong>Spirit Classic.</strong> Even if the directory
+      structure has changed (the 
+    <strong>Spirit Classic</strong> headers are now moved to the 
+      '$BOOST_ROOT/boost/spirit/home/classic' directory), we created forwarding 
+      headers allowing to compile existing applications without any change. 
+      These forwarding headers are deprecated, though, which will result in 
+      corresponding warnings generated for each of the headers. The forwarding 
+      headers are expected to be removed in the future.
+    <br />
+      The recommended way of using Spirit Classic is now to include header
+      files from the directory '$BOOST_ROOT/boost/spirit/include'. All files of 
+      <strong>Spirit Classic</strong>
+      have now a 'classic_' prefixed to their name. For example the include
+    <br/>
+      <br><code>&nbsp;&nbsp;#include &lt;boost/spirit/core/core.hpp&gt;</code><br/> 
+    <br/>
+    now should be written as: 
+    <br/>
+       <br/><code>&nbsp;&nbsp;#include &lt;boost/spirit/include/classic_core.hpp&gt;</code><br/>
+    <br/>      
+    To avoid namespace conflicts with the new Spirit V2 library we moved <strong>Spirit
+      Classic</strong> into the <tt>namespace boost::spirit::classic</tt>. This change will be automatically&nbsp;deactivated whenever the deprecated include files are
+    being used. This ensures full backwards compatibility for existing applications.
+    <br />
+    For more details about this change please consult the documentation.</li>
+</ul>
 <h2>1.8.6</h2>
 <ul>
   <li>Fixed a integer overflow bug preventing to fail parsing on certain large integers. This bug was reported and fixed by Michael Andersen Nexø</li>

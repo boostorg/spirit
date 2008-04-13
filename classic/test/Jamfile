@@ -46,17 +46,17 @@ local opt-metrowerks = <toolset>cw:<optimization>speed ;
 local multi-threading = <library>/boost/thread//boost_thread 
                         <threading>multi <define>BOOST_ALL_NO_LIB=1 ;
 
-    test-suite "spirit.core.kernel"
+    test-suite "spirit.classic.core.kernel"
         : [ spirit-run match_tests.cpp ]
           [ spirit-run post_skips.cpp ]
         ;
 
-    test-suite "spirit.core.scanner"
+    test-suite "spirit.classic.core.scanner"
         : [ spirit-run scanner_tests.cpp ]
           [ spirit-run scanner_value_type_tests.cpp ]
         ;
 
-    test-suite "spirit.core.primitive"
+    test-suite "spirit.classic.core.primitive"
         : [ spirit-run primitives_tests.cpp ]
           [ spirit-run char_strings_test.cpp ]
           [ compile-fail char_strings_test_fail.cpp ]
@@ -64,7 +64,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run custom_real_parser.cpp ]
         ;
 
-    test-suite "spirit.core.composite"
+    test-suite "spirit.classic.core.composite"
         : [ spirit-run epsilon_tests.cpp ]
           [ spirit-run negated_eps_p_test.cpp ]
           [ spirit-run operators_tests.cpp ]
@@ -72,7 +72,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run shortest_alternative_tests.cpp ]
         ;
 
-    test-suite "spirit.core.non_terminal"
+    test-suite "spirit.classic.core.non_terminal"
         : [ spirit-run rule_tests.cpp ]
           [ spirit-run owi_st_tests.cpp ]
           [ spirit-run grammar_tests.cpp : : : $(opt-metrowerks) ]
@@ -84,23 +84,23 @@ local multi-threading = <library>/boost/thread//boost_thread
         ;
 
     # traverse_tests defines SPIRIT_DEBUG, don't run the tests twice
-    test-suite "spirit.meta"
+    test-suite "spirit.classic.meta"
         : [ spirit-run fundamental_tests.cpp ]
           [ spirit-run parser_traits_tests.cpp ]
           [ spirit-run traverse_tests.cpp : : : <toolset>intel:<debug-symbols>off ]
         ;
 
-    test-suite "spirit.attribute"
+    test-suite "spirit.classic.attribute"
         : [ spirit-run closure_tests.cpp : : : $(opt-metrowerks) ]
           [        run bug_000008.cpp : : : $(multi-threading) ]
           [ spirit-run parametric_tests.cpp ]
         ;
 
-    test-suite "spirit.error_handling"
+    test-suite "spirit.classic.error_handling"
         : [ spirit-run exception_tests.cpp ]
         ;
 
-    test-suite "spirit.tree"
+    test-suite "spirit.classic.tree"
         : [ spirit-run ast_calc_tests.cpp ]
           [ spirit-run group_match_bug.cpp ]
           [ spirit-run repeat_ast_tests.cpp ]
@@ -111,7 +111,7 @@ local multi-threading = <library>/boost/thread//boost_thread
 # temporarily removed from the test suite. tree_tests are not finished, yet.
 #         [ spirit-run tree_tests.cpp ]
 
-    test-suite "spirit.dynamic"
+    test-suite "spirit.classic.dynamic"
         : [ compile if_p_as_parser_tests.cpp ]
           [ compile while_p_as_parser_tests.cpp ]
           [ compile for_p_as_parser_tests.cpp ]
@@ -128,7 +128,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run select_p_with_rule.cpp ]
         ;
 
-    test-suite "spirit.utility.parsers"
+    test-suite "spirit.classic.utility.parsers"
         : [ spirit-run chset_tests.cpp ]
           [ spirit-run confix_tests.cpp ]
           [ spirit-run loops_tests.cpp ]
@@ -140,12 +140,12 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ spirit-run grammar_def_test.cpp ]
         ;
 
-    test-suite "spirit.utility.support"
+    test-suite "spirit.classic.utility.support"
         # This test doesn't actually use multiple threads
         : [ spirit-run scoped_lock_tests.cpp : : : $(multi-threading) ]
         ;
 
-    test-suite "spirit.iterator"
+    test-suite "spirit.classic.iterator"
         : [ spirit-run fixed_size_queue_tests.cpp ]
           [ compile-fail fixed_size_queue_fail_tests.cpp ]
           [ spirit-run file_iterator_tests.cpp ]
@@ -155,7 +155,7 @@ local multi-threading = <library>/boost/thread//boost_thread
           [ compile multi_pass_compile_tests.cpp ]
         ;
 
-    test-suite "spirit.small_bug_fixes"
+    test-suite "spirit.classic.small_bug_fixes"
         : [ spirit-run bug_fixes.cpp ]
         ;
 
@@ -174,11 +174,11 @@ local multi-threading = <library>/boost/thread//boost_thread
         swap_test
         ;
 
-    test-suite "spirit.utility.actors"
+    test-suite "spirit.classic.utility.actors"
         : [ spirit-run actor/$(actor_test_sources).cpp ]
         ;
 
-    test-suite "spirit.typeof-support"
+    test-suite "spirit.classic.typeof-support"
         : [ compile typeof_support/typeof_actor.cpp ]
           [ compile typeof_support/typeof_attribute.cpp ]
           [ compile typeof_support/typeof_core.cpp ]

@@ -10,7 +10,11 @@
 
 #include <cstddef>
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     namespace multi_pass_policies
     {
@@ -35,7 +39,9 @@ namespace boost { namespace spirit {
     >
     class multi_pass;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

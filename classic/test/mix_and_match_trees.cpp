@@ -19,7 +19,7 @@
 #include <boost/spirit/include/classic_ast.hpp>
 #include <boost/spirit/include/classic_parse_tree.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 struct my_grammar : grammar<my_grammar>
 {

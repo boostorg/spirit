@@ -17,7 +17,7 @@
 
 void swap_action_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "63";
     const char* cp_first = cp;

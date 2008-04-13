@@ -29,7 +29,7 @@ using namespace std;
 #include <boost/spirit/include/classic_select.hpp>
 #include <boost/spirit/include/classic_closure.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 namespace test_grammars {
 
@@ -79,7 +79,7 @@ namespace test_grammars {
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Test the switch_p usage given an actor as the switch condition
-    struct select_result : public boost::spirit::closure<select_result, int>
+    struct select_result : public BOOST_SPIRIT_CLASSIC_NS::closure<select_result, int>
     {
         member1 val;
     };

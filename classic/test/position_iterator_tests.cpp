@@ -21,7 +21,7 @@
 #include <boost/spirit/include/classic_position_iterator.hpp>
 
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 namespace mpl = boost::mpl;
 
 ///////////////////////////////////////////////////////////////////////////////

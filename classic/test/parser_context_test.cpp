@@ -11,7 +11,7 @@
 #include <boost/spirit/include/classic_assign_actor.hpp>
 
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 int main()
 {

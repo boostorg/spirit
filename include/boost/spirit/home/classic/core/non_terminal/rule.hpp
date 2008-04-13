@@ -29,6 +29,7 @@
 BOOST_STATIC_ASSERT(BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 0);
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/non_terminal/impl/rule.ipp>
 
 #if BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 1
@@ -37,6 +38,8 @@ BOOST_STATIC_ASSERT(BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 0);
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 #if BOOST_SPIRIT_RULE_SCANNERTYPE_LIMIT > 1
 
@@ -165,6 +168,8 @@ namespace boost { namespace spirit {
         scoped_ptr<abstract_parser_t> ptr;
     };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

@@ -10,13 +10,16 @@
 #define BOOST_SPIRIT_LAZY_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/phoenix/actor.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ////////////////////////////////////////////////////////////////////////////
     //
     // lazy_parser, holds phoenix actor which returns a spirit parser.
@@ -56,6 +59,8 @@ namespace boost { namespace spirit
     lazy_parser<ActorT> lazy_p(ActorT const& actor)
     { return lazy_parser<ActorT>(actor); }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_LAZY_HPP

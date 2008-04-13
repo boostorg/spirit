@@ -10,11 +10,14 @@
 
 #include <boost/config.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/scanner/scanner.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template <typename ParserT, typename ActionT>
     class action; //  forward declaration
 
@@ -211,7 +214,9 @@ namespace boost { namespace spirit
         CharT const*            str,
         parser<DerivedT> const& p);
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

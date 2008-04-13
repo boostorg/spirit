@@ -10,6 +10,7 @@
 
 #include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <exception>
@@ -17,6 +18,8 @@
 #include <boost/spirit/home/classic/error_handling/exceptions_fwd.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -89,7 +92,7 @@ namespace boost { namespace spirit {
         virtual const char*
         what() const throw()
         {
-            return "boost::spirit::parser_error";
+            return "BOOST_SPIRIT_CLASSIC_NS::parser_error";
         }
 
         IteratorT where;
@@ -353,7 +356,9 @@ namespace boost { namespace spirit {
         }
     };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #include <boost/spirit/home/classic/error_handling/impl/exceptions.ipp>
 #endif

@@ -15,7 +15,7 @@
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/typeof/typeof.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 #define RULE(name, definition) BOOST_TYPEOF(definition) name = definition
 

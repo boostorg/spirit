@@ -15,6 +15,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     struct sign_parser; // forward declaration only
 
     namespace impl
@@ -469,6 +471,8 @@ namespace boost { namespace spirit {
     }   //  namespace impl
 
 ///////////////////////////////////////////////////////////////////////////////
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #endif

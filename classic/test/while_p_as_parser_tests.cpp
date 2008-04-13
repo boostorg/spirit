@@ -22,21 +22,21 @@ main()
     //////////////////////////////////
     // compile time check wether as_parser<> works for while_p
 
-    ::boost::spirit::rule<> r;
+    ::BOOST_SPIRIT_CLASSIC_NS::rule<> r;
 
-    r = ::boost::spirit::while_p('-')['-'];
-    r = ::boost::spirit::while_p("-")["-"];
+    r = ::BOOST_SPIRIT_CLASSIC_NS::while_p('-')['-'];
+    r = ::BOOST_SPIRIT_CLASSIC_NS::while_p("-")["-"];
 
-    r = ::boost::spirit::while_p(&fun)["foo"];
-    r = ::boost::spirit::while_p(ftor())["foo"];
+    r = ::BOOST_SPIRIT_CLASSIC_NS::while_p(&fun)["foo"];
+    r = ::BOOST_SPIRIT_CLASSIC_NS::while_p(ftor())["foo"];
 
-    r = ::boost::spirit::while_p(r)[r];
+    r = ::BOOST_SPIRIT_CLASSIC_NS::while_p(r)[r];
 
-    r = ::boost::spirit::do_p['-'].while_p('-');
-    r = ::boost::spirit::do_p["-"].while_p("-");
+    r = ::BOOST_SPIRIT_CLASSIC_NS::do_p['-'].while_p('-');
+    r = ::BOOST_SPIRIT_CLASSIC_NS::do_p["-"].while_p("-");
 
-    r = ::boost::spirit::do_p["foo"].while_p(&fun);
-    r = ::boost::spirit::do_p["foo"].while_p(ftor());
+    r = ::BOOST_SPIRIT_CLASSIC_NS::do_p["foo"].while_p(&fun);
+    r = ::BOOST_SPIRIT_CLASSIC_NS::do_p["foo"].while_p(ftor());
 
-    r = ::boost::spirit::do_p[r].while_p(r);
+    r = ::BOOST_SPIRIT_CLASSIC_NS::do_p[r].while_p(r);
 }

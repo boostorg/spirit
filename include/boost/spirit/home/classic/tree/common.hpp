@@ -24,6 +24,7 @@
 
 #include <boost/ref.hpp>
 #include <boost/call_traits.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 
@@ -36,6 +37,8 @@
 #include <boost/spirit/home/classic/tree/common_fwd.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 template <typename T>
 void swap(tree_node<T>& a, tree_node<T>& b);
@@ -523,7 +526,7 @@ namespace impl {
     inline void cp_swap(T& t1, T& t2)
     {
         using std::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
         using boost::swap;
         swap(t1, t2);
     }
@@ -1050,7 +1053,7 @@ struct infix_node_op
 
         using std::swap;
         using boost::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1102,7 +1105,7 @@ struct discard_first_node_op
 
         using std::swap;
         using boost::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1166,7 +1169,7 @@ struct discard_last_node_op
 
         using std::swap;
         using boost::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1226,7 +1229,7 @@ struct inner_node_op
 
         using std::swap;
         using boost::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // copying the tree nodes is expensive, since it may copy a whole
         // tree.  swapping them is cheap, so swap the nodes we want into
@@ -1549,7 +1552,7 @@ struct tree_parse_info
     {
         using std::swap;
         using boost::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // use auto_ptr like ownership for the trees data member
         swap(trees, pi.trees);
@@ -1569,14 +1572,16 @@ struct tree_parse_info
     {
         using std::swap;
         using boost::swap;
-        using boost::spirit::swap;
+        using BOOST_SPIRIT_CLASSIC_NS::swap;
 
         // use auto_ptr like ownership for the trees data member
         swap(trees, trees_);
     }
 };
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

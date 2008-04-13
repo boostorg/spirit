@@ -9,14 +9,17 @@
 #ifndef BOOST_SPIRIT_FOR_HPP
 #define BOOST_SPIRIT_FOR_HPP
 ////////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/dynamic/impl/conditions.ipp>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace boost { namespace spirit
-{
+namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     namespace impl
     {
 
@@ -131,7 +134,7 @@ namespace boost { namespace spirit
                     this->step();
                 }
 
-                boost::spirit::nil_t attr;
+                BOOST_SPIRIT_CLASSIC_NS::nil_t attr;
                 return scan.create_match
                     (length, attr, save, scan.first);
             }
@@ -177,6 +180,8 @@ namespace boost { namespace spirit
             (init_f, condition, step_f);
     }
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_FOR_HPP

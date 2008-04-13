@@ -10,6 +10,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/config.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/meta/as_parser.hpp>
 #include <boost/spirit/home/classic/core/composite/operators.hpp>
 
@@ -18,6 +19,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -386,6 +389,8 @@ comment_nest_p(OpenT const &open, CloseT const &close)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

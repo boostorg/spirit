@@ -18,7 +18,7 @@
 #include <fstream>
 #include <string>
 
-using namespace boost::spirit; 
+using namespace BOOST_SPIRIT_CLASSIC_NS; 
 
 ///////////////////////////////////////////////////////////////////////////////
 struct calculator : public grammar<calculator>

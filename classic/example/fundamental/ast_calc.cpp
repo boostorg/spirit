@@ -32,7 +32,7 @@
 // This example shows how to use an AST.
 ////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef char const*         iterator_t;
 typedef tree_match<iterator_t> parse_tree_match_t;

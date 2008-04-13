@@ -17,7 +17,7 @@
 #include "impl/string_length.hpp"
 
 using namespace test;
-static boost::spirit::parse_info<char const *> pi;
+static BOOST_SPIRIT_CLASSIC_NS::parse_info<char const *> pi;
 
 ////////////////////////////////////////////////
 // These macros are used with BOOST_TEST
@@ -33,7 +33,7 @@ static void
 parse(char const *s, ParserT const &p, bool match)
 {
     
-    pi = boost::spirit::parse(s, s + test_impl::string_length(s), p);
+    pi = BOOST_SPIRIT_CLASSIC_NS::parse(s, s + test_impl::string_length(s), p);
     if (match)
     {
         BOOST_TEST(matches);
@@ -58,14 +58,14 @@ epsilon_as_primitive()
     // This test case also is a compile time check wether
     // both eps_p and epsilon_p are present.
 
-    parse(empty, boost::spirit::epsilon_p, true);
+    parse(empty, BOOST_SPIRIT_CLASSIC_NS::epsilon_p, true);
     BOOST_TEST(full_match);
-    parse(not_empty, boost::spirit::epsilon_p, true);
+    parse(not_empty, BOOST_SPIRIT_CLASSIC_NS::epsilon_p, true);
     BOOST_TEST(partial_match);
 
-    parse(empty, boost::spirit::eps_p, true);
+    parse(empty, BOOST_SPIRIT_CLASSIC_NS::eps_p, true);
     BOOST_TEST(full_match);
-    parse(not_empty, boost::spirit::eps_p, true);
+    parse(not_empty, BOOST_SPIRIT_CLASSIC_NS::eps_p, true);
     BOOST_TEST(partial_match);
 }
 
@@ -77,11 +77,11 @@ static void
 epsilon_as_parser_generator_for_functors()
 {
     bool       flag = false;
-    parse(empty, boost::spirit::epsilon_p(var(flag)), flag);
+    parse(empty, BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag)), flag);
     BOOST_TEST(no_match);
 
     flag = true;
-    parse(empty, boost::spirit::epsilon_p(var(flag)), flag);
+    parse(empty, BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag)), flag);
     BOOST_TEST(full_match);
 }
 
@@ -96,13 +96,13 @@ epsilon_as_parser_generator_for_parsers()
     // as body-parser for another invokation of epsilon_p
 
     bool        flag = false;
-    parse(empty, boost::spirit::epsilon_p(
-            boost::spirit::epsilon_p(var(flag))), flag);
+    parse(empty, BOOST_SPIRIT_CLASSIC_NS::epsilon_p(
+            BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag))), flag);
     BOOST_TEST(no_match);
 
     flag = true;
-    parse(empty, boost::spirit::epsilon_p(
-            boost::spirit::epsilon_p(var(flag))), flag);
+    parse(empty, BOOST_SPIRIT_CLASSIC_NS::epsilon_p(
+            BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag))), flag);
     BOOST_TEST(full_match);
 }
 
@@ -112,15 +112,15 @@ static void
 negation_operator_for_epsilon()
 {
     bool       flag = false;
-    parse(empty, ~boost::spirit::epsilon_p(var(flag)), !flag);
+    parse(empty, ~BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag)), !flag);
     BOOST_TEST(full_match);
-    parse(empty, ~~boost::spirit::epsilon_p(var(flag)), flag);
+    parse(empty, ~~BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag)), flag);
     BOOST_TEST(no_match);
 
     flag = true;
-    parse(empty, ~boost::spirit::epsilon_p(var(flag)), !flag);
+    parse(empty, ~BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag)), !flag);
     BOOST_TEST(no_match);
-    parse(empty, ~~boost::spirit::epsilon_p(var(flag)), flag);
+    parse(empty, ~~BOOST_SPIRIT_CLASSIC_NS::epsilon_p(var(flag)), flag);
     BOOST_TEST(full_match);
 }
 

@@ -283,7 +283,8 @@
 #   include <boost/detail/workaround.hpp>
 #   include <boost/call_traits.hpp>
 #   include <boost/typeof/typeof.hpp>
-#   include <boost/spirit/core/parser.hpp>
+#   include <boost/spirit/home/classic/namespace.hpp>
+#   include <boost/spirit/home/classic/core/parser.hpp>
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #   include <boost/preprocessor/cat.hpp>
 #   include <boost/preprocessor/seq/seq.hpp>
@@ -326,15 +327,19 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Defines an action placeholder. Use at namespace scope.
 #   define BOOST_SPIRIT_ACTION_PLACEHOLDER(name)                               \
-      BOOST_SPIRIT_RP_AP_IMPL(name,::boost::spirit::type_of)
+      BOOST_SPIRIT_RP_AP_IMPL(name,::BOOST_SPIRIT_CLASSIC_NS::type_of)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Utilities to embed parsers by reference.
 namespace boost
 {
   namespace spirit
   {
+    BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     template<class P> class parser_reference;
     template<class P> parser_reference<P> embed_by_reference(parser<P> const &);
+
+    BOOST_SPIRIT_CLASSIC_NAMESPACE_END
   }
 }
 //==============================================================================
@@ -404,7 +409,7 @@ namespace boost
                                                                                \
       template< BOOST_SPIRIT_RP_TPL_PARAMS(pars,acts,typename __,1) >          \
       class name_t                                                             \
-        : public ::boost::spirit::parser< name_t                               \
+        : public ::BOOST_SPIRIT_CLASSIC_NS::parser< name_t                               \
                        < BOOST_SPIRIT_RP_TPL_PARAMS(pars,acts,__,0) > >        \
       {                                                                        \
         class __rule                                                           \
@@ -414,7 +419,7 @@ namespace boost
           BOOST_SPIRIT_RP_EMIT(MV_STATIC,mbrs,BOOST_PP_IDENTITY(typename))     \
         public:                                                                \
           BOOST_TYPEOF_NESTED_TYPEDEF_TPL(__expr,                              \
-            ::boost::spirit::type_of::depend_on_type<__Dummy>(x) );            \
+            ::BOOST_SPIRIT_CLASSIC_NS::type_of::depend_on_type<__Dummy>(x) );            \
         };                                                                     \
                                                                                \
       public:                                                                  \
@@ -451,16 +456,16 @@ namespace boost
                                                                                \
         template<typename Scanner> struct result                               \
         {                                                                      \
-          typedef typename ::boost::spirit::parser_result<                     \
+          typedef typename ::BOOST_SPIRIT_CLASSIC_NS::parser_result<                     \
                            typename __rule::__expr::type, Scanner>::type type; \
         };                                                                     \
                                                                                \
         template<typename Scanner>                                             \
-        typename ::boost::spirit::parser_result<self_t, Scanner>::type         \
+        typename ::BOOST_SPIRIT_CLASSIC_NS::parser_result<self_t, Scanner>::type         \
         parse(Scanner const & s) const { return __parser.parse(s); }           \
                                                                                \
         BOOST_SPIRIT_RP_IF(na,SPIRIT_RP_AP_HANDLER,5)                          \
-                                  (name_t,np,acts,na,::boost::spirit::type_of) \
+                                  (name_t,np,acts,na,::BOOST_SPIRIT_CLASSIC_NS::type_of) \
       };                                                                       \
                                                                                \
       BOOST_PP_IF(np,BOOST_SPIRIT_RP_GEN_FUNC,BOOST_SPIRIT_RP_GLOB_VAR)        \
@@ -483,7 +488,7 @@ namespace boost
       BOOST_SPIRIT_RP_REGISTER_TYPE(name_t)                                    \
                                                                                \
       class name_t                                                             \
-        : public ::boost::spirit::parser< name_t >                             \
+        : public ::BOOST_SPIRIT_CLASSIC_NS::parser< name_t >                             \
       {                                                                        \
         class __rule                                                           \
         {                                                                      \
@@ -519,12 +524,12 @@ namespace boost
                                                                                \
         template<typename Scanner> struct result                               \
         {                                                                      \
-          typedef typename ::boost::spirit::parser_result<                     \
+          typedef typename ::BOOST_SPIRIT_CLASSIC_NS::parser_result<                     \
                                    __rule::__expr::type, Scanner>::type type;  \
         };                                                                     \
                                                                                \
         template<typename Scanner>                                             \
-        typename ::boost::spirit::parser_result<self_t, Scanner>::type         \
+        typename ::BOOST_SPIRIT_CLASSIC_NS::parser_result<self_t, Scanner>::type         \
         parse(Scanner const & s) const { return __parser.parse(s); }           \
       };                                                                       \
                                                                                \
@@ -627,7 +632,7 @@ namespace boost
       name( BOOST_PP_ENUM_BINARY_PARAMS(np,T, const & p) )                     \
       { return name_t < void BOOST_PP_ENUM_TRAILING_PARAMS(np,T) >             \
                  (BOOST_PP_ENUM_PARAMS(np,p) BOOST_PP_ENUM_TRAILING_PARAMS(na, \
-                ::boost::spirit::type_of::nop_functor() BOOST_PP_INTERCEPT) ); \
+                ::BOOST_SPIRIT_CLASSIC_NS::type_of::nop_functor() BOOST_PP_INTERCEPT) ); \
       }
 // RP_GEN_OPAQUE
 //
@@ -642,7 +647,7 @@ namespace boost
 // parameters
 #   define BOOST_SPIRIT_RP_GLOB_VAR(name,name_t,np,na)                         \
       static name_t <void> const name = name_t <void>(BOOST_PP_ENUM_PARAMS(na, \
-                ::boost::spirit::type_of::nop_functor() BOOST_PP_INTERCEPT) );
+                ::BOOST_SPIRIT_CLASSIC_NS::type_of::nop_functor() BOOST_PP_INTERCEPT) );
 
 // RP_GLOB_OPAQUE
 //
@@ -761,17 +766,17 @@ namespace boost
 #   define BOOST_SPIRIT_RP__AP_TEMPLATE_PARAMS(r,data,i,elem)                  \
       , BOOST_PP_CAT(BOOST_PP_TUPLE_ELEM(2,0,data),i)                          \
       BOOST_PP_EXPR_IIF(BOOST_PP_TUPLE_ELEM(2,1,data),                         \
-          = ::boost::spirit::type_of::nop_functor)
+          = ::BOOST_SPIRIT_CLASSIC_NS::type_of::nop_functor)
 
 // AP_REBOUND_ARGS
 #   define BOOST_SPIRIT_RP__AP_REBOUND_ARGS(r,data,i,elem)                     \
       BOOST_PP_COMMA_IF(i)                                                     \
-      ::boost::spirit::type_of::get_placeholdee< __action_placeholder:: elem > \
+      ::BOOST_SPIRIT_CLASSIC_NS::type_of::get_placeholdee< __action_placeholder:: elem > \
                                                            ( __a ## i , data )
 
 // AP_REBOUND_TPL_ARGS
 #   define BOOST_SPIRIT_RP__AP_REBOUND_TPL_ARGS(r,data,i,elem)                 \
-      , typename ::boost::spirit::type_of::placeholdee<                        \
+      , typename ::BOOST_SPIRIT_CLASSIC_NS::type_of::placeholdee<                        \
                   __action_placeholder:: elem , __A ## i, data >::type 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -848,6 +853,8 @@ namespace boost
 
 namespace boost { namespace spirit { 
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
   // Wrapper to embed a parser by reference
 
   template<class P> class parser_reference 
@@ -874,18 +881,24 @@ namespace boost { namespace spirit {
   };
 
   template<class P> parser_reference<P> 
-  embed_by_reference(::boost::spirit::parser<P> & p)
+  embed_by_reference(::BOOST_SPIRIT_CLASSIC_NS::parser<P> & p)
   { return p; }
 
-} } // namespace ::boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::parser_reference, 1)
+} } // namespace ::BOOST_SPIRIT_CLASSIC_NS
+
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::parser_reference, 1)
 
 //------------------------------------------------------------------------------
 // Expression templates for action placeholders.
 //------------------------------------------------------------------------------
 
-namespace boost { namespace spirit { namespace type_of { 
+namespace boost { namespace spirit { 
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
+namespace type_of { 
 
   // No-operation functor
 
@@ -1078,16 +1091,24 @@ namespace boost { namespace spirit { namespace type_of {
     { return concatenate_actions(a,c.action()); }
   };
 
-} } } // namespace ::boost::spirit::type_of
+} 
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::spirit::type_of::nop_functor)
-BOOST_TYPEOF_REGISTER_TEMPLATE(boost::spirit::type_of::composite_action,2)
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+} } // namespace ::BOOST_SPIRIT_CLASSIC_NS::type_of
+
+BOOST_TYPEOF_REGISTER_TYPE(BOOST_SPIRIT_CLASSIC_NS::type_of::nop_functor)
+BOOST_TYPEOF_REGISTER_TEMPLATE(BOOST_SPIRIT_CLASSIC_NS::type_of::composite_action,2)
 
 //------------------------------------------------------------------------------
 // Misc.utilities
 //------------------------------------------------------------------------------
 
-namespace boost { namespace spirit { namespace type_of {
+namespace boost { namespace spirit { 
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
+namespace type_of {
 
   // Utility function to create a dependency to a template argument.
 
@@ -1100,8 +1121,8 @@ namespace boost { namespace spirit { namespace type_of {
   // trick.
 
   #define BOOST_SPIRIT_RP_TYPE(x) \
-    ::boost::spirit::type_of::remove_special_fptr \
-      < ::boost::spirit::type_of::special_result & (*) x >::type
+    ::BOOST_SPIRIT_CLASSIC_NS::type_of::remove_special_fptr \
+      < ::BOOST_SPIRIT_CLASSIC_NS::type_of::special_result & (*) x >::type
 
   struct special_result;
 
@@ -1109,7 +1130,11 @@ namespace boost { namespace spirit { namespace type_of {
   template<typename T> struct remove_special_fptr< special_result & (*)(T) >
   { typedef T type; };
 
-} } } // namespace ::boost::spirit::type_of
+} 
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+} } // namespace ::BOOST_SPIRIT_CLASSIC_NS::type_of
 
 //------------------------------------------------------------------------------
 #endif 

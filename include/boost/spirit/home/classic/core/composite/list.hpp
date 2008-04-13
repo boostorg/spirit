@@ -10,12 +10,15 @@
 #if !defined(BOOST_SPIRIT_LIST_HPP)
 #define BOOST_SPIRIT_LIST_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/primitives/primitives.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/meta/as_parser.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -61,7 +64,9 @@ namespace boost { namespace spirit {
         kleene_star<sequence<B, strlit<wchar_t const*> > > >
     operator%(wchar_t const* a, parser<B> const& b);
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

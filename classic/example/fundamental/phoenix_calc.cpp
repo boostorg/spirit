@@ -21,7 +21,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 ////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ using namespace phoenix;
 //          driver code that uses the calculator below).
 //
 ////////////////////////////////////////////////////////////////////////////
-struct calc_closure : boost::spirit::closure<calc_closure, double>
+struct calc_closure : BOOST_SPIRIT_CLASSIC_NS::closure<calc_closure, double>
 {
     member1 val;
 };

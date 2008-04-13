@@ -7,7 +7,7 @@
     http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 // vi:ts=4:sw=4:et
-// Tests for boost::spirit::while_p
+// Tests for BOOST_SPIRIT_CLASSIC_NS::while_p
 // [28-Dec-2002]
 ////////////////////////////////////////////////////////////////////////////////
 #define qDebug 0
@@ -68,7 +68,7 @@ namespace
     }
 }
 
-typedef boost::spirit::rule<> rule_t;
+typedef BOOST_SPIRIT_CLASSIC_NS::rule<> rule_t;
 
 unsigned int test_count = 0;
 unsigned int error_count = 0;
@@ -96,7 +96,7 @@ test_while(
     number_result = 0;
     iterations_performed = 0;
 
-    boost::spirit::parse_info<> m = boost::spirit::parse(s, s+ test_impl::string_length(s), r);
+    BOOST_SPIRIT_CLASSIC_NS::parse_info<> m = BOOST_SPIRIT_CLASSIC_NS::parse(s, s+ test_impl::string_length(s), r);
 
     bool result = wanted == kError?(m.full?bad:good): (number_result==wanted);
 
@@ -150,10 +150,10 @@ int
 main()
 {
     using namespace std;
-    using ::boost::spirit::uint_p;
-    using ::boost::spirit::while_p;
-    using ::boost::spirit::do_p;
-    using ::boost::spirit::assign_a;
+    using ::BOOST_SPIRIT_CLASSIC_NS::uint_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::while_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::do_p;
+    using ::BOOST_SPIRIT_CLASSIC_NS::assign_a;
 
 #if qDebug
     BOOST_SPIRIT_DEBUG_RULE(while_rule);

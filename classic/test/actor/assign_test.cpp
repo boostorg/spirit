@@ -17,7 +17,7 @@
 
 void assign_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "63";
     const char* cp_first = cp;
@@ -38,7 +38,7 @@ void assign_test()
 
 void assign_test_ref()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
     
 
     const char* cp = "63";

@@ -35,6 +35,8 @@ std::string BOOST_SPIRIT_GETSTRING(std::strstream& ss)
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 ///////////////////////////////////////////////////////////////////////////////
 //  from actions.hpp
     template <typename ParserT, typename ActionT>
@@ -541,6 +543,8 @@ namespace boost { namespace spirit {
     }
 
 ///////////////////////////////////////////////////////////////////////////////
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #undef BOOST_SPIRIT_SSTREAM

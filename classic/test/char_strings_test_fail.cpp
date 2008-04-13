@@ -12,8 +12,8 @@
 
 int main()
 {
-    using boost::spirit::rule;
-    using boost::spirit::ch_p;
+    using BOOST_SPIRIT_CLASSIC_NS::rule;
+    using BOOST_SPIRIT_CLASSIC_NS::ch_p;
 
     rule<> chars = ch_p("string");
 }

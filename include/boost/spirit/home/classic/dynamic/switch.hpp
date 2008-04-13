@@ -40,6 +40,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 BOOST_STATIC_ASSERT(BOOST_SPIRIT_SWITCH_CASE_LIMIT > 0);
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/config.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
@@ -48,6 +49,8 @@ BOOST_STATIC_ASSERT(BOOST_SPIRIT_SWITCH_CASE_LIMIT > 0);
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -249,6 +252,8 @@ struct default_parser_gen
 default_parser_gen const default_p = default_parser_gen();
 
 ///////////////////////////////////////////////////////////////////////////////
-}}  // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}}  // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // BOOST_SPIRIT_SWITCH_HPP

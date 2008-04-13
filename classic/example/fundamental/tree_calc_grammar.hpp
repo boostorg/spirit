@@ -9,7 +9,7 @@
 #ifndef BOOST_SPIRIT_TREE_CALC_GRAMMAR_HPP_
 #define BOOST_SPIRIT_TREE_CALC_GRAMMAR_HPP_
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ///////////////////////////////////////////////////////////////////////////////
 //

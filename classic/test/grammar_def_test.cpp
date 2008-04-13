@@ -11,13 +11,13 @@
 #include <boost/spirit/include/classic_grammar_def.hpp> 
 
 struct my_grammar1
-    : boost::spirit::grammar<my_grammar1>
+    : BOOST_SPIRIT_CLASSIC_NS::grammar<my_grammar1>
 {
     template <typename Scanner>
     struct definition
-        : boost::spirit::grammar_def<
-            boost::spirit::rule<Scanner>,
-            boost::spirit::same
+        : BOOST_SPIRIT_CLASSIC_NS::grammar_def<
+            BOOST_SPIRIT_CLASSIC_NS::rule<Scanner>,
+            BOOST_SPIRIT_CLASSIC_NS::same
         >
     {
         definition(my_grammar1 const &)
@@ -25,31 +25,31 @@ struct my_grammar1
             BOOST_SPIRIT_DEBUG_NODE(start_rule1);
             BOOST_SPIRIT_DEBUG_NODE(start_rule2);
 
-            start_rule1 = boost::spirit::str_p("int");
-            start_rule2 = boost::spirit::int_p;
+            start_rule1 = BOOST_SPIRIT_CLASSIC_NS::str_p("int");
+            start_rule2 = BOOST_SPIRIT_CLASSIC_NS::int_p;
 
             this->start_parsers(start_rule1, start_rule2);
         }
 
-        boost::spirit::rule<Scanner>
+        BOOST_SPIRIT_CLASSIC_NS::rule<Scanner>
             start_rule1,
             start_rule2;
     };
 };
 
-struct my_closure : boost::spirit::closure<my_closure, int>
+struct my_closure : BOOST_SPIRIT_CLASSIC_NS::closure<my_closure, int>
 {
     member1 value;
 };
 
 struct my_grammar2
-    : boost::spirit::grammar<my_grammar2, my_closure::context_t>
+    : BOOST_SPIRIT_CLASSIC_NS::grammar<my_grammar2, my_closure::context_t>
 {
     template <typename Scanner>
     struct definition
-        : boost::spirit::grammar_def<
-            boost::spirit::rule<Scanner>,
-            boost::spirit::same
+        : BOOST_SPIRIT_CLASSIC_NS::grammar_def<
+            BOOST_SPIRIT_CLASSIC_NS::rule<Scanner>,
+            BOOST_SPIRIT_CLASSIC_NS::same
         >
     {
         definition(my_grammar2 const &)
@@ -57,13 +57,13 @@ struct my_grammar2
             BOOST_SPIRIT_DEBUG_NODE(start_rule1);
             BOOST_SPIRIT_DEBUG_NODE(start_rule2);
 
-            start_rule1 = boost::spirit::str_p("int");
-            start_rule2 = boost::spirit::int_p;
+            start_rule1 = BOOST_SPIRIT_CLASSIC_NS::str_p("int");
+            start_rule2 = BOOST_SPIRIT_CLASSIC_NS::int_p;
 
             this->start_parsers(start_rule1, start_rule2);
         }
 
-        boost::spirit::rule<Scanner>
+        BOOST_SPIRIT_CLASSIC_NS::rule<Scanner>
             start_rule1,
             start_rule2;
     };
@@ -80,6 +80,6 @@ int main()
     parse(
         "int 5",
         g1.use_parser<0>() >> g2.use_parser<1>(),
-        boost::spirit::space_p
+        BOOST_SPIRIT_CLASSIC_NS::space_p
     );
 }

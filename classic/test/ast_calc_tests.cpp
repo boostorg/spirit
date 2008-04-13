@@ -19,7 +19,7 @@
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -122,7 +122,7 @@ struct dyn_calculator : public grammar<dyn_calculator>
 
 ////////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 typedef char const*                         iterator_t;
 typedef tree_match<iterator_t>              parse_tree_match_t;

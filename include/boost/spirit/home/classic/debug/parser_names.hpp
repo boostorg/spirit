@@ -12,9 +12,12 @@
 #if defined(BOOST_SPIRIT_DEBUG)
 
 //////////////////////////////////
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -239,7 +242,9 @@ namespace boost { namespace spirit {
     trace_parser(init_closure_parser<ParserT, ActorTupleT> const& p);
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 //////////////////////////////////
 #include <boost/spirit/home/classic/debug/impl/parser_names.ipp>

@@ -21,9 +21,12 @@
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/and.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/primitives/primitives.hpp> // for iscntrl_
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -306,7 +309,9 @@ namespace impl {
 
 #endif // !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif // defined(BOOST_SPIRIT_DEBUG)
 

@@ -12,6 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     struct space_parser;
     template <typename BaseT>
     struct no_skipper_iteration_policy;
@@ -170,6 +172,8 @@ namespace boost { namespace spirit {
             last++;
         return parse(str, last, p, skip);
     }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

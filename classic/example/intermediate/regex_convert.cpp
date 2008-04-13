@@ -49,7 +49,7 @@
 #define BOOST_SPIRIT_NO_REGEX_LIB
 #include <boost/spirit/include/classic_regex.hpp>
 
-using namespace boost::spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace std;
 
 namespace {

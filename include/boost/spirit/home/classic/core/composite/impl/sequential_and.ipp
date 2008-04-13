@@ -13,6 +13,8 @@
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  sequential-and operators implementation
@@ -81,6 +83,8 @@ namespace boost { namespace spirit {
         return sequence<strlit<wchar_t const*>, B>(a, b.derived());
     }
     
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #endif

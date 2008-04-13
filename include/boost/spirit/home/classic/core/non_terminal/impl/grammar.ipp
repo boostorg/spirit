@@ -28,6 +28,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 template <typename DerivedT, typename ContextT>
 struct grammar;
 
@@ -398,6 +400,8 @@ struct grammar_definition
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
 }} // namespace boost::spirit
 
 #endif

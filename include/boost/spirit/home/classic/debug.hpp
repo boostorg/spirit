@@ -89,47 +89,56 @@
     ///////////////////////////////////////////////////////////////////////////
     #if !defined(BOOST_SPIRIT_DEBUG_RULE)
     #define BOOST_SPIRIT_DEBUG_RULE(r)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, BOOST_SPIRIT_DEBUG_TRACENODE)
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, #r, BOOST_SPIRIT_DEBUG_TRACENODE)
     #endif // !defined(BOOST_SPIRIT_DEBUG_RULE)
 
     #if !defined(BOOST_SPIRIT_DEBUG_NODE)
     #define BOOST_SPIRIT_DEBUG_NODE(r)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, BOOST_SPIRIT_DEBUG_TRACENODE)
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, #r, BOOST_SPIRIT_DEBUG_TRACENODE)
     #endif // !defined(BOOST_SPIRIT_DEBUG_NODE)
 
     #if !defined(BOOST_SPIRIT_DEBUG_GRAMMAR)
     #define BOOST_SPIRIT_DEBUG_GRAMMAR(r)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, BOOST_SPIRIT_DEBUG_TRACENODE)
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, #r, BOOST_SPIRIT_DEBUG_TRACENODE)
     #endif // !defined(BOOST_SPIRIT_DEBUG_GRAMMAR)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_RULE)
     #define BOOST_SPIRIT_DEBUG_TRACE_RULE(r, t)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, (t))
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, #r, (t))
     #endif // !defined(BOOST_SPIRIT_TRACE_RULE)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE)
     #define BOOST_SPIRIT_DEBUG_TRACE_NODE(r, t)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, (t))
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, #r, (t))
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR)
     #define BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR(r, t)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, #r, (t))
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, #r, (t))
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_RULE_NAME)
     #define BOOST_SPIRIT_DEBUG_TRACE_RULE_NAME(r, n, t)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, (n), (t))
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, (n), (t))
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_RULE_NAME)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME)
     #define BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME(r, n, t)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, (n), (t))
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, (n), (t))
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_NODE_NAME)
 
     #if !defined(BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME)
     #define BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME(r, n, t)    \
-        ::boost::spirit::impl::get_node_registry().register_node(&r, (n), (t))
+        ::BOOST_SPIRIT_CLASSIC_NS::impl::get_node_registry(). \
+            register_node(&r, (n), (t))
     #endif // !defined(BOOST_SPIRIT_DEBUG_TRACE_GRAMMAR_NAME)
 
     //////////////////////////////////

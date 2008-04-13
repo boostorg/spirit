@@ -8,9 +8,12 @@
 #if !defined(BOOST_SPIRIT_CONFIX_FWD_HPP)
 #define BOOST_SPIRIT_CONFIX_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     struct is_nested;
     struct non_nested;
@@ -27,7 +30,9 @@ namespace boost { namespace spirit {
     template<typename OpenT, typename CloseT>
     struct comment_nest_parser;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

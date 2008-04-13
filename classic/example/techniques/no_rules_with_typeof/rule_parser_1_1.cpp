@@ -30,7 +30,7 @@
 
 namespace my_project { namespace my_module {
 
-  using namespace boost::spirit;
+  using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 
   // A semantic action.
@@ -75,7 +75,7 @@ namespace my_project { namespace my_module {
 
   bool parse_line(char const * str)
   {
-    return boost::spirit::parse(str,line,skipper).full;
+    return BOOST_SPIRIT_CLASSIC_NS::parse(str,line,skipper).full;
   }
 
   #undef BOOST_SPIRIT__NAMESPACE

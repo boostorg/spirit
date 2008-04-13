@@ -14,9 +14,9 @@
 
 int main()
 {
-    using boost::spirit::rule;
-    using boost::spirit::str_p;
-    using boost::spirit::ch_p;
+    using BOOST_SPIRIT_CLASSIC_NS::rule;
+    using BOOST_SPIRIT_CLASSIC_NS::str_p;
+    using BOOST_SPIRIT_CLASSIC_NS::ch_p;
 
     using std::string;
 

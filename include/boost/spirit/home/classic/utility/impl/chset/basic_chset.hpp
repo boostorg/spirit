@@ -12,8 +12,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <bitset>
 #include <boost/spirit/home/classic/utility/impl/chset/range_run.hpp>
+#include <boost/spirit/home/classic/namespace.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -94,7 +97,9 @@ namespace boost { namespace spirit {
 
 #endif
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

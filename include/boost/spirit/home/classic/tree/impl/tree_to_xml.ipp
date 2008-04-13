@@ -40,6 +40,8 @@ std::string BOOST_SPIRIT_GETSTRING(std::ostrstream& ss)
 
 namespace boost { namespace spirit {
 
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
 namespace impl {
 
     ///////////////////////////////////////////////////////////////////////////
@@ -327,7 +329,7 @@ namespace impl {
     template <typename AssocContainerT>
     inline typename AssocContainerT::value_type::second_type
     get_rulename (AssocContainerT const &id_to_name_map,
-        boost::spirit::parser_id const &id)
+        BOOST_SPIRIT_CLASSIC_NS::parser_id const &id)
     {
         typename AssocContainerT::const_iterator it = id_to_name_map.find(id);
         if (it != id_to_name_map.end())
@@ -510,8 +512,10 @@ basic_tree_to_xml (std::basic_ostream<CharT> &ostrm, TreeNodeT const &tree,
         std::basic_string<CharT> const &input_line)
 {
     return basic_tree_to_xml<CharT>(ostrm, tree, input_line,
-        std::map<boost::spirit::parser_id, std::basic_string<CharT> >());
+        std::map<BOOST_SPIRIT_CLASSIC_NS::parser_id, std::basic_string<CharT> >());
 }
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace boost::spirit
 

@@ -14,6 +14,7 @@
 #include <cctype>
 #include <boost/limits.hpp>
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/debug.hpp>
 
 #include <boost/spirit/home/classic/utility/escape_char_fwd.hpp>
@@ -21,6 +22,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -174,6 +177,8 @@ const escape_char_parser<c_escapes> c_escape_ch_p =
     escape_char_parser<c_escapes>();
 
 ///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif

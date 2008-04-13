@@ -8,9 +8,12 @@
 #if !defined(BOOST_SPIRIT_TREE_AST_FWD_HPP)
 #define BOOST_SPIRIT_TREE_AST_FWD_HPP
 
+#include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>
 
 namespace boost { namespace spirit {
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
 
     template <
         typename MatchPolicyT, 
@@ -31,7 +34,9 @@ namespace boost { namespace spirit {
 
     struct root_node_op;
 
-}} // namespace boost::spirit
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS
 
 #endif
 

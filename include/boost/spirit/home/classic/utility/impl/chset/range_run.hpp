@@ -11,8 +11,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <vector>
 
+#include <boost/spirit/home/classic/namespace.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace utility { namespace impl {
+namespace boost { namespace spirit { 
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
+
+namespace utility { namespace impl {
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -22,7 +28,7 @@ namespace boost { namespace spirit { namespace utility { namespace impl {
     //      the implementation of the range_run class.
     //
     //      { Low level implementation detail }
-    //      { Not to be confused with boost::spirit::range }
+    //      { Not to be confused with BOOST_SPIRIT_CLASSIC_NS::range }
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename CharT>
@@ -110,7 +116,11 @@ namespace boost { namespace spirit { namespace utility { namespace impl {
         run_t run;
     };
 
-}}}} // namespace boost::spirit::utility::impl
+}}
+
+BOOST_SPIRIT_CLASSIC_NAMESPACE_END
+
+}} // namespace BOOST_SPIRIT_CLASSIC_NS::utility::impl
 
 #endif
 

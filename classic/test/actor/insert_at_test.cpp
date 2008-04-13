@@ -11,15 +11,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "action_tests.hpp"
-#include <boost/spirit.hpp>
 #include <map>
 #include <cstring>
 #include <iostream>
+#include <boost/spirit/include/classic_spirit.hpp>
 #include <boost/spirit/include/classic_insert_at_actor.hpp>
 
 void insert_at_single_argument_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "(one,0),(two,1),(three,2)";
     const char* cp_first = cp;
@@ -61,7 +61,7 @@ void insert_at_single_argument_test()
 
 void insert_at_two_arguments_test()
 {
-    using namespace boost::spirit;
+    using namespace BOOST_SPIRIT_CLASSIC_NS;
 
     const char* cp = "(0,one),(1,two),(2,three)";
     const char* cp_first = cp;
