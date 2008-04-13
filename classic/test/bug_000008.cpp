@@ -11,7 +11,7 @@
   // or https://sf.net/mailarchive/forum.php?thread_id=2692308&forum_id=1595
   // for a description of the bug being tested for by this program
   //
-  // the problem should be solved with version 1.3 of phoenix/closures.hpp
+  // the problem should be solved with version 1.3 of phoenix/closures.hpp>
 
 #if defined(BOOST_SPIRIT_DEBUG) && defined(__GNUC__) && defined(__WIN32__)
 // It seems that MinGW has some problems with threads and iostream ?
