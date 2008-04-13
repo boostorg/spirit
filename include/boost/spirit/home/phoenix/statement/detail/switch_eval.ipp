@@ -23,7 +23,7 @@
 
 #define BOOST_PP_ITERATION_PARAMS_1                                             \
     (3, (3, BOOST_PP_DEC(BOOST_PP_DEC(PHOENIX_COMPOSITE_LIMIT)),                \
-    "boost/spirit/phoenix/statement/detail/switch_eval.ipp"))
+    "boost/spirit/home/phoenix/statement/detail/switch_eval.ipp"))
 #include BOOST_PP_ITERATE()
 
 #undef PHOENIX_CASE_ITEM
