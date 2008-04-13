@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_DIRECTIVE
 #define BOOST_SPIRIT_INCLUDE_KARMA_DIRECTIVE
-#include <boost/spirit/include/directive.hpp>
+#include <boost/spirit/home/karma/directive.hpp>
 #endif

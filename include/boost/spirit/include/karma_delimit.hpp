@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_DELIMIT
 #define BOOST_SPIRIT_INCLUDE_KARMA_DELIMIT
-#include <boost/spirit/include/delimit.hpp>
+#include <boost/spirit/home/karma/delimit.hpp>
 #endif

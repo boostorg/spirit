@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_META_FUNCTION_HOLDER
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_META_FUNCTION_HOLDER
-#include <boost/spirit/include/meta_function_holder.hpp>
+#include <boost/spirit/home/support/auxiliary/meta_function_holder.hpp>
 #endif

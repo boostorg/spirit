@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_STANDARD
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_STANDARD
-#include <boost/spirit/include/standard.hpp>
+#include <boost/spirit/home/support/standard.hpp>
 #endif

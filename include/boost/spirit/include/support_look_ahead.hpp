@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_LOOK_AHEAD
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_LOOK_AHEAD
-#include <boost/spirit/include/look_ahead.hpp>
+#include <boost/spirit/home/support/iterators/look_ahead.hpp>
 #endif

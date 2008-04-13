@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_SAFE_BOOL
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_SAFE_BOOL
-#include <boost/spirit/include/safe_bool.hpp>
+#include <boost/spirit/home/support/safe_bool.hpp>
 #endif

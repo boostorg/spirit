@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ATTRIBUTE_OF
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ATTRIBUTE_OF
-#include <boost/spirit/include/attribute_of.hpp>
+#include <boost/spirit/home/support/attribute_of.hpp>
 #endif

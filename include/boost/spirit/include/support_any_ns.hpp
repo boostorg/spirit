@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ANY_NS
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ANY_NS
-#include <boost/spirit/include/any_ns.hpp>
+#include <boost/spirit/home/support/algorithm/any_ns.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ISO8859_1
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ISO8859_1
-#include <boost/spirit/include/iso8859_1.hpp>
+#include <boost/spirit/home/support/iso8859_1.hpp>
 #endif

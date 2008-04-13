@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_DIRECTIVE
 #define BOOST_SPIRIT_INCLUDE_QI_DIRECTIVE
-#include <boost/spirit/include/directive.hpp>
+#include <boost/spirit/home/qi/directive.hpp>
 #endif

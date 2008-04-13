@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ASCII
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ASCII
-#include <boost/spirit/include/ascii.hpp>
+#include <boost/spirit/home/support/ascii.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_COMPONENT
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_COMPONENT
-#include <boost/spirit/include/component.hpp>
+#include <boost/spirit/home/support/component.hpp>
 #endif

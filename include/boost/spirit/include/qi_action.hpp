@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_ACTION
 #define BOOST_SPIRIT_INCLUDE_QI_ACTION
-#include <boost/spirit/include/action.hpp>
+#include <boost/spirit/home/qi/action.hpp>
 #endif

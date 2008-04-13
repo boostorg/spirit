@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_STANDARD_WIDE
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_STANDARD_WIDE
-#include <boost/spirit/include/standard_wide.hpp>
+#include <boost/spirit/home/support/standard_wide.hpp>
 #endif

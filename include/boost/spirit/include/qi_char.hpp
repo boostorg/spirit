@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_CHAR
 #define BOOST_SPIRIT_INCLUDE_QI_CHAR
-#include <boost/spirit/include/char.hpp>
+#include <boost/spirit/home/qi/char.hpp>
 #endif

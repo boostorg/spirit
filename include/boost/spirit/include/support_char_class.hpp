@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_CHAR_CLASS
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_CHAR_CLASS
-#include <boost/spirit/include/char_class.hpp>
+#include <boost/spirit/home/support/char_class.hpp>
 #endif

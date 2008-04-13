@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_META_GRAMMAR
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_META_GRAMMAR
-#include <boost/spirit/include/meta_grammar.hpp>
+#include <boost/spirit/home/support/meta_grammar.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ARGUMENT
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ARGUMENT
-#include <boost/spirit/include/argument.hpp>
+#include <boost/spirit/home/support/argument.hpp>
 #endif

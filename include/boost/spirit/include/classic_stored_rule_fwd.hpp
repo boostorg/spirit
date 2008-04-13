@@ -6,7 +6,7 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_STORED_RULE_FWD
-#define BOOST_SPIRIT_INCLUDE_STORED_RULE_FWD
+#ifndef BOOST_SPIRIT_INCLUDE_CLASSIC_STORED_RULE_FWD
+#define BOOST_SPIRIT_INCLUDE_CLASSIC_STORED_RULE_FWD
 #include <boost/spirit/home/classic/dynamic/stored_rule_fwd.hpp>
 #endif

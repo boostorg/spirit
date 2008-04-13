@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_MULTI_PASS
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_MULTI_PASS
-#include <boost/spirit/include/multi_pass.hpp>
+#include <boost/spirit/home/support/multi_pass.hpp>
 #endif

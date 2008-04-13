@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_LEX_TOKENIZE_AND_PARSE
 #define BOOST_SPIRIT_INCLUDE_LEX_TOKENIZE_AND_PARSE
-#include <boost/spirit/include/tokenize_and_parse.hpp>
+#include <boost/spirit/home/lex/tokenize_and_parse.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_BASIC_TRANSFORMS
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_BASIC_TRANSFORMS
-#include <boost/spirit/include/basic_transforms.hpp>
+#include <boost/spirit/home/support/meta_grammar/basic_transforms.hpp>
 #endif

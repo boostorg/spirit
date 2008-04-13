@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_NUMERIC
 #define BOOST_SPIRIT_INCLUDE_KARMA_NUMERIC
-#include <boost/spirit/include/numeric.hpp>
+#include <boost/spirit/home/karma/numeric.hpp>
 #endif

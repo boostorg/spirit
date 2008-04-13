@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_LEX_SET_STATE
 #define BOOST_SPIRIT_INCLUDE_LEX_SET_STATE
-#include <boost/spirit/include/set_state.hpp>
+#include <boost/spirit/home/lex/set_state.hpp>
 #endif

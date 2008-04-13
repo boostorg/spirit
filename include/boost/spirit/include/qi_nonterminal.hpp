@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_NONTERMINAL
 #define BOOST_SPIRIT_INCLUDE_QI_NONTERMINAL
-#include <boost/spirit/include/nonterminal.hpp>
+#include <boost/spirit/home/qi/nonterminal.hpp>
 #endif

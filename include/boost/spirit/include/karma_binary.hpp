@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_BINARY
 #define BOOST_SPIRIT_INCLUDE_KARMA_BINARY
-#include <boost/spirit/include/binary.hpp>
+#include <boost/spirit/home/karma/binary.hpp>
 #endif

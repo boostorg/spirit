@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_MODIFIER
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_MODIFIER
-#include <boost/spirit/include/modifier.hpp>
+#include <boost/spirit/home/support/modifier.hpp>
 #endif

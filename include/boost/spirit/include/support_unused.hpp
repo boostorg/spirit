@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_UNUSED
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_UNUSED
-#include <boost/spirit/include/unused.hpp>
+#include <boost/spirit/home/support/unused.hpp>
 #endif

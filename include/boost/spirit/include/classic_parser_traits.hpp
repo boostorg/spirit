@@ -6,7 +6,7 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_PARSER_TRAITS
-#define BOOST_SPIRIT_INCLUDE_PARSER_TRAITS
+#ifndef BOOST_SPIRIT_INCLUDE_CLASSIC_PARSER_TRAITS
+#define BOOST_SPIRIT_INCLUDE_CLASSIC_PARSER_TRAITS
 #include <boost/spirit/home/classic/meta/parser_traits.hpp>
 #endif

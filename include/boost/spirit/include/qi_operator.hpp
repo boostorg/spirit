@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_OPERATOR
 #define BOOST_SPIRIT_INCLUDE_QI_OPERATOR
-#include <boost/spirit/include/operator.hpp>
+#include <boost/spirit/home/qi/operator.hpp>
 #endif

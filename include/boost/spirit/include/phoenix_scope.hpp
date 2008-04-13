@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_PHOENIX_SCOPE
 #define BOOST_SPIRIT_INCLUDE_PHOENIX_SCOPE
-#include <boost/spirit/include/scope.hpp>
+#include <boost/spirit/home/phoenix/scope.hpp>
 #endif

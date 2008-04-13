@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_NONTERMINAL
 #define BOOST_SPIRIT_INCLUDE_KARMA_NONTERMINAL
-#include <boost/spirit/include/nonterminal.hpp>
+#include <boost/spirit/home/karma/nonterminal.hpp>
 #endif

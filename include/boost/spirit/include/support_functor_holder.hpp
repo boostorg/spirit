@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_FUNCTOR_HOLDER
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_FUNCTOR_HOLDER
-#include <boost/spirit/include/functor_holder.hpp>
+#include <boost/spirit/home/support/auxiliary/functor_holder.hpp>
 #endif

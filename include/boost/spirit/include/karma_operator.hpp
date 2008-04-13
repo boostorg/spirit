@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_OPERATOR
 #define BOOST_SPIRIT_INCLUDE_KARMA_OPERATOR
-#include <boost/spirit/include/operator.hpp>
+#include <boost/spirit/home/karma/operator.hpp>
 #endif

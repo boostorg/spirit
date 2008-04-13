@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_LEX_LEXER_LEXERTL
 #define BOOST_SPIRIT_INCLUDE_LEX_LEXER_LEXERTL
-#include <boost/spirit/include/lexer_lexertl.hpp>
+#include <boost/spirit/home/lex/lexer_lexertl.hpp>
 #endif

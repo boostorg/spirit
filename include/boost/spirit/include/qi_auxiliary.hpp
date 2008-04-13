@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_AUXILIARY
 #define BOOST_SPIRIT_INCLUDE_QI_AUXILIARY
-#include <boost/spirit/include/auxiliary.hpp>
+#include <boost/spirit/home/qi/auxiliary.hpp>
 #endif

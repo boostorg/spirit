@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_GRAMMAR
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_GRAMMAR
-#include <boost/spirit/include/grammar.hpp>
+#include <boost/spirit/home/support/meta_grammar/grammar.hpp>
 #endif

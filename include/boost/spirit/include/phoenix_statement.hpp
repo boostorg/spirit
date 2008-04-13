@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_PHOENIX_STATEMENT
 #define BOOST_SPIRIT_INCLUDE_PHOENIX_STATEMENT
-#include <boost/spirit/include/statement.hpp>
+#include <boost/spirit/home/phoenix/statement.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_GENERATE
 #define BOOST_SPIRIT_INCLUDE_KARMA_GENERATE
-#include <boost/spirit/include/generate.hpp>
+#include <boost/spirit/home/karma/generate.hpp>
 #endif

@@ -6,7 +6,7 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_GRAMMAR_DEF
-#define BOOST_SPIRIT_INCLUDE_GRAMMAR_DEF
+#ifndef BOOST_SPIRIT_INCLUDE_CLASSIC_GRAMMAR_DEF
+#define BOOST_SPIRIT_INCLUDE_CLASSIC_GRAMMAR_DEF
 #include <boost/spirit/home/classic/utility/grammar_def.hpp>
 #endif

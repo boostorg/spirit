@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_PLACEHOLDERS
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_PLACEHOLDERS
-#include <boost/spirit/include/placeholders.hpp>
+#include <boost/spirit/home/support/placeholders.hpp>
 #endif

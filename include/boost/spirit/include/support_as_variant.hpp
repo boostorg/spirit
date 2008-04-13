@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_AS_VARIANT
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_AS_VARIANT
-#include <boost/spirit/include/as_variant.hpp>
+#include <boost/spirit/home/support/as_variant.hpp>
 #endif

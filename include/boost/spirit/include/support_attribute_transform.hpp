@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ATTRIBUTE_TRANSFORM
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ATTRIBUTE_TRANSFORM
-#include <boost/spirit/include/attribute_transform.hpp>
+#include <boost/spirit/home/support/attribute_transform.hpp>
 #endif

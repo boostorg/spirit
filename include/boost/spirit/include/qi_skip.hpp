@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_SKIP
 #define BOOST_SPIRIT_INCLUDE_QI_SKIP
-#include <boost/spirit/include/skip.hpp>
+#include <boost/spirit/home/qi/skip.hpp>
 #endif

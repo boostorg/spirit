@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_LOCALS
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_LOCALS
-#include <boost/spirit/include/locals.hpp>
+#include <boost/spirit/home/support/nonterminal/locals.hpp>
 #endif

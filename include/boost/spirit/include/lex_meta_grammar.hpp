@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_LEX_META_GRAMMAR
 #define BOOST_SPIRIT_INCLUDE_LEX_META_GRAMMAR
-#include <boost/spirit/include/meta_grammar.hpp>
+#include <boost/spirit/home/lex/meta_grammar.hpp>
 #endif

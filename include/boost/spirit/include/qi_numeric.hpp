@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_NUMERIC
 #define BOOST_SPIRIT_INCLUDE_QI_NUMERIC
-#include <boost/spirit/include/numeric.hpp>
+#include <boost/spirit/home/qi/numeric.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_BASIC_RULES
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_BASIC_RULES
-#include <boost/spirit/include/basic_rules.hpp>
+#include <boost/spirit/home/support/meta_grammar/basic_rules.hpp>
 #endif

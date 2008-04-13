@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_DEBUG
 #define BOOST_SPIRIT_INCLUDE_QI_DEBUG
-#include <boost/spirit/include/debug.hpp>
+#include <boost/spirit/home/qi/debug.hpp>
 #endif

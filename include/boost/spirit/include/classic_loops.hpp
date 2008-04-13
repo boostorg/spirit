@@ -6,7 +6,7 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_LOOPS
-#define BOOST_SPIRIT_INCLUDE_LOOPS
+#ifndef BOOST_SPIRIT_INCLUDE_CLASSIC_LOOPS
+#define BOOST_SPIRIT_INCLUDE_CLASSIC_LOOPS
 #include <boost/spirit/home/classic/utility/loops.hpp>
 #endif

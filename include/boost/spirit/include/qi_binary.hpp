@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_BINARY
 #define BOOST_SPIRIT_INCLUDE_QI_BINARY
-#include <boost/spirit/include/binary.hpp>
+#include <boost/spirit/home/qi/binary.hpp>
 #endif

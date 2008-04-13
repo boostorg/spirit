@@ -6,7 +6,7 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_PARSER_NAMES
-#define BOOST_SPIRIT_INCLUDE_PARSER_NAMES
+#ifndef BOOST_SPIRIT_INCLUDE_CLASSIC_PARSER_NAMES
+#define BOOST_SPIRIT_INCLUDE_CLASSIC_PARSER_NAMES
 #include <boost/spirit/home/classic/debug/parser_names.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_PHOENIX_FUSION
 #define BOOST_SPIRIT_INCLUDE_PHOENIX_FUSION
-#include <boost/spirit/include/fusion.hpp>
+#include <boost/spirit/home/phoenix/fusion.hpp>
 #endif

@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_STRING
 #define BOOST_SPIRIT_INCLUDE_QI_STRING
-#include <boost/spirit/include/string.hpp>
+#include <boost/spirit/home/qi/string.hpp>
 #endif

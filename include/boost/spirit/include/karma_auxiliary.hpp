@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_AUXILIARY
 #define BOOST_SPIRIT_INCLUDE_KARMA_AUXILIARY
-#include <boost/spirit/include/auxiliary.hpp>
+#include <boost/spirit/home/karma/auxiliary.hpp>
 #endif

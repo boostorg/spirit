@@ -6,7 +6,7 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_INCLUDE_FUNDAMENTAL
-#define BOOST_SPIRIT_INCLUDE_FUNDAMENTAL
+#ifndef BOOST_SPIRIT_INCLUDE_CLASSIC_FUNDAMENTAL
+#define BOOST_SPIRIT_INCLUDE_CLASSIC_FUNDAMENTAL
 #include <boost/spirit/home/classic/meta/fundamental.hpp>
 #endif

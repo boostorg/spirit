@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_ANY_IF
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_ANY_IF
-#include <boost/spirit/include/any_if.hpp>
+#include <boost/spirit/home/support/algorithm/any_if.hpp>
 #endif

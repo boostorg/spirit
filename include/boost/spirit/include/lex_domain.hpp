@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_LEX_DOMAIN
 #define BOOST_SPIRIT_INCLUDE_LEX_DOMAIN
-#include <boost/spirit/include/domain.hpp>
+#include <boost/spirit/home/lex/domain.hpp>
 #endif

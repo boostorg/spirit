@@ -8,5 +8,5 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_KARMA_WHAT
 #define BOOST_SPIRIT_INCLUDE_KARMA_WHAT
-#include <boost/spirit/include/what.hpp>
+#include <boost/spirit/home/karma/what.hpp>
 #endif
