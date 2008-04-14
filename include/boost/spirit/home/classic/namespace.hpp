@@ -12,7 +12,7 @@
 #if defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
 
 #define BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN /*namespace classic {*/
-#define BOOST_SPIRIT_CLASSIC_NS              boost::spirit::/*classic*/
+#define BOOST_SPIRIT_CLASSIC_NS              boost::spirit/*classic*/
 #define BOOST_SPIRIT_CLASSIC_NAMESPACE_END   /*}*/
         
 #else
