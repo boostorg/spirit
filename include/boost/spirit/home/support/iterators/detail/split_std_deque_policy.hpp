@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
     ///////////////////////////////////////////////////////////////////////////
     struct split_std_deque
     {
-        enum { threshold = 1000 };
+        enum { threshold = 16 };
         
         ///////////////////////////////////////////////////////////////////////
         template <typename Value>
@@ -89,13 +89,13 @@ namespace boost { namespace spirit { namespace multi_pass_policies
                         // free up the memory used by the queue. we avoid 
                         // clearing the queue on every increment, though, 
                         // because this would be too time consuming
-                        queue.clear();
-                        queue.reserve(threshold);
+
+                        // erase all but first item in queue
+                        queue.erase(queue.begin()+1, queue.end());
                         mp.queued_position = 0;
                         
-                        // create a new entry in the queue and initialize 
+                        // reuse first entry in the queue and initialize 
                         // it from the input
-                        queue.push_back(Value());
                         MultiPass::advance_input(mp, queue[mp.queued_position++]);
                     }
                     else
