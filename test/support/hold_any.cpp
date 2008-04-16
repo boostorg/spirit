@@ -15,7 +15,7 @@
 #include <string>
 
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/support/detail/hold_any.hpp>
+#include <boost/spirit/home/support/detail/hold_any.hpp>
 
 using namespace std; 
 using namespace boost::spirit;

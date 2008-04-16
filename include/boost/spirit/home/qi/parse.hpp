@@ -95,9 +95,9 @@ namespace boost { namespace spirit { namespace qi
         typedef spirit::traits::skipper_is_compatible<Expr, Skipper>
             skipper_is_compatible;
             
-//         BOOST_MPL_ASSERT_MSG(
-//             skipper_is_compatible::value,
-//             skipper_is_not_compatible_with_parser, (Iterator, Expr, Skipper));
+        BOOST_MPL_ASSERT_MSG(
+            skipper_is_compatible::value,
+            skipper_is_not_compatible_with_parser, (Iterator, Expr, Skipper));
         
         typedef typename result_of::as_component<qi::domain, Expr>::type component;
         typedef typename component::director director;

@@ -8,6 +8,6 @@
 
 project spirit-static-lexer-example ;
 
-exe generate_tables     : generate_tables.cpp ;
+exe word_count_generate : word_count_generate.cpp ;
 exe word_count_static   : word_count_static.cpp ;
 

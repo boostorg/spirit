@@ -166,13 +166,6 @@ int main()
     std::cout << "std::vector<boost::date>" << std::endl;
     output_container(std::cout, dates);
     
-    ///////////////////////////////////////////////////////////////////////////
-    // fusion tuples
-    // this will work in the future
-//     boost::fusion::vector<int, char, double> fv(42, 'a', 45.8);
-//
-//     std::cout << "boost::fusion::vector<int, char, double>" << std::endl;
-//     output_container(std::cout, fv);
     return 0;
 }
 

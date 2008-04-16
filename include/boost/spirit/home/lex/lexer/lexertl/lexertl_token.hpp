@@ -12,6 +12,9 @@
 
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/support/placeholders.hpp>
+#include <boost/spirit/home/support/detail/lexer/generator.hpp>
+#include <boost/spirit/home/support/detail/lexer/rules.hpp>
+#include <boost/spirit/home/support/detail/lexer/consts.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>

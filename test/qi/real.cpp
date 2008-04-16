@@ -12,8 +12,8 @@
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/support/detail/math/fpclassify.hpp>
-#include <boost/spirit/support/detail/math/signbit.hpp>
+#include <boost/spirit/home/support/detail/math/fpclassify.hpp>
+#include <boost/spirit/home/support/detail/math/signbit.hpp>
 
 #include "test.hpp"
 using namespace spirit_test;

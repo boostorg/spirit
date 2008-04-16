@@ -530,9 +530,9 @@ namespace boost { namespace spirit { namespace karma {
         ///////////////////////////////////////////////////////////////////////
         //  This is the workhorse behind the real generator
         ///////////////////////////////////////////////////////////////////////
-        template <typename OutputIterator, typename T>
+        template <typename OutputIterator, typename U>
         static bool
-        call_n (OutputIterator& sink, T n, RealPolicies const& p)
+        call_n (OutputIterator& sink, U n, RealPolicies const& p)
         {
         // prepare sign and get output format
             bool sign_val = false;
@@ -549,21 +549,21 @@ namespace boost { namespace spirit { namespace karma {
             // allow for ADL to find the correct overloads for log10 et.al.
             using namespace std;
             
-            T dim = 0;
+            U dim = 0;
             if (0 == (p.fixed & flags) && !detail::is_zero(n))
             {
                 dim = log10(n);
                 if (dim > 0)
-                    n /= pow(T(10.0), (int)detail::round_to_long::call(dim));
+                    n /= pow(U(10.0), (int)detail::round_to_long::call(dim));
                 else if (n < 1.) 
-                    n *= pow(T(10.0), (int)detail::round_to_long::call(-dim));
+                    n *= pow(U(10.0), (int)detail::round_to_long::call(-dim));
             }
             
         // prepare numbers (sign, integer and fraction part)
             unsigned precision = p.precision(n);
-            T integer_part;
-            T precexp = std::pow(10.0, (int)precision);
-            T fractional_part = modf(n, &integer_part);
+            U integer_part;
+            U precexp = std::pow(10.0, (int)precision);
+            U fractional_part = modf(n, &integer_part);
             
             fractional_part = floor(fractional_part * precexp + 0.5);
             if (fractional_part >= precexp) 
@@ -574,8 +574,8 @@ namespace boost { namespace spirit { namespace karma {
 
         // if trailing zeros are to be omitted, normalize the precision and
         // fractional part
-            T long_int_part = floor(integer_part);
-            T long_frac_part = floor(fractional_part);
+            U long_int_part = floor(integer_part);
+            U long_frac_part = floor(fractional_part);
             if (!p.trailing_zeros)
             {
                 if (0 != long_frac_part) {

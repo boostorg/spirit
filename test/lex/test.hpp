@@ -6,6 +6,9 @@
 #if !defined(BOOST_SPIRIT_LEX_TEST_MAR_23_2007_0721PM)
 #define BOOST_SPIRIT_LEX_TEST_MAR_23_2007_0721PM
 
+#include <boost/variant.hpp>
+#include <boost/range/iterator_range.hpp>
+
 namespace spirit_test
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -39,7 +42,7 @@ namespace spirit_test
     inline boost::iterator_range<Iterator> const& 
     get_iterpair(boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> const& v)
     {
-        return get<boost::iterator_range<Iterator> >(v);
+        return boost::get<boost::iterator_range<Iterator> >(v);
     }
     
     ///////////////////////////////////////////////////////////////////////////

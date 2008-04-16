@@ -139,7 +139,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
                 // passing the current token instance as a parameter helps
                 // generating better code if compared to assigning the 
                 // result of the functor to this instance
-                return ftor.get_next(mp, t);
+                return mp.ftor.get_next(mp, t);
             }
 
             // test, whether we reached the end of the underlying stream

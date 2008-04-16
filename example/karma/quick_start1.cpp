@@ -37,7 +37,7 @@ int main()
         ) << std::endl << std::endl;
 
     // output the container as a space separated sequence
-    std::cout << "...as space delited list" << std::endl;
+    std::cout << "...as space delimited list" << std::endl;
     std::cout << 
         karma::format_delimited(
             *int_,                                // format description

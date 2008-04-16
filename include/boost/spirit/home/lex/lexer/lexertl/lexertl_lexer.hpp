@@ -13,13 +13,13 @@
 #include <iosfwd>
 
 #include <boost/spirit/home/support/safe_bool.hpp>
+#include <boost/spirit/home/support/detail/lexer/generator.hpp>
+#include <boost/spirit/home/support/detail/lexer/rules.hpp>
+#include <boost/spirit/home/support/detail/lexer/consts.hpp>
 #include <boost/spirit/home/lex/lexer/lexer_fwd.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/lexertl_token.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/lexertl_functor.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/lexertl_iterator.hpp>
-#include <boost/spirit/home/support/detail/lexer/generator.hpp>
-#include <boost/spirit/home/support/detail/lexer/rules.hpp>
-#include <boost/spirit/home/support/detail/lexer/consts.hpp>
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
@@ -199,6 +199,9 @@ namespace boost { namespace spirit { namespace lex
         //  tokens.
         iterator_type begin(Iterator& first, Iterator const& last) const
         { 
+            if (!init_dfa())
+                return iterator_type();
+                
             struct iterator_data_type {
                 boost::lexer::state_machine const& state_machine_;
                 boost::lexer::basic_rules<char_type> const& rules_;
@@ -206,8 +209,7 @@ namespace boost { namespace spirit { namespace lex
             };
 
             iterator_data_type iterator_data = { state_machine, rules, actions };
-            return init_dfa() ? iterator_type(iterator_data, first, last)
-                              : iterator_type();
+            return iterator_type(iterator_data, first, last);
         }
         
         //  Return the end iterator usable to stop iterating over the generated 
