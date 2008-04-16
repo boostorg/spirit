@@ -65,15 +65,6 @@ struct signed_policy
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-//  this is a workaround for the missing lround for the real_concept type
-long lround(boost::math::concepts::real_concept n)
-{
-    if (n >= 0)
-        return boost::math::tools::real_cast<long>(n + 0.5);
-    return boost::math::tools::real_cast<long>(n - 0.5);
-}
-
-///////////////////////////////////////////////////////////////////////////////
 //  We need to specialize is_real_lit_tag to allow to use a real_concept as a
 //  literal below
 namespace boost { namespace spirit 

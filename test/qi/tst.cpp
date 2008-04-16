@@ -5,8 +5,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/qi/string/tst.hpp>
-#include <boost/spirit/qi/string/tst_map.hpp>
+#include <boost/spirit/home/qi/string/tst.hpp>
+#include <boost/spirit/home/qi/string/tst_map.hpp>
 
 #include <string>
 #include <cctype>

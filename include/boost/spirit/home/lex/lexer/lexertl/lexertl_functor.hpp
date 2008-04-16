@@ -231,7 +231,7 @@ namespace boost { namespace spirit { namespace lex
     public:
         lexertl_functor()
 #if 0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION > 900 || defined(__PGI)
-          , eof()
+          : eof()
 #endif // 0 != __DECCXX_VER
         {}
         
