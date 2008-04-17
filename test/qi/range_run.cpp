@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cctype>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/qi/char/detail/range_run.hpp>
+#include <boost/spirit/home/qi/char/detail/range_run.hpp>
 #include <boost/random.hpp>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/integer_traits.hpp>

@@ -91,6 +91,23 @@ main()
         BOOST_TEST(!test(L"z", ~~wchar('b', 'y')));
     }
 
+
+    {   // single char strings as argument to char_
+        BOOST_TEST(test("x", char_("x"), space));
+        BOOST_TEST(test("x", wchar(L"x"), space));
+    }
+
+    {
+        // chsets
+        BOOST_TEST(test("x", char_("a-z")));
+        BOOST_TEST(!test("1", char_("a-z")));
+        BOOST_TEST(test("1", char_("a-z0-9")));
+
+        BOOST_TEST(test("x", char_(L"a-z")));
+        BOOST_TEST(!test("1", char_(L"a-z")));
+        BOOST_TEST(test("1", char_(L"a-z0-9")));
+    }
+
     {   // lazy chars
 
         using namespace boost::phoenix;
