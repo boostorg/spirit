@@ -14,37 +14,34 @@
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
-    namespace detail
+    template <typename Run, typename Iterator, typename Range>
+    inline bool
+    try_merge(Run& run, Iterator iter, Range const& range)
     {
-        template <typename Run, typename Iterator, typename Range>
-        inline bool
-        try_merge(Run& run, Iterator iter, Range const& range)
+        // if *iter intersects with, or is adjacent to, 'range'...
+        if (can_merge(*iter, range))
         {
-            // if *iter intersects with, or is adjacent to, 'range'...
-            if (can_merge(*iter, range))
+            typedef typename Range::value_type value_type;
+            typedef integer_traits<value_type> integer_traits;
+
+            // merge range and *iter
+            merge(*iter, range);
+
+            // collapse all subsequent ranges that can merge with *iter
+            Iterator i;
+            value_type last =
+                iter->last == integer_traits::const_max
+                ? iter->last : iter->last+1;
+
+            for (i = iter+1; i != run.end() && last >= i->first; ++i)
             {
-                typedef typename Range::value_type value_type;
-                typedef integer_traits<value_type> integer_traits;
-
-                // merge range and *iter
-                merge(*iter, range);
-
-                // collapse all subsequent ranges that can merge with *iter
-                Iterator i;
-                value_type last =
-                    iter->last == integer_traits::const_max
-                    ? iter->last : iter->last+1;
-
-                for (i = iter+1; i != run.end() && last >= i->first; ++i)
-                {
-                    iter->last = i->last;
-                }
-                // erase all ranges that were collapsed
-                run.erase(iter+1, i);
-                return true;
+                iter->last = i->last;
             }
-            return false;
+            // erase all ranges that were collapsed
+            run.erase(iter+1, i);
+            return true;
         }
+        return false;
     }
 
     template <typename Char>
@@ -100,14 +97,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             }
 
             // if *(iter-1) can merge with 'range', merge them and return
-            if (detail::try_merge(run, iter-1, range))
+            if (try_merge(run, iter-1, range))
             {
                 return;
             }
         }
 
         // if *iter can merge with with 'range', merge them
-        if (iter == run.end() || !detail::try_merge(run, iter, range))
+        if (iter == run.end() || !try_merge(run, iter, range))
         {
             // no overlap, insert 'range'
             run.insert(iter, range);
