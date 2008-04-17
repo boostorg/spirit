@@ -51,10 +51,24 @@ namespace boost { namespace spirit { namespace qi
             typedef unused_type type;   // literal parsers have no attribute
         };
 
+        template <typename Char_, typename CharParam>
+        static bool test_impl(Char_ ch, CharParam param)
+        {
+            // tests plain chars
+            return ch == param;
+        }
+
+        template <typename Char_, typename CharParam>
+        static bool test_impl(Char_ const* ch, CharParam param)
+        {
+            // tests single char null terminated strings
+            return *ch == param;
+        }
+
         template <typename Component, typename CharParam, typename Context>
         static bool test(Component const& component, CharParam ch, Context&)
         {
-            return fusion::at_c<0>(component.elements) == ch;
+            return test_impl(fusion::at_c<0>(component.elements), ch);
         }
 
         template <typename Component>
@@ -62,8 +76,27 @@ namespace boost { namespace spirit { namespace qi
         {
             return std::string("'")
                 + spirit::detail::to_narrow_char(
-                    fusion::at_c<0>(component.elements)) 
+                    fusion::at_c<0>(component.elements))
                 + '\'';
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // parse a character set
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    struct char_set : char_parser<char_set<Char>, Char>
+    {
+        template <typename Component, typename CharParam, typename Context>
+        static bool test(Component const& component, CharParam ch, Context&)
+        {
+            return component.ptr->test(ch);
+        }
+
+        template <typename Component>
+        static std::string what(Component const&)
+        {
+            return "char-set";
         }
     };
 

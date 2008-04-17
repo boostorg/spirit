@@ -11,8 +11,34 @@
 #include <boost/spirit/home/support/placeholders.hpp>
 #include <boost/spirit/home/support/meta_grammar.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/qi/char/detail/basic_chset.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <boost/shared_ptr.hpp>
+
+namespace boost { namespace spirit { namespace qi
+{
+    template <typename Char>
+    struct char_set;
+
+    template <typename Char, typename Elements>
+    struct char_set_component;
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Char, typename Elements, typename Modifier>
+    struct make_component<qi::domain, qi::char_set<Char>, Elements, Modifier>
+      : mpl::identity<qi::char_set_component<Char, Elements> >
+    {
+        static qi::char_set_component<Char, Elements>
+        call(Elements const& elements)
+        {
+            return qi::char_set_component<Char, Elements>(
+                fusion::at_c<0>(elements));
+        }
+    };
+}}}
 
 namespace boost { namespace spirit { namespace qi
 {
@@ -126,6 +152,22 @@ namespace boost { namespace spirit { namespace qi
     {
     };
 
+
+    // literals: 'x', L'x' and single char strings: "x", L"x"
+    struct single_char_literal_meta_grammar
+      : proto::or_<
+        // plain chars:
+            proto::terminal<char>
+          , proto::terminal<wchar_t>
+        // single char null terminates strings:
+          , proto::terminal<char[2]>
+          , proto::terminal<char(&)[2]>
+          , proto::terminal<wchar_t[2]>
+          , proto::terminal<wchar_t(&)[2]>
+        >
+    {
+    };
+
     // literals: 'x', L'x'
     struct char_literal_meta_grammar
       : proto::or_<
@@ -139,10 +181,73 @@ namespace boost { namespace spirit { namespace qi
     {
     };
 
-    // char_, char_('x'), char_(f), char_('x', 'z'),
+    // literal strings: "hello" (defined in qi/string/meta_grammar.hpp)
+    struct basic_string_literal_meta_grammar;
+
+    // std::string(s) (defined in qi/string/meta_grammar.hpp)
+    struct basic_std_string_meta_grammar;
+
+    template <typename T>
+    struct extract_char; // (defined in qi/string/metagrammar.hpp)
+
+    template <typename Tag, typename T>
+    struct extract_chset_director;
+
+    template <typename T>
+    struct extract_chset_director<tag::char_, T>
+    {
+        typedef typename extract_char<T>::type char_type;
+        typedef char_set<char_type> type;
+    };
+
+    template <typename T>
+    struct extract_chset_director<tag::wchar, T>
+    {
+        typedef typename extract_char<T>::type char_type;
+        typedef char_set<char_type> type;
+    };
+
+    template <typename Char, typename Elements>
+    struct char_set_component
+    {
+        typedef qi::domain domain;
+        typedef char_set<Char> director;
+        typedef Elements elements_type;
+
+        char_set_component(Char const* definition)
+          : ptr(new detail::basic_chset<Char>())
+        {
+            Char ch = *definition++;
+            while (ch)
+            {
+                Char next = *definition++;
+                if (next == '-')
+                {
+                    next = *definition++;
+                    if (next == 0)
+                    {
+                        ptr->set(ch);
+                        ptr->set('-');
+                        break;
+                    }
+                    ptr->set(ch, next);
+                }
+                else
+                {
+                    ptr->set(ch);
+                }
+                ch = next;
+            }
+        }
+
+        boost::shared_ptr<detail::basic_chset<Char> > ptr;
+    };
+
+    // char_, char_('x'), char_("x"), char_(f), char_('x', 'z'),
     // char_(L'x'), char_(L'x', L'z'),
-    // wchar, wchar('x'), wchar('x', 'z'),
+    // wchar, wchar('x'), wchar("x"), wchar('x', 'z'),
     // wchar(L'x'), wchar(L'x', L'z')
+    // char_("a-z"), wchar("a-z")
     // [w]lit('x'), [w]lit(L'x')
     struct char_meta_grammar1
       : proto::or_<
@@ -154,13 +259,13 @@ namespace boost { namespace spirit { namespace qi
               , qi::domain
               , mpl::identity<extract_any_char_director<mpl::_> >
             >
-            // char_('x'), wchar(L'x') --> literal_char
+            // char_('x'), wchar(L'x'), char_("x"), wchar(L"x")--> literal_char
           , meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
                         is_char_tag<proto::_arg, qi::domain>()
                     >
-                  , basic_char_literal_meta_grammar
+                  , single_char_literal_meta_grammar
                 >
               , qi::domain
               , mpl::identity<extract_literal_char_director<mpl::_, mpl::_> >
@@ -175,6 +280,16 @@ namespace boost { namespace spirit { namespace qi
                 >
               , qi::domain
               , mpl::identity<extract_literal_char_director<mpl::_, mpl::_> >
+            >
+            // char_("a-z"), char_(L"a-z"), wchar(L"a-z") --> char_set
+          , meta_grammar::compose_function1_eval<
+                proto::function<
+                    proto::if_<
+                        is_char_tag<proto::_arg, qi::domain>()>
+                  , proto::or_<basic_string_literal_meta_grammar, basic_std_string_meta_grammar>
+                >
+              , qi::domain
+              , mpl::identity<extract_chset_director<mpl::_, mpl::_> >
             >
             // char_(F()) --> lazy_char
           , meta_grammar::function1_rule<
