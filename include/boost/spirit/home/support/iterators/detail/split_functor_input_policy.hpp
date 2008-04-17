@@ -103,7 +103,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             template <typename MultiPass>
             static void destroy(MultiPass& mp) 
             {
-                functor_type::destroy(mp.shared);
+                functor_type::destroy(mp);
             }
         };
         
