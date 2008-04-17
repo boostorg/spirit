@@ -99,14 +99,14 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             template <typename MultiPass>
             static bool equal_to(MultiPass const& mp, MultiPass const& x) 
             {
-                return queuePosition == x.queuePosition;
+                return mp.queuePosition == x.queuePosition;
             }
 
             // called by operator<
             template <typename MultiPass>
             static bool less_than(MultiPass const& mp, MultiPass const& x)
             {
-                return queuePosition < x.queuePosition;
+                return mp.queuePosition < x.queuePosition;
             }
 
         protected:
