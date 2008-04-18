@@ -5,8 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_HPP)
-#define BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_HPP
+#if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_APR_18_2008_1102AM)
+#define BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_APR_18_2008_1102AM
 
 #include <cstddef>
 
