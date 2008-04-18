@@ -11,10 +11,10 @@
 #include <boost/bind.hpp>
 
 // Presented are various ways to attach semantic actions
-//  * Using plain function pointers
-//  * Using plain simple function objects
-//  * Using plain boost.bind
-//  * Using plain boost.lambda
+//  * Using plain function pointer
+//  * Using simple function object
+//  * Using boost.bind
+//  * Using boost.lambda
 
 using namespace boost::spirit;
 
@@ -35,12 +35,12 @@ int main()
 {
     char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
 
-    { // example using plain functions
+    { // example using plain function
 
         qi::parse(s1, e1, '{' >> int_[&write] >> '}');
     }
 
-    { // example using simple function objects
+    { // example using simple function object
 
         qi::parse(s1, e1, '{' >> int_[write_action()] >> '}');
     }
@@ -55,7 +55,10 @@ int main()
         using boost::lambda::_1;
         qi::parse(s1, e1, '{' >> int_[std::cout << _1 << '\n'] >> '}');
     }
-    
+
     return 0;
 }
+
+
+
 
