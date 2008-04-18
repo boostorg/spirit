@@ -169,18 +169,21 @@ namespace boost { namespace spirit { namespace lex
         typedef Token token_type;
         typedef TokenSet token_set;
         typedef lexertl_iterator<Functor> iterator_type;
-        
+
+    private:        
+        // this type is purely used for the iterator_type construction below
+        struct iterator_data_type {
+            typename Functor::next_token_functor next_;
+            typename Functor::semantic_actions_type const& actions_;
+        };
+
+    public:
         //  Return the start iterator usable for iterating over the generated
         //  tokens, the Functor F is called to match the next token from the 
         //  input.
         template <typename F>
         iterator_type begin(Iterator& first, Iterator const& last, F next) const
         { 
-            struct iterator_data_type {
-                typename Functor::next_token_functor next_;
-                typename Functor::semantic_actions_type const& actions_;
-            };
-
             iterator_data_type iterator_data = { next, actions };
             return iterator_type(iterator_data, first, last);
         }
@@ -191,11 +194,6 @@ namespace boost { namespace spirit { namespace lex
         template <typename Iterator_>
         iterator_type begin(Iterator_& first, Iterator_ const& last) const
         { 
-            struct iterator_data_type {
-                typename Functor::next_token_functor next_;
-                typename Functor::semantic_actions_type const& actions_;
-            };
-
             iterator_data_type iterator_data = 
                 { &lex::static_::next_token<Iterator_>, actions };
             return iterator_type(iterator_data, first, last);

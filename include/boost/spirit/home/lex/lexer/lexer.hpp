@@ -280,7 +280,7 @@ namespace boost { namespace spirit { namespace lex
     //  definitions
     ///////////////////////////////////////////////////////////////////////////
     template <typename Lexer>
-    class lexer_def : noncopyable, public Lexer
+    class lexer_def : private noncopyable, public Lexer
     {
     private:
         typedef lexer_def self_type;
