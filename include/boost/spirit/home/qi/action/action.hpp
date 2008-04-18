@@ -32,6 +32,13 @@ namespace boost { namespace spirit { namespace qi
         {
         };
 
+        template <typename F, typename Attribute, typename Context>
+        static bool const_action_dispatch(
+            F const& f, Attribute const& attr, Context& context)
+        {
+            return spirit::detail::action_dispatch(f, attr, context);
+        }
+
         template <
             typename Component
           , typename Iterator, typename Context
@@ -62,7 +69,7 @@ namespace boost { namespace spirit { namespace qi
             {
                 // call the function, passing the attribute, the context.
                 // The client can return false to fail parsing.
-                return spirit::detail::action_dispatch(
+                return const_action_dispatch(
                     spirit::right(component), attr, context);
             }
             return false;
