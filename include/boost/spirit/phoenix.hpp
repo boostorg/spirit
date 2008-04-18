@@ -10,14 +10,14 @@
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_PHOENIX
 
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
-#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_phoenix.hpp")
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phoenix1.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
-#  warning "This header is deprecated. Please use: boost/spirit/include/classic_phoenix.hpp"
+#  warning "This header is deprecated. Please use: boost/spirit/include/phoenix1.hpp"
 #endif
 
 #if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
 #define BOOST_SPIRIT_USE_OLD_NAMESPACE
 #endif
-#include <boost/spirit/include/classic_phoenix.hpp>
+#include <boost/spirit/include/phoenix1.hpp>
 
 #endif
