@@ -7,81 +7,11 @@
 #if !defined(BOOST_SPIRIT_RULE_FEB_12_2007_0440PM)
 #define BOOST_SPIRIT_RULE_FEB_12_2007_0440PM
 
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/component.hpp>
-#include <boost/intrusive_ptr.hpp>
-#include <boost/detail/atomic_count.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/utility/enable_if.hpp>
-#include <boost/function_types/is_function.hpp>
+#include <boost/spirit/home/qi/nonterminal/virtual_component_base.hpp>
 #include <boost/assert.hpp>
-#include <algorithm>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
-    struct accept_unused_only
-    {
-        // this struct accepts only unused types and
-        // nothing else.
-        accept_unused_only(unused_type) {}
-    };
-
-    template <typename Iterator, typename Context, typename Skipper>
-    struct virtual_component_base
-    {
-        struct no_skipper {};
-
-        typedef typename
-            mpl::eval_if<
-                is_same<Skipper, unused_type>
-              , mpl::identity<no_skipper>
-              , result_of::as_component<qi::domain, Skipper>
-            >::type
-        skipper_type;
-
-        virtual_component_base()
-          : use_count(0)
-        {
-        }
-
-        virtual ~virtual_component_base()
-        {
-        }
-
-        virtual bool
-        parse(
-            Iterator& first
-          , Iterator const& last
-          , Context& context
-          , skipper_type const& skipper) = 0;
-
-        virtual bool
-        parse(
-            Iterator& first
-          , Iterator const& last
-          , Context& context
-          , accept_unused_only) = 0;
-
-        boost::detail::atomic_count use_count;
-    };
-
-    template <typename Iterator, typename Context, typename Skipper>
-    inline void
-    intrusive_ptr_add_ref(virtual_component_base<Iterator, Context, Skipper>* p)
-    {
-        ++p->use_count;
-    }
-
-    template <typename Iterator, typename Context, typename Skipper>
-    inline void
-    intrusive_ptr_release(virtual_component_base<Iterator, Context, Skipper>* p)
-    {
-        if (--p->use_count == 0)
-            delete p;
-    }
-
     template <
         typename Iterator, typename Component
       , typename Context, typename Skipper
@@ -91,7 +21,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     {
         typedef virtual_component_base<Iterator, Context, Skipper> base_type;
         typedef typename base_type::skipper_type skipper_type;
-        typedef typename base_type::no_skipper no_skipper;
+        typedef typename base_type::take_no_skipper take_no_skipper;
 
         virtual_component(Component const& component)
           : component(component)
@@ -158,7 +88,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& /*first*/
           , Iterator const& /*last*/
           , Context&
-          , no_skipper
+          , take_no_skipper
           , mpl::false_)
         {
             BOOST_ASSERT(false); // this should never be called
@@ -169,7 +99,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& /*first*/
           , Iterator const& /*last*/
           , Context& /*context*/
-          , no_skipper
+          , take_no_skipper
           , mpl::true_)
         {
             BOOST_ASSERT(false); // this should never be called
@@ -191,7 +121,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , accept_unused_only)
+          , no_skipper)
         {
             return parse_main(first, last, context, unused, Auto());
         }

@@ -36,12 +36,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename OutputIterator, typename Context, typename Delimiter>
     struct virtual_component_base
     {
-        struct no_delimiter {};
+        struct take_no_delimiter {};
 
         typedef typename
             mpl::eval_if<
                 is_same<Delimiter, unused_type>,
-                mpl::identity<no_delimiter>,
+                mpl::identity<take_no_delimiter>,
                 result_of::as_component<karma::domain, Delimiter>
             >::type
         delimiter_type;
@@ -205,7 +205,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             virtual_component_base<OutputIterator, Context, Delimiter>
         base_type;
         typedef typename base_type::delimiter_type delimiter_type;
-        typedef typename base_type::no_delimiter no_delimiter;
+        typedef typename base_type::take_no_delimiter take_no_delimiter;
 
         virtual_component(Component const& component)
           : component(component)
@@ -237,7 +237,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         bool
-        generate_main(OutputIterator& /*sink*/, Context& /*context*/, no_delimiter,
+        generate_main(OutputIterator& /*sink*/, Context& /*context*/, take_no_delimiter,
             mpl::false_)
         {
             BOOST_ASSERT(false); // this should never be called
@@ -245,7 +245,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         bool
-        generate_main(OutputIterator& /*sink*/, Context& /*context*/, no_delimiter,
+        generate_main(OutputIterator& /*sink*/, Context& /*context*/, take_no_delimiter,
             mpl::true_)
         {
             BOOST_ASSERT(false); // this should never be called

@@ -7,7 +7,7 @@
 #if !defined(BOOST_SPIRIT_ERROR_HANDLER_APR_29_2007_1042PM)
 #define BOOST_SPIRIT_ERROR_HANDLER_APR_29_2007_1042PM
 
-#include <boost/spirit/home/qi/nonterminal/detail/rule.hpp>
+#include <boost/spirit/home/qi/nonterminal/virtual_component_base.hpp>
 #include <boost/spirit/home/qi/nonterminal/error_handler_result.hpp>
 #include <boost/spirit/home/qi/operator/expect.hpp>
 #include <boost/fusion/include/vector.hpp>
@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , accept_unused_only)
+          , no_skipper)
         {
             return parse_main(first, last, context, unused);
         }

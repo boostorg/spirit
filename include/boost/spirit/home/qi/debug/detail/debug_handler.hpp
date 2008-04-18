@@ -8,7 +8,7 @@
 #if !defined(BOOST_SPIRIT_DEBUG_HANDLER_NOV_12_2007_0926AM)
 #define BOOST_SPIRIT_DEBUG_HANDLER_NOV_12_2007_0926AM
 
-#include <boost/spirit/home/qi/nonterminal/detail/rule.hpp>
+#include <boost/spirit/home/qi/nonterminal/virtual_component_base.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace debug
 {
@@ -45,10 +45,10 @@ namespace detail
         typename PreParseF, typename PostParseF
     >
     struct debug_handler
-      : qi::detail::virtual_component_base<Iterator, Context, Skipper>
+      : virtual_component_base<Iterator, Context, Skipper>
     {
         typedef
-            qi::detail::virtual_component_base<Iterator, Context, Skipper>
+            virtual_component_base<Iterator, Context, Skipper>
         base_type;
         typedef intrusive_ptr<base_type> pointer_type;
         typedef typename base_type::skipper_type skipper_type;
@@ -104,7 +104,7 @@ namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , accept_unused_only)
+          , no_skipper)
         {
             return parse_main(first, last, context, unused);
         }

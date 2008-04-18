@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace qi
         typedef rule<Iterator, T0, T1, T2> self_type;
 
         typedef
-            detail::virtual_component_base<
+            virtual_component_base<
                 Iterator
               , typename base_type::context_type
               , skipper_type
