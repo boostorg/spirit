@@ -15,10 +15,10 @@
 #include <boost/function_output_iterator.hpp>
 
 // Presented are various ways to attach semantic actions
-//  * Using plain function pointers
-//  * Using plain simple function objects
-//  * Using plain boost.bind
-//  * Using plain boost.lambda
+//  * Using plain function pointer
+//  * Using simple function object
+//  * Using boost.bind
+//  * Using boost.lambda
 
 using namespace boost::spirit;
 
@@ -37,14 +37,14 @@ struct read_action
 
 ///////////////////////////////////////////////////////////////////////////
 template <typename String>
-struct string_appender 
+struct string_appender
 {
-    string_appender(String& s) 
-    :   str(s) 
+    string_appender(String& s)
+    :   str(s)
     {}
-    
+
     template <typename T>
-    void operator()(T const &x) const 
+    void operator()(T const &x) const
     {
         str += x;
     }
@@ -53,7 +53,7 @@ struct string_appender
 };
 
 template <typename String>
-inline string_appender<String> 
+inline string_appender<String>
 make_string_appender(String& str)
 {
     return string_appender<String>(str);
@@ -68,7 +68,7 @@ int main()
     { // example using plain functions
         std::string generated;
         bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)), 
+            make_function_output_iterator(make_string_appender(generated)),
             '{' << int_[&read] << '}');
 
         if (result)
@@ -78,7 +78,7 @@ int main()
     { // example using simple function objects
         std::string generated;
         bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)), 
+            make_function_output_iterator(make_string_appender(generated)),
             '{' << int_[read_action()] << '}');
 
         if (result)
@@ -88,7 +88,7 @@ int main()
     { // example using boost.bind
         std::string generated;
         bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)), 
+            make_function_output_iterator(make_string_appender(generated)),
             '{' << int_[boost::bind(&read, _1)] << '}');
 
         if (result)
@@ -100,15 +100,15 @@ int main()
 
         std::string generated;
         std::stringstream strm("42");
-        
+
         bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)), 
+            make_function_output_iterator(make_string_appender(generated)),
             '{' << int_[strm >> _1] << '}');
 
         if (result)
             std::cout << "Boost.Lambda: " << generated << std::endl;
     }
-    
+
     return 0;
 }
 
