@@ -23,12 +23,6 @@ void fun2(int i)
     x += i;
 }
 
-void fun3(int& i)
-{
-    x += i;
-    i = 0;
-}
-
 struct fun_action
 {
     void operator()(int const& i, unused_type, unused_type) const
@@ -50,8 +44,11 @@ int main()
     }
 
     {
-        char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        qi::parse(s1, e1, '{' >> int_[&fun3] >> '}');
+        //~ char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
+        //~ qi::parse(s1, e1, '{' >> int_[fun2] >> '}');
+
+        //~ int ii;
+        //~ boost::spirit::detail::action_dispatch(fun2, ii, ii);
     }
 
     {
@@ -61,7 +58,7 @@ int main()
 
     {
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        qi::parse(s1, e1, '{' >> int_[boost::bind(&fun, _1)] >> '}');
+        qi::parse(s1, e1, '{' >> int_[boost::bind(&fun1, _1)] >> '}');
     }
 
     {
