@@ -53,6 +53,8 @@ namespace boost { namespace spirit { namespace lex
     //        iterator_type   The type of the iterator used to access the
     //                        underlying character stream.
     //
+    //        id_type         The type of the token id used.
+    //
     //    methods
     //        default constructor
     //                        This should initialize the token as an end of 
@@ -107,6 +109,7 @@ namespace boost { namespace spirit { namespace lex
     {
         typedef Iterator iterator_type;
         typedef mpl::false_ has_state;
+        typedef std::size_t id_type;
         
         //  default constructed tokens correspond to EOI tokens
         lexertl_token() 

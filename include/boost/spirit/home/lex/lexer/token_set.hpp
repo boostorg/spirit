@@ -42,7 +42,7 @@ namespace boost { namespace spirit { namespace lex
         // avoid warnings about using 'this' in constructor
         token_set& this_() { return *this; }
 
-        typedef token_set<TokenSet> self_type;
+        typedef token_set self_type;
         typedef TokenSet base_token_set;
 
         // initialize proto base class
@@ -57,6 +57,8 @@ namespace boost { namespace spirit { namespace lex
         }
 
     public:
+        typedef typename TokenSet::id_type id_type;
+        
         // Qi interface: metafunction calculating parser return type
         template <typename Component, typename Context, typename Iterator>
         struct attribute
@@ -65,7 +67,7 @@ namespace boost { namespace spirit { namespace lex
             //  and the corresponding pair of iterators
             typedef typename Iterator::base_iterator_type iterator_type;
             typedef
-                fusion::vector<std::size_t, iterator_range<iterator_type> >
+                fusion::vector<id_type, iterator_range<iterator_type> >
             type;
         };
 
@@ -88,7 +90,7 @@ namespace boost { namespace spirit { namespace lex
                 BOOST_ASSERT(~0 != token_state);
 
                 token_type &t = *first;
-                if (0 != t.id() && token_state == t.state()) {
+                if (token_is_valid(t) && token_state == t.state()) {
                 // any of the token definitions matched
                     qi::detail::assign_to(t, attr);
                     ++first;
@@ -123,7 +125,7 @@ namespace boost { namespace spirit { namespace lex
             {}
 
             adder const&
-            operator()(char_type c, std::size_t token_id = 0) const
+            operator()(char_type c, id_type token_id = id_type()) const
             {
                 if (0 == token_id)
                     token_id = static_cast<std::size_t>(c);
@@ -132,22 +134,22 @@ namespace boost { namespace spirit { namespace lex
                 return *this;
             }
             adder const&
-            operator()(string_type const& s, std::size_t token_id = 0) const
+            operator()(string_type const& s, id_type token_id = id_type()) const
             {
                 if (0 == token_id)
-                    token_id = next_id();
+                    token_id = next_id<id_type>::get();
                 def.add_token (def.initial_state().c_str(), s, token_id);
                 return *this;
             }
             template <typename Attribute>
             adder const&
-            operator()(token_def<Attribute, char_type>& tokdef,
-                std::size_t token_id = 0) const
+            operator()(token_def<Attribute, char_type, id_type>& tokdef,
+                id_type token_id = id_type()) const
             {
                 // make sure we have a token id
                 if (0 == token_id) {
                     if (0 == tokdef.id()) {
-                        token_id = next_id();
+                        token_id = next_id<id_type>::get();
                         tokdef.id(token_id);
                     }
                     else {

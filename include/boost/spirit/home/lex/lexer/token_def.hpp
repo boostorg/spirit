@@ -34,22 +34,37 @@ namespace boost { namespace spirit { namespace lex
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    inline std::size_t next_id()
+    //  The next_id template needs to be specialized for any non-default token 
+    //  id type used by a custom token type. It need to expose a function
+    //  'static Idtype get()' returning the next available token id each time 
+    //  it is called.
+    template <typename Idtype>
+    struct next_id;
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //  Default specialization for the next_id template returning the next 
+    //  available token id.
+    template <>
+    struct next_id<std::size_t>
     {
-        static std::size_t next_token_id = min_token_id;
-        return next_token_id++;   
-    }
-
+        static std::size_t get()
+        {
+            static std::size_t next_token_id = min_token_id;
+            return next_token_id++;   
+        }
+    };
+    
     ///////////////////////////////////////////////////////////////////////////
     //  This component represents a token definition
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Attribute, typename Char>
+    template<typename Attribute, typename Char, typename Idtype>
     class token_def
       : public proto::extends<
             typename make_terminal_holder<
-                token_def<Attribute, Char>*, token_def<Attribute, Char>
+                token_def<Attribute, Char, Idtype>*, 
+                token_def<Attribute, Char, Idtype>
             >::type,
-            token_def<Attribute, Char>
+            token_def<Attribute, Char, Idtype>
         >
     {
     private:
@@ -132,23 +147,24 @@ namespace boost { namespace spirit { namespace lex
         {
             token_state = lexdef.add_state(state.c_str());
             if (0 == token_id)
-                token_id = next_id();
+                token_id = next_id<Idtype>::get();
             lexdef.add_token (state.c_str(), def, token_id);
         }
             
     public:
         typedef Char char_type;
+        typedef Idtype id_type;
         typedef std::basic_string<char_type> string_type;
         
         // Lex interface: constructing token definitions
         token_def() 
           : base_type(make_tag()), token_id(0), token_state(~0) 
         {}
-        explicit token_def(char_type def_, std::size_t id_ = 0)
+        explicit token_def(char_type def_, Idtype id_ = Idtype())
           : base_type(make_tag()), def(lex::detail::escape(def_)), 
             token_id(0 == id_ ? def_ : id_), token_state(~0) 
         {}
-        explicit token_def(string_type def_, std::size_t id_ = 0)
+        explicit token_def(string_type def_, Idtype id_ = Idtype())
           : base_type(make_tag()), def(def_), token_id(id_), token_state(~0) 
         {}
         
@@ -167,14 +183,14 @@ namespace boost { namespace spirit { namespace lex
         }
         
         // general accessors 
-        std::size_t id() const { return token_id; }
-        void id(std::size_t id) { token_id = id; }
+        Idtype id() const { return token_id; }
+        void id(Idtype id) { token_id = id; }
         string_type const& definition() const { return def; }
         std::size_t state() const { return token_state; }
         
     private:
         string_type def;
-        std::size_t token_id;
+        Idtype token_id;
         std::size_t token_state;
     };
 

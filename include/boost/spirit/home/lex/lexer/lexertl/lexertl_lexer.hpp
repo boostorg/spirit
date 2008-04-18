@@ -83,6 +83,9 @@ namespace boost { namespace spirit { namespace lex
         typedef std::basic_string<char_type> string_type;
 
     public:
+        typedef Token token_type;
+        typedef typename Token::id_type id_type;
+
         // interface for token definition management
         void add_token (char_type const* state, string_type const& tokendef, 
             std::size_t token_id)
@@ -192,6 +195,7 @@ namespace boost { namespace spirit { namespace lex
         //  Every lexer type to be used as a lexer for Spirit has to conform to 
         //  a public interface .
         typedef Token token_type;
+        typedef typename Token::id_type id_type;
         typedef TokenSet token_set;
         typedef lexertl_iterator<Functor> iterator_type;
         

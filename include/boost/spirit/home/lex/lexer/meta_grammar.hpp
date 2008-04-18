@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/lex/domain.hpp>
+#include <boost/spirit/home/lex/lexer/lexer_fwd.hpp>
 #include <boost/spirit/home/lex/lexer/terminal_holder.hpp>
 #include <boost/spirit/home/support/placeholders.hpp>
 #include <boost/spirit/home/support/meta_grammar.hpp>
@@ -29,12 +30,6 @@ namespace boost { namespace spirit { namespace lex
     struct string_token_def;
     struct char_token_def;
     
-    template<typename Attribute, typename Char>
-    class token_def;
-
-    template <typename TokenSet>
-    class token_set;
-
     struct lexer_meta_grammar;
 
     template <typename Expr, typename Enable>
@@ -52,7 +47,7 @@ namespace boost { namespace spirit { namespace lex
             // token_def<>
             meta_grammar::terminal_rule<
                 lex::domain, 
-                terminal_holder<proto::_, lex::token_def<proto::_, proto::_> >, 
+                terminal_holder<proto::_, lex::token_def<proto::_, proto::_, proto::_> >, 
                 terminal_director
             >,
             // token_set

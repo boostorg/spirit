@@ -27,7 +27,9 @@ namespace boost { namespace spirit { namespace lex
         collect(Component const& component, LexerDef& lexdef, 
             String const& state)
         {
-            lexdef.add_token (state.c_str(), subject(component), next_id());
+            typedef typename LexerDef::id_type id_type;
+            lexdef.add_token (state.c_str(), subject(component), 
+                next_id<id_type>::get());
         }
     };
                 

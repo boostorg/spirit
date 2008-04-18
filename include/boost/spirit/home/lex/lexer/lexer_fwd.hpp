@@ -17,7 +17,8 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     //  This component represents a token definition
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Attribute = unused_type, typename Char = char>
+    template<typename Attribute = unused_type, typename Char = char, 
+        typename Idtype = std::size_t>
     class token_def;
 
     ///////////////////////////////////////////////////////////////////////////

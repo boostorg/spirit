@@ -47,6 +47,8 @@ namespace boost { namespace spirit { namespace lex
             typedef typename proto::terminal<terminal_holder>::type tag;
             typedef proto::extends<tag, lexer_def_> base_type;
 
+            typedef typename LexerDef::id_type id_type;
+            
             tag make_tag() const
             {
                 tag xpr = {{ this }};
@@ -65,7 +67,7 @@ namespace boost { namespace spirit { namespace lex
                 //  id, and the corresponding pair of iterators
                 typedef typename Iterator::base_iterator_type iterator_type;
                 typedef 
-                    fusion::vector<std::size_t, iterator_range<iterator_type> > 
+                    fusion::vector<id_type, iterator_range<iterator_type> > 
                 type;
             };
                 
@@ -84,7 +86,7 @@ namespace boost { namespace spirit { namespace lex
                     token_type;
 
                     token_type &t = *first;
-                    if (0 != t.id()) {
+                    if (token_is_valid(t)) {
                     // any of the token definitions matched
                         qi::detail::assign_to(t, attr);
                         ++first;
@@ -109,31 +111,31 @@ namespace boost { namespace spirit { namespace lex
                 {}
 
                 adder const&
-                operator()(char_type c, std::size_t token_id = 0) const
+                operator()(char_type c, id_type token_id = 0) const
                 {
                     if (0 == token_id)
-                        token_id = static_cast<std::size_t>(c);
+                        token_id = static_cast<id_type>(c);
                     def.def.add_token (def.state.c_str(), lex::detail::escape(c), 
                         token_id);
                     return *this;
                 }
                 adder const&
-                operator()(string_type const& s, std::size_t token_id = 0) const
+                operator()(string_type const& s, id_type token_id = id_type()) const
                 {
                     if (0 == token_id)
-                        token_id = next_id();
+                        token_id = next_id<id_type>::get();
                     def.def.add_token (def.state.c_str(), s, token_id);
                     return *this;
                 }
                 template <typename Attribute>
                 adder const&
-                operator()(token_def<Attribute, char_type>& tokdef, 
-                    std::size_t token_id = 0) const
+                operator()(token_def<Attribute, char_type, id_type>& tokdef, 
+                    id_type token_id = id_type()) const
                 {
                     // make sure we have a token id
                     if (0 == token_id) {
                         if (0 == tokdef.id()) {
-                            token_id = next_id();
+                            token_id = next_id<id_type>::get();
                             tokdef.id(token_id);
                         }
                         else {
@@ -281,13 +283,14 @@ namespace boost { namespace spirit { namespace lex
     class lexer_def : noncopyable, public Lexer
     {
     private:
-        typedef lexer_def<Lexer> self_type;
+        typedef lexer_def self_type;
         
         // avoid warnings about using 'this' in constructor
         lexer_def& this_() { return *this; }    
 
     public:        
         typedef Lexer lexer_type;
+        typedef typename Lexer::id_type id_type;
         typedef detail::lexer_def_<self_type> token_set;
         typedef typename Lexer::char_type char_type;
         typedef std::basic_string<char_type> string_type;
@@ -317,6 +320,7 @@ namespace boost { namespace spirit { namespace lex
         typedef typename Definition::lexer_type lexer_type;
         typedef typename Definition::char_type char_type;
         typedef typename Definition::iterator_type iterator_type;
+        typedef typename Definition::id_type id_type;
 
         lexer(Definition& token_def_)
           : token_def(token_def_) 
