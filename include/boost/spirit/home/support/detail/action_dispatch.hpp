@@ -41,16 +41,6 @@ namespace boost { namespace spirit { namespace detail
         return pass;
     }
 
-    template <typename RT, typename A0, typename A1, typename A2
-      , typename Attribute, typename Context>
-    bool action_dispatch(RT(&f)(A0, A1, A2)
-      , Attribute& attr, Context& context)
-    {
-        bool pass = true;
-        f(attr, context, pass);
-        return pass;
-    }
-
     template <typename RT, typename A0, typename A1
       , typename Attribute, typename Context>
     bool action_dispatch(RT(*f)(A0, A1)
@@ -60,27 +50,9 @@ namespace boost { namespace spirit { namespace detail
         return true;
     }
 
-    template <typename RT, typename A0, typename A1
-      , typename Attribute, typename Context>
-    bool action_dispatch(RT(&f)(A0, A1)
-      , Attribute& attr, Context& context)
-    {
-        f(attr, context);
-        return true;
-    }
-
     template <typename RT, typename A0
       , typename Attribute, typename Context>
     bool action_dispatch(RT(*f)(A0)
-      , Attribute& attr, Context& context)
-    {
-        f(attr);
-        return true;
-    }
-
-    template <typename RT, typename A0
-      , typename Attribute, typename Context>
-    bool action_dispatch(RT(&f)(A0)
       , Attribute& attr, Context& context)
     {
         f(attr);
