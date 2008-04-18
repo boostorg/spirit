@@ -23,6 +23,8 @@ namespace boost { namespace spirit
         struct wchar {};
         struct lit {};
         struct wlit {};
+        struct eol {};
+        struct end {};
 
         struct bin {};
         struct oct {};
@@ -80,6 +82,8 @@ namespace boost { namespace spirit
     typedef proto::terminal<tag::wchar>::type wchar_type;
     typedef proto::terminal<tag::lit>::type lit_type;
     typedef proto::terminal<tag::wlit>::type wlit_type;
+    typedef proto::terminal<tag::eol>::type eol_type;
+    typedef proto::terminal<tag::end>::type end_type;
     
     typedef proto::terminal<tag::bin>::type bin_type;
     typedef proto::terminal<tag::oct>::type oct_type;
@@ -136,6 +140,8 @@ namespace boost { namespace spirit
     proto::terminal<tag::wchar>::type const wchar = {{}};
     proto::terminal<tag::lit>::type const lit = {{}};
     proto::terminal<tag::wlit>::type const wlit = {{}};
+    proto::terminal<tag::eol>::type const eol = {{}};
+    proto::terminal<tag::end>::type const end = {{}};
     
     proto::terminal<tag::bin>::type const bin = {{}};
     proto::terminal<tag::oct>::type const oct = {{}};
@@ -197,6 +203,7 @@ namespace boost { namespace spirit
     inline void silence_unused_warnings__placeholders()
     {
         (void) char_; (void) wchar; (void) lit; (void) wlit;
+        (void) eol; (void) end;
         (void) bin; (void) oct; (void) hex;
         (void) byte; (void) word; (void) dword; 
         (void) big_word; (void) big_dword; 
