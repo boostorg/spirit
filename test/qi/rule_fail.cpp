@@ -20,12 +20,12 @@ int main()
 {
     char const* input = "some input, it doesn't matter";
     char const* end = &input[strlen(input)+1];
-    
+
     rule<char const*, rule<char const*> > def;
     def = int_ >> *(',' >> int_);
-    
+
     bool r = phrase_parse(input, end, def,
-		    space | ('%' >> *~char_('\n') >> '\n'));
+        space | ('%' >> *~char_('\n') >> '\n'));
 
     return 0;
 }
