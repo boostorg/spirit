@@ -6,6 +6,7 @@
 #==============================================================================
 project spirit-qi-example ;
 
+exe actions : actions.cpp ;
 exe sum : sum.cpp ;
 exe complex_number : complex_number.cpp ;
 exe employee : employee.cpp ;
