@@ -26,8 +26,8 @@ namespace detail
 
     struct trace_level
     {
-        trace_level(int &level) 
-          : level(level) 
+        trace_level(int &level)
+          : level(level)
         {
             ++level;
         }
@@ -35,27 +35,27 @@ namespace detail
         {
             --level;
         }
-        
+
         int& level;
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <
         typename Iterator, typename Context, typename Skipper,
         typename PreParseF, typename PostParseF
     >
-    struct debug_handler 
+    struct debug_handler
       : qi::detail::virtual_component_base<Iterator, Context, Skipper>
     {
-        typedef 
-            qi::detail::virtual_component_base<Iterator, Context, Skipper> 
+        typedef
+            qi::detail::virtual_component_base<Iterator, Context, Skipper>
         base_type;
         typedef intrusive_ptr<base_type> pointer_type;
         typedef typename base_type::skipper_type skipper_type;
 
         debug_handler(pointer_type subject, std::string const& name,
                 bool trace, PreParseF preF, PostParseF postF)
-          : subject(subject), name(name), trace(trace), 
+          : subject(subject), name(name), trace(trace),
             preF(preF), postF(postF)
         {
         }
@@ -67,21 +67,21 @@ namespace detail
           , Context& context
           , Skipper_ const& skipper)
         {
-            // execute embedded parser if tracing is disabled or if the 
+            // execute embedded parser if tracing is disabled or if the
             // pre-parse hook returns true
             bool r = false;
-            if (!trace || preF(name, subject, get_trace_level(), first, last)) 
+            if (!trace || preF(name, subject, get_trace_level(), first, last))
             {
                 {
                     trace_level level(get_trace_level());
-                    
+
                     // do the actual parsing
                     Iterator i = first;
                     r = subject->parse(i, last, context, skipper);
                     if (r)
                         first = i;
                 }
-                                    
+
                 // the post-parse hook gets executed only if tracing is enabled
                 if (trace)
                     postF(r, name, subject, get_trace_level(), first, last);
@@ -104,7 +104,7 @@ namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , unused_type)
+          , accept_unused_only)
         {
             return parse_main(first, last, context, unused);
         }
@@ -115,8 +115,8 @@ namespace detail
         PreParseF preF;
         PostParseF postF;
     };
- 
-}   
+
+}
 }}}}
 
 #endif
