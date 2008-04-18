@@ -36,6 +36,10 @@ namespace boost { namespace spirit { namespace qi
         static bool const_action_dispatch(
             F const& f, Attribute const& attr, Context& context)
         {
+            // This function makes Attribute a const reference
+            // before calling detail::action_dispatch whereby
+            // disallowing mutability of the attribute in semantic
+            // actions.
             return spirit::detail::action_dispatch(f, attr, context);
         }
 
