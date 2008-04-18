@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename A0, typename A1, typename A2
       , typename Attribute, typename Context>
-    bool action_dispatch(RT(*f)(A0&, A1&, A2&)
+    bool action_dispatch(RT(*f)(A0, A1, A2)
       , Attribute& attr, Context& context)
     {
         bool pass = true;
@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename A0, typename A1, typename A2
       , typename Attribute, typename Context>
-    bool action_dispatch(RT(&f)(A0&, A1&, A2&)
+    bool action_dispatch(RT(&f)(A0, A1, A2)
       , Attribute& attr, Context& context)
     {
         bool pass = true;
@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename A0, typename A1
       , typename Attribute, typename Context>
-    bool action_dispatch(RT(*f)(A0&, A1&)
+    bool action_dispatch(RT(*f)(A0, A1)
       , Attribute& attr, Context& context)
     {
         f(attr, context);
@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename A0, typename A1
       , typename Attribute, typename Context>
-    bool action_dispatch(RT(&f)(A0&, A1&)
+    bool action_dispatch(RT(&f)(A0, A1)
       , Attribute& attr, Context& context)
     {
         f(attr, context);
@@ -71,7 +71,7 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename A0
       , typename Attribute, typename Context>
-    bool action_dispatch(RT(*f)(A0&)
+    bool action_dispatch(RT(*f)(A0)
       , Attribute& attr, Context& context)
     {
         f(attr);
@@ -80,12 +80,13 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename A0
       , typename Attribute, typename Context>
-    bool action_dispatch(RT(&f)(A0&)
+    bool action_dispatch(RT(&f)(A0)
       , Attribute& attr, Context& context)
     {
         f(attr);
         return true;
     }
+
 }}}
 
 #endif

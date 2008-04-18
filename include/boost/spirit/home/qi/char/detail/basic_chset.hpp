@@ -48,13 +48,13 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         void
         clear(Char from, Char to)
         {
-            rr.set(range<Char>(c, c));
+            rr.clear(range<Char>(from, to));
         }
 
         void
         clear(Char c)
         {
-            rr.clear(range<Char>(from, to));
+            rr.clear(range<Char>(c, c));
         }
 
         void
