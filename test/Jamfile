@@ -14,6 +14,7 @@ import testing ;
     test-suite spirit_v2 :
 
     # run Qi tests
+    [ run qi/actions.cpp                    : : : : ]
     [ run qi/char.cpp                       : : : : ]
     [ run qi/char_class.cpp                 : : : : ]
     [ run qi/lit.cpp                        : : : : ]

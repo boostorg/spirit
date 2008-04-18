@@ -33,10 +33,10 @@ int main()
 {
     char const* input = "some input, it doesn't matter";
     char const* end = &input[strlen(input)+1];
-    
+
     num_list def;
     bool r = phrase_parse(input, end, make_parser(def),
-		    space | ('%' >> *~char_('\n') >> '\n'));
+        space | ('%' >> *~char_('\n') >> '\n'));
 
     return 0;
 }

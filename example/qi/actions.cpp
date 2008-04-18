@@ -33,26 +33,28 @@ struct write_action
 
 int main()
 {
-    char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-
     { // example using plain function
 
+        char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[&write] >> '}');
     }
 
     { // example using simple function object
 
+        char const *s1 = "{43}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[write_action()] >> '}');
     }
 
     { // example using boost.bind
 
+        char const *s1 = "{44}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[boost::bind(&write, _1)] >> '}');
     }
 
     { // example using boost.lambda
 
         using boost::lambda::_1;
+        char const *s1 = "{45}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[std::cout << _1 << '\n'] >> '}');
     }
 
