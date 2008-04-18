@@ -1,3 +1,10 @@
+/*=============================================================================
+    Copyright (c) 2001-2008 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+=============================================================================*/
+
 #include <iostream>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -11,14 +18,14 @@
 
 using namespace boost::spirit;
 
-void write(int& i)
+void write(int const& i)
 {
     std::cout << i << std::endl;
 }
 
 struct write_action
 {
-    void operator()(int& i, unused_type, unused_type) const
+    void operator()(int const& i, unused_type, unused_type) const
     {
         std::cout << i << std::endl;
     }
@@ -47,5 +54,8 @@ int main()
 
         using boost::lambda::_1;
         qi::parse(s1, e1, '{' >> int_[std::cout << _1 << '\n'] >> '}');
-    }}
+    }
+    
+    return 0;
+}
 

@@ -13,6 +13,7 @@
 #include <boost/spirit/home/support/component.hpp>
 #include <boost/spirit/home/support/detail/values.hpp>
 #include <boost/spirit/home/support/attribute_of.hpp>
+#include <boost/spirit/home/support/detail/action_dispatch.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/identity.hpp>
@@ -60,9 +61,10 @@ namespace boost { namespace spirit { namespace karma
             // call the function, passing the parameter, the context
             // and a bool flag that the client can set to false to
             // fail parsing.
-            bool pass = true;
-            spirit::right(component)(
-                spirit::detail::pass_value<param_type>::call(p), ctx, pass);
+            // call the function, passing the attribute, the context.
+            // The client can return false to fail parsing.
+            bool pass = spirit::detail::action_dispatch(
+                spirit::right(component), p, ctx);
 
             return pass &&
                 director::generate(spirit::left(component), sink, ctx, d, p);
