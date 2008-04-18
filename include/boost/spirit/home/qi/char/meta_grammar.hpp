@@ -65,7 +65,7 @@ namespace boost { namespace spirit { namespace qi
     struct char_class;
 
     struct eol_director;
-    struct end_director;
+    struct eoi_director;
     
     ///////////////////////////////////////////////////////////////////////////
     struct char_meta_grammar;
@@ -342,7 +342,7 @@ namespace boost { namespace spirit { namespace qi
               , char_class<mpl::_>
             >
           , meta_grammar::terminal_rule<qi::domain, tag::eol, eol_director>
-          , meta_grammar::terminal_rule<qi::domain, tag::end, end_director>
+          , meta_grammar::terminal_rule<qi::domain, tag::eoi, eoi_director>
         >
     {};
 

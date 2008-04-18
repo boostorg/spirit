@@ -24,7 +24,7 @@ main()
     using boost::spirit::char_;
     using boost::spirit::wchar;
     using boost::spirit::eol;
-    using boost::spirit::end;
+    using boost::spirit::eoi;
     
     {
         BOOST_TEST(test("x", 'x'));
@@ -139,12 +139,12 @@ main()
         BOOST_TEST(!test(L"   \b", eol, wchar(L' ')));
     }
     
-    {   // end
-        BOOST_TEST(test("", end));
-        BOOST_TEST(!test("a", end));
+    {   // eoi
+        BOOST_TEST(test("", eoi));
+        BOOST_TEST(!test("a", eoi));
 
-        BOOST_TEST(test("   ", end, space));
-        BOOST_TEST(!test("   a", end, space));
+        BOOST_TEST(test("   ", eoi, space));
+        BOOST_TEST(!test("   a", eoi, space));
     }
     
     return boost::report_errors();

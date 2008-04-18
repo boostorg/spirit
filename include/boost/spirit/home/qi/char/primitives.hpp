@@ -57,9 +57,9 @@ namespace boost { namespace spirit { namespace qi
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    //  the end_director matches the end of the input
+    //  the eoi_director matches the end of the input
     ///////////////////////////////////////////////////////////////////////////
-    struct end_director
+    struct eoi_director
     {
         template <typename Component, typename Context, typename Iterator>
         struct attribute
@@ -84,7 +84,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Component>
         static std::string what(Component const&)
         {
-            return "end";
+            return "eoi";
         }
     };
     
