@@ -209,7 +209,7 @@ namespace boost { namespace spirit { namespace qi
             static call(Rule& r, A1 const& a1)
             {
                 typename Rule::pointer_type old (r.ptr);
-                r.ptr.reset(new Decorator(r.ptr, a1));
+            r.ptr.reset(new Decorator(r.ptr, a1));
                 return old;
             }
 
@@ -362,11 +362,11 @@ namespace boost { namespace spirit { namespace traits
     // forward declaration only
     template <typename Parser, typename Skipper>
     struct skipper_is_compatible;
-    
+
     // If the parser is a rule, then the skipper must be convertible to
-    // the skipper used with this rule. 
+    // the skipper used with this rule.
     template <
-        typename Iterator, typename T0, typename T1, typename T2, 
+        typename Iterator, typename T0, typename T1, typename T2,
         typename Skipper
     >
     struct skipper_is_compatible<qi::rule<Iterator, T0, T1, T2>, Skipper>

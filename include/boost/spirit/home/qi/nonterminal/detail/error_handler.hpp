@@ -87,7 +87,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , unused_type)
+          , accept_unused_only)
         {
             return parse_main(first, last, context, unused);
         }

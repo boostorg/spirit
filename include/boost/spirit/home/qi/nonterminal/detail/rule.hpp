@@ -21,6 +21,13 @@
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
+    struct accept_unused_only
+    {
+        // this struct accepts only unused types and
+        // nothing else.
+        accept_unused_only(unused_type) {}
+    };
+
     template <typename Iterator, typename Context, typename Skipper>
     struct virtual_component_base
     {
@@ -55,7 +62,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , unused_type) = 0;
+          , accept_unused_only) = 0;
 
         boost::detail::atomic_count use_count;
     };
@@ -184,7 +191,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator& first
           , Iterator const& last
           , Context& context
-          , unused_type)
+          , accept_unused_only)
         {
             return parse_main(first, last, context, unused, Auto());
         }
