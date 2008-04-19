@@ -123,22 +123,4 @@ namespace boost { namespace spirit { namespace qi
     
 }}}
 
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // forward declaration only (the default specialization is defined in the 
-    // file parse.hpp)
-    template <typename Parser, typename Skipper>
-    struct skipper_is_compatible;
-    
-    // If the parser is a grammar, then the skipper must be convertible to
-    // the skipper used with this grammar. 
-    template <typename Definition, typename Skipper>
-    struct skipper_is_compatible<qi::grammar<Definition>, Skipper>
-      : is_convertible<Skipper, typename qi::grammar<Definition>::skipper_type>
-    {
-    };
-
-}}}
-
 #endif

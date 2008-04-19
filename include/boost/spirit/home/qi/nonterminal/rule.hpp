@@ -168,6 +168,11 @@ namespace boost { namespace spirit { namespace qi
             Iterator_& first, Iterator_ const& last
           , Context& context, Skipper const& skipper) const
         {
+            // If the following line produces a compilation error stating the
+            // 4th parameter is not convertible to the expected type, then you
+            // probably trying to use this rule instance with a skipper which 
+            // is not compatible with the skipper type used while defining the
+            // type of this rule instance.
             return ptr->parse(first, last, context, skipper);
         }
 
@@ -353,28 +358,6 @@ namespace boost { namespace spirit { namespace qi
     {
         on_error<fail>(r, f);
     }
-
-}}}
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // forward declaration only
-    template <typename Parser, typename Skipper>
-    struct skipper_is_compatible;
-
-    // If the parser is a rule, then the skipper must be convertible to
-    // the skipper used with this rule.
-    template <
-        typename Iterator, typename T0, typename T1, typename T2,
-        typename Skipper
-    >
-    struct skipper_is_compatible<qi::rule<Iterator, T0, T1, T2>, Skipper>
-      : is_convertible<
-            Skipper, typename qi::rule<Iterator, T0, T1, T2>::skipper_type
-        >
-    {
-    };
 
 }}}
 

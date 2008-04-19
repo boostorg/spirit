@@ -17,21 +17,6 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/bool.hpp>
 
-///////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // normally any skipper can be used with any generator
-    template <typename Generator, typename Delimiter>
-    struct delimiter_is_compatible : mpl::true_
-    {
-    };
-    
-    // If the parser is a rule or a grammar, then the delimiter must be 
-    // convertible to the delimiter used with this rule or grammar. The 
-    // corresponding specializations are defined in the files grammar.hpp and
-    // rule.hpp.
-}}}
-
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
@@ -104,14 +89,6 @@ namespace boost { namespace spirit { namespace karma
         BOOST_MPL_ASSERT_MSG(delimiter_is_component::value,
             delimiter_is_not_convertible_to_a_generator, 
             (OutputIterator, Expr, Delimiter));
-
-        typedef spirit::traits::delimiter_is_compatible<Expr, Delimiter>
-            delimiter_is_compatible;
-            
-        BOOST_MPL_ASSERT_MSG(
-            delimiter_is_compatible::value,
-            delimiter_is_not_compatible_with_generator, 
-            (OutputIterator, Expr, Delimiter));
         
         // wrap user supplied iterator into our own output iterator
         detail::output_iterator<OutputIterator> sink(target_sink);
@@ -150,14 +127,6 @@ namespace boost { namespace spirit { namespace karma
 
         BOOST_MPL_ASSERT_MSG(delimiter_is_component::value,
             delimiter_is_not_convertible_to_a_generator, 
-            (OutputIterator, Expr, Parameter, Delimiter));
-
-        typedef spirit::traits::delimiter_is_compatible<Expr, Delimiter>
-            delimiter_is_compatible;
-            
-        BOOST_MPL_ASSERT_MSG(
-            delimiter_is_compatible::value,
-            delimiter_is_not_compatible_with_generator, 
             (OutputIterator, Expr, Parameter, Delimiter));
         
         // wrap user supplied iterator into our own output iterator

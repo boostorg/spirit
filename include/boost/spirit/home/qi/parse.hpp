@@ -13,21 +13,6 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/bool.hpp>
 
-///////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // normally any skipper can be used with any parser
-    template <typename Parser, typename Skipper>
-    struct skipper_is_compatible : mpl::true_
-    {
-    };
-    
-    // If the parser is a rule or a grammar, then the skipper must be 
-    // convertible to the skipper used with this rule or grammar. The 
-    // corresponding specializations are defined in the files grammar.hpp and
-    // rule.hpp.
-}}}
-
 namespace boost { namespace spirit { namespace qi
 {
     template <typename Iterator, typename Expr>
@@ -92,13 +77,6 @@ namespace boost { namespace spirit { namespace qi
             skipper_is_component::value,
             skipper_is_not_convertible_to_a_parser, (Iterator, Expr, Skipper));
 
-        typedef spirit::traits::skipper_is_compatible<Expr, Skipper>
-            skipper_is_compatible;
-            
-//         BOOST_MPL_ASSERT_MSG(
-//             skipper_is_compatible::value,
-//             skipper_is_not_compatible_with_parser, (Iterator, Expr, Skipper));
-        
         typedef typename result_of::as_component<qi::domain, Expr>::type component;
         typedef typename component::director director;
         component c = spirit::as_component(qi::domain(), xpr);
@@ -137,14 +115,6 @@ namespace boost { namespace spirit { namespace qi
             skipper_is_not_convertible_to_a_parser, 
             (Iterator, Expr, Attr, Skipper));
 
-        typedef spirit::traits::skipper_is_compatible<Expr, Skipper>
-            skipper_is_compatible;
-            
-        BOOST_MPL_ASSERT_MSG(
-            skipper_is_compatible::value,
-            skipper_is_not_compatible_with_parser, 
-            (Iterator, Expr, Attr, Skipper));
-        
         typedef typename result_of::as_component<qi::domain, Expr>::type component;
         typedef typename component::director director;
         component c = spirit::as_component(qi::domain(), xpr);

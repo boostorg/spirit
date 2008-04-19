@@ -159,6 +159,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(
             OutputIterator_& sink, Context& context, Delimiter const& delim) const
         {
+            // If the following line produces a compilation error stating the
+            // 3rd parameter is not convertible to the expected type, then you
+            // probably trying to use this rule instance with a delimiter which 
+            // is not compatible with the delimiter type used while defining 
+            // the type of this rule instance.
             return ptr->generate(sink, context, delim);
         }
 
@@ -184,31 +189,6 @@ namespace boost { namespace spirit { namespace karma
         friend struct nonterminal_director;
         pointer_type ptr;
         std::string name_;
-    };
-
-}}}
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // forward declaration only (the default specialization is defined in the 
-    // file generate.hpp)
-    template <typename Generator, typename Delimiter>
-    struct delimiter_is_compatible;
-    
-    // If the parser is a rule, then the delimiter must be convertible to
-    // the delimiter used with this rule. 
-    template <
-        typename OutputIterator, typename T0, typename T1, typename T2, 
-        typename Delimiter
-    >
-    struct delimiter_is_compatible<
-            karma::rule<OutputIterator, T0, T1, T2>, Delimiter>
-      : is_convertible<
-            Delimiter, 
-            typename karma::rule<OutputIterator, T0, T1, T2>::delimiter_type
-        >
-    {
     };
 
 }}}

@@ -113,24 +113,4 @@ namespace boost { namespace spirit { namespace karma
     
 }}}
 
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace traits
-{
-    // forward declaration only (the default specialization is defined in the 
-    // file generate.hpp)
-    template <typename Generator, typename Delimiter>
-    struct delimiter_is_compatible;
-    
-    // If the parser is a grammar, then the delimiter must be convertible to
-    // the delimiter used with this grammar. 
-    template <typename Definition, typename Delimiter>
-    struct delimiter_is_compatible<karma::grammar<Definition>, Delimiter>
-      : is_convertible<
-            Delimiter, typename karma::grammar<Definition>::delimiter_type
-        >
-    {
-    };
-
-}}}
-
 #endif
