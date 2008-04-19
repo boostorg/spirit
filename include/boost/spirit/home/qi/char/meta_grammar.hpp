@@ -18,30 +18,6 @@
 
 namespace boost { namespace spirit { namespace qi
 {
-    template <typename Char>
-    struct char_set;
-
-    template <typename Char, typename Elements>
-    struct char_set_component;
-}}}
-
-namespace boost { namespace spirit { namespace traits
-{
-    template <typename Char, typename Elements, typename Modifier>
-    struct make_component<qi::domain, qi::char_set<Char>, Elements, Modifier>
-      : mpl::identity<qi::char_set_component<Char, Elements> >
-    {
-        static qi::char_set_component<Char, Elements>
-        call(Elements const& elements)
-        {
-            return qi::char_set_component<Char, Elements>(
-                fusion::at_c<0>(elements));
-        }
-    };
-}}}
-
-namespace boost { namespace spirit { namespace qi
-{
     ///////////////////////////////////////////////////////////////////////////
     // forwards
     ///////////////////////////////////////////////////////////////////////////
@@ -66,7 +42,7 @@ namespace boost { namespace spirit { namespace qi
 
     struct eol_director;
     struct eoi_director;
-    
+
     ///////////////////////////////////////////////////////////////////////////
     struct char_meta_grammar;
 
@@ -238,6 +214,39 @@ namespace boost { namespace spirit { namespace qi
                 else
                 {
                     ptr->set(ch);
+                }
+                ch = next;
+            }
+        }
+
+        template <typename CharSetClass> // no-case version
+        char_set_component(Char const* definition, CharSetClass)
+          : ptr(new detail::basic_chset<Char>())
+        {
+            Char ch = *definition++;
+            while (ch)
+            {
+                Char next = *definition++;
+                if (next == '-')
+                {
+                    next = *definition++;
+                    if (next == 0)
+                    {
+                        ptr->set(CharSetClass::tolower(ch));
+                        ptr->set(CharSetClass::tolower('-'));
+                        ptr->set(CharSetClass::toupper(ch));
+                        ptr->set(CharSetClass::toupper('-'));
+                        break;
+                    }
+                    ptr->set(CharSetClass::tolower(ch)
+                      , CharSetClass::tolower(next));
+                    ptr->set(CharSetClass::toupper(ch)
+                      , CharSetClass::toupper(next));
+                }
+                else
+                {
+                    ptr->set(CharSetClass::tolower(ch));
+                    ptr->set(CharSetClass::toupper(ch));
                 }
                 ch = next;
             }

@@ -191,7 +191,7 @@ namespace boost { namespace spirit
     namespace result_of
     {
         template <
-            typename Domain, typename Expr, typename State = unused_type, 
+            typename Domain, typename Expr, typename State = unused_type,
             typename Visitor = unused_type
         >
         struct as_component
@@ -208,7 +208,7 @@ namespace boost { namespace spirit
 
         // special case for arrays
         template <
-            typename Domain, typename T, int N, 
+            typename Domain, typename T, int N,
             typename State, typename Visitor>
         struct as_component<Domain, T[N], State, Visitor>
         {
@@ -243,8 +243,8 @@ namespace boost { namespace spirit
     inline typename result_of::as_component<Domain, Expr>::type
     as_component(Domain, Expr const& xpr, State const& state, Visitor& visitor)
     {
-        typedef typename 
-            result_of::as_component<Domain, Expr, State, Visitor>::grammar 
+        typedef typename
+            result_of::as_component<Domain, Expr, State, Visitor>::grammar
         grammar;
         return grammar()(proto::as_expr(xpr), state, visitor);
     };
@@ -271,7 +271,7 @@ namespace boost { namespace spirit
     {
         template <
             typename Domain, typename Director
-          , typename Elements, typename Modifier>
+          , typename Elements, typename Modifier, typename Enable = void>
         struct make_component
           : mpl::identity<component<Domain, Director, Elements> >
         {
