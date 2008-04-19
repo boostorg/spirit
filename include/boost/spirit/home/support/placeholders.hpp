@@ -83,7 +83,7 @@ namespace boost { namespace spirit
     typedef proto::terminal<tag::lit>::type lit_type;
     typedef proto::terminal<tag::wlit>::type wlit_type;
     typedef proto::terminal<tag::eol>::type eol_type;
-    typedef proto::terminal<tag::eoi>::type end_type;
+    typedef proto::terminal<tag::eoi>::type eoi_type;
     
     typedef proto::terminal<tag::bin>::type bin_type;
     typedef proto::terminal<tag::oct>::type oct_type;
