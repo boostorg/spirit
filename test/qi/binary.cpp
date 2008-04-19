@@ -60,11 +60,11 @@ main()
             qword(0x0807060504030201LL)));
 #endif
 #else
-        BOOST_TEST(test("\x01", 1, byte(0x01)));
-        BOOST_TEST(test("\x01\x02", 2, word(0x0102)));
-        BOOST_TEST(test("\x01\x02\x03\x04", 4, dword(0x01020304)));
+        BOOST_TEST(test("\x01", byte(0x01)));
+        BOOST_TEST(test("\x01\x02", word(0x0102)));
+        BOOST_TEST(test("\x01\x02\x03\x04", dword(0x01020304)));
 #ifdef BOOST_HAS_LONG_LONG
-        BOOST_TEST(test("\x01\x02\x03\x04\x05\x06\x07\x08", 8,
+        BOOST_TEST(test("\x01\x02\x03\x04\x05\x06\x07\x08",
             qword(0x0102030405060708LL)));
 #endif
 #endif
