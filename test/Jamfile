@@ -81,8 +81,9 @@ import testing ;
 
     # run support tests
     [ run support/hold_any.cpp              : : : : ]
-    [ run support/multi_pass_compile.cpp    : : : : ]
-    [ run support/multi_pass.cpp            : : : : ]
+# the multi_pass tests are not completed yet
+#    [ run support/multi_pass_compile.cpp    : : : : ]
+#    [ run support/multi_pass.cpp            : : : : ]
 
     # run lexer tests
     [ run lex/lexertl1.cpp                  : : : : ]
