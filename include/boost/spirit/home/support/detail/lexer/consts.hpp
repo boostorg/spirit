@@ -20,7 +20,11 @@ namespace lexer
 
     const std::size_t max_macro_len = 20;
     const std::size_t num_chars = 256;
+#if defined(WCHAR_MAX)
     const std::size_t num_wchar_ts = WCHAR_MAX < 0x110000 ? WCHAR_MAX : 0x110000;
+#else
+    const std::size_t num_wchar_ts = 0x110000;
+#endif
     const std::size_t null_token = static_cast<std::size_t> (~0);
     const std::size_t bol_token = static_cast<std::size_t> (~1);
     const std::size_t eol_token = static_cast<std::size_t> (~2);
