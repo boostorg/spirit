@@ -46,8 +46,8 @@ namespace boost { namespace spirit { namespace lex
         typedef TokenSet base_token_set;
 
         // initialize proto base class
-        typedef terminal_holder<token_set*, token_set> terminal_holder;
-        typedef typename proto::terminal<terminal_holder>::type tag;
+        typedef terminal_holder<token_set*, token_set> terminal_holder_;
+        typedef typename proto::terminal<terminal_holder_>::type tag;
         typedef proto::extends<tag, token_set> base_type;
 
         tag make_tag()

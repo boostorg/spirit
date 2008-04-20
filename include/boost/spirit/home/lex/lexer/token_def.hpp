@@ -69,8 +69,8 @@ namespace boost { namespace spirit { namespace lex
     {
     private:
         // initialize proto base class
-        typedef terminal_holder<token_def*, token_def> terminal_holder;
-        typedef typename proto::terminal<terminal_holder>::type tag;
+        typedef terminal_holder<token_def*, token_def> terminal_holder_;
+        typedef typename proto::terminal<terminal_holder_>::type tag;
         typedef proto::extends<tag, token_def> base_type;
 
         tag make_tag() 
