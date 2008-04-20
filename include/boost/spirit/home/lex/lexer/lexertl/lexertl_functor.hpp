@@ -23,6 +23,7 @@
 #include <boost/spirit/home/lex/lexer/lexertl/wrap_action.hpp>
 
 #if 0 != __COMO_VERSION__ || !BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
+#define BOOST_SPIRIT_STATIC_EOF 1
 #define BOOST_SPIRIT_EOF_PREFIX static
 #else
 #define BOOST_SPIRIT_EOF_PREFIX 
@@ -265,7 +266,11 @@ namespace boost { namespace spirit { namespace lex
         {
             shared& data = mp.shared->ftor;
             if (data.first == data.last) 
+#if defined(BOOST_SPIRIT_STATIC_EOF)
                 return result = eof;
+#else
+                return result = mp.ftor.eof;
+#endif
 
             Iterator end = data.first;
             std::size_t id = data.next(end);
@@ -283,7 +288,11 @@ namespace boost { namespace spirit { namespace lex
                 result = result_type(0);
             }
             else if (0 == id) {         // EOF reached
+#if defined(BOOST_SPIRIT_STATIC_EOF)
                 result = eof;
+#else
+                result = mp.ftor.eof;
+#endif
             }
             else {
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
@@ -366,5 +375,6 @@ namespace boost { namespace spirit { namespace lex
 }}}
 
 #undef BOOST_SPIRIT_EOF_PREFIX
+#undef BOOST_SPIRIT_STATIC_EOF
 
 #endif

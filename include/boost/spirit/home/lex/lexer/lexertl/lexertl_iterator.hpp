@@ -54,7 +54,7 @@ namespace boost { namespace spirit { namespace lex
         typedef multi_pass_policies::split_std_deque storage_policy;
         
         typedef multi_pass_policies::default_policy<
-                input_policy, ownership_policy, check_policy, storage_policy>
+                ownership_policy, check_policy, input_policy, storage_policy>
             policy_type;
         typedef spirit::multi_pass<functor_data_type, policy_type> type;
     };
