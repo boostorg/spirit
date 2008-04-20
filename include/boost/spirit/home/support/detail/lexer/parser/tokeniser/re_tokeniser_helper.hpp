@@ -6,6 +6,8 @@
 #ifndef BOOST_LEXER_RE_TOKENISER_HELPER_H
 #define BOOST_LEXER_RE_TOKENISER_HELPER_H
 
+#include <cstring>    // for strlen
+
 #include "../../char_traits.hpp"
 #include "../../size_t.hpp"
 #include "re_tokeniser_state.hpp"
@@ -190,6 +192,7 @@ private:
 
         if (str_)
         {
+            using namespace std; // some systems have strlen in namespace std
             str_len_ = strlen (str_);
         }
         else
@@ -229,6 +232,7 @@ private:
 
         if (str_)
         {
+            using namespace std; // some systems have wcslen in namespace std
             str_len_ = wcslen (str_);
         }
         else
