@@ -293,7 +293,9 @@ namespace boost { namespace spirit { namespace lex
                 typename Functor::semantic_actions_type::value_type
             value_type;
             
-            actions.insert(value_type(id, act));
+            typedef typename Functor::wrap_action_type wrapper_type;
+
+            actions.insert(value_type(id, wrapper_type::call(act)));
         }
                 
         bool init_dfa() const

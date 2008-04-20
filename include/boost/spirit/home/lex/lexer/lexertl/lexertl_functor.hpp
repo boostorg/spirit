@@ -20,6 +20,7 @@
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/iterator_tokenizer.hpp>
+#include <boost/spirit/home/lex/lexer/lexertl/wrap_action.hpp>
 
 #if 0 != __COMO_VERSION__ || !BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
 #define BOOST_SPIRIT_EOF_PREFIX static
@@ -46,6 +47,10 @@ namespace boost { namespace spirit { namespace lex
             char_type;
 
             typedef unused_type semantic_actions_type;
+
+            typedef 
+                detail::wrap_action<unused_type, iterpair_type, Data>
+            wrap_action_type;
 
             // initialize the shared data 
             template <typename IterData>
@@ -83,7 +88,7 @@ namespace boost { namespace spirit { namespace lex
           : Data<Iterator, mpl::false_, mpl::false_>
         {
             typedef Data<Iterator, mpl::false_, mpl::false_> base_type;
-            
+
             // initialize the shared data 
             template <typename IterData>
             Data (IterData const& data_, Iterator& first_, Iterator const& last_)
@@ -127,10 +132,14 @@ namespace boost { namespace spirit { namespace lex
                 boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
 
-            typedef void functor_type(iterpair_type, std::size_t, Data&, bool&);
+            typedef void functor_type(iterpair_type, std::size_t, bool&, Data&);
             typedef boost::function<functor_type> functor_wrapper_type;
             typedef std::multimap<std::size_t, functor_wrapper_type> 
                 semantic_actions_type;
+
+            typedef 
+                detail::wrap_action<functor_wrapper_type, iterpair_type, Data>
+            wrap_action_type;
 
             template <typename IterData>
             Data (IterData const& data_, Iterator& first_, Iterator const& last_)
@@ -154,7 +163,7 @@ namespace boost { namespace spirit { namespace lex
                 std::pair<iterator_type, iterator_type> p = actions.equal_range(id);
                 while (p.first != p.second)
                 {
-                    ((*p.first).second)(itp, id, *this, match);
+                    ((*p.first).second)(itp, id, match, *this);
                     if (!match)
                         return false;   // return a 'no-match'
                     ++p.first;
@@ -230,7 +239,7 @@ namespace boost { namespace spirit { namespace lex
         
     public:
         lexertl_functor()
-#if 0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION > 900 || defined(__PGI)
+#if /*0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION > 900 || */defined(__PGI)
           : eof()
 #endif // 0 != __DECCXX_VER
         {}
@@ -247,6 +256,10 @@ namespace boost { namespace spirit { namespace lex
         typedef Iterator iterator_type;
         typedef typename shared::semantic_actions_type semantic_actions_type;
 
+        // this is needed to wrap the semantic actions in a proper way
+        typedef typename shared::wrap_action_type wrap_action_type;
+
+        ///////////////////////////////////////////////////////////////////////
         template <typename MultiPass>
         static result_type& get_next(MultiPass& mp, result_type& result)
         {

@@ -50,6 +50,10 @@ namespace boost { namespace spirit { namespace lex
 
             typedef unused_type semantic_actions_type;
 
+            typedef 
+                detail::wrap_action<unused_type, iterpair_type, Data>
+            wrap_action_type;
+
             // initialize the shared data 
             template <typename IterData>
             Data (IterData const& data_, Iterator& first_, Iterator const& last_)
@@ -121,10 +125,14 @@ namespace boost { namespace spirit { namespace lex
                 boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
 
-            typedef void functor_type(iterpair_type, std::size_t, Data&, bool&);
+            typedef void functor_type(iterpair_type, std::size_t, bool&, Data&);
             typedef boost::function<functor_type> functor_wrapper_type;
             typedef std::multimap<std::size_t, functor_wrapper_type> 
                 semantic_actions_type;
+
+            typedef 
+                detail::wrap_action<functor_wrapper_type, iterpair_type, Data>
+            wrap_action_type;
 
             template <typename IterData>
             Data (IterData const& data_, Iterator& first_, Iterator const& last_)
@@ -148,7 +156,7 @@ namespace boost { namespace spirit { namespace lex
                 std::pair<iterator_type, iterator_type> p = actions.equal_range(id);
                 while (p.first != p.second)
                 {
-                    ((*p.first).second)(itp, id, *this, match);
+                    ((*p.first).second)(itp, id, match, *this);
                     if (!match)
                         return false;   // return a 'no-match'
                     ++p.first;
@@ -224,8 +232,8 @@ namespace boost { namespace spirit { namespace lex
         
     public:
         lexertl_static_functor()
-#if 0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION > 900
-          , eof()
+#if /*0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION > 900 || */defined(__PGI)
+          : eof()
 #endif // 0 != __DECCXX_VER
         {}
         
@@ -242,6 +250,10 @@ namespace boost { namespace spirit { namespace lex
         typedef typename shared::semantic_actions_type semantic_actions_type;
         typedef typename shared::next_token_functor next_token_functor;
 
+        // this is needed to wrap the semantic actions in a proper way
+        typedef typename shared::wrap_action_type wrap_action_type;
+
+        ///////////////////////////////////////////////////////////////////////
         template <typename MultiPass>
         result_type& operator()(MultiPass& mp, result_type& result)
         {
