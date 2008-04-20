@@ -6,6 +6,7 @@
 #ifndef BOOST_LEXER_GENERATOR_HPP
 #define BOOST_LEXER_GENERATOR_HPP
 
+#include <cstring>    // memcmp
 #include "char_traits.hpp"
 #include "partition/charset.hpp"
 #include "partition/equivset.hpp"
@@ -754,7 +755,8 @@ protected:
                     continue;
                 }
 
-                if (::memcmp (first_, second_, sizeof(std::size_t) *
+                using namespace std;    // some systems have memcmp in namespace std
+                if (memcmp (first_, second_, sizeof(std::size_t) *
                     dfa_alphabet_) == 0)
                 {
                     index_set_.insert (curr_index_);
