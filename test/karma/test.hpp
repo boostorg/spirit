@@ -6,6 +6,7 @@
 #if !defined(BOOST_SPIRIT_KARMA_TEST_FEB_23_2007_1221PM)
 #define BOOST_SPIRIT_KARMA_TEST_FEB_23_2007_1221PM
 
+#include <cstring>
 #include <string>
 #include <iterator>
 #include <iostream>
