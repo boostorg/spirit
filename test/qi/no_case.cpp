@@ -96,7 +96,8 @@ main()
         // chsets
         BOOST_TEST(test("x", no_case[char_("a-z")]));
         BOOST_TEST(test("X", no_case[char_("a-z")]));
-        BOOST_TEST(test("X", no_case[wchar(L"a-z")]));
+        BOOST_TEST(test(L"X", no_case[wchar(L"a-z")]));
+        BOOST_TEST(test(L"X", no_case[wchar(L"X")]));
     }
 
     return boost::report_errors();
