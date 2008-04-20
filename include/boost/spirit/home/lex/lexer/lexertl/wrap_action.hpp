@@ -13,6 +13,7 @@
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/phoenix/core/argument.hpp>
 #include <boost/spirit/home/phoenix/bind.hpp>
+#include <boost/spirit/home/phoenix/scope.hpp>
 
 #include <boost/bind.hpp>
 
@@ -30,45 +31,50 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         }
 
         // wrap phoenix actor, make sure first argument is a fusion sequence
-        template <typename Eval>
-        static void phoenix_action(phoenix::actor<Eval> const& f,
-            Attribute const& attr, std::size_t id, bool& pass, Context& ctx)
-        {
-            f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
-        }
-        
-//         struct phoenix_action
-//         {
-//             template <typename F, typename T1, typename T2, typename T3, typename T4>
-//             struct result { typedef void type; };
-//             
-//             template <typename Eval>
-//             void 
-//             operator()(phoenix::actor<Eval> const& f, Attribute const& attr, 
-//                 std::size_t id, bool& pass, Context& ctx) const
-//             {
-//                 f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
-//             }
-//         };
+        //~ template <typename Eval>
+        //~ static void phoenix_action(phoenix::actor<Eval> const& f,
+            //~ Attribute const& attr, std::size_t id, bool& pass, Context& ctx)
+        //~ {
+            //~ f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
+        //~ }
+
+         struct phoenix_action
+         {
+             template <typename F, typename T1, typename T2, typename T3, typename T4>
+             struct result { typedef void type; };
+
+             template <typename Eval>
+             void
+             operator()(phoenix::actor<Eval> const& f, Attribute const& attr,
+                 std::size_t id, bool& pass, Context& ctx) const
+             {
+                 f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
+             }
+         };
 
         template <typename Eval>
         static FunctionType call(phoenix::actor<Eval> const& f)
         {
-//             using phoenix::arg_names::arg1;
-//             using phoenix::arg_names::arg2;
-//             using phoenix::arg_names::arg3;
-//             using phoenix::arg_names::arg4;
+             using phoenix::arg_names::_1;
+             using phoenix::arg_names::_2;
+             using phoenix::arg_names::_3;
+             using phoenix::arg_names::_4;
 
-//             void (*pf)(phoenix::actor<Eval> const&,
-//                 Attribute const&, std::size_t, bool&, Context&) =
-//                     &wrap_action::phoenix_action;
-// 
-//             return phoenix::bind(pf, f, arg1, arg2, arg3, arg4);
+             //~ void (*pf)(phoenix::actor<Eval> const&,
+                 //~ Attribute const&, std::size_t, bool&, Context&) =
+                     //~ &wrap_action::phoenix_action;
 
-//             return phoenix::bind(phoenix_action(), f, arg1, arg2, arg3, arg4);
-            
-            return boost::bind(
-                &wrap_action::phoenix_action<Eval>, f, _1, _2, _3, _4);
+             //~ return phoenix::bind(pf, f, arg1, arg2, arg3, arg4);
+
+             return phoenix::bind(phoenix_action(), phoenix::lambda[f], _1, _2, _3, _4);
+
+             //~ return phoenix::bind(phoenix::lambda[f], f, _1, _2, _3, _4);
+
+             //~ return boost::bind(pf, f, _1, _2, _3, _4);
+             //~ return phoenix::bind(pf, f, _1, _2, _3, _4);
+
+            //~ return boost::bind(
+                //~ &wrap_action::phoenix_action<Eval>, f, _1, _2, _3, _4);
         }
 
         // semantic actions with 3 arguments
@@ -82,12 +88,15 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         template <typename A0, typename A1, typename A2>
         static FunctionType call(void(*f)(A0, A1, A2))
         {
-            using phoenix::arg_names::arg1;
-            using phoenix::arg_names::arg2;
-            using phoenix::arg_names::arg3;
+            using phoenix::arg_names::_1;
+            using phoenix::arg_names::_2;
+            using phoenix::arg_names::_3;
 
-            return phoenix::bind(
-                &wrap_action::arg3_action<void(A0, A1, A2)>, f, arg1, arg2, arg3);
+            void (*pf)(void(*)(A0, A1, A2), Attribute const&, std::size_t, bool&, Context&) =
+                &wrap_action::arg3_action;
+
+            //~ return boost::bind(pf, f, _1, _2, _3);
+            return phoenix::bind(pf, f, _1, _2, _3);
         }
 
         // semantic actions with 2 arguments
@@ -101,11 +110,14 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         template <typename A0, typename A1>
         static FunctionType call(void(*f)(A0, A1))
         {
-            using phoenix::arg_names::arg1;
-            using phoenix::arg_names::arg2;
+            using phoenix::arg_names::_1;
+            using phoenix::arg_names::_2;
 
-            return phoenix::bind(
-                &wrap_action::arg2_action<void(A0, A1)>, f, arg1, arg2);
+            void (*pf)(void(*)(A0, A1), Attribute const&, std::size_t, bool&, Context&) =
+                &wrap_action::arg2_action;
+
+            //~ return boost::bind(pf, f, _1, _2);
+            return phoenix::bind(pf, f, _1, _2);
         }
 
         // semantic actions with 1 argument
@@ -119,8 +131,12 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         template <typename A0>
         static FunctionType call(void(*f)(A0))
         {
-            using phoenix::arg_names::arg1;
-            return phoenix::bind(&wrap_action::arg1_action<void(A0)>, f, arg1);
+            void (*pf)(void(*)(A0), Attribute const&, std::size_t, bool&, Context&) =
+                &arg1_action;
+
+            using phoenix::arg_names::_1;
+            return phoenix::bind(pf, f, _1);
+            //~ return boost::bind(pf, f, _1);
         }
     };
 
