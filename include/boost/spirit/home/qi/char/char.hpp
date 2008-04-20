@@ -18,6 +18,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/foreach.hpp>
+#include <boost/mpl/print.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
@@ -52,12 +53,14 @@ namespace boost { namespace spirit { namespace qi
             typedef unused_type type;   // literal parsers have no attribute
         };
 
-        static Char get_char(Char ch)
+        template <typename CharParam>
+        static CharParam get_char(CharParam ch)
         {
             return ch;
         }
 
-        static Char get_char(Char const* str)
+        template <typename CharParam>
+        static CharParam get_char(CharParam const* str)
         {
             return *str;
         }
