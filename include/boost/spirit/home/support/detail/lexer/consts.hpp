@@ -6,8 +6,11 @@
 #ifndef BOOST_LEXER_CONSTS_H
 #define BOOST_LEXER_CONSTS_H
 
-#include "size_t.hpp"
+#include <boost/config.hpp>
+#if !defined(BOOST_NO_INTRINSIC_WCHAR_T) && (!defined(BOOST_NO_CWCHAR) || defined(sun) || defined(__sun))
 #include <wchar.h>
+#endif
+#include <boost/spirit/home/support/detail/lexer/size_t.hpp>
 
 namespace boost
 {
