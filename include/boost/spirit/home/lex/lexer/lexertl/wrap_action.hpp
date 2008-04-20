@@ -31,30 +31,33 @@ namespace boost { namespace spirit { namespace lex { namespace detail
 
         // wrap phoenix actor, make sure first argument is a fusion sequence
         template <typename Eval>
-        static void phoenix_action(phoenix::actor<Eval> const& f, 
+        static void phoenix_action(phoenix::actor<Eval> const& f,
             Attribute const& attr, std::size_t id, bool& pass, Context& ctx)
         {
             f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
         }
-        
+
         template <typename Eval>
         static FunctionType call(phoenix::actor<Eval> const& f)
         {
-//             using phoenix::arg_names::arg1;
-//             using phoenix::arg_names::arg2;
-//             using phoenix::arg_names::arg3;
-//             using phoenix::arg_names::arg4;
-// 
-//             return phoenix::bind(
-//                 &wrap_action::phoenix_action<Eval>, f, arg1, arg2, arg3, arg4);
+             using phoenix::arg_names::arg1;
+             using phoenix::arg_names::arg2;
+             using phoenix::arg_names::arg3;
+             using phoenix::arg_names::arg4;
 
-            return boost::bind(
-                &wrap_action::phoenix_action<Eval>, f, _1, _2, _3, _4);
+            void (*pf)(phoenix::actor<Eval> const&,
+                Attribute const&, std::size_t, bool&, Context&) =
+                    &wrap_action::phoenix_action;
+
+             return phoenix::bind(pf, f, arg1, arg2, arg3, arg4);
+
+            //~ return boost::bind(
+                //~ &wrap_action::phoenix_action<Eval>, f, _1, _2, _3, _4);
         }
 
         // semantic actions with 3 arguments
         template <typename F>
-        static void arg3_action(F* f, Attribute const& attr, 
+        static void arg3_action(F* f, Attribute const& attr,
             std::size_t id, bool& pass, Context&)
         {
             f(attr, id, pass);
@@ -73,7 +76,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
 
         // semantic actions with 2 arguments
         template <typename F>
-        static void arg2_action(F* f, Attribute const& attr, 
+        static void arg2_action(F* f, Attribute const& attr,
             std::size_t id, bool&, Context&)
         {
             f(attr, id);
@@ -91,7 +94,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
 
         // semantic actions with 1 argument
         template <typename F>
-        static void arg1_action(F* f, Attribute const& attr, 
+        static void arg1_action(F* f, Attribute const& attr,
             std::size_t, bool&, Context&)
         {
             f(attr);
