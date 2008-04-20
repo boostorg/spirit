@@ -34,19 +34,24 @@ namespace boost { namespace spirit { namespace qi
         {
             qi::skip(first, last, skipper);
 
-            bool matched = false;
-            if (first != last && *first == '\r')    // CR
-            {
-                matched = true;
-                ++first;
-            }
-            if (first != last && *first == '\n')    // LF
-            {
-                matched = true;
-                ++first;
-            }
+            Iterator it = first;
 
-            return matched;
+            bool matched = false;
+            if (it != last && *it == '\r')    // CR
+            {
+                matched = true;
+                ++it;
+            }
+            if (it != last && *it == '\n')    // LF
+            {
+                matched = true;
+                ++it;
+            }
+            if (!matched)
+                return false;
+                
+            first = it;
+            return true;
         }
 
         template <typename Component>
