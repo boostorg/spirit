@@ -30,27 +30,43 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         }
 
         // wrap phoenix actor, make sure first argument is a fusion sequence
-        template <typename Eval>
-        static void phoenix_action(phoenix::actor<Eval> const& f,
-            Attribute const& attr, std::size_t id, bool& pass, Context& ctx)
+//         template <typename Eval>
+//         static void phoenix_action(phoenix::actor<Eval> const& f,
+//             Attribute const& attr, std::size_t id, bool& pass, Context& ctx)
+//         {
+//             f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
+//         }
+        
+        struct phoenix_action
         {
-            f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
-        }
+            template <typename F, typename T1, typename T2, typename T3, typename T4>
+            struct result { typedef void type; };
+            
+            template <typename Eval>
+            void 
+            operator()(phoenix::actor<Eval> const& f, Attribute const& attr, 
+                std::size_t id, bool& pass, Context& ctx) const
+            {
+                f(spirit::detail::pass_value<Attribute const>::call(attr), id, pass, ctx);
+            }
+        };
 
         template <typename Eval>
         static FunctionType call(phoenix::actor<Eval> const& f)
         {
-             using phoenix::arg_names::arg1;
-             using phoenix::arg_names::arg2;
-             using phoenix::arg_names::arg3;
-             using phoenix::arg_names::arg4;
+            using phoenix::arg_names::arg1;
+            using phoenix::arg_names::arg2;
+            using phoenix::arg_names::arg3;
+            using phoenix::arg_names::arg4;
 
-            void (*pf)(phoenix::actor<Eval> const&,
-                Attribute const&, std::size_t, bool&, Context&) =
-                    &wrap_action::phoenix_action;
+//             void (*pf)(phoenix::actor<Eval> const&,
+//                 Attribute const&, std::size_t, bool&, Context&) =
+//                     &wrap_action::phoenix_action;
+// 
+//             return phoenix::bind(pf, f, arg1, arg2, arg3, arg4);
 
-             return phoenix::bind(pf, f, arg1, arg2, arg3, arg4);
-
+            return phoenix::bind(phoenix_action(), f, arg1, arg2, arg3, arg4);
+            
             //~ return boost::bind(
                 //~ &wrap_action::phoenix_action<Eval>, f, _1, _2, _3, _4);
         }
