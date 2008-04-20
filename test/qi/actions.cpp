@@ -8,6 +8,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
+#include <cstring>
 
 using namespace boost::spirit;
 
