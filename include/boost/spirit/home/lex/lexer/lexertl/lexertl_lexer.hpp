@@ -65,7 +65,10 @@ namespace boost { namespace spirit { namespace lex
         { 
             std::basic_string<Char> result(1, ch);
             if (detail::must_escape(ch)) 
-                result.insert(0, 1, '\\');
+            {
+                typedef typename std::basic_string<Char>::size_type size_type;
+                result.insert((size_type)0, 1, '\\');
+            }
             return result;
         }
     }
