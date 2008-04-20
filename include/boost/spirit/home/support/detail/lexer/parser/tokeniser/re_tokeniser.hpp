@@ -7,6 +7,7 @@
 #define BOOST_LEXER_RE_TOKENISER_HPP
 
 #include <map>
+#include <cstring>    // memcpy
 #include "num_token.hpp"
 #include "../../runtime_error.hpp"
 #include "../../size_t.hpp"
@@ -421,7 +422,8 @@ private:
         }
 
         token_.set (num_token::MACRO, null_token);
-        ::memcpy (token_._macro, start_, len_ * sizeof(CharT));
+        using namespace std;    // some systems have memcpy in namespace std
+        memcpy (token_._macro, start_, len_ * sizeof(CharT));
         token_._macro[len_] = 0;
     }
 };
