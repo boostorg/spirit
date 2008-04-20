@@ -21,7 +21,8 @@ namespace boost { namespace spirit { namespace lex { namespace detail
     template <typename FunctionType, typename Attribute, typename Context>
     struct wrap_action
     {
-        // plain functors are not touched at all
+        // plain functions with 4 arguments and function objects are not 
+        // touched at all
         template <typename F>
         static FunctionType call(F const& f)
         {

@@ -240,9 +240,9 @@ namespace boost { namespace spirit { namespace lex
         
     public:
         lexertl_functor()
-#if /*0 != __DECCXX_VER || BOOST_INTEL_CXX_VERSION > 900 || */defined(__PGI)
+#if defined(__PGI)
           : eof()
-#endif // 0 != __DECCXX_VER
+#endif 
         {}
         
         ///////////////////////////////////////////////////////////////////////
@@ -358,7 +358,7 @@ namespace boost { namespace spirit { namespace lex
         {}  
     };
 
-#if 0 != __COMO_VERSION__ || !BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
+#if defined(BOOST_SPIRIT_STATIC_EOF)
     ///////////////////////////////////////////////////////////////////////////
     //  eof token
     ///////////////////////////////////////////////////////////////////////////
@@ -370,7 +370,7 @@ namespace boost { namespace spirit { namespace lex
                 Token, Iterator, SupportsActors, SupportsState>::eof = 
             typename lexertl_functor<
                 Token, Iterator, SupportsActors, SupportsState>::result_type();
-#endif // 0 != __COMO_VERSION__
+#endif
 
 }}}
 
