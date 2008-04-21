@@ -48,6 +48,7 @@ import testing ;
     [ run qi/match_manip.cpp                : : : : ]
     [ run qi/binary.cpp                     : : : : ]
     [ run qi/debug.cpp                      : : : : ]
+    [ run qi/end.cpp                        : : : : ]
 
     [ compile-fail qi/grammar_fail.cpp      : : ]
     [ compile-fail qi/rule_fail.cpp         : : ]
