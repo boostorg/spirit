@@ -23,8 +23,6 @@ main()
     using namespace boost::spirit::ascii;
     using boost::spirit::char_;
     using boost::spirit::wchar;
-    using boost::spirit::eol;
-    using boost::spirit::eoi;
     
     {
         BOOST_TEST(test("x", 'x'));
@@ -115,36 +113,6 @@ main()
         using namespace boost::phoenix;
         BOOST_TEST((test("x", char_(val('x')))));
         BOOST_TEST((test("h", char_(val('a'), val('n')))));
-    }
-
-    {   // eol
-        BOOST_TEST(test("\r", eol));
-        BOOST_TEST(test("\r\n", eol));
-        BOOST_TEST(test("\n", eol));
-        BOOST_TEST(!test("\b", eol));
-
-        BOOST_TEST(test("   \r", eol, char_(' ')));
-        BOOST_TEST(test("   \r\n", eol, char_(' ')));
-        BOOST_TEST(test("   \n", eol, char_(' ')));
-        BOOST_TEST(!test("   \b", eol, char_(' ')));
-
-        BOOST_TEST(test(L"\r", eol));
-        BOOST_TEST(test(L"\r\n", eol));
-        BOOST_TEST(test(L"\n", eol));
-        BOOST_TEST(!test(L"\b", eol));
-
-        BOOST_TEST(test(L"   \r", eol, wchar(L' ')));
-        BOOST_TEST(test(L"   \r\n", eol, wchar(L' ')));
-        BOOST_TEST(test(L"   \n", eol, wchar(L' ')));
-        BOOST_TEST(!test(L"   \b", eol, wchar(L' ')));
-    }
-    
-    {   // eoi
-        BOOST_TEST(test("", eoi));
-        BOOST_TEST(!test("a", eoi));
-
-        BOOST_TEST(test("   ", eoi, space));
-        BOOST_TEST(!test("   a", eoi, space));
     }
     
     return boost::report_errors();

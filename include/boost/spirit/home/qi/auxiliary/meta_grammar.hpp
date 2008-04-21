@@ -30,6 +30,13 @@ namespace boost { namespace spirit { namespace qi
     struct lazy_parser;
     struct functor_director;
 
+    struct eol_director;
+    struct eoi_director;
+
+    template <typename Positive>
+    struct negated_end_director;
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Enable>
     struct is_valid_expr;
 
@@ -41,7 +48,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
 
     // none, eps and eps(f)
-    struct auxiliary_meta_grammar
+    struct auxiliary_meta_grammar1
       : proto::or_<
             meta_grammar::empty_terminal_rule<
                 qi::domain, tag::none, none>
@@ -56,6 +63,38 @@ namespace boost { namespace spirit { namespace qi
               , functor_holder<proto::_, proto::_>
               , functor_director
             >
+        >
+    {
+    };
+
+    // eol, eoi
+    struct auxiliary_end_meta_grammar
+      : proto::or_<
+            meta_grammar::terminal_rule<qi::domain, tag::eol, eol_director>
+          , meta_grammar::terminal_rule<qi::domain, tag::eoi, eoi_director>
+        >
+    {
+    };
+
+    struct negated_auxiliary_end_meta_grammar
+      : proto::or_<
+            auxiliary_end_meta_grammar
+          , meta_grammar::compose_single<
+                proto::unary_expr<
+                    proto::tag::complement
+                  , negated_auxiliary_end_meta_grammar
+                >
+              , qi::domain
+              , negated_end_director<mpl::_>
+            >
+        >
+    {
+    };
+
+    struct auxiliary_meta_grammar
+      : proto::or_<
+            auxiliary_meta_grammar1
+          , negated_auxiliary_end_meta_grammar
         >
     {
     };

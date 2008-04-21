@@ -10,7 +10,6 @@
 #include <boost/spirit/home/qi/char/char_parser.hpp>
 #include <boost/spirit/home/qi/char/char.hpp>
 #include <boost/spirit/home/qi/char/char_class.hpp>
-#include <boost/spirit/home/qi/char/primitives.hpp>
 #include <boost/spirit/home/qi/char/meta_grammar.hpp>
 
 #endif

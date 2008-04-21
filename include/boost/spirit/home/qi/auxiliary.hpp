@@ -13,6 +13,7 @@
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/spirit/home/qi/auxiliary/functor.hpp>
 #include <boost/spirit/home/qi/auxiliary/functor_director.hpp>
+#include <boost/spirit/home/qi/auxiliary/primitives.hpp>
 #include <boost/spirit/home/qi/auxiliary/meta_grammar.hpp>
 
 #endif

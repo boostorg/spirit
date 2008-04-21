@@ -40,12 +40,9 @@ namespace boost { namespace spirit { namespace qi
     template <typename Tag>
     struct char_class;
 
-    struct eol_director;
-    struct eoi_director;
-
-    ///////////////////////////////////////////////////////////////////////////
     struct char_meta_grammar;
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Enable>
     struct is_valid_expr;
 
@@ -350,8 +347,6 @@ namespace boost { namespace spirit { namespace qi
               , qi::domain
               , char_class<mpl::_>
             >
-          , meta_grammar::terminal_rule<qi::domain, tag::eol, eol_director>
-          , meta_grammar::terminal_rule<qi::domain, tag::eoi, eoi_director>
         >
     {};
 
