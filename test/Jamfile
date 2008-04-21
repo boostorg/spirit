@@ -53,6 +53,7 @@ import testing ;
     [ compile-fail qi/rule_fail.cpp         : : ]
 
     # run Karma tests
+    [ run karma/actions.cpp                 : : : : karma_actions ]
     [ run karma/alternative.cpp             : : : : karma_alternative ]
     [ run karma/binary.cpp                  : : : : karma_binary ]
     [ run karma/case_handling.cpp           : : : : ]
