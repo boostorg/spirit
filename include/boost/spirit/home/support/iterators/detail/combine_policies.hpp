@@ -414,7 +414,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
     //  multi_pass template, combining 4 separate policies into one. Any other
     //  multi_pass policy class needs to follow the scheme as shown below.
     template<
-        typename Input, typename Ownership, typename Checking,
+        typename Ownership, typename Checking, typename Input, 
         typename Storage
     >
     struct default_policy

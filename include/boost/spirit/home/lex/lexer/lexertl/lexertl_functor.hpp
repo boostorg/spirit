@@ -352,7 +352,7 @@ namespace boost { namespace spirit { namespace lex
             return mp.shared->ftor.rules.state(statename);
         }
         
-        // we don't need this
+        // we don't need this, but it must be there
         template <typename MultiPass>
         static void destroy(MultiPass const& mp)
         {}  

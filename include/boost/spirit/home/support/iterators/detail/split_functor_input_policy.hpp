@@ -154,7 +154,6 @@ namespace boost { namespace spirit { namespace multi_pass_policies
                 return ftor;
             }
 
-        protected:
             mutable functor_type ftor;
         };
 

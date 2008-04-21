@@ -257,7 +257,7 @@ namespace boost { namespace spirit { namespace lex
 
         ///////////////////////////////////////////////////////////////////////
         template <typename MultiPass>
-        result_type& operator()(MultiPass& mp, result_type& result)
+        static result_type& get_next(MultiPass& mp, result_type& result)
         {
             shared& data = mp.shared->ftor;
             if (data.first == data.last) 
@@ -342,6 +342,11 @@ namespace boost { namespace spirit { namespace lex
         { 
             return mp.shared->ftor.rules.state(statename);
         }
+        
+        // we don't need this, but it must be there
+        template <typename MultiPass>
+        static void destroy(MultiPass const& mp)
+        {}  
     };
 
 #if defined(BOOST_SPIRIT_STATIC_EOF)
