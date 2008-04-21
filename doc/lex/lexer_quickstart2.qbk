@@ -58,11 +58,11 @@ The semantics of the shown code is as follows. The code inside the `[]`
 brackets will be executed whenever the corresponding token has been matched by 
 the lexical analyzer. This is very similar to __flex__, where the action code 
 associated with a token definition gets executed after the recognition of a
-matching input sequence. The code above uses functors constructed using 
-__phoenix2__, but it is possible to insert any C++ functor as long as it 
-exposes the interface:
+matching input sequence. The code above uses function objects constructed using 
+__phoenix2__, but it is possible to insert any C++ function or function object 
+as long as it exposes the interface:
 
-    void f (Range r, std::size_t id, Context& ctx, bool& matched);
+    void f (Range r, Idtype id, bool& matched, Context& ctx);
 
 [variablelist where:
     [[`Range r`]            [This is a `boost::iterator_range` holding two 
@@ -71,36 +71,35 @@ exposes the interface:
                              held iterators is the same as specified while
                              defining the type of the `lexertl_lexer<...>` 
                              (its first template parameter).]]
-    [[`std::size_t id`]     [This is the token id for the matched token.]]
+    [[`Idtype id`]          [This is the token id of the type `std::size_t` 
+                             for the matched token.]]
+    [[`bool& matched`]      [This boolean value is pre/initialized to `true`.
+                             If the functor sets it to `false` the lexer
+                             stops calling any semantic actions attached to 
+                             this token and behaves as if the token have not
+                             been matched in the first place.]]
     [[`Context& ctx`]       [This is a reference to a lexer specific, 
                              unspecified type, providing the context for the
                              current lexer state. It can be used to access
                              different internal data items and is needed for
                              lexer state control from inside a semantic 
                              action.]]
-    [[`bool& matched`]      [This boolean value is pre/initialized to `true`.
-                             If the functor sets it to `false` the lexer
-                             stops calling any semantic actions attached to 
-                             this token and behaves as if the token have not
-                             been matched in the first place.]]
 ]
 
-Even if it is possible to write your own functor implementations, the preferred 
-way of defining lexer semantic actions is to use __phoenix2__. In this case you
-can access the three parameters described in the table above by using the 
-predefined __phoenix2__ placeholders: `_1` for the iterator range, `_2` for the 
-token id, `_3` for the reference to the lexer state, and `_4` for the reference 
-to the boolean value signaling the outcome of the semantic action. 
+When using a C++ function as the semantic action the following prototypes are 
+allowed as well:
 
-[important  All placeholders (`_1`, `_2`, etc.) used in /lexer/ semantic 
-            actions in conjunction with functors created based on __phoenix2__ 
-            need to be imported from the `namespace boost::phoenix::arg_names` 
-            (and *not* `namespace boost::spirit::arg_names`, which is 
-            different from using placeholders in __qi__ or __karma__). 
-            Using the wrong placeholders leads to subtle compilation errors 
-            which are difficult to backtrack to their cause.
-]
+    void f (Range r, Idtype id, bool& matched);
+    void f (Range r, Idtype id);
+    void f (Range r);
 
+Even if it is possible to write your own function object implementations (i.e. 
+using Boost.Lambda or Boost.Bind), the preferred way of defining lexer semantic 
+actions is to use __phoenix2__. In this case you can access the four parameters 
+described in the table above by using the predefined __spirit__ placeholders: 
+`_1` for the iterator range, `_2` for the token id, `_3` for the reference 
+to the boolean value signaling the outcome of the semantic action, and `_4` for 
+the reference to the internal lexer context. 
 
 [heading Associating Token Definitions with the Lexer]
 
