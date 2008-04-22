@@ -5,7 +5,7 @@
 
 //#define KARMA_FAIL_COMPILATION
 
-#include <limits>
+#include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/math/concepts/real_concept.hpp>
 
@@ -14,6 +14,7 @@
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 
+#include <limits>
 #include "test.hpp"
 
 using namespace spirit_test;

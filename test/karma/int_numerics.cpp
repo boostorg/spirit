@@ -5,7 +5,7 @@
 
 //#define KARMA_FAIL_COMPILATION
 
-#include <limits>
+#include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/mpl/vector.hpp>
@@ -23,6 +23,7 @@
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
 
+#include <limits>
 #include "test.hpp"
 
 using namespace spirit_test;
