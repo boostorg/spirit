@@ -59,6 +59,13 @@ namespace boost { namespace spirit { namespace detail
         return true;
     }
 
+    template <typename RT, typename Attribute, typename Context>
+    bool action_dispatch(RT(*f)()
+      , Attribute& attr, Context& context)
+    {
+        f();
+        return true;
+    }
 }}}
 
 #endif
