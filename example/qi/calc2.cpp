@@ -7,15 +7,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  A Calculator example demonstrating the grammar and semantic actions
-//  using phoenix to "bind" plain functions. The parser prints code suitable
-//  for a stack based virtual machine.
+//  using plain functions. The parser prints code suitable for a stack
+//  based virtual machine.
 //
 //  [ JDG May 10, 2002 ]    spirit1
 //  [ JDG March 4, 2007 ]   spirit2
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_bind.hpp>
 
 #include <iostream>
 #include <string>
@@ -23,9 +22,6 @@
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
-using boost::phoenix::bind;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Semantic actions
@@ -50,22 +46,22 @@ struct calculator : grammar_def<Iterator, space_type>
     {
         expression =
             term
-            >> *(   ('+' >> term            [bind(&do_add)])
-                |   ('-' >> term            [bind(&do_subt)])
+            >> *(   ('+' >> term            [&do_add])
+                |   ('-' >> term            [&do_subt])
                 )
             ;
 
         term =
             factor
-            >> *(   ('*' >> factor          [bind(&do_mult)])
-                |   ('/' >> factor          [bind(&do_div)])
+            >> *(   ('*' >> factor          [&do_mult])
+                |   ('/' >> factor          [&do_div])
                 )
             ;
 
         factor =
-            uint_                           [bind(&do_int, _1)]
+            uint_                           [&do_int]
             |   '(' >> expression >> ')'
-            |   ('-' >> factor              [bind(&do_neg)])
+            |   ('-' >> factor              [&do_neg])
             |   ('+' >> factor)
             ;
     }
