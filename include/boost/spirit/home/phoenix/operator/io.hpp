@@ -20,14 +20,14 @@ namespace boost { namespace phoenix
     inline typename detail::enable_if_ostream<T0, T1>::type
     operator<<(T0& a0, actor<T1> const& a1)
     {
-        return compose<shift_left_eval>(ref(a0), a1);
+        return compose<shift_left_eval>(phoenix::ref(a0), a1);
     }
 
     template <typename T0, typename T1>
     inline typename detail::enable_if_istream<T0, T1>::type
     operator>>(T0& a0, actor<T1> const& a1)
     {
-        return compose<shift_right_eval>(ref(a0), a1);
+        return compose<shift_right_eval>(phoenix::ref(a0), a1);
     }
 
 ///////////////////////////////////////////////////////////////////////////////
