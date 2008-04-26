@@ -8,7 +8,7 @@
 #define BOOST_SPIRIT_TST_MAP_JUNE_03_2007_1143AM
 
 #include <boost/spirit/home/qi/string/detail/tst.hpp>
-#include <boost/spirit/home/support/detail/unordered_map.hpp>
+#include <boost/unordered_map.hpp>
 #include <boost/pool/object_pool.hpp>
 
 namespace boost { namespace spirit { namespace qi
