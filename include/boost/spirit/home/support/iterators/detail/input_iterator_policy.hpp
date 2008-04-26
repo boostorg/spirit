@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
 
             // test, whether we reached the end of the underlying stream
             template <typename MultiPass>
-            static bool input_at_eof(MultiPass const& mp, value_type const& t) 
+            static bool input_at_eof(MultiPass const& mp, value_type const&) 
             {
                 return mp.input == T();
             }
@@ -97,7 +97,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
         template <typename T>
         struct shared
         {
-            explicit shared(T x) {}
+            explicit shared(T) {}
 
             // no shared data elements
         };

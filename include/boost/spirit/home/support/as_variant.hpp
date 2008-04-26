@@ -14,6 +14,11 @@
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/variant/variant_fwd.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/push_back.hpp>
+#include <boost/mpl/contains.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace detail
 {
@@ -50,6 +55,22 @@ namespace boost { namespace spirit { namespace detail
 #undef BOOST_FUSION_NEXT_CALL_ITERATOR
 #undef BOOST_FUSION_VALUE_OF_ITERATOR
 
+    template <typename Sequence>
+    struct generate_variant
+    {
+        // build a variant generator being able to generate a variant holding 
+        // all of the types as given in the typelist 
+        typedef typename
+            detail::as_variant<fusion::result_of::size<Sequence>::value>
+        gen;
+        
+        // use this generator to create the actual variant
+        typedef typename gen::template apply<
+                typename fusion::result_of::begin<Sequence>::type
+            >::type 
+        type;
+    };
+    
 }}}
 
 namespace boost { namespace spirit
@@ -57,11 +78,25 @@ namespace boost { namespace spirit
     template <typename Sequence>
     struct as_variant
     {
-        typedef typename
-            detail::as_variant<fusion::result_of::size<Sequence>::value>
-        gen;
-        typedef typename gen::
-            template apply<typename fusion::result_of::begin<Sequence>::type>::type
+        // make sure each of the types occurs only once in the type list
+        typedef typename 
+            mpl::fold<
+                Sequence, mpl::vector<>,
+                mpl::if_<
+                    mpl::contains<mpl::_1, mpl::_2>, 
+                    mpl::_1, mpl::push_back<mpl::_1, mpl::_2> 
+                > 
+            >::type 
+        new_sequence;
+
+        // if there is only one type in the list of types we strip off the 
+        // variant all together
+        typedef typename 
+            mpl::eval_if<
+                mpl::equal_to<mpl::size<new_sequence>, mpl::int_<1> >,
+                mpl::deref<mpl::front<Sequence> >,
+                detail::generate_variant<new_sequence>
+            >::type 
         type;
     };
 }}

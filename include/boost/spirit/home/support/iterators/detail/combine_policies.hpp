@@ -344,7 +344,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
       : Storage
     {
         multi_pass_unique() {}
-        multi_pass_unique(T const& /*x*/) {}
+        multi_pass_unique(T const&) {}
 
         template <typename MultiPass>
         static void destroy(MultiPass& mp)

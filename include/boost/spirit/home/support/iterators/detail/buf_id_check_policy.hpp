@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             }
 
             template <typename MultiPass>
-            static void destroy(MultiPass& mp) 
+            static void destroy(MultiPass&) 
             {}
 
         protected:

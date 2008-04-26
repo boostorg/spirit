@@ -71,10 +71,10 @@ namespace boost { namespace spirit { namespace multi_pass_policies
 
         protected:
             unique() {}
-            explicit unique(Functor const& x) {}
+            explicit unique(Functor const&) {}
 
         public:
-            void swap(unique& x) {}
+            void swap(unique&) {}
 
             // get the next token
             template <typename MultiPass>

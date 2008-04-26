@@ -26,7 +26,7 @@ namespace boost { namespace spirit { namespace qi
     }
 
     template <typename Iterator>
-    inline void skip(Iterator& first, Iterator const& last, unused_type)
+    inline void skip(Iterator&, Iterator const&, unused_type)
     {
     }
 }}}

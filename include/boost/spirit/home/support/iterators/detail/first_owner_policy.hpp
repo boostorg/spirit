@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             // to, so don't swap first_.  swap is only called from operator=
 
             template <typename MultiPass>
-            static bool is_unique(MultiPass const& mp) 
+            static bool is_unique(MultiPass const&) 
             {
                 return false; // no way to know, so always return false
             }

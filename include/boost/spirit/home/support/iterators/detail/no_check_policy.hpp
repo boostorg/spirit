@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             static void clear_queue(MultiPass&) {}
 
             template <typename MultiPass>
-            static void destroy(MultiPass& mp) {}
+            static void destroy(MultiPass&) {}
         };
 
         ///////////////////////////////////////////////////////////////////////

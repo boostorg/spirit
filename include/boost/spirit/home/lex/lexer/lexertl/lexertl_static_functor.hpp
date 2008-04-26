@@ -345,7 +345,7 @@ namespace boost { namespace spirit { namespace lex
         
         // we don't need this, but it must be there
         template <typename MultiPass>
-        static void destroy(MultiPass const& mp)
+        static void destroy(MultiPass const&)
         {}  
     };
 

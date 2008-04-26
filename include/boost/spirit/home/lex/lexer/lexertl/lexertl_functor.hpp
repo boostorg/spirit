@@ -89,7 +89,8 @@ namespace boost { namespace spirit { namespace lex
           : Data<Iterator, mpl::false_, mpl::false_>
         {
             typedef Data<Iterator, mpl::false_, mpl::false_> base_type;
-
+            typedef std::size_t state_type;
+            
             // initialize the shared data 
             template <typename IterData>
             Data (IterData const& data_, Iterator& first_, Iterator const& last_)
@@ -354,7 +355,7 @@ namespace boost { namespace spirit { namespace lex
         
         // we don't need this, but it must be there
         template <typename MultiPass>
-        static void destroy(MultiPass const& mp)
+        static void destroy(MultiPass const&)
         {}  
     };
 

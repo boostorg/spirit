@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
         ///////////////////////////////////////////////////////////////////////
         struct unique // : detail::default_ownership_policy
         {
-            void swap(unique& x) {}
+            void swap(unique&) {}
 
             // clone is called when a copy of the iterator is made, so 
             // increment the ref-count.
@@ -54,7 +54,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             }
 
             template <typename MultiPass>
-            static void destroy(MultiPass& mp) 
+            static void destroy(MultiPass&) 
             {}
         };
 

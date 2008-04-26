@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace detail
     template <typename RT, typename A0
       , typename Attribute, typename Context>
     bool action_dispatch(RT(*f)(A0)
-      , Attribute& attr, Context& context)
+      , Attribute& attr, Context&)
     {
         f(attr);
         return true;
@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace detail
 
     template <typename RT, typename Attribute, typename Context>
     bool action_dispatch(RT(*f)()
-      , Attribute& attr, Context& context)
+      , Attribute&, Context&)
     {
         f();
         return true;

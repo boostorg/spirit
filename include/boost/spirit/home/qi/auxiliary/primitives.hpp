@@ -32,10 +32,10 @@ namespace boost { namespace spirit { namespace qi
           , typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         static bool parse(
-            Component const& component
+            Component const& /*component*/
           , Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr)
+          , Context& /*context*/, Skipper const& skipper
+          , Attribute& /*attr*/)
         {
             qi::skip(first, last, skipper);
             return Parser::test(first, last);
@@ -66,10 +66,10 @@ namespace boost { namespace spirit { namespace qi
           , typename Iterator, typename Context
           , typename Skipper, typename Attribute>
         static bool parse(
-            Component const& component
+            Component const& /*component*/
           , Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr)
+          , Context& /*context*/, Skipper const& skipper
+          , Attribute& /*attr*/)
         {
             qi::skip(first, last, skipper);
 

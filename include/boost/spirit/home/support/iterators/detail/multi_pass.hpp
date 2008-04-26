@@ -58,12 +58,12 @@ namespace boost { namespace spirit { namespace detail
         default_input_policy() {}
         
         template <typename Functor>
-        default_input_policy(Functor const& x) {}
+        default_input_policy(Functor const&) {}
         
         template <typename MultiPass>
-        static void destroy(MultiPass& mp) {}
+        static void destroy(MultiPass&) {}
         
-        void swap(default_input_policy& /*x*/) {}
+        void swap(default_input_policy&) {}
         
         template <typename MultiPass, typename TokenType>
         static TokenType& advance_input(MultiPass& mp, TokenType& curtok);
@@ -78,12 +78,12 @@ namespace boost { namespace spirit { namespace detail
     struct default_ownership_policy
     {
         template <typename MultiPass>
-        static void destroy(MultiPass& mp) {}
+        static void destroy(MultiPass&) {}
 
         void swap(default_ownership_policy&) {}
 
         template <typename MultiPass>
-        static void clone(MultiPass& mp) {}
+        static void clone(MultiPass&) {}
 
         template <typename MultiPass>
         static bool release(MultiPass& mp);
@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace detail
     struct default_storage_policy
     {
         template <typename MultiPass>
-        static void destroy(MultiPass& mp) {}
+        static void destroy(MultiPass&) {}
 
         void swap(default_storage_policy&) {}
 
@@ -103,10 +103,10 @@ namespace boost { namespace spirit { namespace detail
         static typename MultiPass::reference dereference(MultiPass const& mp);
         
         template <typename MultiPass>
-        static void increment(MultiPass& mp) {}
+        static void increment(MultiPass&) {}
         
         template <typename MultiPass>
-        static void clear_queue(MultiPass& mp) {}
+        static void clear_queue(MultiPass&) {}
 
         template <typename MultiPass>
         static bool is_eof(MultiPass const& mp);
@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace detail
     struct default_checking_policy
     {
         template <typename MultiPass>
-        static void destroy(MultiPass& mp) {}
+        static void destroy(MultiPass&) {}
 
         void swap(default_checking_policy&) {}
 
