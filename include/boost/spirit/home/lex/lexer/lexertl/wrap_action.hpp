@@ -112,6 +112,23 @@ namespace boost { namespace spirit { namespace lex { namespace detail
             using phoenix::arg_names::_1;
             return phoenix::bind(pf, f, _1);
         }
+
+        // semantic actions with 0 argument
+        template <typename F>
+        static void arg0_action(F* f, Attribute const&,
+            std::size_t, bool&, Context&)
+        {
+            f();
+        }
+
+        static FunctionType call(void(*f)())
+        {
+            void (*pf)(void(*)(), Attribute const&, std::size_t, 
+                bool&, Context&) = &arg0_action;
+
+            using phoenix::arg_names::_1;
+            return phoenix::bind(pf, f, _1);
+        }
     };
 
     // specialization allowing to skip wrapping for lexer types not supporting
