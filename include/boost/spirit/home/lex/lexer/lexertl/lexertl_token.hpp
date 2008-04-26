@@ -101,7 +101,7 @@ namespace boost { namespace spirit { namespace lex
     struct lexertl_token;
 
     ///////////////////////////////////////////////////////////////////////////
-    //  This specialization of the toke type doesn't contain any item data and
+    //  This specialization of the token type doesn't contain any item data and
     //  doesn't support working with lexer states.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
@@ -143,7 +143,7 @@ namespace boost { namespace spirit { namespace lex
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    //  This specialization of the toke type doesn't contain any item data but
+    //  This specialization of the token type doesn't contain any item data but
     //  supports working with lexer states.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
