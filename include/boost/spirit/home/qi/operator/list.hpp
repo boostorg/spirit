@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace qi
 
             typename container::result_of::value<Attribute>::type val;
             if (ldirector::parse(
-                    left(component)
+                    spirit::left(component)
                   , first, last, context, skipper, val)
                 )
             {
@@ -56,10 +56,10 @@ namespace boost { namespace spirit { namespace qi
                 Iterator i = first;
                 while(
                     rdirector::parse(
-                        right(component)
+                        spirit::right(component)
                       , i, last, context, skipper, unused)
                  && ldirector::parse(
-                        left(component)
+                        spirit::left(component)
                       , i, last, context, skipper, val)
                     )
                 {
