@@ -107,11 +107,11 @@ namespace boost { namespace phoenix
                         typename fusion::result_of::begin<Cases>::type
                     >::type
                 >
-            is_default_case;
+            is_default_case_;
 
             typedef typename
                 mpl::eval_if<
-                    is_default_case
+                    is_default_case_
                   , mpl::identity<Cases>
                   , fusion::result_of::push_front<
                         Cases const, actor<default_case<actor<null_actor> > > >
@@ -135,7 +135,7 @@ namespace boost { namespace phoenix
             static type
             eval(Cases const& cases)
             {
-                return eval(cases, is_default_case());
+                return eval(cases, is_default_case_());
             }
         };
 
@@ -143,12 +143,12 @@ namespace boost { namespace phoenix
         struct switch_composite
         {
             BOOST_STATIC_ASSERT(fusion::traits::is_sequence<Cases>::value);
-            typedef ensure_default<Cases> ensure_default;
+            typedef ensure_default<Cases> ensure_default_;
 
             typedef typename
                 fusion::result_of::as_vector<
                     typename fusion::result_of::push_front<
-                        typename ensure_default::type, Cond>::type
+                        typename ensure_default_::type, Cond>::type
                     >::type
             tuple_type;
 
@@ -162,7 +162,7 @@ namespace boost { namespace phoenix
             eval(Cond const& cond, Cases const& cases)
             {
                 return fusion::as_vector(
-                    fusion::push_front(ensure_default::eval(cases), cond));
+                    fusion::push_front(ensure_default_::eval(cases), cond));
             }
         };
 
