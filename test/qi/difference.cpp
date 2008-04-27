@@ -54,8 +54,8 @@ main()
     }
 
     {
-        using namespace boost::phoenix;
         using boost::spirit::arg_names::_1;
+        using boost::phoenix::ref;
         std::string s;
 
         BOOST_TEST(test(
