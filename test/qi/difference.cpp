@@ -55,19 +55,20 @@ main()
 
     {
         using boost::spirit::arg_names::_1;
-        using boost::phoenix::ref;
+        namespace phx = boost::phoenix;
+        
         std::string s;
 
         BOOST_TEST(test(
             "/*abcdefghijk*/"
-          , "/*" >> *(char_ - "*/")[ref(s) += _1] >> "*/"
+          , "/*" >> *(char_ - "*/")[phx::ref(s) += _1] >> "*/"
         ));
         BOOST_TEST(s == "abcdefghijk");
         s.clear();
 
         BOOST_TEST(test(
             "    /*abcdefghijk*/    "
-          , "/*" >> *(char_ - "*/")[ref(s) += _1] >> "*/"
+          , "/*" >> *(char_ - "*/")[phx::ref(s) += _1] >> "*/"
           , space
         ));
         BOOST_TEST(s == "abcdefghijk");
