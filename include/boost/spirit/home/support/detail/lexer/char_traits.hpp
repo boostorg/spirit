@@ -18,7 +18,7 @@ namespace lexer
     {
         typedef CharT index_type;
 
-        index_type call(CharT ch)
+        static index_type call(CharT ch)
         {
             return ch;
         }
@@ -29,7 +29,7 @@ namespace lexer
     {
         typedef unsigned char index_type;
         
-        index_type call(char ch)
+        static index_type call(char ch)
         {
             return static_cast<index_type>(ch);
         }
@@ -40,7 +40,7 @@ namespace lexer
     {
         typedef wchar_t index_type;
 
-        index_type call(wchar_t ch)
+        static index_type call(wchar_t ch)
         {
             return ch;
         }

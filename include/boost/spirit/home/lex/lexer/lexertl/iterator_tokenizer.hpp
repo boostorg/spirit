@@ -127,13 +127,14 @@ namespace boost { namespace spirit { namespace lex
                 else
                 {
                     typedef typename 
-                        boost::iterator_traits<Iterator>::value_type 
+                        boost::detail::iterator_traits<Iterator>::value_type 
                     value_type;
                     typedef typename 
-                        char_traits<value_type>::index_type 
+                        boost::lexer::char_traits<value_type>::index_type 
                     index_type;
                     
-                    index_type index = char_traits<value_type>::call(*curr_++);
+                    index_type index = 
+                        boost::lexer::char_traits<value_type>::call(*curr_++);
                     std::size_t const state_ = ptr_[
                         lookup_[static_cast<std::size_t>(index)]];
 
@@ -216,13 +217,14 @@ namespace boost { namespace spirit { namespace lex
                 else
                 {
                     typedef typename 
-                        boost::iterator_traits<Iterator>::value_type 
+                        boost::detail::iterator_traits<Iterator>::value_type 
                     value_type;
                     typedef typename 
-                        char_traits<value_type>::index_type 
+                        boost::lexer::char_traits<value_type>::index_type 
                     index_type;
                     
-                    index_type index = char_traits<value_type>::call(*curr_++);
+                    index_type index = 
+                        boost::lexer::char_traits<value_type>::call(*curr_++);
                     std::size_t const state_ = ptr_[
                         lookup_[static_cast<std::size_t>(index)]];
 
