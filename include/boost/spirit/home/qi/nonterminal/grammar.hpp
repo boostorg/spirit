@@ -104,23 +104,96 @@ namespace boost { namespace spirit { namespace qi
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  Generator functions helping to construct a proper grammar object 
+    //  Generator functions helping to construct a proper grammar object
     //  instance
     ///////////////////////////////////////////////////////////////////////////
     template <typename Definition>
-    inline grammar<Definition> 
+    inline grammar<Definition>
     make_parser(Definition const& def)
     {
         return grammar<Definition>(def);
     }
-    
+
     template <typename Definition, typename Start>
-    inline grammar<Definition> 
+    inline grammar<Definition>
     make_parser(Definition const& def, Start const& start)
     {
         return grammar<Definition>(def, start);
     }
-    
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  The grammar_class template
+    ///////////////////////////////////////////////////////////////////////////
+    template <template <typename, typename> class Def>
+    struct grammar_class {};
+
+    template <typename Iterator, template <typename, typename> class Def>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , grammar_class<Def>)
+    {
+        Def<Iterator, unused_type> def;
+        grammar<Def<Iterator, unused_type> > g(def);
+        return parse(first, last, g);
+    }
+
+    template <typename Iterator
+      , template <typename, typename> class Def, typename Attr>
+    inline bool
+    parse(
+        Iterator& first
+      , Iterator last
+      , grammar_class<Def>
+      , Attr& attr)
+    {
+        Def<Iterator, unused_type> def;
+        grammar<Def<Iterator, unused_type> > g(def);
+        return parse(first, last, g, attr);
+    }
+
+    template <typename Iterator
+      , template <typename, typename> class Def, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , grammar_class<Def>
+      , Skipper const& skipper_)
+    {
+        typedef typename
+            result_of::as_component<qi::domain, Skipper>::type
+        skipper_type;
+
+        skipper_type skipper = spirit::as_component(qi::domain(), skipper_);
+
+        Def<Iterator, skipper_type> def;
+        grammar<Def<Iterator, skipper_type> > g(def);
+        return phrase_parse(first, last, g, skipper);
+    }
+
+    template <typename Iterator
+      , template <typename, typename> class Def, typename Attr, typename Skipper>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , grammar_class<Def>
+      , Attr& attr
+      , Skipper const& skipper_)
+    {
+        typedef typename
+            result_of::as_component<qi::domain, Skipper>::type
+        skipper_type;
+
+        skipper_type skipper = spirit::as_component(qi::domain(), skipper_);
+
+        Def<Iterator, skipper_type> def;
+        grammar<Def<Iterator, skipper_type> > g(def);
+        return phrase_parse(first, last, g, attr, skipper);
+    }
+
 }}}
 
 #endif
