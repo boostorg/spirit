@@ -22,8 +22,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     inline bool 
     string_generate(OutputIterator& sink, Char const* str, unused_type = unused)
     {
-        Char ch;
-        for (/**/; !!(ch = *str); ++str)
+        for (Char ch = *str; ch != 0; ch = *++str)
             detail::generate_to(sink, ch);
         return true;
     }
@@ -53,11 +52,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     inline bool 
     string_generate(OutputIterator& sink, Char const* str, Tag tag)
     {
-        Char ch;
-        for (/**/; !!(ch = *str); ++str) 
-        {
+        for (Char ch = *str; ch != 0; ch = *++str)
             detail::generate_to(sink, ch, tag);
-        }
         return true;
     }
 

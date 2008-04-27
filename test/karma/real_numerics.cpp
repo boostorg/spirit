@@ -26,7 +26,7 @@ struct scientific_policy : boost::spirit::karma::real_generator_policies<T>
 {
     //  we want the numbers always to be in scientific format
     typedef boost::spirit::karma::real_generator_policies<T> base_type;
-    static int floatfield(T n) { return base_type::scientific; }
+    static int floatfield(T) { return base_type::scientific; }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ struct fixed_policy : boost::spirit::karma::real_generator_policies<T>
     typedef boost::spirit::karma::real_generator_policies<T> base_type;
 
     //  we want the numbers always to be in scientific format
-    static int floatfield(T n) { return base_type::fixed; }
+    static int floatfield(T) { return base_type::fixed; }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ struct trailing_zeros_policy
     static bool const trailing_zeros = true;
     
     //  we want to generate up to 4 fractional digits 
-    static unsigned int precision(T n) { return 4; }
+    static unsigned int precision(T) { return 4; }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -527,6 +527,12 @@ namespace boost { namespace spirit { namespace karma {
             return call_n(sink, T(n), p);
         }
         
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(push)  
+# pragma warning(disable: 4100)   // 'x': unreferenced formal parameter  
+# pragma warning(disable: 4127)   // conditional expression is constant
+#endif 
+
         ///////////////////////////////////////////////////////////////////////
         //  This is the workhorse behind the real generator
         ///////////////////////////////////////////////////////////////////////
@@ -617,6 +623,11 @@ namespace boost { namespace spirit { namespace karma {
             }
             return r;
         }
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(pop)  
+#endif 
+
     };
 
 }}}

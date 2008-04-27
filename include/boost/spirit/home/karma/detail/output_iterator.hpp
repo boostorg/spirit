@@ -169,6 +169,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         private:
             output_iterator& parent;
+
+            // suppress warning about assignment operator not being generated
+            output_proxy& operator=(output_proxy const&);
         };
         
 #if !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
@@ -260,6 +263,9 @@ public:
         counting_sink count_data;                   // for counting
         buffer_sink<OutputIterator> buffer_data;    // for buffering
         output_mode mode;
+
+        // suppress warning about assignment operator not being generated
+        output_iterator& operator=(output_iterator const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////

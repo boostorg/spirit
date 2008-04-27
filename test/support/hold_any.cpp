@@ -118,7 +118,7 @@ int state;
 struct small_object 
 {
     small_object() {}
-    small_object(small_object const& fb) { state = 1; }
+    small_object(small_object const&) { state = 1; }
     ~small_object() { state = 2; }
 };
 
@@ -138,7 +138,7 @@ operator<< (std::ostream& o, small_object const&)
 struct large_object 
 {
     large_object() {}
-    large_object(large_object const& fb) { state = 3; }
+    large_object(large_object const&) { state = 3; }
     ~large_object() { state = 4; }
     
     int data0;
