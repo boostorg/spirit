@@ -6,9 +6,9 @@
 =============================================================================*/
 #include "calc6.hpp"
 
-void vmachine::execute(std::vector<int>& code, int nvars)
+void vmachine::execute(std::vector<int> const& code, int nvars)
 {
-    std::vector<int>::iterator pc = code.begin();
+    std::vector<int>::const_iterator pc = code.begin();
     std::vector<int>::iterator locals = stack.begin();
     stack_ptr = stack.begin() + nvars;
 

@@ -52,7 +52,7 @@ public:
     }
 
     std::vector<int> const& get_stack() const { return stack; };
-    void execute(std::vector<int>& code, int nvars);
+    void execute(std::vector<int> const& code, int nvars);
 
 private:
 

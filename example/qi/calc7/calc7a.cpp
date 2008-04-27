@@ -9,9 +9,9 @@
 # pragma warning(disable: 4800) // forcing value to bool 'true' or 'false'
                                 // (performance warning)
 
-void vmachine::execute(std::vector<int>& code, int nvars)
+void vmachine::execute(std::vector<int> const& code, int nvars)
 {
-    std::vector<int>::iterator pc = code.begin();
+    std::vector<int>::const_iterator pc = code.begin();
     std::vector<int>::iterator locals = stack.begin();
     stack_ptr = stack.begin() + nvars;
 

@@ -60,7 +60,7 @@ public:
     }
 
     int top() const { return stack_ptr[-1]; };
-    void execute(std::vector<int>& code);
+    void execute(std::vector<int> const& code);
 
 private:
 
@@ -68,9 +68,9 @@ private:
     std::vector<int>::iterator stack_ptr;
 };
 
-void vmachine::execute(std::vector<int>& code)
+void vmachine::execute(std::vector<int> const& code)
 {
-    std::vector<int>::iterator pc = code.begin();
+    std::vector<int>::const_iterator pc = code.begin();
     stack_ptr = stack.begin();
 
     while (pc != code.end())
