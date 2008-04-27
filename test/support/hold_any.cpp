@@ -36,9 +36,9 @@ bool output_any (hold_any const& a, std::string expected)
     {
         o << any_cast<double>(a);
     }
-    else if (a.type() == typeid(complex<int>)) 
+    else if (a.type() == typeid(std::complex<int>)) 
     {
-        o << any_cast<complex<int> >(a);
+        o << any_cast<std::complex<int> >(a);
     }
     else 
     {
@@ -61,12 +61,12 @@ void simple_any_test()
     BOOST_TEST(output_any(42, "42"));
     BOOST_TEST(output_any('q', "q"));
     BOOST_TEST(output_any(3.14, "3.14"));
-    BOOST_TEST(output_any(complex<int>(1, 2), "(1,2)"));
+    BOOST_TEST(output_any(std::complex<int>(1, 2), "(1,2)"));
 
     int n = 42; BOOST_TEST(output_any(n, "42"));
     char c = 'q'; BOOST_TEST(output_any(c, "q"));
     double d = 3.14; BOOST_TEST(output_any(d, "3.14"));
-    complex<int> x(1, 2); BOOST_TEST(output_any(x, "(1,2)"));
+    std::complex<int> x(1, 2); BOOST_TEST(output_any(x, "(1,2)"));
   
     hold_any a;
     BOOST_TEST(output_any(a = n, "42"));
@@ -79,13 +79,13 @@ void simple_any_test()
     BOOST_TEST(output_any_direct(n = hold_any(42), "42"));
     BOOST_TEST(output_any_direct(c = hold_any('q'), "q"));
     BOOST_TEST(output_any_direct(d = hold_any(3.14), "3.14"));  
-    BOOST_TEST(output_any_direct(x = complex<int>(hold_any(complex<int>(1, 2))), "(1,2)"));
+    BOOST_TEST(output_any_direct(x = std::complex<int>(hold_any(std::complex<int>(1, 2))), "(1,2)"));
 #endif
   
     BOOST_TEST(output_any_direct(hold_any(42), "42"));
     BOOST_TEST(output_any_direct(hold_any('q'), "q"));
     BOOST_TEST(output_any_direct(hold_any(3.14), "3.14"));  
-    BOOST_TEST(output_any_direct(hold_any(complex<int>(1, 2)), "(1,2)"));
+    BOOST_TEST(output_any_direct(hold_any(std::complex<int>(1, 2)), "(1,2)"));
 
     BOOST_TEST(!a.empty());
     a = 0;
