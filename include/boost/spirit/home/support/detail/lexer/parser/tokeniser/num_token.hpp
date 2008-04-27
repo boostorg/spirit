@@ -6,6 +6,7 @@
 #ifndef BOOST_LEXER_NUM_TOKEN_HPP
 #define BOOST_LEXER_NUM_TOKEN_HPP
 
+#include <boost/config.hpp>
 #include "../../consts.hpp" // null_token
 #include "../../size_t.hpp"
 
@@ -123,9 +124,15 @@ const char basic_num_token<CharT>::_precedence_table[END + 1][END + 1] = {
 template<typename CharT>
 const char *basic_num_token<CharT>::_precedence_strings[END + 1] =
 { 
+#if BOOST_INTEL_CXX_VERSION <= 910
   {"BEGIN"}, {"REGEX"}, {"OREXP"}, {"SEQUENCE"}, {"SUB"}, {"EXPRESSION"}, 
   {"REPEAT"}, {"DUPLICATE"}, {"|"}, {"CHARSET"}, {"MACRO"}, 
   {"("}, {")"}, {"?"}, {"*"}, {"+"}, {"{n[,[m]]}"}, {"END"} 
+#else
+  "BEGIN", "REGEX", "OREXP", "SEQUENCE", "SUB", "EXPRESSION", 
+  "REPEAT", "DUPLICATE", "|", "CHARSET", "MACRO", 
+  "(", ")", "?", "*", "+", "{n[,[m]]}", "END" 
+#endif
 };
 
 }
