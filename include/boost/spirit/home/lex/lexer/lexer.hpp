@@ -43,8 +43,8 @@ namespace boost { namespace spirit { namespace lex
             // initialize proto base class
             typedef 
                 terminal_holder<lexer_def_ const*, lexer_def_> 
-            terminal_holder;
-            typedef typename proto::terminal<terminal_holder>::type tag;
+            terminal_holder_;
+            typedef typename proto::terminal<terminal_holder_>::type tag;
             typedef proto::extends<tag, lexer_def_> base_type;
 
             typedef typename LexerDef::id_type id_type;
