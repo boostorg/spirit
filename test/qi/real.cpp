@@ -38,7 +38,7 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     //  No exponent
     template <typename Iterator>
     static bool
-    parse_exp(Iterator& first, Iterator const& last)
+    parse_exp(Iterator&, Iterator const&)
     {
         return false;
     }
@@ -46,7 +46,7 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     //  No exponent
     template <typename Iterator, typename Attribute>
     static bool
-    parse_exp_n(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_exp_n(Iterator&, Iterator const&, Attribute&)
     {
         return false;
     }
