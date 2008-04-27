@@ -124,7 +124,8 @@ namespace boost { namespace spirit { namespace lex
                 }
                 else
                 {
-                    std::size_t const state_ = ptr_[lookup_[*curr_++]];
+                    std::size_t const state_ = ptr_[
+                        lookup_[static_cast<int>(*curr_++)]];
 
                     if (state_ == 0)
                     {
@@ -204,7 +205,8 @@ namespace boost { namespace spirit { namespace lex
                 }
                 else
                 {
-                    std::size_t const state_ = ptr_[lookup_[*curr_++]];
+                    std::size_t const state_ = ptr_[
+                        lookup_[static_cast<int>(*curr_++)]];
 
                     if (state_ == 0)
                     {
