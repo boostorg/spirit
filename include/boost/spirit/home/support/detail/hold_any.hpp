@@ -27,6 +27,13 @@
 #include <iosfwd>
 
 ///////////////////////////////////////////////////////////////////////////////
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+#pragma warning(push)  
+#pragma warning(disable: 4100)   // 'x': unreferenced formal parameter  
+#pragma warning(disable: 4127)   // conditional expression is constant
+#endif 
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
 {
     struct bad_any_cast
@@ -407,6 +414,12 @@ namespace boost { namespace spirit
         return any_cast<nonref const&>(const_cast<hold_any &>(operand));
     }
 
-}}
+///////////////////////////////////////////////////////////////////////////////
+}}    // namespace boost::spirit
+
+///////////////////////////////////////////////////////////////////////////////
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+#pragma warning(pop)  
+#endif 
 
 #endif
