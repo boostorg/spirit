@@ -132,9 +132,9 @@ namespace boost { namespace spirit { namespace qi
     parse(
         Iterator& first
       , Iterator last
-      , grammar_class<Def>)
+      , grammar_class<Def>& gc)
     {
-        Def<Iterator, unused_type> def;
+        Def<Iterator, unused_type> def(gc);
         grammar<Def<Iterator, unused_type> > g(def);
         return parse(first, last, g);
     }
@@ -145,10 +145,10 @@ namespace boost { namespace spirit { namespace qi
     parse(
         Iterator& first
       , Iterator last
-      , grammar_class<Def>
+      , grammar_class<Def>& gc
       , Attr& attr)
     {
-        Def<Iterator, unused_type> def;
+        Def<Iterator, unused_type> def(gc);
         grammar<Def<Iterator, unused_type> > g(def);
         return parse(first, last, g, attr);
     }
@@ -159,7 +159,7 @@ namespace boost { namespace spirit { namespace qi
     phrase_parse(
         Iterator& first
       , Iterator last
-      , grammar_class<Def>
+      , grammar_class<Def>& gc
       , Skipper const& skipper_)
     {
         typedef typename
@@ -168,7 +168,7 @@ namespace boost { namespace spirit { namespace qi
 
         skipper_type skipper = spirit::as_component(qi::domain(), skipper_);
 
-        Def<Iterator, skipper_type> def;
+        Def<Iterator, skipper_type> def(gc);
         grammar<Def<Iterator, skipper_type> > g(def);
         return phrase_parse(first, last, g, skipper);
     }
@@ -179,7 +179,7 @@ namespace boost { namespace spirit { namespace qi
     phrase_parse(
         Iterator& first
       , Iterator last
-      , grammar_class<Def>
+      , grammar_class<Def>& gc
       , Attr& attr
       , Skipper const& skipper_)
     {
@@ -189,7 +189,7 @@ namespace boost { namespace spirit { namespace qi
 
         skipper_type skipper = spirit::as_component(qi::domain(), skipper_);
 
-        Def<Iterator, skipper_type> def;
+        Def<Iterator, skipper_type> def(gc);
         grammar<Def<Iterator, skipper_type> > g(def);
         return phrase_parse(first, last, g, attr, skipper);
     }
