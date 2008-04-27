@@ -243,7 +243,7 @@ private:
         node_ptr_vector &node_ptr_vector_, tree_node_stack &tree_node_stack_)
     {
         assert (handle_.top ()._type == token::SUB &&
-            handle_.size () == 1 || handle_.size () == 2);
+            (handle_.size () == 1 || handle_.size () == 2));
 
         if (handle_.size () == 1)
         {
@@ -262,7 +262,7 @@ private:
     static void repeat (token_stack &handle_, token_stack &token_stack_)
     {
         assert (handle_.top ()._type == token::REPEAT &&
-            handle_.size () >= 1 && handle_.size () <= 3);
+            (handle_.size () >= 1 && handle_.size () <= 3));
 
         if (handle_.size () == 1)
         {
