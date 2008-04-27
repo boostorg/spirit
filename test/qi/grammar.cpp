@@ -71,7 +71,8 @@ struct num_list2 : grammar_def<char const*, grammar<my_skipper> >
 template <typename Iterator, typename Skipper>
 struct num_list3 : grammar_def<Iterator, Skipper>
 {
-    num_list3()
+    template <typename Class>
+    num_list3(Class& self)
     {
         using boost::spirit::int_;
         num = int_;
