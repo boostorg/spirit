@@ -529,7 +529,7 @@ namespace boost { namespace spirit { namespace karma {
         
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
 # pragma warning(push)  
-# pragma warning(disable: 4100)   // 'x': unreferenced formal parameter  
+# pragma warning(disable: 4100)   // 'p': unreferenced formal parameter  
 # pragma warning(disable: 4127)   // conditional expression is constant
 #endif 
 

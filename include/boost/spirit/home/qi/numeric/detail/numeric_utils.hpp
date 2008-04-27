@@ -316,6 +316,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     >
     struct extract_int
     {
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(push)  
+# pragma warning(disable: 4127)   // conditional expression is constant
+#endif 
         template <typename Iterator, typename Attribute>
         static bool
         parse_main(
@@ -360,6 +364,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             }
             return false;
         }
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(pop)  
+#endif 
 
         template <typename Iterator>
         static bool
@@ -401,6 +408,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <typename T, unsigned Radix, typename Accumulator, bool Accumulate>
     struct extract_int<T, Radix, 1, -1, Accumulator, Accumulate>
     {
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(push)  
+# pragma warning(disable: 4127)   // conditional expression is constant
+#endif 
         template <typename Iterator, typename Attribute>
         static bool
         parse_main(
@@ -460,6 +471,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             first = it;
             return true;
         }
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(pop)  
+#endif 
 
         template <typename Iterator>
         static bool

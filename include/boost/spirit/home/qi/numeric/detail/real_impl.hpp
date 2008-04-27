@@ -73,6 +73,12 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
         }
     }
 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(push)  
+# pragma warning(disable: 4100)   // 'p': unreferenced formal parameter  
+# pragma warning(disable: 4127)   // conditional expression is constant
+#endif 
+
     template <typename T, typename RealPolicies>
     struct real_impl
     {
@@ -209,6 +215,11 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             return true;
         }
     };
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
+# pragma warning(pop)  
+#endif 
+
 }}}}
 
 #endif
