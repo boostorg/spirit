@@ -118,7 +118,18 @@ main()
         BOOST_TEST(n == 123);
     }
 
-    { // grammar_class test
+    { // grammar_class test (no skipper)
+
+        grammar_class<num_list3> nlist;
+
+        char const* first = "123,456,789";
+        char const* last = first;
+        while (*last)
+            last++;
+        BOOST_TEST(parse(first, last, nlist) && (first == last));
+    }
+
+    { // grammar_class test (w/skipper)
 
         grammar_class<num_list3> nlist;
 
