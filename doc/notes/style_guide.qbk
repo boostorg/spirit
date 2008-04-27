@@ -11,7 +11,7 @@ various points, the grammar tends to be quite difficult to follow. In order to
 keep an easy-to-read, consistent en aesthetically pleasing look to the Spirit
 code, the following coding styleguide is advised.
 
-This coding style is adapted and extended from the ANTLR/PCCTS style (Terrence
+This coding style is adapted and extended from the ANTLR\/PCCTS style (Terrence
 Parr) and [@http://groups.yahoo.com/group/boost/files/coding_guidelines.html
 Boost coding guidelines] (David Abrahams and Nathan Myers) and is the
 combined work of Joel de Guzman, Chris Uzdavinis and Hartmut Kaiser.

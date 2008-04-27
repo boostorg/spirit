@@ -35,7 +35,7 @@ namespace `boost::spirit` need to be adjusted as soon as the header names are
 corrected as described above. As an alternative you can define the preprocessor 
 constant `BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic 
 code to be in the namespace `boost::spirit` as before. This is not recommended, 
-though, as it maz result in naming clashs
+though, as it may result in naming clashes.
 
 The change of the namespace will be automatically deactivated whenever the 
 deprecated include files are being used. This ensures full backwards 
