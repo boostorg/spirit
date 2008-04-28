@@ -28,6 +28,7 @@ using namespace spirit_test;
 int
 main()
 {
+    using namespace boost::spirit;
     using namespace boost::spirit::qi;
     using namespace boost::spirit::ascii;
 
