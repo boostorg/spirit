@@ -143,6 +143,9 @@ namespace boost { namespace spirit { namespace qi
         template <typename Definition>
         friend struct grammar;
 
+        template <typename Iterator_, typename T0_, typename T1_, typename T2_>
+        friend struct grammar_;
+
         friend struct detail::rule_decorator;
 
         template <typename Expr, typename Auto>
@@ -170,7 +173,7 @@ namespace boost { namespace spirit { namespace qi
         {
             // If the following line produces a compilation error stating the
             // 4th parameter is not convertible to the expected type, then you
-            // probably trying to use this rule instance with a skipper which 
+            // probably trying to use this rule instance with a skipper which
             // is not compatible with the skipper type used while defining the
             // type of this rule instance.
             return ptr->parse(first, last, context, skipper);
