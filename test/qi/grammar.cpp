@@ -24,9 +24,9 @@ using namespace boost::spirit::qi;
 using namespace boost::spirit::ascii;
 using namespace boost::spirit::arg_names;
 
-struct num_list : grammar_def<char const*, space_type>
+struct num_list : grammar_<char const*, space_type>
 {
-    num_list()
+    num_list() : base_type(start)
     {
         using boost::spirit::int_;
         num = int_;
@@ -87,8 +87,7 @@ main()
 {
     { // simple grammar test
 
-        num_list def;
-        grammar<num_list> nlist(def);
+        num_list nlist;
         BOOST_TEST(test("123, 456, 789", nlist, space));
     }
 
