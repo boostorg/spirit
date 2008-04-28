@@ -14,7 +14,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_function1+2+3.hpp>
+#include <boost/spirit/include/phoenix_function.hpp>
 
 #include <iostream>
 #include <vector>
