@@ -8,6 +8,7 @@
 #define BOOST_SPIRIT_CHAR_APR_16_2006_1051AM
 
 #include <boost/spirit/home/qi/char/char_parser.hpp>
+#include <boost/spirit/home/qi/char/detail/get_char.hpp>
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
@@ -53,22 +54,10 @@ namespace boost { namespace spirit { namespace qi
             typedef unused_type type;   // literal parsers have no attribute
         };
 
-        template <typename CharParam>
-        static CharParam get_char(CharParam ch)
-        {
-            return ch;
-        }
-
-        template <typename CharParam>
-        static CharParam get_char(CharParam const* str)
-        {
-            return *str;
-        }
-
         template <typename Component, typename CharParam, typename Context>
         static bool test(Component const& component, CharParam ch, Context&)
         {
-            return get_char(fusion::at_c<0>(component.elements)) == ch;
+            return detail::get_char(fusion::at_c<0>(component.elements)) == ch;
         }
 
         template <typename Component>
@@ -76,7 +65,7 @@ namespace boost { namespace spirit { namespace qi
         {
             return std::string("'")
                 + spirit::detail::to_narrow_char(
-                    get_char(fusion::at_c<0>(component.elements)))
+                    detail::get_char(fusion::at_c<0>(component.elements)))
                 + '\'';
         }
     };
@@ -203,21 +192,11 @@ namespace boost { namespace spirit { namespace qi
             typedef unused_type type;   // literal parsers have no attribute
         };
 
-        static Char get_char(Char ch)
-        {
-            return ch;
-        }
-
-        static Char get_char(Char const* str)
-        {
-            return *str;
-        }
-
         template <typename Component, typename CharParam, typename Context>
         static bool test(Component const& component, CharParam ch, Context&)
         {
-            return get_char(fusion::at_c<0>(component.elements)) == ch
-                || get_char(fusion::at_c<1>(component.elements)) == ch
+            return detail::get_char(fusion::at_c<0>(component.elements)) == ch
+                || detail::get_char(fusion::at_c<1>(component.elements)) == ch
             ;
         }
 
@@ -227,11 +206,11 @@ namespace boost { namespace spirit { namespace qi
             std::string result;
             result += std::string("'")
                 + spirit::detail::to_narrow_char(
-                    get_char(fusion::at_c<0>(component.elements))) + '\'';
+                    detail::get_char(fusion::at_c<0>(component.elements))) + '\'';
             result += " or ";
             result += std::string("'") +
                 spirit::detail::to_narrow_char(
-                    get_char(fusion::at_c<1>(component.elements))) + '\'';
+                    detail::get_char(fusion::at_c<1>(component.elements))) + '\'';
             return result;
         }
     };
@@ -334,22 +313,12 @@ namespace boost { namespace spirit { namespace traits
             component<qi::domain, qi::no_case_literal_char<Char>, vector_type>
         type;
 
-        static Char get_char(Char ch)
-        {
-            return ch;
-        }
-
-        static Char get_char(Char const* str)
-        {
-            return *str;
-        }
-
         static type
         call(Elements const& elements)
         {
             typedef typename Modifier::char_set char_set;
 
-            Char ch = get_char(fusion::at_c<0>(elements));
+            Char ch = qi::detail::get_char(fusion::at_c<0>(elements));
             vector_type v(
                 char_set::tolower(ch)
               , char_set::toupper(ch)
