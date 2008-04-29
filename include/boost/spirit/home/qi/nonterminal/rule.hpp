@@ -80,10 +80,13 @@ namespace boost { namespace spirit { namespace qi
             typedef spirit::traits::is_component<qi::domain, Expr> is_component;
 
             // report invalid expression error as early as possible
-            BOOST_MPL_ASSERT_MSG(
-                is_component::value,
-                xpr_is_not_convertible_to_a_parser, ());
+//             BOOST_MPL_ASSERT_MSG(
+//                 is_component::value,
+//                 xpr_is_not_convertible_to_a_parser, ());
 
+            // temp workaround for mpl problem
+            BOOST_STATIC_ASSERT(is_component::value);
+            
             define(xpr, mpl::false_());
             return *this;
         }
@@ -173,9 +176,9 @@ namespace boost { namespace spirit { namespace qi
         {
             // If the following line produces a compilation error stating the
             // 4th parameter is not convertible to the expected type, then you
-            // probably trying to use this rule instance with a skipper which
-            // is not compatible with the skipper type used while defining the
-            // type of this rule instance.
+            // are probably trying to use this rule instance with a skipper 
+            // which is not compatible with the skipper type used while 
+            // defining the type of this rule instance.
             return ptr->parse(first, last, context, skipper);
         }
 
@@ -217,7 +220,7 @@ namespace boost { namespace spirit { namespace qi
             static call(Rule& r, A1 const& a1)
             {
                 typename Rule::pointer_type old (r.ptr);
-            r.ptr.reset(new Decorator(r.ptr, a1));
+                r.ptr.reset(new Decorator(r.ptr, a1));
                 return old;
             }
 
