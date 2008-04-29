@@ -141,9 +141,9 @@ namespace boost { namespace spirit { namespace qi
 
     private:
 
-        template <typename Iterator, typename Context, typename Skipper>
+        template <typename Iterator_, typename Context, typename Skipper>
         bool parse(
-            Iterator& first, Iterator const& last
+            Iterator_& first, Iterator_ const& last
           , Context& context, Skipper const& skipper) const
         {
             return start.parse(first, last, context, skipper);
