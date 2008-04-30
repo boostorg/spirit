@@ -25,16 +25,16 @@ main()
     using spirit_test::test;
     using namespace boost::spirit;
     using namespace boost::spirit::karma;
-    using namespace boost::phoenix;
     using namespace boost::spirit::arg_names;
+    namespace phx = boost::phoenix;
 
     {
-        BOOST_TEST(test("123", lazy(val(int_)), 123));
+        BOOST_TEST(test("123", lazy(phx::val(int_)), 123));
     }
 
     {
         int result = 123;
-        BOOST_TEST(test("123", lazy(val(int_))[_1 = ref(result)]));
+        BOOST_TEST(test("123", lazy(phx::val(int_))[_1 = phx::ref(result)]));
     }
 
     {
@@ -44,8 +44,8 @@ main()
         r = char_('<') << lazy(_r1) << '>' <<  "</" << lazy(_r1) << '>';
 
         std::string tag("tag"), foo("foo");
-        BOOST_TEST(test("<tag></tag>", r (ref(tag))));
-        BOOST_TEST(!test("<foo></bar>", r (ref(foo))));
+        BOOST_TEST(test("<tag></tag>", r (phx::ref(tag))));
+        BOOST_TEST(!test("<foo></bar>", r (phx::ref(foo))));
     }
 
     return boost::report_errors();
