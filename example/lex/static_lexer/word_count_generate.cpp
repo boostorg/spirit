@@ -13,6 +13,7 @@
 
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/lex_lexer_lexertl.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/lexertl_generate_static.hpp>
 

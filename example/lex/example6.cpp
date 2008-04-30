@@ -26,6 +26,7 @@
 //  is that we use the self.add() syntax to define tokens and to associate them
 //  with the lexer.
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/lex_lexer_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

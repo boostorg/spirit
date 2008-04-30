@@ -20,6 +20,7 @@
 //  Any number of simple sentences (optionally comma separated) inside a pair 
 //  of curly braces will be matched.
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/lex_lexer_lexertl.hpp>
 

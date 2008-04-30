@@ -34,6 +34,7 @@
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 #define BOOST_VARIANT_MINIMIZE_SIZE
 
+#include <boost/config/warning_disable.hpp>
 //[wcp_includes
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/lex_lexer_lexertl.hpp>
