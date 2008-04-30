@@ -15,6 +15,7 @@
 //  use a larger value for the alignment field width (default is 10)
 #define BOOST_KARMA_DEFAULT_FIELD_LENGTH 25
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/karma_stream.hpp>
 

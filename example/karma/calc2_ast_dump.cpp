@@ -14,6 +14,7 @@
 //  [ HK April 28, 2008 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/karma.hpp>
 

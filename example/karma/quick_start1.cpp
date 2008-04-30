@@ -6,6 +6,7 @@
 //  The main purpose of this example is to show how a single container type can
 //  be formatted using different output grammars. 
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/karma_stream.hpp>
 

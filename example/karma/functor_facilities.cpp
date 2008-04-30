@@ -6,6 +6,7 @@
 //  This examples demonstrate how to write functor based generators for special
 //  purposes. 
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/karma_stream.hpp>
 

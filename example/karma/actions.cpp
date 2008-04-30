@@ -6,13 +6,14 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
-#include <iostream>
-#include <strstream>
-
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
 #include <boost/function_output_iterator.hpp>
+
+#include <iostream>
+#include <strstream>
 
 // Presented are various ways to attach semantic actions
 //  * Using plain function pointer
