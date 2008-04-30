@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  A Calculator example demonstrating generation of AST which gets dumped into
-//  a human readable format afterwards.
+//  a reverse polish notation afterwards.
 //
 //  [ JDG April 28, 2008 ]
 //  [ HK April 28, 2008 ]
@@ -61,13 +61,14 @@ struct calculator : qi::grammar_def<Iterator, expression_ast(), space_type>
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Our AST grammar for the generator, this just dumps the AST as a expression
+//  Our AST grammar for the generator, this prints the AST in reverse polish 
+//  notation
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OuputIterator>
-struct dump_ast
+struct ast_rpn
   : karma::grammar_def<OuputIterator, expression_ast(), space_type>
 {
-    dump_ast()
+    ast_rpn()
     {
         ast_node %= 
                 int_        [_1 = _int(_r0)]
@@ -76,16 +77,16 @@ struct dump_ast
             ;
             
         binary_node = 
-                ('(' << ast_node << char_ << ast_node << ')')
+                (ast_node << ast_node << char_)
                 [ 
-                    _1 = _left(_r0), _2 = _op(_r0), _3 = _right(_r0)
+                    _1 = _left(_r0), _2 = _right(_r0), _3 = _op(_r0)
                 ]
             ;
 
         unary_node =
-                ('(' << char_ << ast_node << ')')
+                verbatim['(' << ast_node << char_ << ')']
                 [
-                    _1 = _op(_r0), _2 = _right(_r0)
+                    _1 = _right(_r0), _2 = _op(_r0)
                 ]
             ;
     }
@@ -102,7 +103,7 @@ int
 main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "Dump AST's for simple expressions...\n\n";
+    std::cout << "RPN generator for simple expressions...\n\n";
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
@@ -115,10 +116,10 @@ main()
 
     // Our generator grammar definitions
     typedef std::back_insert_iterator<std::string> output_iterator_type;
-    typedef dump_ast<output_iterator_type> dump_ast;
+    typedef ast_rpn<output_iterator_type> ast_rpn;
     
-    dump_ast dump_ast_def;
-    karma::grammar<dump_ast> ast_grammar(dump_ast_def, dump_ast_def.ast_node); 
+    ast_rpn ast_rpn_def;
+    karma::grammar<ast_rpn> ast_grammar(ast_rpn_def, ast_rpn_def.ast_node); 
 
     std::string str;
     while (std::getline(std::cin, str))
@@ -126,7 +127,8 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        expression_ast ast;
+        expression_ast ast;   // this will hold the generated AST
+        
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
         bool r = qi::phrase_parse(iter, end, calc, ast, space);
@@ -139,7 +141,7 @@ main()
             
             if (r)
             {
-                std::cout << "AST for '" << str << "': " << generated 
+                std::cout << "RPN for '" << str << "': " << generated 
                           << std::endl;
             }
             else
