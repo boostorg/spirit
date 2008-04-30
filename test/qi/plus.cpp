@@ -76,20 +76,20 @@ main()
     }
 
     { // actions
-        using namespace boost::phoenix;
+        namespace phx = boost::phoenix;
         using boost::spirit::arg_names::_1;
 
         std::vector<char> v;
-        BOOST_TEST(test("bbbb", (+char_)[ref(v) = _1]) && 4 == v.size() &&
+        BOOST_TEST(test("bbbb", (+char_)[phx::ref(v) = _1]) && 4 == v.size() &&
             v[0] == 'b' && v[1] == 'b' && v[2] == 'b' &&  v[3] == 'b');
     }
 
     { // more actions
-        using namespace boost::phoenix;
+        namespace phx = boost::phoenix;
         using boost::spirit::arg_names::_1;
 
         std::vector<int> v;
-        BOOST_TEST(test("1 2 3", (+int_)[ref(v) = _1], space) && 3 == v.size() &&
+        BOOST_TEST(test("1 2 3", (+int_)[phx::ref(v) = _1], space) && 3 == v.size() &&
             v[0] == 1 && v[1] == 2 && v[2] == 3);
     }
 
