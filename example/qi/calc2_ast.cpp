@@ -11,6 +11,8 @@
 //  [ JDG April 28, 2002 ]
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

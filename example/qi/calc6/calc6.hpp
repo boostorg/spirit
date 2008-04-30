@@ -7,6 +7,7 @@
 #if !defined(BOOST_SPIRIT_CALC6)
 #define BOOST_SPIRIT_CALC6
 
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_container.hpp>

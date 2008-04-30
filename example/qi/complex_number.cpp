@@ -12,6 +12,8 @@
 //  [ JDG May 9, 2007 ]     spirit2
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>

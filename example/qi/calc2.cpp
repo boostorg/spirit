@@ -14,6 +14,8 @@
 //  [ JDG March 4, 2007 ]   spirit2
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+#include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 
 #include <iostream>
