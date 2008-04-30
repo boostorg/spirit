@@ -35,7 +35,7 @@ main()
     using namespace boost::spirit::ascii;
 
     using namespace boost::assign;
-    
+
     std::vector<char> v;
     v += 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h';
     
@@ -53,12 +53,12 @@ main()
     }
 
     { // actions
-        using namespace boost::phoenix;
+        namespace phx = boost::phoenix;
         using boost::spirit::arg_names::_1;
 
-        BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[_1 = ref(v)]));
+        BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[_1 = phx::ref(v)]));
         BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
-            (char_ % ',')[_1 = ref(v)], space));
+            (char_ % ',')[_1 = phx::ref(v)], space));
     }
 
     return boost::report_errors();
