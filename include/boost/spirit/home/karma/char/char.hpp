@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace karma
                 + '\'';
         }
     };
-                
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  lazy_char 
@@ -146,7 +146,7 @@ namespace boost { namespace spirit { namespace karma
             return "char";
         }
     };
-                
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  lower and upper case variants of any_char with an associated parameter

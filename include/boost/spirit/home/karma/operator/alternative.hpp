@@ -18,7 +18,13 @@
 #include <boost/spirit/home/support/algorithm/any.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/fusion/include/for_each.hpp>
+#include <boost/fusion/include/mpl.hpp>
+#include <boost/fusion/include/transform.hpp>
 #include <boost/variant.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/end.hpp>
+#include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/transform_view.hpp>
 
 namespace boost { namespace spirit { namespace karma
 {
@@ -51,28 +57,12 @@ namespace boost { namespace spirit { namespace karma
             Context& ctx, Delimiter const& d, Parameter const& param)
         {
             typedef detail::alternative_generate_functor<
-                Component, OutputIterator, Context, Delimiter, Parameter>
-            functor;
+                OutputIterator, Context, Delimiter, Parameter
+            > functor;
 
-            functor f(component, sink, ctx, d, param);
-            return boost::apply_visitor(f, param);
-        }
-
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, unused_type)
-        {
-            typedef typename
-                fusion::result_of::value_at_c<
-                    typename Component::elements_type, 0>::type
-            child_component_type;
-
-            typedef typename child_component_type::director director;
-            return director::generate(
-                fusion::at_c<0>(component.elements),
-                sink, ctx, d, unused);
+            // f return true if *any* of the parser succeeds
+            functor f (sink, ctx, d, param);
+            return fusion::any(component.elements, f);
         }
 
         template <typename Component>

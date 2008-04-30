@@ -59,25 +59,24 @@ namespace boost { namespace spirit { namespace karma
             mpl::if_<
                 is_same<result_type_, void>, unused_type, result_type_
             >::type
-        result_type;
+        attribute_type;
 
         // param_types is a sequence of types passed as parameters to the 
         // nonterminal
         typedef typename 
             function_types::parameter_types<sig_type>::type 
-        param_types_;
-
-        // if no parameters have been specified, we generate a single 
-        // unused_type parameter, which is needed to allow grammar parameter
-        // propagation to function correctly 
-        typedef typename
-            mpl::if_<
-                is_same<typename mpl::size<param_types_>::type, mpl::long_<0> >,
-                fusion::single_view<unused_type>, 
-                param_types_
-            >::type
         param_types;
 
+        // the parameter tuple has the attribute value pre-pended
+        typedef typename 
+            fusion::result_of::as_vector<
+                fusion::joint_view<
+                    fusion::single_view<attribute_type const&>,
+                    param_types
+                >
+            >::type
+        retval_param_types;
+        
         // locals_type is a sequence of types to be used as local variables
         typedef typename 
             fusion::result_of::as_vector<Locals>::type 
@@ -86,16 +85,7 @@ namespace boost { namespace spirit { namespace karma
         //  The overall context_type consist of a tuple with:
         //      1) a tuple of the return value and parameters
         //      2) the locals
-        typedef fusion::vector<
-                typename fusion::result_of::as_vector<
-                    fusion::joint_view<
-                        fusion::single_view<result_type const>,
-                        param_types
-                    >
-                >::type,
-                typename fusion::result_of::as_vector<locals_type>::type
-            >
-        context_type;
+        typedef fusion::vector<retval_param_types, locals_type> context_type;
 
         typedef nonterminal<Derived, Sig, Locals> self_type;
         typedef nonterminal_holder<Derived const*, Derived> nonterminal_holder_;

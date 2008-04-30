@@ -33,6 +33,16 @@
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
+    struct no_delimiter
+    {
+        // this struct accepts only unused types and
+        // nothing else. This is used by the second
+        // pure virtual parse member function of
+        // virtual_component_base below.
+
+        no_delimiter(unused_type) {}
+    };
+
     template <typename OutputIterator, typename Context, typename Delimiter>
     struct virtual_component_base
     {
@@ -60,7 +70,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             delimiter_type const& delim) = 0;
 
         virtual bool
-        generate(OutputIterator& sink, Context& context, unused_type) = 0;
+        generate(OutputIterator& sink, Context& context, no_delimiter) = 0;
 
         boost::detail::atomic_count use_count;
     };
@@ -81,119 +91,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         if (--p->use_count == 0)
             delete p;
     }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Component, typename Context>
-    struct needs_single_attribute
-    :   mpl::not_<
-            typename fusion::traits::is_sequence<
-                typename traits::attribute_of<
-                    karma::domain, Component, Context>::type
-            >::type
-        >
-    {
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename MustDeref, typename Parameter>
-    struct deref_if
-    {
-        typedef typename
-            mpl::eval_if<
-                MustDeref,
-                fusion::result_of::at_c<Parameter, 1>,
-                fusion::result_of::pop_front<Parameter>
-            >::type
-        type;
-
-        template <typename Param>
-        static type
-        call(Param const& param, mpl::true_)
-        {
-            return fusion::at_c<1>(param);
-        }
-
-        template <typename Param>
-        static type
-        call(Param const& param, mpl::false_)
-        {
-            return fusion::pop_front(param);
-        }
-
-        template <typename Param>
-        static type
-        call(Param const& param)
-        {
-            return call(param, MustDeref());
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Component, typename Context>
-    struct propagate_param
-    {
-        // If first element of the context (that's the parameter type) contains
-        // one element only, then the parameter type to propagate is unused,
-        // otherwise we consider to use everything except the first element of
-        // this sequence.
-        //
-        // If the resulting sequence type is a fusion sequence containing
-        // exactly one element and the right hand side expects a singular
-        // (non-sequence) parameter we pass on the first (and only) element of
-        // this sequence, otherwise we pass the parameter sequence itself.
-        typedef typename
-            boost::add_const<
-                typename boost::remove_reference<
-                    typename fusion::result_of::at_c<Context, 0>::type
-                >::type
-            >::type
-        parameter_type;
-
-        // this evaluates to mpl::true_ if the rules parameter type is unused
-        typedef typename
-            mpl::equal_to<mpl::size<parameter_type>, mpl::long_<1> >::type
-        no_parameter;
-
-        // this evaluates to mpl::true_ if the rules parameter type contains
-        // one element and the right hand side generator expects a single
-        // (non-sequence) parameter type
-        typedef typename
-            mpl::and_<
-                mpl::equal_to<mpl::size<parameter_type>, mpl::long_<2> >,
-                needs_single_attribute<Component, Context>
-            >::type
-        must_dereference;
-
-        typedef typename
-            mpl::eval_if<
-                no_parameter,
-                mpl::identity<unused_type const>,
-                deref_if<must_dereference, parameter_type>
-            >::type
-        propagated_type;
-
-        template <typename Ctx>
-        static unused_type const
-        call(Ctx& context, mpl::true_)
-        {
-            return unused;
-        }
-
-        template <typename Ctx>
-        static propagated_type
-        call(Ctx& context, mpl::false_)
-        {
-            return deref_if<must_dereference, parameter_type>::
-                call(fusion::at_c<0>(context));
-        }
-
-        template <typename Ctx>
-        static propagated_type
-        call(Ctx& context)
-        {
-            return call(context, no_parameter());
-        }
-    };
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator, typename Component, typename Context,
@@ -220,33 +117,37 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool generate_main(OutputIterator& sink, Context& context,
             Delimiter_ const& delim, mpl::false_)
         {
-            // If Auto is false, the component's parameter is unused.
+            // If Auto is false, we synthesize a new (default constructed) 
+            // attribute instance based on the attributes of the embedded 
+            // generator.
+            typename traits::attribute_of<
+                    karma::domain, Component, Context
+                >::type param;
+                
             typedef typename Component::director director;
-            return director::generate(component, sink, context, delim, unused);
+            return director::generate(component, sink, context, delim, param);
         }
 
         template <typename Delimiter_>
         bool generate_main(OutputIterator& sink, Context& context,
             Delimiter_ const& delim, mpl::true_)
         {
-            //  If Auto is true, we pass the rule's parameters on to the
+            //  If Auto is true, we pass the rule's attribute on to the
             //  component.
             typedef typename Component::director director;
             return director::generate(component, sink, context, delim,
-                detail::propagate_param<Component, Context>::call(context));
+                fusion::at_c<0>(fusion::at_c<0>(context)));
         }
 
         bool
-        generate_main(OutputIterator& /*sink*/, Context& /*context*/, take_no_delimiter,
-            mpl::false_)
+        generate_main(OutputIterator&, Context&, take_no_delimiter, mpl::false_)
         {
             BOOST_ASSERT(false); // this should never be called
             return false;
         }
 
         bool
-        generate_main(OutputIterator& /*sink*/, Context& /*context*/, take_no_delimiter,
-            mpl::true_)
+        generate_main(OutputIterator&, Context&, take_no_delimiter, mpl::true_)
         {
             BOOST_ASSERT(false); // this should never be called
             return false;
@@ -260,7 +161,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         virtual bool
-        generate(OutputIterator& sink, Context& context, unused_type)
+        generate(OutputIterator& sink, Context& context, no_delimiter)
         {
             return generate_main(sink, context, unused, Auto());
         }

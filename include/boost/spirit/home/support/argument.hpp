@@ -209,7 +209,7 @@ namespace boost { namespace spirit
     // current lexer state 
         phoenix::actor<lexer_state> const state = lexer_state();
     
-    // _val refers to the |return| value of a rule
+    // _val refers to the 'return' value of a rule
     // _r0, _r1, ... refer to the rule arguments
         phoenix::actor<attribute<0> > const _val = attribute<0>();
         phoenix::actor<attribute<0> > const _r0 = attribute<0>();

@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/nonterminal/detail/expand_arg.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/support/component.hpp>
+#include <boost/spirit/home/support/attribute_transform.hpp>
 #include <boost/spirit/home/support/detail/values.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/join.hpp>
@@ -28,56 +29,63 @@ namespace boost { namespace spirit { namespace karma
 {
     struct nonterminal_director
     {
+        // The attribute (parameter) of nonterminals is the type given to them 
+        // as the return value of the function signature.
         template <typename Component, typename Context, typename Unused>
         struct attribute
         {
-            typedef typename result_of::subject<Component>::type nonterminal_holder;
-            typedef typename nonterminal_holder::nonterminal_type::param_types type;
+            typedef typename 
+                result_of::subject<Component>::type 
+            nonterminal_holder;
+            typedef typename 
+                nonterminal_holder::nonterminal_type::attribute_type 
+            type;
         };
 
+        // the nonterminal_holder holds an actual nonterminal_object
         template <
             typename NonterminalContext, typename Nonterminal,
-            typename OutputIterator, typename Context,
-            typename Delimiter, typename Parameter>
+            typename OutputIterator, typename Context, typename Delimiter, 
+            typename Parameter>
         static bool generate_nonterminal(
             nonterminal_object<Nonterminal> const& x,
-            OutputIterator& sink, Context& context_,
-            Delimiter const& delim, Parameter const& param)
+            OutputIterator& sink, Context&, Delimiter const& delim, 
+            Parameter const& param)
         {
-            // the nonterminal_holder holds an actual nonterminal_object
             typedef typename Nonterminal::locals_type locals_type;
-            NonterminalContext context(param, locals_type());
+            fusion::single_view<Parameter const&> front(param);
+            NonterminalContext context(front, locals_type());
             return x.obj.generate(sink, context, delim);
         }
 
+        // the nonterminal_holder holds a pointer to a nonterminal
         template <
             typename NonterminalContext, typename Nonterminal,
-            typename OutputIterator, typename Context,
-            typename Delimiter, typename Parameter>
+            typename OutputIterator, typename Context, typename Delimiter, 
+            typename Parameter>
         static bool generate_nonterminal(
             Nonterminal const* ptr,
-            OutputIterator& sink, Context& /*context_*/,
-            Delimiter const& delim, Parameter const& param)
+            OutputIterator& sink, Context&, Delimiter const& delim, 
+            Parameter const& param)
         {
-            // the nonterminal_holder holds a pointer to a nonterminal
             typedef typename Nonterminal::locals_type locals_type;
-            NonterminalContext context(param, locals_type());
+            fusion::single_view<Parameter const&> front(param);
+            NonterminalContext context(front, locals_type());
             return ptr->generate(sink, context, delim);
         }
 
+        // the nonterminal_holder holds a parameterized_nonterminal
         template <
             typename NonterminalContext, typename Nonterminal,
             typename FSequence, typename OutputIterator,
-            typename Context, typename Delimiter,
-            typename Parameter>
+            typename Context, typename Delimiter, typename Parameter>
         static bool generate_nonterminal(
             parameterized_nonterminal<Nonterminal, FSequence> const& x,
-            OutputIterator& sink, Context& context_,
-            Delimiter const& delim, Parameter const& /*param*/)
+            OutputIterator& sink, Context& context_, Delimiter const& delim, 
+            Parameter const& param)
         {
-            // the nonterminal_holder holds a parameterized_nonterminal
             typedef typename Nonterminal::locals_type locals_type;
-            fusion::single_view<unused_type const> front(unused);
+            fusion::single_view<Parameter const&> front(param);
             NonterminalContext context(
                 fusion::join(
                     front,
@@ -95,8 +103,7 @@ namespace boost { namespace spirit { namespace karma
         // main entry point
         ///////////////////////////////////////////////////////////////////////
         template <
-            typename Component,
-            typename OutputIterator, typename Context,
+            typename Component, typename OutputIterator, typename Context,
             typename Delimiter, typename Parameter>
         static bool generate(
             Component const& component, OutputIterator& sink,
@@ -107,29 +114,16 @@ namespace boost { namespace spirit { namespace karma
             nonterminal_holder;
             
             //  The overall context_type consists of a tuple with:
-            //      1) a tuple of the return value and parameters
+            //      1) a tuple of the attribute and parameters
             //      2) the locals
             //  if no signature is specified the first tuple contains
-            //  an unused_type element at position zero only.
-
+            //  the attribute at position zero only.
             typedef typename 
                 nonterminal_holder::nonterminal_type::context_type 
             context_type;
 
-            typedef typename
-                mpl::if_<
-                    is_same<typename remove_const<Parameter>::type, unused_type>,
-                    context_type,
-                    Parameter
-                >::type
-            parameter_type;
-
-            // create an parameter if one is not supplied
-            parameter_type p (spirit::detail::make_value<parameter_type>::call(param));
-
             return generate_nonterminal<context_type>(
-                subject(component).held, sink, context, delim, p
-            );
+                subject(component).held, sink, context, delim, param);
         }
 
         template <typename Nonterminal>

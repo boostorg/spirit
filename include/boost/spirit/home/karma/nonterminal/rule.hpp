@@ -75,9 +75,12 @@ namespace boost { namespace spirit { namespace karma
             is_component;
 
             // report invalid expression error as early as possible
-            BOOST_MPL_ASSERT_MSG(
-                is_component::value,
-                xpr_is_not_convertible_to_a_generator, ());
+//             BOOST_MPL_ASSERT_MSG(
+//                 is_component::value,
+//                 xpr_is_not_convertible_to_a_generator, ());
+
+            // temp workaround for mpl problem
+            BOOST_STATIC_ASSERT(is_component::value);
 
             define(xpr, mpl::false_());
             return *this;
@@ -91,9 +94,12 @@ namespace boost { namespace spirit { namespace karma
             is_component;
 
             // report invalid expression error as early as possible
-            BOOST_MPL_ASSERT_MSG(
-                is_component::value,
-                xpr_is_not_convertible_to_a_generator, ());
+//             BOOST_MPL_ASSERT_MSG(
+//                 is_component::value,
+//                 xpr_is_not_convertible_to_a_generator, ());
+
+            // temp workaround for mpl problem
+            BOOST_STATIC_ASSERT(is_component::value);
 
             r.define(xpr, mpl::true_());
             return r;
@@ -161,9 +167,9 @@ namespace boost { namespace spirit { namespace karma
         {
             // If the following line produces a compilation error stating the
             // 3rd parameter is not convertible to the expected type, then you
-            // probably trying to use this rule instance with a delimiter which 
-            // is not compatible with the delimiter type used while defining 
-            // the type of this rule instance.
+            // are probably trying to use this rule instance with a delimiter 
+            // which is not compatible with the delimiter type used while 
+            // defining the type of this rule instance.
             return ptr->generate(sink, context, delim);
         }
 

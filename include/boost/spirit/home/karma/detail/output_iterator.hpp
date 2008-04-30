@@ -14,6 +14,7 @@
 #include <vector>
 #include <algorithm>
 
+#include <boost/noncopyable.hpp>
 #include <boost/spirit/home/karma/detail/ostream_iterator.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail 
@@ -83,7 +84,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator>
-    class buffer_sink 
+    class buffer_sink : boost::noncopyable
     {
     public:
         buffer_sink()
@@ -144,7 +145,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //  on demand, such as counting, buffering, and position tracking.
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator, typename Enable = void>
-    class output_iterator
+    class output_iterator : boost::noncopyable
     {
     private:
         enum output_mode 

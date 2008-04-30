@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2007 Hartmut Kaiser
+//  Copyright (c) 2001-2008 Hartmut Kaiser
 //  Copyright (c) 2001-2007 Joel de Guzman
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -11,101 +11,166 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
+#include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attribute_of.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
-#include <boost/fusion/include/at.hpp>
-#include <boost/fusion/include/value_at.hpp>
-#include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/mpl/find_if.hpp>
+#include <boost/mpl/deref.hpp>
+#include <boost/mpl/distance.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/variant.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
-    template <typename Component, typename OutputIterator,
-        typename Context, typename Delimiter, typename Parameter>
-    struct alternative_generate_functor
+    ///////////////////////////////////////////////////////////////////////////
+    //  A component is compatible to a given parameter type if the parameter
+    //  is the same as the expected type of the component
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Expected, typename Parameter>
+    struct is_compatible_component
     {
-        typedef bool result_type; // to satisfy boost::variant visition
+        typedef typename Parameter::types types;
+        typedef typename mpl::end<types>::type end;
+        typedef typename mpl::begin<types>::type begin;
 
-        template <typename Attribute, typename Got>
-        struct compute_is_compatible
-        {
-            typedef typename
-                Attribute::types
-            types; // mpl sequence of types in the variant
+        typedef typename
+            mpl::find_if<
+                types,
+                is_same<mpl::_1, Expected>
+            >::type
+        iter;
 
-            typedef typename
-                mpl::begin<types>::type
-            begin; // iterator to the first element
+        typedef typename mpl::not_<is_same<iter, end> >::type type;
+        enum { value = type::value };
+    };
 
-            typedef typename
-                mpl::end<types>::type
-            end; // iterator to the last element
+    template <typename Expected>
+    struct is_compatible_component<Expected, unused_type>
+      : mpl::false_
+    {};
 
-            typedef typename
-                mpl::find_if<
-                    types,
-                    is_same<mpl::_1, Got> // $$$ fix this
-                >::type
-            iter;
+    ///////////////////////////////////////////////////////////////////////////
+    //  execute a generator if the given parameter type is compatible
+    ///////////////////////////////////////////////////////////////////////////
 
-            typedef typename mpl::distance<begin, iter>::type index;
-            typedef typename mpl::not_<is_same<iter, end> >::type type;
-            enum { value = type::value };
-        };
-
-        template <typename Got>
-        struct compute_is_compatible<unused_type, Got> : mpl::false_ {};
-
-        template <typename Attribute, typename Component_, typename Context_>
-        struct is_compatible :
-            compute_is_compatible<
-                typename traits::attribute_of<
-                    karma::domain, Component_, Context_>::type,
-                Attribute>
-        {
-        };
-
-        alternative_generate_functor(Component const& component_,
-            OutputIterator& sink_, Context& ctx_,
-            Delimiter const& d, Parameter const& p)
-        : component(component_), sink(sink_), ctx(ctx_), delim(d), param(p)
-        {
-        }
-
-        template <typename Attribute>
-        bool call(Attribute const& actual_attribute, mpl::true_) const
-        {
-            typedef is_compatible<Attribute, Component, Context> is_compatible;
-            typedef typename is_compatible::index index;
-            typedef typename Component::elements_type elements;
-
-            typedef typename
-                fusion::result_of::value_at<elements, index>::type
-            child_component_type;
-
-            typedef typename child_component_type::director director;
-            return director::generate(
-                fusion::at<index>(component.elements),
-                sink, ctx, delim, actual_attribute);
-        }
-
-        template <typename Attribute>
-        bool call(Attribute const& actual_attribute, mpl::false_) const
+    //  this get's instantiated if the parameter type is _not_ compatible with
+    //  the generator
+    template <typename Component, typename Parameter, typename Expected,
+        typename Enable = void>
+    struct alternative_generate
+    {
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool
+        call(Component const&, OutputIterator&, Context&, Delimiter const&, 
+            Parameter const&)
         {
             return false;
         }
+    };
 
-        template <typename Attribute>
-        bool operator()(Attribute const& actual_attribute) const
+    template <typename Component>
+    struct alternative_generate<Component, unused_type, unused_type>
+    {
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool
+        call(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& delim, unused_type const&)
         {
-            typedef mpl::bool_<
-                is_compatible<Attribute, Component, Context>::value>
-            is_compatible;
+            // return true if any of the generators succeed
+            typedef typename Component::director director;
+            return director::generate(component, sink, ctx, delim, unused);
+        }
+    };
 
-            return call(actual_attribute, is_compatible());
+    //  this get's instantiated if there is no parameter given for the
+    //  alternative generator
+    template <typename Component, typename Expected>
+    struct alternative_generate<Component, unused_type, Expected>
+      : alternative_generate<Component, unused_type, unused_type>
+    {};
+
+    //  this get's instantiated if the generator does not expect to receive a
+    //  parameter (the generator is self contained).
+    template <typename Component, typename Parameter>
+    struct alternative_generate<Component, Parameter, unused_type>
+      : alternative_generate<Component, unused_type, unused_type>
+    {};
+
+    //  this get's instantiated if the parameter type is compatible to the
+    //  generator
+    template <typename Component, typename Parameter, typename Expected>
+    struct alternative_generate<
+        Component, Parameter, Expected,
+        typename enable_if<
+            is_compatible_component<Expected, Parameter>
+        >::type
+    >
+    {
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool
+        call(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& delim, Parameter const& param)
+        {
+            typedef
+                is_compatible_component<Expected, Parameter>
+            component_type;
+
+            typedef typename
+                mpl::distance<
+                    typename component_type::begin,
+                    typename component_type::iter
+                >::type
+            distance_type;
+
+            // make sure, the content of the passed variant matches our
+            // expectations
+            if (param.which() != distance_type::value)
+                return false;
+
+            // returns true if any of the generators succeed
+            typedef
+                typename mpl::deref<
+                    typename component_type::iter
+                >::type
+            compatible_type;
+
+            typedef typename Component::director director;
+            return director::generate(component, sink, ctx, delim,
+                get<compatible_type>(param));
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  alternative_generate_functor: a functor supplied to spirit::any which
+    //  will be executed for every generator in a given alternative generator
+    //  expression
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename OutputIterator, typename Context, typename Delimiter,
+        typename Parameter>
+    struct alternative_generate_functor
+    {
+        alternative_generate_functor(OutputIterator& sink_, Context& ctx_,
+              Delimiter const& d, Parameter const& p)
+          : sink(sink_), ctx(ctx_), delim(d), param(p)
+        {
         }
 
-        Component const& component;
+        template <typename Component>
+        bool operator()(Component const& component)
+        {
+            typedef
+                typename traits::attribute_of<
+                    karma::domain, Component, Context>::type
+            expected;
+            typedef
+                alternative_generate<Component, Parameter, expected>
+            generate;
+
+            return generate::call(component, sink, ctx, delim, param);
+        }
+
         OutputIterator& sink;
         Context& ctx;
         Delimiter const& delim;
