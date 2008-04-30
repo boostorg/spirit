@@ -82,7 +82,7 @@ namespace boost { namespace spirit { namespace karma
             fusion::result_of::as_vector<Locals>::type 
         locals_type;
 
-        //  The overall context_type consist of a tuple with:
+        //  The overall context_type consists of a tuple with:
         //      1) a tuple of the return value and parameters
         //      2) the locals
         typedef fusion::vector<retval_param_types, locals_type> context_type;

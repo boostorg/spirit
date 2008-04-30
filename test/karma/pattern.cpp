@@ -19,6 +19,7 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/spirit/include/phoenix_fusion.hpp>
 
 #include "test.hpp"
 
@@ -57,29 +58,27 @@ int main()
     // basic tests involving a direct parameter
     {
         typedef variant<char, int, double> var_type;
-        fusion::vector<unused_type, var_type> v (unused, 'a');
+        var_type v ('a');
 
-        rule<outiter_type, void(var_type)> start;
+        rule<outiter_type, var_type()> start;
 
-        start = (char_ | int_ | double_)[_1 = _r1];
+        start = (char_ | int_ | double_)[_1 = _r0];
         BOOST_TEST(test("a", start, v));
 
-        v = fusion::vector<unused_type, var_type>(unused, 10);
+        v = 10;
         BOOST_TEST(test("10", start, v));
-        v = fusion::vector<unused_type, var_type>(unused, 12.4);
+        v = 12.4;
         BOOST_TEST(test("12.4", start, v));
     }
 
     {
         rule<outiter_type, void(char, int, double)> start;
-        fusion::vector<unused_type, char, int, double> vec(unused, 'a', 10, 12.4);
+        fusion::vector<char, int, double> vec('a', 10, 12.4);
 
         start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
-        BOOST_TEST(test("a1012.4", start, vec));
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
         start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
-        BOOST_TEST(test("a1012.4", start, vec));
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
         rule<outiter_type, void(char)> a;
@@ -90,29 +89,34 @@ int main()
         b = int_[_1 = _r1];
         c = double_[_1 = _r1];
         start = a(_r1) << b(_r2) << c(_r3);
-        BOOST_TEST(test("a1012.4", start, vec));
         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
     }
 
     // test rule parameter propagation
     {
-        rule<outiter_type, void(char, int, double)> start;
-        fusion::vector<unused_type, char, int, double> vec(unused, 'a', 10, 12.4);
+        using boost::phoenix::at_c;
+        
+        rule<outiter_type, fusion::vector<char, int, double>()> start;
+        fusion::vector<char, int, double> vec('a', 10, 12.4);
 
         start %= char_ << int_ << double_;
         BOOST_TEST(test("a1012.4", start, vec));
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
 
-        rule<outiter_type, void(char)> a;
-        rule<outiter_type, void(int)> b;
-        rule<outiter_type, void(double)> c;
+        rule<outiter_type, char()> a;
+        rule<outiter_type, int()> b;
+        rule<outiter_type, double()> c;
 
         a %= char_ << eps;
         b %= int_;
         c %= double_;
-        start = a(_r1) << b(_r2) << c(_r3);
+        start = a[_1 = at_c<0>(_r0)] << b[_1 = at_c<1>(_r0)] << c[_1 = at_c<2>(_r0)];
         BOOST_TEST(test("a1012.4", start, vec));
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
+
+        start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
+        BOOST_TEST(test("a1012.4", start, vec));
+
+        start %= a << b << c;
+        BOOST_TEST(test("a1012.4", start, vec));
     }
 
     // basic tests with delimiter
