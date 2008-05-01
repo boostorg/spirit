@@ -35,7 +35,6 @@ main()
     typedef lexer_type::token_set token_set;
     typedef lex::lexer_def<lexer_type> lexer_def;
 
-    token_set s;
     std::string str("def");
 
     {
