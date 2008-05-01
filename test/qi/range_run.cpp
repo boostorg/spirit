@@ -28,7 +28,7 @@ void acid_test()
     int const test_size = 1000;
 
     boost::mt19937 rng;
-    boost::uniform_int<> char_(const_min, const_max);
+    boost::uniform_int<> char_(int(const_min), int(const_max));
     boost::variate_generator<boost::mt19937&, boost::uniform_int<> >
        gen(rng, char_);
     boost::uniform_int<> _1of10(1, 10);
@@ -36,7 +36,7 @@ void acid_test()
        on_or_off(rng, _1of10);
 
     range_run<Char> rr;
-    boost::dynamic_bitset<> bset(const_max-const_min+1);
+    boost::dynamic_bitset<> bset(int(const_max)-int(const_min)+1);
 
     for (int i = 0; i < test_size; ++i)
     {
