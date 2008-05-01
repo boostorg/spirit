@@ -75,14 +75,15 @@ int main()
     }
 
     {
-        using boost::lambda::_1;
+        namespace lambda = boost::lambda;
         {
             std::stringstream strm("42");
-            BOOST_TEST(test("{42}", '{' << int_[strm >> _1] << '}'));
+            BOOST_TEST(test("{42}", '{' << int_[strm >> lambda::_1] << '}'));
         }
         {
             std::stringstream strm("42");
-            BOOST_TEST(test_delimited("{ 42 } ", '{' << int_[strm >> _1] << '}', space));
+            BOOST_TEST(test_delimited("{ 42 } ", 
+                '{' << int_[strm >> lambda::_1] << '}', space));
         }
     }
 
