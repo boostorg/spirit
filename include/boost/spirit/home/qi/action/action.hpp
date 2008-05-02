@@ -40,7 +40,7 @@ namespace boost { namespace spirit { namespace qi
             // before calling detail::action_dispatch whereby
             // disallowing mutability of the attribute in semantic
             // actions.
-            return spirit::detail::action_dispatch(f, attr, context);
+            return spirit::detail::action_dispatch<mpl::true_>(f, attr, context);
         }
 
         template <

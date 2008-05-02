@@ -14,7 +14,8 @@
 
 namespace boost { namespace spirit { namespace detail
 {
-    template <typename F, typename Attribute, typename Context>
+    // general handler for everything not explicitly specialized below
+    template <typename Pass, typename F, typename Attribute, typename Context>
     bool action_dispatch(F const& f, Attribute& attr, Context& context)
     {
         bool pass = true;
@@ -22,16 +23,44 @@ namespace boost { namespace spirit { namespace detail
         return pass;
     }
 
+    // handler for phoenix actors
+    
+    // If the component this action has to be invoked for is a sequence, we 
+    // wrap any non-fusion sequence into a fusion sequence (done by pass_value)
+    // and pass through any fusion sequence.
     template <typename Eval, typename Attribute, typename Context>
     bool action_dispatch(phoenix::actor<Eval> const& f
-      , Attribute& attr, Context& context)
+      , Attribute& attr, Context& context, mpl::true_)
     {
         bool pass = true;
-        f(pass_value<Attribute>::call(attr), context, pass);
+        f (pass_value<Attribute>::call(attr), context, pass);
         return pass;
     }
 
-    template <typename RT, typename A0, typename A1, typename A2
+    // If this action has to be invoked for anything but a sequence, we always 
+    // need to wrap the attribute into a fusion sequence, because the attribute
+    // has to be treated as being a single value in any case (even if it 
+    // actually already is a fusion sequence on its own).
+    template <typename Eval, typename Attribute, typename Context>
+    bool action_dispatch(phoenix::actor<Eval> const& f
+      , Attribute& attr, Context& context, mpl::false_)
+    {
+        bool pass = true;
+        f (fusion::vector<Attribute&>(attr), context, pass);
+        return pass;
+    }
+
+    template <typename IsSequence
+        , typename Eval, typename Attribute, typename Context>
+    bool action_dispatch(phoenix::actor<Eval> const& f
+      , Attribute& attr, Context& context)
+    {
+        return action_dispatch(f, attr, context, IsSequence());
+    }
+
+    // specializations for plain function pointers taking a different number of
+    // arguments
+    template <typename Pass, typename RT, typename A0, typename A1, typename A2
       , typename Attribute, typename Context>
     bool action_dispatch(RT(*f)(A0, A1, A2)
       , Attribute& attr, Context& context)
@@ -41,7 +70,7 @@ namespace boost { namespace spirit { namespace detail
         return pass;
     }
 
-    template <typename RT, typename A0, typename A1
+    template <typename Pass, typename RT, typename A0, typename A1
       , typename Attribute, typename Context>
     bool action_dispatch(RT(*f)(A0, A1)
       , Attribute& attr, Context& context)
@@ -50,7 +79,7 @@ namespace boost { namespace spirit { namespace detail
         return true;
     }
 
-    template <typename RT, typename A0
+    template <typename Pass, typename RT, typename A0
       , typename Attribute, typename Context>
     bool action_dispatch(RT(*f)(A0)
       , Attribute& attr, Context&)
@@ -59,13 +88,14 @@ namespace boost { namespace spirit { namespace detail
         return true;
     }
 
-    template <typename RT, typename Attribute, typename Context>
+    template <typename Pass, typename RT, typename Attribute, typename Context>
     bool action_dispatch(RT(*f)()
       , Attribute&, Context&)
     {
         f();
         return true;
     }
+    
 }}}
 
 #endif

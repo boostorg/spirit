@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
-    Copyright (c) 2001-2007 Hartmut Kaiser
+    Copyright (c) 2001-2008 Joel de Guzman
+    Copyright (c) 2001-2008 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,10 +20,10 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
+#include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant/recursive_variant.hpp>
-#include <boost/function_output_iterator.hpp>
 
 #include <iostream>
 #include <fstream>
@@ -31,8 +31,6 @@
 #include <vector>
 
 using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::karma;
 using namespace boost::spirit::ascii;
 using namespace boost::spirit::arg_names;
 
@@ -77,25 +75,25 @@ struct mini_xml_parser :
 {
     mini_xml_parser()
     {
-        text = lexeme[+(char_ - '<')        [text.val += _1]];
-        node = (xml | text)                 [node.val = _1];
+        text = lexeme[+(char_ - '<')        [_val += _1]];
+        node = (xml | text)                 [_val = _1];
 
         start_tag =
                 '<'
-            >>  lexeme[+(char_ - '>')       [start_tag.val += _1]]
+            >>  lexeme[+(char_ - '>')       [_val += _1]]
             >>  '>'
         ;
 
         end_tag =
                 "</"
-            >>  lit(end_tag._1)
+            >>  lit(_r1)
             >>  '>'
         ;
 
         xml =
-                start_tag                   [at_c<0>(xml.val) = _1]
-            >>  *node                       [push_back(at_c<1>(xml.val), _1)]
-            >>  end_tag(at_c<0>(xml.val))
+                start_tag                   [at_c<0>(_val) = _1]
+            >>  *node                       [push_back(at_c<1>(_val), _1)]
+            >>  end_tag(at_c<0>(_val))
         ;
     }
 
@@ -107,85 +105,46 @@ struct mini_xml_parser :
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-//
+//  A couple of phoenix functions helping to access the elements of the 
+//  generated AST
 ///////////////////////////////////////////////////////////////////////////////
-template <typename String>
-struct string_appender
+template <typename T>
+struct get_element
 {
-    string_appender(String& s)
-    :   str(s)
-    {}
+    template <typename T1>
+    struct result { typedef T const& type; };
 
-    template <typename T>
-    void operator()(T const &x) const
+    T const& operator()(mini_xml_node const& node) const
     {
-        str += x;
-    }
-
-    String& str;
-};
-
-template <typename String>
-inline string_appender<String>
-make_string_appender(String& str)
-{
-    return string_appender<String>(str);
-}
-
-template <typename Char>
-struct output_iterator
-{
-    typedef std::basic_string<Char> string_type;
-    typedef string_appender<string_type> appender_type;
-    typedef boost::function_output_iterator<appender_type> type;
-    
-    static type 
-    call(std::basic_string<Char>& str)
-    {
-        return boost::make_function_output_iterator(
-            make_string_appender(str));
+        return boost::get<T>(node);
     }
 };
 
+phoenix::function<get_element<std::string> > _string;
+phoenix::function<get_element<mini_xml> > _xml;
+
 ///////////////////////////////////////////////////////////////////////////////
-//
+//  The output grammar defining the format of the generated data
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OutputIterator>
 struct mini_xml_generator
-  : boost::spirit::karma::grammar_def<OutputIterator, void(mini_xml), space_type>
+  : karma::grammar_def<OutputIterator, mini_xml()>
 {
-// typedef karma::grammar_def<OutputIterator, void(mini_xml), space_type> base_type;
-// boost::mpl::print<typename base_type::start_type::param_types> x;
-
     mini_xml_generator()
     {
-//             text = verbatim[lit(text._1)];
-//             node = (xml | text)                 [_1 = node._1];
-//
-//             start_tag =
-//                     '<'
-//                 <<  verbatim[lit(start_tag._1)]
-//                 <<  '>'
-//             ;
-//
-//             end_tag =
-//                     "</"
-//                 <<  verbatim[lit(end_tag._1)]
-//                 <<  '>'
-//             ;
-//
-//         xml =
-//                 start_tag(at_c<0>(xml._1))
-//                 <<  (*node)                     [ref(at_c<1>(xml._1))]
-//             <<  end_tag(at_c<0>(xml._1))
-        ;
+        node %= 
+                lit[_1 = _string(_r0)] 
+            |   (char_('\n') << xml[_1 = _xml(_r0)] << '\n')
+            ;
+
+        xml =   char_('<') << lit(at_c<0>(_r0)) << '>'
+            <<  (*node)[_1 = at_c<1>(_r0)]
+            <<  lit("</")  << lit(at_c<0>(_r0)) << '>'
+            ;
     }
 
-    karma::rule<OutputIterator, void(mini_xml), space_type> xml;
-//     karma::rule<OutputIterator, void(mini_xml_node), space_type> node;
-//     karma::rule<OutputIterator, void(std::string), space_type> text;
-//     karma::rule<OutputIterator, void(std::string), space_type> start_tag;
-//     karma::rule<OutputIterator, void(std::string), space_type> end_tag;
+    karma::rule<OutputIterator, mini_xml()> xml;
+    karma::rule<OutputIterator, mini_xml_node()> node;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -227,7 +186,7 @@ int main(int argc, char **argv)
 
     std::string::const_iterator iter = storage.begin();
     std::string::const_iterator end = storage.end();
-    bool r = phrase_parse(iter, end, xmlin, ast, space);
+    bool r = qi::phrase_parse(iter, end, xmlin, ast, space);
 
     if (r && iter == end)
     {
@@ -235,15 +194,14 @@ int main(int argc, char **argv)
         std::cout << "Parsing succeeded\n";
         std::cout << "-------------------------\n";
 
-        typedef output_iterator<char>::type outiter_type;
+        typedef std::back_insert_iterator<std::string> outiter_type;
         typedef mini_xml_generator<outiter_type> mini_xml_generator;
 
         mini_xml_generator gen;                     //  Our grammar definition
         karma::grammar<mini_xml_generator> xmlout(gen, gen.xml); // Our grammar
 
         std::string generated;
-        bool r = generate_delimited(output_iterator<char>::call(generated), 
-                    xmlout(ast), space);
+        bool r = karma::generate(std::back_inserter(generated), xmlout, ast);
 
         if (r)
             std::cout << generated << std::endl;

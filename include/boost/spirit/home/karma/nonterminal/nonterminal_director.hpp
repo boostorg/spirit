@@ -85,7 +85,7 @@ namespace boost { namespace spirit { namespace karma
             Parameter const& param)
         {
             typedef typename Nonterminal::locals_type locals_type;
-            fusion::vector<Parameter const&> front(param);
+            fusion::single_view<Parameter const&> front(param);
             NonterminalContext context(
                 fusion::join(
                     front,

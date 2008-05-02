@@ -31,6 +31,8 @@ namespace boost { namespace spirit
     //  used to decide, whether to advance the second iterator or not.
     //  This is needed for sequences containing components with unused
     //  attributes.
+    //  The second iterator is advanced only if the attribute of the 
+    //  corresponding component iterator is not unused.
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {

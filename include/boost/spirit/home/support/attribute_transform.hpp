@@ -12,6 +12,7 @@
 #include <boost/spirit/home/support/component.hpp>
 #include <boost/spirit/home/support/attribute_of.hpp>
 #include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/is_sequence.hpp>
 #include <boost/variant/variant_fwd.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/filter_if.hpp>
@@ -26,23 +27,40 @@ namespace boost { namespace spirit
     {
         // Here, we provide policies for stripping single element fusion
         // sequences. Add more specializations as needed.
-        template <typename T>
+        template <typename T, typename IsSequence>
         struct strip_single_element_sequence
         {
             typedef T type;
         };
 
         template <typename T>
-        struct strip_single_element_sequence<fusion::vector<T> >
+        struct strip_single_element_sequence<fusion::vector<T>, mpl::false_>
         {
             //  Strips single element fusion vectors into its 'naked'
             //  form: vector<T> --> T
             typedef T type;
         };
 
-        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+        template <typename T>
+        struct strip_single_element_sequence<fusion::vector<T>, mpl::true_>
+        {
+            //  Strips single element fusion vectors into its 'naked'
+            //  form: vector<T> --> T, but does so only if T is not a fusion 
+            //  sequence itself
+            typedef typename 
+                mpl::if_<
+                    fusion::traits::is_sequence<T>,
+                    fusion::vector<T>,
+                    T
+                >::type 
+            type;
+        };
+
+        template <BOOST_VARIANT_ENUM_PARAMS(typename T), typename IsSequence>
         struct strip_single_element_sequence<
-            fusion::vector<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > >
+                fusion::vector<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
+              , IsSequence
+            >
         {
             //  Exception: Single element variants are not stripped!
             typedef fusion::vector<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > type;
@@ -65,7 +83,8 @@ namespace boost { namespace spirit
     //
     template <
         typename Director, typename Component
-      , typename Iterator, typename Context>
+      , typename Iterator, typename Context
+      , typename IsSequence = mpl::false_>
     struct build_fusion_sequence
     {
         template <
@@ -121,7 +140,7 @@ namespace boost { namespace spirit
         // Finally, strip single element sequences into its
         // naked form (e.g. vector<T> --> T)
         typedef typename
-            traits::strip_single_element_sequence<attribute_sequence>::type
+            traits::strip_single_element_sequence<attribute_sequence, IsSequence>::type
         type;
     };
 

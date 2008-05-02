@@ -23,6 +23,10 @@
 
 namespace boost { namespace spirit { namespace karma
 {
+    ///////////////////////////////////////////////////////////////////////////
+    struct sequence;    // forward declaration only
+    
+    ///////////////////////////////////////////////////////////////////////////
     struct action
     {
         template <typename Component, typename Context, typename Unused>
@@ -44,7 +48,8 @@ namespace boost { namespace spirit { namespace karma
             typedef typename
                 result_of::left<Component>::type::director
             director;
-
+            typedef typename is_same<director, sequence>::type is_sequence;
+            
             typedef typename
                 attribute<Component, Context, unused_type>::type
             param_type;
@@ -63,7 +68,7 @@ namespace boost { namespace spirit { namespace karma
             // fail parsing.
             // call the function, passing the attribute, the context.
             // The client can return false to fail parsing.
-            bool pass = spirit::detail::action_dispatch(
+            bool pass = spirit::detail::action_dispatch<is_sequence>(
                 spirit::right(component), p, ctx);
 
             return pass &&
