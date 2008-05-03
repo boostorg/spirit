@@ -10,7 +10,6 @@
 #include <boost/spirit/include/karma.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
-#include <boost/function_output_iterator.hpp>
 
 #include <iostream>
 #include <strstream>
@@ -36,40 +35,12 @@ struct read_action
     }
 };
 
-///////////////////////////////////////////////////////////////////////////
-template <typename String>
-struct string_appender
-{
-    string_appender(String& s)
-    :   str(s)
-    {}
-
-    template <typename T>
-    void operator()(T const &x) const
-    {
-        str += x;
-    }
-
-    String& str;
-};
-
-template <typename String>
-inline string_appender<String>
-make_string_appender(String& str)
-{
-    return string_appender<String>(str);
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    using boost::make_function_output_iterator;
-
     { // example using plain functions
         std::string generated;
-        bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)),
+        bool result = karma::generate(std::back_inserter(generated), 
             '{' << int_[&read] << '}');
 
         if (result)
@@ -78,8 +49,7 @@ int main()
 
     { // example using simple function objects
         std::string generated;
-        bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)),
+        bool result = karma::generate(std::back_inserter(generated), 
             '{' << int_[read_action()] << '}');
 
         if (result)
@@ -88,8 +58,7 @@ int main()
 
     { // example using boost.bind
         std::string generated;
-        bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)),
+        bool result = karma::generate(std::back_inserter(generated), 
             '{' << int_[boost::bind(&read, _1)] << '}');
 
         if (result)
@@ -102,8 +71,7 @@ int main()
         std::string generated;
         std::stringstream strm("42");
 
-        bool result = karma::generate(
-            make_function_output_iterator(make_string_appender(generated)),
+        bool result = karma::generate(std::back_inserter(generated),
             '{' << int_[strm >> lambda::_1] << '}');
 
         if (result)
