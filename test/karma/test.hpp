@@ -12,13 +12,11 @@
 #include <iostream>
 #include <typeinfo>
 
-#include <boost/function_output_iterator.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_what.hpp>
 
 namespace spirit_test
 {
-
     ///////////////////////////////////////////////////////////////////////////
     struct display_type
     {
@@ -38,57 +36,18 @@ namespace spirit_test
     display_type const display = {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename String>
-    struct string_appender 
-    {
-        string_appender(String& s) 
-        :   str(s) 
-        {}
-        
-        template <typename T>
-        void operator()(T const &x) const 
-        {
-            str += x;
-        }
-
-        String& str;
-
-        // suppress warning about assignment operator not being generated
-        string_appender& operator=(string_appender const&);
-    };
-
-    template <typename String>
-    inline string_appender<String> 
-    make_string_appender(String& str)
-    {
-        return string_appender<String>(str);
-    }
-
-    template <typename Char>
-    struct output_iterator
-    {
-        typedef std::basic_string<Char> string_type;
-        typedef string_appender<string_type> appender_type;
-        typedef boost::function_output_iterator<appender_type> type;
-    };
-    
-    ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename Generator>
     inline bool test(Char const *expected, Generator const& g)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
+        
         string_type generated;
-
-        bool result = karma::generate(make_function_output_iterator(
-            make_string_appender(generated)), g);
+        bool result = karma::generate(std::back_inserter(generated), g);
                 
         return result && generated == expected;
     }
@@ -96,19 +55,15 @@ namespace spirit_test
     template <typename Char, typename Generator>
     inline bool test(std::basic_string<Char> const& expected, Generator const& g)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate(make_function_output_iterator(
-            make_string_appender(generated)), g);
+        string_type generated;
+        bool result = karma::generate(std::back_inserter(generated), g);
                 
         return result && generated == expected;
     }
@@ -118,19 +73,15 @@ namespace spirit_test
     inline bool test(Char const *expected, Generator const& g, 
         Parameter const &parameter)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate(make_function_output_iterator(
-            make_string_appender(generated)), g, parameter);
+        string_type generated;
+        bool result = karma::generate(std::back_inserter(generated), g, parameter);
                 
         return result && generated == expected;
     }
@@ -139,19 +90,15 @@ namespace spirit_test
     inline bool test(std::basic_string<Char> const& expected, Generator const& g, 
         Parameter const &parameter)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate(make_function_output_iterator(
-            make_string_appender(generated)), g, parameter);
+        string_type generated;
+        bool result = karma::generate(std::back_inserter(generated), g, parameter);
                 
         return result && generated == expected;
     }
@@ -161,19 +108,15 @@ namespace spirit_test
     inline bool test_delimited(Char const *expected, Generator const& g, 
         Delimiter const& d)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate_delimited(make_function_output_iterator(
-            make_string_appender(generated)), g, d);
+        string_type generated;
+        bool result = karma::generate_delimited(std::back_inserter(generated), g, d);
                 
         return result && generated == expected;
     }
@@ -182,19 +125,15 @@ namespace spirit_test
     inline bool test_delimited(std::basic_string<Char> const& expected, 
         Generator const& g, Delimiter const& d)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate_delimited(make_function_output_iterator(
-            make_string_appender(generated)), g, d);
+        string_type generated;
+        bool result = karma::generate_delimited(std::back_inserter(generated), g, d);
                 
         return result && generated == expected;
     }
@@ -205,19 +144,16 @@ namespace spirit_test
     inline bool test_delimited(Char const *expected, Generator const& g, 
         Parameter const &parameter, Delimiter const& d)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate_delimited(make_function_output_iterator(
-            make_string_appender(generated)), g, parameter, d);
+        string_type generated;
+        bool result = karma::generate_delimited(std::back_inserter(generated), 
+            g, parameter, d);
                 
         return result && generated == expected;
     }
@@ -227,19 +163,16 @@ namespace spirit_test
     inline bool test_delimited(std::basic_string<Char> const& expected, 
         Generator const& g, Parameter const &parameter, Delimiter const& d)
     {
-        // we don't care about the result of the "what" function.
-        // we only care that all generators have it:
-        boost::spirit::karma::what(g);
-
-        using boost::make_function_output_iterator;
         namespace karma = boost::spirit::karma;
-        
         typedef std::basic_string<Char> string_type;
         
-        string_type generated;
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
 
-        bool result = karma::generate_delimited(make_function_output_iterator(
-            make_string_appender(generated)), g, parameter, d);
+        string_type generated;
+        bool result = karma::generate_delimited(std::back_inserter(generated), 
+            g, parameter, d);
                 
         return result && generated == expected;
     }
@@ -250,19 +183,15 @@ namespace spirit_test
     binary_test(char const *expected, std::size_t size, 
         Generator const& g)
     {
+        namespace karma = boost::spirit::karma;
+        typedef std::basic_string<Char> string_type;
+        
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
-        boost::spirit::karma::what(g);
+        karma::what(g);
 
-        using boost::make_function_output_iterator;
-        namespace karma = boost::spirit::karma;
-        
-        typedef std::basic_string<unsigned char> string_type;
-        
         string_type generated;
-
-        bool result = karma::generate(make_function_output_iterator(
-            make_string_appender(generated)), g);
+        bool result = karma::generate(std::back_inserter(generated), g);
                 
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
@@ -273,19 +202,15 @@ namespace spirit_test
     binary_test(char const *expected, std::size_t size, 
         Generator const& g, Parameter const &parameter)
     {
+        namespace karma = boost::spirit::karma;
+        typedef std::basic_string<Char> string_type;
+        
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
-        boost::spirit::karma::what(g);
+        karma::what(g);
 
-        using boost::make_function_output_iterator;
-        namespace karma = boost::spirit::karma;
-        
-        typedef std::basic_string<unsigned char> string_type;
-        
         string_type generated;
-
-        bool result = karma::generate(make_function_output_iterator(
-            make_string_appender(generated)), g, parameter);
+        bool result = karma::generate(std::back_inserter(generated), g, parameter);
                 
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
