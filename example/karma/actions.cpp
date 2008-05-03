@@ -97,14 +97,14 @@ int main()
     }
 
     { // example using boost.lambda
-        using boost::lambda::_1;
+        namespace lambda = boost::lambda;
 
         std::string generated;
         std::stringstream strm("42");
 
         bool result = karma::generate(
             make_function_output_iterator(make_string_appender(generated)),
-            '{' << int_[strm >> _1] << '}');
+            '{' << int_[strm >> lambda::_1] << '}');
 
         if (result)
             std::cout << "Boost.Lambda: " << generated << std::endl;
