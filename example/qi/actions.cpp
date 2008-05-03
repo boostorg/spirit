@@ -55,9 +55,9 @@ int main()
 
     { // example using boost.lambda
 
-        using boost::lambda::_1;
+        namespace lambda = boost::lambda;
         char const *s1 = "{45}", *e1 = s1 + std::strlen(s1);
-        qi::parse(s1, e1, '{' >> int_[std::cout << _1 << '\n'] >> '}');
+        qi::parse(s1, e1, '{' >> int_[std::cout << lambda::_1 << '\n'] >> '}');
     }
 
     return 0;

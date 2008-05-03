@@ -64,10 +64,9 @@ int main()
     }
 
     {
-        using boost::lambda::_1;
-        using boost::lambda::var;
+        namespace lambda = boost::lambda;
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        qi::parse(s1, e1, '{' >> int_[var(x) += _1] >> '}');
+        qi::parse(s1, e1, '{' >> int_[lambda::var(x) += lambda::_1] >> '}');
     }
 
     BOOST_TEST(x == (42*6));
