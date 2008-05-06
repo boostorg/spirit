@@ -134,7 +134,7 @@ struct mini_xml_generator
     {
         node %= 
                 lit[_1 = _string(_r0)] 
-            |   (char_('\n') << xml[_1 = _xml(_r0)] << '\n')
+            |   xml[_1 = _xml(_r0)]
             ;
 
         xml =   char_('<') << lit(at_c<0>(_r0)) << '>'

@@ -46,7 +46,7 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Component, typename Context, typename Iterator>
         struct attribute :
-            build_fusion_sequence<alternative, Component, Iterator, Context, mpl::true_>
+            build_fusion_sequence<alternative, Component, Iterator, Context>
         {
         };
 
