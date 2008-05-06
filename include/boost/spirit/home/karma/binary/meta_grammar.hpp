@@ -29,6 +29,8 @@ namespace boost { namespace spirit { namespace karma
     template <integer::endianness endian, int bits>
     struct binary_lit_director;
 
+    struct binary_padding_director;
+    
     struct main_meta_grammar;
 
     template <typename Expr, typename Enable>
@@ -223,6 +225,9 @@ namespace boost { namespace spirit { namespace karma
                 >,
                 karma::domain,
                 mpl::identity<extract_binary_lit_director<mpl::_, mpl::_> >
+            >,
+            meta_grammar::function1_rule<
+                karma::domain, tag::pad, binary_padding_director
             >
         >
     {

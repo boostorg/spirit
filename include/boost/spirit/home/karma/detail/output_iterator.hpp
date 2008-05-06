@@ -20,6 +20,37 @@
 namespace boost { namespace spirit { namespace karma { namespace detail 
 {
     ///////////////////////////////////////////////////////////////////////////
+    //  This class is used to keep track of the current position in the output.
+    ///////////////////////////////////////////////////////////////////////////
+    class position_sink 
+    {
+    public:
+        position_sink() : count(0), line(1), column(0) {}
+        void tidy() { count = 0; line = 1; column = 0; }
+        
+        template <typename T>
+        void output(T const& value) 
+        {
+            ++count; 
+            if (value == '\n') {
+                ++line;
+                column = 1;
+            }
+            else {
+                ++column;
+            }
+        }
+        std::size_t get_count() const { return count; }
+        std::size_t get_line() const { return line; }
+        std::size_t get_column() const { return column; }
+
+    private:
+        std::size_t count;
+        std::size_t line;
+        std::size_t column;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     //  This class is used to count the umber of characters streamed into the 
     //  output.
     ///////////////////////////////////////////////////////////////////////////
@@ -233,6 +264,10 @@ public:
             if (mode & count_characters)    // count characters, if appropriate
                 count_data.output();
 
+            // always track position in the output (this is needed by different 
+            // generators, such as indent, pad, etc.)
+            track_position_data.output(value);
+
             if (mode & buffer_characters)   // buffer output, if appropriate
                 buffer_data.output(value);
             else
@@ -255,6 +290,12 @@ public:
             buffer_data.copy(sink);
         }
         
+        // return the current count in the output
+        std::size_t get_out_count() const
+        {
+            return track_position_data.get_count();
+        }
+        
     protected:
         // this is the wrapped user supplied output iterator
         OutputIterator& sink;
@@ -263,8 +304,9 @@ public:
         // these are the hooks providing optional functionality
         counting_sink count_data;                   // for counting
         buffer_sink<OutputIterator> buffer_data;    // for buffering
-        output_mode mode;
-
+        position_sink track_position_data;          // for position tracking
+        int mode;
+        
         // suppress warning about assignment operator not being generated
         output_iterator& operator=(output_iterator const&);
     };

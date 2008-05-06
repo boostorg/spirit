@@ -11,6 +11,7 @@
 #endif
 
 #include <boost/spirit/home/karma/binary/binary.hpp>
+#include <boost/spirit/home/karma/binary/padding.hpp>
 #include <boost/spirit/home/karma/binary/meta_grammar.hpp>
 
 #endif

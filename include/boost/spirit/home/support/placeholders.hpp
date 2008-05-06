@@ -10,6 +10,7 @@
 
 #include <boost/xpressive/proto/proto.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/type_traits/is_enum.hpp>
 
 namespace boost { namespace spirit
 {
@@ -42,7 +43,8 @@ namespace boost { namespace spirit
         struct big_qword {};
         struct little_qword {};
 #endif
-
+        struct pad {};
+        
         struct ushort {};
         struct ulong {};
         struct uint {};
@@ -101,6 +103,7 @@ namespace boost { namespace spirit
     typedef proto::terminal<tag::big_qword>::type big_qword_type;
     typedef proto::terminal<tag::little_qword>::type little_qword_type;
 #endif
+    typedef proto::terminal<tag::pad>::type pad_type;
 
     typedef proto::terminal<tag::ushort>::type ushort_type;
     typedef proto::terminal<tag::ulong>::type ulong_type;
@@ -159,6 +162,7 @@ namespace boost { namespace spirit
     proto::terminal<tag::big_qword>::type const big_qword = {{}};
     proto::terminal<tag::little_qword>::type const little_qword = {{}};
 #endif
+    proto::terminal<tag::pad>::type const pad = {{}};
 
     proto::terminal<tag::ushort>::type const ushort = {{}};
     proto::terminal<tag::ulong>::type const ulong = {{}};
@@ -214,6 +218,7 @@ namespace boost { namespace spirit
         (void) qword; (void) little_qword; (void) big_qword;
         (void) ulong_long; (void) long_long;
 #endif
+        (void) pad;
         (void) float_; (void) double_; (void) long_double;
         (void) left_align; (void) right_align; (void) center;
         (void) delimit; (void) verbatim;
@@ -270,7 +275,7 @@ namespace boost { namespace spirit
     // test if a tag is an integer type
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Domain>
-    struct is_int_lit_tag : mpl::false_ {};
+    struct is_int_lit_tag : is_enum<T> {};
 
     template <typename Domain>
     struct is_int_lit_tag<short, Domain> : mpl::true_ {};

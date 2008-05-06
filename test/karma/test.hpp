@@ -184,7 +184,7 @@ namespace spirit_test
         Generator const& g)
     {
         namespace karma = boost::spirit::karma;
-        typedef std::basic_string<Char> string_type;
+        typedef std::basic_string<char> string_type;
         
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
@@ -203,7 +203,7 @@ namespace spirit_test
         Generator const& g, Parameter const &parameter)
     {
         namespace karma = boost::spirit::karma;
-        typedef std::basic_string<Char> string_type;
+        typedef std::basic_string<char> string_type;
         
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
@@ -211,6 +211,46 @@ namespace spirit_test
 
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g, parameter);
+                
+        return result && !std::memcmp(generated.c_str(), expected, size);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Generator, typename Delimiter>
+    inline bool 
+    binary_test_delimited(char const *expected, std::size_t size, 
+        Generator const& g, Delimiter const& d)
+    {
+        namespace karma = boost::spirit::karma;
+        typedef std::basic_string<char> string_type;
+        
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
+
+        string_type generated;
+        bool result = karma::generate_delimited(std::back_inserter(generated), 
+            g, d);
+                
+        return result && !std::memcmp(generated.c_str(), expected, size);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Generator, typename Parameter, typename Delimiter>
+    inline bool 
+    binary_test_delimited(char const *expected, std::size_t size, 
+        Generator const& g, Parameter const &parameter, Delimiter const& d)
+    {
+        namespace karma = boost::spirit::karma;
+        typedef std::basic_string<char> string_type;
+        
+        // we don't care about the result of the "what" function.
+        // we only care that all generators have it:
+        karma::what(g);
+
+        string_type generated;
+        bool result = karma::generate_delimited(std::back_inserter(generated), 
+            g, parameter, d);
                 
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
