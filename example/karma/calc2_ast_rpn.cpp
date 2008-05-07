@@ -72,22 +72,24 @@ struct ast_rpn
     ast_rpn()
     {
         ast_node %= 
-                int_        [_1 = _int(_r0)]
-            |   binary_node [_1 = _bin_op(_r0)]
-            |   unary_node  [_1 = _unary_op(_r0)]
+                int_        [_1 = _int(_val)]
+            |   binary_node [_1 = _bin_op(_val)]
+            |   unary_node  [_1 = _unary_op(_val)]
             ;
             
         binary_node = 
                 (ast_node << ast_node << char_)
                 [ 
-                    _1 = _left(_r0), _2 = _right(_r0), _3 = _op(_r0)
+                    _1 = _left(_val), _2 = _right(_val), _3 = _op(_val)
                 ]
             ;
 
         unary_node =
-                verbatim['(' << ast_node << char_ << ')']
-                [
-                    _1 = _right(_r0), _2 = _op(_r0)
+                verbatim [
+                    ('(' << ast_node << char_ << ')')
+                    [
+                        _1 = _right(_val), _2 = _op(_val)
+                    ]
                 ]
             ;
     }

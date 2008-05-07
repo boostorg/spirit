@@ -71,22 +71,22 @@ struct dump_ast
     dump_ast()
     {
         ast_node %= 
-                int_        [_1 = _int(_r0)]
-            |   binary_node [_1 = _bin_op(_r0)]
-            |   unary_node  [_1 = _unary_op(_r0)]
+                int_        [_1 = _int(_val)]
+            |   binary_node [_1 = _bin_op(_val)]
+            |   unary_node  [_1 = _unary_op(_val)]
             ;
             
         binary_node = 
                 ('(' << ast_node << char_ << ast_node << ')')
                 [ 
-                    _1 = _left(_r0), _2 = _op(_r0), _3 = _right(_r0)
+                    _1 = _left(_val), _2 = _op(_val), _3 = _right(_val)
                 ]
             ;
 
         unary_node =
                 ('(' << char_ << ast_node << ')')
                 [
-                    _1 = _op(_r0), _2 = _right(_r0)
+                    _1 = _op(_val), _2 = _right(_val)
                 ]
             ;
     }
