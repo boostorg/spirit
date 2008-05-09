@@ -68,8 +68,8 @@ namespace boost { namespace spirit { namespace karma
             // fail parsing.
             // call the function, passing the attribute, the context.
             // The client can return false to fail parsing.
-            bool pass = spirit::detail::action_dispatch<is_sequence>(
-                spirit::right(component), p, ctx);
+            bool pass = spirit::detail::action_dispatch(
+                spirit::right(component), p, ctx, is_sequence());
 
             return pass &&
                 director::generate(spirit::left(component), sink, ctx, d, p);

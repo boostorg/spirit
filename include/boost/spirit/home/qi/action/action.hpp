@@ -12,6 +12,7 @@
 #include <boost/spirit/home/support/attribute_of.hpp>
 #include <boost/spirit/home/support/detail/action_dispatch.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -40,7 +41,8 @@ namespace boost { namespace spirit { namespace qi
             // before calling detail::action_dispatch whereby
             // disallowing mutability of the attribute in semantic
             // actions.
-            return spirit::detail::action_dispatch<mpl::true_>(f, attr, context);
+            return spirit::detail::action_dispatch(f, attr, context, 
+                mpl::true_());
         }
 
         template <
