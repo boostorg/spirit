@@ -43,7 +43,6 @@ void main(int argc, char* argv[])
             break;
     } while (EOF != tok);
     printf("lines: %d, words: %d, characters: %d\n", l, w, c);
-    printf("Time elapsed: %f", tim.elapsed());
     fclose(yyin);
 }
 
