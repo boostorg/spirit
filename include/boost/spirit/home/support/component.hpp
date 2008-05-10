@@ -237,7 +237,7 @@ namespace boost { namespace spirit
         unused_type unused;
         typedef typename result_of::as_component<Domain, Expr>::grammar grammar;
         return grammar()(proto::as_expr(xpr), unused, unused);
-    };
+    }
 
     template <typename Domain, typename Expr, typename State, typename Visitor>
     inline typename result_of::as_component<Domain, Expr>::type
@@ -247,14 +247,14 @@ namespace boost { namespace spirit
             result_of::as_component<Domain, Expr, State, Visitor>::grammar
         grammar;
         return grammar()(proto::as_expr(xpr), state, visitor);
-    };
+    }
 
     template <typename Domain, typename Director, typename Elements>
     inline component<Domain, Director, Elements> const&
     as_component(Domain, component<Domain, Director, Elements> const& component)
     {
         return component;
-    };
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     //  Create a component. This is a customization point. Components are
