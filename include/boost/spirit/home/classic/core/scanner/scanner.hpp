@@ -248,22 +248,22 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         bool
         at_end() const
         {
-            typedef typename PoliciesT::iteration_policy_t iteration_policy_t;
-            return iteration_policy_t::at_end(*this);
+            typedef typename PoliciesT::iteration_policy_t iteration_policy_type;
+            return iteration_policy_type::at_end(*this);
         }
 
         value_t
         operator*() const
         {
-            typedef typename PoliciesT::iteration_policy_t iteration_policy_t;
-            return iteration_policy_t::filter(iteration_policy_t::get(*this));
+            typedef typename PoliciesT::iteration_policy_t iteration_policy_type;
+            return iteration_policy_type::filter(iteration_policy_t::get(*this));
         }
 
         scanner const&
         operator++() const
         {
-            typedef typename PoliciesT::iteration_policy_t iteration_policy_t;
-            iteration_policy_t::advance(*this);
+            typedef typename PoliciesT::iteration_policy_t iteration_policy_type;
+            iteration_policy_type::advance(*this);
             return *this;
         }
 
