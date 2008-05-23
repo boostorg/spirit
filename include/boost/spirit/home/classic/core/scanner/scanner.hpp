@@ -256,7 +256,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         operator*() const
         {
             typedef typename PoliciesT::iteration_policy_t iteration_policy_type;
-            return iteration_policy_type::filter(iteration_policy_t::get(*this));
+            return iteration_policy_type::filter(iteration_policy_type::get(*this));
         }
 
         scanner const&
