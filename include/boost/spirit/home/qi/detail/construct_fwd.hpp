@@ -48,7 +48,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         template <typename Iterator>
         inline void
-        construct(unsigned int& attr, Iterator const& first, Iterator const& last);
+        construct(unsigned int& attr, Iterator const& first, 
+            Iterator const& last);
 
         template <typename Iterator>
         inline void
@@ -56,16 +57,19 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         template <typename Iterator>
         inline void
-        construct(unsigned long& attr, Iterator const& first, Iterator const& last);
+        construct(unsigned long& attr, Iterator const& first, 
+            Iterator const& last);
 
 #ifdef BOOST_HAS_LONG_LONG
         template <typename Iterator>
         inline void
-        construct(boost::long_long_type& attr, Iterator const& first, Iterator const& last);
+        construct(boost::long_long_type& attr, Iterator const& first, 
+            Iterator const& last);
 
         template <typename Iterator>
         inline void
-        construct(boost::ulong_long_type& attr, Iterator const& first, Iterator const& last);
+        construct(boost::ulong_long_type& attr, Iterator const& first, 
+            Iterator const& last);
 #endif
 
         template <typename Iterator>
@@ -78,7 +82,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
         template <typename Iterator>
         inline void
-        construct(long double& attr, Iterator const& first, Iterator const& last);
+        construct(long double& attr, Iterator const& first, 
+            Iterator const& last);
     }
     
 }}}}

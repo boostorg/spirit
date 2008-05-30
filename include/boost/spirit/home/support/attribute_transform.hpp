@@ -37,8 +37,10 @@ namespace boost { namespace spirit
         };
 
         template <typename T>
-        struct strip_single_element_sequence<fusion::vector<T>, mpl::false_,
-					     typename boost::enable_if<not_is_variant<T> >::type>
+        struct strip_single_element_sequence<
+            fusion::vector<T>, mpl::false_,
+            typename boost::enable_if<not_is_variant<T> >::type
+        >
         {
             //  Strips single element fusion vectors into its 'naked'
             //  form: vector<T> --> T
@@ -46,8 +48,10 @@ namespace boost { namespace spirit
         };
 
         template <typename T>
-        struct strip_single_element_sequence<fusion::vector<T>, mpl::true_,
-					     typename boost::enable_if<not_is_variant<T> >::type>
+        struct strip_single_element_sequence<
+            fusion::vector<T>, mpl::true_,
+            typename boost::enable_if<not_is_variant<T> >::type
+        >
         {
             //  Strips single element fusion vectors into its 'naked'
             //  form: vector<T> --> T, but does so only if T is not a fusion 

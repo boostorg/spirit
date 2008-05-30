@@ -28,8 +28,8 @@ namespace boost { namespace spirit { namespace lex
             }
             
             template <typename Range, typename LexerContext>
-            void operator()(Range const&, std::size_t, LexerContext& ctx, 
-                bool&) const
+            void operator()(Range const&, std::size_t, bool&, 
+                LexerContext& ctx) const
             {
                 ctx.set_state_name(new_state);
             }
