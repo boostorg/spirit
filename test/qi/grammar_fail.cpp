@@ -35,7 +35,8 @@ int main()
     char const* end = &input[strlen(input)+1];
 
     num_list def;
-    bool r = phrase_parse(input, end, make_parser(def),
+    grammar<num_list> g(def); 
+    bool r = phrase_parse(input, end, g,
         space | ('%' >> *~char_('\n') >> '\n'));
 
     return 0;

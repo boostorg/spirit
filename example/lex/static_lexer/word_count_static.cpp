@@ -100,10 +100,9 @@ int main(int argc, char* argv[])
     char const* first = str.c_str();
     char const* last = &first[str.size()];
     
-    // Parsing is done based on the the token stream, not the character 
-    // stream read from the input.
-    bool r = tokenize_and_parse(first, last, make_lexer(word_count), 
-        make_parser(def));
+    // Parsing is done based on the the token stream, not the character stream.
+    qi::grammar<word_count_grammar<iterator_type> > g(def); 
+    bool r = tokenize_and_parse(first, last, make_lexer(word_count), g);
 
     if (r) {    // success
         std::cout << "lines: " << def.l << ", words: " << def.w 

@@ -52,10 +52,11 @@ struct print_numbers_tokens : lexer_def<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 //  Grammar definition
 ///////////////////////////////////////////////////////////////////////////////
-template <typename Iterator>
-struct print_numbers_grammar : grammar_def<Iterator>
+template <typename Iterator, typename Skipper>
+struct print_numbers_grammar : grammar_def<Iterator, Skipper>
 {
-    print_numbers_grammar()
+    template <typename Class>
+    print_numbers_grammar(Class& self)
     {
         start =  *(   token(lex::min_token_id)  [ std::cout << _1  << "\n" ] 
                   |   token(lex::min_token_id+1)
@@ -89,14 +90,14 @@ int main(int argc, char* argv[])
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
     print_numbers_tokens<lexer_type> print_tokens;    // Our token definition
-    print_numbers_grammar<iterator_type> def;         // Our grammar definition
+    grammar_class<print_numbers_grammar> print;       // Our grammar definition
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "print_numbers.input" : argv[1]));
     base_iterator_type first = str.begin();
     bool r = tokenize_and_parse(first, str.end(), make_lexer(print_tokens), 
-        make_parser(def));
+        print);
 
     if (r) {
         std::cout << "-------------------------\n";

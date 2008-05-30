@@ -156,8 +156,8 @@ int main(int argc, char* argv[])
     // stream read from the input. The function `tokenize_and_parse()` wraps
     // the passed iterator range `[first, last)` by the lexical analyzer and 
     // uses its exposed iterators to parse the toke stream.
-    bool r = tokenize_and_parse(first, last, make_lexer(word_count), 
-        make_parser(def));
+    qi::grammar<word_count_grammar<iterator_type> > g(def); 
+    bool r = tokenize_and_parse(first, last, make_lexer(word_count), g);
 
     if (r) {
         std::cout << "lines: " << def.l << ", words: " << def.w 

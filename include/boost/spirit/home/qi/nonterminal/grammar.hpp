@@ -164,25 +164,6 @@ namespace boost { namespace spirit { namespace qi
         friend struct nonterminal_director;
     };
 
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  Generator functions helping to construct a proper grammar object
-    //  instance
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Definition>
-    inline grammar<Definition>
-    make_parser(Definition const& def)
-    {
-        return grammar<Definition>(def);
-    }
-
-    template <typename Definition, typename Start>
-    inline grammar<Definition>
-    make_parser(Definition const& def, Start const& start)
-    {
-        return grammar<Definition>(def, start);
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     //  The grammar_class template
     ///////////////////////////////////////////////////////////////////////////

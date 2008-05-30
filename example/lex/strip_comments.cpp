@@ -141,8 +141,9 @@ int main(int argc, char* argv[])
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();
-    bool r = tokenize_and_parse(first, str.end(), make_lexer(strip_comments), 
-        make_parser(def));
+
+    qi::grammar<strip_comments_grammar<iterator_type> > g(def); 
+    bool r = tokenize_and_parse(first, str.end(), make_lexer(strip_comments), g);
 
     if (r) {
         std::cout << "-------------------------\n";
