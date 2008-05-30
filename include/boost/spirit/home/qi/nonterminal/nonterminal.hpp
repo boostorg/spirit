@@ -7,7 +7,7 @@
 #if !defined(BOOST_SPIRIT_NONTERMINAL_FEB_19_2007_0236PM)
 #define BOOST_SPIRIT_NONTERMINAL_FEB_19_2007_0236PM
 
-#include <boost/spirit/home/qi/nonterminal/nonterminal.hpp>
+#include <boost/spirit/home/support/nonterminal/nonterminal.hpp>
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 
