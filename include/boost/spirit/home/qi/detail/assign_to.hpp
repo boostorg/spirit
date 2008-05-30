@@ -9,6 +9,7 @@
 #if !defined(BOOST_SPIRIT_ASSIGN_TO_APR_16_2006_0812PM)
 #define BOOST_SPIRIT_ASSIGN_TO_APR_16_2006_0812PM
 
+#include <boost/spirit/home/qi/detail/construct_fwd.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/ref.hpp>
 
