@@ -18,6 +18,7 @@
 #include <boost/spirit/home/lex/lexer/string_token_def.hpp>
 #include <boost/spirit/home/lex/lexer/sequence.hpp>
 #include <boost/spirit/home/lex/lexer/action.hpp>
+#include <boost/spirit/home/lex/lexer/lexer_actions.hpp>
 #include <boost/spirit/home/lex/lexer/lexer.hpp>
 #include <boost/spirit/home/lex/lexer/meta_grammar.hpp>
 
