@@ -11,6 +11,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/component.hpp>
 #include <boost/spirit/home/support/attribute_of.hpp>
+#include <boost/spirit/home/support/detail/values.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/variant/variant_fwd.hpp>
@@ -25,16 +26,19 @@ namespace boost { namespace spirit
 
     namespace traits
     {
+        using boost::spirit::detail::not_is_variant;
+
         // Here, we provide policies for stripping single element fusion
         // sequences. Add more specializations as needed.
-        template <typename T, typename IsSequence>
+        template <typename T, typename IsSequence, typename Enable = void>
         struct strip_single_element_sequence
         {
             typedef T type;
         };
 
         template <typename T>
-        struct strip_single_element_sequence<fusion::vector<T>, mpl::false_>
+        struct strip_single_element_sequence<fusion::vector<T>, mpl::false_,
+					     typename boost::enable_if<not_is_variant<T> >::type>
         {
             //  Strips single element fusion vectors into its 'naked'
             //  form: vector<T> --> T
@@ -42,7 +46,8 @@ namespace boost { namespace spirit
         };
 
         template <typename T>
-        struct strip_single_element_sequence<fusion::vector<T>, mpl::true_>
+        struct strip_single_element_sequence<fusion::vector<T>, mpl::true_,
+					     typename boost::enable_if<not_is_variant<T> >::type>
         {
             //  Strips single element fusion vectors into its 'naked'
             //  form: vector<T> --> T, but does so only if T is not a fusion 
