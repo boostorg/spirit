@@ -44,6 +44,7 @@ void main(int argc, char* argv[])
     } while (EOF != tok);
     printf("lines: %d, words: %d, characters: %d\n", l, w, c);
     fclose(yyin);
+    return 0;
 }
 
 extern "C" int yywrap()  
