@@ -26,7 +26,7 @@ bool count(int tok, int* c, int* w, int* l)
     return true;
 }
 
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     int tok = EOF;
     int c = 0, w = 0, l = 0;
