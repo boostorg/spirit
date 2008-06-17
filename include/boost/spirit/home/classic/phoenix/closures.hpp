@@ -348,8 +348,6 @@ public:
 
                             closure()
                             : frame()       { closure_frame_holder_ref(&frame); }
-    closure_frame_t&        context()       { assert(frame!=0); return frame.get(); }
-    closure_frame_t const&  context() const { assert(frame!=0); return frame.get(); }
 
     typedef actor<closure_member<0, self_t> > member1;
     typedef actor<closure_member<1, self_t> > member2;
