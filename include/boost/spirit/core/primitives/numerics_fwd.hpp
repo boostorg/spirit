@@ -1,83 +1,23 @@
 /*=============================================================================
-    Copyright (C) 2006 Tobias Schwinger
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_NUMERICS_FWD_HPP)
-#   define BOOST_SPIRIT_NUMERICS_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_NUMERICS_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_NUMERICS_FWD
 
-namespace boost { namespace spirit 
-{
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  uint_parser class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T = unsigned,
-        int Radix = 10,
-        unsigned MinDigits = 1,
-        int MaxDigits = -1
-    >
-    struct uint_parser;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  int_parser class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T = unsigned,
-        int Radix = 10,
-        unsigned MinDigits = 1,
-        int MaxDigits = -1
-    >
-    struct int_parser;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  sign_parser class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    struct sign_parser;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  default real number policies
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    struct ureal_parser_policies;
-
-    template <typename T>
-    struct real_parser_policies;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  real_parser class
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T = double,
-        typename RealPoliciesT = ureal_parser_policies<T>
-    >
-    struct real_parser;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  strict reals (do not allow plain integers (no decimal point))
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T>
-    struct strict_ureal_parser_policies;
-
-    template <typename T>
-    struct strict_real_parser_policies;
-
-}} // namespace boost::spirit
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_numerics_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_numerics_fwd.hpp"
 #endif
 
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_numerics_fwd.hpp>
+
+#endif

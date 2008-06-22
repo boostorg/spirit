@@ -1,31 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2001-2003 Hartmut Kaiser
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_VERSION_HPP)
-#define SPIRIT_VERSION_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_VERSION
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_VERSION
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  This checks, whether the used Boost library is at least V1.32.0
-//
-///////////////////////////////////////////////////////////////////////////////
-#include <boost/version.hpp>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_version.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_version.hpp"
+#endif
 
-#if BOOST_VERSION < 103200
-#error "Spirit v1.8.x needs at least Boost V1.32.0 to compile successfully."
-#endif 
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_version.hpp>
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  This is the version of the current Spirit distribution
-//
-///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x1806
-#define SPIRIT_PIZZA_VERSION SPIRIT_MEGA_VEGGI  // :-)
-
-#endif // defined(SPIRIT_VERSION_HPP)
+#endif

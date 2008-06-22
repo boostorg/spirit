@@ -1,38 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_TREE_AST_FWD_HPP)
-#define BOOST_SPIRIT_TREE_AST_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_AST_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_AST_FWD
 
-#include <boost/spirit/core/nil.hpp>
-
-namespace boost { namespace spirit {
-
-    template <
-        typename MatchPolicyT, 
-        typename NodeFactoryT, 
-        typename T = nil_t
-    >
-    struct ast_tree_policy;
-
-    template <
-        typename IteratorT,
-        typename NodeFactoryT = node_val_data_factory<nil_t>,
-        typename T = nil_t
-    >
-    struct ast_match_policy;
-
-    template <typename T>
-    struct gen_ast_node_parser;
-
-    struct root_node_op;
-
-}} // namespace boost::spirit
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_ast_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_ast_fwd.hpp"
 #endif
 
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_ast_fwd.hpp>
+
+#endif

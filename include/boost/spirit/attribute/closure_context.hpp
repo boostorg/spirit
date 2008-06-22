@@ -1,51 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2002-2003 Joel de Guzman
-    Copyright (c) 2002-2003 Hartmut Kaiser
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_HPP)
-#define BOOST_SPIRIT_CLOSURE_CONTEXT_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_CLOSURE_CONTEXT
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_CLOSURE_CONTEXT
 
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit {
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_closure_context.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_closure_context.hpp"
+#endif
 
-#if !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
-#define BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_closure_context.hpp>
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  closure_context_linker
-//  { helper template for the closure extendability }
-//
-//      This classes can be 'overloaded' (defined elsewhere), to plug
-//      in additional functionality into the closure parsing process.
-//
-///////////////////////////////////////////////////////////////////////////////
-
-template<typename ContextT>
-struct closure_context_linker : public ContextT
-{
-    template <typename ParserT>
-    closure_context_linker(ParserT const& p)
-    : ContextT(p) {}
-
-    template <typename ParserT, typename ScannerT>
-    void pre_parse(ParserT const& p, ScannerT const& scan)
-    { ContextT::pre_parse(p, scan); }
-
-    template <typename ResultT, typename ParserT, typename ScannerT>
-    ResultT&
-    post_parse(ResultT& hit, ParserT const& p, ScannerT const& scan)
-    { return ContextT::post_parse(hit, p, scan); }
-};
-
-#endif // !defined(BOOST_SPIRIT_CLOSURE_CONTEXT_LINKER_DEFINED)
-
-///////////////////////////////////////////////////////////////////////////////
-}} // namespace boost::spirit
-
-#endif // BOOST_SPIRIT_CLOSURE_CONTEXT_HPP
+#endif

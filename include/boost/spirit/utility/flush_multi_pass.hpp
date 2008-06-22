@@ -1,73 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2001-2003 Daniel Nuffer
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_FLUSH_MULTI_PASS_HPP
-#define BOOST_SPIRIT_FLUSH_MULTI_PASS_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_FLUSH_MULTI_PASS
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_FLUSH_MULTI_PASS
 
-///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/iterator/multi_pass.hpp>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_flush_multi_pass.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_flush_multi_pass.hpp"
+#endif
 
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit {
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_flush_multi_pass.hpp>
 
-    namespace impl {
-
-        template <typename T>
-        void flush_iterator(T &) {}
-
-        template <typename T1, typename T2, typename T3, typename T4>
-        void flush_iterator(boost::spirit::multi_pass<
-            T1, T2, T3, T4, boost::spirit::multi_pass_policies::std_deque> &i)
-        {
-            i.clear_queue();
-        }
-
-    }   // namespace impl
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  flush_multi_pass_parser
-    //
-    //      The flush_multi_pass_parser flushes an underlying
-    //      multi_pass_iterator during the normal parsing process. This may
-    //      be used at certain points during the parsing process, when it is
-    //      clear, that no backtracking is needed anymore and the input
-    //      gathered so far may be discarded.
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    class flush_multi_pass_parser
-    :   public parser<flush_multi_pass_parser>
-    {
-    public:
-        typedef flush_multi_pass_parser this_t;
-
-        template <typename ScannerT>
-        typename parser_result<this_t, ScannerT>::type
-        parse(ScannerT const& scan) const
-        {
-            impl::flush_iterator(scan.first);
-            return scan.empty_match();
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  predefined flush_multi_pass_p object
-    //
-    //      This object should may used to flush a multi_pass_iterator along
-    //      the way during the normal parsing process.
-    //
-    ///////////////////////////////////////////////////////////////////////////
-
-    flush_multi_pass_parser const
-        flush_multi_pass_p = flush_multi_pass_parser();
-
-}} // namespace boost::spirit
-
-#endif // BOOST_SPIRIT_FLUSH_MULTI_PASS_HPP
+#endif

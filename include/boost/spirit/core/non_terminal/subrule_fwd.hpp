@@ -1,31 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_SUBRULE_FWD_HPP)
-#define BOOST_SPIRIT_SUBRULE_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_SUBRULE_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_SUBRULE_FWD
 
-#include <boost/spirit/core/non_terminal/parser_context.hpp>
-
-namespace boost { namespace spirit  {
-
-    template <int ID, typename ContextT = parser_context<> >
-    struct subrule; 
-
-    template <int ID, typename DefT, typename ContextT = parser_context<> >
-    struct subrule_parser;
-
-    template <typename ScannerT, typename ListT>
-    struct subrules_scanner;
-
-    template <typename FirstT, typename RestT>
-    struct subrule_list; 
-
-}} // namespace boost::spirit
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_subrule_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_subrule_fwd.hpp"
 #endif
 
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_subrule_fwd.hpp>
+
+#endif

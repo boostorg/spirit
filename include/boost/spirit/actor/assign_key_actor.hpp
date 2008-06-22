@@ -1,92 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2003 Jonathan de Halleux (dehalleux@pelikhan.com)
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_ACTOR_ASSIGN_KEY_ACTOR_HPP
-#define BOOST_SPIRIT_ACTOR_ASSIGN_KEY_ACTOR_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_ASSIGN_KEY_ACTOR
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_ASSIGN_KEY_ACTOR
 
-#include <boost/spirit/actor/ref_const_ref_value_actor.hpp>
-#include <boost/spirit/actor/ref_const_ref_const_ref_a.hpp>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_assign_key_actor.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_assign_key_actor.hpp"
+#endif
 
-namespace boost { namespace spirit {
-
-    struct assign_key_action
-    {
-        template<
-            typename T,
-            typename ValueT,
-            typename KeyT
-        >
-        void act(T& ref_, ValueT const& value_, KeyT const& key_) const
-        {
-            ref_[ key_ ] = value_;
-        }
-
-        template<
-            typename T,
-            typename ValueT,
-            typename IteratorT
-        >
-        void act(
-            T& ref_,
-            ValueT const& value_,
-            IteratorT const& first_,
-            IteratorT const& last_
-            ) const
-        {
-            typedef typename T::key_type key_type;
-            key_type key(first_,last_);
-
-            ref_[key] = value_;
-        }
-    };
-
-    template<
-        typename T,
-        typename ValueT
-    >
-    inline ref_const_ref_value_actor<T,ValueT,assign_key_action>
-        assign_key_a(T& ref_, ValueT const& value_)
-    {
-        return ref_const_ref_value_actor<T,ValueT,assign_key_action>(
-            ref_,
-            value_
-            );
-    }
-
-    template<
-        typename T,
-        typename ValueT,
-        typename KeyT
-    >
-    inline ref_const_ref_const_ref_actor<
-        T,
-        ValueT,
-        KeyT,
-        assign_key_action
-    >
-        assign_key_a(
-            T& ref_,
-            ValueT const& value_,
-            KeyT const& key_
-    )
-    {
-        return ref_const_ref_const_ref_actor<
-            T,
-            ValueT,
-            KeyT,
-            assign_key_action
-        >(
-            ref_,
-            value_,
-            key_
-            );
-    }
-
-}}
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_assign_key_actor.hpp>
 
 #endif

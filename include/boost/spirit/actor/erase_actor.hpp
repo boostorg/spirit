@@ -1,85 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2003 Jonathan de Halleux (dehalleux@pelikhan.com)
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_ACTOR_ERASE_ACTOR_HPP
-#define BOOST_SPIRIT_ACTOR_ERASE_ACTOR_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_ERASE_ACTOR
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_ERASE_ACTOR
 
-#include <boost/spirit/actor/ref_value_actor.hpp>
-#include <boost/spirit/actor/ref_const_ref_actor.hpp>
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_erase_actor.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_erase_actor.hpp"
+#endif
 
-namespace boost { namespace spirit {
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  Summary:
-    //  A semantic action policy that calss the erase method.
-    //  (This doc uses convention available in actors.hpp)
-    //
-    //  Actions (what it does):
-    //      ref.erase( value );
-    //      ref.erase( T::key_type(first,last) );
-    //      ref.erase( key_ref );
-    //
-    //  Policy name:
-    //      erase_action
-    //
-    //  Policy holder, corresponding helper method:
-    //      ref_value_actor, erase_a( ref );
-    //      ref_const_ref_actor, erase_a( ref, key_ref );
-    //
-    //  () operators: both
-    //
-    //  See also ref_value_actor and ref_const_ref_actor for more details.
-    ///////////////////////////////////////////////////////////////////////////
-    struct erase_action
-    {
-        template<
-            typename T,
-            typename KeyT
-        >
-        void act(T& ref_, KeyT const& key_) const
-        {
-            ref_.erase(key_);
-        }
-        template<
-            typename T,
-            typename IteratorT
-        >
-        void act(
-            T& ref_,
-            IteratorT const& first_,
-            IteratorT const& last_
-            ) const
-        {
-            typedef typename T::key_type key_type;
-            key_type key(first_,last_);
-
-            ref_.erase(key);
-        }
-    };
-
-    template<typename T>
-    inline ref_value_actor<T,erase_action> erase_a(T& ref_)
-    {
-        return ref_value_actor<T,erase_action>(ref_);
-    }
-
-    template<
-        typename T,
-        typename KeyT
-    >
-    inline ref_const_ref_actor<T,KeyT,erase_action> erase_a(
-        T& ref_,
-        KeyT const& key_
-    )
-    {
-        return ref_const_ref_actor<T,KeyT,erase_action>(ref_,key_);
-    }
-
-}}
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_erase_actor.hpp>
 
 #endif

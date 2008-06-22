@@ -1,65 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_CLOSURE_FWD_HPP)
-#define BOOST_SPIRIT_CLOSURE_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_CLOSURE_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_CLOSURE_FWD
 
-#include <boost/spirit/phoenix/tuples.hpp>
-
-#if !defined(BOOST_SPIRIT_CLOSURE_LIMIT)
-#   define BOOST_SPIRIT_CLOSURE_LIMIT PHOENIX_LIMIT
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_closure_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_closure_fwd.hpp"
 #endif
 
-namespace boost { namespace spirit {
-
-    template<typename ClosureT>
-    class closure_context;
-
-    template <typename ClosureT>
-    class init_closure_context;
-
-    template <typename ParserT, typename ActorTupleT>
-    struct init_closure_parser;
-
-    template <
-            typename DerivedT
-        ,   typename T0 = phoenix::nil_t
-        ,   typename T1 = phoenix::nil_t
-        ,   typename T2 = phoenix::nil_t
-
-    #if BOOST_SPIRIT_CLOSURE_LIMIT > 3
-        ,   typename T3 = phoenix::nil_t
-        ,   typename T4 = phoenix::nil_t
-        ,   typename T5 = phoenix::nil_t
-
-    #if BOOST_SPIRIT_CLOSURE_LIMIT > 6
-        ,   typename T6 = phoenix::nil_t
-        ,   typename T7 = phoenix::nil_t
-        ,   typename T8 = phoenix::nil_t
-
-    #if BOOST_SPIRIT_CLOSURE_LIMIT > 9
-        ,   typename T9 = phoenix::nil_t
-        ,   typename T10 = phoenix::nil_t
-        ,   typename T11 = phoenix::nil_t
-
-    #if BOOST_SPIRIT_CLOSURE_LIMIT > 12
-        ,   typename T12 = phoenix::nil_t
-        ,   typename T13 = phoenix::nil_t
-        ,   typename T14 = phoenix::nil_t
-
-    #endif
-    #endif
-    #endif
-    #endif
-    >
-    struct closure;
-
-}} // namespace boost::spirit
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_closure_fwd.hpp>
 
 #endif
-

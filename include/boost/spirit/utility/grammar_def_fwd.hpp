@@ -1,48 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_GRAMMAR_DEF_FWD_HPP)
-#define BOOST_SPIRIT_GRAMMAR_DEF_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_GRAMMAR_DEF_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_GRAMMAR_DEF_FWD
 
-#include <boost/spirit/phoenix/tuples.hpp>
-
-#include <boost/preprocessor/repetition/enum_binary_params.hpp>
-#include <boost/preprocessor/facilities/intercept.hpp>
-
-#if !defined(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT)
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT PHOENIX_LIMIT
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_grammar_def_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_grammar_def_fwd.hpp"
 #endif
 
-//  Calculate an integer rounded up to the nearest integer dividable by 3
-#if BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 12
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     15
-#elif BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 9
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     12
-#elif BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 6
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     9
-#elif BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT > 3
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     6
-#else
-#define BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A     3
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
 #endif
-
-namespace boost { namespace spirit {
-
-    template <
-        typename T,
-        BOOST_PP_ENUM_BINARY_PARAMS(
-            BOOST_PP_DEC(BOOST_SPIRIT_GRAMMAR_STARTRULE_TYPE_LIMIT_A),
-            typename T, = phoenix::nil_t BOOST_PP_INTERCEPT
-        )
-    >
-    class grammar_def;
-
-}} // namespace boost::spirit
+#include <boost/spirit/include/classic_grammar_def_fwd.hpp>
 
 #endif
-

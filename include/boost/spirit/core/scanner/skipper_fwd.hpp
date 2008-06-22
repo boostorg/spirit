@@ -1,28 +1,23 @@
 /*=============================================================================
-    Copyright (c) 2006 Tobias Schwinger
-    http://spirit.sourceforge.net/
+  Copyright (c) 2001-2008 Joel de Guzman
+  Copyright (c) 2001-2008 Hartmut Kaiser
+  http://spirit.sourceforge.net/
 
-    Use, modification and distribution is subject to the Boost Software
-    License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt)
+  Distributed under the Boost Software License, Version 1.0. (See accompanying
+  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_SKIPPER_FWD_HPP)
-#define BOOST_SPIRIT_SKIPPER_FWD_HPP
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_SKIPPER_FWD
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_SKIPPER_FWD
 
-#include <boost/spirit/core/scanner/scanner_fwd.hpp>
-
-namespace boost { namespace spirit {
-
-    template <typename BaseT = iteration_policy>
-    struct skipper_iteration_policy;
-
-    template <typename BaseT = iteration_policy>
-    struct no_skipper_iteration_policy; 
-
-    template <typename ParserT, typename BaseT = iteration_policy>
-    class skip_parser_iteration_policy;
-
-}} // namespace boost::spirit
-
+#if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
+#  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/classic_skipper_fwd.hpp")
+#elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
+#  warning "This header is deprecated. Please use: boost/spirit/include/classic_skipper_fwd.hpp"
 #endif
 
+#if !defined(BOOST_SPIRIT_USE_OLD_NAMESPACE)
+#define BOOST_SPIRIT_USE_OLD_NAMESPACE
+#endif
+#include <boost/spirit/include/classic_skipper_fwd.hpp>
+
+#endif
