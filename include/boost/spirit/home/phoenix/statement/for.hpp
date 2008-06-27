@@ -27,7 +27,7 @@ namespace boost { namespace phoenix
           , typename Init, typename Cond, typename Step, typename Do>
         static void
         eval(
-        	Env const& env
+            Env const& env
           , Init& init, Cond& cond, Step& step, Do& do_)
         {
             for (init.eval(env); cond.eval(env); step.eval(env))

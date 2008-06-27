@@ -34,7 +34,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
     //  Requirements:
     //      T is default constructible
     //          (There's an alternate implementation that relaxes this
-    //              requirement -- João Abecasis)
+    //              requirement -- Joao Abecasis)
     //      T::T() MUST not throw!
     //          this is a requirement of boost::call_once.
     //

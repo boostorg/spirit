@@ -37,17 +37,17 @@ namespace boost { namespace phoenix
 //      Lazy functions are provided for all of the member functions of the
 //      following containers:
 //
-//      deque · list · map · multimap · vector.
+//      deque - list - map - multimap - vector.
 //
 //      Indeed, should *your* class have member functions with the same names
 //      and signatures as those listed below, then it will automatically be
 //      supported. To summarize, lazy functions are provided for member
 //      functions:
 //
-//          assign · at · back · begin · capacity · clear · empty · end ·
-//          erase · front · get_allocator · insert · key_comp · max_size ·
-//          pop_back · pop_front · push_back · push_front · rbegin · rend ·
-//          reserve · resize . size · splice · value_comp.
+//          assign - at - back - begin - capacity - clear - empty - end -
+//          erase - front - get_allocator - insert - key_comp - max_size -
+//          pop_back - pop_front - push_back - push_front - rbegin - rend -
+//          reserve - resize . size - splice - value_comp.
 //
 //      The lazy functions' names are the same as the corresponding member
 //      function. Sample usage:
@@ -322,7 +322,7 @@ namespace boost { namespace phoenix
             template <typename C>
             struct result
             {
-        	    typedef typename allocator_type_of<C>::type type;
+                typedef typename allocator_type_of<C>::type type;
             };
 
             template <typename C>
@@ -392,7 +392,7 @@ namespace boost { namespace phoenix
 
                 typedef typename
                     boost::mpl::eval_if<
-        		        boost::is_same<Arg2, fusion::void_>
+                        boost::is_same<Arg2, fusion::void_>
                       , choice_1
                       , choice_2
                     >::type
@@ -403,7 +403,7 @@ namespace boost { namespace phoenix
             typename result<C, Arg1>::type
             operator()(C& c, Arg1 const& arg1) const
             {
-        	    return c.insert(arg1);
+                return c.insert(arg1);
             }
 
             template <typename C, typename Arg1, typename Arg2>
