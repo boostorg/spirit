@@ -28,7 +28,7 @@ std::vector<int> const build_vector()
     int_vector::iterator it = data.begin();
     int_vector::iterator const end = data.end();
     for (; it != end; ++it)
-	    *it += size;
+      *it += size;
     return data;
 }
 

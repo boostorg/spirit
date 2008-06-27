@@ -152,11 +152,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return buffer ? buffer->buffer_size() : 0; 
         }
 
-    private:        
+    private:
         std::size_t width;
         abstract_container<OutputIterator> *buffer;
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  forward declaration only
     ///////////////////////////////////////////////////////////////////////////
@@ -321,16 +321,16 @@ public:
             output_iterator<ostream_iterator<T, Elem, Traits>, int> 
         base_type;
         typedef ostream_iterator<T, Elem, Traits> base_iterator_type;
-	    typedef std::basic_ostream<Elem, Traits> ostream_type;
-        
+        typedef std::basic_ostream<Elem, Traits> ostream_type;
+
     public:
         output_iterator(base_iterator_type& sink)
           : base_type(sink)
         {}
-        
+
         ostream_type& get_ostream() { return this->sink.get_ostream(); }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  Helper class for exception safe enabling of character counting in the
     //  output iterator

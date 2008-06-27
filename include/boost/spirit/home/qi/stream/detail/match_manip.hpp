@@ -1,7 +1,7 @@
 //  Copyright (c) 2001-2008 Hartmut Kaiser
 // 
 //  Distributed under the Boist Software License, Version 1.0. (See accompanying 
-//  file LICENSE_1_0.txt or copy at http://www.boist.org/LICENSE_1_0.txt)
+//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_FORMAT_MANIP_MAY_05_2007_1203PM)
 #define BOOST_SPIRIT_FORMAT_MANIP_MAY_05_2007_1203PM

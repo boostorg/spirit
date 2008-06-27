@@ -30,6 +30,9 @@ namespace boost { namespace spirit { namespace char_class
 
     ///////////////////////////////////////////////////////////////////////////
     // ISO 8859-1 character classification table
+    //
+    // the comments intentionally contain non-ascii characters 
+    // boostinspect:noascii
     ///////////////////////////////////////////////////////////////////////////
     const unsigned char iso8859_1_char_types[] = 
     {

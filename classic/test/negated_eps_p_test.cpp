@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2004 João Abecasis
+    Copyright (c) 2004 Joao Abecasis
     Copyright (c) 2004 Joel de Guzman
     http://spirit.sourceforge.net/
 

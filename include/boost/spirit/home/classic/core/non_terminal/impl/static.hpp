@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2006 João Abecasis
+    Copyright (c) 2006 Joao Abecasis
     http://spirit.sourceforge.net/
 
   Distributed under the Boost Software License, Version 1.0. (See accompanying

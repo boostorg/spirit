@@ -17,8 +17,8 @@ std::map<int, int> const build_map()
     int_vector::const_iterator it = data.begin();
     int_vector::const_iterator const end = data.end();
     for (; it != end; ++it) {
-	    int const value = *it;
-	    result[value] = 100 * value;
+      int const value = *it;
+      result[value] = 100 * value;
     }
     return result;
 }
@@ -47,7 +47,7 @@ std::vector<int> const build_vector()
     int_vector::iterator it = data.begin();
     int_vector::iterator const end = data.end();
     for (; it != end; ++it)
-	    *it += size;
+      *it += size;
     return data;
 }
 

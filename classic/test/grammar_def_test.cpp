@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2005 João Abecasis
+//  Copyright (c) 2005 Joao Abecasis
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
