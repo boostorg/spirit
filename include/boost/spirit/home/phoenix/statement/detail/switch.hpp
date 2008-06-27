@@ -74,21 +74,21 @@ namespace boost { namespace phoenix
                     is_default_case<Case>
                   , fusion::result_of::push_front<Seq const, actor<Case> >
                   , fusion::result_of::push_back<Seq const, actor<Case> >
-	        >::type>::type
+            >::type>::type
             type;
 
             static type
             eval(Seq const& seq, Case const& case_, mpl::false_)
             {
                 return fusion::as_vector(
-		    		fusion::push_back(seq, actor<Case>(case_)));
+                    fusion::push_back(seq, actor<Case>(case_)));
             }
 
             static type
             eval(Seq const& seq, Case const& case_, mpl::true_)
             {
                 return fusion::as_vector(
-		    		fusion::push_front(seq, actor<Case>(case_)));
+                    fusion::push_front(seq, actor<Case>(case_)));
             }
 
             static type

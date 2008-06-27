@@ -85,8 +85,8 @@ void test_assign2(Container c)
     assign(arg1, arg2, arg3)(c, first, last);
     if (test(c.size() != size)) {
         cerr << "Failed " << typeid(Container).name()
-	     << " test_assign2 1\n"
-	     << "size == " << c.size() << '\n';
+       << " test_assign2 1\n"
+       << "size == " << c.size() << '\n';
         return;
     }
 
@@ -313,7 +313,7 @@ void test_map_erase(Container c)
 {
     test_erase(c);
     if (boost::report_errors() != 0)
-	    return;
+      return;
 
     using phx::arg_names::arg1;
     using phx::arg_names::arg2;
@@ -322,7 +322,7 @@ void test_map_erase(Container c)
     typename Container::value_type const value = *c.begin();
     typename Container::key_type const key = value.first;
     typename Container::size_type const removed =
-	    erase(arg1, arg2)(c, key);
+      erase(arg1, arg2)(c, key);
     if (test(removed != 1)) {
         cerr << "Failed " << typeid(Container).name() << " test_map_erase 1\n";
         return;
@@ -433,7 +433,7 @@ inline void test_map_insert(std::map<int, int> c)
     // pair<iterator, bool> insert(const value_type& val);
     Map::value_type const value2(1400, 2200);
     std::pair<Map::iterator, bool> result =
-	    phx::insert(arg1, arg2)(c, value2);
+      phx::insert(arg1, arg2)(c, value2);
     if (test(!result.second)) {
         cerr << "Failed " << typeid(Map).name() << " test_map_insert 2\n";
         return;
@@ -468,7 +468,7 @@ inline void test_multimap_insert(std::multimap<int, int> c)
 
     if (test(it != c.begin() || *it != *(++it))) {
         cerr << "Failed " << typeid(Multimap).name()
-	     << " test_multimap_insert 1\n";
+       << " test_multimap_insert 1\n";
         return;
     }
 
@@ -478,7 +478,7 @@ inline void test_multimap_insert(std::multimap<int, int> c)
     it = phx::insert(arg1, arg2)(c, value2);
     if (test(it == c.end())) {
         cerr << "Failed " << typeid(Multimap).name()
-	     << " test_multimap_insert 2\n";
+       << " test_multimap_insert 2\n";
         return;
     }
 
@@ -490,7 +490,7 @@ inline void test_multimap_insert(std::multimap<int, int> c)
     phx::insert(arg1, const_c.begin(), const_c.end())(c);
     if (test(c.size() != size + const_c.size())) {
         cerr << "Failed " << typeid(Multimap).name()
-	     << " test_multimap_insert 3\n";
+       << " test_multimap_insert 3\n";
         return;
     }
 }

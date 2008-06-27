@@ -459,7 +459,7 @@ namespace boost { namespace type_deduction_detail
                                                                                 \
         BOOST_STATIC_CONSTANT(int, index = (size / sizeof(char)) - 1);          \
                                                                                 \
-        typedef typename mpl::at_c<                                  	        \
+        typedef typename mpl::at_c<                                             \
             typename base_type::types, index>::type id;                         \
         typedef typename id::type type;                                         \
     };
