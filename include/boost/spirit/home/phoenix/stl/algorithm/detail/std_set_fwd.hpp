@@ -26,14 +26,14 @@ namespace std
       , class Pr
       , class Alloc
     >
-	class set;
+    class set;
 
     template<
         class Kty
       , class Pr
       , class Alloc
     >
-	class multiset;
+    class multiset;
 }
 
 #endif
