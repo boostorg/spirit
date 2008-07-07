@@ -11,12 +11,12 @@
 [heading Spirit Classic]
 
 The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called 
-*Spirit Classic*. Even if the directory structure has changed (the Spirit Classic 
+__classic__. Even if the directory structure has changed (the Spirit Classic 
 headers are now moved to the '$BOOST_ROOT/boost/spirit/home/classic' directory), 
 we created forwarding headers allowing to compile existing applications without 
 any change. These forwarding headers are deprecated, though, which will result 
-in corresponding warnings generated for each of the headers. The forwarding 
-headers are expected to be removed in the future. 
+in corresponding warnings generated for each of the headers starting with Boost 
+V1.38. The forwarding headers are expected to be removed in the future. 
 
 The recommended way of using Spirit Classic now is to include header files from 
 the directory '$BOOST_ROOT/boost/spirit/include'. All files of Spirit Classic 

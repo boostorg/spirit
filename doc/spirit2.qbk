@@ -53,6 +53,7 @@
 [def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<>`]]
 
 
+[def __classic__                /Spirit.Classic/]
 [def __qi__                     /Spirit.Qi/]
 [def __karma__                  /Spirit.Karma/]
 [def __lex__                    /Spirit.Lex/]

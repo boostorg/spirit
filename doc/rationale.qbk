@@ -7,4 +7,23 @@
 ===============================================================================/]
 
 [section Rationale]
+
+[heading Qi]
+
+
+[heading Karma]
+
+Why (almost) all __karma__ components expose a attribute type not equal to 
+`unused` even if they are 'fully defined'?
+
+A component is 'fully defined' if it has a value to generate, even if no 
+attribute is passed from the generator context nor is one assigned using a 
+semantic action. For instance, all literal generators (char_('a'), int_(0), 
+etc.) are fully defined.
+
+
+
+[Heading Lex]
+
+
 [endsect]
