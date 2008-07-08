@@ -24,6 +24,7 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     struct none;
     struct eps_generator;
+    struct eol_generator;
     struct semantic_predicate;
     struct lazy_generator;
     struct functor_director;
@@ -45,6 +46,8 @@ namespace boost { namespace spirit { namespace karma
                 karma::domain, tag::none, none>,
             meta_grammar::empty_terminal_rule<
                 karma::domain, tag::eps, eps_generator>,
+            meta_grammar::empty_terminal_rule<
+                karma::domain, tag::eol, eol_generator>,
             meta_grammar::function1_rule<
                 karma::domain, tag::eps, semantic_predicate>,
             meta_grammar::function1_rule<
