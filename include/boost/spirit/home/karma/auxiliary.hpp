@@ -8,6 +8,7 @@
 
 #include <boost/spirit/home/karma/auxiliary/none.hpp>
 #include <boost/spirit/home/karma/auxiliary/eps.hpp>
+#include <boost/spirit/home/karma/auxiliary/eol.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/auxiliary/functor.hpp>
 #include <boost/spirit/home/karma/auxiliary/functor_director.hpp>
