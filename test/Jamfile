@@ -61,6 +61,7 @@ import testing ;
     [ run karma/center_alignment.cpp        : : : : ]
     [ run karma/char.cpp                    : : : : karma_char ]
     [ run karma/delimiter.cpp               : : : : ]
+    [ run karma/eol.cpp                     : : : : karma_eol ]
     [ run karma/eps.cpp                     : : : : karma_eps ]
     [ run karma/format_manip.cpp            : : : : ]
     [ run karma/functor.cpp                 : : : : karma_functor ]
