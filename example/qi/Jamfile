@@ -13,9 +13,10 @@ exe employee : employee.cpp ;
 exe roman : roman.cpp ;
 exe mini_xml1 : mini_xml1.cpp ;
 exe mini_xml2 : mini_xml2.cpp ;
-exe num_list : num_list.cpp ;
+exe num_list1 : num_list1.cpp ;
 exe num_list2 : num_list2.cpp ;
 exe num_list3 : num_list3.cpp ;
+exe num_list4 : num_list4.cpp ;
 
 exe calc1 : calc1.cpp ;
 exe calc2 : calc2.cpp ;

@@ -40,12 +40,12 @@ bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
 
         //  Begin grammar
         (
-            double_[push_back(ref(v), _1)] % ','
+            double_ % ','
         )
         ,
         //  End grammar
 
-        space);
+        v, space);
 
     if (first != last) // fail if we did not get a full match
         return false;
