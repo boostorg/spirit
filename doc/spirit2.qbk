@@ -97,11 +97,11 @@
 
 [/ Some images ]
 
-[def __note__                   [$../../../../doc/html/images/adm_note.png]]
-[def __tip__                    [$../../../../doc/html/images/adm_tip.png]]
-[def __important__              [$../../../../doc/html/images/adm_important.png]]
-[def __caution__                [$../../../../doc/html/images/adm_caution.png]]
-[def __danger__                 [$../../../../doc/html/images/adm_danger.png]]
+[def __note__                   [$images/note.png]]
+[def __tip__                    [$images/tip.png]]
+[def __important__              [$images/important.png]]
+[def __caution__                [$images/caution.png]]
+[def __danger__                 [$images/alert.png]]
 
 
 [/ some templates]

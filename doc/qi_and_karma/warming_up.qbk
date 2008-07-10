@@ -81,10 +81,10 @@ parser to do its work. There are a couple of ways to do this. For now, we will
 use the `phrase_parse` function. One overload of this function accepts four
 arguments:
 
-* An iterator pointing to the start of the input
-* An iterator pointing to one past the end of the input
-* The parser object
-* Another parser called the skip parser
+# An iterator pointing to the start of the input
+# An iterator pointing to one past the end of the input
+# The parser object
+# Another parser called the skip parser
 
 In our example, we wish to skip spaces and tabs. Another parser named `space`
 is included in Spirit's repertoire of predefined parsers. It is a very simple
@@ -132,6 +132,5 @@ for the letter `'a'` followed by `'b'`. You'll get used to it, sooner or later.
 Finally, take note that we test for a full match (i.e. the parser fully parsed
 the input) by checking if the first iterator, after parsing, is equal to the end
 iterator. You may strike out this part if partial matches are to be allowed.
-
 
 [endsect] [/ Warming up]

@@ -32,9 +32,14 @@ using namespace boost::spirit::arg_names;
 ///////////////////////////////////////////////////////////////////////////////
 //[tutorial_numlist1
 template <typename Iterator>
-bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
+bool parse_numbers(Iterator first, Iterator last)
 {
-    bool r = phrase_parse(first, last, double_ >> *(',' >> double_), space);
+    bool r = phrase_parse(
+        first,                          /*< start iterator >*/
+        last,                           /*< end iterator >*/
+        double_ >> *(',' >> double_),   /*< the parser >*/
+        space                           /*< the skip-parser >*/
+    );
     if (first != last) // fail if we did not get a full match
         return false;
     return r;
@@ -60,17 +65,11 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        std::vector<double> v;
-        if (parse_numbers(str.begin(), str.end(), v))
+        if (parse_numbers(str.begin(), str.end()))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
             std::cout << str << " Parses OK: " << std::endl;
-
-            for (std::vector<double>::size_type i = 0; i < v.size(); ++i)
-                std::cout << i << ": " << v[i] << std::endl;
-
-            std::cout << "\n-------------------------\n";
         }
         else
         {
