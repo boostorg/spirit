@@ -8,8 +8,7 @@
 
 [section Sum - adding numbers]
 
-Here's a parser that sums a comma-separated list of numbers. This time, we're
-using __phoenix__ to do the semantic actions.
+Here's a parser that sums a comma-separated list of numbers.
 
 [import ../../example/qi/sum.cpp]
 
@@ -46,9 +45,10 @@ Now the actual parser:
 The full cpp file for this example can be found here: [@../../example/qi/actions.cpp]
 
 This is almost like our original numbers list example. We're incrementally
-building on top of our examples. This time though, we'll be adding the
-smarts. There's an accumulator (`double& n) that adds the numbers parsed.
-On a successful parse, this number is the sum of all the parsed numbers.
+building on top of our examples. This time though, like in the complex number
+example, we'll be adding the smarts. There's an accumulator (`double& n) that
+adds the numbers parsed. On a successful parse, this number is the sum of all
+the parsed numbers.
 
 The first `double_` parser attaches this action:
 

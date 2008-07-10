@@ -29,9 +29,10 @@ using boost::phoenix::ref;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Parse roman hundreds (100..900) numerals using the symbol table.
-//  Notice that the data associated with each slot is passed
-//  to attached semantic actions.
+//  Notice that the data associated with each slot is the parser's attribute
+//  (which is passed to attached semantic actions).
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_roman_hundreds
 struct hundreds_ : symbols<char, unsigned>
 {
     hundreds_()
@@ -50,10 +51,12 @@ struct hundreds_ : symbols<char, unsigned>
     }
 
 } hundreds;
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Parse roman tens (10..90) numerals using the symbol table.
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_roman_tens
 struct tens_ : symbols<char, unsigned>
 {
     tens_()
@@ -72,10 +75,12 @@ struct tens_ : symbols<char, unsigned>
     }
 
 } tens;
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Parse roman ones (1..9) numerals using the symbol table.
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_roman_ones
 struct ones_ : symbols<char, unsigned>
 {
     ones_()
@@ -94,6 +99,7 @@ struct ones_ : symbols<char, unsigned>
     }
 
 } ones;
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  roman (numerals) grammar

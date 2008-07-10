@@ -56,11 +56,16 @@ is a Spirit supplied support class.
 
 All examples parse inputs of the form:
 
-    "{number}"
+    "{integer}"
+
+An integer inside the curly braces.
 
 The first example shows how to attach a plain function:
 
 [tutorial_attach_actions1]
+
+What's new? Well `int_` is the sibbling of `double_`. I'm sure you can guess
+what this parser does.
 
 The next example shows how to attach a simple function object:
 

@@ -31,6 +31,7 @@ using namespace boost::spirit::arg_names;
 ///////////////////////////////////////////////////////////////////////////////
 //  Our complex number parser/compiler
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_complex_number
 template <typename Iterator>
 bool parse_complex(Iterator first, Iterator last, std::complex<double>& c)
 {
@@ -53,6 +54,7 @@ bool parse_complex(Iterator first, Iterator last, std::complex<double>& c)
     c = std::complex<double>(rN, iN);
     return r;
 }
+//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program
