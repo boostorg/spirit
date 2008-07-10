@@ -31,4 +31,12 @@ Just put the spirit distribution in your include path, compile and run. Code
 size? -very tight -essentially comparable to hand written recursive descent
 code.
 
+Our tutorials will walk you through the simplest Spirit examples, incrementally
+building on top of the earlier examples as we expose more and more features and
+techniques. We will try to be as gentle as possible with the learning curve.
+We will present the tutorials in a cookbook style approach. This style of
+presentation is based on our BoostCon '07 and BoostCon '08 slides.
+
+Have fun!
+
 [endsect] [/ Quickstart]

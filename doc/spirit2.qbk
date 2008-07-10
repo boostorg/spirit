@@ -24,8 +24,8 @@
 [/ Some links ]
 
 [def __spirit__                 [@http://spirit.sourceforge.net Spirit]]
-[def __phoenix__                [@http://boost.org/libs/spirit/phoenix/index.html Phoenix]]
-[def __phoenix2__               [@http://spirit.sourceforge.net/dl_more/phoenix_v2/libs/spirit/phoenix/doc/html/index.html Phoenix2]]
+[def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
+[def __phoenix2__               [@../../phoenix/doc/html/index.html Phoenix2]]
 [def __fusion__                 [@http://spirit.sourceforge.net/dl_more/fusion_v2/libs/fusion/doc/html/index.html Fusion]]
 [def __mpl__                    [@http://www.boost.org/libs/mpl/index.html MPL]]
 [def __boost_tuples__           [@http://www.boost.org/libs/tuple/index.html Boost.Tuples]]
@@ -51,6 +51,8 @@
 
 [def __boost_variant__          [@http://www.boost.org/doc/html/variant.html `boost::variant<>`]]
 [def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<>`]]
+[def __boost_bind__             [@http://www.boost.org/libs/bind/index.html Boost.Bind]]
+[def __boost_lambda__           [@http://www.boost.org/libs/lambda/index.html Boost.Lambda]]
 
 
 [def __classic__                /Spirit.Classic/]
