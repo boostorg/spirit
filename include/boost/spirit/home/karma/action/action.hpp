@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace karma
                 result_of::left<Component>::type::director
             director;
             typedef typename is_same<director, sequence>::type is_sequence;
-            
+
             typedef typename
                 attribute<Component, Context, unused_type>::type
             param_type;
@@ -65,8 +65,7 @@ namespace boost { namespace spirit { namespace karma
 
             // call the function, passing the parameter, the context
             // and a bool flag that the client can set to false to
-            // fail parsing.
-            // call the function, passing the attribute, the context.
+            // fail generating.
             // The client can return false to fail parsing.
             bool pass = spirit::detail::action_dispatch(
                 spirit::right(component), p, ctx, is_sequence());

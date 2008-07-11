@@ -136,9 +136,9 @@ main()
     // action tests
     {
         BOOST_TEST(test("x", char_[_1 = val('x')]));
-        BOOST_TEST(test(L"x", char_[_1 = val(L'x')]));
+        BOOST_TEST(test(L"x", wchar[_1 = val(L'x')]));
         BOOST_TEST(!test("x", char_[_1 = val('y')]));
-        BOOST_TEST(!test(L"x", char_[_1 = val(L'y')]));
+        BOOST_TEST(!test(L"x", wchar[_1 = val(L'y')]));
     }
 
     {   // lazy chars
