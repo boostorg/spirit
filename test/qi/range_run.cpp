@@ -28,7 +28,9 @@ void acid_test()
     int const test_size = 1000;
 
     boost::mt19937 rng;
-    boost::uniform_int<> char_(int(const_min), int(const_max));
+    int min = const_min;
+    int max = const_max;
+    boost::uniform_int<> char_(min, max);
     boost::variate_generator<boost::mt19937&, boost::uniform_int<> >
        gen(rng, char_);
     boost::uniform_int<> _1of10(1, 10);
