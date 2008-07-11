@@ -9,6 +9,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/nonterminal/nonterminal.hpp>
+#include <boost/spirit/home/qi/nonterminal/grammar_fwd.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/rule.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/error_handler.hpp>
 #include <boost/spirit/home/qi/domain.hpp>
@@ -23,9 +24,6 @@
 
 namespace boost { namespace spirit { namespace qi
 {
-    // forward declarations
-    template <typename Definition>
-    struct grammar;
     namespace detail { struct rule_decorator; }
 
     template <
@@ -86,7 +84,7 @@ namespace boost { namespace spirit { namespace qi
 
             // temp workaround for mpl problem
             BOOST_STATIC_ASSERT(is_component::value);
-            
+
             define(xpr, mpl::false_());
             return *this;
         }
@@ -143,11 +141,8 @@ namespace boost { namespace spirit { namespace qi
 
     private:
 
-        template <typename Definition>
-        friend struct grammar;
-
         template <typename Iterator_, typename T0_, typename T1_, typename T2_>
-        friend struct grammar_;
+        friend struct grammar;
 
         friend struct detail::rule_decorator;
 
@@ -176,8 +171,8 @@ namespace boost { namespace spirit { namespace qi
         {
             // If the following line produces a compilation error stating the
             // 4th parameter is not convertible to the expected type, then you
-            // are probably trying to use this rule instance with a skipper 
-            // which is not compatible with the skipper type used while 
+            // are probably trying to use this rule instance with a skipper
+            // which is not compatible with the skipper type used while
             // defining the type of this rule instance.
             return ptr->parse(first, last, context, skipper);
         }
