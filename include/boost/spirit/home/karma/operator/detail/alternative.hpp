@@ -41,16 +41,11 @@ namespace detail
         typedef typename mpl::begin<types>::type begin;
 
         typedef typename
-            mpl::find_if<
-                types,
-                is_convertible<mpl::_1, Expected>
-            >::type
+            mpl::find_if<types, is_same<mpl::_1, Expected> >::type
         iter;
 
         typedef typename mpl::not_<is_same<iter, end> >::type type;
         enum { value = type::value };
-        
-        
     };
 
     template <typename Expected>
@@ -117,18 +112,18 @@ namespace detail
     {
         // If this alternative is a sequence, we wrap the attribute into a 
         // fusion sequence.
-        template <typename Parameter>
-        static fusion::vector<Parameter const&> 
-        wrap_attribute(Parameter const& param, mpl::true_)
+        template <typename Parameter_>
+        static fusion::vector<Parameter_ const&> 
+        wrap_attribute(Parameter_ const& param, mpl::true_)
         {
             return fusion::vector<Parameter const&>(param);
         }
 
         // If this alternative is not a sequence the parameter is passed 
         // through unchanged.
-        template <typename Parameter>
-        static Parameter const& 
-        wrap_attribute(Parameter const& param, mpl::false_)
+        template <typename Parameter_>
+        static Parameter_ const& 
+        wrap_attribute(Parameter_ const& param, mpl::false_)
         {
             return param;
         }
