@@ -14,22 +14,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/config/warning_disable.hpp>
+//[tutorial_adder_includes
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-
 #include <iostream>
 #include <string>
+//]
 
+//[tutorial_adder_using
 using namespace boost::phoenix;
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::ascii;
 using namespace boost::spirit::arg_names;
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our adder
 ///////////////////////////////////////////////////////////////////////////////
+
+//[tutorial_adder
 template <typename Iterator>
 bool adder(Iterator first, Iterator last, double& n)
 {
@@ -48,6 +53,7 @@ bool adder(Iterator first, Iterator last, double& n)
         return false;
     return r;
 }
+//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program

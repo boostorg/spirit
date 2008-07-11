@@ -1,0 +1,60 @@
+[/==============================================================================
+    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2008 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Roman Numerals]
+
+This example demonstrates:
+
+* symbol table
+* rule
+* grammar
+
+[heading Symbol Table]
+
+The symbol table holds a dictionary of symbols where each symbol is a sequence
+of characters (a `char`, `wchar\_t`, `int`, enumeration etc.) . The template
+class, parameterized by the character type, can work efficiently with 8, 16, 32
+and even 64 bit characters. Mutable data of type T is associated with each
+symbol.
+
+Traditionally, symbol table management is maintained seperately outside the BNF
+grammar through semantic actions. Contrary to standard practice, the Spirit
+symbol table class symbols is-a parser. An instance of which may be used
+anywhere in the EBNF grammar specification. It is an example of a dynamic
+parser. A dynamic parser is characterized by its ability to modify its behavior
+at run time. Initially, an empty symbols object matches nothing. At any time,
+symbols may be added or removed, thus, dynamically altering its behavior.
+
+Each entry in a symbol table has an associated mutable data slot. In this
+regard, one can view the symbol table as an associative container (or map) of
+key-value pairs where the keys are strings.
+
+The symbols class expects two template parameters. The first parameter specifies
+the character type of the symbols. The second specifies the data type associated
+with each symbol: its attribute.
+
+Here's a parser for roman hundreds (100..900) using the symbol table. Keep in
+mind that the data associated with each slot is the parser's attribute (which is
+passed to attached semantic actions).
+
+[import ../../example/qi/roman.cpp]
+
+[tutorial_roman_hundreds]
+
+Here's a parser for roman tens (10..90):
+
+[tutorial_roman_tens]
+
+and, finally, for ones (1..9):
+
+[tutorial_roman_ones]
+
+Now we can use `hundreds`, `tens` and `ones` anywhere in our parser expressions.
+They are all parsers.
+
+[endsect]

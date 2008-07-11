@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Inside Phoenix</title>
-<link rel="stylesheet" href="../boostbook.css" type="text/css">
+<link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.66.1">
 <link rel="start" href="../index.html" title="Chapter 1. Phoenix 2.0">
 <link rel="up" href="../index.html" title="Chapter 1. Phoenix 2.0">
@@ -10,25 +10,26 @@
 <link rel="next" href="wrap_up.html" title="Wrap Up">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table cellpadding="2" width="100%">
+<table cellpadding="2" width="100%"><tr>
 <td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
-<td align="center"><a href="../../../../../../index.htm">Home</a></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
 <td align="center"><a href="../../../../../libraries.htm">Libraries</a></td>
-<td align="center"><a href="../../../../../../people/people.htm">People</a></td>
-<td align="center"><a href="../../../../../../more/faq.htm">FAQ</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
 <td align="center"><a href="../../../../../../more/index.htm">More</a></td>
-</table>
+</tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="algorithm.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="wrap_up.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="algorithm.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="wrap_up.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="phoenix.inside_phoenix"></a>Inside Phoenix</h2></div></div></div>
+<a name="phoenix.inside_phoenix"></a><a href="inside_phoenix.html" title="Inside Phoenix">Inside Phoenix</a></h2></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail">Actors In Detail</a></span></dt>
 <dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.actor_example">Actor Example</a></span></dt>
-<dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composites_in_detail">Composites In Detail</a></span></dt>
+<dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composites_in_detail">Composites
+      In Detail</a></span></dt>
 <dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composing">Composing</a></span></dt>
 <dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.extending">Extending</a></span></dt>
 </dl></div>
@@ -40,24 +41,31 @@
     </p>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="phoenix.inside_phoenix.actors_in_detail"></a>Actors In Detail</h3></div></div></div>
+<a name="phoenix.inside_phoenix.actors_in_detail"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail" title="Actors In Detail">Actors In Detail</a></h3></div></div></div>
 <a name="phoenix.inside_phoenix.actors_in_detail.actor_concept"></a><h3>
-<a name="id479686"></a>
-        Actor Concept
+<a name="id495225"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.actor_concept">Actor
+        Concept</a>
       </h3>
 <p>
         The main concept is the <tt class="computeroutput"><span class="identifier">Actor</span></tt>.
         Actors are function objects (that can accept 0 to N arguments (where N is
         a predefined maximum).
       </p>
-<div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
-<tbody><tr><td class="blurb"> <span class="inlinemediaobject"><img src="../images/note.png" alt="note"></span> You can set <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>,
-              the predefined maximum arity an actor can take. By default, <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt> is set to 10.</td></tr></tbody>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+          You can set <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>,
+          the predefined maximum arity an actor can take. By default, <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt> is set to 10.
+        </p></td></tr>
 </table></div>
 <a name="phoenix.inside_phoenix.actors_in_detail.actor_template_class"></a><h3>
-<a name="id479780"></a>
-        actor template class
+<a name="id495302"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.actor_template_class">actor
+        template class</a>
       </h3>
 <p>
         The <tt class="computeroutput"><span class="identifier">actor</span></tt> template class
@@ -77,7 +85,7 @@
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">&gt;</span>
     <span class="identifier">actor</span><span class="special">(</span><span class="identifier">T0</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">_0</span><span class="special">,</span> <span class="identifier">T1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">_1</span><span class="special">);</span>
-    
+
     <span class="comment">// more constructors
 </span>
     <span class="keyword">typename</span> <span class="identifier">apply_actor</span><span class="special">&lt;</span><span class="identifier">eval_type</span><span class="special">,</span> <span class="identifier">basic_environment</span><span class="special">&lt;&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span>
@@ -94,50 +102,93 @@
     <span class="comment">// function call operators
 </span><span class="special">};</span>
 </pre>
-<div class="informaltable">
-<h4>
-<a name="id480555"></a>
-          <span class="table-title">Actor Concept Requirements</span>
-        </h4>
-<table class="table">
+<div class="table">
+<a name="id496086"></a><p class="title"><b>Table 1.10. Actor Concept Requirements</b></p>
+<table class="table" summary="Actor Concept Requirements">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
-<th>Expression</th>
-<th>Result/Semantics</th>
+<th>
+            <p>
+              Expression
+            </p>
+            </th>
+<th>
+            <p>
+              Result/Semantics
+            </p>
+            </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">eval_type</span></tt></td>
-<td>The actor's
-              Eval type</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">eval_type</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              The actor's Eval type
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">()</span></tt></td>
-<td>Default
-              Constructor</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">()</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              Default Constructor
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">(</span><span class="identifier">base</span><span class="special">)</span></tt></td>
-<td>Constructor
-              from Eval</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">(</span><span class="identifier">base</span><span class="special">)</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              Constructor from Eval
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">(</span><span class="identifier">arg0</span><span class="special">,</span> <span class="identifier">arg1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">argN</span><span class="special">)</span></tt></td>
-<td>Pass through constructors</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">(</span><span class="identifier">arg0</span><span class="special">,</span> <span class="identifier">arg1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">argN</span><span class="special">)</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              Pass through constructors
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">x</span><span class="special">(</span><span class="identifier">arg0</span><span class="special">,</span> <span class="identifier">arg1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">argN</span><span class="special">)</span></tt></td>
-<td>Function call operators</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">x</span><span class="special">(</span><span class="identifier">arg0</span><span class="special">,</span> <span class="identifier">arg1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">argN</span><span class="special">)</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              Function call operators
+            </p>
+            </td>
 </tr>
 </tbody>
 </table>
 </div>
 <a name="phoenix.inside_phoenix.actors_in_detail.eval_concept"></a><h3>
-<a name="id480807"></a>
-        Eval Concept
+<a name="id496398"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept">Eval
+        Concept</a>
       </h3>
 <p>
         The <tt class="computeroutput"><span class="identifier">actor</span></tt> template class
@@ -148,37 +199,56 @@
         make it easy to write models of the concept. We shall see an example in the
         <a href="inside_phoenix.html#phoenix.inside_phoenix.actor_example" title="Actor Example">next section</a>.
       </p>
-<div class="informaltable">
-<h4>
-<a name="id480890"></a>
-          <span class="table-title">Eval Concept Requirements</span>
-        </h4>
-<table class="table">
+<div class="table">
+<a name="id496494"></a><p class="title"><b>Table 1.11. Eval Concept Requirements</b></p>
+<table class="table" summary="Eval Concept Requirements">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
-<th>Expression</th>
-<th>Result/Semantics</th>
+<th>
+            <p>
+              Expression
+            </p>
+            </th>
+<th>
+            <p>
+              Result/Semantics
+            </p>
+            </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><tt class="computeroutput"><span class="keyword">return</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">eval</span><span class="special">(</span><span class="identifier">env</span><span class="special">)</span></tt></td>
-<td>Evaluates the function
-              (see Environment below)</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="keyword">return</span> <span class="identifier">x</span><span class="special">.</span><span class="identifier">eval</span><span class="special">(</span><span class="identifier">env</span><span class="special">)</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              Evaluates the function (see Environment below)
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Env</span><span class="special">&gt;::</span><span class="identifier">type</span></tt></td>
-<td>The return type
-              of eval (see Environment below)</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Env</span><span class="special">&gt;::</span><span class="identifier">type</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              The return type of eval (see Environment below)
+            </p>
+            </td>
 </tr>
 </tbody>
 </table>
 </div>
 <a name="phoenix.inside_phoenix.actors_in_detail.constructors"></a><h3>
-<a name="id481035"></a>
-        Constructors
+<a name="id496665"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.constructors">Constructors</a>
       </h3>
 <p>
         In addition to a default constructor and an constructor from a Eval object,
@@ -186,44 +256,60 @@
         <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>). These constructors
         simply forward the arguments to the <tt class="computeroutput"><span class="identifier">base</span></tt>.
       </p>
-<div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
-<tbody><tr><td class="blurb"> <span class="inlinemediaobject"><img src="../images/note.png" alt="note"></span> <span class="bold"><b>Parametric Base Class
-              Pattern</b></span><br> <br> Notice that actor derives from its
-              template argument Eval. This is the inverse of the curiously recurring
-              template pattern (CRTP). With the CRTP, a class, T, has a Derived template
-              parameter that is assumed to be its subclass. The "parametric
-              base class pattern" (PBCP), on the other hand, inverses the inheritance
-              and makes a class, T, the derived class. Both CRTP and PBCP techniques
-              have its pros and cons, which is outside the scope of this document.
-              CRTP should really be renamed "parametric subclass pattern (PSCP),
-              but again, that's another story. </td></tr></tbody>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top">
+<p>
+          <span class="bold"><b>Parametric Base Class Pattern</b></span>
+        </p>
+<p>
+          Notice that actor derives from its template argument Eval. This is the
+          inverse of the curiously recurring template pattern (CRTP). With the CRTP,
+          a class, T, has a Derived template parameter that is assumed to be its
+          subclass. The "parametric base class pattern" (PBCP), on the
+          other hand, inverses the inheritance and makes a class, T, the derived
+          class. Both CRTP and PBCP techniques have its pros and cons, which is outside
+          the scope of this document. CRTP should really be renamed "parametric
+          subclass pattern (PSCP), but again, that's another story.
+        </p>
+</td></tr>
 </table></div>
 <a name="phoenix.inside_phoenix.actors_in_detail.function_call_operators"></a><h3>
-<a name="id481142"></a>
-        Function Call Operators
+<a name="id496762"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.function_call_operators">Function
+        Call Operators</a>
       </h3>
 <p>
         There are N function call operators for 0 to N arguments (N == <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>). The actor class accepts
         the arguments and forwards the arguments to the actor's base <tt class="computeroutput"><span class="identifier">Eval</span></tt> for evaluation.
       </p>
-<div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
-<tbody><tr><td class="blurb"> <span class="inlinemediaobject"><img src="../images/note.png" alt="note"></span> <span class="bold"><b>Forwarding Function
-              Problem</b></span><br> <br> The function call operators cannot
-              accept non-const temporaries and literal constants. There is a known
-              issue with current C++ called the "<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm" target="_top">Forwarding
-              Function Problem</a>". The problem is that given an arbitrary
-              function <tt class="computeroutput"><span class="identifier">F</span></tt>, using current
-              C++ language rules, one cannot create a forwarding function <tt class="computeroutput"><span class="identifier">FF</span></tt> that transparently assumes the
-              arguments of <tt class="computeroutput"><span class="identifier">F</span></tt>. Disallowing
-              non-const rvalues arguments partially solves the problem but prohibits
-              code such as <tt class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">);</span></tt>.
-              </td></tr></tbody>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top">
+<p>
+          <span class="bold"><b>Forwarding Function Problem</b></span>
+        </p>
+<p>
+          The function call operators cannot accept non-const temporaries and literal
+          constants. There is a known issue with current C++ called the "<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1385.htm" target="_top">Forwarding
+          Function Problem</a>". The problem is that given an arbitrary
+          function <tt class="computeroutput"><span class="identifier">F</span></tt>, using current
+          C++ language rules, one cannot create a forwarding function <tt class="computeroutput"><span class="identifier">FF</span></tt> that transparently assumes the arguments
+          of <tt class="computeroutput"><span class="identifier">F</span></tt>. Disallowing non-const
+          rvalues arguments partially solves the problem but prohibits code such
+          as <tt class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">);</span></tt>.
+        </p>
+</td></tr>
 </table></div>
 <a name="phoenix.inside_phoenix.actors_in_detail.environment"></a><h3>
-<a name="id481329"></a>
-        Environment
+<a name="id496934"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.environment">Environment</a>
       </h3>
 <p>
         On an actor function call, before calling the actor's <tt class="computeroutput"><span class="identifier">Eval</span><span class="special">::</span><span class="identifier">eval</span></tt>
@@ -232,35 +318,61 @@
         <tt class="computeroutput"><span class="identifier">basic_environment</span></tt> template
         class is a model of.
       </p>
-<div class="informaltable">
-<h4>
-<a name="id481397"></a>
-          <span class="table-title">Environment Concept Requirements</span>
-        </h4>
-<table class="table">
+<div class="table">
+<a name="id497013"></a><p class="title"><b>Table 1.12. Environment Concept Requirements</b></p>
+<table class="table" summary="Environment Concept Requirements">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
-<th>Expression</th>
-<th>Result/Semantics</th>
+<th>
+            <p>
+              Expression
+            </p>
+            </th>
+<th>
+            <p>
+              Result/Semantics
+            </p>
+            </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">x</span><span class="special">.</span><span class="identifier">args</span><span class="special">()</span></tt></td>
-<td>The
-              arguments in a tie (a tuple of references)</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">x</span><span class="special">.</span><span class="identifier">args</span><span class="special">()</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              The arguments in a tie (a tuple of references)
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">args_type</span></tt></td>
-<td>The arguments'
-              types in an MPL sequence</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">args_type</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              The arguments' types in an MPL sequence
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">tie_type</span></tt></td>
-<td>The tie (tuple
-              of references) type</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">tie_type</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              The tie (tuple of references) type
+            </p>
+            </td>
 </tr>
 </tbody>
 </table>
@@ -276,8 +388,8 @@
         such as local variables, etc.
       </p>
 <a name="phoenix.inside_phoenix.actors_in_detail.apply_actor"></a><h3>
-<a name="id481574"></a>
-        apply_actor
+<a name="id497228"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.apply_actor">apply_actor</a>
       </h3>
 <p>
         <tt class="computeroutput"><span class="identifier">apply_actor</span></tt> is a standard
@@ -320,8 +432,8 @@
 <span class="special">}</span>
 </pre>
 <a name="phoenix.inside_phoenix.actors_in_detail.actor_result"></a><h3>
-<a name="id482224"></a>
-        actor_result
+<a name="id497910"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.actor_result">actor_result</a>
       </h3>
 <p>
         For reasons of symmetry to the family of <tt class="computeroutput"><span class="identifier">actor</span><span class="special">::</span><span class="keyword">operator</span><span class="special">()</span></tt> there is a special metafunction usable
@@ -340,7 +452,7 @@
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="phoenix.inside_phoenix.actor_example"></a>Actor Example</h3></div></div></div>
+<a name="phoenix.inside_phoenix.actor_example"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.actor_example" title="Actor Example">Actor Example</a></h3></div></div></div>
 <p>
         Let us see a very simple prototypical example of an actor. This is not a
         toy example. This is actually part of the library. Remember the <a href="primitives.html#phoenix.primitives.references" title="References"><tt class="computeroutput"><span class="identifier">reference</span></tt></a>?.
@@ -401,7 +513,9 @@
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="phoenix.inside_phoenix.composites_in_detail"></a>Composites In Detail</h3></div></div></div>
+<a name="phoenix.inside_phoenix.composites_in_detail"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.composites_in_detail" title="Composites
+      In Detail">Composites
+      In Detail</a></h3></div></div></div>
 <p>
         We stated before that composites are actors that are composed of zero or
         more actors (see <a href="composite.html" title="Composite">Composite</a>). This
@@ -415,25 +529,36 @@
         <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept"><tt class="computeroutput"><span class="identifier">Eval</span></tt></a> instances and an eval policy.
         The individual <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept"><tt class="computeroutput"><span class="identifier">Eval</span></tt></a> instances are stored in a tuple.
       </p>
-<div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
-<tbody><tr><td class="blurb"> <span class="inlinemediaobject"><img src="../images/note.png" alt="note"></span> In a sense, the original definition of "composite",
-              more or less, will do just fine because <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept"><tt class="computeroutput"><span class="identifier">Eval</span></tt></a> instances never exist
-              alone and are always wrapped in an <tt class="computeroutput"><span class="identifier">actor</span></tt>
-              template class which inherits from it anyway. The resulting actor IS-AN
-              <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept"><tt class="computeroutput"><span class="identifier">Eval</span></tt></a>.</td></tr></tbody>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+          In a sense, the original definition of "composite", more or less,
+          will do just fine because <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept"><tt class="computeroutput"><span class="identifier">Eval</span></tt></a> instances never exist alone
+          and are always wrapped in an <tt class="computeroutput"><span class="identifier">actor</span></tt>
+          template class which inherits from it anyway. The resulting actor IS-AN
+          <a href="inside_phoenix.html#phoenix.inside_phoenix.actors_in_detail.eval_concept"><tt class="computeroutput"><span class="identifier">Eval</span></tt></a>.
+        </p></td></tr>
 </table></div>
-<div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
-<tbody><tr><td class="blurb"> <span class="inlinemediaobject"><img src="../images/note.png" alt="note"></span> You can set <tt class="computeroutput"><span class="identifier">PHOENIX_COMPOSITE_LIMIT</span></tt>,
-              the predefined maximum <tt class="computeroutput"><span class="identifier">Eval</span></tt>s
-              (actors) a composite can take. By default, <tt class="computeroutput"><span class="identifier">PHOENIX_COMPOSITE_LIMIT</span></tt>
-              is set to <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>
-              (See <a href="actors.html" title="Actors">Actors</a>).</td></tr></tbody>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/html/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+          You can set <tt class="computeroutput"><span class="identifier">PHOENIX_COMPOSITE_LIMIT</span></tt>,
+          the predefined maximum <tt class="computeroutput"><span class="identifier">Eval</span></tt>s
+          (actors) a composite can take. By default, <tt class="computeroutput"><span class="identifier">PHOENIX_COMPOSITE_LIMIT</span></tt>
+          is set to <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>
+          (See <a href="actors.html" title="Actors">Actors</a>).
+        </p></td></tr>
 </table></div>
 <a name="phoenix.inside_phoenix.composites_in_detail.composite_template_class"></a><h2>
-<a name="id483520"></a>
-        composite template class
+<a name="id499206"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.composites_in_detail.composite_template_class">composite
+        template class</a>
       </h2>
 <pre class="programlisting">
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">EvalPolicy</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">EvalTuple</span><span class="special">&gt;</span>
@@ -456,7 +581,7 @@
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">U0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">U1</span><span class="special">&gt;</span>
     <span class="identifier">composite</span><span class="special">(</span><span class="identifier">U0</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">_0</span><span class="special">,</span> <span class="identifier">U1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">_1</span><span class="special">);</span>
-    
+
     <span class="comment">// more constructors
 </span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Env</span><span class="special">&gt;</span>
@@ -465,8 +590,8 @@
 <span class="special">};</span>
 </pre>
 <a name="phoenix.inside_phoenix.composites_in_detail.evaltuple"></a><h2>
-<a name="id484112"></a>
-        EvalTuple
+<a name="id499812"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.composites_in_detail.evaltuple">EvalTuple</a>
       </h2>
 <p>
         <tt class="computeroutput"><span class="identifier">EvalTuple</span></tt>, holds all the
@@ -477,8 +602,8 @@
         base class.
       </p>
 <a name="phoenix.inside_phoenix.composites_in_detail.evalpolicy"></a><h2>
-<a name="id484203"></a>
-        EvalPolicy
+<a name="id499923"></a>
+        <a href="inside_phoenix.html#phoenix.inside_phoenix.composites_in_detail.evalpolicy">EvalPolicy</a>
       </h2>
 <p>
         The composite's <tt class="computeroutput"><span class="identifier">eval</span></tt> member
@@ -491,29 +616,54 @@
 <p>
         <span class="inlinemediaobject"><img src="../images/funnel_out.png" alt="funnel_out"></span>
       </p>
-<div class="informaltable">
-<h4>
-<a name="id484285"></a>
-          <span class="table-title">EvalPolicy Requirements</span>
-        </h4>
-<table class="table">
+<div class="table">
+<a name="id500013"></a><p class="title"><b>Table 1.13. EvalPolicy Requirements</b></p>
+<table class="table" summary="EvalPolicy Requirements">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
-<th>Expression</th>
-<th>Result/Semantics</th>
+<th>
+            <p>
+              Expression
+            </p>
+            </th>
+<th>
+            <p>
+              Result/Semantics
+            </p>
+            </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">x</span><span class="special">.</span><span class="identifier">eval</span><span class="special">&lt;</span><span class="identifier">RT</span><span class="special">&gt;(</span><span class="identifier">env</span><span class="special">,</span> <span class="identifier">eval0</span><span class="special">,</span> <span class="identifier">eval1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">evalN</span><span class="special">)</span></tt></td>
-<td>Evaluate the composite</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">x</span><span class="special">.</span><span class="identifier">eval</span><span class="special">&lt;</span><span class="identifier">RT</span><span class="special">&gt;(</span><span class="identifier">env</span><span class="special">,</span> <span class="identifier">eval0</span><span class="special">,</span>
+              <span class="identifier">eval1</span><span class="special">,</span>
+              <span class="special">...,</span> <span class="identifier">evalN</span><span class="special">)</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              Evaluate the composite
+            </p>
+            </td>
 </tr>
 <tr>
-<td><tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Env</span><span class="special">,</span> <span class="identifier">Eval0</span><span class="special">,</span> <span class="identifier">Eval1</span><span class="special">,</span> <span class="identifier">Eval2</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">EvalN</span><span class="special">&gt;::</span><span class="identifier">type</span></tt></td>
-<td>The
-              return type of eval</td>
+<td>
+            <p>
+              <tt class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Env</span><span class="special">,</span> <span class="identifier">Eval0</span><span class="special">,</span>
+              <span class="identifier">Eval1</span><span class="special">,</span>
+              <span class="identifier">Eval2</span><span class="special">,</span>
+              <span class="special">...,</span> <span class="identifier">EvalN</span><span class="special">&gt;::</span><span class="identifier">type</span></tt>
+            </p>
+            </td>
+<td>
+            <p>
+              The return type of eval
+            </p>
+            </td>
 </tr>
 </tbody>
 </table>
@@ -532,21 +682,22 @@
 <span class="identifier">eval</span><span class="special">(</span><span class="identifier">Env</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">env</span><span class="special">)</span> <span class="keyword">const</span>
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">result</span><span class="special">&lt;</span><span class="identifier">Env</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">return_type</span><span class="special">;</span>
-    <span class="keyword">return</span> <span class="identifier">EvalPolicy</span><span class="special">::</span><span class="keyword">template</span> 
+    <span class="keyword">return</span> <span class="identifier">EvalPolicy</span><span class="special">::</span><span class="keyword">template</span>
         <span class="identifier">eval</span><span class="special">&lt;</span><span class="identifier">return_type</span><span class="special">&gt;(</span>
             <span class="identifier">env</span>
           <span class="special">,</span> <span class="identifier">get</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(*</span><span class="keyword">this</span><span class="special">)</span>   <span class="comment">// gets the 0th element from EvalTuple
-</span>          <span class="special">,</span> <span class="identifier">get</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(*</span><span class="keyword">this</span><span class="special">));</span> <span class="comment">// gets the 1st element from EvalTuple    
+</span>          <span class="special">,</span> <span class="identifier">get</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(*</span><span class="keyword">this</span><span class="special">));</span> <span class="comment">// gets the 1st element from EvalTuple
 </span><span class="special">}</span>
 </pre>
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="phoenix.inside_phoenix.composing"></a>Composing</h3></div></div></div>
+<a name="phoenix.inside_phoenix.composing"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.composing" title="Composing">Composing</a></h3></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.compose">compose</a></span></dt>
 <dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.as_composite">as_composite</a></span></dt>
-<dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.composite_example">Composite Example</a></span></dt>
+<dt><span class="section"><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.composite_example">Composite
+        Example</a></span></dt>
 </dl></div>
 <p>
         Composites are never instantiated directly. Front end expression templates
@@ -560,12 +711,13 @@
         easier. We have a set of overloaded <tt class="computeroutput"><span class="identifier">compose</span></tt>
         functions and an <tt class="computeroutput"><span class="identifier">as_composite</span></tt>
         metafunction. Together, these helpers make composing a breeze. We'll provide
-        an <a href="inside_phoenix.html#phoenix.inside_phoenix.composing.composite_example" title="Composite Example">example
+        an <a href="inside_phoenix.html#phoenix.inside_phoenix.composing.composite_example" title="Composite
+        Example">example
         of a composite</a> later to see why.
       </p>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="phoenix.inside_phoenix.composing.compose"></a>compose</h4></div></div></div>
+<a name="phoenix.inside_phoenix.composing.compose"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.compose" title="compose">compose</a></h4></div></div></div>
 <pre class="programlisting">
 <span class="identifier">compose</span><span class="special">&lt;</span><span class="identifier">EvalPolicy</span><span class="special">&gt;(</span><span class="identifier">arg0</span><span class="special">,</span> <span class="identifier">arg1</span><span class="special">,</span> <span class="identifier">arg2</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">argN</span><span class="special">);</span>
 </pre>
@@ -581,12 +733,12 @@
 </pre>
 <p>
           converts the argument <tt class="computeroutput"><span class="number">3</span></tt> to
-          an <tt class="computeroutput"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">value</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;(</span><span class="number">3</span><span class="special">)</span></tt>.
+          an <tt class="computeroutput"><span class="identifier">actor</span><span class="special">&lt;</span><span class="identifier">value</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="special">&gt;(</span><span class="number">3</span><span class="special">)</span></tt>.
         </p>
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="phoenix.inside_phoenix.composing.as_composite"></a>as_composite</h4></div></div></div>
+<a name="phoenix.inside_phoenix.composing.as_composite"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.as_composite" title="as_composite">as_composite</a></h4></div></div></div>
 <pre class="programlisting">
 <span class="identifier">as_composite</span><span class="special">&lt;</span><span class="identifier">EvalPolicy</span><span class="special">,</span> <span class="identifier">Arg0</span><span class="special">,</span> <span class="identifier">Arg1</span><span class="special">,</span> <span class="identifier">Arg2</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">ArgN</span><span class="special">&gt;::</span><span class="identifier">type</span>
 </pre>
@@ -607,10 +759,13 @@
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="phoenix.inside_phoenix.composing.composite_example"></a>Composite Example</h4></div></div></div>
+<a name="phoenix.inside_phoenix.composing.composite_example"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.composing.composite_example" title="Composite
+        Example">Composite
+        Example</a></h4></div></div></div>
 <p>
           Now, let's examine an example. Again, this is not a toy example. This is
-          actually part of the library. Remember the <a href="composite.html#phoenix.composite.statement.while__statement" title="while_ Statement"><tt class="computeroutput"><span class="identifier">while_</span></tt></a> lazy statement? Putting
+          actually part of the library. Remember the <a href="composite.html#phoenix.composite.statement.while__statement" title="while_
+        Statement"><tt class="computeroutput"><span class="identifier">while_</span></tt></a> lazy statement? Putting
           together everything we've learned so far, we will present it here in its
           entirety (verbatim):
         </p>
@@ -719,7 +874,7 @@
 </div>
 <div class="section" lang="en">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="phoenix.inside_phoenix.extending"></a>Extending</h3></div></div></div>
+<a name="phoenix.inside_phoenix.extending"></a><a href="inside_phoenix.html#phoenix.inside_phoenix.extending" title="Extending">Extending</a></h3></div></div></div>
 <p>
         We've shown how it is very easy to extend phoenix by writing new primitives
         and composites. The modular design of Phoenix makes it extremely extensible.
@@ -739,12 +894,16 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><small>Copyright © 2002-2005 Joel
-      de Guzman, Dan Marsden</small></td>
+<td align="right"><div class="copyright-footer">Copyright © 2002-2005 Joel
+      de Guzman, Dan Marsden<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="algorithm.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="wrap_up.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="algorithm.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="wrap_up.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

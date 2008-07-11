@@ -8,7 +8,17 @@
 
 [section Qi and Karma]
 
-[include    qi_and_karma/tutorials.qbk]
+[section    Tutorials]
+[include        qi_and_karma/tutorial_intro.qbk]
+[include        qi_and_karma/warming_up.qbk]
+[include        qi_and_karma/actions.qbk]
+[include        qi_and_karma/complex.qbk]
+[include        qi_and_karma/sum_tutorial.qbk]
+[include        qi_and_karma/num_list2.qbk]
+[include        qi_and_karma/num_list3.qbk]
+[include        qi_and_karma/num_list4.qbk]
+[include        qi_and_karma/roman.qbk]
+[endsect]
 
 [section    Abstracts]
 [include        qi_and_karma/peg.qbk]

@@ -7,7 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  This sample demontrates a parser for a comma separated list of numbers.
-//  The numbers are inserted in a vector using phoenix.
+//  No actions.
 //
 //  [ JDG May 10, 2002 ]    spirit1
 //  [ JDG March 24, 2007 ]  spirit2
@@ -16,9 +16,6 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
 
 #include <iostream>
 #include <string>
@@ -31,27 +28,23 @@ using namespace boost::spirit::ascii;
 using namespace boost::spirit::arg_names;
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Our number list compiler
+//  Our number list parser
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_numlist1
 template <typename Iterator>
-bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
+bool parse_numbers(Iterator first, Iterator last)
 {
-    bool r = phrase_parse(first, last,
-
-        //  Begin grammar
-        (
-            double_[push_back(ref(v), _1)]
-                >> *(',' >> double_[push_back(ref(v), _1)])
-        )
-        ,
-        //  End grammar
-
-        space);
-
+    bool r = phrase_parse(
+        first,                          /*< start iterator >*/
+        last,                           /*< end iterator >*/
+        double_ >> *(',' >> double_),   /*< the parser >*/
+        space                           /*< the skip-parser >*/
+    );
     if (first != last) // fail if we did not get a full match
         return false;
     return r;
 }
+//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -64,7 +57,6 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
 
     std::cout << "Give me a comma separated list of numbers.\n";
-    std::cout << "The numbers will be inserted in a vector of numbers\n";
     std::cout << "Type [q or Q] to quit\n\n";
 
     std::string str;
@@ -73,17 +65,11 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        std::vector<double> v;
-        if (parse_numbers(str.begin(), str.end(), v))
+        if (parse_numbers(str.begin(), str.end()))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
             std::cout << str << " Parses OK: " << std::endl;
-
-            for (std::vector<double>::size_type i = 0; i < v.size(); ++i)
-                std::cout << i << ": " << v[i] << std::endl;
-
-            std::cout << "\n-------------------------\n";
         }
         else
         {
