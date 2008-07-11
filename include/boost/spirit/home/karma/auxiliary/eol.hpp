@@ -9,6 +9,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/delimit.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/karma/detail/generate_to.hpp>
 
 namespace boost { namespace spirit { namespace karma
 {

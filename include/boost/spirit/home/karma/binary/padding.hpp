@@ -6,6 +6,8 @@
 #if !defined(BOOST_SPIRIT_KARMA_PADDING_MAY_06_2008_0436PM)
 #define BOOST_SPIRIT_KARMA_PADDING_MAY_06_2008_0436PM
 
+#include <boost/lexical_cast.hpp>
+
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/delimit.hpp>
 #include <boost/spirit/home/support/unused.hpp>

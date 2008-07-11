@@ -36,6 +36,14 @@ namespace spirit_test
     display_type const display = {};
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Char>
+    struct output_iterator
+    {
+        typedef std::basic_string<Char> string_type;
+        typedef std::back_insert_iterator<string_type> type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename Generator>
     inline bool test(Char const *expected, Generator const& g)
     {

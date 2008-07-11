@@ -14,7 +14,7 @@
 #include <boost/bind.hpp>
 #include <boost/function_output_iterator.hpp>
 
-#include <strstream>
+#include <sstream>
 #include "test.hpp"
 
 using namespace spirit_test;

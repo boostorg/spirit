@@ -12,7 +12,7 @@
 #include <boost/bind.hpp>
 
 #include <iostream>
-#include <strstream>
+#include <sstream>
 
 // Presented are various ways to attach semantic actions
 //  * Using plain function pointer
