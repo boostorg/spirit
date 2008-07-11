@@ -33,9 +33,9 @@ using boost::phoenix::construct;
 //  Our calculator grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : grammar_def<Iterator, int(), space_type>
+struct calculator : grammar<Iterator, int(), space_type>
 {
-    calculator()
+    calculator() : grammar<Iterator, int(), space_type>(expression)
     {
         expression =
             term                            [_val = _1]
@@ -93,7 +93,7 @@ main()
     typedef calculator<iterator_type> calculator;
 
     calculator def; //  Our grammar definition
-    grammar<calculator> calc(def, def.expression); // Our grammar
+    calculator calc; // Our grammar
 
     std::string str;
     int result;

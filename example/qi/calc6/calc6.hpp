@@ -125,7 +125,7 @@ function<error_handler_> const error_handler = error_handler_();
 //  Our expression grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct expression : grammar_def<Iterator, space_type>
+struct expression : grammar<Iterator, space_type>
 {
     expression(std::vector<int>& code, symbols<char, int>& vars);
 
@@ -160,7 +160,7 @@ struct var_adder
 };
 
 template <typename Iterator>
-struct statement : grammar_def<Iterator, space_type>
+struct statement : grammar<Iterator, space_type>
 {
     statement(std::vector<int>& code);
 
@@ -168,8 +168,7 @@ struct statement : grammar_def<Iterator, space_type>
     symbols<char, int> vars;
     int nvars;
 
-    expression<Iterator> expr_def;
-    grammar<expression<Iterator> > expr;
+    expression<Iterator> expr;
     rule<Iterator, space_type> start, var_decl;
     rule<Iterator, std::string(), space_type> identifier;
     rule<Iterator, int(), space_type> var_ref;

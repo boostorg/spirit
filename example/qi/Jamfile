@@ -4,12 +4,16 @@
 #   Distributed under the Boost Software License, Version 1.0. (See accompanying
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
-project spirit-qi-example ;
+project spirit-qi-example
+    : requirements <toolset>gcc:<cxxflags>-ftemplate-depth-300
+    :
+    :
+    ;
 
-exe actions : actions.cpp ;
+exe actions_ : actions.cpp ;
 exe sum : sum.cpp ;
 exe complex_number : complex_number.cpp ;
-exe employee : employee.cpp ;
+exe employee : employee.cpp  ;
 exe roman : roman.cpp ;
 exe mini_xml1 : mini_xml1.cpp ;
 exe mini_xml2 : mini_xml2.cpp ;

@@ -56,9 +56,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 //  Our employee parser
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct employee_parser : grammar_def<Iterator, employee(), space_type>
+struct employee_parser : grammar<Iterator, employee(), space_type>
 {
-    employee_parser()
+    employee_parser() : grammar<Iterator, employee(), space_type>(start)
     {
         quoted_string %= lexeme['"' >> +(char_ - '"') >> '"'];
 
@@ -95,8 +95,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef employee_parser<iterator_type> employee_parser;
 
-    employee_parser def; //  Our grammar definition
-    grammar<employee_parser> g(def); // Our grammar
+    employee_parser g; // Our grammar
     std::string str;
     while (getline(std::cin, str))
     {

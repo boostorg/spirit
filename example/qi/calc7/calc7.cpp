@@ -70,9 +70,7 @@ main()
 
     vmachine mach;                      //  Our virtual machine
     std::vector<int> code;              //  Our VM code
-    statement def(code);                //  Our grammar definition
-    grammar<statement>
-        calc(def, def.statement_list);  //  Our grammar
+    statement calc(code);               //  Our grammar
 
     std::string str;
     std::string program;
@@ -85,10 +83,10 @@ main()
 
     if (::compile(calc, program))
     {
-        mach.execute(code, def.nvars);
+        mach.execute(code, calc.nvars);
 
         std::cout << "Results------------------\n\n";
-        def.vars.for_each(var_printer(mach.get_stack()));
+        calc.vars.for_each(var_printer(mach.get_stack()));
         std::cout << "-------------------------\n\n";
     }
 

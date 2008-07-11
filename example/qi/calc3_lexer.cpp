@@ -88,10 +88,11 @@ struct calculator_tokens : lexer_def<Lexer>
 //  use a defined tokenset from above as the skip parser.
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
-struct calculator : grammar_def<Iterator, int(), typename Lexer::token_set>
+struct calculator : grammar<Iterator, int(), typename Lexer::token_set>
 {
     template <typename TokenDef>
-    calculator(TokenDef const& tok)
+    calculator(TokenDef const& tok) 
+      : grammar<Iterator, int(), typename Lexer::token_set>(expression)
     {
         // grammar
         expression =
@@ -160,7 +161,7 @@ main()
     calculator def (tokens);                        // Our grammar definition
 
     lexer<calculator_tokens> lex(tokens);           // Our lexer
-    grammar<calculator> calc(def, def.expression);  // Our grammar
+    calculator calc;                                // Our grammar
 
     // get input line by line and feed the parser to evaluate the expressions
     // read in from the input

@@ -128,10 +128,11 @@ void mini_xml_printer::operator()(mini_xml const& xml) const
 //  Our mini XML grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct mini_xml_def
-  : grammar_def<Iterator, mini_xml(), locals<std::string>, space_type>
+struct mini_xml_grammar
+  : grammar<Iterator, mini_xml(), locals<std::string>, space_type>
 {
-    mini_xml_def()
+    mini_xml_grammar()
+      : grammar<Iterator, mini_xml(), locals<std::string>, space_type>(xml)
     {
         text %= lexeme[+(char_ - '<')];
         node %= xml | text;
@@ -194,9 +195,8 @@ int main(int argc, char **argv)
         std::istream_iterator<char>(),
         std::back_inserter(storage));
 
-    typedef mini_xml_def<std::string::const_iterator> mini_xml_def;
-    mini_xml_def def;  //  Our grammar definition
-    grammar<mini_xml_def> xml(def, def.xml); // Our grammar
+    typedef mini_xml_grammar<std::string::const_iterator> mini_xml_grammar;
+    mini_xml_grammar xml; // Our grammar
     mini_xml ast; // our tree
 
     std::string::const_iterator iter = storage.begin();

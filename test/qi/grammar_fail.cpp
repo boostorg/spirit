@@ -16,9 +16,9 @@ using namespace boost::spirit;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::ascii;
 
-struct num_list : grammar_def<char const*, rule<char const*> >
+struct num_list : grammar<char const*, rule<char const*> >
 {
-    num_list()
+    num_list() : base_type(start)
     {
         using boost::spirit::int_;
         num = int_;
@@ -34,8 +34,7 @@ int main()
     char const* input = "some input, it doesn't matter";
     char const* end = &input[strlen(input)+1];
 
-    num_list def;
-    grammar<num_list> g(def); 
+    num_list g;
     bool r = phrase_parse(input, end, g,
         space | ('%' >> *~char_('\n') >> '\n'));
 

@@ -19,13 +19,12 @@
 template <typename Grammar>
 bool compile(Grammar const& prog, std::string const& expr)
 {
-    typedef white_space_def<std::string::const_iterator> white_space_def;
-    white_space_def white_;                         //  Our skipper definition
-    grammar<white_space_def> white_space(white_);   //  Our skipper
+    typedef white_space<std::string::const_iterator> white_space;
+    white_space ws; //  Our skipper
 
     std::string::const_iterator iter = expr.begin();
     std::string::const_iterator end = expr.end();
-    bool r = phrase_parse(iter, end, prog, white_space);
+    bool r = phrase_parse(iter, end, prog, ws);
 
     if (r && iter == end)
     {
@@ -80,14 +79,13 @@ int main(int argc, char **argv)
 
     vmachine mach;              //  Our virtual machine
     std::vector<int> code;      //  Our VM code
-    program def(code);          //  Our grammar definition
-    grammar<program> prog(def); //  Our grammar
+    program prog(code);         //  Our grammar definition
 
     if (::compile(prog, source_code))
     {
         std::string fmain("main");
         std::string::iterator fbegin = fmain.begin();
-        function_info* f = def.functions.lookup()->find(fbegin, fmain.end());
+        function_info* f = prog.functions.lookup()->find(fbegin, fmain.end());
         if (f == 0)
         {
             std::cerr << "Error: main function not defined" << std::endl;

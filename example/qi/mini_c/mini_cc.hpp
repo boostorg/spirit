@@ -15,11 +15,11 @@
 template <typename Iterator>
 statement<Iterator>::statement(
     std::vector<int>& code, symbols<char, function_info>& functions)
-  : code(code)
+  : grammar<Iterator, white_space>(statement_list)
+  , code(code)
   , functions(functions)
   , nvars(0)
-  , expr_def(code, vars, functions)
-  , expr(expr_def, expr_def.expr)
+  , expr(code, vars, functions)
   , add_var(var_adder(vars, nvars))
   , op(code)
 {

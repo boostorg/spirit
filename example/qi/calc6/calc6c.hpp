@@ -14,10 +14,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 statement<Iterator>::statement(std::vector<int>& code)
-  : code(code)
+  : grammar<Iterator, space_type>(start)
+  , code(code)
   , nvars(0)
-  , expr_def(code, vars)
-  , expr(expr_def, expr_def.expr)
+  , expr(code, vars)
   , add_var(vars)
   , op(code)
 {

@@ -17,7 +17,8 @@ expression<Iterator>::expression(
     std::vector<int>& code
   , symbols<char, int>& vars
   , symbols<char, function_info>& functions)
-  : code(code)
+  : grammar<Iterator, white_space>(expr)
+  , code(code)
   , vars(vars)
   , functions(functions)
   , op(code)

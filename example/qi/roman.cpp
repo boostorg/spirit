@@ -105,9 +105,9 @@ struct ones_ : symbols<char, unsigned>
 //  roman (numerals) grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct roman : grammar_def<Iterator, unsigned()>
+struct roman : grammar<Iterator, unsigned()>
 {
-    roman()
+    roman() : grammar<Iterator, unsigned()>(start)
     {
         start
             =   +char_('M') [_val += 1000]
@@ -138,8 +138,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef roman<iterator_type> roman;
 
-    roman def; //  Our grammar definition
-    grammar<roman> roman_parser(def); // Our grammar
+    roman roman_parser; // Our grammar
 
     std::string str;
     unsigned result;
