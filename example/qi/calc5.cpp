@@ -117,7 +117,7 @@ template <typename Iterator>
 struct calculator : grammar<Iterator, space_type>
 {
     calculator(std::vector<int>& code)
-      : grammar<Iterator, space_type>(expression)
+      : calculator::base_type(expression)
       , code(code)
     {
         expression =

@@ -58,7 +58,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 template <typename Iterator>
 struct employee_parser : grammar<Iterator, employee(), space_type>
 {
-    employee_parser() : grammar<Iterator, employee(), space_type>(start)
+    employee_parser() : employee_parser::base_type(start)
     {
         quoted_string %= lexeme['"' >> +(char_ - '"') >> '"'];
 

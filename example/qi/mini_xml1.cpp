@@ -130,7 +130,7 @@ void mini_xml_printer::operator()(mini_xml const& xml) const
 template <typename Iterator>
 struct mini_xml_grammar : grammar<Iterator, mini_xml(), space_type>
 {
-    mini_xml_grammar() : grammar<Iterator, mini_xml(), space_type>(xml)
+    mini_xml_grammar() : mini_xml_grammar::base_type(xml)
     {
         text = lexeme[+(char_ - '<')        [_val += _1]];
         node = (xml | text)                 [_val = _1];

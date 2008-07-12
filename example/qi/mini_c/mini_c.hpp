@@ -248,7 +248,7 @@ struct function_state_reset
 template <typename Iterator>
 struct white_space : grammar<Iterator>
 {
-    white_space() : grammar<Iterator>(start)
+    white_space() : white_space::base_type(start)
     {
         start =
                 space                               // tab/space/cr/lf

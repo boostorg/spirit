@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 statement<Iterator>::statement(std::vector<int>& code)
-  : grammar<Iterator, space_type>(start)
+  : statement::base_type(start)
   , code(code)
   , nvars(0)
   , expr(code, vars)

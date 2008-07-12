@@ -29,7 +29,7 @@ using namespace boost::spirit::ascii;
 template <typename Iterator>
 struct calculator : grammar<Iterator, space_type>
 {
-    calculator() : grammar<Iterator, space_type>(expression)
+    calculator() : calculator::base_type(expression)
     {
         expression =
             term

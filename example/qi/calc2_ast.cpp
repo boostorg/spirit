@@ -132,7 +132,7 @@ boost::phoenix::function<negate_expr> neg;
 template <typename Iterator>
 struct calculator : grammar<Iterator, expression_ast(), space_type>
 {
-    calculator() : grammar<Iterator, expression_ast(), space_type>(expression)
+    calculator() : calculator::base_type(expression)
     {
         expression =
             term                            [_val = _1]

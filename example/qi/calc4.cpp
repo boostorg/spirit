@@ -35,7 +35,7 @@ using boost::phoenix::construct;
 template <typename Iterator>
 struct calculator : grammar<Iterator, int(), space_type>
 {
-    calculator() : grammar<Iterator, int(), space_type>(expression)
+    calculator() : calculator::base_type(expression)
     {
         expression =
             term                            [_val = _1]

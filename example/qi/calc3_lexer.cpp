@@ -92,7 +92,7 @@ struct calculator : grammar<Iterator, int(), typename Lexer::token_set>
 {
     template <typename TokenDef>
     calculator(TokenDef const& tok) 
-      : grammar<Iterator, int(), typename Lexer::token_set>(expression)
+      : calculator::base_type(expression)
     {
         // grammar
         expression =

@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 program<Iterator>::program(std::vector<int>& code)
-  : grammar<Iterator, white_space>(start)
+  : program::base_type(start)
   , code(code)
   , statement(code, functions)
   , add_function(function_adder(functions))

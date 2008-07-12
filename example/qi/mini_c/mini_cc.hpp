@@ -15,7 +15,7 @@
 template <typename Iterator>
 statement<Iterator>::statement(
     std::vector<int>& code, symbols<char, function_info>& functions)
-  : grammar<Iterator, white_space>(statement_list)
+  : statement::base_type(statement_list)
   , code(code)
   , functions(functions)
   , nvars(0)

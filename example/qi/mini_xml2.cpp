@@ -132,7 +132,7 @@ struct mini_xml_grammar
   : grammar<Iterator, mini_xml(), locals<std::string>, space_type>
 {
     mini_xml_grammar()
-      : grammar<Iterator, mini_xml(), locals<std::string>, space_type>(xml)
+      : mini_xml_grammar::base_type(xml)
     {
         text %= lexeme[+(char_ - '<')];
         node %= xml | text;
