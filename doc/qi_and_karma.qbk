@@ -18,6 +18,7 @@
 [include        qi_and_karma/num_list3.qbk]
 [include        qi_and_karma/num_list4.qbk]
 [include        qi_and_karma/roman.qbk]
+[include        qi_and_karma/employee.qbk]
 [endsect]
 
 [section    Abstracts]
