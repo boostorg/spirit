@@ -53,6 +53,49 @@ import testing ;
     [ compile-fail qi/grammar_fail.cpp      : : ]
     [ compile-fail qi/rule_fail.cpp         : : ]
 
+    # run Karma tests
+    [ run karma/actions.cpp                 : : : : karma_actions ]
+    [ run karma/alternative.cpp             : : : : karma_alternative ]
+    [ run karma/binary.cpp                  : : : : karma_binary ]
+    [ run karma/case_handling.cpp           : : : : ]
+    [ run karma/center_alignment.cpp        : : : : ]
+    [ run karma/char.cpp                    : : : : karma_char ]
+    [ run karma/delimiter.cpp               : : : : ]
+    [ run karma/eol.cpp                     : : : : karma_eol ]
+    [ run karma/eps.cpp                     : : : : karma_eps ]
+    [ run karma/format_manip.cpp            : : : : ]
+    [ run karma/functor.cpp                 : : : : karma_functor ]
+    [ run karma/grammar.cpp                 : : : : karma_grammar ]
+    [ run karma/int_numerics.cpp            : : : : ]
+    [ run karma/kleene.cpp                  : : : : karma_kleene ]
+    [ run karma/lazy.cpp                    : : : : karma_lazy ]
+    [ run karma/left_alignment.cpp          : : : : ]
+    [ run karma/list.cpp                    : : : : karma_list ]
+    [ run karma/lit.cpp                     : : : : karma_lit ]
+    [ run karma/none.cpp                    : : : : karma_none ]
+    [ run karma/optional.cpp                : : : : karma_optional ]
+    [ run karma/pattern.cpp                 : : : : ]
+    [ run karma/real_numerics.cpp           : : : : ]
+    [ run karma/right_alignment.cpp         : : : : ]
+    [ run karma/sequence.cpp                : : : : karma_sequence ]
+
+    [ compile-fail karma/grammar_fail.cpp   : : karma_grammar_fail ]
+    [ compile-fail karma/rule_fail.cpp      : : karma_rule_fail ]
+
+    # run support tests
+    [ run support/hold_any.cpp              : : : : ]
+# the multi_pass tests are not completed yet
+#    [ run support/multi_pass_compile.cpp    : : : : ]
+#    [ run support/multi_pass.cpp            : : : : ]
+
+    # run lexer tests
+    [ run lex/lexertl1.cpp                  : : : : ]
+    [ run lex/lexertl2.cpp                  : : : : ]
+    [ run lex/lexertl3.cpp                  : : : : ]
+    [ run lex/lexertl4.cpp                  : : : : ]
+    [ run lex/lexertl5.cpp                  : : : : ]
+    [ run lex/state_switcher_test.cpp       : : : : ]
+
     ;
 
 }
