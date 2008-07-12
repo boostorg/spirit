@@ -41,6 +41,7 @@ using phoenix::push_back;
 ///////////////////////////////////////////////////////////////////////////////
 //  Our mini XML tree representation
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_xml1_structures
 struct mini_xml;
 
 typedef
@@ -55,14 +56,17 @@ struct mini_xml
     std::string name;                           // tag name
     std::vector<mini_xml_node> children;        // children
 };
+//]
 
 // We need to tell fusion about our mini_xml struct
 // to make it a first-class fusion citizen
+//[tutorial_xml1_adapt_structures
 BOOST_FUSION_ADAPT_STRUCT(
     mini_xml,
     (std::string, name)
     (std::vector<mini_xml_node>, children)
 )
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Print out the mini xml tree
@@ -127,6 +131,7 @@ void mini_xml_printer::operator()(mini_xml const& xml) const
 ///////////////////////////////////////////////////////////////////////////////
 //  Our mini XML grammar definition
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_xml1_grammar
 template <typename Iterator>
 struct mini_xml_grammar : grammar<Iterator, mini_xml(), space_type>
 {
@@ -160,6 +165,7 @@ struct mini_xml_grammar : grammar<Iterator, mini_xml(), space_type>
     rule<Iterator, std::string(), space_type> start_tag;
     rule<Iterator, void(std::string), space_type> end_tag;
 };
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program

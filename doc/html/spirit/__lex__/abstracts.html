@@ -84,7 +84,7 @@
             of the <span class="emphasis"><em>Spirit.Lex</em></span> library.
           </p>
 <a name="spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id488006"></a>
+<a name="id493147"></a>
             <a href="abstracts.html#spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -150,7 +150,7 @@
             The lexer iterator returns the same token type for each of the different
             matched token definitions. To accomodate for the possibly different token
             <span class="emphasis"><em>value</em></span> types exposed by the various token types (token
-            definitions), the general type of the token value is a <a href="http://www.boost.org/doc/html/variant.html" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;&gt;</span></tt></a>.
+            definitions), the general type of the token value is a <a href="http://www.boost.org/doc/html/variant.html" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">.</span><span class="identifier">variant</span><span class="special">&lt;&gt;</span></tt></a>.
             As a minimum (for the default configuration) this token value variant
             will be configured to always hold a <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>
             containing the pair of iterators pointing to the matched input sequence
@@ -167,7 +167,7 @@
               token value will be converted to the requested token type (parser attribute)
               exactly once. This happens at the time of the first access to the token
               value requiring the corresponding type conversion. The converted token
-              value will be stored in the <a href="http://www.boost.org/doc/html/variant.html" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;&gt;</span></tt></a>
+              value will be stored in the <a href="http://www.boost.org/doc/html/variant.html" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">.</span><span class="identifier">variant</span><span class="special">&lt;&gt;</span></tt></a>
               replacing the initially stored iterator range. This avoids to convert
               the input sequence to the token value more than once, thus optimizing
               the integration of the lexer with <span class="emphasis"><em>Spirit.Qi</em></span>, even
@@ -222,7 +222,7 @@
             when it is requested for the first time.
           </p>
 <a name="spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id488816"></a>
+<a name="id493952"></a>
             <a href="abstracts.html#spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -296,7 +296,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values.examples_of_using__link_linkend__spirit___lex___reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_"></a><h6>
-<a name="id489230"></a>
+<a name="id494366"></a>
             <a href="abstracts.html#spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values.examples_of_using__link_linkend__spirit___lex___reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_">Examples
             of using <a href="reference/token_class.html" title="Token Class"><tt class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></tt></a></a>
           </h6>

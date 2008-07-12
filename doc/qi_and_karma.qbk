@@ -19,6 +19,7 @@
 [include        qi_and_karma/num_list4.qbk]
 [include        qi_and_karma/roman.qbk]
 [include        qi_and_karma/employee.qbk]
+[include        qi_and_karma/mini_xml.qbk]
 [endsect]
 
 [section    Abstracts]

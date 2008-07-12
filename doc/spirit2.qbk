@@ -50,7 +50,7 @@
 [def __re2c__                   [@http://re2c.sourceforge.net/ re2c]]
 [def __ragel__                  [@http://www.cs.queensu.ca/~thurston/ragel/ Ragel]]
 
-[def __boost_variant__          [@http://www.boost.org/doc/html/variant.html `boost::variant<>`]]
+[def __boost_variant__          [@http://www.boost.org/doc/html/variant.html `boost.variant<>`]]
 [def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<>`]]
 [def __boost_bind__             [@http://www.boost.org/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@http://www.boost.org/libs/lambda/index.html Boost.Lambda]]

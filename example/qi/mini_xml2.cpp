@@ -127,6 +127,7 @@ void mini_xml_printer::operator()(mini_xml const& xml) const
 ///////////////////////////////////////////////////////////////////////////////
 //  Our mini XML grammar definition
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_xml2_grammar
 template <typename Iterator>
 struct mini_xml_grammar
   : grammar<Iterator, mini_xml(), locals<std::string>, space_type>
@@ -162,6 +163,7 @@ struct mini_xml_grammar
     rule<Iterator, std::string(), space_type> start_tag;
     rule<Iterator, void(std::string), space_type> end_tag;
 };
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
