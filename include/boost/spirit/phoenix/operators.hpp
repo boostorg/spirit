@@ -9,10 +9,14 @@
 #ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_OPERATORS
 #define BOOST_SPIRIT_DEPRECATED_INCLUDE_OPERATORS
 
+#include <boost/version.hpp>
+
+#if BOOST_VERSION >= 103800
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__DMC__)
 #  pragma message ("Warning: This header is deprecated. Please use: boost/spirit/include/phoenix1_operators.hpp")
 #elif defined(__GNUC__) || defined(__HP_aCC) || defined(__SUNPRO_CC) || defined(__IBMCPP__)
 #  warning "This header is deprecated. Please use: boost/spirit/include/phoenix1_operators.hpp"
+#endif
 #endif
 
 #include <boost/spirit/include/phoenix1_operators.hpp>
