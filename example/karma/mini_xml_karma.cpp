@@ -71,9 +71,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 struct mini_xml_parser :
-    qi::grammar_def<Iterator, mini_xml(), space_type>
+    qi::grammar<Iterator, mini_xml(), space_type>
 {
-    mini_xml_parser()
+    mini_xml_parser() : mini_xml_parser::base_type(xml)
     {
         text = lexeme[+(char_ - '<')        [_val += _1]];
         node = (xml | text)                 [_val = _1];
@@ -180,8 +180,7 @@ int main(int argc, char **argv)
         std::back_inserter(storage));
 
     typedef mini_xml_parser<std::string::const_iterator> mini_xml_parser;
-    mini_xml_parser def;  //  Our grammar definition
-    qi::grammar<mini_xml_parser> xmlin(def, def.xml); // Our grammar
+    mini_xml_parser xmlin;  //  Our grammar definition
     mini_xml ast; // our tree
 
     std::string::const_iterator iter = storage.begin();

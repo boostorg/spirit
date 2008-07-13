@@ -124,13 +124,9 @@ template <typename Iterator, typename Lexer>
 struct example6_grammar 
   : grammar<Iterator, in_state_skipper<typename Lexer::token_set> >
 {
-    typedef 
-        grammar<Iterator, in_state_skipper<typename Lexer::token_set> >
-    base_type;
-
     template <typename TokenDef>
     example6_grammar(TokenDef const& tok)
-      : base_type(program)
+      : example6_grammar::base_type(program)
     {
         program 
             =  +block
