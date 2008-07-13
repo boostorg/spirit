@@ -63,11 +63,12 @@ struct example2_tokens : lexer_def<Lexer>
 //  Grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct example2_grammar : grammar_def<Iterator>
+struct example2_grammar : grammar<Iterator>
 {
     template <typename TokenDef>
     example2_grammar(TokenDef const& tok)
-      : paragraphs(0), commands(0), questions(0), statements(0)
+      : example2_grammar::base_type(story), 
+        paragraphs(0), commands(0), questions(0), statements(0)
     {
         story 
             =  +paragraph
@@ -131,10 +132,9 @@ int main()
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
     example2_tokens tokens;                         // Our token definition
-    example2_grammar def (tokens);                  // Our grammar definition
+    example2_grammar calc(tokens);                  // Our grammar definition
 
     lexer<example2_tokens> lex(tokens);             // Our lexer
-    grammar<example2_grammar> calc(def, def.story); // Our grammar
 
     std::string str (read_from_file("example2.input"));
 
@@ -153,9 +153,9 @@ int main()
         std::cout << "-------------------------\n";
         std::cout << "Parsing succeeded\n";
         std::cout << "There were " 
-                  << def.commands << " commands, " 
-                  << def.questions << " questions, and " 
-                  << def.statements << " statements.\n";
+                  << calc.commands << " commands, " 
+                  << calc.questions << " questions, and " 
+                  << calc.statements << " statements.\n";
         std::cout << "-------------------------\n";
     }
     else

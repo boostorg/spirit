@@ -73,10 +73,11 @@ struct example3_tokens : lexer_def<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
 struct example3_grammar 
-  : grammar_def<Iterator, in_state_skipper<typename Lexer::token_set> >
+  : grammar<Iterator, in_state_skipper<typename Lexer::token_set> >
 {
     template <typename TokenDef>
     example3_grammar(TokenDef const& tok)
+      : example3_grammar::base_type(start)
     {
         start 
             =  +(couplet | tok.ellipses)
@@ -105,17 +106,17 @@ int main()
 {
     // iterator type used to expose the underlying input stream
     typedef std::string::iterator base_iterator_type;
-    
+
     // This is the token type to return from the lexer iterator
     typedef lexertl_token<base_iterator_type> token_type;
-    
+
     // This is the lexer type to use to tokenize the input.
     // Here we use the lexertl based lexer engine.
     typedef lexertl_lexer<token_type> lexer_type;
-    
+
     // This is the token definition type (derived from the given lexer type).
     typedef example3_tokens<lexer_type> example3_tokens;
-    
+
     // this is the iterator type exposed by the lexer 
     typedef lexer<example3_tokens>::iterator_type iterator_type;
 
@@ -125,10 +126,9 @@ int main()
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
     example3_tokens tokens;                         // Our token definition
-    example3_grammar def (tokens);                  // Our grammar definition
+    example3_grammar calc(tokens);                  // Our grammar definition
 
     lexer<example3_tokens> lex(tokens);             // Our lexer
-    grammar<example3_grammar> calc(def);            // Our grammar
 
     std::string str (read_from_file("example3.input"));
 
@@ -137,7 +137,7 @@ int main()
     std::string::iterator it = str.begin();
     iterator_type iter = lex.begin(it, str.end());
     iterator_type end = lex.end();
-        
+
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
     // Note, how we use the token_set defined above as the skip parser.

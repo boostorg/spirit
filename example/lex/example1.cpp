@@ -61,10 +61,11 @@ struct example1_tokens : lexer_def<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 struct example1_grammar 
-  : grammar_def<Iterator, in_state_skipper<token_def<> > >
+  : grammar<Iterator, in_state_skipper<token_def<> > >
 {
     template <typename TokenDef>
     example1_grammar(TokenDef const& tok)
+      : example1_grammar::base_type(start)
     {
         start = '{' >> *(tok.identifier >> -char_(',')) >> '}';
     }
@@ -97,10 +98,9 @@ int main()
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
     example1_tokens tokens;                         // Our token definition
-    example1_grammar def (tokens);                  // Our grammar definition
+    example1_grammar calc(tokens);                  // Our grammar definition
 
     lexer<example1_tokens> lex(tokens);             // Our lexer
-    grammar<example1_grammar> calc(def);            // Our parser
 
     std::string str (read_from_file("example1.input"));
 
