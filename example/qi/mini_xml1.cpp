@@ -142,6 +142,7 @@ struct mini_xml_grammar : grammar<Iterator, mini_xml(), space_type>
 
         start_tag =
                 '<'
+            >>  !char_('/')
             >>  lexeme[+(char_ - '>')       [_val += _1]]
             >>  '>'
         ;

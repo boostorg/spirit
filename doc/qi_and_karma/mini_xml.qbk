@@ -24,6 +24,8 @@ Along the way, we'll see new features:
 * Inherited attributes
 * Variant attributes
 * Local Variables
+* Not Predicate
+* Lazy Lit
 
 The full cpp files for these examples can be found here:
 [@../../example/qi/mini_xml1.cpp] and here: [@../../example/qi/mini_xml2.cpp]
@@ -69,12 +71,27 @@ Again, with an attribute of `std::string`. Then, it's definition:
 
     start_tag =
             '<'
+        >>  !char_('/')
         >>  lexeme[+(char_ - '>')       [_val += _1]]
         >>  '>'
     ;
 
-Nothing special. Almost the same as the `text` rule apart from the added `'<'`
-and `'>'`.
+[heading Not Predicate]
+
+`start_tag` is similar to the `text` rule apart from the added `'<'` and `'>'`.
+But wait, to make sure that the `start_tag` does not parse `end_tag`s too, we
+add: `!char_('/')`. This is a "Not Predicate":
+
+    !p
+
+It will try the parser, `p`. If it is successful, fail, otherwise, pass. In
+other words, it negates the result of `p`. Like the `eps`, it does not consume
+any input though. It will always rewind the iterator position to where it
+was upon entry. So, the expression:
+
+    !char_('/')
+
+basically says: we should not have a `'/'` at this point.
 
 [heading Inherited Attribute]
 
@@ -207,7 +224,7 @@ Let's see how this is used in action:
 # Upon parsing `start_tag`, the parsed start-tag string is placed in
   the local variable specified by (yet another) __phoenix__ placeholder:
   `_a`. We have only one local variable. If we had more, these are designated
-  by `_b`..`z`.
+  by `_b`..`_z`.
 
 # Then we parse zero or more `node`s.
 
