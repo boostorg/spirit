@@ -81,14 +81,14 @@ namespace boost { namespace spirit { namespace qi
             return false;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             typedef typename
                 result_of::left<Component>::type::director
             director;
 
-            return director::what(spirit::left(component));
+            return director::what(spirit::left(component), ctx);
         }
     };
 }}}

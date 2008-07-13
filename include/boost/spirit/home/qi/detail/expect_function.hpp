@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     is_first = false;
                     return true;
                 }
-                Exception x = {first, last, director::what(component) };
+                Exception x = {first, last, director::what(component, context) };
                 throw x;
             }
             is_first = false;
@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     is_first = false;
                     return true;
                 }
-                Exception x = {first, last, director::what(component) };
+                Exception x = {first, last, director::what(component, context) };
                 throw x;
             }
             is_first = false;

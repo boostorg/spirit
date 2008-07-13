@@ -47,8 +47,8 @@ namespace boost { namespace spirit { namespace qi
             return false;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "raw[";
 
@@ -56,7 +56,7 @@ namespace boost { namespace spirit { namespace qi
                 result_of::subject<Component>::type::director
             director;
 
-            result += director::what(subject(component));
+            result += director::what(subject(component), ctx);
             result += "]";
             return result;
         }

@@ -61,8 +61,8 @@ namespace boost { namespace spirit { namespace qi
             return in.good() || in.eof();
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "any-stream";
         }

@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace qi
     struct end_director_base
     {
         typedef mpl::false_ stores_iterator;
-        
+
         template <typename Component, typename Context, typename Iterator>
         struct attribute
         {
@@ -46,7 +46,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator>
         bool test(Iterator& first, Iterator const& last);
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  same as end_director_base above, but stores iterator
     ///////////////////////////////////////////////////////////////////////////
@@ -86,13 +86,13 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator>
         bool test(Iterator& first, Iterator const& last);
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  ~eoi, ~eol: 'not end of line' or 'not end of input'
     template <typename Positive>
-    struct negated_end_director 
+    struct negated_end_director
       : end_director_base<
-            negated_end_director<Positive>, 
+            negated_end_director<Positive>,
             typename Positive::director::stores_iterator
         >
     {
@@ -102,11 +102,11 @@ namespace boost { namespace spirit { namespace qi
             return !Positive::director::test(first, last);
         }
 
-        template <typename Component>
-        static std::string what(Component const&component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
-            return "not " + 
-                Positive::director::what(fusion::at_c<0>(component.elements));
+            return "not " +
+                Positive::director::what(fusion::at_c<0>(component.elements), ctx);
         }
     };
 
@@ -119,15 +119,15 @@ namespace boost { namespace spirit { namespace qi
         {
             return first == last;
         }
-        
-        template <typename Component>
-        static std::string what(Component const&)
+
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "eoi";
         }
     };
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////////
     //  the eol_director matches line endings
     ///////////////////////////////////////////////////////////////////////////
@@ -150,13 +150,13 @@ namespace boost { namespace spirit { namespace qi
             return matched;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "eol";
         }
     };
-    
+
 ///////////////////////////////////////////////////////////////////////////////
 }}}
 

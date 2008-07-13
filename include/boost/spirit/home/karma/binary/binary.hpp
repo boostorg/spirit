@@ -136,8 +136,8 @@ namespace boost { namespace spirit { namespace karma
             return false;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return karma::detail::what<endian>::is();
         }
@@ -173,8 +173,8 @@ namespace boost { namespace spirit { namespace karma
             return true;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return karma::detail::what<endian>::is();
         }

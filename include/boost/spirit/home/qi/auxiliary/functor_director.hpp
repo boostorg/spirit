@@ -40,8 +40,8 @@ namespace boost { namespace spirit { namespace qi
             return subject(component).held->parse(first, last, context, attr);
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "functor";
         }

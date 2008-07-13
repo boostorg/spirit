@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace karma
         typedef typename component::director director;
 
         component c = spirit::as_component(karma::domain(), xpr);
-        return director::what(c);
+        return director::what(c, unused);
     }
 }}}
 

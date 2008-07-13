@@ -159,8 +159,8 @@ namespace boost { namespace spirit { namespace qi
             return x.ptr->what();
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return what_nonterminal(subject(component).held);
         }

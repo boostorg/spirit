@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2008 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_KARMA_REAL_FEB_26_2007_0512PM)
@@ -20,17 +20,17 @@
 #include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
 #include <cmath>
 
-namespace boost { namespace spirit { namespace karma 
+namespace boost { namespace spirit { namespace karma
 {
     namespace detail
     {
         template <typename RealPolicies>
         struct real_policy;
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
-    //  This specialization is used for real generators not having a direct 
-    //  initializer: float_, double_ etc. These generators must be used in 
+    //  This specialization is used for real generators not having a direct
+    //  initializer: float_, double_ etc. These generators must be used in
     //  conjunction with a parameter.
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename RealPolicies, typename Tag>
@@ -43,44 +43,44 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // double_/float_/etc. has a parameter attached
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& param)
         {
             RealPolicies const& p = detail::real_policy<RealPolicies>::get(
                 fusion::at_c<0>(component.elements));
             bool result = real_inserter<T, RealPolicies, Tag>::
                 call(sink, param, p);
 
-            karma::delimit(sink, d);           // always do post-delimiting 
+            karma::delimit(sink, d);           // always do post-delimiting
             return result;
         }
 
-        // this double_/float_/etc. has no parameter attached, it needs to have 
+        // this double_/float_/etc. has no parameter attached, it needs to have
         // been initialized from a direct literal
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter>
-        static bool 
-        generate(Component const&, OutputIterator&, Context&, Delimiter const&, 
-            unused_type) 
+        static bool
+        generate(Component const&, OutputIterator&, Context&, Delimiter const&,
+            unused_type)
         {
-            BOOST_MPL_ASSERT_MSG(false, real_not_usable_without_parameter, 
+            BOOST_MPL_ASSERT_MSG(false, real_not_usable_without_parameter,
                 (Component, Context));
             return false;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "real number";
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
-    //  This specialization is used for real generators having a direct 
-    //  initializer: float_(10.), double_(20.) etc. 
+    //  This specialization is used for real generators having a direct
+    //  initializer: float_(10.), double_(20.) etc.
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename RealPolicies, typename Tag>
     struct real_generator<true, T, RealPolicies, Tag>
@@ -91,28 +91,28 @@ namespace boost { namespace spirit { namespace karma
             typedef unused_type type;
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/)
         {
             RealPolicies const& p = detail::real_policy<RealPolicies>::get(
                 fusion::at_c<0>(component.elements));
             T n = fusion::at_c<1>(component.elements);
             bool result = real_inserter<T, RealPolicies, Tag>::call(sink, n, p);
 
-            karma::delimit(sink, d);           // always do post-delimiting 
+            karma::delimit(sink, d);           // always do post-delimiting
             return result;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "real number";
         }
     };
-    
+
 }}}
 
 namespace boost { namespace spirit { namespace traits
@@ -133,14 +133,14 @@ namespace boost { namespace spirit { namespace traits
         typedef spirit::char_class::tag::lower char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
 
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         real_policy_type;
         typedef fusion::vector<real_policy_type> vector_type;
 
         typedef karma::real_generator<false, T, RealPolicies, key_tag> real_type;
         typedef component<karma::domain, real_type, vector_type> type;
-        
+
         static type
         call(Elements const& elements)
         {
@@ -161,17 +161,17 @@ namespace boost { namespace spirit { namespace traits
         typedef spirit::char_class::tag::lower char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
 
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         real_policy_type;
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 1>::type
         real_data_type;
         typedef fusion::vector<real_policy_type, real_data_type> vector_type;
 
         typedef karma::real_generator<true, T, RealPolicies, key_tag> real_type;
         typedef component<karma::domain, real_type, vector_type> type;
-                
+
         static type
         call(Elements const& elements)
         {
@@ -195,14 +195,14 @@ namespace boost { namespace spirit { namespace traits
         typedef spirit::char_class::tag::upper char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
 
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         real_policy_type;
         typedef fusion::vector<real_policy_type> vector_type;
 
         typedef karma::real_generator<false, T, RealPolicies, key_tag> real_type;
         typedef component<karma::domain, real_type, vector_type> type;
-        
+
         static type
         call(Elements const& elements)
         {
@@ -223,17 +223,17 @@ namespace boost { namespace spirit { namespace traits
         typedef spirit::char_class::tag::upper char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
 
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         real_policy_type;
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 1>::type
         real_data_type;
         typedef fusion::vector<real_policy_type, real_data_type> vector_type;
 
         typedef karma::real_generator<true, T, RealPolicies, key_tag> real_type;
         typedef component<karma::domain, real_type, vector_type> type;
-                
+
         static type
         call(Elements const& elements)
         {

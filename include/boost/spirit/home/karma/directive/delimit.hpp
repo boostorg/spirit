@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2008 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_KARMA_DELIMIT_MAR_02_2007_0217PM)
@@ -27,31 +27,31 @@ namespace boost { namespace spirit { namespace karma
         struct attribute
           : traits::attribute_of<
                 karma::domain,
-                typename result_of::right<Component>::type, 
+                typename result_of::right<Component>::type,
                 Context
             >
         {
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& /*d*/, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& /*d*/, Parameter const& param)
         {
-            //  the delimit_space generator simply dispatches to the embedded 
+            //  the delimit_space generator simply dispatches to the embedded
             //  generator while supplying a single space as the new delimiter
             //  to use
-            typedef typename 
+            typedef typename
                 result_of::right<Component>::type::director
             director;
-            
-            return director::generate(spirit::right(component), 
+
+            return director::generate(spirit::right(component),
                 sink, ctx, spirit::as_component(karma::domain(), ' '), param);
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "delimit[";
 
@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace karma
                 spirit::result_of::right<Component>::type::director
             director;
 
-            result += director::what(spirit::right(component));
+            result += director::what(spirit::right(component), ctx);
             result += "]";
             return result;
         }
@@ -74,48 +74,48 @@ namespace boost { namespace spirit { namespace karma
         struct attribute
           : traits::attribute_of<
                 karma::domain,
-                typename result_of::subject<Component>::type, 
+                typename result_of::subject<Component>::type,
                 Context
             >
         {
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& /*d*/, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& /*d*/, Parameter const& param)
         {
-            //  the delimit generator simply dispatches to the embedded 
+            //  the delimit generator simply dispatches to the embedded
             //  generator while supplying it's argument as the new delimiter
             //  to use
-            typedef typename 
+            typedef typename
                 spirit::result_of::subject<Component>::type::director
             director;
-            
-            return director::generate(spirit::subject(component), sink, ctx, 
+
+            return director::generate(spirit::subject(component), sink, ctx,
                 spirit::as_component(
-                    karma::domain(), spirit::argument1(component)), 
+                    karma::domain(), spirit::argument1(component)),
                 param);
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "delimit(";
-            
+
             typedef typename
                 spirit::result_of::argument1<Component>::type::director
             delimiter;
-            
-            result += delimiter::what(spirit::argument1(component));
+
+            result += delimiter::what(spirit::argument1(component), ctx);
             result +=")[";
 
             typedef typename
                 spirit::result_of::subject<Component>::type::director
             director;
 
-            result += director::what(spirit::subject(component));
+            result += director::what(spirit::subject(component), ctx);
             result += "]";
             return result;
         }

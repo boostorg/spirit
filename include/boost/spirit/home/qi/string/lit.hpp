@@ -53,8 +53,8 @@ namespace boost { namespace spirit { namespace qi
             );
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return std::string("\"")
                 + spirit::detail::to_narrow_string(
@@ -102,10 +102,14 @@ namespace boost { namespace spirit { namespace qi
             );
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
-            return "string";
+            return std::string("\"")
+                + spirit::detail::to_narrow_string(
+                    fusion::at_c<0>(component.elements)(unused, ctx))
+                + std::string("\"")
+            ;
         }
     };
 
@@ -141,8 +145,8 @@ namespace boost { namespace spirit { namespace qi
             );
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return std::string("case-insensitive \"")
                 + spirit::detail::to_narrow_string(

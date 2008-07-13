@@ -11,10 +11,11 @@
 
 namespace boost { namespace spirit { namespace detail
 {
+    template <typename Context>
     struct what_function
     {
-        what_function(std::string& str)
-          : str(str), first(true)
+        what_function(std::string& str, Context const& ctx)
+          : str(str), first(true), ctx(ctx)
         {
         }
 
@@ -26,10 +27,11 @@ namespace boost { namespace spirit { namespace detail
             else
                 str += ", ";
             typedef typename Component::director director;
-            str += director::what(component);
+            str += director::what(component, ctx);
         }
 
         std::string& str;
+        Context const& ctx;
         mutable bool first;
     };
 }}}

@@ -74,8 +74,8 @@ namespace boost { namespace spirit { namespace karma
                 generate(subject, sink, ctx, d, param);
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "lazy[";
             // FIXME: need to get at the what of the embedded component

@@ -72,8 +72,8 @@ namespace boost { namespace spirit { namespace karma
 //             return false;
 //         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "kleene[";
 
@@ -81,7 +81,7 @@ namespace boost { namespace spirit { namespace karma
                 spirit::result_of::subject<Component>::type::director
             director;
 
-            result += director::what(spirit::subject(component));
+            result += director::what(spirit::subject(component), ctx);
             result += "]";
             return result;
         }

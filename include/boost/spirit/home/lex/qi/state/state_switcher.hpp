@@ -71,8 +71,8 @@ namespace boost { namespace spirit { namespace qi
             return true;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result("set_state(\"");
             result += spirit::detail::to_narrow_string(
@@ -148,8 +148,8 @@ namespace boost { namespace spirit { namespace qi
                 last, context, skipper, attr);
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result("in_state(\"");
             result += spirit::detail::to_narrow_string(
@@ -160,7 +160,7 @@ namespace boost { namespace spirit { namespace qi
                 spirit::result_of::subject<Component>::type::director
             director;
 
-            result += director::what(subject(component));
+            result += director::what(subject(component), ctx);
             result += "]";
             return result;
         }
