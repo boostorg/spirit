@@ -15,18 +15,9 @@
 namespace boost { namespace spirit { namespace detail
 {
     // general handler for everything not explicitly specialized below
-    template <typename F, typename Attribute, typename Context>
+    template <typename F, typename Attribute, typename Context, bool IsSequence>
     bool action_dispatch(F const& f, Attribute& attr, Context& context
-      , mpl::true_)
-    {
-        bool pass = true;
-        f(attr, context, pass);
-        return pass;
-    }
-
-    template <typename F, typename Attribute, typename Context>
-    bool action_dispatch(F const& f, Attribute& attr, Context& context
-      , mpl::false_)
+      , mpl::bool_<IsSequence>)
     {
         bool pass = true;
         f(attr, context, pass);
@@ -34,7 +25,7 @@ namespace boost { namespace spirit { namespace detail
     }
 
     // handler for phoenix actors
-    
+
     // If the component this action has to be invoked for is a sequence, we 
     // wrap any non-fusion sequence into a fusion sequence (done by pass_value)
     // and pass through any fusion sequence.
@@ -63,9 +54,9 @@ namespace boost { namespace spirit { namespace detail
     // specializations for plain function pointers taking a different number of
     // arguments
     template <typename RT, typename A0, typename A1, typename A2
-      , typename Attribute, typename Context, typename IsSequence>
+      , typename Attribute, typename Context, bool IsSequence>
     bool action_dispatch(RT(*f)(A0, A1, A2)
-      , Attribute& attr, Context& context, IsSequence)
+      , Attribute& attr, Context& context, mpl::bool_<IsSequence>)
     {
         bool pass = true;
         f(attr, context, pass);
@@ -73,27 +64,27 @@ namespace boost { namespace spirit { namespace detail
     }
 
     template <typename RT, typename A0, typename A1
-      , typename Attribute, typename Context, typename IsSequence>
+      , typename Attribute, typename Context, bool IsSequence>
     bool action_dispatch(RT(*f)(A0, A1)
-      , Attribute& attr, Context& context, IsSequence)
+      , Attribute& attr, Context& context, mpl::bool_<IsSequence>)
     {
         f(attr, context);
         return true;
     }
 
     template <typename RT, typename A0
-      , typename Attribute, typename Context, typename IsSequence>
+      , typename Attribute, typename Context, bool IsSequence>
     bool action_dispatch(RT(*f)(A0)
-      , Attribute& attr, Context&, IsSequence)
+      , Attribute& attr, Context&, mpl::bool_<IsSequence>)
     {
         f(attr);
         return true;
     }
 
     template <typename RT
-      , typename Attribute, typename Context, typename IsSequence>
+      , typename Attribute, typename Context, bool IsSequence>
     bool action_dispatch(RT(*f)()
-      , Attribute&, Context&, IsSequence)
+      , Attribute&, Context&, mpl::bool_<IsSequence>)
     {
         f();
         return true;
