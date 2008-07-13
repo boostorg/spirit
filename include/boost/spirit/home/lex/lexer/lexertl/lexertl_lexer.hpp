@@ -47,6 +47,7 @@ namespace boost { namespace spirit { namespace lex
             case '.':
             case '^': case '$':
             case '\\':
+            case '"':
                 return true;
 
             default:
