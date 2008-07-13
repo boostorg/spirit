@@ -128,9 +128,9 @@ phoenix::function<get_element<mini_xml> > _xml;
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OutputIterator>
 struct mini_xml_generator
-  : karma::grammar_def<OutputIterator, mini_xml()>
+  : karma::grammar<OutputIterator, mini_xml()>
 {
-    mini_xml_generator()
+    mini_xml_generator() : mini_xml_generator::base_type(xml)
     {
         node %= 
                 lit[_1 = _string(_r0)] 
@@ -196,8 +196,7 @@ int main(int argc, char **argv)
         typedef std::back_insert_iterator<std::string> outiter_type;
         typedef mini_xml_generator<outiter_type> mini_xml_generator;
 
-        mini_xml_generator gen;                     //  Our grammar definition
-        karma::grammar<mini_xml_generator> xmlout(gen, gen.xml); // Our grammar
+        mini_xml_generator xmlout;                 //  Our grammar definition
 
         std::string generated;
         bool r = karma::generate(std::back_inserter(generated), xmlout, ast);

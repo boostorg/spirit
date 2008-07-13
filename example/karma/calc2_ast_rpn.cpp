@@ -67,9 +67,9 @@ struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OuputIterator>
 struct ast_rpn
-  : karma::grammar_def<OuputIterator, expression_ast(), space_type>
+  : karma::grammar<OuputIterator, expression_ast(), space_type>
 {
-    ast_rpn()
+    ast_rpn() : ast_rpn::base_type(ast_node)
     {
         ast_node %= 
                 int_        [_1 = _int(_val)]
@@ -120,8 +120,7 @@ main()
     typedef std::back_insert_iterator<std::string> output_iterator_type;
     typedef ast_rpn<output_iterator_type> ast_rpn;
     
-    ast_rpn ast_rpn_def;
-    karma::grammar<ast_rpn> ast_grammar(ast_rpn_def, ast_rpn_def.ast_node); 
+    ast_rpn ast_grammar;
 
     std::string str;
     while (std::getline(std::cin, str))

@@ -19,7 +19,7 @@ using namespace boost::spirit;
 using namespace boost::spirit::karma;
 using namespace boost::spirit::ascii;
 
-struct num_list : grammar_def<char const*, rule<char const*> >
+struct num_list : grammar<char const*, rule<char const*> >
 {
     num_list()
     {
