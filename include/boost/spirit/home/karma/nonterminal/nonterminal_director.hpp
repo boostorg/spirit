@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace karma
             Parameter const& param)
         {
             typedef typename Nonterminal::locals_type locals_type;
-            fusion::single_view<Parameter const&> front(param);
+            fusion::vector<Parameter const&> front(param);
             NonterminalContext context(front, locals_type());
             return x.obj.generate(sink, context, delim);
         }
@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace karma
             Parameter const& param)
         {
             typedef typename Nonterminal::locals_type locals_type;
-            fusion::single_view<Parameter const&> front(param);
+            fusion::vector<Parameter const&> front(param);
             NonterminalContext context(front, locals_type());
             return ptr->generate(sink, context, delim);
         }
