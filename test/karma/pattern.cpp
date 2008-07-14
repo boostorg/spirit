@@ -37,23 +37,23 @@ int main()
     typedef spirit_test::output_iterator<char>::type outiter_type;
 
     // basic tests
-    {
-        rule<outiter_type> start;
-
-        start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
-        BOOST_TEST(test("a1012.4", start));
-
-        start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
-        BOOST_TEST(test("a1012.4", start));
-
-        rule<outiter_type> a, b, c;
-        a = char_[_1 = 'a'];
-        b = int_[_1 = 10];
-        c = double_[_1 = 12.4];
-
-        start = a << b << c;
-        BOOST_TEST(test("a1012.4", start));
-    }
+//     {
+//         rule<outiter_type> start;
+// 
+//         start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
+//         BOOST_TEST(test("a1012.4", start));
+// 
+//         start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
+//         BOOST_TEST(test("a1012.4", start));
+// 
+//         rule<outiter_type> a, b, c;
+//         a = char_[_1 = 'a'];
+//         b = int_[_1 = 10];
+//         c = double_[_1 = 12.4];
+// 
+//         start = a << b << c;
+//         BOOST_TEST(test("a1012.4", start));
+//     }
 
     // basic tests involving a direct parameter
     {
@@ -62,7 +62,7 @@ int main()
 
         rule<outiter_type, var_type()> start;
 
-        start = (char_ | int_ | double_)[_1 = _r0];
+        start %= (char_ | int_ | double_)[_1 = _r0];
         BOOST_TEST(test("a", start, v));
 
         v = 10;
@@ -71,80 +71,80 @@ int main()
         BOOST_TEST(test("12.4", start, v));
     }
 
-    {
-        rule<outiter_type, void(char, int, double)> start;
-        fusion::vector<char, int, double> vec('a', 10, 12.4);
-
-        start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
-
-        start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
-
-        rule<outiter_type, void(char)> a;
-        rule<outiter_type, void(int)> b;
-        rule<outiter_type, void(double)> c;
-
-        a = char_[_1 = _r1];
-        b = int_[_1 = _r1];
-        c = double_[_1 = _r1];
-        start = a(_r1) << b(_r2) << c(_r3);
-        BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
-    }
+//     {
+//         rule<outiter_type, void(char, int, double)> start;
+//         fusion::vector<char, int, double> vec('a', 10, 12.4);
+// 
+//         start = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3];
+//         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
+// 
+//         start = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3];
+//         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
+// 
+//         rule<outiter_type, void(char)> a;
+//         rule<outiter_type, void(int)> b;
+//         rule<outiter_type, void(double)> c;
+// 
+//         a = char_[_1 = _r1];
+//         b = int_[_1 = _r1];
+//         c = double_[_1 = _r1];
+//         start = a(_r1) << b(_r2) << c(_r3);
+//         BOOST_TEST(test("a1012.4", start('a', 10, 12.4)));
+//     }
 
     // test rule parameter propagation
-    {
-        using boost::phoenix::at_c;
-        
-        rule<outiter_type, fusion::vector<char, int, double>()> start;
-        fusion::vector<char, int, double> vec('a', 10, 12.4);
-
-        start %= char_ << int_ << double_;
-        BOOST_TEST(test("a1012.4", start, vec));
-
-        rule<outiter_type, char()> a;
-        rule<outiter_type, int()> b;
-        rule<outiter_type, double()> c;
-
-        a %= char_ << eps;
-        b %= int_;
-        c %= double_;
-        start = a[_1 = at_c<0>(_r0)] << b[_1 = at_c<1>(_r0)] << c[_1 = at_c<2>(_r0)];
-        BOOST_TEST(test("a1012.4", start, vec));
-
-        start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
-        BOOST_TEST(test("a1012.4", start, vec));
-
-        start %= a << b << c;
-        BOOST_TEST(test("a1012.4", start, vec));
-    }
-
-    // basic tests with delimiter
-    {
-        rule<outiter_type, space_type> start;
-
-        start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
-        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
-
-        start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
-        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
-
-        rule<outiter_type, space_type> a, b, c;
-        a = char_[_1 = 'a'];
-        b = int_[_1 = 10];
-        c = double_[_1 = 12.4];
-
-        start = a << b << c;
-        BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
-    }
-
-    // locals test
-    {
-        rule<outiter_type, locals<std::string> > start;
-
-        start = lit[_1 = "abc", _a = _1] << int_[_1 = 10] << lit[_1 = _a];
-        BOOST_TEST(test("abc10abc", start));
-    }
+//     {
+//         using boost::phoenix::at_c;
+//         
+//         rule<outiter_type, fusion::vector<char, int, double>()> start;
+//         fusion::vector<char, int, double> vec('a', 10, 12.4);
+// 
+//         start %= char_ << int_ << double_;
+//         BOOST_TEST(test("a1012.4", start, vec));
+// 
+//         rule<outiter_type, char()> a;
+//         rule<outiter_type, int()> b;
+//         rule<outiter_type, double()> c;
+// 
+//         a %= char_ << eps;
+//         b %= int_;
+//         c %= double_;
+//         start = a[_1 = at_c<0>(_r0)] << b[_1 = at_c<1>(_r0)] << c[_1 = at_c<2>(_r0)];
+//         BOOST_TEST(test("a1012.4", start, vec));
+// 
+//         start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
+//         BOOST_TEST(test("a1012.4", start, vec));
+// 
+//         start %= a << b << c;
+//         BOOST_TEST(test("a1012.4", start, vec));
+//     }
+// 
+//     // basic tests with delimiter
+//     {
+//         rule<outiter_type, space_type> start;
+// 
+//         start = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4];
+//         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
+// 
+//         start = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4];
+//         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
+// 
+//         rule<outiter_type, space_type> a, b, c;
+//         a = char_[_1 = 'a'];
+//         b = int_[_1 = 10];
+//         c = double_[_1 = 12.4];
+// 
+//         start = a << b << c;
+//         BOOST_TEST(test_delimited("a 10 12.4 ", start, space));
+//     }
+// 
+//     // locals test
+//     {
+//         rule<outiter_type, locals<std::string> > start;
+// 
+//         start = lit[_1 = "abc", _a = _1] << int_[_1 = 10] << lit[_1 = _a];
+//         BOOST_TEST(test("abc10abc", start));
+//     }
 
      //~ { // alias tests
          //~ typedef variant<char, int, double> var_type;
