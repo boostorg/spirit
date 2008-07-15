@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Quickstart 3 - Counting Words Using a Parser]
+[section:lexer_quickstart3 Quickstart 3 - Counting Words Using a Parser]
 
 The whole purpose of integrating __lex__ as part of the __spirit__ library was 
 to add a library allowing to merge lexical analysis with the parsing 

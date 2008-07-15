@@ -70,18 +70,18 @@
 [def __sec_qi_and_karma__       [link spirit.qi_and_karma Qi and Karma]]
 [def __sec_qi_karma_attributes__  [link spirit.qi_and_karma.abstracts.attributes Attributes]]
 
-[def __sec_lex__                [link spirit.__lex__ Lex]]
-[def __sec_lex_quickstart_1__   [link spirit.__lex__.__lex___tutorials.quickstart_1___a_word_counter_using___lex__ Lex Quickstart 1 - A word counter using __lex__]]
-[def __sec_lex_quickstart_2__   [link spirit.__lex__.__lex___tutorials.quickstart_2___a_better_word_counter_using___lex__ Lex Quickstart 2 - A better word counter using __lex__]]
-[def __sec_lex_quickstart_3__   [link spirit.__lex__.__lex___tutorials.quickstart_3___counting_words_using_a_parser Lex Quickstart 3 - Counting Words Using a Parser]]
+[def __sec_lex__                [link spirit.lex Lex]]
+[def __sec_lex_quickstart_1__   [link spirit.lex.tutorials.lexer_quickstart1 Lex Quickstart 1 - A word counter using __lex__]]
+[def __sec_lex_quickstart_2__   [link spirit.lex.tutorials.lexer_quickstart2 Lex Quickstart 2 - A better word counter using __lex__]]
+[def __sec_lex_quickstart_3__   [link spirit.lex.tutorials.lexer_quickstart3 Lex Quickstart 3 - Counting Words Using a Parser]]
 
-[def __sec_lex_static_model__   [link spirit.__lex__.abstracts.the__static__lexer_model The /Static/ Model]]
-[def __sec_lex_primitives__     [link spirit.__lex__.abstracts.lexer_primitives Lexer Primitives]]
-[def __sec_lex_tokenvalues__    [link spirit.__lex__.abstracts.lexer_primitives.about_tokens_and_token_values About Tokens and Token Values]]
-[def __sec_lex_attributes__     [link spirit.__lex__.abstracts.lexer_attributes Lexer Attributes]]
+[def __sec_lex_static_model__   [link spirit.lex.abstracts.lexer_static_model The /Static/ Model]]
+[def __sec_lex_primitives__     [link spirit.lex.abstracts.lexer_primitives Lexer Primitives]]
+[def __sec_lex_tokenvalues__    [link spirit.lex.abstracts.lexer_primitives.lexer_token_values About Tokens and Token Values]]
+[def __sec_lex_attributes__     [link spirit.lex.abstracts.lexer_attributes Lexer Attributes]]
 
-[def __sec_ref_lex_token__      [link spirit.__lex__.reference.concepts.token Token Reference]]
-[def __sec_ref_lex_token_def__  [link spirit.__lex__.reference.concepts.tokendef TokenDef Reference]]
+[def __sec_ref_lex_token__      [link spirit.lex.reference.concepts.token Token Reference]]
+[def __sec_ref_lex_token_def__  [link spirit.lex.reference.concepts.tokendef TokenDef Reference]]
 
 [/ References to API descriptions ]
 
@@ -91,11 +91,11 @@
 
 [/ References to classes ]
 
-[def __class_token_def__        [link spirit.__lex__.reference.tokendef_class `token_def<>`]]
+[def __class_token_def__        [link spirit.lex.reference.tokendef_class `token_def<>`]]
 
-[def __class_lexertl_token__    [link spirit.__lex__.reference.token_class `lexertl_token<>`]]
-[def __class_lexertl_lexer__    [link spirit.__lex__.reference.lexer_class.the_lexertl_lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
-[def __class_lexertl_static_lexer__ [link spirit.__lex__.reference.lexer_class.the_lexertl_static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
+[def __class_lexertl_token__    [link spirit.lex.reference.token_class `lexertl_token<>`]]
+[def __class_lexertl_lexer__    [link spirit.lex.reference.lexer_class.the_lexertl_lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
+[def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer_class.the_lexertl_static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
 
 
 [/ Some images ]

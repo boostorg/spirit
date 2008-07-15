@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Quickstart 2 - A better word counter using __lex__]
+[section:lexer_quickstart2 Quickstart 2 - A better word counter using __lex__]
 
 People knowing __flex__ will probably complain about the example from the 
 section __sec_lex_quickstart_1__ as being overly complex and not being 

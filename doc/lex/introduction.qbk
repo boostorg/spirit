@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Introduction to __lex__]
+[section:lexer_introduction Introduction to __lex__]
 
 Lexical scanning is the process of analyzing the stream of input characters and 
 separating it into strings called tokens, separated by whitespace. 
@@ -49,7 +49,7 @@ be very useful in practical applications. In 1956, Noam Chomsky defined the
 * Type 3:  Regular grammars
 
 The complexity of these grammars increases from regular grammars being the 
-simplest to unrestricted grammars being the most complex. Similarily, the 
+simplest to unrestricted grammars being the most complex. Similarly, the 
 complexity of the recognizers for these grammars increases. Although, a few 
 features of some programming languages (such as C++) are Type 1, fortunately 
 for the most part programming languages can be described using only the Types 3 
@@ -133,5 +133,22 @@ into your C++ program, building the lexical analyzer dynamicly at runtime. The
 dynamic model is something not supported by __flex__ or other lexical scanner 
 generators (such as __re2c__, __ragel__, etc.). But it is very flexible and 
 allows to speed up the development of your application.
+
+[heading The Library Structure of __lex__]
+
+The [link spirit.lexerflow figure] below shows a high level overview of how the 
+__lex__ library might be used in an application. __lex__ allows to create 
+lexical analyzers based on patterns. These patterns are regular expression 
+based rules used to define the different tokens to be recognized in the 
+character input sequence. The input sequence is expected to be provided to the
+lexical analyzer as an arbitrary standard forward iterator. The lexical 
+analyzer itself exposes a standard forward iterator as well. The difference 
+here is that the exposed iterator provides access to the token sequence instead
+of to the character sequence. The tokens in this sequence are constructed on 
+the fly by analyzing the underlying character sequence and 
+matching this to the patterns as defined by the application.
+
+[fig ./images/lexerflow.png..The Library structure and Common Flow of Information while using __lex__ in an application..spirit.lexerflow]
+
 
 [endsect]

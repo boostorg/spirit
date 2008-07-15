@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section About Tokens and Token Values]
+[section:lexer_token_values About Tokens and Token Values]
 
 As already discussed, lexical scanning is the process of analyzing the stream 
 of input characters and separating it into strings called tokens, most of the 
