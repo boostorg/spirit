@@ -20,6 +20,9 @@ namespace boost { namespace spirit { namespace lex
     {
     public:
         typedef std::vector<std::size_t> size_t_vector;
+        typedef 
+            typename boost::detail::iterator_traits<Iterator>::value_type 
+        char_type;
 
 //         static std::size_t next (const std::size_t * const lookup_,
 //             std::size_t const dfa_alphabet_, const std::size_t *  const dfa_,
@@ -93,7 +96,8 @@ namespace boost { namespace spirit { namespace lex
 //             return id_;
 //         }
 
-        static std::size_t next (boost::lexer::state_machine const& state_machine_,
+        static std::size_t next (
+            boost::lexer::basic_state_machine<char_type> const& state_machine_,
             std::size_t &dfa_state_, Iterator const& start_,
             Iterator &start_token_, Iterator const& end_)
         {
@@ -186,7 +190,8 @@ namespace boost { namespace spirit { namespace lex
 
         ///////////////////////////////////////////////////////////////////////
         static 
-        std::size_t next (boost::lexer::state_machine const& state_machine_,
+        std::size_t next (
+            boost::lexer::basic_state_machine<char_type> const& state_machine_,
             Iterator const& start_, Iterator &start_token_, Iterator const& end_)
         {
             if (start_token_ == end_) return 0;

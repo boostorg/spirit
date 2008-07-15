@@ -1,5 +1,5 @@
 // rules.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +21,6 @@ namespace boost
 {
 namespace lexer
 {
-
 namespace detail
 {
     // return name of initial state
@@ -31,13 +30,19 @@ namespace detail
     template <>
     struct initial<char>
     {
-        static char const* call() { return "INITIAL"; }
+        static const char *str ()
+        {
+            return "INITIAL";
+        }
     };
 
     template <>
     struct initial<wchar_t>
     {
-        static wchar_t const* call() { return L"INITIAL"; }
+        static const wchar_t *str ()
+        {
+            return L"INITIAL";
+        }
     };
 }
 
@@ -57,11 +62,11 @@ public:
     typedef std::pair<string, std::size_t> string_size_t_pair;
 
     basic_rules (const bool case_sensitive_ = true,
-        const bool dot_not_newline_ = false) :
+        const bool dot_not_newline_ = true) :
         _case_sensitive (case_sensitive_),
         _dot_not_newline (dot_not_newline_)
     {
-        add_state (detail::initial<CharT>::call());
+        add_state (initial ());
     }
 
     void clear ()
@@ -75,8 +80,7 @@ public:
         _case_sensitive = true;
         _locale = std::locale ();
         _dot_not_newline = false;
-
-        add_state (detail::initial<CharT>::call());
+        add_state (initial ());
     }
 
     void clear (const CharT *state_name_)
@@ -312,9 +316,9 @@ public:
         return empty_;
     }
 
-    static CharT const* initial() 
+    static const CharT *initial ()
     {
-        return detail::initial<CharT>::call();
+        return detail::initial<CharT>::str ();
     }
 
 private:

@@ -1,5 +1,5 @@
 // state_machine.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,7 +7,7 @@
 #define BOOST_LEXER_STATE_MACHINE_HPP
 
 #include <algorithm>
-#include "char_state_machine.hpp"
+#include "conversion/char_state_machine.hpp"
 #include "consts.hpp"
 #include <deque>
 #include <map>
@@ -19,27 +19,214 @@ namespace boost
 {
 namespace lexer
 {
-struct state_machine
+template<typename CharT>
+class basic_state_machine
 {
-    typedef std::vector<std::size_t> size_t_vector;
-    typedef internal::ptr_vector<size_t_vector> size_t_vector_vector;
+public:
+    class iterator
+    {
+    public:
+#if defined _MSC_VER && _MSC_VER <= 1200
+        friend basic_state_machine;
+#else
+        friend class basic_state_machine;
+#endif
 
-    size_t_vector_vector _lookup;
-    size_t_vector _dfa_alphabet;
-    size_t_vector_vector _dfa;
-    bool _seen_BOL_assertion;
-    bool _seen_EOL_assertion;
+        struct data
+        {
+            // Current iterator info
+            std::size_t dfa;
+            std::size_t states;
+            std::size_t state;
+            std::size_t transitions;
+            std::size_t transition;
 
-    state_machine () :
+            // Current state info
+            bool end_state;
+            std::size_t id;
+            std::size_t goto_dfa;
+            std::size_t bol_index;
+            std::size_t eol_index;
+
+            // Current transition info
+            basic_string_token<CharT> token;
+            std::size_t goto_state;
+
+            data () :
+                dfa (npos),
+                states (0),
+                state (npos),
+                transitions (0),
+                transition (npos),
+                end_state (false),
+                id (npos),
+                goto_dfa (npos),
+                bol_index (npos),
+                eol_index (npos),
+                goto_state (npos)
+            {
+            }
+
+            bool operator == (const data &rhs_) const
+            {
+                return dfa == rhs_.dfa &&
+                    states == rhs_.states &&
+                    state == rhs_.state &&
+                    transitions == rhs_.transitions &&
+                    transition == rhs_.transition &&
+                    end_state == rhs_.end_state &&
+                    id == rhs_.id &&
+                    goto_dfa == rhs_.goto_dfa &&
+                    bol_index == rhs_.bol_index &&
+                    eol_index == rhs_.eol_index &&
+                    token == rhs_.token &&
+                    transition == rhs_.transition;
+            }
+        };
+
+        iterator () :
+            _sm (0),
+            _dfas (0),
+            _dfa (npos),
+            _states (0),
+            _state (npos),
+            _transitions (0),
+            _transition (npos)
+        {
+        }
+
+        bool operator == (const iterator &rhs_) const
+        {
+            return _dfas == rhs_._dfas && _dfa == rhs_._dfa &&
+                _states == rhs_._states && _state == rhs_._state &&
+                _transitions == rhs_._transitions &&
+                _transition == rhs_._transition;
+        }
+
+        bool operator != (const iterator &rhs_) const
+        {
+            return !(*this == rhs_);
+        }
+
+        data &operator * ()
+        {
+            return _data;
+        }
+
+        data *operator -> ()
+        {
+            return &_data;
+        }
+
+        // Let compiler generate operator = ().
+
+        // prefix version
+        iterator &operator ++ ()
+        {
+            next ();
+            return *this;
+        }
+
+        // postfix version
+        iterator operator ++ (int)
+        {
+            iterator iter_ = *this;
+
+            next ();
+            return iter_;
+        }
+
+        void clear ()
+        {
+            _dfas = _states = _transitions = 0;
+            _dfa = _state = _transition = npos;
+        }
+
+    private:
+        basic_state_machine *_sm;
+        data _data;
+        std::size_t _dfas;
+        std::size_t _dfa;
+        std::size_t _states;
+        std::size_t _state;
+        std::size_t _transitions;
+        std::size_t _transition;
+        typename detail::basic_char_state_machine<CharT>::state::
+            size_t_string_token_map::const_iterator _token_iter;
+        typename detail::basic_char_state_machine<CharT>::state::
+            size_t_string_token_map::const_iterator _token_end;
+
+        void next ()
+        {
+            bool reset_state_ = false;
+
+            if (_transition >= _transitions)
+            {
+                _transition = _data.transition = 0;
+                _data.state = ++_state;
+                reset_state_ = true;
+
+                if (_state >= _states)
+                {
+                    ++_dfa;
+
+                    if (_dfa >= _dfas)
+                    {
+                        clear ();
+                        reset_state_ = false;
+                    }
+                    else
+                    {
+                        _states = _sm->_csm._sm_vector[_dfa].size ();
+                        _state = _data.state = 0;
+                    }
+                }
+            }
+            else
+            {
+                _data.transition = _transition;
+            }
+
+            if (reset_state_)
+            {
+                const typename detail::basic_char_state_machine<CharT>::
+                    state *ptr_ = &_sm->_csm._sm_vector[_dfa][_state];
+
+                _transitions = _data.transitions = ptr_->_transitions.size ();
+                _data.end_state = ptr_->_end_state;
+                _data.id = ptr_->_id;
+                _data.goto_dfa = ptr_->_state;
+                _data.bol_index = ptr_->_bol_index;
+                _data.eol_index = ptr_->_eol_index;
+                _token_iter = ptr_->_transitions.begin ();
+                _token_end = ptr_->_transitions.end ();
+            }
+
+            if (_token_iter != _token_end)
+            {
+                _data.token = _token_iter->second;
+                _data.goto_state = _token_iter->first;
+                ++_token_iter;
+                ++_transition;
+            }
+            else
+            {
+                _data.token.clear ();
+                _data.goto_state = npos;
+            }
+        }
+    };
+
+#if defined _MSC_VER && _MSC_VER <= 1200
+    friend iterator;
+#else
+    friend class iterator;
+#endif
+
+    basic_state_machine () :
         _seen_BOL_assertion (false),
         _seen_EOL_assertion (false)
     {
-    }
-
-    bool empty () const
-    {
-        return _lookup->empty () && _dfa_alphabet.empty () &&
-            _dfa->empty ();
     }
 
     void clear ()
@@ -49,19 +236,104 @@ struct state_machine
         _dfa.clear ();
         _seen_BOL_assertion = false;
         _seen_EOL_assertion = false;
+        _csm.clear ();
     }
 
-    void swap (state_machine &sm_)
+    bool empty () const
+    {
+        // Don't include _csm in this test, as irrelevant to state.
+        return _lookup->empty () && _dfa_alphabet.empty () &&
+            _dfa->empty ();
+    }
+
+    std::size_t size () const
+    {
+        return _dfa->size ();
+    }
+
+    bool operator == (const basic_state_machine &rhs_) const
+    {
+        // Don't include _csm in this test, as irrelevant to state.
+        return _lookup == rhs_._lookup &&
+            _dfa_alphabet == rhs_._dfa_alphabet &&
+            _dfa == rhs_._dfa &&
+            _seen_BOL_assertion == rhs_._seen_BOL_assertion &&
+            _seen_EOL_assertion == rhs_._seen_EOL_assertion;
+    }
+
+    iterator begin () const
+    {
+        iterator iter_;
+
+        iter_._sm = const_cast<basic_state_machine *>(this);
+        check_for_csm ();
+
+        if (!_csm.empty())
+        {
+            const typename detail::basic_char_state_machine<CharT>::
+                state_vector *ptr_ = &_csm._sm_vector[0];
+
+            iter_._dfas = _csm._sm_vector.size ();
+            iter_._states = iter_._data.states = ptr_->size ();
+            iter_._transitions = iter_._data.transitions =
+            ptr_->front ()._transitions.size ();
+            iter_._dfa = iter_._data.dfa = 0;
+            iter_._state = iter_._data.state = 0;
+            iter_._transition = 0;
+            iter_._data.end_state = ptr_->front ()._end_state;
+            iter_._data.id = ptr_->front ()._id;
+            iter_._data.goto_dfa = ptr_->front ()._state;
+            iter_._data.bol_index = ptr_->front ()._bol_index;
+            iter_._data.eol_index = ptr_->front ()._eol_index;
+            iter_._token_iter = ptr_->front ()._transitions.begin ();
+            iter_._token_end = ptr_->front ()._transitions.end ();
+            ++iter_;
+        }
+
+        return iter_;
+    }
+
+    iterator end () const
+    {
+        iterator iter_;
+
+        iter_._sm = const_cast<basic_state_machine *>(this);
+        return iter_;
+    }
+
+    void swap (basic_state_machine &sm_)
     {
         _lookup->swap (*sm_._lookup);
         _dfa_alphabet.swap (sm_._dfa_alphabet);
         _dfa->swap (*sm_._dfa);
         std::swap (_seen_BOL_assertion, sm_._seen_BOL_assertion);
         std::swap (_seen_EOL_assertion, sm_._seen_EOL_assertion);
+        _csm.swap (sm_._csm);
     }
 
-    template<typename CharT>
-    void human_readable (basic_char_state_machine<CharT> &sm_) const
+// VC++ 6, 7.1 and 8 can't cope with template friend classes!
+#if !(defined _MSC_VER && _MSC_VER < 1500)
+private:
+#endif
+    typedef std::vector<std::size_t> size_t_vector;
+    typedef detail::ptr_vector<size_t_vector> size_t_vector_vector;
+
+    size_t_vector_vector _lookup;
+    size_t_vector _dfa_alphabet;
+    size_t_vector_vector _dfa;
+    bool _seen_BOL_assertion;
+    bool _seen_EOL_assertion;
+    mutable detail::basic_char_state_machine<CharT> _csm;
+
+    void check_for_csm () const
+    {
+        if (_csm.empty ())
+        {
+            human_readable (_csm);
+        }
+    }
+
+    void human_readable (detail::basic_char_state_machine<CharT> &sm_) const
     {
         const std::size_t max_ = sizeof (CharT) == 1 ?
             num_chars : num_wchar_ts;
@@ -98,8 +370,9 @@ struct state_machine
             for (std::size_t state_index_ = 1; state_index_ < states_;
                 ++state_index_)
             {
-                typename basic_char_state_machine<CharT>::state *state_ =
-                    &sm_._sm_vector[start_state_index_][state_index_ - 1];
+                typename detail::basic_char_state_machine<CharT>::state
+                    *state_ = &sm_._sm_vector[start_state_index_]
+                    [state_index_ - 1];
 
                 state_->_end_state = *read_ptr_ != 0;
                 state_->_id = *(read_ptr_ + id_index);
@@ -116,15 +389,15 @@ struct state_machine
                     if (transition_ != 0)
                     {
                         const std::size_t i_ = transition_ - 1;
-                        typename basic_char_state_machine<CharT>::state::
-                            size_t_string_token_map::iterator iter_ =
+                        typename detail::basic_char_state_machine<CharT>::
+                            state::size_t_string_token_map::iterator iter_ =
                             state_->_transitions.find (i_);
 
                         if (iter_ == state_->_transitions.end ())
                         {
                             basic_string_token<CharT> token_
                                 (false, chars_[col_index_]);
-                            typename basic_char_state_machine<CharT>::
+                            typename detail::basic_char_state_machine<CharT>::
                                 state::size_t_string_token_pair pair_
                                 (i_, token_);
 
@@ -137,7 +410,7 @@ struct state_machine
                     }
                 }
 
-                for (typename basic_char_state_machine<CharT>::state::
+                for (typename detail::basic_char_state_machine<CharT>::state::
                     size_t_string_token_map::iterator iter_ =
                     state_->_transitions.begin (),
                     end_ = state_->_transitions.end ();
@@ -150,7 +423,25 @@ struct state_machine
             }
         }
     }
+
+#if !(defined _MSC_VER && _MSC_VER < 1500)
+    template<typename ChT, typename Traits>
+    friend class basic_file_input;
+
+    template<typename ChT, typename Traits>
+    friend class basic_generator;
+
+    template<typename FwdIter, typename Traits>
+    friend class basic_input;
+
+    template<typename ChT, class Archive>
+    friend void serialise (basic_state_machine &sm_, Archive &ar_,
+        unsigned int version_);
+#endif
 };
+
+typedef basic_state_machine<char> state_machine;
+typedef basic_state_machine<wchar_t> wstate_machine;
 }
 }
 

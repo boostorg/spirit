@@ -1,5 +1,5 @@
 // node.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,7 @@ namespace boost
 {
 namespace lexer
 {
-namespace internal
+namespace detail
 {
 class node
 {
@@ -64,7 +64,7 @@ public:
 
     virtual void append_followpos (const node_vector &/*followpos_*/)
     {
-        throw runtime_error ("Internal error node::append_followpos");
+        throw runtime_error ("Internal error node::append_followpos()");
     }
 
     node *copy (node_ptr_vector &node_ptr_vector_) const
@@ -129,27 +129,37 @@ public:
 
     virtual std::size_t id () const
     {
-        throw runtime_error ("Internal error node::id");
+        throw runtime_error ("Internal error node::id()");
     }
 
     virtual std::size_t lexer_state () const
     {
-        throw runtime_error ("Internal error node::state");
+        throw runtime_error ("Internal error node::state()");
     }
 
     virtual std::size_t token () const
     {
-        throw runtime_error ("Internal error node::token");
+        throw runtime_error ("Internal error node::token()");
+    }
+
+    virtual void greedy (const bool /*greedy_*/)
+    {
+        throw runtime_error ("Internal error node::token(bool)");
+    }
+
+    virtual bool greedy () const
+    {
+        throw runtime_error ("Internal error node::token()");
     }
 
     virtual const node_vector &followpos () const
     {
-        throw runtime_error ("Internal error node::followpos");
+        throw runtime_error ("Internal error node::followpos()");
     }
 
     virtual node_vector &followpos ()
     {
-        throw runtime_error ("Internal error node::followpos");
+        throw runtime_error ("Internal error node::followpos()");
     }
 
 protected:

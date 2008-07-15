@@ -1,5 +1,5 @@
 // string_token.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -49,7 +49,7 @@ struct basic_string_token
 
     void normalise ()
     {
-        const std::size_t max_chars_ = sizeof(CharT) == 1 ?
+        const std::size_t max_chars_ = sizeof (CharT) == 1 ?
             num_chars : num_wchar_ts;
 
         if (_charset.length () == max_chars_)
@@ -69,7 +69,7 @@ struct basic_string_token
 
     void negate ()
     {
-        const std::size_t max_chars_ = sizeof(CharT) == 1 ?
+        const std::size_t max_chars_ = sizeof (CharT) == 1 ?
             num_chars : num_wchar_ts;
         CharT curr_char_ = sizeof (CharT) == 1 ? -128 : 0;
         string temp_;
@@ -135,7 +135,7 @@ struct basic_string_token
 
     void intersect (basic_string_token &rhs_, basic_string_token &overlap_)
     {
-        if ((any () && rhs_.any ()) || (_negated == rhs_._negated &&
+        if (any () && rhs_.any () || (_negated == rhs_._negated &&
             !any () && !rhs_.any ()))
         {
             intersect_same_types (rhs_, overlap_);

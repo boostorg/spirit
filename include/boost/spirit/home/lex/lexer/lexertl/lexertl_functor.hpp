@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace lex
             std::size_t get_state() const { return 0; }
             void set_state_name (char_type const* state) {}
 
-            boost::lexer::state_machine const& state_machine;
+            boost::lexer::basic_state_machine<char_type> const& state_machine;
             boost::lexer::basic_rules<char_type> const& rules;
             Iterator& first;
             Iterator last;

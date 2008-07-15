@@ -67,7 +67,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
     // Generate a tokenizer for the given state machine.
     template <typename Char>
     inline bool 
-    generate_cpp (boost::lexer::state_machine const& sm_, 
+    generate_cpp (boost::lexer::basic_state_machine<Char> const& sm_, 
         boost::lexer::basic_rules<Char> const& rules_, 
         std::ostream &os_, char const* name_suffix = "", 
         bool skip_on_nomatch = true, bool optimize_parameters = true)

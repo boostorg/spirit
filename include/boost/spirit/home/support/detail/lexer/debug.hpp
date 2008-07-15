@@ -1,5 +1,5 @@
 // debug.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -112,55 +112,56 @@ public:
         }
     }
 
-    static void dump (const state_machine &state_machine_, ostream &stream_)
+    static void dump (const basic_state_machine<CharT> &state_machine_, ostream &stream_)
     {
-        basic_char_state_machine<CharT> char_state_machine_;
+        typename basic_state_machine<CharT>::iterator iter_ =
+            state_machine_.begin ();
+        typename basic_state_machine<CharT>::iterator end_ =
+            state_machine_.end ();
 
-        state_machine_.human_readable (char_state_machine_);
-
-        for (std::size_t state_ = 0,
-            states_ = char_state_machine_._sm_vector.size ();
-            state_ < states_; ++state_)
+        for (std::size_t dfa_ = 0, dfas_ = state_machine_.size ();
+            dfa_ < dfas_; ++dfa_)
         {
-            const typename basic_char_state_machine<CharT>::state *ptr_ =
-                &char_state_machine_._sm_vector[state_].front ();
-            const std::size_t size_ = char_state_machine_.
-                _sm_vector[state_].size ();
+            const std::size_t states_ = iter_->states;
 
-            for (std::size_t i_ = 0; i_ < size_; ++i_, ++ptr_)
+            for (std::size_t i_ = 0; i_ < states_; ++i_)
             {
                 state (stream_);
                 stream_ << i_ << std::endl;
 
-                if (ptr_->_end_state)
+                if (iter_->end_state)
                 {
                     end_state (stream_);
-                    stream_ << ptr_->_id;
+                    stream_ << iter_->id;
                     dfa (stream_);
-                    stream_ << ptr_->_state;
+                    stream_ << iter_->goto_dfa;
                     stream_ << std::endl;
                 }
 
-                if (ptr_->_bol_index != npos)
+                if (iter_->bol_index != npos)
                 {
                     bol (stream_);
-                    stream_ << ptr_->_bol_index << std::endl;
+                    stream_ << iter_->bol_index << std::endl;
                 }
 
-                if (ptr_->_eol_index != npos)
+                if (iter_->eol_index != npos)
                 {
                     eol (stream_);
-                    stream_ << ptr_->_eol_index << std::endl;
+                    stream_ << iter_->eol_index << std::endl;
                 }
 
-                for (typename basic_char_state_machine<CharT>::state::
-                    size_t_string_token_map::const_iterator iter_ = ptr_->
-                    _transitions.begin (), end_ = ptr_->_transitions.end ();
-                    iter_ != end_; ++iter_)
-                {
-                    std::size_t transition_ = iter_->first;
+                const std::size_t transitions_ = iter_->transitions;
 
-                    if (iter_->second.any ())
+                if (transitions_ == 0)
+                {
+                    ++iter_;
+                }
+
+                for (std::size_t t_ = 0; t_ < transitions_; ++t_)
+                {
+                    std::size_t goto_state_ = iter_->goto_state;
+
+                    if (iter_->token.any ())
                     {
                         any (stream_);
                     }
@@ -168,20 +169,30 @@ public:
                     {
                         open_bracket (stream_);
 
-                        if (iter_->second._negated)
+                        if (iter_->token._negated)
                         {
                             negated (stream_);
                         }
 
                         string charset_;
+                        CharT c_ = 0;
 
-                        escape_control_chars (iter_->second._charset,
+                        escape_control_chars (iter_->token._charset,
                             charset_);
+                        c_ = *charset_.c_str ();
+
+                        if (!iter_->token._negated &&
+                            (c_ == '^' || c_ == ']'))
+                        {
+                            stream_ << '\\';
+                        }
+
                         stream_ << charset_;
                         close_bracket (stream_);
                     }
 
-                    stream_ << transition_ << std::endl;
+                    stream_ << goto_state_ << std::endl;
+                    ++iter_;
                 }
 
                 stream_ << std::endl;

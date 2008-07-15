@@ -1,13 +1,14 @@
 // generator.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #ifndef BOOST_LEXER_GENERATOR_HPP
 #define BOOST_LEXER_GENERATOR_HPP
 
-#include <cstring>    // memcmp
 #include "char_traits.hpp"
+// memcmp()
+#include <cstring>
 #include "partition/charset.hpp"
 #include "partition/equivset.hpp"
 #include <memory>
@@ -25,10 +26,10 @@ template<typename CharT, typename Traits = char_traits<CharT> >
 class basic_generator
 {
 public:
-    typedef state_machine::size_t_vector size_t_vector;
+    typedef typename basic_state_machine<CharT>::size_t_vector size_t_vector;
     typedef basic_rules<CharT> rules;
 
-    static void build (const rules &rules_, state_machine &state_machine_)
+    static void build (const rules &rules_, basic_state_machine<CharT> &state_machine_)
     {
         std::size_t index_ = 0;
         std::size_t size_ = rules_.statemap ().size ();
@@ -56,7 +57,7 @@ public:
                 // vector mapping token indexes to partitioned token index sets
                 index_set_vector set_mapping_;
                 // syntax tree
-                internal::node *root_ = build_tree (rules_, index_,
+                detail::node *root_ = build_tree (rules_, index_,
                     node_ptr_vector_, state_machine_._lookup[index_],
                     set_mapping_, state_machine_._dfa_alphabet[index_],
                     state_machine_._seen_BOL_assertion,
@@ -69,7 +70,7 @@ public:
         }
     }
 
-    static void minimise (state_machine &state_machine_)
+    static void minimise (basic_state_machine<CharT> &state_machine_)
     {
         const std::size_t machines_ = state_machine_._dfa->size ();
 
@@ -92,30 +93,30 @@ public:
     }
 
 protected:
-    typedef internal::basic_charset<CharT> charset;
-    typedef internal::ptr_list<charset> charset_list;
+    typedef detail::basic_charset<CharT> charset;
+    typedef detail::ptr_list<charset> charset_list;
     typedef std::auto_ptr<charset> charset_ptr;
-    typedef internal::equivset equivset;
-    typedef internal::ptr_list<equivset> equivset_list;
+    typedef detail::equivset equivset;
+    typedef detail::ptr_list<equivset> equivset_list;
     typedef std::auto_ptr<equivset> equivset_ptr;
     typedef typename charset::index_set index_set;
     typedef std::vector<index_set> index_set_vector;
-    typedef internal::basic_parser<CharT> parser;
+    typedef detail::basic_parser<CharT> parser;
     typedef typename parser::node_ptr_vector node_ptr_vector;
-    typedef std::set<const internal::node *> node_set;
-    typedef internal::ptr_vector<node_set> node_set_vector;
-    typedef std::vector<const internal::node *> node_vector;
-    typedef internal::ptr_vector<node_vector> node_vector_vector;
+    typedef std::set<const detail::node *> node_set;
+    typedef detail::ptr_vector<node_set> node_set_vector;
+    typedef std::vector<const detail::node *> node_vector;
+    typedef detail::ptr_vector<node_vector> node_vector_vector;
     typedef typename parser::string string;
     typedef std::pair<string, string> string_pair;
     typedef typename parser::tokeniser::string_token string_token;
     typedef std::deque<string_pair> macro_deque;
-    typedef std::pair<string, const internal::node *> macro_pair;
+    typedef std::pair<string, const detail::node *> macro_pair;
     typedef typename parser::macro_map::iterator macro_iter;
     typedef std::pair<macro_iter, bool> macro_iter_pair;
     typedef typename parser::tokeniser::token_map token_map;
 
-    static internal::node *build_tree (const rules &rules_,
+    static detail::node *build_tree (const rules &rules_,
         const std::size_t state_, node_ptr_vector &node_ptr_vector_,
         size_t_vector *lookup_, index_set_vector &set_mapping_,
         std::size_t &dfa_alphabet_, bool &seen_BOL_assertion_,
@@ -139,14 +140,14 @@ protected:
         const typename rules::string_pair_deque &macrodeque_ =
             rules_.macrodeque ();
         typename parser::macro_map macromap_;
-        typename internal::node::node_vector tree_vector_;
+        typename detail::node::node_vector tree_vector_;
 
         build_macros (token_map_, macrodeque_, macromap_,
             rules_.case_sensitive (), rules_.locale (), node_ptr_vector_,
             rules_.dot_not_newline (), seen_BOL_assertion_,
             seen_EOL_assertion_);
 
-        internal::node *root_ = parser::parse (regex_.c_str (),
+        detail::node *root_ = parser::parse (regex_.c_str (),
             regex_.c_str () + regex_.size (), *ids_iter_, *states_iter_,
             rules_.case_sensitive (), rules_.dot_not_newline (),
             rules_.locale (), node_ptr_vector_, macromap_, token_map_,
@@ -178,9 +179,9 @@ protected:
         if (seen_BOL_assertion_)
         {
             // Fixup BOLs
-            typename internal::node::node_vector::iterator iter_ =
+            typename detail::node::node_vector::iterator iter_ =
                 tree_vector_.begin ();
-            typename internal::node::node_vector::iterator end_ =
+            typename detail::node::node_vector::iterator end_ =
                 tree_vector_.end ();
 
             for (; iter_ != end_; ++iter_)
@@ -191,9 +192,9 @@ protected:
 
         // join trees
         {
-            typename internal::node::node_vector::iterator iter_ =
+            typename detail::node::node_vector::iterator iter_ =
                 tree_vector_.begin ();
-            typename internal::node::node_vector::iterator end_ =
+            typename detail::node::node_vector::iterator end_ =
                 tree_vector_.end ();
 
             if (iter_ != end_)
@@ -205,7 +206,7 @@ protected:
             for (; iter_ != end_; ++iter_)
             {
                 node_ptr_vector_->push_back (0);
-                node_ptr_vector_->back () = new internal::selection_node
+                node_ptr_vector_->back () = new detail::selection_node
                     (root_, *iter_);
                 root_ = node_ptr_vector_->back ();
             }
@@ -256,7 +257,7 @@ protected:
         {
             const typename rules::string &name_ = iter_->first;
             const typename rules::string &regex_ = iter_->second;
-            internal::node *node_ = parser::parse (regex_.c_str (),
+            detail::node *node_ = parser::parse (regex_.c_str (),
                 regex_.c_str () + regex_.size (), 0, 0, case_sensitive_,
                 not_dot_newline_, locale_, node_ptr_vector_, macromap_,
                 token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
@@ -267,11 +268,11 @@ protected:
         }
     }
 
-    static void build_dfa (internal::node *root_,
+    static void build_dfa (detail::node *root_,
         const index_set_vector &set_mapping_, const std::size_t dfa_alphabet_,
         size_t_vector &dfa_)
     {
-        typename internal::node::node_vector *followpos_ =
+        typename detail::node::node_vector *followpos_ =
             &root_->firstpos ();
         node_set_vector seen_sets_;
         node_vector_vector seen_vectors_;
@@ -302,7 +303,10 @@ protected:
                 {
                     ptr_ = &dfa_.front () + ((index_ + 1) * dfa_alphabet_);
 
-                    for (typename internal::equivset::index_vector::const_iterator
+                    // Prune abstemious transitions from end states.
+                    if (*ptr_ && !equivset_->_greedy) continue;
+
+                    for (typename detail::equivset::index_vector::const_iterator
                         equiv_iter_ = equivset_->_index_vector.begin (),
                         equiv_end_ = equivset_->_index_vector.end ();
                         equiv_iter_ != equiv_end_; ++equiv_iter_)
@@ -333,7 +337,7 @@ protected:
         }
     }
 
-    static std::size_t closure (typename internal::node::node_vector *followpos_,
+    static std::size_t closure (typename detail::node::node_vector *followpos_,
         node_set_vector &seen_sets_, node_vector_vector &seen_vectors_,
         size_t_vector &hash_vector_, const std::size_t size_, size_t_vector &dfa_)
     {
@@ -348,12 +352,12 @@ protected:
         std::auto_ptr<node_set> set_ptr_ (new node_set);
         std::auto_ptr<node_vector> vector_ptr_ (new node_vector);
 
-        for (typename internal::node::node_vector::const_iterator iter_ =
+        for (typename detail::node::node_vector::const_iterator iter_ =
             followpos_->begin (), end_ = followpos_->end ();
             iter_ != end_; ++iter_)
         {
-            closure_ex (*iter_, end_state_, id_, state_, followpos_,
-                set_ptr_.get (), vector_ptr_.get (), hash_);
+            closure_ex (*iter_, end_state_, id_, state_, set_ptr_.get (),
+                vector_ptr_.get (), hash_);
         }
 
         bool found_ = false;
@@ -399,9 +403,8 @@ protected:
         return index_;
     }
 
-    static void closure_ex (internal::node *node_, bool &end_state_,
-        std::size_t &id_, std::size_t &state_,
-        typename internal::node::node_vector * /*followpos_*/, node_set *set_ptr_,
+    static void closure_ex (detail::node *node_, bool &end_state_,
+        std::size_t &id_, std::size_t &state_, node_set *set_ptr_,
         node_vector *vector_ptr_, std::size_t &hash_)
     {
         const bool temp_end_state_ = node_->end_state ();
@@ -529,7 +532,7 @@ protected:
 
         if (token_._negated)
         {
-            CharT curr_char_ = sizeof(CharT) == 1 ? -128 : 0;
+            CharT curr_char_ = sizeof (CharT) == 1 ? -128 : 0;
             std::size_t i_ = 0;
 
             while (curr_ < chars_end_)
@@ -655,7 +658,7 @@ protected:
 
         for (; iter_ != end_; ++iter_)
         {
-            const internal::node *node_ = *iter_;
+            const detail::node *node_ = *iter_;
 
             if (!node_->end_state ())
             {
@@ -671,31 +674,31 @@ protected:
 
                         index_set_.insert (token_);
                         list_->back () = new equivset (index_set_,
-                            node_->followpos ());
+                            node_->greedy (), node_->token (), node_->followpos ());
                     }
                     else
                     {
                         list_->back () = new equivset (set_mapping_[token_],
-                            node_->followpos ());
+                            node_->greedy (), node_->token (), node_->followpos ());
                     }
                 }
             }
         }
     }
 
-    static void fixup_bol (internal::node * &root_,
+    static void fixup_bol (detail::node * &root_,
         node_ptr_vector &node_ptr_vector_)
     {
-        typename internal::node::node_vector *first_ = &root_->firstpos ();
+        typename detail::node::node_vector *first_ = &root_->firstpos ();
         bool found_ = false;
-        typename internal::node::node_vector::const_iterator iter_ =
+        typename detail::node::node_vector::const_iterator iter_ =
             first_->begin ();
-        typename internal::node::node_vector::const_iterator end_ =
+        typename detail::node::node_vector::const_iterator end_ =
             first_->end ();
 
         for (; iter_ != end_; ++iter_)
         {
-            const internal::node *node_ = *iter_;
+            const detail::node *node_ = *iter_;
 
             found_ = !node_->end_state () && node_->token () == bol_token;
 
@@ -705,23 +708,23 @@ protected:
         if (!found_)
         {
             node_ptr_vector_->push_back (0);
-            node_ptr_vector_->back () = new internal::leaf_node (bol_token);
+            node_ptr_vector_->back () = new detail::leaf_node (bol_token, true);
 
-            internal::node *lhs_ = node_ptr_vector_->back ();
+            detail::node *lhs_ = node_ptr_vector_->back ();
 
             node_ptr_vector_->push_back (0);
-            node_ptr_vector_->back () = new internal::leaf_node (null_token);
+            node_ptr_vector_->back () = new detail::leaf_node (null_token, true);
 
-            internal::node *rhs_ = node_ptr_vector_->back ();
+            detail::node *rhs_ = node_ptr_vector_->back ();
 
             node_ptr_vector_->push_back (0);
             node_ptr_vector_->back () =
-                new internal::selection_node (lhs_, rhs_);
+                new detail::selection_node (lhs_, rhs_);
             lhs_ = node_ptr_vector_->back ();
 
             node_ptr_vector_->push_back (0);
             node_ptr_vector_->back () =
-                new internal::sequence_node (lhs_, root_);
+                new detail::sequence_node (lhs_, root_);
             root_ = node_ptr_vector_->back ();
         }
     }
@@ -755,8 +758,10 @@ protected:
                     continue;
                 }
 
-                using namespace std;    // some systems have memcmp in namespace std
-                if (memcmp (first_, second_, sizeof(std::size_t) *
+                // Some systems have memcmp in namespace std.
+                using namespace std;
+
+                if (memcmp (first_, second_, sizeof (std::size_t) *
                     dfa_alphabet_) == 0)
                 {
                     index_set_.insert (curr_index_);

@@ -1,14 +1,14 @@
 // tokeniser_helper.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #ifndef BOOST_LEXER_RE_TOKENISER_HELPER_H
 #define BOOST_LEXER_RE_TOKENISER_HELPER_H
 
-#include <cstring>    // for strlen
-
 #include "../../char_traits.hpp"
+// strlen()
+#include <cstring>
 #include "../../size_t.hpp"
 #include "re_tokeniser_state.hpp"
 
@@ -16,7 +16,7 @@ namespace boost
 {
 namespace lexer
 {
-namespace internal
+namespace detail
 {
 template<typename CharT, typename Traits = char_traits<CharT> >
 class basic_re_tokeniser_helper
@@ -192,7 +192,9 @@ private:
 
         if (str_)
         {
-            using namespace std; // some systems have strlen in namespace std
+            // Some systems have strlen in namespace std.
+            using namespace std;
+
             str_len_ = strlen (str_);
         }
         else
@@ -232,7 +234,9 @@ private:
 
         if (str_)
         {
-            using namespace std; // some systems have wcslen in namespace std
+            // Some systems have wcslen in namespace std.
+            using namespace std;
+
             str_len_ = wcslen (str_);
         }
         else
@@ -310,32 +314,28 @@ private:
     static CharT decode_octal (state &state_)
     {
         std::size_t accumulator_ = 0;
-        CharT ch_ = 0;
+        CharT ch_ = *state_._curr;
         unsigned short count_ = 3;
-        bool eos_ = state_.next (ch_);
+        bool eos_ = false;
 
-        do
+        for (;;)
         {
             accumulator_ *= 8;
             accumulator_ += ch_ - '0';
             --count_;
+            state_.increment ();
             eos_ = state_.eos ();
 
-            if (!eos_)
-            {
-                ch_ = *state_._curr;
+            if (!count_ || eos_) break;
 
-                // Don't consume invalid chars!
-                if (ch_ >= '0' && ch_ <= '7')
-                {
-                    state_.increment ();
-                }
-                else
-                {
-                    eos_ = true;
-                }
+            ch_ = *state_._curr;
+
+            // Don't consume invalid chars!
+            if (ch_ < '0' || ch_ > '7')
+            {
+                break;
             }
-        } while (!eos_ && count_);
+        }
 
         return static_cast<CharT> (accumulator_);
     }

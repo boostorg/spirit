@@ -1,10 +1,10 @@
-// cpp_code.hpp
-// Copyright (c) 2008 Ben Hanson
+// generate_cpp_code.hpp
+// Copyright (c) 2008 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-#ifndef BOOST_LEXER_EXAMPLE_CPP_CODE_HPP
-#define BOOST_LEXER_EXAMPLE_CPP_CODE_HPP
+#ifndef BOOST_LEXER_GENERATE_CPP_CODE_HPP
+#define BOOST_LEXER_GENERATE_CPP_CODE_HPP
 
 #include "char_traits.hpp"
 #include "consts.hpp"
@@ -19,7 +19,8 @@ namespace boost
 {
 namespace lexer
 {
-void generate_cpp (const state_machine &sm_, std::ostream &os_,
+template<typename CharT>
+void generate_cpp (const basic_state_machine<CharT> &sm_, std::ostream &os_,
     const bool use_pointers_ = false, const bool skip_unknown_ = true,
     const bool optimise_parameters_ = true, const char *name_ = "next_token")
 {

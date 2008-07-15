@@ -1,20 +1,22 @@
 // char_state_machine.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #ifndef BOOST_LEXER_CHAR_STATE_MACHINE_HPP
 #define BOOST_LEXER_CHAR_STATE_MACHINE_HPP
 
-#include "consts.hpp"
+#include "../consts.hpp"
 #include <map>
-#include "size_t.hpp"
-#include "string_token.hpp"
+#include "../size_t.hpp"
+#include "../string_token.hpp"
 #include <vector>
 
 namespace boost
 {
 namespace lexer
+{
+namespace detail
 {
 template<typename CharT>
 struct basic_char_state_machine
@@ -47,15 +49,26 @@ struct basic_char_state_machine
 
     state_vector_vector _sm_vector;
 
+    bool empty () const
+    {
+        return _sm_vector.empty ();
+    }
+
     void clear ()
     {
         _sm_vector.clear ();
+    }
+
+    void swap (basic_char_state_machine &csm_)
+    {
+        _sm_vector.swap (csm_._sm_vector);
     }
 };
 
 typedef basic_char_state_machine<char> char_state_machine;
 typedef basic_char_state_machine<wchar_t> wchar_state_machine;
 
+}
 }
 }
 

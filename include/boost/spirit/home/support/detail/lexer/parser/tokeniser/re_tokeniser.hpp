@@ -1,13 +1,14 @@
 // tokeniser.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #ifndef BOOST_LEXER_RE_TOKENISER_HPP
 #define BOOST_LEXER_RE_TOKENISER_HPP
 
+// memcpy()
+#include <cstring>
 #include <map>
-#include <cstring>    // memcpy
 #include "num_token.hpp"
 #include "../../runtime_error.hpp"
 #include "../../size_t.hpp"
@@ -19,7 +20,7 @@ namespace boost
 {
 namespace lexer
 {
-namespace internal
+namespace detail
 {
 template<typename CharT>
 class basic_re_tokeniser
@@ -93,13 +94,40 @@ public:
                     token_.set (num_token::CLOSEPAREN, null_token);
                     break;
                 case '?':
-                    token_.set (num_token::OPT, null_token);
+                    if (!state_.eos () && *state_._curr == '?')
+                    {
+                        token_.set (num_token::AOPT, null_token);
+                        state_.increment ();
+                    }
+                    else
+                    {
+                        token_.set (num_token::OPT, null_token);
+                    }
+
                     break;
                 case '*':
-                    token_.set (num_token::ZEROORMORE, null_token);
+                    if (!state_.eos () && *state_._curr == '?')
+                    {
+                        token_.set (num_token::AZEROORMORE, null_token);
+                        state_.increment ();
+                    }
+                    else
+                    {
+                        token_.set (num_token::ZEROORMORE, null_token);
+                    }
+
                     break;
                 case '+':
-                    token_.set (num_token::ONEORMORE, null_token);
+                    if (!state_.eos () && *state_._curr == '?')
+                    {
+                        token_.set (num_token::AONEORMORE, null_token);
+                        state_.increment ();
+                    }
+                    else
+                    {
+                        token_.set (num_token::ONEORMORE, null_token);
+                    }
+
                     break;
                 case '{':
                     open_curly (state_, token_);
@@ -223,6 +251,12 @@ private:
         else if (*state_._curr >= '0' && *state_._curr <= '9')
         {
             repeat_n (state_, token_);
+
+            if (!state_.eos () && *state_._curr == '?')
+            {
+                token_._type = num_token::AREPEATN;
+                state_.increment ();
+            }
         }
         else
         {
@@ -391,8 +425,8 @@ private:
                 throw runtime_error ("Unexpected end of regex "
                     "(missing '}').");
             }
-        } while (ch_ == '_' || ch_ == '-' || (ch_ >= 'A' && ch_ <= 'Z') ||
-            (ch_ >= 'a' && ch_ <= 'z') || (ch_ >= '0' && ch_ <= '9'));
+        } while (ch_ == '_' || ch_ == '-' || ch_ >= 'A' && ch_ <= 'Z' ||
+            ch_ >= 'a' && ch_ <= 'z' || ch_ >= '0' && ch_ <= '9');
 
         if (ch_ != '}')
         {
@@ -422,8 +456,11 @@ private:
         }
 
         token_.set (num_token::MACRO, null_token);
-        using namespace std;    // some systems have memcpy in namespace std
-        memcpy (token_._macro, start_, len_ * sizeof(CharT));
+
+        // Some systems have memcpy in namespace std.
+        using namespace std;
+
+        memcpy (token_._macro, start_, len_ * sizeof (CharT));
         token_._macro[len_] = 0;
     }
 };

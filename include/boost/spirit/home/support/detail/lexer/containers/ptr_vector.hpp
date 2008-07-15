@@ -1,5 +1,5 @@
 // ptr_vector.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,7 +13,7 @@ namespace boost
 {
 namespace lexer
 {
-namespace internal
+namespace detail
 {
 template<typename Type>
 class ptr_vector
@@ -58,6 +58,25 @@ public:
     Type * const &operator [] (const std::size_t index_) const
     {
         return _vector[index_];
+    }
+
+    bool operator == (const ptr_vector &rhs_) const
+    {
+        bool equal_ = _vector.size () == rhs_._vector.size ();
+
+        if (equal_)
+        {
+            typename vector::const_iterator lhs_iter_ = _vector.begin ();
+            typename vector::const_iterator end_ = _vector.end ();
+            typename vector::const_iterator rhs_iter_ = rhs_._vector.begin ();
+
+            for (; equal_ && lhs_iter_ != end_; ++lhs_iter_, ++rhs_iter_)
+            {
+                equal_ = **lhs_iter_ == **rhs_iter_;
+            }
+        }
+
+        return  equal_;
     }
 
     void clear ()

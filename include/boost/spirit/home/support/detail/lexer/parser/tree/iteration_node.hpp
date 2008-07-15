@@ -1,5 +1,5 @@
 // iteration_node.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,14 +12,15 @@ namespace boost
 {
 namespace lexer
 {
-namespace internal
+namespace detail
 {
 class iteration_node : public node
 {
 public:
-    iteration_node (node *next_) :
+    iteration_node (node *next_, const bool greedy_) :
         node (true),
-        _next (next_)
+        _next (next_),
+        _greedy (greedy_)
     {
         node_vector::iterator iter_;
         node_vector::iterator end_;
@@ -31,6 +32,12 @@ public:
             iter_ != end_; ++iter_)
         {
             (*iter_)->append_followpos (_firstpos);
+        }
+
+        for (iter_ = _firstpos.begin (), end_ = _firstpos.end ();
+            iter_ != end_; ++iter_)
+        {
+            (*iter_)->greedy (greedy_);
         }
     }
 
@@ -54,6 +61,7 @@ public:
 private:
     // Not owner of this pointer...
     node *_next;
+    bool _greedy;
 
     virtual void copy_node (node_ptr_vector &node_ptr_vector_,
         node_stack &new_node_stack_, bool_stack &perform_op_stack_,
@@ -61,10 +69,10 @@ private:
     {
         if (perform_op_stack_.top ())
         {
-            node *ptr_  = new_node_stack_.top ();
+            node *ptr_ = new_node_stack_.top ();
 
             node_ptr_vector_->push_back (0);
-            node_ptr_vector_->back () = new iteration_node (ptr_);
+            node_ptr_vector_->back () = new iteration_node (ptr_, _greedy);
             new_node_stack_.top () = node_ptr_vector_->back ();
         }
         else

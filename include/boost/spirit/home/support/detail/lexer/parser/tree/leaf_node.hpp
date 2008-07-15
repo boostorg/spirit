@@ -1,5 +1,5 @@
 // leaf_node.hpp
-// Copyright (c) 2007 Ben Hanson
+// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,14 +14,16 @@ namespace boost
 {
 namespace lexer
 {
-namespace internal
+namespace detail
 {
 class leaf_node : public node
 {
 public:
-    leaf_node (const std::size_t token_) :
+    leaf_node (const std::size_t token_, const bool greedy_) :
         node (token_ == null_token),
-        _token (token_)
+        _token (token_),
+        _set_greedy (!greedy_),
+        _greedy (greedy_)
     {
         if (!_nullable)
         {
@@ -59,6 +61,20 @@ public:
         return _token;
     }
 
+    virtual void greedy (const bool greedy_)
+    {
+        if (!_set_greedy)
+        {
+            _greedy = greedy_;
+            _set_greedy = true;
+        }
+    }
+
+    virtual bool greedy () const
+    {
+        return _greedy;
+    }
+
     virtual const node_vector &followpos () const
     {
         return _followpos;
@@ -71,6 +87,8 @@ public:
 
 private:
     std::size_t _token;
+    bool _set_greedy;
+    bool _greedy;
     node_vector _followpos;
 
     virtual void copy_node (node_ptr_vector &node_ptr_vector_,
@@ -78,7 +96,7 @@ private:
         bool &/*down_*/) const
     {
         node_ptr_vector_->push_back (0);
-        node_ptr_vector_->back () = new leaf_node (_token);
+        node_ptr_vector_->back () = new leaf_node (_token, _greedy);
         new_node_stack_.push (node_ptr_vector_->back ());
     }
 };
