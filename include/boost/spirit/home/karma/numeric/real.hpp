@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        static std::string what(Component const& /*component*/, Context const& /*ctx*/)
         {
             return "real number";
         }
@@ -107,7 +107,7 @@ namespace boost { namespace spirit { namespace karma
         }
 
         template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        static std::string what(Component const& /*component*/, Context const& /*ctx*/)
         {
             return "real number";
         }
