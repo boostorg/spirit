@@ -86,7 +86,7 @@
 [/ References to API descriptions ]
 
 [def __api_tokenize_and_parse__ [link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
-[def __api_generate_static__    [link spirit.__lex__.abstracts.tokenizing_input_data.the_generate_static___function `generate_static()`]]
+[def __api_generate_static__    [link spirit.lex.abstracts.tokenizing_input_data.the_generate_static___function `generate_static()`]]
 
 
 [/ References to classes ]

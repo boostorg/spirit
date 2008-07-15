@@ -65,7 +65,7 @@ struct strip_comments_tokens : lexer_def<Lexer>
     void def (Self& self)
     {
         // define tokens and associate them with the lexer
-        cppcomment = "//.*\n";
+        cppcomment = "//[^\n]*";
         ccomment = "/\\*";
         endcomment = "\\*/";
         
@@ -111,7 +111,7 @@ struct strip_comments_grammar : grammar<Iterator>
                               *token(IDANY) >> tok.endcomment 
                           ]
                   |   tok.cppcomment
-                  |   token(IDANY)
+                  |   token(IDANY)   [ std::cout << _1 ]
                   )
               ;
     }
