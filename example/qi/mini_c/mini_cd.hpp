@@ -14,16 +14,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 program<Iterator>::program(std::vector<int>& code)
-  : code(code)
-  , statement_def(code, functions)
-  , statement(statement_def, statement_def.statement_list)
+  : program::base_type(start)
+  , code(code)
+  , statement(code, functions)
   , add_function(function_adder(functions))
-  , state_reset(function_state_reset(code, statement_def.vars, statement_def.nvars))
+  , state_reset(function_state_reset(code, statement.vars, statement.nvars))
   , op(code)
 {
-    bool& has_return = statement_def.has_return;
-    int& nvars = statement_def.nvars;
-    boost::phoenix::function<var_adder>& add_var = statement_def.add_var;
+    bool& has_return = statement.has_return;
+    int& nvars = statement.nvars;
+    boost::phoenix::function<var_adder>& add_var = statement.add_var;
 
     identifier %=
         raw[lexeme[alpha >> *(alnum | '_')]]

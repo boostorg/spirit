@@ -71,9 +71,9 @@ BOOST_FUSION_ADAPT_STRUCT(
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 struct mini_xml_parser :
-    qi::grammar_def<Iterator, mini_xml(), space_type>
+    qi::grammar<Iterator, mini_xml(), space_type>
 {
-    mini_xml_parser()
+    mini_xml_parser() : mini_xml_parser::base_type(xml)
     {
         text = lexeme[+(char_ - '<')        [_val += _1]];
         node = (xml | text)                 [_val = _1];
@@ -128,9 +128,9 @@ phoenix::function<get_element<mini_xml> > _xml;
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OutputIterator>
 struct mini_xml_generator
-  : karma::grammar_def<OutputIterator, mini_xml()>
+  : karma::grammar<OutputIterator, mini_xml()>
 {
-    mini_xml_generator()
+    mini_xml_generator() : mini_xml_generator::base_type(xml)
     {
         node %= 
                 lit[_1 = _string(_r0)] 
@@ -180,8 +180,7 @@ int main(int argc, char **argv)
         std::back_inserter(storage));
 
     typedef mini_xml_parser<std::string::const_iterator> mini_xml_parser;
-    mini_xml_parser def;  //  Our grammar definition
-    qi::grammar<mini_xml_parser> xmlin(def, def.xml); // Our grammar
+    mini_xml_parser xmlin;  //  Our grammar definition
     mini_xml ast; // our tree
 
     std::string::const_iterator iter = storage.begin();
@@ -197,8 +196,7 @@ int main(int argc, char **argv)
         typedef std::back_insert_iterator<std::string> outiter_type;
         typedef mini_xml_generator<outiter_type> mini_xml_generator;
 
-        mini_xml_generator gen;                     //  Our grammar definition
-        karma::grammar<mini_xml_generator> xmlout(gen, gen.xml); // Our grammar
+        mini_xml_generator xmlout;                 //  Our grammar definition
 
         std::string generated;
         bool r = karma::generate(std::back_inserter(generated), xmlout, ast);

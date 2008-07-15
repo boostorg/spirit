@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/karma/nonterminal/nonterminal.hpp>
+#include <boost/spirit/home/karma/nonterminal/grammar_fwd.hpp>
 #include <boost/spirit/home/karma/nonterminal/detail/rule.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/detail/output_iterator.hpp>
@@ -26,9 +27,6 @@
 
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename Definition>
-    struct grammar; // forward declaration
-
     template <typename OutputIterator, typename T0 = unused_type,
         typename T1 = unused_type, typename T2 = unused_type>
     struct rule
@@ -140,7 +138,7 @@ namespace boost { namespace spirit { namespace karma
 
     private:
 
-        template <typename Definition>
+        template <typename Iterator_, typename T0_, typename T1_, typename T2_>
         friend struct grammar;
 
         template <typename Expr, typename Auto>

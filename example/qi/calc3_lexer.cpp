@@ -88,10 +88,11 @@ struct calculator_tokens : lexer_def<Lexer>
 //  use a defined tokenset from above as the skip parser.
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
-struct calculator : grammar_def<Iterator, int(), typename Lexer::token_set>
+struct calculator : grammar<Iterator, int(), typename Lexer::token_set>
 {
     template <typename TokenDef>
-    calculator(TokenDef const& tok)
+    calculator(TokenDef const& tok) 
+      : calculator::base_type(expression)
     {
         // grammar
         expression =
@@ -143,7 +144,7 @@ main()
     
     // This is the lexer type to use to tokenize the input.
     // Here we use the lexertl based lexer engine.
-    typedef lexertl_lexer<base_iterator_type, token_type> lexer_type;
+    typedef lexertl_lexer<token_type> lexer_type;
     
     // This is the token definition type (derived from the given lexer type).
     typedef calculator_tokens<lexer_type> calculator_tokens;
@@ -157,10 +158,9 @@ main()
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
     calculator_tokens tokens;                       // Our token definition
-    calculator def (tokens);                        // Our grammar definition
+    calculator calc(tokens);                        // Our grammar definition
 
     lexer<calculator_tokens> lex(tokens);           // Our lexer
-    grammar<calculator> calc(def, def.expression);  // Our grammar
 
     // get input line by line and feed the parser to evaluate the expressions
     // read in from the input

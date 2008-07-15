@@ -18,6 +18,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/foreach.hpp>
@@ -37,6 +38,8 @@ namespace phoenix = boost::phoenix;
 
 using phoenix::at_c;
 using phoenix::push_back;
+using phoenix::val;
+using phoenix::construct;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our mini XML tree representation
@@ -127,13 +130,13 @@ void mini_xml_printer::operator()(mini_xml const& xml) const
 ///////////////////////////////////////////////////////////////////////////////
 //  Our mini XML grammar definition
 ///////////////////////////////////////////////////////////////////////////////
-//[tutorial_xml2_grammar
+//[tutorial_xml3_grammar
 template <typename Iterator>
 struct mini_xml_grammar
   : grammar<Iterator, mini_xml(), locals<std::string>, space_type>
 {
     mini_xml_grammar()
-      : mini_xml_grammar::base_type(xml)
+      : mini_xml_grammar::base_type(xml, "xml")
     {
         text %= lexeme[+(char_ - '<')];
         node %= xml | text;
@@ -141,21 +144,39 @@ struct mini_xml_grammar
         start_tag %=
                 '<'
             >>  !char_('/')
-            >>  lexeme[+(char_ - '>')]
-            >>  '>'
+            >   lexeme[+(char_ - '>')]
+            >   '>'
         ;
 
         end_tag =
                 "</"
-            >>  lit(_r1)
-            >>  '>'
+            >   lit(_r1)
+            >   '>'
         ;
 
         xml %=
                 start_tag[_a = _1]
-            >>  *node
-            >>  end_tag(_a)
+            >   *node
+            >   end_tag(_a)
         ;
+
+        xml.name("xml");
+        node.name("node");
+        text.name("text");
+        start_tag.name("start_tag");
+        end_tag.name("end_tag");
+
+        on_error<fail>
+        (
+            xml
+          , std::cout
+                << val("Error! Expecting ")
+                << _4                               // what failed?
+                << val(" here: \"")
+                << construct<std::string>(_3, _2)   // iterators to error-pos, end
+                << val("\"")
+                << std::endl
+        );
     }
 
     rule<Iterator, mini_xml(), locals<std::string>, space_type> xml;
@@ -217,11 +238,8 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::string::const_iterator some = iter+30;
-        std::string context(iter, (some>end)?end:some);
         std::cout << "-------------------------\n";
         std::cout << "Parsing failed\n";
-        std::cout << "stopped at: \": " << context << "...\"\n";
         std::cout << "-------------------------\n";
         return 1;
     }

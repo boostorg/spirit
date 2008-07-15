@@ -35,8 +35,8 @@ namespace boost { namespace spirit { namespace qi
             return true;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "any-char";
         }
@@ -60,8 +60,8 @@ namespace boost { namespace spirit { namespace qi
             return detail::get_char(fusion::at_c<0>(component.elements)) == ch;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return std::string("'")
                 + spirit::detail::to_narrow_char(
@@ -82,8 +82,8 @@ namespace boost { namespace spirit { namespace qi
             return component.ptr->test(ch);
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "char-set";
         }
@@ -114,10 +114,13 @@ namespace boost { namespace spirit { namespace qi
             return fusion::at_c<0>(component.elements)(unused, context) == ch;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
-            return "char";
+            return std::string("'")
+                + spirit::detail::to_narrow_char(
+                    fusion::at_c<0>(component.elements)(unused, ctx))
+                + '\'';
         }
     };
 
@@ -135,8 +138,8 @@ namespace boost { namespace spirit { namespace qi
                 !(fusion::at_c<1>(component.elements) < ch);
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result;
             result += std::string("'") + fusion::at_c<0>(component.elements) + '\'';
@@ -173,8 +176,8 @@ namespace boost { namespace spirit { namespace qi
                 !(fusion::at_c<1>(component.elements)(unused, context) < ch);
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "char-range";
         }
@@ -200,8 +203,8 @@ namespace boost { namespace spirit { namespace qi
             ;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result;
             result += std::string("'")
@@ -232,8 +235,8 @@ namespace boost { namespace spirit { namespace qi
             ;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result;
             result += std::string("'") + fusion::at_c<0>(component.elements) + '\'';

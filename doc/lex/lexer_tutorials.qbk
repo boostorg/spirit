@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section __lex__ Tutorials Overview]
+[section:lexer_tutorials __lex__ Tutorials Overview]
 
 The __lex__ library implements several components on top of possibly different 
 lexer generator libraries. It exposes a pair of iterators, which, when 

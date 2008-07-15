@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Quickstart 1 - A word counter using __lex__]
+[section:lexer_quickstart1 Quickstart 1 - A word counter using __lex__]
 
 __lex__ is very modular, which follows the general building principle of the 
 __spirit__ libraries. You never pay for features you don't use. It is nicely 

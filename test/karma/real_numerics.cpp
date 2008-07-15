@@ -5,6 +5,7 @@
 
 //#define KARMA_FAIL_COMPILATION
 
+#include <boost/version.hpp>
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/math/concepts/real_concept.hpp>
@@ -65,6 +66,9 @@ struct signed_policy
     static bool const force_sign = true;
 };
 
+// support for using real_concept with a Karma generator has been implemented 
+// in Boost versions > 1.36 only
+#if BOOST_VERSION > 103600
 ///////////////////////////////////////////////////////////////////////////////
 //  We need to specialize is_real_lit_tag to allow to use a real_concept as a
 //  literal below
@@ -74,6 +78,7 @@ namespace boost { namespace spirit
     struct is_real_lit_tag<boost::math::concepts::real_concept, Domain> 
       : boost::mpl::true_ {};
 }}
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 int
@@ -390,6 +395,9 @@ main()
         BOOST_TEST(test(" 0.0", upper[signed_], 0.0));
     }
 
+// support for using real_concept with a Karma generator has been implemented 
+// in Boost versions > 1.36 only
+#if BOOST_VERSION > 103600
     {
         using boost::math::concepts::real_concept;
         typedef karma::real_spec<real_concept> custom_type;
@@ -435,6 +443,7 @@ main()
         BOOST_TEST(test("12342.0", custom(real_concept(12342.))));
         BOOST_TEST(test("1.234e05", custom(real_concept(123420.))));
     }
-    
+#endif
+
     return boost::report_errors();
 }

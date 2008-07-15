@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Parsing using a Lexer]
+[section:lexer_parsing Parsing using a Lexer]
 
 [/ write about integration of lexer component with __qi__]
 

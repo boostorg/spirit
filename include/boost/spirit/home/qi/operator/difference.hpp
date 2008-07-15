@@ -66,8 +66,8 @@ namespace boost { namespace spirit { namespace qi
             return ldirector::parse(left(component), first, last, context, skipper, attr);
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "difference[";
 
@@ -79,9 +79,9 @@ namespace boost { namespace spirit { namespace qi
                 result_of::right<Component>::type::director
             rdirector;
 
-            result += ldirector::what(left(component));
+            result += ldirector::what(left(component), ctx);
             result += ", ";
-            result += rdirector::what(right(component));
+            result += rdirector::what(right(component), ctx);
             result += "]";
             return result;
         }

@@ -36,8 +36,8 @@ namespace boost { namespace spirit { namespace qi
             return true;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "eps";
         }
@@ -65,8 +65,8 @@ namespace boost { namespace spirit { namespace qi
             return fusion::at_c<0>(component.elements)(unused, context);
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "semantic-predicate";
         }

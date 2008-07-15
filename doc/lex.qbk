@@ -6,18 +6,18 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section __lex__]
+[section:lex __lex__]
 
 [include    lex/introduction.qbk]
 
-[section __lex__ Tutorials]
+[section:tutorials __lex__ Tutorials]
 [include        lex/lexer_tutorials.qbk]
 [include        lex/lexer_quickstart1.qbk]
 [include        lex/lexer_quickstart2.qbk]
 [include        lex/lexer_quickstart3.qbk]
 [endsect]
 
-[section Abstracts]
+[section:abstracts Abstracts]
 [section        Lexer Primitives]
 [include            lex/lexer_primitives.qbk]
 [include            lex/tokens_values.qbk]
@@ -31,11 +31,11 @@
 [include        lex/lexer_states.qbk]
 [endsect]
 
-[section Quick Reference]
+[section:quick_reference Quick Reference]
 [endsect]
 
-[section Reference]
-[section        Concepts]
+[section:reference Reference]
+[section:concepts        Concepts]
 [include            reference/lex/lexer.qbk]
 [include            reference/lex/token.qbk]
 [include            reference/lex/tokendef.qbk]

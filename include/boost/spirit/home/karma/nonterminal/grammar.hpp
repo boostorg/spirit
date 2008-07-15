@@ -8,7 +8,8 @@
 #define BOOST_SPIRIT_KARMA_GRAMMAR_MAR_05_2007_0542PM
 
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/nonterminal/nonterminal.hpp>
+#include <boost/spirit/home/karma/nonterminal/nonterminal.hpp>
+#include <boost/spirit/home/karma/nonterminal/grammar_fwd.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
 #include <boost/spirit/home/karma/nonterminal/nonterminal_director.hpp>
@@ -17,68 +18,24 @@
 
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename Definition>
+    template <typename Iterator, typename T0 , typename T1 , typename T2>
     struct grammar
       : nonterminal<
-            grammar<Definition>, 
-            typename Definition::sig_type,
-            typename Definition::locals_type
-        >
+            grammar<Iterator, T0, T1, T2>,
+            typename karma::rule<Iterator, T0, T1, T2>::sig_type,
+            typename karma::rule<Iterator, T0, T1, T2>::locals_type
+        >, noncopyable
     {
-        typedef typename Definition::sig_type sig_type;
-        typedef typename Definition::locals_type locals_type;
-        typedef typename Definition::delimiter_type delimiter_type;
-        typedef typename Definition::start_type start_type;
-        typedef typename Definition::iterator_type iterator_type;
-
-        explicit grammar(Definition const& definition_)
-          : definition(definition_), start(definition_.start)
-        {
-        }
-
-        template <typename Definition_, typename Start>
-        grammar(Definition_ const& definition_, Start const& start_)
-          : definition(definition_), start(start_)
-        {
-        }
-
-    private:
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        bool generate(OutputIterator& sink, Context& context, 
-            Delimiter const& delim) const
-        {
-            return start.generate(sink, context, delim);
-        }
-
-        std::string what() const
-        {
-            if (definition.name().empty())
-            {
-                return start.what();
-            }
-            else
-            {
-                return definition.name();
-            }
-        }
-
-        friend struct nonterminal_director;
-        Definition const& definition;
-        start_type const& start;
-    };
-
-    template <typename OutputIterator, typename T0 = unused_type,
-        typename T1 = unused_type, typename T2 = unused_type>
-    struct grammar_def : noncopyable
-    {
-        typedef karma::rule<OutputIterator, T0, T1, T2> start_type;
-        typedef typename start_type::iterator_type iterator_type;
+        typedef Iterator iterator_type;
+        typedef karma::rule<Iterator, T0, T1, T2> start_type;
         typedef typename start_type::sig_type sig_type;
         typedef typename start_type::locals_type locals_type;
         typedef typename start_type::delimiter_type delimiter_type;
+        typedef grammar<Iterator, T0, T1, T2> base_type;
 
-        grammar_def(std::string const& name_ = std::string())
-          : name_(name_) {}
+        grammar(start_type const& start, std::string const& name_ = std::string())
+          : start_(start), name_(name_) 
+        {}
 
         std::string name() const
         {
@@ -90,27 +47,32 @@ namespace boost { namespace spirit { namespace karma
             name_ = name__;
         }
 
+        start_type const& start_;
         std::string name_;
+
+    private:
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator& sink, Context& context, 
+            Delimiter const& delim) const
+        {
+            return start_.generate(sink, context, delim);
+        }
+
+        std::string what() const
+        {
+            if (name().empty())
+            {
+                return start_.what();
+            }
+            else
+            {
+                return name();
+            }
+        }
+
+        friend struct nonterminal_director;
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    //  Generator functions helping to construct a proper grammar object 
-    //  instance
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Definition>
-    inline grammar<Definition> 
-    make_generator(Definition const& def)
-    {
-        return grammar<Definition>(def);
-    }
-    
-    template <typename Definition, typename Start>
-    inline grammar<Definition> 
-    make_generator(Definition const& def, Start const& start)
-    {
-        return grammar<Definition>(def, start);
-    }
-    
 }}}
 
 #endif

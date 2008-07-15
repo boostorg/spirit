@@ -246,9 +246,9 @@ struct function_state_reset
 //  White-space and comments grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct white_space_def : grammar_def<Iterator>
+struct white_space : grammar<Iterator>
 {
-    white_space_def()
+    white_space() : white_space::base_type(start)
     {
         start =
                 space                               // tab/space/cr/lf
@@ -263,14 +263,14 @@ struct white_space_def : grammar_def<Iterator>
 //  Our expression grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct expression : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
+struct expression : grammar<Iterator, white_space<Iterator> >
 {
     expression(
         std::vector<int>& code
       , symbols<char, int>& vars
       , symbols<char, function_info>& functions);
 
-    typedef grammar<white_space_def<Iterator> > white_space;
+    typedef white_space<Iterator> white_space;
 
     rule<Iterator, white_space>
         expr, equality_expr, relational_expr
@@ -290,11 +290,11 @@ struct expression : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
 //  Our statement grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct statement : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
+struct statement : grammar<Iterator, white_space<Iterator> >
 {
     statement(std::vector<int>& code, symbols<char, function_info>& functions);
 
-    typedef grammar<white_space_def<Iterator> > white_space;
+    typedef white_space<Iterator> white_space;
 
     std::vector<int>& code;
     symbols<char, int> vars;
@@ -302,8 +302,7 @@ struct statement : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
     int nvars;
     bool has_return;
 
-    expression<Iterator> expr_def;
-    grammar<expression<Iterator> > expr;
+    expression<Iterator> expr;
     rule<Iterator, white_space>
         statement_, statement_list, var_decl, compound_statement
       , return_statement;
@@ -323,11 +322,11 @@ struct statement : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
 //  Our program grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct program : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
+struct program : grammar<Iterator, white_space<Iterator> >
 {
     program(std::vector<int>& code);
 
-    typedef grammar<white_space_def<Iterator> > white_space;
+    typedef white_space<Iterator> white_space;
 
     std::vector<int>& code;
     rule<Iterator, std::string(), white_space> identifier;
@@ -341,8 +340,7 @@ struct program : grammar_def<Iterator, grammar<white_space_def<Iterator> > >
     function_locals;
 
     symbols<char, function_info> functions;
-    statement<Iterator> statement_def;
-    grammar<statement<Iterator> > statement;
+    statement<Iterator> statement;
 
     rule<Iterator, function_locals, white_space> function;
     boost::phoenix::function<function_adder> add_function;

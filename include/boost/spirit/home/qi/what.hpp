@@ -26,7 +26,7 @@ namespace boost { namespace spirit { namespace qi
         typedef typename result_of::as_component<qi::domain, Expr>::type component;
         typedef typename component::director director;
         component c = spirit::as_component(qi::domain(), xpr);
-        return director::what(c);
+        return director::what(c, unused);
     }
 }}}
 

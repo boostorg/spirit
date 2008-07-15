@@ -130,9 +130,9 @@ boost::phoenix::function<negate_expr> neg;
 //  Our calculator grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : grammar_def<Iterator, expression_ast(), space_type>
+struct calculator : grammar<Iterator, expression_ast(), space_type>
 {
-    calculator()
+    calculator() : calculator::base_type(expression)
     {
         expression =
             term                            [_val = _1]
@@ -173,8 +173,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef calculator<iterator_type> calculator;
 
-    calculator def; //  Our grammar definition
-    grammar<calculator> calc(def, def.expression); // Our grammar
+    calculator calc; // Our grammar
 
     std::string str;
     while (std::getline(std::cin, str))

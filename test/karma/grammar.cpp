@@ -29,9 +29,9 @@ using namespace boost::spirit::ascii;
 
 typedef spirit_test::output_iterator<char>::type outiter_type;
 
-struct num_list : grammar_def<outiter_type, space_type>
+struct num_list : grammar<outiter_type, space_type>
 {
-    num_list()
+    num_list() : num_list::base_type(start)
     {
         using boost::spirit::int_;
         num1 = int_(123);
@@ -47,8 +47,7 @@ int
 main()
 {
     { // simple grammar test
-        num_list def;
-        grammar<num_list> nlist(def);
+        num_list nlist;
         BOOST_TEST(test_delimited("123 , 456 , 789 ", nlist, space));
     }
 

@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section The /Static/ Lexer Model]
+[section:lexer_static_model The /Static/ Lexer Model]
 
 The documentation of __lex__ so far mostly was about describing the features of
 the /dynamic/ model, where the tables needed for lexical analysis are generated

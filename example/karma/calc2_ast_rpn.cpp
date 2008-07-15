@@ -32,9 +32,9 @@ using namespace boost::spirit::arg_names;
 //  Our calculator parser grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : qi::grammar_def<Iterator, expression_ast(), space_type>
+struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
 {
-    calculator()
+    calculator() : calculator::base_type(expression)
     {
         expression =
             term                            [_val = _1]
@@ -67,9 +67,9 @@ struct calculator : qi::grammar_def<Iterator, expression_ast(), space_type>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OuputIterator>
 struct ast_rpn
-  : karma::grammar_def<OuputIterator, expression_ast(), space_type>
+  : karma::grammar<OuputIterator, expression_ast(), space_type>
 {
-    ast_rpn()
+    ast_rpn() : ast_rpn::base_type(ast_node)
     {
         ast_node %= 
                 int_        [_1 = _int(_val)]
@@ -114,15 +114,13 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef calculator<iterator_type> calculator;
 
-    calculator def; 
-    qi::grammar<calculator> calc(def, def.expression);
+    calculator calc; 
 
     // Our generator grammar definitions
     typedef std::back_insert_iterator<std::string> output_iterator_type;
     typedef ast_rpn<output_iterator_type> ast_rpn;
     
-    ast_rpn ast_rpn_def;
-    karma::grammar<ast_rpn> ast_grammar(ast_rpn_def, ast_rpn_def.ast_node); 
+    ast_rpn ast_grammar;
 
     std::string str;
     while (std::getline(std::cin, str))

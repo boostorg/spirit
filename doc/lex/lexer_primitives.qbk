@@ -6,9 +6,10 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Lexer Primitives]
+[section:lexer_primitives Lexer Primitives]
 
 [/ Describe the primitive lexer constructs, such as token_def, token_set? ]
+
 [/ Describe the primitive lexer constructs usable in parsers, such as 
    in_state[], set_state(), token(), etc. ]
 

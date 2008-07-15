@@ -44,11 +44,11 @@ using namespace boost::spirit::lex;
 //  definition class instance passed to the constructor to allow accessing the
 //  embedded token_def<> instances.
 template <typename Iterator>
-struct word_count_grammar : grammar_def<Iterator>
+struct word_count_grammar : grammar<Iterator>
 {
     template <typename TokenDef>
     word_count_grammar(TokenDef const& tok)
-      : c(0), w(0), l(0)
+      : grammar<Iterator>(start), c(0), w(0), l(0)
     {
         using boost::spirit::arg_names::_1;
         using boost::phoenix::ref;
@@ -92,8 +92,8 @@ int main(int argc, char* argv[])
 
     // Now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process.
-    word_count_tokens<lexer_type> word_count;            // Our token definition
-    word_count_grammar<iterator_type> def (word_count);  // Our grammar definition
+    word_count_tokens<lexer_type> word_count;           // Our token definition
+    word_count_grammar<iterator_type> g (word_count);   // Our grammar definition
 
     // Read in the file into memory.
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
@@ -101,12 +101,11 @@ int main(int argc, char* argv[])
     char const* last = &first[str.size()];
     
     // Parsing is done based on the the token stream, not the character stream.
-    qi::grammar<word_count_grammar<iterator_type> > g(def); 
     bool r = tokenize_and_parse(first, last, make_lexer(word_count), g);
 
     if (r) {    // success
-        std::cout << "lines: " << def.l << ", words: " << def.w 
-                  << ", characters: " << def.c << "\n";
+        std::cout << "lines: " << g.l << ", words: " << g.w 
+                  << ", characters: " << g.c << "\n";
     }
     else {
         std::string rest(first, last);

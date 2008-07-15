@@ -34,9 +34,9 @@ using namespace boost::spirit::arg_names;
 //  Our calculator parser grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : qi::grammar_def<Iterator, expression_ast(), space_type>
+struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
 {
-    calculator()
+    calculator() : calculator::base_type(expression)
     {
         expression =
             term                            [_val = _1]
@@ -133,9 +133,9 @@ void vmachine::execute(std::vector<element> const& code)
 ///////////////////////////////////////////////////////////////////////////////
 template <typename OuputIterator, typename Delimiter>
 struct generate_byte_code
-  : karma::grammar_def<OuputIterator, expression_ast(), Delimiter>
+  : karma::grammar<OuputIterator, expression_ast(), Delimiter>
 {
-    generate_byte_code()
+    generate_byte_code() : generate_byte_code::base_type(ast_node)
     {
         ast_node %= 
                 (dword(op_int) << dword) [_1 = _int(_val)]
@@ -172,11 +172,8 @@ bool generate_vm_code(expression_ast const& ast,
     // Our generator grammar definitions
     typedef char* output_iterator_type;
     typedef generate_byte_code<output_iterator_type, Delimiter> generate_byte_code;
-    
-    generate_byte_code generate_byte_code_def;
-    karma::grammar<generate_byte_code> gen_vm(
-        generate_byte_code_def, generate_byte_code_def.ast_node); 
 
+    generate_byte_code gen_vm;
     return karma::generate_delimited((*code.begin()).bytes, gen_vm, ast, d);
 }
 
@@ -195,8 +192,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef calculator<iterator_type> calculator;
 
-    calculator def; 
-    qi::grammar<calculator> calc(def, def.expression);
+    calculator calc; 
 
     std::string str;
     while (std::getline(std::cin, str))

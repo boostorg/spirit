@@ -74,8 +74,8 @@ namespace boost { namespace spirit { namespace qi
                 parse(subject, first, last, context, skipper, attr);
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             //~ typedef typename
                 //~ result_of::subject<Component>::type
@@ -96,7 +96,7 @@ namespace boost { namespace spirit { namespace qi
                     //~ qi::domain(), fusion::at_c<0>(component.elements)(unused, unused));
 
             std::string result = "lazy[";
-            //~ result += component_type::director::what(subject);
+            //~ result += component_type::director::what(subject, ctx);
             result += "]";
             return result;
         }

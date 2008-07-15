@@ -114,10 +114,11 @@ void vmachine::execute(std::vector<int> const& code)
 //  Our calculator grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : grammar_def<Iterator, space_type>
+struct calculator : grammar<Iterator, space_type>
 {
     calculator(std::vector<int>& code)
-      : code(code)
+      : calculator::base_type(expression)
+      , code(code)
     {
         expression =
             term
@@ -203,9 +204,7 @@ main()
 
     vmachine mach;                  //  Our virtual machine
     std::vector<int> code;          //  Our VM code
-    calculator def(code);           //  Our grammar definition
-    grammar<calculator>
-        calc(def, def.expression);  //  Our grammar
+    calculator calc(code);          //  Our grammar
 
     std::string str;
     while (std::getline(std::cin, str))

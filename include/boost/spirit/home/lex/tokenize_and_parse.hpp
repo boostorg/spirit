@@ -82,21 +82,6 @@ namespace boost { namespace spirit { namespace lex
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename Iterator, typename LexerExpr, 
-        template <typename, typename> class Def
-    >
-    inline bool
-    tokenize_and_parse(Iterator& first, Iterator last, LexerExpr const& lex,
-        qi::grammar_class<Def>& gc)
-    {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        Def<iterator_type, unused_type> def(gc);
-        qi::grammar<Def<iterator_type, unused_type> > g(def);
-        return tokenize_and_parse(first, last, lex, g);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename LexerExpr, typename ParserExpr,
         typename Attribute>
     inline bool
@@ -120,21 +105,6 @@ namespace boost { namespace spirit { namespace lex
 
         iterator_type iter = lex.begin(first, last);
         return director::parse(c, iter, lex.end(), unused, unused, attr);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename Iterator, typename LexerExpr, 
-        template <typename, typename> class Def, typename Attribute
-    >
-    inline bool
-    tokenize_and_parse(Iterator& first, Iterator last, LexerExpr const& lex,
-        qi::grammar_class<Def>& gc, Attribute& attr)
-    {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        Def<iterator_type, unused_type> def(gc);
-        qi::grammar<Def<iterator_type, unused_type> > g(def);
-        return tokenize_and_parse(first, last, lex, g, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -229,21 +199,6 @@ namespace boost { namespace spirit { namespace lex
 
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename Iterator, typename LexerExpr, 
-        template <typename, typename> class Def, typename Skipper
-    >
-    inline bool
-    tokenize_and_phrase_parse(Iterator& first, Iterator last, 
-        LexerExpr const& lex, qi::grammar_class<Def>& gc, Skipper const& skipper)
-    {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        Def<iterator_type, unused_type> def(gc);
-        qi::grammar<Def<iterator_type, unused_type> > g(def);
-        return tokenize_and_phrase_parse(first, last, lex, g, skipper);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <
         typename Iterator, typename LexerExpr, typename ParserExpr, 
         typename Attribute, typename Skipper
     >
@@ -285,23 +240,6 @@ namespace boost { namespace spirit { namespace lex
         // do a final post-skip
         skip(iter, lex.end(), skipper);
         return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename Iterator, typename LexerExpr, 
-        template <typename, typename> class Def, 
-        typename Skipper, typename Attribute
-    >
-    inline bool
-    tokenize_and_phrase_parse(Iterator& first, Iterator last, 
-        LexerExpr const& lex, qi::grammar_class<Def>& gc, Skipper const& skipper,
-        Attribute& attr)
-    {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        Def<iterator_type, unused_type> def(gc);
-        qi::grammar<Def<iterator_type, unused_type> > g(def);
-        return tokenize_and_phrase_parse(first, last, lex, g, skipper, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////

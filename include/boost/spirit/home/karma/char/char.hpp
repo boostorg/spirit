@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2008 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_KARMA_CHAR_FEB_21_2007_0543PM)
@@ -24,13 +24,13 @@
 #include <boost/fusion/include/cons.hpp>
 #include <boost/utility/enable_if.hpp>
 
-namespace boost { namespace spirit { namespace karma 
-{ 
+namespace boost { namespace spirit { namespace karma
+{
     ///////////////////////////////////////////////////////////////////////////
     //
-    //  any_char 
+    //  any_char
     //      generates a single character from the associated parameter
-    //      
+    //
     //      Note: this generator has to have an associated parameter
     //
     ///////////////////////////////////////////////////////////////////////////
@@ -44,31 +44,31 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // any_char has a parameter attached
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const&, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const&, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& param)
         {
             detail::generate_to(sink, param);
-            karma::delimit(sink, d);           // always do post-delimiting 
+            karma::delimit(sink, d);           // always do post-delimiting
             return true;
         }
 
-        // this any_char has no parameter attached, it needs to have been 
+        // this any_char has no parameter attached, it needs to have been
         // initialized from a direct literal
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter>
-        static bool 
-        generate(Component const&, OutputIterator&, Context&, Delimiter const&, 
-            unused_type) 
+        static bool
+        generate(Component const&, OutputIterator&, Context&, Delimiter const&,
+            unused_type)
         {
             BOOST_MPL_ASSERT_MSG(false, char__not_usable_without_parameter, ());
             return false;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "any-char";
         }
@@ -76,13 +76,13 @@ namespace boost { namespace spirit { namespace karma
 
     ///////////////////////////////////////////////////////////////////////////
     //
-    //  literal_char 
+    //  literal_char
     //      generates a single character given by a literal it was initialized
     //      from
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char>
-    struct literal_char 
+    struct literal_char
     {
         template <typename Component, typename Context, typename Unused>
         struct attribute
@@ -91,19 +91,19 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // any_char has a parameter attached
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/)
         {
             detail::generate_to(sink, fusion::at_c<0>(component.elements));
-            karma::delimit(sink, d);             // always do post-delimiting 
+            karma::delimit(sink, d);             // always do post-delimiting
             return true;
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return std::string("'")
                 + spirit::detail::to_narrow_char(
@@ -114,12 +114,12 @@ namespace boost { namespace spirit { namespace karma
 
     ///////////////////////////////////////////////////////////////////////////
     //
-    //  lazy_char 
-    //      generates a single character given by a functor it was initialized 
+    //  lazy_char
+    //      generates a single character given by a functor it was initialized
     //      from
     //
     ///////////////////////////////////////////////////////////////////////////
-    struct lazy_char 
+    struct lazy_char
     {
         template <typename Component, typename Context, typename Unused>
         struct attribute
@@ -128,20 +128,20 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // any_char has a parameter attached
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& d, Parameter const& /*param*/) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Parameter const& /*param*/)
         {
-            detail::generate_to(sink, 
+            detail::generate_to(sink,
                 fusion::at_c<0>(component.elements)(unused, ctx));
-            karma::delimit(sink, d);             // always do post-delimiting 
+            karma::delimit(sink, d);             // always do post-delimiting
             return true;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "char";
         }
@@ -154,7 +154,7 @@ namespace boost { namespace spirit { namespace karma
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename Tag>
-    struct case_any_char 
+    struct case_any_char
     {
         template <typename Component, typename Context, typename Unused>
         struct attribute
@@ -166,42 +166,42 @@ namespace boost { namespace spirit { namespace karma
         typedef typename Tag::char_class char_class_;
 
         // case_any_char has a parameter attached
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& /*component*/, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& /*component*/, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& param)
         {
             using spirit::char_class::convert;
             Char p = convert<char_set>::to(char_class_(), param);
             detail::generate_to(sink, p);
-            karma::delimit(sink, d);           // always do post-delimiting 
+            karma::delimit(sink, d);           // always do post-delimiting
             return true;
         }
 
-        // this case_any_char has no parameter attached, it needs to have been 
+        // this case_any_char has no parameter attached, it needs to have been
         // initialized from a direct literal
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter>
-        static bool 
-        generate(Component const&, OutputIterator&, Context&, Delimiter const&, 
-            unused_type) 
+        static bool
+        generate(Component const&, OutputIterator&, Context&, Delimiter const&,
+            unused_type)
         {
             BOOST_MPL_ASSERT_MSG(false, char__not_usable_without_parameter, ());
             return false;
         }
 
-        template <typename Component>
-        static std::string what(Component const&)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result;
-            result = std::string("any-") + 
-                spirit::char_class::what<char_set>::is(char_class_()) + 
+            result = std::string("any-") +
+                spirit::char_class::what<char_set>::is(char_class_()) +
                 "case-char";
             return result;
         }
     };
-    
+
 }}}  // namespace boost::spirit::karma
 
 namespace boost { namespace spirit { namespace traits
@@ -218,20 +218,20 @@ namespace boost { namespace spirit { namespace traits
         >::type
     >
     {
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         char_type;
         typedef fusion::vector<char_type> vector_type;
 
         typedef component<
-            karma::domain, karma::literal_char<Char>, vector_type> 
+            karma::domain, karma::literal_char<Char>, vector_type>
         type;
-        
+
         static type
         call(Elements const& elements)
         {
             typedef typename Modifier::char_set char_set;
-            
+
             char_type ch = fusion::at_c<0>(elements);
             vector_type v(char_set::tolower(ch));
             return type(v);
@@ -247,20 +247,20 @@ namespace boost { namespace spirit { namespace traits
         >::type
     >
     {
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         char_type;
         typedef fusion::vector<char_type> vector_type;
 
-        typedef 
-            component<karma::domain, karma::literal_char<Char>, vector_type> 
+        typedef
+            component<karma::domain, karma::literal_char<Char>, vector_type>
         type;
-        
+
         static type
         call(Elements const& elements)
         {
             typedef typename Modifier::char_set char_set;
-            
+
             char_type ch = fusion::at_c<0>(elements);
             vector_type v(char_set::toupper(ch));
             return type(v);
@@ -282,11 +282,11 @@ namespace boost { namespace spirit { namespace traits
         typedef typename Modifier::char_set char_set;
         typedef spirit::char_class::tag::lower char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
-        
+
         typedef component<
-            karma::domain, karma::case_any_char<Char, key_tag>, fusion::nil> 
+            karma::domain, karma::case_any_char<Char, key_tag>, fusion::nil>
         type;
-        
+
         static type
         call(Elements const&)
         {
@@ -306,11 +306,11 @@ namespace boost { namespace spirit { namespace traits
         typedef typename Modifier::char_set char_set;
         typedef spirit::char_class::tag::upper char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
-        
+
         typedef component<
-            karma::domain, karma::case_any_char<Char, key_tag>, fusion::nil> 
+            karma::domain, karma::case_any_char<Char, key_tag>, fusion::nil>
         type;
-        
+
         static type
         call(Elements const&)
         {

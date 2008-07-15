@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2008 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_KARMA_UINT_FEB_23_2007_0840PM)
@@ -39,33 +39,33 @@ namespace boost { namespace spirit { namespace karma
 
         BOOST_MPL_ASSERT_MSG(!std::numeric_limits<T>::is_signed,
             signed_unsigned_mismatch, ());
-        
+
         // uint has a parameter attached
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& /*component*/, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& /*component*/, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& param)
         {
             bool result = int_inserter<Radix, Tag>::call(sink, param);
-            karma::delimit(sink, d);           // always do post-delimiting 
+            karma::delimit(sink, d);           // always do post-delimiting
             return result;
         }
 
-        // this uint has no parameter attached, it needs to have been 
+        // this uint has no parameter attached, it needs to have been
         // initialized from a direct literal
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter>
-        static bool 
-        generate(Component const&, OutputIterator&, Context&, Delimiter const&, 
-            unused_type) 
+        static bool
+        generate(Component const&, OutputIterator&, Context&, Delimiter const&,
+            unused_type)
         {
             BOOST_MPL_ASSERT_MSG(false, uint_not_usable_without_parameter, ());
             return false;
         }
-        
-        template <typename Component>
-        static std::string what(Component const&)
+
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "unsigned integer";
         }
@@ -87,21 +87,21 @@ namespace boost { namespace spirit { namespace karma
 
         BOOST_MPL_ASSERT_MSG(!std::numeric_limits<T>::is_signed,
             signed_unsigned_mismatch, ());
-        
-        template <typename Component, typename OutputIterator, 
+
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/)
         {
             T n = fusion::at_c<0>(component.elements);
             bool result = int_inserter<Radix, Tag>::call(sink, n);
-            karma::delimit(sink, d);           // always do post-delimiting 
+            karma::delimit(sink, d);           // always do post-delimiting
             return result;
         }
-        
-        template <typename Component>
-        static std::string what(Component const&)
+
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return "unsigned integer";
         }
@@ -129,7 +129,7 @@ namespace boost { namespace spirit { namespace traits
 
         typedef karma::uint_generator<false, T, Radix, ForceSign, key_tag> int_type;
         typedef component<karma::domain, int_type, fusion::nil> type;
-        
+
         static type
         call(Elements const&)
         {
@@ -150,14 +150,14 @@ namespace boost { namespace spirit { namespace traits
         typedef spirit::char_class::tag::lower char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
 
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         int_data_type;
         typedef fusion::vector<int_data_type> vector_type;
 
         typedef karma::uint_generator<true, T, Radix, ForceSign, key_tag> int_type;
         typedef component<karma::domain, int_type, vector_type> type;
-                
+
         static type
         call(Elements const& elements)
         {
@@ -183,7 +183,7 @@ namespace boost { namespace spirit { namespace traits
 
         typedef karma::uint_generator<false, T, Radix, ForceSign, key_tag> int_type;
         typedef component<karma::domain, int_type, fusion::nil> type;
-        
+
         static type
         call(Elements const&)
         {
@@ -204,14 +204,14 @@ namespace boost { namespace spirit { namespace traits
         typedef spirit::char_class::tag::upper char_class_;
         typedef spirit::char_class::key<char_set, char_class_> key_tag;
 
-        typedef typename 
+        typedef typename
             fusion::result_of::value_at_c<Elements, 0>::type
         int_data_type;
         typedef fusion::vector<int_data_type> vector_type;
 
         typedef karma::uint_generator<true, T, Radix, ForceSign, key_tag> int_type;
         typedef component<karma::domain, int_type, vector_type> type;
-                
+
         static type
         call(Elements const& elements)
         {

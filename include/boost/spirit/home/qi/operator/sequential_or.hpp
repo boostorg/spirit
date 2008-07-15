@@ -60,12 +60,12 @@ namespace boost { namespace spirit { namespace qi
         }
 
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "sequential-or[";
             fusion::for_each(component.elements,
-                spirit::detail::what_function(result));
+                spirit::detail::what_function<Context>(result, ctx));
             result += "]";
             return result;
         }

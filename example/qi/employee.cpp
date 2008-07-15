@@ -34,6 +34,7 @@ using namespace boost::spirit::arg_names;
 ///////////////////////////////////////////////////////////////////////////////
 //  Our employee struct
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_employee_struct
 struct employee
 {
     int age;
@@ -41,9 +42,11 @@ struct employee
     std::string forename;
     double salary;
 };
+//]
 
 // We need to tell fusion about our employee struct
 // to make it a first-class fusion citizen
+//[tutorial_employee_adapt_struct
 BOOST_FUSION_ADAPT_STRUCT(
     employee,
     (int, age)
@@ -51,14 +54,16 @@ BOOST_FUSION_ADAPT_STRUCT(
     (std::string, forename)
     (double, salary)
 )
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our employee parser
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_employee_parser
 template <typename Iterator>
-struct employee_parser : grammar_def<Iterator, employee(), space_type>
+struct employee_parser : grammar<Iterator, employee(), space_type>
 {
-    employee_parser()
+    employee_parser() : employee_parser::base_type(start)
     {
         quoted_string %= lexeme['"' >> +(char_ - '"') >> '"'];
 
@@ -76,6 +81,7 @@ struct employee_parser : grammar_def<Iterator, employee(), space_type>
     rule<Iterator, std::string(), space_type> quoted_string;
     rule<Iterator, employee(), space_type> start;
 };
+//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -95,8 +101,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef employee_parser<iterator_type> employee_parser;
 
-    employee_parser def; //  Our grammar definition
-    grammar<employee_parser> g(def); // Our grammar
+    employee_parser g; // Our grammar
     std::string str;
     while (getline(std::cin, str))
     {

@@ -1,6 +1,6 @@
 //  Copyright (c) 2001-2008 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_KARMA_RIGHT_ALIGNMENT_FEB_27_2007_1216PM)
@@ -18,7 +18,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//  The BOOST_KARMA_DEFAULT_FIELD_LENGTH specifies the default field length 
+//  The BOOST_KARMA_DEFAULT_FIELD_LENGTH specifies the default field length
 //  to be used for padding.
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,10 +26,10 @@
 #define BOOST_KARMA_DEFAULT_FIELD_LENGTH 10
 #endif
 
-namespace boost { namespace spirit { namespace karma 
+namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
-    //  The simple right alignment directive is used for right_align[...] 
+    //  The simple right alignment directive is used for right_align[...]
     //  generators. It uses default values for the generated width (defined via
     //  the BOOST_KARMA_DEFAULT_FIELD_LENGTH constant) and for the padding
     //  generator (always spaces).
@@ -40,25 +40,25 @@ namespace boost { namespace spirit { namespace karma
         struct attribute
           : traits::attribute_of<
                 karma::domain,
-                typename result_of::argument1<Component>::type, 
+                typename result_of::argument1<Component>::type,
                 Context
             >
         {
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Parameter const& param)
         {
-            return detail::right_align_generate(sink, ctx, d, param, 
-                argument1(component), BOOST_KARMA_DEFAULT_FIELD_LENGTH, 
+            return detail::right_align_generate(sink, ctx, d, param,
+                argument1(component), BOOST_KARMA_DEFAULT_FIELD_LENGTH,
                 spirit::as_component(karma::domain(), ' '));
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "right_align[";
 
@@ -66,12 +66,12 @@ namespace boost { namespace spirit { namespace karma
                 spirit::result_of::argument1<Component>::type::director
             director;
 
-            result += director::what(spirit::argument1(component));
+            result += director::what(spirit::argument1(component), ctx);
             result += "]";
             return result;
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  The right alignment with width directive, is used for generators
     //  like right_align(width)[...]. It uses a default value for the padding
@@ -83,27 +83,27 @@ namespace boost { namespace spirit { namespace karma
         struct attribute
           : traits::attribute_of<
                 karma::domain,
-                typename result_of::subject<Component>::type, 
+                typename result_of::subject<Component>::type,
                 Context
             >
         {
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Parameter const& param)
         {
-            return detail::right_align_generate(sink, ctx, d, param, 
+            return detail::right_align_generate(sink, ctx, d, param,
                 subject(component), proto::arg_c<0>(argument1(component)), ' ');
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "right_align(";
-            
+
             result += boost::lexical_cast<std::string>(
                 proto::arg_c<0>(argument1(component)));
             result += ")[";
@@ -112,16 +112,16 @@ namespace boost { namespace spirit { namespace karma
                 spirit::result_of::subject<Component>::type::director
             director;
 
-            result += director::what(spirit::subject(component));
+            result += director::what(spirit::subject(component), ctx);
             result += "]";
             return result;
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  The right alignment directive with padding, is used for generators like
-    //  right_align(padding)[...], where padding is a arbitrary generator 
-    //  expression. It uses a default value for the generated width (defined 
+    //  right_align(padding)[...], where padding is a arbitrary generator
+    //  expression. It uses a default value for the generated width (defined
     //  via the BOOST_KARMA_DEFAULT_FIELD_LENGTH constant).
     ///////////////////////////////////////////////////////////////////////////
     struct padding_right_aligment
@@ -130,49 +130,49 @@ namespace boost { namespace spirit { namespace karma
         struct attribute
           : traits::attribute_of<
                 karma::domain,
-                typename result_of::subject<Component>::type, 
+                typename result_of::subject<Component>::type,
                 Context
             >
         {
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Parameter const& param)
         {
-            return detail::right_align_generate(sink, ctx, d, param, 
-                subject(component), BOOST_KARMA_DEFAULT_FIELD_LENGTH, 
+            return detail::right_align_generate(sink, ctx, d, param,
+                subject(component), BOOST_KARMA_DEFAULT_FIELD_LENGTH,
                 argument1(component));
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "right_align(";
-            
+
             typedef typename
                 spirit::result_of::argument1<Component>::type::director
             padding;
 
-            result += padding::what(spirit::argument1(component));
+            result += padding::what(spirit::argument1(component), ctx);
             result += ")[";
 
             typedef typename
                 spirit::result_of::subject<Component>::type::director
             director;
 
-            result += director::what(spirit::subject(component));
+            result += director::what(spirit::subject(component), ctx);
             result += "]";
             return result;
         }
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
-    //  The full right alignment directive, is used for generators like 
-    //  right_align(width, padding)[...], where width is a integer value to be 
-    //  used as the field width and padding is a arbitrary generator 
+    //  The full right alignment directive, is used for generators like
+    //  right_align(width, padding)[...], where width is a integer value to be
+    //  used as the field width and padding is a arbitrary generator
     //  expression.
     ///////////////////////////////////////////////////////////////////////////
     struct full_right_aligment
@@ -181,28 +181,28 @@ namespace boost { namespace spirit { namespace karma
         struct attribute
           : traits::attribute_of<
                 karma::domain,
-                typename result_of::subject<Component>::type, 
+                typename result_of::subject<Component>::type,
                 Context
             >
         {
         };
 
-        template <typename Component, typename OutputIterator, 
+        template <typename Component, typename OutputIterator,
             typename Context, typename Delimiter, typename Parameter>
-        static bool 
-        generate(Component const& component, OutputIterator& sink, 
-            Context& ctx, Delimiter const& d, Parameter const& param) 
+        static bool
+        generate(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Parameter const& param)
         {
-            return detail::right_align_generate(sink, ctx, d, param, 
-                subject(component), proto::arg_c<0>(argument1(component)), 
+            return detail::right_align_generate(sink, ctx, d, param,
+                subject(component), proto::arg_c<0>(argument1(component)),
                 argument2(component));
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             std::string result = "right_align(";
-            
+
             result += boost::lexical_cast<std::string>(
                 proto::arg_c<0>(argument1(component)));
             result += ", ";
@@ -211,19 +211,19 @@ namespace boost { namespace spirit { namespace karma
                 spirit::result_of::argument2<Component>::type::director
             padding;
 
-            result += padding::what(spirit::argument2(component));
+            result += padding::what(spirit::argument2(component), ctx);
             result += ")[";
 
             typedef typename
                 spirit::result_of::subject<Component>::type::director
             director;
 
-            result += director::what(spirit::subject(component));
+            result += director::what(spirit::subject(component), ctx);
             result += "]";
             return result;
         }
     };
-    
+
 }}} // namespace boost::spirit::karma
 
 #endif

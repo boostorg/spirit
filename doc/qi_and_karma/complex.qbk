@@ -35,7 +35,6 @@ This parser can parse complex numbers of the form:
 
 [import ../../example/qi/complex_number.cpp]
 
-
 Here goes, this time with actions:
 
 [tutorial_complex_number]

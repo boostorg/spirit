@@ -103,26 +103,31 @@ struct ones_ : symbols<char, unsigned>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  roman (numerals) grammar
+//
+//      Note the use of the || operator. The expression
+//      a || b reads match a or b and in sequence. Try
+//      defining the roman numerals grammar in YACC or
+//      PCCTS. Spirit rules! :-)
 ///////////////////////////////////////////////////////////////////////////////
+//[tutorial_roman_grammar
 template <typename Iterator>
-struct roman : grammar_def<Iterator, unsigned()>
+struct roman : grammar<Iterator, unsigned()>
 {
-    roman()
+    roman() : roman::base_type(start)
     {
-        start
-            =   +char_('M') [_val += 1000]
-            ||  hundreds    [_val += _1]
-            ||  tens        [_val += _1]
-            ||  ones        [_val += _1];
-
-        //  Note the use of the || operator. The expression
-        //  a || b reads match a or b and in sequence. Try
-        //  defining the roman numerals grammar in YACC or
-        //  PCCTS. Spirit rules! :-)
+        start = eps             [_val = 0] >>
+            (
+                +char_('M')     [_val += 1000]
+                ||  hundreds    [_val += _1]
+                ||  tens        [_val += _1]
+                ||  ones        [_val += _1]
+            )
+        ;
     }
 
     rule<Iterator, unsigned()> start;
 };
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -138,8 +143,7 @@ main()
     typedef std::string::const_iterator iterator_type;
     typedef roman<iterator_type> roman;
 
-    roman def; //  Our grammar definition
-    grammar<roman> roman_parser(def); // Our grammar
+    roman roman_parser; // Our grammar
 
     std::string str;
     unsigned result;
@@ -150,7 +154,8 @@ main()
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        bool r = parse(iter, end, roman_parser[ref(result) = _1]);
+        //[tutorial_roman_grammar_parse
+        bool r = parse(iter, end, roman_parser, result);
 
         if (r && iter == end)
         {
@@ -167,6 +172,7 @@ main()
             std::cout << "stopped at: \": " << rest << "\"\n";
             std::cout << "-------------------------\n";
         }
+        //]
     }
 
     std::cout << "Bye... :-) \n\n";

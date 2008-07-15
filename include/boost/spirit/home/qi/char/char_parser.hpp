@@ -70,11 +70,11 @@ namespace boost { namespace spirit { namespace qi
                 fusion::at_c<0>(component.elements), ch, context);
         }
 
-        template <typename Component>
-        static std::string what(Component const& component)
+        template <typename Component, typename Context>
+        static std::string what(Component const& component, Context const& ctx)
         {
             return std::string("not ")
-                + Positive::director::what(fusion::at_c<0>(component.elements));
+                + Positive::director::what(fusion::at_c<0>(component.elements), ctx);
         }
     };
 }}}
