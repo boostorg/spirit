@@ -312,9 +312,9 @@ public:
     }
 
 // VC++ 6, 7.1 and 8 can't cope with template friend classes!
-#if !(defined _MSC_VER && _MSC_VER < 1500)
-private:
-#endif
+// #if !(defined _MSC_VER && _MSC_VER < 1500)
+// private:
+// #endif
     typedef std::vector<std::size_t> size_t_vector;
     typedef detail::ptr_vector<size_t_vector> size_t_vector_vector;
 
