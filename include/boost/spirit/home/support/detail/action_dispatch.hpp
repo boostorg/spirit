@@ -47,7 +47,8 @@ namespace boost { namespace spirit { namespace detail
       , Attribute& attr, Context& context, mpl::false_)
     {
         bool pass = true;
-        f (fusion::vector<Attribute&>(attr), context, pass);
+        fusion::vector<Attribute&> wrapped_attr(attr);
+        f (wrapped_attr, context, pass);
         return pass;
     }
 
