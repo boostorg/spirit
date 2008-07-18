@@ -19,8 +19,8 @@
 //  In this example int_rule is declared as rule with int match attribute's
 //  type, so in int_rule variable we can hold any parser, which returns int
 //  value. For example int_p or bin_p. And the most important is that we can
-//  use returned value in the semantic action binded to the int_rule. 
-//  
+//  use returned value in the semantic action binded to the int_rule.
+//
 //-----------------------------------------------------------------------------
 #include <iostream>
 #include <boost/cstdlib.hpp>
@@ -30,7 +30,7 @@
 using namespace std;
 using namespace boost;
 using namespace phoenix;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 //-----------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ int main()
     parse(
         "123",
         // Using a returned value in the semantic action
-        int_rule[cout << arg1 << endl] 
+        int_rule[cout << arg1 << endl]
     );
 
     return exit_success;

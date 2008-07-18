@@ -122,6 +122,7 @@ exe refactoring
 
 exe regular_expression
     : fundamental/regular_expression.cpp
+      /boost//regex
     :
     ;
 
@@ -219,6 +220,14 @@ exe parameters
 
 exe regex_convert
     : intermediate/regex_convert.cpp
+      /boost//regex
+    :
+    ;
+
+exe simple_xml
+    : intermediate/simple_xml/driver.cpp
+      intermediate/simple_xml/tag.cpp
+      intermediate/simple_xml/tag.cpp
     :
     ;
 

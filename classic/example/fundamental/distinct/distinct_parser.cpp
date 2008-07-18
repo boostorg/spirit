@@ -14,7 +14,7 @@
 
 using namespace std;
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 // keyword_p for C++
 // (for basic usage instead of std_p)

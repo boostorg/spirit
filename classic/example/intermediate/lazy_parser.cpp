@@ -39,7 +39,7 @@
 #include <boost/spirit/include/classic_dynamic.hpp>
 
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 //-----------------------------------------------------------------------------
@@ -56,14 +56,14 @@ struct my_grammar
         typedef stored_rule<ScannerT, parser_context<int> > number_rule_t;
 
         struct block_closure;
-        typedef spirit::closure<
+        typedef boost::spirit::classic::closure<
             block_closure,
             int,
             typename number_rule_t::alias_t>
         closure_base_t;
 
         struct block_closure : closure_base_t
-        {           
+        {
             typename closure_base_t::member1 sum;
             typename closure_base_t::member2 int_rule;
         };

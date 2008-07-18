@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_attribute.hpp>
-#include <boost/spirit/include/classic_functions.hpp>
+#include <boost/spirit/include/phoenix1_functions.hpp>
 #include <iostream>
 #include <string>
 

@@ -32,7 +32,7 @@
 
 using namespace std;
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 using namespace phoenix;
 
 //-----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ int main()
 
     parse_info<> info = parse(
         "1",
-        
+
         // r rule is used twice but the semantic action is invoked only once
         epsilon_p(r) >> r,
 

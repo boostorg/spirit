@@ -25,11 +25,11 @@
 
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_symbols.hpp>
-
-#include <boost/spirit/include/classic_phx1_tuples.hpp>
-#include <boost/spirit/include/classic_phx1_tuple_helpers.hpp>
-#include <boost/spirit/include/classic_primitives.hpp>
 #include <boost/spirit/include/classic_closure.hpp>
+
+#include <boost/spirit/include/phoenix1_tuples.hpp>
+#include <boost/spirit/include/phoenix1_tuple_helpers.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // used namespaces
