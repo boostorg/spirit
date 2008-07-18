@@ -24,21 +24,25 @@ void acid_test()
 
     typedef boost::integer_traits<Char> integer_traits;
     Char const const_min = integer_traits::const_min;
-    Char const const_max = integer_traits::const_max;
+    // if Char has same size as unsigned, we back-off 1 bit to not
+    // overflow dynamic_bitset
+    Char const const_max = (sizeof(Char) == sizeof(unsigned)) ?
+        integer_traits::const_max-1 : integer_traits::const_max;
+    unsigned bit_set_size = unsigned(const_max)-unsigned(const_min)+1;
     int const test_size = 1000;
 
     boost::mt19937 rng;
     int min = const_min;
     int max = const_max;
-    boost::uniform_int<> char_(min, max);
-    boost::variate_generator<boost::mt19937&, boost::uniform_int<> >
+    boost::uniform_int<Char> char_(min, max);
+    boost::variate_generator<boost::mt19937&, boost::uniform_int<Char> >
        gen(rng, char_);
-    boost::uniform_int<> _1of10(1, 10);
-    boost::variate_generator<boost::mt19937&, boost::uniform_int<> >
+    boost::uniform_int<Char> _1of10(1, 10);
+    boost::variate_generator<boost::mt19937&, boost::uniform_int<Char> >
        on_or_off(rng, _1of10);
 
     range_run<Char> rr;
-    boost::dynamic_bitset<> bset(int(const_max)-int(const_min)+1);
+    boost::dynamic_bitset<unsigned> bset(bit_set_size);
 
     for (int i = 0; i < test_size; ++i)
     {
