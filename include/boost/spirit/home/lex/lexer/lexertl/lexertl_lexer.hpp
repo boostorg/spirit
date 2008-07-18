@@ -206,7 +206,7 @@ namespace boost { namespace spirit { namespace lex
     private:
         // this type is purely used for the iterator_type construction below
         struct iterator_data_type {
-            boost::lexer::state_machine const& state_machine_;
+            boost::lexer::basic_state_machine<char_type> const& state_machine_;
             boost::lexer::basic_rules<char_type> const& rules_;
             typename Functor::semantic_actions_type const& actions_;
         };
@@ -324,7 +324,7 @@ namespace boost { namespace spirit { namespace lex
         }
 
     private:
-        mutable boost::lexer::state_machine state_machine;
+        mutable boost::lexer::basic_state_machine<char_type> state_machine;
         boost::lexer::basic_rules<char_type> rules;
         typename Functor::semantic_actions_type actions;
         mutable bool initialized_dfa;
