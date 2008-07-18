@@ -14,7 +14,7 @@
 
 using namespace std;
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 struct my_grammar: public grammar<my_grammar>
 {

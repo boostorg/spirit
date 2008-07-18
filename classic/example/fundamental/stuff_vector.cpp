@@ -16,9 +16,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_primitives.hpp>
 #include <boost/spirit/include/classic_operators.hpp>
-#include <boost/spirit/include/classic_functions.hpp>
+#include <boost/spirit/include/phoenix1_functions.hpp>
+#include <boost/spirit/include/phoenix1_primitives.hpp>
 #include <iostream>
 #include <string>
 

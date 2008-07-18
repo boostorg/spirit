@@ -22,7 +22,7 @@
 
 using namespace std;
 using namespace boost;
-using namespace spirit;
+using namespace BOOST_SPIRIT_CLASSIC_NS;
 
 //-----------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ int main()
 
     parse_info<> info = parse(
         "1",
-        
+
         no_actions_d
         [
             r

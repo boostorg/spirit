@@ -49,7 +49,7 @@ namespace boost { namespace spirit
 //  Client code
 //
 ///////////////////////////////////////////////////////////////////////////////
-struct skip_grammar : sub_grammar<skip_grammar>
+struct skip_grammar : boost::spirit::sub_grammar<skip_grammar>
 {
     typedef
        alternative<alternative<space_parser, sequence<sequence<
