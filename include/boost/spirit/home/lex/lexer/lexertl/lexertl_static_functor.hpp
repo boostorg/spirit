@@ -245,7 +245,15 @@ namespace boost { namespace spirit { namespace lex
           : eof()
 #endif 
         {}
-        
+
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
+        // somehow VC7.1 needs this (meaningless) assignment operator
+        lexertl_functor& operator=(lexertl_functor const& rhs)
+        {
+            return *this;
+        }
+#endif
+
         ///////////////////////////////////////////////////////////////////////
         // interface to the multi_pass_policies::split_functor_input policy
         typedef Token result_type;
