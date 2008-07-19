@@ -19,15 +19,16 @@
 template <typename Char>
 void acid_test()
 {
+    if (sizeof(Char) == sizeof(unsigned))
+        return; // don't do this test if we have a Char that's very big.
+                // the smaller chars will suffice for testing.
+
     using boost::spirit::qi::detail::range_run;
     using boost::spirit::qi::detail::range;
 
     typedef boost::integer_traits<Char> integer_traits;
     Char const const_min = integer_traits::const_min;
-    // if Char has same size as unsigned, we back-off 1 bit to not
-    // overflow dynamic_bitset
-    Char const const_max = (sizeof(Char) == sizeof(unsigned)) ?
-        integer_traits::const_max-1 : integer_traits::const_max;
+    Char const const_max = integer_traits::const_max;
     unsigned bit_set_size = unsigned(const_max)-unsigned(const_min)+1;
     int const test_size = 1000;
 
