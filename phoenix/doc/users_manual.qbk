@@ -658,19 +658,19 @@ again be another composite.
 ]
 
 Each module is defined in a header file with the same name. For example,
-the core module is defined in `<boost/spirit/phoenix/core.hpp>`.
+the core module is defined in `<boost/spirit/home/phoenix/core.hpp>`.
 
 [table Includes
     [[Module]           [File]]
-    [[Core]             [`#include <boost/spirit/phoenix/core.hpp>`]]
-    [[Function]         [`#include <boost/spirit/phoenix/function.hpp>`]]
-    [[Operator]         [`#include <boost/spirit/phoenix/operator.hpp>`]]
-    [[Statement]        [`#include <boost/spirit/phoenix/statement.hpp>`]]
-    [[Object]           [`#include <boost/spirit/phoenix/object.hpp>`]]
-    [[Scope]            [`#include <boost/spirit/phoenix/scope.hpp>`]]
-    [[Bind]             [`#include <boost/spirit/phoenix/bind.hpp>`]]
-    [[Container]        [`#include <boost/spirit/phoenix/container.hpp>`]]
-    [[Algorithm]        [`#include <boost/spirit/phoenix/algorithm.hpp>`]]
+    [[Core]             [`#include <boost/spirit/home/phoenix/core.hpp>`]]
+    [[Function]         [`#include <boost/spirit/home/phoenix/function.hpp>`]]
+    [[Operator]         [`#include <boost/spirit/home/phoenix/operator.hpp>`]]
+    [[Statement]        [`#include <boost/spirit/home/phoenix/statement.hpp>`]]
+    [[Object]           [`#include <boost/spirit/home/phoenix/object.hpp>`]]
+    [[Scope]            [`#include <boost/spirit/home/phoenix/scope.hpp>`]]
+    [[Bind]             [`#include <boost/spirit/home/phoenix/bind.hpp>`]]
+    [[Container]        [`#include <boost/spirit/home/phoenix/container.hpp>`]]
+    [[Algorithm]        [`#include <boost/spirit/home/phoenix/algorithm.hpp>`]]
 ]
 
 [blurb __tip__ Finer grained include files are available per feature; see the
@@ -723,7 +723,7 @@ only a few primitives. This section shall deal with these preset primitives.
 
 [section Arguments]
 
-    #include <boost/spirit/phoenix/core/argument.hpp>
+    #include <boost/spirit/home/phoenix/core/argument.hpp>
 
 We use an instance of:
 
@@ -823,7 +823,7 @@ used as callbacks.]
 
 [section Values]
 
-    #include <boost/spirit/phoenix/core/value.hpp>
+    #include <boost/spirit/home/phoenix/core/value.hpp>
 
 Whenever we see a constant in a partially applied function, an
 
@@ -856,7 +856,7 @@ prints out "3 Hello World".
 
 [section References]
 
-    #include <boost/spirit/phoenix/core/reference.hpp>
+    #include <boost/spirit/home/phoenix/core/reference.hpp>
 
 Values are immutable constants. Attempting to modify a value will result in a
 compile time error. When we want the function to modify the parameter, we use a
@@ -898,7 +898,7 @@ prints out "3 Hello World"
 [endsect]
 [section Constant References]
 
-    #include <boost/spirit/phoenix/core/reference.hpp>
+    #include <boost/spirit/home/phoenix/core/reference.hpp>
 
 Another free function `cref(cv)` may also be used. `cref(cv)` creates an
 `actor<reference<T const&> >` object. This is similar to `actor<value<T> >` but
@@ -908,7 +908,7 @@ copy by value, the `cref(cv)` offers a lighter alternative.
 [endsect]
 [section Nothing]
 
-    #include <boost/spirit/phoenix/core/nothing.hpp>
+    #include <boost/spirit/home/phoenix/core/nothing.hpp>
 
 Finally, the `actor<null_actor>` does nothing; (a "bum", if you will :-).
 There's a sole `actor<null_actor>` instance named "nothing". This actor is
@@ -941,7 +941,7 @@ structure. The actual evaluation is handled by a composite specific eval policy.
 
 [section Function]
 
-    #include <boost/spirit/phoenix/function/function.hpp>
+    #include <boost/spirit/home/phoenix/function/function.hpp>
 
 The `function` class template provides a mechanism for implementing lazily
 evaluated functions. Syntactically, a lazy function looks like an ordinary C/C++ function.
@@ -1150,17 +1150,17 @@ If the right hand side is a member function pointer, the result is an actor whic
     [[Operators]                    [File]]
     [[`-`, `+`, `++`, `--`, `+=`,
       `-=`, `*=`, `/=`, `%=`,
-      `*`, `/`, `%`]                [`#include <boost/spirit/phoenix/operator/arithmetic.hpp>`]]
+      `*`, `/`, `%`]                [`#include <boost/spirit/home/phoenix/operator/arithmetic.hpp>`]]
     [[`&=`, `|=`, `^=`, `<<=`,
       `>>=`, `&`, `|`, `^`, `<<`,
-      `>>`]                         [`#include <boost/spirit/phoenix/operator/bitwise.hpp>`]]
+      `>>`]                         [`#include <boost/spirit/home/phoenix/operator/bitwise.hpp>`]]
     [[`==`, `!=`, `<`,
-      `<=`, `>`, `>=`]              [`#include <boost/spirit/phoenix/operator/comparison.hpp>`]]
-    [[`<<`, `>>`]                   [`#include <boost/spirit/phoenix/operator/io.hpp>`]]
-    [[`!`, &&, `||`]                [`#include <boost/spirit/phoenix/operator/logical.hpp>`]]
-    [[`&x`, `*p`, `=`, `[]`]        [`#include <boost/spirit/phoenix/operator/self.hpp>`]]
-    [[`if_else(c, a, b)`]           [`#include <boost/spirit/phoenix/operator/if_else.hpp>`]]
-    [[`->*`]                        [`#include <boost/spirit/phoenix/operator/member.hpp>`]]
+      `<=`, `>`, `>=`]              [`#include <boost/spirit/home/phoenix/operator/comparison.hpp>`]]
+    [[`<<`, `>>`]                   [`#include <boost/spirit/home/phoenix/operator/io.hpp>`]]
+    [[`!`, &&, `||`]                [`#include <boost/spirit/home/phoenix/operator/logical.hpp>`]]
+    [[`&x`, `*p`, `=`, `[]`]        [`#include <boost/spirit/home/phoenix/operator/self.hpp>`]]
+    [[`if_else(c, a, b)`]           [`#include <boost/spirit/home/phoenix/operator/if_else.hpp>`]]
+    [[`->*`]                        [`#include <boost/spirit/home/phoenix/operator/member.hpp>`]]
 ]
 
 [endsect]
@@ -1200,7 +1200,7 @@ Here are more examples with annotations. The code almost speaks for itself.
 
 [section Block Statement]
 
-    #include <boost/spirit/phoenix/statement/sequence.hpp>
+    #include <boost/spirit/home/phoenix/statement/sequence.hpp>
 
 Syntax:
 
@@ -1248,7 +1248,7 @@ operator chain (and spits out an error for zero arguments).
 [endsect]
 [section if_ Statement]
 
-    #include <boost/spirit/phoenix/statement/if.hpp>
+    #include <boost/spirit/home/phoenix/statement/if.hpp>
 
 We have seen the `if_` statement. The syntax is:
 
@@ -1260,7 +1260,7 @@ We have seen the `if_` statement. The syntax is:
 [endsect]
 [section if_else_ statement]
 
-    #include <boost/spirit/phoenix/statement/if.hpp>
+    #include <boost/spirit/home/phoenix/statement/if.hpp>
 
 The syntax is
 
@@ -1301,7 +1301,7 @@ Notice how the `if_else_` statement is nested.
 [endsect]
 [section switch_ statement]
 
-    #include <boost/spirit/phoenix/statement/switch.hpp>
+    #include <boost/spirit/home/phoenix/statement/switch.hpp>
 
 The syntax is:
 
@@ -1330,7 +1330,7 @@ element's actual value:
 [endsect]
 [section while_ Statement]
 
-    #include <boost/spirit/phoenix/statement/while.hpp>
+    #include <boost/spirit/home/phoenix/statement/while.hpp>
 
 The syntax is:
 
@@ -1355,7 +1355,7 @@ the number at each step. A newline terminates the printout of each value.
 [endsect]
 [section do_while_ Statement]
 
-    #include <boost/spirit/phoenix/statement/do_while.hpp>
+    #include <boost/spirit/home/phoenix/statement/do_while.hpp>
 
 The syntax is:
 
@@ -1385,7 +1385,7 @@ slight twist in logic.
 [endsect]
 [section for_ Statement]
 
-    #include <boost/spirit/phoenix/statement/for.hpp>
+    #include <boost/spirit/home/phoenix/statement/for.hpp>
 
 The syntax is:
 
@@ -1424,7 +1424,7 @@ return void.]
 [endsect]
 [section try_ catch_ Statement]
 
-    #include <boost/spirit/phoenix/statement/try_catch.hpp>
+    #include <boost/spirit/home/phoenix/statement/try_catch.hpp>
 
 The syntax is:
 
@@ -1468,7 +1468,7 @@ prints messages about different exception types it catches.
 [endsect]
 [section throw_]
 
-    #include <boost/spirit/phoenix/statement/throw.hpp>
+    #include <boost/spirit/home/phoenix/statement/throw.hpp>
 
 As a natural companion to the try/catch support, the statement module provides
 lazy throwing and rethrowing of exceptions.
@@ -1517,7 +1517,7 @@ The module provides /"lazy"/ versions of C++'s object constructor, `new`,
 
 [*/Lazy constructors.../]
 
-    #include <boost/spirit/phoenix/object/construct.hpp>
+    #include <boost/spirit/home/phoenix/object/construct.hpp>
 
 Lazily construct an object from an arbitrary set of arguments:
 
@@ -1542,7 +1542,7 @@ is set to `PHOENIX_LIMIT` (See [link phoenix.actors Actors]).]
 
 [*/Lazy new.../]
 
-    #include <boost/spirit/phoenix/object/new.hpp>
+    #include <boost/spirit/home/phoenix/object/new.hpp>
 
 Lazily construct an object, on the heap, from an arbitrary set of arguments:
 
@@ -1565,7 +1565,7 @@ preprocessor constant PHOENIX_COMPOSITE_LIMIT. See the note above.]
 
 [*/Lazy delete.../]
 
-    #include <boost/spirit/phoenix/object/delete.hpp>
+    #include <boost/spirit/home/phoenix/object/delete.hpp>
 
 Lazily delete an object, from the heap:
 
@@ -1581,10 +1581,10 @@ Example:
 
 [*/Lazy casts.../]
 
-    #include <boost/spirit/phoenix/object/static_cast.hpp>
-    #include <boost/spirit/phoenix/object/dynamic_cast.hpp>
-    #include <boost/spirit/phoenix/object/const_cast.hpp>
-    #include <boost/spirit/phoenix/object/reinterpret_cast.hpp>
+    #include <boost/spirit/home/phoenix/object/static_cast.hpp>
+    #include <boost/spirit/home/phoenix/object/dynamic_cast.hpp>
+    #include <boost/spirit/home/phoenix/object/const_cast.hpp>
+    #include <boost/spirit/home/phoenix/object/reinterpret_cast.hpp>
 
 The set of lazy C++ cast template functions provide a way of lazily casting an
 object of a certain type to another type. The syntax resembles the well known
@@ -1622,7 +1622,7 @@ This section deals with local variables and nested lambda scopes.
 
 [h2 Local Variables]
 
-    #include <boost/spirit/phoenix/scope/local_variable.hpp>
+    #include <boost/spirit/home/phoenix/scope/local_variable.hpp>
 
 We use an instance of:
 
@@ -1645,7 +1645,7 @@ named `_a`..`_z` that you can already use. To make use of them, simply use the
 
 [h2 let]
 
-    #include <boost/spirit/phoenix/scope/let.hpp>
+    #include <boost/spirit/home/phoenix/scope/let.hpp>
 
 You declare local variables using the syntax:
 
@@ -1759,7 +1759,7 @@ an outer scope:
 
 [h2 lambda]
 
-    #include <boost/spirit/phoenix/scope/lambda.hpp>
+    #include <boost/spirit/home/phoenix/scope/lambda.hpp>
 
 A lot of times, you'd want to write a lazy function that accepts one or more
 functions (higher order functions). STL algorithms come to mind, for example.
@@ -1897,7 +1897,7 @@ composite].
 
 [h2 Binding Functions]
 
-    #include <boost/spirit/phoenix/bind/bind_function.hpp>
+    #include <boost/spirit/home/phoenix/bind/bind_function.hpp>
 
 Example, given a function `foo`:
 
@@ -1921,7 +1921,7 @@ will print out "4".
 
 [h2 Binding Member Functions]
 
-    #include <boost/spirit/phoenix/bind/bind_member_function.hpp>
+    #include <boost/spirit/home/phoenix/bind/bind_member_function.hpp>
 
 Binding member functions can be done similarly. A bound member function takes in
 a pointer or reference to an object as the first argument. For instance, given:
@@ -1946,7 +1946,7 @@ the arguments can be lazily bound. Examples:
 
 [h2 Binding Member Variables]
 
-    #include <boost/spirit/phoenix/bind/bind_member_variable.hpp>
+    #include <boost/spirit/home/phoenix/bind/bind_member_variable.hpp>
 
 Member variables can also be bound much like member functions. Member variables
 are not functions. Yet, like the [link phoenix.primitives.references `ref(x)`] that
@@ -1978,7 +1978,7 @@ The object (reference or pointer) can be lazily bound. Examples:
 [endsect]
 [section Container]
 
-    #include <boost/spirit/phoenix/container.hpp>
+    #include <boost/spirit/home/phoenix/container.hpp>
 
 The container module predefines a set of lazy functions that work on STL
 containers. These functions provide a mechanism for the lazy evaluation of the
@@ -2081,7 +2081,7 @@ The following table describes the container functions and their semantics.
 
 [section Algorithm]
 
-    #include <boost/spirit/phoenix/algorithm.hpp>
+    #include <boost/spirit/home/phoenix/algorithm.hpp>
 
 The algorithm module provides wrappers for the standard algorithms in the
 `<algorithm>` and `<numeric>` headers.
@@ -2090,9 +2090,9 @@ The algorithms are divided into the categories iteration, transformation and que
 modelling the __boost_mpl__ library. The different algorithm classes can be
 included using the headers:
 
-    #include <boost/spirit/phoenix/stl/algorithm/iteration.hpp>
-    #include <boost/spirit/phoenix/stl/algorithm/transformation.hpp>
-    #include <boost/spirit/phoenix/stl/algorithm/querying.hpp>
+    #include <boost/spirit/home/phoenix/stl/algorithm/iteration.hpp>
+    #include <boost/spirit/home/phoenix/stl/algorithm/transformation.hpp>
+    #include <boost/spirit/home/phoenix/stl/algorithm/querying.hpp>
 
 The functions of the algorithm module take ranges as arguments where
 appropriate. This is different to the standard
