@@ -7,14 +7,19 @@
     http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 
+#include <stdexcept>
+
 #define BOOST_SPIRIT_ASSERT_EXCEPTION ::spirit_exception
 
-struct spirit_exception
+struct spirit_exception : std::exception
 {
     spirit_exception(char const * msg)
         : message(msg)
     {
     }
+    ~spirit_exception() throw() {}
+
+    char const* what() const throw() { return message; }
 
     char const * message;
 };
@@ -51,7 +56,7 @@ int main()
         symbols_.add(begin, end, (void*) boost::addressof(symbols_));
         BOOST_TEST(0);
     }
-    catch (spirit_exception &e)
+    catch (spirit_exception &/*e*/)
     {
     }
 
@@ -61,7 +66,7 @@ int main()
         symbols_.add(begin2, end2, (void*) boost::addressof(symbols_));
         BOOST_TEST(0);
     }
-    catch (spirit_exception &e)
+    catch (spirit_exception &/*e*/)
     {
     }
     return boost::report_errors();
