@@ -9,8 +9,9 @@
 =============================================================================*/
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_assign_actor.hpp>
-#include <iostream>
 #include <boost/detail/lightweight_test.hpp>
+#include <iostream>
+#include <climits>
 
 using namespace std;
 using namespace BOOST_SPIRIT_CLASSIC_NS;
