@@ -27,7 +27,7 @@ namespace boost { namespace spirit { namespace qi
 
     struct state_switcher;
     struct state_switcher_context;
-    
+
     struct plain_token;
 
     template <typename Expr, typename Enable>
