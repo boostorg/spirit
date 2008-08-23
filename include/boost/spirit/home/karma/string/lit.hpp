@@ -55,7 +55,7 @@ namespace boost { namespace spirit { namespace karma
         generate(Component const& component, OutputIterator& sink,
             Context& /*ctx*/, Delimiter const& d, unused_type)
         {
-            BOOST_MPL_ASSERT_MSG(false, lit_not_usable_without_parameter, ());
+            BOOST_MPL_ASSERT_MSG(false, lit_not_usable_without_attribute, ());
             return false;
         }
 
@@ -165,7 +165,7 @@ namespace boost { namespace spirit { namespace karma
         generate(Component const& component, OutputIterator& sink,
             Context& /*ctx*/, Delimiter const& d, unused_type)
         {
-            BOOST_MPL_ASSERT_MSG(false, lit_not_usable_without_parameter, ());
+            BOOST_MPL_ASSERT_MSG(false, lit_not_usable_without_attribute, ());
             return false;
         }
 

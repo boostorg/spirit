@@ -132,7 +132,7 @@ namespace boost { namespace spirit { namespace karma
             unused_type)
         {
             BOOST_MPL_ASSERT_MSG(false,
-                binary_generator_not_usable_without_parameter, ());
+                binary_generator_not_usable_without_attribute, ());
             return false;
         }
 
