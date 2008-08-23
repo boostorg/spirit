@@ -31,12 +31,24 @@ int main()
     }
 
     {
+        int opt = 10;
+        BOOST_TEST(test("10", -int_, opt));
+    }
+
+    {
         using namespace boost::spirit::ascii;
         
         boost::optional<int> opt;
         BOOST_TEST(test_delimited("", -int_, opt, space));
 
         opt = 10;
+        BOOST_TEST(test_delimited("10 ", -int_, opt, space));
+    }
+
+    {
+        using namespace boost::spirit::ascii;
+
+        int opt = 10;
         BOOST_TEST(test_delimited("10 ", -int_, opt, space));
     }
 
@@ -56,12 +68,31 @@ int main()
         using namespace boost::phoenix;
         namespace phoenix = boost::phoenix;
         using namespace boost::spirit::arg_names;
+
+        int n = 1234;
+        BOOST_TEST(test("1234", (-int_)[_1 = phoenix::ref(n)]));
+    }
+
+    {   // test action
+        using namespace boost::phoenix;
+        namespace phoenix = boost::phoenix;
+        using namespace boost::spirit::arg_names;
         using namespace boost::spirit::ascii;
 
         boost::optional<int> n;
         BOOST_TEST(test_delimited("", (-int_)[_1 = phoenix::ref(n)], space));
 
         n = 1234;
+        BOOST_TEST(test_delimited("1234 ", (-int_)[_1 = phoenix::ref(n)], space));
+    }
+
+    {   // test action
+        using namespace boost::phoenix;
+        namespace phoenix = boost::phoenix;
+        using namespace boost::spirit::arg_names;
+        using namespace boost::spirit::ascii;
+
+        int n = 1234;
         BOOST_TEST(test_delimited("1234 ", (-int_)[_1 = phoenix::ref(n)], space));
     }
 

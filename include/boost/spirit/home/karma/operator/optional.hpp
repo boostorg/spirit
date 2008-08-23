@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/component.hpp>
+#include <boost/spirit/home/support/attribute_of.hpp>
 #include <boost/spirit/home/support/attribute_transform.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/optional.hpp>
@@ -21,30 +22,44 @@ namespace boost { namespace spirit { namespace karma
     namespace detail
     {
         template <typename Parameter>
-        inline bool
-        optional_is_valid(boost::optional<Parameter> const& opt)
+        struct optional_attribute
         {
-            return opt;
-        }
+            static inline bool
+            is_valid(boost::optional<Parameter> const& opt)
+            {
+                return opt;
+            }
 
-        inline bool
-        optional_is_valid(unused_type)
-        {
-            return true;
-        }
+            static inline bool
+            is_valid(Parameter const&)
+            {
+                return true;
+            }
 
-        template <typename Parameter>
-        inline Parameter const&
-        optional_get(boost::optional<Parameter> const& opt)
-        {
-            return get(opt) ;
-        }
+            static inline bool
+            is_valid(unused_type)
+            {
+                return true;
+            }
 
-        inline unused_type
-        optional_get(unused_type)
-        {
-            return unused;
-        }
+            static inline Parameter const&
+            get(boost::optional<Parameter> const& opt)
+            {
+                return boost::get(opt);
+            }
+
+            static inline Parameter const&
+            get(Parameter const& p)
+            {
+                return p;
+            }
+
+            static inline unused_type
+            get(unused_type)
+            {
+                return unused;
+            }
+        };
     }
 
     struct optional
@@ -71,10 +86,16 @@ namespace boost { namespace spirit { namespace karma
                 result_of::subject<Component>::type::director
             director;
 
-            if (detail::optional_is_valid(param))
+            typedef typename traits::attribute_of<
+                karma::domain, typename result_of::subject<Component>::type, 
+                Context, unused_type
+            >::type attribute_type;
+
+            typedef detail::optional_attribute<attribute_type> optional_type;
+            if (optional_type::is_valid(param))
             {
                 director::generate(subject(component), sink, ctx, d,
-                    detail::optional_get(param));
+                    optional_type::get(param));
             }
             return true;
         }
