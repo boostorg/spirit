@@ -22,13 +22,16 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     // forwards
     ///////////////////////////////////////////////////////////////////////////
+    struct main_meta_grammar;
+
     struct none;
     struct eps_generator;
     struct eol_generator;
     struct semantic_predicate;
     struct lazy_generator;
     struct functor_director;
-    
+    struct confix_director;
+
     template <typename Expr, typename Enable>
     struct is_valid_expr;
 
@@ -42,20 +45,31 @@ namespace boost { namespace spirit { namespace karma
     // none, and lazy
     struct auxiliary_meta_grammar
       : proto::or_<
+            // none
             meta_grammar::empty_terminal_rule<
                 karma::domain, tag::none, none>,
+            // eps
             meta_grammar::empty_terminal_rule<
                 karma::domain, tag::eps, eps_generator>,
+            // eol
             meta_grammar::empty_terminal_rule<
                 karma::domain, tag::eol, eol_generator>,
+            // eps(...)
             meta_grammar::function1_rule<
                 karma::domain, tag::eps, semantic_predicate>,
+            // lazy(...)
             meta_grammar::function1_rule<
                 karma::domain, tag::lazy, lazy_generator>,
+            // functor generators
             meta_grammar::terminal_rule<
                 karma::domain, 
                 functor_holder<proto::_, proto::_>,
                 functor_director
+            >,
+            // confix("...", "...")[...]
+            meta_grammar::subscript_rule<
+                karma::domain, tag::confix<proto::_, proto::_>, 
+                confix_director, main_meta_grammar
             >
         >
     {

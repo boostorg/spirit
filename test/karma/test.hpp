@@ -49,14 +49,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
-        
+
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g);
-                
+
         return result && generated == expected;
     }
 
@@ -65,14 +65,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g);
-                
+
         return result && generated == expected;
     }
 
@@ -83,14 +83,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g, parameter);
-                
+
         return result && generated == expected;
     }
 
@@ -100,14 +100,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g, parameter);
-                
+
         return result && generated == expected;
     }
 
@@ -118,14 +118,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate_delimited(std::back_inserter(generated), g, d);
-                
+
         return result && generated == expected;
     }
 
@@ -135,14 +135,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate_delimited(std::back_inserter(generated), g, d);
-                
+
         return result && generated == expected;
     }
 
@@ -154,7 +154,7 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
@@ -162,7 +162,7 @@ namespace spirit_test
         string_type generated;
         bool result = karma::generate_delimited(std::back_inserter(generated), 
             g, parameter, d);
-                
+
         return result && generated == expected;
     }
 
@@ -173,7 +173,7 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<Char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
@@ -181,7 +181,7 @@ namespace spirit_test
         string_type generated;
         bool result = karma::generate_delimited(std::back_inserter(generated), 
             g, parameter, d);
-                
+
         return result && generated == expected;
     }
 
@@ -193,14 +193,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g);
-                
+
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
@@ -212,14 +212,14 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
 
         string_type generated;
         bool result = karma::generate(std::back_inserter(generated), g, parameter);
-                
+
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
@@ -231,7 +231,7 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
@@ -239,7 +239,7 @@ namespace spirit_test
         string_type generated;
         bool result = karma::generate_delimited(std::back_inserter(generated), 
             g, d);
-                
+
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
@@ -251,7 +251,7 @@ namespace spirit_test
     {
         namespace karma = boost::spirit::karma;
         typedef std::basic_string<char> string_type;
-        
+
         // we don't care about the result of the "what" function.
         // we only care that all generators have it:
         karma::what(g);
@@ -259,7 +259,7 @@ namespace spirit_test
         string_type generated;
         bool result = karma::generate_delimited(std::back_inserter(generated), 
             g, parameter, d);
-                
+
         return result && !std::memcmp(generated.c_str(), expected, size);
     }
 
