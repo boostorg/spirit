@@ -9,6 +9,7 @@
 #define BOOST_SPIRIT_STRING_FEB_03_2007_0355PM
 
 #include <boost/spirit/home/qi/auxiliary/none.hpp>
+#include <boost/spirit/home/qi/auxiliary/confix.hpp>
 #include <boost/spirit/home/qi/auxiliary/eps.hpp>
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/spirit/home/qi/auxiliary/functor.hpp>
