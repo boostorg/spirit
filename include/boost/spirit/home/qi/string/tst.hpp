@@ -84,7 +84,7 @@ namespace boost { namespace spirit { namespace qi
         template <typename F>
         void for_each(F f) const
         {
-            node::for_each(root, "", f);
+            node::for_each(root, std::basic_string<Char>(), f);
         }
 
     private:
