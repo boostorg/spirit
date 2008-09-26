@@ -44,6 +44,8 @@ int main()
     BOOST_TEST(test.value == 2);
 
     BOOST_TEST((val(ptr)->*&Test::func)(3)() == 3);
+    int i = 33;
+    BOOST_TEST((arg1->*&Test::func)(arg2)(cptr, i) == i);
     BOOST_TEST((val(cptr)->*&Test::func)(4)() == 4);
     BOOST_TEST((val(ptr)->*&Test::dunc)()() == 10);
 
