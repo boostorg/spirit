@@ -32,7 +32,11 @@ namespace boost { namespace phoenix { namespace detail
         template <typename Env, typename F>
         struct result
         {
-            typedef typename F::template result<Env>::type fn;
+            typedef typename
+                remove_reference<
+                    typename F::template result<Env>::type 
+                >::type
+            fn;
             typedef typename fn::result_type type;
         };
 
@@ -96,7 +100,11 @@ namespace boost { namespace phoenix { namespace detail
           , BOOST_PP_ENUM_PARAMS(N, typename A)>
         struct result
         {
-            typedef typename F::template result<Env>::type fn;
+            typedef typename
+                remove_reference<
+                    typename F::template result<Env>::type 
+                >::type
+            fn;
             BOOST_PP_REPEAT(N, PHOENIX_GET_ARG, _)
 
             typedef BOOST_PP_CAT(mpl::vector, N)
