@@ -15,6 +15,7 @@
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/spirit/home/phoenix/scope/dynamic.hpp>
 
 #if defined(DONT_HAVE_BOOST)                        \
     || !defined(BOOST_HAS_THREADS)                  \

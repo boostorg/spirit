@@ -12,7 +12,7 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_scope.hpp>
+#include <boost/spirit/home/phoenix/scope/dynamic.hpp>
 
 struct my_dynamic : ::boost::phoenix::dynamic<int, std::string, double>
 {
