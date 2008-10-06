@@ -15,7 +15,7 @@ namespace boost { namespace spirit { namespace detail
     struct what_function
     {
         what_function(std::string& str, Context const& ctx)
-          : str(str), first(true), ctx(ctx)
+          : str(str), ctx(ctx), first(true)
         {
         }
 
