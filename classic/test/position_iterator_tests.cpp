@@ -141,32 +141,38 @@ void CheckLineCounting(IterT iter)
 {
     IterT end;
 
-    BOOST_TEST(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(*iter == '\n');
     BOOST_TEST(iter.get_position().line == 1);
     ++iter; // 0
     BOOST_TEST(iter.get_position().line == 2);
     ++iter; // 1
     ++iter; // 2
     ++iter; // 3
-    ++iter; // newline
-    BOOST_TEST(*iter == '\n' || *iter == '\r');
+    ++iter; // \r
+    BOOST_TEST(*iter == '\r');
+    BOOST_TEST(iter.get_position().line == 2);
+    ++iter; // \n
+    BOOST_TEST(*iter == '\n');
     BOOST_TEST(iter.get_position().line == 2);
     ++iter; // 4
     BOOST_TEST(iter.get_position().line == 3);
     ++iter; // 5
     ++iter; // 6
     ++iter; // 7
-    ++iter; // newline
-    BOOST_TEST(*iter == '\n' || *iter == '\r');
+    ++iter; // \n
+    BOOST_TEST(*iter == '\n');
     BOOST_TEST(iter.get_position().line == 3);
     ++iter; // 8
     BOOST_TEST(iter.get_position().line == 4);
     ++iter; // 9
-    ++iter; // newline
+    ++iter; // \n
     BOOST_TEST(iter.get_position().line == 4);
-    BOOST_TEST(*iter == '\n' || *iter == '\r');
-    ++iter; // end
+    BOOST_TEST(*iter == '\n');
+    ++iter; // \r
     BOOST_TEST(iter.get_position().line == 5);
+    BOOST_TEST(*iter == '\r');
+    ++iter; // end
+    BOOST_TEST(iter.get_position().line == 6);
     BOOST_TEST(iter == end);
 }
 
