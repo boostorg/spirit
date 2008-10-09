@@ -150,6 +150,7 @@ void CheckLineCounting(IterT iter)
     ++iter; // 3
     ++iter; // newline
     BOOST_TEST(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(iter.get_position().line == 2);
     ++iter; // 4
     BOOST_TEST(iter.get_position().line == 3);
     ++iter; // 5
@@ -157,12 +158,15 @@ void CheckLineCounting(IterT iter)
     ++iter; // 7
     ++iter; // newline
     BOOST_TEST(*iter == '\n' || *iter == '\r');
+    BOOST_TEST(iter.get_position().line == 3);
     ++iter; // 8
     BOOST_TEST(iter.get_position().line == 4);
     ++iter; // 9
     ++iter; // newline
+    BOOST_TEST(iter.get_position().line == 4);
     BOOST_TEST(*iter == '\n' || *iter == '\r');
     ++iter; // end
+    BOOST_TEST(iter.get_position().line == 5);
     BOOST_TEST(iter == end);
 }
 
@@ -427,10 +431,10 @@ void CheckBasicFunctionality(void)
 
     const char* b = "\n0123\r\n4567\n89\n\r";
 
-    test_impl::CheckLineCounting(position_iterator<iter_t>(b, b+15, ""));
-    test_impl::CheckLineCounting(position_iterator2<iter_t>(b, b+15, ""));
-    test_impl::CheckLineCounting(position_iterator<iter_t, file_position_without_column>(b, b+15, ""));
-    test_impl::CheckLineCounting(position_iterator2<iter_t, file_position_without_column>(b, b+15, ""));
+    test_impl::CheckLineCounting(position_iterator<iter_t>(b, b+16, ""));
+    test_impl::CheckLineCounting(position_iterator2<iter_t>(b, b+16, ""));
+    test_impl::CheckLineCounting(position_iterator<iter_t, file_position_without_column>(b, b+16, ""));
+    test_impl::CheckLineCounting(position_iterator2<iter_t, file_position_without_column>(b, b+16, ""));
 }
 
 
