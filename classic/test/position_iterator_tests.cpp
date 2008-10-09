@@ -394,15 +394,15 @@ void CheckConstructors(void)
 template <typename IterT>
 void CheckDistance(IterT begin)
 {
-	IterT end;
+    IterT end;
 
-	std::size_t std_distance = std::distance(begin, end);
-	
-	std::size_t manual_count = 0;
-	for(IterT it = begin; it != end; ++it)
-		++manual_count;
-	
-	BOOST_TEST(std_distance == manual_count);
+    std::size_t std_distance = std::distance(begin, end);
+    
+    std::size_t manual_count = 0;
+    for(IterT it = begin; it != end; ++it)
+        ++manual_count;
+    
+    BOOST_TEST(std_distance == manual_count);
 }
 
 
@@ -462,9 +462,9 @@ void CheckLineExtraction(void)
 
 void CheckDistance(void)
 {
-	const char* b = "\n0123\r\n4567\n89\n\r";
+    const char* b = "\n0123\r\n4567\n89\n\r";
     typedef const char* iter_t;
-	
+    
     test_impl::CheckDistance(position_iterator<iter_t>(b, b+15, ""));
     test_impl::CheckDistance(position_iterator2<iter_t>(b, b+15, ""));
     test_impl::CheckDistance(position_iterator<iter_t, file_position_without_column>(b, b+15, ""));
