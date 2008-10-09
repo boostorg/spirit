@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <list>
+#include <algorithm>
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>
 #include <boost/mpl/list.hpp>
@@ -60,6 +61,7 @@ void CheckConstructors(void);
 void CheckBasicFunctionality(void);
 void CheckColumnCounting(void);
 void CheckLineExtraction(void);
+void CheckDistance(void);
 
 void CheckInstantiation(void)
 {
@@ -81,6 +83,7 @@ int main(void)
     CheckBasicFunctionality();
     CheckColumnCounting();
     CheckLineExtraction();
+    CheckDistance();
 
     return boost::report_errors();
 }
@@ -378,6 +381,20 @@ void CheckConstructors(void)
     CheckEmptySequence<iterc_t>();
 }
 
+template <typename IterT>
+void CheckDistance(IterT begin)
+{
+	IterT end;
+
+	std::size_t std_distance = std::distance(begin, end);
+	
+	std::size_t manual_count = 0;
+	for(IterT it = begin; it != end; ++it)
+		++manual_count;
+	
+	BOOST_TEST(std_distance == manual_count);
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 } /* namespace test_impl */
@@ -431,4 +448,15 @@ void CheckColumnCounting(void)
 void CheckLineExtraction(void)
 {
     test_impl::CheckLineExtraction();
+}
+
+void CheckDistance(void)
+{
+	const char* b = "\n0123\r\n4567\n89\n\r";
+    typedef const char* iter_t;
+	
+    test_impl::CheckDistance(position_iterator<iter_t>(b, b+15, ""));
+    test_impl::CheckDistance(position_iterator2<iter_t>(b, b+15, ""));
+    test_impl::CheckDistance(position_iterator<iter_t, file_position_without_column>(b, b+15, ""));
+    test_impl::CheckDistance(position_iterator2<iter_t, file_position_without_column>(b, b+15, ""));
 }
