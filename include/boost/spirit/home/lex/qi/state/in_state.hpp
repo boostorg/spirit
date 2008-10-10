@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace qi
     {
         String name;
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // These are the different overloads allowed for the in_state(...) 
     // construct
@@ -33,23 +33,26 @@ namespace boost { namespace spirit { namespace qi
         proto::terminal<in_state_tag<char const*> >::type that = {{s}};
         return that;
     }
-    
+
     inline proto::terminal<in_state_tag<wchar_t const*> >::type
     in_state(wchar_t const *s)
     {
         proto::terminal<in_state_tag<wchar_t const*> >::type that = {{s}};
         return that;
     }
-    
+
     template <typename Char, typename Traits, typename Allocator>
-    inline proto::terminal<in_state_tag<char const*> >::type
+    inline typename proto::terminal<in_state_tag<Char const*> >::type
     in_state(std::basic_string<Char, Traits, Allocator> const& s)
     {
-        typename proto::terminal<in_state_tag<Char const*> >::type that = 
-            {{s.c_str()}};
+        typedef std::basic_string<Char, Traits, Allocator> string_type;
+
+        typename proto::terminal<in_state_tag<string_type> >::type that;
+        that.s = s;
+
         return that;
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // The following is a helper template allowing to use the in_state()[] as 
     // a skip parser

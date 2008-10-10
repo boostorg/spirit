@@ -30,7 +30,7 @@ namespace boost { namespace spirit
         struct bin {};
         struct oct {};
         struct hex {};
-        
+
         struct byte {};
         struct word {};
         struct dword {};
@@ -44,7 +44,7 @@ namespace boost { namespace spirit
         struct little_qword {};
 #endif
         struct pad {};
-        
+
         struct ushort {};
         struct ulong {};
         struct uint {};
@@ -72,10 +72,10 @@ namespace boost { namespace spirit
         struct lazy {};
         struct omit {};
         struct raw {};
-        
+
         struct stream {};
         struct wstream {};
-        
+
         struct token {};
     }
 

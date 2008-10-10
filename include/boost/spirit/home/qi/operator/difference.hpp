@@ -56,14 +56,16 @@ namespace boost { namespace spirit { namespace qi
 
             // Try RHS first
             Iterator start = first;
-            if (rdirector::parse(right(component), first, last, context, skipper, unused))
+            if (rdirector::parse(spirit::right(component), first, last, context, 
+                skipper, unused))
             {
                 // RHS succeeds, we fail.
                 first = start;
                 return false;
             }
             // RHS fails, now try LHS
-            return ldirector::parse(left(component), first, last, context, skipper, attr);
+            return ldirector::parse(spirit::left(component), first, last, 
+                context, skipper, attr);
         }
 
         template <typename Component, typename Context>
@@ -79,9 +81,9 @@ namespace boost { namespace spirit { namespace qi
                 result_of::right<Component>::type::director
             rdirector;
 
-            result += ldirector::what(left(component), ctx);
+            result += ldirector::what(spirit::left(component), ctx);
             result += ", ";
-            result += rdirector::what(right(component), ctx);
+            result += rdirector::what(spirit::right(component), ctx);
             result += "]";
             return result;
         }

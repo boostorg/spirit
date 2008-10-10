@@ -5,8 +5,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef BOOST_PP_IS_ITERATING
-#ifndef PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
-#define PHOENIX_SCOPE_DETAIL_LOCAL_GEN_HPP
+// Allow multiple inclusion. let.hpp and lambda.hpp will have the guards
 
 #include <boost/preprocessor/iterate.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
@@ -26,7 +25,6 @@
 
 #undef PHOENIX_LOCAL_GEN_PARAM
 #undef PHOENIX_LOCAL_GEN_ACTOR
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 //

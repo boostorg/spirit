@@ -268,7 +268,7 @@ namespace boost { namespace phoenix
                 typedef
                     boost::mpl::eval_if<
                         boost::is_same<Arg1, typename iterator_of<C>::type>
-#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1400)
+#if defined(BOOST_MSVC) && (BOOST_MSVC <= 1500)
                       , iterator_of<C>
 #else
                       , boost::mpl::identity<void>

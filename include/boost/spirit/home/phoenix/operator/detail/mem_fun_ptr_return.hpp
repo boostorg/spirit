@@ -25,6 +25,12 @@ namespace detail
     {
         typedef Ret type;
     };
+    
+    template<typename Ret, typename Class>
+    struct mem_fun_ptr_return<Ret (Class::*)() const>
+    {
+        typedef Ret type;
+    };
 
 #define BOOST_PP_ITERATION_PARAMS_1                                                           \
         (3, (1, PHOENIX_MEMBER_LIMIT, "boost/spirit/home/phoenix/operator/detail/mem_fun_ptr_return.hpp"))

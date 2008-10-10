@@ -35,17 +35,17 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         BOOST_MPL_ASSERT_MSG(
             (spirit::traits::is_component<karma::domain, Padding>::value), 
             padding_is_not_convertible_to_a_generator, (Context, Padding));
-            
+
         typedef 
             typename result_of::as_component<karma::domain, Embedded>::type 
         embedded;
         typedef 
             typename result_of::as_component<karma::domain, Padding>::type 
         padding;
-        
+
         // wrap the given output iterator to allow left padding
         detail::enable_buffering<OutputIterator> buffering(sink, width);
-        
+
         // first generate the embedded output 
         embedded ec = spirit::as_component(karma::domain(), e);
         typedef typename embedded::director director;

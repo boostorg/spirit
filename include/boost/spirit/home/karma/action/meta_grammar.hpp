@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace karma
     // forwards
     /////////////////////////////////////////////////////////////////////////// 
     struct action;
-    
+
     struct main_meta_grammar;
 
     template <typename Expr, typename Enable>

@@ -21,7 +21,6 @@
 #include <boost/preprocessor/repeat.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/is_reference.hpp>
-#include <boost/spirit/home/phoenix/detail/local_reference.hpp>
 
 #define PHOENIX_MAP_LOCAL_TEMPLATE_PARAM(z, n, data) \
     typename T##n = unused<n>
@@ -109,35 +108,13 @@ namespace boost { namespace phoenix
             type;
         };
 
-        template <typename T>
-        struct local_reference_identity
-        {
-            typedef local_reference<T> type;
-        };
-
-        template <typename Locals, typename Index>
-        struct make_local_reference
-        {
-            typedef typename
-                fusion::result_of::value_at<Locals, Index>::type
-            value_at;
-
-            typedef typename
-                mpl::eval_if<
-                    is_reference<value_at>
-                  , mpl::identity<value_at>
-                  , local_reference_identity<value_at>
-                >::type
-            type;
-        };
-
         template <typename Locals, typename Index>
         struct get_local_or_void
         {
             typedef typename
                 mpl::eval_if<
                     mpl::less<Index, mpl::size<Locals> >
-                  , make_local_reference<Locals, Index>
+                  , fusion::result_of::at<Locals, Index>
                   , mpl::identity<fusion::void_>
                 >::type
             type;

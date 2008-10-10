@@ -85,9 +85,9 @@ namespace boost { namespace spirit { namespace qi
                 result_of::right<Component>::type::director
             rdirector;
 
-            result += ldirector::what(left(component), ctx);
+            result += ldirector::what(spirit::left(component), ctx);
             result += ", ";
-            result += rdirector::what(right(component), ctx);
+            result += rdirector::what(spirit::right(component), ctx);
             result += "]";
             return result;
         }

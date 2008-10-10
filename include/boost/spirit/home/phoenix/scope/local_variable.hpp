@@ -36,7 +36,7 @@ namespace boost { namespace phoenix
         struct result : detail::apply_local<local_variable<Key>, Env> {};
 
         template <typename Env>
-        typename result<Env>::type const
+        typename result<Env>::type 
         eval(Env const& env) const
         {
             typedef typename result<Env>::type return_type;

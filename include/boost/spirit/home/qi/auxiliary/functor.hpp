@@ -175,8 +175,8 @@ namespace boost { namespace spirit { namespace qi
     //              typedef unspecified type;
     //          };
     //
-    //      which declares the given type as the expected parameter type for 
-    //      the generator to create.
+    //      which declares the given type as the expected attribute type for 
+    //      the parser to create.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Functor>
     inline typename result_of::as_parser<Functor>::type
@@ -187,7 +187,7 @@ namespace boost { namespace spirit { namespace qi
     
     ///////////////////////////////////////////////////////////////////////////
     //  The as_parser_mf generator function is equivalent to the function
-    //  as_parser above except that the user has explicitly to specify a
+    //  as_parser above except that the user has to explicitly specify a
     //  type exposing an embedded apply meta function declaring the expected
     //  parameter type for the generator to create.
     ///////////////////////////////////////////////////////////////////////////

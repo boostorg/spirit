@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace karma
 //         generate(Component const&, OutputIterator&, Context&, Delimiter const&,
 //             unused_type)
 //         {
-//             BOOST_MPL_ASSERT_MSG(false, kleene_not_usable_without_parameter, ());
+//             BOOST_MPL_ASSERT_MSG(false, kleene_not_usable_without_attribute, ());
 //             return false;
 //         }
 
