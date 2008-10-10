@@ -56,7 +56,7 @@ instance may contain a token value and/or the lexer state this token instance
 was matched in. The following [link spirit.lex.tokenstructure figure] shows the 
 schematic structure of a token.
 
-[fig ./images/TokenStructure.png..The structure of a token..spirit.lex.tokenstructure]
+[fig ./images/tokenstructure.png..The structure of a token..spirit.lex.tokenstructure]
 
 The token value and the token state may be omitted for optimization reasons, 
 avoiding the token to carry more data than actually required. This 
