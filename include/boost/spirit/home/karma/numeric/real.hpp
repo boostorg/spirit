@@ -18,7 +18,7 @@
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
 #include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
-#include <cmath>
+#include <boost/config/no_tr1/cmath.hpp>
 
 namespace boost { namespace spirit { namespace karma
 {

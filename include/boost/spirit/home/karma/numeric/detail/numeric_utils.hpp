@@ -10,7 +10,7 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <cmath>
+#include <boost/config/no_tr1/cmath.hpp>
 #include <limits>
 
 #include <boost/type_traits/is_integral.hpp>

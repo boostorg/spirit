@@ -14,7 +14,7 @@
 #include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
-#include <cmath>
+#include <boost/config/no_tr1/cmath.hpp>
 #include <boost/spirit/home/support/detail/math/fpclassify.hpp>
 
 namespace boost { namespace spirit { namespace karma 
