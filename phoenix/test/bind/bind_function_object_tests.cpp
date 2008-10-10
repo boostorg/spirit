@@ -101,6 +101,12 @@ main()
     int const ic5 = 5;
     // testing consts
     BOOST_TEST(bind(sqr(), arg1)(ic5) == (ic5*ic5));
+    
+    // From Steven Watanabe
+    sqr s;
+    int x = 2;
+    int result = bind(ref(s), _1)(x); 
+    BOOST_TEST(result == 4);
 
     return boost::report_errors();
 }

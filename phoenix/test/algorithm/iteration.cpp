@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 
-#include <boost/spirit/include/phoenix_stl.hpp/iteration.hpp>
+#include <boost/spirit/home/phoenix/stl/algorithm/iteration.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
