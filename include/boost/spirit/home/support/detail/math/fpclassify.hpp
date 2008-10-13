@@ -38,7 +38,7 @@ Some of the functions below have two implementations,
 depending on whether all the mantissa bits are copied or not.
 */
 
-#include <cmath>
+#include <boost/config/no_tr1/cmath.hpp>
 
 #ifndef FP_INFINITE
 #   define FP_INFINITE 0
