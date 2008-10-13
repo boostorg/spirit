@@ -134,13 +134,14 @@ const char *basic_num_token<CharT>::_precedence_strings[END + 1] =
     {"REPEAT"}, {"DUPLICATE"}, {"|"}, {"CHARSET"}, {"MACRO"},
     {"("}, {")"}, {"?"}, {"??"}, {"*"}, {"*?"}, {"+"}, {"+?"}, {"{n[,[m]]}"},
     {"{n[,[m]]}?"}, {"END"}
-}
+};
 #else
 {"BEGIN", "REGEX", "OREXP", "SEQUENCE", "SUB", "EXPRESSION", "REPEAT",
     "DUPLICATE", "|", "CHARSET", "MACRO", "(", ")", "?", "??", "*", "*?",
-    "+", "+?", "{n[,[m]]}", "{n[,[m]]}?", "END"};
-}
+    "+", "+?", "{n[,[m]]}", "{n[,[m]]}?", "END"
+};
 #endif
+}
 }
 }
 
