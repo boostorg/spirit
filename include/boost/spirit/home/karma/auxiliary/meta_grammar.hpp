@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace karma
             >,
             // confix("...", "...")[...]
             meta_grammar::subscript_rule<
-                karma::domain, tag::confix<proto::_, proto::_>, 
+                karma::domain, tag::confix_tag<proto::_, proto::_>, 
                 confix_director, main_meta_grammar
             >
         >

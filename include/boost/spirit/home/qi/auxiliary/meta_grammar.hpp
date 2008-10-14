@@ -73,7 +73,7 @@ namespace boost { namespace spirit { namespace qi
             >
         // confix(..., ...)[...]
           , meta_grammar::subscript_rule<
-                qi::domain, tag::confix<proto::_, proto::_>, 
+                qi::domain, tag::confix_tag<proto::_, proto::_>, 
                 confix_director, main_meta_grammar
             >
         >
