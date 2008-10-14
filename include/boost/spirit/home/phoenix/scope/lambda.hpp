@@ -16,6 +16,7 @@
 #include <boost/spirit/home/phoenix/core/composite.hpp>
 #include <boost/spirit/home/phoenix/scope/scoped_environment.hpp>
 #include <boost/spirit/home/phoenix/scope/detail/local_variable.hpp>
+#include <boost/spirit/home/phoenix/detail/local_reference.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/fusion/include/transform.hpp>
 #include <boost/fusion/include/as_vector.hpp>
