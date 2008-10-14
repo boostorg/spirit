@@ -13,7 +13,7 @@ namespace boost { namespace spirit { namespace tag
 {
     // This is the tag returned by the confix() function
     template <typename Prefix, typename Suffix>
-    struct confix
+    struct confix_tag
     {
         Prefix prefix;
         Suffix suffix;
@@ -27,11 +27,11 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <typename Prefix, typename Suffix = Prefix>
     struct confix_spec
-      : proto::terminal<tag::confix<Prefix, Suffix> >::type
+      : proto::terminal<tag::confix_tag<Prefix, Suffix> >::type
     {
     private:
         typedef typename 
-            proto::terminal<tag::confix<Prefix, Suffix> >::type
+            proto::terminal<tag::confix_tag<Prefix, Suffix> >::type
         base_type;
 
         base_type make_tag(Prefix const& prefix, Suffix const& suffix) const
@@ -51,11 +51,11 @@ namespace boost { namespace spirit
         struct confix_extractor
         {
             template <typename Prefix, typename Suffix>
-            static Prefix const& prefix(tag::confix<Prefix, Suffix> const& c) 
+            static Prefix const& prefix(tag::confix_tag<Prefix, Suffix> const& c) 
             { return c.prefix; }
 
             template <typename Prefix, typename Suffix>
-            static Suffix const& suffix(tag::confix<Prefix, Suffix> const& c) 
+            static Suffix const& suffix(tag::confix_tag<Prefix, Suffix> const& c) 
             { return c.suffix; }
         };
     }
