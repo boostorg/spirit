@@ -331,7 +331,7 @@ namespace boost { namespace spirit { namespace karma {
             {
                 // Allow ADL to find the correct overload for fmod
                 using namespace std; 
-                return cast_to_long::call(fmod(n, Radix));
+                return cast_to_long::call(fmod(n, T(Radix)));
             }
             
             template <typename T>
