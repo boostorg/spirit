@@ -562,7 +562,7 @@ namespace boost { namespace spirit { namespace char_class
     ///////////////////////////////////////////////////////////////////////////
     struct iso8859_1
     {
-        typedef char char_type;
+        typedef unsigned char char_type;
 
         static bool
         is_ascii(int ch)

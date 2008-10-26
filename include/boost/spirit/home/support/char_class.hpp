@@ -78,88 +78,90 @@ namespace boost { namespace spirit { namespace char_class
     template <typename CharSet>
     struct classify
     {
+        typedef typename CharSet::char_type char_type;
+
         template <typename Char>
         static bool
         is(tag::alnum, Char ch)
         {
-            return CharSet::isalnum(ch);
+            return CharSet::isalnum(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::alpha, Char ch)
         {
-            return CharSet::isalpha(ch);
+            return CharSet::isalpha(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::digit, Char ch)
         {
-            return CharSet::isdigit(ch);
+            return CharSet::isdigit(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::xdigit, Char ch)
         {
-            return CharSet::isxdigit(ch);
+            return CharSet::isxdigit(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::cntrl, Char ch)
         {
-            return CharSet::iscntrl(ch);
+            return CharSet::iscntrl(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::graph, Char ch)
         {
-            return CharSet::isgraph(ch);
+            return CharSet::isgraph(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::lower, Char ch)
         {
-            return CharSet::islower(ch);
+            return CharSet::islower(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::print, Char ch)
         {
-            return CharSet::isprint(ch);
+            return CharSet::isprint(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::punct, Char ch)
         {
-            return CharSet::ispunct(ch);
+            return CharSet::ispunct(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::space, Char ch)
         {
-            return CharSet::isspace(ch);
+            return CharSet::isspace(char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::blank, Char ch)
         {
-            return CharSet::isblank BOOST_PREVENT_MACRO_SUBSTITUTION (ch);
+            return CharSet::isblank BOOST_PREVENT_MACRO_SUBSTITUTION (char_type(ch));
         }
 
         template <typename Char>
         static bool
         is(tag::upper, Char ch)
         {
-            return CharSet::isupper(ch);
+            return CharSet::isupper(char_type(ch));
         }
     };
 
@@ -167,18 +169,20 @@ namespace boost { namespace spirit { namespace char_class
     template <typename CharSet>
     struct convert
     {
+        typedef typename CharSet::char_type char_type;
+
         template <typename Char>
         static Char
         to(tag::lower, Char ch)
         {
-            return CharSet::tolower(ch);
+            return CharSet::tolower(char_type(ch));
         }
 
         template <typename Char>
         static Char
         to(tag::upper, Char ch)
         {
-            return CharSet::toupper(ch);
+            return CharSet::toupper(char_type(ch));
         }
     };
 
