@@ -1,4 +1,7 @@
-boost_test_run(qi_actions qi/actions.cpp)
+boost_additional_test_dependencies(spirit BOOST_DEPENDS test variant function_types intrusive lambda assign iostreams math random dynamic_bitset)
+
+
+boost_test_run(qi_actions qi/actions.cpp BOOST_LIB spirit)
 boost_test_run(qi_char qi/char.cpp)
 boost_test_run(qi_char_class qi/char_class.cpp)
 boost_test_run(qi_lit qi/lit.cpp)
