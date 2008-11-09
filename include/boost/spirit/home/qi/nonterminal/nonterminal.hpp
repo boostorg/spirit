@@ -11,7 +11,7 @@
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/is_function.hpp>

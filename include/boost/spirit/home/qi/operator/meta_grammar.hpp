@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace qi
             >
             // +a
           , meta_grammar::unary_rule<
-                qi::domain, proto::tag::posit, plus
+                qi::domain, proto::tag::unary_plus, plus
               , main_meta_grammar
             >
             // &a

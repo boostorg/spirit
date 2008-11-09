@@ -94,11 +94,11 @@ namespace boost { namespace spirit { namespace lex
             // semantic actions for tokens
             meta_grammar::binary_rule<
                 lex::domain, proto::tag::subscript, action,
-                token_def_meta_grammar, proto::when<proto::_, proto::_arg>
+                token_def_meta_grammar, proto::when<proto::_, proto::_child>
             >,
             meta_grammar::binary_rule<
                 lex::domain, proto::tag::subscript, action,
-                action_lexer_meta_grammar, proto::when<proto::_, proto::_arg>
+                action_lexer_meta_grammar, proto::when<proto::_, proto::_child>
             >
         >
     {

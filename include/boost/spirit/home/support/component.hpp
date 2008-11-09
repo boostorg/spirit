@@ -9,7 +9,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/meta_grammar/grammar.hpp>
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
 #include <boost/mpl/void.hpp>
@@ -198,12 +198,8 @@ namespace boost { namespace spirit
         {
             typedef typename meta_grammar::grammar<Domain>::type grammar;
             typedef typename proto::result_of::as_expr<Expr>::type proto_xpr;
-
-            typedef typename
-                grammar::template result<
-                    void(proto_xpr, State, Visitor)
-                >::type
-            type;
+            typedef typename grammar::template impl<proto_xpr, State, Visitor> callable;
+            typedef typename callable::result_type type;
         };
 
         // special case for arrays
@@ -214,12 +210,8 @@ namespace boost { namespace spirit
         {
             typedef typename meta_grammar::grammar<Domain>::type grammar;
             typedef typename proto::result_of::as_expr<T const*>::type proto_xpr;
-
-            typedef typename
-                grammar::template result<
-                    void(proto_xpr, State, Visitor)
-                >::type
-            type;
+            typedef typename grammar::template impl<proto_xpr, State, Visitor> callable;
+            typedef typename callable::result_type type;
         };
 
         // special case for components
@@ -229,24 +221,36 @@ namespace boost { namespace spirit
         {
         };
     }
+    
+    namespace detail
+    {
+        template<typename T>
+        T &decay(T &t)
+        {
+            return t;
+        }
+
+        template<typename T, int N>
+        T *decay(T (&t)[N])
+        {
+            return t;
+        }
+    }
 
     template <typename Domain, typename Expr>
     inline typename result_of::as_component<Domain, Expr>::type
     as_component(Domain, Expr const& xpr)
     {
-        unused_type unused;
-        typedef typename result_of::as_component<Domain, Expr>::grammar grammar;
-        return grammar()(proto::as_expr(xpr), unused, unused);
+        typedef typename result_of::as_component<Domain, Expr>::callable callable;
+        return callable()(proto::as_expr(detail::decay(xpr)), unused_type(), unused_type());
     }
 
     template <typename Domain, typename Expr, typename State, typename Visitor>
     inline typename result_of::as_component<Domain, Expr>::type
     as_component(Domain, Expr const& xpr, State const& state, Visitor& visitor)
     {
-        typedef typename
-            result_of::as_component<Domain, Expr, State, Visitor>::grammar
-        grammar;
-        return grammar()(proto::as_expr(xpr), state, visitor);
+        typedef typename result_of::as_component<Domain, Expr, State, Visitor>::callable callable;
+        return callable()(proto::as_expr(detail::decay(xpr)), state, visitor);
     }
 
     template <typename Domain, typename Director, typename Elements>

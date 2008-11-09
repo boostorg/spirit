@@ -11,8 +11,8 @@
 #include <boost/spirit/home/support/meta_grammar/basic_transforms.hpp>
 #include <boost/spirit/home/support/component.hpp>
 #include <boost/fusion/include/cons.hpp>
-#include <boost/xpressive/proto/proto.hpp>
-#include <boost/xpressive/proto/transform.hpp>
+#include <boost/proto/core.hpp>
+#include <boost/proto/transform.hpp>
 #include <boost/mpl/identity.hpp>
 
 namespace boost { namespace spirit { namespace meta_grammar

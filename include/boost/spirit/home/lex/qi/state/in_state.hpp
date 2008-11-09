@@ -10,7 +10,7 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace qi

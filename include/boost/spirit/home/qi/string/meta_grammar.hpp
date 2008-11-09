@@ -159,7 +159,7 @@ namespace boost { namespace spirit { namespace qi
           , meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_lit_tag<proto::_arg, qi::domain>()>
+                        is_lit_tag<proto::_child, qi::domain>()>
                   , proto::or_<basic_string_literal_meta_grammar, basic_std_string_meta_grammar>
                 >
               , qi::domain
@@ -170,7 +170,7 @@ namespace boost { namespace spirit { namespace qi
               , tag::lit
               , lazy_string
               , proto::if_<
-                    detail::is_not_convertible_to_int<proto::_arg >() >
+                    detail::is_not_convertible_to_int<proto::_child >() >
             >
           , meta_grammar::terminal_rule<
                 qi::domain

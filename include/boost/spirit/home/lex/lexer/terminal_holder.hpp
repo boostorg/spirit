@@ -7,7 +7,7 @@
 #if !defined(BOOST_SPIRIT_LEX_TERMINAL_HOLDER_MAR_22_2007_0217PM)
 #define BOOST_SPIRIT_LEX_TERMINAL_HOLDER_MAR_22_2007_0217PM
 
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 
 namespace boost { namespace spirit { namespace lex
 {

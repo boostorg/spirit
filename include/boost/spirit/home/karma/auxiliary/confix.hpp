@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace karma
             // generate the prefix
             generate_helper(sink, ctx, d, 
                 spirit::detail::confix_extractor::prefix(
-                    proto::arg_c<0>(spirit::argument1(component))));
+                    proto::child_c<0>(spirit::argument1(component))));
 
             // generate the embedded items
             typedef typename
@@ -88,7 +88,7 @@ namespace boost { namespace spirit { namespace karma
             // append the suffix 
             generate_helper(sink, ctx, d, 
                 spirit::detail::confix_extractor::suffix(
-                    proto::arg_c<0>(spirit::argument1(component))));
+                    proto::child_c<0>(spirit::argument1(component))));
 
             return result;
         }
@@ -99,11 +99,11 @@ namespace boost { namespace spirit { namespace karma
             std::string result = "confix(";
 
             result += what_helper(spirit::detail::confix_extractor::prefix(
-                    proto::arg_c<0>(spirit::argument1(component))), ctx);
+                    proto::child_c<0>(spirit::argument1(component))), ctx);
             result += ", ";
 
             result += what_helper(spirit::detail::confix_extractor::suffix(
-                    proto::arg_c<0>(spirit::argument1(component))), ctx);
+                    proto::child_c<0>(spirit::argument1(component))), ctx);
             result += ")[";
 
             typedef typename

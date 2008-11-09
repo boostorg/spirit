@@ -8,7 +8,7 @@
 #if !defined(BOOST_SPIRIT_PLACEHOLDERS_NOV_18_2006_0326PM)
 #define BOOST_SPIRIT_PLACEHOLDERS_NOV_18_2006_0326PM
 
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/type_traits/is_enum.hpp>
 

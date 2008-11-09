@@ -263,7 +263,7 @@ namespace boost { namespace spirit { namespace qi
             // char_, wchar --> any_char
             meta_grammar::compose_empty<
                 proto::if_<
-                    is_char_tag<proto::_arg, qi::domain>()
+                    is_char_tag<proto::_child, qi::domain>()
                 >
               , qi::domain
               , mpl::identity<extract_any_char_director<mpl::_> >
@@ -272,7 +272,7 @@ namespace boost { namespace spirit { namespace qi
           , meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_char_tag<proto::_arg, qi::domain>()
+                        is_char_tag<proto::_child, qi::domain>()
                     >
                   , single_char_literal_meta_grammar
                 >
@@ -283,7 +283,7 @@ namespace boost { namespace spirit { namespace qi
           , meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_lit_tag<proto::_arg, qi::domain>()
+                        is_lit_tag<proto::_child, qi::domain>()
                     >
                   , basic_char_literal_meta_grammar
                 >
@@ -294,7 +294,7 @@ namespace boost { namespace spirit { namespace qi
           , meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_char_tag<proto::_arg, qi::domain>()>
+                        is_char_tag<proto::_child, qi::domain>()>
                   , proto::or_<basic_string_literal_meta_grammar, basic_std_string_meta_grammar>
                 >
               , qi::domain
@@ -310,7 +310,7 @@ namespace boost { namespace spirit { namespace qi
           , meta_grammar::compose_function2_eval<
                 proto::function<
                     proto::if_<
-                        is_char_tag<proto::_arg, qi::domain>()
+                        is_char_tag<proto::_child, qi::domain>()
                     >
                   , basic_char_literal_meta_grammar
                   , basic_char_literal_meta_grammar

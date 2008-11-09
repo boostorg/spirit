@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace qi
         // stream, wstream
         meta_grammar::compose_empty<    
             proto::if_<
-                is_stream_tag<proto::_arg, qi::domain>()
+                is_stream_tag<proto::_child, qi::domain>()
             >,
             qi::domain,
             mpl::identity<extract_stream_director<mpl::_> >
