@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #ifndef PHOENIX_BIND_BIND_MEMBER_VARIABLE_HPP
@@ -11,6 +11,10 @@
 #include <boost/spirit/home/phoenix/core/compose.hpp>
 #include <boost/spirit/home/phoenix/core/reference.hpp>
 #include <boost/spirit/home/phoenix/core/detail/function_eval.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/remove_reference.hpp>
 
 namespace boost { namespace phoenix
 {
@@ -22,7 +26,27 @@ namespace boost { namespace phoenix
             template <typename Class>
             struct result
             {
-                typedef RT& type;
+                typedef RT type;
+            };
+
+            template <typename Class>
+            struct result<Class&>
+            {
+                typedef typename boost::mpl::if_<
+                    boost::is_const<Class>
+                  , const RT&
+                  , RT&
+                >::type type;
+            };
+
+            template <typename Class>
+            struct result<Class*>
+            {
+                typedef typename boost::mpl::if_<
+                    boost::is_const<Class>
+                  , const RT&
+                  , RT&
+                >::type type;
             };
 
             member_variable(MP mp)
@@ -36,6 +60,18 @@ namespace boost { namespace phoenix
 
             template <typename Class>
             RT& operator()(Class* obj) const
+            {
+                return obj->*mp;
+            }
+
+            template <typename Class>
+            RT const& operator()(Class const& obj) const
+            {
+                return obj.*mp;
+            }
+
+            template <typename Class>
+            RT const& operator()(Class const* obj) const
             {
                 return obj->*mp;
             }
