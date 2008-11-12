@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
@@ -23,15 +23,27 @@ namespace test
     {
         int m;
     };
+
+    struct xx {
+       int m;
+    };
 }
 
 int
 main()
 {
-    test::x x_;
-    bind(&test::x::m, x_)() = 123;
-    bind(&test::x::m, arg1)(x_) = 123;
-    BOOST_TEST(x_.m == 123);
+    {
+        test::x x_;
+        bind(&test::x::m, x_)() = 123;
+        bind(&test::x::m, arg1)(x_) = 123;
+        BOOST_TEST(x_.m == 123);
+    }
+    {
+        test::xx x_= {0};
+        bind(&test::xx::m, val(x_))(); // does not compile
+        bind(&test::xx::m, ref(x_))() = 1;
+        bind(&test::xx::m, cref(x_))();
+    }
 
     return boost::report_errors();
 }
