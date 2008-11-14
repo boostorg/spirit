@@ -113,7 +113,7 @@ public:
                         (&_input->_state_machine->_lookup->front ()->front (),
                         _input->_state_machine->_dfa_alphabet.front (),
                         &_input->_state_machine->_dfa->front ()->front (),
-                        _input->_begin, _data.end, _input->_end);
+                        _data.bol, _data.end, _input->_end);
                 }
                 else
                 {
@@ -129,7 +129,7 @@ public:
                     _input->_state_machine->_seen_EOL_assertion)
                 {
                     _data.id = next (*_input->_state_machine, _data.state,
-                        _input->_begin, _data.end, _input->_end);
+                        _data.bol, _data.end, _input->_end);
                 }
                 else
                 {
@@ -147,13 +147,12 @@ public:
 
         std::size_t next (const basic_state_machine
             <typename Traits::char_type> &state_machine_,
-            std::size_t &start_state_, const FwdIter &start_,
+            std::size_t &start_state_, bool bol_,
             FwdIter &start_token_, const FwdIter &end_)
         {
             if (start_token_ == end_) return 0;
 
         again:
-            bool bol_ = _data.bol;
             const std::size_t * lookup_ = &state_machine_._lookup[start_state_]->
                 front ();
             std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[start_state_];
@@ -228,7 +227,11 @@ public:
                 _data.bol = end_bol_;
                 start_token_ = end_token_;
 
-                if (id_ == 0) goto again;
+                if (id_ == 0)
+                {
+                    bol_ = _data.bol;
+                    goto again;
+                }
             }
             else
             {
@@ -299,11 +302,10 @@ public:
 
         std::size_t next (const std::size_t * const lookup_,
             const std::size_t dfa_alphabet_, const std::size_t * const dfa_,
-            FwdIter const &start_, FwdIter &start_token_, FwdIter const &end_)
+            bool bol_, FwdIter &start_token_, FwdIter const &end_)
         {
             if (start_token_ == end_) return 0;
 
-            bool bol_ = _data.bol;
             const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
