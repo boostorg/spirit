@@ -1,5 +1,5 @@
 // rules.hpp
-// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -61,10 +61,8 @@ public:
     typedef std::map<string, std::size_t> string_size_t_map;
     typedef std::pair<string, std::size_t> string_size_t_pair;
 
-    basic_rules (const bool case_sensitive_ = true,
-        const bool dot_not_newline_ = true) :
-        _case_sensitive (case_sensitive_),
-        _dot_not_newline (dot_not_newline_)
+    basic_rules (const regex_flags flags_ = dot_not_newline) :
+        _flags (flags_)
     {
         add_state (initial ());
     }
@@ -77,9 +75,8 @@ public:
         _regexes.clear ();
         _ids.clear ();
         _states.clear ();
-        _case_sensitive = true;
+        _flags = dot_not_newline;
         _locale = std::locale ();
-        _dot_not_newline = false;
         add_state (initial ());
     }
 
@@ -95,34 +92,27 @@ public:
         }
     }
 
-    void case_sensitive (const bool case_sensitive_)
+    void flags (const regex_flags flags_)
     {
-        _case_sensitive = case_sensitive_;
+        _flags = flags_;
     }
 
-    bool case_sensitive () const
+    regex_flags flags () const
     {
-        return _case_sensitive;
+        return _flags;
     }
 
-    void locale (std::locale &locale_)
+    std::locale imbue (std::locale &locale_)
     {
+        std::locale loc_ = _locale;
+
         _locale = locale_;
+        return loc_;
     }
 
     const std::locale &locale () const
     {
         return _locale;
-    }
-
-    void dot_not_newline (const bool dot_not_newline_)
-    {
-        _dot_not_newline = dot_not_newline_;
-    }
-
-    bool dot_not_newline () const
-    {
-        return _dot_not_newline;
     }
 
     std::size_t state (const CharT *name_) const
@@ -328,9 +318,8 @@ private:
     string_deque_deque _regexes;
     id_vector_deque _ids;
     id_vector_deque _states;
-    bool _case_sensitive;
+    regex_flags _flags;
     std::locale _locale;
-    bool _dot_not_newline;
 
     void add (const CharT *curr_state_, const string &regex_,
         const std::size_t id_, const CharT *new_state_, const bool check_)
