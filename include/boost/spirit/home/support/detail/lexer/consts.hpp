@@ -1,5 +1,5 @@
 // consts.h
-// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,12 +8,13 @@
 
 #include <boost/config.hpp>
 #include <boost/integer_traits.hpp>
-#include <boost/spirit/home/support/detail/lexer/size_t.hpp>
+#include "size_t.hpp"
 
 namespace boost
 {
 namespace lexer
 {
+    enum regex_flags {none = 0, icase = 1, dot_not_newline = 2};
     // 0 = end state, 1 = id, 2 = lex state, 3 = bol, 4 = eol,
     // 5 = dead_state_index
     enum {end_state_index, id_index, state_index, bol_index, eol_index,
