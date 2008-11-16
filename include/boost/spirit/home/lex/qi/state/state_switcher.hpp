@@ -142,7 +142,7 @@ namespace boost { namespace spirit { namespace qi
 
             // the state has to be reset at exit in any case
             detail::reset_state_on_exit<Iterator> guard(
-                first, proto::arg_c<0>(argument1(component)).name);
+                first, proto::child_c<0>(argument1(component)).name);
 
             return director::parse(spirit::subject(component), first,
                 last, context, skipper, attr);
@@ -153,7 +153,7 @@ namespace boost { namespace spirit { namespace qi
         {
             std::string result("in_state(\"");
             result += spirit::detail::to_narrow_string(
-                proto::arg_c<0>(argument1(component)).name);
+                proto::child_c<0>(argument1(component)).name);
             result += "\")[";
 
             typedef typename

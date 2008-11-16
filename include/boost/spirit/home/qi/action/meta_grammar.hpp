@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace qi
     struct action_meta_grammar : 
         meta_grammar::binary_rule<
             qi::domain, proto::tag::subscript, action
-          , main_meta_grammar, proto::when<proto::_, proto::_arg>
+          , main_meta_grammar, proto::when<proto::_, proto::_child>
         >
     {
     };

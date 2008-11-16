@@ -8,7 +8,7 @@
 #define SPIRIT_ISO8859_1_JAN_31_2006_0529PM
 
 #include <boost/spirit/home/support/char_class.hpp>
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 
 namespace boost { namespace spirit { namespace iso8859_1
 {

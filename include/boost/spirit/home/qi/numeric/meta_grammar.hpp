@@ -271,7 +271,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     struct int_meta_grammar
       : meta_grammar::compose_empty<
-            proto::if_<is_int_tag<proto::_arg, qi::domain>()>
+            proto::if_<is_int_tag<proto::_child, qi::domain>()>
           , qi::domain
           , mpl::identity<extract_int_director<mpl::_> >
         >
@@ -279,7 +279,7 @@ namespace boost { namespace spirit { namespace qi
 
     struct real_meta_grammar
       : meta_grammar::compose_single<
-            proto::if_<is_real_tag<proto::_arg, qi::domain>()>
+            proto::if_<is_real_tag<proto::_child, qi::domain>()>
           , qi::domain
           , mpl::identity<extract_real_director<mpl::_> >
         >

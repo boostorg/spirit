@@ -359,7 +359,7 @@ namespace boost { namespace spirit { namespace karma
     struct int_literal_meta_grammar
       : meta_grammar::compose_empty<
             proto::if_<
-                is_int_lit_tag<proto::_arg, karma::domain>()
+                is_int_lit_tag<proto::_child, karma::domain>()
             >,
             karma::domain,
             mpl::identity<extract_literal_int_director<mpl::_> >
@@ -372,7 +372,7 @@ namespace boost { namespace spirit { namespace karma
       : proto::or_<
             meta_grammar::compose_empty<
                 proto::if_<
-                    is_int_tag<proto::_arg, karma::domain>()
+                    is_int_tag<proto::_child, karma::domain>()
                 >,
                 karma::domain,
                 mpl::identity<extract_int_director_plain<mpl::_> >
@@ -380,7 +380,7 @@ namespace boost { namespace spirit { namespace karma
             meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_int_tag<proto::_arg, karma::domain>()
+                        is_int_tag<proto::_child, karma::domain>()
                     >, 
                     int_literal_meta_grammar
                 >, 
@@ -394,7 +394,7 @@ namespace boost { namespace spirit { namespace karma
     struct real_literal_meta_grammar
       : meta_grammar::compose_empty<
             proto::if_<
-                is_real_lit_tag<proto::_arg, karma::domain>()
+                is_real_lit_tag<proto::_child, karma::domain>()
             >,
             karma::domain,
             mpl::identity<extract_literal_real_director<mpl::_> >
@@ -405,7 +405,7 @@ namespace boost { namespace spirit { namespace karma
       : proto::or_<
             meta_grammar::compose_single<
                 proto::if_<
-                    is_real_tag<proto::_arg, karma::domain>()
+                    is_real_tag<proto::_child, karma::domain>()
                 >,
                 karma::domain,
                 mpl::identity<extract_real_director_plain<mpl::_> >
@@ -413,7 +413,7 @@ namespace boost { namespace spirit { namespace karma
             meta_grammar::compose_function1_full<
                 proto::function<
                     proto::if_<
-                        is_real_tag<proto::_arg, karma::domain>()
+                        is_real_tag<proto::_child, karma::domain>()
                     >, 
                     real_literal_meta_grammar
                 >, 

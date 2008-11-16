@@ -95,7 +95,7 @@ namespace boost { namespace spirit { namespace karma
             Context& ctx, Delimiter const& d, Parameter const& param)
         {
             return detail::left_align_generate(sink, ctx, d, param,
-                subject(component), proto::arg_c<0>(argument1(component)), ' ');
+                subject(component), proto::child_c<0>(argument1(component)), ' ');
         }
 
         template <typename Component, typename Context>
@@ -104,7 +104,7 @@ namespace boost { namespace spirit { namespace karma
             std::string result = "left_align(";
 
             result += boost::lexical_cast<std::string>(
-                proto::arg_c<0>(argument1(component)));
+                proto::child_c<0>(argument1(component)));
             result += ")[";
 
             typedef typename
@@ -193,7 +193,7 @@ namespace boost { namespace spirit { namespace karma
             Context& ctx, Delimiter const& d, Parameter const& param)
         {
             return detail::left_align_generate(sink, ctx, d, param,
-                subject(component), proto::arg_c<0>(argument1(component)),
+                subject(component), proto::child_c<0>(argument1(component)),
                 argument2(component));
         }
 
@@ -203,7 +203,7 @@ namespace boost { namespace spirit { namespace karma
             std::string result = "left_align(";
 
             result += boost::lexical_cast<std::string>(
-                proto::arg_c<0>(argument1(component)));
+                proto::child_c<0>(argument1(component)));
             result += ", ";
 
             typedef typename

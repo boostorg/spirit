@@ -199,7 +199,7 @@ namespace boost { namespace spirit { namespace karma
     struct int_binary_meta_grammar
       : meta_grammar::compose_empty<
             proto::if_<
-                is_int_lit_tag<proto::_arg, karma::domain>()
+                is_int_lit_tag<proto::_child, karma::domain>()
             >,
             karma::domain,
             mpl::identity<extract_literal_bin_director<mpl::_> >
@@ -211,7 +211,7 @@ namespace boost { namespace spirit { namespace karma
       : proto::or_<
             meta_grammar::compose_empty<
                 proto::if_<
-                    is_binary_tag<proto::_arg, karma::domain>()
+                    is_binary_tag<proto::_child, karma::domain>()
                 >,
                 karma::domain, 
                 mpl::identity<extract_binary_director<mpl::_> > 
@@ -219,7 +219,7 @@ namespace boost { namespace spirit { namespace karma
             meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_binary_tag<proto::_arg, karma::domain>()
+                        is_binary_tag<proto::_child, karma::domain>()
                     >,
                     int_binary_meta_grammar
                 >,

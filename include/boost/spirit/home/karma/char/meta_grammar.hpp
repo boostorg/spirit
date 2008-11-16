@@ -163,7 +163,7 @@ namespace boost { namespace spirit { namespace karma
             // char_, wchar, space
             meta_grammar::compose_empty<
                 proto::if_<
-                    is_char_tag<proto::_arg, karma::domain>()
+                    is_char_tag<proto::_child, karma::domain>()
                 >,
                 karma::domain,
                 mpl::identity<extract_any_char_director<mpl::_> >
@@ -172,7 +172,7 @@ namespace boost { namespace spirit { namespace karma
             meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_char_tag<proto::_arg, karma::domain>()
+                        is_char_tag<proto::_child, karma::domain>()
                     >,
                     basic_char_literal_meta_grammar
                 >,
@@ -183,7 +183,7 @@ namespace boost { namespace spirit { namespace karma
             meta_grammar::compose_function1_eval<
                 proto::function<
                     proto::if_<
-                        is_lit_tag<proto::_arg, karma::domain>()
+                        is_lit_tag<proto::_child, karma::domain>()
                     >,
                     basic_char_literal_meta_grammar
                 >,

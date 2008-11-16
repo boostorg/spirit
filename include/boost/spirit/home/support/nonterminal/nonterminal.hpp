@@ -7,7 +7,7 @@
 #if !defined(BOOST_SPIRIT_NONTERMINAL_MAR_06_2007_0236PM)
 #define BOOST_SPIRIT_NONTERMINAL_MAR_06_2007_0236PM
 
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/fusion/include/as_vector.hpp>

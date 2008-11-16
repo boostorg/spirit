@@ -11,7 +11,7 @@
 #endif
 
 #include <boost/lexical_cast.hpp>
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 #include <boost/range/iterator_range.hpp>
 
 namespace boost { namespace spirit { namespace qi

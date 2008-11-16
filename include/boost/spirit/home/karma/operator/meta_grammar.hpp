@@ -70,7 +70,7 @@ namespace boost { namespace spirit { namespace karma
                 main_meta_grammar
             >,
             meta_grammar::unary_rule<
-                karma::domain, proto::tag::posit, plus,
+                karma::domain, proto::tag::unary_plus, plus,
                 main_meta_grammar
             >,
             meta_grammar::binary_rule<

@@ -13,7 +13,7 @@
 #include <boost/spirit/home/support/modifier.hpp>
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/xpressive/proto/proto.hpp>
+#include <boost/proto/core.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/range.hpp>
 #include <boost/type_traits/add_reference.hpp>
@@ -92,7 +92,7 @@ namespace boost { namespace spirit { namespace qi
           : add(*this)
           , remove(*this)
         {
-            proto::arg(*this).lookup = ptr_type(new Lookup());
+            proto::child(*this).lookup = ptr_type(new Lookup());
         }
 
         template <typename Symbols>
@@ -100,7 +100,7 @@ namespace boost { namespace spirit { namespace qi
           : add(*this)
           , remove(*this)
         {
-            proto::arg(*this).lookup = ptr_type(new Lookup());
+            proto::child(*this).lookup = ptr_type(new Lookup());
             typename range_const_iterator<Symbols>::type si = boost::begin(syms);
             while (si != boost::end(syms))
                 add(*si++);
@@ -111,7 +111,7 @@ namespace boost { namespace spirit { namespace qi
           : add(*this)
           , remove(*this)
         {
-            proto::arg(*this).lookup = ptr_type(new Lookup());
+            proto::child(*this).lookup = ptr_type(new Lookup());
             typename range_const_iterator<Symbols>::type si = boost::begin(syms);
             typename range_const_iterator<Data>::type di = boost::begin(data);
             while (si != boost::end(syms))
@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace qi
         symbols&
         operator=(symbols const& rhs)
         {
-            proto::arg(*this) = proto::arg(rhs);
+            proto::child(*this) = proto::child(rhs);
             return *this;
         }
 
@@ -154,7 +154,7 @@ namespace boost { namespace spirit { namespace qi
 
         ptr_type lookup() const
         {
-            return proto::arg(*this).lookup;
+            return proto::child(*this).lookup;
         }
 
         template <typename F>
