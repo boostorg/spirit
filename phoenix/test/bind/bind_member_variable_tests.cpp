@@ -29,21 +29,75 @@ namespace test
     };
 }
 
+template<class T, class F>
+void write_test(F f) {
+    T x_;
+    bind(&T::m, f(x_))() = 122;
+    BOOST_TEST(x_.m == 122);
+    bind(&T::m, arg1)(f(x_)) = 123;
+    BOOST_TEST(x_.m == 123);
+}
+
+template<class T, class F>
+void read_test(F f) {
+    T x_;
+    x_.m = 123;
+
+    BOOST_TEST(bind(&T::m, f(x_))() == 123);
+    BOOST_TEST(bind(&T::m, arg1)(f(x_)) == 123);
+}
+
+struct identity
+{
+    template<class T>
+    T& operator()(T& t) const
+    {
+        return t;
+    }
+};
+
+struct constify
+{
+    template<class T>
+    const T& operator()(const T& t) const
+    {
+        return t;
+    }
+};
+
+struct add_pointer
+{
+    template<class T>
+    T* const operator()(T& t) const
+    {
+        return &t;
+    }
+};
+
+struct add_const_pointer
+{
+    template<class T>
+    const T* const operator()(const T& t) const
+    {
+        return &t;
+    }
+};
+
 int
 main()
 {
-    {
-        test::x x_;
-        bind(&test::x::m, x_)() = 123;
-        bind(&test::x::m, arg1)(x_) = 123;
-        BOOST_TEST(x_.m == 123);
-    }
-    {
-        test::xx x_= {0};
-        bind(&test::xx::m, val(x_))(); // does not compile
-        bind(&test::xx::m, ref(x_))() = 1;
-        bind(&test::xx::m, cref(x_))();
-    }
+    write_test<test::x>(identity());
+    write_test<test::x>(add_pointer());
+    write_test<test::xx>(identity());
+    write_test<test::xx>(add_pointer());
 
+    read_test<test::x>(identity());
+    //read_test<test::x>(constify()); // this fails because of capture by value.
+    read_test<test::x>(add_pointer());
+    read_test<test::x>(add_const_pointer());
+    read_test<test::xx>(identity());
+    read_test<test::xx>(constify());
+    read_test<test::xx>(add_pointer());
+    read_test<test::xx>(add_const_pointer());
     return boost::report_errors();
 }
