@@ -13,6 +13,7 @@
 #include <string>
 #include <list>
 #include <algorithm>
+#include <boost/iterator.hpp>
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>
 #include <boost/mpl/list.hpp>
@@ -62,6 +63,7 @@ void CheckBasicFunctionality(void);
 void CheckColumnCounting(void);
 void CheckLineExtraction(void);
 void CheckDistance(void);
+void CheckSingular();
 
 void CheckInstantiation(void)
 {
@@ -84,6 +86,7 @@ int main(void)
     CheckColumnCounting();
     CheckLineExtraction();
     CheckDistance();
+    CheckSingular();
 
     return boost::report_errors();
 }
@@ -469,4 +472,101 @@ void CheckDistance(void)
     test_impl::CheckDistance(position_iterator2<iter_t>(b, b+15, ""));
     test_impl::CheckDistance(position_iterator<iter_t, file_position_without_column>(b, b+15, ""));
     test_impl::CheckDistance(position_iterator2<iter_t, file_position_without_column>(b, b+15, ""));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+namespace test_impl {
+
+    class check_singular_iterator
+        : public boost::iterator<std::forward_iterator_tag, int>
+    {
+        bool singular_;
+        int count_;
+
+    public:
+
+        check_singular_iterator() : singular_(true), count_(0) {}
+        explicit check_singular_iterator(int x) : singular_(false), count_(x) {}
+
+        int const& operator*() const {
+            BOOST_TEST(!singular_);
+            return count_;
+        }
+
+        int const* operator->() const {
+            BOOST_TEST(!singular_);
+            return &count_;
+        }
+
+        check_singular_iterator& operator++() {
+            BOOST_TEST(count_ > 0);
+            --count_;
+            return *this;
+        }
+
+        check_singular_iterator operator++(int) {
+            check_singular_iterator tmp(*this);
+            ++(*this);
+            return tmp;
+        }
+
+        bool operator==(check_singular_iterator const& other) const {
+            BOOST_TEST(!singular_ && !other.singular_);
+            return count_ == other.count_;
+        }
+
+        bool operator!=(check_singular_iterator const& other) const {
+            return !(*this == other);
+        }
+    };
+
+    template <typename CountIterator>
+    void CheckSingular()
+    {
+        CountIterator begin(check_singular_iterator(5), check_singular_iterator(0));
+        CountIterator end1(check_singular_iterator(0), check_singular_iterator(0));
+        CountIterator end2;
+
+        BOOST_TEST(begin == begin);
+        BOOST_TEST(begin != end1);
+        BOOST_TEST(begin != end2);
+
+        BOOST_TEST(end1 != begin);
+        BOOST_TEST(end1 == end1);
+        BOOST_TEST(end1 == end2);
+
+        BOOST_TEST(end2 != begin);
+        BOOST_TEST(end2 == end1);
+        BOOST_TEST(end2 == end2);
+
+        BOOST_TEST(std::distance(begin, begin) == 0);
+        BOOST_TEST(std::distance(begin, end1) == 5);
+        BOOST_TEST(std::distance(begin, end2) == 5);
+
+        BOOST_TEST(std::distance(end1, end1) == 0);
+        BOOST_TEST(std::distance(end1, end2) == 0);
+
+        BOOST_TEST(std::distance(end2, end1) == 0);
+        BOOST_TEST(std::distance(end2, end2) == 0);
+    }
+}
+
+void CheckSingular()
+{
+    test_impl::CheckSingular<
+        position_iterator<test_impl::check_singular_iterator, file_position>
+    >();
+
+    test_impl::CheckSingular<
+        position_iterator<test_impl::check_singular_iterator, file_position_without_column>
+    >();
+
+    test_impl::CheckSingular<
+        position_iterator2<test_impl::check_singular_iterator, file_position>
+    >();
+
+    test_impl::CheckSingular<
+        position_iterator2<test_impl::check_singular_iterator, file_position_without_column>
+    >();
 }
