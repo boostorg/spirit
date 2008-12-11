@@ -7,6 +7,11 @@
 #ifndef PHOENIX_BIND_BIND_MEMBER_VARIABLE_HPP
 #define PHOENIX_BIND_BIND_MEMBER_VARIABLE_HPP
 
+#include <boost/mpl/if.hpp>
+#include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/phoenix/core/compose.hpp>
 #include <boost/spirit/home/phoenix/core/reference.hpp>
@@ -26,24 +31,12 @@ namespace boost { namespace phoenix
             template <typename Class>
             struct result
             {
-                typedef RT type;
-            };
-
-            template <typename Class>
-            struct result<Class&>
-            {
                 typedef typename boost::mpl::if_<
-                    boost::is_const<Class>
-                  , const RT&
-                  , RT&
-                >::type type;
-            };
-
-            template <typename Class>
-            struct result<Class*>
-            {
-                typedef typename boost::mpl::if_<
-                    boost::is_const<Class>
+                    boost::is_const<
+                        typename boost::remove_pointer<
+                            typename boost::remove_reference<Class>::type
+                        >::type
+                    >
                   , const RT&
                   , RT&
                 >::type type;
