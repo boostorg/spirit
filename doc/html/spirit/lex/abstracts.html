@@ -84,7 +84,7 @@
             of the <span class="emphasis"><em>Spirit.Lex</em></span> library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id658935"></a>
+<a name="id499645"></a>
             <a href="abstracts.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -134,7 +134,7 @@
             </p>
 <div class="figure">
 <a name="spirit.lex.tokenstructure"></a><p class="title"><b>Figure 5. The structure of a token</b></p>
-<span class="inlinemediaobject"><img src="../.././images/TokenStructure.png" alt="The
+<span class="inlinemediaobject"><img src="../.././images/tokenstructure.png" alt="The
             structure of a token"></span>
 </div>
 <p>
@@ -178,8 +178,7 @@
             Here is the template prototype of the <a href="reference/token_class.html" title="Token Class"><tt class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></tt></a>
             template:
           </p>
-<pre class="programlisting">
-<span class="keyword">template</span> <span class="special">&lt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Iterator</span> <span class="special">=</span> <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> 
     <span class="keyword">typename</span> <span class="identifier">AttributeTypes</span> <span class="special">=</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector0</span><span class="special">&lt;&gt;,</span> 
     <span class="keyword">typename</span> <span class="identifier">HasState</span> <span class="special">=</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span>
@@ -222,7 +221,7 @@
             when it is requested for the first time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id659461"></a>
+<a name="id500459"></a>
             <a href="abstracts.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -235,8 +234,7 @@
 <p>
             The template prototype of this class is shown here:
           </p>
-<pre class="programlisting">
-<span class="keyword">template</span><span class="special">&lt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Attribute</span> <span class="special">=</span> <span class="identifier">unused_type</span><span class="special">,</span> 
     <span class="keyword">typename</span> <span class="identifier">Char</span> <span class="special">=</span> <span class="keyword">char</span>
 <span class="special">&gt;</span>
@@ -296,7 +294,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_"></a><h6>
-<a name="id659718"></a>
+<a name="id500867"></a>
             <a href="abstracts.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_">Examples
             of using <a href="reference/token_class.html" title="Token Class"><tt class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></tt></a></a>
           </h6>
@@ -320,8 +318,7 @@
 <p>
               
 </p>
-<pre class="programlisting">
-<span class="comment">// these tokens expose the iterator_range of the matched input sequence
+<pre class="programlisting"><span class="comment">// these tokens expose the iterator_range of the matched input sequence
 </span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span> <span class="identifier">if_</span><span class="special">,</span> <span class="identifier">else_</span><span class="special">,</span> <span class="identifier">while_</span><span class="special">;</span>
 
 <span class="comment">// The following two tokens have an associated value type, 'identifier'
@@ -361,8 +358,7 @@
 <p>
               
 </p>
-<pre class="programlisting">
-<span class="comment">// This is the lexer token type to use. The second template parameter lists 
+<pre class="programlisting"><span class="comment">// This is the lexer token type to use. The second template parameter lists 
 </span><span class="comment">// all attribute types used for token_def's during token definition (see 
 </span><span class="comment">// calculator_tokens&lt;&gt; above). Here we use the predefined lexertl token 
 </span><span class="comment">// type, but any compatible token type may be used instead.

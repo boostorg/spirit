@@ -82,8 +82,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">enum</span> <span class="identifier">tokenids</span> 
+<pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">tokenids</span> 
 <span class="special">{</span>
     <span class="identifier">IDANY</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">min_token_id</span> <span class="special">+</span> <span class="number">1</span><span class="special">,</span>
 <span class="special">};</span>
@@ -104,8 +103,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="comment">// This token definition class can be used without any change for all three
+<pre class="programlisting"><span class="comment">// This token definition class can be used without any change for all three
 </span><span class="comment">// possible use cases: a dynamic lexical analyzer, a code generator, and a
 </span><span class="comment">// static lexical analyzer.
 </span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">BaseLexer</span><span class="special">&gt;</span>
@@ -147,8 +145,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="comment">//  This is an ordinary grammar definition following the rules defined by 
+<pre class="programlisting"><span class="comment">//  This is an ordinary grammar definition following the rules defined by 
 </span><span class="comment">//  Spirit.Qi. There is nothing specific about it, except it gets the token
 </span><span class="comment">//  definition class instance passed to the constructor to allow accessing the
 </span><span class="comment">//  embedded token_def&lt;&gt; instances.
@@ -181,7 +178,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h5>
-<a name="id662050"></a>
+<a name="id503276"></a>
           <a href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h5>
@@ -202,8 +199,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
     <span class="comment">// create the lexer object instance needed to invoke the generator
 </span>    <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span> <span class="identifier">word_count</span><span class="special">;</span> <span class="comment">// the token definition
@@ -228,7 +224,7 @@
           the next topic (the full generated code can be viewed <a href="../../../../../example/lex/static_lexer/word_count_static.hpp" target="_top">here</a>).
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h5>
-<a name="id662419"></a>
+<a name="id503799"></a>
           <a href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h5>
@@ -248,8 +244,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexer_static_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexer_static_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
           </p>
@@ -269,8 +264,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
     <span class="comment">// Define the token type to be used: 'std::string' is available as the type 
 </span>    <span class="comment">// of the token value.

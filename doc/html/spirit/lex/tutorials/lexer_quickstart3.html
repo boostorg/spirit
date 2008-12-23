@@ -52,7 +52,7 @@
 <div class="figure">
 <a name="spirit.lex.flowcontrol"></a><p class="title"><b>Figure 4. The common flow control implemented while parsing
           combined with lexical analysis</b></p>
-<span class="inlinemediaobject"><img src="../../.././images/FlowOfControl.png" alt="The common flow
+<span class="inlinemediaobject"><img src="../../.././images/flowofcontrol.png" alt="The common flow
           control implemented while parsing combined with lexical analysis"></span>
 </div>
 <p>
@@ -70,7 +70,7 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h5>
-<a name="id655484"></a>
+<a name="id495762"></a>
           <a href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h5>
 <p>
@@ -92,8 +92,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexer_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_statement</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -111,8 +110,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">;</span>
 </pre>
@@ -121,7 +119,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h5>
-<a name="id655884"></a>
+<a name="id496323"></a>
           <a href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h5>
@@ -144,8 +142,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lexer_def</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Self</span><span class="special">&gt;</span>
@@ -177,7 +174,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h5>
-<a name="id656242"></a>
+<a name="id496819"></a>
           <a href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h5>
@@ -285,8 +282,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_grammar</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TokenDef</span><span class="special">&gt;</span>
@@ -355,7 +351,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h5>
-<a name="id657239"></a>
+<a name="id498236"></a>
           <a href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h5>
@@ -373,8 +369,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
 <span class="callout_bug"><a name="spirit4co" href="lexer_quickstart3.html#spirit4"><img src="../../../images/callouts/1.png" alt="1" border="0"></a></span>  <span class="keyword">typedef</span> <span class="identifier">lexertl_token</span><span class="special">&lt;</span>
         <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span>

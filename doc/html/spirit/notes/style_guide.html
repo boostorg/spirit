@@ -58,8 +58,7 @@
           all, what belongs to one level, at one indentation level.
         </li>
 </ul></div>
-<pre class="programlisting">
-<span class="identifier">program</span>
+<pre class="programlisting"><span class="identifier">program</span>
     <span class="special">=</span>   <span class="identifier">program_heading</span> <span class="special">[</span><span class="identifier">heading_action</span><span class="special">]</span>
         <span class="special">&gt;&gt;</span> <span class="identifier">block</span> <span class="special">[</span><span class="identifier">block_action</span><span class="special">]</span>
         <span class="special">&gt;&gt;</span> <span class="char">'.'</span>
@@ -85,8 +84,7 @@
           separate them from the rules.
         </li>
 </ul></div>
-<pre class="programlisting">
-<span class="identifier">program_heading</span>
+<pre class="programlisting"><span class="identifier">program_heading</span>
     <span class="special">=</span>   <span class="identifier">no_case</span><span class="special">[</span><span class="string">"program"</span><span class="special">]</span>
         <span class="special">&gt;&gt;</span> <span class="identifier">identifier</span>
         <span class="special">&gt;&gt;</span> <span class="char">'('</span>
@@ -102,8 +100,7 @@
           of directives, semantic expressions (using Phoenix or LL lambda expressions)
           or parsers should be placed as follows.
         </li></ul></div>
-<pre class="programlisting">
-<span class="identifier">identifier</span>
+<pre class="programlisting"><span class="identifier">identifier</span>
     <span class="special">=</span>   <span class="identifier">no_case</span>
         <span class="special">[</span>
             <span class="identifier">lexeme</span>
@@ -122,8 +119,7 @@
           'body' at the same indentation level as the rule itself, highlighting the
           unary operator.
         </li></ul></div>
-<pre class="programlisting">
-<span class="identifier">block</span>
+<pre class="programlisting"><span class="identifier">block</span>
    <span class="special">=</span>  <span class="special">*(</span>   <span class="identifier">label_declaration_part</span>
        <span class="special">|</span>   <span class="identifier">constant_definition_part</span>
        <span class="special">|</span>   <span class="identifier">type_definition_part</span>

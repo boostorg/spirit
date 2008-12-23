@@ -43,7 +43,7 @@
           (for the full example code see here: <a href="../../../../../example/lex/word_count_functor.cpp" target="_top">word_count_functor.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.prerequisites"></a><h5>
-<a name="id648951"></a>
+<a name="id488986"></a>
           <a href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.prerequisites">Prerequisites</a>
         </h5>
 <p>
@@ -59,8 +59,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexer_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexer_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">bind</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">ref</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -76,8 +75,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">;</span>
 </pre>
 <p>
@@ -85,7 +83,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.defining_tokens"></a><h5>
-<a name="id649646"></a>
+<a name="id489371"></a>
           <a href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.defining_tokens">Defining
           Tokens</a>
         </h5>
@@ -120,8 +118,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lexer_def</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Self</span><span class="special">&gt;</span>
@@ -142,7 +139,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.doing_the_useful_work"></a><h5>
-<a name="id649992"></a>
+<a name="id489877"></a>
           <a href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.doing_the_useful_work">Doing
           the Useful Work</a>
         </h5>
@@ -168,8 +165,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">struct</span> <span class="identifier">counter</span>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">counter</span>
 <span class="special">{</span>
     <span class="comment">// the function operator gets called for each of the matched tokens
 </span>    <span class="comment">// c, l, w are references to the counters used to keep track of the numbers
@@ -208,7 +204,7 @@
           as well.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.pulling_everything_together"></a><h5>
-<a name="id650494"></a>
+<a name="id490577"></a>
           <a href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.pulling_everything_together">Pulling
           Everything Together</a>
         </h5>
@@ -227,8 +223,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
     <span class="comment">// these variables are used to count characters, words and lines
 </span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">c</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">w</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">l</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
@@ -264,7 +259,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.comparing__emphasis_spirit_lex__emphasis__with__ulink_url__http___flex_sourceforge_net___flex__ulink_"></a><h5>
-<a name="id651326"></a>
+<a name="id491716"></a>
           <a href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.comparing__emphasis_spirit_lex__emphasis__with__ulink_url__http___flex_sourceforge_net___flex__ulink_">Comparing
           <span class="emphasis"><em>Spirit.Lex</em></span> with <a href="http://flex.sourceforge.net/" target="_top">Flex</a></a>
         </h5>
@@ -306,8 +301,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="special">%{</span>
+<pre class="programlisting"><span class="special">%{</span>
     <span class="preprocessor">#define</span> <span class="identifier">ID_WORD</span> <span class="number">1000</span>
     <span class="preprocessor">#define</span> <span class="identifier">ID_EOL</span>  <span class="number">1001</span>
     <span class="preprocessor">#define</span> <span class="identifier">ID_CHAR</span> <span class="number">1002</span>

@@ -45,7 +45,7 @@
           options along the lines (for the full example code see here: <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.prerequisites"></a><h5>
-<a name="id652117"></a>
+<a name="id492776"></a>
           <a href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.prerequisites">Prerequisites</a>
         </h5>
 <p>
@@ -65,8 +65,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">support_argument</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">support_argument</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_lexer_lexertl</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_statement</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -85,8 +84,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">;</span>
 </pre>
 <p>
@@ -103,8 +101,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="special">%{</span>
+<pre class="programlisting"><span class="special">%{</span>
     <span class="keyword">int</span> <span class="identifier">c</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">w</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">l</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">%}</span>
 <span class="special">%%</span>
@@ -123,7 +120,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.semantic_actions_in__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id652815"></a>
+<a name="id493728"></a>
           <a href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.semantic_actions_in__emphasis_spirit_lex__emphasis_">Semantic
           Actions in <span class="emphasis"><em>Spirit.Lex</em></span></a>
         </h5>
@@ -140,8 +137,7 @@
 <p>
             
 </p>
-<pre class="programlisting">
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lexer_def</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="identifier">word_count_tokens</span><span class="special">()</span>
@@ -181,8 +177,7 @@
           but it is possible to insert any C++ function or function object as long
           as it exposes the interface:
         </p>
-<pre class="programlisting">
-<span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Range</span> <span class="identifier">r</span><span class="special">,</span> <span class="identifier">Idtype</span> <span class="identifier">id</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;</span> <span class="identifier">matched</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">&amp;</span> <span class="identifier">ctx</span><span class="special">);</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Range</span> <span class="identifier">r</span><span class="special">,</span> <span class="identifier">Idtype</span> <span class="identifier">id</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;</span> <span class="identifier">matched</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">&amp;</span> <span class="identifier">ctx</span><span class="special">);</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b>where:</b></p>
@@ -221,8 +216,7 @@
           When using a C++ function as the semantic action the following prototypes
           are allowed as well:
         </p>
-<pre class="programlisting">
-<span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Range</span> <span class="identifier">r</span><span class="special">,</span> <span class="identifier">Idtype</span> <span class="identifier">id</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;</span> <span class="identifier">matched</span><span class="special">);</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Range</span> <span class="identifier">r</span><span class="special">,</span> <span class="identifier">Idtype</span> <span class="identifier">id</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;</span> <span class="identifier">matched</span><span class="special">);</span>
 <span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Range</span> <span class="identifier">r</span><span class="special">,</span> <span class="identifier">Idtype</span> <span class="identifier">id</span><span class="special">);</span>
 <span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Range</span> <span class="identifier">r</span><span class="special">);</span>
 </pre>
@@ -240,7 +234,7 @@
           to the internal lexer context.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart2.associating_token_definitions_with_the_lexer"></a><h5>
-<a name="id653861"></a>
+<a name="id495186"></a>
           <a href="lexer_quickstart2.html#spirit.lex.tutorials.lexer_quickstart2.associating_token_definitions_with_the_lexer">Associating
           Token Definitions with the Lexer</a>
         </h5>
@@ -255,8 +249,7 @@
           combining the different token definitions using the <tt class="computeroutput"><span class="special">|</span></tt>
           operator. Here is the code snippet again:
         </p>
-<pre class="programlisting">
-<span class="identifier">self</span> <span class="special">=</span>  <span class="identifier">word</span>  <span class="special">[++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">w</span><span class="special">),</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">distance</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)]</span>
+<pre class="programlisting"><span class="identifier">self</span> <span class="special">=</span>  <span class="identifier">word</span>  <span class="special">[++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">w</span><span class="special">),</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">distance</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)]</span>
     <span class="special">|</span>   <span class="identifier">eol</span>   <span class="special">[++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">),</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">l</span><span class="special">)]</span> 
     <span class="special">|</span>   <span class="identifier">any</span>   <span class="special">[++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)]</span>
     <span class="special">;</span>
