@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2008 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -119,13 +119,14 @@ namespace boost { namespace spirit { namespace karma
         //
         //  Note:     If the trailing_zeros flag is not in effect additional
         //            comments apply. See the comment for the fraction_part()
-        //            function below.
+        //            function below. Moreover, this precision will be limited
+        //            to the value of std::numeric_limits<T>::digits10 + 1
         ///////////////////////////////////////////////////////////////////////
         static unsigned int
         precision(T)
         {
             // generate max. 'fractional_precision' fractional digits
-            return fractional_precision;   
+            return fractional_precision;
         }
 
         ///////////////////////////////////////////////////////////////////////

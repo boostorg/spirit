@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2008 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,18 +16,34 @@
 #define BOOST_KARMA_DEFAULT_FIELD_LENGTH 25
 
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/karma_stream.hpp>
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <list>
+#include <map>
 #include <algorithm>
 #include <cstdlib> 
 
 #include <boost/range.hpp>
-#include <boost/date_time//gregorian/gregorian.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/fusion/include/std_pair.hpp>
+
+///////////////////////////////////////////////////////////////////////////////
+// This streaming operator is needed to generate the output from the map below
+// Yes, it's heresy, but this operator has to live in namespace std to be 
+// picked up by the compiler.
+namespace std {
+    inline std::ostream& 
+    operator<<(std::ostream& os, std::pair<int const, std::string> v)
+    {
+        os << v.first << ": " << v.second;
+        return os;
+    }
+}
+
+#include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/include/karma_stream.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
@@ -67,6 +83,12 @@ void output_container(std::ostream& os, Container const& c)
     os << 
         karma::format(
             '[' << (stream % ", ") << ']',        // format description
+            c                                     // data
+        ) << std::endl << std::endl;
+
+    os << 
+        karma::format(
+            '[' << -(stream % ", ") << ']',       // format description
             c                                     // data
         ) << std::endl << std::endl;
 
@@ -167,6 +189,18 @@ int main()
     std::cout << "std::vector<boost::date>" << std::endl;
     output_container(std::cout, dates);
     
+    ///////////////////////////////////////////////////////////////////////////
+    //  map of int --> string mappings
+    std::map<int, std::string> mappings;
+    mappings.insert(std::make_pair(0, "zero"));
+    mappings.insert(std::make_pair(1, "one"));
+    mappings.insert(std::make_pair(2, "two"));
+
+    std::cout << "-------------------------------------------------------------" 
+              << std::endl;
+    std::cout << "std::map<int, std::string>" << std::endl;
+    output_container(std::cout, mappings);
+
     return 0;
 }
 
