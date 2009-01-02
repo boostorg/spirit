@@ -208,8 +208,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         
 #if !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
 private:
-        friend struct enable_counting<output_iterator>;
-        friend struct enable_buffering<output_iterator>;
+        friend struct enable_counting<output_iterator<OutputIterator> >;
+        friend struct enable_buffering<output_iterator<OutputIterator> >;
+        friend struct enable_counting<output_iterator<OutputIterator, int> >;
+        friend struct enable_buffering<output_iterator<OutputIterator, int> >;
 #else
 public:
 #endif
