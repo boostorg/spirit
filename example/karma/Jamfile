@@ -8,7 +8,7 @@
 project spirit-karma-example ;
 
 exe quick_start1       : quick_start1.cpp ;
-exe actions            : actions.cpp ;
+exe actions_example    : actions.cpp ;
 exe basic_facilities   : basic_facilities.cpp ;
 exe functor_facilities : functor_facilities.cpp ;
 exe calc2_ast_dump     : calc2_ast_dump.cpp ;
