@@ -17,7 +17,6 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-namespace karma = boost::spirit::karma;
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()

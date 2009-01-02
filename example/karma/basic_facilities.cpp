@@ -47,7 +47,6 @@ namespace std {
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-namespace karma = boost::spirit::karma;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Output the given containers in list format
