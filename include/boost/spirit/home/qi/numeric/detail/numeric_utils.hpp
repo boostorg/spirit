@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Hartmut Kaiser
     Copyright (c) 2006 Stephen Nutt
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -338,7 +338,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             if (!Accumulate)
             {
                 // skip leading zeros
-                while (it != last && *it == '0')
+                while (it != last && *it == '0' && leading_zeros < MaxDigits)
                 {
                     ++it;
                     ++leading_zeros;

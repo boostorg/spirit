@@ -96,23 +96,23 @@
           is not perfect.
         </li>
 </ul></div>
-<a name="spirit.lex.lexer_introduction.why_using_a_separate_lexer"></a><h4>
-<a name="id648365"></a>
-        <a href="lex.html#spirit.lex.lexer_introduction.why_using_a_separate_lexer">Why
-        Using a Separate Lexer</a>
+<a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h4>
+<a name="id488039"></a>
+        <a href="lex.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
+        Use a Separate Lexer?</a>
       </h4>
 <p>
         Typically, lexical scanning is done in a separate module from the parser,
-        feeding the parser with a stream of input tokens only. Now, theoretically
-        it is not necessary to do this separation. In the end there is only one set
+        feeding the parser with a stream of input tokens only. Theoretically it is
+        not necessary implement this separation as in the end there is only one set
         of syntactical rules defining the language, so in theory we could write the
         whole parser in one module. In fact, <span class="emphasis"><em>Spirit.Qi</em></span> allows
-        to write parsers without using a lexer, parsing the input character stream
+        you to write parsers without using a lexer, parsing the input character stream
         directly, and for the most part this is the way <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
         has been used since its invention.
       </p>
 <p>
-        However, the separation has both practical and theoretical bases and proves
+        However, this separation has both practical and theoretical bases and proves
         to be very useful in practical applications. In 1956, Noam Chomsky defined
         the "Chomsky Hierarchy" of grammars:
       </p>
@@ -147,25 +147,24 @@
         handled as regular expressions tend to be the lower-level parts, such as
         the definition of an identifier or of an integer value:
       </p>
-<pre class="programlisting">
-<span class="identifier">letter</span>     <span class="special">:=</span> <span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z</span><span class="special">]</span>
+<pre class="programlisting"><span class="identifier">letter</span>     <span class="special">:=</span> <span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z</span><span class="special">]</span>
 <span class="identifier">digit</span>      <span class="special">:=</span> <span class="special">[</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span>
 
 <span class="identifier">identifier</span> <span class="special">:=</span> <span class="identifier">letter</span> <span class="special">[</span> <span class="identifier">letter</span> <span class="special">|</span> <span class="identifier">digit</span> <span class="special">]*</span>
-<span class="identifier">integer</span>    <span class="special">:=</span> <span class="identifier">digit</span><span class="special">*</span>
+<span class="identifier">integer</span>    <span class="special">:=</span> <span class="identifier">digit</span><span class="special">+</span>
 </pre>
 <p>
         Higher level parts of practical grammars tend to be more complex and can't
-        be implemented using plain regular expressions anymore. We need to store
-        information on the built-in hardware stack while recursing the grammar hierarchy,
-        and that in fact this is the preferred approach used for top-down parsing.
-        Since it takes a different kind of abstract machine to parse the two types
-        of grammars, it proved to be efficient to separate the lexical scanner into
-        a separate module which is built around the idea of a state machine. The
-        goal here is to use the simplest parsing technique needed for the job.
+        be implemented using plain regular expressions. We need to store information
+        on the built-in hardware stack while recursing the grammar hierarchy, and
+        that in fact this is the preferred approach used for top-down parsing. Since
+        it takes a different kind of abstract machine to parse the two types of grammars,
+        it proved to be efficient to separate the lexical scanner into a separate
+        module which is built around the idea of a state machine. The goal here is
+        to use the simplest parsing technique needed for the job.
       </p>
 <p>
-        Another, more practical reason for separating the scanner from the parser
+        Another, more practical, reason for separating the scanner from the parser
         is the need for backtracking during parsing. The input data is a stream of
         characters, which is often thought to be processed left to right without
         any backtracking. Unfortunately, in practice most of the time that isn't
@@ -197,7 +196,7 @@
         grammar recognizers.
       </p>
 <a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h4>
-<a name="id648579"></a>
+<a name="id488369"></a>
         <a href="lex.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
         of using <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h4>
@@ -210,22 +209,22 @@
         making it possible to freely access any context information and data structure.
         Since the C++ compiler sees all the code it will generate optimal code nomatter
         what configuration options have been chosen by the user. <span class="emphasis"><em>Spirit.Lex</em></span>
-        gives you all the features you could get from a similar <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
-        program without the need to leave C++ as a host language:
+        gives you the vast majority of features you could get from a similar <a href="http://flex.sourceforge.net/" target="_top">Flex</a> program without the need
+        to leave C++ as a host language:
       </p>
 <div class="itemizedlist"><ul type="disc">
 <li>
-          the definition of tokens is done using regular expressions (patterns)
+          The definition of tokens is done using regular expressions (patterns)
         </li>
 <li>
-          the token definitions can refer to special substitution string (pattern
+          The token definitions can refer to special substitution strings (pattern
           macros) simplifying pattern definitions
         </li>
 <li>
-          the generated lexical scanner may have multiple start states
+          The generated lexical scanner may have multiple start states
         </li>
 <li>
-          it is possible to attach code to any of the token definitions; this code
+          It is possible to attach code to any of the token definitions; this code
           gets executed whenever the corresponding token pattern has been matched
         </li>
 </ul></div>
@@ -238,14 +237,15 @@
         Model</a>) - a model very similar to the way <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
         operates - we will mainly focus on the opposite, the <span class="emphasis"><em>dynamic</em></span>
         model. You can directly integrate the token definitions into your C++ program,
-        building the lexical analyzer dynamicly at runtime. The dynamic model is
+        building the lexical analyzer dynamically at runtime. The dynamic model is
         something not supported by <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
         or other lexical scanner generators (such as <a href="http://re2c.sourceforge.net/" target="_top">re2c</a>,
         <a href="http://www.cs.queensu.ca/~thurston/ragel/" target="_top">Ragel</a>, etc.).
-        But it is very flexible and allows to speed up the development of your application.
+        But it is very flexible and allows you to speed up the development of your
+        application.
       </p>
 <a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h4>
-<a name="id648682"></a>
+<a name="id488543"></a>
         <a href="lex.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
         Library Structure of <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h4>

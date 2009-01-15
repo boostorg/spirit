@@ -152,7 +152,7 @@ Things to take notice of:
   for doing pre and post initializations.
 
 * The expression `a || b` reads: match a or b and in sequence. That is, if both
-  `a` and `b` match, it must be in sequence; this is equivalent to `a >> !b | b`,
+  `a` and `b` match, it must be in sequence; this is equivalent to `a >> -b | b`,
   but more efficient.
 
 [heading Let's Parse!]

@@ -1,5 +1,5 @@
 //  Copyright (c) 2001-2007 Joel de Guzman
-//  Copyright (c) 2001-2008 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,44 +22,44 @@ namespace boost { namespace spirit { namespace karma
     namespace detail
     {
         template <typename Parameter>
-        struct optional_attribute
+        inline bool
+        optional_is_valid(boost::optional<Parameter> const& opt)
         {
-            static inline bool
-            is_valid(boost::optional<Parameter> const& opt)
-            {
-                return opt;
-            }
+            return opt;
+        }
 
-            static inline bool
-            is_valid(Parameter const&)
-            {
-                return true;
-            }
+        template <typename Parameter>
+        inline bool
+        optional_is_valid(Parameter const& opt)
+        {
+            return true;
+        }
 
-            static inline bool
-            is_valid(unused_type)
-            {
-                return true;
-            }
+        inline bool
+        optional_is_valid(unused_type)
+        {
+            return true;
+        }
 
-            static inline Parameter const&
-            get(boost::optional<Parameter> const& opt)
-            {
-                return boost::get(opt);
-            }
+        template <typename Parameter>
+        inline Parameter const&
+        optional_get(boost::optional<Parameter> const& opt)
+        {
+            return get(opt);
+        }
 
-            static inline Parameter const&
-            get(Parameter const& p)
-            {
-                return p;
-            }
+        template <typename Parameter>
+        inline Parameter const&
+        optional_get(Parameter const& opt)
+        {
+            return opt;
+        }
 
-            static inline unused_type
-            get(unused_type)
-            {
-                return unused;
-            }
-        };
+        inline unused_type
+        optional_get(unused_type)
+        {
+            return unused;
+        }
     }
 
     struct optional
@@ -86,16 +86,10 @@ namespace boost { namespace spirit { namespace karma
                 result_of::subject<Component>::type::director
             director;
 
-            typedef typename traits::attribute_of<
-                karma::domain, typename result_of::subject<Component>::type, 
-                Context, unused_type
-            >::type attribute_type;
-
-            typedef detail::optional_attribute<attribute_type> optional_type;
-            if (optional_type::is_valid(param))
+            if (detail::optional_is_valid(param))
             {
                 director::generate(subject(component), sink, ctx, d,
-                    optional_type::get(param));
+                    detail::optional_get(param));
             }
             return true;
         }

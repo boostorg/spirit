@@ -1,5 +1,5 @@
 // parser.hpp
-// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -52,14 +52,13 @@ Grammar:
 */
     static node *parse (const CharT *start_, const CharT * const end_,
         const std::size_t id_, const std::size_t dfa_state_,
-        const bool case_sensitive_, const bool dot_not_newline_,
-        const std::locale &locale_, node_ptr_vector &node_ptr_vector_,
-        const macro_map &macromap_, typename tokeniser::token_map &map_,
+        const regex_flags flags_, const std::locale &locale_,
+        node_ptr_vector &node_ptr_vector_, const macro_map &macromap_,
+        typename tokeniser::token_map &map_,
         bool &seen_BOL_assertion_, bool &seen_EOL_assertion_)
     {
         node *root_ = 0;
-        state state_ (start_, end_, case_sensitive_, locale_,
-            dot_not_newline_);
+        state state_ (start_, end_, flags_, locale_);
         token lhs_token_;
         token rhs_token_;
         token_stack token_stack_;
@@ -91,7 +90,7 @@ Grammar:
                 ss_ << "A syntax error occurred: '" <<
                     lhs_token_.precedence_string () <<
                     "' against '" << rhs_token_.precedence_string () <<
-                    "' at index " << state_._index << ".";
+                    "' at index " << state_.index () << ".";
                 throw runtime_error (ss_.str ().c_str ());
                 break;
             }

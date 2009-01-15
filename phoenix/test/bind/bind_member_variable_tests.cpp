@@ -1,7 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2007 Joel de Guzman
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #include <iostream>
@@ -23,15 +23,81 @@ namespace test
     {
         int m;
     };
+
+    struct xx {
+       int m;
+    };
 }
+
+template<class T, class F>
+void write_test(F f) {
+    T x_;
+    bind(&T::m, f(x_))() = 122;
+    BOOST_TEST(x_.m == 122);
+    bind(&T::m, arg1)(f(x_)) = 123;
+    BOOST_TEST(x_.m == 123);
+}
+
+template<class T, class F>
+void read_test(F f) {
+    T x_;
+    x_.m = 123;
+
+    BOOST_TEST(bind(&T::m, f(x_))() == 123);
+    BOOST_TEST(bind(&T::m, arg1)(f(x_)) == 123);
+}
+
+struct identity
+{
+    template<class T>
+    T& operator()(T& t) const
+    {
+        return t;
+    }
+};
+
+struct constify
+{
+    template<class T>
+    const T& operator()(const T& t) const
+    {
+        return t;
+    }
+};
+
+struct add_pointer
+{
+    template<class T>
+    T* const operator()(T& t) const
+    {
+        return &t;
+    }
+};
+
+struct add_const_pointer
+{
+    template<class T>
+    const T* const operator()(const T& t) const
+    {
+        return &t;
+    }
+};
 
 int
 main()
 {
-    test::x x_;
-    bind(&test::x::m, x_)() = 123;
-    bind(&test::x::m, arg1)(x_) = 123;
-    BOOST_TEST(x_.m == 123);
+    write_test<test::x>(identity());
+    write_test<test::x>(add_pointer());
+    write_test<test::xx>(identity());
+    write_test<test::xx>(add_pointer());
 
+    read_test<test::x>(identity());
+    //read_test<test::x>(constify()); // this fails because of capture by value.
+    read_test<test::x>(add_pointer());
+    read_test<test::x>(add_const_pointer());
+    read_test<test::xx>(identity());
+    read_test<test::xx>(constify());
+    read_test<test::xx>(add_pointer());
+    read_test<test::xx>(add_const_pointer());
     return boost::report_errors();
 }

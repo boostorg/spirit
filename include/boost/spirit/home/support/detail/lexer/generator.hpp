@@ -1,5 +1,5 @@
 // generator.hpp
-// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -143,15 +143,13 @@ protected:
         typename detail::node::node_vector tree_vector_;
 
         build_macros (token_map_, macrodeque_, macromap_,
-            rules_.case_sensitive (), rules_.locale (), node_ptr_vector_,
-            rules_.dot_not_newline (), seen_BOL_assertion_,
-            seen_EOL_assertion_);
+            rules_.flags (), rules_.locale (), node_ptr_vector_,
+            seen_BOL_assertion_, seen_EOL_assertion_);
 
         detail::node *root_ = parser::parse (regex_.c_str (),
             regex_.c_str () + regex_.size (), *ids_iter_, *states_iter_,
-            rules_.case_sensitive (), rules_.dot_not_newline (),
-            rules_.locale (), node_ptr_vector_, macromap_, token_map_,
-            seen_BOL_assertion_, seen_EOL_assertion_);
+            rules_.flags (), rules_.locale (), node_ptr_vector_, macromap_,
+            token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
 
         ++regex_iter_;
         ++ids_iter_;
@@ -166,10 +164,9 @@ protected:
 
             root_ = parser::parse (regex_.c_str (),
                 regex_.c_str () + regex_.size (), *ids_iter_,
-                *states_iter_, rules_.case_sensitive (),
-                rules_.dot_not_newline (), rules_.locale (), node_ptr_vector_,
-                macromap_, token_map_, seen_BOL_assertion_,
-                seen_EOL_assertion_);
+                *states_iter_, rules_.flags (), rules_.locale (),
+                node_ptr_vector_, macromap_, token_map_,
+                seen_BOL_assertion_, seen_EOL_assertion_);
             tree_vector_.push_back (root_);
             ++regex_iter_;
             ++ids_iter_;
@@ -246,10 +243,9 @@ protected:
 
     static void build_macros (token_map &token_map_,
         const macro_deque &macrodeque_,
-        typename parser::macro_map &macromap_, const bool case_sensitive_,
+        typename parser::macro_map &macromap_, const regex_flags flags_,
         const std::locale &locale_, node_ptr_vector &node_ptr_vector_,
-        const bool not_dot_newline_, bool &seen_BOL_assertion_,
-        bool &seen_EOL_assertion_)
+        bool &seen_BOL_assertion_, bool &seen_EOL_assertion_)
     {
         for (typename macro_deque::const_iterator iter_ =
             macrodeque_.begin (), end_ = macrodeque_.end ();
@@ -258,9 +254,9 @@ protected:
             const typename rules::string &name_ = iter_->first;
             const typename rules::string &regex_ = iter_->second;
             detail::node *node_ = parser::parse (regex_.c_str (),
-                regex_.c_str () + regex_.size (), 0, 0, case_sensitive_,
-                not_dot_newline_, locale_, node_ptr_vector_, macromap_,
-                token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
+                regex_.c_str () + regex_.size (), 0, 0, flags_,
+                locale_, node_ptr_vector_, macromap_, token_map_,
+                seen_BOL_assertion_, seen_EOL_assertion_);
             macro_iter_pair map_iter_ = macromap_.
                 insert (macro_pair (name_, 0));
 
@@ -361,21 +357,19 @@ protected:
         }
 
         bool found_ = false;
+        typename size_t_vector::const_iterator hash_iter_ =
+            hash_vector_.begin ();
+        typename size_t_vector::const_iterator hash_end_ =
+            hash_vector_.end ();
+        typename node_set_vector::vector::const_iterator set_iter_ =
+            seen_sets_->begin ();
 
-        // Stop VC++ 2005 crashing...
-        if (!hash_vector_.empty ())
+        for (; hash_iter_ != hash_end_; ++hash_iter_, ++set_iter_)
         {
-            const std::size_t *hash_iter_ = &hash_vector_.front ();
-            const std::size_t *hash_end_ = hash_iter_ + hash_vector_.size ();
-            node_set **set_iter_ = &seen_sets_->front ();
+            found_ = *hash_iter_ == hash_ && *(*set_iter_) == *set_ptr_;
+            ++index_;
 
-            for (; hash_iter_ != hash_end_; ++hash_iter_, ++set_iter_)
-            {
-                found_ = *hash_iter_ == hash_ && *(*set_iter_) == *set_ptr_;
-                ++index_;
-
-                if (found_) break;
-            }
+            if (found_) break;
         }
 
         if (!found_)
@@ -662,7 +656,7 @@ protected:
 
             if (!node_->end_state ())
             {
-                std::size_t token_ = node_->token ();
+                const std::size_t token_ = node_->token ();
 
                 if (token_ != null_token)
                 {
@@ -674,12 +668,12 @@ protected:
 
                         index_set_.insert (token_);
                         list_->back () = new equivset (index_set_,
-                            node_->greedy (), node_->token (), node_->followpos ());
+                            node_->greedy (), token_, node_->followpos ());
                     }
                     else
                     {
                         list_->back () = new equivset (set_mapping_[token_],
-                            node_->greedy (), node_->token (), node_->followpos ());
+                            node_->greedy (), token_, node_->followpos ());
                     }
                 }
             }

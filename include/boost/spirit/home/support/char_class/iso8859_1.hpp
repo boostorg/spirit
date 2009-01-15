@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -562,7 +562,7 @@ namespace boost { namespace spirit { namespace char_class
     ///////////////////////////////////////////////////////////////////////////
     struct iso8859_1
     {
-        typedef char char_type;
+        typedef unsigned char char_type;
 
         static bool
         is_ascii(int ch)

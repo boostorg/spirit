@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2008 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -31,13 +31,12 @@ struct counter_impl : boost::spirit::karma::functor_base
     template <typename OutputIterator, typename Context, typename Parameter>
     bool operator()(Parameter const&, Context& ctx, OutputIterator& sink) const
     {
-        namespace karma = boost::spirit::karma;
         return karma::generate(sink, int_ << ": ", counter++);
     }
-    
+
     counter_impl(int& counter_) 
     : counter(counter_) {}
-    
+
     int& counter;
 };
 
@@ -64,13 +63,12 @@ struct confix_impl : public boost::spirit::karma::functor_base
     template <typename OutputIterator, typename Context, typename Parameter>
     bool operator()(Parameter const& v, Context& ctx, OutputIterator& sink) const
     {
-        namespace karma = boost::spirit::karma;
         return karma::generate(sink, open << xpr << close, v);
     }
-    
+
     confix_impl(char const* open_, char const* close_, Expr const& xpr_) 
     : open(open_), close(close_), xpr(xpr_) {}
-    
+
     std::string open;
     std::string close;
     Expr xpr;
@@ -98,13 +96,12 @@ struct list_impl : boost::spirit::karma::functor_base
     template <typename OutputIterator, typename Parameter>
     bool operator()(OutputIterator& sink, Parameter const& v) const
     {
-        namespace karma = boost::spirit::karma;
         return karma::generate(sink, xpr % delim, v);
     }
-    
+
     list_impl(Expr const& xpr_, char const* delim_) 
     : xpr(xpr_), delim(delim_) {}
-    
+
     Expr xpr;
     std::string delim;
 };
@@ -131,7 +128,6 @@ list(Expr const& xpr, char const* delim)
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    namespace karma = boost::spirit::karma;
     using namespace boost::phoenix;
     using namespace boost::phoenix::arg_names;
 

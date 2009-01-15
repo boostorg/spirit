@@ -15,6 +15,8 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
+#include <boost/fusion/include/io.hpp>
+
 using namespace boost::phoenix;
 using namespace boost::phoenix::arg_names;
 using namespace std;
@@ -37,6 +39,7 @@ main()
 
     (cout << val(hello) << world << ", you da man!\n")();
     for_each(v.begin(), v.end(), cout << arg1 << ',');
+    (cout << arg1 + 1)(i100);
 
     (cout << arg1 << "this is it, shukz:" << hex << arg2 << endl << endl)(msg, i100);
 

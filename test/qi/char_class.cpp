@@ -75,6 +75,10 @@ main()
         BOOST_TEST(test("0", xdigit));
         BOOST_TEST(test("f", xdigit));
         BOOST_TEST(!test("g", xdigit));
+
+        BOOST_TEST(test("é", alpha));
+        BOOST_TEST(test("é", lower));
+        BOOST_TEST(!test("é", upper));
     }
 
     {

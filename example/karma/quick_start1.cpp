@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2008 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,6 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-namespace karma = boost::spirit::karma;
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()

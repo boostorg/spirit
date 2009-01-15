@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Hartmut Kaiser
     Copyright (c) 2001-2007 Joel de Guzman
     Copyright (c) 2003 Gustavo Guerra
 

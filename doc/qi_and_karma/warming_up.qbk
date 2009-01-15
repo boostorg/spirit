@@ -43,7 +43,7 @@ consumed depending on how the parser is invoked (see below).
 
 [heading Trivial Example #3 Parsing one or more numbers]
 
-Create a parser that will accept one or more floating-point numbers.
+Create a parser that will accept zero or more floating-point numbers.
 
     *double_
 
