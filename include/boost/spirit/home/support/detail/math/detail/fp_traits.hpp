@@ -1,7 +1,7 @@
 // fp_traits.hpp
 
-#ifndef BOOST_MATH_FP_TRAITS_HPP
-#define BOOST_MATH_FP_TRAITS_HPP
+#ifndef BOOST_SPIRIT_MATH_FP_TRAITS_HPP
+#define BOOST_SPIRIT_MATH_FP_TRAITS_HPP
 
 // Copyright (c) 2006 Johan Rade
 
@@ -24,6 +24,7 @@
 //------------------------------------------------------------------------------
 
 namespace boost {
+namespace spirit {
 namespace math {
 namespace detail {
 
@@ -571,6 +572,7 @@ template<class T> struct fp_traits
 
 }   // namespace detail
 }   // namespace math
+}   // namespace spirit
 }   // namespace boost
 
 #endif

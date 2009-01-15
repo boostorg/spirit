@@ -1,5 +1,5 @@
-#ifndef BOOST_MATH_NONFINITE_NUM_FACETS_HPP
-#define BOOST_MATH_NONFINITE_NUM_FACETS_HPP
+#ifndef BOOST_SPIRIT_MATH_NONFINITE_NUM_FACETS_HPP
+#define BOOST_SPIRIT_MATH_NONFINITE_NUM_FACETS_HPP
 
 // Copyright (c) 2006 Johan Rade
 
@@ -11,8 +11,8 @@
 #include <ios>
 #include <limits>
 #include <locale>
-#include "fpclassify.hpp"
-#include "signbit.hpp"
+#include <boost/spirit/home/support/detail/math/fpclassify.hpp>
+#include <boost/spirit/home/support/detail/math/signbit.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning(push)
@@ -20,6 +20,7 @@
 #endif
 
 namespace boost {
+namespace spirit {
 namespace math {
 
 
@@ -465,7 +466,8 @@ private:
 
 //------------------------------------------------------------------------------
 
-}   // namespace serialization
+}   // namespace math
+}   // namespace spirit
 }   // namespace boost
 
 #ifdef _MSC_VER
