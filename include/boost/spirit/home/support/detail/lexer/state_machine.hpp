@@ -177,7 +177,8 @@ public:
                     }
                     else
                     {
-                        _states = _sm->_csm._sm_vector[_dfa].size ();
+                        _states = _data.states =
+                            _sm->_csm._sm_vector[_dfa].size ();
                         _state = _data.state = 0;
                     }
                 }
