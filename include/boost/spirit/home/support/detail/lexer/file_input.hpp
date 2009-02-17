@@ -7,6 +7,8 @@
 #define BOOST_LEXER_FILE_INPUT
 
 #include "char_traits.hpp"
+// memcpy
+#include <cstring>
 #include <fstream>
 #include "size_t.hpp"
 #include "state_machine.hpp"
@@ -414,8 +416,10 @@ again:
             else if (_start_token < _end_buffer)
             {
                 const std::size_t len_ = _end_buffer - _start_token;
+                using namespace std;
 
-                ::memcpy (_start_buffer, _start_token - 1, (len_ + 1) * sizeof (CharT));
+                // Some systems have memcpy in namespace std.
+                memcpy (_start_buffer, _start_token - 1, (len_ + 1) * sizeof (CharT));
                 _stream->read (_start_buffer + len_ + 1,
                     static_cast<std::streamsize> (_buffer.size () - len_ - 1));
                 count_ = _stream->gcount ();
