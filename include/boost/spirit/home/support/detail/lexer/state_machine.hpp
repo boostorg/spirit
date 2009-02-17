@@ -1,5 +1,5 @@
 // state_machine.hpp
-// Copyright (c) 2007 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -277,7 +277,7 @@ public:
             iter_._dfas = _csm._sm_vector.size ();
             iter_._states = iter_._data.states = ptr_->size ();
             iter_._transitions = iter_._data.transitions =
-            ptr_->front ()._transitions.size ();
+                ptr_->front ()._transitions.size ();
             iter_._dfa = iter_._data.dfa = 0;
             iter_._state = iter_._data.state = 0;
             iter_._transition = 0;
@@ -313,9 +313,9 @@ public:
     }
 
 // VC++ 6, 7.1 and 8 can't cope with template friend classes!
-// #if !(defined _MSC_VER && _MSC_VER < 1500)
-// private:
-// #endif
+#if !(defined _MSC_VER && _MSC_VER < 1500)
+private:
+#endif
     typedef std::vector<std::size_t> size_t_vector;
     typedef detail::ptr_vector<size_t_vector> size_t_vector_vector;
 
