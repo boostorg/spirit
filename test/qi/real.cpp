@@ -238,8 +238,8 @@ main()
         BOOST_TEST(!test("-1.2e", double_));
         BOOST_TEST(!test_attr("-1.2e", double_, d));
 
-        using boost::math::fpclassify;
-        using boost::math::signbit;
+        using boost::spirit::math::fpclassify;
+        using boost::spirit::math::signbit;
         BOOST_TEST(test("-inf", double_));
         BOOST_TEST(test("-infinity", double_));
         BOOST_TEST(test_attr("-inf", double_, d) &&
