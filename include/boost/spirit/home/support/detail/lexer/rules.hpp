@@ -131,7 +131,7 @@ public:
 
     void add_state (const CharT *name_)
     {
-        validate (name_, true);
+        validate (name_);
 
         if (_statemap.insert (string_size_t_pair (name_,
             _statemap.size ())).second)
@@ -155,7 +155,7 @@ public:
 
     void add_macro (const CharT *name_, const string &regex_)
     {
-        validate (name_, false);
+        validate (name_);
 
         typename string_set::const_iterator iter_ = _macroset.find (name_);
 
@@ -334,7 +334,7 @@ private:
 
         if (!dot_)
         {
-            validate (new_state_, true);
+            validate (new_state_);
         }
 
         std::size_t new_ = string::npos;
@@ -394,7 +394,7 @@ private:
                     start_ = curr_state_;
                 }
 
-                validate (state_.c_str (), true);
+                validate (state_.c_str ());
                 iter_ = _statemap.find (state_.c_str ());
 
                 if (iter_ == end_)
@@ -403,6 +403,7 @@ private:
                     std::ostringstream os_;
 
                     os_ << "Unknown state name '";
+                    curr_state_ = state_.c_str();
 
                     while (*curr_state_)
                     {
@@ -427,9 +428,8 @@ private:
         }
     }
 
-    void validate (const CharT *name_, const bool comma_) const
+    void validate (const CharT *name_) const
     {
-again:
         const CharT *start_ = name_;
 
         if (*name_ != '_' && !(*name_ >= 'A' && *name_ <= 'Z') &&
@@ -455,12 +455,6 @@ again:
 
         while (*name_)
         {
-            if (*name_ == ',' && comma_)
-            {
-                ++name_;
-                goto again;
-            }
-
             if (*name_ != '_' && *name_ != '-' &&
                 !(*name_ >= 'A' && *name_ <= 'Z') &&
                 !(*name_ >= 'a' && *name_ <= 'z') &&
@@ -470,6 +464,7 @@ again:
                 std::ostringstream os_;
 
                 os_ << "Invalid name '";
+                name_ = start_;
 
                 while (*name_)
                 {
@@ -489,6 +484,7 @@ again:
             std::ostringstream os_;
 
             os_ << "Name '";
+            name_ = start_;
 
             while (*name_)
             {
