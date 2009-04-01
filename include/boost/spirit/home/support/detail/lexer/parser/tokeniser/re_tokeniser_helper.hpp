@@ -103,7 +103,7 @@ public:
                         std::ostringstream ss_;
 
                         ss_ << "Mismatch in charset negation preceding "
-                            "index " << state_.index () - 1 << '.';
+                            "index " << state_.index () << '.';
                         throw runtime_error (ss_.str ().c_str ());
                     }
 

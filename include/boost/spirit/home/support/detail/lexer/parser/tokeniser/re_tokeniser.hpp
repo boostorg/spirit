@@ -270,7 +270,7 @@ private:
                 {
                     std::ostringstream ss_;
 
-                    ss_ << "Unknown option at " <<
+                    ss_ << "Unknown option at index " <<
                         state_.index () - 1 << '.';
                     throw runtime_error (ss_.str ().c_str ());
                 }
