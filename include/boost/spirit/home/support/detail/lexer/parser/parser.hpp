@@ -1,5 +1,5 @@
 // parser.hpp
-// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -378,7 +378,7 @@ private:
         // perform ?
         node *lhs_ = tree_node_stack_.top ();
         // You don't know if lhs_ is a leaf_node, so get firstpos.
-        node::node_vector &firstpos_ = lhs_->firstpos();
+        node::node_vector &firstpos_ = lhs_->firstpos ();
 
         for (node::node_vector::iterator iter_ = firstpos_.begin (),
             end_ = firstpos_.end (); iter_ != end_; ++iter_)
