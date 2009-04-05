@@ -1,5 +1,5 @@
 // input.hpp
-// Copyright (c) 2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2008-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,7 +7,7 @@
 #define BOOST_LEXER_INPUT
 
 #include "char_traits.hpp"
-#include <iterator>
+#include <boost/detail/iterator.hpp>
 #include "size_t.hpp"
 #include "state_machine.hpp"
 
@@ -102,38 +102,39 @@ public:
 
         void next_token ()
         {
+            const detail::internals &internals_ = _input->_state_machine->data ();
+
             _data.start = _data.end;
 
-            if (_input->_state_machine->_dfa->size () == 1)
+            if (internals_._dfa->size () == 1)
             {
-                if (_input->_state_machine->_seen_BOL_assertion ||
-                    _input->_state_machine->_seen_EOL_assertion)
+                if (internals_._seen_BOL_assertion ||
+                    internals_._seen_EOL_assertion)
                 {
                     _data.id = next
-                        (&_input->_state_machine->_lookup->front ()->front (),
-                        _input->_state_machine->_dfa_alphabet.front (),
-                        &_input->_state_machine->_dfa->front ()->front (),
+                        (&internals_._lookup->front ()->front (),
+                        internals_._dfa_alphabet.front (),
+                        &internals_._dfa->front ()->front (),
                         _data.bol, _data.end, _input->_end);
                 }
                 else
                 {
-                    _data.id = next (&_input->_state_machine->_lookup->
-                        front ()->front (), _input->_state_machine->
-                        _dfa_alphabet.front (), &_input->_state_machine->
+                    _data.id = next (&internals_._lookup->front ()->front (),
+                        internals_._dfa_alphabet.front (), &internals_.
                         _dfa->front ()->front (), _data.end, _input->_end);
                 }
             }
             else
             {
-                if (_input->_state_machine->_seen_BOL_assertion ||
-                    _input->_state_machine->_seen_EOL_assertion)
+                if (internals_._seen_BOL_assertion ||
+                    internals_._seen_EOL_assertion)
                 {
-                    _data.id = next (*_input->_state_machine, _data.state,
+                    _data.id = next (internals_, _data.state,
                         _data.bol, _data.end, _input->_end);
                 }
                 else
                 {
-                    _data.id = next (*_input->_state_machine, _data.state,
+                    _data.id = next (internals_, _data.state,
                         _data.end, _input->_end);
                 }
             }
@@ -145,18 +146,17 @@ public:
             }
         }
 
-        std::size_t next (const basic_state_machine
-            <typename Traits::char_type> &state_machine_,
+        std::size_t next (const detail::internals &internals_,
             std::size_t &start_state_, bool bol_,
             FwdIter &start_token_, const FwdIter &end_)
         {
             if (start_token_ == end_) return 0;
 
         again:
-            const std::size_t * lookup_ = &state_machine_._lookup[start_state_]->
+            const std::size_t * lookup_ = &internals_._lookup[start_state_]->
                 front ();
-            std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[start_state_];
-            const std::size_t *dfa_ = &state_machine_._dfa[start_state_]->front ();
+            std::size_t dfa_alphabet_ = internals_._dfa_alphabet[start_state_];
+            const std::size_t *dfa_ = &internals_._dfa[start_state_]->front ();
             const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
@@ -244,18 +244,17 @@ public:
             return id_;
         }
 
-        std::size_t next (const basic_state_machine
-            <typename Traits::char_type> &state_machine_,
+        std::size_t next (const detail::internals &internals_,
             std::size_t &start_state_, FwdIter &start_token_,
             FwdIter const &end_)
         {
             if (start_token_ == end_) return 0;
 
         again:
-            const std::size_t * lookup_ = &state_machine_._lookup[start_state_]->
+            const std::size_t * lookup_ = &internals_._lookup[start_state_]->
                 front ();
-            std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[start_state_];
-            const std::size_t *dfa_ = &state_machine_._dfa[start_state_]->front ();
+            std::size_t dfa_alphabet_ = internals_._dfa_alphabet[start_state_];
+            const std::size_t *dfa_ = &internals_._dfa[start_state_]->front ();
             const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
@@ -456,7 +455,7 @@ public:
         iter_._data.id = npos;
         iter_._data.start = _begin;
         iter_._data.end = _begin;
-        iter_._data.bol = _state_machine->_seen_BOL_assertion;
+        iter_._data.bol = _state_machine->data ()._seen_BOL_assertion;
         iter_._data.state = 0;
         ++iter_;
         return iter_;

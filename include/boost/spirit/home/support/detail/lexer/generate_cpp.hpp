@@ -1,5 +1,5 @@
 // generate_cpp_code.hpp
-// Copyright (c) 2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2008-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +8,7 @@
 
 #include "char_traits.hpp"
 #include "consts.hpp"
+#include "internals.hpp"
 #include <iostream>
 #include <boost/detail/iterator.hpp>
 #include "runtime_error.hpp"
@@ -20,10 +21,13 @@ namespace boost
 namespace lexer
 {
 template<typename CharT>
-void generate_cpp (const basic_state_machine<CharT> &sm_, std::ostream &os_,
-    const bool use_pointers_ = false, const bool skip_unknown_ = true,
-    const bool optimise_parameters_ = true, const char *name_ = "next_token")
+void generate_cpp (const basic_state_machine<CharT> &state_machine_,
+    std::ostream &os_, const bool use_pointers_ = false,
+    const bool skip_unknown_ = true, const bool optimise_parameters_ = true,
+    const char *name_ = "next_token")
 {
+    const detail::internals &sm_ = state_machine_.data ();
+
     if (sm_._lookup->size () == 0)
     {
         throw runtime_error ("Cannot generate code from an empty state machine");

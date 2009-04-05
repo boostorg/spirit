@@ -1,5 +1,5 @@
 // rules.hpp
-// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -129,6 +129,18 @@ public:
         return state_;
     }
 
+    const CharT *state (const std::size_t index_) const
+    {
+        if (index_ == 0)
+        {
+            return initial ();
+        }
+        else
+        {
+            return _lexer_state_names[index_ - 1].c_str ();
+        }
+    }
+
     void add_state (const CharT *name_)
     {
         validate (name_);
@@ -139,6 +151,11 @@ public:
             _regexes.push_back (string_deque ());
             _ids.push_back (id_vector ());
             _states.push_back (id_vector ());
+
+            if (string (name_) != initial ())
+            {
+                _lexer_state_names.push_back (name_);
+            }
         }
     }
 
@@ -320,6 +337,7 @@ private:
     id_vector_deque _states;
     regex_flags _flags;
     std::locale _locale;
+    string_deque _lexer_state_names;
 
     void add (const CharT *curr_state_, const string &regex_,
         const std::size_t id_, const CharT *new_state_, const bool check_)
@@ -403,7 +421,7 @@ private:
                     std::ostringstream os_;
 
                     os_ << "Unknown state name '";
-                    curr_state_ = state_.c_str();
+                    curr_state_ = state_.c_str ();
 
                     while (*curr_state_)
                     {

@@ -1,5 +1,5 @@
 // file_input.hpp
-// Copyright (c) 2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2008-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -96,19 +96,21 @@ public:
 
         void next_token ()
         {
+            const detail::internals &internals_ = _input->_state_machine->data ();
+
             _data.start = _data.end;
 
-            if (_input->_state_machine->_dfa->size () == 1)
+            if (internals_._dfa->size () == 1)
             {
-                _data.id = _input->next (&_input->_state_machine->_lookup->
-                    front ()->front (), _input->_state_machine->_dfa_alphabet.
-                    front (), &_input->_state_machine->_dfa->front ()->
-                    front (), _data.start, _data.end);
+                _data.id = _input->next (&internals_._lookup->front ()->
+                    front (), internals_._dfa_alphabet.front (),
+                    &internals_._dfa->front ()->front (), _data.start,
+                    _data.end);
             }
             else
             {
-                _data.id = _input->next (*_input->_state_machine, _data.state,
-                    _data.start, _data.end);
+                _data.id = _input->next (internals_, _data.state, _data.start,
+                    _data.end);
             }
 
             if (_data.id == 0)
@@ -197,16 +199,16 @@ private:
     const CharT *_end_token;
     CharT *_end_buffer;
 
-    std::size_t next (const basic_state_machine<CharT> &state_machine_,
+    std::size_t next (const detail::internals &internals_,
         std::size_t &start_state_, const CharT * &start_, const CharT * &end_)
     {
         _start_token = _end_token;
 
 again:
-        const std::size_t * lookup_ = &state_machine_._lookup[start_state_]->
+        const std::size_t * lookup_ = &internals_._lookup[start_state_]->
             front ();
-        std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[start_state_];
-        const std::size_t *dfa_ = &state_machine_._dfa[start_state_]->front ();
+        std::size_t dfa_alphabet_ = internals_._dfa_alphabet[start_state_];
+        const std::size_t *dfa_ = &internals_._dfa[start_state_]->front ();
         const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
         const CharT *curr_ = _start_token;
         bool end_state_ = *ptr_ != 0;
@@ -416,9 +418,9 @@ again:
             else if (_start_token < _end_buffer)
             {
                 const std::size_t len_ = _end_buffer - _start_token;
+                // Some systems have memcpy in namespace std.
                 using namespace std;
 
-                // Some systems have memcpy in namespace std.
                 memcpy (_start_buffer, _start_token - 1, (len_ + 1) * sizeof (CharT));
                 _stream->read (_start_buffer + len_ + 1,
                     static_cast<std::streamsize> (_buffer.size () - len_ - 1));

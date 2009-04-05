@@ -1,5 +1,5 @@
 // consts.h
-// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +20,7 @@ namespace lexer
     enum {end_state_index, id_index, state_index, bol_index, eol_index,
         dead_state_index, dfa_offset};
 
-    const std::size_t max_macro_len = 20;
+    const std::size_t max_macro_len = 30;
     const std::size_t num_chars = 256;
     const std::size_t num_wchar_ts =
         (boost::integer_traits<wchar_t>::const_max < 0x110000) ?
