@@ -72,11 +72,11 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         std::ostream &os_, char const* name_suffix = "", 
         bool skip_on_nomatch = true, bool optimize_parameters = true)
     {
-        if (sm_._lookup->empty())
+        if (sm_.data()._lookup->empty())
             return false;
             
-        std::size_t const dfas_ = sm_._dfa->size();
-        std::size_t const lookups_ = sm_._lookup->front()->size();
+        std::size_t const dfas_ = sm_.data()._dfa->size();
+        std::size_t const lookups_ = sm_.data()._lookup->front()->size();
 
         os_ << "// Copyright (c) 2008 Ben Hanson\n";
         os_ << "//\n";
@@ -117,12 +117,12 @@ namespace boost { namespace spirit { namespace lex { namespace detail
             os_ << "std::size_t &start_state_, ";
         }
 
-        if (sm_._seen_BOL_assertion || !optimize_parameters)
+        if (sm_.data()._seen_BOL_assertion || !optimize_parameters)
         {
             os_ << "Iterator const& start_, ";
         }
 
-        if (dfas_ > 1 || sm_._seen_BOL_assertion || !optimize_parameters)
+        if (dfas_ > 1 || sm_.data()._seen_BOL_assertion || !optimize_parameters)
         {
             os_ << "\n    ";
         }
@@ -142,8 +142,8 @@ namespace boost { namespace spirit { namespace lex { namespace detail
                 std::size_t i_ = 0;
                 std::size_t j_ = 1;
                 std::size_t count_ = lookups_ / 8;
-                std::size_t const* lookup_ = &sm_._lookup[state_]->front ();
-                std::size_t const* dfa_ = &sm_._dfa[state_]->front ();
+                std::size_t const* lookup_ = &sm_.data()._lookup[state_]->front ();
+                std::size_t const* dfa_ = &sm_.data()._dfa[state_]->front ();
 
                 os_ << "    static const std::size_t lookup" << state_ 
                     << "_[" << lookups_ << "] = {";
@@ -168,7 +168,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
                 }
 
                 os_ << "};\n";
-                count_ = sm_._dfa[state_]->size ();
+                count_ = sm_.data()._dfa[state_]->size ();
                 os_ << "    static const std::size_t dfa" << state_ << "_[" <<
                     count_ << "] = {";
                 count_ /= 8;
@@ -190,7 +190,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
                     }
                 }
 
-                std::size_t const mod_ = sm_._dfa[state_]->size () % 8;
+                std::size_t const mod_ = sm_.data()._dfa[state_]->size () % 8;
                 if (mod_)
                 {
                     const std::size_t index_ = count_ * 8;
@@ -211,7 +211,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
                 os_ << "};\n";
             }
 
-            std::size_t count_ = sm_._dfa_alphabet.size();
+            std::size_t count_ = sm_.data()._dfa_alphabet.size();
             std::size_t i_ = 1;
 
             os_ << "    static const std::size_t *lookup_arr_[" << count_ <<
@@ -228,11 +228,11 @@ namespace boost { namespace spirit { namespace lex { namespace detail
             os_ << "    static const std::size_t dfa_alphabet_arr_[" << 
                 count_ << "] = {";
 
-            os_ << sm_._dfa_alphabet.front ();
+            os_ << sm_.data()._dfa_alphabet.front ();
 
             for (i_ = 1; i_ < count_; ++i_)
             {
-                os_ << ", " << sm_._dfa_alphabet[i_];
+                os_ << ", " << sm_.data()._dfa_alphabet[i_];
             }
 
             os_ << "};\n";
@@ -249,14 +249,14 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         }
         else
         {
-            std::size_t const* lookup_ = &sm_._lookup[0]->front();
-            std::size_t const* dfa_ = &sm_._dfa[0]->front();
+            std::size_t const* lookup_ = &sm_.data()._lookup[0]->front();
+            std::size_t const* dfa_ = &sm_.data()._dfa[0]->front();
             std::size_t i_ = 0;
             std::size_t j_ = 1;
             std::size_t count_ = lookups_ / 8;
 
             os_ << "    static const std::size_t lookup_[";
-            os_ << sm_._lookup[0]->size() << "] = {";
+            os_ << sm_.data()._lookup[0]->size() << "] = {";
 
             for (; i_ < count_; ++i_)
             {
@@ -279,10 +279,10 @@ namespace boost { namespace spirit { namespace lex { namespace detail
 
             os_ << "};\n";
             os_ << "    static const std::size_t dfa_alphabet_ = " <<
-              sm_._dfa_alphabet.front () << ";\n";
+              sm_.data()._dfa_alphabet.front () << ";\n";
             os_ << "    static const std::size_t dfa_[" <<
-              sm_._dfa[0]->size () << "] = {";
-                count_ = sm_._dfa[0]->size () / 8;
+              sm_.data()._dfa[0]->size () << "] = {";
+                count_ = sm_.data()._dfa[0]->size () / 8;
 
             for (i_ = 0; i_ < count_; ++i_)
             {
@@ -301,7 +301,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
                 }
             }
 
-            const std::size_t mod_ = sm_._dfa[0]->size () % 8;
+            const std::size_t mod_ = sm_.data()._dfa[0]->size () % 8;
 
             if (mod_)
             {
@@ -342,22 +342,22 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         os_ << "    while (curr_ != end_)\n";
         os_ << "    {\n";
 
-        if (sm_._seen_BOL_assertion)
+        if (sm_.data()._seen_BOL_assertion)
         {
             os_ << "        std::size_t const BOL_state_ = ptr_[bol_index];\n";
         }
 
-        if (sm_._seen_EOL_assertion)
+        if (sm_.data()._seen_EOL_assertion)
         {
             os_ << "        std::size_t const EOL_state_ = ptr_[eol_index];\n";
         }
 
-        if (sm_._seen_BOL_assertion || sm_._seen_EOL_assertion)
+        if (sm_.data()._seen_BOL_assertion || sm_.data()._seen_EOL_assertion)
         {
             os_ << '\n';
         }
 
-        if (sm_._seen_BOL_assertion && sm_._seen_EOL_assertion)
+        if (sm_.data()._seen_BOL_assertion && sm_.data()._seen_EOL_assertion)
         {
             os_ << "        if (BOL_state_ && (start_token_ == start_ ||\n";
             os_ << "            *(start_token_ - 1) == '\\n'))\n";
@@ -388,7 +388,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
             os_ << "            ptr_ = &dfa_[state_ * dfa_alphabet_];\n";
             os_ << "        }\n";
         }
-        else if (sm_._seen_BOL_assertion)
+        else if (sm_.data()._seen_BOL_assertion)
         {
             os_ << "        if (BOL_state_ && (start_token_ == start_ ||\n";
             os_ << "            *(start_token_ - 1) == '\\n'))\n";
@@ -415,7 +415,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
             os_ << "            ptr_ = &dfa_[state_ * dfa_alphabet_];\n";
             os_ << "        }\n";
         }
-        else if (sm_._seen_EOL_assertion)
+        else if (sm_.data()._seen_EOL_assertion)
         {
             os_ << "        if (EOL_state_ && *curr_ == '\\n')\n";
             os_ << "        {\n";
@@ -477,7 +477,7 @@ namespace boost { namespace spirit { namespace lex { namespace detail
         os_ << "    }\n";
         os_ << '\n';
 
-        if (sm_._seen_EOL_assertion)
+        if (sm_.data()._seen_EOL_assertion)
         {
             os_ << "    const std::size_t EOL_state_ = ptr_[eol_index];\n";
             os_ << '\n';
