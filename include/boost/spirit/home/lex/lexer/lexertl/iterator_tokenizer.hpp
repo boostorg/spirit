@@ -104,10 +104,10 @@ namespace boost { namespace spirit { namespace lex
             if (start_token_ == end_) return 0;
 
         again:
-            std::size_t const* lookup_ = &state_machine_._lookup[dfa_state_]->
+            std::size_t const* lookup_ = &state_machine_.data()._lookup[dfa_state_]->
                 front ();
-            std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[dfa_state_];
-            std::size_t const* dfa_ = &state_machine_._dfa[dfa_state_]->front ();
+            std::size_t dfa_alphabet_ = state_machine_.data()._dfa_alphabet[dfa_state_];
+            std::size_t const* dfa_ = &state_machine_.data()._dfa[dfa_state_]->front ();
             std::size_t const* ptr_ = dfa_ + dfa_alphabet_;
             Iterator curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
@@ -196,9 +196,9 @@ namespace boost { namespace spirit { namespace lex
         {
             if (start_token_ == end_) return 0;
 
-            std::size_t const* lookup_ = &state_machine_._lookup[0]->front();
-            std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[0];
-            std::size_t const* dfa_ = &state_machine_._dfa[0]->front ();
+            std::size_t const* lookup_ = &state_machine_.data()._lookup[0]->front();
+            std::size_t dfa_alphabet_ = state_machine_.data()._dfa_alphabet[0];
+            std::size_t const* dfa_ = &state_machine_.data()._dfa[0]->front ();
             std::size_t const* ptr_ = dfa_ + dfa_alphabet_;
             Iterator curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
