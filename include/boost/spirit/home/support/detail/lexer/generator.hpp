@@ -1,5 +1,5 @@
 // generator.hpp
-// Copyright (c) 2007-2008 Ben Hanson (http://www.benhanson.net/)
+// Copyright (c) 2007-2009 Ben Hanson (http://www.benhanson.net/)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file licence_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,30 +26,35 @@ template<typename CharT, typename Traits = char_traits<CharT> >
 class basic_generator
 {
 public:
-    typedef typename basic_state_machine<CharT>::size_t_vector size_t_vector;
+    typedef typename detail::internals::size_t_vector size_t_vector;
     typedef basic_rules<CharT> rules;
 
-    static void build (const rules &rules_, basic_state_machine<CharT> &state_machine_)
+    static void build (const rules &rules_,
+        basic_state_machine<CharT> &state_machine_)
     {
         std::size_t index_ = 0;
         std::size_t size_ = rules_.statemap ().size ();
         node_ptr_vector node_ptr_vector_;
+        detail::internals &internals_ = const_cast<detail::internals &>
+            (state_machine_.data ());
+        bool seen_BOL_assertion_ = false;
+        bool seen_EOL_assertion_ = false;
 
         state_machine_.clear ();
 
         for (; index_ < size_; ++index_)
         {
-            state_machine_._lookup->push_back (0);
-            state_machine_._lookup->back () = new size_t_vector;
-            state_machine_._dfa_alphabet.push_back (0);
-            state_machine_._dfa->push_back (0);
-            state_machine_._dfa->back () = new size_t_vector;
+            internals_._lookup->push_back (0);
+            internals_._lookup->back () = new size_t_vector;
+            internals_._dfa_alphabet.push_back (0);
+            internals_._dfa->push_back (0);
+            internals_._dfa->back () = new size_t_vector;
         }
 
-        for (index_ = 0, size_ = state_machine_._lookup->size ();
+        for (index_ = 0, size_ = internals_._lookup->size ();
             index_ < size_; ++index_)
         {
-            state_machine_._lookup[index_]->resize (sizeof (CharT) == 1 ?
+            internals_._lookup[index_]->resize (sizeof (CharT) == 1 ?
                 num_chars : num_wchar_ts, dead_state_index);
 
             if (!rules_.regexes ()[index_].empty ())
@@ -58,26 +63,44 @@ public:
                 index_set_vector set_mapping_;
                 // syntax tree
                 detail::node *root_ = build_tree (rules_, index_,
-                    node_ptr_vector_, state_machine_._lookup[index_],
-                    set_mapping_, state_machine_._dfa_alphabet[index_],
-                    state_machine_._seen_BOL_assertion,
-                    state_machine_._seen_EOL_assertion);
+                    node_ptr_vector_, internals_._lookup[index_],
+                    set_mapping_, internals_._dfa_alphabet[index_],
+                    internals_._seen_BOL_assertion,
+                    internals_._seen_EOL_assertion);
 
                 build_dfa (root_, set_mapping_,
-                    state_machine_._dfa_alphabet[index_],
-                    *state_machine_._dfa[index_]);
+                    internals_._dfa_alphabet[index_],
+                    *internals_._dfa[index_]);
+
+                if (internals_._seen_BOL_assertion)
+                {
+                    seen_BOL_assertion_ = true;
+                }
+
+                if (internals_._seen_EOL_assertion)
+                {
+                    seen_EOL_assertion_ = true;
+                }
+
+                internals_._seen_BOL_assertion = false;
+                internals_._seen_EOL_assertion = false;
             }
         }
+
+        internals_._seen_BOL_assertion = seen_BOL_assertion_;
+        internals_._seen_EOL_assertion = seen_EOL_assertion_;
     }
 
     static void minimise (basic_state_machine<CharT> &state_machine_)
     {
-        const std::size_t machines_ = state_machine_._dfa->size ();
+        detail::internals &internals_ = const_cast<detail::internals &>
+            (state_machine_.data ());
+        const std::size_t machines_ = internals_._dfa->size ();
 
         for (std::size_t i_ = 0; i_ < machines_; ++i_)
         {
-            const std::size_t dfa_alphabet_ = state_machine_._dfa_alphabet[i_];
-            size_t_vector *dfa_ = state_machine_._dfa[i_];
+            const std::size_t dfa_alphabet_ = internals_._dfa_alphabet[i_];
+            size_t_vector *dfa_ = internals_._dfa[i_];
 
             if (dfa_alphabet_ != 0)
             {
