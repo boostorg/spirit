@@ -6,14 +6,14 @@
 #   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
-project spirit_v2-tests
-    : requirements <toolset>gcc:<cxxflags>-ftemplate-depth-300
-    :
-    :
-    ;
 
 # bring in rules for testing
 import testing ;
+
+project   # spirit_v2-tests
+    : requirements 
+        <toolset>gcc:<cxxflags>-ftemplate-depth-300
+    ;
 
 {
     test-suite spirit_v2 :
