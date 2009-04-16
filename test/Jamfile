@@ -13,6 +13,7 @@ import testing ;
 project   # spirit_v2-tests
     : requirements 
         <toolset>gcc:<cxxflags>-ftemplate-depth-300
+        <toolset>darwin:<cxxflags>-ftemplate-depth-300
     ;
 
 {
