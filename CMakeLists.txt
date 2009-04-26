@@ -13,7 +13,7 @@ boost_library_project(
   TESTDIRS  test
   HEADERS ${lib_headers}
   #  DOCDIRS 
-  DESCRIPTION  "LL parser framework represents parsers directly as EBNF grammars in inlined C++."
+  DESCRIPTION  "A object oriented, recursive-descent parser and output generation library using the yyntax of Parsing Expression Grammars (PEG’s) directly in C++"
   MODULARIZED
   AUTHORS  "Joel de Guzman <joel -at- boost-consulting.com>"
            "Hartmut Kaiser <hartmut.kaiser -at- gmail.com>"

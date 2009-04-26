@@ -10,7 +10,6 @@
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
@@ -21,6 +20,7 @@ int main()
 {
     using namespace spirit_test;
     using namespace boost::spirit;
+    using namespace boost::spirit::ascii;
 
     {
         boost::optional<int> opt;
@@ -36,8 +36,6 @@ int main()
     }
 
     {
-        using namespace boost::spirit::ascii;
-        
         boost::optional<int> opt;
         BOOST_TEST(test_delimited("", -int_, opt, space));
 
@@ -46,8 +44,6 @@ int main()
     }
 
     {
-        using namespace boost::spirit::ascii;
-
         int opt = 10;
         BOOST_TEST(test_delimited("10 ", -int_, opt, space));
     }
@@ -55,7 +51,6 @@ int main()
     {   // test action
         using namespace boost::phoenix;
         namespace phoenix = boost::phoenix;
-        using namespace boost::spirit::arg_names;
 
         boost::optional<int> n ;
         BOOST_TEST(test("", (-int_)[_1 = phoenix::ref(n)]));
@@ -67,7 +62,6 @@ int main()
     {   // test action
         using namespace boost::phoenix;
         namespace phoenix = boost::phoenix;
-        using namespace boost::spirit::arg_names;
 
         int n = 1234;
         BOOST_TEST(test("1234", (-int_)[_1 = phoenix::ref(n)]));
@@ -76,8 +70,6 @@ int main()
     {   // test action
         using namespace boost::phoenix;
         namespace phoenix = boost::phoenix;
-        using namespace boost::spirit::arg_names;
-        using namespace boost::spirit::ascii;
 
         boost::optional<int> n;
         BOOST_TEST(test_delimited("", (-int_)[_1 = phoenix::ref(n)], space));
@@ -89,8 +81,6 @@ int main()
     {   // test action
         using namespace boost::phoenix;
         namespace phoenix = boost::phoenix;
-        using namespace boost::spirit::arg_names;
-        using namespace boost::spirit::ascii;
 
         int n = 1234;
         BOOST_TEST(test_delimited("1234 ", (-int_)[_1 = phoenix::ref(n)], space));

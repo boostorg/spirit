@@ -16,9 +16,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/config/warning_disable.hpp>
+
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/home/karma/binary.hpp>
 
 #include <iostream>
 #include <vector>
@@ -28,13 +28,13 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our calculator parser grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
+struct calculator 
+  : qi::grammar<Iterator, expression_ast(), space_type>
 {
     calculator() : calculator::base_type(expression)
     {
@@ -138,20 +138,24 @@ struct generate_byte_code
     generate_byte_code() : generate_byte_code::base_type(ast_node)
     {
         ast_node %= 
-                (dword(op_int) << dword) [_1 = _int(_val)]
-            |   binary_node              [_1 = _bin_op(_val)]
-            |   unary_node               [_1 = _unary_op(_val)]
+                int_node    [_1 = _int(_val)]
+            |   binary_node [_1 = _bin_op(_val)]
+            |   unary_node  [_1 = _unary_op(_val)]
             ;
-            
+
+        int_node %=
+                dword(op_int) << dword
+            ;
+
         binary_node = 
-                (ast_node << ast_node << byte)
+                (ast_node << ast_node << byte_)
                 [ 
                     _1 = _left(_val), _2 = _right(_val), _3 = _op(_val)
                 ]
             ;
 
         unary_node =
-                (ast_node << byte)
+                (ast_node << byte_)
                 [
                     _1 = _right(_val), _2 = _op(_val)
                 ]
@@ -159,6 +163,7 @@ struct generate_byte_code
     }
 
     karma::rule<OuputIterator, expression_ast(), Delimiter> ast_node;
+    karma::rule<OuputIterator, int(), Delimiter> int_node;
     karma::rule<OuputIterator, binary_op(), Delimiter> binary_node;
     karma::rule<OuputIterator, unary_op(), Delimiter> unary_node;
 };
@@ -173,8 +178,9 @@ bool generate_vm_code(expression_ast const& ast,
     typedef char* output_iterator_type;
     typedef generate_byte_code<output_iterator_type, Delimiter> generate_byte_code;
 
+    char* outbuffer = (*code.begin()).bytes;
     generate_byte_code gen_vm;
-    return karma::generate_delimited((*code.begin()).bytes, gen_vm, ast, d);
+    return karma::generate_delimited(outbuffer, gen_vm, d, ast);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -203,14 +209,14 @@ main()
         expression_ast ast;
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        bool r = qi::phrase_parse(iter, end, calc, ast, space);
+        bool r = qi::phrase_parse(iter, end, calc, space, ast);
 
         if (r && iter == end)
         {
             // we assume a vm code size of 4096 is sufficient
             std::vector<vmachine::element> code (4096);
             r = generate_vm_code(ast, code, pad(4));
-            
+
             if (r)
             {
                 vmachine vm;

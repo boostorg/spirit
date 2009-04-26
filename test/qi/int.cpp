@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
     Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -27,11 +27,16 @@
 // Some compilers have long long, but don't define the
 // LONG_LONG_MIN and LONG_LONG_MAX macros in limits.h.  This
 // assumes that long long is 64 bits.
+
+BOOST_STATIC_ASSERT(sizeof(long long) == 8);
+
 #if !defined(LONG_LONG_MIN) && !defined(LONG_LONG_MAX)
 # define LONG_LONG_MAX 0x7fffffffffffffffLL
 # define LONG_LONG_MIN (-LONG_LONG_MAX - 1)
 #endif
 #endif // BOOST_HAS_LONG_LONG
+
+BOOST_STATIC_ASSERT(sizeof(long) == 4);
 
     char const* max_int = "2147483647";
     char const* int_overflow = "2147483648";
@@ -48,7 +53,8 @@
 int
 main()
 {
-    using namespace spirit_test;
+    using spirit_test::test;
+    using spirit_test::test_attr;
 
     ///////////////////////////////////////////////////////////////////////////
     //  signed integer tests
@@ -130,12 +136,29 @@ main()
 #endif
 
     ///////////////////////////////////////////////////////////////////////////
-    //  int_spec<unused_type> tests
+    //  short_ and long_ tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::int_spec;
+        using boost::spirit::short_;
+        using boost::spirit::long_;
+        int i;
+
+        BOOST_TEST(test("12345", short_));
+        BOOST_TEST(test_attr("12345", short_, i));
+        BOOST_TEST(i == 12345);
+
+        BOOST_TEST(test("1234567890", long_));
+        BOOST_TEST(test_attr("1234567890", long_, i));
+        BOOST_TEST(i == 1234567890);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  int_parser<unused_type> tests
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::qi::int_parser;
         using boost::spirit::unused_type;
-        int_spec<unused_type> any_int;
+        int_parser<unused_type> any_int;
 
         BOOST_TEST(test("123456", any_int));
         BOOST_TEST(test("-123456", any_int));
@@ -146,8 +169,8 @@ main()
     //  action tests
     ///////////////////////////////////////////////////////////////////////////
     {
-        using namespace boost::phoenix;
-        using boost::spirit::arg_names::_1;
+        using boost::phoenix::ref;
+        using boost::spirit::_1;
         using boost::spirit::ascii::space;
         using boost::spirit::int_;
         int n, m;

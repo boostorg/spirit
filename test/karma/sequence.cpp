@@ -8,7 +8,6 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
@@ -16,11 +15,11 @@
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/fusion/include/vector.hpp>
 #include <boost/spirit/include/support_unused.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
+#include <boost/fusion/include/vector.hpp>
 
 #include "test.hpp"
 
@@ -31,8 +30,9 @@ int
 main()
 {
     using namespace boost::spirit;
+    using namespace boost::spirit::ascii;
     namespace fusion = boost::fusion;
-    
+
     {
         {
             BOOST_TEST(test("xi", char_('x') << char_('i')));
@@ -49,12 +49,12 @@ main()
             BOOST_TEST(test_delimited("Hello , World ", 
                 lit("Hello") << ',' << "World", char(' ')));
         }
-        
+
         {
             fusion::vector<char, char, std::string> p ('a', 'b', "cdefg");
-            BOOST_TEST(test("abcdefg", char_ << char_ << lit, p));
+            BOOST_TEST(test("abcdefg", char_ << char_ << string, p));
             BOOST_TEST(test_delimited("a b cdefg ", 
-                char_ << char_ << lit, p, char(' ')));
+                char_ << char_ << string, p, char(' ')));
         }
 
         {
@@ -75,16 +75,26 @@ main()
         }
 
         {
-            // literal generators do not need a parameter
+            // literal generators do not need an attribute
             fusion::vector<char, char> p('a', 'c');
             BOOST_TEST(test("abc", char_ << 'b' << char_, p));
             BOOST_TEST(test_delimited("a b c ", 
                 char_ << 'b' << char_, p, char(' ')));
         }
-        
+
         {
-            using namespace boost::spirit::ascii;
-            
+            std::list<int> v;
+            v.push_back(1);
+            v.push_back(2);
+            v.push_back(3);
+            BOOST_TEST(test("123", int_ << int_ << int_, v));
+            BOOST_TEST(test_delimited("1 2 3 ", int_ << int_ << int_, v, ' '));
+            BOOST_TEST(test("1,2,3", int_ << ',' << int_ << ',' << int_, v));
+            BOOST_TEST(test_delimited("1 , 2 , 3 ", 
+                int_ << ',' << int_ << ',' << int_, v, ' '));
+        }
+
+        {
             BOOST_TEST(test("aa", lower[char_('A') << 'a']));
             BOOST_TEST(test_delimited("BEGIN END ", 
                 upper[lit("begin") << "end"], char(' ')));
@@ -92,20 +102,18 @@ main()
                 upper[lit("begin") << "nend"], char(' ')));
 
             BOOST_TEST(test("Aa        ", left_align[char_('A') << 'a']));
-            BOOST_TEST(test("    Aa    ", center[char_('A') << 'a']));
-            BOOST_TEST(test("        Aa", right_align[char_('A') << 'a']));
+//             BOOST_TEST(test("    Aa    ", center[char_('A') << 'a']));
+//             BOOST_TEST(test("        Aa", right_align[char_('A') << 'a']));
         }
 
         // action tests
         {
             using namespace boost::phoenix;
-            using namespace boost::spirit::arg_names;
-            using namespace boost::spirit::ascii;
 
             BOOST_TEST(test("abcdefg", 
-                (char_ << char_ << lit)[_1 = 'a', _2 = 'b', _3 = "cdefg"]));
+                (char_ << char_ << string)[_1 = 'a', _2 = 'b', _3 = "cdefg"]));
             BOOST_TEST(test_delimited("a b cdefg ", 
-                (char_ << char_ << lit)[_1 = 'a', _2 = 'b', _3 = "cdefg"], 
+                (char_ << char_ << string)[_1 = 'a', _2 = 'b', _3 = "cdefg"], 
                 char(' ')));
 
             BOOST_TEST(test_delimited("a 12 c ", 
@@ -121,11 +129,11 @@ main()
             BOOST_TEST(test("AA", upper[char_ << 'a'][_1 = 'a']));
 
             BOOST_TEST(test("Aa        ", left_align[char_ << 'a'][_1 = 'A']));
-            BOOST_TEST(test("    Aa    ", center[char_ << 'a'][_1 = 'A']));
-            BOOST_TEST(test("        Aa", right_align[char_ << 'a'][_1 = 'A']));
+//             BOOST_TEST(test("    Aa    ", center[char_ << 'a'][_1 = 'A']));
+//             BOOST_TEST(test("        Aa", right_align[char_ << 'a'][_1 = 'A']));
         }
     }
-    
+
     return boost::report_errors();
 }
 

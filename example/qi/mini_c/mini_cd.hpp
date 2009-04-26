@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -42,7 +42,7 @@ program<Iterator>::program(std::vector<int>& code)
                 >> *(',' > identifier           [add_var(_1)])
             )
         >   ')'
-        >   char_('{')                          [
+        >   lit('{')                            [
                                                     _b = size(ref(code)),
                                                     add_function(
                                                         _a     // function name
@@ -52,7 +52,7 @@ program<Iterator>::program(std::vector<int>& code)
                                                     op(op_stk_adj, 0)   // adjust this later
                                                 ]
         >   statement
-        >   char_('}')                          [state_reset(_b)]
+        >   lit('}')                            [state_reset(_b)]
         ;
 
     start =
@@ -63,7 +63,7 @@ program<Iterator>::program(std::vector<int>& code)
     function.name("function");
     start.name("program");
 
-    on_error<fail>(start, error_handler(_4, _3, _2));
+    on_error<fail>(start, ::error_handler(_4, _3, _2));
 }
 
 #endif

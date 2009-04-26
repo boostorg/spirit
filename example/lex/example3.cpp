@@ -1,5 +1,4 @@
 //  Copyright (c) 2001-2009 Hartmut Kaiser
-//  Copyright (c) 2001-2007 Joel de Guzman
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -40,29 +39,28 @@ using namespace boost::spirit::lex;
 //  Token definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct example3_tokens : lexer_def<Lexer>
+struct example3_tokens : lexer<Lexer>
 {
     typedef typename Lexer::token_set token_set;
-    
-    template <typename Self>
-    void def (Self& self)
+
+    example3_tokens()
     {
         // define the tokens to match
         ellipses = "\\.\\.\\.";
         number = "[0-9]+";
-        
+
         // define the whitespace to ignore (spaces, tabs, newlines and C-style 
         // comments)
         white_space 
             =   token_def<>("[ \\t\\n]+")               // whitespace
             |   "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/"   // C style comments
             ;
-        
+
         // associate the tokens and the token set with the lexer
-        self = ellipses | '(' | ')' | number;
-        self("WS") = white_space;
+        this->self = ellipses | '(' | ')' | number;
+        this->self("WS") = white_space;
     }
-    
+
     // these tokens expose the iterator_range of the matched input sequence
     token_def<> ellipses, identifier, number;
     token_set white_space;
@@ -108,35 +106,33 @@ int main()
     typedef std::string::iterator base_iterator_type;
 
     // This is the token type to return from the lexer iterator
-    typedef lexertl_token<base_iterator_type> token_type;
+    typedef lexertl::token<base_iterator_type> token_type;
 
     // This is the lexer type to use to tokenize the input.
     // Here we use the lexertl based lexer engine.
-    typedef lexertl_lexer<token_type> lexer_type;
+    typedef lexertl::lexer<token_type> lexer_type;
 
     // This is the token definition type (derived from the given lexer type).
     typedef example3_tokens<lexer_type> example3_tokens;
 
     // this is the iterator type exposed by the lexer 
-    typedef lexer<example3_tokens>::iterator_type iterator_type;
+    typedef example3_tokens::iterator_type iterator_type;
 
     // this is the type of the grammar to parse
     typedef example3_grammar<iterator_type, lexer_type> example3_grammar;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
-    example3_tokens tokens;                         // Our token definition
-    example3_grammar calc(tokens);                  // Our grammar definition
-
-    lexer<example3_tokens> lex(tokens);             // Our lexer
+    example3_tokens tokens;                         // Our lexer
+    example3_grammar calc(tokens);                  // Our parser
 
     std::string str (read_from_file("example3.input"));
 
     // At this point we generate the iterator pair used to expose the
     // tokenized input stream.
     std::string::iterator it = str.begin();
-    iterator_type iter = lex.begin(it, str.end());
-    iterator_type end = lex.end();
+    iterator_type iter = tokens.begin(it, str.end());
+    iterator_type end = tokens.end();
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.

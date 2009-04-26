@@ -5,7 +5,6 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
@@ -13,11 +12,11 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
-#include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
+
 #include <boost/assign/std/vector.hpp>
 
 #include <string>
@@ -38,7 +37,7 @@ main()
 
     std::vector<char> v;
     v += 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h';
-    
+
     {
         BOOST_TEST(test("a,b,c,d,e,f,g,h", char_ % ',', v));
         BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 
@@ -54,7 +53,6 @@ main()
 
     { // actions
         namespace phx = boost::phoenix;
-        using boost::spirit::arg_names::_1;
 
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[_1 = phx::ref(v)]));
         BOOST_TEST(test_delimited("a , b , c , d , e , f , g , h ", 

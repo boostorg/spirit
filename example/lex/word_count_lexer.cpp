@@ -34,8 +34,7 @@
 
 #include <boost/config/warning_disable.hpp>
 //[wcl_includes
-#include <boost/spirit/include/support_argument.hpp>
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/phoenix_algorithm.hpp>
@@ -61,27 +60,25 @@ using namespace boost::spirit::lex;
 ///////////////////////////////////////////////////////////////////////////////
 //[wcl_token_definition
 template <typename Lexer>
-struct word_count_tokens : lexer_def<Lexer>
+struct word_count_tokens : lexer<Lexer>
 {
     word_count_tokens()
-      : c(0), w(0), l(0),
-        word("[^ \t\n]+"), eol("\n"), any(".")  // define tokens
-    {}
-    
-    template <typename Self>
-    void def (Self& self)
+      : c(0), w(0), l(0)
+      , word("[^ \t\n]+")     // define tokens
+      , eol("\n")
+      , any(".")
     {
         using boost::phoenix::ref;
         using boost::phoenix::distance;
-        using boost::spirit::arg_names::_1;
 
         // associate tokens with the lexer
-        self =  word  [++ref(w), ref(c) += distance(_1)]
+        this->self 
+            =   word  [++ref(w), ref(c) += distance(_1)]
             |   eol   [++ref(c), ++ref(l)] 
             |   any   [++ref(c)]
             ;
     }
-    
+
     std::size_t c, w, l;
     token_def<> word, eol, any;
 };
@@ -105,18 +102,18 @@ int main(int argc, char* argv[])
     //
     // As a result the token instances contain the token ids as the only data 
     // member.
-    typedef lexertl_token<char const*, omitted, boost::mpl::false_> token_type;
+    typedef lexertl::token<char const*, omitted, boost::mpl::false_> token_type;
 
     // lexer type
-    typedef lexertl_actor_lexer<token_type> lexer_type;
-    
+    typedef lexertl::actor_lexer<token_type> lexer_type;
+
     // create the lexer object instance needed to invoke the lexical analysis 
     word_count_tokens<lexer_type> word_count_lexer;
 
     // tokenize the given string, all generated tokens are discarded
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    bool r = tokenize(first, last, make_lexer(word_count_lexer));
+    bool r = tokenize(first, last, word_count_lexer);
 
     if (r) {
         std::cout << "lines: " << word_count_lexer.l 

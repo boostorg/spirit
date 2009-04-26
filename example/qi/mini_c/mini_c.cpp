@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
     {
         std::string fmain("main");
         std::string::iterator fbegin = fmain.begin();
-        function_info* f = prog.functions.lookup()->find(fbegin, fmain.end());
+        function_info* f = prog.functions.lookup->find(fbegin, fmain.end());
         if (f == 0)
         {
             std::cerr << "Error: main function not defined" << std::endl;

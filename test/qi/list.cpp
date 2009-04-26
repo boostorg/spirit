@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -31,7 +31,6 @@ using namespace spirit_test;
 int
 main()
 {
-    using namespace boost::spirit;
     using namespace boost::spirit::ascii;
 
     {
@@ -50,9 +49,28 @@ main()
         BOOST_TEST(s == "abcdefgh");
     }
 
+    {
+        using boost::spirit::int_;
+
+        std::vector<int> v;
+        BOOST_TEST(test_attr("1,2", int_ % ',', v));
+        BOOST_TEST(2 == v.size() && 1 == v[0] && 2 == v[1]);
+    }
+
+    {
+        using boost::spirit::int_;
+
+        std::vector<int> v;
+        BOOST_TEST(test_attr("(1,2)", '(' >> int_ % ',' >> ')', v));
+        BOOST_TEST(2 == v.size() && 1 == v[0] && 2 == v[1]);
+    }
+
     { // actions
-        using namespace boost::phoenix;
-        using boost::spirit::arg_names::_1;
+        using boost::phoenix::ref;
+        using boost::phoenix::begin;
+        using boost::phoenix::end;
+        using boost::phoenix::construct;
+        using boost::spirit::qi::_1;
 
         std::string s;
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')

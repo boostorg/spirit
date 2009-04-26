@@ -6,9 +6,6 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-// include this first to make rules have placeholders (e.g. r._1)
-#include <boost/spirit/include/support_argument.hpp>
-
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -52,7 +49,6 @@ main()
     }
 
     { // direct access to the rules
-
         num_list def;
         BOOST_TEST(test_delimited("123 ", def.num1, space));
         BOOST_TEST(test_delimited("123 , 456 , 789 ", def.start, space));

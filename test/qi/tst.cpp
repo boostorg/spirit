@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -341,10 +341,10 @@ void tests()
     }
 }
 
-int
-main()
+int main()
 {
-    using namespace boost::spirit::qi;
+    using boost::spirit::qi::tst;
+    using boost::spirit::qi::tst_map;
 
     tests<tst<char, int>, tst<wchar_t, int> >();
     tests<tst_map<char, int>, tst_map<wchar_t, int> >();

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,14 +20,13 @@
 #include <string>
 #include <vector>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
 using boost::phoenix::function;
 using boost::phoenix::ref;
 using boost::phoenix::size;
+
+using namespace boost::spirit;
+using namespace boost::spirit::qi;
+using namespace boost::spirit::ascii;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  The Virtual Machine
@@ -152,7 +151,7 @@ struct error_handler_
 
     template <typename Iterator>
     void operator()(
-        std::string const& what
+        info const& what
       , Iterator err_pos, Iterator last) const
     {
         std::cout

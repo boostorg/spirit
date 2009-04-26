@@ -1,16 +1,24 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+
+#if defined(_MSC_VER)
+# pragma warning(disable: 4180)     // qualifier applied to function type
+                                    // has no meaning; ignored
+#endif
+
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/qi_operator.hpp>
+#include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_char.hpp>
+#include <boost/spirit/include/qi_parse.hpp>
+#include <boost/spirit/include/qi_action.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
 #include <cstring>
-
-using namespace boost::spirit;
 
 int x = 0;
 
@@ -23,6 +31,7 @@ void fun2(int i)
 {
     x += i;
 }
+using boost::spirit::unused_type;
 
 struct fun_action
 {
@@ -34,6 +43,9 @@ struct fun_action
 
 int main()
 {
+    namespace qi = boost::spirit::qi;
+    using boost::spirit::int_;
+
     {
         char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
         qi::parse(s1, e1, '{' >> int_[&fun1] >> '}');
@@ -45,12 +57,8 @@ int main()
     }
 
     {
-        // $$$ uncomment me! $$$
-        //~ char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
-        //~ qi::parse(s1, e1, '{' >> int_[fun2] >> '}');
-
-        //~ int ii;
-        //~ boost::spirit::detail::action_dispatch(fun2, ii, ii);
+        char const *s1 = "{42}", *e1 = s1 + std::strlen(s1);
+        qi::parse(s1, e1, '{' >> int_[fun2] >> '}');
     }
 
     {

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -28,9 +28,13 @@ using namespace spirit_test;
 int
 main()
 {
-    using namespace boost::spirit;
-    using boost::spirit::ascii::alpha;
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::_1;
+    using boost::spirit::qi::_2;
     using boost::spirit::qi::rule;
+    using boost::spirit::ascii::alpha;
+    using boost::spirit::ascii::char_;
+
     using boost::fusion::vector;
     using boost::fusion::at_c;
     using boost::optional;
@@ -76,7 +80,6 @@ main()
 
     {   // test action
         using namespace boost::phoenix;
-        using namespace boost::spirit::arg_names;
         namespace phx = boost::phoenix;
 
         optional<int> i;

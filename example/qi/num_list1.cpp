@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2002-2007 Joel de Guzman
+    Copyright (c) 2002-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,30 +21,34 @@
 #include <string>
 #include <vector>
 
-using namespace boost::phoenix;
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
-///////////////////////////////////////////////////////////////////////////////
-//  Our number list parser
-///////////////////////////////////////////////////////////////////////////////
-//[tutorial_numlist1
-template <typename Iterator>
-bool parse_numbers(Iterator first, Iterator last)
+namespace client
 {
-    bool r = phrase_parse(
-        first,                          /*< start iterator >*/
-        last,                           /*< end iterator >*/
-        double_ >> *(',' >> double_),   /*< the parser >*/
-        space                           /*< the skip-parser >*/
-    );
-    if (first != last) // fail if we did not get a full match
-        return false;
-    return r;
+    namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  Our number list parser
+    ///////////////////////////////////////////////////////////////////////////
+    //[tutorial_numlist1
+    template <typename Iterator>
+    bool parse_numbers(Iterator first, Iterator last)
+    {
+        using qi::double_;
+        using qi::phrase_parse;
+        using ascii::space;
+
+        bool r = phrase_parse(
+            first,                          /*< start iterator >*/
+            last,                           /*< end iterator >*/
+            double_ >> *(',' >> double_),   /*< the parser >*/
+            space                           /*< the skip-parser >*/
+        );
+        if (first != last) // fail if we did not get a full match
+            return false;
+        return r;
+    }
+    //]
 }
-//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -65,7 +69,7 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        if (parse_numbers(str.begin(), str.end()))
+        if (client::parse_numbers(str.begin(), str.end()))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";

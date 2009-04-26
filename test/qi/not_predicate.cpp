@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,11 +16,12 @@ int
 main()
 {
     using spirit_test::test;
-    using namespace boost::spirit;
+    using boost::spirit::qi::int_;
 
     {
         BOOST_TEST((!test("1234", !int_)));
         BOOST_TEST((test("abcd", !int_, false)));
+        BOOST_TEST((!test("abcd", !!int_, false)));
     }
 
     return boost::report_errors();

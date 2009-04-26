@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,62 +21,69 @@
 #include <iostream>
 #include <string>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
-using boost::phoenix::val;
-using boost::phoenix::construct;
-
-///////////////////////////////////////////////////////////////////////////////
-//  Our calculator grammar
-///////////////////////////////////////////////////////////////////////////////
-template <typename Iterator>
-struct calculator : grammar<Iterator, int(), space_type>
+namespace client
 {
-    calculator() : calculator::base_type(expression)
+    namespace qi = boost::spirit::qi;
+    namespace phoenix = boost::phoenix;
+    namespace ascii = boost::spirit::ascii;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    //  Our calculator grammar
+    ///////////////////////////////////////////////////////////////////////////////
+    template <typename Iterator>
+    struct calculator : qi::grammar<Iterator, int(), ascii::space_type>
     {
-        expression =
-            term                            [_val = _1]
-            >> *(   ('+' > term             [_val += _1])
-                |   ('-' > term             [_val -= _1])
-                )
-            ;
+        calculator() : calculator::base_type(expression)
+        {
+            using namespace qi::labels;
+            using qi::uint_;
+            using qi::on_error;
+            using qi::fail;
 
-        term =
-            factor                          [_val = _1]
-            >> *(   ('*' > factor           [_val *= _1])
-                |   ('/' > factor           [_val /= _1])
-                )
-            ;
+            using phoenix::construct;
+            using phoenix::val;
 
-        factor =
-            uint_                           [_val = _1]
-            |   '(' > expression            [_val = _1] > ')'
-            |   ('-' > factor               [_val = -_1])
-            |   ('+' > factor               [_val = _1])
-            ;
+            expression =
+                term                            [_val = _1]
+                >> *(   ('+' > term             [_val += _1])
+                    |   ('-' > term             [_val -= _1])
+                    )
+                ;
 
-        expression.name("expression");
-        term.name("term");
-        factor.name("factor");
+            term =
+                factor                          [_val = _1]
+                >> *(   ('*' > factor           [_val *= _1])
+                    |   ('/' > factor           [_val /= _1])
+                    )
+                ;
 
-        on_error<fail>
-        (   
-            expression
-          , std::cout
-                << val("Error! Expecting ")
-                << _4                               // what failed?
-                << val(" here: \"")
-                << construct<std::string>(_3, _2)   // iterators to error-pos, end
-                << val("\"")
-                << std::endl
-        );
-    }
+            factor =
+                uint_                           [_val = _1]
+                |   '(' > expression            [_val = _1] > ')'
+                |   ('-' > factor               [_val = -_1])
+                |   ('+' > factor               [_val = _1])
+                ;
 
-    rule<Iterator, int(), space_type> expression, term, factor;
-};
+            expression.name("expression");
+            term.name("term");
+            factor.name("factor");
+
+            on_error<fail>
+            (
+                expression
+              , std::cout
+                    << val("Error! Expecting ")
+                    << _4                               // what failed?
+                    << val(" here: \"")
+                    << construct<std::string>(_3, _2)   // iterators to error-pos, end
+                    << val("\"")
+                    << std::endl
+            );
+        }
+
+        qi::rule<Iterator, int(), ascii::space_type> expression, term, factor;
+    };
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -89,10 +96,10 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
+    using boost::spirit::ascii::space;
     typedef std::string::const_iterator iterator_type;
-    typedef calculator<iterator_type> calculator;
+    typedef client::calculator<iterator_type> calculator;
 
-    calculator def; //  Our grammar definition
     calculator calc; // Our grammar
 
     std::string str;
@@ -104,7 +111,7 @@ main()
 
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        bool r = phrase_parse(iter, end, calc, result, space);
+        bool r = phrase_parse(iter, end, calc, space, result);
 
         if (r && iter == end)
         {

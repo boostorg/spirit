@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Hartmut Kaiser
-    Copyright (c) 2001-2008 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +20,7 @@
 //  * Using boost.bind
 //  * Using boost.lambda
 
-using namespace boost::spirit;
+using boost::spirit::unused_type;
 
 void read(int& i)
 {
@@ -39,8 +39,11 @@ struct read_action
 int main()
 {
     { // example using plain functions
+        using namespace boost::spirit;
+
         std::string generated;
-        bool result = karma::generate(std::back_inserter(generated), 
+        std::back_insert_iterator<std::string> outit(generated);
+        bool result = karma::generate(outit, 
             '{' << int_[&read] << '}');
 
         if (result)
@@ -48,8 +51,11 @@ int main()
     }
 
     { // example using simple function objects
+        using namespace boost::spirit;
+
         std::string generated;
-        bool result = karma::generate(std::back_inserter(generated), 
+        std::back_insert_iterator<std::string> outit(generated);
+        bool result = karma::generate(outit, 
             '{' << int_[read_action()] << '}');
 
         if (result)
@@ -57,9 +63,13 @@ int main()
     }
 
     { // example using boost.bind
+        using boost::spirit::int_;
+        using boost::spirit::karma::generate;
+
         std::string generated;
-        bool result = karma::generate(std::back_inserter(generated), 
-            '{' << int_[boost::bind(&read, _1)] << '}');
+        std::back_insert_iterator<std::string> outit(generated);
+        bool result = generate(outit, 
+            '{' << int_[boost::bind(read, _1)] << '}');
 
         if (result)
             std::cout << "Boost.Bind: " << generated << std::endl;
@@ -67,11 +77,13 @@ int main()
 
     { // example using boost.lambda
         namespace lambda = boost::lambda;
+        using namespace boost::spirit;
 
         std::string generated;
         std::stringstream strm("42");
 
-        bool result = karma::generate(std::back_inserter(generated),
+        std::back_insert_iterator<std::string> outit(generated);
+        bool result = karma::generate(outit,
             '{' << int_[strm >> lambda::_1] << '}');
 
         if (result)
