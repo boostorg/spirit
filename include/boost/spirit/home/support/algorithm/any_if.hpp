@@ -1,10 +1,16 @@
-//  Copyright (c) 2001-2009 Hartmut Kaiser
-//
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+/*=============================================================================
+    Copyright (c) 2001-2009 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
 
-#if !defined(BOOST_SPIRIT_ANY_IF_MAR_30_2007_1220PM)
-#define BOOST_SPIRIT_ANY_IF_MAR_30_2007_1220PM
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================*/
+#if !defined(BOOST_SPIRIT_ANY_IF_MARCH_30_2007_1220PM)
+#define BOOST_SPIRIT_ANY_IF_MARCH_30_2007_1220PM
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 #include <boost/fusion/include/equal_to.hpp>
 #include <boost/fusion/include/next.hpp>
@@ -14,25 +20,21 @@
 #include <boost/fusion/include/end.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/any.hpp>
-#include <boost/fusion/include/make_cons.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/print.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/identity.hpp>
-#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
-    //  This is a special version for a binary fusion::any. The predicate is
-    //  used to decide, whether to advance the second iterator or not.
+    //  This is a special version for a binary fusion::any. The predicate
+    //  is used to decide whether to advance the second iterator or not.
     //  This is needed for sequences containing components with unused
-    //  attributes.
-    //  The second iterator is advanced only if the attribute of the 
-    //  corresponding component iterator is not unused.
+    //  attributes. The second iterator is advanced only if the attribute
+    //  of the corresponding component iterator is not unused.
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
@@ -177,27 +179,9 @@ namespace boost { namespace spirit
     }
 
     template <typename Pred, typename Sequence1, typename Sequence2, typename F>
-    inline typename enable_if<fusion::traits::is_sequence<Sequence2>, bool>::type
+    inline bool
     any_if(Sequence1 const& seq1, Sequence2& seq2, F f, Pred)
     {
-        return detail::any_if<Pred>(
-                fusion::begin(seq1)
-              , fusion::begin(seq2)
-              , fusion::end(seq1)
-              , f
-              , fusion::result_of::equal_to<
-                    typename fusion::result_of::begin<Sequence1>::type
-                  , typename fusion::result_of::end<Sequence1>::type>());
-    }
-
-    template <typename Pred, typename Sequence1, typename Attribute, typename F>
-    inline typename disable_if<fusion::traits::is_sequence<Attribute>, bool>::type
-    any_if(Sequence1 const& seq1, Attribute& attr, F f, Pred /*p*/)
-    {
-        typename
-            fusion::result_of::make_cons<Attribute&>::type
-        seq2(attr); // wrap attribute in a single element tuple
-
         return detail::any_if<Pred>(
                 fusion::begin(seq1)
               , fusion::begin(seq2)

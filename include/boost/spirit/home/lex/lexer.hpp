@@ -10,21 +10,13 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/lex/lexer/terminal_holder.hpp>
-#include <boost/spirit/home/lex/lexer/terminal_director.hpp>
+#include <boost/spirit/home/lex/lexer/terminals.hpp>
 #include <boost/spirit/home/lex/lexer/token_def.hpp>
 #include <boost/spirit/home/lex/lexer/token_set.hpp>
 #include <boost/spirit/home/lex/lexer/char_token_def.hpp>
 #include <boost/spirit/home/lex/lexer/string_token_def.hpp>
 #include <boost/spirit/home/lex/lexer/sequence.hpp>
 #include <boost/spirit/home/lex/lexer/action.hpp>
-#include <boost/spirit/home/lex/lexer/lexer_actions.hpp>
 #include <boost/spirit/home/lex/lexer/lexer.hpp>
-#include <boost/spirit/home/lex/lexer/meta_grammar.hpp>
-
-#include <boost/spirit/home/lex/qi/state/state_switcher.hpp>
-#include <boost/spirit/home/lex/qi/state/in_state.hpp>
-#include <boost/spirit/home/lex/qi/utility/plain_token.hpp>
-#include <boost/spirit/home/lex/qi/meta_grammar.hpp>
 
 #endif

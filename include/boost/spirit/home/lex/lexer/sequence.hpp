@@ -10,23 +10,53 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/lex/lexer/detail/sequence.hpp>
+#include <boost/spirit/home/lex/domain.hpp>
+#include <boost/spirit/home/lex/lexer_type.hpp>
+#include <boost/spirit/home/lex/meta_compiler.hpp>
+#include <boost/spirit/home/lex/detail/sequence_function.hpp>
 #include <boost/fusion/include/any.hpp>
+
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_operator<lex::domain, proto::tag::bitwise_or>  // enables |
+      : mpl::true_ {};
+
+    template <>
+    struct flatten_tree<lex::domain, proto::tag::bitwise_or>  // flattens |
+      : mpl::true_ {};
+
+}}
 
 namespace boost { namespace spirit { namespace lex
 {
-    struct sequence
+    template <typename Elements>
+    struct sequence : nary_lexer<sequence<Elements> >
     {
-        template <typename Component, typename LexerDef, typename String>
-        static void 
-        collect(Component const& component, LexerDef& lexdef, 
-            String const& state)
+        sequence(Elements const& elements)
+          : elements(elements) {}
+
+        template <typename LexerDef, typename String>
+        void collect(LexerDef& lexdef, String const& state)
         {
-            detail::sequence_collect<LexerDef, String> f (lexdef, state);
-            fusion::any(component.elements, f);
+            detail::sequence_function<LexerDef, String> f (lexdef, state);
+            fusion::any(elements, f);
         }
+
+        Elements elements;
     };
-    
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Lexer generator: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Modifiers>
+    struct make_composite<proto::tag::bitwise_or, Elements, Modifiers>
+      : make_nary_composite<Elements, sequence>
+    {};
+
 }}} // namespace boost::spirit::lex
 
 #endif

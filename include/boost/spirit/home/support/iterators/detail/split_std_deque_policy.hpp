@@ -1,5 +1,5 @@
-//  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001 Daniel C. Nuffer
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -26,7 +26,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
     struct split_std_deque
     {
         enum { threshold = 16 };
-        
+
         ///////////////////////////////////////////////////////////////////////
         template <typename Value>
         class unique //: public detail::default_storage_policy
@@ -35,13 +35,10 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             typedef std::vector<Value> queue_type;
 
         protected:
-            unique()
-              : queued_position(0)
-            {}
+            unique() : queued_position(0) {}
 
             unique(unique const& x)
-              : queued_position(x.queued_position)
-            {}
+              : queued_position(x.queued_position) {}
 
             void swap(unique& x)
             {
@@ -80,6 +77,14 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             {
                 queue_type& queue = mp.shared->queued_elements;
                 typename queue_type::size_type size = queue.size();
+
+                // The following assertion fires if the iterator gets 
+                // incremented before being dereferenced for the first time.
+                // This may happen if you use the postincrement operator
+                // at the same time as you dereference it: *it++, which is 
+                // invalid for this input iterator because the data storage
+                // is shared between its copies and incrementing affects all
+                // copies at the same time.
                 BOOST_ASSERT(0 != size && mp.queued_position <= size);
                 if (mp.queued_position == size)
                 {
@@ -93,7 +98,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
                         // erase all but first item in queue
                         queue.erase(queue.begin()+1, queue.end());
                         mp.queued_position = 0;
-                        
+
                         // reuse first entry in the queue and initialize 
                         // it from the input
                         MultiPass::advance_input(mp, queue[mp.queued_position++]);
@@ -145,8 +150,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             }
             
             template <typename MultiPass>
-            static void destroy(MultiPass&) 
-            {}
+            static void destroy(MultiPass&) {}
 
         protected:
             mutable typename queue_type::size_type queued_position;
@@ -157,7 +161,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
         struct shared
         {
             shared() { queued_elements.reserve(threshold); }
-            
+
             typedef std::vector<Value> queue_type;
             queue_type queued_elements;
         }; 

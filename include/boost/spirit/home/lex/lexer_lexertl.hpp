@@ -12,7 +12,7 @@
 
 //  These includes make available everything needed to use lexertl either 
 //  standalone or as a lexer component for spirit::qi
-#include <boost/spirit/home/lex/lexer/lexertl/lexertl_lexer.hpp>
 #include <boost/spirit/home/lex.hpp>
+#include <boost/spirit/home/lex/lexer/lexertl/lexer.hpp>
 
 #endif

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
       , typename Skipper, typename Exception>
     struct expect_function
     {
+        typedef Iterator iterator_type;
+        typedef Context context_type;
+
         expect_function(
             Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper)
@@ -28,20 +31,19 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component, typename Attribute>
-        bool operator()(Component const& component, Attribute& attr)
+        bool operator()(Component const& component, Attribute& attr) const
         {
             // if we are testing the first component in the sequence,
             // return true if the parser fails, if this not the first
             // component, throw exception if the parser fails
-            typedef typename Component::director director;
-            if (!director::parse(component, first, last, context, skipper, attr))
+            if (!component.parse(first, last, context, skipper, attr))
             {
                 if (is_first)
                 {
                     is_first = false;
                     return true;
                 }
-                Exception x = {first, last, director::what(component, context) };
+                Exception x = { first, last, component.what(context) };
                 throw x;
             }
             is_first = false;
@@ -49,20 +51,19 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool operator()(Component const& component)
+        bool operator()(Component const& component) const
         {
             // if we are testing the first component in the sequence,
             // return true if the parser fails, if this not the first
             // component, throw exception if the parser fails
-            typedef typename Component::director director;
-            if (!director::parse(component, first, last, context, skipper, unused))
+            if (!component.parse(first, last, context, skipper, unused))
             {
                 if (is_first)
                 {
                     is_first = false;
                     return true;
                 }
-                Exception x = {first, last, director::what(component, context) };
+                Exception x = { first, last, component.what(context) };
                 throw x;
             }
             is_first = false;
@@ -73,7 +74,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Iterator const& last;
         Context& context;
         Skipper const& skipper;
-        bool is_first;
+        mutable bool is_first;
     };
 }}}}
 

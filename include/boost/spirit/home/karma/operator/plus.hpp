@@ -11,84 +11,92 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/support/component.hpp>
-#include <boost/spirit/home/support/detail/container.hpp>
+#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attribute_transform.hpp>
-#include <boost/mpl/assert.hpp>
-#include <vector>
+#include <boost/spirit/home/support/container.hpp>
 
+#include <boost/type_traits/add_const.hpp>
+
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_operator<karma::domain, proto::tag::unary_plus> // enables +g
+      : mpl::true_ {};
+
+}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    struct plus
+    template <typename Subject>
+    struct plus : unary_generator<plus<Subject> >
     {
-        template <typename T>
-        struct build_attribute_container
+        typedef Subject subject_type;
+
+        template <typename Context, typename Unused>
+        struct attribute
         {
-            typedef std::vector<T> type;
+            // Build a std::vector from the subject's attribute. Note
+            // that build_std_vector may return unused_type if the
+            // subject's attribute is an unused_type.
+            typedef typename
+                traits::build_std_vector<
+                    typename traits::attribute_of<Subject, Context>::type
+                >::type
+            type;
         };
 
-        template <typename Component, typename Context, typename Iterator>
-        struct attribute :
-            build_container<plus, Component, Iterator, Context>
-        {
-        };
+        plus(Subject const& subject)
+          : subject(subject) {}
 
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Parameter const& param)
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr) const
         {
-            typedef typename
-                spirit::result_of::subject<Component>::type::director
-            director;
-            typedef typename
-                container::result_of::iterator<Parameter const>::type
-            iterator_type;
+            typedef typename traits::result_of::iterator<
+                typename add_const<Attribute>::type
+            >::type iterator_type;
 
-            iterator_type it = container::begin(param);
-            iterator_type end = container::end(param);
+            iterator_type it = traits::begin(attr);
+            iterator_type end = traits::end(attr);
 
             // plus fails if the parameter is empty
-            if (it == end)
+            if (traits::compare(it, end))
                 return false;
 
             bool result = true;
-            for (/**/; result && !container::compare(it, end);
-                 container::next(it))
+            for (/**/; result && !traits::compare(it, end); traits::next(it))
             {
-                result = director::generate(spirit::subject(component), sink,
-                    ctx, d, container::deref(it));
+                result = subject.generate(sink, ctx, d, traits::deref(it));
             }
             return result;
         }
 
-        // this kleene has no parameter attached
-//         template <typename Component, typename OutputIterator,
-//             typename Context, typename Delimiter>
-//         static bool
-//         generate(Component const&, OutputIterator&, Context&, Delimiter const&,
-//             unused_type)
-//         {
-//             BOOST_MPL_ASSERT_MSG(false, plus_not_usable_without_attribute, ());
-//             return false;
-//         }
-
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        info what(Context& context) const
         {
-            std::string result = "plus[";
-
-            typedef typename
-                spirit::result_of::subject<Component>::type::director
-            director;
-
-            result += director::what(spirit::subject(component), ctx);
-            result += "]";
-            return result;
+            return info("plus", subject.what(context));
         }
+
+        Subject subject;
     };
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Generator generators: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Modifiers>
+    struct make_composite<proto::tag::unary_plus, Elements, Modifiers>
+      : make_unary_composite<Elements, plus>
+    {};
 
 }}}
 

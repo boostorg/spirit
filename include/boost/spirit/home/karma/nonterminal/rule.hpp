@@ -1,132 +1,196 @@
-//  Copyright (c) 2001-2007 Joel de Guzman
+//  Copyright (c) 2001-2009 Joel de Guzman
 //  Copyright (c) 2001-2009 Hartmut Kaiser
-//
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
+// 
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_KARMA_RULE_MAR_05_2007_0455PM)
 #define BOOST_SPIRIT_KARMA_RULE_MAR_05_2007_0455PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
+
+#include <boost/function.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/function_types/result_type.hpp>
+#include <boost/function_types/parameter_types.hpp>
+#include <boost/function_types/is_function.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+#include <boost/utility/enable_if.hpp>
+
+#include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/make_vector.hpp>
+#include <boost/fusion/include/cons.hpp>
+#include <boost/fusion/include/as_list.hpp>
+#include <boost/fusion/include/as_vector.hpp>
 
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/karma/nonterminal/nonterminal.hpp>
-#include <boost/spirit/home/karma/nonterminal/grammar_fwd.hpp>
-#include <boost/spirit/home/karma/nonterminal/detail/rule.hpp>
-#include <boost/spirit/home/karma/domain.hpp>
-#include <boost/spirit/home/karma/detail/output_iterator.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/mpl/assert.hpp>
-
-#if defined(BOOST_MSVC)
-# pragma warning(push)
-# pragma warning(disable: 4355) // 'this' : used in base member initializer list warning
-#endif
+#include <boost/spirit/home/support/argument.hpp>
+#include <boost/spirit/home/support/context.hpp>
+#include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/support/nonterminal/locals.hpp>
+#include <boost/spirit/home/karma/reference.hpp>
+#include <boost/spirit/home/karma/nonterminal/detail/generator_binder.hpp>
 
 namespace boost { namespace spirit { namespace karma
 {
-    template <typename OutputIterator, typename T0 = unused_type,
-        typename T1 = unused_type, typename T2 = unused_type>
-    struct rule
-      : make_nonterminal<rule<OutputIterator, T0, T1, T2>, T0, T1, T2>::type
+    BOOST_PP_REPEAT(SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_USING_ATTRIBUTE, _)
+
+    using spirit::_val;
+    using spirit::_a;
+    using spirit::_b;
+    using spirit::_c;
+    using spirit::_d;
+    using spirit::_e;
+    using spirit::_f;
+    using spirit::_g;
+    using spirit::_h;
+    using spirit::_i;
+    using spirit::_j;
+
+    using spirit::info;
+    using spirit::locals;
+
+    template <typename Rule, typename Params>
+    struct parameterized_rule : generator<parameterized_rule<Rule, Params> >
     {
-        typedef
-            make_nonterminal<rule<OutputIterator, T0, T1, T2>, T0, T1, T2>
-        make_nonterminal_;
+        parameterized_rule(Rule const& rule, Params const& params)
+          : ref(rule), params(params) {}
 
-        typedef typename make_nonterminal_::delimiter_type delimiter_type;
-        typedef typename make_nonterminal_::type base_type;
-        typedef detail::output_iterator<OutputIterator> iterator_type;
-        typedef rule<OutputIterator, T0, T1, T2> self_type;
+        template <typename Context, typename Unused>
+        struct attribute : Rule::template attribute<Context, Unused> {};
 
-        typedef
-            detail::virtual_component_base<
-                iterator_type,
-                typename base_type::context_type,
-                delimiter_type
-            >
-        virtual_component;
+        template <typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context& context
+          , Delimiter const& delim, Attribute const& attr) const
+        {
+            // We pass the additional params argument to parse
+            return ref.get().generate(sink, context, delim, attr, params);
+        }
 
-        typedef intrusive_ptr<virtual_component> pointer_type;
+        template <typename Context>
+        info what(Context& context) const
+        {
+            return ref.get().what(context);
+        }
 
-        rule() {}
-        ~rule() {}
+        boost::reference_wrapper<Rule const> ref;
+        Params params;
+    };
+
+    template <
+        typename OutputIterator
+      , typename T1 = unused_type
+      , typename T2 = unused_type
+      , typename T3 = unused_type
+    >
+    struct rule
+      : proto::extends<
+            typename proto::terminal<
+                reference<rule<OutputIterator, T1, T2, T3> const>
+            >::type
+          , rule<OutputIterator, T1, T2, T3>
+        >
+      , generator<rule<OutputIterator, T1, T2, T3> >
+    {
+        typedef rule<OutputIterator, T1, T2, T3> this_type;
+        typedef reference<this_type const> reference_;
+        typedef typename proto::terminal<reference_>::type terminal;
+        typedef proto::extends<terminal, this_type> base_type;
+        typedef mpl::vector<T1, T2, T3> template_params;
+
+        // the output iterator is always wrapped by karma
+        typedef detail::output_iterator<OutputIterator> output_iterator;
+
+        // locals_type is a sequence of types to be used as local variables
+        typedef typename fusion::result_of::as_vector<
+            typename detail::extract_param<
+                    template_params
+                  , spirit::detail::is_locals<mpl::_>
+                  , locals<>
+                >::type
+            >::type
+        locals_type;
+
+        // The delimiter-generator type
+        typedef typename
+            result_of::compile<
+                karma::domain
+              , typename detail::extract_param<
+                    template_params
+                  , traits::matches<karma::domain, mpl::_>
+                  , unused_type
+                >::type
+            >::type
+        delimiter_type;
+
+        typedef typename
+            detail::extract_param<
+                template_params
+              , function_types::is_function<mpl::_>
+              , void()
+            >::type
+        sig_type;
+
+        typedef typename function_types::result_type<sig_type>::type attr_type_;
+
+        // This is the rule's attribute type
+        typedef typename
+            mpl::if_<
+                is_same<attr_type_, void>
+              , unused_type
+              , attr_type_
+            >::type
+        attr_type;
+        typedef typename add_reference<
+            typename add_const<attr_type>::type>::type 
+        attr_reference_type;
+
+        // parameter_types is a sequence of types passed as parameters to the rule
+        typedef typename
+            function_types::parameter_types<sig_type>::type
+        params_;
+
+        typedef typename
+            fusion::result_of::as_list<params_>::type
+        parameter_types;
+
+        static size_t const params_size = mpl::size<params_>::value;
+
+        // the context passed to the right hand side of a rule contains
+        // the attribute and the parameters for this particular rule invocation
+        typedef context<
+            fusion::cons<attr_reference_type, parameter_types>, locals_type>
+        context_type;
+
+        typedef function<
+            bool(output_iterator&, context_type&, delimiter_type const&)>
+        function_type;
+
+        rule(std::string const& name_ = "unnamed-rule")
+          : base_type(terminal::make(alias()))
+          , name_(name_)
+        {
+        }
 
         rule(rule const& rhs)
-          : ptr(rhs.ptr)
+          : base_type(terminal::make(alias()))
+          , name_(rhs.name_)
+          , f(rhs.f)
         {
         }
 
         rule& operator=(rule const& rhs)
         {
-            ptr = rhs.ptr;
+            f = rhs.f;
+            name_ = rhs.name_;
             return *this;
         }
 
-        template <typename Expr>
-        rule& operator=(Expr const& xpr)
-        {
-            typedef
-                spirit::traits::is_component<karma::domain, Expr>
-            is_component;
-
-            // report invalid expression error as early as possible
-//             BOOST_MPL_ASSERT_MSG(
-//                 is_component::value,
-//                 xpr_is_not_convertible_to_a_generator, ());
-
-            // temp workaround for mpl problem
-            BOOST_STATIC_ASSERT(is_component::value);
-
-            define(xpr, mpl::false_());
-            return *this;
-        }
-
-        template <typename Expr>
-        friend rule& operator%=(rule& r, Expr const& xpr)
-        {
-            typedef
-                spirit::traits::is_component<karma::domain, Expr>
-            is_component;
-
-            // report invalid expression error as early as possible
-//             BOOST_MPL_ASSERT_MSG(
-//                 is_component::value,
-//                 xpr_is_not_convertible_to_a_generator, ());
-
-            // temp workaround for mpl problem
-            BOOST_STATIC_ASSERT(is_component::value);
-
-            r.define(xpr, mpl::true_());
-            return r;
-        }
-
-        self_type alias() const
-        {
-            self_type result;
-            result.define(*this, mpl::false_());
-            return result;
-        }
-
-        typename
-            make_nonterminal_holder<
-                nonterminal_object<self_type>
-              , self_type
-            >::type
-        copy() const
-        {
-            typename
-                make_nonterminal_holder<
-                    nonterminal_object<self_type>
-                  , self_type
-                >::type
-            result = {{*this}};
-            return result;
-        }
-
-        std::string name() const
+        std::string const& name() const
         {
             return name_;
         }
@@ -136,69 +200,120 @@ namespace boost { namespace spirit { namespace karma
             name_ = str;
         }
 
-    private:
-
-        template <typename Iterator_, typename T0_, typename T1_, typename T2_>
-        friend struct grammar;
-
-        template <typename Expr, typename Auto>
-        void define(Expr const& xpr, Auto)
+        template <typename Expr>
+        rule& operator=(Expr const& expr)
         {
-            typedef typename
-                result_of::as_component<karma::domain, Expr>::type
-            component;
-            typedef
-                detail::virtual_component<
-                    iterator_type,
-                    component,
-                    typename base_type::context_type,
-                    delimiter_type,
-                    Auto
-                >
-            virtual_component;
-            ptr = new virtual_component(spirit::as_component(karma::domain(), xpr));
+            // Report invalid expression error as early as possible.
+            // If you got an error_invalid_expression error message here,
+            // then the expression (expr) is not a valid spirit karma expression.
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+
+            f = detail::bind_generator<mpl::false_>(compile<karma::domain>(expr));
+            return *this;
         }
 
-        template <typename OutputIterator_, typename Context, typename Delimiter>
-        bool generate(
-            OutputIterator_& sink, Context& context, Delimiter const& delim) const
+        // g++ 3.3 barfs if this is a member function :(
+        template <typename Expr>
+        friend rule& operator%=(rule& r, Expr const& expr)
         {
-            // If the following line produces a compilation error stating the
-            // 3rd parameter is not convertible to the expected type, then you
-            // are probably trying to use this rule instance with a delimiter 
-            // which is not compatible with the delimiter type used while 
-            // defining the type of this rule instance.
-            return ptr->generate(sink, context, delim);
+            // Report invalid expression error as early as possible.
+            // If you got an error_invalid_expression error message here,
+            // then the expression (expr) is not a valid spirit karma expression.
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+
+            r.f = detail::bind_generator<mpl::true_>(compile<karma::domain>(expr));
+            return r;
         }
 
-        std::string what() const
+        // non-const version needed to suppress proto's %= kicking in
+        template <typename Expr>
+        friend rule& operator%=(rule& r, Expr& expr)
         {
-            if (name_.empty())
+            return r %= static_cast<Expr const&>(expr);
+        }
+
+        template <typename Context, typename Unused>
+        struct attribute
+        {
+            typedef attr_type type;
+        };
+
+        template <typename Context, typename Delimiter, typename Attribute>
+        bool generate(output_iterator& sink, Context&, Delimiter const& delim
+          , Attribute const& attr) const
+        {
+            if (f)
             {
-                if (ptr)
+                // Create an attribute if none is supplied. 
+                typedef traits::make_attribute<attr_type, Attribute> 
+                    make_attribute;
+
+                context_type context(make_attribute::call(attr));
+
+                // If you are seeing a compilation error here stating that the 
+                // third parameter can't be converted to a karma::reference
+                // then you are probably trying to use a rule or a grammar with 
+                // an incompatible delimiter type.
+                if (f(sink, context, delim))
                 {
-                    return "unnamed-rule";
-                }
-                else
-                {
-                    return "empty-rule";
+                    return true;
                 }
             }
-            else
-            {
-                return name_;
-            }
+            return false;
         }
 
-        friend struct nonterminal_director;
-        pointer_type ptr;
+        template <typename Context, typename Delimiter, typename Attribute
+          , typename Params>
+        bool generate(output_iterator& sink, Context& caller_context
+          , Delimiter const& delim, Attribute const& attr
+          , Params const& params) const
+        {
+            if (f)
+            {
+                // Create an attribute if none is supplied. 
+                typedef traits::make_attribute<attr_type, Attribute> 
+                    make_attribute;
+
+                context_type context(make_attribute::call(attr), params, caller_context);
+
+                // If you are seeing a compilation error here stating that the 
+                // third parameter can't be converted to a karma::reference
+                // then you are probably trying to use a rule or a grammar with 
+                // an incompatible delimiter type.
+                if (f(sink, context, delim))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        template <typename Context>
+        info what(Context& context) const
+        {
+            return info(name_);
+        }
+
+        reference_ alias() const
+        {
+            return reference_(*this);
+        }
+
+        typename proto::terminal<this_type>::type copy() const
+        {
+            typename proto::terminal<this_type>::type result = {*this};
+            return result;
+        }
+
+        // bring in the operator() overloads
+        rule const& get_rule() const { return *this; }
+        typedef this_type rule_type;
+        #include <boost/spirit/home/karma/nonterminal/detail/fcall.hpp>
+
         std::string name_;
+        function_type f;
     };
 
 }}}
-
-#if defined(BOOST_MSVC)
-# pragma warning(pop)
-#endif
 
 #endif

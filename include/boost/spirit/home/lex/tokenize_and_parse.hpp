@@ -1,14 +1,12 @@
-/*=============================================================================
-    Copyright (c) 2001-2009 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
+// 
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-=============================================================================*/
 #if !defined(BOOST_SPIRIT_LEXER_PARSE_NOV_17_2007_0246PM)
 #define BOOST_SPIRIT_LEXER_PARSE_NOV_17_2007_0246PM
 
-#include <boost/spirit/home/qi/meta_grammar.hpp>
-#include <boost/spirit/home/qi/skip.hpp>
+#include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/nonterminal/grammar.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/lex/lexer.hpp>
@@ -57,54 +55,34 @@ namespace boost { namespace spirit { namespace lex
     //                  to the matched input sequence.
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename LexerExpr, typename ParserExpr>
+    template <typename Iterator, typename Lexer, typename ParserExpr>
     inline bool
-    tokenize_and_parse(Iterator& first, Iterator last, LexerExpr const& lex,
+    tokenize_and_parse(Iterator& first, Iterator last, Lexer const& lex,
         ParserExpr const& xpr)
     {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        typedef spirit::traits::is_component<qi::domain, ParserExpr> 
-            is_component;
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
 
-        // report invalid expression error as early as possible
-        BOOST_MPL_ASSERT_MSG(
-            is_component::value,
-            xpr_is_not_convertible_to_a_parser, (iterator_type, ParserExpr));
-
-        typedef typename 
-            result_of::as_component<qi::domain, ParserExpr>::type 
-        component;
-        typedef typename component::director director;
-        component c = spirit::as_component(qi::domain(), xpr);
-
-        iterator_type iter = lex.begin(first, last);
-        return director::parse(c, iter, lex.end(), unused, unused, unused);
+        typename Lexer::iterator_type iter = lex.begin(first, last);
+        return compile<qi::domain>(xpr).parse(iter, lex.end(), unused, unused, unused);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename LexerExpr, typename ParserExpr,
-        typename Attribute>
+    template <typename Iterator, typename Lexer, typename ParserExpr
+      , typename Attribute>
     inline bool
-    tokenize_and_parse(Iterator& first, Iterator last, LexerExpr const& lex,
-        ParserExpr const& xpr, Attribute& attr)
+    tokenize_and_parse(Iterator& first, Iterator last, Lexer const& lex
+      , ParserExpr const& xpr, Attribute& attr)
     {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        typedef spirit::traits::is_component<qi::domain, ParserExpr> 
-            is_component;
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
 
-        // report invalid expression error as early as possible
-        BOOST_MPL_ASSERT_MSG(
-            is_component::value,
-            xpr_is_not_convertible_to_a_parser, (iterator_type, ParserExpr));
-
-        typedef typename 
-            result_of::as_component<qi::domain, ParserExpr>::type 
-        component;
-        typedef typename component::director director;
-        component c = spirit::as_component(qi::domain(), xpr);
-
-        iterator_type iter = lex.begin(first, last);
-        return director::parse(c, iter, lex.end(), unused, unused, attr);
+        typename Lexer::iterator_type iter = lex.begin(first, last);
+        return compile<qi::domain>(xpr).parse(iter, lex.end(), unused, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -154,91 +132,59 @@ namespace boost { namespace spirit { namespace lex
     //                  'xpr'.
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename Iterator, typename LexerExpr, typename ParserExpr, 
-        typename Skipper
-    >
+    template <typename Iterator, typename Lexer, typename ParserExpr
+      , typename Skipper>
     inline bool
-    tokenize_and_phrase_parse(Iterator& first, Iterator last, 
-        LexerExpr const& lex, ParserExpr const& xpr, Skipper const& skipper_)
+    tokenize_and_phrase_parse(Iterator& first, Iterator last
+      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper)
     {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        typedef spirit::traits::is_component<qi::domain, ParserExpr> 
-            expr_is_component;
-        typedef spirit::traits::is_component<qi::domain, Skipper> 
-            skipper_is_component;
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
 
-        // report invalid expressions error as early as possible
-        BOOST_MPL_ASSERT_MSG(
-            expr_is_component::value,
-            xpr_is_not_convertible_to_a_parser, 
-            (iterator_type, ParserExpr, Skipper));
+        typedef
+            typename result_of::compile<qi::domain, Skipper>::type
+        skipper_type;
+        skipper_type const skipper_ = compile<qi::domain>(skipper);
 
-        BOOST_MPL_ASSERT_MSG(
-            skipper_is_component::value,
-            skipper_is_not_convertible_to_a_parser, 
-            (iterator_type, ParserExpr, Skipper));
-
-        typedef typename 
-            result_of::as_component<qi::domain, ParserExpr>::type 
-        component;
-        typedef typename component::director director;
-        component c = spirit::as_component(qi::domain(), xpr);
-
-        typename result_of::as_component<qi::domain, Skipper>::type
-            skipper = spirit::as_component(qi::domain(), skipper_);
-
-        iterator_type iter = lex.begin(first, last);
-        if (!director::parse(c, iter, lex.end(), unused, skipper, unused))
+        typename Lexer::iterator_type iter = lex.begin(first, last);
+        if (!compile<qi::domain>(xpr).parse(
+                iter, lex.end(), unused, skipper_, unused))
             return false;
 
         // do a final post-skip
-        skip(iter, lex.end(), skipper);
+        qi::skip_over(iter, lex.end(), skipper_);
         return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename Iterator, typename LexerExpr, typename ParserExpr, 
-        typename Attribute, typename Skipper
-    >
+    template <typename Iterator, typename Lexer, typename ParserExpr
+      , typename Skipper, typename Attribute>
     inline bool
-    tokenize_and_phrase_parse(Iterator& first, Iterator last, 
-        LexerExpr const& lex, ParserExpr const& xpr, Attribute& attr,
-        Skipper const& skipper_)
+    tokenize_and_phrase_parse(Iterator& first, Iterator last
+      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper_
+      , Attribute& attr)
     {
-        typedef typename LexerExpr::iterator_type iterator_type;
-        typedef spirit::traits::is_component<qi::domain, ParserExpr> 
-            expr_is_component;
-        typedef spirit::traits::is_component<qi::domain, Skipper> 
-            skipper_is_component;
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit qi expression.
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
 
-        // report invalid expressions error as early as possible
-        BOOST_MPL_ASSERT_MSG(
-            expr_is_component::value,
-            xpr_is_not_convertible_to_a_parser, 
-            (iterator_type, ParserExpr, Skipper));
+        typedef
+            typename result_of::compile<qi::domain, Skipper>::type
+        skipper_type;
+        skipper_type const skipper_ = compile<qi::domain>(skipper);
 
-        BOOST_MPL_ASSERT_MSG(
-            skipper_is_component::value,
-            skipper_is_not_convertible_to_a_parser, 
-            (iterator_type, ParserExpr, Skipper));
-
-        typedef typename 
-            result_of::as_component<qi::domain, ParserExpr>::type 
-        component;
-        typedef typename component::director director;
-        component c = spirit::as_component(qi::domain(), xpr);
-
-        typename result_of::as_component<qi::domain, Skipper>::type
-            skipper = spirit::as_component(qi::domain(), skipper_);
-
-        iterator_type iter = lex.begin(first, last);
-        if (!director::parse(c, iter, lex.end(), unused, skipper, attr))
+        typename Lexer::iterator_type iter = lex.begin(first, last);
+        if (!compile<qi::domain>(xpr).parse(
+                iter, lex.end(), unused, skipper_, attr))
             return false;
 
         // do a final post-skip
-        skip(iter, lex.end(), skipper);
+        qi::skip_over(iter, lex.end(), skipper_);
         return true;
     }
 
@@ -247,7 +193,7 @@ namespace boost { namespace spirit { namespace lex
     //  The tokenize() function is one of the main Spirit API functions. It 
     //  simplifies using a lexer to tokenize a given input sequence. It's main
     //  purpose is to use the lexer to tokenize all the input. 
-    
+
     //  The second version below discards all generated tokens afterwards. 
     //  This is useful whenever all the needed functionality has been 
     //  implemented directly inside the lexer semantic actions, which are being 
@@ -278,11 +224,11 @@ namespace boost { namespace spirit { namespace lex
     //                  the tokenization should be canceled.
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename LexerExpr, typename F>
+    template <typename Iterator, typename Lexer, typename F>
     inline bool
-    tokenize(Iterator& first, Iterator last, LexerExpr const& lex, F f)
+    tokenize(Iterator& first, Iterator last, Lexer const& lex, F f)
     {
-        typedef typename LexerExpr::iterator_type iterator_type;
+        typedef typename Lexer::iterator_type iterator_type;
 
         iterator_type end = lex.end();
         for (iterator_type iter = lex.begin(first, last); iter != end; ++iter) 
@@ -294,18 +240,18 @@ namespace boost { namespace spirit { namespace lex
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator, typename LexerExpr>
+    template <typename Iterator, typename Lexer>
     inline bool
-    tokenize(Iterator& first, Iterator last, LexerExpr const& lex)
+    tokenize(Iterator& first, Iterator last, Lexer const& lex)
     {
-        typedef typename LexerExpr::iterator_type iterator_type;
+        typedef typename Lexer::iterator_type iterator_type;
 
         iterator_type iter = lex.begin(first, last);
         iterator_type end = lex.end();
 
         while (iter != end && token_is_valid(*iter))
             ++iter;
-            
+
         return (iter == end) ? true : false;
     }
 

@@ -11,11 +11,12 @@
 #endif
 
 #include <boost/spirit/home/karma/operator/sequence.hpp>
+#include <boost/spirit/home/karma/operator/and_predicate.hpp>
+#include <boost/spirit/home/karma/operator/not_predicate.hpp>
 #include <boost/spirit/home/karma/operator/alternative.hpp>
 #include <boost/spirit/home/karma/operator/kleene.hpp>
 #include <boost/spirit/home/karma/operator/plus.hpp>
 #include <boost/spirit/home/karma/operator/optional.hpp>
 #include <boost/spirit/home/karma/operator/list.hpp>
-#include <boost/spirit/home/karma/operator/meta_grammar.hpp>
 
 #endif

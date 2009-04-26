@@ -13,16 +13,16 @@
 #include <boost/spirit/home/support/detail/lexer/char_traits.hpp>
 #include <vector>
 
-namespace boost { namespace spirit { namespace lex 
+namespace boost { namespace spirit { namespace lex { namespace lexertl
 { 
+    ///////////////////////////////////////////////////////////////////////////
     template<typename Iterator>
     class basic_iterator_tokeniser
     {
     public:
         typedef std::vector<std::size_t> size_t_vector;
-        typedef 
-            typename boost::detail::iterator_traits<Iterator>::value_type 
-        char_type;
+        typedef typename boost::detail::iterator_traits<Iterator>::value_type 
+            char_type;
 
 //         static std::size_t next (const std::size_t * const lookup_,
 //             std::size_t const dfa_alphabet_, const std::size_t *  const dfa_,
@@ -97,9 +97,9 @@ namespace boost { namespace spirit { namespace lex
 //         }
 
         static std::size_t next (
-            boost::lexer::basic_state_machine<char_type> const& state_machine_,
-            std::size_t &dfa_state_, Iterator const& start_,
-            Iterator &start_token_, Iterator const& end_)
+            boost::lexer::basic_state_machine<char_type> const& state_machine_
+          , std::size_t &dfa_state_, Iterator const& start_
+          , Iterator &start_token_, Iterator const& end_)
         {
             if (start_token_ == end_) return 0;
 
@@ -136,7 +136,7 @@ namespace boost { namespace spirit { namespace lex
                     typedef typename 
                         boost::lexer::char_traits<value_type>::index_type 
                     index_type;
-                    
+
                     index_type index = 
                         boost::lexer::char_traits<value_type>::call(*curr_++);
                     std::size_t const state_ = ptr_[
@@ -184,15 +184,14 @@ namespace boost { namespace spirit { namespace lex
             else {
                 id_ = boost::lexer::npos;
             }
-            
+
             return id_;
         }
 
         ///////////////////////////////////////////////////////////////////////
-        static 
-        std::size_t next (
-            boost::lexer::basic_state_machine<char_type> const& state_machine_,
-            Iterator const& start_, Iterator &start_token_, Iterator const& end_)
+        static std::size_t next (
+            boost::lexer::basic_state_machine<char_type> const& state_machine_
+          , Iterator const& start_, Iterator &start_token_, Iterator const& end_)
         {
             if (start_token_ == end_) return 0;
 
@@ -270,7 +269,7 @@ namespace boost { namespace spirit { namespace lex
             else {
                 id_ = boost::lexer::npos;
             }
-            
+
             return id_;
         }
     };
@@ -279,6 +278,6 @@ namespace boost { namespace spirit { namespace lex
     typedef basic_iterator_tokeniser<char const *> tokeniser;
     typedef basic_iterator_tokeniser<wchar_t const *> wtokeniser;
 
-}}}
+}}}}
 
 #endif

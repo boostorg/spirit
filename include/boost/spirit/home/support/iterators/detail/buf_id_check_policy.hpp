@@ -1,5 +1,5 @@
 //  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -46,13 +46,8 @@ namespace boost { namespace spirit { namespace multi_pass_policies
         ///////////////////////////////////////////////////////////////////////
         struct unique //: detail::default_checking_policy
         {
-            unique()
-              : buf_id(0)
-            {}
-
-            unique(unique const& x)
-              : buf_id(x.buf_id)
-            {}
+            unique() : buf_id(0) {}
+            unique(unique const& x) : buf_id(x.buf_id) {}
 
             void swap(unique& x)
             {
@@ -76,13 +71,12 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             }
 
             template <typename MultiPass>
-            static void destroy(MultiPass&) 
-            {}
+            static void destroy(MultiPass&) {}
 
         protected:
             unsigned long buf_id;
         };
-        
+
         ///////////////////////////////////////////////////////////////////////
         struct shared
         {

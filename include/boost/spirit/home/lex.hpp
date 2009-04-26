@@ -11,8 +11,7 @@
 #endif
 
 #include <boost/spirit/home/lex/lexer.hpp>
-#include <boost/spirit/home/lex/domain.hpp>
-#include <boost/spirit/home/lex/meta_grammar.hpp>
+#include <boost/spirit/home/lex/qi.hpp>
 #include <boost/spirit/home/lex/tokenize_and_parse.hpp>
 
 #endif

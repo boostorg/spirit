@@ -12,6 +12,5 @@
 
 #include <boost/spirit/home/karma/char/char.hpp>
 #include <boost/spirit/home/karma/char/space.hpp>
-#include <boost/spirit/home/karma/char/meta_grammar.hpp>
 
 #endif

@@ -12,6 +12,5 @@
 
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
 #include <boost/spirit/home/karma/nonterminal/grammar.hpp>
-#include <boost/spirit/home/karma/nonterminal/meta_grammar.hpp>
 
 #endif

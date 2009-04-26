@@ -4,16 +4,29 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(SPIRIT_ALTERNATIVE_FUNCTION_APR_23_2007_1046AM)
-#define SPIRIT_ALTERNATIVE_FUNCTION_APR_23_2007_1046AM
+#if !defined(SPIRIT_ALTERNATIVE_FUNCTION_APRIL_23_2007_1046AM)
+#define SPIRIT_ALTERNATIVE_FUNCTION_APRIL_23_2007_1046AM
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attribute_of.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/variant.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
+    template <typename T>
+    struct not_is_variant
+      : mpl::true_ {};
+
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+      : mpl::false_ {};
+
     template <typename Iterator, typename Context, typename Skipper,
         typename Attribute>
     struct alternative_function
@@ -27,21 +40,31 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool operator()(Component const& component)
+        bool call(Component const& component, mpl::true_) const
         {
-            // return true if the parser succeeds
-            typedef typename Component::director director;
-            typename
-                traits::attribute_of<
-                    qi::domain, Component, Context, Iterator>::type
-            val;
+            // if Attribute is not a variant, then pass it as-is
+            return component.parse(first, last, context, skipper, attr);
+        }
 
-            if (director::parse(component, first, last, context, skipper, val))
+        template <typename Component>
+        bool call(Component const& component, mpl::false_) const
+        {
+            // if Attribute is a variant, then create an attribute for
+            // the Component with its expected type.
+            typename traits::attribute_of<Component, Context, Iterator>::type val;
+            if (component.parse(first, last, context, skipper, val))
             {
                 attr = val;
                 return true;
             }
             return false;
+        }
+
+        template <typename Component>
+        bool operator()(Component const& component) const
+        {
+            // return true if the parser succeeds
+            return call(component, not_is_variant<Attribute>());
         }
 
         Iterator& first;
@@ -65,8 +88,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool operator()(Component const& component)
         {
             // return true if the parser succeeds
-            typedef typename Component::director director;
-            return director::parse(component, first, last, context, skipper,
+            return component.parse(first, last, context, skipper,
                 unused);
         }
 

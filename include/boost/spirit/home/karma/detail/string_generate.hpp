@@ -11,67 +11,72 @@
 #endif
 
 #include <string>
-#include <boost/spirit/home/karma/detail/generate_to.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/karma/detail/generate_to.hpp>
+#include <boost/foreach.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a pointer 
     template <typename OutputIterator, typename Char>
-    inline bool 
-    string_generate(OutputIterator& sink, Char const* str, unused_type = unused)
+    inline bool string_generate(OutputIterator& sink, Char const* str)
     {
         for (Char ch = *str; ch != 0; ch = *++str)
-            detail::generate_to(sink, ch);
+        {
+            if (!detail::generate_to(sink, ch))
+                return false;
+        }
         return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a std::string
-    template <typename OutputIterator, typename Char>
-    inline bool 
-    string_generate(OutputIterator& sink, std::basic_string<Char> const& str,
-        unused_type = unused)
+    template <
+        typename OutputIterator, typename Char, typename Traits
+      , typename Allocator>
+    inline bool string_generate(OutputIterator& sink
+      , std::basic_string<Char, Traits, Allocator> const& str)
     {
-        typedef std::basic_string<Char> string_type;
-        
-        typename string_type::const_iterator end = str.end();
-        for (typename string_type::const_iterator it = str.begin(); 
-             it != end; ++it)
+        BOOST_FOREACH(Char ch, str)
         {
-            detail::generate_to(sink, *it);
+            if (!detail::generate_to(sink, ch))
+                return false;
         }
         return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a pointer, converting according using a 
-    //  given character class tag
-    template <typename OutputIterator, typename Char, typename Tag>
-    inline bool 
-    string_generate(OutputIterator& sink, Char const* str, Tag tag)
+    //  given character class and case tag
+    template <
+        typename OutputIterator, typename Char, typename CharEncoding
+      , typename Tag>
+    inline bool string_generate(OutputIterator& sink, Char const* str
+      , CharEncoding ce, Tag tag)
     {
         for (Char ch = *str; ch != 0; ch = *++str)
-            detail::generate_to(sink, ch, tag);
+        {
+            if (!detail::generate_to(sink, ch, ce, tag))
+                return false;
+        }
         return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a std::string, converting according using a 
-    //  given character class tag
-    template <typename OutputIterator, typename Char, typename Tag>
-    inline bool 
-    string_generate(OutputIterator& sink, std::basic_string<Char> const& str, 
-        Tag tag)
+    //  given character class and case tag
+    template <
+        typename OutputIterator, typename Char, typename CharEncoding
+      , typename Tag, typename Traits, typename Allocator>
+    inline bool string_generate(OutputIterator& sink
+      , std::basic_string<Char, Traits, Allocator> const& str
+      , CharEncoding ce, Tag tag)
     {
-        typedef std::basic_string<Char> string_type;
-        
-        typename string_type::const_iterator end = str.end();
-        for (typename string_type::const_iterator it = str.begin(); 
-             it != end; ++it)
+        BOOST_FOREACH(Char ch, str)
         {
-            detail::generate_to(sink, *it, tag);
+            if (!detail::generate_to(sink, ch, ce, tag))
+                return false;
         }
         return true;
     }

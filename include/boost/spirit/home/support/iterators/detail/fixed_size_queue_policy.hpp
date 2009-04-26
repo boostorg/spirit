@@ -1,5 +1,5 @@
-//  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001 Daniel C. Nuffer
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -38,12 +38,10 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             typedef detail::fixed_size_queue<Value, N> queue_type;
 
         protected:
-            unique()
-            {}
+            unique() {}
 
             unique(unique const& x)
-              : queuePosition(x.queuePosition)
-            {}
+              : queuePosition(x.queuePosition) {}
 
             void swap(unique& x)
             {

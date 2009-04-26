@@ -14,8 +14,12 @@
 #include <vector>
 #include <algorithm>
 
+#include <boost/config.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/mpl/if.hpp>
+
 #include <boost/spirit/home/karma/detail/ostream_iterator.hpp>
+#include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail 
 {
@@ -25,9 +29,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     class position_sink 
     {
     public:
-        position_sink() : count(0), line(1), column(0) {}
-        void tidy() { count = 0; line = 1; column = 0; }
-        
+        position_sink() : count(0), line(1), column(1) {}
+        void tidy() { count = 0; line = 1; column = 1; }
+
         template <typename T>
         void output(T const& value) 
         {
@@ -51,22 +55,36 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  This class is used to count the umber of characters streamed into the 
+    //  This class is used to count the number of characters streamed into the 
     //  output.
     ///////////////////////////////////////////////////////////////////////////
-    class counting_sink 
+    template <typename OutputIterator>
+    class counting_sink : boost::noncopyable
     {
     public:
-        counting_sink() : count(0) {}
-        
-        void init(std::size_t count_) { count = count_; }
-        void tidy() { count = 0; }
-        
-        void output() { ++count; }
+        counting_sink(OutputIterator& sink_, std::size_t count_ = 0
+              , bool enabled = true) 
+          : sink(sink_), count(count_) 
+        {
+            prev_count = sink.chain_counting(enabled ? this : NULL);
+        }
+        ~counting_sink() 
+        {
+            sink.chain_counting(prev_count);
+        }
+
+        void output() 
+        { 
+            ++count; 
+            if (prev_count)           // propagate count 
+                prev_count->output();
+        }
         std::size_t get_count() const { return count; }
 
     private:
         std::size_t count;
+        counting_sink* prev_count;                // previous counter in chain
+        OutputIterator& sink;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -82,10 +100,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         virtual ~abstract_container() {}
         virtual void output(void const *item) = 0;
-        virtual void copy(OutputIterator& sink) = 0;
-        virtual std::size_t buffer_size() = 0;
+        virtual bool copy(OutputIterator& sink, std::size_t maxwidth) const = 0;
+        virtual std::size_t buffer_size() const = 0;
     };
-    
+
     template <typename OutputIterator, typename T>
     class concrete_container : public abstract_container<OutputIterator>
     {
@@ -96,40 +114,69 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
         ~concrete_container() {}
 
+    private:
         void output(void const *item)
         {
             buffer.push_back(*static_cast<T const*>(item));
         }
-        void copy(OutputIterator& sink)
+        bool copy(OutputIterator& sink, std::size_t maxwidth) const
         {
-            std::copy(buffer.begin(), buffer.end(), sink);
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable: 4267)
+#endif
+            typename std::basic_string<T>::const_iterator end = 
+                buffer.begin() + (std::min)(buffer.size(), maxwidth);
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
+
+            std::copy(buffer.begin(), end, sink);
+            return true;
         }
-        std::size_t buffer_size()
+//         template <typename RestIterator>
+//         bool copy_rest(RestIterator& restsink, std::size_t start_at) const
+//         {
+//             typename std::basic_string<T>::const_iterator begin = 
+//                 buffer.begin() + (std::min)(buffer.size(), start_at);
+// 
+//             std::copy(begin, buffer.end(), restsink);
+//             return true;
+//         }
+        std::size_t buffer_size() const
         {
             return buffer.size();
         }
-    
+
     private:
-        std::vector<T> buffer;
+        std::basic_string<T> buffer;
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator>
     class buffer_sink : boost::noncopyable
     {
     public:
         buffer_sink()
-          : width(0), buffer(0) 
-        {}
-        
+          : width(0), buffer(0) {}
+
         ~buffer_sink() 
         { 
-            delete buffer; 
+            tidy(); 
         }
-        
-        void init(std::size_t width_) { width = width_; }
-        void tidy() { delete buffer; buffer = 0; width = 0; }
-        
+
+        void enable(std::size_t width_) 
+        { 
+            tidy();             // release existing buffer
+            width = width_; 
+        }
+
+        void tidy() 
+        { 
+            delete buffer; buffer = 0; width = 0; 
+        }
+
         template <typename T>
         void output(T const& value)
         {
@@ -140,13 +187,17 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             }
             buffer->output(&value);
         }
-        
-        void copy(OutputIterator& sink) const 
+
+        bool copy(OutputIterator& sink, std::size_t maxwidth) const 
         { 
-            if (buffer) 
-                buffer->copy(sink); 
+            return buffer ? buffer->copy(sink, maxwidth) : false; 
         }
-        
+//         template <typename RestIterator>
+//         bool copy_rest(RestIterator& sink, std::size_t start_at) const 
+//         { 
+//             return buffer ? buffer->copy_rest(sink, start_at) : false; 
+//         }
+
         std::size_t buffer_size() const 
         { 
             return buffer ? buffer->buffer_size() : 0; 
@@ -160,11 +211,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     //  forward declaration only
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator> struct enable_counting;
     template <typename OutputIterator> struct enable_buffering;
 
     ///////////////////////////////////////////////////////////////////////////
-    //  Karma uses a output iterator wrapper for all output operations. This
+    //  Karma uses an output iterator wrapper for all output operations. This
     //  is necessary to avoid the dreaded 'scanner business' problem, i.e. the
     //  dependency of rules and grammars on the used output iterator. 
     //
@@ -175,23 +225,16 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //  supplied iterator. But it is possible to enable additional functionality
     //  on demand, such as counting, buffering, and position tracking.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator, typename Enable = void>
+    template <typename OutputIterator, typename Derived = unused_type>
     class output_iterator : boost::noncopyable
     {
     private:
-        enum output_mode 
-        {
-            output_characters = 0,    // just hand through character
-            count_characters = 1,     // additionally count characters
-            buffer_characters = 2     // buffer all characters, no output
-        };
-        
         struct output_proxy 
         {
             output_proxy(output_iterator& parent) 
               : parent(parent) 
             {}
-            
+
             template <typename T> 
             output_proxy& operator=(T const& value) 
             {
@@ -205,46 +248,37 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             // suppress warning about assignment operator not being generated
             output_proxy& operator=(output_proxy const&);
         };
-        
+
+        // get the most derived type of this class
+        typedef typename mpl::if_<
+            traits::is_not_unused<Derived>, Derived, output_iterator
+        >::type most_derived_type;
+
 #if !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
-private:
-        friend struct enable_counting<output_iterator<OutputIterator> >;
-        friend struct enable_buffering<output_iterator<OutputIterator> >;
-        friend struct enable_counting<output_iterator<OutputIterator, int> >;
-        friend struct enable_buffering<output_iterator<OutputIterator, int> >;
+    private:
+        friend struct counting_sink<output_iterator<OutputIterator, Derived> >;
+        friend struct enable_buffering<output_iterator<OutputIterator, Derived> >;
 #else
-public:
+    public:
 #endif
         // functions related to counting
-        void enable_counting(std::size_t count = 0)
+        counting_sink<most_derived_type>* chain_counting(
+            counting_sink<most_derived_type>* count_data)
         {
-            count_data.init(count);
-            mode = output_mode(mode | count_characters);
+            counting_sink<most_derived_type>* prev_count = count;
+            count = count_data;
+            return prev_count;
         }
-        void disable_counting()
-        {
-            mode = output_mode(mode & ~count_characters);
-        }
-        void reset_counting()
-        {
-            count_data.tidy();
-        }
-        
+
         // functions related to buffering
-        void enable_buffering(std::size_t width = 0)
+        buffer_sink<most_derived_type>* chain_buffering(
+            buffer_sink<most_derived_type>* buffer_data)
         {
-            buffer_data.init(width);
-            mode = output_mode(mode | buffer_characters);
+            buffer_sink<most_derived_type>* prev_buffer = buffer;
+            buffer = buffer_data;
+            return prev_buffer;
         }
-        void disable_buffering()
-        {
-            mode = output_mode(mode & ~buffer_characters);
-        }
-        void reset_buffering()
-        {
-            buffer_data.tidy();
-        }
-        
+
     public:
         typedef std::output_iterator_tag iterator_category;
         typedef void value_type;
@@ -252,63 +286,58 @@ public:
         typedef void pointer;
         typedef void reference;
 
-        output_iterator(OutputIterator& sink_)
-          : sink(sink_), mode(output_characters)
+        explicit output_iterator(OutputIterator& sink_)
+          : sink(sink_), count(NULL), buffer(NULL)
+        {}
+        output_iterator(output_iterator const& rhs)
+          : sink(rhs.sink), count(rhs.count), buffer(rhs.buffer)
+          , track_position_data(rhs.track_position_data)
         {}
 
         output_proxy operator*() { return output_proxy(*this); }
         output_iterator& operator++() { ++sink; return *this; } 
-        output_iterator& operator++(int) { sink++; return *this; }
+        output_iterator operator++(int) 
+        {
+            output_iterator t(*this);
+            ++sink; 
+            return t; 
+        }
 
         template <typename T> 
         void output(T const& value) 
         { 
-            if (mode & count_characters)    // count characters, if appropriate
-                count_data.output();
+            if (NULL != count)          // count characters, if appropriate
+                count->output();
 
             // always track position in the output (this is needed by different 
             // generators, such as indent, pad, etc.)
             track_position_data.output(value);
 
-            if (mode & buffer_characters)   // buffer output, if appropriate
-                buffer_data.output(value);
+            if (NULL != buffer)         // buffer output, if appropriate
+                buffer->output(value);
             else
                 *sink = value; 
         }
 
-        // functions related to counting
-        std::size_t count() const
-        {
-            return count_data.get_count();
-        }
-        
-        // functions related to buffering
-        std::size_t buffer_size() const
-        {
-            return buffer_data.buffer_size();
-        }
-        void buffer_copy()
-        {
-            buffer_data.copy(sink);
-        }
-        
         // return the current count in the output
         std::size_t get_out_count() const
         {
             return track_position_data.get_count();
         }
-        
+
+        // plain output iterators are considered to be good all the time
+        bool good() const { return true; }
+
     protected:
         // this is the wrapped user supplied output iterator
         OutputIterator& sink;
 
     private:
         // these are the hooks providing optional functionality
-        counting_sink count_data;                   // for counting
-        buffer_sink<OutputIterator> buffer_data;    // for buffering
-        position_sink track_position_data;          // for position tracking
-        int mode;
-        
+        counting_sink<most_derived_type>* count;      // for counting
+        buffer_sink<most_derived_type>* buffer;       // for buffering
+        position_sink track_position_data;            // for position tracking
+
         // suppress warning about assignment operator not being generated
         output_iterator& operator=(output_iterator const&);
     };
@@ -316,21 +345,25 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Elem, typename Traits>
     class output_iterator<ostream_iterator<T, Elem, Traits> >
-      : public output_iterator<ostream_iterator<T, Elem, Traits>, int>
+      : public output_iterator<ostream_iterator<T, Elem, Traits>
+          , output_iterator<ostream_iterator<T, Elem, Traits> > >
     {
     private:
-        typedef 
-            output_iterator<ostream_iterator<T, Elem, Traits>, int> 
-        base_type;
+        typedef output_iterator<ostream_iterator<T, Elem, Traits>
+              , output_iterator<ostream_iterator<T, Elem, Traits> > 
+        > base_type;
         typedef ostream_iterator<T, Elem, Traits> base_iterator_type;
         typedef std::basic_ostream<Elem, Traits> ostream_type;
 
     public:
         output_iterator(base_iterator_type& sink)
-          : base_type(sink)
-        {}
+          : base_type(sink) {}
 
         ostream_type& get_ostream() { return this->sink.get_ostream(); }
+        ostream_type const& get_ostream() const { return this->sink.get_ostream(); }
+
+        // expose good bit of underlying stream object
+        bool good() const { return this->sink.get_ostream().good(); }
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -341,24 +374,28 @@ public:
     struct enable_counting
     {
         enable_counting(OutputIterator& sink_, std::size_t count = 0)
-          : sink(sink_)
+          : count_data(sink_, count) {}
+
+        // get number of characters counted since last enable
+        std::size_t count() const
         {
-            sink.enable_counting(count);
-        }
-        ~enable_counting()
-        {
-            sink.disable_counting();
-            sink.reset_counting();
-        }
-        
-        void disable()
-        {
-            sink.disable_counting();
+            return count_data.get_count();
         }
 
-        OutputIterator& sink;
+    private:
+        counting_sink<OutputIterator> count_data;              // for counting
     };
-    
+
+    template <typename OutputIterator>
+    struct disable_counting
+    {
+        disable_counting(OutputIterator& sink_)
+          : count_data(sink_, 0, false) {}
+
+    private:
+        counting_sink<OutputIterator> count_data;
+    };
+
     ///////////////////////////////////////////////////////////////////////////
     //  Helper class for exception safe enabling of character buffering in the
     //  output iterator
@@ -367,24 +404,53 @@ public:
     struct enable_buffering
     {
         enable_buffering(OutputIterator& sink_, std::size_t width = 0)
-          : sink(sink_)
+          : sink(sink_), prev_buffer(NULL), enabled(false)
         {
-            sink.enable_buffering(width);
+            buffer_data.enable(width);
+            prev_buffer = sink.chain_buffering(&buffer_data);
+            enabled = true;
         }
         ~enable_buffering()
         {
-            sink.disable_buffering();
-            sink.reset_buffering();
+            disable();
         }
-        
+
+        // reset buffer chain to initial state
         void disable()
         {
-            sink.disable_buffering();
+            if (enabled) {
+                BOOST_VERIFY(&buffer_data == sink.chain_buffering(prev_buffer));
+                enabled = false;
+            }
         }
-        
+
+        // copy to the underlying sink whatever is in the local buffer
+        bool buffer_copy(std::size_t maxwidth = std::size_t(-1)
+          , bool disable_ = true)
+        {
+            if (disable_)
+                disable();
+            return buffer_data.copy(sink, maxwidth) && sink.good();
+        }
+
+        // return number of characters stored in the buffer
+        std::size_t buffer_size() const
+        {
+            return buffer_data.buffer_size();
+        }
+
+//         bool buffer_copy_rest(std::size_t start_at = 0)
+//         {
+//             return buffer_data.copy_rest(sink, start_at);
+//         }
+
+    private:
         OutputIterator& sink;
+        buffer_sink<OutputIterator> buffer_data;    // for buffering
+        buffer_sink<OutputIterator>* prev_buffer;   // previous buffer in chain
+        bool enabled;
     };
-    
+
 }}}}
 
 #endif 

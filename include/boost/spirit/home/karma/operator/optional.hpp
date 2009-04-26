@@ -11,26 +11,39 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/support/component.hpp>
-#include <boost/spirit/home/support/attribute_of.hpp>
-#include <boost/spirit/home/support/attribute_transform.hpp>
+#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/support/info.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/optional.hpp>
 
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_operator<karma::domain, proto::tag::negate> // enables -g
+      : mpl::true_ {};
+
+}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
     namespace detail
     {
-        template <typename Parameter>
+        template <typename Attribute>
         inline bool
-        optional_is_valid(boost::optional<Parameter> const& opt)
+        optional_is_valid(boost::optional<Attribute> const& opt)
         {
             return opt;
         }
 
-        template <typename Parameter>
+        template <typename Attribute>
         inline bool
-        optional_is_valid(Parameter const& opt)
+        optional_is_valid(Attribute const& opt)
         {
             return true;
         }
@@ -41,16 +54,16 @@ namespace boost { namespace spirit { namespace karma
             return true;
         }
 
-        template <typename Parameter>
-        inline Parameter const&
-        optional_get(boost::optional<Parameter> const& opt)
+        template <typename Attribute>
+        inline Attribute const&
+        optional_get(boost::optional<Attribute> const& opt)
         {
             return get(opt);
         }
 
-        template <typename Parameter>
-        inline Parameter const&
-        optional_get(Parameter const& opt)
+        template <typename Attribute>
+        inline Attribute const&
+        optional_get(Attribute const& opt)
         {
             return opt;
         }
@@ -62,52 +75,54 @@ namespace boost { namespace spirit { namespace karma
         }
     }
 
-    struct optional
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject>
+    struct optional : unary_generator<optional<Subject> >
     {
-        template <typename T>
-        struct build_attribute_container
-        {
-            typedef boost::optional<T> type;
-        };
+        typedef Subject subject_type;
 
-        template <typename Component, typename Context, typename Iterator>
-        struct attribute :
-            build_container<optional, Component, Iterator, Context>
+        template <typename Context, typename Unused>
+        struct attribute
         {
-        };
-
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Parameter const& param)
-        {
+            // Build a boost::optional from the subject's attribute. Note
+            // that boost::optional may return unused_type if the
+            // subject's attribute is an unused_type.
             typedef typename
-                result_of::subject<Component>::type::director
-            director;
+                traits::build_optional<
+                    typename traits::attribute_of<Subject, Context>::type
+                >::type
+            type;
+        };
 
-            if (detail::optional_is_valid(param))
-            {
-                director::generate(subject(component), sink, ctx, d,
-                    detail::optional_get(param));
-            }
+        optional(Subject const& subject)
+          : subject(subject) {}
+
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr) const
+        {
+            if (detail::optional_is_valid(attr))
+                subject.generate(sink, ctx, d, detail::optional_get(attr));
             return true;
         }
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        info what(Context& context) const
         {
-            std::string result = "optional[";
-
-            typedef typename
-                spirit::result_of::subject<Component>::type::director
-            director;
-
-            result += director::what(spirit::subject(component), ctx);
-            result += "]";
-            return result;
+            return info("optional", subject.what(context));
         }
+
+        Subject subject;
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Generator generators: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Modifiers>
+    struct make_composite<proto::tag::negate, Elements, Modifiers>
+      : make_unary_composite<Elements, optional> {};
 
 }}}
 

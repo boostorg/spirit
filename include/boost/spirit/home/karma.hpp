@@ -18,7 +18,12 @@
 #include <boost/spirit/home/karma/action.hpp>
 #include <boost/spirit/home/karma/directive.hpp>
 #include <boost/spirit/home/karma/auxiliary.hpp>
+#include <boost/spirit/home/karma/binary.hpp>
 #include <boost/spirit/home/karma/generate.hpp>
+#include <boost/spirit/home/karma/generate_attr.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
+#include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/what.hpp>
+#include <boost/spirit/home/karma/stream.hpp>
 
 #endif

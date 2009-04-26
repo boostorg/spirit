@@ -11,11 +11,21 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
+#include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/meta_compiler.hpp>
+#include <boost/spirit/home/support/info.hpp>
+
 namespace boost { namespace spirit { namespace lex
 {
-    struct domain 
-    {};
-    
+    // lex's domain
+    struct domain {};
+
+    // bring in some of spirit parts into spirit::lex
+    using spirit::unused;
+    using spirit::unused_type;
+    using spirit::compile;
+    using spirit::info;
+
 }}}
 
 #endif

@@ -1,5 +1,5 @@
 //  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 //  http://spirit.sourceforge.net/
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -8,6 +8,7 @@
 #if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_1124AM)
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_1124AM
 
+#include <boost/config.hpp>
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 #include <boost/spirit/home/support/iterators/detail/combine_policies.hpp>
@@ -32,7 +33,7 @@ namespace boost { namespace spirit
             policies_base_type;
         typedef typename Policies::BOOST_NESTED_TEMPLATE shared<T> 
             shared_data_type;
-                
+
         // define the types the standard embedded iterator typedefs are taken 
         // from
 #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
@@ -50,13 +51,10 @@ namespace boost { namespace spirit
         typedef typename iterator_type::reference reference;
         typedef typename iterator_type::pointer pointer;
 
-        multi_pass()
-          : shared(0)
-        {}
-        
+        multi_pass() : shared(0) {}
+
         explicit multi_pass(T input)
-          : shared(new shared_data_type(input)), policies_base_type(input)
-        {}
+          : shared(new shared_data_type(input)), policies_base_type(input) {}
 
 #if BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
         // The standard library shipped with gcc-3.1 has a bug in
@@ -65,9 +63,7 @@ namespace boost { namespace spirit
         // checking code that isn't required by the standard.
         // The workaround is to provide an additional constructor that
         // ignores its int argument and behaves like the default constructor.
-        multi_pass(int)
-          : shared(0)
-        {}
+        multi_pass(int) : shared(0) {}
 #endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
         ~multi_pass()
@@ -83,7 +79,7 @@ namespace boost { namespace spirit
         {
             policies_base_type::clone(*this);
         }
-        
+
         multi_pass& operator=(multi_pass const& x)
         {
             if (this != &x) {
@@ -133,7 +129,7 @@ namespace boost { namespace spirit
                 return y.is_eof();
             if (y.is_eof())
                 return false;
-                
+
             return policies_base_type::equal_to(*this, y);
         }
         bool operator<(multi_pass const& y) const
@@ -146,7 +142,7 @@ namespace boost { namespace spirit
         {
             return (0 == shared) || policies_base_type::is_eof(*this);
         }
-        
+
     public:
         shared_data_type *shared;
     };
@@ -192,8 +188,7 @@ namespace boost { namespace spirit
 
     template <typename T, typename Policies>
     inline void 
-    swap(multi_pass<T, Policies> &x,
-         multi_pass<T, Policies> &y)
+    swap(multi_pass<T, Policies> &x, multi_pass<T, Policies> &y)
     {
         x.swap(y);
     }

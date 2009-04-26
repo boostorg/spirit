@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
-    Copyright (c) 2001-2003 Daniel Nuffer
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Daniel Nuffer
     http://spirit.sourceforge.net/
 
   Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -8,6 +8,10 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_BASIC_CHSET_APRIL_17_2008
 #define BOOST_SPIRIT_BASIC_CHSET_APRIL_17_2008
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <bitset>

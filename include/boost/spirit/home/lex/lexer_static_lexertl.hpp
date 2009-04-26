@@ -10,9 +10,9 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-//  These includes make available everything needed to use lexertl as a lexer 
-//  component for spirit::qi
-#include <boost/spirit/home/lex/lexer/lexertl/lexertl_static_lexer.hpp>
+//  These includes make available everything needed to use lexertl either 
+//  standalone or as a lexer component for spirit::qi
 #include <boost/spirit/home/lex.hpp>
+#include <boost/spirit/home/lex/lexer/lexertl/static_lexer.hpp>
 
 #endif

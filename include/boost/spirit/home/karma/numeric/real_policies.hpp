@@ -10,63 +10,81 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
+#include <boost/config/no_tr1/cmath.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/support/detail/scoped_enum_emulation.hpp>
 #include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
-#include <boost/config/no_tr1/cmath.hpp>
-#include <boost/spirit/home/support/detail/math/fpclassify.hpp>
 
 namespace boost { namespace spirit { namespace karma 
 {
     ///////////////////////////////////////////////////////////////////////////
     //
-    //  real_generator_policies, if you need special handling of your floating
+    //  real_policies, if you need special handling of your floating
     //  point numbers, just overload this policy class and use it as a template
-    //  parameter to the karma::real_spec floating point specifier:
+    //  parameter to the karma::real_generator floating point specifier:
     //
     //      template <typename T>
-    //      struct scientific_policy : karma::real_generator_policies<T>
+    //      struct scientific_policy : karma::real_policies<T>
     //      {
     //          //  we want the numbers always to be in scientific format
-    //          static int floatfield(T n) { return scientific; }
+    //          static int floatfield(T n) { return fmtflags::scientific; }
     //      };
     //
     //      typedef 
-    //          karma::real_spec<double, scientific_policy<double> > 
+    //          karma::real_generator<double, scientific_policy<double> > 
     //      science_type;
     //
     //      karma::generate(sink, science_type(), 1.0); // will output: 1.0e00
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct real_generator_policies
+    struct real_policies
     {
+        ///////////////////////////////////////////////////////////////////////
+        // Expose the data type the generator is targeted to
+        ///////////////////////////////////////////////////////////////////////
+        typedef T value_type;
+
         ///////////////////////////////////////////////////////////////////////
         //  Specifies, which representation type to use during output 
         //  generation.
         ///////////////////////////////////////////////////////////////////////
-        enum fmtflags 
+        BOOST_SCOPED_ENUM_START(fmtflags)
         {
             scientific = 0,   // Generate floating-point values in scientific 
                               // format (with an exponent field).
             fixed = 1         // Generate floating-point values in fixed-point 
                               // format (with no exponent field). 
         };
-        
+        BOOST_SCOPED_ENUM_END
+
         ///////////////////////////////////////////////////////////////////////
         //  The default behavior is to not to require generating a sign. If 
         //  'force_sign' is specified as true, then all generated numbers will 
         //  have a sign ('+' or '-', zeros will have a space instead of a sign)
         ///////////////////////////////////////////////////////////////////////
         static bool const force_sign = false;
-        
+
         ///////////////////////////////////////////////////////////////////////
-        //  The 'trailing_zeros' flag instructs the floating point generator to 
-        //  emit trailing zeros up to the required precision digits.
+        //  Return whether trailing zero digits have to be emitted in the 
+        //  fractional part of the output. If set, this flag instructs the 
+        //  floating point generator to emit trailing zeros up to the required 
+        //  precision digits (as returned by the precision() function).
+        // 
+        //      n     The floating point number to output. This can be used to 
+        //            adjust the required behavior depending on the value of 
+        //            this number.
         ///////////////////////////////////////////////////////////////////////
-        static bool const trailing_zeros = false;
-        
+        static bool trailing_zeros(T)
+        {
+            // the default behavior is not to generate trailing zeros
+            return false;
+        }
+
         ///////////////////////////////////////////////////////////////////////
         //  Decide, which representation type to use in the generated output.
         //
@@ -74,7 +92,7 @@ namespace boost { namespace spirit { namespace karma
         //  between 0.001 and 100000 will be generated using the fixed format, 
         //  all others will be generated using the scientific representation.
         //
-        //  The trailing_zeros flag can be used to force the output of trailing 
+        //  The trailing_zeros_flag can be used to force the output of trailing 
         //  zeros in the fractional part up to the number of digits returned by 
         //  the precision() member function. The default is not to generate 
         //  the trailing zeros.
@@ -83,30 +101,16 @@ namespace boost { namespace spirit { namespace karma
         //            adjust the formatting flags depending on the value of 
         //            this number.
         ///////////////////////////////////////////////////////////////////////
-        static int 
-        floatfield(T n)
+        static int floatfield(T n)
         {
             if (detail::is_zero(n))
-                return fixed;
+                return fmtflags::fixed;
 
             T abs_n = detail::absolute_value(n);
-            return (abs_n >= 1e5 || abs_n < 1e-3) ? scientific : fixed;
+            return (abs_n >= 1e5 || abs_n < 1e-3) 
+              ? fmtflags::scientific : fmtflags::fixed;
         }
-        
-        ///////////////////////////////////////////////////////////////////////
-        //  The 'fractional_precision' constant specifies the default number of 
-        //  digits to generate for the fractional part of a floating point 
-        //  number. This is used by this (default) policies implementation 
-        //  only. If you need another fractional precision you'll have to 
-        //  overload the precision function below.
-        //  
-        //  Note: The actual number of digits for a floating point number is 
-        //        determined by the precision() function below. This allows to
-        //        have different precisions depending on the value of the
-        //        floating point number.
-        ///////////////////////////////////////////////////////////////////////
-        static unsigned int const fractional_precision = 3;
-        
+
         ///////////////////////////////////////////////////////////////////////
         //  Return the maximum number of decimal digits to generate in the 
         //  fractional part of the output.
@@ -122,11 +126,10 @@ namespace boost { namespace spirit { namespace karma
         //            function below. Moreover, this precision will be limited
         //            to the value of std::numeric_limits<T>::digits10 + 1
         ///////////////////////////////////////////////////////////////////////
-        static unsigned int
-        precision(T)
+        static unsigned precision(T)
         {
-            // generate max. 'fractional_precision' fractional digits
-            return fractional_precision;
+            // by default, generate max. 3 fractional digits
+            return 3;
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -138,14 +141,13 @@ namespace boost { namespace spirit { namespace karma
         //      sign  The sign of the overall floating point number to convert.
         ///////////////////////////////////////////////////////////////////////
         template <bool ForceSign, typename OutputIterator>
-        static bool
-        integer_part (OutputIterator& sink, T n, bool sign)
+        static bool integer_part (OutputIterator& sink, T n, bool sign)
         {
             return sign_inserter<ForceSign>::call(
                         sink, detail::is_zero(n), sign) &&
                    int_inserter<10>::call(sink, n);
         }
-        
+
         ///////////////////////////////////////////////////////////////////////
         //  Generate the decimal point.
         //
@@ -165,12 +167,11 @@ namespace boost { namespace spirit { namespace karma
         //            function below.
         ///////////////////////////////////////////////////////////////////////
         template <typename OutputIterator>
-        static bool
-        dot (OutputIterator& sink, T)
+        static bool dot (OutputIterator& sink, T)
         {
             return char_inserter<>::call(sink, '.');  // generate the dot by default 
         }
-        
+
         ///////////////////////////////////////////////////////////////////////
         //  Generate the fractional part of the number.
         //
@@ -199,8 +200,8 @@ namespace boost { namespace spirit { namespace karma
         //
         ///////////////////////////////////////////////////////////////////////
         template <typename OutputIterator>
-        static bool
-        fraction_part (OutputIterator& sink, T n, unsigned precision_)
+        static bool fraction_part (OutputIterator& sink, T n
+          , unsigned precision_)
         {
             // allow for ADL to find the correct overload for floor and log10
             using namespace std;
@@ -208,7 +209,7 @@ namespace boost { namespace spirit { namespace karma
             // The following is equivalent to:
             //    generate(sink, right_align(precision, '0')[ulong], n);
             // but it's spelled out to avoid inter-modular dependencies.
-            
+
             T digits = (detail::is_zero(n) ? 0 : floor(log10(n))) + 1;
             bool r = true;
             for (/**/; r && digits < precision_; digits = digits + 1)
@@ -229,18 +230,17 @@ namespace boost { namespace spirit { namespace karma
         //  output possibly influenced by either the lower[...] or upper[...] 
         //  directives.
         ///////////////////////////////////////////////////////////////////////
-        template <typename Tag, typename OutputIterator>
-        static bool
-        exponent (OutputIterator& sink, T n)
+        template <typename CharEncoding, typename Tag, typename OutputIterator>
+        static bool exponent (OutputIterator& sink, long n)
         {
-            T abs_n = detail::absolute_value(n);
-            bool r = char_inserter<Tag>::call(sink, 'e') &&
+            long abs_n = detail::absolute_value(n);
+            bool r = char_inserter<CharEncoding, Tag>::call(sink, 'e') &&
                      sign_inserter<false>::call(
                           sink, detail::is_zero(n), detail::is_negative(n));
 
             // the C99 Standard requires at least two digits in the exponent
             if (r && abs_n < 10)
-                r = char_inserter<Tag>::call(sink, '0');
+                r = char_inserter<CharEncoding, Tag>::call(sink, '0');
             return r && int_inserter<10>::call(sink, abs_n);
         }
 
@@ -259,25 +259,27 @@ namespace boost { namespace spirit { namespace karma
         //  Note: These functions get called only if fpclassify() returned 
         //        FP_INFINITY or FP_NAN.
         ///////////////////////////////////////////////////////////////////////
-        template <bool ForceSign, typename Tag, typename OutputIterator>
-        static bool 
-        nan (OutputIterator& sink, T n)
+        template <
+            bool ForceSign, typename CharEncoding, typename Tag
+          , typename OutputIterator>
+        static bool nan (OutputIterator& sink, T n)
         {
             return sign_inserter<ForceSign>::call(
                         sink, false, detail::is_negative(n)) &&
-                   string_inserter<Tag>::call(sink, "nan");
+                   string_inserter<CharEncoding, Tag>::call(sink, "nan");
         }
 
-        template <bool ForceSign, typename Tag, typename OutputIterator>
-        static bool 
-        inf (OutputIterator& sink, T n)
+        template <
+            bool ForceSign, typename CharEncoding, typename Tag
+          , typename OutputIterator>
+        static bool inf (OutputIterator& sink, T n)
         {
             return sign_inserter<ForceSign>::call(
                         sink, false, detail::is_negative(n)) &&
-                   string_inserter<Tag>::call(sink, "inf");
+                   string_inserter<CharEncoding, Tag>::call(sink, "inf");
         }
     };
-    
+
 }}}
 
 #endif // defined(BOOST_SPIRIT_KARMA_REAL_POLICIES_MAR_02_2007_0936AM)

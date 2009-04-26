@@ -10,16 +10,32 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/karma/domain.hpp>
-#include <boost/spirit/home/karma/delimit.hpp>
-#include <boost/spirit/home/karma/detail/generate_to.hpp>
+#include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/string_traits.hpp>
+#include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
-#include <boost/spirit/home/support/detail/to_narrow.hpp>
-#include <boost/spirit/home/support/iso8859_1.hpp>
-#include <boost/spirit/home/support/ascii.hpp>
-#include <boost/spirit/home/support/standard.hpp>
-#include <boost/spirit/home/support/standard_wide.hpp>
+#include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/karma/delimit_out.hpp>
+#include <boost/spirit/home/karma/auxiliary/lazy.hpp>
+#include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/generate_to.hpp>
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit 
+{ 
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename CharEncoding>
+    struct use_terminal<karma::domain
+      , tag::char_code<tag::space, CharEncoding>        // enables space
+    > : mpl::true_ {};
+
+}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -28,86 +44,63 @@ namespace boost { namespace spirit { namespace karma
     //      generates a single character from the associated parameter
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Tag, typename Char>
-    struct any_space_char
+    template <typename CharEncoding>
+    struct any_space
+      : primitive_generator<any_space<CharEncoding> >
     {
-        template <typename Component, typename Context, typename Unused>
+        typedef typename CharEncoding::char_type char_type;
+        typedef CharEncoding char_encoding;
+
+        template <typename Context, typename Unused>
         struct attribute
         {
-            typedef Char type;
+            typedef char_type type;
         };
 
-        typedef typename Tag::char_set char_set;
-        typedef typename Tag::char_class char_class_;
-
-        // space has a parameter attached
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& /*component*/, OutputIterator& sink,
-            Context& /*ctx*/, Delimiter const& d, Parameter const& ch)
+        // any_space has an attached parameter
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const& attr)
         {
-            using spirit::char_class::classify;
-            BOOST_ASSERT(classify<char_set>::is(char_class_(), ch));
-            detail::generate_to(sink, ch);
-            karma::delimit(sink, d);           // always do post-delimiting
-            return true;
+            if (!spirit::char_class::classify<char_encoding>::is(tag::space(), attr))
+                return false;     // allow whitespace only
+
+            return 
+                karma::detail::generate_to(sink, attr) &&
+                karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
-        // this space has no parameter attached, just generate a single ' '
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter>
-        static bool
-        generate(Component const&, OutputIterator& sink, Context&,
-            Delimiter const& d, unused_type)
+        // any_space has no attribute attached, use single space character
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool generate(OutputIterator& sink, Context&, Delimiter const& d, 
+            unused_type const&)
         {
-            detail::generate_to(sink, ' ');     // generate a single space
-            karma::delimit(sink, d);            // always do post-delimiting
-            return true;
+            return 
+                karma::detail::generate_to(sink, ' ') &&
+                karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        static info what(Context const& ctx)
         {
-            return "any-space";
+            return info("space");
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //
-    //  space(...)
-    //      generates a single space character given by a literal it was
-    //      initialized from
-    //
+    // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Tag, typename Char>
-    struct literal_space_char
+    // space
+    template <typename CharEncoding, typename Modifiers>
+    struct make_primitive<tag::char_code<tag::space, CharEncoding>, Modifiers>
     {
-        template <typename Component, typename Context, typename Unused>
-        struct attribute
-        {
-            typedef unused_type type;
-        };
+        typedef any_space<CharEncoding> result_type;
 
-        // any_char has a parameter attached
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/)
+        result_type operator()(unused_type, unused_type) const
         {
-            detail::generate_to(sink, fusion::at_c<0>(component.elements));
-            karma::delimit(sink, d);             // always do post-delimiting
-            return true;
-        }
-
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
-        {
-            return std::string("space('")
-                + spirit::detail::to_narrow_char(
-                    fusion::at_c<0>(component.elements))
-                + "')";
+            return result_type();
         }
     };
 

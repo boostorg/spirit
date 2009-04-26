@@ -10,10 +10,8 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/karma/numeric/numeric_fwd.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
 #include <boost/spirit/home/karma/numeric/uint.hpp>
 #include <boost/spirit/home/karma/numeric/real.hpp>
-#include <boost/spirit/home/karma/numeric/meta_grammar.hpp>
 
 #endif

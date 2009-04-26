@@ -478,7 +478,7 @@ private:
 };
 
 typedef basic_input<std::string::iterator> iter_input;
-typedef basic_input<std::wstring::iterator> iter_winput;
+typedef basic_input<std::basic_string<wchar_t>::iterator> iter_winput;
 typedef basic_input<const char *> ptr_input;
 typedef basic_input<const wchar_t *> ptr_winput;
 }

@@ -11,6 +11,5 @@
 #endif
 
 #include <boost/spirit/home/karma/action/action.hpp>
-#include <boost/spirit/home/karma/action/meta_grammar.hpp>
 
 #endif

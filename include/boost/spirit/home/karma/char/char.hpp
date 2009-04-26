@@ -10,22 +10,74 @@
 #pragma once      // MS compatible compilers support #pragma once
 #endif
 
-#include <boost/spirit/home/karma/domain.hpp>
-#include <boost/spirit/home/karma/delimit.hpp>
-#include <boost/spirit/home/karma/detail/generate_to.hpp>
-#include <boost/spirit/home/support/modifier.hpp>
+#include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/string_traits.hpp>
+#include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
-#include <boost/spirit/home/support/detail/to_narrow.hpp>
-#include <boost/spirit/home/support/iso8859_1.hpp>
-#include <boost/spirit/home/support/ascii.hpp>
+#include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/karma/delimit_out.hpp>
+#include <boost/spirit/home/karma/auxiliary/lazy.hpp>
+#include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/generate_to.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/fusion/include/value_at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/cons.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/assert.hpp>
+#include <boost/mpl/bool.hpp>
+#include <string>
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename CharEncoding>
+    struct use_terminal<karma::domain
+      , tag::char_code<tag::char_, CharEncoding>        // enables char_
+    > : mpl::true_ {};
+
+    template <typename CharEncoding, typename A0>
+    struct use_terminal<karma::domain
+      , terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>    // enables char_('x'), char_("x")
+          , fusion::vector1<A0>
+        >
+    > : mpl::true_ {};
+
+    template <typename CharEncoding>                    // enables *lazy* char_('x'), char_("x")
+    struct use_lazy_terminal<
+        karma::domain
+      , tag::char_code<tag::char_, CharEncoding>
+      , 1 // arity
+    > : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, char>            // enables 'x'
+      : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, char[2]>         // enables "x"
+      : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, wchar_t>         // enables L'x'
+      : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, wchar_t[2]>      // enables L"x"
+      : mpl::true_ {};
+
+}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
+    using spirit::lit;    // lit('x') is equivalent to 'x'
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  any_char
@@ -34,43 +86,49 @@ namespace boost { namespace spirit { namespace karma
     //      Note: this generator has to have an associated parameter
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Char>
+    template <typename CharEncoding, typename Tag>
     struct any_char
+      : primitive_generator<any_char<CharEncoding, Tag> >
     {
-        template <typename Component, typename Context, typename Unused>
+        typedef typename CharEncoding::char_type char_type;
+        typedef CharEncoding char_encoding;
+
+        template <typename Context, typename Unused>
         struct attribute
         {
-            typedef Char type;
+            typedef char_type type;
         };
 
-        // any_char has a parameter attached
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const&, OutputIterator& sink,
-            Context& /*ctx*/, Delimiter const& d, Parameter const& param)
+        // any_char has an attached parameter
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const& attr)
         {
-            detail::generate_to(sink, param);
-            karma::delimit(sink, d);           // always do post-delimiting
-            return true;
+            return 
+                karma::detail::generate_to(sink, attr, char_encoding(), Tag()) &&
+                karma::delimit_out(sink, d);       // always do post-delimiting
         }
 
-        // this any_char has no parameter attached, it needs to have been
+        // any_char has no attribute attached, it needs to have been
         // initialized from a direct literal
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter>
-        static bool
-        generate(Component const&, OutputIterator&, Context&, Delimiter const&,
-            unused_type)
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool generate(OutputIterator&, Context&, Delimiter const&, 
+            unused_type const&)
         {
+            // It is not possible (doesn't make sense) to use char_ without
+            // providing any attribute, as the generator doesn't 'know' what
+            // character to output. The following assertion fires if this
+            // situation is detected in your code.
             BOOST_MPL_ASSERT_MSG(false, char__not_usable_without_attribute, ());
             return false;
         }
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        static info what(Context const& ctx)
         {
-            return "any-char";
+            return info("any-char");
         }
     };
 
@@ -81,243 +139,183 @@ namespace boost { namespace spirit { namespace karma
     //      from
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Char>
+    template <typename CharEncoding, typename Tag, bool no_attribute>
     struct literal_char
+      : primitive_generator<literal_char<CharEncoding, Tag, no_attribute> >
     {
-        template <typename Component, typename Context, typename Unused>
+        typedef typename CharEncoding::char_type char_type;
+        typedef CharEncoding char_encoding;
+
+        literal_char(char_type ch)
+          : ch (spirit::char_class::convert<char_encoding>::to(Tag(), ch)) 
+        {}
+
+        template <typename Context, typename Unused>
         struct attribute
         {
-            typedef unused_type type;
+            typedef typename mpl::if_c<
+                no_attribute, unused_type, char_type>::type
+            type;
         };
 
-        // any_char has a parameter attached
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& /*ctx*/, Delimiter const& d, Parameter const& /*param*/)
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const&) const
         {
-            detail::generate_to(sink, fusion::at_c<0>(component.elements));
-            karma::delimit(sink, d);             // always do post-delimiting
-            return true;
+            return karma::detail::generate_to(sink, ch) &&
+                   karma::delimit_out(sink, d);    // always do post-delimiting
         }
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        info what(Context const& ctx) const
         {
-            return std::string("'")
-                + spirit::detail::to_narrow_char(
-                    fusion::at_c<0>(component.elements))
-                + '\'';
+            return info("literal-char", char_encoding::toucs4(ch));
         }
+
+        char_type ch;
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //
-    //  lazy_char
-    //      generates a single character given by a functor it was initialized
-    //      from
-    //
+    // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    struct lazy_char
+    namespace detail
     {
-        template <typename Component, typename Context, typename Unused>
-        struct attribute
+        template <typename Modifiers, typename Encoding>
+        struct basic_literal
         {
-            typedef unused_type type;
+            static bool const lower =
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+
+            static bool const upper =
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            static bool const no_attr =
+                !has_modifier<Modifiers, tag::lazy_eval>::value;
+
+            typedef literal_char<
+                typename spirit::detail::get_encoding<
+                    Modifiers, Encoding, lower || upper>::type
+              , typename get_casetag<Modifiers, lower || upper>::type
+              , no_attr>
+            result_type;
+
+            template <typename Char>
+            result_type operator()(Char ch, unused_type) const
+            {
+                return result_type(ch);
+            }
+
+            template <typename Char>
+            result_type operator()(Char const* str, unused_type) const
+            {
+                return result_type(str[0]);
+            }
         };
+    }
 
-        // any_char has a parameter attached
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Parameter const& /*param*/)
-        {
-            detail::generate_to(sink,
-                fusion::at_c<0>(component.elements)(unused, ctx));
-            karma::delimit(sink, d);             // always do post-delimiting
-            return true;
-        }
+    // literals: 'x', "x"
+    template <typename Modifiers>
+    struct make_primitive<char, Modifiers>
+      : detail::basic_literal<Modifiers, char_encoding::standard> {};
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
-        {
-            return "char";
-        }
-    };
+    template <typename Modifiers>
+    struct make_primitive<char const(&)[2], Modifiers>
+      : detail::basic_literal<Modifiers, char_encoding::standard> {};
 
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    //  lower and upper case variants of any_char with an associated parameter
-    //      note: this generator has to have a parameter associated
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Char, typename Tag>
-    struct case_any_char
+    // literals: L'x', L"x"
+    template <typename Modifiers>
+    struct make_primitive<wchar_t, Modifiers>
+      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
+
+    template <typename Modifiers>
+    struct make_primitive<wchar_t const(&)[2], Modifiers>
+      : detail::basic_literal<Modifiers, char_encoding::standard_wide> {};
+
+    // char_
+    template <typename CharEncoding, typename Modifiers>
+    struct make_primitive<tag::char_code<tag::char_, CharEncoding>, Modifiers>
     {
-        template <typename Component, typename Context, typename Unused>
-        struct attribute
-        {
-            typedef Char type;
-        };
+        static bool const lower =
+            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
 
-        typedef typename Tag::char_set char_set;
-        typedef typename Tag::char_class char_class_;
+        static bool const upper =
+            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
-        // case_any_char has a parameter attached
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& /*component*/, OutputIterator& sink,
-            Context& /*ctx*/, Delimiter const& d, Parameter const& param)
-        {
-            using spirit::char_class::convert;
-            Char p = convert<char_set>::to(char_class_(), param);
-            detail::generate_to(sink, p);
-            karma::delimit(sink, d);           // always do post-delimiting
-            return true;
-        }
+        typedef any_char<
+            typename spirit::detail::get_encoding<
+                Modifiers, CharEncoding, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+        > result_type;
 
-        // this case_any_char has no parameter attached, it needs to have been
-        // initialized from a direct literal
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter>
-        static bool
-        generate(Component const&, OutputIterator&, Context&, Delimiter const&,
-            unused_type)
+        result_type operator()(unused_type, unused_type) const
         {
-            BOOST_MPL_ASSERT_MSG(false, char__not_usable_without_attribute, ());
-            return false;
-        }
-
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
-        {
-            std::string result;
-            result = std::string("any-") +
-                spirit::char_class::what<char_set>::is(char_class_()) +
-                "case-char";
-            return result;
+            return result_type();
         }
     };
 
-}}}  // namespace boost::spirit::karma
-
-namespace boost { namespace spirit { namespace traits
-{
-    ///////////////////////////////////////////////////////////////////////////
-    // lower_case and upper_case any_char and literal_char generators
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Domain, typename Elements, typename Modifier,
-        typename Char>
-    struct make_modified_component<
-        Domain, karma::literal_char<Char>, Elements, Modifier,
-        typename enable_if<
-            is_member_of_modifier<Modifier, spirit::char_class::lower_case_base_tag>
-        >::type
-    >
+    // char_(...)
+    template <typename CharEncoding, typename Modifiers, typename A0>
+    struct make_primitive<
+        terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>
+          , fusion::vector1<A0>
+        >
+      , Modifiers>
     {
-        typedef typename
-            fusion::result_of::value_at_c<Elements, 0>::type
-        char_type;
-        typedef fusion::vector<char_type> vector_type;
+        static bool const lower =
+            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
 
-        typedef component<
-            karma::domain, karma::literal_char<Char>, vector_type>
-        type;
+        static bool const upper =
+            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
-        static type
-        call(Elements const& elements)
+        static bool const no_attr =
+            !has_modifier<Modifiers, tag::lazy_eval>::value;
+
+        typedef literal_char<
+            typename spirit::detail::get_encoding<
+                Modifiers, CharEncoding, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+          , no_attr
+        > result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
         {
-            typedef typename Modifier::char_set char_set;
-
-            char_type ch = fusion::at_c<0>(elements);
-            vector_type v(char_set::tolower(ch));
-            return type(v);
+            return result_type(fusion::at_c<0>(term.args));
         }
     };
 
-    template <typename Domain, typename Elements, typename Modifier,
-        typename Char>
-    struct make_modified_component<
-        Domain, karma::literal_char<Char>, Elements, Modifier,
-        typename enable_if<
-            is_member_of_modifier<Modifier, spirit::char_class::upper_case_base_tag>
-        >::type
-    >
+    // char_("x")
+    template <typename CharEncoding, typename Modifiers, typename Char>
+    struct make_primitive<
+        terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>
+          , fusion::vector1<Char(&)[2]> // For single char strings
+        >
+      , Modifiers>
     {
-        typedef typename
-            fusion::result_of::value_at_c<Elements, 0>::type
-        char_type;
-        typedef fusion::vector<char_type> vector_type;
+        static bool const lower =
+            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
 
-        typedef
-            component<karma::domain, karma::literal_char<Char>, vector_type>
-        type;
+        static bool const upper =
+            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
-        static type
-        call(Elements const& elements)
+        typedef literal_char<
+            typename spirit::detail::get_encoding<
+                Modifiers, CharEncoding, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+          , false
+        > result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
         {
-            typedef typename Modifier::char_set char_set;
-
-            char_type ch = fusion::at_c<0>(elements);
-            vector_type v(char_set::toupper(ch));
-            return type(v);
+            return result_type(fusion::at_c<0>(term.args)[0]);
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////////
-    // lower_case and upper case_any_char conversions
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Domain, typename Elements, typename Modifier,
-        typename Char>
-    struct make_modified_component<
-        Domain, karma::any_char<Char>, Elements, Modifier,
-        typename enable_if<
-            is_member_of_modifier<Modifier, spirit::char_class::lower_case_base_tag>
-        >::type
-    >
-    {
-        typedef typename Modifier::char_set char_set;
-        typedef spirit::char_class::tag::lower char_class_;
-        typedef spirit::char_class::key<char_set, char_class_> key_tag;
+}}}   // namespace boost::spirit::karma
 
-        typedef component<
-            karma::domain, karma::case_any_char<Char, key_tag>, fusion::nil>
-        type;
-
-        static type
-        call(Elements const&)
-        {
-            return type(fusion::nil());
-        }
-    };
-
-    template <typename Domain, typename Elements, typename Modifier,
-        typename Char>
-    struct make_modified_component<
-        Domain, karma::any_char<Char>, Elements, Modifier,
-        typename enable_if<
-            is_member_of_modifier<Modifier, spirit::char_class::upper_case_base_tag>
-        >::type
-    >
-    {
-        typedef typename Modifier::char_set char_set;
-        typedef spirit::char_class::tag::upper char_class_;
-        typedef spirit::char_class::key<char_set, char_class_> key_tag;
-
-        typedef component<
-            karma::domain, karma::case_any_char<Char, key_tag>, fusion::nil>
-        type;
-
-        static type
-        call(Elements const&)
-        {
-            return type(fusion::nil());
-        }
-    };
-
-}}}   // namespace boost::spirit::traits
-
-#endif // !defined(BOOST_SPIRIT_KARMA_CHAR_FEB_21_2007_0543PM)
+#endif

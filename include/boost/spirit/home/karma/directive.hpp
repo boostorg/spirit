@@ -17,13 +17,18 @@
 #include <boost/spirit/home/karma/directive/left_alignment.hpp>
 #include <boost/spirit/home/karma/directive/right_alignment.hpp>
 #include <boost/spirit/home/karma/directive/center_alignment.hpp>
-#include <boost/spirit/home/karma/directive/alignment_meta_grammar.hpp>
+
+///////////////////////////////////////////////////////////////////////////////
+//  directives related to truncating length
+//  maxwidth[...]
+///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/karma/directive/maxwidth.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  directives related to character case
 //  lower[...] and upper[...]
 ///////////////////////////////////////////////////////////////////////////////
-#include <boost/spirit/home/karma/directive/case_meta_grammar.hpp>
+#include <boost/spirit/home/karma/directive/upper_lower_case.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 //  directives related to delimiting generators 
@@ -31,6 +36,5 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/karma/directive/verbatim.hpp>
 #include <boost/spirit/home/karma/directive/delimit.hpp>
-#include <boost/spirit/home/karma/directive/delimiter_meta_grammar.hpp>
 
 #endif
