@@ -19,16 +19,16 @@ namespace boost { namespace spirit {
         struct lex_input;
         struct functor_input;
         struct split_functor_input;
-        
+
         // ownership policies
         struct ref_counted;
         struct first_owner;
-        
+
         // checking policies
         class illegal_backtracking;
         struct buf_id_check;
         struct no_check;
-        
+
         // storage policies
         struct std_deque;
         template<std::size_t N> struct fixed_size_queue;
@@ -44,7 +44,7 @@ namespace boost { namespace spirit {
     {
         template <typename T> void swap(T& t1, T& t2);
     }
-    
+
 }} // namespace boost::spirit
 
 #endif
