@@ -91,8 +91,8 @@ int main(int argc, char* argv[])
     // read input from the given file
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
 
-    // Specifying 'omitted' as the token value type generates a token class not
-    // holding any token value at all (not even the iterator_range of the 
+    // Specifying 'omitted' as the token attribute type generates a token class 
+    // notholding any token attribute at all (not even the iterator_range of the 
     // matched input sequence), therefor optimizing the token, the lexer, and 
     // possibly the parser implementation as much as possible. 
     //

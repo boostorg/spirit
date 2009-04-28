@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
     typedef std::string::iterator base_iterator_type;
 
     // the token type to be used, 'int' is available as the type of the token 
-    // value and no lexer state is supported
+    // attribute and no lexer state is supported
     typedef lexertl::token<base_iterator_type, boost::mpl::vector<int>
       , boost::mpl::false_> token_type;
 

@@ -5,8 +5,8 @@
 
 //  This example shows how to create a simple lexer recognizing a couple of 
 //  different tokens aimed at a simple language and how to use this lexer with 
-//  a grammar. It shows how to associate values to tokens and how to access the 
-//  token values from inside the grammar.
+//  a grammar. It shows how to associate attributes to tokens and how to access the 
+//  token attributes from inside the grammar.
 //
 //  Additionally, this example demonstrates, how to define a token set usable 
 //  as the skip parser during parsing, allowing to define several tokens to be 
@@ -86,7 +86,7 @@ public:
     //       well (see the typedef for the token_type below).
     //
     // The conversion of the matched input to an instance of this type occurs
-    // once (on first access), which makes token values as efficient as 
+    // once (on first access), which makes token attributes as efficient as 
     // possible. Moreover, token instances are constructed once by the lexer
     // library. From this point on tokens are passed by reference only, 
     // avoiding them being copied around.
@@ -186,7 +186,7 @@ struct example5_tokens : example5_base_tokens<Lexer>
         this->base_type::init_token_definitions();
     }
 
-    // this token has no value
+    // this token has no attribute
     token_def<omitted> else_;
 };
 
@@ -218,13 +218,13 @@ int main()
     // example5_base_tokens<> above). Here we use the predefined lexertl token 
     // type, but any compatible token type may be used instead.
     //
-    // If you don't list any token value types in the following declaration 
+    // If you don't list any token attribute types in the following declaration 
     // (or just use the default token type: lexertl_token<base_iterator_type>)  
     // it will compile and work just fine, just a bit less efficient. This is  
-    // because the token value will be generated from the matched input  
+    // because the token attribute will be generated from the matched input  
     // sequence every time it is requested. But as soon as you specify at 
-    // least one token value type you'll have to list all value types used  
-    // for token_def<> declarations in the token definition class above,  
+    // least one token attribute type you'll have to list all attribute types 
+    // used for token_def<> declarations in the token definition class above,  
     // otherwise compilation errors will occur.
     typedef lexertl::token<
         base_iterator_type, boost::mpl::vector<unsigned int, std::string> 

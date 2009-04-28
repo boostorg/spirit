@@ -127,7 +127,7 @@ struct word_count_grammar : grammar<Iterator>
 int main(int argc, char* argv[])
 {
 /*< define the token type to be used: `std::string` is available as the 
-     type of the token value 
+     type of the token attribute 
 >*/  typedef lexertl::token<
         char const*, boost::mpl::vector<std::string>
     > token_type;

@@ -124,8 +124,8 @@ struct counter
         switch (t.id()) {
         case ID_WORD:       // matched a word
         // since we're using a default token type in this example, every 
-        // token instance contains a `iterator_range<BaseIterator>` as its 
-        // token value pointing to the matched character sequence in the input 
+        // token instance contains a `iterator_range<BaseIterator>` as its token
+        // attribute pointing to the matched character sequence in the input 
             ++w; c += t.value().size(); 
             break;
         case ID_EOL:        // matched a newline character
