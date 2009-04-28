@@ -15,7 +15,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/home/lex/lexer/lexertl/generate_static.hpp>
+#include <boost/spirit/include/lex_generate_static_lexertl.hpp>
 
 #include <fstream>
 
