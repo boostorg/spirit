@@ -176,15 +176,15 @@ namespace boost { namespace spirit { namespace lex
         typedef
             typename result_of::compile<qi::domain, Skipper>::type
         skipper_type;
-        skipper_type const skipper_ = compile<qi::domain>(skipper);
+        skipper_type const skipper = compile<qi::domain>(skipper_);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
         if (!compile<qi::domain>(xpr).parse(
-                iter, lex.end(), unused, skipper_, attr))
+                iter, lex.end(), unused, skipper, attr))
             return false;
 
         // do a final post-skip
-        qi::skip_over(iter, lex.end(), skipper_);
+        qi::skip_over(iter, lex.end(), skipper);
         return true;
     }
 

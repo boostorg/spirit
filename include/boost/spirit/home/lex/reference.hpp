@@ -37,7 +37,7 @@ namespace boost { namespace spirit { namespace lex
         template <typename LexerDef, typename String>
         void collect(LexerDef& lexdef, String const& state) const
         {
-            return ref.get().collect(lexdef, state);
+            return this->ref.get().collect(lexdef, state);
         }
     };
 
@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace lex
 
         IdType id() const 
         { 
-            return ref.get().id(); 
+            return this->ref.get().id(); 
         }
     };
 

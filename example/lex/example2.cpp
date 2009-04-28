@@ -56,7 +56,7 @@ struct example2_tokens : lexer<Lexer>
         // interpreted literally and never as special regex characters. This is
         // done to be able to assign single characters the id of their character
         // code value, allowing to reference those as literals in Qi grammars.
-        self = token_def<>(',') | '!' | '.' | '?' | ' ' | '\n' | word;
+        this->self = token_def<>(',') | '!' | '.' | '?' | ' ' | '\n' | word;
     }
 
     token_def<> word;

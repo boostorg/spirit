@@ -42,7 +42,7 @@ namespace boost { namespace spirit { namespace lex
               , lexer_def_<LexerDef> >
           , qi::parser<lexer_def_<LexerDef> >
           , lex::lexer_type<lexer_def_<LexerDef> >
-          , noncopyable
+//           , noncopyable
         {
         private:
             // avoid warnings about using 'this' in constructor

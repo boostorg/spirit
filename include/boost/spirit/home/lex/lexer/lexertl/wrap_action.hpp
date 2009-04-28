@@ -13,6 +13,7 @@
 #include <boost/spirit/home/phoenix/core/argument.hpp>
 #include <boost/spirit/home/phoenix/bind.hpp>
 #include <boost/spirit/home/phoenix/scope.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace lex { namespace lexertl 
@@ -42,8 +43,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                   , Attribute const& attr, std::size_t id, bool& pass
                   , Context& ctx) const
                 {
-                    f (spirit::detail::pass_value<Attribute const>::call(attr)
-                      , id, pass, ctx);
+                    typedef typename 
+                        traits::pass_attribute<unused_type, Attribute const>::type
+                    attribute_type;
+
+                    attribute_type attr_wrap(attr);
+                    f (attr_wrap, id, pass, ctx);
                 }
             };
 

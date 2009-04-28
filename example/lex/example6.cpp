@@ -27,7 +27,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <iostream>
@@ -76,13 +76,13 @@ struct example6_tokens : lexer<Lexer>
             ;
 
         // associate the tokens and the token set with the lexer
-        self = token_def<>('(') | ')' | '{' | '}' | '=' | ';';
+        this->self = token_def<>('(') | ')' | '{' | '}' | '=' | ';';
 
         // Token definitions can be added by using some special syntactic 
         // construct as shown below.
         // Note, that the token definitions added this way expose the iterator
         // pair pointing to the matched input stream as their attribute.
-        self.add
+        this->self.add
             (constant, ID_CONSTANT)
             ("if", ID_IF)
             ("else", ID_ELSE)
@@ -91,7 +91,7 @@ struct example6_tokens : lexer<Lexer>
         ;
 
         // add whitespace tokens to another lexer state (here: "WS")
-        self("WS") = white_space;
+        this->self("WS") = white_space;
     }
 
     // The following two tokens have an associated value type, identifier 

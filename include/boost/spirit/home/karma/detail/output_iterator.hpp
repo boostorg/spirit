@@ -254,13 +254,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             traits::is_not_unused<Derived>, Derived, output_iterator
         >::type most_derived_type;
 
-#if !defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS)
-    private:
-        friend struct counting_sink<output_iterator<OutputIterator, Derived> >;
-        friend struct enable_buffering<output_iterator<OutputIterator, Derived> >;
-#else
     public:
-#endif
         // functions related to counting
         counting_sink<most_derived_type>* chain_counting(
             counting_sink<most_derived_type>* count_data)

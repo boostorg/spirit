@@ -31,7 +31,7 @@ struct word_count_tokens : boost::spirit::lex::lexer<BaseLexer>
     {
         // define tokens and associate them with the lexer
         word = "[^ \t\n]+";
-        this->self = word | '\n' | token_def<>(".", IDANY);
+        this->self = word | '\n' | boost::spirit::lex::token_def<>(".", IDANY);
     }
 
     boost::spirit::lex::token_def<std::string> word;
