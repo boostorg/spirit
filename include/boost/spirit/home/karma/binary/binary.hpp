@@ -51,8 +51,8 @@ namespace boost { namespace spirit
     BOOST_SPIRIT_ENABLE_BINARY(byte_)                   // enables byte_
     BOOST_SPIRIT_ENABLE_BINARY(word)                    // enables word
     BOOST_SPIRIT_ENABLE_BINARY(big_word)                // enables big_word
-    BOOST_SPIRIT_ENABLE_BINARY(dword)                   // enables dword
     BOOST_SPIRIT_ENABLE_BINARY(little_word)             // enables little_word
+    BOOST_SPIRIT_ENABLE_BINARY(dword)                   // enables dword
     BOOST_SPIRIT_ENABLE_BINARY(big_dword)               // enables big_dword
     BOOST_SPIRIT_ENABLE_BINARY(little_dword)            // enables little_dword
 #ifdef BOOST_HAS_LONG_LONG
@@ -70,10 +70,10 @@ namespace boost { namespace spirit { namespace karma
 {
     using boost::spirit::byte_;
     using boost::spirit::word;
-    using boost::spirit::dword;
     using boost::spirit::big_word;
-    using boost::spirit::big_dword;
     using boost::spirit::little_word;
+    using boost::spirit::dword;
+    using boost::spirit::big_dword;
     using boost::spirit::little_dword;
 #ifdef BOOST_HAS_LONG_LONG
     using boost::spirit::qword;
@@ -310,10 +310,10 @@ namespace boost { namespace spirit { namespace karma
 
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(byte_, native, 8)
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(word, native, 16)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(dword, native, 32)
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_word, big, 16)
-    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_dword, big, 32)
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_word, little, 16)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(dword, native, 32)
+    BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(big_dword, big, 32)
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(little_dword, little, 32)
 #ifdef BOOST_HAS_LONG_LONG
     BOOST_SPIRIT_MAKE_BINARY_PRIMITIVE(qword, native, 64)
