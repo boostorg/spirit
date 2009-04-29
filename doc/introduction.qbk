@@ -186,7 +186,7 @@ type from the output format. You can use the same output format with different
 data types as long as these conform conceptually. The next table gives some 
 related examples.
 
-[table Different data types usable with the output format `(*int_ << eol)`
+[table Different data types usable with the output format `*(int_ << eol)`
     [ [Data type] ]
     [ [`int i[4]`]                [C style arrays] ]
     [ [`std::vector<int>`]        [Standard vector] ]
