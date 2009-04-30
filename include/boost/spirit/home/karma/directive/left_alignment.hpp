@@ -48,7 +48,7 @@ namespace boost { namespace spirit
           , terminal_ex<tag::left_align, fusion::vector1<T> > >
       : mpl::true_ {};
 
-    // enables *lazy* delimit(d)[g], where d provides a generator
+    // enables *lazy* left_align(d)[g], where d provides a generator
     template <>
     struct use_lazy_directive<karma::domain, tag::left_align, 1> 
       : mpl::true_ {};
@@ -60,8 +60,8 @@ namespace boost { namespace spirit
           , terminal_ex<tag::left_align, fusion::vector2<Width, Padding> > >
       : spirit::traits::matches<karma::domain, Padding> {};
 
-    // enables *lazy* delimit(w, d)[g], where d provides a generator and w is 
-    // a maximum width
+    // enables *lazy* left_align(w, d)[g], where d provides a generator and w 
+    // is a maximum width
     template <>
     struct use_lazy_directive<karma::domain, tag::left_align, 2> 
       : mpl::true_ {};
