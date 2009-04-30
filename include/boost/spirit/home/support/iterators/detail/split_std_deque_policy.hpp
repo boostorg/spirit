@@ -53,9 +53,12 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             dereference(MultiPass const& mp)
             {
                 queue_type& queue = mp.shared->queued_elements;
+                typename queue_type::size_type size = queue.size();
+
+                BOOST_ASSERT(mp.queued_position <= size);
                 if (0 == mp.queued_position) 
                 {
-                    if (queue.empty())
+                    if (0 == size)
                     {
                         queue.push_back(Value());
                         return MultiPass::advance_input(mp, queue[mp.queued_position++]);
@@ -78,14 +81,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
                 queue_type& queue = mp.shared->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
-                // The following assertion fires if the iterator gets 
-                // incremented before being dereferenced for the first time.
-                // This may happen if you use the postincrement operator
-                // at the same time as you dereference it: *it++, which is 
-                // invalid for this input iterator because the data storage
-                // is shared between its copies and incrementing affects all
-                // copies at the same time.
-                BOOST_ASSERT(0 != size && mp.queued_position <= size);
+                BOOST_ASSERT(mp.queued_position <= size);
                 if (mp.queued_position == size)
                 {
                     // check if this is the only iterator
