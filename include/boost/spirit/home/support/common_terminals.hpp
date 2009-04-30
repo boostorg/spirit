@@ -73,7 +73,6 @@ namespace boost { namespace spirit
         ( right_align )
         ( center )
         ( maxwidth )
-        ( confix )
         ( set_state )
         ( in_state )
         ( token )
