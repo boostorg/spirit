@@ -1,6 +1,5 @@
 #==============================================================================
 #   Copyright (c) 2001-2009 Joel de Guzman
-#   Copyright (c) 2001-2009 Joel de Guzman
 #   Copyright (c) 2001-2009 Hartmut Kaiser
 #
 #   Use, modification and distribution is subject to the Boost Software
@@ -12,8 +11,8 @@ project spirit_v2x/test
         <include>.
         <toolset>gcc:<cxxflags>-ftemplate-depth-300
         <toolset>darwin:<cxxflags>-ftemplate-depth-300
-        <toolset>gcc:<linkflags>-Wl,--enable-auto-import
-        <toolset>darwin:<linkflags>-Wl,--enable-auto-import
+#        <toolset>gcc:<linkflags>-Wl,--enable-auto-import
+#        <toolset>darwin:<linkflags>-Wl,--enable-auto-import
     :
     :
     ;
@@ -31,13 +30,11 @@ import testing ;
     [ run qi/binary.cpp                     : : : : ]
     [ run qi/char.cpp                       : : : : ]
     [ run qi/char_class.cpp                 : : : : ]
-    #[ run qi/confix.cpp                     : : : : ]
     #[ run qi/debug.cpp                      : : : : ]
     [ run qi/difference.cpp                 : : : : ]
     [ run qi/end.cpp                        : : : : ]
     [ run qi/eps.cpp                        : : : : ]
     [ run qi/expect.cpp                     : : : : ]
-    #[ run qi/functor.cpp                    : : : : ]
     [ run qi/grammar.cpp                    : : : : ]
     [ run qi/int.cpp                        : : : : ]
     [ run qi/kleene.cpp                     : : : : ]
@@ -74,13 +71,11 @@ import testing ;
     [ run karma/case_handling.cpp           : : : : ]
     [ run karma/center_alignment.cpp        : : : : ]
     [ run karma/char.cpp                    : : : : karma_char ]
-#    [ run karma/confix.cpp                  : : : : karma_confix ]
     [ run karma/delimiter.cpp               : : : : ]
     [ run karma/eol.cpp                     : : : : karma_eol ]
     [ run karma/eps.cpp                     : : : : karma_eps ]
     [ run karma/format_manip.cpp            : : : : ]
     [ run karma/format_manip_attr.cpp       : : : : ]
-#    [ run karma/functor.cpp                 : : : : karma_functor ]
     [ run karma/generate_attr.cpp           : : : : ]
     [ run karma/grammar.cpp                 : : : : karma_grammar ]
     [ run karma/int_numerics.cpp            : : : : ]
