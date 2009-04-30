@@ -32,19 +32,19 @@ namespace boost { namespace spirit { namespace detail
     template<typename T> 
     inline bool (signbit)(T x)
     {
-        return boost::spirit::math::signbit(x);
+        return (boost::spirit::math::signbit)(x);
     }
 
     template<typename T> 
     inline T (changesign)(T x)
     {
-        return boost::spirit::math::changesign(x);
+        return (boost::spirit::math::changesign)(x);
     }
 #else
     template<typename T> 
     inline bool (signbit)(T x)
     {
-        return boost::math::signbit(x) ? true : false;
+        return (boost::math::signbit)(x) ? true : false;
     }
 
     // This routine has been taken and adapted from Johan Rade's fp_traits 
