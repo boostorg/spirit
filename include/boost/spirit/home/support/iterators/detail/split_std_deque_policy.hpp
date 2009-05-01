@@ -12,7 +12,7 @@
 #include <boost/assert.hpp>
 #include <vector>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     ///////////////////////////////////////////////////////////////////////////
     //  class split_std_deque

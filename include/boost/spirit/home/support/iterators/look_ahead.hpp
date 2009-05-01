@@ -24,19 +24,19 @@ namespace boost { namespace spirit
     class look_ahead :
         public multi_pass<
             T,
-            multi_pass_policies::input_iterator,
-            multi_pass_policies::first_owner,
-            multi_pass_policies::no_check,
-            multi_pass_policies::fixed_size_queue<N> 
+            iterator_policies::input_iterator,
+            iterator_policies::first_owner,
+            iterator_policies::no_check,
+            iterator_policies::fixed_size_queue<N> 
         >
     {
     private:
         typedef multi_pass<
             T,
-            multi_pass_policies::input_iterator,
-            multi_pass_policies::first_owner,
-            multi_pass_policies::no_check,
-            multi_pass_policies::fixed_size_queue<N> > 
+            iterator_policies::input_iterator,
+            iterator_policies::first_owner,
+            iterator_policies::no_check,
+            iterator_policies::fixed_size_queue<N> > 
         base_type;
             
     public:

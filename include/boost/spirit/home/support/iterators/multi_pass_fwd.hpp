@@ -12,7 +12,7 @@
 
 namespace boost { namespace spirit {
 
-    namespace multi_pass_policies
+    namespace iterator_policies
     {
         // input policies
         struct input_iterator;

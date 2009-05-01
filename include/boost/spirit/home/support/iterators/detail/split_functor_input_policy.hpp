@@ -11,7 +11,7 @@
 #include <boost/assert.hpp>
 #include <boost/type_traits/is_empty.hpp>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     namespace split_functor_input_is_valid_test_
     {

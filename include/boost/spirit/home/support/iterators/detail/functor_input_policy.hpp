@@ -10,7 +10,7 @@
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 #include <boost/assert.hpp>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     namespace is_valid_test_
     {

@@ -13,7 +13,7 @@
 #include <boost/throw_exception.hpp>
 #include <exception>    // for std::exception
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     ///////////////////////////////////////////////////////////////////////////
     //  class illegal_backtracking

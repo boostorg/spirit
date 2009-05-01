@@ -9,7 +9,7 @@
 #include <boost/config.hpp>
 #include <boost/type_traits/is_empty.hpp>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     ///////////////////////////////////////////////////////////////////////////
     //  The purpose of the multi_pass_unique template is to eliminate 

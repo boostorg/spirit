@@ -11,7 +11,7 @@
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 #include <cstdlib>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     ///////////////////////////////////////////////////////////////////////////
     //  class ref_counted
