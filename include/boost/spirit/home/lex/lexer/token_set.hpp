@@ -231,6 +231,8 @@ namespace boost { namespace spirit { namespace lex
         adder add;
         pattern_adder add_pattern;
 
+        std::size_t state() const { return token_state; }
+
     private:
         mutable std::size_t token_state;
     };
