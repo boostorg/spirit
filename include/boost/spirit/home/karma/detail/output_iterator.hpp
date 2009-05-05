@@ -64,7 +64,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     public:
         counting_sink(OutputIterator& sink_, std::size_t count_ = 0
               , bool enabled = true) 
-          : sink(sink_), count(count_) 
+          : count(count_), prev_count(0), sink(sink_)
         {
             prev_count = sink.chain_counting(enabled ? this : NULL);
         }
