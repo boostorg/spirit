@@ -106,6 +106,8 @@ import testing ;
     [ run lex/lexertl5.cpp                  : : : : ]
     [ run lex/state_switcher_test.cpp       : : : : ]
 
+    [ run lex/regression001.cpp             : : : : lex_regression001 ]
+
     ;
 
 }
