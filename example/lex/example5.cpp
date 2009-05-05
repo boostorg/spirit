@@ -254,7 +254,7 @@ int main()
     std::string::iterator it = str.begin();
     iterator_type iter = tokens.begin(it, str.end());
     iterator_type end = tokens.end();
-        
+
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
     // Note, how we use the token_set defined above as the skip parser. It must
