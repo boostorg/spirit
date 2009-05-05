@@ -73,17 +73,17 @@ namespace boost { namespace spirit { namespace karma {
 
         inline float absolute_value (float n)
         {
-            return spirit::detail::signbit(n) ? -n : n;
+            return (spirit::detail::signbit)(n) ? -n : n;
         }
 
         inline double absolute_value (double n)
         {
-            return spirit::detail::signbit(n) ? -n : n;
+            return (spirit::detail::signbit)(n) ? -n : n;
         }
 
         inline long double absolute_value (long double n)
         {
-            return spirit::detail::signbit(n) ? -n : n;
+            return (spirit::detail::signbit)(n) ? -n : n;
         }
 
         template <typename T>
@@ -97,17 +97,17 @@ namespace boost { namespace spirit { namespace karma {
         ///////////////////////////////////////////////////////////////////////
         inline bool is_negative(float n) 
         { 
-            return spirit::detail::signbit(n) ? true : false; 
+            return (spirit::detail::signbit)(n) ? true : false; 
         }
 
         inline bool is_negative(double n) 
         { 
-            return spirit::detail::signbit(n) ? true : false; 
+            return (spirit::detail::signbit)(n) ? true : false; 
         }
 
         inline bool is_negative(long double n) 
         { 
-            return spirit::detail::signbit(n) ? true : false; 
+            return (spirit::detail::signbit)(n) ? true : false; 
         }
 
         template <typename T>
@@ -119,17 +119,17 @@ namespace boost { namespace spirit { namespace karma {
         ///////////////////////////////////////////////////////////////////////
         inline bool is_zero(float n) 
         { 
-            return math::fpclassify(n) == FP_ZERO; 
+            return (math::fpclassify)(n) == FP_ZERO; 
         }
 
         inline bool is_zero(double n) 
         { 
-            return math::fpclassify(n) == FP_ZERO; 
+            return (math::fpclassify)(n) == FP_ZERO; 
         }
 
         inline bool is_zero(long double n) 
         { 
-            return math::fpclassify(n) == FP_ZERO; 
+            return (math::fpclassify)(n) == FP_ZERO; 
         }
 
         template <typename T>
@@ -533,7 +533,7 @@ namespace boost { namespace spirit { namespace karma {
         static bool
         call (OutputIterator& sink, float n, Policies const& p = Policies())
         {
-            int fpclass = math::fpclassify(n);
+            int fpclass = (math::fpclassify)(n);
             if (FP_NAN == fpclass)
                 return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
             else if (FP_INFINITE == fpclass)
@@ -545,7 +545,7 @@ namespace boost { namespace spirit { namespace karma {
         static bool
         call (OutputIterator& sink, double n, Policies const& p = Policies())
         {
-            int fpclass = math::fpclassify(n);
+            int fpclass = (math::fpclassify)(n);
             if (FP_NAN == fpclass)
                 return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
             else if (FP_INFINITE == fpclass)
@@ -557,7 +557,7 @@ namespace boost { namespace spirit { namespace karma {
         static bool
         call (OutputIterator& sink, long double n, Policies const& p = Policies())
         {
-            int fpclass = math::fpclassify(n);
+            int fpclass = (math::fpclassify)(n);
             if (FP_NAN == fpclass)
                 return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
             else if (FP_INFINITE == fpclass)
