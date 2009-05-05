@@ -251,7 +251,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #endif
 
         ///////////////////////////////////////////////////////////////////////
-        // interface to the multi_pass_policies::split_functor_input policy
+        // interface to the iterator_policies::split_functor_input policy
         typedef Token result_type;
         typedef functor unique;
         typedef detail::Data<Iterator, SupportsActors, SupportsState> shared;

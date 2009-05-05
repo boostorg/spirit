@@ -36,16 +36,16 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         // Compose the multi_pass iterator policy type from the appropriate 
         // policies
-        typedef multi_pass_policies::split_functor_input input_policy;
-        typedef multi_pass_policies::ref_counted ownership_policy;
+        typedef iterator_policies::split_functor_input input_policy;
+        typedef iterator_policies::ref_counted ownership_policy;
 #if defined(BOOST_SPIRIT_DEBUG)
-        typedef multi_pass_policies::buf_id_check check_policy;
+        typedef iterator_policies::buf_id_check check_policy;
 #else
-        typedef multi_pass_policies::no_check check_policy;
+        typedef iterator_policies::no_check check_policy;
 #endif
-        typedef multi_pass_policies::split_std_deque storage_policy;
+        typedef iterator_policies::split_std_deque storage_policy;
 
-        typedef multi_pass_policies::default_policy<
+        typedef iterator_policies::default_policy<
                 ownership_policy, check_policy, input_policy, storage_policy>
             policy_type;
 

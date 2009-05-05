@@ -183,7 +183,7 @@ namespace boost { namespace spirit { namespace lex
         };
         friend struct adder;
 
-        // allow to use lexer.self.add_pattern("pattern1", "regex1")(...);
+        // allow to use tokset.add_pattern("pattern1", "regex1")(...);
         // syntax
         struct pattern_adder
         {
