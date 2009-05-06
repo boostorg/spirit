@@ -13,7 +13,7 @@ boost_library_project(
   TESTDIRS  test
   HEADERS ${lib_headers}
   #  DOCDIRS 
-  DESCRIPTION  "A object oriented, recursive-descent parser and output generation library using the yyntax of Parsing Expression Grammars (PEG’s) directly in C++"
+  DESCRIPTION  "A object oriented, recursive-descent parser and output generation library using the syntax of Parsing Expression Grammars (PEGs) directly in C++"
   MODULARIZED
   AUTHORS  "Joel de Guzman <joel -at- boost-consulting.com>"
            "Hartmut Kaiser <hartmut.kaiser -at- gmail.com>"
