@@ -40,7 +40,6 @@ main()
     using boost::spirit::qi::rule;
     using boost::spirit::qi::lazy;
     using boost::spirit::qi::_r1;
-    using boost::phoenix::ref;
 
     { // basics
         symbols<char, int> sym;
@@ -159,7 +158,7 @@ main()
     }
 
     { // actions
-        using boost::phoenix::ref;
+        namespace phx = boost::phoenix;
         using boost::spirit::_1;
 
         symbols<char, int> sym;
@@ -173,19 +172,19 @@ main()
         ;
 
         int i;
-        BOOST_TEST((test("Joel", sym[ref(i) = _1])));
+        BOOST_TEST((test("Joel", sym[phx::ref(i) = _1])));
         BOOST_TEST(i == 1);
-        BOOST_TEST((test("Ruby", sym[ref(i) = _1])));
+        BOOST_TEST((test("Ruby", sym[phx::ref(i) = _1])));
         BOOST_TEST(i == 2);
-        BOOST_TEST((test("Tenji", sym[ref(i) = _1])));
+        BOOST_TEST((test("Tenji", sym[phx::ref(i) = _1])));
         BOOST_TEST(i == 3);
-        BOOST_TEST((test("Tutit", sym[ref(i) = _1])));
+        BOOST_TEST((test("Tutit", sym[phx::ref(i) = _1])));
         BOOST_TEST(i == 4);
-        BOOST_TEST((test("Kim", sym[ref(i) = _1])));
+        BOOST_TEST((test("Kim", sym[phx::ref(i) = _1])));
         BOOST_TEST(i == 5);
-        BOOST_TEST((test("Joey", sym[ref(i) = _1])));
+        BOOST_TEST((test("Joey", sym[phx::ref(i) = _1])));
         BOOST_TEST(i == 6);
-        BOOST_TEST((!test("XXX", sym[ref(i) = _1])));
+        BOOST_TEST((!test("XXX", sym[phx::ref(i) = _1])));
     }
 
     { // construction from symbol array
@@ -253,6 +252,8 @@ main()
     }
 
     {
+        namespace phx = boost::phoenix;
+
         symbols<char, int> sym;
         sym.add
             ("a", 1)
@@ -263,11 +264,11 @@ main()
         r %= lazy(_r1);
 
         int i = 0;
-        BOOST_TEST(test_attr("a", r(ref(sym)), i));
+        BOOST_TEST(test_attr("a", r(phx::ref(sym)), i));
         BOOST_TEST(i == 1);
-        BOOST_TEST(test_attr("b", r(ref(sym)), i));
+        BOOST_TEST(test_attr("b", r(phx::ref(sym)), i));
         BOOST_TEST(i == 2);
-        BOOST_TEST(!test("c", r(ref(sym))));
+        BOOST_TEST(!test("c", r(phx::ref(sym))));
     }
 
     return boost::report_errors();
