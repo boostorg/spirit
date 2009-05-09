@@ -18,7 +18,7 @@ exe print_numbers           : print_numbers.cpp ;
 exe word_count              : word_count.cpp ;
 exe word_count_functor      : word_count_functor.cpp ;
 exe word_count_lexer        : word_count_lexer.cpp ;
-exe word_count_lexer_flex   : word_count_lexer_flex.cpp ;
+exe word_count_functor_flex : word_count_functor_flex.cpp ;
 exe strip_comments          : strip_comments.cpp ;
 exe strip_comments_lexer    : strip_comments_lexer.cpp ;
 
