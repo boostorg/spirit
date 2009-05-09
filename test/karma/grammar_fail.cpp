@@ -40,7 +40,7 @@ int main()
 
     std::back_insert_iterator<std::string> outit(generated);
     num_list def;
-    bool r = generate_delimited(outit, def, char_('%') << '\n');
+    generate_delimited(outit, def, char_('%') << '\n');
 
     return 0;
 }

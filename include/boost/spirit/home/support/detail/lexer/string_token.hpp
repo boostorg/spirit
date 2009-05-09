@@ -135,7 +135,7 @@ struct basic_string_token
 
     void intersect (basic_string_token &rhs_, basic_string_token &overlap_)
     {
-        if (any () && rhs_.any () || (_negated == rhs_._negated &&
+        if ((any () && rhs_.any ()) || (_negated == rhs_._negated &&
             !any () && !rhs_.any ()))
         {
             intersect_same_types (rhs_, overlap_);

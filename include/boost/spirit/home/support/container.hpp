@@ -52,8 +52,8 @@ namespace boost { namespace spirit { namespace traits
 //    struct is_container<optional<T> > 
 //      : is_container<T> {};
 
-//#define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 \
-//        is_container<BOOST_PP_CAT(T, N)>::value ||                            \
+//#define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 
+//        is_container<BOOST_PP_CAT(T, N)>::value ||                            
 //    /***/
 
 //    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>

@@ -525,8 +525,8 @@ private:
                 throw runtime_error ("Unexpected end of regex "
                     "(missing '}').");
             }
-        } while (ch_ == '_' || ch_ == '-' || ch_ >= 'A' && ch_ <= 'Z' ||
-            ch_ >= 'a' && ch_ <= 'z' || ch_ >= '0' && ch_ <= '9');
+        } while (ch_ == '_' || ch_ == '-' || (ch_ >= 'A' && ch_ <= 'Z') ||
+            (ch_ >= 'a' && ch_ <= 'z') || (ch_ >= '0' && ch_ <= '9'));
 
         if (ch_ != '}')
         {

@@ -39,10 +39,10 @@ main()
         BOOST_TEST(!test("\n", !eol, false));
         BOOST_TEST(test("\b", !eol, false));
 
-        BOOST_TEST(test("   \r", eol, ascii::char_(L' ')));
-        BOOST_TEST(test("   \r\n", eol, ascii::char_(L' ')));
-        BOOST_TEST(test("   \n", eol, ascii::char_(L' ')));
-        BOOST_TEST(!test("   \b", eol, ascii::char_(L' ')));
+        BOOST_TEST(test("   \r", eol, ascii::char_(' ')));
+        BOOST_TEST(test("   \r\n", eol, ascii::char_(' ')));
+        BOOST_TEST(test("   \n", eol, ascii::char_(' ')));
+        BOOST_TEST(!test("   \b", eol, ascii::char_(' ')));
 
         BOOST_TEST(test(L"\r", eol));
         BOOST_TEST(test(L"\r\n", eol));

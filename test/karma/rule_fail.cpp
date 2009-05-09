@@ -31,7 +31,7 @@ int main()
     def = int_(1) << ',' << int_(0);
 
     std::back_insert_iterator<std::string> outit(generated);
-    bool r = generate_delimited(outit, def, char_('%') << '\n');
+    generate_delimited(outit, def, char_('%') << '\n');
 
     return 0;
 }

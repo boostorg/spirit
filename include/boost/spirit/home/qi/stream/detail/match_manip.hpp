@@ -27,32 +27,32 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     struct match_manip
     {
         match_manip(Expr const& xpr, Skipper const& s, Attribute& a)
-          : expr(xpr), attr(a), skipper(s), post_skip(skip_flag::postskip) {}
+          : expr(xpr), skipper(s), attr(a), post_skip(skip_flag::postskip) {}
 
         match_manip(Expr const& xpr, Skipper const& s
             , BOOST_SCOPED_ENUM(skip_flag) ps, Attribute& a)
-          : expr(xpr), attr(a), skipper(s), post_skip(ps) {}
+          : expr(xpr), skipper(s), attr(a), post_skip(ps) {}
 
         Expr const& expr;
         Skipper const& skipper;
-        BOOST_SCOPED_ENUM(skip_flag) const post_skip;
         Attribute& attr;
+        BOOST_SCOPED_ENUM(skip_flag) const post_skip;
     };
 
     template <typename Expr, typename Skipper, typename Attribute>
     struct match_manip<Expr, mpl::true_, Skipper, Attribute>
     {
         match_manip(Expr const& xpr, Skipper const& s, Attribute& a)
-          : expr(xpr), attr(a), skipper(s), post_skip(skip_flag::postskip) {}
+          : expr(xpr), skipper(s), attr(a), post_skip(skip_flag::postskip) {}
 
         match_manip(Expr const& xpr, Skipper const& s
             , BOOST_SCOPED_ENUM(skip_flag) ps, Attribute& a)
-          : expr(xpr), attr(a), skipper(s), post_skip(ps) {}
+          : expr(xpr), skipper(s), attr(a), post_skip(ps) {}
 
         Expr const& expr;
         Skipper const& skipper;
-        BOOST_SCOPED_ENUM(skip_flag) const post_skip;
         Attribute attr;
+        BOOST_SCOPED_ENUM(skip_flag) const post_skip;
     };
 
     ///////////////////////////////////////////////////////////////////////////

@@ -77,7 +77,7 @@ main()
         rr.set(range<char>('a', 'a'));
         for (char c = 0; c < 127; ++c)
         {
-            BOOST_TEST(c == 'a' == rr.test(c));
+            BOOST_TEST((c == 'a') == rr.test(c));
         }
     }
     {
@@ -95,7 +95,7 @@ main()
         rr.set(range<char>(0, 0));
         for (char c = 0; c < 127; ++c)
         {
-            BOOST_TEST(c == 0 == rr.test(c));
+            BOOST_TEST((c == 0) == rr.test(c));
         }
         rr.set(range<char>(0, 50));
         for (char c = 0; c < 127; ++c)
@@ -108,7 +108,7 @@ main()
         rr.set(range<unsigned char>(255, 255));
         for (unsigned char c = 0; c < 255; ++c)
         {
-            BOOST_TEST(c == 255 == rr.test(c));
+            BOOST_TEST((c == 255) == rr.test(c));
         }
         rr.set(range<unsigned char>(250, 255));
         for (unsigned char c = 0; c < 255; ++c)
