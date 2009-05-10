@@ -69,25 +69,25 @@ main()
     using boost::spirit::qi::typed_stream;
     using boost::spirit::qi::stream;
     using boost::spirit::qi::int_;
-    using boost::phoenix::ref;
 
     using namespace boost::spirit::ascii;
     namespace fusion = boost::fusion;
+    namespace phx = boost::phoenix;
 
     {
         char c = '\0';
         BOOST_TEST(test( "a",
-            char_[ref(c) = _1]
+            char_[phx::ref(c) = _1]
         ) && c == 'a');
 
         c = '\0';
         BOOST_TEST(test( "a",
-            match(char_[ref(c) = _1])
+            match(char_[phx::ref(c) = _1])
         ) && c == 'a');
 
         c = '\0';
         BOOST_TEST(test( " a",
-            phrase_match(char_[ref(c) = _1], space)
+            phrase_match(char_[phx::ref(c) = _1], space)
         ) && c == 'a');
 
         c = '\0';
@@ -112,32 +112,32 @@ main()
         ///////////////////////////////////////////////////////////////////////
         char c = '\0';
         BOOST_TEST(test( "a",
-            char_stream[ref(c) = _1]
+            char_stream[phx::ref(c) = _1]
         ) && c == 'a');
 
         c = '\0';
         BOOST_TEST(test( "a",
-            match(char_stream[ref(c) = _1])
+            match(char_stream[phx::ref(c) = _1])
         ) && c == 'a');
 
         c = '\0';
         BOOST_TEST(test( " a",
-            phrase_match(char_stream[ref(c) = _1], space)
+            phrase_match(char_stream[phx::ref(c) = _1], space)
         ) && c == 'a');
 
         int i = 0;
         BOOST_TEST(test( "42",
-            int_stream[ref(i) = _1]
+            int_stream[phx::ref(i) = _1]
         ) && i == 42);
 
         i = 0;
         BOOST_TEST(test( "42",
-            match(int_stream[ref(i) = _1])
+            match(int_stream[phx::ref(i) = _1])
         ) && i == 42);
 
         i = 0;
         BOOST_TEST(test( " 42",
-            phrase_match(int_stream[ref(i) = _1], space)
+            phrase_match(int_stream[phx::ref(i) = _1], space)
         ) && i == 42);
 
         ///////////////////////////////////////////////////////////////////////
@@ -165,17 +165,17 @@ main()
     {
         char a = '\0', b = '\0';
         BOOST_TEST(test( "ab",
-            char_[ref(a) = _1] >> char_[ref(b) = _1]
+            char_[phx::ref(a) = _1] >> char_[phx::ref(b) = _1]
         ) && a == 'a' && b == 'b');
 
         a = '\0', b = '\0';
         BOOST_TEST(test( "ab",
-            match(char_[ref(a) = _1] >> char_[ref(b) = _1])
+            match(char_[phx::ref(a) = _1] >> char_[phx::ref(b) = _1])
         ) && a == 'a' && b == 'b');
 
         a = '\0', b = '\0';
         BOOST_TEST(test( " a b",
-            phrase_match(char_[ref(a) = _1] >> char_[ref(b) = _1], space)
+            phrase_match(char_[phx::ref(a) = _1] >> char_[phx::ref(b) = _1], space)
         ) && a == 'a' && b == 'b');
 
         fusion::vector<char, char> t;
@@ -192,7 +192,7 @@ main()
     {
         char a = '\0', b = '\0', c = '\0';
         BOOST_TEST(test( "abc",
-            char_[ref(a) = _1] >> char_[ref(b) = _1] >> char_[ref(c) = _1]
+            char_[phx::ref(a) = _1] >> char_[phx::ref(b) = _1] >> char_[phx::ref(c) = _1]
         ) && a == 'a' && b == 'b' && c == 'c');
 
         BOOST_TEST(test( "abc",
@@ -226,7 +226,7 @@ main()
         char a = '\0';
         int i = 0;
         BOOST_TEST(test( "a2",
-            (char_ >> int_)[ref(a) = _1, ref(i) = _2]
+            (char_ >> int_)[phx::ref(a) = _1, phx::ref(i) = _2]
         ) && a == 'a' && i == 2);
 
         fusion::vector<char, int> t;
@@ -251,7 +251,7 @@ main()
         // output all elements of a vector
         std::vector<char> v;
         BOOST_TEST(test( "abc",
-            (*char_)[ref(v) = _1]
+            (*char_)[phx::ref(v) = _1]
         ) && 3 == v.size() && v[0] == 'a' && v[1] == 'b' && v[2] == 'c');
 
         v.clear();

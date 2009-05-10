@@ -38,8 +38,7 @@ main()
     using boost::spirit::qi::on_error;
     using boost::spirit::qi::debug;
 
-    using boost::phoenix::ref;
-    using boost::phoenix::val;
+    namespace phx = boost::phoenix;
 
 
     { // basic tests
@@ -188,7 +187,7 @@ main()
         rule<char const*, char()> a;
         a = alpha[_val = _1];
 
-        BOOST_TEST(test("x", a[ref(ch) = _1]));
+        BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
         BOOST_TEST(ch == 'x');
 
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
@@ -201,7 +200,7 @@ main()
         rule<char const*, char()> a;
         a %= alpha;
 
-        BOOST_TEST(test("x", a[ref(ch) = _1]));
+        BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
         BOOST_TEST(ch == 'x');
 
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
@@ -218,11 +217,11 @@ main()
         rule<char const*, std::string()> r;
         r %= char_ >> *(',' >> char_);
 
-        BOOST_TEST(test("a,b,c,d,e,f", r[ref(s) = _1]));
+        BOOST_TEST(test("a,b,c,d,e,f", r[phx::ref(s) = _1]));
         BOOST_TEST(s == "abcdef");
 
         r %= char_ >> char_ >> char_ >> char_ >> char_ >> char_;
-        BOOST_TEST(test("abcdef", r[ref(s) = _1]));
+        BOOST_TEST(test("abcdef", r[phx::ref(s) = _1]));
         BOOST_TEST(s == "abcdef");
     }
 
@@ -242,7 +241,7 @@ main()
         a %= b;
         b %= alpha;
 
-        BOOST_TEST(test("x", a[ref(ch) = _1]));
+        BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
         BOOST_TEST(ch == 'x');
 
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
@@ -255,7 +254,7 @@ main()
         rule<char const*, char(int)> a; // 1 arg
         a = alpha[_val = _1 + _r1];
 
-        BOOST_TEST(test("x", a(val(1))[ref(ch) = _1]));
+        BOOST_TEST(test("x", a(phx::val(1))[phx::ref(ch) = _1]));
         BOOST_TEST(ch == 'x' + 1);
 
         BOOST_TEST(test_attr("a", a(1), ch)); // allow scalars as rule args too.
@@ -273,7 +272,7 @@ main()
         rule<char const*, void(char&)> a; // 1 arg (reference)
         a = alpha[_r1 = _1];
 
-        BOOST_TEST(test("x", a(ref(ch))));
+        BOOST_TEST(test("x", a(phx::ref(ch))));
         BOOST_TEST(ch == 'x');
     }
 
@@ -289,9 +288,9 @@ main()
 
         rule<char const*, void(int), locals<char> > a; // 1 arg + 1 local
         a = alpha[_a = _1 + _r1] >> char_(_a);
-        BOOST_TEST(test("ab", a(val(1))));
-        BOOST_TEST(test("xy", a(val(1))));
-        BOOST_TEST(!test("ax", a(val(1))));
+        BOOST_TEST(test("ab", a(phx::val(1))));
+        BOOST_TEST(test("xy", a(phx::val(1))));
+        BOOST_TEST(!test("ax", a(phx::val(1))));
     }
 
     { // void() has unused type (void == unused_type)
@@ -341,7 +340,6 @@ main()
     { // error handling
 
         using namespace boost::spirit::ascii;
-        using boost::phoenix::val;
         using boost::phoenix::construct;
         using boost::phoenix::bind;
 
@@ -351,11 +349,11 @@ main()
         on_error<fail>
         (
             r, std::cout
-                << val("Error! Expecting: ")
+                << phx::val("Error! Expecting: ")
                 << _4
-                << val(", got: \"")
+                << phx::val(", got: \"")
                 << construct<std::string>(_3, _2)
-                << val("\"")
+                << phx::val("\"")
                 << std::endl
         );
 

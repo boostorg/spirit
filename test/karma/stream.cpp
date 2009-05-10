@@ -129,15 +129,15 @@ main()
     }
 
     {   // lazy streams
-        using namespace boost::phoenix;
+        namespace phx = boost::phoenix;
 
         std::basic_string<char> s("abc");
-        BOOST_TEST((test("abc", stream(val(s)))));
-        BOOST_TEST((test("abc", stream(ref(s)))));
+        BOOST_TEST((test("abc", stream(phx::val(s)))));
+        BOOST_TEST((test("abc", stream(phx::ref(s)))));
 
         std::basic_string<wchar_t> ws(L"abc");
-        BOOST_TEST((test(L"abc", wstream(val(ws)))));
-        BOOST_TEST((test(L"abc", wstream(ref(ws)))));
+        BOOST_TEST((test(L"abc", wstream(phx::val(ws)))));
+        BOOST_TEST((test(L"abc", wstream(phx::ref(ws)))));
     }
 
     return boost::report_errors();

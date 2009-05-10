@@ -132,25 +132,25 @@ main()
     }
 
     {   // test action
-        using namespace boost::phoenix;
+        namespace phx = boost::phoenix;
         using namespace boost::spirit::ascii;
 
         std::string str("abc");
-        BOOST_TEST(test("abc", string[_1 = ref(str)]));
-        BOOST_TEST(test_delimited("abc ", string[_1 = ref(str)], space));
+        BOOST_TEST(test("abc", string[_1 = phx::ref(str)]));
+        BOOST_TEST(test_delimited("abc ", string[_1 = phx::ref(str)], space));
     }
 
     {   // lazy strings
-        using namespace boost::phoenix;
+        namespace phx = boost::phoenix;
         using namespace boost::spirit::ascii;
 
         std::basic_string<char> s("abc");
-        BOOST_TEST((test("abc", lit(val(s)))));
-        BOOST_TEST((test("abc", string(val(s)))));
+        BOOST_TEST((test("abc", lit(phx::val(s)))));
+        BOOST_TEST((test("abc", string(phx::val(s)))));
 
         std::basic_string<wchar_t> ws(L"abc");
-        BOOST_TEST((test(L"abc", lit(ref(ws)))));
-        BOOST_TEST((test(L"abc", string(ref(ws)))));
+        BOOST_TEST((test(L"abc", lit(phx::ref(ws)))));
+        BOOST_TEST((test(L"abc", string(phx::ref(ws)))));
     }
 
     return boost::report_errors();

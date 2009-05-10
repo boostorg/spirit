@@ -85,13 +85,12 @@ main()
     {   // lazy string
 
         using namespace boost::spirit::ascii;
-        using boost::phoenix::ref;
-        using boost::phoenix::val;
+        namespace phx = boost::phoenix;
 
-        BOOST_TEST((test("x", string(val("x")))));
+        BOOST_TEST((test("x", string(phx::val("x")))));
 
         std::string str; // make sure lazy lits have an attribute
-        BOOST_TEST(test("x", string(val("x"))[ref(str) = _1]));
+        BOOST_TEST(test("x", string(phx::val("x"))[phx::ref(str) = _1]));
         BOOST_TEST(str == "x");
     }
 

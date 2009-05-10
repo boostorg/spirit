@@ -66,7 +66,7 @@ main()
     }
 
     { // actions
-        using boost::phoenix::ref;
+        namespace phx = boost::phoenix;
         using boost::phoenix::begin;
         using boost::phoenix::end;
         using boost::phoenix::construct;
@@ -74,7 +74,7 @@ main()
 
         std::string s;
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')
-            [ref(s) = construct<std::string>(begin(_1), end(_1))]));
+            [phx::ref(s) = construct<std::string>(begin(_1), end(_1))]));
     }
 
     return boost::report_errors();
