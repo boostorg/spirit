@@ -17,14 +17,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/config/warning_disable.hpp>
 
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/karma.hpp>
-
 #include <iostream>
 #include <vector>
 #include <string>
 
 #include "calc2_ast_vm.hpp"
+
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/karma.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
