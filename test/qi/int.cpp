@@ -19,7 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  *** BEWARE PLATFORM DEPENDENT!!! ***
-//  *** The following assumes 32 bit integers and 64 bit long longs.
+//  *** The following assumes 32 bit or 64 bit integers and 64 bit long longs.
 //  *** Modify these constant strings when appropriate.
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,14 +34,22 @@ BOOST_STATIC_ASSERT(sizeof(long long) == 8);
 # define LONG_LONG_MAX 0x7fffffffffffffffLL
 # define LONG_LONG_MIN (-LONG_LONG_MAX - 1)
 #endif
+
 #endif // BOOST_HAS_LONG_LONG
 
-BOOST_STATIC_ASSERT(sizeof(long) == 4);
-
+#if LONG_MAX != LLONG_MAX
+    BOOST_STATIC_ASSERT(sizeof(long) == 4);
     char const* max_int = "2147483647";
     char const* int_overflow = "2147483648";
     char const* min_int = "-2147483648";
     char const* int_underflow = "-2147483649";
+#else
+    BOOST_STATIC_ASSERT(sizeof(long) == 8);
+    char const* max_int = "9223372036854775807";
+    char const* int_overflow = "9223372036854775808";
+    char const* min_int = "-9223372036854775808";
+    char const* int_underflow = "-9223372036854775809";
+#endif
 
 #ifdef BOOST_HAS_LONG_LONG
     char const* max_long_long = "9223372036854775807";
