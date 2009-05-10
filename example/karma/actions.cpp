@@ -22,7 +22,7 @@
 
 using boost::spirit::unused_type;
 
-void read(int& i)
+void read_function(int& i)
 {
     i = 42;
 }
@@ -44,7 +44,7 @@ int main()
         std::string generated;
         std::back_insert_iterator<std::string> outit(generated);
         bool result = karma::generate(outit, 
-            '{' << int_[&read] << '}');
+            '{' << int_[&read_function] << '}');
 
         if (result)
             std::cout << "Simple function: " << generated << std::endl;
@@ -69,7 +69,7 @@ int main()
         std::string generated;
         std::back_insert_iterator<std::string> outit(generated);
         bool result = generate(outit, 
-            '{' << int_[boost::bind(read, _1)] << '}');
+            '{' << int_[boost::bind(read_function, _1)] << '}');
 
         if (result)
             std::cout << "Boost.Bind: " << generated << std::endl;
