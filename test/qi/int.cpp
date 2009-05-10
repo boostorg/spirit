@@ -37,14 +37,14 @@ BOOST_STATIC_ASSERT(sizeof(long long) == 8);
 
 #endif // BOOST_HAS_LONG_LONG
 
-#if LONG_MAX != LLONG_MAX
-    BOOST_STATIC_ASSERT(sizeof(long) == 4);
+#if INT_MAX != LLONG_MAX
+    BOOST_STATIC_ASSERT(sizeof(int) == 4);
     char const* max_int = "2147483647";
     char const* int_overflow = "2147483648";
     char const* min_int = "-2147483648";
     char const* int_underflow = "-2147483649";
 #else
-    BOOST_STATIC_ASSERT(sizeof(long) == 8);
+    BOOST_STATIC_ASSERT(sizeof(int) == 8);
     char const* max_int = "9223372036854775807";
     char const* int_overflow = "9223372036854775808";
     char const* min_int = "-9223372036854775808";
