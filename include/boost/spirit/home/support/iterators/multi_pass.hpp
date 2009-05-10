@@ -53,8 +53,20 @@ namespace boost { namespace spirit
 
         multi_pass() : shared(0) {}
 
+        // Newer versions of gcc (and perhaps other compilers) are known to 
+        // generate warnings about the base class and the 'shared' member 
+        // being initialized in the wrong order ('shared' is initialized before
+        // the base class). This is fully intended behavior as some policies
+        // rely on the fact that their shared part is initialized before their
+        // unique part. Please ignore the warnings, these are harmless.
         explicit multi_pass(T input)
           : shared(new shared_data_type(input)), policies_base_type(input) {}
+
+        multi_pass(multi_pass const& x)
+          : shared(x.shared), policies_base_type(x)
+        {
+            policies_base_type::clone(*this);
+        }
 
 #if BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
         // The standard library shipped with gcc-3.1 has a bug in
@@ -72,12 +84,6 @@ namespace boost { namespace spirit
                 policies_base_type::destroy(*this);
                 delete shared;
             }
-        }
-
-        multi_pass(multi_pass const& x)
-          : shared(x.shared), policies_base_type(x)
-        {
-            policies_base_type::clone(*this);
         }
 
         multi_pass& operator=(multi_pass const& x)
