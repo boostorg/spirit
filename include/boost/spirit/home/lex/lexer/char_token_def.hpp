@@ -70,6 +70,8 @@ namespace boost { namespace spirit { namespace lex
                 static_cast<std::size_t>(ch));
         }
 
+        std::size_t id() const { return static_cast<std::size_t>(ch); }
+
         char_type ch;
     };
 

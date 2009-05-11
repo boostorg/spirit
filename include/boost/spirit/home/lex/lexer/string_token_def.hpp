@@ -58,16 +58,21 @@ namespace boost { namespace spirit { namespace lex
         typedef std::basic_string<char_type> string_type;
 
         string_token_def(typename add_reference<String>::type str)
-          : str_(str) {}
+          : str_(str), id_(~0U) {}
 
         template <typename LexerDef, typename State>
         void collect(LexerDef& lexdef, State const& state) const
         {
             typedef typename LexerDef::id_type id_type;
-            lexdef.add_token (state.c_str(), str_, next_id<id_type>::get());
+            if (~0U == id_)
+                id_ = next_id<id_type>::get();
+            lexdef.add_token (state.c_str(), str_, id_);
         }
 
+        std::size_t id() const { return id_; }
+
         string_type str_;
+        std::size_t id_;
     };
 
     ///////////////////////////////////////////////////////////////////////////
