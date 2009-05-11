@@ -8,10 +8,11 @@
 #if !defined(BOOST_SPIRIT_ITERATOR_LOOK_AHEAD_MAR_16_2007_1253PM)
 #define BOOST_SPIRIT_ITERATOR_LOOK_AHEAD_MAR_16_2007_1253PM
 
-#include <boost/spirit/home/support/iterators/detail/input_iterator_policy.hpp>
 #include <boost/spirit/home/support/iterators/detail/first_owner_policy.hpp>
 #include <boost/spirit/home/support/iterators/detail/no_check_policy.hpp>
+#include <boost/spirit/home/support/iterators/detail/input_iterator_policy.hpp>
 #include <boost/spirit/home/support/iterators/detail/fixed_size_queue_policy.hpp>
+#include <boost/spirit/home/support/iterators/detail/combine_policies.hpp>
 #include <boost/spirit/home/support/iterators/multi_pass.hpp>
 
 namespace boost { namespace spirit 
@@ -22,23 +23,23 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, std::size_t N>
     class look_ahead :
-        public multi_pass<
-            T,
-            iterator_policies::input_iterator,
-            iterator_policies::first_owner,
-            iterator_policies::no_check,
-            iterator_policies::fixed_size_queue<N> 
+        public multi_pass<T
+          , iterator_policies::default_policy<
+                iterator_policies::first_owner
+              , iterator_policies::no_check
+              , iterator_policies::input_iterator
+              , iterator_policies::fixed_size_queue<N> > 
         >
     {
     private:
-        typedef multi_pass<
-            T,
-            iterator_policies::input_iterator,
-            iterator_policies::first_owner,
-            iterator_policies::no_check,
-            iterator_policies::fixed_size_queue<N> > 
-        base_type;
-            
+        typedef multi_pass<T
+          , iterator_policies::default_policy<
+                iterator_policies::first_owner
+              , iterator_policies::no_check
+              , iterator_policies::input_iterator
+              , iterator_policies::fixed_size_queue<N> > 
+        > base_type;
+
     public:
         look_ahead()
           : base_type() {}
