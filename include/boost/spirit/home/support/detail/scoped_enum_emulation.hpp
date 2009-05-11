@@ -9,7 +9,7 @@
 
 #include <boost/version.hpp>
 
-#if BOOST_VERSION >= 103900
+#if BOOST_VERSION >= 104000
 #include <boost/detail/scoped_enum_emulation.hpp>
 #else
 # define BOOST_SCOPED_ENUM_START(name) struct name { enum enum_t
