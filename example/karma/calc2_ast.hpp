@@ -19,6 +19,7 @@
 #define SPIRIT_EXAMPLE_CALC2_AST_APR_30_2008_1011AM
 
 #include <boost/variant.hpp>
+#include <boost/variant/get.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
@@ -72,10 +73,14 @@ struct expression_ast
 };
 
 // expose variant functionality
-template <typename T>
-inline T get(expression_ast const& expr)
+namespace boost
 {
-    return boost::get<T>(expr.expr);
+    // this function has to live in namespace boost for ADL to correctly find it
+    template <typename T>
+    inline T get(expression_ast const& expr)
+    {
+        return boost::get<T>(expr.expr);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
