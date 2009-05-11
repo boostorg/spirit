@@ -13,6 +13,8 @@
 #endif
 
 #include <cwctype>
+#include <string>
+
 #include <boost/cstdint.hpp>
 
 namespace boost { namespace spirit { namespace char_encoding

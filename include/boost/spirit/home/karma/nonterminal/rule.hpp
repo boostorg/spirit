@@ -32,6 +32,7 @@
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 #include <boost/spirit/home/karma/nonterminal/detail/generator_binder.hpp>
 
 namespace boost { namespace spirit { namespace karma

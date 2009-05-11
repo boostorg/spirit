@@ -16,6 +16,8 @@
 
 #include <boost/proto/proto.hpp>
 #include <boost/config.hpp>
+#include <boost/spirit/home/support/unused.hpp>
+
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4800) // 'int' : forcing value to bool 'true' or 'false' warning

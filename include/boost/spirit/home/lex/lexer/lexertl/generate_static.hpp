@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/detail/lexer/char_traits.hpp>
 #include <boost/spirit/home/support/detail/lexer/consts.hpp>
+#include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/size_t.hpp>
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
 #include <boost/algorithm/string.hpp>
