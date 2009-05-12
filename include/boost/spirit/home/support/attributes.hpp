@@ -23,7 +23,6 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/end.hpp>
-#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/variant.hpp>
@@ -256,17 +255,15 @@ namespace boost { namespace spirit { namespace traits
             filter_unused_attributes<Sequence>::type
         filtered_attributes;
 
-        typedef has_no_unused<Sequence> has_no_unused_type;
-
         // If the original attribute list does not contain any unused
         // attributes, it is used, otherwise a single unused_type is
         // pushed to the front of the list. This is to make sure that if
         // there is an unused_type in the list, it is the first one.
         typedef typename
             mpl::eval_if<
-                has_no_unused_type
-              , mpl::identity<Sequence>
-              , fusion::result_of::push_front<filtered_attributes, unused_type>
+                has_no_unused<Sequence>,
+                mpl::identity<Sequence>,
+                fusion::result_of::push_front<filtered_attributes, unused_type>
             >::type
         attribute_sequence;
 
@@ -281,27 +278,13 @@ namespace boost { namespace spirit { namespace traits
             >::type
         new_sequence;
 
-        // If there is only an unused_type and one other type in the list of 
-        // types we strip off the variant. IOTW, we collapse single element 
-        // variants, variant<unused_type, T> to T.
-        typedef typename
-            mpl::eval_if<
-                mpl::and_<
-                    mpl::equal_to<mpl::size<new_sequence>, mpl::int_<2> >
-                  , mpl::not_<has_no_unused_type> >
-              , fusion::result_of::pop_front<new_sequence>
-              , mpl::identity<new_sequence>
-            >::type
-        shortened_type;
-
         // If there is only one type in the list of types we strip off the
-        // variant as well. IOTW, we collapse single element variants, 
-        // variant<T> to T.
+        // variant. IOTW, collapse single element variants, variant<T> to T.
         typedef typename
             mpl::eval_if<
-                mpl::equal_to<mpl::size<shortened_type>, mpl::int_<1> >,
-                mpl::front<shortened_type>,
-                spirit::detail::as_variant<shortened_type>
+                mpl::equal_to<mpl::size<new_sequence>, mpl::int_<1> >,
+                mpl::deref<mpl::front<attribute_sequence> >,
+                spirit::detail::as_variant<new_sequence>
             >::type
         type;
     };

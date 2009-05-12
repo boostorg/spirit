@@ -436,17 +436,11 @@ namespace boost { namespace spirit { namespace qi
               , tag::char_code<tag::no_case, CharEncoding>
             >::value;
 
-        static bool const no_attr =
-            !has_modifier<
-                Modifiers
-              , tag::lazy_eval
-            >::value;
-
         typedef typename
             mpl::if_<
                 traits::is_string<A0>
               , char_set<CharEncoding, no_case>
-              , literal_char<CharEncoding, no_attr, no_case>
+              , literal_char<CharEncoding, false, no_case>
             >::type
         result_type;
 
