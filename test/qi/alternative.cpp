@@ -26,13 +26,18 @@
 
 struct print_action
 {
+    print_action(char last)
+      : last_(last) {}
+
     void operator()(std::vector<char> const& v
       , boost::spirit::unused_type
       , boost::spirit::unused_type) const
     {
         BOOST_TEST(v.size() == 4 && 
-            v[0] =='a' && v[1] =='b' && v[2] =='1' && v[3] =='2');
+            v[0] == 'a' && v[1] == 'b' && v[2] == '1' && v[3] == last_);
     }
+
+    char last_;
 };
 
 int
@@ -133,8 +138,8 @@ main()
         using boost::spirit::ascii::alpha;
         using boost::spirit::ascii::digit;
 
-        BOOST_TEST( (test("ab12", lexeme[*(alnum | '_')][print_action()])) );
-        BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][print_action()])) );
+        BOOST_TEST( (test("ab1_", lexeme[*(alnum | '_')][print_action('_')])) );
+        BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][print_action('2')])) );
     }
 
     return boost::report_errors();
