@@ -465,13 +465,7 @@ namespace boost { namespace spirit { namespace qi
               , tag::char_code<tag::no_case, CharEncoding>
             >::value;
 
-        static bool const no_attr =
-            !has_modifier<
-                Modifiers
-              , tag::lazy_eval
-            >::value;
-
-        typedef literal_char<CharEncoding, no_attr, no_case> result_type;
+        typedef literal_char<CharEncoding, false, no_case> result_type;
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
