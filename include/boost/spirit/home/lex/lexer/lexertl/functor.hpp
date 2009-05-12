@@ -35,24 +35,24 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename Iterator, typename HasActors, typename HasState>
-        struct Data;    // no default specialization
+        struct data;    // no default specialization
 
         ///////////////////////////////////////////////////////////////////////
         //  neither supports state, nor actors
         template <typename Iterator>
-        struct Data<Iterator, mpl::false_, mpl::false_>
+        struct data<Iterator, mpl::false_, mpl::false_>
         {
             typedef std::size_t state_type;
             typedef iterator_range<Iterator> iterpair_type;
             typedef typename boost::detail::iterator_traits<Iterator>::value_type 
                 char_type;
             typedef unused_type semantic_actions_type;
-            typedef detail::wrap_action<unused_type, iterpair_type, Data>
+            typedef detail::wrap_action<unused_type, iterpair_type, data>
                 wrap_action_type;
 
             // initialize the shared data 
             template <typename IterData>
-            Data (IterData const& data_, Iterator& first_, Iterator const& last_)
+            data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : state_machine(data_.state_machine_)
               , rules(data_.rules_)
               , first(first_), last(last_) {}
@@ -64,7 +64,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
 
             // nothing to invoke, so this is empty
-            bool invoke_actions(std::size_t, Iterator const&) 
+            bool invoke_actions(std::size_t, std::size_t, Iterator const&) 
             {
                 return true;    // always accept
             }
@@ -81,10 +81,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support actors
         template <typename Iterator>
-        struct Data<Iterator, mpl::false_, mpl::true_>
-          : Data<Iterator, mpl::false_, mpl::false_>
+        struct data<Iterator, mpl::false_, mpl::true_>
+          : data<Iterator, mpl::false_, mpl::false_>
         {
-            typedef Data<Iterator, mpl::false_, mpl::false_> base_type;
+            typedef data<Iterator, mpl::false_, mpl::false_> base_type;
 
             typedef typename base_type::state_type state_type;
             typedef typename base_type::char_type char_type;
@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // initialize the shared data 
             template <typename IterData>
-            Data (IterData const& data_, Iterator& first_, Iterator const& last_)
+            data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_), state(0) {}
 
             std::size_t next(Iterator& end)
@@ -124,30 +124,47 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  does support actors, but may have no state
         template <typename Iterator, typename HasState>
-        struct Data<Iterator, mpl::true_, HasState> 
-          : Data<Iterator, mpl::false_, HasState>
+        struct data<Iterator, mpl::true_, HasState> 
+          : data<Iterator, mpl::false_, HasState>
         {
-            typedef Data<Iterator, mpl::false_, HasState> base_type;
+            typedef data<Iterator, mpl::false_, HasState> base_type;
 
             typedef iterator_range<Iterator> iterpair_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::char_type char_type;
 
-            typedef void functor_type(iterpair_type, std::size_t, bool&, Data&);
+            typedef void functor_type(iterpair_type, std::size_t, bool&, data&);
             typedef boost::function<functor_type> functor_wrapper_type;
-            typedef std::multimap<std::size_t, functor_wrapper_type> 
+            struct action_key
+            {
+                action_key(std::size_t id, std::size_t state)
+                  : id_(id), state_(state) {}
+                action_key(std::pair<std::size_t, std::size_t> const& k)
+                  : id_(k.first), state_(k.second) {}
+
+                friend bool operator<(action_key const& lhs, action_key const& rhs)
+                {
+                    return lhs.id_ < rhs.id_ || 
+                          (lhs.id_ == rhs.id_ && lhs.state_ < rhs.state_);
+                }
+
+                std::size_t id_;
+                std::size_t state_;
+            };
+            typedef std::multimap<action_key, functor_wrapper_type> 
                 semantic_actions_type;
 
-            typedef detail::wrap_action<functor_wrapper_type, iterpair_type, Data>
+            typedef detail::wrap_action<functor_wrapper_type, iterpair_type, data>
                 wrap_action_type;
 
             template <typename IterData>
-            Data (IterData const& data_, Iterator& first_, Iterator const& last_)
+            data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_)
               , actions(data_.actions_) {}
 
             // invoke attached semantic actions, if defined
-            bool invoke_actions(std::size_t id, Iterator const& end)
+            bool invoke_actions(std::size_t id, std::size_t state
+              , Iterator const& end)
             {
                 if (actions.empty()) 
                     return true;  // nothing to invoke, continue with 'match'
@@ -158,7 +175,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 typedef typename semantic_actions_type::const_iterator 
                     iterator_type;
 
-                std::pair<iterator_type, iterator_type> p = actions.equal_range(id);
+                std::pair<iterator_type, iterator_type> p = 
+                    actions.equal_range(action_key(id, state));
+
                 while (p.first != p.second)
                 {
                     ((*p.first).second)(itp, id, match, *this);
@@ -217,7 +236,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // reference, see
         // http://www.open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#45.
         template <typename Iterator_, typename HasActors, typename HasState> 
-        friend struct detail::Data;
+        friend struct detail::data;
 
         // Helper template allowing to assign a value on exit
         template <typename T>
@@ -254,7 +273,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // interface to the iterator_policies::split_functor_input policy
         typedef Token result_type;
         typedef functor unique;
-        typedef detail::Data<Iterator, SupportsActors, SupportsState> shared;
+        typedef detail::data<Iterator, SupportsActors, SupportsState> shared;
 
         BOOST_SPIRIT_EOF_PREFIX result_type const eof;
 
@@ -317,7 +336,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 std::size_t state = data.get_state();
 
                 // invoke attached semantic actions, if defined
-                if (!data.invoke_actions(id, end))
+                if (!data.invoke_actions(id, state, end))
                 {
                     // one of the semantic actions signaled no-match
                     result = result_type(0); 

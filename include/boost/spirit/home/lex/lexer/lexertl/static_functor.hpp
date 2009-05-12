@@ -35,30 +35,30 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename Iterator, typename HasActors, typename HasState>
-        struct Data;    // no default specialization
-        
+        struct static_data;    // no default specialization
+
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support no state and no actors
         template <typename Iterator>
-        struct Data<Iterator, mpl::false_, mpl::false_>
+        struct static_data<Iterator, mpl::false_, mpl::false_>
         {
             typedef std::size_t state_type;
             typedef iterator_range<Iterator> iterpair_type;
             typedef typename 
                 boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
-            
+
             typedef std::size_t (*next_token_functor)(std::size_t&, 
                 Iterator const&, Iterator&, Iterator const&);
 
             typedef unused_type semantic_actions_type;
 
-            typedef detail::wrap_action<unused_type, iterpair_type, Data>
+            typedef detail::wrap_action<unused_type, iterpair_type, static_data>
                 wrap_action_type;
 
             // initialize the shared data 
             template <typename IterData>
-            Data (IterData const& data_, Iterator& first_, Iterator const& last_)
+            static_data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : next_token(data_.next_), first(first_), last(last_)
             {}
 
@@ -86,10 +86,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support no actors
         template <typename Iterator>
-        struct Data<Iterator, mpl::false_, mpl::true_>
-          : Data<Iterator, mpl::false_, mpl::false_>
+        struct static_data<Iterator, mpl::false_, mpl::true_>
+          : static_data<Iterator, mpl::false_, mpl::false_>
         {
-            typedef Data<Iterator, mpl::false_, mpl::false_> base_type;
+            typedef static_data<Iterator, mpl::false_, mpl::false_> base_type;
 
             typedef typename base_type::state_type state_type;
             typedef typename base_type::char_type char_type;
@@ -99,7 +99,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // initialize the shared data 
             template <typename IterData>
-            Data (IterData const& data_, Iterator& first_, Iterator const& last_)
+            static_data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_), state(0)
             {}
 
@@ -124,25 +124,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         //  does support actors, but may have no state
         template <typename Iterator, typename HasState>
-        struct Data<Iterator, mpl::true_, HasState> 
-          : Data<Iterator, mpl::false_, HasState>
+        struct static_data<Iterator, mpl::true_, HasState> 
+          : static_data<Iterator, mpl::false_, HasState>
         {
-            typedef Data<Iterator, mpl::false_, HasState> base_type;
+            typedef static_data<Iterator, mpl::false_, HasState> base_type;
 
             typedef iterator_range<Iterator> iterpair_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::char_type char_type;
 
-            typedef void functor_type(iterpair_type, std::size_t, bool&, Data&);
+            typedef void functor_type(iterpair_type, std::size_t, bool&, static_data&);
             typedef boost::function<functor_type> functor_wrapper_type;
             typedef std::multimap<std::size_t, functor_wrapper_type> 
                 semantic_actions_type;
 
             typedef detail::wrap_action<functor_wrapper_type
-              , iterpair_type, Data> wrap_action_type;
+              , iterpair_type, static_data> wrap_action_type;
 
             template <typename IterData>
-            Data (IterData const& data_, Iterator& first_, Iterator const& last_)
+            static_data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_),
                 actions(data_.actions_)
             {}
@@ -217,7 +217,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // reference, see
         // http://www.open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#45.
         template <typename Iterator_, typename HasActors, typename HasState> 
-        friend struct detail::Data;
+        friend struct detail::static_data;
 
         // Helper template allowing to assign a value on exit
         template <typename T>
@@ -254,7 +254,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // interface to the iterator_policies::split_functor_input policy
         typedef Token result_type;
         typedef static_functor unique;
-        typedef detail::Data<Iterator, SupportsActors, SupportsState> shared;
+        typedef detail::static_data<Iterator, SupportsActors, SupportsState> shared;
 
         BOOST_SPIRIT_EOF_PREFIX result_type const eof;
 
