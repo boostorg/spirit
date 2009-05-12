@@ -21,7 +21,19 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include "test.hpp"
+
+struct print_action
+{
+    void operator()(std::vector<char> const& v
+      , boost::spirit::unused_type
+      , boost::spirit::unused_type) const
+    {
+        BOOST_TEST(v.size() == 4 && 
+            v[0] =='a' && v[1] =='b' && v[2] =='1' && v[3] =='2');
+    }
+};
 
 int
 main()
@@ -112,6 +124,17 @@ main()
 
         r3 %= ((eps >> r1) | r2);
         r3 = ((eps >> r1) | r2)[_val += _1];
+    }
+
+    // make sure the attribute of an alternative gets properly collapsed
+    {
+        using boost::spirit::qi::lexeme;
+        using boost::spirit::ascii::alnum;
+        using boost::spirit::ascii::alpha;
+        using boost::spirit::ascii::digit;
+
+        BOOST_TEST( (test("ab12", lexeme[*(alnum | '_')][print_action()])) );
+        BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][print_action()])) );
     }
 
     return boost::report_errors();
