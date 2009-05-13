@@ -6,6 +6,8 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
+include_directories(.)
+
 boost_additional_test_dependencies(spirit BOOST_DEPENDS test variant function_types intrusive lambda assign iostreams math random dynamic_bitset fusion)
 message(STATUS "Boost/libs/spirit/test needs GCC C++ -ftemplate-depth-300 flag")
 
@@ -100,8 +102,8 @@ boost_test_run(lex_lexertl4 lex/lexertl4.cpp COMPILE_FLAGS ${test_compile_flags}
 boost_test_run(lex_lexertl5 lex/lexertl5.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_state_switcher_test lex/state_switcher_test.cpp COMPILE_FLAGS ${test_compile_flags})
 
-boost_test_run(lex_regression001 lex/lex_regression001.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(lex_regression002 lex/lex_regression002.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_regression001 lex/regression001.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_regression002 lex/regression002.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run support tests
 # boost_test_run(support_hold_any support/hold_any.cpp COMPILE_FLAGS ${test_compile_flags})

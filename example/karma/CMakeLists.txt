@@ -1,0 +1,11 @@
+
+boost_add_executable(quick_start1)
+boost_add_executable(actions)
+boost_add_executable(basic_facilities DEPENDS boost_date_time)
+boost_add_executable(calc2_ast_dump)
+boost_add_executable(calc2_ast_rpn)
+boost_add_executable(calc2_ast_vm)
+boost_add_executable(mini_xml_karma)
+
+
+
