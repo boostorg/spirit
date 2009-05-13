@@ -6,6 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/mpl/print.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
@@ -24,9 +25,9 @@
 #include <vector>
 #include "test.hpp"
 
-struct print_action
+struct test_action
 {
-    print_action(char last)
+    test_action(char last)
       : last_(last) {}
 
     void operator()(std::vector<char> const& v
@@ -38,6 +39,26 @@ struct print_action
     }
 
     char last_;
+};
+
+struct test_action_2
+{
+    typedef std::vector<boost::variant<boost::spirit::unused_type, char> >
+        result_type;
+
+    void operator()(result_type const& v
+      , boost::spirit::unused_type
+      , boost::spirit::unused_type) const
+    {
+        using boost::get;
+
+        BOOST_TEST(v.size() == 5 && 
+            v[0].which() == 0 &&
+            v[1].which() == 1 && get<char>(v[1]) == 'a' && 
+            v[2].which() == 1 && get<char>(v[2]) == 'b' && 
+            v[3].which() == 1 && get<char>(v[3]) == '1' && 
+            v[4].which() == 1 && get<char>(v[4]) == '2');
+    }
 };
 
 int
@@ -138,8 +159,10 @@ main()
         using boost::spirit::ascii::alpha;
         using boost::spirit::ascii::digit;
 
-        BOOST_TEST( (test("ab1_", lexeme[*(alnum | '_')][print_action('_')])) );
-        BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][print_action('2')])) );
+        BOOST_TEST( (test("ab1_", lexeme[*(alnum | char_('_'))][test_action('_')])) );
+        BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][test_action('2')])) );
+
+        BOOST_TEST( (test("abcab12", lexeme[*("abc" | alnum)][test_action_2()])) );
     }
 
     return boost::report_errors();
