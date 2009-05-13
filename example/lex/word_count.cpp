@@ -111,7 +111,7 @@ struct word_count_grammar : grammar<Iterator>
         using boost::phoenix::size;
 
         start =  *(   tok.word      [++ref(w), ref(c) += size(_1)]
-                  |   char_('\n')   [++ref(c), ++ref(l)] 
+                  |   lit('\n')     [++ref(c), ++ref(l)] 
                   |   token(IDANY)  [++ref(c)]
                   )
               ;

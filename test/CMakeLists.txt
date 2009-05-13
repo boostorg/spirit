@@ -58,39 +58,39 @@ boost_test_run(qi_uint qi/uint.cpp COMPILE_FLAGS ${test_compile_flags})
 # boost_test_compile_fail(qi_rule_fail qi/rule_fail.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run Karma tests
-boost_test_run(karma_actions karma/actions.cpp COMPILE_FLAGS ${test_compile_flags}) #              : : : : karma_actions ]
-boost_test_run(karma_and_attribute karma/and_attribute.cpp COMPILE_FLAGS ${test_compile_flags}) #              : : : : karma_actions ]
-boost_test_run(karma_alternative karma/alternative.cpp COMPILE_FLAGS ${test_compile_flags}) #              : : : : karma_alternative ]
-boost_test_run(karma_binary karma/binary.cpp COMPILE_FLAGS ${test_compile_flags}) #                   : : : : karma_binary ]
+boost_test_run(karma_actions karma/actions.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_and_attribute karma/and_attribute.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_alternative karma/alternative.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_binary karma/binary.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_case_handling karma/case_handling.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_center_alignment karma/center_alignment.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_char karma/char.cpp COMPILE_FLAGS ${test_compile_flags}) #                     : : : : karma_char ]
+boost_test_run(karma_char karma/char.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_delimiter karma/delimiter.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_eol karma/eol.cpp COMPILE_FLAGS ${test_compile_flags}) #                      : : : : karma_eol ]
-boost_test_run(karma_eps karma/eps.cpp COMPILE_FLAGS ${test_compile_flags}) #                      : : : : karma_eps ]
+boost_test_run(karma_eol karma/eol.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_eps karma/eps.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_format_manip karma/format_manip.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_format_manip_attr karma/format_manip_attr.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_generate_attr karma/generate_attr.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_grammar karma/grammar.cpp COMPILE_FLAGS ${test_compile_flags}) #                  : : : : karma_grammar ]
+boost_test_run(karma_grammar karma/grammar.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_int_numerics karma/int_numerics.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_kleene karma/kleene.cpp COMPILE_FLAGS ${test_compile_flags}) #                   : : : : karma_kleene ]
-boost_test_run(karma_lazy karma/lazy.cpp COMPILE_FLAGS ${test_compile_flags}) #                     : : : : karma_lazy ]
+boost_test_run(karma_kleene karma/kleene.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_lazy karma/lazy.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_left_alignment karma/left_alignment.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_list karma/list.cpp COMPILE_FLAGS ${test_compile_flags}) #                     : : : : karma_list ]
-boost_test_run(karma_lit karma/lit.cpp COMPILE_FLAGS ${test_compile_flags}) #                      : : : : karma_lit ]
-boost_test_run(karma_maxwidth karma/maxwidth.cpp COMPILE_FLAGS ${test_compile_flags}) #                      : : : : karma_lit ]
-boost_test_run(karma_optional karma/optional.cpp COMPILE_FLAGS ${test_compile_flags}) #                 : : : : karma_optional ]
+boost_test_run(karma_list karma/list.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_lit karma/lit.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_maxwidth karma/maxwidth.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_optional karma/optional.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_pattern karma/pattern.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_pattern2 karma/pattern2.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_plus karma/plus.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_real_numerics karma/real_numerics.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_right_alignment karma/right_alignment.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_sequence karma/sequence.cpp COMPILE_FLAGS ${test_compile_flags}) #                 : : : : karma_sequence ]
-boost_test_run(karma_stream karma/stream.cpp COMPILE_FLAGS ${test_compile_flags}) #                 : : : : karma_sequence ]
-boost_test_run(karma_tricky_alignment karma/tricky_alignment.cpp COMPILE_FLAGS ${test_compile_flags}) #                 : : : : karma_sequence ]
+boost_test_run(karma_sequence karma/sequence.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_stream karma/stream.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_tricky_alignment karma/tricky_alignment.cpp COMPILE_FLAGS ${test_compile_flags})
 
-boost_test_compile_fail(karma_grammar_fail karma/grammar_fail.cpp COMPILE_FLAGS ${test_compile_flags}) #   : : karma_grammar_fail ]
-boost_test_compile_fail(karma_rule_fail karma/rule_fail.cpp COMPILE_FLAGS ${test_compile_flags}) #      : : karma_rule_fail ]
+boost_test_compile_fail(karma_grammar_fail karma/grammar_fail.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_compile_fail(karma_rule_fail karma/rule_fail.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run lexer tests
 boost_test_run(lex_lexertl1 lex/lexertl1.cpp COMPILE_FLAGS ${test_compile_flags})
@@ -99,6 +99,9 @@ boost_test_run(lex_lexertl3 lex/lexertl3.cpp COMPILE_FLAGS ${test_compile_flags}
 boost_test_run(lex_lexertl4 lex/lexertl4.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_lexertl5 lex/lexertl5.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_state_switcher_test lex/state_switcher_test.cpp COMPILE_FLAGS ${test_compile_flags})
+
+boost_test_run(lex_regression001 lex/lex_regression001.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_regression002 lex/lex_regression002.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run support tests
 # boost_test_run(support_hold_any support/hold_any.cpp COMPILE_FLAGS ${test_compile_flags})

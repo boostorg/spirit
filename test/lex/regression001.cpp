@@ -1,4 +1,9 @@
+//  Copyright (c) 2001-2009 Hartmut Kaiser
+// 
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
+//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
 #include <iostream>
@@ -53,6 +58,6 @@ int main(int argc, char* argv[])
         i != position_helper_lexer.end(); i++ )
     {
     }
-    return 0;
+    return boost::report_errors();
 }
 
