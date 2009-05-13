@@ -311,7 +311,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         //  Register a semantic action with the given id
         template <typename F>
-        void add_action(std::size_t id, F act)
+        void add_action(id_type id, std::size_t state, F act)
         {
             // If you get compilation errors below stating value_type not being
             // a member of boost::fusion::unused_type, then you are probably
@@ -322,25 +322,21 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 value_type;
             typedef typename Functor::wrap_action_type wrapper_type;
 
-            actions.insert(value_type(id, wrapper_type::call(act)));
+            actions.insert(value_type(std::make_pair(id, state)
+              , wrapper_type::call(act)));
         }
 
         bool init_dfa() const
         {
             if (!initialized_dfa) {
                 state_machine.clear();
-                try {
-                    typedef boost::lexer::basic_generator<char_type> generator;
-                    generator::build (rules, state_machine);
-                    generator::minimise (state_machine);
+                typedef boost::lexer::basic_generator<char_type> generator;
+                generator::build (rules, state_machine);
+                generator::minimise (state_machine);
 
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
-                    boost::lexer::debug::dump(state_machine, std::cerr);
+                boost::lexer::debug::dump(state_machine, std::cerr);
 #endif
-                }
-                catch (std::runtime_error const&) {
-                    return false;
-                }
                 initialized_dfa = true;
             }
             return true;

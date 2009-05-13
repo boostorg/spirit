@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace lex
         std::size_t id() const { return id_; }
 
         string_type str_;
-        std::size_t id_;
+        mutable std::size_t id_;
     };
 
     ///////////////////////////////////////////////////////////////////////////

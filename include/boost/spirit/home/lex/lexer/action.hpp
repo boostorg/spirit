@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace lex
 
             // retrieve the id of the associated token_def and register the 
             // given semantic action with the lexer instance
-            lexdef.add_action(subject.id(), f);
+            lexdef.add_action(subject.id(), subject.state(), f);
         }
 
         Subject subject;

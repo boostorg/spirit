@@ -218,7 +218,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         // register a semantic action with the given id
         template <typename F>
-        void add_action(std::size_t id, F act) 
+        void add_action(id_type id, std::size_t state, F act) 
         {
             // If you get compilation errors below stating value_type not being
             // a member of boost::fusion::unused_type, then you are probably
@@ -228,7 +228,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             typedef typename Functor::semantic_actions_type::value_type
                 value_type;
 
-            actions.insert(value_type(id, act));
+            actions.insert(value_type(std::make_pair(id, state), act));
         }
 
         bool init_dfa() const { return true; }

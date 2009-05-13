@@ -51,6 +51,10 @@ namespace boost { namespace spirit { namespace lex
         { 
             return this->ref.get().id(); 
         }
+        std::size_t state() const 
+        { 
+            return this->ref.get().state(); 
+        }
     };
 
 }}}
