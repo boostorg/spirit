@@ -196,6 +196,10 @@ namespace boost { namespace spirit
             // wrap A in a Phoenix actor if not already one
             typedef typename phoenix::as_actor<A>::type type;
         };
+        template <typename A>
+        struct to_lazy_arg<const A>
+          : to_lazy_arg<A>
+        {};
         template <>
         struct to_lazy_arg<unused_type>
         {
@@ -210,6 +214,10 @@ namespace boost { namespace spirit
             // identity
             typedef A type;
         };
+        template <typename A>
+        struct to_nonlazy_arg<const A>
+          : to_nonlazy_arg<A>
+        {};
         template <>
         struct to_nonlazy_arg<unused_type>
         {
