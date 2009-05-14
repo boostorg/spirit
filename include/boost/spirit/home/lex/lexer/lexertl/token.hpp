@@ -85,6 +85,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //
     //        accessors
     //              id()      return the token id of the matched input sequence
+    //              id(newid) set the token id of the token instance
     //
     //              state()   return the lexer state this token was matched in
     //
@@ -118,9 +119,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  construct an invalid token
         token(int) : id_(0) {}
 
-        token(std::size_t id, std::size_t) : id_(id) {}
+        token(id_type id, std::size_t) : id_(id) {}
 
-        token(std::size_t id, std::size_t, Iterator const& first
+        token(id_type id, std::size_t, Iterator const& first
               , Iterator const& last)
           : id_(id) 
 #if defined(BOOST_SPIRIT_DEBUG)
@@ -131,9 +132,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  this default conversion operator is needed to allow the direct 
         //  usage of tokens in conjunction with the primitive parsers defined 
         //  in Qi
-        operator std::size_t() const { return id_; }
+        operator id_type() const { return id_; }
 
-        std::size_t id() const { return id_; }
+        //  Retrieve or set the token id of this token instance. 
+        id_type id() const { return id_; }
+        void id(id_type newid) { id_ = newid; }
+
         std::size_t state() const { return 0; }   // always '0' (INITIAL state)
 
 #if defined(BOOST_SPIRIT_DEBUG)
@@ -141,7 +145,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #endif
 
     protected:
-        std::size_t id_;         // token id, 0 if nothing has been matched
+        id_type id_;            // token id, 0 if nothing has been matched
     };
 
 #if defined(BOOST_SPIRIT_DEBUG)
@@ -179,10 +183,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  construct an invalid token
         token(int) : base_type(0), state_(boost::lexer::npos) {}
 
-        token(std::size_t id, std::size_t state)
+        token(id_type id, std::size_t state)
           : base_type(id, boost::lexer::npos), state_(state) {}
 
-        token(std::size_t id, std::size_t state
+        token(id_type id, std::size_t state
               , Iterator const& first, Iterator const& last)
           : base_type(id, boost::lexer::npos, first, last)
           , state_(state) {}
