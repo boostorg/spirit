@@ -58,7 +58,7 @@ struct word_count_grammar : grammar<Iterator>
         //  associate the defined tokens with the lexer, at the same time 
         //  defining the actions to be executed 
         start =  *(   tok.word      [ ++ref(w), ref(c) += size(_1) ]
-                  |   char_('\n')   [ ++ref(l), ++ref(c) ] 
+                  |   lit('\n')     [ ++ref(l), ++ref(c) ] 
                   |   token(IDANY)  [ ++ref(c) ]
                   )
               ;
