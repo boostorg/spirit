@@ -15,12 +15,6 @@
 #include <boost/spirit/home/qi/parse.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 
-namespace boost { namespace spirit { namespace qi
-{
-    template <typename Iterator, typename Expr, typename Attr>
-    bool parse(Iterator& first, Iterator last, Expr const& expr, Attr& attr);
-}}}
-
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
     namespace construct_

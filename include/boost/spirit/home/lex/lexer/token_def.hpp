@@ -149,14 +149,23 @@ namespace boost { namespace spirit { namespace lex
         template <typename LexerDef, typename String>
         void collect(LexerDef& lexdef, String const& state) const
         {
-            token_state = lexdef.add_state(state.c_str());
+            std::size_t state_id = lexdef.add_state(state.c_str());
+
+            // If the following assertion fires you are probably trying to use 
+            // a single token_def instance in more than one lexer state. This 
+            // is not possible. Please create a separate token_def instance 
+            // from the same regular expression for each lexer state it needs 
+            // to be associated with.
+            BOOST_ASSERT(~0 == token_state || state_id == token_state);
+
+            token_state = state_id;
             if (0 == token_id)
                 token_id = next_id<Idtype>::get();
 
             if (0 == def.which())
-                lexdef.add_token (state.c_str(), get<string_type>(def), token_id);
+                lexdef.add_token(state.c_str(), get<string_type>(def), token_id);
             else
-                lexdef.add_token (state.c_str(), get<char_type>(def), token_id);
+                lexdef.add_token(state.c_str(), get<char_type>(def), token_id);
         }
 
     public:

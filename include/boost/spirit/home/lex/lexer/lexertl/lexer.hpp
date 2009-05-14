@@ -257,24 +257,41 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
     public:
         // interface for token definition management
-        void add_token (char_type const* state, char_type tokendef, 
+        void add_token(char_type const* state, char_type tokendef, 
             std::size_t token_id)
         {
             add_state(state);
             rules.add(state, detail::escape(tokendef), token_id, state);
             initialized_dfa = false;
         }
-        void add_token (char_type const* state, string_type const& tokendef, 
+        void add_token(char_type const* state, string_type const& tokendef, 
             std::size_t token_id)
         {
             add_state(state);
             rules.add(state, tokendef, token_id, state);
             initialized_dfa = false;
         }
+
+        // Allow a token_set to be associated with this lexer instance. This 
+        // copies all token definitions of the right hand side into this lexer
+        // instance.
         void add_token(char_type const* state, token_set const& tokset)
         {
             add_state(state);
             rules.add(state, tokset.get_rules());
+            initialized_dfa = false;
+        }
+
+        // Allow to associate a whole lexer instance with another lexer 
+        // instance. This copies all token definitions of the right hand side 
+        // lexer into this instance.
+        template <typename Token_, typename Iterator_, typename Functor_
+          , typename TokenSet_>
+        void add_token(char_type const* state
+          , lexer<Token_, Iterator_, Functor_, TokenSet_> const& lexer_def)
+        {
+            add_state(state);
+            rules.add(state, lexer_def.get_rules());
             initialized_dfa = false;
         }
 
@@ -286,6 +303,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             rules.add_macro(name.c_str(), patterndef);
             initialized_dfa = false;
         }
+
+        boost::lexer::rules const& get_rules() const { return rules; }
 
         void clear(char_type const* state)
         {
