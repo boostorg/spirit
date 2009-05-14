@@ -54,14 +54,17 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef typename reverse_state_map_type::iterator iterator;
         iterator rend = reverse_state_map.end();
         std::size_t last_id = 0;
-        for (iterator rit = reverse_state_map.begin(); rit != rend; 
-             ++rit, ++last_id)
+        for (iterator rit = reverse_state_map.begin(); rit != rend; ++last_id)
         {
             for (/**/; last_id < (*rit).first; ++last_id)
             {
                 os_ << "    0,  // \"<undefined state>\"\n";
             }
-            os_ << "    \"" << (*rit).second << "\",\n";
+            os_ << "    \"" << (*rit).second << "\"";
+            if (++rit != rend)
+                os_ << ",\n";
+            else
+                os_ << "\n";        // don't generate the final comma
         }
         os_ << "};\n\n";
 
