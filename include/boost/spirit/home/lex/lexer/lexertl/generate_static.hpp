@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     generate_cpp_state_names (boost::lexer::basic_rules<Char> const& rules_
       , std::ostream &os_, char const* name_suffix = "")
     {
-        // we need to re-sort the state names in ascending order if the state 
+        // we need to re-sort the state names in ascending order of the state 
         // ids, filling possible gaps in between later
         typedef typename 
             boost::lexer::basic_rules<Char>::string_size_t_map::const_iterator
@@ -54,7 +54,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef typename reverse_state_map_type::iterator iterator;
         iterator rend = reverse_state_map.end();
         std::size_t last_id = 0;
-        for (iterator rit = reverse_state_map.begin(); rit != rend; ++rit)
+        for (iterator rit = reverse_state_map.begin(); rit != rend; 
+             ++rit, ++last_id)
         {
             for (/**/; last_id < (*rit).first; ++last_id)
             {
@@ -107,7 +108,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "#include <boost/spirit/home/support/detail/lexer/char_traits.hpp>\n\n";
 
         os_ << "// the generated table of state names and the tokenizer have to be\n"
-               "// defined in the boost::spirit::lex::static namespace\n";
+               "// defined in the boost::spirit::lex::lexertl::static_ namespace\n";
         os_ << "namespace boost { namespace spirit { namespace lex { "
             "namespace lexertl { namespace static_ {\n\n";
 
