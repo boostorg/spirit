@@ -174,6 +174,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef token<Iterator, omitted, mpl::false_> base_type;
 
     public:
+        typedef typename base_type::id_type id_type;
         typedef Iterator iterator_type;
         typedef mpl::true_ has_state;
 
