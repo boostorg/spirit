@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -29,7 +29,12 @@
     [[`chset`]          Character-set specifier string (example: "a-z0-9")]]
     [[`str`]            Character-class specific string (See __char_class_types__)]]
     [[`Str`]            Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
+    [[`tuple<>`]        [Used as a placeholder for a fusion sequence]]
+    [[`vector<>`]       [Used as a placeholder for an STL container]]
+    [[`variant<>`]      [Used as a placeholder for a boost::variant]]
+    [[`optional<>`]     [Used as a placeholder for a boost::optional]]
 ]
+
 
 [table Predefined __qi__ primitive parsers
     [[Expression]           [Attribute]                 [Description]]
@@ -71,10 +76,10 @@
     [[`omit[a]`]            [`Unused`]                  [Ignores the attribute type of `a`]]
     [[`raw[a]`]             [`boost::iterator_range<I>`][Presents the transduction of `a` as an iterator range]]
 
-    [[`repeat[a]`]          [`std::vector<A>`]          [Repeat `a` zero or more times]]
-    [[`repeat(N)[a]`]       [`std::vector<A>`]          [Repeat `a` `N` times]]
-    [[`repeat(N, M)[a]`]    [`std::vector<A>`]          [Repeat `a` `N` to `M` times]]
-    [[`repeat(N, inf)[a]`]  [`std::vector<A>`]          [Repeat `a` `N` or more times]]
+    [[`repeat[a]`]          [`vector<A>`]               [Repeat `a` zero or more times]]
+    [[`repeat(N)[a]`]       [`vector<A>`]               [Repeat `a` `N` times]]
+    [[`repeat(N, M)[a]`]    [`vector<A>`]               [Repeat `a` `N` to `M` times]]
+    [[`repeat(N, inf)[a]`]  [`vector<A>`]               [Repeat `a` `N` or more times]]
 
     [[`skip[a]`]            [`A`]                       [Reestablish the skipper that got inhibited by lexeme]]
     [[`skip(p)[a]`]         [`A`]                       [Use `p` as a skipper for parsing `a`]]
@@ -99,20 +104,20 @@
                                                         but don't move the iterator position]]
     [[`&a`]                 [`Unused`]                  [And predicate. Ensure that `a` matches
                                                         but don't move the iterator position]]
-    [[`-a`]                 [`boost::optional<A>`]      [Optional. Parse `a` zero or one time]]
-    [[`*a`]                 [`std::vector<A>`]          [Kleene. Parse `a` zero or more times]]
-    [[`+a`]                 [`std::vector<A>`]          [Plus. Parse `a` one or more times]]
-    [[`a | b`]              [`boost::variant<A, B>`]    [Alternative. Parse `a` or `b`]]
-    [[`a >> b`]             [`fusion::vector<A, B>`]    [Sequence. Parse `a` followed by `b`]]
-    [[`a > b`]              [`fusion::vector<A, B>`]    [Expect. Parse `a` followed by `b`. `b` is
+    [[`-a`]                 [`optional<A>`]             [Optional. Parse `a` zero or one time]]
+    [[`*a`]                 [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
+    [[`+a`]                 [`vector<A>`]               [Plus. Parse `a` one or more times]]
+    [[`a | b`]              [`variant<A, B>`]           [Alternative. Parse `a` or `b`]]
+    [[`a >> b`]             [`tuple<A, B>`]             [Sequence. Parse `a` followed by `b`]]
+    [[`a > b`]              [`tuple<A, B>`]             [Expect. Parse `a` followed by `b`. `b` is
                                                         expected to match when `a` matches, otherwise,
                                                         an `expectation_failure` is thrown.]]
     [[`a - b`]              [`A`]                       [Difference. Parse `a` but not `b`]]
-    [[`a || b`]             [`fusion::vector<A, B>`]    [Sequential Or. Parse `a` or `b` or `a` followed by `b`]]
-    [[`a % b`]              [`std::vector<A>`]          [List. Parse `a` delimited `b` one or more times]]
-    [[`a ^ b`]              [`fusion::vector<`
-                                `boost::optional<A>,`
-                                `boost::optional<B> >`
+    [[`a || b`]             [`tuple<A, B>`]             [Sequential Or. Parse `a` or `b` or `a` followed by `b`]]
+    [[`a % b`]              [`vector<A>`]               [List. Parse `a` delimited `b` one or more times]]
+    [[`a ^ b`]              [`tuple<`
+                                `optional<A>,`
+                                `optional<B> >`
                             ]                           [Permutation. Parse `a` and `b` in any order]]
 ]
 
@@ -173,10 +178,10 @@
                                                          BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH]]
     [[`maxwidth(N)[a]`]     [`A`]                       [Generate `a` truncated to column of width `N`]]
 
-    [[`repeat[a]`]          [`std::vector<A>`]          [Repeat `a` zero or more times]]
-    [[`repeat(N)[a]`]       [`std::vector<A>`]          [Repeat `a` `N` times]]
-    [[`repeat(N, M)[a]`]    [`std::vector<A>`]          [Repeat `a` `N` to `M` times]]
-    [[`repeat(N, inf)[a]`]  [`std::vector<A>`]          [Repeat `a` `N` or more times]]
+    [[`repeat[a]`]          [`vector<A>`]               [Repeat `a` zero or more times]]
+    [[`repeat(N)[a]`]       [`vector<A>`]               [Repeat `a` `N` times]]
+    [[`repeat(N, M)[a]`]    [`vector<A>`]               [Repeat `a` `N` to `M` times]]
+    [[`repeat(N, inf)[a]`]  [`vector<A>`]               [Repeat `a` `N` or more times]]
 
     [[`verbatim[a]`]        [`A`]                       [Disable delimited generation for `a`]]
     [[`delimit[a]`]         [`A`]                       [Reestablish the delimiter that got inhibited by verbatim]]
@@ -202,12 +207,12 @@
                                                         generating but don't create any output]]
     [[`&a`]                 [`Unused`]                  [And predicate. Ensure that `a` does succeed
                                                         generating but don't create any output]]
-    [[`-a`]                 [`boost::optional<A>`]      [Optional. Generate `a` zero or one time]]
-    [[`*a`]                 [`std::vector<A>`]          [Kleene. Generate `a` zero or more times]]
-    [[`+a`]                 [`std::vector<A>`]          [Plus. Generate `a` one or more times]]
-    [[`a | b`]              [`boost::variant<A, B>`]    [Alternative. Generate `a` or `b`]]
-    [[`a << b`]             [`fusion::vector<A, B>`]    [Sequence. Generate `a` followed by `b`]]
-    [[`a % b`]              [`std::vector<A>`]          [List. Generate `a` delimited `b` one or more times]]
+    [[`-a`]                 [`optional<A>`]             [Optional. Generate `a` zero or one time]]
+    [[`*a`]                 [`vector<A>`]               [Kleene. Generate `a` zero or more times]]
+    [[`+a`]                 [`vector<A>`]               [Plus. Generate `a` one or more times]]
+    [[`a | b`]              [`variant<A, B>`]           [Alternative. Generate `a` or `b`]]
+    [[`a << b`]             [`tuple<A, B>`]             [Sequence. Generate `a` followed by `b`]]
+    [[`a % b`]              [`vector<A>`]               [List. Generate `a` delimited `b` one or more times]]
 ]
 
 [heading Compound Attribute Rules]
@@ -220,75 +225,71 @@ which reads as: given, `a` and `b` are parsers/generators, and `A` is the type
 of the attribute of `a`, and `B` is the type of the attribute of `b`, then the 
 type of the attribute of `a >> b` will be `tuple<A, B>`.
 
-Note: `tuple<>` is used as a placeholder for a fusion sequence
-      `vector<>` is used as a placeholder for a STL container
-      `none` stands for not having any attribute (attribute type is `unused`)
-
 
 [table __qi__ compound parser attribute types
     [[Expression]           [Attribute]]
     [[sequence (`>>`)]      [`a: A, b: B --> (a >> b): tuple<A, B>`
-                             `a: A, b: none --> (a >> b): A`
-                             `a: none, b: B --> (a >> b): B`
-                             `a: none, b: none --> (a >> b): none`
+                             `a: A, b: Unused --> (a >> b): A`
+                             `a: Unused, b: B --> (a >> b): B`
+                             `a: Unused, b: Unused --> (a >> b): Unused`
                              `a: A, b: A --> (a >> b): vector<A>`]]
     [[expect (`>`)]         [`a: A, b: B --> (a > b): tuple<A, B>`
-                             `a: A, b: none --> (a > b): A`
-                             `a: none, b: B --> (a > b): B`
-                             `a: none, b: none --> (a > b): none`
+                             `a: A, b: Unused --> (a > b): A`
+                             `a: Unused, b: B --> (a > b): B`
+                             `a: Unused, b: Unused --> (a > b): Unused`
                              `a: A, b: A --> (a > b): vector<A>`]]
     [[alternative (`|`)]    [`a: A, b: B --> (a | b): variant<A, B>`
-                             `a: A, b: none --> (a | b): variant<none, A>`
-                             `a: none, b: B --> (a | b): variant<none, B>`
-                             `a: none, b: none --> (a | b): none`
+                             `a: A, b: Unused --> (a | b): variant<Unused, A>`
+                             `a: Unused, b: B --> (a | b): variant<Unused, B>`
+                             `a: Unused, b: Unused --> (a | b): Unused`
                              `a: A, b: A --> (a | b): A`]]
     [[difference (`-`)]     [`a: A, b: B --> (a - b): A`]]
     [[kleene (`*`)]         [`a: A --> *a: vector<A>`
-                             `a: none --> a: none`]]
+                             `a: Unused --> a: Unused`]]
     [[plus (`+`)]           [`a: A --> +a: vector<A>`
-                             `a: none --> a: none`]]
+                             `a: Unused --> a: Unused`]]
     [[list (`%`)]           [`a: A, b: B --> (a % b): vector<A>`
-                             `a: none, b: B --> (a % b): none`]]
+                             `a: Unused, b: B --> (a % b): Unused`]]
     [[repetition]           [`a: A --> repeat(...,...)[a]: vector<A>`
-                             `a: none --> repeat(...,...)[a]: none`]]
+                             `a: Unused --> repeat(...,...)[a]: Unused`]]
     [[sequential or (`||`)] [`a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >`
-                             `a: A, b: none --> (a || b): optional<A>`
-                             `a: none, b: B --> (a || b): optional<B>`
-                             `a: none, b: none --> (a || b): none`]]
+                             `a: A, b: Unused --> (a || b): optional<A>`
+                             `a: Unused, b: B --> (a || b): optional<B>`
+                             `a: Unused, b: Unused --> (a || b): Unused`]]
     [[optional (`-`)]       [`a: A --> -a: optional<A>`
-                             `a: none --> -a: none`]]
-    [[and predicate (`&`)]  [`a: A --> &a: none`]]
-    [[not predicate (`!`)]  [`a: A --> !a: none`]]
+                             `a: Unused --> -a: Unused`]]
+    [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
+    [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
     [[permutation (`^`)]    [`a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >`
-                             `a: A, b: none --> (a ^ b): optional<A>`
-                             `a: none, b: B --> (a ^ b): optional<B>`
-                             `a: none, b: none --> (a ^ b): none`]]
+                             `a: A, b: Unused --> (a ^ b): optional<A>`
+                             `a: Unused, b: B --> (a ^ b): optional<B>`
+                             `a: Unused, b: Unused --> (a ^ b): Unused`]]
 ]
 
 [table __karma__ compound generator attribute types
     [[Expression]           [Attribute]]
     [[sequence (`<<`)]      [`a: A, b: B --> (a << b): tuple<A, B>`
-                             `a: A, b: none --> (a << b): A`
-                             `a: none, b: B --> (a << b): B`
-                             `a: none, b: none --> (a << b): none`
+                             `a: A, b: Unused --> (a << b): A`
+                             `a: Unused, b: B --> (a << b): B`
+                             `a: Unused, b: Unused --> (a << b): Unused`
                              `a: A, b: A --> (a << b): vector<A>`]]
     [[alternative (`|`)]    [`a: A, b: B --> (a | b): variant<A, B>`
-                             `a: A, b: none --> (a | b): variant<none, A>`
-                             `a: none, b: B --> (a | b): variant<none, B>`
-                             `a: none, b: none --> (a | b): none`
+                             `a: A, b: Unused --> (a | b): variant<Unused, A>`
+                             `a: Unused, b: B --> (a | b): variant<Unused, B>`
+                             `a: Unused, b: Unused --> (a | b): Unused`
                              `a: A, b: A --> (a | b): A`]]
     [[kleene (`*`)]         [`a: A --> *a: vector<A>`
-                             `a: none --> a: none`]]
+                             `a: Unused --> a: Unused`]]
     [[plus (`+`)]           [`a: A --> +a: vector<A>`
-                             `a: none --> a: none`]]
+                             `a: Unused --> a: Unused`]]
     [[list (`%`)]           [`a: A, b: B --> (a % b): vector<A>`
-                             `a: none, b: B --> (a % b): none`]]
+                             `a: Unused, b: B --> (a % b): Unused`]]
     [[repetition]           [`a: A --> repeat(...,...)[a]: vector<A>`
-                             `a: none --> repeat(...,...)[a]: none`]]
+                             `a: Unused --> repeat(...,...)[a]: Unused`]]
     [[optional (`-`)]       [`a: A --> -a: optional<A>`
-                             `a: none --> -a: none`]]
-    [[and predicate (`&`)]  [`a: A --> &a: none`]]
-    [[not predicate (`!`)]  [`a: A --> !a: none`]]
+                             `a: Unused --> -a: Unused`]]
+    [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
+    [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
 ]
 
 
