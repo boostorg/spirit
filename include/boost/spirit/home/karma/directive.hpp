@@ -37,4 +37,10 @@
 #include <boost/spirit/home/karma/directive/verbatim.hpp>
 #include <boost/spirit/home/karma/directive/delimit.hpp>
 
+///////////////////////////////////////////////////////////////////////////////
+//  repeat directives
+//  repeat[...]
+///////////////////////////////////////////////////////////////////////////////
+#include <boost/spirit/home/karma/directive/repeat.hpp>
+
 #endif
