@@ -9,26 +9,26 @@
 [section Quick Reference]
 
 [variablelist Notation
-    [[`P`]              Parser type]]
-    [[`p, a, b, c`]     Parser objects]]
-    [[`A, B, C`]        Attribute types of parsers A, B and C]]
-    [[`I`]              The iterator type used for parsing]]
-    [[`Unused`]         An `unused_type`]]
-    [[`Context`]        The enclosing rule's `Context` type]]
-    [[`Attr`]           An attribute type]]
-    [[`b`]              A boolean expression]]
-    [[`fp`]             A (lazy parser) function with signature `P(Unused, Context)`]]
-    [[`fa`]             A (semantic action) function with signature `void(Attr, Context, bool&)`.
+    [[`P`]              [Parser type]]
+    [[`p, a, b, c`]     [Parser objects]]
+    [[`A, B, C`]        [Attribute types of parsers A, B and C]]
+    [[`I`]              [The iterator type used for parsing]]
+    [[`Unused`]         [An `unused_type`]]
+    [[`Context`]        [The enclosing rule's `Context` type]]
+    [[`Attr`]           [An attribute type]]
+    [[`b`]              [A boolean expression]]
+    [[`fp`]             [A (lazy parser) function with signature `P(Unused, Context)`]]
+    [[`fa`]             [A (semantic action) function with signature `void(Attr, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
                         force the parse to fail.]]
-    [[`first`]          An iterator pointing to the start of input]]
-    [[`last`]           An iterator pointing to the end of input]]
-    [[`Ch`]             Character-class specific character type (See __char_class_types__)]]
-    [[`ch`]             Character-class specific character (See __char_class_types__)]]
-    [[`ch2`]            Character-class specific character (See __char_class_types__)]]
-    [[`chset`]          Character-set specifier string (example: "a-z0-9")]]
-    [[`str`]            Character-class specific string (See __char_class_types__)]]
-    [[`Str`]            Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
+    [[`first`]          [An iterator pointing to the start of input]]
+    [[`last`]           [An iterator pointing to the end of input]]
+    [[`Ch`]             [Character-class specific character type (See __char_class_types__)]]
+    [[`ch`]             [Character-class specific character (See __char_class_types__)]]
+    [[`ch2`]            [Character-class specific character (See __char_class_types__)]]
+    [[`chset`]          [Character-set specifier string (example: "a-z0-9")]]
+    [[`str`]            [Character-class specific string (See __char_class_types__)]]
+    [[`Str`]            [Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
     [[`tuple<>`]        [Used as a placeholder for a fusion sequence]]
     [[`vector<>`]       [Used as a placeholder for an STL container]]
     [[`variant<>`]      [Used as a placeholder for a boost::variant]]
@@ -36,15 +36,15 @@
 ]
 
 
-[table Predefined __qi__ primitive parsers
+[table Predefined /Spirit.Qi/ primitive parsers
     [[Expression]           [Attribute]                 [Description]]
-    [[`eol`]                [`Unused`]                  [Matches the end of line (\r or \n or \r\n)]]
+    [[`eol`]                [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
     [[`eoi`]                [`Unused`]                  [Matches the end of input (first == last)]]
     [[`eps`]                [`Unused`]                  [Match an empty string]]
     [[`eps(b)`]             [`Unused`]                  [If `b` is true, match an empty string]]
     [[`lazy(fp)`]           [Attribute of `P` where `P`
                             is the return type of `fp`] [Invoke `fp` at parse time, returning a parser
-                                                        `p` which is then called to parse.]
+                                                        `p` which is then called to parse.]]
     [[`fp`]                 [see `lazy(fp)` above]      [Equivalent to `lazy[fp]`]]
     [[`p[fa]`]              [Attribute of `p`]          [Call semantic action, `fa` if p succeeds.]]
 
@@ -121,14 +121,14 @@
                             ]                           [Permutation. Parse `a` and `b` in any order]]
 ]
 
-[table Predefined __karma__ primitive generators
+[table Predefined /Spirit.Karma/ primitive generators
     [[Expression]           [Attribute]                 [Description]]
-    [[`eol`]                [`Unused`]                  [Generates the end of line (\n)]]
+    [[`eol`]                [`Unused`]                  [Generates the end of line (`\n`)]]
     [[`eps`]                [`Unused`]                  [Generate an empty string]]
     [[`eps(b)`]             [`Unused`]                  [If `b` is true, generate an empty string]]
     [[`lazy(fg)`]           [Attribute of `G` where `G`
                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
-                                                        `g` which is then called to generate.]
+                                                        `g` which is then called to generate.]]
     [[`fg`]                 [see `lazy(fg)` above]      [Equivalent to `lazy[fp]`]]
     [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 
@@ -226,67 +226,67 @@ of the attribute of `a`, and `B` is the type of the attribute of `b`, then the
 type of the attribute of `a >> b` will be `tuple<A, B>`.
 
 
-[table __qi__ compound parser attribute types
+[table /Spirit.Qi/ compound parser attribute types
     [[Expression]           [Attribute]]
-    [[sequence (`>>`)]      [`a: A, b: B --> (a >> b): tuple<A, B>`
-                             `a: A, b: Unused --> (a >> b): A`
-                             `a: Unused, b: B --> (a >> b): B`
-                             `a: Unused, b: Unused --> (a >> b): Unused`
+    [[sequence (`>>`)]      [`a: A, b: B --> (a >> b): tuple<A, B>`[br]
+                             `a: A, b: Unused --> (a >> b): A`[br]
+                             `a: Unused, b: B --> (a >> b): B`[br]
+                             `a: Unused, b: Unused --> (a >> b): Unused`[br]
                              `a: A, b: A --> (a >> b): vector<A>`]]
-    [[expect (`>`)]         [`a: A, b: B --> (a > b): tuple<A, B>`
-                             `a: A, b: Unused --> (a > b): A`
-                             `a: Unused, b: B --> (a > b): B`
-                             `a: Unused, b: Unused --> (a > b): Unused`
+    [[expect (`>`)]         [`a: A, b: B --> (a > b): tuple<A, B>`[br]
+                             `a: A, b: Unused --> (a > b): A`[br]
+                             `a: Unused, b: B --> (a > b): B`[br]
+                             `a: Unused, b: Unused --> (a > b): Unused`[br]
                              `a: A, b: A --> (a > b): vector<A>`]]
-    [[alternative (`|`)]    [`a: A, b: B --> (a | b): variant<A, B>`
-                             `a: A, b: Unused --> (a | b): variant<Unused, A>`
-                             `a: Unused, b: B --> (a | b): variant<Unused, B>`
-                             `a: Unused, b: Unused --> (a | b): Unused`
+    [[alternative (`|`)]    [`a: A, b: B --> (a | b): variant<A, B>`[br]
+                             `a: A, b: Unused --> (a | b): variant<Unused, A>`[br]
+                             `a: Unused, b: B --> (a | b): variant<Unused, B>`[br]
+                             `a: Unused, b: Unused --> (a | b): Unused`[br]
                              `a: A, b: A --> (a | b): A`]]
     [[difference (`-`)]     [`a: A, b: B --> (a - b): A`]]
-    [[kleene (`*`)]         [`a: A --> *a: vector<A>`
+    [[kleene (`*`)]         [`a: A --> *a: vector<A>`[br]
                              `a: Unused --> a: Unused`]]
-    [[plus (`+`)]           [`a: A --> +a: vector<A>`
+    [[plus (`+`)]           [`a: A --> +a: vector<A>`[br]
                              `a: Unused --> a: Unused`]]
-    [[list (`%`)]           [`a: A, b: B --> (a % b): vector<A>`
+    [[list (`%`)]           [`a: A, b: B --> (a % b): vector<A>`[br]
                              `a: Unused, b: B --> (a % b): Unused`]]
-    [[repetition]           [`a: A --> repeat(...,...)[a]: vector<A>`
+    [[repetition]           [`a: A --> repeat(...,...)[a]: vector<A>`[br]
                              `a: Unused --> repeat(...,...)[a]: Unused`]]
-    [[sequential or (`||`)] [`a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >`
-                             `a: A, b: Unused --> (a || b): optional<A>`
-                             `a: Unused, b: B --> (a || b): optional<B>`
+    [[sequential or (`||`)] [`a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >`[br]
+                             `a: A, b: Unused --> (a || b): optional<A>`[br]
+                             `a: Unused, b: B --> (a || b): optional<B>`[br]
                              `a: Unused, b: Unused --> (a || b): Unused`]]
-    [[optional (`-`)]       [`a: A --> -a: optional<A>`
+    [[optional (`-`)]       [`a: A --> -a: optional<A>`[br]
                              `a: Unused --> -a: Unused`]]
     [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
     [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
-    [[permutation (`^`)]    [`a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >`
-                             `a: A, b: Unused --> (a ^ b): optional<A>`
-                             `a: Unused, b: B --> (a ^ b): optional<B>`
+    [[permutation (`^`)]    [`a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >`[br]
+                             `a: A, b: Unused --> (a ^ b): optional<A>`[br]
+                             `a: Unused, b: B --> (a ^ b): optional<B>`[br]
                              `a: Unused, b: Unused --> (a ^ b): Unused`]]
 ]
 
-[table __karma__ compound generator attribute types
+[table /Spirit.Karma/ compound generator attribute types
     [[Expression]           [Attribute]]
-    [[sequence (`<<`)]      [`a: A, b: B --> (a << b): tuple<A, B>`
-                             `a: A, b: Unused --> (a << b): A`
-                             `a: Unused, b: B --> (a << b): B`
-                             `a: Unused, b: Unused --> (a << b): Unused`
+    [[sequence (`<<`)]      [`a: A, b: B --> (a << b): tuple<A, B>`[br]
+                             `a: A, b: Unused --> (a << b): A`[br]
+                             `a: Unused, b: B --> (a << b): B`[br]
+                             `a: Unused, b: Unused --> (a << b): Unused`[br]
                              `a: A, b: A --> (a << b): vector<A>`]]
-    [[alternative (`|`)]    [`a: A, b: B --> (a | b): variant<A, B>`
-                             `a: A, b: Unused --> (a | b): variant<Unused, A>`
-                             `a: Unused, b: B --> (a | b): variant<Unused, B>`
-                             `a: Unused, b: Unused --> (a | b): Unused`
+    [[alternative (`|`)]    [`a: A, b: B --> (a | b): variant<A, B>`[br]
+                             `a: A, b: Unused --> (a | b): variant<Unused, A>`[br]
+                             `a: Unused, b: B --> (a | b): variant<Unused, B>`[br]
+                             `a: Unused, b: Unused --> (a | b): Unused`[br]
                              `a: A, b: A --> (a | b): A`]]
-    [[kleene (`*`)]         [`a: A --> *a: vector<A>`
+    [[kleene (`*`)]         [`a: A --> *a: vector<A>`[br]
                              `a: Unused --> a: Unused`]]
-    [[plus (`+`)]           [`a: A --> +a: vector<A>`
+    [[plus (`+`)]           [`a: A --> +a: vector<A>`[br]
                              `a: Unused --> a: Unused`]]
-    [[list (`%`)]           [`a: A, b: B --> (a % b): vector<A>`
+    [[list (`%`)]           [`a: A, b: B --> (a % b): vector<A>`[br]
                              `a: Unused, b: B --> (a % b): Unused`]]
-    [[repetition]           [`a: A --> repeat(...,...)[a]: vector<A>`
+    [[repetition]           [`a: A --> repeat(...,...)[a]: vector<A>`[br]
                              `a: Unused --> repeat(...,...)[a]: Unused`]]
-    [[optional (`-`)]       [`a: A --> -a: optional<A>`
+    [[optional (`-`)]       [`a: A --> -a: optional<A>`[br]
                              `a: Unused --> -a: Unused`]]
     [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
     [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
@@ -320,25 +320,25 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
 [heading Non-terminals]
 
 [variablelist Notation
-    [[`RT`]                     Synthesized attribute. The rule or grammar's return type.]]
-    [[`Arg1`, `Arg2`, `ArgN`]   Inherited attributes. Zero or more or arguments.]]
-    [[`L1`, `L2`, `LN`]         Zero or more local variables.]]
-    [[`r, r2`]                  Rules]]
-    [[`g`]                      A grammar]]
-    [[`p`]                      A parser expression]]
+    [[`RT`]                     [Synthesized attribute. The rule or grammar's return type.]]
+    [[`Arg1`, `Arg2`, `ArgN`]   [Inherited attributes. Zero or more or arguments.]]
+    [[`L1`, `L2`, `LN`]         [Zero or more local variables.]]
+    [[`r, r2`]                  [Rules]]
+    [[`g`]                      [A grammar]]
+    [[`p`]                      [A parser expression]]
 ]
 
 [variablelist Terminology
-    [[Signature]                `RT(Arg1, Arg2 ... ,ArgN)`. The signature specifies
+    [[Signature]                [`RT(Arg1, Arg2 ... ,ArgN)`. The signature specifies
                                 the synthesized (return value) and inherited (arguments)
                                 attributes.]]
-    [[Locals]                   `locals<L1, L2 ..., LN>`. The local variables.]]
-    [[Skipper]                  The skip-parser type]]
+    [[Locals]                   [`locals<L1, L2 ..., LN>`. The local variables.]]
+    [[Skipper]                  [The skip-parser type]]
 ]
 
 [variablelist Template Arguments
-    [[`Iterator`]               The iterator type you will use for parsing.]]
-    [[`A1`, `A2`, `A3`]         Can be one of 1)Signature 2)Locals 3)Skipper.]]
+    [[`Iterator`]               [The iterator type you will use for parsing.]]
+    [[`A1`, `A2`, `A3`]         [Can be one of 1)Signature 2)Locals 3)Skipper.]]
 ]
 
 [table

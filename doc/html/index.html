@@ -1,10 +1,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Spirit 2.0</title>
+<title>Spirit 2.1</title>
 <link rel="stylesheet" href="../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.66.1">
-<link rel="start" href="index.html" title="Spirit 2.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="index.html" title="Spirit 2.1">
 <link rel="next" href="spirit/what_s_new.html" title="What's New">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -18,11 +18,11 @@
 </tr></table>
 <hr>
 <div class="spirit-nav"><a accesskey="n" href="spirit/what_s_new.html"><img src="../../../../doc/html/images/next.png" alt="Next"></a></div>
-<div class="article" lang="en">
+<div class="article" title="Spirit 2.1">
 <div class="titlepage">
 <div>
 <div><h2 class="title">
-<a name="spirit"></a>Spirit 2.0</h2></div>
+<a name="spirit"></a>Spirit 2.1</h2></div>
 <div><div class="authorgroup">
 <div class="author"><h3 class="author">
 <span class="firstname">Joel</span> <span class="surname">de Guzman</span>
@@ -31,10 +31,10 @@
 <span class="firstname">Hartmut</span> <span class="surname">Kaiser</span>
 </h3></div>
 </div></div>
-<div><p class="copyright">Copyright © 2001-2008 Joel de Guzman,
-      Hartmut Kaiser</p></div>
-<div><div class="legalnotice">
-<a name="id386666"></a><p>
+<div><p class="copyright">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser</p></div>
+<div><div class="legalnotice" title="Legal Notice">
+<a name="id683678"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -166,31 +166,32 @@
 <dt><span class="section"><a href="spirit/references.html">References</a></span></dt>
 </dl>
 </div>
-<div class="section" lang="en">
+<div class="section" title="Preface">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="spirit.preface"></a><a href="index.html#spirit.preface" title="Preface">Preface</a></h2></div></div></div>
+<a name="spirit.preface"></a><a class="link" href="index.html#spirit.preface" title="Preface">Preface</a>
+</h2></div></div></div>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
         </p>
 <p>
-          <span class="emphasis"><em>&#8220;<span class="quote">Examples of designs that meet most of the criteria for
+          <span class="emphasis"><em><span class="quote">&#8220;<span class="quote">Examples of designs that meet most of the criteria for
           "goodness" (easy to understand, flexible, efficient) are a recursive-
           descent parser, which is traditional procedural code. Another example is
           the STL, which is a generic library of containers and algorithms depending
-          crucially on both traditional procedural code and on parametric polymorphism.</span>&#8221;</em></span>
-          <span class="bold"><b>--Bjarne Stroustrup</b></span>
+          crucially on both traditional procedural code and on parametric polymorphism.</span>&#8221;</span></em></span>
+          <span class="bold"><strong>--Bjarne Stroustrup</strong></span>
         </p>
 <p>
       </p>
 </blockquote></div>
-<a name="spirit.preface.history"></a><h3>
-<a name="id388764"></a>
-      <a href="index.html#spirit.preface.history">History</a>
-    </h3>
-<a name="spirit.preface._emphasis_80s__emphasis_"></a><h3>
-<a name="id386336"></a>
-      <a href="index.html#spirit.preface._emphasis_80s__emphasis_"><span class="emphasis"><em>80s</em></span></a>
-    </h3>
+<a name="spirit.preface.history"></a><h4>
+<a name="id683729"></a>
+      <a class="link" href="index.html#spirit.preface.history">History</a>
+    </h4>
+<a name="spirit.preface._emphasis_80s__emphasis_"></a><h4>
+<a name="id683742"></a>
+      <a class="link" href="index.html#spirit.preface._emphasis_80s__emphasis_"><span class="emphasis"><em>80s</em></span></a>
+    </h4>
 <p>
       In the Mid 80s, Joel wrote his first calculator in Pascal. It has been an unforgettable
       coding experience. He was amazed how a mutually recursive set of functions
@@ -201,10 +202,10 @@
       a grammar using Pascal- like syntax diagrams and then write a corresponding
       recursive-descent parser. This worked very well.
     </p>
-<a name="spirit.preface._emphasis_90s__emphasis_"></a><h3>
-<a name="id386375"></a>
-      <a href="index.html#spirit.preface._emphasis_90s__emphasis_"><span class="emphasis"><em>90s</em></span></a>
-    </h3>
+<a name="spirit.preface._emphasis_90s__emphasis_"></a><h4>
+<a name="id683760"></a>
+      <a class="link" href="index.html#spirit.preface._emphasis_90s__emphasis_"><span class="emphasis"><em>90s</em></span></a>
+    </h4>
 <p>
       The arrival of the Internet and the World Wide Web magnified this thousand-fold.
       At one point Joel had to write an HTML parser for a Web browser project. He
@@ -245,11 +246,11 @@
       objects and linking semantic actions on the fly. A very early text can be found
       here: <a href="http://spirit.sourceforge.net/dl_docs/pre-spirit.htm" target="_top">pre-Spirit</a>.
     </p>
-<a name="spirit.preface._emphasis_2001_to_2006__emphasis_"></a><h3>
-<a name="id388110"></a>
-      <a href="index.html#spirit.preface._emphasis_2001_to_2006__emphasis_"><span class="emphasis"><em>2001
+<a name="spirit.preface._emphasis_2001_to_2006__emphasis_"></a><h4>
+<a name="id683802"></a>
+      <a class="link" href="index.html#spirit.preface._emphasis_2001_to_2006__emphasis_"><span class="emphasis"><em>2001
       to 2006</em></span></a>
-    </h3>
+    </h4>
 <p>
       Version 1.0 to 1.8 was a complete rewrite of the original Spirit parser using
       expression templates and static polymorphism, inspired by the works of Todd
@@ -275,13 +276,13 @@
       of domains. The Boost Libraries have become widely known as an industry standard
       for design and implementation quality, robustness, and reusability.
     </p>
-<a name="spirit.preface._emphasis_2007__emphasis_"></a><h3>
-<a name="id387263"></a>
-      <a href="index.html#spirit.preface._emphasis_2007__emphasis_"><span class="emphasis"><em>2007</em></span></a>
-    </h3>
+<a name="spirit.preface._emphasis_2007__emphasis_"></a><h4>
+<a name="id683837"></a>
+      <a class="link" href="index.html#spirit.preface._emphasis_2007__emphasis_"><span class="emphasis"><em>2007</em></span></a>
+    </h4>
 <p>
       Over the years, especially after Spirit was accepted into Boost, Spirit has
-      served its purpose quite admirably. The focus of what we'll now call <span class="bold"><b><span class="emphasis"><em>Classic-Spirit</em></span></b></span> (versions prior
+      served its purpose quite admirably. The focus of what we'll now call <span class="bold"><strong><span class="emphasis"><em>Classic-Spirit</em></span></strong></span> (versions prior
       to 2.0) was on transduction parsing where the input string is merely translated
       to an output string. A lot of parsers are of the transduction type. When the
       time came to add attributes to the parser library, it was done rather in an
@@ -303,12 +304,12 @@
       library). <a href="../../phoenix/doc/html/index.html" target="_top">Phoenix</a> also
       had to be beefed up to support Spirit V2. The result is <a href="../../phoenix/doc/html/index.html" target="_top">Phoenix2</a>.
       Last but not least, Spirit V2 uses an <a href="http://ubiety.uwaterloo.ca/~tveldhui/papers/Expression-Templates/exprtmpl.html" target="_top">Expression
-      Templates</a> library called -Boost.Proto-.
+      Templates</a> library called <a href="http://www.boost.org/doc/libs/1_38_0/doc/html/proto.html" target="_top">Boost.Proto</a>.
     </p>
-<a name="spirit.preface.new_ideas__spirit_v2"></a><h3>
-<a name="id387382"></a>
-      <a href="index.html#spirit.preface.new_ideas__spirit_v2">New Ideas: Spirit V2</a>
-    </h3>
+<a name="spirit.preface.new_ideas__spirit_v2"></a><h4>
+<a name="id683909"></a>
+      <a class="link" href="index.html#spirit.preface.new_ideas__spirit_v2">New Ideas: Spirit V2</a>
+    </h4>
 <p>
       Just before the development of Spirit V2 began, Hartmut came across the <a href="http://www.stringtemplate.org/" target="_top">StringTemplate</a> library which is
       a part of the ANTLR parser framework. It is a Java template engine (with ports
@@ -343,27 +344,27 @@
       parser grammars. Again, Spirit's modular structure allowed us to reuse the
       same underlying component library as for the parser and generator libraries.
     </p>
-<a name="spirit.preface.how_to_use_this_manual"></a><h3>
-<a name="id387485"></a>
-      <a href="index.html#spirit.preface.how_to_use_this_manual">How to use this manual</a>
-    </h3>
+<a name="spirit.preface.how_to_use_this_manual"></a><h4>
+<a name="id683959"></a>
+      <a class="link" href="index.html#spirit.preface.how_to_use_this_manual">How to use this manual</a>
+    </h4>
 <p>
-      Each major section (there are two: <a href="spirit/qi_and_karma.html" title="Qi and Karma">Qi and
-      Karma</a>, and <a href="spirit/lex.html" title=" Spirit.Lex">Lex</a>) is roughly divided
+      Each major section (there are two: <a class="link" href="spirit/qi_and_karma.html" title="Qi and Karma">Qi and
+      Karma</a>, and <a class="link" href="spirit/lex.html" title="Spirit.Lex">Lex</a>) is roughly divided
       into 3 parts:
     </p>
-<div class="orderedlist"><ol type="1">
-<li>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
         Tutorials: A step by step guide with heavily annotated code. These are meant
         to get the user acquainted with the library as quickly as possible. The objective
         is to build the confidence of the user in using the library using abundant
         examples and detailed instructions. Examples speak volumes.
       </li>
-<li>
+<li class="listitem">
         Abstracts: A high level summary of key topics. The objective is to give the
         user a high level view of the library, the key concepts, background and theories.
       </li>
-<li>
+<li class="listitem">
         Reference: Detailed formal technical reference. We start with a quick reference
         -- an easy to use table that maps into the reference proper. The reference
         proper starts with C++ <a href="http://en.wikipedia.org/wiki/C%2B%2B0x#Concept" target="_top">Concepts</a>
@@ -375,8 +376,8 @@
       icons precede some text to indicate:
     </p>
 <div class="table">
-<a name="id387571"></a><p class="title"><b>Table 1. Icons</b></p>
-<table class="table" summary="Icons">
+<a name="id684007"></a><p class="title"><b>Table 1. Icons</b></p>
+<div class="table-contents"><table class="table" summary="Icons">
 <colgroup>
 <col>
 <col>
@@ -488,17 +489,17 @@
           </td>
 </tr>
 </tbody>
-</table>
+</table></div>
 </div>
-<p>
+<br class="table-break"><p>
       This documentation is automatically generated by Boost QuickBook documentation
       tool. QuickBook can be found in the <a href="http://www.boost.org/tools/index.html" target="_top">Boost
       Tools</a>.
     </p>
-<a name="spirit.preface.support"></a><h3>
-<a name="id386631"></a>
-      <a href="index.html#spirit.preface.support">Support</a>
-    </h3>
+<a name="spirit.preface.support"></a><h4>
+<a name="id684248"></a>
+      <a class="link" href="index.html#spirit.preface.support">Support</a>
+    </h4>
 <p>
       Please direct all questions to Spirit's mailing list. You can subscribe to
       the <a href="http://www.nabble.com/The-Spirit-Parser-Library-f3430.html" target="_top">Spirit
@@ -512,7 +513,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: December 23, 2008 at 09:37:55 GMT</small></p></td>
+<td align="left"><p><small>Last revised: May 18, 2009 at 21:08:21 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

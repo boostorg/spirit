@@ -122,15 +122,15 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
 * The `lex::lexer<Lexer>` template constructor now takes an optional parameter
   specifying the `match_flags` to be used for table generation. Currently, there
   are the following flags available:
-
+'''
         match_flags::match_default,          // no flags
         match_flags::match_not_dot_newline,  // the regex '.' doesn't match newlines
         match_flags::match_icase             // all matching operations are case insensitive
-
+'''
   If no parameter is passed to the constructor, `match_flags::match_default` is 
-  used, i.e. the '.' matches newlines and matching is case sensitive.
+  used, i.e. the `.` matches newlines and matching is case sensitive.
 * Now the `char_()` and `string()` placeholders can be used for token 
-  definitions as a replacement for `token_def<>(...)`, although it is still
+  definitions as a replacement for `token_def`, although it is still
   possible to use the latter one.
 
 [endsect]

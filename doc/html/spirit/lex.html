@@ -1,14 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Spirit.Lex</title>
+<title>Spirit.Lex</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.66.1">
-<link rel="start" href="../index.html" title="Spirit 2.0">
-<link rel="up" href="../index.html" title="Spirit 2.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../index.html" title="Spirit 2.1">
+<link rel="up" href="../index.html" title="Spirit 2.1">
 <link rel="prev" href="qi_and_karma/reference/debug.html" title="Debug">
-<link rel="next" href="lex/tutorials.html" title=" Spirit.Lex
-      Tutorials">
+<link rel="next" href="lex/tutorials.html" title="Spirit.Lex Tutorials">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -23,9 +22,10 @@
 <div class="spirit-nav">
 <a accesskey="p" href="qi_and_karma/reference/debug.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lex/tutorials.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
+<div class="section" title="Spirit.Lex">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="spirit.lex"></a><a href="lex.html" title=" Spirit.Lex"> <span class="emphasis"><em>Spirit.Lex</em></span></a></h2></div></div></div>
+<a name="spirit.lex"></a><a class="link" href="lex.html" title="Spirit.Lex"> <span class="emphasis"><em>Spirit.Lex</em></span></a>
+</h2></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="lex.html#spirit.lex.lexer_introduction"> Introduction to <span class="emphasis"><em>Spirit.Lex</em></span></a></span></dt>
 <dt><span class="section"><a href="lex/tutorials.html"> <span class="emphasis"><em>Spirit.Lex</em></span>
@@ -64,9 +64,10 @@
 <dt><span class="section"><a href="lex/reference/tokenset_class.html">TokenSet Class</a></span></dt>
 </dl></dd>
 </dl></div>
-<div class="section" lang="en">
+<div class="section" title="Introduction to Spirit.Lex">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="spirit.lex.lexer_introduction"></a><a href="lex.html#spirit.lex.lexer_introduction" title=" Introduction to Spirit.Lex"> Introduction to <span class="emphasis"><em>Spirit.Lex</em></span></a></h3></div></div></div>
+<a name="spirit.lex.lexer_introduction"></a><a class="link" href="lex.html#spirit.lex.lexer_introduction" title="Introduction to Spirit.Lex"> Introduction to <span class="emphasis"><em>Spirit.Lex</em></span></a>
+</h3></div></div></div>
 <p>
         Lexical scanning is the process of analyzing the stream of input characters
         and separating it into strings called tokens, separated by whitespace. Most
@@ -78,29 +79,29 @@
         set of patterns describing the different tokens you want to recognize in
         the input. To make this a bit more formal, here are some definitions:
       </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
           A token is a sequence of consecutive characters having a collective meaning.
           Tokens may have attributes specific to the token type, carrying additional
           information about the matched character sequence.
         </li>
-<li>
+<li class="listitem">
           A pattern is a rule expressed as a regular expression and describing how
-          a particular token can be formed. For example, <tt class="literal">[A-Za-z][A-Za-z_0-9]*</tt>
+          a particular token can be formed. For example, <code class="literal">[A-Za-z][A-Za-z_0-9]*</code>
           is a pattern for a rule matching C++ identifiers.
         </li>
-<li>
+<li class="listitem">
           Characters between tokens are called whitespace; these include spaces,
           tabs, newlines, and formfeeds. Many people also count comments as whitespace,
           though since some tools such as lint look at comments, this conflation
           is not perfect.
         </li>
 </ul></div>
-<a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h4>
-<a name="id488039"></a>
-        <a href="lex.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
+<a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h5>
+<a name="id731904"></a>
+        <a class="link" href="lex.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
         Use a Separate Lexer?</a>
-      </h4>
+      </h5>
 <p>
         Typically, lexical scanning is done in a separate module from the parser,
         feeding the parser with a stream of input tokens only. Theoretically it is
@@ -116,17 +117,17 @@
         to be very useful in practical applications. In 1956, Noam Chomsky defined
         the "Chomsky Hierarchy" of grammars:
       </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
           Type 0: Unrestricted grammars (e.g., natural languages)
         </li>
-<li>
+<li class="listitem">
           Type 1: Context-Sensitive grammars
         </li>
-<li>
+<li class="listitem">
           Type 2: Context-Free grammars
         </li>
-<li>
+<li class="listitem">
           Type 3: Regular grammars
         </li>
 </ul></div>
@@ -195,11 +196,11 @@
         it is even possible to use the provided functionality to build more complex
         grammar recognizers.
       </p>
-<a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h4>
-<a name="id488369"></a>
-        <a href="lex.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
+<a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h5>
+<a name="id732113"></a>
+        <a class="link" href="lex.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
         of using <span class="emphasis"><em>Spirit.Lex</em></span></a>
-      </h4>
+      </h5>
 <p>
         The advantage of using <span class="emphasis"><em>Spirit.Lex</em></span> to create the lexical
         analyzer over using more traditional tools such as <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
@@ -212,18 +213,18 @@
         gives you the vast majority of features you could get from a similar <a href="http://flex.sourceforge.net/" target="_top">Flex</a> program without the need
         to leave C++ as a host language:
       </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
           The definition of tokens is done using regular expressions (patterns)
         </li>
-<li>
+<li class="listitem">
           The token definitions can refer to special substitution strings (pattern
           macros) simplifying pattern definitions
         </li>
-<li>
+<li class="listitem">
           The generated lexical scanner may have multiple start states
         </li>
-<li>
+<li class="listitem">
           It is possible to attach code to any of the token definitions; this code
           gets executed whenever the corresponding token pattern has been matched
         </li>
@@ -232,8 +233,7 @@
         Even if it is possible to use <span class="emphasis"><em>Spirit.Lex</em></span> to generate
         C++ code representing the lexical analyzer (we will refer to that as the
         <span class="emphasis"><em>static</em></span> model, described in more detail in the section
-        <a href="lex/abstracts/lexer_static_model.html" title=" The Static
-        Lexer Model">The <span class="emphasis"><em>Static</em></span>
+        <a class="link" href="lex/abstracts/lexer_static_model.html" title="The Static Lexer Model">The <span class="emphasis"><em>Static</em></span>
         Model</a>) - a model very similar to the way <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
         operates - we will mainly focus on the opposite, the <span class="emphasis"><em>dynamic</em></span>
         model. You can directly integrate the token definitions into your C++ program,
@@ -244,14 +244,13 @@
         But it is very flexible and allows you to speed up the development of your
         application.
       </p>
-<a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h4>
-<a name="id488543"></a>
-        <a href="lex.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
+<a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h5>
+<a name="id732216"></a>
+        <a class="link" href="lex.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
         Library Structure of <span class="emphasis"><em>Spirit.Lex</em></span></a>
-      </h4>
+      </h5>
 <p>
-        The <a href="lex.html#spirit.lexerflow" title="Figure 3. The Library structure and Common Flow of Information while
-        using Spirit.Lex in an application">figure</a> below shows a high level
+        The <a class="link" href="lex.html#spirit.lexerflow" title="Figure 3. The Library structure and Common Flow of Information while using Spirit.Lex in an application">figure</a> below shows a high level
         overview of how the <span class="emphasis"><em>Spirit.Lex</em></span> library might be used
         in an application. <span class="emphasis"><em>Spirit.Lex</em></span> allows to create lexical
         analyzers based on patterns. These patterns are regular expression based
@@ -269,18 +268,16 @@
 <div class="figure">
 <a name="spirit.lexerflow"></a><p class="title"><b>Figure 3. The Library structure and Common Flow of Information while
         using <span class="emphasis"><em>Spirit.Lex</em></span> in an application</b></p>
-<span class="inlinemediaobject"><img src=".././images/lexerflow.png" alt="The
-        Library structure and Common Flow of Information while using Spirit.Lex
-        in an application"></span>
+<div class="figure-contents"><span class="inlinemediaobject"><img src=".././images/lexerflow.png" alt="The Library structure and Common Flow of Information while using Spirit.Lex in an application"></span></div>
 </div>
-<p>
+<p><br class="figure-break">
       </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright © 2001-2008 Joel de Guzman,
-      Hartmut Kaiser<p>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

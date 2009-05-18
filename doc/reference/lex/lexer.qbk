@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -7,6 +7,7 @@
 ===============================================================================/]
 
 [section Lexer]
+
 [table Regular expressions support
     [[Expression]   [Meaning]]
     [[`x`]          [Match any character `x`]]
@@ -62,17 +63,20 @@ Options may be zero or more of the characters 'i' or 's'.
 
 [note POSIX character classes are not currently supported, due to performance issues
 when creating them in wide character mode.]
-[br][h1 Regular Expression Precedence]
+
+[heading Regular Expression Precedence]
 
 * `rs` has highest precedence
 * `r*` has next highest (`+`, `?`, `{n,m}` have the same precedence as `*`)
 * `r|s` has the lowest precedence
 
-[h1 Macros]
+[heading Macros]
 
 Regular expressions can be given a name and referred to in rules using the
 syntax `{NAME}` where `NAME` is the name you have given to the macro.  A macro
 name can be at most 30 characters long and must start with a `_` or a letter.
 Subsequent characters can be `_`, `-`, a letter or a decimal digit.
 Use the `rules::add_macro()` method to define a macro.
+
 [endsect]
+
