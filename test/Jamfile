@@ -90,6 +90,7 @@ import testing ;
     [ run karma/pattern2.cpp                : : : : karma_pattern2 ]
     [ run karma/plus.cpp                    : : : : karma_plus ]
     [ run karma/real_numerics.cpp           : : : : ]
+    [ run karma/repeat.cpp                  : : : : karma_repeat ]
     [ run karma/right_alignment.cpp         : : : : ]
     [ run karma/sequence.cpp                : : : : karma_sequence ]
     [ run karma/stream.cpp                  : : : : karma_stream ]
