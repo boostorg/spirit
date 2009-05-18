@@ -27,7 +27,7 @@
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
 <a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id684301"></a>
+<a name="id660271"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
     </h4>
 <p>
@@ -66,11 +66,11 @@
       for existing applications.
     </p>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id684492"></a>
+<a name="id660462"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0_to_2_x"></a><h4>
-<a name="id684505"></a>
+<a name="id660475"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0_to_2_x">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 to 2.x</a>
@@ -81,15 +81,18 @@
         the newest version of <a href="http://www.boost.org/doc/libs/1_38_0/doc/html/proto.html" target="_top">Boost.Proto</a>
 </li>
 <li class="listitem">
-        qi::phrase_parse, qi::phrase_format now post-skip by default.
+<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>, <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_format</span></code>
+        now post-skip by default.
       </li>
 <li class="listitem">
-        karma::generate_delimited and karma::format_delimited now don't do pre- delimiting
-        by default.
+<code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate_delimited</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">format_delimited</span></code>
+        now don't do pre- delimiting by default.
       </li>
 <li class="listitem">
-        Changed parameter sequence of qi::phrase_parse, qi::phrase_match, karma::generate_delimited,
-        and match_delimited. The attribute is now the last parameter.
+        Changed parameter sequence of <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>,
+        <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_match</span></code>, <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate_delimited</span></code>,
+        and <code class="computeroutput"><span class="identifier">match_delimited</span></code>. The
+        attribute is now always the last parameter.
       </li>
 <li class="listitem">
         Added new overloads of those functions allowing to explicitely specify the
@@ -99,43 +102,62 @@
         multi attribute API functions
       </li>
 <li class="listitem">
-        removed grammar_def&lt;&gt;
+        removed <code class="computeroutput"><span class="identifier">grammar_def</span><span class="special">&lt;&gt;</span></code>
+</li>
+<li class="listitem">
+        removed functions <code class="computeroutput"><span class="identifier">make_parser</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">make_generator</span><span class="special">()</span></code>
+</li>
+<li class="listitem">
+        removed <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">none</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">none</span></code>
+</li>
+<li class="listitem">
+        sequences and lists now accept a standard container as its attribute
       </li>
 <li class="listitem">
-        removed functions make_parser() and make<span class="underline">generator()
-        * removed qi::none and karma::none * sequences and lists now accept a standard
-        container as its attribute * The string placeholder terminal now can take
-        other strings as its parameter (i.e. std::string) * all terminals taking
-        literals now accept a (lazy) function object as well * All placeholders for
-        terminals and directives (such as int</span>, double<span class="underline">,
-        verbatim, etc.) were previously defined in the namespace boost::spirit only.
-        Now these are additionally imported into the namespaces spirit::qi, spirit::karma,
-        and spirit::lex (if they are supported by the corresponding sub-library.
-        * The terminal placeholders char</span> and string are not defined in
-        the namespace boost::spirit anymore as they have been moved to the character
-        set namespaces, allowing to do proper character set handling based on the
-        used namespace (as spirit::ascii, etc.)
+        The string placeholder terminal now can take other strings as its parameter
+        (i.e. std::string)
       </li>
 <li class="listitem">
-        The uint, ushort, ulong, and byte terminal placeholders have been renamed
-        to uint<span class="underline">, ushort</span>, ulong<span class="underline">,
-        and byte</span>.
+        all terminals taking literals now accept a (lazy) function object as well
       </li>
 <li class="listitem">
-        qi: skip[] now re-enables outer skipper if used inside lexeme[]
+        All placeholders for terminals and directives (such as <code class="computeroutput"><span class="identifier">int_</span></code>,
+        <code class="computeroutput"><span class="identifier">double_</span></code>, <code class="computeroutput"><span class="identifier">verbatim</span></code>,
+        etc.) were previously defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>
+        only. Now these are additionally imported into the namespaces <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span></code>, <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span></code>,
+        and <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span></code> (if they are supported by the corresponding
+        sub-library.
       </li>
 <li class="listitem">
-        karma: maxwidth[] directive
+        The terminal placeholders <code class="computeroutput"><span class="identifier">char_</span></code>
+        and <code class="computeroutput"><span class="identifier">string</span></code> are not defined
+        in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code> anymore as they have been moved
+        to the character set namespaces, allowing to do proper character set handling
+        based on the used namespace (as <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span></code>,
+        etc.)
       </li>
 <li class="listitem">
-        karma: delimit[] now re-enables outer delimiter if used inside verbatim[]
+        The <code class="computeroutput"><span class="identifier">uint</span></code>, <code class="computeroutput"><span class="identifier">ushort</span></code>,
+        <code class="computeroutput"><span class="identifier">ulong</span></code>, and <code class="computeroutput"><span class="identifier">byte</span></code> terminal placeholders have been renamed
+        to <code class="computeroutput"><span class="identifier">uint_</span></code>, <code class="computeroutput"><span class="identifier">ushort_</span></code>,
+        <code class="computeroutput"><span class="identifier">ulong_</span></code>, and <code class="computeroutput"><span class="identifier">byte_</span></code>.
       </li>
 <li class="listitem">
-        karma: added and-predicate (operator&amp;()) and not-predicate (operator!())
+        qi::skip[]<code class="computeroutput"> <span class="identifier">now</span> <span class="identifier">re</span><span class="special">-</span><span class="identifier">enables</span> <span class="identifier">outer</span> <span class="identifier">skipper</span>
+        <span class="keyword">if</span> <span class="identifier">used</span>
+        <span class="identifier">inside</span> </code>lexeme[]<code class="computeroutput"> <span class="special">*</span>
+        <span class="identifier">Added</span> </code>karma::maxwidth[]<code class="computeroutput">
+        <span class="identifier">directive</span> <span class="special">*</span>
+        </code>karma::delimit[]<code class="computeroutput"> <span class="identifier">now</span> <span class="identifier">re</span><span class="special">-</span><span class="identifier">enables</span>
+        <span class="identifier">outer</span> <span class="identifier">delimiter</span>
+        <span class="keyword">if</span> <span class="identifier">used</span>
+        <span class="identifier">inside</span> </code>verbatim[]<code class="computeroutput"> <span class="special">*</span> <span class="identifier">karma</span><span class="special">:</span> <span class="identifier">added</span> <span class="keyword">and</span><span class="special">-</span><span class="identifier">predicate</span>
+        <span class="special">(</span></code>operator&amp;()<code class="computeroutput"><span class="special">)</span>
+        <span class="keyword">and</span> <span class="keyword">not</span><span class="special">-</span><span class="identifier">predicate</span> <span class="special">(</span></code>operator!()`)
       </li>
 </ul></div>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x"></a><h4>
-<a name="id684607"></a>
+<a name="id661106"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x">What's
       changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 to 2.x</a>
     </h4>
@@ -156,9 +178,7 @@
         The lex::lexer class does not have the function <code class="computeroutput"><span class="identifier">def</span><span class="special">(</span><span class="identifier">Self</span><span class="special">&amp;</span>
         <span class="identifier">self</span><span class="special">)</span></code>
         anymore, token definitions can be added to the lexer at any time, usually
-        in the constructor of the user defined lexer class:
-      </li>
-</ul></div>
+        in the constructor of the user defined lexer class: 
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">example_tokens</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="special">{</span>
@@ -169,42 +189,57 @@
       <span class="special">}</span>
 <span class="special">};</span>
 </pre>
-<p>
-      template &lt;typename Lexer&gt; struct example_tokens : lex::lexer&lt;Lexer&gt;
-      { example_lexer() { <span class="emphasis"><em>/ your token definitions here this-&gt;self =
-      ... } }; * The new lexer class now can be directly used, their is no need anymore
-      to wrap it using the `make_lexer()` template as before. Therefor the function
-      `make_lexer()` has been removed. * The `lex::tokenize_and_parse()` and `lex::tokenize_and_phrase_parse()`
-      functions have been changed to match the parameter sequence as implemented
-      by the `qi::parse()` and `qi::phrase_parse()` functions. Both take a possibly
-      arbitrary number of attribute arguments as its last parameters (well, the number
-      of attributes is limited by the macro `SPIRIT_ARGUMENTS_LIMIT`, which defaults
-      to `PHOENIX_LIMIT`). * The `lex::lexertl_lexer`, `lex::lexertl_token_set`,
-      and `lex::lexertl_token` classes has been moved to the `lex::lexertl` namespace
-      and the names have been changed to `lex::lexertl::lexer`, `lex::lexertl::token_set`,
-      `lex::lexertl::token` (the same applies to the `lex::lexert_actor_lexer`, and
-      the `static_lexertl_*` family of types). * The __lexer__ library has been updated
-      to use the newest version of Ben Hansons __lexertl__ lexer construction library
-      (Boost review pending). * The `lex::lexer&lt;Lexer&gt;` template constructor
-      now takes an optional parameter specifying the `match_flags` to be used for
-      table generation. Currently, there are the following flags available: ''' match_flags::match_default,
-      /</em></span> no flags match_flags::match_not_dot_newline, <span class="emphasis"><em>/ the regex
-      '.' doesn't match newlines match_flags::match_icase /</em></span> all matching
-      operations are case insensitive If no parameter is passed to the constructor, `match_flags::match_default` is 
-  used, i.e. the `.` matches newlines and matching is case sensitive.
-* Now the `char_()` and `string()` placeholders can be used for token 
-  definitions as a replacement for `token_def`, although it is still
-  possible to use the latter one.
-
-[endsect]
-
-
-'''
-  If no parameter is passed to the constructor, <code class="computeroutput"><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_default</span></code> is 
-  used, i.e. the <code class="computeroutput"><span class="special">.</span></code> matches newlines and matching is case sensitive.
-* Now the <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">string</span><span class="special">()</span></code> placeholders can be used for token 
-  definitions as a replacement for <code class="computeroutput"><span class="identifier">token_def</span></code>, although it is still
-  possible to use the latter one.</p>
+</li>
+<li class="listitem">
+        The new lexer class now can be directly used, their is no need anymore to
+        wrap it using the <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code> template as before. Therefor the function
+        <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code>
+        has been removed.
+      </li>
+<li class="listitem">
+        The <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_parse</span><span class="special">()</span></code>
+        and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_phrase_parse</span><span class="special">()</span></code>
+        functions have been changed to match the parameter sequence as implemented
+        by the <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">()</span></code>
+        and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">()</span></code>
+        functions. Both take a possibly arbitrary number of attribute arguments as
+        its last parameters (well, the number of attributes is limited by the macro
+        <code class="computeroutput"><span class="identifier">SPIRIT_ARGUMENTS_LIMIT</span></code>, which
+        defaults to <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code>).
+      </li>
+<li class="listitem">
+        The <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_lexer</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token_set</span></code>,
+        and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token</span></code> classes has been moved to
+        the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span></code> namespace and the names have been
+        changed to <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token_set</span></code>,
+        <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span></code> (the same applies to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexert_actor_lexer</span></code>,
+        and the <code class="computeroutput"><span class="identifier">static_lexertl_</span><span class="special">*</span></code>
+        family of types).
+      </li>
+<li class="listitem">
+        The <span class="emphasis"><em>Spirit.Lex</em></span> library has been updated to use the newest
+        version of Ben Hansons <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
+        lexer construction library (Boost review pending).
+      </li>
+<li class="listitem">
+        The <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span></code>
+        template constructor now takes an optional parameter specifying the <code class="computeroutput"><span class="identifier">match_flags</span></code> to be used for table generation.
+        Currently, there are the following flags available: 
+<pre class="programlisting"><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_default</span><span class="special">,</span>          <span class="comment">// no flags
+</span><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_not_dot_newline</span><span class="special">,</span>  <span class="comment">// the regex '.' doesn't match newlines
+</span><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_icase</span>             <span class="comment">// all matching operations are case insensitive
+</span></pre>
+        If no parameter is passed to the constructor, <code class="computeroutput"><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_default</span></code>
+        is used, i.e. the <code class="computeroutput"><span class="special">.</span></code> matches
+        newlines and matching is case sensitive.
+      </li>
+<li class="listitem">
+        Now the <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>
+        and <code class="computeroutput"><span class="identifier">string</span><span class="special">()</span></code>
+        placeholders can be used for token definitions as a replacement for <code class="computeroutput"><span class="identifier">token_def</span></code>, although it is still possible
+        to use the latter one.
+      </li>
+</ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

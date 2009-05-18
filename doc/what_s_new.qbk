@@ -46,37 +46,37 @@ compatibility for existing applications.
 [heading What's changed in __qi__ and __karma__ from V2.0 to 2.x]
 
 * __spirit__ is now based on the newest version of __boost_proto__
-* qi::phrase_parse, qi::phrase_format now post-skip by default.
-* karma::generate_delimited and karma::format_delimited now don't do pre-
+* `qi::phrase_parse`, `qi::phrase_format` now post-skip by default.
+* `karma::generate_delimited` and `karma::format_delimited` now don't do pre-
   delimiting by default.
-* Changed parameter sequence of qi::phrase_parse, qi::phrase_match, 
-  karma::generate_delimited, and match_delimited. The attribute is now the last 
-  parameter.
+* Changed parameter sequence of `qi::phrase_parse`, `qi::phrase_match`, 
+  `karma::generate_delimited`, and `match_delimited`. The attribute is now 
+  always the last parameter.
 * Added new overloads of those functions allowing to explicitely specify the
   post-skipping and pre-delimiting behavior.
 * multi attribute API functions
-* removed grammar_def<>
-* removed functions make_parser() and make_generator()
-* removed qi::none and karma::none
+* removed `grammar_def<>`
+* removed functions `make_parser()` and `make_generator()`
+* removed `qi::none` and `karma::none`
 * sequences and lists now accept a standard container as its attribute
 * The string placeholder terminal now can take other strings as its parameter 
   (i.e. std::string)
 * all terminals taking literals now accept a (lazy) function object as well
-* All placeholders for terminals and directives (such as int_, double_, 
-  verbatim, etc.) were previously defined in the namespace boost::spirit 
+* All placeholders for terminals and directives (such as `int_`, `double_`, 
+  `verbatim`, etc.) were previously defined in the namespace `boost::spirit` 
   only. Now these are additionally imported into the namespaces
-  spirit::qi, spirit::karma, and spirit::lex (if they are supported by 
+  `spirit::qi`, `spirit::karma`, and `spirit::lex` (if they are supported by 
   the corresponding sub-library.
-* The terminal placeholders char_ and string are not defined in the
-  namespace boost::spirit anymore as they have been moved to the 
+* The terminal placeholders `char_` and `string` are not defined in the
+  namespace `boost::spirit` anymore as they have been moved to the 
   character set namespaces, allowing to do proper character set 
-  handling based on the used namespace (as spirit::ascii, etc.)
-* The uint, ushort, ulong, and byte terminal placeholders have been renamed to
-  uint_, ushort_, ulong_, and byte_.
-* qi: skip[] now re-enables outer skipper if used inside lexeme[]
-* karma: maxwidth[] directive
-* karma: delimit[] now re-enables outer delimiter if used inside verbatim[]
-* karma: added and-predicate (operator&()) and not-predicate (operator!())
+  handling based on the used namespace (as `spirit::ascii`, etc.)
+* The `uint`, `ushort`, `ulong`, and `byte` terminal placeholders have been 
+  renamed to `uint_`, `ushort_`, `ulong_`, and `byte_`.
+* qi::skip[]` now re-enables outer skipper if used inside `lexeme[]`
+* Added `karma::maxwidth[]` directive
+* `karma::delimit[]` now re-enables outer delimiter if used inside `verbatim[]`
+* karma: added and-predicate (`operator&()`) and not-predicate (`operator!()`)
 
 
 [heading What's changed in __lex__ from V2.0 to 2.x]
@@ -93,7 +93,7 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
 * The lex::lexer class does not have the function `def(Self& self)` anymore, 
   token definitions can be added to the lexer at any time, usually in the 
   constructor of the user defined lexer class:
-
+``
       template <typename Lexer>
       struct example_tokens : lex::lexer<Lexer>
       {
@@ -103,6 +103,7 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
                 this->self = ...
             }
       };
+``
 * The new lexer class now can be directly used, their is no need anymore to 
   wrap it using the `make_lexer()` template as before. Therefor the function
   `make_lexer()` has been removed.
@@ -117,16 +118,16 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
   changed to `lex::lexertl::lexer`, `lex::lexertl::token_set`, `lex::lexertl::token`
   (the same applies to the `lex::lexert_actor_lexer`, and the `static_lexertl_*`
   family of types).
-* The __lexer__ library has been updated to use the newest version of Ben 
+* The __lex__ library has been updated to use the newest version of Ben 
   Hansons __lexertl__ lexer construction library (Boost review pending).
 * The `lex::lexer<Lexer>` template constructor now takes an optional parameter
   specifying the `match_flags` to be used for table generation. Currently, there
   are the following flags available:
-'''
+``
         match_flags::match_default,          // no flags
         match_flags::match_not_dot_newline,  // the regex '.' doesn't match newlines
         match_flags::match_icase             // all matching operations are case insensitive
-'''
+``
   If no parameter is passed to the constructor, `match_flags::match_default` is 
   used, i.e. the `.` matches newlines and matching is case sensitive.
 * Now the `char_()` and `string()` placeholders can be used for token 
