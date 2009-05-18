@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/assert.hpp>
 #include <boost/function.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/function_types/result_type.hpp>
@@ -186,7 +187,7 @@ namespace boost { namespace spirit { namespace karma
 
         rule& operator=(rule const& rhs)
         {
-            // The following assertion fires  when you try to initialize a rule
+            // The following assertion fires when you try to initialize a rule
             // from an uninitialized one. Did you mean to refer to the right
             // hand side rule instead of assigning from it? In this case you 
             // should write lhs = rhs.alias();
