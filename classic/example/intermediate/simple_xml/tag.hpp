@@ -12,14 +12,14 @@
 
 struct tag
 {
-    std::string	id;
+    std::string id;
     std::map<std::string,std::string> attributes;
     typedef boost::variant<
         std::string,
         boost::recursive_wrapper<tag>
         >
     variant_type;
-    std::list<variant_type>	children;
+    std::list<variant_type> children;
 };
 
 
