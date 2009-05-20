@@ -1,7 +1,7 @@
 # Add a library target to the build system
 boost_library_project(
   spirit
-  SRCDIRS     example/karma example/qi example/lex
+  SRCDIRS     example/karma example/qi example/lex phoenix/example
   TESTDIRS    test
   HEADERS     spirit.hpp spirit
   #  DOCDIRS 
