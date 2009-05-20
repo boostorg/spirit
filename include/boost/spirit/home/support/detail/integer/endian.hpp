@@ -195,7 +195,7 @@ namespace boost
           return detail::load_big_endian<T, n_bits/8>(m_value);
         }
       private:
-  	    char m_value[n_bits/8];
+        char m_value[n_bits/8];
     };
 
     //  unaligned little endian specialization
@@ -227,7 +227,7 @@ namespace boost
           return detail::load_little_endian<T, n_bits/8>(m_value);
         }
       private:
-  	    char m_value[n_bits/8];
+        char m_value[n_bits/8];
     };
 
     //  unaligned native endian specialization
@@ -254,7 +254,7 @@ namespace boost
         operator T() const        { return detail::load_little_endian<T, n_bits/8>(m_value); }
 #   endif
       private:
-  	    char m_value[n_bits/8];
+        char m_value[n_bits/8];
     };
 
     //  Specializations that mimic built-in integer types.
@@ -285,7 +285,7 @@ namespace boost
         operator T() const        { return detail::load_big_endian<T, sizeof(T)>(&m_value); }
 #   endif  
       private:
-  	    T m_value;
+        T m_value;
     };
 
     //  aligned little endian specialization
@@ -313,7 +313,7 @@ namespace boost
         operator T() const        { return detail::load_little_endian<T, sizeof(T)>(&m_value); }
     #endif
       private:
-  	    T m_value;
+        T m_value;
     };
 
   //  naming convention typedefs  ------------------------------------------------------//
