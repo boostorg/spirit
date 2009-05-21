@@ -1,8 +1,8 @@
 # Add a library target to the build system
 boost_library_project(
   spirit
-  SRCDIRS     example/karma example/qi example/lex phoenix/example
-  TESTDIRS    test
+  SRCDIRS     example/karma example/qi example/lex 
+  TESTDIRS    test phoenix/example
   HEADERS     spirit.hpp spirit
   #  DOCDIRS 
   DESCRIPTION "A object oriented, recursive-descent parser and output generation library using the syntax of Parsing Expression Grammars (PEGs) directly in C++"
