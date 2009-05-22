@@ -61,18 +61,21 @@ namespace boost { namespace spirit { namespace lex
     {
         typedef typename CharEncoding::char_type char_type;
 
-        char_token_def(char_type ch) : ch (ch) {}
+        char_token_def(char_type ch) : ch(ch), unique_id_(~0) {}
 
         template <typename LexerDef, typename String>
         void collect(LexerDef& lexdef, String const& state) const
         {
-            lexdef.add_token (state.c_str(), ch, 
-                static_cast<std::size_t>(ch));
+            lexdef.add_token (state.c_str(), ch, static_cast<std::size_t>(ch));
         }
+
+        template <typename LexerDef>
+        void add_actions(LexerDef& lexdef) const {}
 
         std::size_t id() const { return static_cast<std::size_t>(ch); }
 
         char_type ch;
+        mutable std::size_t unique_id_;
     };
 
     ///////////////////////////////////////////////////////////////////////////

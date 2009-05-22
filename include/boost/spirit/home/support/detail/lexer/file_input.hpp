@@ -33,6 +33,7 @@ public:
         struct data
         {
             std::size_t id;
+            std::size_t unique_id;
             const CharT *start;
             const CharT *end;
             std::size_t state;
@@ -40,14 +41,16 @@ public:
             // Construct in end() state.
             data () :
                 id (0),
+                unique_id (npos),
                 state (npos)
             {
             }
 
             bool operator == (const data &rhs_) const
             {
-                return id == rhs_.id && start == rhs_.start &&
-                    end == rhs_.end && state == rhs_.state;
+                return id == rhs_.id && unique_id == rhs_.unique_id &&
+                    start == rhs_.start && end == rhs_.end &&
+                    state == rhs_.state;
             }
         };
 
@@ -105,12 +108,12 @@ public:
                 _data.id = _input->next (&internals_._lookup->front ()->
                     front (), internals_._dfa_alphabet.front (),
                     &internals_._dfa->front ()->front (), _data.start,
-                    _data.end);
+                    _data.end, _data.unique_id);
             }
             else
             {
                 _data.id = _input->next (internals_, _data.state, _data.start,
-                    _data.end);
+                    _data.end, _data.unique_id);
             }
 
             if (_data.id == 0)
@@ -156,6 +159,7 @@ public:
         iterator iter_;
 
         iter_._input = this;
+        // Over-ride default of 0 (EOF)
         iter_._data.id = npos;
         iter_._data.start = 0;
         iter_._data.end = 0;
@@ -200,7 +204,8 @@ private:
     CharT *_end_buffer;
 
     std::size_t next (const detail::internals &internals_,
-        std::size_t &start_state_, const CharT * &start_, const CharT * &end_)
+        std::size_t &start_state_, const CharT * &start_, const CharT * &end_,
+        std::size_t &unique_id_)
     {
         _start_token = _end_token;
 
@@ -213,6 +218,7 @@ again:
         const CharT *curr_ = _start_token;
         bool end_state_ = *ptr_ != 0;
         std::size_t id_ = *(ptr_ + id_index);
+        std::size_t uid_ = *(ptr_ + unique_id_index);
         const CharT *end_token_ = curr_;
 
         for (;;)
@@ -255,6 +261,7 @@ again:
             {
                 end_state_ = true;
                 id_ = *(ptr_ + id_index);
+                uid_ = *(ptr_ + unique_id_index);
                 start_state_ = *(ptr_ + state_index);
                 end_token_ = curr_;
             }
@@ -263,6 +270,7 @@ again:
         if (_start_token >= _end_buffer)
         {
             // No more tokens...
+            unique_id_ = npos;
             return 0;
         }
 
@@ -276,6 +284,7 @@ again:
             {
                 end_state_ = true;
                 id_ = *(ptr_ + id_index);
+                uid_ = *(ptr_ + unique_id_index);
                 start_state_ = *(ptr_ + state_index);
                 end_token_ = curr_;
             }
@@ -293,23 +302,26 @@ again:
             // No match causes char to be skipped
             _end_token = _start_token + 1;
             id_ = npos;
+            uid_ = npos;
         }
 
         start_ = _start_token;
         end_ = _end_token;
+        unique_id_ = uid_;
         return id_;
     }
 
     std::size_t next (const std::size_t * const lookup_,
         const std::size_t dfa_alphabet_, const std::size_t * const dfa_,
-        const CharT * &start_, const CharT * &end_)
+        const CharT * &start_, const CharT * &end_, std::size_t &unique_id_)
     {
         _start_token = _end_token;
 
         const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
         const CharT *curr_ = _start_token;
         bool end_state_ = *ptr_ != 0;
-        std::size_t id_ = id_ = *(ptr_ + id_index);
+        std::size_t id_ = *(ptr_ + id_index);
+        std::size_t uid_ = *(ptr_ + unique_id_index);
         const CharT *end_token_ = curr_;
 
         for (;;)
@@ -352,6 +364,7 @@ again:
             {
                 end_state_ = true;
                 id_ = *(ptr_ + id_index);
+                uid_ = *(ptr_ + unique_id_index);
                 end_token_ = curr_;
             }
         }
@@ -359,6 +372,7 @@ again:
         if (_start_token >= _end_buffer)
         {
             // No more tokens...
+            unique_id_ = npos;
             return 0;
         }
 
@@ -372,6 +386,7 @@ again:
             {
                 end_state_ = true;
                 id_ = *(ptr_ + id_index);
+                uid_ = *(ptr_ + unique_id_index);
                 end_token_ = curr_;
             }
         }
@@ -386,10 +401,12 @@ again:
             // No match causes char to be skipped
             _end_token = _start_token + 1;
             id_ = npos;
+            uid_ = npos;
         }
 
         start_ = _start_token;
         end_ = _end_token;
+        unique_id_ = uid_;
         return id_;
     }
 

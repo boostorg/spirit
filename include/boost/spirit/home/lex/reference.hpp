@@ -37,7 +37,13 @@ namespace boost { namespace spirit { namespace lex
         template <typename LexerDef, typename String>
         void collect(LexerDef& lexdef, String const& state) const
         {
-            return this->ref.get().collect(lexdef, state);
+            this->ref.get().collect(lexdef, state);
+        }
+
+        template <typename LexerDef>
+        void add_actions(LexerDef& lexdef) const 
+        {
+            this->ref.get().add_actions(lexdef);
         }
     };
 

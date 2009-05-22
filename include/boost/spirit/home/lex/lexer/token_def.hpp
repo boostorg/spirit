@@ -168,6 +168,9 @@ namespace boost { namespace spirit { namespace lex
                 lexdef.add_token(state.c_str(), get<char_type>(def), token_id);
         }
 
+        template <typename LexerDef>
+        void add_actions(LexerDef& lexdef) const {}
+
     public:
         typedef Char char_type;
         typedef Idtype id_type;
@@ -180,8 +183,7 @@ namespace boost { namespace spirit { namespace lex
 
         explicit token_def(char_type def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(alias()))
-          , def(def_)
-          , token_id(Idtype() == id_ ? def_ : id_)
+          , def(def_), token_id(Idtype() == id_ ? def_ : id_)
           , token_state(~0) {}
 
         explicit token_def(string_type const& def_, Idtype id_ = Idtype())
@@ -207,6 +209,7 @@ namespace boost { namespace spirit { namespace lex
         // general accessors 
         Idtype id() const { return token_id; }
         void id(Idtype id) { token_id = id; }
+
         string_type definition() const 
         { 
             return (0 == def.which()) 

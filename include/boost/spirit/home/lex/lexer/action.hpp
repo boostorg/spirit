@@ -32,6 +32,13 @@ namespace boost { namespace spirit { namespace lex
             // first collect the token definition information for the token_def 
             // this action is attached to
             subject.collect(lexdef, state);
+        }
+
+        template <typename LexerDef>
+        void add_actions(LexerDef& lexdef) const
+        {
+            // call to add all actions attached further down the hierarchy 
+            subject.add_actions(lexdef);
 
             // retrieve the id of the associated token_def and register the 
             // given semantic action with the lexer instance

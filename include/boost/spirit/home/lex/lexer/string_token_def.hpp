@@ -69,6 +69,9 @@ namespace boost { namespace spirit { namespace lex
             lexdef.add_token (state.c_str(), str_, id_);
         }
 
+        template <typename LexerDef>
+        void add_actions(LexerDef& lexdef) const {}
+
         std::size_t id() const { return id_; }
 
         string_type str_;

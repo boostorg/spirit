@@ -165,6 +165,8 @@ protected:
             {
                 end_state (stream_);
                 stream_ << iter_->id;
+                unique_id (stream_);
+                stream_ << iter_->unique_id;
                 dfa (stream_);
                 stream_ << iter_->goto_dfa;
                 stream_ << std::endl;
@@ -279,6 +281,16 @@ protected:
     static void end_state (std::wostream &stream_)
     {
         stream_ << L"  END STATE, Id = ";
+    }
+
+    static void unique_id (std::ostream &stream_)
+    {
+        stream_ << ", Unique Id = ";
+    }
+
+    static void unique_id (std::wostream &stream_)
+    {
+        stream_ << L", Unique Id = ";
     }
 
     static void any (std::ostream &stream_)

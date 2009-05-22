@@ -32,6 +32,7 @@ public:
         struct data
         {
             std::size_t id;
+            std::size_t unique_id;
             FwdIter start;
             FwdIter end;
             bool bol;
@@ -40,6 +41,7 @@ public:
             // Construct in end() state.
             data () :
                 id (0),
+                unique_id (npos),
                 bol (false),
                 state (npos)
             {
@@ -47,8 +49,9 @@ public:
 
             bool operator == (const data &rhs_) const
             {
-                return id == rhs_.id && start == rhs_.start &&
-                    end == rhs_.end && bol == rhs_.bol && state == rhs_.state;
+                return id == rhs_.id && unique_id == rhs_.unique_id &&
+                    start == rhs_.start && end == rhs_.end &&
+                    bol == rhs_.bol && state == rhs_.state;
             }
         };
 
@@ -115,13 +118,14 @@ public:
                         (&internals_._lookup->front ()->front (),
                         internals_._dfa_alphabet.front (),
                         &internals_._dfa->front ()->front (),
-                        _data.bol, _data.end, _input->_end);
+                        _data.bol, _data.end, _input->_end, _data.unique_id);
                 }
                 else
                 {
                     _data.id = next (&internals_._lookup->front ()->front (),
                         internals_._dfa_alphabet.front (), &internals_.
-                        _dfa->front ()->front (), _data.end, _input->_end);
+                        _dfa->front ()->front (), _data.end, _input->_end,
+                        _data.unique_id);
                 }
             }
             else
@@ -130,12 +134,12 @@ public:
                     internals_._seen_EOL_assertion)
                 {
                     _data.id = next (internals_, _data.state,
-                        _data.bol, _data.end, _input->_end);
+                        _data.bol, _data.end, _input->_end, _data.unique_id);
                 }
                 else
                 {
                     _data.id = next (internals_, _data.state,
-                        _data.end, _input->_end);
+                        _data.end, _input->_end, _data.unique_id);
                 }
             }
 
@@ -148,9 +152,14 @@ public:
 
         std::size_t next (const detail::internals &internals_,
             std::size_t &start_state_, bool bol_,
-            FwdIter &start_token_, const FwdIter &end_)
+            FwdIter &start_token_, const FwdIter &end_,
+            std::size_t &unique_id_)
         {
-            if (start_token_ == end_) return 0;
+            if (start_token_ == end_)
+            {
+                unique_id_ = npos;
+                return 0;
+            }
 
         again:
             const std::size_t * lookup_ = &internals_._lookup[start_state_]->
@@ -161,6 +170,7 @@ public:
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
             std::size_t id_ = *(ptr_ + id_index);
+            std::size_t uid_ = *(ptr_ + unique_id_index);
             bool end_bol_ = bol_;
             FwdIter end_token_ = start_token_;
 
@@ -199,6 +209,7 @@ public:
                 {
                     end_state_ = true;
                     id_ = *(ptr_ + id_index);
+                    uid_ = *(ptr_ + unique_id_index);
                     start_state_ = *(ptr_ + state_index);
                     end_bol_ = bol_;
                     end_token_ = curr_;
@@ -215,6 +226,7 @@ public:
                 {
                     end_state_ = true;
                     id_ = *(ptr_ + id_index);
+                    uid_ = *(ptr_ + unique_id_index);
                     start_state_ = *(ptr_ + state_index);
                     end_bol_ = bol_;
                     end_token_ = curr_;
@@ -239,16 +251,22 @@ public:
                 _data.bol = *start_token_ == '\n';
                 ++start_token_;
                 id_ = npos;
+                uid_ = npos;
             }
 
+            unique_id_ = uid_;
             return id_;
         }
 
         std::size_t next (const detail::internals &internals_,
             std::size_t &start_state_, FwdIter &start_token_,
-            FwdIter const &end_)
+            FwdIter const &end_, std::size_t &unique_id_)
         {
-            if (start_token_ == end_) return 0;
+            if (start_token_ == end_)
+            {
+                unique_id_ = npos;
+                return 0;
+            }
 
         again:
             const std::size_t * lookup_ = &internals_._lookup[start_state_]->
@@ -259,6 +277,7 @@ public:
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
             std::size_t id_ = *(ptr_ + id_index);
+            std::size_t uid_ = *(ptr_ + unique_id_index);
             FwdIter end_token_ = start_token_;
 
             while (curr_ != end_)
@@ -277,6 +296,7 @@ public:
                 {
                     end_state_ = true;
                     id_ = *(ptr_ + id_index);
+                    uid_ = *(ptr_ + unique_id_index);
                     start_state_ = *(ptr_ + state_index);
                     end_token_ = curr_;
                 }
@@ -294,21 +314,29 @@ public:
                 // No match causes char to be skipped
                 ++start_token_;
                 id_ = npos;
+                uid_ = npos;
             }
 
+            unique_id_ = uid_;
             return id_;
         }
 
         std::size_t next (const std::size_t * const lookup_,
             const std::size_t dfa_alphabet_, const std::size_t * const dfa_,
-            bool bol_, FwdIter &start_token_, FwdIter const &end_)
+            bool bol_, FwdIter &start_token_, FwdIter const &end_,
+            std::size_t &unique_id_)
         {
-            if (start_token_ == end_) return 0;
+            if (start_token_ == end_)
+            {
+                unique_id_ = npos;
+                return 0;
+            }
 
             const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
             std::size_t id_ = *(ptr_ + id_index);
+            std::size_t uid_ = *(ptr_ + unique_id_index);
             bool end_bol_ = bol_;
             FwdIter end_token_ = start_token_;
 
@@ -347,6 +375,7 @@ public:
                 {
                     end_state_ = true;
                     id_ = *(ptr_ + id_index);
+                    uid_ = *(ptr_ + unique_id_index);
                     end_bol_ = bol_;
                     end_token_ = curr_;
                 }
@@ -362,6 +391,7 @@ public:
                 {
                     end_state_ = true;
                     id_ = *(ptr_ + id_index);
+                    uid_ = *(ptr_ + unique_id_index);
                     end_bol_ = bol_;
                     end_token_ = curr_;
                 }
@@ -379,21 +409,29 @@ public:
                 _data.bol = *start_token_ == '\n';
                 ++start_token_;
                 id_ = npos;
+                uid_ = npos;
             }
 
+            unique_id_ = uid_;
             return id_;
         }
 
         std::size_t next (const std::size_t * const lookup_,
             const std::size_t dfa_alphabet_, const std::size_t * const dfa_,
-            FwdIter &start_token_, FwdIter const &end_)
+            FwdIter &start_token_, FwdIter const &end_,
+            std::size_t &unique_id_)
         {
-            if (start_token_ == end_) return 0;
+            if (start_token_ == end_)
+            {
+                unique_id_ = npos;
+                return 0;
+            }
 
             const std::size_t *ptr_ = dfa_ + dfa_alphabet_;
             FwdIter curr_ = start_token_;
             bool end_state_ = *ptr_ != 0;
             std::size_t id_ = *(ptr_ + id_index);
+            std::size_t uid_ = *(ptr_ + unique_id_index);
             FwdIter end_token_ = start_token_;
 
             while (curr_ != end_)
@@ -412,6 +450,7 @@ public:
                 {
                     end_state_ = true;
                     id_ = *(ptr_ + id_index);
+                    uid_ = *(ptr_ + unique_id_index);
                     end_token_ = curr_;
                 }
             }
@@ -426,8 +465,10 @@ public:
                 // No match causes char to be skipped
                 ++start_token_;
                 id_ = npos;
+                uid_ = npos;
             }
 
+            unique_id_ = uid_;
             return id_;
         }
     };
@@ -452,6 +493,7 @@ public:
         iterator iter_;
 
         iter_._input = this;
+        // Over-ride default of 0 (EOI)
         iter_._data.id = npos;
         iter_._data.start = _begin;
         iter_._data.end = _begin;

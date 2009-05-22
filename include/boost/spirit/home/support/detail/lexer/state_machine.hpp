@@ -45,6 +45,7 @@ public:
             // Current state info
             bool end_state;
             std::size_t id;
+            std::size_t unique_id;
             std::size_t goto_dfa;
             std::size_t bol_index;
             std::size_t eol_index;
@@ -61,6 +62,7 @@ public:
                 transition (npos),
                 end_state (false),
                 id (npos),
+                unique_id (npos),
                 goto_dfa (npos),
                 bol_index (npos),
                 eol_index (npos),
@@ -77,6 +79,7 @@ public:
                     transition == rhs_.transition &&
                     end_state == rhs_.end_state &&
                     id == rhs_.id &&
+                    unique_id == rhs_.unique_id &&
                     goto_dfa == rhs_.goto_dfa &&
                     bol_index == rhs_.bol_index &&
                     eol_index == rhs_.eol_index &&
@@ -197,6 +200,7 @@ public:
                 _transitions = _data.transitions = ptr_->_transitions.size ();
                 _data.end_state = ptr_->_end_state;
                 _data.id = ptr_->_id;
+                _data.unique_id = ptr_->_unique_id;
                 _data.goto_dfa = ptr_->_state;
                 _data.bol_index = ptr_->_bol_index;
                 _data.eol_index = ptr_->_eol_index;
@@ -281,6 +285,7 @@ public:
             iter_._transition = 0;
             iter_._data.end_state = ptr_->front ()._end_state;
             iter_._data.id = ptr_->front ()._id;
+            iter_._data.unique_id = ptr_->front()._unique_id;
             iter_._data.goto_dfa = ptr_->front ()._state;
             iter_._data.bol_index = ptr_->front ()._bol_index;
             iter_._data.eol_index = ptr_->front ()._eol_index;
@@ -368,6 +373,7 @@ private:
 
                 state_->_end_state = *read_ptr_ != 0;
                 state_->_id = *(read_ptr_ + id_index);
+                state_->_unique_id = *(read_ptr_ + unique_id_index);
                 state_->_state = *(read_ptr_ + state_index);
                 state_->_bol_index = *(read_ptr_ + bol_index) - 1;
                 state_->_eol_index = *(read_ptr_ + eol_index) - 1;

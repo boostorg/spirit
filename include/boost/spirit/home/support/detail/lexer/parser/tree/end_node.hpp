@@ -18,9 +18,11 @@ namespace detail
 class end_node : public node
 {
 public:
-    end_node (const std::size_t id_, const std::size_t lexer_state_) :
+    end_node (const std::size_t id_, const std::size_t unique_id_,
+        const std::size_t lexer_state_) :
         node (false),
         _id (id_),
+        _unique_id (unique_id_),
         _lexer_state (lexer_state_)
     {
         node::_firstpos.push_back (this);
@@ -58,6 +60,11 @@ public:
         return _id;
     }
 
+    virtual std::size_t unique_id () const
+    {
+        return _unique_id;
+    }
+
     virtual std::size_t lexer_state () const
     {
         return _lexer_state;
@@ -65,6 +72,7 @@ public:
 
 private:
     std::size_t _id;
+    std::size_t _unique_id;
     std::size_t _lexer_state;
     node_vector _followpos;
 

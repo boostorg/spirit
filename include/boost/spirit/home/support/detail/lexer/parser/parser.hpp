@@ -51,10 +51,10 @@ Grammar:
 <DUPLICATE>  -> '?' | '*' | '+' | '{n[,[m]]}'
 */
     static node *parse (const CharT *start_, const CharT * const end_,
-        const std::size_t id_, const std::size_t dfa_state_,
-        const regex_flags flags_, const std::locale &locale_,
-        node_ptr_vector &node_ptr_vector_, const macro_map &macromap_,
-        typename tokeniser::token_map &map_,
+        const std::size_t id_, const std::size_t unique_id_,
+        const std::size_t dfa_state_, const regex_flags flags_,
+        const std::locale &locale_, node_ptr_vector &node_ptr_vector_,
+        const macro_map &macromap_, typename tokeniser::token_map &map_,
         bool &seen_BOL_assertion_, bool &seen_EOL_assertion_)
     {
         node *root_ = 0;
@@ -116,7 +116,7 @@ Grammar:
         {
             node_ptr_vector_->push_back (0);
 
-            node *rhs_node_ = new end_node (id_, dfa_state_);
+            node *rhs_node_ = new end_node (id_, unique_id_, dfa_state_);
 
             node_ptr_vector_->back () = rhs_node_;
             node_ptr_vector_->push_back (0);

@@ -197,12 +197,22 @@ namespace boost { namespace spirit { namespace lex
             };
             friend struct pattern_adder;
 
+        private:
+            // Helper function to invoke the necessary 2 step compilation
+            // process on token definition expressions
+            template <typename TokenExpr>
+            void compile2pass(TokenExpr const& expr) 
+            {
+                expr.collect(def, state);
+                expr.add_actions(def);
+            }
+
         public:
             ///////////////////////////////////////////////////////////////////
             template <typename Expr>
             void define(Expr const& expr)
             {
-                compile<lex::domain>(expr).collect(def, state);
+                compile2pass(compile<lex::domain>(expr));
             }
 
             lexer_def_(LexerDef& def_, string_type const& state_)

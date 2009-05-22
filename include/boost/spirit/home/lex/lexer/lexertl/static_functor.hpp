@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             char_type;
 
             typedef std::size_t (*next_token_functor)(std::size_t&, 
-                Iterator const&, Iterator&, Iterator const&);
+                Iterator const&, Iterator&, Iterator const&, std::size_t&);
 
             typedef unused_type semantic_actions_type;
 
@@ -62,15 +62,15 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
               : next_token(data_.next_), first(first_), last(last_)
             {}
 
-            std::size_t next(Iterator& end)
+            std::size_t next(Iterator& end, std::size_t& unique_id)
             {
-                typedef basic_iterator_tokeniser<Iterator> tokenizer;
                 std::size_t state;
-                return next_token(state, first, end, last);
+                return next_token(state, first, end, last, unique_id);
             }
 
             // nothing to invoke, so this is empty
-            bool invoke_actions(std::size_t, Iterator const&) 
+            bool invoke_actions(std::size_t, std::size_t, std::size_t
+              , Iterator const&) 
             {
                 return true;    // always accept
             }
@@ -93,9 +93,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             typedef typename base_type::state_type state_type;
             typedef typename base_type::char_type char_type;
-            typedef 
-                typename base_type::semantic_actions_type 
-            semantic_actions_type;
+            typedef typename base_type::semantic_actions_type 
+                semantic_actions_type;
 
             // initialize the shared data 
             template <typename IterData>
@@ -103,17 +102,24 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
               : base_type(data_, first_, last_), state(0)
             {}
 
-            std::size_t next(Iterator& end)
+            std::size_t next(Iterator& end, std::size_t& unique_id)
             {
-                typedef basic_iterator_tokeniser<Iterator> tokenizer;
-                return this->next_token(state, this->first, end, this->last);
+                return this->next_token(state, this->first, end, this->last
+                  , unique_id);
             }
 
             std::size_t& get_state() { return state; }
             void set_state_name (char_type const* new_state) 
             { 
-                std::size_t state_id = this->rules.state(new_state);
+                this->rules.state(new_state);
+                for (std::size_t state_id = 0; 
+                     state_id < sizeof(lexer_state_names)/sizeof(lexer_state_names[0]); ++state_id)
+
+                // if the following assertion fires you've probably been using 
+                // a lexer state name which was not defined in your token 
+                // definition
                 BOOST_ASSERT(state_id != boost::lexer::npos);
+
                 if (state_id != boost::lexer::npos)
                     state = state_id;
             }
@@ -135,7 +141,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             typedef void functor_type(iterpair_type, std::size_t, bool&, static_data&);
             typedef boost::function<functor_type> functor_wrapper_type;
-            typedef std::multimap<std::size_t, functor_wrapper_type> 
+            typedef std::vector<std::vector<functor_wrapper_type> >
                 semantic_actions_type;
 
             typedef detail::wrap_action<functor_wrapper_type
@@ -143,34 +149,31 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             template <typename IterData>
             static_data (IterData const& data_, Iterator& first_, Iterator const& last_)
-              : base_type(data_, first_, last_),
-                actions(data_.actions_)
-            {}
+              : base_type(data_, first_, last_)
+              , actions(data_.actions_), state_names_(data_.state_names_)
+              , state_count_(data_.state_count_) {}
 
             // invoke attached semantic actions, if defined
-            bool invoke_actions(std::size_t id, Iterator const& end)
+            bool invoke_actions(std::size_t state, std::size_t id
+              , std::size_t unique_id, Iterator const& end)
             {
-                if (actions.empty()) 
-                    return true;  // nothing to invoke, continue with 'match'
+                if (state >= actions_.size())
+                    return true;    // no action defined for this state
+
+                std::vector<functor_wrapper_type> const& actions = actions_[state];
+
+                if (unique_id >= actions.size() || !actions[unique_id]) 
+                    return true;    // nothing to invoke, continue with 'match'
 
                 iterpair_type itp(this->first, end);
                 bool match = true;
-
-                typedef typename semantic_actions_type::const_iterator 
-                    iterator_type;
-
-                std::pair<iterator_type, iterator_type> p = actions.equal_range(id);
-                while (p.first != p.second)
-                {
-                    ((*p.first).second)(itp, id, match, *this);
-                    if (!match)
-                        return false;   // return a 'no-match'
-                    ++p.first;
-                }
-                return true;    // normal execution
+                actions[unique_id](itp, id, match, *this);
+                return match;
             }
 
-            semantic_actions_type const& actions;
+            semantic_actions_type const& actions_;
+            std::size_t const state_count_;
+            const char* const* state_names_;
         };
     }
 
@@ -279,8 +282,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #endif
 
             Iterator end = data.first;
-            std::size_t id = data.next(end);
-            
+            std::size_t unique_id = boost::lexer::npos;
+            std::size_t id = data.next(end, unique_id);
+
             if (boost::lexer::npos == id) {   // no match
 #if defined(BOOST_SPIRIT_DEBUG)
                 std::string next;
@@ -318,7 +322,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t state = data.get_state();
 
             // invoke attached semantic actions, if there are any defined
-            if (!data.invoke_actions(id, end))
+            if (!data.invoke_actions(state, id, unique_id, end))
             {
                 // one of the semantic actions signaled no-match
                 return result = result_type(0); 

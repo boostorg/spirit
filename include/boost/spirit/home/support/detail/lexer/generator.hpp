@@ -148,6 +148,7 @@ protected:
         const typename rules::string_deque_deque &regexes_ =
             rules_.regexes ();
         const typename rules::id_vector_deque &ids_ = rules_.ids ();
+        std::size_t unique_id_ = 0;
         const typename rules::id_vector_deque &states_ = rules_.states ();
         typename rules::string_deque::const_iterator regex_iter_ =
             regexes_[state_].begin ();
@@ -170,9 +171,9 @@ protected:
             seen_BOL_assertion_, seen_EOL_assertion_);
 
         detail::node *root_ = parser::parse (regex_.c_str (),
-            regex_.c_str () + regex_.size (), *ids_iter_, *states_iter_,
-            rules_.flags (), rules_.locale (), node_ptr_vector_, macromap_,
-            token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
+            regex_.c_str () + regex_.size (), *ids_iter_, unique_id_++,
+            *states_iter_, rules_.flags (), rules_.locale (), node_ptr_vector_,
+            macromap_, token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
 
         ++regex_iter_;
         ++ids_iter_;
@@ -186,7 +187,7 @@ protected:
             const typename rules::string &regex_ = *regex_iter_;
 
             root_ = parser::parse (regex_.c_str (),
-                regex_.c_str () + regex_.size (), *ids_iter_,
+                regex_.c_str () + regex_.size (), *ids_iter_, unique_id_++,
                 *states_iter_, rules_.flags (), rules_.locale (),
                 node_ptr_vector_, macromap_, token_map_,
                 seen_BOL_assertion_, seen_EOL_assertion_);
@@ -277,7 +278,7 @@ protected:
             const typename rules::string &name_ = iter_->first;
             const typename rules::string &regex_ = iter_->second;
             detail::node *node_ = parser::parse (regex_.c_str (),
-                regex_.c_str () + regex_.size (), 0, 0, flags_,
+                regex_.c_str () + regex_.size (), 0, 0, 0, flags_,
                 locale_, node_ptr_vector_, macromap_, token_map_,
                 seen_BOL_assertion_, seen_EOL_assertion_);
             macro_iter_pair map_iter_ = macromap_.
@@ -362,6 +363,7 @@ protected:
     {
         bool end_state_ = false;
         std::size_t id_ = 0;
+        std::size_t unique_id_ = npos;
         std::size_t state_ = 0;
         std::size_t hash_ = 0;
 
@@ -375,8 +377,8 @@ protected:
             followpos_->begin (), end_ = followpos_->end ();
             iter_ != end_; ++iter_)
         {
-            closure_ex (*iter_, end_state_, id_, state_, set_ptr_.get (),
-                vector_ptr_.get (), hash_);
+            closure_ex (*iter_, end_state_, id_, unique_id_, state_,
+                set_ptr_.get (), vector_ptr_.get (), hash_);
         }
 
         bool found_ = false;
@@ -413,6 +415,7 @@ protected:
             {
                 dfa_[old_size_] |= end_state;
                 dfa_[old_size_ + id_index] = id_;
+                dfa_[old_size_ + unique_id_index] = unique_id_;
                 dfa_[old_size_ + state_index] = state_;
             }
         }
@@ -421,8 +424,8 @@ protected:
     }
 
     static void closure_ex (detail::node *node_, bool &end_state_,
-        std::size_t &id_, std::size_t &state_, node_set *set_ptr_,
-        node_vector *vector_ptr_, std::size_t &hash_)
+        std::size_t &id_, std::size_t &unique_id_, std::size_t &state_,
+        node_set *set_ptr_, node_vector *vector_ptr_, std::size_t &hash_)
     {
         const bool temp_end_state_ = node_->end_state ();
 
@@ -432,6 +435,7 @@ protected:
             {
                 end_state_ = true;
                 id_ = node_->id ();
+                unique_id_ = node_->unique_id ();
                 state_ = node_->lexer_state ();
             }
         }
@@ -502,7 +506,7 @@ protected:
                     }
                     else
                     {
-                        iter_ = lhs_->insert (++iter_, 0);
+                        iter_ = lhs_->insert (++iter_, (charset*)0);
                         *iter_ = overlap_.release ();
 
                         // VC++ 6 Hack:
@@ -644,7 +648,7 @@ protected:
                     }
                     else
                     {
-                        iter_ = lhs_->insert (++iter_, 0);
+                        iter_ = lhs_->insert (++iter_, (equivset*)0);
                         *iter_ = overlap_.release ();
 
                         // VC++ 6 Hack:
@@ -816,6 +820,7 @@ protected:
 
                 new_ptr_[end_state_index] = ptr_[end_state_index];
                 new_ptr_[id_index] = ptr_[id_index];
+                new_ptr_[unique_id_index] = ptr_[unique_id_index];
                 new_ptr_[state_index] = ptr_[state_index];
                 new_ptr_[bol_index] = lookup_ptr_[ptr_[bol_index]];
                 new_ptr_[eol_index] = lookup_ptr_[ptr_[eol_index]];

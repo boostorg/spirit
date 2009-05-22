@@ -57,14 +57,15 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
               , rules(data_.rules_)
               , first(first_), last(last_) {}
 
-            std::size_t next(Iterator& end)
+            std::size_t next(Iterator& end, std::size_t& unique_id)
             {
                 typedef basic_iterator_tokeniser<Iterator> tokenizer;
-                return tokenizer::next(state_machine, first, end, last);
+                return tokenizer::next(state_machine, first, end, last, unique_id);
             }
 
             // nothing to invoke, so this is empty
-            bool invoke_actions(std::size_t, std::size_t, Iterator const&) 
+            bool invoke_actions(std::size_t, std::size_t, std::size_t
+              , Iterator const&) 
             {
                 return true;    // always accept
             }
@@ -96,11 +97,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_), state(0) {}
 
-            std::size_t next(Iterator& end)
+            std::size_t next(Iterator& end, std::size_t& unique_id)
             {
                 typedef basic_iterator_tokeniser<Iterator> tokenizer;
                 return tokenizer::next(this->state_machine, state, 
-                    this->first, end, this->last);
+                    this->first, end, this->last, unique_id);
             }
 
             std::size_t& get_state() { return state; }
@@ -135,60 +136,36 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             typedef void functor_type(iterpair_type, std::size_t, bool&, data&);
             typedef boost::function<functor_type> functor_wrapper_type;
-            struct action_key
-            {
-                action_key(std::size_t id, std::size_t state)
-                  : id_(id), state_(state) {}
-                action_key(std::pair<std::size_t, std::size_t> const& k)
-                  : id_(k.first), state_(k.second) {}
-
-                friend bool operator<(action_key const& lhs, action_key const& rhs)
-                {
-                    return lhs.id_ < rhs.id_ || 
-                          (lhs.id_ == rhs.id_ && lhs.state_ < rhs.state_);
-                }
-
-                std::size_t id_;
-                std::size_t state_;
-            };
-            typedef std::multimap<action_key, functor_wrapper_type> 
+            typedef std::vector<std::vector<functor_wrapper_type> >
                 semantic_actions_type;
 
-            typedef detail::wrap_action<functor_wrapper_type, iterpair_type, data>
-                wrap_action_type;
+            typedef detail::wrap_action<functor_wrapper_type
+              , iterpair_type, data> wrap_action_type;
 
             template <typename IterData>
             data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_)
-              , actions(data_.actions_) {}
+              , actions_(data_.actions_) {}
 
             // invoke attached semantic actions, if defined
-            bool invoke_actions(std::size_t id, std::size_t state
-              , Iterator const& end)
+            bool invoke_actions(std::size_t state, std::size_t id
+              , std::size_t unique_id, Iterator const& end)
             {
-                if (actions.empty()) 
-                    return true;  // nothing to invoke, continue with 'match'
+                if (state >= actions_.size())
+                    return true;    // no action defined for this state
+
+                std::vector<functor_wrapper_type> const& actions = actions_[state];
+
+                if (unique_id >= actions.size() || !actions[unique_id]) 
+                    return true;    // nothing to invoke, continue with 'match'
 
                 iterpair_type itp(this->first, end);
                 bool match = true;
-
-                typedef typename semantic_actions_type::const_iterator 
-                    iterator_type;
-
-                std::pair<iterator_type, iterator_type> p = 
-                    actions.equal_range(action_key(id, state));
-
-                while (p.first != p.second)
-                {
-                    ((*p.first).second)(itp, id, match, *this);
-                    if (!match)
-                        return false;   // return a 'no-match'
-                    ++p.first;
-                }
-                return true;    // normal execution
+                actions[unique_id](itp, id, match, *this);
+                return match;
             }
 
-            semantic_actions_type const& actions;
+            semantic_actions_type const& actions_;
         };
     }
 
@@ -297,7 +274,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #endif
 
             Iterator end = data.first;
-            std::size_t id = data.next(end);
+            std::size_t unique_id = boost::lexer::npos;
+            std::size_t id = data.next(end, unique_id);
 
             if (boost::lexer::npos == id) {   // no match
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
@@ -309,47 +287,43 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 std::cerr << "Not matched, in state: " << data.state 
                           << ", lookahead: >" << next << "<" << std::endl;
 #endif
-                result = result_type(0);
+                return result = result_type(0);
             }
             else if (0 == id) {         // EOF reached
 #if defined(BOOST_SPIRIT_STATIC_EOF)
-                result = eof;
+                return result = eof;
 #else
-                result = mp.ftor.eof;
+                return result = mp.ftor.eof;
 #endif
             }
-            else {
+
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
-                {
-                    std::string next;
-                    Iterator it = end;
-                    for (std::size_t i = 0; i < 10 && it != data.last; ++it, ++i)
-                        next += *it;
+            {
+                std::string next;
+                Iterator it = end;
+                for (std::size_t i = 0; i < 10 && it != data.last; ++it, ++i)
+                    next += *it;
 
-                    std::cerr << "Matched: " << id << ", in state: " 
-                              << data.state << ", string: >" 
-                              << std::basic_string<char_type>(data.first, end) << "<"
-                              << ", lookahead: >" << next << "<" << std::endl;
-                }
-#endif
-                // invoke_actions might change state
-                std::size_t state = data.get_state();
-
-                // invoke attached semantic actions, if defined
-                if (!data.invoke_actions(id, state, end))
-                {
-                    // one of the semantic actions signaled no-match
-                    result = result_type(0); 
-                }
-                else 
-                {
-                    // return matched token, advancing 'data.first' past the 
-                    // matched sequence
-                    assign_on_exit<Iterator> on_exit(data.first, end);
-                    result = result_type(id, state, data.first, end);
-                }
+                std::cerr << "Matched: " << id << ", in state: " 
+                          << data.state << ", string: >" 
+                          << std::basic_string<char_type>(data.first, end) << "<"
+                          << ", lookahead: >" << next << "<" << std::endl;
             }
-            return result;
+#endif
+            // invoke_actions might change state
+            std::size_t state = data.get_state();
+
+            // invoke attached semantic actions, if defined
+            if (!data.invoke_actions(state, id, unique_id, end))
+            {
+                // one of the semantic actions signaled no-match
+                return result = result_type(0); 
+            }
+
+            // return matched token, advancing 'data.first' past the 
+            // matched sequence
+            assign_on_exit<Iterator> on_exit(data.first, end);
+            return result = result_type(id, state, data.first, end);
         }
 
         // set_state are propagated up to the iterator interface, allowing to 

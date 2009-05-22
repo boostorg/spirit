@@ -132,6 +132,11 @@ public:
         throw runtime_error ("Internal error node::id()");
     }
 
+    virtual std::size_t unique_id () const
+    {
+        throw runtime_error ("Internal error node::unique_id()");
+    }
+
     virtual std::size_t lexer_state () const
     {
         throw runtime_error ("Internal error node::state()");

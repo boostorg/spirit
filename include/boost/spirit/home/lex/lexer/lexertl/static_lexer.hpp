@@ -30,6 +30,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  This is a forward declaration for the generated static table of 
         //  valid state names
         extern char const* const lexer_state_names[];
+        extern std::size_t const lexer_state_count;
 
         //  This is the forward declaration of the generated function to be 
         //  called to get the next token. 
@@ -158,6 +159,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             typename Functor::next_token_functor next_;
             typename Functor::semantic_actions_type const& actions_;
+            std::size_t const state_count_;
+            const char* const* state_names_;
         };
 
     public:
@@ -167,7 +170,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename F>
         iterator_type begin(Iterator& first, Iterator const& last, F next) const
         { 
-            iterator_data_type iterator_data = { next, actions };
+            iterator_data_type iterator_data = { next, actions
+              , static_::lexer_state_count, static_::lexer_state_names };
             return iterator_type(iterator_data, first, last);
         }
 
@@ -178,7 +182,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         iterator_type begin(Iterator_& first, Iterator_ const& last) const
         { 
             iterator_data_type iterator_data = 
-                { &lex::lexertl::static_::next_token<Iterator_>, actions };
+                { &lex::lexertl::static_::next_token<Iterator_>, actions,
+                  static_::lexer_state_count, static_::lexer_state_names };
             return iterator_type(iterator_data, first, last);
         }
 

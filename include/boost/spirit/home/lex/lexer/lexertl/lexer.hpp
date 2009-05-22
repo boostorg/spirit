@@ -117,8 +117,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         std::size_t add_state(char_type const* state)
         {
-            rules.add_state(state);
-            return rules.state(state);
+            return rules.add_state(state);
         }
         string_type initial_state() const 
         { 
@@ -194,7 +193,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // operator_bool() is needed for the safe_bool base class
         operator typename safe_bool<lexer>::result_type() const 
         { 
-            return safe_bool<lexer>()(initialized_dfa); 
+            return safe_bool<lexer>()(initialized_dfa_); 
         }
 
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
@@ -225,7 +224,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             if (!init_dfa())
                 return iterator_type();
 
-            iterator_data_type iterator_data = { state_machine, rules, actions };
+            iterator_data_type iterator_data = { state_machine_, rules_, actions_ };
             return iterator_type(iterator_data, first, last);
         }
 
@@ -249,10 +248,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
 
         //  Lexer instances can be created by means of a derived class only.
-        lexer(unsigned int flags_) 
-          : initialized_dfa(false), flags(map_flags(flags_)) 
+        lexer(unsigned int flags) 
+          : flags_(map_flags(flags)), initialized_dfa_(false)
         {
-            rules.flags(flags);
+            rules_.flags(flags_);
         }
 
     public:
@@ -261,15 +260,15 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t token_id)
         {
             add_state(state);
-            rules.add(state, detail::escape(tokendef), token_id, state);
-            initialized_dfa = false;
+            rules_.add(state, detail::escape(tokendef), token_id, state);
+            initialized_dfa_ = false;
         }
         void add_token(char_type const* state, string_type const& tokendef, 
             std::size_t token_id)
         {
             add_state(state);
-            rules.add(state, tokendef, token_id, state);
-            initialized_dfa = false;
+            rules_.add(state, tokendef, token_id, state);
+            initialized_dfa_ = false;
         }
 
         // Allow a token_set to be associated with this lexer instance. This 
@@ -278,8 +277,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         void add_token(char_type const* state, token_set const& tokset)
         {
             add_state(state);
-            rules.add(state, tokset.get_rules());
-            initialized_dfa = false;
+            rules_.add(state, tokset.get_rules());
+            initialized_dfa_ = false;
         }
 
         // Allow to associate a whole lexer instance with another lexer 
@@ -287,12 +286,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // lexer into this instance.
         template <typename Token_, typename Iterator_, typename Functor_
           , typename TokenSet_>
-        void add_token(char_type const* state
+        std::size_t add_token(char_type const* state
           , lexer<Token_, Iterator_, Functor_, TokenSet_> const& lexer_def)
         {
             add_state(state);
-            rules.add(state, lexer_def.get_rules());
-            initialized_dfa = false;
+            rules_.add(state, lexer_def.get_rules());
+            initialized_dfa_ = false;
         }
 
         // interface for pattern definition management
@@ -300,32 +299,31 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             string_type const& patterndef)
         {
             add_state(state);
-            rules.add_macro(name.c_str(), patterndef);
-            initialized_dfa = false;
+            rules_.add_macro(name.c_str(), patterndef);
+            initialized_dfa_ = false;
         }
 
-        boost::lexer::rules const& get_rules() const { return rules; }
+        boost::lexer::rules const& get_rules() const { return rules_; }
 
         void clear(char_type const* state)
         {
-            std::size_t s = rules.state(state);
+            std::size_t s = rules_.state(state);
             if (boost::lexer::npos != s)
-                rules.clear(state);
-            initialized_dfa = false;
+                rules_.clear(state);
+            initialized_dfa_ = false;
         }
         std::size_t add_state(char_type const* state)
         {
-            std::size_t stateid = rules.state(state);
+            std::size_t stateid = rules_.state(state);
             if (boost::lexer::npos == stateid) {
-                rules.add_state(state);
-                stateid = rules.state(state);
-                initialized_dfa = false;
+                stateid = rules_.add_state(state);
+                initialized_dfa_ = false;
             }
             return stateid;
         }
         string_type initial_state() const 
         { 
-            return string_type(rules.initial());
+            return string_type(rules_.initial());
         }
 
         //  Register a semantic action with the given id
@@ -341,32 +339,43 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 value_type;
             typedef typename Functor::wrap_action_type wrapper_type;
 
-            actions.insert(value_type(std::make_pair(id, state)
-              , wrapper_type::call(act)));
+            if (actions_.size() <= state)
+                actions_.resize(state + 1); 
+
+            std::size_t unique_id = rules_.retrieve_id(state, id);
+            BOOST_ASSERT(boost::lexer::npos != unique_id);
+
+            value_type& actions (actions_[state]);
+            if (actions.size() <= unique_id)
+                actions.resize(unique_id + 1); 
+
+            actions[unique_id] = wrapper_type::call(act);
         }
 
         bool init_dfa() const
         {
-            if (!initialized_dfa) {
-                state_machine.clear();
+            if (!initialized_dfa_) {
+                state_machine_.clear();
                 typedef boost::lexer::basic_generator<char_type> generator;
-                generator::build (rules, state_machine);
-                generator::minimise (state_machine);
+                generator::build (rules_, state_machine_);
+                generator::minimise (state_machine_);
 
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
-                boost::lexer::debug::dump(state_machine, std::cerr);
+                boost::lexer::debug::dump(state_machine_, std::cerr);
 #endif
-                initialized_dfa = true;
+                initialized_dfa_ = true;
             }
             return true;
         }
 
     private:
-        mutable boost::lexer::basic_state_machine<char_type> state_machine;
-        boost::lexer::basic_rules<char_type> rules;
-        typename Functor::semantic_actions_type actions;
-        mutable bool initialized_dfa;
-        boost::lexer::regex_flags flags;
+        // lexertl specific data
+        mutable boost::lexer::basic_state_machine<char_type> state_machine_;
+        boost::lexer::basic_rules<char_type> rules_;
+        boost::lexer::regex_flags flags_;
+
+        typename Functor::semantic_actions_type actions_;
+        mutable bool initialized_dfa_;
 
         template <typename Lexer> 
         friend bool generate_static(Lexer const&, std::ostream&, char const*);

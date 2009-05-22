@@ -68,6 +68,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
         os_ << "};\n\n";
 
+        os_ << "// this variable defines the number of lexer states\n";
+        os_ << "std::size_t const lexer_state_count = " 
+            << rules_.statemap().size() << ";\n\n";
+
         return true;
     }
 
@@ -137,11 +141,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "\n    ";
         }
 
-        os_ << "Iterator &start_token_, Iterator const& end_)\n";
+        os_ << "Iterator &start_token_, Iterator const& end_, ";
+        os_ << "std::size_t& unique_id_)\n";
         os_ << "{\n";
-        os_ << "    enum {end_state_index, id_index, state_index, bol_index, "
-          "eol_index,\n";
-        os_ << "        dead_state_index, dfa_offset};\n";
+        os_ << "    enum {end_state_index, id_index, unique_id_index, "
+          "state_index, bol_index,\n";
+        os_ << "        eol_index, dead_state_index, dfa_offset};\n";
         os_ << "    static const std::size_t npos = static_cast"
           "<std::size_t>(~0);\n";
 
@@ -156,7 +161,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 std::size_t const* dfa_ = &sm_.data()._dfa[state_]->front();
 
                 os_ << "    static const std::size_t lookup" << state_ 
-                    << "_[" << lookups_ << "] = {";
+                    << "_[" << lookups_ << "] = {\n        ";
 
                 for (/**/; i_ < count_; ++i_)
                 {
@@ -171,16 +176,16 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
                     if (i_ < count_ - 1)
                     {
-                        os_ << "," << std::endl << "        ";
+                        os_ << ",\n        ";
                     }
 
                     j_ = 1;
                 }
 
-                os_ << "};\n";
+                os_ << " };\n";
                 count_ = sm_.data()._dfa[state_]->size ();
                 os_ << "    static const std::size_t dfa" << state_ << "_[" <<
-                    count_ << "] = {";
+                    count_ << "] = {\n        ";
                 count_ /= 8;
 
                 for (i_ = 0; i_ < count_; ++i_)
@@ -196,7 +201,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
                     if (i_ < count_ - 1)
                     {
-                        os_ << "," << std::endl << "        ";
+                        os_ << ",\n        ";
                     }
                 }
 
@@ -218,25 +223,23 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     }
                 }
 
-                os_ << "};\n";
+                os_ << " };\n";
             }
 
             std::size_t count_ = sm_.data()._dfa_alphabet.size();
             std::size_t i_ = 1;
 
             os_ << "    static const std::size_t *lookup_arr_[" << count_ <<
-                "] = {";
-
-            os_ << "lookup0_";
+                "] = { lookup0_";
 
             for (i_ = 1; i_ < count_; ++i_)
             {
                 os_ << ", " << "lookup" << i_ << "_";
             }
 
-            os_ << "};\n";
+            os_ << " };\n";
             os_ << "    static const std::size_t dfa_alphabet_arr_[" << 
-                count_ << "] = {";
+                count_ << "] = { ";
 
             os_ << sm_.data()._dfa_alphabet.front ();
 
@@ -245,9 +248,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 os_ << ", " << sm_.data()._dfa_alphabet[i_];
             }
 
-            os_ << "};\n";
+            os_ << " };\n";
             os_ << "    static const std::size_t *dfa_arr_[" << count_ <<
-                "] = {";
+                "] = { ";
             os_ << "dfa0_";
 
             for (i_ = 1; i_ < count_; ++i_)
@@ -255,7 +258,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 os_ << ", " << "dfa" << i_ << "_";
             }
 
-            os_ << "};\n";
+            os_ << " };\n";
         }
         else
         {
@@ -266,7 +269,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t count_ = lookups_ / 8;
 
             os_ << "    static const std::size_t lookup_[";
-            os_ << sm_.data()._lookup[0]->size() << "] = {";
+            os_ << sm_.data()._lookup[0]->size() << "] = {\n        ";
 
             for (; i_ < count_; ++i_)
             {
@@ -281,17 +284,17 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
                 if (i_ < count_ - 1)
                 {
-                    os_ << "," << std::endl << "        ";
+                    os_ << ",\n        ";
                 }
 
                 j_ = 1;
             }
 
-            os_ << "};\n";
+            os_ << " };\n";
             os_ << "    static const std::size_t dfa_alphabet_ = " <<
               sm_.data()._dfa_alphabet.front () << ";\n";
             os_ << "    static const std::size_t dfa_[" <<
-              sm_.data()._dfa[0]->size () << "] = {";
+              sm_.data()._dfa[0]->size () << "] = {\n        ";
                 count_ = sm_.data()._dfa[0]->size () / 8;
 
             for (i_ = 0; i_ < count_; ++i_)
@@ -307,7 +310,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
                 if (i_ < count_ - 1)
                 {
-                    os_ << "," << std::endl << "        ";
+                    os_ << ",\n        ";
                 }
             }
 
@@ -330,7 +333,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 }
             }
 
-            os_ << "};\n";
+            os_ << " };\n";
         }
 
         os_ << "\n    if (start_token_ == end_) return 0;\n\n";
@@ -347,24 +350,20 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "    Iterator curr_ = start_token_;\n";
         os_ << "    bool end_state_ = *ptr_ != 0;\n";
         os_ << "    std::size_t id_ = *(ptr_ + id_index);\n";
-        os_ << "    Iterator end_token_ = start_token_;\n";
-        os_ << '\n';
+        os_ << "    std::size_t uid_ = *(ptr_ + unique_id_index);\n";
+        os_ << "    Iterator end_token_ = start_token_;\n\n";
+
         os_ << "    while (curr_ != end_)\n";
         os_ << "    {\n";
 
         if (sm_.data()._seen_BOL_assertion)
         {
-            os_ << "        std::size_t const BOL_state_ = ptr_[bol_index];\n";
+            os_ << "        std::size_t const BOL_state_ = ptr_[bol_index];\n\n";
         }
 
         if (sm_.data()._seen_EOL_assertion)
         {
-            os_ << "        std::size_t const EOL_state_ = ptr_[eol_index];\n";
-        }
-
-        if (sm_.data()._seen_BOL_assertion || sm_.data()._seen_EOL_assertion)
-        {
-            os_ << '\n';
+            os_ << "        std::size_t const EOL_state_ = ptr_[eol_index];\n\n";
         }
 
         if (sm_.data()._seen_BOL_assertion && sm_.data()._seen_EOL_assertion)
@@ -396,7 +395,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "            if (state_ == 0) break;\n";
             os_ << '\n';
             os_ << "            ptr_ = &dfa_[state_ * dfa_alphabet_];\n";
-            os_ << "        }\n";
+            os_ << "        }\n\n";
         }
         else if (sm_.data()._seen_BOL_assertion)
         {
@@ -411,8 +410,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             if (lookups_ == 256)
             {
-                os_ << "                ptr_[lookup_[static_cast<unsigned char>\n";
-                os_ << "                (*curr_++)]];\n";
+                os_ << "                ptr_[lookup_[static_cast<unsigned char>"
+                       "(*curr_++)]];\n";
             }
             else
             {
@@ -423,7 +422,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "            if (state_ == 0) break;\n";
             os_ << '\n';
             os_ << "            ptr_ = &dfa_[state_ * dfa_alphabet_];\n";
-            os_ << "        }\n";
+            os_ << "        }\n\n";
         }
         else if (sm_.data()._seen_EOL_assertion)
         {
@@ -437,8 +436,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             if (lookups_ == 256)
             {
-                os_ << "                ptr_[lookup_[static_cast<unsigned char>\n";
-                os_ << "                    (*curr_++)]];\n";
+                os_ << "                ptr_[lookup_[static_cast<unsigned char>"
+                       "(*curr_++)]];\n";
             }
             else
             {
@@ -449,7 +448,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << "            if (state_ == 0) break;\n";
             os_ << '\n';
             os_ << "            ptr_ = &dfa_[state_ * dfa_alphabet_];\n";
-            os_ << "        }\n";
+            os_ << "        }\n\n";
         }
         else
         {
@@ -457,8 +456,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             if (lookups_ == 256)
             {
-                os_ << "            ptr_[lookup_[static_cast<unsigned char>\n";
-                os_ << "                (*curr_++)]];\n";
+                os_ << "            ptr_[lookup_[static_cast<unsigned char>"
+                       "(*curr_++)]];\n";
             }
             else
             {
@@ -468,14 +467,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             os_ << '\n';
             os_ << "        if (state_ == 0) break;\n";
             os_ << '\n';
-            os_ << "        ptr_ = &dfa_[state_ * dfa_alphabet_];\n";
+            os_ << "        ptr_ = &dfa_[state_ * dfa_alphabet_];\n\n";
         }
 
-        os_ << '\n';
         os_ << "        if (*ptr_)\n";
         os_ << "        {\n";
         os_ << "            end_state_ = true;\n";
         os_ << "            id_ = *(ptr_ + id_index);\n";
+        os_ << "            uid_ = *(ptr_ + unique_id_index);\n";
 
         if (dfas_ > 1)
         {
@@ -484,21 +483,21 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         os_ << "            end_token_ = curr_;\n";
         os_ << "        }\n";
-        os_ << "    }\n";
-        os_ << '\n';
+        os_ << "    }\n\n";
 
         if (sm_.data()._seen_EOL_assertion)
         {
-            os_ << "    const std::size_t EOL_state_ = ptr_[eol_index];\n";
-            os_ << '\n';
+            os_ << "    const std::size_t EOL_state_ = ptr_[eol_index];\n\n";
+
             os_ << "    if (EOL_state_ && curr_ == end_)\n";
             os_ << "    {\n";
-            os_ << "        ptr_ = &dfa_[EOL_state_ * dfa_alphabet_];\n";
-            os_ << '\n';
+            os_ << "        ptr_ = &dfa_[EOL_state_ * dfa_alphabet_];\n\n";
+
             os_ << "        if (*ptr_)\n";
             os_ << "        {\n";
             os_ << "            end_state_ = true;\n";
             os_ << "            id_ = *(ptr_ + id_index);\n";
+            os_ << "            uid_ = *(ptr_ + unique_id_index);\n";
 
             if (dfas_ > 1)
             {
@@ -507,8 +506,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             os_ << "            end_token_ = curr_;\n";
             os_ << "        }\n";
-            os_ << "    }\n";
-            os_ << '\n';
+            os_ << "    }\n\n";
         }
 
         os_ << "    if (end_state_)\n";
@@ -518,7 +516,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         if (dfas_ > 1)
         {
-            os_ << '\n';
             os_ << "        if (id_ == 0) goto again;\n";
         }
 
@@ -533,8 +530,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
 
         os_ << "        id_ = npos;\n";
-        os_ << "    }\n";
-        os_ << '\n';
+        os_ << "        uid_ = npos;\n";
+        os_ << "    }\n\n";
+
+        os_ << "    unique_id_ = uid_;\n";
         os_ << "    return id_;\n";
         os_ << "}\n\n";
 
@@ -555,7 +554,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
         if (!lexer.init_dfa())
             return false;
-        return detail::generate_cpp(lexer.state_machine, lexer.rules, os
+        return detail::generate_cpp(lexer.state_machine_, lexer.rules_, os
           , name_suffix, false, false);
     }
 

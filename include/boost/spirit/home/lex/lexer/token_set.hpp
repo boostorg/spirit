@@ -91,10 +91,10 @@ namespace boost { namespace spirit { namespace lex
 
                 //  If the following assertion fires you probably forgot to
                 //  associate this token set definition with a lexer instance.
-                BOOST_ASSERT(~0 != token_state);
+                BOOST_ASSERT(~0 != token_state_);
 
                 token_type &t = *first;
-                if (token_is_valid(t) && token_state == t.state()) {
+                if (token_is_valid(t) && token_state_ == t.state()) {
                 // any of the token definitions matched
                     qi::detail::assign_to(t, attr);
                     ++first;
@@ -123,11 +123,14 @@ namespace boost { namespace spirit { namespace lex
             // is not possible. Please create a separate token_set instance 
             // from the same set of regular expressions for each lexer state it 
             // needs to be associated with.
-            BOOST_ASSERT(~0 == token_state || state_id == token_state);
+            BOOST_ASSERT(~0 == token_state_ || state_id == token_state_);
 
-            token_state = state_id;
+            token_state_ = state_id;
             lexdef.add_token (state.c_str(), *this);
         }
+
+        template <typename LexerDef>
+        void add_actions(LexerDef& lexdef) const {}
 
     private:
         // allow to use the tokset.add("regex1", id1)("regex2", id2);
@@ -176,15 +179,15 @@ namespace boost { namespace spirit { namespace lex
                     tokdef.id(token_id);
                 }
 
-                def.add_token (def.initial_state().c_str(), tokdef.definition(),
-                    token_id);
+                def.add_token(def.initial_state().c_str(), tokdef.definition()
+                  , token_id);
                 return *this;
             }
 
             template <typename TokenSet_>
             adder const& operator()(token_set<TokenSet_> const& tokset) const
             {
-                def.add_token (def.initial_state().c_str(), tokset);
+                def.add_token(def.initial_state().c_str(), tokset);
                 return *this;
             }
 
@@ -209,18 +212,27 @@ namespace boost { namespace spirit { namespace lex
         };
         friend struct pattern_adder;
 
+    private:
+        // Helper function to invoke the necessary 2 step compilation process 
+        // on token definition expressions
+        template <typename TokenExpr>
+        void compile2pass(TokenExpr const& expr) 
+        {
+            expr.collect(*this, base_token_set::initial_state());
+            expr.add_actions(*this);
+        }
+
     public:
         ///////////////////////////////////////////////////////////////////
         template <typename Expr>
         void define(Expr const& expr)
         {
-            compile<lex::domain>(expr).collect(
-                *this, base_token_set::initial_state());
+            compile2pass(compile<lex::domain>(expr));
         }
 
         token_set()
           : proto_base_type(terminal_type::make(alias()))
-          , add(this_()), add_pattern(this_()), token_state(~0) {}
+          , add(this_()), add_pattern(this_()), token_state_(~0) {}
 
         // allow to assign a token definition expression
         template <typename Expr>
@@ -240,10 +252,10 @@ namespace boost { namespace spirit { namespace lex
         adder add;
         pattern_adder add_pattern;
 
-        std::size_t state() const { return token_state; }
+        std::size_t state() const { return token_state_; }
 
     private:
-        mutable std::size_t token_state;
+        mutable std::size_t token_state_;
     };
 
     // allow to assign a token definition expression

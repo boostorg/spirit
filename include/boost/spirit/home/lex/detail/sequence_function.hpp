@@ -16,20 +16,36 @@
 namespace boost { namespace spirit { namespace lex { namespace detail
 {
     template <typename LexerDef, typename String>
-    struct sequence_function
+    struct sequence_collect_function
     {
-        sequence_function(LexerDef& def_, String const& state_)
+        sequence_collect_function(LexerDef& def_, String const& state_)
           : def(def_), state(state_) {}
 
         template <typename Component>
         bool operator()(Component const& component) const
         {
             component.collect(def, state);
-            return false;   // execute for all sequence elements
+            return false;     // execute for all sequence elements
         }
 
         LexerDef& def;
         String const& state;
+    };
+
+    template <typename LexerDef>
+    struct sequence_add_actions_function
+    {
+        sequence_add_actions_function(LexerDef& def_)
+          : def(def_) {}
+
+        template <typename Component>
+        bool operator()(Component const& component) const
+        {
+            component.add_actions(def);
+            return false;     // execute for all sequence elements
+        }
+
+        LexerDef& def;
     };
 
 }}}}
