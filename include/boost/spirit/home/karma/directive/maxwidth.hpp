@@ -171,7 +171,7 @@ namespace boost { namespace spirit { namespace karma
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
 
-    // creates left_align[] directive generator
+    // creates maxwidth[] directive generator
     template <typename Subject, typename Modifiers>
     struct make_directive<tag::maxwidth, Subject, Modifiers>
     {
