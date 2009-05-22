@@ -49,6 +49,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
     // the director for a confix() generated generator
     template <typename Subject, typename Prefix, typename Suffix>
     struct confix_generator
+      : spirit::karma::primitive_generator<confix_generator<Subject, Prefix, Suffix> >
     {
         typedef Subject subject_type;
 
