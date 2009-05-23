@@ -286,7 +286,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // lexer into this instance.
         template <typename Token_, typename Iterator_, typename Functor_
           , typename TokenSet_>
-        std::size_t add_token(char_type const* state
+        void add_token(char_type const* state
           , lexer<Token_, Iterator_, Functor_, TokenSet_> const& lexer_def)
         {
             add_state(state);
