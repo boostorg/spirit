@@ -282,7 +282,7 @@ protected:
                 locale_, node_ptr_vector_, macromap_, token_map_,
                 seen_BOL_assertion_, seen_EOL_assertion_);
             macro_iter_pair map_iter_ = macromap_.
-                insert (macro_pair (name_, 0));
+                insert (macro_pair (name_, (detail::node const*)0));
 
             map_iter_.first->second = node_;
         }
