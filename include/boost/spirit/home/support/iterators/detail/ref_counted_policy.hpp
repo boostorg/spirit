@@ -9,6 +9,9 @@
 
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
+#if defined(BOOST_HAS_THREADS)
+#include <boost/detail/atomic_count.hpp>
+#endif
 #include <cstdlib>
 
 namespace boost { namespace spirit { namespace iterator_policies
@@ -61,7 +64,12 @@ namespace boost { namespace spirit { namespace iterator_policies
         struct shared
         {
             shared() : count(1) {}
+
+#if defined(BOOST_HAS_THREADS)
+            boost::detail::atomic_count count;
+#else
             std::size_t count;
+#endif
         };
 
     };
