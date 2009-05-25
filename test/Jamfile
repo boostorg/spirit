@@ -17,6 +17,8 @@ project spirit_v2x/test
     :
     ;
 
+path-constant LEX_DIR : $(BOOST_ROOT)/libs/spirit/test/lex ;
+
 # bring in rules for testing
 import testing ;
 
@@ -109,6 +111,8 @@ import testing ;
 
     [ run lex/regression001.cpp             : : : : lex_regression001 ]
     [ run lex/regression002.cpp             : : : : lex_regression002 ]
+    [ run lex/regression003_generate.cpp    : $(LEX_DIR)/matlib_static.h : : : lex_regression003_generate ]
+    [ run lex/regression003.cpp             : : : <dependency>.//lex_regression003_generate : lex_regression003 ]
 
     ;
 
