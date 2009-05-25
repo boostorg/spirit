@@ -22,7 +22,15 @@
 namespace boost { namespace spirit { namespace lex { namespace lexertl 
 {
     namespace detail
-    { 
+    {
+
+    inline bool
+    generate_delimiter(std::ostream &os_)
+    {
+        os_ << std::string(80, '/') << "\n";
+        return os_.good();
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Generate a table of the names of the used lexer states, which is a bit 
     // tricky, because the table stored with the rules is sorted based on the 
@@ -47,6 +55,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             reverse_state_map.insert(value_type((*sit).second, (*sit).first.c_str()));
         }
 
+        generate_delimiter(os_);
         os_ << "// this table defines the names of the lexer states\n";
         os_ << "char const* const lexer_state_names" 
             << (name_suffix[0] ? "_" : "") << name_suffix
@@ -69,6 +78,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
         os_ << "};\n\n";
 
+        generate_delimiter(os_);
         os_ << "// this variable defines the number of lexer states\n";
         os_ << "std::size_t const lexer_state_count" 
             << (name_suffix[0] ? "_" : "") << name_suffix
@@ -79,21 +89,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     inline bool 
     generate_cpp_state_table (std::ostream &os_, char const* name_suffix = "")
     {
+        std::string suffix(name_suffix[0] ? "_" : "");
+        suffix += name_suffix;
+
+        generate_delimiter(os_);
         os_ << "// this defines a generic accessor for the information above\n";
-        os_ << "struct lexer" 
-            << (name_suffix[0] ? "_" : "") << name_suffix << "\n{\n";
+        os_ << "struct lexer" << suffix << "\n{\n";
+        os_ << "    // return the number of lexer states\n";
         os_ << "    static std::size_t const state_count()\n";
-        os_ << "    {\n        return lexer_state_count" 
-            << (name_suffix[0] ? "_" : "") << name_suffix <<"; \n    }\n\n";
+        os_ << "    {\n        return lexer_state_count" << suffix << "; \n    }\n\n";
+        os_ << "    // return the name of the lexer state as given by 'idx'\n";
         os_ << "    static char const* const state_name(std::size_t idx)\n";
-        os_ << "    {\n        return lexer_state_names" 
-            << (name_suffix[0] ? "_" : "") << name_suffix <<"[idx]; \n    }\n\n";
+        os_ << "    {\n        return lexer_state_names" << suffix << "[idx]; \n    }\n\n";
+        os_ << "    // return the next matched token\n";
         os_ << "    template<typename Iterator>\n";
         os_ << "    static std::size_t next(std::size_t &start_state_, Iterator const& start_\n";
         os_ << "      , Iterator &start_token_, Iterator const& end_, std::size_t& unique_id_)\n";
-        os_ << "    {\n        return next_token" 
-            << (name_suffix[0] ? "_" : "") << name_suffix 
-            << "(start_state_, start_, start_token_, end_, unique_id_); \n    }\n};\n\n";
+        os_ << "    {\n        return next_token" << suffix 
+            << "(start_state_, start_, start_token_, end_, unique_id_);\n    }\n";
+        os_ << "};\n\n";
         return os_.good();
     }
 
@@ -108,7 +122,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
         if (sm_.data()._lookup->empty())
             return false;
-            
+
         std::size_t const dfas_ = sm_.data()._dfa->size();
         std::size_t const lookups_ = sm_.data()._lookup->front()->size();
 
@@ -138,6 +152,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         os_ << "#include <boost/detail/iterator.hpp>\n";
         os_ << "#include <boost/spirit/home/support/detail/lexer/char_traits.hpp>\n\n";
 
+        generate_delimiter(os_);
         os_ << "// the generated table of state names and the tokenizer have to be\n"
                "// defined in the boost::spirit::lex::lexertl::static_ namespace\n";
         os_ << "namespace boost { namespace spirit { namespace lex { "
@@ -147,6 +162,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         if (!generate_cpp_state_info(rules_, os_, name_suffix))
             return false;
 
+        generate_delimiter(os_);
         os_ << "// this function returns the next matched token\n";
         os_ << "template<typename Iterator>\n";
         os_ << "std::size_t next_token" << (name_suffix[0] ? "_" : "") 
