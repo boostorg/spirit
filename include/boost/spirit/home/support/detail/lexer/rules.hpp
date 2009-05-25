@@ -297,9 +297,8 @@ public:
         return add (curr_state_, regex_, id_, new_state_, true);
     }
 
-    std::size_t add (const CharT *curr_state_, const basic_rules &rules_)
+    void add (const CharT *curr_state_, const basic_rules &rules_)
     {
-        const std::size_t counter_ = next_unique_id();
         const string_pair_deque &macros_ = rules_.macrodeque ();
         typename string_pair_deque::const_iterator macro_iter_ =
             macros_.begin ();
@@ -341,8 +340,6 @@ public:
                     detail::dot<CharT>::str(), true, *uid_iter_);
             }
         }
-
-        return counter_;
     }
 
     const string_size_t_map &statemap () const

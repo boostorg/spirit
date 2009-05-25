@@ -282,11 +282,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // Allow a token_set to be associated with this lexer instance. This 
         // copies all token definitions of the right hand side into this lexer
         // instance.
-        std::size_t add_token(char_type const* state, token_set const& tokset)
+        void add_token(char_type const* state, token_set const& tokset)
         {
             add_state(state);
             initialized_dfa_ = false;
-            return rules_.add(state, tokset.get_rules());
+            rules_.add(state, tokset.get_rules());
         }
 
         // Allow to associate a whole lexer instance with another lexer 
@@ -294,12 +294,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // lexer into this instance.
         template <typename Token_, typename Iterator_, typename Functor_
           , typename TokenSet_>
-        std::size_t add_token(char_type const* state
+        void add_token(char_type const* state
           , lexer<Token_, Iterator_, Functor_, TokenSet_> const& lexer_def)
         {
             add_state(state);
             initialized_dfa_ = false;
-            return rules_.add(state, lexer_def.get_rules());
+            rules_.add(state, lexer_def.get_rules());
         }
 
         // interface for pattern definition management

@@ -248,10 +248,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             return unique_id<id_type>::get();
         }
-        std::size_t add_token(char_type const* state, token_set& tokset) 
-        {
-            return unique_id<id_type>::get();
-        }
+        void add_token(char_type const* state, token_set& tokset) {}
 
         // interface for pattern definition management
         void add_pattern (char_type const* state, string_type const& name
