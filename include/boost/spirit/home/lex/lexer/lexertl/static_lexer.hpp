@@ -23,6 +23,14 @@
 namespace boost { namespace spirit { namespace lex { namespace lexertl
 { 
     ///////////////////////////////////////////////////////////////////////////
+    //  forward declaration
+    ///////////////////////////////////////////////////////////////////////////
+    namespace static_
+    {
+        struct lexer;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     //  static_token_set
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token
@@ -210,8 +218,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename Iterator_>
         iterator_type begin(Iterator_& first, Iterator_ const& last) const
         { 
-            iterator_data_type iterator_data = 
-                { &tables_type::next<Iterator_>, actions_, get_state_id };
+            iterator_data_type iterator_data = { 
+                    &tables_type::template next<Iterator_>, actions_, 
+                    get_state_id 
+                };
             return iterator_type(iterator_data, first, last);
         }
 

@@ -28,6 +28,7 @@ struct word_count_lexer_tokens : boost::spirit::lex::lexer<Lexer>
       , eol("\n")
       , any(".")
     {
+        using boost::spirit::_1;
         using boost::phoenix::ref;
         using boost::phoenix::distance;
 
