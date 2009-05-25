@@ -284,7 +284,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 for (std::size_t i = 0; i < 10 && it != data.last; ++it, ++i)
                     next += *it;
 
-                std::cerr << "Not matched, in state: " << data.state 
+                std::cerr << "Not matched, in state: " << data.get_state() 
                           << ", lookahead: >" << next << "<" << std::endl;
 #endif
                 return result = result_type(0);
@@ -305,7 +305,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     next += *it;
 
                 std::cerr << "Matched: " << id << ", in state: " 
-                          << data.state << ", string: >" 
+                          << data.get_state() << ", string: >" 
                           << std::basic_string<char_type>(data.first, end) << "<"
                           << ", lookahead: >" << next << "<" << std::endl;
             }

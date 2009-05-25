@@ -21,6 +21,7 @@
 #include <boost/spirit/home/lex/lexer/lexertl/token.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/functor.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/iterator.hpp>
+#include <boost/spirit/home/lex/lexer/lexertl/unique_id.hpp>
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
@@ -73,6 +74,20 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
             return result;
         }
+
+        ///////////////////////////////////////////////////////////////////////
+        //  
+        ///////////////////////////////////////////////////////////////////////
+        inline boost::lexer::regex_flags map_flags(unsigned int flags)
+        {
+            unsigned int retval = boost::lexer::none;
+            if (flags & match_flags::match_not_dot_newline)
+                retval |= boost::lexer::dot_not_newline;
+            if (flags & match_flags::match_icase)
+                retval |= boost::lexer::icase;
+
+            return boost::lexer::regex_flags(retval);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -90,42 +105,46 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef Token token_type;
         typedef typename Token::id_type id_type;
 
+        token_set(unsigned int flags = 0)
+          : rules_(detail::map_flags(flags), &unique_id<id_type>::get)
+        {}
+
         // interface for token definition management
-        void add_token (char_type const* state, char_type tokendef
+        std::size_t add_token (char_type const* state, char_type tokendef
           , std::size_t token_id)
         {
-            rules.add(state, detail::escape(tokendef), token_id, state);
+            return rules_.add(state, detail::escape(tokendef), token_id, state);
         }
 
-        void add_token (char_type const* state, string_type const& tokendef
+        std::size_t add_token (char_type const* state, string_type const& tokendef
           , std::size_t token_id)
         {
-            rules.add(state, tokendef, token_id, state);
+            return rules_.add(state, tokendef, token_id, state);
         }
 
         // interface for pattern definition management
-        void add_pattern (char_type const* state, string_type const& name
+        std::size_t add_pattern (char_type const* state, string_type const& name
           , string_type const& patterndef)
         {
             add_state(state);
-            rules.add_macro(name.c_str(), patterndef);
+            return rules_.add_macro(name.c_str(), patterndef);
         }
 
-        boost::lexer::rules const& get_rules() const { return rules; }
+        boost::lexer::rules const& get_rules() const { return rules_; }
 
-        void clear() { rules.clear(); }
+        void clear() { rules_.clear(); }
 
         std::size_t add_state(char_type const* state)
         {
-            return rules.add_state(state);
+            return rules_.add_state(state);
         }
         string_type initial_state() const 
         { 
-            return string_type(rules.initial());
+            return string_type(rules_.initial());
         }
 
     private:
-        boost::lexer::basic_rules<char_type> rules;
+        boost::lexer::basic_rules<char_type> rules_;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -236,49 +255,38 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
 
     protected:
-        static boost::lexer::regex_flags map_flags(unsigned int flags)
-        {
-            unsigned int retval = boost::lexer::none;
-            if (flags & match_flags::match_not_dot_newline)
-                retval |= boost::lexer::dot_not_newline;
-            if (flags & match_flags::match_icase)
-                retval |= boost::lexer::icase;
-
-            return boost::lexer::regex_flags(retval);
-        }
-
         //  Lexer instances can be created by means of a derived class only.
         lexer(unsigned int flags) 
-          : flags_(map_flags(flags)), initialized_dfa_(false)
-        {
-            rules_.flags(flags_);
-        }
+          : flags_(detail::map_flags(flags))
+          , rules_(flags_, &unique_id<id_type>::get)
+          , initialized_dfa_(false)
+        {}
 
     public:
         // interface for token definition management
-        void add_token(char_type const* state, char_type tokendef, 
+        std::size_t add_token(char_type const* state, char_type tokendef, 
             std::size_t token_id)
         {
             add_state(state);
-            rules_.add(state, detail::escape(tokendef), token_id, state);
             initialized_dfa_ = false;
+            return rules_.add(state, detail::escape(tokendef), token_id, state);
         }
-        void add_token(char_type const* state, string_type const& tokendef, 
+        std::size_t add_token(char_type const* state, string_type const& tokendef, 
             std::size_t token_id)
         {
             add_state(state);
-            rules_.add(state, tokendef, token_id, state);
             initialized_dfa_ = false;
+            return rules_.add(state, tokendef, token_id, state);
         }
 
         // Allow a token_set to be associated with this lexer instance. This 
         // copies all token definitions of the right hand side into this lexer
         // instance.
-        void add_token(char_type const* state, token_set const& tokset)
+        std::size_t add_token(char_type const* state, token_set const& tokset)
         {
             add_state(state);
-            rules_.add(state, tokset.get_rules());
             initialized_dfa_ = false;
+            return rules_.add(state, tokset.get_rules());
         }
 
         // Allow to associate a whole lexer instance with another lexer 
@@ -286,12 +294,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // lexer into this instance.
         template <typename Token_, typename Iterator_, typename Functor_
           , typename TokenSet_>
-        void add_token(char_type const* state
+        std::size_t add_token(char_type const* state
           , lexer<Token_, Iterator_, Functor_, TokenSet_> const& lexer_def)
         {
             add_state(state);
-            rules_.add(state, lexer_def.get_rules());
             initialized_dfa_ = false;
+            return rules_.add(state, lexer_def.get_rules());
         }
 
         // interface for pattern definition management
@@ -328,7 +336,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         //  Register a semantic action with the given id
         template <typename F>
-        void add_action(id_type id, std::size_t state, F act)
+        void add_action(id_type unique_id, std::size_t state, F act)
         {
             // If you get compilation errors below stating value_type not being
             // a member of boost::fusion::unused_type, then you are probably
@@ -341,9 +349,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             if (actions_.size() <= state)
                 actions_.resize(state + 1); 
-
-            std::size_t unique_id = rules_.retrieve_id(state, id);
-            BOOST_ASSERT(boost::lexer::npos != unique_id);
 
             value_type& actions (actions_[state]);
             if (actions.size() <= unique_id)
@@ -371,8 +376,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     private:
         // lexertl specific data
         mutable boost::lexer::basic_state_machine<char_type> state_machine_;
-        boost::lexer::basic_rules<char_type> rules_;
+        std::size_t unique_ids_;
         boost::lexer::regex_flags flags_;
+        boost::lexer::basic_rules<char_type> rules_;
 
         typename Functor::semantic_actions_type actions_;
         mutable bool initialized_dfa_;

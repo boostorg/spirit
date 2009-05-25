@@ -52,6 +52,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 Iterator const&, Iterator&, Iterator const&, std::size_t&);
 
             typedef unused_type semantic_actions_type;
+            typedef unused_type get_state_id_type;
 
             typedef detail::wrap_action<unused_type, iterpair_type, static_data>
                 wrap_action_type;
@@ -95,25 +96,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             typedef typename base_type::char_type char_type;
             typedef typename base_type::semantic_actions_type 
                 semantic_actions_type;
+            typedef std::size_t (*get_state_id_type)(char const*);
 
             // initialize the shared data 
             template <typename IterData>
             static_data (IterData const& data_, Iterator& first_, Iterator const& last_)
-              : base_type(data_, first_, last_), state(0)
+              : base_type(data_, first_, last_), state_(0)
+              , get_state_id_(data_.get_state_id_)
             {}
 
             std::size_t next(Iterator& end, std::size_t& unique_id)
             {
-                return this->next_token(state, this->first, end, this->last
+                return this->next_token(state_, this->first, end, this->last
                   , unique_id);
             }
 
-            std::size_t& get_state() { return state; }
+            std::size_t& get_state() { return state_; }
             void set_state_name (char_type const* new_state) 
             { 
-                this->rules.state(new_state);
-                for (std::size_t state_id = 0; 
-                     state_id < sizeof(lexer_state_names)/sizeof(lexer_state_names[0]); ++state_id)
+                std::size_t state_id = get_state_id_(new_state);
 
                 // if the following assertion fires you've probably been using 
                 // a lexer state name which was not defined in your token 
@@ -121,10 +122,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 BOOST_ASSERT(state_id != boost::lexer::npos);
 
                 if (state_id != boost::lexer::npos)
-                    state = state_id;
+                    state_ = state_id;
             }
 
-            std::size_t state;
+            std::size_t state_;
+            get_state_id_type get_state_id_;
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -143,6 +145,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             typedef boost::function<functor_type> functor_wrapper_type;
             typedef std::vector<std::vector<functor_wrapper_type> >
                 semantic_actions_type;
+            typedef typename base_type::get_state_id_type get_state_id_type;
 
             typedef detail::wrap_action<functor_wrapper_type
               , iterpair_type, static_data> wrap_action_type;
@@ -150,8 +153,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             template <typename IterData>
             static_data (IterData const& data_, Iterator& first_, Iterator const& last_)
               : base_type(data_, first_, last_)
-              , actions(data_.actions_), state_names_(data_.state_names_)
-              , state_count_(data_.state_count_) {}
+              , actions_(data_.actions_) {}
 
             // invoke attached semantic actions, if defined
             bool invoke_actions(std::size_t state, std::size_t id
@@ -172,8 +174,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
 
             semantic_actions_type const& actions_;
-            std::size_t const state_count_;
-            const char* const* state_names_;
         };
     }
 
@@ -292,7 +292,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 for (std::size_t i = 0; i < 10 && it != data.last; ++it, ++i)
                     next += *it;
 
-                std::cerr << "Not matched, in state: " << data.state 
+                std::cerr << "Not matched, in state: " << data.get_state() 
                           << ", lookahead: >" << next << "<" << std::endl;
 #endif
                 return result = result_type(0);
@@ -313,7 +313,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     next += *it;
 
                 std::cerr << "Matched: " << id << ", in state: " 
-                          << data.state << ", string: >" 
+                          << data.get_state() << ", string: >" 
                           << std::basic_string<char_type>(data.first, end) << "<"
                           << ", lookahead: >" << next << "<" << std::endl;
             }

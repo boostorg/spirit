@@ -148,7 +148,7 @@ protected:
         const typename rules::string_deque_deque &regexes_ =
             rules_.regexes ();
         const typename rules::id_vector_deque &ids_ = rules_.ids ();
-        std::size_t unique_id_ = 0;
+        const typename rules::id_vector_deque &unique_ids_ = rules_.unique_ids ();
         const typename rules::id_vector_deque &states_ = rules_.states ();
         typename rules::string_deque::const_iterator regex_iter_ =
             regexes_[state_].begin ();
@@ -156,6 +156,8 @@ protected:
             regexes_[state_].end ();
         typename rules::id_vector::const_iterator ids_iter_ =
             ids_[state_].begin ();
+        typename rules::id_vector::const_iterator unique_ids_iter_ =
+            unique_ids_[state_].begin ();
         typename rules::id_vector::const_iterator states_iter_ =
             states_[state_].begin ();
         const typename rules::string &regex_ = *regex_iter_;
@@ -171,12 +173,13 @@ protected:
             seen_BOL_assertion_, seen_EOL_assertion_);
 
         detail::node *root_ = parser::parse (regex_.c_str (),
-            regex_.c_str () + regex_.size (), *ids_iter_, unique_id_++,
+            regex_.c_str () + regex_.size (), *ids_iter_, *unique_ids_iter_,
             *states_iter_, rules_.flags (), rules_.locale (), node_ptr_vector_,
             macromap_, token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
 
         ++regex_iter_;
         ++ids_iter_;
+        ++unique_ids_iter_;
         ++states_iter_;
         tree_vector_.push_back (root_);
 
@@ -187,13 +190,14 @@ protected:
             const typename rules::string &regex_ = *regex_iter_;
 
             root_ = parser::parse (regex_.c_str (),
-                regex_.c_str () + regex_.size (), *ids_iter_, unique_id_++,
+                regex_.c_str () + regex_.size (), *ids_iter_, *unique_ids_iter_,
                 *states_iter_, rules_.flags (), rules_.locale (),
                 node_ptr_vector_, macromap_, token_map_,
                 seen_BOL_assertion_, seen_EOL_assertion_);
             tree_vector_.push_back (root_);
             ++regex_iter_;
             ++ids_iter_;
+            ++unique_ids_iter_;
             ++states_iter_;
         }
 
@@ -282,7 +286,7 @@ protected:
                 locale_, node_ptr_vector_, macromap_, token_map_,
                 seen_BOL_assertion_, seen_EOL_assertion_);
             macro_iter_pair map_iter_ = macromap_.
-                insert (macro_pair (name_, (detail::node const*)0));
+                insert (macro_pair (name_, 0));
 
             map_iter_.first->second = node_;
         }
@@ -506,7 +510,7 @@ protected:
                     }
                     else
                     {
-                        iter_ = lhs_->insert (++iter_, (charset*)0);
+                        iter_ = lhs_->insert (++iter_, 0);
                         *iter_ = overlap_.release ();
 
                         // VC++ 6 Hack:
@@ -648,7 +652,7 @@ protected:
                     }
                     else
                     {
-                        iter_ = lhs_->insert (++iter_, (equivset*)0);
+                        iter_ = lhs_->insert (++iter_, 0);
                         *iter_ = overlap_.release ();
 
                         // VC++ 6 Hack:

@@ -425,6 +425,7 @@ private:
         tree_node_stack_.top () = node_ptr_vector_->back ();
     }
 
+    // This is one of the most mind bending routines in this code...
     static void repeatn (const bool greedy_, const token &token_,
         node_ptr_vector &node_ptr_vector_, tree_node_stack &tree_node_stack_)
     {
@@ -449,9 +450,7 @@ private:
 
             for (std::size_t i_ = 2; i_ < top_; ++i_)
             {
-                node *temp_ = prev_->copy (node_ptr_vector_);
-
-                curr_ = temp_;
+                curr_ = prev_->copy (node_ptr_vector_);
                 tree_node_stack_.push (0);
                 tree_node_stack_.top () = prev_;
                 sequence (node_ptr_vector_, tree_node_stack_);
@@ -462,9 +461,7 @@ private:
             {
                 if (token_._min > 1)
                 {
-                    node *temp_ = prev_->copy (node_ptr_vector_);
-
-                    curr_ = temp_;
+                    curr_ = prev_->copy (node_ptr_vector_);
                     tree_node_stack_.push (0);
                     tree_node_stack_.top () = prev_;
                     sequence (node_ptr_vector_, tree_node_stack_);
@@ -476,19 +473,15 @@ private:
                     tree_node_stack_.push (0);
                     tree_node_stack_.top () = prev_;
                     optional (greedy_, node_ptr_vector_, tree_node_stack_);
-
-                    node *temp_ = tree_node_stack_.top ();
+                    prev_ = tree_node_stack_.top ();
 
                     tree_node_stack_.pop ();
-                    prev_ = temp_;
 
                     const std::size_t count_ = token_._max - token_._min;
 
                     for (std::size_t i_ = 1; i_ < count_; ++i_)
                     {
-                        node *temp_ = prev_->copy (node_ptr_vector_);
-
-                        curr_ = temp_;
+                        curr_ = prev_->copy (node_ptr_vector_);
                         tree_node_stack_.push (0);
                         tree_node_stack_.top () = prev_;
                         sequence (node_ptr_vector_, tree_node_stack_);
@@ -500,10 +493,7 @@ private:
                     tree_node_stack_.push (0);
                     tree_node_stack_.top () = prev_;
                     zero_or_more (greedy_, node_ptr_vector_, tree_node_stack_);
-
-                    node *temp_ = tree_node_stack_.top ();
-
-                    prev_ = temp_;
+                    prev_ = tree_node_stack_.top ();
                     tree_node_stack_.pop ();
                 }
             }

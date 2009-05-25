@@ -9,7 +9,7 @@
 //    . To generate C++ code implementing a static lexical analyzer allowing
 //      to recognize all defined tokens (this file)
 //    . To integrate the generated C++ lexer into the /Spirit/ framework.
-//      (see the file: word_count_static.cpp)
+//      (see the file: word_count_lexer_static.cpp)
 
 // #define BOOST_SPIRIT_LEXERTL_DEBUG
 
@@ -19,28 +19,28 @@
 
 #include <fstream>
 
-#include "word_count_tokens.hpp"
+#include "word_count_lexer_tokens.hpp"
 
 using namespace boost::spirit;
 using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
-//[wc_static_generate_main
+//[wcl_static_generate_main
 int main(int argc, char* argv[])
 {
     // create the lexer object instance needed to invoke the generator
-    word_count_tokens<lexertl::lexer<> > word_count; // the token definition
+    word_count_lexer_tokens<lexertl::actor_lexer<> > word_count; // the token definition
 
     // open the output file, where the generated tokenizer function will be 
     // written to
-    std::ofstream out(argc < 2 ? "word_count_static.hpp" : argv[1]);
+    std::ofstream out(argc < 2 ? "word_count_lexer_static.hpp" : argv[1]);
 
     // invoke the generator, passing the token definition, the output stream 
-    // and the name suffix of the tables and functions to be generated
+    // and the name prefix of the tokenizing function to be generated
     //
-    // The suffix "wc" used below results in a type lexertl::static_::lexer_wc
+    // The suffix "wcl" used below results in a type lexertl::static_::lexer_wcl
     // to be generated, which needs to be passed as a template parameter to the 
-    // lexertl::static_lexer template (see word_count_static.cpp).
-    return lexertl::generate_static(word_count, out, "wc") ? 0 : -1;
+    // lexertl::static_lexer template (see word_count_lexer_static.cpp).
+    return lexertl::generate_static(word_count, out, "wcl") ? 0 : -1;
 }
 //]

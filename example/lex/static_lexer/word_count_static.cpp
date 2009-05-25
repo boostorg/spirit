@@ -28,7 +28,6 @@
 
 #include "../example.hpp"
 #include "word_count_tokens.hpp"          // token definition
-
 #include "word_count_static.hpp"          // generated tokenizer
 
 using namespace boost::spirit;
@@ -85,7 +84,13 @@ int main(int argc, char* argv[])
     // This is the only place where the code is different from an equivalent
     // dynamic lexical analyzer. We use the `lexertl::static_lexer<>` instead of
     // the `lexertl::lexer<>` as the base class for our token defintion type.
-    typedef lexertl::static_lexer<token_type> lexer_type;
+    //
+    // As we specified the suffix "wc" while generating the static tables we 
+    // need to pass the type lexertl::static_::lexer_wc as the second template
+    // parameter below (see word_count_generate.cpp).
+    typedef lexertl::static_lexer<
+        token_type, lexertl::static_::lexer_wc
+    > lexer_type;
 
     // Define the iterator type exposed by the lexer.
     typedef word_count_tokens<lexer_type>::iterator_type iterator_type;

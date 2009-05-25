@@ -82,10 +82,12 @@ public:
     typedef std::map<string, std::size_t> string_size_t_map;
     typedef std::pair<string, std::size_t> string_size_t_pair;
     typedef std::pair<std::size_t, std::size_t> unique_id_key;
-    typedef std::map<unique_id_key, std::size_t> unique_id_map;
 
-    basic_rules (const regex_flags flags_ = dot_not_newline) :
-        _flags (flags_)
+    basic_rules (const regex_flags flags_ = dot_not_newline,
+        std::size_t (*counter_ptr_)() = 0) :
+        _flags (flags_),
+        _counter (0),
+        _counter_ptr (counter_ptr_)
     {
         add_state (initial ());
     }
@@ -97,6 +99,7 @@ public:
         _macroset.clear ();
         _regexes.clear ();
         _ids.clear ();
+        _unique_ids.clear ();
         _states.clear ();
         _flags = dot_not_newline;
         _locale = std::locale ();
@@ -111,6 +114,7 @@ public:
         {
             _regexes[state_].clear ();
             _ids[state_].clear ();
+            _unique_ids[state_].clear ();
             _states[state_].clear ();
         }
     }
@@ -123,6 +127,11 @@ public:
     regex_flags flags () const
     {
         return _flags;
+    }
+
+    std::size_t next_unique_id () 
+    {
+        return _counter_ptr ? _counter_ptr() : _counter++;
     }
 
     std::locale imbue (std::locale &locale_)
@@ -173,6 +182,7 @@ public:
         {
             _regexes.push_back (string_deque ());
             _ids.push_back (id_vector ());
+            _unique_ids.push_back (id_vector ());
             _states.push_back (id_vector ());
 
             if (string (name_) != initial ())
@@ -237,89 +247,102 @@ public:
 
     std::size_t add (const string &regex_, const std::size_t id_)
     {
+        const std::size_t counter_ = next_unique_id();
+
         check_for_invalid_id (id_);
         _regexes[0].push_back (regex_);
         _ids[0].push_back (id_);
+        _unique_ids[0].push_back (counter_);
         _states[0].push_back (0);
-        return _regexes[0].size () - 1;
+
+        return counter_;
     }
 
-    void add (const CharT *curr_state_, const CharT *regex_,
-        const CharT *new_state_, id_vector *id_vec_ = 0)
+    std::size_t add (const CharT *curr_state_, const CharT *regex_,
+        const CharT *new_state_)
     {
-        add (curr_state_, string (regex_), new_state_, id_vec_);
+        return add (curr_state_, string (regex_), new_state_);
     }
 
-    void add (const CharT *curr_state_, const CharT *regex_start_,
-        const CharT *regex_end_, const CharT *new_state_,
-        id_vector *id_vec_ = 0)
+    std::size_t add (const CharT *curr_state_, const CharT *regex_start_,
+        const CharT *regex_end_, const CharT *new_state_)
     {
-        add (curr_state_, string (regex_start_, regex_end_),
-            new_state_, id_vec_);
+        return add (curr_state_, string (regex_start_, regex_end_),
+            new_state_);
     }
 
-    void add (const CharT *curr_state_, const string &regex_,
-        const CharT *new_state_, id_vector *id_vec_ = 0)
+    std::size_t add (const CharT *curr_state_, const string &regex_,
+        const CharT *new_state_)
     {
-        add (curr_state_, regex_, 0, new_state_, false, id_vec_);
+        return add (curr_state_, regex_, 0, new_state_, false);
     }
 
-    void add (const CharT *curr_state_, const CharT *regex_,
-        const std::size_t id_, const CharT *new_state_, id_vector *id_vec_ = 0)
+    std::size_t add (const CharT *curr_state_, const CharT *regex_,
+        const std::size_t id_, const CharT *new_state_)
     {
-        add (curr_state_, string (regex_), id_, new_state_, id_vec_);
+        return add (curr_state_, string (regex_), id_, new_state_);
     }
 
-    void add (const CharT *curr_state_, const CharT *regex_start_,
+    std::size_t add (const CharT *curr_state_, const CharT *regex_start_,
         const CharT *regex_end_, const std::size_t id_,
-        const CharT *new_state_, id_vector *id_vec_ = 0)
+        const CharT *new_state_)
     {
-        add (curr_state_, string (regex_start_, regex_end_), id_,
-            new_state_, id_vec_);
+        return add (curr_state_, string (regex_start_, regex_end_), id_,
+            new_state_);
     }
 
-    void add (const CharT *curr_state_, const string &regex_,
-        const std::size_t id_, const CharT *new_state_, id_vector *id_vec_ = 0)
+    std::size_t add (const CharT *curr_state_, const string &regex_,
+        const std::size_t id_, const CharT *new_state_)
     {
-        add (curr_state_, regex_, id_, new_state_, true, id_vec_);
+        return add (curr_state_, regex_, id_, new_state_, true);
     }
 
-    void add (const CharT *curr_state_, const basic_rules &rules_,
-        id_vector *id_vec_ = 0)
+    std::size_t add (const CharT *curr_state_, const basic_rules &rules_)
     {
+        const std::size_t counter_ = next_unique_id();
+        const string_pair_deque &macros_ = rules_.macrodeque ();
+        typename string_pair_deque::const_iterator macro_iter_ =
+            macros_.begin ();
+        typename string_pair_deque::const_iterator macro_end_ =
+            macros_.end ();
         const string_deque_deque &regexes_ = rules_.regexes ();
         const id_vector_deque &ids_ = rules_.ids ();
+        const id_vector_deque &unique_ids_ = rules_.unique_ids ();
         typename string_deque_deque::const_iterator state_regex_iter_ =
             regexes_.begin ();
         typename string_deque_deque::const_iterator state_regex_end_ =
             regexes_.end ();
         typename id_vector_deque::const_iterator state_id_iter_ =
             ids_.begin ();
+        typename id_vector_deque::const_iterator state_uid_iter_ =
+            unique_ids_.begin();
         typename string_deque::const_iterator regex_iter_;
         typename string_deque::const_iterator regex_end_;
         typename id_vector::const_iterator id_iter_;
-        id_vector *temp_id_vec_ = id_vec_;
+        typename id_vector::const_iterator uid_iter_;
+
+        for (; macro_iter_ != macro_end_; ++macro_iter_)
+        {
+            add_macro (macro_iter_->first.c_str (),
+                macro_iter_->second.c_str ());
+        }
 
         for (; state_regex_iter_ != state_regex_end_; ++state_regex_iter_)
         {
             regex_iter_ = state_regex_iter_->begin ();
             regex_end_ = state_regex_iter_->end ();
             id_iter_ = state_id_iter_->begin ();
+            uid_iter_ = state_uid_iter_->begin ();
 
-            for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_)
+            for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
+                ++uid_iter_)
             {
-                add (curr_state_, *regex_iter_, *id_iter_, detail::dot<CharT>::str(),
-                    temp_id_vec_);
-
-                if (temp_id_vec_)
-                {
-                    // As suggested by Hartmut, only fill the id_vec_ once.
-                    // The dfa sizes can be examined at the end to get a range
-                    // of ids.
-                    temp_id_vec_ = 0;
-                }
+                add (curr_state_, *regex_iter_, *id_iter_,
+                    detail::dot<CharT>::str(), true, *uid_iter_);
             }
         }
+
+        return counter_;
     }
 
     const string_size_t_map &statemap () const
@@ -340,6 +363,11 @@ public:
     const id_vector_deque &ids () const
     {
         return _ids;
+    }
+
+    const id_vector_deque &unique_ids () const
+    {
+        return _unique_ids;
     }
 
     const id_vector_deque &states () const
@@ -370,42 +398,26 @@ public:
         return detail::initial<CharT>::str ();
     }
 
-    std::size_t retrieve_id (std::size_t state, std::size_t id) const
-    {
-        unique_id_key key (state, id);
-        typename unique_id_map::const_iterator it = _unique_ids.find (key);
-
-        if (it == _unique_ids.end ())
-        {
-            return npos;
-        }
-
-        return (*it).second;
-    }
-
 private:
     string_size_t_map _statemap;
     string_pair_deque _macrodeque;
     string_set _macroset;
     string_deque_deque _regexes;
     id_vector_deque _ids;
+    id_vector_deque _unique_ids;
     id_vector_deque _states;
     regex_flags _flags;
+    std::size_t _counter;
+    std::size_t (*_counter_ptr)();
     std::locale _locale;
     string_deque _lexer_state_names;
-    unique_id_map _unique_ids;
 
-    void add (const CharT *curr_state_, const string &regex_,
+    std::size_t add (const CharT *curr_state_, const string &regex_,
         const std::size_t id_, const CharT *new_state_, const bool check_,
-        id_vector *id_vec_ = 0)
+        const std::size_t uid_ = npos)
     {
         const bool star_ = *curr_state_ == '*' && *(curr_state_ + 1) == 0;
         const bool dot_ = *new_state_ == '.' && *(new_state_ + 1) == 0;
-
-        if (id_vec_)
-        {
-            id_vec_->clear();
-        }
 
         if (check_)
         {
@@ -498,21 +510,33 @@ private:
             }
         }
 
+        std::size_t first_counter_ = npos;
+
         for (std::size_t i_ = 0, size_ = states_.size (); i_ < size_; ++i_)
         {
             const std::size_t curr_ = states_[i_];
 
             _regexes[curr_].push_back (regex_);
             _ids[curr_].push_back (id_);
-            _states[curr_].push_back (dot_ ? curr_ : new_);
 
-            if (id_vec_)
+            if (uid_ == npos)
             {
-                id_vec_->push_back (_regexes[curr_].size () - 1);
+                std::size_t counter_ = next_unique_id();
+                if (first_counter_ == npos)
+                    first_counter_ = counter_;
+                _unique_ids[curr_].push_back (counter_);
+            }
+            else
+            {
+                if (first_counter_ == npos)
+                    first_counter_ = uid_;
+                _unique_ids[curr_].push_back (uid_);
             }
 
-            map_id (dot_ ? curr_ : new_, id_, _regexes[curr_].size () - 1);
+            _states[curr_].push_back (dot_ ? curr_ : new_);
         }
+
+        return first_counter_;
     }
 
     void validate (const CharT *name_) const
@@ -596,22 +620,6 @@ private:
             // OK
             break;
         }
-    }
-
-    bool map_id (std::size_t state, std::size_t id, std::size_t unique_id)
-    {
-        typedef typename unique_id_map::iterator iterator_type;
-
-        unique_id_key key (state, id);
-        iterator_type it = _unique_ids.find (key);
-        if (it != _unique_ids.end ())
-        {
-            (*it).second = unique_id;
-            return false;
-        }
-
-        typedef typename unique_id_map::value_type value_type;
-        return _unique_ids.insert (value_type (key, unique_id)).second;
     }
 };
 
