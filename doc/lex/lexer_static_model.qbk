@@ -63,7 +63,7 @@ template, where for the static model you will use the
 __class_lexertl_static_lexer__ type as the template parameter.
 
 This example not only shows how to build a static lexer, but it additionally 
-demonstrates, how such a lexer can be used for parsing in conjunction with a 
+demonstrates how such a lexer can be used for parsing in conjunction with a 
 __qi__ grammar. For completeness we provide the simple grammar used in this 
 example. As you can see, this grammar does not have any dependencies on the 
 static lexical analyzer, and for this reason it is not different from a grammar
@@ -82,7 +82,7 @@ library exposes a special API - the function __api_generate_static__. It
 implements the whole code generator, no further code is needed. All what it 
 takes to invoke this function is to supply a token definition instance, an 
 output stream to use to generate the code to, and an optional string to be used 
-as a prefix for the name of the generated function. All in all just a couple 
+as a suffix for the name of the generated function. All in all just a couple 
 lines of code.
 
 [wc_static_generate_main]

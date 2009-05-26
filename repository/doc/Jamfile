@@ -7,20 +7,20 @@
 #   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-project spirit/doc ;
+project spirit/repository/doc ;
 
 import boostbook : boostbook ;
 using quickbook : quickbook ;
 
-boostbook spirit2
+boostbook spirit2_repository
     :
-        spirit2.qbk
+        spirit2_repository.qbk
     :
-        <xsl:param>boost.root=../../../..
-        <xsl:param>boost.libraries=../../../libraries.htm
-        <xsl:param>html.stylesheet=../../../../doc/html/boostbook.css
-        <xsl:param>chunk.section.depth=4
-        #<xsl:param>chunk.first.sections=1
+        <xsl:param>boost.root=../../../../..
+        <xsl:param>boost.libraries=../../../../libraries.htm
+        <xsl:param>html.stylesheet=../../../../../doc/html/boostbook.css
+        <xsl:param>chunk.section.depth=1
+        <xsl:param>chunk.first.sections=1
         <xsl:param>toc.section.depth=3
         <xsl:param>toc.max.depth=3
         <xsl:param>generate.section.toc.level=4
