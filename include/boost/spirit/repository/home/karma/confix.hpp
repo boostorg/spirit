@@ -17,7 +17,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 
-#include <boost/spirit/repository/support/confix.hpp>
+#include <boost/spirit/repository/home/support/confix.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit 
@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
     {
         typedef Subject subject_type;
 
-        template <typename Component, typename Context, typename Unused>
+        template <typename Context, typename Unused>
         struct attribute
         {
             typedef typename

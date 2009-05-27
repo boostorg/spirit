@@ -144,7 +144,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             {
                 return mp.queued_position < x.queued_position;
             }
-            
+
             template <typename MultiPass>
             static void destroy(MultiPass&) {}
 
