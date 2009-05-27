@@ -81,10 +81,9 @@ public:
     typedef std::deque<string_pair> string_pair_deque;
     typedef std::map<string, std::size_t> string_size_t_map;
     typedef std::pair<string, std::size_t> string_size_t_pair;
-    typedef std::pair<std::size_t, std::size_t> unique_id_key;
 
     basic_rules (const regex_flags flags_ = dot_not_newline,
-        std::size_t (*counter_ptr_)() = 0) :
+        std::size_t (*counter_ptr_) () = 0) :
         _flags (flags_),
         _counter (0),
         _counter_ptr (counter_ptr_)
@@ -247,7 +246,7 @@ public:
 
     std::size_t add (const string &regex_, const std::size_t id_)
     {
-        const std::size_t counter_ = next_unique_id();
+        const std::size_t counter_ = next_unique_id ();
 
         check_for_invalid_id (id_);
         _regexes[0].push_back (regex_);
@@ -405,7 +404,7 @@ private:
     id_vector_deque _states;
     regex_flags _flags;
     std::size_t _counter;
-    std::size_t (*_counter_ptr)();
+    std::size_t (*_counter_ptr) ();
     std::locale _locale;
     string_deque _lexer_state_names;
 
@@ -518,15 +517,22 @@ private:
 
             if (uid_ == npos)
             {
-                std::size_t counter_ = next_unique_id();
+                const std::size_t counter_ = next_unique_id ();
+
                 if (first_counter_ == npos)
+                {
                     first_counter_ = counter_;
+                }
+
                 _unique_ids[curr_].push_back (counter_);
             }
             else
             {
                 if (first_counter_ == npos)
+                {
                     first_counter_ = uid_;
+                }
+
                 _unique_ids[curr_].push_back (uid_);
             }
 
