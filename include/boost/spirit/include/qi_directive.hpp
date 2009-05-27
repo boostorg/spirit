@@ -8,5 +8,11 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_QI_DIRECTIVE
 #define BOOST_SPIRIT_INCLUDE_QI_DIRECTIVE
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/qi/directive.hpp>
+
 #endif

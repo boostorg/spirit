@@ -8,5 +8,11 @@
 =============================================================================*/
 #ifndef BOOST_SPIRIT_INCLUDE_SUPPORT_SAFE_BOOL
 #define BOOST_SPIRIT_INCLUDE_SUPPORT_SAFE_BOOL
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/support/safe_bool.hpp>
+
 #endif
