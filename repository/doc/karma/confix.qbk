@@ -136,6 +136,7 @@ a C++ comment:
 This code snippet will obviouly generate `// This is a comment \n `. Similarily
 generating a 'C'-style comment proves to be straightforward:
 
+[karma_confix_c_comment]
 
 which again will generate `/* This is a comment */ `.
 
