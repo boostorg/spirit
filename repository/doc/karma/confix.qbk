@@ -19,7 +19,7 @@ which can be generated using the `confix` generator as:
 
     confix(prefix, suffix)[subject]
 
-which results in generating the sequence equivalent to
+which results in generating a sequence equivalent to
 
     prefix << subject << suffix
 
@@ -90,31 +90,62 @@ using a simple: `ol["Some text"]` (which results in `<ol>Some text</ol>`).
                              parts.]]
 ]
 
-All 
+All three parameters can be arbitrary complex generators themselves.
 
-[heading Model of]
+[heading Attribute]
 
-Link to concept
+The `confix` component exposes the attribute type of its subject as its own 
+attribute type. If the `subject` does not expose any attribute (the type is
+`unused_type`), then the `confix` does not expose anz attribute either.
 
-[heading Objects]
+    a: A --> confix(p, s)[a]: A
 
-Objects provided by the library
-
-[variablelist Notation
-    [[`xxx`]     [An XXX]]
-]
-
-Semantics of an expression is defined only where it differs from, or is not
-defined in _concept-of_XXX_.
-
-[table
-    [[Expression]       [Semantics]             [Return type]       [Complexity]]
-    [[`xxx`]            [Semantics of `xxx`]    [XXX]               [Constant]]
-]
+[note This notation is used all over the Spirit documentation and reads as:
+      Given, `a` is generator, and `A` is the type of the attribute of generator 
+      `a`, then the type of the attribute exposed by `confix(p, s)[a]` will be
+      `A` as well.]
 
 [heading Example]
 
-Real example code. Use Quickbook import mechanism to link to actual
-working code snippets here.
+The following example shows simple use cases of the `confix` generator. We will
+illustrate its usage by generating different comment styles and a function
+prototype (for the full example code see here: 
+[@../../example/karma/confix.cpp confix.cpp])
+
+[import ../example/karma/confix.cpp]
+
+[heading Prerequisites]
+
+In addition to the main header file needed to include the core components 
+implemented in __karma__ we add the header file needed for the new `confix` 
+generator.
+
+[karma_confix_includes]
+
+To make all the code below more readable we introduce the following namespaces.
+
+[karma_confix_namespace]
+
+[heading Generating Different Comment Styles]
+
+We will show how to generate different comment styles. First we will generate
+a C++ comment:
+
+[karma_confix_cpp_comment]
+
+This code snippet will obviouly generate `// This is a comment \n `. Similarily
+generating a 'C'-style comment proves to be straightforward:
+
+
+which again will generate `/* This is a comment */ `.
+
+[heading Generating a Function Prototype]
+
+Generating a function prototype given a function name a vector or parameter 
+names is simple as well:
+
+[karma_confix_function]
+
+which generates the expected output: `func(par1,par2,par3)`.
 
 [endsect]
