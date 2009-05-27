@@ -7,6 +7,7 @@
 #define BOOST_SPIRIT_LEXER_PARSE_NOV_17_2007_0246PM
 
 #include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/parse.hpp>
 #include <boost/spirit/home/qi/nonterminal/grammar.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/lex/lexer.hpp>
@@ -14,6 +15,10 @@
 
 namespace boost { namespace spirit { namespace lex
 {
+    ///////////////////////////////////////////////////////////////////////////
+    //  Import skip_flag enumerator type from Qi namespace
+    using qi::skip_flag;
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  The tokenize_and_parse() function is one of the main Spirit API 
@@ -122,21 +127,25 @@ namespace boost { namespace spirit { namespace lex
     //                  object instance. The ParserExpr type must conform to 
     //                  the grammar interface described in the corresponding 
     //                  section of the documentation.
+    //  skipper:        The skip parser to be used while parsing the given 
+    //                  input sequence. Note, the skip parser will have to 
+    //                  act on the same token sequence as the main parser 
+    //                  'xpr'.
+    //  post_skip:      The post_skip flag controls whether the funciton will
+    //                  invoke an additional post skip after the main parser
+    //                  returned.
     //  attr:           The top level attribute passed to the parser. It will 
     //                  be populated during the parsing of the input sequence.
     //                  On exit it will hold the 'parser result' corresponding 
     //                  to the matched input sequence.
-    //  skipper_:       The skip parser to be used while parsing the given 
-    //                  input sequence. Note, the skip parser will have to 
-    //                  act on the same token sequence as the main parser 
-    //                  'xpr'.
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Lexer, typename ParserExpr
       , typename Skipper>
     inline bool
     tokenize_and_phrase_parse(Iterator& first, Iterator last
-      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper)
+      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip)
     {
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
@@ -155,17 +164,17 @@ namespace boost { namespace spirit { namespace lex
             return false;
 
         // do a final post-skip
-        qi::skip_over(iter, lex.end(), skipper_);
+        if (post_skip == skip_flag::postskip)
+            qi::skip_over(iter, lex.end(), skipper_);
         return true;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Lexer, typename ParserExpr
       , typename Skipper, typename Attribute>
     inline bool
     tokenize_and_phrase_parse(Iterator& first, Iterator last
-      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper_
-      , Attribute& attr)
+      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip, Attribute& attr)
     {
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
@@ -176,16 +185,29 @@ namespace boost { namespace spirit { namespace lex
         typedef
             typename result_of::compile<qi::domain, Skipper>::type
         skipper_type;
-        skipper_type const skipper = compile<qi::domain>(skipper_);
+        skipper_type const skipper_ = compile<qi::domain>(skipper);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
         if (!compile<qi::domain>(xpr).parse(
-                iter, lex.end(), unused, skipper, attr))
+                iter, lex.end(), unused, skipper_, attr))
             return false;
 
         // do a final post-skip
-        qi::skip_over(iter, lex.end(), skipper);
+        if (post_skip == skip_flag::postskip)
+            qi::skip_over(iter, lex.end(), skipper_);
         return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Lexer, typename ParserExpr
+      , typename Skipper, typename Attribute>
+    inline bool
+    tokenize_and_phrase_parse(Iterator& first, Iterator last
+      , Lexer const& lex, ParserExpr const& xpr, Skipper const& skipper
+      , Attribute& attr)
+    {
+        return tokenize_and_phrase_parse(first, last, lex, xpr, skipper
+          , skip_flag::postskip, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -193,7 +215,7 @@ namespace boost { namespace spirit { namespace lex
     //  The tokenize() function is one of the main Spirit API functions. It 
     //  simplifies using a lexer to tokenize a given input sequence. It's main
     //  purpose is to use the lexer to tokenize all the input. 
-
+    //
     //  The second version below discards all generated tokens afterwards. 
     //  This is useful whenever all the needed functionality has been 
     //  implemented directly inside the lexer semantic actions, which are being 
