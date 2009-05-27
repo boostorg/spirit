@@ -474,7 +474,6 @@ private:
                     tree_node_stack_.top () = prev_;
                     optional (greedy_, node_ptr_vector_, tree_node_stack_);
                     prev_ = tree_node_stack_.top ();
-
                     tree_node_stack_.pop ();
 
                     const std::size_t count_ = token_._max - token_._min;
