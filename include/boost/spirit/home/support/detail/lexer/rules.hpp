@@ -128,9 +128,9 @@ public:
         return _flags;
     }
 
-    std::size_t next_unique_id () 
+    std::size_t next_unique_id ()
     {
-        return _counter_ptr ? _counter_ptr() : _counter++;
+        return _counter_ptr ? _counter_ptr () : _counter++;
     }
 
     std::locale imbue (std::locale &locale_)
@@ -253,7 +253,6 @@ public:
         _ids[0].push_back (id_);
         _unique_ids[0].push_back (counter_);
         _states[0].push_back (0);
-
         return counter_;
     }
 
