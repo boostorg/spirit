@@ -131,7 +131,7 @@
         </p>
 <p>
           This example not only shows how to build a static lexer, but it additionally
-          demonstrates, how such a lexer can be used for parsing in conjunction with
+          demonstrates how such a lexer can be used for parsing in conjunction with
           a <span class="emphasis"><em>Spirit.Qi</em></span> grammar. For completeness we provide the
           simple grammar used in this example. As you can see, this grammar does
           not have any dependencies on the static lexical analyzer, and for this
@@ -176,7 +176,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id723227"></a>
+<a name="id700514"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -189,7 +189,7 @@
           It implements the whole code generator, no further code is needed. All
           what it takes to invoke this function is to supply a token definition instance,
           an output stream to use to generate the code to, and an optional string
-          to be used as a prefix for the name of the generated function. All in all
+          to be used as a suffix for the name of the generated function. All in all
           just a couple lines of code.
         </p>
 <p>
@@ -207,9 +207,12 @@
 </span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">ofstream</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">argc</span> <span class="special">&lt;</span> <span class="number">2</span> <span class="special">?</span> <span class="string">"word_count_static.hpp"</span> <span class="special">:</span> <span class="identifier">argv</span><span class="special">[</span><span class="number">1</span><span class="special">]);</span>
 
     <span class="comment">// invoke the generator, passing the token definition, the output stream 
-</span>    <span class="comment">// and the name prefix of the tokenizing function to be generated
-</span>    <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">function_name</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">argc</span> <span class="special">&lt;</span> <span class="number">3</span> <span class="special">?</span> <span class="string">""</span> <span class="special">:</span> <span class="identifier">argv</span><span class="special">[</span><span class="number">2</span><span class="special">]);</span>
-    <span class="keyword">return</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="identifier">function_name</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
+</span>    <span class="comment">// and the name suffix of the tables and functions to be generated
+</span>    <span class="comment">//
+</span>    <span class="comment">// The suffix "wc" used below results in a type lexertl::static_::lexer_wc
+</span>    <span class="comment">// to be generated, which needs to be passed as a template parameter to the 
+</span>    <span class="comment">// lexertl::static_lexer template (see word_count_static.cpp).
+</span>    <span class="keyword">return</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="string">"wc"</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -222,7 +225,7 @@
           the next topic (the full generated code can be viewed <a href="../../../../../example/lex/static_lexer/word_count_static.hpp" target="_top">here</a>).
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id723603"></a>
+<a name="id700839"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -276,7 +279,13 @@
 </span>    <span class="comment">// This is the only place where the code is different from an equivalent
 </span>    <span class="comment">// dynamic lexical analyzer. We use the `lexertl::static_lexer&lt;&gt;` instead of
 </span>    <span class="comment">// the `lexertl::lexer&lt;&gt;` as the base class for our token defintion type.
-</span>    <span class="keyword">typedef</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;</span><span class="identifier">token_type</span><span class="special">&gt;</span> <span class="identifier">lexer_type</span><span class="special">;</span>
+</span>    <span class="comment">//
+</span>    <span class="comment">// As we specified the suffix "wc" while generating the static tables we 
+</span>    <span class="comment">// need to pass the type lexertl::static_::lexer_wc as the second template
+</span>    <span class="comment">// parameter below (see word_count_generate.cpp).
+</span>    <span class="keyword">typedef</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;</span>
+        <span class="identifier">token_type</span><span class="special">,</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_</span><span class="special">::</span><span class="identifier">lexer_wc</span>
+    <span class="special">&gt;</span> <span class="identifier">lexer_type</span><span class="special">;</span>
 
     <span class="comment">// Define the iterator type exposed by the lexer.
 </span>    <span class="keyword">typedef</span> <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lexer_type</span><span class="special">&gt;::</span><span class="identifier">iterator_type</span> <span class="identifier">iterator_type</span><span class="special">;</span>
