@@ -96,7 +96,7 @@ expression<Iterator>::expression(
                 expr                        [++_b]
                 >> *(',' > expr             [++_b])
             )
-        >   lit(')')                        [op(_a, _b, pass)]
+        >   lit(')')                        [op(_a, _b, _pass)]
         ;
 
     expr.name("expression");
