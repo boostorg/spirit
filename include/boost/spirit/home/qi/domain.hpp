@@ -37,6 +37,8 @@ namespace boost { namespace spirit { namespace qi
     {
         BOOST_PP_REPEAT(SPIRIT_ARGUMENTS_LIMIT, SPIRIT_USING_ARGUMENT, _)
         BOOST_PP_REPEAT(SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_USING_ATTRIBUTE, _)
+        
+        using spirit::_pass;
         using spirit::_val;
         using spirit::_a;
         using spirit::_b;

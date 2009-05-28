@@ -120,8 +120,8 @@ namespace boost { namespace spirit
     phoenix::actor<argument<1> > const _2 = argument<1>();
     phoenix::actor<argument<2> > const _3 = argument<2>();
 
-    // 'pass' may be used to make a match fail in retrospective
-    phoenix::actor<phoenix::argument<2> > const pass = phoenix::argument<2>();
+    // '_pass' may be used to make a match fail in retrospective
+    phoenix::actor<phoenix::argument<2> > const _pass = phoenix::argument<2>();
 
     //  Bring in the rest of the arguments and attributes (_4 .. _N+1), using PP
     BOOST_PP_REPEAT_FROM_TO(
