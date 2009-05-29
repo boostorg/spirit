@@ -139,6 +139,12 @@ main()
               && s1 == e1 - 1);
         }
     }
+    
+    { // test unassigned rule
+        
+        rule<char const*> a;
+        BOOST_TEST(!test("x", a));
+    }
 
     { // alias tests
 
