@@ -6,6 +6,12 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
+This quick reference section is provided for convenience. You can use
+this section as a sort of a "cheat-sheet" on the most commonly used Qi
+components. It is not intended to be complete, but should give you an
+easy way to recall a particular component without having to dig up on
+pages and pages of reference doumentation.
+
 [section Quick Reference]
 
 [variablelist Notation
@@ -20,7 +26,8 @@
     [[`fp`]             [A (lazy parser) function with signature `P(Unused, Context)`]]
     [[`fa`]             [A (semantic action) function with signature `void(Attr, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
-                        force the parse to fail.]]
+                        force the parse to fail. Both `Context` and the boolean flag are
+                        optional.]]
     [[`first`]          [An iterator pointing to the start of input]]
     [[`last`]           [An iterator pointing to the end of input]]
     [[`Ch`]             [Character-class specific character type (See __char_class_types__)]]
@@ -70,6 +77,26 @@
     [[`lit(ch)`]            [`Unused`]                  [Matches `ch`]]
     [[`lit(str)`]           [`Unused`]                  [Matches `str`]]
     [[`string(str)`]        [`Str`]                     [Matches `str`]]
+
+    [[`symbols<Ch, T> sym;`][N/A]                       [Declare a symbol table, `sym`. `Ch` is the
+                                                        underlying char type of the symbol table keys.
+                                                        `T` is the data type associated with each key.]]
+    [[
+``
+    sym.add
+        (str1, val1)
+        (str2, val2)
+        /*...more...*/
+    ;
+``
+    ]
+    [N/A]                                               [Add symbols into a symbol table, `sym`.
+                                                        val1 and val2 are optional data of type `T`,
+                                                        the data type associated with each key.]]
+    [[`sym`]                [`T`]                       [Matches entries in the symbol table, `sym`. If
+                                                        successful, returns the data associated with
+                                                        the key]]
+
 
     [[`lexeme[a]`]          [`A`]                       [Disable skip parsing for `a`]]
     [[`nocase[a]`]          [`A`]                       [Inhibits case-sensitivity for `a`]]
@@ -299,8 +326,8 @@ For all expressions of the form:
 
     p(a1, a2,... aN)
 
-where `p` is a parser, each of the arguments (a1...aN) can either be
-an immediate value, or a lazy function with signature:
+where `p` is a parser, each of the arguments (a1...aN) can either be an
+immediate value, or a lazy function with signature:
 
     T(Unused, Context)
 
@@ -326,6 +353,7 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
     [[`r, r2`]                  [Rules]]
     [[`g`]                      [A grammar]]
     [[`p`]                      [A parser expression]]
+    [[`my_grammar]`             [A user defined grammar]]
 ]
 
 [variablelist Terminology
@@ -345,7 +373,7 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
     [[Expression]                               [Description]]
     [[`rule<Iterator, A1, A2, A3> r(name);`]    [Rule declaration. `Iterator` is required.
                                                 `A1, A2, A3` are optional and can be specified in any order.
-                                                `name` is an optional string that gives the nonterminal
+                                                `name` is an optional string that gives the rule
                                                 its name, useful for debugging and error handling.]]
     [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`. `boost::shared_ptr` semantics.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
@@ -353,12 +381,75 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
                                                 holds a reference to `r`. Reference semantics.]]
     [[`r.copy()`]                               [Get a copy of `r`. `boost::shared_ptr` semantics.]]
     [[`r.name(name)`]                           [Naming a rule]]
+    [[`r.name()`]                               [Getting the name of a rule]]
     [[debug(r)]                                 [Debug rule `r`]]
     [[`r = p;`]                                 [Rule definition]]
     [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` should be
                                                 compatible with the synthesized attribute of `r`. When `p`
                                                 is successful, its attribute is automatically propagated
                                                 to `r`'s synthesized attribute.]]
+
+    [[
+``
+    template <typename Iterator>
+    struct my_grammar : grammar<Iterator, A1, A2, A3>
+    {
+        my_grammar() : my_grammar::base_type(start, name)
+        {
+            // Rule definitions
+            start = /* ... */;
+        }
+
+        rule<Iterator, A1, A2, A3> start;
+        // more rule declarations...
+    };
+``
+    ]                                           [Grammar definition. `name` is an optional string that gives the
+                                                grammar its name, useful for debugging and error handling.]]
+    [[my_grammar<Iterator> g]                   [Instantiating a grammar]]
+    [[`g.name(name)`]                           [Naming a grammar]]
+    [[`g.name()`]                               [Getting the name of a grammar]]
+]
+
+[heading Semantic Actions]
+
+Has the form:
+
+    p[f]
+
+where `f` is a function with the signatures:
+
+    void f(Attr const&);
+    void f(Attr const&, Context&);
+    void f(Attr const&, Context&, bool&);
+
+You can use `__boost_bind__` to bind member functions. For function
+objects, the allowed signatures are:
+
+    void operator()(Attr const&, unused_type, unused_type) const;
+    void operator()(Attr const&, Context&, unused_type) const;
+    void operator()(Attr const&, Context&, bool&) const;
+
+The `unused_type` is used in the signatures above to signify 'don't
+care'.
+
+[heading Phoenix]
+
+__boost_phoenix__ makes it easier to attach semantic actions. You just
+inline your lambda expressions:
+
+    p[phoenix-lambda-expression]
+
+Spirit.Qi provides some __boost_phoenix__ placeholders to important
+information from the `Attr` and `Context` that are otherwise fiddly to extract.
+
+[variablelist Spirit.Qi specific Phoenix placeholders
+    [[`_1, _2... , _N`]         [Nth attribute of `p`]]
+    [[`_val`]                   [The enclosing rule's synthesized attribute.]]
+    [[`_r1, _r2... , _rN`]      [The enclosing rule's Nth inherited attribute.]]
+    [[`_a, _b... , _j`]         [The enclosing rule's local variables (`_a` refers to the first).]]
+    [[`_val`]                   [The enclosing rule's synthesized attribute.]]
+    [[`_pass`]                  [Assign `false` to `_pass` to force a parser failure.]]
 ]
 
 [endsect]
