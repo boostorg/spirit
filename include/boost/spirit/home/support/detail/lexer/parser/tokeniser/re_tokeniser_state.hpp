@@ -46,7 +46,8 @@ struct basic_re_tokeniser_state
     }
 
     // prevent VC++ 7.1 warning:
-    const basic_re_tokeniser_state &operator = (const basic_re_tokeniser_state &rhs_)
+    const basic_re_tokeniser_state &operator =
+        (const basic_re_tokeniser_state &rhs_)
     {
         _start = rhs_._start;
         _end = rhs_._end;
