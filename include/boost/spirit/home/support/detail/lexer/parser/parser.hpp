@@ -120,7 +120,8 @@ Grammar:
 
             node_ptr_vector_->back () = rhs_node_;
             node_ptr_vector_->push_back (0);
-            node_ptr_vector_->back () = new sequence_node (lhs_node_, rhs_node_);
+            node_ptr_vector_->back () = new sequence_node
+                (lhs_node_, rhs_node_);
             root_ = node_ptr_vector_->back ();
         }
 
