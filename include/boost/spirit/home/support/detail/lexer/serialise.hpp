@@ -16,9 +16,11 @@ namespace lexer
 {
 // IMPORTANT! This won't work if you don't enable RTTI!
 template<typename CharT, class Archive>
-void serialise (basic_state_machine<CharT> &sm_, Archive &ar_, unsigned int version_ = 1)
+void serialise (basic_state_machine<CharT> &sm_, Archive &ar_,
+    unsigned int version_ = 1)
 {
-    detail::internals &internals_ = const_cast<detail::internals &>(sm_.data ());
+    detail::internals &internals_ = const_cast<detail::internals &>
+        (sm_.data ());
 
     ar_ & version_;
     ar_ & *internals_._lookup;
