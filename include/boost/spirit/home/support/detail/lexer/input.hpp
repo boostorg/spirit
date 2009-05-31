@@ -105,7 +105,8 @@ public:
 
         void next_token ()
         {
-            const detail::internals &internals_ = _input->_state_machine->data ();
+            const detail::internals &internals_ =
+                _input->_state_machine->data ();
 
             _data.start = _data.end;
 
