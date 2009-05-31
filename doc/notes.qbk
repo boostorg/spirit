@@ -8,17 +8,17 @@
 
 [section Notes]
 
-[section Portability]
-[endsect]
+[/section Portability]
+[/endsect]
 
-[section Porting from Spirit 1.8.x]
-[endsect]
+[/section Porting from Spirit 1.8.x]
+[/endsect]
 
 [section Style Guide]
 [include        notes/style_guide.qbk]
 [endsect]
 
-[section Techniques]
-[endsect]
+[/section Techniques]
+[/endsect]
 
 [endsect]
