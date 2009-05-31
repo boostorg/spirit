@@ -147,7 +147,8 @@ struct basic_string_token
     }
 
 private:
-    void intersect_same_types (basic_string_token &rhs_, basic_string_token &overlap_)
+    void intersect_same_types (basic_string_token &rhs_,
+        basic_string_token &overlap_)
     {
         if (any ())
         {
