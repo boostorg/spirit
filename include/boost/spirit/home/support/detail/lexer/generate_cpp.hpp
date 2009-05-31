@@ -30,7 +30,8 @@ void generate_cpp (const basic_state_machine<CharT> &state_machine_,
 
     if (sm_._lookup->size () == 0)
     {
-        throw runtime_error ("Cannot generate code from an empty state machine");
+        throw runtime_error ("Cannot generate code from an empty "
+            "state machine");
     }
 
     std::string upper_name_ (__DATE__);
@@ -255,14 +256,14 @@ void generate_cpp (const basic_state_machine<CharT> &state_machine_,
     }
     else
     {
-        const std::size_t *lookup_ = &sm_._lookup[0]->front ();
-        const std::size_t *dfa_ = &sm_._dfa[0]->front ();
+        const std::size_t *lookup_ = &sm_._lookup->front ()->front ();
+        const std::size_t *dfa_ = &sm_._dfa->front ()->front ();
         std::size_t i_ = 0;
         std::size_t j_ = 1;
         std::size_t count_ = lookups_ / 8;
 
         os_ << "    static const std::size_t lookup_[";
-        os_ << sm_._lookup[0]->size () << "] = {";
+        os_ << sm_._lookup->front ()->size () << "] = {";
 
         for (; i_ < count_; ++i_)
         {
@@ -287,8 +288,8 @@ void generate_cpp (const basic_state_machine<CharT> &state_machine_,
         os_ << "    static const std::size_t dfa_alphabet_ = " <<
             sm_._dfa_alphabet.front () << ";\n";
         os_ << "    static const std::size_t dfa_[" <<
-            sm_._dfa[0]->size () << "] = {";
-        count_ = sm_._dfa[0]->size () / 8;
+            sm_._dfa->front ()->size () << "] = {";
+        count_ = sm_._dfa->front ()->size () / 8;
 
         for (i_ = 0; i_ < count_; ++i_)
         {
@@ -307,7 +308,7 @@ void generate_cpp (const basic_state_machine<CharT> &state_machine_,
             }
         }
 
-        const std::size_t mod_ = sm_._dfa[0]->size () % 8;
+        const std::size_t mod_ = sm_._dfa->front ()->size () % 8;
 
         if (mod_)
         {
@@ -334,8 +335,10 @@ void generate_cpp (const basic_state_machine<CharT> &state_machine_,
     if (dfas_ > 1)
     {
         os_ << "again:\n";
-        os_ << "    const std::size_t * lookup_ = lookup_arr_[start_state_];\n";
-        os_ << "    std::size_t dfa_alphabet_ = dfa_alphabet_arr_[start_state_];\n";
+        os_ << "    const std::size_t * lookup_ = "
+            "lookup_arr_[start_state_];\n";
+        os_ << "    std::size_t dfa_alphabet_ = "
+            "dfa_alphabet_arr_[start_state_];\n";
         os_ << "    const std::size_t *dfa_ = dfa_arr_[start_state_];\n";
     }
 
