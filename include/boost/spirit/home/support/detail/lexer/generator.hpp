@@ -63,10 +63,7 @@ public:
                 index_set_vector set_mapping_;
                 // syntax tree
                 detail::node *root_ = build_tree (rules_, index_,
-                    node_ptr_vector_, internals_._lookup[index_],
-                    set_mapping_, internals_._dfa_alphabet[index_],
-                    internals_._seen_BOL_assertion,
-                    internals_._seen_EOL_assertion);
+                    node_ptr_vector_, internals_, set_mapping_);
 
                 build_dfa (root_, set_mapping_,
                     internals_._dfa_alphabet[index_],
@@ -141,14 +138,14 @@ protected:
 
     static detail::node *build_tree (const rules &rules_,
         const std::size_t state_, node_ptr_vector &node_ptr_vector_,
-        size_t_vector *lookup_, index_set_vector &set_mapping_,
-        std::size_t &dfa_alphabet_, bool &seen_BOL_assertion_,
-        bool &seen_EOL_assertion_)
+        detail::internals &internals_, index_set_vector &set_mapping_)
     {
+        size_t_vector *lookup_ = internals_._lookup[state_];
         const typename rules::string_deque_deque &regexes_ =
             rules_.regexes ();
         const typename rules::id_vector_deque &ids_ = rules_.ids ();
-        const typename rules::id_vector_deque &unique_ids_ = rules_.unique_ids ();
+        const typename rules::id_vector_deque &unique_ids_ =
+            rules_.unique_ids ();
         const typename rules::id_vector_deque &states_ = rules_.states ();
         typename rules::string_deque::const_iterator regex_iter_ =
             regexes_[state_].begin ();
@@ -170,12 +167,13 @@ protected:
 
         build_macros (token_map_, macrodeque_, macromap_,
             rules_.flags (), rules_.locale (), node_ptr_vector_,
-            seen_BOL_assertion_, seen_EOL_assertion_);
+            internals_._seen_BOL_assertion, internals_._seen_EOL_assertion);
 
         detail::node *root_ = parser::parse (regex_.c_str (),
             regex_.c_str () + regex_.size (), *ids_iter_, *unique_ids_iter_,
             *states_iter_, rules_.flags (), rules_.locale (), node_ptr_vector_,
-            macromap_, token_map_, seen_BOL_assertion_, seen_EOL_assertion_);
+            macromap_, token_map_, internals_._seen_BOL_assertion,
+            internals_._seen_EOL_assertion);
 
         ++regex_iter_;
         ++ids_iter_;
@@ -190,10 +188,11 @@ protected:
             const typename rules::string &regex_ = *regex_iter_;
 
             root_ = parser::parse (regex_.c_str (),
-                regex_.c_str () + regex_.size (), *ids_iter_, *unique_ids_iter_,
-                *states_iter_, rules_.flags (), rules_.locale (),
-                node_ptr_vector_, macromap_, token_map_,
-                seen_BOL_assertion_, seen_EOL_assertion_);
+                regex_.c_str () + regex_.size (), *ids_iter_,
+                *unique_ids_iter_, *states_iter_, rules_.flags (),
+                rules_.locale (), node_ptr_vector_, macromap_, token_map_,
+                internals_._seen_BOL_assertion,
+                internals_._seen_EOL_assertion);
             tree_vector_.push_back (root_);
             ++regex_iter_;
             ++ids_iter_;
@@ -201,7 +200,7 @@ protected:
             ++states_iter_;
         }
 
-        if (seen_BOL_assertion_)
+        if (internals_._seen_BOL_assertion)
         {
             // Fixup BOLs
             typename detail::node::node_vector::iterator iter_ =
@@ -265,7 +264,7 @@ protected:
             }
         }
 
-        dfa_alphabet_ = token_list_->size () + dfa_offset;
+        internals_._dfa_alphabet[state_] = token_list_->size () + dfa_offset;
         return root_;
     }
 
@@ -320,8 +319,9 @@ protected:
                 iter_ != end_; ++iter_)
             {
                 equivset *equivset_ = *iter_;
-                const std::size_t transition_ = closure (&equivset_->_followpos,
-                    seen_sets_, seen_vectors_, hash_vector_, dfa_alphabet_, dfa_);
+                const std::size_t transition_ = closure
+                    (&equivset_->_followpos, seen_sets_, seen_vectors_,
+                    hash_vector_, dfa_alphabet_, dfa_);
 
                 if (transition_ != npos)
                 {
@@ -363,7 +363,8 @@ protected:
 
     static std::size_t closure (typename detail::node::node_vector *followpos_,
         node_set_vector &seen_sets_, node_vector_vector &seen_vectors_,
-        size_t_vector &hash_vector_, const std::size_t size_, size_t_vector &dfa_)
+        size_t_vector &hash_vector_, const std::size_t size_,
+        size_t_vector &dfa_)
     {
         bool end_state_ = false;
         std::size_t id_ = 0;
@@ -733,12 +734,14 @@ protected:
         if (!found_)
         {
             node_ptr_vector_->push_back (0);
-            node_ptr_vector_->back () = new detail::leaf_node (bol_token, true);
+            node_ptr_vector_->back () = new detail::leaf_node
+                (bol_token, true);
 
             detail::node *lhs_ = node_ptr_vector_->back ();
 
             node_ptr_vector_->push_back (0);
-            node_ptr_vector_->back () = new detail::leaf_node (null_token, true);
+            node_ptr_vector_->back () = new detail::leaf_node
+                (null_token, true);
 
             detail::node *rhs_ = node_ptr_vector_->back ();
 
