@@ -131,7 +131,8 @@ public:
         }
     }
 
-    static void dump (const basic_state_machine<CharT> &state_machine_, ostream &stream_)
+    static void dump (const basic_state_machine<CharT> &state_machine_,
+        ostream &stream_)
     {
         typename basic_state_machine<CharT>::iterator iter_ =
             state_machine_.begin ();
