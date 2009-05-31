@@ -25,42 +25,31 @@ namespace detail
 {
     // return name of initial state
     template <typename CharT>
-    struct initial;
+    struct strings;
 
     template <>
-    struct initial<char>
+    struct strings<char>
     {
-        static const char *str ()
+        static const char *initial ()
         {
             return "INITIAL";
         }
-    };
 
-    template <>
-    struct initial<wchar_t>
-    {
-        static const wchar_t *str ()
-        {
-            return L"INITIAL";
-        }
-    };
-
-    template <typename CharT>
-    struct dot;
-
-    template<>
-    struct dot<char>
-    {
-        static const char *str ()
+        static const char *dot ()
         {
             return ".";
         }
     };
 
-    template<>
-    struct dot<wchar_t>
+    template <>
+    struct strings<wchar_t>
     {
-        static const wchar_t *str()
+        static const wchar_t *initial ()
+        {
+            return L"INITIAL";
+        }
+
+        static const wchar_t *dot ()
         {
             return L".";
         }
@@ -168,7 +157,16 @@ public:
         }
         else
         {
-            return _lexer_state_names[index_ - 1].c_str ();
+            const std::size_t vec_index_ = index_ - 1;
+
+            if (vec_index_ > _lexer_state_names.size () - 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return _lexer_state_names[vec_index_].c_str ();
+            }
         }
     }
 
@@ -191,7 +189,7 @@ public:
         }
 
         // Initial is not stored, so no need to - 1.
-        return _lexer_state_names.size();
+        return _lexer_state_names.size ();
     }
 
     void add_macro (const CharT *name_, const CharT *regex_)
@@ -249,10 +247,10 @@ public:
         const std::size_t counter_ = next_unique_id ();
 
         check_for_invalid_id (id_);
-        _regexes[0].push_back (regex_);
-        _ids[0].push_back (id_);
-        _unique_ids[0].push_back (counter_);
-        _states[0].push_back (0);
+        _regexes.front ().push_back (regex_);
+        _ids.front ().push_back (id_);
+        _unique_ids.front ().push_back (counter_);
+        _states.front ().push_back (0);
         return counter_;
     }
 
@@ -295,24 +293,21 @@ public:
         return add (curr_state_, regex_, id_, new_state_, true);
     }
 
-    void add (const CharT *curr_state_, const basic_rules &rules_)
+    void add (const CharT *from_, const basic_rules<CharT> &rules_, const CharT *to_)
     {
         const string_pair_deque &macros_ = rules_.macrodeque ();
         typename string_pair_deque::const_iterator macro_iter_ =
             macros_.begin ();
         typename string_pair_deque::const_iterator macro_end_ =
             macros_.end ();
-        const string_deque_deque &regexes_ = rules_.regexes ();
-        const id_vector_deque &ids_ = rules_.ids ();
-        const id_vector_deque &unique_ids_ = rules_.unique_ids ();
-        typename string_deque_deque::const_iterator state_regex_iter_ =
-            regexes_.begin ();
-        typename string_deque_deque::const_iterator state_regex_end_ =
-            regexes_.end ();
-        typename id_vector_deque::const_iterator state_id_iter_ =
-            ids_.begin ();
-        typename id_vector_deque::const_iterator state_uid_iter_ =
-            unique_ids_.begin();
+        typename string_set::const_iterator macro_dest_iter_;
+        typename string_set::const_iterator macro_dest_end_ = _macroset.end ();
+        const bool star_ = *from_ == '*' && *(from_ + 1) == 0;
+        const bool dot_ = *to_ == '.' && *(to_ + 1) == 0;
+        std::size_t state_ = 0;
+        const string_deque_deque &all_regexes_ = rules_.regexes ();
+        const id_vector_deque &all_ids_ = rules_.ids ();
+        const id_vector_deque &all_unique_ids_ = rules_.unique_ids ();
         typename string_deque::const_iterator regex_iter_;
         typename string_deque::const_iterator regex_end_;
         typename id_vector::const_iterator id_iter_;
@@ -320,22 +315,96 @@ public:
 
         for (; macro_iter_ != macro_end_; ++macro_iter_)
         {
-            add_macro (macro_iter_->first.c_str (),
-                macro_iter_->second.c_str ());
+            macro_dest_iter_ = _macroset.find (macro_iter_->first);
+
+            if (macro_dest_iter_ == macro_dest_end_)
+            {
+                add_macro (macro_iter_->first.c_str (),
+                    macro_iter_->second.c_str ());
+            }
         }
 
-        for (; state_regex_iter_ != state_regex_end_; ++state_regex_iter_)
+        if (star_)
         {
-            regex_iter_ = state_regex_iter_->begin ();
-            regex_end_ = state_regex_iter_->end ();
-            id_iter_ = state_id_iter_->begin ();
-            uid_iter_ = state_uid_iter_->begin ();
+            typename string_deque_deque::const_iterator all_regexes_iter_ =
+                all_regexes_.begin ();
+            typename string_deque_deque::const_iterator all_regexes_end_ =
+                all_regexes_.end ();
+            typename id_vector_deque::const_iterator all_ids_iter_ =
+                all_ids_.begin ();
+            typename id_vector_deque::const_iterator all_uids_iter_ =
+                all_unique_ids_.begin ();
 
-            for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
-                ++uid_iter_)
+            for (; all_regexes_iter_ != all_regexes_end_;
+                ++all_regexes_iter_, ++state_)
             {
-                add (curr_state_, *regex_iter_, *id_iter_,
-                    detail::dot<CharT>::str(), true, *uid_iter_);
+                regex_iter_ = all_regexes_iter_->begin ();
+                regex_end_ = all_regexes_iter_->end ();
+                id_iter_ = all_ids_iter_->begin ();
+                uid_iter_ = all_uids_iter_->begin ();
+
+                for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
+                    ++uid_iter_)
+                {
+                    // If dot_ then lookup state name from rules_; otherwise
+                    // pass name through.
+                    add (rules_.state (state_), *regex_iter_, *id_iter_, dot_ ?
+                        rules_.state (state_) : to_, true, *uid_iter_);
+                }
+            }
+        }
+        else
+        {
+            const CharT *start_ = from_;
+            string state_name_;
+
+            while (*from_)
+            {
+                while (*from_ && *from_ != ',')
+                {
+                    ++from_;
+                }
+
+                state_name_.assign (start_, from_);
+
+                if (*from_)
+                {
+                    ++from_;
+                    start_ = from_;
+                }
+
+                state_ = rules_.state (state_name_.c_str ());
+
+                if (state_ == npos)
+                {
+                    std::basic_stringstream<CharT> ss_;
+                    std::ostringstream os_;
+
+                    os_ << "Unknown state name '";
+                    from_ = state_name_.c_str ();
+
+                    while (*from_)
+                    {
+                        os_ << ss_.narrow (*from_++, ' ');
+                    }
+
+                    os_ << "'.";
+                    throw runtime_error (os_.str ());
+                }
+
+                regex_iter_ = all_regexes_[state_].begin ();
+                regex_end_ = all_regexes_[state_].end ();
+                id_iter_ = all_ids_[state_].begin ();
+                uid_iter_ = all_unique_ids_[state_].begin ();
+
+                for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
+                    ++uid_iter_)
+                {
+                    // If dot_ then lookup state name from rules_; otherwise
+                    // pass name through.
+                    add (state_name_.c_str (), *regex_iter_, *id_iter_, dot_ ?
+                        rules_.state (state_) : to_, true, *uid_iter_);
+                }
             }
         }
     }
@@ -390,7 +459,7 @@ public:
 
     static const CharT *initial ()
     {
-        return detail::initial<CharT>::str ();
+        return detail::strings<CharT>::initial ();
     }
 
 private:
