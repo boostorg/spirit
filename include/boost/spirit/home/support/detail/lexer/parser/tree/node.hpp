@@ -89,7 +89,8 @@ public:
             {
                 const node *top_ = node_stack_.top ();
 
-                top_->copy_node (node_ptr_vector_, new_node_stack_, perform_op_stack_, down_);
+                top_->copy_node (node_ptr_vector_, new_node_stack_,
+                    perform_op_stack_, down_);
 
                 if (!down_) node_stack_.pop ();
             }
