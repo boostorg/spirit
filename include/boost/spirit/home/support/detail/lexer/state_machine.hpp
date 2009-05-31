@@ -274,7 +274,7 @@ public:
         if (!_csm.empty ())
         {
             const typename detail::basic_char_state_machine<CharT>::
-                state_vector *ptr_ = &_csm._sm_vector[0];
+                state_vector *ptr_ = &_csm._sm_vector.front ();
 
             iter_._dfas = _csm._sm_vector.size ();
             iter_._states = iter_._data.states = ptr_->size ();
@@ -285,7 +285,7 @@ public:
             iter_._transition = 0;
             iter_._data.end_state = ptr_->front ()._end_state;
             iter_._data.id = ptr_->front ()._id;
-            iter_._data.unique_id = ptr_->front()._unique_id;
+            iter_._data.unique_id = ptr_->front ()._unique_id;
             iter_._data.goto_dfa = ptr_->front ()._state;
             iter_._data.bol_index = ptr_->front ()._bol_index;
             iter_._data.eol_index = ptr_->front ()._eol_index;
