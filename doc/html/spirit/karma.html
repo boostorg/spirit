@@ -1,0 +1,1536 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Karma</title>
+<link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../index.html" title="Spirit 2.1">
+<link rel="up" href="../index.html" title="Spirit 2.1">
+<link rel="previous" href="qi/quick_reference/phoenix.html" title="Phoenix">
+<link rel="next" href="lex.html" title=" Spirit.Lex">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="qi/quick_reference/phoenix.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lex.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h2 class="title" style="clear: both">
+<a name="spirit.karma"></a><a href="karma.html" title="Karma">Karma</a>
+</h2></div></div>
+<div></div>
+</div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference">Quick Reference</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.common_notation">Common
+        Notation</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.predefined_primitive_generators">Predefined
+        Primitive Generators</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.compound_attribute_rules">Compound
+        Attribute Rules</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.lazy_arguments">Lazy Arguments</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.non_terminals">Non-terminals</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.semantic_actions">Semantic
+        Actions</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.phoenix">Phoenix</a></span></dt>
+</dl></dd>
+</dl></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h3 class="title">
+<a name="spirit.karma.quick_reference"></a><a href="karma.html#spirit.karma.quick_reference" title="Quick Reference">Quick Reference</a>
+</h3></div></div>
+<div></div>
+</div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.common_notation">Common
+        Notation</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.predefined_primitive_generators">Predefined
+        Primitive Generators</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.compound_attribute_rules">Compound
+        Attribute Rules</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.lazy_arguments">Lazy Arguments</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.non_terminals">Non-terminals</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.semantic_actions">Semantic
+        Actions</a></span></dt>
+<dt><span class="section"><a href="karma.html#spirit.karma.quick_reference.phoenix">Phoenix</a></span></dt>
+</dl></div>
+<p>
+        This quick reference section is provided for convenience. You can use this
+        section as a sort of a "cheat-sheet" on the most commonly used
+        Karma components. It is not intended to be complete, but should give you
+        an easy way to recall a particular component without having to dig up on
+        pages and pages of reference doumentation.
+      </p>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.common_notation"></a><a href="karma.html#spirit.karma.quick_reference.common_notation" title="Common
+        Notation">Common
+        Notation</a>
+</h4></div></div>
+<div></div>
+</div>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">P</span></tt></span></dt>
+<dd><p>
+              Parser type
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">p</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span>
+          <span class="identifier">b</span><span class="special">,</span>
+          <span class="identifier">c</span></tt></span></dt>
+<dd><p>
+              Parser objects
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span>
+          <span class="identifier">C</span></tt></span></dt>
+<dd><p>
+              Attribute types of parsers A, B and C
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">I</span></tt></span></dt>
+<dd><p>
+              The iterator type used for parsing
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Unused</span></tt></span></dt>
+<dd><p>
+              An <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Context</span></tt></span></dt>
+<dd><p>
+              The enclosing rule's <tt class="computeroutput"><span class="identifier">Context</span></tt>
+              type
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Attr</span></tt></span></dt>
+<dd><p>
+              An attribute type
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">b</span></tt></span></dt>
+<dd><p>
+              A boolean expression
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">fp</span></tt></span></dt>
+<dd><p>
+              A (lazy parser) function with signature <tt class="computeroutput"><span class="identifier">P</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span></tt>
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">fa</span></tt></span></dt>
+<dd><p>
+              A (semantic action) function with signature <tt class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attr</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></tt>. The third parameter is a boolean
+              flag that can be set to false to force the parse to fail. Both <tt class="computeroutput"><span class="identifier">Context</span></tt> and the boolean flag are
+              optional.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">first</span></tt></span></dt>
+<dd><p>
+              An iterator pointing to the start of input
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">last</span></tt></span></dt>
+<dd><p>
+              An iterator pointing to the end of input
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Ch</span></tt></span></dt>
+<dd><p>
+              Character-class specific character type (See __char_class<span class="underline">types</span>_)
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">ch</span></tt></span></dt>
+<dd><p>
+              Character-class specific character (See __char_class<span class="underline">types</span>_)
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">ch2</span></tt></span></dt>
+<dd><p>
+              Character-class specific character (See __char_class<span class="underline">types</span>_)
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">chset</span></tt></span></dt>
+<dd><p>
+              Character-set specifier string (example: "a-z0-9")
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">str</span></tt></span></dt>
+<dd><p>
+              Character-class specific string (See __char_class<span class="underline">types</span>_)
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Str</span></tt></span></dt>
+<dd><p>
+              Attribute of <tt class="computeroutput"><span class="identifier">str</span></tt>:
+              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>
+              where <tt class="computeroutput"><span class="identifier">T</span></tt> is the underlying
+              character type of <tt class="computeroutput"><span class="identifier">str</span></tt>
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;&gt;</span></tt></span></dt>
+<dd><p>
+              Used as a placeholder for a fusion sequence
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;&gt;</span></tt></span></dt>
+<dd><p>
+              Used as a placeholder for an STL container
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;&gt;</span></tt></span></dt>
+<dd><p>
+              Used as a placeholder for a boost::variant
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;&gt;</span></tt></span></dt>
+<dd><p>
+              Used as a placeholder for a boost::optional
+            </p></dd>
+</dl>
+</div>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.predefined_primitive_generators"></a><a href="karma.html#spirit.karma.quick_reference.predefined_primitive_generators" title="Predefined
+        Primitive Generators">Predefined
+        Primitive Generators</a>
+</h4></div></div>
+<div></div>
+</div>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                  Expression
+                </p></th>
+<th><p>
+                  Attribute
+                </p></th>
+<th><p>
+                  Description
+                </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eol</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates the end of line (<tt class="computeroutput"><span class="special">\</span><span class="identifier">n</span></tt>)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generate an empty string
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  If <tt class="computeroutput"><span class="identifier">b</span></tt> is true, generate
+                  an empty string
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  Attribute of <tt class="computeroutput"><span class="identifier">G</span></tt>
+                  where <tt class="computeroutput"><span class="identifier">G</span></tt> is the
+                  return type of <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                </p></td>
+<td><p>
+                  Invoke <tt class="computeroutput"><span class="identifier">fg</span></tt> at generation
+                  time, returning a generator <tt class="computeroutput"><span class="identifier">g</span></tt>
+                  which is then called to generate.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                </p></td>
+<td><p>
+                  see <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
+                  above
+                </p></td>
+<td><p>
+                  Equivalent to <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">[</span><span class="identifier">fp</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">g</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  Attribute of <tt class="computeroutput"><span class="identifier">g</span></tt>
+                </p></td>
+<td><p>
+                  Call semantic action <tt class="computeroutput"><span class="identifier">fa</span></tt>
+                  (before executing <tt class="computeroutput"><span class="identifier">g</span></tt>).
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">byte_</span></tt>
+                </p></td>
+<td><p>
+                  8 bits native endian
+                </p></td>
+<td><p>
+                  Generates an 8 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">word</span></tt>
+                </p></td>
+<td><p>
+                  16 bits native endian
+                </p></td>
+<td><p>
+                  Generates a 16 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_word</span></tt>
+                </p></td>
+<td><p>
+                  16 bits big endian
+                </p></td>
+<td><p>
+                  Generates a 16 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_word</span></tt>
+                </p></td>
+<td><p>
+                  16 bits little endian
+                </p></td>
+<td><p>
+                  Generates a 16 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">dword</span></tt>
+                </p></td>
+<td><p>
+                  32 bits native endian
+                </p></td>
+<td><p>
+                  Generates a 32 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_dword</span></tt>
+                </p></td>
+<td><p>
+                  32 bits big endian
+                </p></td>
+<td><p>
+                  Generates a 32 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_dword</span></tt>
+                </p></td>
+<td><p>
+                  32 bits little endian
+                </p></td>
+<td><p>
+                  Generates a 32 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">qword</span></tt>
+                </p></td>
+<td><p>
+                  64 bits native endian
+                </p></td>
+<td><p>
+                  Generates a 64 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_qword</span></tt>
+                </p></td>
+<td><p>
+                  64 bits big endian
+                </p></td>
+<td><p>
+                  Generates a 64 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_qword</span></tt>
+                </p></td>
+<td><p>
+                  64 bits little endian
+                </p></td>
+<td><p>
+                  Generates a 64 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Generates a single char string literal, <tt class="computeroutput"><span class="identifier">c</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">string</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Str</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> as lower
+                  case
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> as upper
+                  case
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+                  aligned in column of width BOOST_KARMA_DEFAULT_FIELD_LENGTH
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                  while using <tt class="computeroutput"><span class="identifier">g</span></tt> to
+                  generate the necesssary padding
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+                  aligned in column of width BOOST_KARMA_DEFAULT_FIELD_LENGTH
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                  while using <tt class="computeroutput"><span class="identifier">g</span></tt> to
+                  generate the necesssary padding
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+                  in column of width BOOST_KARMA_DEFAULT_FIELD_LENGTH
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+                  in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+                  in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                  while using <tt class="computeroutput"><span class="identifier">g</span></tt> to
+                  generate the necesssary padding
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> truncated
+                  to column of width BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> truncated
+                  to column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> zero or
+                  more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">M</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> to <tt class="computeroutput"><span class="identifier">M</span></tt>
+                  times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Disable delimited generation for <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Reestablish the delimiter that got inhibited by verbatim
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Use <tt class="computeroutput"><span class="identifier">g</span></tt> as a skipper
+                  for generating <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">float_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">float</span></tt>
+                </p></td>
+<td><p>
+                  Generate a floating point number from a <tt class="computeroutput"><span class="keyword">float</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">double_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">double</span></tt>
+                </p></td>
+<td><p>
+                  Generate a floating point number from a <tt class="computeroutput"><span class="keyword">double</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_double</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></tt>
+                </p></td>
+<td><p>
+                  Generate a floating point number from a <tt class="computeroutput"><span class="keyword">long</span>
+                  <span class="keyword">double</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">bin</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Generate a binary integer from an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">oct</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Generate an octal integer from an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">hex</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Generate a hexadecimal integer from an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ushort_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">short</span></tt>
+                </p></td>
+<td><p>
+                  Generate an unsigned short integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ulong_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Generate an unsigned long integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">uint_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span></tt>
+                </p></td>
+<td><p>
+                  Generate an unsigned int
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ulong_long</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span>
+                  <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Generate an unsigned long long
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">short_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">short</span></tt>
+                </p></td>
+<td><p>
+                  Generate a short integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Generate a long integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">int_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">int</span></tt>
+                </p></td>
+<td><p>
+                  Generate an int
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_long</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Generate a long long
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Not predicate. Ensure that <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  does not succeed generating but don't create any output
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  And predicate. Ensure that <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  does succeed generating but don't create any output
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Optional. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  zero or one time
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Kleene. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  zero or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">+</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Plus. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  one or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Alternative. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  or <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Sequence. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  followed by <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  List. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  delimited <tt class="computeroutput"><span class="identifier">b</span></tt> one
+                  or more times
+                </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.compound_attribute_rules"></a><a href="karma.html#spirit.karma.quick_reference.compound_attribute_rules" title="Compound
+        Attribute Rules">Compound
+        Attribute Rules</a>
+</h4></div></div>
+<div></div>
+</div>
+<p>
+          The notation will be for instance:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+</pre>
+<p>
+          which reads as: given, <tt class="computeroutput"><span class="identifier">a</span></tt>
+          and <tt class="computeroutput"><span class="identifier">b</span></tt> are parsers/generators,
+          and <tt class="computeroutput"><span class="identifier">A</span></tt> is the type of the
+          attribute of <tt class="computeroutput"><span class="identifier">a</span></tt>, and <tt class="computeroutput"><span class="identifier">B</span></tt> is the type of the attribute of <tt class="computeroutput"><span class="identifier">b</span></tt>, then the type of the attribute of
+          <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
+          <span class="identifier">b</span></tt> will be <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt>.
+        </p>
+<div class="table">
+<a name="id455476"></a><p class="title"><b>Table 5. /Spirit.Karma/ compound generator attribute types</b></p>
+<table class="table" summary="/Spirit.Karma/ compound generator attribute types">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                Expression
+              </p></th>
+<th><p>
+                Attribute
+              </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                sequence (<tt class="computeroutput"><span class="special">&lt;&lt;</span></tt>)
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
+<p>
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                alternative (<tt class="computeroutput"><span class="special">|</span></tt>)
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
+<p>
+                a: A, b: A --&gt; (a | b): A`
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                kleene (<tt class="computeroutput"><span class="special">*</span></tt>)
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<p>
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                plus (<tt class="computeroutput"><span class="special">+</span></tt>)
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<p>
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                list (<tt class="computeroutput"><span class="special">%</span></tt>)
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
+<p>
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                repetition
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<p>
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                optional (<tt class="computeroutput"><span class="special">-</span></tt>)
+              </p></td>
+<td>
+<p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<p>
+              </p>
+</td>
+</tr>
+<tr>
+<td><p>
+                and predicate (<tt class="computeroutput"><span class="special">&amp;</span></tt>)
+              </p></td>
+<td><p>
+                <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                <span class="identifier">A</span> <span class="special">--&gt;</span>
+                <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></tt>
+              </p></td>
+</tr>
+<tr>
+<td><p>
+                not predicate (<tt class="computeroutput"><span class="special">!</span></tt>)
+              </p></td>
+<td><p>
+                <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                <span class="identifier">A</span> <span class="special">--&gt;</span>
+                <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></tt>
+              </p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.lazy_arguments"></a><a href="karma.html#spirit.karma.quick_reference.lazy_arguments" title="Lazy Arguments">Lazy Arguments</a>
+</h4></div></div>
+<div></div>
+</div>
+<p>
+          For all expressions of the form:
+        </p>
+<pre class="programlisting"><span class="identifier">p</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
+</pre>
+<p>
+          where <tt class="computeroutput"><span class="identifier">p</span></tt> is a parser, each
+          of the arguments (a1...aN) can either be an immediate value, or a lazy
+          function with signature:
+        </p>
+<pre class="programlisting"><span class="identifier">T</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
+</pre>
+<p>
+          where <tt class="computeroutput"><span class="identifier">T</span></tt>, the function's
+          return value, is compatible with the argument type expected. For example,
+          this is a valid expression:
+        </p>
+<pre class="programlisting"><span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span> <span class="comment">// this will always fail
+</span></pre>
+<p>
+          And so is this:
+        </p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">flag</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
+<span class="identifier">eps</span><span class="special">(</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">flag</span><span class="special">))</span> <span class="comment">// success or fail depending on the value
+</span>                        <span class="comment">// of flag at parse time
+</span></pre>
+<p>
+          since <tt class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></tt> is
+          a function that returns a <tt class="computeroutput"><span class="keyword">bool</span></tt>.
+        </p>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.non_terminals"></a><a href="karma.html#spirit.karma.quick_reference.non_terminals" title="Non-terminals">Non-terminals</a>
+</h4></div></div>
+<div></div>
+</div>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">RT</span></tt></span></dt>
+<dd><p>
+              Synthesized attribute. The rule or grammar's return type.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Arg1</span></tt>,
+          <tt class="computeroutput"><span class="identifier">Arg2</span></tt>, <tt class="computeroutput"><span class="identifier">ArgN</span></tt></span></dt>
+<dd><p>
+              Inherited attributes. Zero or more or arguments.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">L1</span></tt>,
+          <tt class="computeroutput"><span class="identifier">L2</span></tt>, <tt class="computeroutput"><span class="identifier">LN</span></tt></span></dt>
+<dd><p>
+              Zero or more local variables.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">r</span><span class="special">,</span> <span class="identifier">r2</span></tt></span></dt>
+<dd><p>
+              Rules
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">g</span></tt></span></dt>
+<dd><p>
+              A grammar
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">p</span></tt></span></dt>
+<dd><p>
+              A parser expression
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">my_grammar</span></tt></span></dt>
+<dd><p>
+              A user defined grammar
+            </p></dd>
+</dl>
+</div>
+<div class="variablelist">
+<p class="title"><b>Terminology</b></p>
+<dl>
+<dt><span class="term">Signature</span></dt>
+<dd><p>
+              <tt class="computeroutput"><span class="identifier">RT</span><span class="special">(</span><span class="identifier">Arg1</span><span class="special">,</span> <span class="identifier">Arg2</span> <span class="special">...</span>
+              <span class="special">,</span><span class="identifier">ArgN</span><span class="special">)</span></tt>. The signature specifies the synthesized
+              (return value) and inherited (arguments) attributes.
+            </p></dd>
+<dt><span class="term">Locals</span></dt>
+<dd><p>
+              <tt class="computeroutput"><span class="identifier">locals</span><span class="special">&lt;</span><span class="identifier">L1</span><span class="special">,</span> <span class="identifier">L2</span> <span class="special">...,</span>
+              <span class="identifier">LN</span><span class="special">&gt;</span></tt>.
+              The local variables.
+            </p></dd>
+<dt><span class="term">Skipper</span></dt>
+<dd><p>
+              The skip-parser type
+            </p></dd>
+</dl>
+</div>
+<div class="variablelist">
+<p class="title"><b>Template Arguments</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Iterator</span></tt></span></dt>
+<dd><p>
+              The iterator type you will use for parsing.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">A1</span></tt>,
+          <tt class="computeroutput"><span class="identifier">A2</span></tt>, <tt class="computeroutput"><span class="identifier">A3</span></tt></span></dt>
+<dd><p>
+              Can be one of 1)Signature 2)Locals 3)Skipper.
+            </p></dd>
+</dl>
+</div>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                  Expression
+                </p></th>
+<th><p>
+                  Description
+                </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
+                  <span class="identifier">A1</span><span class="special">,</span>
+                  <span class="identifier">A2</span><span class="special">,</span>
+                  <span class="identifier">A3</span><span class="special">&gt;</span>
+                  <span class="identifier">r</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span></tt>
+                </p></td>
+<td><p>
+                  Rule declaration. <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
+                  is required. <tt class="computeroutput"><span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span></tt>
+                  are optional and can be specified in any order. <tt class="computeroutput"><span class="identifier">name</span></tt>
+                  is an optional string that gives the rule its name, useful for
+                  debugging and error handling.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
+                  <span class="identifier">A1</span><span class="special">,</span>
+                  <span class="identifier">A2</span><span class="special">,</span>
+                  <span class="identifier">A3</span><span class="special">&gt;</span>
+                  <span class="identifier">r</span><span class="special">(</span><span class="identifier">r2</span><span class="special">);</span></tt>
+                </p></td>
+<td><p>
+                  Copy construct rule <tt class="computeroutput"><span class="identifier">r</span></tt>
+                  from rule <tt class="computeroutput"><span class="identifier">r2</span></tt>.
+                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></tt> semantics.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
+                  <span class="identifier">r2</span><span class="special">;</span></tt>
+                </p></td>
+<td><p>
+                  Assign rule <tt class="computeroutput"><span class="identifier">r2</span></tt>
+                  to <tt class="computeroutput"><span class="identifier">r</span></tt>. <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></tt> semantics.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">alias</span><span class="special">()</span></tt>
+                </p></td>
+<td><p>
+                  return an alias of <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  The alias is a parser that holds a reference to <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  Reference semantics.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">copy</span><span class="special">()</span></tt>
+                </p></td>
+<td><p>
+                  Get a copy of <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">shared_ptr</span></tt> semantics.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  Naming a rule
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">name</span><span class="special">()</span></tt>
+                </p></td>
+<td><p>
+                  Getting the name of a rule
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  debug(r)
+                </p></td>
+<td><p>
+                  Debug rule <tt class="computeroutput"><span class="identifier">r</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
+                  <span class="identifier">p</span><span class="special">;</span></tt>
+                </p></td>
+<td><p>
+                  Rule definition
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span> <span class="special">%=</span>
+                  <span class="identifier">p</span><span class="special">;</span></tt>
+                </p></td>
+<td><p>
+                  Auto-rule definition. The attribute of <tt class="computeroutput"><span class="identifier">p</span></tt>
+                  should be compatible with the synthesized attribute of <tt class="computeroutput"><span class="identifier">r</span></tt>. When <tt class="computeroutput"><span class="identifier">p</span></tt>
+                  is successful, its attribute is automatically propagated to <tt class="computeroutput"><span class="identifier">r</span></tt>'s synthesized attribute.
+                </p></td>
+</tr>
+<tr>
+<td>
+<p>
+                  
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">my_grammar</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="identifier">my_grammar</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">my_grammar</span><span class="special">::</span><span class="identifier">base_type</span><span class="special">(</span><span class="identifier">start</span><span class="special">,</span> <span class="identifier">name</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="comment">// Rule definitions
+</span>        <span class="identifier">start</span> <span class="special">=</span> <span class="comment">/* ... */</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
+    <span class="comment">// more rule declarations...
+</span><span class="special">};</span>
+</pre>
+<p>
+                </p>
+</td>
+<td><p>
+                  Grammar definition. <tt class="computeroutput"><span class="identifier">name</span></tt>
+                  is an optional string that gives the grammar its name, useful for
+                  debugging and error handling.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  my_grammar&lt;Iterator&gt; g
+                </p></td>
+<td><p>
+                  Instantiating a grammar
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  Naming a grammar
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">name</span><span class="special">()</span></tt>
+                </p></td>
+<td><p>
+                  Getting the name of a grammar
+                </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.semantic_actions"></a><a href="karma.html#spirit.karma.quick_reference.semantic_actions" title="Semantic
+        Actions">Semantic
+        Actions</a>
+</h4></div></div>
+<div></div>
+</div>
+<p>
+          Has the form:
+        </p>
+<pre class="programlisting"><span class="identifier">p</span><span class="special">[</span><span class="identifier">f</span><span class="special">]</span>
+</pre>
+<p>
+          where <tt class="computeroutput"><span class="identifier">f</span></tt> is a function with
+          the signatures:
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;);</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;);</span>
+</pre>
+<p>
+          You can use <tt class="computeroutput"><a href="http://www.boost.org/libs/bind/index.html" target="_top">Boost.Bind</a></tt>
+          to bind member functions. For function objects, the allowed signatures
+          are:
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">unused_type</span><span class="special">,</span> <span class="identifier">unused_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="identifier">unused_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;)</span> <span class="keyword">const</span><span class="special">;</span>
+</pre>
+<p>
+          The <tt class="computeroutput"><span class="identifier">unused_type</span></tt> is used
+          in the signatures above to signify 'don't care'.
+        </p>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.phoenix"></a><a href="karma.html#spirit.karma.quick_reference.phoenix" title="Phoenix">Phoenix</a>
+</h4></div></div>
+<div></div>
+</div>
+<p>
+          __boost<span class="underline">phoenix</span>_ makes it easier to
+          attach semantic actions. You just inline your lambda expressions:
+        </p>
+<pre class="programlisting"><span class="identifier">p</span><span class="special">[</span><span class="identifier">phoenix</span><span class="special">-</span><span class="identifier">lambda</span><span class="special">-</span><span class="identifier">expression</span><span class="special">]</span>
+</pre>
+<p>
+          Spirit.Qi provides some __boost<span class="underline">phoenix</span>_
+          placeholders to important information from the <tt class="computeroutput"><span class="identifier">Attr</span></tt>
+          and <tt class="computeroutput"><span class="identifier">Context</span></tt> that are otherwise
+          fiddly to extract.
+        </p>
+<div class="variablelist">
+<p class="title"><b>Spirit.Qi specific Phoenix placeholders</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">_1</span><span class="special">,</span> <span class="identifier">_2</span><span class="special">...</span> <span class="special">,</span> <span class="identifier">_N</span></tt></span></dt>
+<dd><p>
+              Nth attribute of <tt class="computeroutput"><span class="identifier">p</span></tt>
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">_val</span></tt></span></dt>
+<dd><p>
+              The enclosing rule's synthesized attribute.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">_r1</span><span class="special">,</span> <span class="identifier">_r2</span><span class="special">...</span> <span class="special">,</span> <span class="identifier">_rN</span></tt></span></dt>
+<dd><p>
+              The enclosing rule's Nth inherited attribute.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">_a</span><span class="special">,</span> <span class="identifier">_b</span><span class="special">...</span> <span class="special">,</span> <span class="identifier">_j</span></tt></span></dt>
+<dd><p>
+              The enclosing rule's local variables (<tt class="computeroutput"><span class="identifier">_a</span></tt>
+              refers to the first).
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">_val</span></tt></span></dt>
+<dd><p>
+              The enclosing rule's synthesized attribute.
+            </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">_pass</span></tt></span></dt>
+<dd><p>
+              Assign <tt class="computeroutput"><span class="keyword">false</span></tt> to <tt class="computeroutput"><span class="identifier">_pass</span></tt> to force a parser failure.
+            </p></dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="qi/quick_reference/phoenix.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lex.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

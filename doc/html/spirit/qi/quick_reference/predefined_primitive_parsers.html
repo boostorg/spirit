@@ -1,0 +1,862 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Predefined
+        Primitive Parsers</title>
+<link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../quick_reference.html" title="Quick Reference">
+<link rel="previous" href="../quick_reference.html" title="Quick Reference">
+<link rel="next" href="compound_attribute_rules.html" title="Compound
+        Attribute Rules">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="compound_attribute_rules.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.qi.quick_reference.predefined_primitive_parsers"></a><a href="predefined_primitive_parsers.html" title="Predefined
+        Primitive Parsers">Predefined
+        Primitive Parsers</a>
+</h4></div></div>
+<div></div>
+</div>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                  Expression
+                </p></th>
+<th><p>
+                  Attribute
+                </p></th>
+<th><p>
+                  Description
+                </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eol</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Matches the end of line (<tt class="computeroutput"><span class="special">\</span><span class="identifier">r</span></tt> or <tt class="computeroutput"><span class="special">\</span><span class="identifier">n</span></tt> or <tt class="computeroutput"><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">n</span></tt>)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eoi</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Matches the end of input (first == last)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Match an empty string
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  If <tt class="computeroutput"><span class="identifier">b</span></tt> is true, match
+                  an empty string
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  Attribute of <tt class="computeroutput"><span class="identifier">P</span></tt>
+                  where <tt class="computeroutput"><span class="identifier">P</span></tt> is the
+                  return type of <tt class="computeroutput"><span class="identifier">fp</span></tt>
+                </p></td>
+<td><p>
+                  Invoke <tt class="computeroutput"><span class="identifier">fp</span></tt> at parse
+                  time, returning a parser <tt class="computeroutput"><span class="identifier">p</span></tt>
+                  which is then called to parse.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">fp</span></tt>
+                </p></td>
+<td><p>
+                  see <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fp</span><span class="special">)</span></tt>
+                  above
+                </p></td>
+<td><p>
+                  Equivalent to <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">[</span><span class="identifier">fp</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">p</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  Attribute of <tt class="computeroutput"><span class="identifier">p</span></tt>
+                </p></td>
+<td><p>
+                  Call semantic action, <tt class="computeroutput"><span class="identifier">fa</span></tt>
+                  if p succeeds.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">byte_</span></tt>
+                </p></td>
+<td><p>
+                  8 bits native endian
+                </p></td>
+<td><p>
+                  Matches an 8 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">word</span></tt>
+                </p></td>
+<td><p>
+                  16 bits native endian
+                </p></td>
+<td><p>
+                  Matches a 16 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_word</span></tt>
+                </p></td>
+<td><p>
+                  16 bits big endian
+                </p></td>
+<td><p>
+                  Matches a 16 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_word</span></tt>
+                </p></td>
+<td><p>
+                  16 bits little endian
+                </p></td>
+<td><p>
+                  Matches a 16 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">dword</span></tt>
+                </p></td>
+<td><p>
+                  32 bits native endian
+                </p></td>
+<td><p>
+                  Matches a 32 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_dword</span></tt>
+                </p></td>
+<td><p>
+                  32 bits big endian
+                </p></td>
+<td><p>
+                  Matches a 32 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_dword</span></tt>
+                </p></td>
+<td><p>
+                  32 bits little endian
+                </p></td>
+<td><p>
+                  Matches a 32 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">qword</span></tt>
+                </p></td>
+<td><p>
+                  64 bits native endian
+                </p></td>
+<td><p>
+                  Matches a 64 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_qword</span></tt>
+                </p></td>
+<td><p>
+                  64 bits big endian
+                </p></td>
+<td><p>
+                  Matches a 64 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_qword</span></tt>
+                </p></td>
+<td><p>
+                  64 bits little endian
+                </p></td>
+<td><p>
+                  Matches a 64 bit binary
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Matches any character
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Matches <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Matches a single char string literal, <tt class="computeroutput"><span class="identifier">c</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">,</span>
+                  <span class="identifier">ch2</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Matches a range of chars from <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                  to <tt class="computeroutput"><span class="identifier">ch2</span></tt> (inclusive)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">chset</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Matches a character set <tt class="computeroutput"><span class="identifier">chset</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Matches <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Matches <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Matches <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Matches <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">string</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Str</span></tt>
+                </p></td>
+<td><p>
+                  Matches <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span>
+                  <span class="identifier">T</span><span class="special">&gt;</span>
+                  <span class="identifier">sym</span><span class="special">;</span></tt>
+                </p></td>
+<td><p>
+                  N/A
+                </p></td>
+<td><p>
+                  Declare a symbol table, <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt> is the underlying
+                  char type of the symbol table keys. <tt class="computeroutput"><span class="identifier">T</span></tt>
+                  is the data type associated with each key.
+                </p></td>
+</tr>
+<tr>
+<td>
+<p>
+                  
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">add</span>
+    <span class="special">(</span><span class="identifier">str1</span><span class="special">,</span> <span class="identifier">val1</span><span class="special">)</span>
+    <span class="special">(</span><span class="identifier">str2</span><span class="special">,</span> <span class="identifier">val2</span><span class="special">)</span>
+    <span class="comment">/*...more...*/</span>
+<span class="special">;</span>
+</pre>
+<p>
+                </p>
+</td>
+<td><p>
+                  N/A
+                </p></td>
+<td><p>
+                  Add symbols into a symbol table, <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  val1 and val2 are optional data of type <tt class="computeroutput"><span class="identifier">T</span></tt>,
+                  the data type associated with each key.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">sym</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">T</span></tt>
+                </p></td>
+<td><p>
+                  Matches entries in the symbol table, <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  If successful, returns the data associated with the key
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lexeme</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Disable skip parsing for <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">nocase</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Inhibits case-sensitivity for <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Ignores the attribute type of <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">I</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Presents the transduction of <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  as an iterator range
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> zero or
+                  more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">M</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> to <tt class="computeroutput"><span class="identifier">M</span></tt>
+                  times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Reestablish the skipper that got inhibited by lexeme
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Use <tt class="computeroutput"><span class="identifier">p</span></tt> as a skipper
+                  for parsing <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">float_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">float</span></tt>
+                </p></td>
+<td><p>
+                  Parse a floating point number into a <tt class="computeroutput"><span class="keyword">float</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">double_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">double</span></tt>
+                </p></td>
+<td><p>
+                  Parse a floating point number into a <tt class="computeroutput"><span class="keyword">double</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_double</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></tt>
+                </p></td>
+<td><p>
+                  Parse a floating point number into a <tt class="computeroutput"><span class="keyword">long</span>
+                  <span class="keyword">double</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">bin</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Parse a binary integer into an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">oct</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Parse an octal integer into an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">hex</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Parse a hexadecimal integer into an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ushort_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">short</span></tt>
+                </p></td>
+<td><p>
+                  Parse an unsigned short integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ulong_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Parse an unsigned long integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">uint_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span></tt>
+                </p></td>
+<td><p>
+                  Parse an unsigned int
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ulong_long</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span>
+                  <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Parse an unsigned long long
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">short_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">short</span></tt>
+                </p></td>
+<td><p>
+                  Parse a short integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Parse a long integer
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">int_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">int</span></tt>
+                </p></td>
+<td><p>
+                  Parse an int
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_long</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
+                  Parse a long long
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Not predicate. Ensure that <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  does not match but don't move the iterator position
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  And predicate. Ensure that <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  matches but don't move the iterator position
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Optional. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  zero or one time
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Kleene. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  zero or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">+</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Plus. Parse <tt class="computeroutput"><span class="identifier">a</span></tt> one
+                  or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Alternative. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  or <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Sequence. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  followed by <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Expect. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  followed by <tt class="computeroutput"><span class="identifier">b</span></tt>.
+                  <tt class="computeroutput"><span class="identifier">b</span></tt> is expected to
+                  match when <tt class="computeroutput"><span class="identifier">a</span></tt> matches,
+                  otherwise, an <tt class="computeroutput"><span class="identifier">expectation_failure</span></tt>
+                  is thrown.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">-</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Difference. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  but not <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">||</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Sequential Or. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  or <tt class="computeroutput"><span class="identifier">b</span></tt> or <tt class="computeroutput"><span class="identifier">a</span></tt> followed by <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  List. Parse <tt class="computeroutput"><span class="identifier">a</span></tt> delimited
+                  <tt class="computeroutput"><span class="identifier">b</span></tt> one or more times
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">^</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span></tt>
+                  <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span></tt>
+                  <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span>
+                  <span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Permutation. Parse <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  and <tt class="computeroutput"><span class="identifier">b</span></tt> in any order
+                </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="compound_attribute_rules.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

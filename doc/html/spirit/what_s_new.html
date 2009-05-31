@@ -1,0 +1,261 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>What's New</title>
+<link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../index.html" title="Spirit 2.1">
+<link rel="up" href="../index.html" title="Spirit 2.1">
+<link rel="previous" href="../index.html" title="Spirit 2.1">
+<link rel="next" href="introduction.html" title="Introduction">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../index.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="introduction.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h2 class="title" style="clear: both">
+<a name="spirit.what_s_new"></a><a href="what_s_new.html" title="What's New">What's New</a>
+</h2></div></div>
+<div></div>
+</div>
+<a name="spirit.what_s_new.spirit_classic"></a><h3>
+<a name="id353462"></a>
+      <a href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
+    </h3>
+<p>
+      The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called
+      <span class="emphasis"><em>Spirit.Classic</em></span>. Even if the directory structure has changed
+      (the Spirit Classic headers are now moved to the $BOOST_ROOT/boost/spirit/home/classic directory), we created forwarding
+      headers allowing to compile existing applications without any change. These
+      forwarding headers are deprecated, though, which will result in corresponding
+      warnings generated for each of the headers starting with Boost V1.38. The forwarding
+      headers are expected to be removed in the future.
+    </p>
+<p>
+      The recommended way of using Spirit Classic now is to include header files
+      from the directory $BOOST_ROOT/boost/spirit/include. All files of Spirit Classic in this directory have a 'classic_'
+      prefixed to their name. For example the include
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      now should be written as:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">classic_core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      To avoid namespace conflicts with the new Spirit V2 library we moved Spirit
+      Classic into the namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">classic</span></tt>.
+      All references to the former namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></tt>
+      need to be adjusted as soon as the header names are corrected as described
+      above. As an alternative you can define the preprocessor constant <tt class="computeroutput"><span class="identifier">BOOST_SPIRIT_USE_OLD_NAMESPACE</span></tt>, which will
+      force the Spirit Classic code to be in the namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></tt>
+      as before. This is not recommended, though, as it may result in naming clashes.
+    </p>
+<p>
+      The change of the namespace will be automatically deactivated whenever the
+      deprecated include files are being used. This ensures full backwards compatibility
+      for existing applications.
+    </p>
+<a name="spirit.what_s_new.spirit_v2_1"></a><h3>
+<a name="id353589"></a>
+      <a href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
+    </h3>
+<a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0_to_2_x"></a><h3>
+<a name="id353613"></a>
+      <a href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0_to_2_x">What's
+      changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
+      from V2.0 to 2.x</a>
+    </h3>
+<div class="itemizedlist"><ul type="disc">
+<li>
+<a href="http://spirit.sourceforge.net" target="_top">Spirit</a> is now based on
+        the newest version of <a href="http://www.boost.org/doc/libs/1_38_0/doc/html/proto.html" target="_top">Boost.Proto</a>
+</li>
+<li>
+<tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></tt>, <tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_format</span></tt>
+        now post-skip by default.
+      </li>
+<li>
+<tt class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate_delimited</span></tt> and <tt class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">format_delimited</span></tt>
+        now don't do pre- delimiting by default.
+      </li>
+<li>
+        Changed parameter sequence of <tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></tt>,
+        <tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_match</span></tt>, <tt class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate_delimited</span></tt>,
+        and <tt class="computeroutput"><span class="identifier">match_delimited</span></tt>. The
+        attribute is now always the last parameter.
+      </li>
+<li>
+        Added new overloads of those functions allowing to explicitely specify the
+        post-skipping and pre-delimiting behavior.
+      </li>
+<li>
+        multi attribute API functions
+      </li>
+<li>
+        removed <tt class="computeroutput"><span class="identifier">grammar_def</span><span class="special">&lt;&gt;</span></tt>
+</li>
+<li>
+        removed functions <tt class="computeroutput"><span class="identifier">make_parser</span><span class="special">()</span></tt> and <tt class="computeroutput"><span class="identifier">make_generator</span><span class="special">()</span></tt>
+</li>
+<li>
+        removed <tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">none</span></tt> and <tt class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">none</span></tt>
+</li>
+<li>
+        sequences and lists now accept a standard container as its attribute
+      </li>
+<li>
+        The string placeholder terminal now can take other strings as its parameter
+        (i.e. std::string)
+      </li>
+<li>
+        all terminals taking literals now accept a (lazy) function object as well
+      </li>
+<li>
+        All placeholders for terminals and directives (such as <tt class="computeroutput"><span class="identifier">int_</span></tt>,
+        <tt class="computeroutput"><span class="identifier">double_</span></tt>, <tt class="computeroutput"><span class="identifier">verbatim</span></tt>,
+        etc.) were previously defined in the namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></tt>
+        only. Now these are additionally imported into the namespaces <tt class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span></tt>, <tt class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span></tt>,
+        and <tt class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span></tt> (if they are supported by the corresponding
+        sub-library.
+      </li>
+<li>
+        The terminal placeholders <tt class="computeroutput"><span class="identifier">char_</span></tt>
+        and <tt class="computeroutput"><span class="identifier">string</span></tt> are not defined
+        in the namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></tt> anymore as they have been moved
+        to the character set namespaces, allowing to do proper character set handling
+        based on the used namespace (as <tt class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span></tt>,
+        etc.)
+      </li>
+<li>
+        The <tt class="computeroutput"><span class="identifier">uint</span></tt>, <tt class="computeroutput"><span class="identifier">ushort</span></tt>,
+        <tt class="computeroutput"><span class="identifier">ulong</span></tt>, and <tt class="computeroutput"><span class="identifier">byte</span></tt> terminal placeholders have been renamed
+        to <tt class="computeroutput"><span class="identifier">uint_</span></tt>, <tt class="computeroutput"><span class="identifier">ushort_</span></tt>,
+        <tt class="computeroutput"><span class="identifier">ulong_</span></tt>, and <tt class="computeroutput"><span class="identifier">byte_</span></tt>.
+      </li>
+<li>
+        qi::skip[]<tt class="computeroutput"> <span class="identifier">now</span> <span class="identifier">re</span><span class="special">-</span><span class="identifier">enables</span> <span class="identifier">outer</span> <span class="identifier">skipper</span>
+        <span class="keyword">if</span> <span class="identifier">used</span>
+        <span class="identifier">inside</span> </tt>lexeme[]<tt class="computeroutput"> <span class="special">*</span>
+        <span class="identifier">Added</span> </tt>karma::maxwidth[]<tt class="computeroutput">
+        <span class="identifier">directive</span> <span class="special">*</span>
+        </tt>karma::delimit[]<tt class="computeroutput"> <span class="identifier">now</span> <span class="identifier">re</span><span class="special">-</span><span class="identifier">enables</span>
+        <span class="identifier">outer</span> <span class="identifier">delimiter</span>
+        <span class="keyword">if</span> <span class="identifier">used</span>
+        <span class="identifier">inside</span> </tt>verbatim[]<tt class="computeroutput"> <span class="special">*</span> <span class="identifier">karma</span><span class="special">:</span> <span class="identifier">added</span> <span class="keyword">and</span><span class="special">-</span><span class="identifier">predicate</span>
+        <span class="special">(</span></tt>operator&amp;()<tt class="computeroutput"><span class="special">)</span>
+        <span class="keyword">and</span> <span class="keyword">not</span><span class="special">-</span><span class="identifier">predicate</span> <span class="special">(</span></tt>operator!()`)
+      </li>
+</ul></div>
+<a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x"></a><h3>
+<a name="id410209"></a>
+      <a href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x">What's
+      changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 to 2.x</a>
+    </h3>
+<p>
+      Here is a list of changes in <span class="emphasis"><em>Spirit.Lex</em></span> since version
+      2.0. <span class="emphasis"><em>Spirit.Lex</em></span> 2.x is a complete rewrite of the original
+      <span class="emphasis"><em>Spirit.Lex</em></span> distributed. As all parts of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+      library it is usable either standalone or in conjunction with the other parts.
+      <span class="emphasis"><em>Spirit.Lex</em></span> now uses the infrastructure provided by <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> version 2.1.
+    </p>
+<div class="itemizedlist"><ul type="disc">
+<li>
+        The lex::lexer_def class has been renamed to lex::lexer, while the original
+        class lex::lexer does not exist anymore. This simplifies the creation of
+        lexers.
+      </li>
+<li>
+        The lex::lexer class does not have the function <tt class="computeroutput"><span class="identifier">def</span><span class="special">(</span><span class="identifier">Self</span><span class="special">&amp;</span>
+        <span class="identifier">self</span><span class="special">)</span></tt>
+        anymore, token definitions can be added to the lexer at any time, usually
+        in the constructor of the user defined lexer class: 
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">example_tokens</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="special">{</span>
+      <span class="identifier">example_lexer</span><span class="special">()</span>
+      <span class="special">{</span>
+          <span class="comment">// your token definitions here
+</span>          <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">self</span> <span class="special">=</span> <span class="special">...</span>
+      <span class="special">}</span>
+<span class="special">};</span>
+</pre>
+</li>
+<li>
+        The new lexer class now can be directly used, their is no need anymore to
+        wrap it using the <tt class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></tt> template as before. Therefor the function
+        <tt class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></tt>
+        has been removed.
+      </li>
+<li>
+        The <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_parse</span><span class="special">()</span></tt>
+        and <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_phrase_parse</span><span class="special">()</span></tt>
+        functions have been changed to match the parameter sequence as implemented
+        by the <tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">()</span></tt>
+        and <tt class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">()</span></tt>
+        functions. Both take a possibly arbitrary number of attribute arguments as
+        its last parameters (well, the number of attributes is limited by the macro
+        <tt class="computeroutput"><span class="identifier">SPIRIT_ARGUMENTS_LIMIT</span></tt>, which
+        defaults to <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt>).
+      </li>
+<li>
+        The <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_lexer</span></tt>, <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token_set</span></tt>,
+        and <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token</span></tt> classes has been moved to
+        the <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span></tt> namespace and the names have been
+        changed to <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span></tt>, <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token_set</span></tt>,
+        <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span></tt> (the same applies to the <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexert_actor_lexer</span></tt>,
+        and the <tt class="computeroutput"><span class="identifier">static_lexertl_</span><span class="special">*</span></tt>
+        family of types).
+      </li>
+<li>
+        The <span class="emphasis"><em>Spirit.Lex</em></span> library has been updated to use the newest
+        version of Ben Hansons <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
+        lexer construction library (Boost review pending).
+      </li>
+<li>
+        The <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span></tt>
+        template constructor now takes an optional parameter specifying the <tt class="computeroutput"><span class="identifier">match_flags</span></tt> to be used for table generation.
+        Currently, there are the following flags available: 
+<pre class="programlisting"><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_default</span><span class="special">,</span>          <span class="comment">// no flags
+</span><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_not_dot_newline</span><span class="special">,</span>  <span class="comment">// the regex '.' doesn't match newlines
+</span><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_icase</span>             <span class="comment">// all matching operations are case insensitive
+</span></pre>
+        If no parameter is passed to the constructor, <tt class="computeroutput"><span class="identifier">match_flags</span><span class="special">::</span><span class="identifier">match_default</span></tt>
+        is used, i.e. the <tt class="computeroutput"><span class="special">.</span></tt> matches
+        newlines and matching is case sensitive.
+      </li>
+<li>
+        Now the <tt class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></tt>
+        and <tt class="computeroutput"><span class="identifier">string</span><span class="special">()</span></tt>
+        placeholders can be used for token definitions as a replacement for <tt class="computeroutput"><span class="identifier">token_def</span></tt>, although it is still possible
+        to use the latter one.
+      </li>
+</ul></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../index.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="introduction.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

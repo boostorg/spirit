@@ -1,0 +1,457 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title> Reference</title>
+<link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../index.html" title="Spirit 2.1">
+<link rel="up" href="../lex.html" title=" Spirit.Lex">
+<link rel="previous" href="quick_reference.html" title=" Quick Reference">
+<link rel="next" href="reference/lexer_class.html" title="Lexer Class">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="quick_reference.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../lex.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="reference/lexer_class.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h3 class="title">
+<a name="spirit.lex.reference"></a><a href="reference.html" title=" Reference"> Reference</a>
+</h3></div></div>
+<div></div>
+</div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="reference.html#spirit.lex.reference.concepts"> Concepts</a></span></dt>
+<dt><span class="section"><a href="reference/lexer_class.html">Lexer Class</a></span></dt>
+<dt><span class="section"><a href="reference/token_class.html">Token Class</a></span></dt>
+<dt><span class="section"><a href="reference/tokendef_class.html">TokenDef Class</a></span></dt>
+<dt><span class="section"><a href="reference/tokenset_class.html">TokenSet Class</a></span></dt>
+</dl></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.lex.reference.concepts"></a><a href="reference.html#spirit.lex.reference.concepts" title=" Concepts"> Concepts</a>
+</h4></div></div>
+<div></div>
+</div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="reference.html#spirit.lex.reference.concepts.lexer">Lexer</a></span></dt>
+<dt><span class="section"><a href="reference.html#spirit.lex.reference.concepts.token">Token</a></span></dt>
+<dt><span class="section"><a href="reference.html#spirit.lex.reference.concepts.tokendef">TokenDef</a></span></dt>
+<dt><span class="section"><a href="reference.html#spirit.lex.reference.concepts.tokenset">TokenSet</a></span></dt>
+</dl></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.lex.reference.concepts.lexer"></a><a href="reference.html#spirit.lex.reference.concepts.lexer" title="Lexer">Lexer</a>
+</h5></div></div>
+<div></div>
+</div>
+<div class="table">
+<a name="id477335"></a><p class="title"><b>Table 6. Regular expressions support</b></p>
+<table class="table" summary="Regular expressions support">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                  Expression
+                </p></th>
+<th><p>
+                  Meaning
+                </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">x</span></tt>
+                </p></td>
+<td><p>
+                  Match any character <tt class="computeroutput"><span class="identifier">x</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">.</span></tt>
+                </p></td>
+<td><p>
+                  Match any except newline (or optionally <span class="bold"><b>any</b></span>
+                  character)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">[</span><span class="identifier">xyz</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  A character class; in this case matches <tt class="computeroutput"><span class="identifier">x</span></tt>,
+                  <tt class="computeroutput"><span class="identifier">y</span></tt> or <tt class="computeroutput"><span class="identifier">z</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">[</span><span class="identifier">abj</span><span class="special">-</span><span class="identifier">oZ</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  A character class with a range in it; matches <tt class="computeroutput"><span class="identifier">a</span></tt>,
+                  <tt class="computeroutput"><span class="identifier">b</span></tt> any letter from
+                  <tt class="computeroutput"><span class="identifier">j</span></tt> through <tt class="computeroutput"><span class="identifier">o</span></tt> or a <tt class="computeroutput"><span class="identifier">Z</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">[^</span><span class="identifier">A</span><span class="special">-</span><span class="identifier">Z</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  A negated character class i.e. any character but those in the class.
+                  In this case, any character except an uppercase letter
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">*</span></tt>
+                </p></td>
+<td><p>
+                  Zero or more r's (greedy), where r is any regular expression
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">*?</span></tt>
+                </p></td>
+<td><p>
+                  Zero or more r's (abstemious), where r is any regular expression
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">+</span></tt>
+                </p></td>
+<td><p>
+                  One or more r's (greedy)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">+?</span></tt>
+                </p></td>
+<td><p>
+                  One or more r's (abstemious)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">?</span></tt>
+                </p></td>
+<td><p>
+                  Zero or one r's (greedy), i.e. optional
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">??</span></tt>
+                </p></td>
+<td><p>
+                  Zero or one r's (abstemious), i.e. optional
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">5</span><span class="special">}</span></tt>
+                </p></td>
+<td><p>
+                  Anywhere between two and five r's (greedy)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,</span><span class="number">5</span><span class="special">}?</span></tt>
+                </p></td>
+<td><p>
+                  Anywhere between two and five r's (abstemious)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,}</span></tt>
+                </p></td>
+<td><p>
+                  Two or more r's (greedy)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">2</span><span class="special">,}?</span></tt>
+                </p></td>
+<td><p>
+                  Two or more r's (abstemious)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">{</span><span class="number">4</span><span class="special">}</span></tt>
+                </p></td>
+<td><p>
+                  Exactly four r's
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">{</span><span class="identifier">NAME</span><span class="special">}</span></tt>
+                </p></td>
+<td><p>
+                  The macro <tt class="computeroutput"><span class="identifier">NAME</span></tt>
+                  (see below)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="string">"[xyz]\"foo"</span></tt>
+                </p></td>
+<td><p>
+                  The literal string <tt class="computeroutput"><span class="special">[</span><span class="identifier">xyz</span><span class="special">]\</span><span class="error">"</span><span class="identifier">foo</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">X</span></tt>
+                </p></td>
+<td><p>
+                  If X is <tt class="computeroutput"><span class="identifier">a</span></tt>, <tt class="computeroutput"><span class="identifier">b</span></tt>, <tt class="computeroutput"><span class="identifier">e</span></tt>,
+                  <tt class="computeroutput"><span class="identifier">n</span></tt>, <tt class="computeroutput"><span class="identifier">r</span></tt>, <tt class="computeroutput"><span class="identifier">f</span></tt>,
+                  <tt class="computeroutput"><span class="identifier">t</span></tt>, <tt class="computeroutput"><span class="identifier">v</span></tt> then the ANSI-C interpretation
+                  of <tt class="computeroutput"><span class="special">\</span><span class="identifier">x</span></tt>.
+                  Otherwise a literal <tt class="computeroutput"><span class="identifier">X</span></tt>
+                  (used to escape operators such as <tt class="computeroutput"><span class="special">*</span></tt>)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="number">0</span></tt>
+                </p></td>
+<td><p>
+                  A NUL character (ASCII code 0)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="number">123</span></tt>
+                </p></td>
+<td><p>
+                  The character with octal value 123
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">x2a</span></tt>
+                </p></td>
+<td><p>
+                  The character with hexadecimal value 2a
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">cX</span></tt>
+                </p></td>
+<td><p>
+                  A named control character <tt class="computeroutput"><span class="identifier">X</span></tt>.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">d</span></tt>
+                </p></td>
+<td><p>
+                  A shortcut for <tt class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">D</span></tt>
+                </p></td>
+<td><p>
+                  A shortcut for <tt class="computeroutput"><span class="special">[^</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">s</span></tt>
+                </p></td>
+<td><p>
+                  A shortcut for <tt class="computeroutput"><span class="special">[\</span><span class="identifier">x20</span><span class="special">\</span><span class="identifier">t</span><span class="special">\</span><span class="identifier">n</span><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">f</span><span class="special">\</span><span class="identifier">v</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">S</span></tt>
+                </p></td>
+<td><p>
+                  A shortcut for <tt class="computeroutput"><span class="special">[^\</span><span class="identifier">x20</span><span class="special">\</span><span class="identifier">t</span><span class="special">\</span><span class="identifier">n</span><span class="special">\</span><span class="identifier">r</span><span class="special">\</span><span class="identifier">f</span><span class="special">\</span><span class="identifier">v</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">w</span></tt>
+                </p></td>
+<td><p>
+                  A shortcut for <tt class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z0</span><span class="special">-</span><span class="number">9</span><span class="identifier">_</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">\</span><span class="identifier">W</span></tt>
+                </p></td>
+<td><p>
+                  A shortcut for <tt class="computeroutput"><span class="special">[^</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z0</span><span class="special">-</span><span class="number">9</span><span class="identifier">_</span><span class="special">]</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">(</span><span class="identifier">r</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  Match an <tt class="computeroutput"><span class="identifier">r</span></tt>; parenthesis
+                  are used to override precedence (see below)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">(?</span><span class="identifier">r</span><span class="special">-</span><span class="identifier">s</span><span class="special">:</span><span class="identifier">pattern</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  apply option 'r' and omit option 's' while interpreting pattern.
+                  Options may be zero or more of the characters 'i' or 's'. 'i' means
+                  case-insensitive. '-i' means case-sensitive. 's' alters the meaning
+                  of the '.' syntax to match any single character whatsoever. '-s'
+                  alters the meaning of '.' to match any character except '<tt class="computeroutput"><span class="special">\</span><span class="identifier">n</span></tt>'.
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">rs</span></tt>
+                </p></td>
+<td><p>
+                  The regular expression <tt class="computeroutput"><span class="identifier">r</span></tt>
+                  followed by the regular expression <tt class="computeroutput"><span class="identifier">s</span></tt>
+                  (a sequence)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span><span class="special">|</span><span class="identifier">s</span></tt>
+                </p></td>
+<td><p>
+                  Either an <tt class="computeroutput"><span class="identifier">r</span></tt> or
+                  and <tt class="computeroutput"><span class="identifier">s</span></tt>
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="special">^</span><span class="identifier">r</span></tt>
+                </p></td>
+<td><p>
+                  An <tt class="computeroutput"><span class="identifier">r</span></tt> but only at
+                  the beginning of a line (i.e. when just starting to scan, or right
+                  after a newline has been scanned)
+                </p></td>
+</tr>
+<tr>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">r</span></tt>$
+                </p></td>
+<td><p>
+                  An <tt class="computeroutput"><span class="identifier">r</span></tt> but only at
+                  the end of a line (i.e. just before a newline)
+                </p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              POSIX character classes are not currently supported, due to performance
+              issues when creating them in wide character mode.
+            </p></td></tr>
+</table></div>
+<a name="spirit.lex.reference.concepts.lexer.regular_expression_precedence"></a><h6>
+<a name="id479428"></a>
+            <a href="reference.html#spirit.lex.reference.concepts.lexer.regular_expression_precedence">Regular
+            Expression Precedence</a>
+          </h6>
+<div class="itemizedlist"><ul type="disc">
+<li>
+<tt class="computeroutput"><span class="identifier">rs</span></tt> has highest precedence
+            </li>
+<li>
+<tt class="computeroutput"><span class="identifier">r</span><span class="special">*</span></tt>
+              has next highest (<tt class="computeroutput"><span class="special">+</span></tt>,
+              <tt class="computeroutput"><span class="special">?</span></tt>, <tt class="computeroutput"><span class="special">{</span><span class="identifier">n</span><span class="special">,</span><span class="identifier">m</span><span class="special">}</span></tt>
+              have the same precedence as <tt class="computeroutput"><span class="special">*</span></tt>)
+            </li>
+<li>
+<tt class="computeroutput"><span class="identifier">r</span><span class="special">|</span><span class="identifier">s</span></tt> has the lowest precedence
+            </li>
+</ul></div>
+<a name="spirit.lex.reference.concepts.lexer.macros"></a><h6>
+<a name="id479584"></a>
+            <a href="reference.html#spirit.lex.reference.concepts.lexer.macros">Macros</a>
+          </h6>
+<p>
+            Regular expressions can be given a name and referred to in rules using
+            the syntax <tt class="computeroutput"><span class="special">{</span><span class="identifier">NAME</span><span class="special">}</span></tt> where <tt class="computeroutput"><span class="identifier">NAME</span></tt>
+            is the name you have given to the macro. A macro name can be at most
+            30 characters long and must start with a <tt class="computeroutput"><span class="identifier">_</span></tt>
+            or a letter. Subsequent characters can be <tt class="computeroutput"><span class="identifier">_</span></tt>,
+            <tt class="computeroutput"><span class="special">-</span></tt>, a letter or a decimal
+            digit. Use the <tt class="computeroutput"><span class="identifier">rules</span><span class="special">::</span><span class="identifier">add_macro</span><span class="special">()</span></tt> method to define a macro.
+          </p>
+</div>
+<div class="section" lang="en"><div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.lex.reference.concepts.token"></a><a href="reference.html#spirit.lex.reference.concepts.token" title="Token">Token</a>
+</h5></div></div>
+<div></div>
+</div></div>
+<div class="section" lang="en"><div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.lex.reference.concepts.tokendef"></a><a href="reference.html#spirit.lex.reference.concepts.tokendef" title="TokenDef">TokenDef</a>
+</h5></div></div>
+<div></div>
+</div></div>
+<div class="section" lang="en"><div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.lex.reference.concepts.tokenset"></a><a href="reference.html#spirit.lex.reference.concepts.tokenset" title="TokenSet">TokenSet</a>
+</h5></div></div>
+<div></div>
+</div></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="quick_reference.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../lex.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="reference/lexer_class.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
