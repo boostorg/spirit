@@ -99,7 +99,8 @@ public:
 
         void next_token ()
         {
-            const detail::internals &internals_ = _input->_state_machine->data ();
+            const detail::internals &internals_ =
+                _input->_state_machine->data ();
 
             _data.start = _data.end;
 
@@ -247,7 +248,8 @@ again:
             else
             {
                 const std::size_t state_ =
-                    ptr_[lookup_[static_cast<typename Traits::index_type> (*curr_++)]];
+                    ptr_[lookup_[static_cast<typename Traits::index_type>
+                        (*curr_++)]];
 
                 if (state_ == 0)
                 {
@@ -350,7 +352,8 @@ again:
             else
             {
                 const std::size_t state_ =
-                    ptr_[lookup_[static_cast<typename Traits::index_type> (*curr_++)]];
+                    ptr_[lookup_[static_cast<typename Traits::index_type>
+                        (*curr_++)]];
 
                 if (state_ == 0)
                 {
@@ -438,7 +441,8 @@ again:
                 // Some systems have memcpy in namespace std.
                 using namespace std;
 
-                memcpy (_start_buffer, _start_token - 1, (len_ + 1) * sizeof (CharT));
+                memcpy (_start_buffer, _start_token - 1, (len_ + 1) *
+                    sizeof (CharT));
                 _stream->read (_start_buffer + len_ + 1,
                     static_cast<std::streamsize> (_buffer.size () - len_ - 1));
                 count_ = _stream->gcount ();
