@@ -42,7 +42,7 @@ Now the actual parser:
 
 [tutorial_adder]
 
-The full cpp file for this example can be found here: [@../../example/qi/actions.cpp]
+The full cpp file for this example can be found here: [@../../example/qi/sum.cpp]
 
 This is almost like our original numbers list example. We're incrementally
 building on top of our examples. This time though, like in the complex number
