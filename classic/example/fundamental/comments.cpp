@@ -58,13 +58,7 @@ void actor_cpp (const char *pfirst, const char *plast)
 {
     cout << "Parsing C++-comment" <<endl;
     cout << "Matched (" << plast-pfirst << ") characters: ";
-
-    char cbbuffer[128];
-
-    strncpy(cbbuffer, pfirst, plast-pfirst);
-    cbbuffer[plast-pfirst] = '\0';
-
-    cout << "\"" << cbbuffer << "\"" << endl;
+    cout << "\"" << std::string(pfirst, plast) << "\"" << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
