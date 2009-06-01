@@ -6,8 +6,8 @@
   Distributed under the Boost Software License, Version 1.0. (See accompanying
   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_TYPEOF
-#define BOOST_SPIRIT_DEPRECATED_INCLUDE_TYPEOF
+#ifndef BOOST_SPIRIT_DEPRECATED_INCLUDE_TYPEOF_UTILITY
+#define BOOST_SPIRIT_DEPRECATED_INCLUDE_TYPEOF_UTILITY
 
 #include <boost/version.hpp>
 
