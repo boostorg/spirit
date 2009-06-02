@@ -9,8 +9,8 @@
 
 project spirit/doc ;
 
-import boostbook : boostbook ;
-using quickbook : quickbook ;
+import boostbook ;
+import quickbook ;
 
 boostbook spirit2
     :
