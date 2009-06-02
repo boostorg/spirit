@@ -11,6 +11,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <bitset>
+#include <climits>
 #include <boost/spirit/home/qi/char/detail/range_run.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
