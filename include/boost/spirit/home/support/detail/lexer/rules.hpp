@@ -231,6 +231,43 @@ public:
         }
     }
 
+    void add_macros (const basic_rules<CharT> &rules_)
+    {
+        const string_pair_deque &macros_ = rules_.macrodeque ();
+        typename string_pair_deque::const_iterator macro_iter_ =
+            macros_.begin ();
+        typename string_pair_deque::const_iterator macro_end_ =
+            macros_.end ();
+
+        for (; macro_iter_ != macro_end_; ++macro_iter_)
+        {
+            add_macro (macro_iter_->first.c_str (),
+                macro_iter_->second.c_str ());
+        }
+    }
+
+    void merge_macros (const basic_rules<CharT> &rules_)
+    {
+        const string_pair_deque &macros_ = rules_.macrodeque ();
+        typename string_pair_deque::const_iterator macro_iter_ =
+            macros_.begin ();
+        typename string_pair_deque::const_iterator macro_end_ =
+            macros_.end ();
+        typename string_set::const_iterator macro_dest_iter_;
+        typename string_set::const_iterator macro_dest_end_ = _macroset.end ();
+
+        for (; macro_iter_ != macro_end_; ++macro_iter_)
+        {
+            macro_dest_iter_ = _macroset.find (macro_iter_->first);
+
+            if (macro_dest_iter_ == macro_dest_end_)
+            {
+                add_macro (macro_iter_->first.c_str (),
+                    macro_iter_->second.c_str ());
+            }
+        }
+    }
+
     std::size_t add (const CharT *regex_, const std::size_t id_)
     {
         return add (string (regex_), id_);
@@ -295,13 +332,6 @@ public:
 
     void add (const CharT *from_, const basic_rules<CharT> &rules_, const CharT *to_)
     {
-        const string_pair_deque &macros_ = rules_.macrodeque ();
-        typename string_pair_deque::const_iterator macro_iter_ =
-            macros_.begin ();
-        typename string_pair_deque::const_iterator macro_end_ =
-            macros_.end ();
-        typename string_set::const_iterator macro_dest_iter_;
-        typename string_set::const_iterator macro_dest_end_ = _macroset.end ();
         const bool star_ = *from_ == '*' && *(from_ + 1) == 0;
         const bool dot_ = *to_ == '.' && *(to_ + 1) == 0;
         std::size_t state_ = 0;
@@ -312,17 +342,6 @@ public:
         typename string_deque::const_iterator regex_end_;
         typename id_vector::const_iterator id_iter_;
         typename id_vector::const_iterator uid_iter_;
-
-        for (; macro_iter_ != macro_end_; ++macro_iter_)
-        {
-            macro_dest_iter_ = _macroset.find (macro_iter_->first);
-
-            if (macro_dest_iter_ == macro_dest_end_)
-            {
-                add_macro (macro_iter_->first.c_str (),
-                    macro_iter_->second.c_str ());
-            }
-        }
 
         if (star_)
         {
