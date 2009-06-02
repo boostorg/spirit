@@ -51,6 +51,9 @@ namespace boost { namespace spirit { namespace qi
         template <typename Iterator, typename Attribute>
         static bool call(Iterator& first, Iterator const& last, Attribute& attr)
         {
+            if (first == last)
+                return false;
+
             typedef detail::extract_int<
                 T
               , Radix
