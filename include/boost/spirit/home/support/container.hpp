@@ -18,9 +18,9 @@
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/optional.hpp>
-//#include <boost/variant.hpp>
-//#include <boost/preprocessor/cat.hpp>
-//#include <boost/preprocessor/repeat.hpp>
+#include <boost/variant.hpp>
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/repeat.hpp>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -48,42 +48,20 @@ namespace boost { namespace spirit { namespace traits
         >
     {};
 
-//    template <typename T>
-//    struct is_container<optional<T> > 
-//      : is_container<T> {};
+   template <typename T>
+   struct is_container<optional<T> > 
+     : is_container<T> {};
 
-//#define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 
-//        is_container<BOOST_PP_CAT(T, N)>::value ||                            
-//    /***/
+#define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 \
+       is_container<BOOST_PP_CAT(T, N)>::value ||                             \
+   /***/
 
-//    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-//    struct is_container<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
-//      : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
-//          , BOOST_SPIRIT_IS_CONTAINER, _) false> {};
+   template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+   struct is_container<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
+     : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
+         , BOOST_SPIRIT_IS_CONTAINER, _) false> {};
 
-//#undef BOOST_SPIRIT_IS_CONTAINER
-
-    ///////////////////////////////////////////////////////////////////////////
-//    template <typename T>
-//    struct container_type 
-//    {
-//        typedef T type;
-//    };
-
-//    template <typename T>
-//    struct container_type<optional<T> > 
-//      : container_type<T> {};
-
-//    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-//    struct container_type<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
-//    {
-//        typedef typename 
-//            boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
-//        types;
-
-//        typedef typename mpl::find_if<types, is_container<mpl::_1> >::type iter;
-//        typedef typename mpl::deref<iter>::type type;
-//    };
+#undef BOOST_SPIRIT_IS_CONTAINER
 
     ///////////////////////////////////////////////////////////////////////////
     namespace result_of

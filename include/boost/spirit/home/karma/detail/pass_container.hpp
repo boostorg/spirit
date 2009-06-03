@@ -21,6 +21,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repeat.hpp>
+#include <boost/range/iterator_range.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -38,6 +39,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             is_convertible<typename LHSAttribute::value_type, RHS>
           , is_same<typename LHSAttribute::value_type, hold_any>
         > {};
+
+    template <typename RHS, typename T>
+    struct has_same_elements<RHS, optional<T>, true>
+      : mpl::or_<is_convertible<T, RHS>, is_same<T, hold_any> > {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \
         is_convertible<BOOST_PP_CAT(T, N), RHS>::value ||                     \
@@ -68,8 +73,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // this is for the case when the current element expects an attribute
         // which is taken from the next entry in the container
         template <typename Component>
-//        bool dispatch_attribute_element(Component const& component, mpl::false_) const
-        bool dispatch_attribute(Component const& component, mpl::true_) const
+        bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
             if (!traits::compare(iter, traits::end(attr)) &&
@@ -83,38 +87,32 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return true;
         }
 
-//        // this is for the case when the current element expects an attribute
-//        // which is a container itself, this element will get the rest of the 
-//        // attribute container
-//        template <typename Component>
-//        bool dispatch_attribute_element(Component const& component, mpl::true_) const
-//        {
-//            typedef typename 
-//                traits::attribute_of<Component, context_type>::type
-//            attribute_type;
-//            typedef typename 
-//                traits::container_type<attribute_type>::type
-//            container_type;
-// 
+       // this is for the case when the current element expects an attribute
+       // which is a container itself, this element will get the rest of the 
+       // attribute container
+       template <typename Component>
+       bool dispatch_attribute_element(Component const& component, mpl::true_) const
+       {
 //            bool result = f(component, container_type(iter, traits::end(attr)));
-//            if (result)
-//                iter = traits::end(attr);     // adjust current iter to the end 
-//            return result;
-//        }
-// 
-//        // This handles the distinction between elements in a sequence expecting
-//        // containers themselves and elements expecting non-containers as their 
-//        // attribute. Note: is_container treats optional<T>, where T is a 
-//        // container as a container as well.
-//        template <typename Component>
-//        bool dispatch_attribute(Component const& component, mpl::true_) const
-//        {
-//            typedef traits::is_container<
-//                typename traits::attribute_of<Component, context_type>::type
-//            > predicate;
-// 
-//            return dispatch_attribute_element(component, predicate());
-//        }
+           bool result = f(component, make_iterator_range(iter, traits::end(attr)));
+           if (result)
+               iter = traits::end(attr);     // adjust current iter to the end 
+           return result;
+       }
+
+       // This handles the distinction between elements in a sequence expecting
+       // containers themselves and elements expecting non-containers as their 
+       // attribute. Note: is_container treats optional<T>, where T is a 
+       // container as a container as well.
+       template <typename Component>
+       bool dispatch_attribute(Component const& component, mpl::true_) const
+       {
+           typedef traits::is_container<
+               typename traits::attribute_of<Component, context_type>::type
+           > predicate;
+
+           return dispatch_attribute_element(component, predicate());
+       }
 
         // this is for the case when the current element doesn't expect an 
         // attribute

@@ -30,11 +30,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expected, typename Attribute, typename IsNotVariant>
     struct compute_compatible_component_variant
-    {
-        typedef mpl::int_<-1> distance;
-        typedef typename is_same<Expected, Attribute>::type type;
-        enum { value = type::value };
-    };
+      : is_same<Expected, Attribute> {};
 
     template <typename Expected, typename Attribute>
     struct compute_compatible_component_variant<Expected, Attribute, mpl::false_>
@@ -57,8 +53,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename Expected, typename Attribute>
     struct compute_compatible_component
       : compute_compatible_component_variant<Expected, Attribute
-          , typename spirit::traits::not_is_variant<Attribute>::type>
-    {};
+          , typename spirit::traits::not_is_variant<Attribute>::type> {};
 
     template <typename Expected>
     struct compute_compatible_component<Expected, unused_type>

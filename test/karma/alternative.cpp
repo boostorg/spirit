@@ -8,6 +8,7 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
@@ -111,6 +112,8 @@ main()
     {
         std::vector<int> v;
         BOOST_TEST(test("[]", '[' << (int_ % ", ") << ']' | "[]", v));
+        BOOST_TEST(test("[]", '[' << -(int_ % ", ") << ']', v));
+        BOOST_TEST(test("[]", '[' << ((int_ % ", ") | eps) << ']', v));
 
         v.push_back(5);
         v.push_back(5);
