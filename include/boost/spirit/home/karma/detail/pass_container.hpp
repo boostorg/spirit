@@ -42,11 +42,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     template <typename RHS, typename T>
     struct has_same_elements<RHS, optional<T>, true>
-      : mpl::or_<is_convertible<T, RHS>, is_same<T, hold_any> > {};
+      : has_same_elements<RHS, T> {};
 
 #define BOOST_SPIRIT_IS_CONVERTIBLE(z, N, data)                               \
-        is_convertible<BOOST_PP_CAT(T, N), RHS>::value ||                     \
-        is_same<BOOST_PP_CAT(T, N), hold_any>::value ||                       \
+        has_same_elements<RHS, BOOST_PP_CAT(T, N)>::value ||                  \
     /***/
 
     // Note: variants are treated as containers if one of the held types is a
@@ -87,32 +86,31 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return true;
         }
 
-       // this is for the case when the current element expects an attribute
-       // which is a container itself, this element will get the rest of the 
-       // attribute container
-       template <typename Component>
-       bool dispatch_attribute_element(Component const& component, mpl::true_) const
-       {
-//            bool result = f(component, container_type(iter, traits::end(attr)));
-           bool result = f(component, make_iterator_range(iter, traits::end(attr)));
-           if (result)
-               iter = traits::end(attr);     // adjust current iter to the end 
-           return result;
-       }
+        // this is for the case when the current element expects an attribute
+        // which is a container itself, this element will get the rest of the 
+        // attribute container
+        template <typename Component>
+        bool dispatch_attribute_element(Component const& component, mpl::true_) const
+        {
+            bool result = f(component, make_iterator_range(iter, traits::end(attr)));
+            if (result)
+                iter = traits::end(attr);     // adjust current iter to the end 
+            return result;
+        }
 
-       // This handles the distinction between elements in a sequence expecting
-       // containers themselves and elements expecting non-containers as their 
-       // attribute. Note: is_container treats optional<T>, where T is a 
-       // container as a container as well.
-       template <typename Component>
-       bool dispatch_attribute(Component const& component, mpl::true_) const
-       {
-           typedef traits::is_container<
-               typename traits::attribute_of<Component, context_type>::type
-           > predicate;
+        // This handles the distinction between elements in a sequence expecting
+        // containers themselves and elements expecting non-containers as their 
+        // attribute. Note: is_container treats optional<T>, where T is a 
+        // container as a container as well.
+        template <typename Component>
+        bool dispatch_attribute(Component const& component, mpl::true_) const
+        {
+            typedef traits::is_container<
+                typename traits::attribute_of<Component, context_type>::type
+            > predicate;
 
-           return dispatch_attribute_element(component, predicate());
-       }
+            return dispatch_attribute_element(component, predicate());
+        }
 
         // this is for the case when the current element doesn't expect an 
         // attribute
