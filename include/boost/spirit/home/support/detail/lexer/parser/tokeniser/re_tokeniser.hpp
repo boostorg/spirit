@@ -191,6 +191,9 @@ public:
                     charset (state_, map_, token_);
                     break;
                 }
+                case '/':
+                    throw runtime_error("Lookahead ('/') is not supported yet.");
+                    break;
                 default:
                     if ((state_._flags & icase) &&
                         (std::isupper (ch_, state_._locale) ||
