@@ -9,6 +9,9 @@
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_string.hpp>
 #include <boost/spirit/include/qi_directive.hpp>
+#include <boost/spirit/include/qi_action.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -141,5 +144,32 @@ main()
         BOOST_TEST(test("Bochi Bochi", no_case[s]));
     }
 
+    {   // lazy no_case chars
+
+        using namespace boost::spirit::ascii;
+
+        using boost::phoenix::val;
+        using boost::phoenix::ref;
+        using boost::spirit::_1;
+
+        BOOST_TEST((test("X", no_case[val('x')])));
+        BOOST_TEST((test("h", no_case[char_(val('a'), val('n'))])));
+        BOOST_TEST(test("0", no_case[char_(val("a-z0-9"))]));
+
+        char ch; // make sure lazy chars have an attribute
+        BOOST_TEST(test("x", no_case[char_(val('x'))][ref(ch) = _1]));
+        BOOST_TEST(ch == 'x');
+    }
+    
+    {   // lazy no_case lits
+        
+        using namespace boost::spirit::ascii;
+        using boost::phoenix::val;
+
+        BOOST_TEST(test("Bochi Bochi", no_case[val("bochi bochi")]));
+        BOOST_TEST(test("BOCHI BOCHI", no_case[val("bochi bochi")]));
+        BOOST_TEST(!test("Vavoo", no_case[val("bochi bochi")]));
+    }
+    
     return boost::report_errors();
 }
