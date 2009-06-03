@@ -42,13 +42,18 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace karma
 {
     using spirit::lazy;
+    typedef modify<karma::domain> karma_modify;
 
-    template <typename Function>
-    struct lazy_generator : generator<lazy_generator<Function> >
+    template <typename Function, typename Modifiers>
+    struct lazy_generator : generator<lazy_generator<Function, Modifiers> >
     {
         template <typename Context, typename Unused>
         struct attribute
         {
+            typedef typename
+                boost::result_of<karma_modify(tag::lazy_eval, Modifiers)>::type
+            modifier;
+
             typedef typename
                 remove_reference<
                     typename boost::result_of<Function(unused_type, Context)>::type
@@ -61,7 +66,7 @@ namespace boost { namespace spirit { namespace karma
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, expr_type)
 
             typedef typename
-                result_of::compile<karma::domain, expr_type, tag::lazy_eval>::type
+                result_of::compile<karma::domain, expr_type, modifier>::type
             generator_type;
 
             typedef typename
@@ -69,9 +74,8 @@ namespace boost { namespace spirit { namespace karma
             type;
         };
 
-        lazy_generator(Function const& func)
-          : func(func) 
-        {}
+        lazy_generator(Function const& func, Modifiers const& modifiers)
+          : func(func), modifiers(modifiers) {}
 
         template <
             typename OutputIterator, typename Context, 
@@ -80,7 +84,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& context, 
             Delimiter const& d, Attribute const& attr) const
         {
-            return compile<karma::domain>(func(unused, context), tag::lazy_eval())
+            return compile<karma::domain>(func(unused, context)
+              , karma_modify()(tag::lazy_eval(), modifiers))
                 .generate(sink, context, d, attr);
         }
 
@@ -88,23 +93,30 @@ namespace boost { namespace spirit { namespace karma
         info what(Context& context) const
         {
             return info("lazy"
-              , compile<karma::domain>(func(unused, context), tag::lazy_eval())
+              , compile<karma::domain>(func(unused, context)
+                , karma_modify()(tag::lazy_eval(), modifiers))
                     .what(context)
             );
         }
 
         Function func;
+        Modifiers modifiers;
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Function, typename Subject>
-    struct lazy_directive : unary_generator<lazy_directive<Function, Subject> >
+    template <typename Function, typename Subject, typename Modifiers>
+    struct lazy_directive 
+      : unary_generator<lazy_directive<Function, Subject, Modifiers> >
     {
         typedef Subject subject_type;
 
         template <typename Context, typename Unused>
         struct attribute
         {
+            typedef typename
+                boost::result_of<karma_modify(tag::lazy_eval, Modifiers)>::type
+            modifier;
+
             typedef typename
                 remove_reference<
                     typename boost::result_of<Function(unused_type, Context)>::type
@@ -125,7 +137,7 @@ namespace boost { namespace spirit { namespace karma
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, expr_type)
 
             typedef typename
-                result_of::compile<karma::domain, expr_type, tag::lazy_eval>::type
+                result_of::compile<karma::domain, expr_type, modifier>::type
             generator_type;
 
             typedef typename
@@ -133,8 +145,9 @@ namespace boost { namespace spirit { namespace karma
             type;
         };
 
-        lazy_directive(Function const& function, Subject const& subject)
-          : function(function), subject(subject) {}
+        lazy_directive(Function const& function, Subject const& subject
+              , Modifiers const& modifiers)
+          : function(function), subject(subject), modifiers(modifiers) {}
 
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
@@ -143,7 +156,8 @@ namespace boost { namespace spirit { namespace karma
         {
             return compile<karma::domain>(
                 proto::make_expr<proto::tag::subscript>(
-                    function(unused, ctx), subject), tag::lazy_eval())
+                    function(unused, ctx), subject)
+                  , karma_modify()(tag::lazy_eval(), modifiers))
                 .generate(sink, ctx, d, attr);
         }
 
@@ -153,13 +167,15 @@ namespace boost { namespace spirit { namespace karma
             return info("lazy-directive"
               , compile<karma::domain>(
                     proto::make_expr<proto::tag::subscript>(
-                        function(unused, ctx), subject), tag::lazy_eval())
+                        function(unused, ctx), subject)
+                      , karma_modify()(tag::lazy_eval(), modifiers))
                     .what(ctx)
             );
         }
 
         Function function;
         Subject subject;
+        Modifiers modifiers;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -168,21 +184,23 @@ namespace boost { namespace spirit { namespace karma
     template <typename Eval, typename Modifiers>
     struct make_primitive<phoenix::actor<Eval>, Modifiers>
     {
-        typedef lazy_generator<phoenix::actor<Eval> > result_type;
-        result_type operator()(phoenix::actor<Eval> const& f, unused_type) const
+        typedef lazy_generator<phoenix::actor<Eval>, Modifiers> result_type;
+        result_type operator()(phoenix::actor<Eval> const& f
+          , Modifiers const& modifiers) const
         {
-            return result_type(f);
+            return result_type(f, modifiers);
         }
     };
 
     template <typename Terminal, typename Actor, int Arity, typename Modifiers>
     struct make_primitive<lazy_terminal<Terminal, Actor, Arity>, Modifiers>
     {
-        typedef lazy_generator<Actor> result_type;
+        typedef lazy_generator<Actor, Modifiers> result_type;
         result_type operator()(
-            lazy_terminal<Terminal, Actor, Arity> const& lt, unused_type) const
+            lazy_terminal<Terminal, Actor, Arity> const& lt
+          , Modifiers const& modifiers) const
         {
-            return result_type(lt.actor);
+            return result_type(lt.actor, modifiers);
         }
     };
 
@@ -192,12 +210,12 @@ namespace boost { namespace spirit { namespace karma
     struct make_directive<lazy_terminal<Terminal, Actor, Arity>
       , Subject, Modifiers>
     {
-        typedef lazy_directive<Actor, Subject> result_type;
+        typedef lazy_directive<Actor, Subject, Modifiers> result_type;
         result_type operator()(
             lazy_terminal<Terminal, Actor, Arity> const& lt
-          , Subject const& subject, unused_type) const
+          , Subject const& subject, Modifiers const& modifiers) const
         {
-            return result_type(lt.actor, subject);
+            return result_type(lt.actor, subject, modifiers);
         }
     };
 

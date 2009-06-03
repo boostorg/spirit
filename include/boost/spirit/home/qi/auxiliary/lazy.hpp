@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace qi
             typedef typename
                 boost::result_of<qi_modify(tag::lazy_eval, Modifiers)>::type
             modifier;
-            
+
             typedef typename
                 remove_reference<
                     typename boost::result_of<Function(unused_type, Context)>::type
@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace qi
     template <typename Function, typename Subject, typename Modifiers>
     struct lazy_directive 
         : unary_parser<lazy_directive<Function, Subject, Modifiers> >
-    {       
+    {
         typedef Subject subject_type;
 
         template <typename Context, typename Iterator>
@@ -114,7 +114,7 @@ namespace boost { namespace spirit { namespace qi
             typedef typename
                 boost::result_of<qi_modify(tag::lazy_eval, Modifiers)>::type
             modifier;
-                
+
             typedef typename
                 remove_reference<
                     typename boost::result_of<Function(unused_type, Context)>::type

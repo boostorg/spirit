@@ -160,9 +160,9 @@ main()
         BOOST_TEST(test("x", no_case[char_(val('x'))][ref(ch) = _1]));
         BOOST_TEST(ch == 'x');
     }
-    
+
     {   // lazy no_case lits
-        
+
         using namespace boost::spirit::ascii;
         using boost::phoenix::val;
 
@@ -170,6 +170,6 @@ main()
         BOOST_TEST(test("BOCHI BOCHI", no_case[val("bochi bochi")]));
         BOOST_TEST(!test("Vavoo", no_case[val("bochi bochi")]));
     }
-    
+
     return boost::report_errors();
 }

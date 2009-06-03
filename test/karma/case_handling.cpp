@@ -255,5 +255,13 @@ main()
         BOOST_TEST(test("ÄÄ", upper["Ää"]));
     }
 
+    {
+        using namespace boost::spirit::ascii;
+        using boost::phoenix::val;
+
+        BOOST_TEST(test("x", lower[val('X')]));
+        BOOST_TEST(test("x", lower[val('x')]));
+    }
+
     return boost::report_errors();
 }
