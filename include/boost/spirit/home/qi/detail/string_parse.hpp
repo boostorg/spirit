@@ -23,11 +23,11 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Iterator i = first;
         Char ch = *str;
 
-        for (; !!ch; ++str, ++i)
+        for (; !!ch; ++i)
         {
             if (i == last || (ch != *i))
                 return false;
-            ch = *str;
+            ch = *++str;
         }
 
         detail::assign_to(first, i, attr);
