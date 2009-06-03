@@ -16,6 +16,7 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/detail/fail_function.hpp>
 #include <boost/spirit/home/karma/detail/pass_container.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
@@ -120,8 +121,18 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            return generate_impl(sink, ctx, d, attr
-                , traits::is_container<Attribute>());
+            // wrap the given output iterator avoid output as long as one
+            // component of the sequence fails
+            detail::enable_buffering<OutputIterator> buffering(sink);
+            bool r = false;
+            {
+                detail::disable_counting<OutputIterator> nocounting(sink);
+                r = generate_impl(sink, ctx, d, attr
+                  , traits::is_container<Attribute>());
+            }
+            if (r) 
+                buffering.buffer_copy();
+            return r;
         }
 
         template <typename Context>

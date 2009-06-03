@@ -19,14 +19,6 @@
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
-    template <typename T>
-    struct not_is_variant
-      : mpl::true_ {};
-
-    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
-      : mpl::false_ {};
-
     template <typename Iterator, typename Context, typename Skipper,
         typename Attribute>
     struct alternative_function
@@ -64,7 +56,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool operator()(Component const& component) const
         {
             // return true if the parser succeeds
-            return call(component, not_is_variant<Attribute>());
+            return call(component, spirit::traits::not_is_variant<Attribute>());
         }
 
         Iterator& first;

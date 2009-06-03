@@ -37,6 +37,14 @@ namespace boost { namespace spirit { namespace traits
     // components.
     ///////////////////////////////////////////////////////////////////////////
 
+    template <typename T>
+    struct not_is_variant
+      : mpl::true_ {};
+
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+      : mpl::false_ {};
+
     ///////////////////////////////////////////////////////////////////////////
     // attribute_of
     //

@@ -28,20 +28,37 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //  A component is compatible to a given Attribute type if the Attribute
     //  is the same as the expected type of the component
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Expected, typename Attribute, typename IsNotVariant>
+    struct compute_compatible_component_variant
+    {
+        typedef mpl::int_<-1> distance;
+        typedef typename is_same<Expected, Attribute>::type type;
+        enum { value = type::value };
+    };
+
     template <typename Expected, typename Attribute>
-    struct compute_compatible_component
+    struct compute_compatible_component_variant<Expected, Attribute, mpl::false_>
     {
         typedef typename Attribute::types types;
         typedef typename mpl::end<types>::type end;
-        typedef typename mpl::begin<types>::type begin;
 
         typedef typename 
             mpl::find_if<types, is_same<Expected, mpl::_1> >::type 
         iter;
 
+        typedef typename mpl::distance<
+            typename mpl::begin<types>::type, iter
+        >::type distance;
+
         typedef typename mpl::not_<is_same<iter, end> >::type type;
         enum { value = type::value };
     };
+
+    template <typename Expected, typename Attribute>
+    struct compute_compatible_component
+      : compute_compatible_component_variant<Expected, Attribute
+          , typename spirit::traits::not_is_variant<Attribute>::type>
+    {};
 
     template <typename Expected>
     struct compute_compatible_component<Expected, unused_type>
@@ -111,13 +128,28 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         call(Component const& component, OutputIterator& sink,
             Context& ctx, Delimiter const& d, Attribute const& attr)
         {
+            return call(component, sink, ctx, d, attr
+              , spirit::traits::not_is_variant<Attribute>());
+        }
+
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool
+        call(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Attribute const& attr, mpl::true_)
+        {
+            return component.generate(sink, ctx, d, attr);
+        }
+
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        static bool
+        call(Component const& component, OutputIterator& sink,
+            Context& ctx, Delimiter const& d, Attribute const& attr, mpl::false_)
+        {
             typedef
                 compute_compatible_component<Expected, Attribute>
             component_type;
 
-            typedef typename mpl::distance<
-                typename component_type::begin, typename component_type::iter
-            >::type distance_type;
+            typedef typename component_type::distance distance_type;
 
             // make sure, the content of the passed variant matches our
             // expectations

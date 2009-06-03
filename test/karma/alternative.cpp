@@ -108,6 +108,16 @@ main()
         BOOST_TEST(!test_delimited("", char_ | int_, v, char_(' ')));
     }
 
+    {
+        std::vector<int> v;
+        BOOST_TEST(test("[]", '[' << (int_ % ", ") << ']' | "[]", v));
+
+        v.push_back(5);
+        v.push_back(5);
+        v.push_back(5);
+        BOOST_TEST(test("[5, 5, 5]", '[' << (int_ % ", ") << ']' | "[]", v));
+    }
+
     return boost::report_errors();
 }
 
