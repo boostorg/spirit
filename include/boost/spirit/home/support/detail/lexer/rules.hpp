@@ -338,10 +338,12 @@ public:
         const string_deque_deque &all_regexes_ = rules_.regexes ();
         const id_vector_deque &all_ids_ = rules_.ids ();
         const id_vector_deque &all_unique_ids_ = rules_.unique_ids ();
+        const id_vector_deque &all_states_ = rules_.states ();
         typename string_deque::const_iterator regex_iter_;
         typename string_deque::const_iterator regex_end_;
         typename id_vector::const_iterator id_iter_;
         typename id_vector::const_iterator uid_iter_;
+        typename id_vector::const_iterator state_iter_;
 
         if (star_)
         {
@@ -353,22 +355,27 @@ public:
                 all_ids_.begin ();
             typename id_vector_deque::const_iterator all_uids_iter_ =
                 all_unique_ids_.begin ();
+            typename id_vector_deque::const_iterator all_states_iter_ =
+                all_states_.begin ();
 
             for (; all_regexes_iter_ != all_regexes_end_;
-                ++all_regexes_iter_, ++state_)
+                ++state_, ++all_regexes_iter_, ++all_ids_iter_,
+                ++all_uids_iter_, ++all_states_iter_)
             {
                 regex_iter_ = all_regexes_iter_->begin ();
                 regex_end_ = all_regexes_iter_->end ();
                 id_iter_ = all_ids_iter_->begin ();
                 uid_iter_ = all_uids_iter_->begin ();
+                state_iter_ = all_states_iter_->begin ();
 
                 for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
-                    ++uid_iter_)
+                    ++uid_iter_, ++state_iter_)
                 {
                     // If dot_ then lookup state name from rules_; otherwise
                     // pass name through.
-                    add (rules_.state (state_), *regex_iter_, *id_iter_, dot_ ?
-                        rules_.state (state_) : to_, true, *uid_iter_);
+                    add (dot_ ? rules_.state (state_) : to_, *regex_iter_,
+                        *id_iter_, rules_.state (*state_iter_), true,
+                        *uid_iter_);
                 }
             }
         }
@@ -415,14 +422,16 @@ public:
                 regex_end_ = all_regexes_[state_].end ();
                 id_iter_ = all_ids_[state_].begin ();
                 uid_iter_ = all_unique_ids_[state_].begin ();
+                state_iter_ = all_states_[state].begin ();
 
                 for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
-                    ++uid_iter_)
+                    ++uid_iter_, ++state_iter_)
                 {
                     // If dot_ then lookup state name from rules_; otherwise
                     // pass name through.
-                    add (state_name_.c_str (), *regex_iter_, *id_iter_, dot_ ?
-                        rules_.state (state_) : to_, true, *uid_iter_);
+                    add (dot_ ? state_name_.c_str () : to_, *regex_iter_,
+                        *id_iter_, rules_.state (*state_iter_), true,
+                        *uid_iter_);
                 }
             }
         }
