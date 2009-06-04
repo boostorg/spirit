@@ -436,7 +436,7 @@ public:
             }
         }
     }
-
+/*
     void add (const CharT *curr_state_, const basic_rules<CharT> &rules_)
     {
         const string_deque_deque &regexes_ = rules_.regexes ();
@@ -470,7 +470,7 @@ public:
             }
         }
     }
-
+*/
     const string_size_t_map &statemap () const
     {
         return _statemap;
