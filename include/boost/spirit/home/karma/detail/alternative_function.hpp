@@ -18,6 +18,7 @@
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/distance.hpp>
+#include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/variant.hpp>
 
@@ -30,7 +31,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expected, typename Attribute, typename IsNotVariant>
     struct compute_compatible_component_variant
-      : is_same<Expected, Attribute> {};
+      : mpl::or_<is_same<Expected, Attribute>, is_same<Expected, hold_any> > {};
 
     template <typename Expected, typename Attribute>
     struct compute_compatible_component_variant<Expected, Attribute, mpl::false_>
