@@ -428,6 +428,40 @@ public:
         }
     }
 
+    void add (const CharT *curr_state_, const basic_rules<CharT> &rules_)
+    {
+        const string_deque_deque &regexes_ = rules_.regexes ();
+        const id_vector_deque &ids_ = rules_.ids ();
+        const id_vector_deque &unique_ids_ = rules_.unique_ids ();
+        typename string_deque_deque::const_iterator state_regex_iter_ =
+            regexes_.begin ();
+        typename string_deque_deque::const_iterator state_regex_end_ =
+            regexes_.end ();
+        typename id_vector_deque::const_iterator state_id_iter_ =
+            ids_.begin ();
+        typename id_vector_deque::const_iterator state_uid_iter_ =
+            unique_ids_.begin ();
+        typename string_deque::const_iterator regex_iter_;
+        typename string_deque::const_iterator regex_end_;
+        typename id_vector::const_iterator id_iter_;
+        typename id_vector::const_iterator uid_iter_;
+
+        for (; state_regex_iter_ != state_regex_end_; ++state_regex_iter_)
+        {
+            regex_iter_ = state_regex_iter_->begin ();
+            regex_end_ = state_regex_iter_->end ();
+            id_iter_ = state_id_iter_->begin ();
+            uid_iter_ = state_uid_iter_->begin ();
+
+            for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
+                ++uid_iter_)
+            {
+                add (curr_state_, *regex_iter_, *id_iter_, curr_state_, true,
+                    *uid_iter_);
+            }
+        }
+    }
+
     const string_size_t_map &statemap () const
     {
         return _statemap;
