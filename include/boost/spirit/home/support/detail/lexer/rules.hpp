@@ -422,7 +422,7 @@ public:
                 regex_end_ = all_regexes_[state_].end ();
                 id_iter_ = all_ids_[state_].begin ();
                 uid_iter_ = all_unique_ids_[state_].begin ();
-                state_iter_ = all_states_[state].begin ();
+                state_iter_ = all_states_[state_].begin ();
 
                 for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
                     ++uid_iter_, ++state_iter_)
