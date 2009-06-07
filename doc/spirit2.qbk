@@ -137,6 +137,7 @@
 [include what_s_new.qbk]
 [include introduction.qbk]
 [include structure.qbk]
+[include abstracts.qbk]
 [include qi.qbk]
 [include karma.qbk]
 [include lex.qbk]

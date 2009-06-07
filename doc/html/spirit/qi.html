@@ -102,7 +102,7 @@
 <div></div>
 </div>
 <a name="spirit.qi.tutorials.quick_start.why_would_you_want_to_use_spirit_qi_"></a><h5>
-<a name="id414454"></a>
+<a name="id414456"></a>
           <a href="qi.html#spirit.qi.tutorials.quick_start.why_would_you_want_to_use_spirit_qi_">Why
           would you want to use Spirit.Qi?</a>
         </h5>
@@ -153,7 +153,7 @@
           on how to build parsers from the simplest parser, building up as we go.
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__1_parsing_a_number"></a><h5>
-<a name="id414535"></a>
+<a name="id414536"></a>
           <a href="qi.html#spirit.qi.tutorials.warming_up.trivial_example__1_parsing_a_number">Trivial
           Example #1 Parsing a number</a>
         </h5>
@@ -168,7 +168,7 @@
           parsers and consistent naming conventions help you keep from going insane!
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__2_parsing_two_numbers"></a><h5>
-<a name="id414581"></a>
+<a name="id414582"></a>
           <a href="qi.html#spirit.qi.tutorials.warming_up.trivial_example__2_parsing_two_numbers">Trivial
           Example #2 Parsing two numbers</a>
         </h5>
@@ -201,7 +201,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__3_parsing_one_or_more_numbers"></a><h5>
-<a name="id414670"></a>
+<a name="id414671"></a>
           <a href="qi.html#spirit.qi.tutorials.warming_up.trivial_example__3_parsing_one_or_more_numbers">Trivial
           Example #3 Parsing one or more numbers</a>
         </h5>
@@ -225,7 +225,7 @@
           in most places.
         </p>
 <a name="spirit.qi.tutorials.warming_up.trivial_example__4_parsing_a_comma_delimited_list_of_numbers"></a><h5>
-<a name="id414747"></a>
+<a name="id414748"></a>
           <a href="qi.html#spirit.qi.tutorials.warming_up.trivial_example__4_parsing_a_comma_delimited_list_of_numbers">Trivial
           Example #4 Parsing a comma-delimited list of numbers</a>
         </h5>
@@ -248,7 +248,7 @@
           star encloses the complete expression above.
         </p>
 <a name="spirit.qi.tutorials.warming_up.let_s_parse_"></a><h5>
-<a name="id414923"></a>
+<a name="id414924"></a>
           <a href="qi.html#spirit.qi.tutorials.warming_up.let_s_parse_">Let's Parse!</a>
         </h5>
 <p>
@@ -618,7 +618,7 @@
           The examples above can be found here: <a href="../../../example/qi/actions.cpp" target="_top">../../example/qi/actions.cpp</a>
         </p>
 <a name="spirit.qi.tutorials.semantic_actions.phoenix"></a><h5>
-<a name="id417350"></a>
+<a name="id417351"></a>
           <a href="qi.html#spirit.qi.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h5>
 <p>
@@ -900,7 +900,7 @@
 <p>
         </p>
 <p>
-          The full cpp file for this example can be found here: <a href="../../../example/qi/actions.cpp" target="_top">../../example/qi/actions.cpp</a>
+          The full cpp file for this example can be found here: <a href="../../../example/qi/sum.cpp" target="_top">../../example/qi/sum.cpp</a>
         </p>
 <p>
           This is almost like our original numbers list example. We're incrementally
@@ -1187,7 +1187,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.tutorials.roman_numerals.symbol_table"></a><h5>
-<a name="id422370"></a>
+<a name="id422369"></a>
           <a href="qi.html#spirit.qi.tutorials.roman_numerals.symbol_table">Symbol
           Table</a>
         </h5>
@@ -1319,7 +1319,7 @@
           They are all parsers.
         </p>
 <a name="spirit.qi.tutorials.roman_numerals.rules"></a><h5>
-<a name="id423675"></a>
+<a name="id423674"></a>
           <a href="qi.html#spirit.qi.tutorials.roman_numerals.rules">Rules</a>
         </h5>
 <p>
@@ -1399,7 +1399,7 @@
 <pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">double_</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">double_</span><span class="special">);</span>
 </pre>
 <a name="spirit.qi.tutorials.roman_numerals.grammars"></a><h5>
-<a name="id424257"></a>
+<a name="id424256"></a>
           <a href="qi.html#spirit.qi.tutorials.roman_numerals.grammars">Grammars</a>
         </h5>
 <p>
@@ -1504,7 +1504,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.tutorials.roman_numerals.let_s_parse_"></a><h5>
-<a name="id425274"></a>
+<a name="id425273"></a>
           <a href="qi.html#spirit.qi.tutorials.roman_numerals.let_s_parse_">Let's Parse!</a>
         </h5>
 <p>
@@ -1708,7 +1708,7 @@
           has a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></tt> attribute.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h5>
-<a name="id427554"></a>
+<a name="id427553"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
         </h5>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
@@ -1725,7 +1725,7 @@
           a double quote.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h5>
-<a name="id427710"></a>
+<a name="id427709"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
         </h5>
 <p>
@@ -1744,7 +1744,7 @@
           is just <tt class="computeroutput"><span class="keyword">char</span></tt>.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h5>
-<a name="id427868"></a>
+<a name="id427867"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
         </h5>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
@@ -1763,7 +1763,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h5>
-<a name="id428054"></a>
+<a name="id428053"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
         </h5>
@@ -1804,7 +1804,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h5>
-<a name="id428377"></a>
+<a name="id428375"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
         </h5>
@@ -1836,7 +1836,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h5>
-<a name="id428726"></a>
+<a name="id428724"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
         </h5>
@@ -1874,7 +1874,7 @@
           directly into the rule's attribute, in-situ.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h5>
-<a name="id429170"></a>
+<a name="id429168"></a>
           <a href="qi.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
         </h5>
 <p>
@@ -1997,7 +1997,7 @@
           for testing purposes. "4.toyxml" has an error in it.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.first_cut"></a><h5>
-<a name="id430077"></a>
+<a name="id430075"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.first_cut">First Cut</a>
         </h5>
 <p>
@@ -2073,7 +2073,7 @@
           by the placeholder <tt class="computeroutput"><span class="identifier">_val</span></tt>).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.alternates"></a><h5>
-<a name="id431678"></a>
+<a name="id431675"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.alternates">Alternates</a>
         </h5>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
@@ -2103,7 +2103,7 @@
 <span class="special">;</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___asts_.not_predicate"></a><h5>
-<a name="id432139"></a>
+<a name="id432136"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.not_predicate">Not
           Predicate</a>
         </h5>
@@ -2130,7 +2130,7 @@
           at this point.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.inherited_attribute"></a><h5>
-<a name="id432380"></a>
+<a name="id432377"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.inherited_attribute">Inherited
           Attribute</a>
         </h5>
@@ -2156,7 +2156,7 @@
           <tt class="computeroutput"><span class="identifier">_r3</span></tt>, etc. if you have more).
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit"></a><h5>
-<a name="id432659"></a>
+<a name="id432656"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.a_lazy_lit">A Lazy
           Lit</a>
         </h5>
@@ -2190,7 +2190,7 @@
           accessors, provided by <a href="../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.how_it_all_works"></a><h5>
-<a name="id433139"></a>
+<a name="id433136"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.how_it_all_works">How
           it all works</a>
         </h5>
@@ -2237,7 +2237,7 @@
           as <tt class="computeroutput"><span class="identifier">_r1</span></tt>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.the_structures"></a><h5>
-<a name="id433582"></a>
+<a name="id433580"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.the_structures">The
           Structures</a>
         </h5>
@@ -2270,7 +2270,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants"></a><h5>
-<a name="id433850"></a>
+<a name="id433848"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.of_alternates_and_variants">Of
           Alternates and Variants</a>
         </h5>
@@ -2297,7 +2297,7 @@
           of <tt class="computeroutput"><span class="identifier">a</span></tt> and <tt class="computeroutput"><span class="identifier">B</span></tt> is the attribute of <tt class="computeroutput"><span class="identifier">b</span></tt>.
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again"></a><h5>
-<a name="id434116"></a>
+<a name="id434114"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.adapting_structs_again">Adapting
           structs again</a>
         </h5>
@@ -2323,7 +2323,7 @@
 <p>
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.one_more_take"></a><h5>
-<a name="id434314"></a>
+<a name="id434312"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.one_more_take">One
           More Take</a>
         </h5>
@@ -2392,7 +2392,7 @@
           in the <tt class="computeroutput"><span class="identifier">xml</span></tt> rule:
         </p>
 <a name="spirit.qi.tutorials.mini_xml___asts_.local_variables"></a><h5>
-<a name="id435559"></a>
+<a name="id435556"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___asts_.local_variables">Local
           Variables</a>
         </h5>
@@ -2458,7 +2458,7 @@
           What's new?
         </p>
 <a name="spirit.qi.tutorials.mini_xml___error_handling.readable_names"></a><h5>
-<a name="id436012"></a>
+<a name="id436009"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___error_handling.readable_names">Readable
           Names</a>
         </h5>
@@ -2477,7 +2477,7 @@
 <span class="identifier">end_tag</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"end_tag"</span><span class="special">);</span>
 </pre>
 <a name="spirit.qi.tutorials.mini_xml___error_handling.on_error"></a><h5>
-<a name="id436263"></a>
+<a name="id436260"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___error_handling.on_error">On
           Error</a>
         </h5>
@@ -2615,7 +2615,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.tutorials.mini_xml___error_handling.expectation_points"></a><h5>
-<a name="id436933"></a>
+<a name="id436930"></a>
           <a href="qi.html#spirit.qi.tutorials.mini_xml___error_handling.expectation_points">Expectation
           Points</a>
         </h5>
