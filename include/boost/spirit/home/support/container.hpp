@@ -32,10 +32,10 @@ namespace boost { namespace spirit { namespace traits
 
     namespace detail
     {
-        BOOST_MPL_HAS_XXX_TRAIT_DEF(value_type);
-        BOOST_MPL_HAS_XXX_TRAIT_DEF(iterator);
-        BOOST_MPL_HAS_XXX_TRAIT_DEF(size_type);
-        BOOST_MPL_HAS_XXX_TRAIT_DEF(reference);
+        BOOST_MPL_HAS_XXX_TRAIT_DEF(value_type)
+        BOOST_MPL_HAS_XXX_TRAIT_DEF(iterator)
+        BOOST_MPL_HAS_XXX_TRAIT_DEF(size_type)
+        BOOST_MPL_HAS_XXX_TRAIT_DEF(reference)
     }
 
     template <typename T>
