@@ -161,6 +161,28 @@ main()
         }
     }
     {
+        range_run<char> rr;
+        rr.set(range<char>('c', 'e'));
+        rr.set(range<char>('g', 'i'));
+        rr.set(range<char>('d', 'k'));
+        for (char c = 'a'; c <= 'm'; ++c)
+        {
+            BOOST_TEST((c >= 'c' && c <= 'k') == rr.test(c));
+        }
+    }
+    {
+        typedef boost::integer_traits<char> traits;
+        char const const_min = traits::const_min;
+        range_run<char> rr;
+        rr.set(range<char>(const_min, const_min+16));
+        rr.clear(range<char>(const_min, const_min+8));
+        BOOST_TEST(!rr.test(const_min));
+        BOOST_TEST(!rr.test(const_min+8));
+        BOOST_TEST(rr.test(const_min+9));
+        BOOST_TEST(rr.test(const_min+16));
+        BOOST_TEST(!rr.test(const_min+17));
+    }
+    {
         acid_test<char>();
         acid_test<signed char>();
         acid_test<unsigned char>();
