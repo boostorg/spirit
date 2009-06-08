@@ -124,6 +124,11 @@ struct actor_result {
 };
 
 //////////////////////////////////
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
+#endif
+
 template <typename BaseT>
 struct actor : public BaseT {
 
@@ -269,6 +274,10 @@ struct actor : public BaseT {
     typename impl::make_binary1<index_op, BaseT, B>::type
     operator[](B const& b) const;
 };
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 ///////////////////////////////////////////////////////////////////////////
 //
