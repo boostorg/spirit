@@ -213,8 +213,8 @@ namespace boost { namespace spirit { namespace lex
         }
 
         // general accessors 
-        Idtype id() const { return token_id_; }
-        void id(Idtype id) { token_id_ = id; }
+        Idtype const& id() const { return token_id_; }
+        void id(Idtype const& id) { token_id_ = id; }
         std::size_t unique_id() const { return unique_id_; }
 
         string_type definition() const 

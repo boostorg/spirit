@@ -64,9 +64,9 @@ struct strip_comments_tokens : lexer<Lexer>
       : strip_comments_tokens::base_type(match_flags::match_default)
     {
         // define tokens and associate them with the lexer
-        cppcomment = "//[^\n]*";
-        ccomment = "/\\*";
-        endcomment = "\\*/";
+        cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
+        ccomment = "\\/\\*";            // '/*'
+        endcomment = "\\*\\/";          // '*/'
 
         // The following tokens are associated with the default lexer state 
         // (the "INITIAL" state). Specifying 'INITIAL' as a lexer state is 

@@ -66,10 +66,34 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     namespace result_of
     {
+        ///////////////////////////////////////////////////////////////////////
         template <typename Container>
         struct value
         {
             typedef typename Container::value_type type;
+        };
+
+        // this will be instantiated if the optional holds a container
+        template <typename T>
+        struct value<optional<T> > : value<T> {};
+
+        // this will be instantiated if the variant holds a container
+        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+        struct value<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+        {
+            typedef typename 
+                boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
+            types;
+            typedef typename 
+                mpl::find_if<types, is_container<mpl::_1> >::type 
+            iter;
+
+            typedef typename value<
+                typename mpl::if_<
+                    is_same<iter, typename mpl::end<types>::type>
+                  , unused_type, typename mpl::deref<iter>::type
+                >::type
+            >::type type;
         };
 
         template <>
@@ -84,6 +108,7 @@ namespace boost { namespace spirit { namespace traits
             typedef unused_type type;
         };
 
+        ///////////////////////////////////////////////////////////////////////
         template <typename Container>
         struct iterator
         {
@@ -108,6 +133,7 @@ namespace boost { namespace spirit { namespace traits
             typedef unused_type const* type;
         };
 
+        ///////////////////////////////////////////////////////////////////////
         template <typename T>
         struct optional_value
         {

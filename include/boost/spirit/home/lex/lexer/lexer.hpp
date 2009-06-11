@@ -319,8 +319,9 @@ namespace boost { namespace spirit { namespace lex
 
         // access iterator interface
         template <typename Iterator>
-        iterator_type begin(Iterator& first, Iterator const& last) const
-            { return this->lexer_type::begin(first, last); }
+        iterator_type begin(Iterator& first, Iterator const& last
+                , char_type const* initial_state = 0) const
+            { return this->lexer_type::begin(first, last, initial_state); }
         iterator_type end() const 
             { return this->lexer_type::end(); }
 

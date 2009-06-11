@@ -79,9 +79,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // for tokenization
         template <typename IteratorData>
         iterator(IteratorData const& iterdata_, base_iterator_type& first
-              , base_iterator_type const& last)
+              , base_iterator_type const& last, char_type const* state = 0)
           : base_type(functor_type(unique_functor_type()
-              , shared_functor_type(iterdata_, first, last))) {}
+              , shared_functor_type(iterdata_, first, last))) 
+        {
+            set_state(map_state(state));
+        }
 
         // create an end iterator usable for end of range checking
         iterator() {}
@@ -96,7 +99,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // by the underlying lexer object
         std::size_t map_state(char_type const* statename)
         {
-            return unique_functor_type::map_state(*this, statename);
+            return (0 != statename) 
+              ? unique_functor_type::map_state(*this, statename)
+              : 0;
         }
     };
 

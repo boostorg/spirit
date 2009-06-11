@@ -58,6 +58,20 @@ using namespace boost::spirit::lex;
 //  Note, the token definition type is derived from the 'lexertl_actor_lexer'
 //  template, which is a necessary to being able to use lexer semantic actions.
 ///////////////////////////////////////////////////////////////////////////////
+struct distance_func
+{
+    template <typename Iterator1, typename Iterator2>
+    struct result : boost::iterator_difference<Iterator1> {};
+
+    template <typename Iterator1, typename Iterator2>
+    typename result<Iterator1, Iterator2>::type 
+    operator()(Iterator1& begin, Iterator2& end) const
+    {
+        return std::distance(begin, end);
+    }
+};
+boost::phoenix::function<distance_func> const distance = distance_func();
+
 //[wcl_token_definition
 template <typename Lexer>
 struct word_count_tokens : lexer<Lexer>
@@ -68,12 +82,13 @@ struct word_count_tokens : lexer<Lexer>
       , eol("\n")
       , any(".")
     {
+        using boost::spirit::lex::_start;
+        using boost::spirit::lex::_end;
         using boost::phoenix::ref;
-        using boost::phoenix::distance;
 
         // associate tokens with the lexer
         this->self 
-            =   word  [++ref(w), ref(c) += distance(_1)]
+            =   word  [++ref(w), ref(c) += distance(_start, _end)]
             |   eol   [++ref(c), ++ref(l)] 
             |   any   [++ref(c)]
             ;

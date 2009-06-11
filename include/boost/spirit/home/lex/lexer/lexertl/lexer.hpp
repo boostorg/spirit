@@ -20,6 +20,7 @@
 
 #include <boost/spirit/home/lex/lexer/lexertl/token.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/functor.hpp>
+#include <boost/spirit/home/lex/lexer/lexertl/functor_data.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/iterator.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/unique_id.hpp>
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
@@ -204,7 +205,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token = token<>
       , typename Iterator = typename Token::iterator_type
-      , typename Functor = functor<Token, Iterator, mpl::false_>
+      , typename Functor = functor<Token, lexertl::detail::data, Iterator, mpl::false_>
       , typename TokenSet = lex::token_set<token_set<Token, Iterator> > >
     class lexer 
     {
@@ -238,13 +239,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     public:
         //  Return the start iterator usable for iterating over the generated
         //  tokens.
-        iterator_type begin(Iterator& first, Iterator const& last) const
+        iterator_type begin(Iterator& first, Iterator const& last
+          , char_type const* initial_state = 0) const
         { 
             if (!init_dfa())
                 return iterator_type();
 
             iterator_data_type iterator_data = { state_machine_, rules_, actions_ };
-            return iterator_type(iterator_data, first, last);
+            return iterator_type(iterator_data, first, last, initial_state);
         }
 
         //  Return the end iterator usable to stop iterating over the generated 
@@ -287,7 +289,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             add_state(state);
             initialized_dfa_ = false;
             rules_.add("*", tokset.get_rules(), state);
-//             rules_.add(state, tokset.get_rules());
         }
 
         // Allow to associate a whole lexer instance with another lexer 
@@ -301,7 +302,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             add_state(state);
             initialized_dfa_ = false;
             rules_.add("*", lexer_def.get_rules(), state);
-//             rules_.add(state, tokset.get_rules());
         }
 
         // interface for pattern definition management
@@ -340,23 +340,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename F>
         void add_action(id_type unique_id, std::size_t state, F act)
         {
-            // If you get compilation errors below stating value_type not being
-            // a member of boost::fusion::unused_type, then you are probably
-            // using semantic actions in your token definition without 
-            // the actor_lexer being specified as the base class of your lexer
-            // (instead of the lexer class).
-            typedef typename Functor::semantic_actions_type::value_type
-                value_type;
             typedef typename Functor::wrap_action_type wrapper_type;
-
-            if (actions_.size() <= state)
-                actions_.resize(state + 1); 
-
-            value_type& actions (actions_[state]);
-            if (actions.size() <= unique_id)
-                actions.resize(unique_id + 1); 
-
-            actions[unique_id] = wrapper_type::call(act);
+            actions_.add_action(unique_id, state, wrapper_type::call(act));
         }
 
         bool init_dfa() const
@@ -410,7 +395,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token = token<>
       , typename Iterator = typename Token::iterator_type
-      , typename Functor = functor<Token, Iterator, mpl::true_>
+      , typename Functor = functor<Token, lexertl::detail::data, Iterator, mpl::true_>
       , typename TokenSet = lex::token_set<token_set<Token, Iterator> > >
     class actor_lexer : public lexer<Token, Iterator, Functor, TokenSet>
     {

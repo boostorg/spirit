@@ -244,31 +244,37 @@ namespace boost { namespace spirit { namespace lex
     //  f:              A functor (callable object) taking a single argument of
     //                  the token type and returning a bool, indicating whether
     //                  the tokenization should be canceled.
+    //  initial_state:  The name of the state the lexer should start matching.
+    //                  The default value is zero, causing the lexer to start 
+    //                  in its 'INITIAL' state.
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Lexer, typename F>
     inline bool
-    tokenize(Iterator& first, Iterator last, Lexer const& lex, F f)
+    tokenize(Iterator& first, Iterator last, Lexer const& lex, F f
+      , typename Lexer::char_type const* initial_state = 0)
     {
         typedef typename Lexer::iterator_type iterator_type;
 
+        iterator_type iter = lex.begin(first, last, initial_state);
         iterator_type end = lex.end();
-        for (iterator_type iter = lex.begin(first, last); iter != end; ++iter) 
+        for (/**/; iter != end; ++iter) 
         {
             if (!f(*iter))
                 return false;
         }
-        return true;
+        return (iter == end) ? true : false;
     }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Lexer>
     inline bool
-    tokenize(Iterator& first, Iterator last, Lexer const& lex)
+    tokenize(Iterator& first, Iterator last, Lexer const& lex
+      , typename Lexer::char_type const* initial_state = 0)
     {
         typedef typename Lexer::iterator_type iterator_type;
 
-        iterator_type iter = lex.begin(first, last);
+        iterator_type iter = lex.begin(first, last, initial_state);
         iterator_type end = lex.end();
 
         while (iter != end && token_is_valid(*iter))

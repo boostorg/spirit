@@ -56,6 +56,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     struct pass_container
     {
         typedef typename F::context_type context_type;
+        typedef typename F::iterator_type iterator_type;
 
         pass_container(F const& f, Attr& attr)
           : f(f), attr(attr) {}
@@ -92,7 +93,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool dispatch_attribute(Component const& component, mpl::true_) const
         {
             typedef traits::is_container<
-                typename traits::attribute_of<Component, context_type>::type
+                typename traits::attribute_of<
+                    Component, context_type, iterator_type
+                >::type
             > predicate;
 
             return dispatch_attribute_element(component, predicate());
@@ -116,7 +119,9 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // of the current element (component). If this is has no attribute
             // we shouldn't push an element into the container.
             typedef traits::is_not_unused<
-                typename traits::attribute_of<Component, context_type>::type
+                typename traits::attribute_of<
+                    Component, context_type, iterator_type
+                >::type
             > predicate;
 
             return dispatch_attribute(component, predicate());
@@ -137,7 +142,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool operator()(Component const& component) const
         {
             typedef typename traits::result_of::value<Attr>::type lhs;
-            typedef typename F::iterator_type iterator_type;
             typedef typename F::context_type context_type;
             typedef typename traits::attribute_of<
                 Component, context_type, iterator_type>::type

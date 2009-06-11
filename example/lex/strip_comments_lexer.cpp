@@ -67,10 +67,12 @@ struct echo_input_functor
       : os(os_) {}
 
     // This is called by the semantic action handling code during the lexing
-    template <typename Range, typename LexerContext>
-    void operator()(Range const& r, std::size_t, bool&, LexerContext&) const
+    template <typename Iterator, typename Context>
+    void operator()(Iterator const& b, Iterator const& e
+      , BOOST_SCOPED_ENUM(boost::spirit::lex::pass_flags)&
+      , std::size_t&, Context&) const
     {
-        os << r;
+        os << std::string(b, e);
     }
 
     std::basic_ostream<Char, Traits>& os;
@@ -92,8 +94,10 @@ struct set_lexer_state
       : state(state_) {}
 
     // This is called by the semantic action handling code during the lexing
-    template <typename Range, typename LexerContext>
-    void operator()(Range const&, std::size_t, bool&, LexerContext& ctx) const
+    template <typename Iterator, typename Context>
+    void operator()(Iterator const&, Iterator const&
+      , BOOST_SCOPED_ENUM(boost::spirit::lex::pass_flags)&
+      , std::size_t&, Context& ctx) const
     {
         ctx.set_state_name(state.c_str());
     }
@@ -109,9 +113,9 @@ struct strip_comments_tokens : lexer<Lexer>
       : strip_comments_tokens::base_type(match_flags::match_default)
     {
         // define tokens and associate them with the lexer
-        cppcomment = "//[^\n]*";
-        ccomment = "/\\*";
-        endcomment = "\\*/";
+        cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
+        ccomment = "\\/\\*";            // '/*'
+        endcomment = "\\*\\/";          // '*/'
         any = ".";
         eol = "\n";
 
@@ -128,8 +132,8 @@ struct strip_comments_tokens : lexer<Lexer>
         // The following tokens are associated with the lexer state 'COMMENT'.
         this->self("COMMENT") 
             =   endcomment  [ set_lexer_state("INITIAL") ]
-            |   eol
-            |   any 
+            |   "\n"
+            |   "." 
             ;
     }
 

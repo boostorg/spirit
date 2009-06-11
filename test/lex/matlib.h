@@ -14,8 +14,10 @@ struct set_lexer_state
 {
     std::string state;
     set_lexer_state(const std::string &a):state(a){}
-    template <class Range,class Context>
-    void operator () (Range const &,std::size_t,bool &,Context &ctx) const
+    template <class Iterator,class Context>
+    void operator () (Iterator const&, Iterator const&
+      , BOOST_SCOPED_ENUM(boost::spirit::lex::pass_flags)&, std::size_t
+      , Context &ctx) const
     {
         ctx.set_state_name(state.c_str());
     }
@@ -25,10 +27,12 @@ struct store_double
 {
     std::vector<double> &out;
     store_double(std::vector<double> &a):out(a){}
-    template <class Range,class LexerContext>
-    void operator () (Range const & r,std::size_t,bool &,LexerContext &)const
+    template <class Iterator,class LexerContext>
+    void operator () (Iterator const& start, Iterator const& end
+      , BOOST_SCOPED_ENUM(boost::spirit::lex::pass_flags)&, std::size_t
+      , LexerContext &ctx) const
     {
-        std::string work(r.begin(),r.end());
+        std::string work(start, end);
         out.push_back(std::atof(work.c_str()));
     }
 };
@@ -40,8 +44,10 @@ struct add_row
 
     add_row(std::vector<std::vector<double> > &a,std::vector<double> &b)
         :matrix(a),row(b) {}
-    template <class Range,class Context>
-    void operator () (Range const &,std::size_t ,bool &,Context &ctx) const
+    template <class Iterator,class Context>
+    void operator () (Iterator const&, Iterator const&
+      , BOOST_SCOPED_ENUM(boost::spirit::lex::pass_flags)&, std::size_t
+      , Context &ctx) const
     {
         matrix.push_back(std::vector<double>());
         matrix.back().swap(row);

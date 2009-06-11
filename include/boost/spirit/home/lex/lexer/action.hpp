@@ -12,6 +12,8 @@
 
 #include <boost/spirit/home/lex/meta_compiler.hpp>
 #include <boost/spirit/home/lex/lexer_type.hpp>
+#include <boost/spirit/home/lex/argument.hpp>
+#include <boost/spirit/home/lex/lexer/support_functions.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -19,6 +21,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace lex
 {
+    using spirit::_start;
+    using spirit::_end;
+    using spirit::_pass;
+    using spirit::_tokenid;
+    using spirit::_state;
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Action>
     struct action : unary_lexer<action<Subject, Action> >
