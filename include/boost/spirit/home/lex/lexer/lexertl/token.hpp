@@ -155,9 +155,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     operator<< (std::basic_ostream<Char, Traits>& os
       , token<Iterator, AttributeTypes, HasState> const& t)
     {
-        Iterator end = t.matched_.second;
-        for (Iterator it = t.matched_.first; it != end; ++it)
-            os << *it;
+        if (t.id()) {
+            Iterator end = t.matched_.second;
+            for (Iterator it = t.matched_.first; it != end; ++it)
+                os << *it;
+        }
+        else {
+            os << "<invalid token>";
+        }
         return os;
     }
 #endif
