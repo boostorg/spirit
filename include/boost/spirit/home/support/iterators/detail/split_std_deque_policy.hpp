@@ -63,6 +63,10 @@ namespace boost { namespace spirit { namespace iterator_policies
                         queue.push_back(Value());
                         return MultiPass::advance_input(mp, queue[mp.queued_position++]);
                     }
+                    else if (!MultiPass::input_is_valid(mp, queue[mp.queued_position]))
+                    {
+                        MultiPass::advance_input(mp, queue[mp.queued_position]);
+                    }
                     return queue[mp.queued_position++];
                 }
                 else if (!MultiPass::input_is_valid(mp, queue[mp.queued_position-1]))
