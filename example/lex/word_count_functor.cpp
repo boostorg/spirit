@@ -145,8 +145,8 @@ struct counter
 /*` The main function simply loads the given file into memory (as a 
     `std::string`), instantiates an instance of the token definition template
     using the correct iterator type (`word_count_tokens<char const*>`),
-    and finally calls `lex::tokenize`, passing an instance of the counter functor
-    defined above. The return value of `lex::tokenize` will be `true` if the 
+    and finally calls `lex::tokenize`, passing an instance of the counter function
+    object. The return value of `lex::tokenize()` will be `true` if the 
     whole input sequence has been successfully tokenized, and `false` otherwise.
 */
 int main(int argc, char* argv[])
