@@ -103,34 +103,39 @@ struct word_count_tokens : lexer<Lexer>
 //[wcl_main
 int main(int argc, char* argv[])
 {
-    // read input from the given file
-    std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
 
-    // Specifying 'omitted' as the token attribute type generates a token class 
-    // notholding any token attribute at all (not even the iterator_range of the 
-    // matched input sequence), therefor optimizing the token, the lexer, and 
-    // possibly the parser implementation as much as possible. 
-    //
-    // Specifying mpl::false_ as the 3rd template parameter generates a token
-    // type and an iterator, both holding no lexer state, allowing for even more 
-    // aggressive optimizations.
-    //
-    // As a result the token instances contain the token ids as the only data 
-    // member.
-    typedef lexertl::token<char const*, omitted, boost::mpl::false_> token_type;
+/*<  Specifying `omitted` as the token attribute type generates a token class 
+     not holding any token attribute at all (not even the iterator range of the 
+     matched input sequence), therefore optimizing the token, the lexer, and 
+     possibly the parser implementation as much as possible. Specifying 
+     `mpl::false_` as the 3rd template parameter generates a token
+     type and an iterator, both holding no lexer state, allowing for even more 
+     aggressive optimizations. As a result the token instances contain the token 
+     ids as the only data member.
+>*/  typedef lexertl::token<char const*, omitted, boost::mpl::false_> token_type;
 
-    // lexer type
-    typedef lexertl::actor_lexer<token_type> lexer_type;
+/*<  This defines the lexer type to use
+>*/  typedef lexertl::actor_lexer<token_type> lexer_type;
 
-    // create the lexer object instance needed to invoke the lexical analysis 
-    word_count_tokens<lexer_type> word_count_lexer;
+/*<  Create the lexer object instance needed to invoke the lexical analysis 
+>*/  word_count_tokens<lexer_type> word_count_lexer;
 
-    // tokenize the given string, all generated tokens are discarded
+/*<  Read input from the given file, tokenize all the input, while discarding
+     all generated tokens
+>*/  std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    bool r = tokenize(first, last, word_count_lexer);
 
-    if (r) {
+/*<  Create a pair of iterators returning the sequence of generated tokens
+>*/  lexer_type::iterator_type iter = word_count_lexer.begin(first, last);
+    lexer_type::iterator_type end = word_count_lexer.end();
+
+/*<  Here we simply iterate over all tokens, making sure to break the loop
+     if an invalid token gets returned from the lexer
+>*/  while (iter != end && token_is_valid(*iter))
+        ++iter;
+
+    if (iter == end) {
         std::cout << "lines: " << word_count_lexer.l 
                   << ", words: " << word_count_lexer.w 
                   << ", characters: " << word_count_lexer.c 

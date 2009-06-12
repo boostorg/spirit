@@ -62,22 +62,35 @@ matching input sequence. The code above uses function objects constructed using
 __phoenix2__, but it is possible to insert any C++ function or function object 
 as long as it exposes the interface:
 
-    void f (Range r, Idtype id, bool& matched, Context& ctx);
+    void f (Iterator& start, Iterator& end, pass_flag& matched, Idtype& id, Context& ctx);
 
 [variablelist where:
-    [[`Range r`]            [This is a `boost::iterator_range` holding two 
-                             iterators pointing to the matched range in the
-                             underlying input sequence. The type of the
-                             held iterators is the same as specified while
+    [[`Iterator& start`]    [This is a the iterator pointing to the begin of the 
+                             matched range in the underlying input sequence. The 
+                             type of the iterator is the same as specified while
                              defining the type of the `lexertl_lexer<...>` 
-                             (its first template parameter).]]
-    [[`Idtype id`]          [This is the token id of the type `std::size_t` 
-                             for the matched token.]]
-    [[`bool& matched`]      [This boolean value is pre/initialized to `true`.
-                             If the functor sets it to `false` the lexer
-                             stops calling any semantic actions attached to 
-                             this token and behaves as if the token has not
-                             been matched in the first place.]]
+                             (its first template parameter). The semantic action 
+                             is allowed to change the value of this iterator
+                             influencing, the matched input sequence.]]
+    [[`Iterator& end`]      [This is a the iterator pointing to the end of the 
+                             matched range in the underlying input sequence. The 
+                             type of the iterator is the same as specified while
+                             defining the type of the `lexertl_lexer<...>` 
+                             (its first template parameter). The semantic action 
+                             is allowed to change the value of this iterator
+                             influencing, the matched input sequence.]]
+    [[`pass_flag& matched`] [This value is pre/initialized to `pass_normal`.
+                             If the semantic action sets it to `pass_fail` the 
+                             behaves as if the token has not been matched in 
+                             the first place. If the semantic action sets this
+                             to `pass_ignore` the lexer ignores the current
+                             token and tries to match a next token from the
+                             input.]]
+    [[`Idtype& id`]         [This is the token id of the type Idtype (most of 
+                             the time this will be a `std::size_t`) for the 
+                             matched token. The semantic action is allowed to 
+                             change the value of this token id, influencing the 
+                             if of the created token.]]
     [[`Context& ctx`]       [This is a reference to a lexer specific, 
                              unspecified type, providing the context for the
                              current lexer state. It can be used to access
@@ -89,9 +102,10 @@ as long as it exposes the interface:
 When using a C++ function as the semantic action the following prototypes are 
 allowed as well:
 
-    void f (Range r, Idtype id, bool& matched);
-    void f (Range r, Idtype id);
-    void f (Range r);
+    void f (Iterator& start, Iterator& end, pass_flag& matched, Idtype& id);
+    void f (Iterator& start, Iterator& end, pass_flag& matched);
+    void f (Iterator& start, Iterator& end);
+    void f ();
 
 Even if it is possible to write your own function object implementations (i.e. 
 using Boost.Lambda or Boost.Bind), the preferred way of defining lexer semantic 
@@ -127,6 +141,14 @@ every token gets assigned a id the __lex__ library internally assigns unique
 numbers to the token definitions, starting with the constant defined by 
 `boost::spirit::lex::min_token_id`.
 
+[heading Pulling everything together]
+
+In order to execute the code defined above we still need to instantiate an 
+instance of the lexer type, feed it from some input sequence and create a pair 
+of iterators allowing to iterate over the token sequence as created by the 
+lexer. This code shows how to achieve these steps:
+
+[wcl_main]
 
 
 [endsect]

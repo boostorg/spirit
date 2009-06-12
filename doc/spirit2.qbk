@@ -67,7 +67,8 @@
 
 [/ Sections ]
 
-[def __sec_qi_and_karma__       [link spirit.qi_and_karma Qi and Karma]]
+[def __sec_qi__                 [link spirit.qi Qi]]
+[def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_qi_karma_attributes__  [link spirit.qi_and_karma.abstracts.attributes Attributes]]
 
 [def __sec_lex__                [link spirit.lex Lex]]
@@ -86,7 +87,8 @@
 [/ References to API descriptions ]
 
 [def __api_tokenize_and_parse__ [link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
-[def __api_generate_static__    [link spirit.lex.abstracts.tokenizing_input_data.generate_static_function `generate_static()`]]
+[def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
+[def __api_generate_static__    [link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
 
 [/ References to classes ]

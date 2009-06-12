@@ -160,7 +160,7 @@ underlying component library as for the parser and generator libraries.
 
 [heading How to use this manual]
 
-Each major section (there are two: __sec_qi_and_karma__, and __sec_lex__) is
+Each major section (there are 3: __sec_qi__, __sec_karma__, and __sec_lex__) is
 roughly divided into 3 parts:
 
 # Tutorials: A step by step guide with heavily annotated code. These

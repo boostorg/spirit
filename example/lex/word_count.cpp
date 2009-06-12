@@ -126,16 +126,16 @@ struct word_count_grammar : grammar<Iterator>
 //[wcp_main
 int main(int argc, char* argv[])
 {
-/*< define the token type to be used: `std::string` is available as the 
+/*<  Define the token type to be used: `std::string` is available as the 
      type of the token attribute 
 >*/  typedef lexertl::token<
         char const*, boost::mpl::vector<std::string>
     > token_type;
 
-/*< define the lexer type to use implementing the state machine
+/*<  Define the lexer type to use implementing the state machine
 >*/  typedef lexertl::lexer<token_type> lexer_type;
 
-/*< define the iterator type exposed by the lexer type
+/*<  Define the iterator type exposed by the lexer type
 >*/  typedef word_count_tokens<lexer_type>::iterator_type iterator_type;
 
     // now we use the types defined above to create the lexer and grammar
@@ -147,12 +147,12 @@ int main(int argc, char* argv[])
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    
-    // Parsing is done based on the the token stream, not the character 
-    // stream read from the input. The function `tokenize_and_parse()` wraps
-    // the passed iterator range `[first, last)` by the lexical analyzer and 
-    // uses its exposed iterators to parse the toke stream.
-    bool r = tokenize_and_parse(first, last, word_count, g);
+
+/*<  Parsing is done based on the the token stream, not the character 
+     stream read from the input. The function `tokenize_and_parse()` wraps
+     the passed iterator range `[first, last)` by the lexical analyzer and 
+     uses its exposed iterators to parse the toke stream.
+>*/  bool r = tokenize_and_parse(first, last, word_count, g);
 
     if (r) {
         std::cout << "lines: " << g.l << ", words: " << g.w 

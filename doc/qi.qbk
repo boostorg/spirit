@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Qi]
+[section:qi Qi]
 
 [section    Tutorials]
 [include        qi/tutorial_intro.qbk]
