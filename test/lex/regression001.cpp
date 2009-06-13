@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     base_iterator last = &first[str.size()];
 
     for(lexer_type::iterator_type i = position_helper_lexer.begin(first, last); 
-        i != position_helper_lexer.end(); i++ )
+        i != position_helper_lexer.end() && *i; i++ )
     {
     }
     return boost::report_errors();
