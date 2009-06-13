@@ -11,6 +11,7 @@
 #endif
 
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
+#include <boost/spirit/home/support/safe_bool.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/detail/lexer/generator.hpp>
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
@@ -144,6 +145,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         std::pair<Iterator, Iterator> matched_;
 #endif
 
+        // operator_bool() is needed for the safe_bool base class
+        operator typename safe_bool<token>::result_type() const 
+        { 
+            return safe_bool<token>()(
+                0 != id_ && std::size_t(boost::lexer::npos) != id_); 
+        }
+
     protected:
         id_type id_;            // token id, 0 if nothing has been matched
     };
@@ -155,7 +163,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     operator<< (std::basic_ostream<Char, Traits>& os
       , token<Iterator, AttributeTypes, HasState> const& t)
     {
-        if (t.id()) {
+        if (t) {
             Iterator end = t.matched_.second;
             for (Iterator it = t.matched_.first; it != end; ++it)
                 os << *it;
@@ -326,7 +334,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     inline bool 
     token_is_valid(token<Iterator, AttributeTypes, HasState> const& t)
     {
-        return 0 != t.id() && std::size_t(boost::lexer::npos) != t.id();
+        return t ? true : false;
     }
 
     ///////////////////////////////////////////////////////////////////////////
