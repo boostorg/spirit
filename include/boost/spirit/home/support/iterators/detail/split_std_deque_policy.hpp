@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             typedef std::vector<Value> queue_type;
 
         protected:
-            unique() : queued_position(0) {}
+            unique() : queued_position(1) {}
 
             unique(unique const& x)
               : queued_position(x.queued_position) {}
@@ -55,25 +55,12 @@ namespace boost { namespace spirit { namespace iterator_policies
                 queue_type& queue = mp.shared->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
-                BOOST_ASSERT(mp.queued_position <= size);
-                if (0 == mp.queued_position) 
-                {
-                    if (0 == size)
-                    {
-                        queue.push_back(Value());
-                        return MultiPass::advance_input(mp, queue[mp.queued_position++]);
-                    }
-                    else if (!MultiPass::input_is_valid(mp, queue[mp.queued_position]))
-                    {
-                        return MultiPass::advance_input(mp, queue[mp.queued_position++]);
-                    }
-                    return queue[mp.queued_position++];
-                }
-                else if (!MultiPass::input_is_valid(mp, queue[mp.queued_position-1]))
-                {
-                    return MultiPass::advance_input(mp, queue[mp.queued_position-1]);
-                }
-                return queue[mp.queued_position-1];
+                BOOST_ASSERT(mp.queued_position > 1 && mp.queued_position <= size);
+
+                Value& v(queue[mp.queued_position-1]);
+                if (!MultiPass::input_is_valid(mp, v))
+                    return MultiPass::advance_input(mp, v);
+                return v;
             }
 
             // This is called when the iterator is incremented. It's a template
@@ -85,7 +72,13 @@ namespace boost { namespace spirit { namespace iterator_policies
                 queue_type& queue = mp.shared->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
-                BOOST_ASSERT(mp.queued_position <= size);
+                BOOST_ASSERT(mp.queued_position > 1 && mp.queued_position <= size);
+
+                // do not increment iterator as long as the current token is
+                // invalid
+                if (size > 0 && !MultiPass::input_is_valid(mp, queue[mp.queued_position-1]))
+                    return;
+
                 if (mp.queued_position == size)
                 {
                     // check if this is the only iterator
@@ -101,15 +94,14 @@ namespace boost { namespace spirit { namespace iterator_policies
 
                         // reuse first entry in the queue and initialize 
                         // it from the input
-                        MultiPass::advance_input(mp, queue[mp.queued_position++]);
                     }
                     else
                     {
                         // create a new entry in the queue and initialize 
                         // it from the input
-                        queue.push_back(Value());
-                        MultiPass::advance_input(mp, queue[mp.queued_position++]);
+                        queue.push_back(Value(0));
                     }
+                    MultiPass::advance_input(mp, queue[mp.queued_position++]);
                 }
                 else
                 {
@@ -122,7 +114,8 @@ namespace boost { namespace spirit { namespace iterator_policies
             static void clear_queue(MultiPass& mp)
             {
                 mp.shared->queued_elements.clear();
-                mp.queued_position = 0;
+                mp.shared->queued_elements.push_back(Value(0));
+                mp.queued_position = 1;
             }
 
             // called to determine whether the iterator is an eof iterator
@@ -160,7 +153,11 @@ namespace boost { namespace spirit { namespace iterator_policies
         template <typename Value>
         struct shared
         {
-            shared() { queued_elements.reserve(threshold); }
+            shared() 
+            {
+                queued_elements.reserve(threshold); 
+                queued_elements.push_back(Value(0));
+            }
 
             typedef std::vector<Value> queue_type;
             queue_type queued_elements;
