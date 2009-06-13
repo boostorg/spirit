@@ -210,7 +210,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     class lexer 
     {
     public:
-        // operator_bool() is needed for the safe_bool base class
         operator typename safe_bool<lexer>::result_type() const 
         { 
             return safe_bool<lexer>()(initialized_dfa_); 
