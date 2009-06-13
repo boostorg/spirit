@@ -16,7 +16,7 @@ as a recursive-descent parser.
 Like EBNF, PEG is a formal grammar for describing a formal language in
 terms of a set of rules used to recognize strings of this language.
 Unlike EBNF, PEGs have an exact interpretation. There is only one valid
-parse tree ($$$ add link to parse trees and asts $$$) for each PEG
+parse tree (see __ast__) for each PEG
 grammar.
 
 [heading Sequences]

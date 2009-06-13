@@ -180,7 +180,7 @@ main()
             char_ >> char_ >> -(char_ % ','), s )) );
         BOOST_TEST(s == "ab");
 
-        // test having an variant<container, ...> inside a sequence
+        // test having a variant<container, ...> inside a sequence
         s.erase();
         BOOST_TEST( (test_attr("ab", 
             char_ >> char_ >> ((char_ % ',') | eps), s )) );

@@ -6,9 +6,10 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[/section Abstracts]
+[section Abstracts]
 
-[/include        abstracts/peg.qbk]
+[include        abstracts/syntax_diagram.qbk]
+[include        abstracts/peg.qbk]
 [/include        abstracts/parsing.qbk]
 [/include        abstracts/generating.qbk]
 [/include        abstracts/primitives.qbk]
@@ -22,5 +23,5 @@
 [/include        abstracts/error_handling.qbk]
 [/include        abstracts/parse_trees_and_asts.qbk]
 
-[/endsect]
+[endsect]
 

@@ -1,0 +1,64 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+[section Syntax Diagram]
+
+[def __sd_start_stop__              [$../images/start_stop.png]]
+[def __sd_terminals__               [$../images/terminal.png]]
+[def __sd_non_terminals__           [$../images/non-terminal.png]]
+[def __sd_sequence__                [$../images/sequence.png]]
+[def __sd_choice__                  [$../images/alternative.png]]
+[def __sd_optional__                [$../images/optional.png]]
+
+In the following section, we will deal with Parsing Expression Grammars
+(PEG), a variant of Extended Backus-Naur Form (EBNF) with a different
+interpretation. It is easier to understand PEG using Syntax Diagrams.
+Syntax diagrams represent a grammar graphically. It was used extensibly
+by Niklaus Wirth [footnote Niklaus Wirth: The Programming Language
+Pascal. (July 1973)] in the "Pascal User Manual". Syntax Diagrams are
+easily understandable with programmers due to its similarity to flow
+charts. Also, the one to one mapping between the diagrams and functions
+make it ideal for representing __rd__ parsers.
+
+[heading Elements of a Syntax Diagram]
+
+All diagrams have one entry and exit point. Arrows connect all possible
+paths through the grammar from the entry point to the exit point.
+
+[:__sd_start_stop__]
+
+Terminals are represented by round boxes. Terminals are atomic and
+usually represent plain characters, strings or tokens.
+
+[:__sd_terminals__]
+
+Non-terminals are represented by boxes. Diagrams are modularized using
+named non-terminals. A complex diagram can be broken down into a set of
+non-terminals. Non-terminals also allow recursion (i.e. a non-terminal
+can call itself).
+
+[:__sd_non_terminals__]
+
+The most basic composition is the Sequence. B follows A:
+
+[:__sd_sequence__]
+
+The ordered choice, hencforth we will call alternatives. In PEG, ordered
+choice and alternatives are not quite the same. PEG allows ambiguity of
+choice where one ore more branches can succeed. In PEG, in case of
+ambiguity, the first one always wins.
+
+[:__sd_choice__]
+
+The optional (zero-or-one):
+
+[:__sd_optional__]
+
+
+[endsect]
+
+

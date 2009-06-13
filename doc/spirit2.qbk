@@ -100,6 +100,13 @@
 [def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer_class.the_lexertl_static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
 
 
+[/ References to abstracts ]
+
+[def __rd__                     [Recursive Descent] [/$$$ TODO: link me $$$]
+[def __syntax_diagrams__        [link spirit.abstracts.syntax_diagrams Syntax Diagram]]
+[def __peg__                    [link spirit.abstracts.parsing_expression_grammar Parsing Expression Grammar]]
+[def __ast__                    [Abstract Syntax Tree] [/$$$ TODO: link me $$$]
+
 [/ Some images ]
 
 [def __note__                   [$images/note.png]]
@@ -107,7 +114,6 @@
 [def __important__              [$images/important.png]]
 [def __caution__                [$images/caution.png]]
 [def __danger__                 [$images/alert.png]]
-
 
 [/ some templates]
 
