@@ -374,8 +374,8 @@ public:
                     // If dot_ then lookup state name from rules_; otherwise
                     // pass name through.
                     add (dot_ ? rules_.state (state_) : to_, *regex_iter_,
-                        *id_iter_, rules_.state (*state_iter_), true,
-                        *uid_iter_);
+                        *id_iter_, dot_ ? rules_.state (*state_iter_) : to_, 
+                        true, *uid_iter_);
                 }
             }
         }
