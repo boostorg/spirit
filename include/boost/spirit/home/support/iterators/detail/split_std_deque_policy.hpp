@@ -55,7 +55,7 @@ namespace boost { namespace spirit { namespace iterator_policies
                 queue_type& queue = mp.shared->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
-                BOOST_ASSERT(mp.queued_position > 1 && mp.queued_position <= size);
+                BOOST_ASSERT(mp.queued_position > 0 && mp.queued_position <= size);
 
                 Value& v(queue[mp.queued_position-1]);
                 if (!MultiPass::input_is_valid(mp, v))
@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace iterator_policies
                 queue_type& queue = mp.shared->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
-                BOOST_ASSERT(mp.queued_position > 1 && mp.queued_position <= size);
+                BOOST_ASSERT(mp.queued_position > 0 && mp.queued_position <= size);
 
                 // do not increment iterator as long as the current token is
                 // invalid
