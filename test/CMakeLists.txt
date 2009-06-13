@@ -101,8 +101,8 @@ boost_test_run(lex_lexertl2 lex/lexertl2.cpp COMPILE_FLAGS ${test_compile_flags}
 boost_test_run(lex_lexertl3 lex/lexertl3.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_lexertl4 lex/lexertl4.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_lexertl5 lex/lexertl5.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(lex_state_switcher_test lex/state_switcher_test.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(lex_lexer_state_switcher_test lex/lexer_state_switcher_test.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_state_switcher lex/state_switcher_test.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_lexer_state_switcher lex/lexer_state_switcher.cpp COMPILE_FLAGS ${test_compile_flags})
 
 boost_test_run(lex_regression001 lex/regression001.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_regression002 lex/regression002.cpp COMPILE_FLAGS ${test_compile_flags})
