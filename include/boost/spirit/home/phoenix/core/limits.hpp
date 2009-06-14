@@ -62,14 +62,14 @@
 #endif
 
 
-#if !defined(FUSION_MAX_TUPLE_SIZE)
-# define FUSION_MAX_TUPLE_SIZE PHOENIX_LIMIT
-#elif (FUSION_MAX_TUPLE_SIZE < PHOENIX_LIMIT)
-# error "FUSION_MAX_TUPLE_SIZE is set too low"
+#if !defined(FUSION_MAX_VECTOR_SIZE)
+# define FUSION_MAX_VECTOR_SIZE PHOENIX_LIMIT
+#elif (FUSION_MAX_VECTOR_SIZE < PHOENIX_LIMIT)
+# error "FUSION_MAX_VECTOR_SIZE < PHOENIX_LIMIT"
 #endif
 
 // this include will bring in mpl::vectorN and 
-// fusion::tupleN where N is PHOENIX_ACTOR_LIMIT
+// fusion::vectorN where N is PHOENIX_LIMIT
 #include <boost/fusion/include/vector.hpp>
 
 // for some reason, this must be included now to make
