@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 bool pass_bool = true;
                 f (start, end, pass_bool, id);
-                pass = pass_bool ? pass_fags::pass_normal : pass_fags::pass_fail;
+                pass = pass_bool ? pass_flags::pass_normal : pass_flags::pass_fail;
             }
 
             template <typename A0, typename A1, typename A2, typename A3>
@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 bool pass_bool = true;
                 f (start, end, pass_bool);
-                pass = pass_bool ? pass_flags::pass_normal : pass_fags::pass_fail;
+                pass = pass_bool ? pass_flags::pass_normal : pass_flags::pass_fail;
             }
 
             template <typename A0, typename A1, typename A2>
