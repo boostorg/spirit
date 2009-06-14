@@ -213,8 +213,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             }
             std::size_t get_state_id(char_type const* state) const 
             { 
-                return lexertl::detail::get_state_id(state, get_state_name_
-                  , num_states_); 
+                return lexertl::detail::get_state_id(state
+                  , this->get_state_name_, num_states_); 
             }
 
             // the functions next() and get_state() are used by the functor 
