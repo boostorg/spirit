@@ -8,10 +8,6 @@
 #ifndef PHOENIX_SCOPE_DYNAMIC_HPP
 #define PHOENIX_SCOPE_DYNAMIC_HPP
 
-#if !defined(PHOENIX_DYNAMIC_LIMIT)
-# define PHOENIX_DYNAMIC_LIMIT PHOENIX_LIMIT
-#endif
-
 #include <boost/spirit/home/phoenix/core/limits.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>

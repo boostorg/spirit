@@ -8,10 +8,6 @@
 #ifndef PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
 #define PHOENIX_SCOPE_LOCAL_VARIABLE_HPP
 
-#if !defined(PHOENIX_LOCAL_LIMIT)
-# define PHOENIX_LOCAL_LIMIT PHOENIX_LIMIT
-#endif
-
 #include <boost/spirit/home/phoenix/core/limits.hpp>
 #include <boost/spirit/home/phoenix/detail/local_reference.hpp>
 #include <boost/spirit/home/phoenix/scope/detail/local_variable.hpp>

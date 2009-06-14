@@ -18,7 +18,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/iteration/iterate.hpp>
-#include <boost/preprocessor/arithmetic/sub.hpp>
+#include <boost/preprocessor/arithmetic/dec.hpp>
 
 #include <boost/spirit/home/phoenix/operator/detail/mem_fun_ptr_eval.hpp>
 

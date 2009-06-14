@@ -15,12 +15,6 @@
 #include <boost/fusion/include/push_back.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 
-#include <boost/preprocessor/arithmetic/dec.hpp>
-
-#if !defined(PHOENIX_CATCH_LIMIT)
-#define PHOENIX_CATCH_LIMIT BOOST_PP_DEC(PHOENIX_COMPOSITE_LIMIT)
-#endif
-
 #include <boost/spirit/home/phoenix/statement/detail/catch_composite.hpp>
 #include <boost/spirit/home/phoenix/statement/detail/catch_eval.hpp>
 #include <boost/spirit/home/phoenix/statement/detail/catch_all_eval.hpp>
