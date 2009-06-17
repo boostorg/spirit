@@ -155,6 +155,12 @@ main()
         BOOST_TEST((test_attr("Joey", sym, i)));
         BOOST_TEST(i == 6);
         BOOST_TEST((!test_attr("XXX", sym, i)));
+        
+        // double add:
+        
+        sym.add("Joel", 265);
+        BOOST_TEST((test_attr("Joel", sym, i)));
+        BOOST_TEST(i == 1);        
     }
 
     { // actions
