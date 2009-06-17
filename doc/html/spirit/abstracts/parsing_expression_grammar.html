@@ -7,7 +7,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../index.html" title="Spirit 2.1">
 <link rel="up" href="../abstracts.html" title="Abstracts">
-<link rel="previous" href="../abstracts.html" title="Abstracts">
+<link rel="previous" href="syntax_diagram.html" title="Syntax Diagram">
 <link rel="next" href="../qi.html" title=" Qi">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../abstracts.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../qi.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="syntax_diagram.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../qi.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage">
@@ -45,7 +45,7 @@
         [Abstract Syntax Tree) for each PEG grammar.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.sequences"></a><h4>
-<a name="id414933"></a>
+<a name="id414932"></a>
         <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
       </h4>
 <p>
@@ -55,6 +55,18 @@
 </pre>
 <p>
         The PEG expression above states that, in order for this to succeed, <tt class="computeroutput"><span class="identifier">a</span></tt> must follow <tt class="computeroutput"><span class="identifier">b</span></tt>.
+        Here's the syntax diagram:
+      </p>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+          </p>
+<p>
+            <span class="inlinemediaobject"><img src="../../images/sequence.png" alt="sequence"></span>
+          </p>
+<p>
+        </p>
+</blockquote></div>
+<p>
         Here's a trivial example:
       </p>
 <pre class="programlisting"><span class="char">'x'</span> <span class="identifier">digit</span>
@@ -74,7 +86,7 @@
         </p></td></tr>
 </table></div>
 <a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a><h4>
-<a name="id415052"></a>
+<a name="id415082"></a>
         <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
       </h4>
 <p>
@@ -98,7 +110,17 @@
         succeeds, success, if not try to match <tt class="computeroutput"><span class="identifier">b</span></tt>.
         This is a bit of a deviation from the usual EBNF interpretation where you
         simply match <tt class="computeroutput"><span class="identifier">a</span></tt> <span class="bold"><b>or</b></span> <tt class="computeroutput"><span class="identifier">b</span></tt>.
+        Here's the syntax diagram:
       </p>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+          </p>
+<p>
+            <span class="inlinemediaobject"><img src="../../images/alternative.png" alt="alternative"></span>
+          </p>
+<p>
+        </p>
+</blockquote></div>
 <p>
         PEGs allow for ambiguity in the alternatives. In the expression above, both
         <tt class="computeroutput"><span class="identifier">a</span></tt> or <tt class="computeroutput"><span class="identifier">b</span></tt>
@@ -107,7 +129,7 @@
         about this $$$).
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.loops"></a><h4>
-<a name="id415210"></a>
+<a name="id415268"></a>
         <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
       </h4>
 <p>
@@ -127,6 +149,27 @@
           or plus in C++.
         </p></td></tr>
 </table></div>
+<p>
+        Here are the syntax diagrams:
+      </p>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+          </p>
+<p>
+            <span class="inlinemediaobject"><img src="../../images/kleene.png" alt="kleene"></span>
+          </p>
+<p>
+        </p>
+</blockquote></div>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+          </p>
+<p>
+            <span class="inlinemediaobject"><img src="../../images/plus.png" alt="plus"></span>
+          </p>
+<p>
+        </p>
+</blockquote></div>
 <p>
         The first, called the Kleene star, matches zero or more of its subject <tt class="computeroutput"><span class="identifier">a</span></tt>. The second, plus, matches one ore more
         of its subject <tt class="computeroutput"><span class="identifier">a</span></tt>.
@@ -149,7 +192,7 @@
         We will see more of these other mechanisms shortly.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.difference"></a><h4>
-<a name="id415330"></a>
+<a name="id415445"></a>
         <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
       </h4>
 <p>
@@ -175,7 +218,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../abstracts.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../qi.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="syntax_diagram.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../qi.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

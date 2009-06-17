@@ -138,6 +138,17 @@
     </figure>
 ''']
 
+[def __sd_start_stop__              [$../../images/start_stop.png]]
+[def __sd_terminals__               [$../../images/terminal.png]]
+[def __sd_non_terminals__           [$../../images/non-terminal.png]]
+[def __sd_sequence__                [$../../images/sequence.png]]
+[def __sd_choice__                  [$../../images/alternative.png]]
+[def __sd_optional__                [$../../images/optional.png]]
+[def __sd_plus__                    [$../../images/plus.png]]
+[def __sd_kleene__                  [$../../images/kleene.png]]
+[def __sd_predicate__               [$../../images/predicate.png]]
+[def __sd_and_predicate__           [$../../images/and_predicate.png]]
+[def __sd_not_predicate__           [$../../images/not_predicate.png]]
 
 [/ Here we go ]
 

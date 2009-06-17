@@ -7,27 +7,16 @@
 ===============================================================================/]
 [section Syntax Diagram]
 
-[def __sd_start_stop__              [$../images/start_stop.png]]
-[def __sd_terminals__               [$../images/terminal.png]]
-[def __sd_non_terminals__           [$../images/non-terminal.png]]
-[def __sd_sequence__                [$../images/sequence.png]]
-[def __sd_choice__                  [$../images/alternative.png]]
-[def __sd_optional__                [$../images/optional.png]]
-[def __sd_plus__                    [$../images/plus.png]]
-[def __sd_kleene__                  [$../images/kleene.png]]
-[def __sd_predicate__               [$../images/predicate.png]]
-[def __sd_and_predicate__           [$../images/and_predicate.png]]
-[def __sd_not_predicate__           [$../images/not_predicate.png]]
-
-In the following section, we will deal with Parsing Expression Grammars
+In the next section, we will deal with Parsing Expression Grammars
 (PEG), a variant of Extended Backus-Naur Form (EBNF) with a different
 interpretation. It is easier to understand PEG using Syntax Diagrams.
 Syntax diagrams represent a grammar graphically. It was used extensibly
 by Niklaus Wirth [footnote Niklaus Wirth: The Programming Language
 Pascal. (July 1973)] in the "Pascal User Manual". Syntax Diagrams are
 easily understandable with programmers due to its similarity to flow
-charts. Also, the one to one mapping between the diagrams and functions
-make it ideal for representing __rd__ parsers.
+charts. The isomorphism of the diagrams and functions make it ideal for
+representing __rd__ parsers which are essentially mutually recursive
+functions.
 
 [heading Elements]
 
@@ -54,10 +43,10 @@ The most basic composition is the Sequence. B follows A:
 
 [:__sd_sequence__]
 
-The ordered choice, hencforth we will call alternatives. In PEG, ordered
-choice and alternatives are not quite the same. PEG allows ambiguity of
-choice where one ore more branches can succeed. In PEG, in case of
-ambiguity, the first one always wins.
+The ordered choice, henceforth we will call /alternatives/. In PEG,
+ordered choice and alternatives are not quite the same. PEG allows
+ambiguity of choice where one or more branches can succeed. In PEG, in
+case of ambiguity, the first one always wins.
 
 [:__sd_choice__]
 
@@ -70,18 +59,18 @@ Now, the loops. We have the zero-or-more and one-or-more:
 [:__sd_kleene__]
 [:__sd_plus__]
 
-Take note that, as in PEG, these behave greedily. If there is another
-'A' just before the end-point, it will always fail because the preceding
-loop has already exhausted all the 'A's and there is nothing more to
-get. This is a crucial difference between PEG and general Context Free
-Grammars (PEGs). This behavior is quite obvious with syntax diagrams as
+Take note that, as in PEG, these loops behave greedily. If there is
+another 'A' just before the end-point, it will always fail because the
+preceding loop has already exhausted all 'A's and there is nothing more
+left. This is a crucial difference between PEG and general Context Free
+Grammars (CFGs). This behavior is quite obvious with syntax diagrams as
 they resemble flow-charts.
 
 [heading Predicates]
 
-Now, the following are Syntax Diagram versions PEG predicates. While
-these are not really included in usual Syntax Diagrams, we have it here
-to closely follow PEGs.
+Now, the following are Syntax Diagram versions of PEG predicates. These
+are not traditionally found in Syntax Diagrams. These are special
+extensions we invented to closely follow PEGs.
 
 First, we introduce a new element, the Predicate:
 

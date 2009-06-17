@@ -5,7 +5,6 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
-
 [section Parsing Expression Grammar]
 
 Parsing Expression Grammars (PEG) are a derivative of Extended
@@ -26,7 +25,11 @@ Sequences are represented by juxtaposition like in EBNF:
     a b
 
 The PEG expression above states that, in order for this to succeed,
-`a` must follow `b`. Here's a trivial example:
+`a` must follow `b`. Here's the syntax diagram:
+
+[:__sd_sequence__]
+
+Here's a trivial example:
 
     'x' digit
 
@@ -46,7 +49,9 @@ Alternatives are represented in PEG using the slash:
 Alternatives allow for choices. The expression above reads: try to match
 `a`. If `a` succeeds, success, if not try to match `b`. This is a bit of
 a deviation from the usual EBNF interpretation where you simply match
-`a` *or* `b`.
+`a` *or* `b`. Here's the syntax diagram:
+
+[:__sd_choice__]
 
 PEGs allow for ambiguity in the alternatives. In the expression above,
 both `a` or `b` can both match an input string. However, only the first
@@ -59,10 +64,15 @@ Again, like EBNF, PEG uses the regular-expression Kleene star and the
 plus loops:
 
     a*
-    b+
+    a+
 
 [note Spirit.Qi uses the prefix star and plus since there is no postfix
 star or plus in C++.]
+
+Here are the syntax diagrams:
+
+[:__sd_kleene__]
+[:__sd_plus__]
 
 The first, called the Kleene star, matches zero or more of its subject
 `a`. The second, plus, matches one ore more of its subject `a`.
