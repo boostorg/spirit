@@ -118,7 +118,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token() : id_(boost::lexer::npos) {}
 
         //  construct an invalid token
-        token(int) : id_(0) {}
+        explicit token(int) : id_(0) {}
 
         token(id_type id, std::size_t) : id_(id) {}
 
@@ -149,7 +149,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         operator typename safe_bool<token>::result_type() const 
         { 
             return safe_bool<token>()(
-                0 != id_ && std::size_t(boost::lexer::npos) != id_); 
+                0 != id_ && id_type(boost::lexer::npos) != id_); 
         }
 
     protected:
@@ -195,7 +195,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token() : state_(boost::lexer::npos) {}
 
         //  construct an invalid token
-        token(int) : base_type(0), state_(boost::lexer::npos) {}
+        explicit token(int) : base_type(0), state_(boost::lexer::npos) {}
 
         token(id_type id, std::size_t state)
           : base_type(id, boost::lexer::npos), state_(state) {}
@@ -299,7 +299,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         token() : value_(iterpair_type(iterator_type(), iterator_type())) {}
 
         //  construct an invalid token
-        token(int)
+        explicit token(int)
           : base_type(0)
           , value_(iterpair_type(iterator_type(), iterator_type())) {}
 
