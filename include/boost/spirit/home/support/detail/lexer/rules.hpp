@@ -330,10 +330,12 @@ public:
         return add (curr_state_, regex_, id_, new_state_, true);
     }
 
-    void add (const CharT *from_, const basic_rules<CharT> &rules_, const CharT *to_)
+    void add (const CharT *source_, const basic_rules<CharT> &rules_,
+        const CharT *dest_, const CharT *to_ = detail::strings<CharT>::dot ())
     {
-        const bool star_ = *from_ == '*' && *(from_ + 1) == 0;
-        const bool dot_ = *to_ == '.' && *(to_ + 1) == 0;
+        const bool star_ = *source_ == '*' && *(source_ + 1) == 0;
+        const bool dest_dot_ = *dest_ == '.' && *(dest_ + 1) == 0;
+        const bool to_dot_ = *to_ == '.' && *(to_ + 1) == 0;
         std::size_t state_ = 0;
         const string_deque_deque &all_regexes_ = rules_.regexes ();
         const id_vector_deque &all_ids_ = rules_.ids ();
@@ -371,32 +373,32 @@ public:
                 for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
                     ++uid_iter_, ++state_iter_)
                 {
-                    // If dot_ then lookup state name from rules_; otherwise
+                    // If ..._dot_ then lookup state name from rules_; otherwise
                     // pass name through.
-                    add (dot_ ? rules_.state (state_) : to_, *regex_iter_,
-                        *id_iter_, dot_ ? rules_.state (*state_iter_) : to_, 
-                        true, *uid_iter_);
+                    add (dest_dot_ ? rules_.state (state_) : dest_, *regex_iter_,
+                        *id_iter_, to_dot_ ? rules_.state (*state_iter_) : to_, true,
+                        *uid_iter_);
                 }
             }
         }
         else
         {
-            const CharT *start_ = from_;
+            const CharT *start_ = source_;
             string state_name_;
 
-            while (*from_)
+            while (*source_)
             {
-                while (*from_ && *from_ != ',')
+                while (*source_ && *source_ != ',')
                 {
-                    ++from_;
+                    ++source_;
                 }
 
-                state_name_.assign (start_, from_);
+                state_name_.assign (start_, source_);
 
-                if (*from_)
+                if (*source_)
                 {
-                    ++from_;
-                    start_ = from_;
+                    ++source_;
+                    start_ = source_;
                 }
 
                 state_ = rules_.state (state_name_.c_str ());
@@ -407,11 +409,11 @@ public:
                     std::ostringstream os_;
 
                     os_ << "Unknown state name '";
-                    from_ = state_name_.c_str ();
+                    source_ = state_name_.c_str ();
 
-                    while (*from_)
+                    while (*source_)
                     {
-                        os_ << ss_.narrow (*from_++, ' ');
+                        os_ << ss_.narrow (*source_++, ' ');
                     }
 
                     os_ << "'.";
@@ -427,10 +429,10 @@ public:
                 for (; regex_iter_ != regex_end_; ++regex_iter_, ++id_iter_,
                     ++uid_iter_, ++state_iter_)
                 {
-                    // If dot_ then lookup state name from rules_; otherwise
+                    // If ..._dot_ then lookup state name from rules_; otherwise
                     // pass name through.
-                    add (dot_ ? state_name_.c_str () : to_, *regex_iter_,
-                        *id_iter_, rules_.state (*state_iter_), true,
+                    add (dest_dot_ ? state_name_.c_str () : dest_, *regex_iter_,
+                        *id_iter_, to_dot_ ? rules_.state (*state_iter_) : to_, true,
                         *uid_iter_);
                 }
             }
