@@ -73,8 +73,9 @@ allowed as well:
 
 The last parameter passed to any lexer semantic action is a reference to an 
 unspecified type (see the `Context` type in the table above). This type is 
-unspecified because it depends on and is implemented by the token type returned
-by the lexer. Nevertheless any context type is expected to expose a couple of
+unspecified because it depends on the token type returned by the lexer. It is 
+implemented in the internals of the iterator type exposed by the lexer.
+Nevertheless, any context type is expected to expose a couple of
 functions allowing to influence the behavior of the lexer. The following table 
 gives an overview and a short description of the available functionality.
 
@@ -82,31 +83,26 @@ gives an overview and a short description of the available functionality.
     [[Name]   [Description]]
     [[`Iterator const& get_eoi() const`]
      [The function `get_eoi()` may be used by to access the end iterator of 
-      the input stream the lexer has been initialized with]
-    ]
-    [[`Iterator const& less(Iterator const& it, int n) `]
-     [The function `less()` returns an iterator positioned to the nth input 
-      character beyond the current start iterator (i.e. by passing the return 
-      value to the parameter `end` it is possible to return all but the 
-      first n characters of the current token back to the input stream.]
-    ]
+      the input stream the lexer has been initialized with]]
     [[`void more()`]
      [The function `more()` tells the lexer that the next time it matches a 
       rule, the corresponding token should be appended onto the current token 
-      value rather than replacing it.]
-    ]
+      value rather than replacing it.]]
+    [[`Iterator const& less(Iterator const& it, int n)`]
+     [The function `less()` returns an iterator positioned to the nth input 
+      character beyond the current token start iterator (i.e. by passing the 
+      return value to the parameter `end` it is possible to return all but the 
+      first n characters of the current token back to the input stream.]]
     [[`bool lookahead(std::size_t id)`]
      [The function `lookahead()` can be for instance used to implement 
       lookahead for lexer engines not supporting constructs like flex' `a/b` 
       (match `a`, but only when followed by `b`). It invokes the lexer on the 
       input following the current token without actually moving forward in the 
       input stream. The function returns whether the lexer was able to match a 
-      token with the given token-id `id`.]
-    ]
+      token with the given token-id `id`.]]
     [[`std::size_t get_state() const` and `void set_state(std::size_t state)`]
      [The functions `get_state()` and `set_state()` may be used to introspect
-      and change the current lexer state.]
-    ]
+      and change the current lexer state.]]
 ]
 
 [heading Lexer Semantic Actions Using Phoenix]
@@ -118,43 +114,63 @@ described above by using the predefined __spirit__ placeholders:
 
 [table Predefined Phoenix placeholders for lexer semantic actions
     [[Placeholder]    [Description]]
-    [[`_start`]       [Refers to the iterator pointing to the begin of the 
-                       matched input sequence. Any modifications to this 
-                       iterator value will be reflected in the generated 
-                       token.]]
-    [[`_end`]         [Refers to the iterator pointing past the end of the 
-                       matched input sequence. Any modifications to this 
-                       iterator value will be reflected in the generated 
-                       token.]]
-    [[`_pass`]        [References the value signaling the outcome of the 
-                       semantic action. This is pre-initialized to 
-                       `lex::pass_flags::pass_normal`. If this is set to
-                       `lex::pass_flags::pass_fail`, the lexer will behave as 
-                       if no token has been matched, if is set to 
-                       `lex::pass_flags::pass_ignore`, the lexer will ignore 
-                       the current match and proceed trying to match tokens 
-                       from the input.]]
-    [[`_tokenid`]     [Refers to the token id of the token to be generated. Any
-                       modifications to this value will be reflected in the
-                       generated token.]]
-    [[`_state`]       [Refers to the lexer state the input has been match in.
-                       Any modifications to this value will be reflected in the
-                       lexer itself (the next match will start in the new 
-                       state). The currently generated token is not affected 
-                       by changes to this variable.]]
-    [[`_eoi`]         [References the end iterator of the overall lexer input.
-                       This value cannot be changed.]]
+    [[`_start`]
+     [Refers to the iterator pointing to the begin of the matched input 
+      sequence. Any modifications to this iterator value will be reflected in 
+      the generated token.]]
+    [[`_end`]
+     [Refers to the iterator pointing past the end of the matched input 
+      sequence. Any modifications to this iterator value will be reflected in 
+      the generated token.]]
+    [[`_pass`]
+     [References the value signaling the outcome of the semantic action. This 
+      is pre-initialized to `lex::pass_flags::pass_normal`. If this is set to
+      `lex::pass_flags::pass_fail`, the lexer will behave as if no token has 
+      been matched, if is set to `lex::pass_flags::pass_ignore`, the lexer will 
+      ignore the current match and proceed trying to match tokens from the 
+      input.]]
+    [[`_tokenid`]
+     [Refers to the token id of the token to be generated. Any modifications 
+      to this value will be reflected in the generated token.]]
+    [[`_state`]
+     [Refers to the lexer state the input has been match in. Any modifications 
+      to this value will be reflected in the lexer itself (the next match will 
+      start in the new state). The currently generated token is not affected 
+      by changes to this variable.]]
+    [[`_eoi`]
+     [References the end iterator of the overall lexer input. This value 
+      cannot be changed.]]
 ]
 
-[heading Support functions callable from semantic actions]
-
-[table Support functions
+The context object passed as the last parameter to any lexer semantic action is 
+not directly accessible while using __phoenix2__ expressions. We rather provide
+predefine Phoenix functions allowing to invoke the different support functions
+as mentioned above. The following table lists the available support functions 
+and describes their functionality:
+ 
+[table Support functions usable from Phoenix expressions inside lexer semantic actions
     [[Plain function] [Phoenix function] [Description]]
-
-[[`ctx.more()`][lex::more()][]]
-[[`ctx.less()`][lex::less()][]]
-[[`ctx.lookahead()`][lex::lookahead()][]]
-
+    [[`ctx.more()`]
+     [`more()`]
+     [The function `more()` tells the lexer that the next time it matches a 
+      rule, the corresponding token should be appended onto the current token 
+      value rather than replacing it.]]
+    [[`ctx.less()`]
+     [`less(n)`]
+     [The function `less()` takes a single integer parameter `n` and returns an 
+      iterator positioned to the nth input character beyond the current token 
+      start iterator (i.e. by assigning the return value to the placeholder 
+      `_end` it is possible to return all but the first `n` characters of the 
+      current token back to the input stream.]]
+    [[`ctx.lookahead()`]
+     [`lookahead(std::size_t)` or `lookahead(token_def)`]
+     [The function `lookahead()` takes a single parameter specifying the token
+      to match in the input. The function can be used for instance to implement 
+      lookahead for lexer engines not supporting constructs like flex' `a/b` 
+      (match `a`, but only when followed by `b`). It invokes the lexer on the 
+      input following the current token without actually moving forward in the 
+      input stream. The function returns whether the lexer was able to match 
+      the specified token.]]
 ]
 
 [endsect]
