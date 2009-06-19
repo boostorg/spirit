@@ -150,44 +150,44 @@ which reads as: given, `a` and `b` are parsers/generators, and `A` is the type
 of the attribute of `a`, and `B` is the type of the attribute of `b`, then the 
 type of the attribute of `a >> b` will be `tuple<A, B>`.
 
-[table /Spirit.Karma/ compound generator attribute types
+[table Spirit.Karma compound generator attribute types
     [[Expression]           [Attribute]]
-    
-    [[sequence (`<<`)]      
+
+    [[sequence (`<<`)]
 [``a: A, b: B --> (a << b): tuple<A, B>
 a: A, b: Unused --> (a << b): A
 a: Unused, b: B --> (a << b): B
 a: Unused, b: Unused --> (a << b): Unused
 a: A, b: A --> (a << b): vector<A>``
 ]]
-                             
-    [[alternative (`|`)]    
+
+    [[alternative (`|`)]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): variant<Unused, A>
 a: Unused, b: B --> (a | b): variant<Unused, B>
 a: Unused, b: Unused --> (a | b): Unused``
 a: A, b: A --> (a | b): A`]]
-                             
-    [[kleene (`*`)]         
+
+    [[kleene (`*`)]
 [``a: A --> *a: vector<A>
 a: Unused --> a: Unused``]]
-                             
-    [[plus (`+`)]           
+
+    [[plus (`+`)]
 [``a: A --> +a: vector<A>
 a: Unused --> a: Unused``]]
-                             
-    [[list (`%`)]           
+
+    [[list (`%`)]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
-                             
-    [[repetition]          
+
+    [[repetition]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
-                             
-    [[optional (`-`)]       
+
+    [[optional (`-`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
-                             
+
     [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
     [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
 ]

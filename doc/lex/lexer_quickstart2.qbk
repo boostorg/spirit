@@ -60,60 +60,8 @@ the lexical analyzer. This is very similar to __flex__, where the action code
 associated with a token definition gets executed after the recognition of a
 matching input sequence. The code above uses function objects constructed using 
 __phoenix2__, but it is possible to insert any C++ function or function object 
-as long as it exposes the interface:
-
-    void f (Iterator& start, Iterator& end, pass_flag& matched, Idtype& id, Context& ctx);
-
-[variablelist where:
-    [[`Iterator& start`]    [This is a the iterator pointing to the begin of the 
-                             matched range in the underlying input sequence. The 
-                             type of the iterator is the same as specified while
-                             defining the type of the `lexertl_lexer<...>` 
-                             (its first template parameter). The semantic action 
-                             is allowed to change the value of this iterator
-                             influencing, the matched input sequence.]]
-    [[`Iterator& end`]      [This is a the iterator pointing to the end of the 
-                             matched range in the underlying input sequence. The 
-                             type of the iterator is the same as specified while
-                             defining the type of the `lexertl_lexer<...>` 
-                             (its first template parameter). The semantic action 
-                             is allowed to change the value of this iterator
-                             influencing, the matched input sequence.]]
-    [[`pass_flag& matched`] [This value is pre/initialized to `pass_normal`.
-                             If the semantic action sets it to `pass_fail` the 
-                             behaves as if the token has not been matched in 
-                             the first place. If the semantic action sets this
-                             to `pass_ignore` the lexer ignores the current
-                             token and tries to match a next token from the
-                             input.]]
-    [[`Idtype& id`]         [This is the token id of the type Idtype (most of 
-                             the time this will be a `std::size_t`) for the 
-                             matched token. The semantic action is allowed to 
-                             change the value of this token id, influencing the 
-                             if of the created token.]]
-    [[`Context& ctx`]       [This is a reference to a lexer specific, 
-                             unspecified type, providing the context for the
-                             current lexer state. It can be used to access
-                             different internal data items and is needed for
-                             lexer state control from inside a semantic 
-                             action.]]
-]
-
-When using a C++ function as the semantic action the following prototypes are 
-allowed as well:
-
-    void f (Iterator& start, Iterator& end, pass_flag& matched, Idtype& id);
-    void f (Iterator& start, Iterator& end, pass_flag& matched);
-    void f (Iterator& start, Iterator& end);
-    void f ();
-
-Even if it is possible to write your own function object implementations (i.e. 
-using Boost.Lambda or Boost.Bind), the preferred way of defining lexer semantic 
-actions is to use __phoenix2__. In this case you can access the four parameters 
-described in the table above by using the predefined __spirit__ placeholders: 
-`_1` for the iterator range, `_2` for the token id, `_3` for the reference 
-to the boolean value signaling the outcome of the semantic action, and `_4` for 
-the reference to the internal lexer context. 
+as long as it exposes the proper interface. For more details on please refer 
+to the section __sec_lex_semactions__. 
 
 [heading Associating Token Definitions with the Lexer]
 
