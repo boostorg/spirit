@@ -52,7 +52,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             static typename MultiPass::reference 
             dereference(MultiPass const& mp)
             {
-                queue_type& queue = mp.shared->queued_elements;
+                queue_type& queue = mp.shared()->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
                 BOOST_ASSERT(mp.queued_position > 0 && mp.queued_position <= size);
@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static void increment(MultiPass& mp)
             {
-                queue_type& queue = mp.shared->queued_elements;
+                queue_type& queue = mp.shared()->queued_elements;
                 typename queue_type::size_type size = queue.size();
 
                 BOOST_ASSERT(mp.queued_position > 0 && mp.queued_position <= size);
@@ -113,8 +113,8 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static void clear_queue(MultiPass& mp)
             {
-                mp.shared->queued_elements.clear();
-                mp.shared->queued_elements.push_back(Value(0));
+                mp.shared()->queued_elements.clear();
+                mp.shared()->queued_elements.push_back(Value(0));
                 mp.queued_position = 1;
             }
 
@@ -122,7 +122,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static bool is_eof(MultiPass const& mp)
             {
-                queue_type& queue = mp.shared->queued_elements;
+                queue_type& queue = mp.shared()->queued_elements;
                 return 0 != mp.queued_position && 
                     mp.queued_position == queue.size() && 
                     MultiPass::input_at_eof(mp, queue[mp.queued_position-1]);

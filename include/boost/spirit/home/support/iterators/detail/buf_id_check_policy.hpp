@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static void check(MultiPass const& mp) 
             {
-                if (mp.buf_id != mp.shared->shared_buf_id)
+                if (mp.buf_id != mp.shared()->shared_buf_id)
                     boost::throw_exception(illegal_backtracking());
             }
 
@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static void clear_queue(MultiPass& mp)
             {
-                ++mp.shared->shared_buf_id;
+                ++mp.shared()->shared_buf_id;
                 ++mp.buf_id;
             }
 

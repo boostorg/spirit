@@ -35,8 +35,8 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static void clone(MultiPass& mp)
             {
-                if (0 != mp.shared)
-                    ++mp.shared->count;
+                if (0 != mp.shared())
+                    ++mp.shared()->count;
             }
 
             // called when a copy is deleted. Decrement the ref-count. Return
@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static bool release(MultiPass& mp)
             {
-                return 0 != mp.shared && 0 == --mp.shared->count;
+                return 0 != mp.shared() && 0 == --mp.shared()->count;
             }
 
             // returns true if there is only one iterator in existence.
@@ -53,7 +53,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static bool is_unique(MultiPass const& mp) 
             {
-                return 0 == mp.shared || 1 == mp.shared->count;
+                return 0 == mp.shared() || 1 == mp.shared()->count;
             }
 
             template <typename MultiPass>

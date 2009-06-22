@@ -55,7 +55,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             static typename MultiPass::reference 
             dereference(MultiPass const& mp)
             {
-                if (mp.queuePosition == mp.shared->queuedElements.end())
+                if (mp.queuePosition == mp.shared()->queuedElements.end())
                 {
                     return MultiPass::get_input(mp);
                 }
@@ -71,13 +71,13 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static void increment(MultiPass& mp)
             {
-                if (mp.queuePosition == mp.shared->queuedElements.end())
+                if (mp.queuePosition == mp.shared()->queuedElements.end())
                 {
                     // don't let the queue get larger than N
-                    if (mp.shared->queuedElements.size() >= N)
-                        mp.shared->queuedElements.pop_front();
+                    if (mp.shared()->queuedElements.size() >= N)
+                        mp.shared()->queuedElements.pop_front();
 
-                    mp.shared->queuedElements.push_back(MultiPass::get_input(mp));
+                    mp.shared()->queuedElements.push_back(MultiPass::get_input(mp));
                     MultiPass::advance_input(mp);
                 }
                 ++mp.queuePosition;
@@ -89,7 +89,7 @@ namespace boost { namespace spirit { namespace iterator_policies
             template <typename MultiPass>
             static bool is_eof(MultiPass const& mp)
             {
-                return mp.queuePosition == mp.shared->queuedElements.end() &&
+                return mp.queuePosition == mp.shared()->queuedElements.end() &&
                        MultiPass::input_at_eof(mp);
             }
 

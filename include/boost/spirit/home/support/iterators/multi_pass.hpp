@@ -14,6 +14,7 @@
 #include <boost/spirit/home/support/iterators/detail/combine_policies.hpp>
 #include <boost/limits.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/utility/base_from_member.hpp>
 
 namespace boost { namespace spirit 
 {
@@ -22,7 +23,9 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template<typename T, typename Policies>
     class multi_pass 
-      : public Policies::BOOST_NESTED_TEMPLATE unique<T>
+      : private boost::base_from_member<
+            typename Policies::BOOST_NESTED_TEMPLATE shared<T>*>
+      , public Policies::BOOST_NESTED_TEMPLATE unique<T>
 #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
       , typename iterator_base_creator<T, typename Policies::input_policy>::type
 #endif
@@ -33,6 +36,8 @@ namespace boost { namespace spirit
             policies_base_type;
         typedef typename Policies::BOOST_NESTED_TEMPLATE shared<T> 
             shared_data_type;
+
+        typedef boost::base_from_member<shared_data_type*> member_base;
 
         // define the types the standard embedded iterator typedefs are taken 
         // from
@@ -51,7 +56,7 @@ namespace boost { namespace spirit
         typedef typename iterator_type::reference reference;
         typedef typename iterator_type::pointer pointer;
 
-        multi_pass() : shared(0) {}
+        multi_pass() : member_base((shared_data_type*)0) {}
 
         // Newer versions of gcc (and perhaps other compilers) are known to 
         // generate warnings about the base class and the 'shared' member 
@@ -60,10 +65,10 @@ namespace boost { namespace spirit
         // rely on the fact that their shared part is initialized before their
         // unique part. Please ignore the warnings, these are harmless.
         explicit multi_pass(T input)
-          : shared(new shared_data_type(input)), policies_base_type(input) {}
+          : member_base(new shared_data_type(input)), policies_base_type(input) {}
 
         multi_pass(multi_pass const& x)
-          : shared(x.shared), policies_base_type(x)
+          : member_base(x.member), policies_base_type(x)
         {
             policies_base_type::clone(*this);
         }
@@ -75,14 +80,14 @@ namespace boost { namespace spirit
         // checking code that isn't required by the standard.
         // The workaround is to provide an additional constructor that
         // ignores its int argument and behaves like the default constructor.
-        multi_pass(int) : shared(0) {}
+        multi_pass(int) : member(0) {}
 #endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
         ~multi_pass()
         {
             if (policies_base_type::release(*this)) {
                 policies_base_type::destroy(*this);
-                delete shared;
+                delete this->member;
             }
         }
 
@@ -97,7 +102,7 @@ namespace boost { namespace spirit
 
         void swap(multi_pass& x)
         {
-            spirit::detail::swap(shared, x.shared);
+            spirit::detail::swap(this->member, x.member);
             this->policies_base_type::swap(x);
         }
 
@@ -143,14 +148,14 @@ namespace boost { namespace spirit
             return policies_base_type::less_than(*this, y);
         }
 
+        // allow access to base member
+        shared_data_type* shared() const { return this->member; }
+
     private: // helper functions
         bool is_eof() const
         {
-            return (0 == shared) || policies_base_type::is_eof(*this);
+            return (0 == this->member) || policies_base_type::is_eof(*this);
         }
-
-    public:
-        shared_data_type *shared;
     };
 
 

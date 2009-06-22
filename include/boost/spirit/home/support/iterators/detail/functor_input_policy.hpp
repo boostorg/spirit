@@ -64,7 +64,7 @@ namespace boost { namespace spirit { namespace iterator_policies
                 // if mp.shared is NULL then this instance of the multi_pass 
                 // represents a end iterator, so no advance functionality is 
                 // needed
-                if (0 != mp.shared) 
+                if (0 != mp.shared()) 
                     t = mp.ftor();
             }
 
