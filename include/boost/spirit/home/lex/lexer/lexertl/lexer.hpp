@@ -287,7 +287,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             add_state(state);
             initialized_dfa_ = false;
-            rules_.add("*", tokset.get_rules(), state);
+            rules_.add("*", tokset.get_rules(), state, state);
         }
 
         // Allow to associate a whole lexer instance with another lexer 
@@ -300,7 +300,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
             add_state(state);
             initialized_dfa_ = false;
-            rules_.add("*", lexer_def.get_rules(), state);
+            rules_.add("*", lexer_def.get_rules(), state, state);
         }
 
         // interface for pattern definition management
