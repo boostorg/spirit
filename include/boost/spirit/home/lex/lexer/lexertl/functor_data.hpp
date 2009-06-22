@@ -142,10 +142,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t get_state() const { return 0; }
             void set_state(std::size_t state) {}
 
+            Iterator const& get_first() const { return first_; }
+
+        protected:
             Iterator& first_;
             Iterator last_;
 
-        protected:
             boost::lexer::basic_state_machine<char_type> const& state_machine_;
             boost::lexer::basic_rules<char_type> const& rules_;
         };
@@ -205,7 +207,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             {
                 typedef basic_iterator_tokeniser<Iterator> tokenizer;
                 return tokenizer::next(this->state_machine_, state_, 
-                    this->first_, end, this->last_, unique_id);
+                    this->get_first(), end, this->get_eoi(), unique_id);
             }
 
             std::size_t& get_state() { return state_; }
@@ -260,7 +262,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             // token back to the input stream). 
             Iterator const& less(Iterator& it, int n) 
             {
-                it = this->first_;
+                it = this->get_first();
                 std::advance(it, n);
                 return it;
             }
@@ -272,7 +274,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             // the current token value rather than replacing it.
             void more()
             {
-                hold_ = this->first_;
+                hold_ = this->get_first();
                 has_hold_ = true;
             }
 
@@ -282,7 +284,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             // a/b  (match a, but only when followed by b)
             bool lookahead(std::size_t id)
             {
-                Iterator end = this->first_;
+                Iterator end = this->get_first();
                 std::size_t unique_id = boost::lexer::npos;
                 return id == next(end, unique_id);
             }
@@ -295,14 +297,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 if (!has_hold_)
                     return false;
 
-                std::swap(this->first_, hold_);
+                std::swap(this->get_first(), hold_);
                 has_hold_ = false;
                 return true;
             }
             void revert_adjust_start()
             {
                 // this will be called only if adjust_start above returned true
-                std::swap(this->first_, hold_);
+                std::swap(this->get_first(), hold_);
                 has_hold_ = true;
             }
 
