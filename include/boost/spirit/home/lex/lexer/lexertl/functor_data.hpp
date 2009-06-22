@@ -142,7 +142,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t get_state() const { return 0; }
             void set_state(std::size_t state) {}
 
+            Iterator& get_first() { return first_; }
             Iterator const& get_first() const { return first_; }
+            Iterator const& get_last() const { return last_; }
 
         protected:
             Iterator& first_;

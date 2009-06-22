@@ -56,7 +56,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 // Note: all arguments might be changed by the invoked semantic 
                 //       action
                 BOOST_SCOPED_ENUM(pass_flags) match = pass_flags::pass_normal;
-                actions_[unique_id](data.first_, end, match, id, data);
+                actions_[unique_id](data.get_first(), end, match, id, data);
                 return match;
             }
 
@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 // Note: all arguments might be changed by the invoked semantic 
                 //       action
                 BOOST_SCOPED_ENUM(pass_flags) match = pass_flags::pass_normal;
-                actions[unique_id](data.first_, end, match, id, data);
+                actions[unique_id](data.get_first(), end, match, id, data);
                 return match;
             }
 

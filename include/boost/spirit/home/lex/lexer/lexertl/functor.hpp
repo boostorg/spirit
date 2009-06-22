@@ -127,24 +127,24 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename MultiPass>
         static result_type& get_next(MultiPass& mp, result_type& result)
         {
-            shared& data = mp.shared->ftor;
+            shared& data = mp.shared()->ftor;
             do {
-                if (data.first_ == data.last_) 
+                if (data.get_first() == data.get_last()) 
 #if defined(BOOST_SPIRIT_STATIC_EOF)
                     return result = eof;
 #else
                     return result = mp.ftor.eof;
 #endif
 
-                Iterator end = data.first_;
+                Iterator end = data.get_first();
                 std::size_t unique_id = boost::lexer::npos;
                 std::size_t id = data.next(end, unique_id);
 
                 if (boost::lexer::npos == id) {   // no match
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
                     std::string next;
-                    Iterator it = data.first_;
-                    for (std::size_t i = 0; i < 10 && it != data.last_; ++it, ++i)
+                    Iterator it = data.get_first();
+                    for (std::size_t i = 0; i < 10 && it != data.get_last(); ++it, ++i)
                         next += *it;
 
                     std::cerr << "Not matched, in state: " << data.get_state() 
@@ -164,12 +164,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 {
                     std::string next;
                     Iterator it = end;
-                    for (std::size_t i = 0; i < 10 && it != data.last_; ++it, ++i)
+                    for (std::size_t i = 0; i < 10 && it != data.get_last(); ++it, ++i)
                         next += *it;
 
                     std::cerr << "Matched: " << id << ", in state: " 
                               << data.get_state() << ", string: >" 
-                              << std::basic_string<char_type>(data.first_, end) << "<"
+                              << std::basic_string<char_type>(data.get_first(), end) << "<"
                               << ", lookahead: >" << next << "<" << std::endl;
                 }
 #endif
@@ -187,8 +187,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 if (pass_flags::pass_normal == pass) {
                     // return matched token, advancing 'data.first_' past the 
                     // matched sequence
-                    assign_on_exit<Iterator> on_exit(data.first_, end);
-                    return result = result_type(id, state, data.first_, end);
+                    assign_on_exit<Iterator> on_exit(data.get_first(), end);
+                    return result = result_type(id, state, data.get_first(), end);
                 }
                 else if (pass_flags::pass_fail == pass) {
                     // if the data.first_ got adjusted above, revert this adjustment
@@ -210,8 +210,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename MultiPass>
         static std::size_t set_state(MultiPass& mp, std::size_t state) 
         { 
-            std::size_t oldstate = mp.shared->ftor.get_state();
-            mp.shared->ftor.set_state(state);
+            std::size_t oldstate = mp.shared()->ftor.get_state();
+            mp.shared()->ftor.set_state(state);
 
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
             std::cerr << "Switching state from: " << oldstate 
@@ -225,7 +225,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         static std::size_t 
         map_state(MultiPass const& mp, char_type const* statename)  
         { 
-            return mp.shared->ftor.get_state_id(statename);
+            return mp.shared()->ftor.get_state_id(statename);
         }
 
         // we don't need this, but it must be there
