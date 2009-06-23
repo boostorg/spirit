@@ -138,7 +138,7 @@ namespace boost { namespace spirit { namespace qi
             fusion::result_of::value_at_c<Elements, 0>::type
         subject;
 
-        BOOST_MPL_ASSERT_MSG((
+        BOOST_SPIRIT_ASSERT_MSG((
             traits::is_char_parser<subject>::value
         ), subject_is_not_negatable, (subject));
 

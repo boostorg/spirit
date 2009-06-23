@@ -169,7 +169,7 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator&, Context&, Delimiter const&
           , unused_type) 
         {
-            BOOST_MPL_ASSERT_MSG(false, real_not_usable_without_attribute, ());
+            BOOST_SPIRIT_ASSERT_MSG(false, real_not_usable_without_attribute, ());
             return false;
         }
 

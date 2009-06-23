@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace qi
       : primitive_parser<int_parser_impl<T, Radix, MinDigits, MaxDigits> >
     {
         // check template parameter 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 

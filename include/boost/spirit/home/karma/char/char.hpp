@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace karma
             // providing any attribute, as the generator doesn't 'know' what
             // character to output. The following assertion fires if this
             // situation is detected in your code.
-            BOOST_MPL_ASSERT_MSG(false, char__not_usable_without_attribute, ());
+            BOOST_SPIRIT_ASSERT_MSG(false, char__not_usable_without_attribute, ());
             return false;
         }
 

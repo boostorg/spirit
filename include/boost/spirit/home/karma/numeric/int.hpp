@@ -165,11 +165,11 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // check template Attribute 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
-        BOOST_MPL_ASSERT_MSG(std::numeric_limits<T>::is_signed,
+        BOOST_SPIRIT_ASSERT_MSG(std::numeric_limits<T>::is_signed,
             signed_unsigned_mismatch, ());
 
         // int has a Attribute attached
@@ -193,7 +193,7 @@ namespace boost { namespace spirit { namespace karma
         static bool
         generate(OutputIterator&, Context&, Delimiter const&, unused_type)
         {
-            BOOST_MPL_ASSERT_MSG(false, int__not_usable_without_attribute, ());
+            BOOST_SPIRIT_ASSERT_MSG(false, int__not_usable_without_attribute, ());
             return false;
         }
 
@@ -227,11 +227,11 @@ namespace boost { namespace spirit { namespace karma
           : n_(n) {}
 
         // check template Attribute 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
-        BOOST_MPL_ASSERT_MSG(std::numeric_limits<T>::is_signed,
+        BOOST_SPIRIT_ASSERT_MSG(std::numeric_limits<T>::is_signed,
             signed_unsigned_mismatch, ());
 
         template <typename OutputIterator, typename Context, typename Delimiter

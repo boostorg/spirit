@@ -97,11 +97,11 @@ namespace boost { namespace spirit { namespace karma
         struct integer
         {
 #ifdef BOOST_HAS_LONG_LONG
-            BOOST_MPL_ASSERT_MSG(
+            BOOST_SPIRIT_ASSERT_MSG(
                 bits == 8 || bits == 16 || bits == 32 || bits == 64,
                 not_supported_binary_size, ());
 #else
-            BOOST_MPL_ASSERT_MSG(
+            BOOST_SPIRIT_ASSERT_MSG(
                 bits == 8 || bits == 16 || bits == 32,
                 not_supported_binary_size, ());
 #endif
@@ -206,7 +206,7 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , unused_type)
         {
-            BOOST_MPL_ASSERT_MSG(false,
+            BOOST_SPIRIT_ASSERT_MSG(false,
                 binary_generator_not_usable_without_attribute, ());
             return false;
         }

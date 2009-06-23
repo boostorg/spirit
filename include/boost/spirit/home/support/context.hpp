@@ -13,6 +13,7 @@
 
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/spirit/home/support/nonterminal/expand_arg.hpp>
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/phoenix/core/argument.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -115,7 +116,7 @@ namespace boost { namespace spirit
             attributes_size;
 
             // report invalid argument not found (N is out of bounds)
-            BOOST_MPL_ASSERT_MSG(
+            BOOST_SPIRIT_ASSERT_MSG(
                 (N < attributes_size::value),
                 index_is_out_of_bounds, ());
 
@@ -151,7 +152,7 @@ namespace boost { namespace spirit
             locals_size;
 
             // report invalid argument not found (N is out of bounds)
-            BOOST_MPL_ASSERT_MSG(
+            BOOST_SPIRIT_ASSERT_MSG(
                 (N < locals_size::value),
                 index_is_out_of_bounds, ());
 

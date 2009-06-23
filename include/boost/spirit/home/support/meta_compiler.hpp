@@ -17,6 +17,7 @@
 #include <boost/spirit/home/support/modify.hpp>
 #include <boost/spirit/home/support/detail/make_cons.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit
@@ -60,7 +61,7 @@ namespace boost { namespace spirit
     {
         struct meta_grammar;
 
-        BOOST_MPL_ASSERT_MSG((
+        BOOST_SPIRIT_ASSERT_MSG((
             !use_operator<Domain, proto::tag::subscript>::value
         ), error_proto_tag_subscript_cannot_be_used, ());
 
@@ -252,10 +253,5 @@ namespace boost { namespace spirit
     };
 
 }}
-
-#define BOOST_SPIRIT_ASSERT_MATCH(Domain, Expr)                                 \
-        BOOST_MPL_ASSERT_MSG((                                                  \
-            boost::spirit::traits::matches<Domain, Expr>::value                 \
-        ), error_invalid_expression, (Expr));
 
 #endif

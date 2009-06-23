@@ -28,6 +28,10 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/range/iterator_range.hpp>
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
+#include <boost/static_assert.hpp>
+#endif
+
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <iosfwd>
 #endif

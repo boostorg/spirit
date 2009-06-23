@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/qi/numeric/detail/numeric_utils.hpp>
 #include <boost/assert.hpp>
 #include <boost/mpl/assert.hpp>
@@ -44,7 +45,7 @@ namespace boost { namespace spirit { namespace qi
     struct extract_uint
     {
         // check template parameter 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
@@ -80,7 +81,7 @@ namespace boost { namespace spirit { namespace qi
     struct extract_int
     {
         // check template parameter 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 

@@ -250,7 +250,7 @@ namespace boost { namespace spirit { namespace qi
         {
             typedef typename traits::char_type_of<String>::type in_type;
 
-            BOOST_MPL_ASSERT_MSG((
+            BOOST_SPIRIT_ASSERT_MSG((
                 (sizeof(char_type) == sizeof(in_type))
             ), cannot_convert_string, (String));
 
@@ -306,7 +306,7 @@ namespace boost { namespace spirit { namespace qi
         {
             typedef typename traits::char_type_of<String>::type in_type;
 
-            BOOST_MPL_ASSERT_MSG((
+            BOOST_SPIRIT_ASSERT_MSG((
                 (sizeof(char_type) == sizeof(in_type))
             ), cannot_convert_string, (String));
 

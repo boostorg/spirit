@@ -11,6 +11,7 @@
 #include <boost/preprocessor/arithmetic/inc.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/phoenix/core/argument.hpp>
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/mpl/size.hpp>
@@ -38,7 +39,7 @@ namespace boost { namespace spirit
             sequence_size;
 
             // report invalid argument not found (N is out of bounds)
-            BOOST_MPL_ASSERT_MSG(
+            BOOST_SPIRIT_ASSERT_MSG(
                 (N < sequence_size::value),
                 index_is_out_of_bounds, ());
 

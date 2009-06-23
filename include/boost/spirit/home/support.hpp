@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include<boost/spirit/home/support/assert_msg.hpp>
 #include<boost/spirit/home/support/action_dispatch.hpp>
 #include<boost/spirit/home/support/argument.hpp>
 #include<boost/spirit/home/support/attributes.hpp>
