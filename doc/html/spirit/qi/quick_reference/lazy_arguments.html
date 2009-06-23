@@ -3,11 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Lazy Arguments</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
-<link rel="home" href="../../../index.html" title="Spirit 2.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../quick_reference.html" title="Quick Reference">
-<link rel="previous" href="compound_attribute_rules.html" title="Compound
-        Attribute Rules">
+<link rel="prev" href="compound_attribute_rules.html" title="Compound Attribute Rules">
 <link rel="next" href="non_terminals.html" title="Non-terminals">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,26 +23,23 @@
 <a accesskey="p" href="compound_attribute_rules.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="non_terminals.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.qi.quick_reference.lazy_arguments"></a><a href="lazy_arguments.html" title="Lazy Arguments">Lazy Arguments</a>
-</h4></div></div>
-<div></div>
-</div>
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.qi.quick_reference.lazy_arguments"></a><a class="link" href="lazy_arguments.html" title="Lazy Arguments">Lazy Arguments</a>
+</h4></div></div></div>
 <p>
           For all expressions of the form:
         </p>
 <pre class="programlisting"><span class="identifier">p</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
 </pre>
 <p>
-          where <tt class="computeroutput"><span class="identifier">p</span></tt> is a parser, each
+          where <code class="computeroutput"><span class="identifier">p</span></code> is a parser, each
           of the arguments (a1...aN) can either be an immediate value, or a lazy
           function with signature:
         </p>
 <pre class="programlisting"><span class="identifier">T</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
 </pre>
 <p>
-          where <tt class="computeroutput"><span class="identifier">T</span></tt>, the function's
+          where <code class="computeroutput"><span class="identifier">T</span></code>, the function's
           return value, is compatible with the argument type expected. For example,
           this is a valid expression:
         </p>
@@ -57,8 +53,8 @@
 </span>                        <span class="comment">// of flag at parse time
 </span></pre>
 <p>
-          since <tt class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></tt> is
-          a function that returns a <tt class="computeroutput"><span class="keyword">bool</span></tt>.
+          since <code class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></code> is
+          a function that returns a <code class="computeroutput"><span class="keyword">bool</span></code>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
