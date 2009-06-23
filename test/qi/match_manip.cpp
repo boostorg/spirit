@@ -21,7 +21,6 @@
 #include <vector>
 #include <list>
 
-#include <boost/static_assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
