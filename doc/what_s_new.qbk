@@ -54,26 +54,26 @@ compatibility for existing applications.
   always the last parameter.
 * Added new overloads of those functions allowing to explicitely specify the
   post-skipping and pre-delimiting behavior.
-* multi attribute API functions
-* removed `grammar_def<>`
-* removed functions `make_parser()` and `make_generator()`
-* removed `qi::none` and `karma::none`
-* sequences and lists now accept a standard container as its attribute
+* Added multi attribute API functions
+* Removed `grammar_def<>`
+* Removed functions `make_parser()` and `make_generator()`
+* Removed `qi::none` and `karma::none`
+* Sequences and lists now accept a standard container as their attribute
 * The string placeholder terminal now can take other strings as its parameter 
   (i.e. std::string)
-* all terminals taking literals now accept a (lazy) function object as well
+* All terminals taking literals now accept a (lazy) function object as well
 * All placeholders for terminals and directives (such as `int_`, `double_`, 
   `verbatim`, etc.) were previously defined in the namespace `boost::spirit` 
   only. Now these are additionally imported into the namespaces
   `spirit::qi`, `spirit::karma`, and `spirit::lex` (if they are supported by 
-  the corresponding sub-library.
+  the corresponding sub-library).
 * The terminal placeholders `char_` and `string` are not defined in the
   namespace `boost::spirit` anymore as they have been moved to the 
   character set namespaces, allowing to do proper character set 
   handling based on the used namespace (as `spirit::ascii`, etc.)
 * The `uint`, `ushort`, `ulong`, and `byte` terminal placeholders have been 
   renamed to `uint_`, `ushort_`, `ulong_`, and `byte_`.
-* qi::skip[]` now re-enables outer skipper if used inside `lexeme[]`
+* `qi::skip[]` now re-enables outer skipper if used inside `lexeme[]`
 * Added `karma::maxwidth[]` directive
 * `karma::delimit[]` now re-enables outer delimiter if used inside `verbatim[]`
 * karma: added and-predicate (`operator&()`) and not-predicate (`operator!()`)
@@ -133,5 +133,13 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
 * Now the `char_()` and `string()` placeholders can be used for token 
   definitions as a replacement for `token_def`, although it is still
   possible to use the latter one.
+* Lexer semantic actions now have to conform to a changed interface (see
+  __sec_lex_semactions__ for details).
+* Added placeholder symbols usable from the inside of lexer semantic actions 
+  while using Phoenix: _start, _end, _eoi, _state, and _pass (see 
+  __sec_lex_semactions__ for more details).
+* Added (lazy) support functions usable from the inside of lexer semantic
+   actions while using Phoenix: `lex::more()`, `lex::less()`, and 
+   `lex::lookahead()` (see  __sec_lex_semactions__ for more details).
 
 [endsect]

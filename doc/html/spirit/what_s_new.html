@@ -27,7 +27,7 @@
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
 <a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id1040120"></a>
+<a name="id1071796"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
     </h4>
 <p>
@@ -66,11 +66,11 @@
       for existing applications.
     </p>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id1040311"></a>
+<a name="id1071987"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0_to_2_x"></a><h4>
-<a name="id1040324"></a>
+<a name="id1072000"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0_to_2_x">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 to 2.x</a>
@@ -99,26 +99,26 @@
         post-skipping and pre-delimiting behavior.
       </li>
 <li class="listitem">
-        multi attribute API functions
+        Added multi attribute API functions
       </li>
 <li class="listitem">
-        removed <code class="computeroutput"><span class="identifier">grammar_def</span><span class="special">&lt;&gt;</span></code>
+        Removed <code class="computeroutput"><span class="identifier">grammar_def</span><span class="special">&lt;&gt;</span></code>
 </li>
 <li class="listitem">
-        removed functions <code class="computeroutput"><span class="identifier">make_parser</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">make_generator</span><span class="special">()</span></code>
+        Removed functions <code class="computeroutput"><span class="identifier">make_parser</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">make_generator</span><span class="special">()</span></code>
 </li>
 <li class="listitem">
-        removed <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">none</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">none</span></code>
+        Removed <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">none</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">none</span></code>
 </li>
 <li class="listitem">
-        sequences and lists now accept a standard container as its attribute
+        Sequences and lists now accept a standard container as their attribute
       </li>
 <li class="listitem">
         The string placeholder terminal now can take other strings as its parameter
         (i.e. std::string)
       </li>
 <li class="listitem">
-        all terminals taking literals now accept a (lazy) function object as well
+        All terminals taking literals now accept a (lazy) function object as well
       </li>
 <li class="listitem">
         All placeholders for terminals and directives (such as <code class="computeroutput"><span class="identifier">int_</span></code>,
@@ -126,7 +126,7 @@
         etc.) were previously defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span></code>
         only. Now these are additionally imported into the namespaces <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span></code>, <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span></code>,
         and <code class="computeroutput"><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span></code> (if they are supported by the corresponding
-        sub-library.
+        sub-library).
       </li>
 <li class="listitem">
         The terminal placeholders <code class="computeroutput"><span class="identifier">char_</span></code>
@@ -143,21 +143,23 @@
         <code class="computeroutput"><span class="identifier">ulong_</span></code>, and <code class="computeroutput"><span class="identifier">byte_</span></code>.
       </li>
 <li class="listitem">
-        qi::skip[]<code class="computeroutput"> <span class="identifier">now</span> <span class="identifier">re</span><span class="special">-</span><span class="identifier">enables</span> <span class="identifier">outer</span> <span class="identifier">skipper</span>
-        <span class="keyword">if</span> <span class="identifier">used</span>
-        <span class="identifier">inside</span> </code>lexeme[]<code class="computeroutput"> <span class="special">*</span>
-        <span class="identifier">Added</span> </code>karma::maxwidth[]<code class="computeroutput">
-        <span class="identifier">directive</span> <span class="special">*</span>
-        </code>karma::delimit[]<code class="computeroutput"> <span class="identifier">now</span> <span class="identifier">re</span><span class="special">-</span><span class="identifier">enables</span>
-        <span class="identifier">outer</span> <span class="identifier">delimiter</span>
-        <span class="keyword">if</span> <span class="identifier">used</span>
-        <span class="identifier">inside</span> </code>verbatim[]<code class="computeroutput"> <span class="special">*</span> <span class="identifier">karma</span><span class="special">:</span> <span class="identifier">added</span> <span class="keyword">and</span><span class="special">-</span><span class="identifier">predicate</span>
-        <span class="special">(</span></code>operator&amp;()<code class="computeroutput"><span class="special">)</span>
-        <span class="keyword">and</span> <span class="keyword">not</span><span class="special">-</span><span class="identifier">predicate</span> <span class="special">(</span></code>operator!()`)
+<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip</span><span class="special">[]</span></code>
+        now re-enables outer skipper if used inside <code class="computeroutput"><span class="identifier">lexeme</span><span class="special">[]</span></code>
+</li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">maxwidth</span><span class="special">[]</span></code>
+        directive
+      </li>
+<li class="listitem">
+<code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">delimit</span><span class="special">[]</span></code>
+        now re-enables outer delimiter if used inside <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
+</li>
+<li class="listitem">
+        karma: added and-predicate (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></code>) and not-predicate (<code class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></code>)
       </li>
 </ul></div>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x"></a><h4>
-<a name="id1040956"></a>
+<a name="id1072552"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x">What's
       changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 to 2.x</a>
     </h4>
@@ -238,6 +240,20 @@
         and <code class="computeroutput"><span class="identifier">string</span><span class="special">()</span></code>
         placeholders can be used for token definitions as a replacement for <code class="computeroutput"><span class="identifier">token_def</span></code>, although it is still possible
         to use the latter one.
+      </li>
+<li class="listitem">
+        Lexer semantic actions now have to conform to a changed interface (see <a class="link" href="lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer Semantic Actions</a>
+        for details).
+      </li>
+<li class="listitem">
+        Added placeholder symbols usable from the inside of lexer semantic actions
+        while using Phoenix: _start, _end, _eoi, _state, and _pass (see <a class="link" href="lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer
+        Semantic Actions</a> for more details).
+      </li>
+<li class="listitem">
+        Added (lazy) support functions usable from the inside of lexer semantic actions
+        while using Phoenix: <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">more</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">less</span><span class="special">()</span></code>, and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lookahead</span><span class="special">()</span></code> (see <a class="link" href="lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer
+        Semantic Actions</a> for more details).
       </li>
 </ul></div>
 </div>

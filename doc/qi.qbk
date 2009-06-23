@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -29,6 +29,9 @@
 
 [/
 [section    Reference]
+[/section        Concepts]
+[include             qi/parser.qbk]
+[/endsect]
 [include        qi/concepts.qbk]
 [include        qi/action.qbk]
 [include        qi/auxiliary.qbk]

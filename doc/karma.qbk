@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -17,20 +17,20 @@
 
 [/section    Reference]
 [/section        Concepts]
-[/include            reference/karma/parser.qbk]
-[/include            reference/karma/generator.qbk]
+[/include            karma/parser.qbk]
+[/include            karma/generator.qbk]
 [/endsect]
-[/include        reference/karma/char.qbk]
-[/include        reference/karma/string.qbk]
-[/include        reference/karma/numeric.qbk]
-[/include        reference/karma/binary.qbk]
-[/include        reference/karma/directive.qbk]
-[/include        reference/karma/action.qbk]
-[/include        reference/karma/nonterminal.qbk]
-[/include        reference/karma/operator.qbk]
-[/include        reference/karma/stream.qbk]
-[/include        reference/karma/auxiliary.qbk]
-[/include        reference/karma/debug.qbk]
+[/include        karma/char.qbk]
+[/include        karma/string.qbk]
+[/include        karma/numeric.qbk]
+[/include        karma/binary.qbk]
+[/include        karma/directive.qbk]
+[/include        karma/action.qbk]
+[/include        karma/nonterminal.qbk]
+[/include        karma/operator.qbk]
+[/include        karma/stream.qbk]
+[/include        karma/auxiliary.qbk]
+[/include        karma/debug.qbk]
 [/endsect]
 
 [endsect]
