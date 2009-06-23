@@ -28,7 +28,7 @@
 [def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
 [def __phoenix2__               [@../../phoenix/doc/html/index.html Phoenix2]]
 [def __fusion__                 [@http://spirit.sourceforge.net/dl_more/fusion_v2/libs/fusion/doc/html/index.html Fusion]]
-[def __mpl__                    [@http://www.boost.org/libs/mpl/index.html MPL]]
+[def __mpl__                    [@http://www.boost.org/libs/mpl/index.html Boost.Mpl]]
 [def __boost__                  [@http://www.boost.org/ Boost]]
 [def __boost_tools__            [@http://www.boost.org/tools/index.html Boost Tools]]
 [def __spirit_list__            [@https://lists.sourceforge.net/lists/listinfo/spirit-general Spirit Mailing List]]
