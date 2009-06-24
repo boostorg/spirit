@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section FAQ]
+[section:faq Spirit FAQ]
 
 [heading I'm getting multiple symbol definition errors while using Visual C++. Anything I could do about that?]
  
@@ -20,10 +20,15 @@ circumstances using this macro may lead to the aformentioned linker errors.
 
 __spirit__ allows you to define a preprocessor constant disabling the usage
 of `BOOST_MPL_ASSERT_MSG()`, while switching to `BOOST_STATIC_ASSRT()` instead.
-If you define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1 (either by adding a
-`-DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1` on the compiler command line or by
-inserting a `#define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG 1` into your code 
-before any spirit headers get included).
+If you define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1 (either by adding 
+
+    -DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1
+
+on the compiler command line or by inserting a 
+
+    #define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG 1 
+
+into your code before any spirit headers get included).
 
 Using this trick has no adverse effects on any of the functionality of 
 __spirit__. The only change you might see while using this workaround are less
