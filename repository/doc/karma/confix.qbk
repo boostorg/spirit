@@ -96,7 +96,7 @@ All three parameters can be arbitrary complex generators themselves.
 
 The `confix` component exposes the attribute type of its subject as its own 
 attribute type. If the `subject` does not expose any attribute (the type is
-`unused_type`), then the `confix` does not expose anz attribute either.
+`unused_type`), then the `confix` does not expose any attribute either.
 
     a: A --> confix(p, s)[a]: A
 
