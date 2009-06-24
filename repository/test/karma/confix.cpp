@@ -10,7 +10,7 @@
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 
-#include <boost/spirit/repository/karma.hpp>
+#include <boost/spirit/repository/include/karma_confix.hpp>
 
 #include <iostream>
 #include "test.hpp"
