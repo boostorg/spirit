@@ -143,7 +143,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
-            return f(component, attr);
+            return f(component, make_iterator_range(iter, traits::end(attr)));
         }
 
         // Dispatches to dispatch_main depending on the attribute type
