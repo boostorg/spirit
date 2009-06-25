@@ -8,8 +8,10 @@
 
 [section:karma Karma]
 
-[/section    Tutorials]
-[/endsect]
+[section    Tutorials]
+[include        karma/tutorial_intro.qbk]
+[include        karma/warming_up.qbk]
+[endsect]
 
 [section    Quick Reference]
 [include        karma/quick_reference.qbk]
