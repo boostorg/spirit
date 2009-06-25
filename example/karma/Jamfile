@@ -8,6 +8,7 @@
 project spirit-karma-example ;
 
 exe quick_start1       : quick_start1.cpp ;
+exe num_list1          : num_list1.cpp ;
 exe actions_example    : actions.cpp ;
 exe basic_facilities   : basic_facilities.cpp /boost//date_time ;
 exe calc2_ast_dump     : calc2_ast_dump.cpp ;
