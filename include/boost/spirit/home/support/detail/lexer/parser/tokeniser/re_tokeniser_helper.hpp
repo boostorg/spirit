@@ -161,6 +161,70 @@ public:
         }
     }
 
+    static CharT chr (state &state_)
+    {
+        CharT ch_ = 0;
+
+        // eos_ has already been checked for.
+        switch (*state_._curr)
+        {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+                ch_ = decode_octal (state_);
+                break;
+            case 'a':
+                ch_ = '\a';
+                state_.increment ();
+                break;
+            case 'b':
+                ch_ = '\b';
+                state_.increment ();
+                break;
+            case 'c':
+                ch_ = decode_control_char (state_);
+                break;
+            case 'e':
+                ch_ = 27; // '\e' not recognised by compiler
+                state_.increment ();
+                break;
+            case 'f':
+                ch_ = '\f';
+                state_.increment ();
+                break;
+            case 'n':
+                ch_ = '\n';
+                state_.increment ();
+                break;
+            case 'r':
+                ch_ = '\r';
+                state_.increment ();
+                break;
+            case 't':
+                ch_ = '\t';
+                state_.increment ();
+                break;
+            case 'v':
+                ch_ = '\v';
+                state_.increment ();
+                break;
+            case 'x':
+                ch_ = decode_hex (state_);
+                break;
+            default:
+                ch_ = *state_._curr;
+                state_.increment ();
+                break;
+        }
+
+        return ch_;
+    }
+
 private:
     static const char *charset_shortcut (const char ch_,
         std::size_t &str_len_)
@@ -244,70 +308,6 @@ private:
         }
 
         return str_;
-    }
-
-    static CharT chr (state &state_)
-    {
-        CharT ch_ = 0;
-
-        // eos_ has already been checked for.
-        switch (*state_._curr)
-        {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-                ch_ = decode_octal (state_);
-                break;
-            case 'a':
-                ch_ = '\a';
-                state_.increment ();
-                break;
-            case 'b':
-                ch_ = '\b';
-                state_.increment ();
-                break;
-            case 'c':
-                ch_ = decode_control_char (state_);
-                break;
-            case 'e':
-                ch_ = 27; // '\e' not recognised by compiler
-                state_.increment ();
-                break;
-            case 'f':
-                ch_ = '\f';
-                state_.increment ();
-                break;
-            case 'n':
-                ch_ = '\n';
-                state_.increment ();
-                break;
-            case 'r':
-                ch_ = '\r';
-                state_.increment ();
-                break;
-            case 't':
-                ch_ = '\t';
-                state_.increment ();
-                break;
-            case 'v':
-                ch_ = '\v';
-                state_.increment ();
-                break;
-            case 'x':
-                ch_ = decode_hex (state_);
-                break;
-            default:
-                ch_ = *state_._curr;
-                state_.increment ();
-                break;
-        }
-
-        return ch_;
     }
 
     static CharT decode_octal (state &state_)
