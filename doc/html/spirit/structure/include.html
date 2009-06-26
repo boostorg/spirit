@@ -76,9 +76,10 @@
       </p>
 <p>
         Each directory (except include and home) have a corresponding header file
-        that contains forwarding includes of each relevant include files that the
+        that contains forwarding includes of each relevant include file that the
         directory contains. For example, there exists a &lt;boost/spirit/actor.hpp&gt;
-        header file.
+        header file which includes all the relevant files from the boost/spirit<span class="emphasis"><em>actor</em></span>
+        directory.
       </p>
 <p>
         To distinguish between Spirit versions, you can inspect the version file:
@@ -102,9 +103,8 @@
 <pre class="programlisting"><span class="identifier">BOOST_ROOT</span><span class="special">/</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span>
 </pre>
 <p>
-        is a special flat-structured directory that contains all the spirit headers.
-        The accomodate the flat structure, the headers are prefixed with the sub-
-        library name:
+        is a special flat directory that contains all the spirit headers. To accomodate
+        the flat structure, the headers are prefixed with the sub-library name:
       </p>
 <div class="itemizedlist"><ul type="disc">
 <li>
@@ -196,13 +196,12 @@
 </ul></div>
 <p>
         The various sub-libraries include files can be found in each sub-directory
-        containing the particular sub-library. The include structure of each sub-library
-        are documented in each (sub)libraries' documentation. Each sub-library follows
-        the same consistent scheme as above.
+        containing the particular sub-library. The include structure of a sub-library
+        is covered in its documentation. For consistency, each library follows the
+        same scheme as above.
       </p>
 <p>
-        To keep it simple for you, the client, you can simply use the main flat include
-        directory where all include files are all placed together.
+        To keep it simple, you should use the flat include directory at boost/spirit/include.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
