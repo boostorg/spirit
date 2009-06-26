@@ -29,12 +29,12 @@
 <p>
       Boost Spirit is an object-oriented, recursive-descent parser and output generation
       library for C++. It allows you to write grammars and format descriptions using
-      a format similar to EBNF (Extended Backus Naur Form, see [4]) directly in C++.
-      These inline grammar specifications can mix freely with other C++ code and,
-      thanks to the generative power of C++ templates, are immediately executable.
-      In retrospect, conventional compiler-compilers or parser-generators have to
-      perform an additional translation step from the source EBNF code to C or C++
-      code.
+      a format similar to EBNF (Extended Backus Naur Form, see <a href="http://www.csci.csusb.edu/dick/maths/intro_ebnf.html" target="_top">EBNF
+      intro</a>) directly in C++. These inline grammar specifications can mix
+      freely with other C++ code and, thanks to the generative power of C++ templates,
+      are immediately executable. In retrospect, conventional compiler-compilers
+      or parser-generators have to perform an additional translation step from the
+      source EBNF code to C or C++ code.
     </p>
 <p>
       The syntax and semantics of the libraries' API directly form domain-specific
@@ -57,13 +57,13 @@
       C++ we do not need any separate tools to compile, preprocess or integrate those
       into the build process. <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
       allows seamless integration of the parsing and output generation process with
-      other C++ code. Often this allows for simpler and more efficient code.
+      other C++ code. This often allows for simpler and more efficient code.
     </p>
 <p>
-      Both the created parsers and generators are fully attributed which allows you
-      to easily build and handle hierarchical data structures in memory. These data
-      structures resemble the structure of the input data and can directly be used
-      to generate arbitrarily-formatted output.
+      Both the created parsers and generators are fully attributed (more on that
+      later) which allows you to easily build and handle hierarchical data structures
+      in memory. These data structures resemble the structure of the input data and
+      can directly be used to generate arbitrarily-formatted output.
     </p>
 <p>
       The <a class="link" href="introduction.html#spirit.spiritstructure" title="Figure 1. The overall structure of the Boost Spirit library">figure</a> below depicts the
@@ -130,7 +130,7 @@
 <p><br class="figure-break">
     </p>
 <a name="spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_"></a><h4>
-<a name="id2605682"></a>
+<a name="id2605683"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_">A
       Quick Overview of Parsing with <span class="emphasis"><em>Spirit.Qi</em></span></a>
     </h4>
@@ -182,10 +182,10 @@
 <span class="special">(</span><span class="number">1</span> <span class="special">+</span> <span class="special">(</span><span class="number">2</span> <span class="special">+</span> <span class="special">(</span><span class="number">3</span> <span class="special">+</span> <span class="special">(</span><span class="number">4</span> <span class="special">+</span> <span class="number">5</span><span class="special">))))</span>
 </pre>
 <p>
-      Certainly we have done some modifications to the original EBNF syntax. This
-      is done to conform to C++ syntax rules. Most notably we see the abundance of
-      shift &gt;&gt; operators. Since there are no 'empty' operators in C++, it is
-      simply not possible to write something like:
+      Certainly we have modified the original EBNF syntax. This is done to conform
+      to C++ syntax rules. Most notably we see the abundance of shift &gt;&gt; operators.
+      Since there are no 'empty' operators in C++, it is simply not possible to write
+      something like:
     </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="identifier">b</span>
 </pre>
@@ -362,7 +362,7 @@
       used in the Standard's I/O streams.
     </p>
 <p>
-      Another important feature of <span class="emphasis"><em>karma</em></span> allows you to fully
+      Another important feature of <span class="emphasis"><em>Karma</em></span> allows you to fully
       decouple the data type from the output format. You can use the same output
       format with different data types as long as these conform conceptually. The
       next table gives some related examples.

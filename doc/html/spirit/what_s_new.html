@@ -32,16 +32,16 @@
     </h4>
 <p>
       The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called
-      <span class="emphasis"><em>Spirit.Classic</em></span>. Even if the directory structure has changed
+      <span class="emphasis"><em>Spirit.Classic</em></span>. Since the directory structure has changed
       (the Spirit Classic headers are now moved to the $BOOST_ROOT/boost/spirit/home/classic directory), we created forwarding
-      headers allowing to compile existing applications without any change. These
-      forwarding headers are deprecated, though, which will result in corresponding
+      headers allowing existing applications to compile without any change. However,
+      these forwarding headers are deprecated, which will result in corresponding
       warnings generated for each of the headers starting with Boost V1.38. The forwarding
       headers are expected to be removed in the future.
     </p>
 <p>
       The recommended way of using Spirit Classic now is to include header files
-      from the directory $BOOST_ROOT/boost/spirit/include. All files of Spirit Classic in this directory have a 'classic_'
+      from the directory $BOOST_ROOT/boost/spirit/include. All Spirit Classic headers in this directory have a 'classic_'
       prefixed to their name. For example the include
     </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -194,7 +194,7 @@
 </li>
 <li>
         The new lexer class now can be directly used, their is no need anymore to
-        wrap it using the <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code> template as before. Therefor the function
+        wrap it using the <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code> template as before. Therefore the function
         <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code>
         has been removed.
       </li>
@@ -211,7 +211,7 @@
       </li>
 <li>
         The <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_lexer</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token_set</span></code>,
-        and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token</span></code> classes has been moved to
+        and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token</span></code> classes have been moved to
         the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span></code> namespace and the names have been
         changed to <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span></code>, <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token_set</span></code>,
         <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span></code> (the same applies to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexert_actor_lexer</span></code>,
@@ -236,10 +236,11 @@
         newlines and matching is case sensitive.
       </li>
 <li>
-        Now the <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>
+        The <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>
         and <code class="computeroutput"><span class="identifier">string</span><span class="special">()</span></code>
-        placeholders can be used for token definitions as a replacement for <code class="computeroutput"><span class="identifier">token_def</span></code>, although it is still possible
-        to use the latter one.
+        placeholders can now be used for token definitions as a replacement for
+        <code class="computeroutput"><span class="identifier">token_def</span></code>, although it is
+        still possible to use the latter.
       </li>
 <li>
         Lexer semantic actions now have to conform to a changed interface (see <a class="link" href="lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer Semantic Actions</a>
