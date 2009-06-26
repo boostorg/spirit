@@ -10,18 +10,20 @@
 
 [heading Spirit Classic]
 
-The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called
-__classic__. Even if the directory structure has changed (the Spirit Classic
-headers are now moved to the '''$BOOST_ROOT/boost/spirit/home/classic''' directory),
-we created forwarding headers allowing to compile existing applications without
-any change. These forwarding headers are deprecated, though, which will result
-in corresponding warnings generated for each of the headers starting with Boost
-V1.38. The forwarding headers are expected to be removed in the future.
+The Spirit V1.8.x code base has been integrated with Spirit V2. It is
+now called __classic__. Since the directory structure has changed (the
+Spirit Classic headers are now moved to the
+'''$BOOST_ROOT/boost/spirit/home/classic''' directory), we created
+forwarding headers allowing existing applications to compile without
+any change. However, these forwarding headers are deprecated, which
+will result in corresponding warnings generated for each of the
+headers starting with Boost V1.38. The forwarding headers are expected
+to be removed in the future.
 
-The recommended way of using Spirit Classic now is to include header files from
-the directory '''$BOOST_ROOT/boost/spirit/include'''. All files of Spirit Classic
-in this directory have a 'classic_' prefixed to their name. For example the
-include
+The recommended way of using Spirit Classic now is to include header
+files from the directory '''$BOOST_ROOT/boost/spirit/include'''. All
+Spirit Classic headers in this directory have a 'classic_' prefixed to
+their name. For example the include
 
     #include <boost/spirit/core/core.hpp>
 
@@ -29,17 +31,18 @@ now should be written as:
 
     #include <boost/spirit/include/classic_core.hpp>
 
-To avoid namespace conflicts with the new Spirit V2 library we moved Spirit Classic
-into the namespace `boost::spirit::classic`. All references to the former
-namespace `boost::spirit` need to be adjusted as soon as the header names are
-corrected as described above. As an alternative you can define the preprocessor
-constant `BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic
-code to be in the namespace `boost::spirit` as before. This is not recommended,
-though, as it may result in naming clashes.
+To avoid namespace conflicts with the new Spirit V2 library we moved
+Spirit Classic into the namespace `boost::spirit::classic`. All
+references to the former namespace `boost::spirit` need to be adjusted
+as soon as the header names are corrected as described above. As an
+alternative you can define the preprocessor constant
+`BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic
+code to be in the namespace `boost::spirit` as before. This is not
+recommended, though, as it may result in naming clashes.
 
-The change of the namespace will be automatically deactivated whenever the
-deprecated include files are being used. This ensures full backwards
-compatibility for existing applications.
+The change of the namespace will be automatically deactivated whenever
+the deprecated include files are being used. This ensures full
+backwards compatibility for existing applications.
 
 [heading Spirit V2.1] 
 
@@ -105,7 +108,7 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
       };
 ``
 * The new lexer class now can be directly used, their is no need anymore to 
-  wrap it using the `make_lexer()` template as before. Therefor the function
+  wrap it using the `make_lexer()` template as before. Therefore the function
   `make_lexer()` has been removed.
 * The `lex::tokenize_and_parse()` and `lex::tokenize_and_phrase_parse()` functions 
   have been changed to match the parameter sequence as implemented by the 
@@ -114,7 +117,7 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
   parameters (well, the number of attributes is limited by the macro
   `SPIRIT_ARGUMENTS_LIMIT`, which defaults to `PHOENIX_LIMIT`).
 * The `lex::lexertl_lexer`, `lex::lexertl_token_set`, and `lex::lexertl_token`
-  classes has been moved to the `lex::lexertl` namespace and the names have been 
+  classes have been moved to the `lex::lexertl` namespace and the names have been 
   changed to `lex::lexertl::lexer`, `lex::lexertl::token_set`, `lex::lexertl::token`
   (the same applies to the `lex::lexert_actor_lexer`, and the `static_lexertl_*`
   family of types).
@@ -130,9 +133,9 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
 ``
   If no parameter is passed to the constructor, `match_flags::match_default` is 
   used, i.e. the `.` matches newlines and matching is case sensitive.
-* Now the `char_()` and `string()` placeholders can be used for token 
+* The `char_()` and `string()` placeholders can now be used for token 
   definitions as a replacement for `token_def`, although it is still
-  possible to use the latter one.
+  possible to use the latter.
 * Lexer semantic actions now have to conform to a changed interface (see
   __sec_lex_semactions__ for details).
 * Added placeholder symbols usable from the inside of lexer semantic actions 

@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Warming up</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../../../index.html" title="Spirit 2.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="quick_start.html" title="Quick Start">
 <link rel="next" href="../quick_reference.html" title="Quick Reference">
@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="quick_start.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Warming up">
+<div class="section" lang="en">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit.karma.tutorials.warming_up"></a><a class="link" href="warming_up.html" title="Warming up">Warming up</a>
 </h4></div></div></div>
@@ -31,7 +31,7 @@
           We will start from trivial examples, ramping up as we go.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__1_generating_a_number"></a><h6>
-<a name="id1024744"></a>
+<a name="id2641657"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__1_generating_a_number">Trivial
           Example #1 Generating a number</a>
         </h6>
@@ -51,7 +51,7 @@
           to a floating point generator or parser: <code class="computeroutput"><span class="identifier">double_</span></code>.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__2_generating_two_numbers"></a><h6>
-<a name="id1024787"></a>
+<a name="id2641728"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__2_generating_two_numbers">Trivial
           Example #2 Generating two numbers</a>
         </h6>
@@ -74,7 +74,7 @@
           is a composition of smaller generators. Whitespace between numbers can
           implicitly be inserted depending on how the generator is invoked (see below).
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
@@ -87,7 +87,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__3_generating_one_or_more_numbers"></a><h6>
-<a name="id1024858"></a>
+<a name="id2641856"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__3_generating_one_or_more_numbers">Trivial
           Example #3 Generating one or more numbers</a>
         </h6>
@@ -112,7 +112,7 @@
           numbers, if needed.
         </p>
 <a name="spirit.karma.tutorials.warming_up.trivial_example__4_generating_a_comma_delimited_list_of_numbers"></a><h6>
-<a name="id1024906"></a>
+<a name="id2641936"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.trivial_example__4_generating_a_comma_delimited_list_of_numbers">Trivial
           Example #4 Generating a comma-delimited list of numbers</a>
         </h6>
@@ -135,7 +135,7 @@
           in the generated output zero or more times.
         </p>
 <a name="spirit.karma.tutorials.warming_up.let_s_generate_"></a><h6>
-<a name="id1025040"></a>
+<a name="id2642120"></a>
           <a class="link" href="warming_up.html#spirit.karma.tutorials.warming_up.let_s_generate_">Let's
           Generate!</a>
         </h6>
@@ -144,17 +144,17 @@
           generator to do its work. For now, we will use the <code class="computeroutput"><span class="identifier">generate_delimited</span></code>
           function. One overload of this function accepts four arguments:
         </p>
-<div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem">
+<div class="orderedlist"><ol type="1">
+<li>
             An output iterator accepting the generated characters
           </li>
-<li class="listitem">
+<li>
             The generator expression
           </li>
-<li class="listitem">
+<li>
             Another generator called the delimiting generator
           </li>
-<li class="listitem">
+<li>
             The data to format and output
           </li>
 </ol></div>
@@ -247,14 +247,14 @@
           or disk full, etc.)
         </p>
 <p>
-          Note that we inlined the parser directly in the call to parse. Upon calling
-          parse, the expression evaluates into a temporary, unnamed parser which
-          is passed into the parse() function, used, and then destroyed.
+          Note that we inlined the generator directly in the call to <code class="computeroutput"><span class="identifier">generate_delimited</span></code>. Upon calling generate,
+          the expression evaluates into a temporary, unnamed generator which is passed
+          into the <code class="computeroutput"><span class="identifier">generate_delimited</span><span class="special">()</span></code> function, used, and then destroyed.
         </p>
 <p>
-          Here, we opted to make the generator generic by making it a template, parameterized
-          by the output iterator type. By doing so, it can put the generated data
-          into any STL conforming output iterator.
+          Here, we chose to make the generate function generic by making it a template,
+          parameterized by the output iterator type. By doing so, it can put the
+          generated data into any STL conforming output iterator.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

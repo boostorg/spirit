@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
-<link rel="home" href="../index.html" title="Spirit 2.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
+<link rel="start" href="../index.html" title="Spirit 2.1">
 <link rel="up" href="../index.html" title="Spirit 2.1">
 <link rel="prev" href="what_s_new.html" title="What's New">
 <link rel="next" href="structure.html" title="Structure">
@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="what_s_new.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="structure.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Introduction">
+<div class="section" lang="en">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="spirit.introduction"></a><a class="link" href="introduction.html" title="Introduction">Introduction</a>
 </h2></div></div></div>
@@ -41,14 +41,14 @@
       embedded languages (DSEL). In fact, Spirit exposes 3 different DSELs to the
       user:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
         one for creating parser grammars,
       </li>
-<li class="listitem">
+<li>
         one for the specification of the required tokens to be used for parsing,
       </li>
-<li class="listitem">
+<li>
         and one for the description of the required output formats.
       </li>
 </ul></div>
@@ -70,24 +70,24 @@
       overall structure of the Boost Spirit library. The library consists of 4 major
       parts:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
 <span class="emphasis"><em>Spirit.Classic</em></span>: This is the almost-unchanged code base
         taken from the former Boost Spirit V1.8 distribution. It has been moved into
         the namespace boost::spirit::classic. A special compatibility layer has been
         added to ensure complete compatibility with existing code using Spirit V1.8.
       </li>
-<li class="listitem">
+<li>
 <span class="emphasis"><em>Spirit.Qi</em></span>: This is the parser library allowing you to
         build recursive descent parsers. The exposed domain-specific language can
         be used to describe the grammars to implement, and the rules for storing
         the parsed information.
       </li>
-<li class="listitem">
+<li>
 <span class="emphasis"><em>Spirit.Lex</em></span>: This is the library usable to create tokenizers
         (lexers). The domain-specific language exposed by <span class="emphasis"><em>Spirit.Lex</em></span>
 </li>
-<li class="listitem">
+<li>
 <span class="emphasis"><em>Spirit.Karma</em></span>: This is the generator library allowing
         you to create code for recursive descent, data type-driven output formatting.
         The exposed domain-specific language is almost equivalent to the parser description
@@ -130,7 +130,7 @@
 <p><br class="figure-break">
     </p>
 <a name="spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_"></a><h4>
-<a name="id985677"></a>
+<a name="id2605682"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_">A
       Quick Overview of Parsing with <span class="emphasis"><em>Spirit.Qi</em></span></a>
     </h4>
@@ -220,7 +220,7 @@
       <code class="computeroutput"><span class="special">;</span></code>.
     </p>
 <a name="spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_"></a><h4>
-<a name="id986630"></a>
+<a name="id2606782"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_">A
       Quick Overview of Output Generation with <span class="emphasis"><em>Spirit.Karma</em></span></a>
     </h4>
@@ -253,7 +253,7 @@
       of the same <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code>:
     </p>
 <div class="table">
-<a name="id986971"></a><p class="title"><b>Table 2. Different output formats for `std::vector&lt;int&gt;`</b></p>
+<a name="id2607180"></a><p class="title"><b>Table 2. Different output formats for `std::vector&lt;int&gt;`</b></p>
 <div class="table-contents"><table class="table" summary="Different output formats for `std::vector&lt;int&gt;`">
 <colgroup>
 <col>
@@ -368,7 +368,7 @@
       next table gives some related examples.
     </p>
 <div class="table">
-<a name="id988437"></a><p class="title"><b>Table 3. Different data types usable with the output format
+<a name="id2607587"></a><p class="title"><b>Table 3. Different data types usable with the output format
     `*(int_ &lt;&lt; eol)`</b></p>
 <div class="table-contents"><table class="table" summary="Different data types usable with the output format
     `*(int_ &lt;&lt; eol)`">
