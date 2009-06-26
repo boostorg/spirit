@@ -10,7 +10,7 @@
 
 Boost Spirit is an object-oriented, recursive-descent parser and output generation 
 library for C++. It allows you to write grammars and format descriptions using a 
-format similar to EBNF (Extended Backus Naur Form, see [4]) directly in 
+format similar to EBNF (Extended Backus Naur Form, see __ebnf_intro__) directly in 
 C++. These inline grammar specifications can mix freely with other C++ code and, 
 thanks to the generative power of C++ templates, are immediately executable. 
 In retrospect, conventional compiler-compilers or parser-generators have to 
@@ -28,13 +28,14 @@ user:
 Since the target input grammars and output formats are written entirely in C++ 
 we do not need any separate tools to compile, preprocess or integrate those 
 into the build process. __spirit__ allows seamless integration of the parsing 
-and output generation process with other C++ code. Often this allows for 
+and output generation process with other C++ code. This often allows for 
 simpler and more efficient code.
 
-Both the created parsers and generators are fully attributed which allows you to 
-easily build and handle hierarchical data structures in memory. These data
-structures resemble the structure of the input data and can directly be used to 
-generate arbitrarily-formatted output.
+Both the created parsers and generators are fully attributed (more on
+that later) which allows you to easily build and handle hierarchical
+data structures in memory. These data structures resemble the
+structure of the input data and can directly be used to generate
+arbitrarily-formatted output.
 
 The [link spirit.spiritstructure figure] below depicts the overall structure 
 of the Boost Spirit library. The library consists of 4 major parts:
@@ -115,10 +116,10 @@ inputs such as:
     1 + ((6 * 200) - 20) / 6
     (1 + (2 + (3 + (4 + 5))))
 
-Certainly we have done some modifications to the original EBNF syntax. This is 
-done to conform to C++ syntax rules. Most notably we see the abundance of 
-shift >> operators. Since there are no 'empty' operators in C++, it is simply 
-not possible to write something like: 
+Certainly we have modified the original EBNF syntax. This is done to
+conform to C++ syntax rules. Most notably we see the abundance of
+shift >> operators. Since there are no 'empty' operators in C++, it is
+simply not possible to write something like:
 
     a b
 
@@ -181,7 +182,7 @@ The syntax is similar to /Qi/ with the exception that we use the `<<`
 operator for output concatenation. This should be easy to understand as it 
 follows the conventions used in the Standard's I/O streams. 
 
-Another important feature of /karma/ allows you to fully decouple the data 
+Another important feature of /Karma/ allows you to fully decouple the data 
 type from the output format. You can use the same output format with different 
 data types as long as these conform conceptually. The next table gives some 
 related examples.
