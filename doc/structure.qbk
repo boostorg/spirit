@@ -33,9 +33,10 @@ directories will still be present in future versions of Spirit. We only
 keep them for backward compatibility. Please be warned.
 
 Each directory (except include and home) have a corresponding header file that
-contains forwarding includes of each relevant include files that the
+contains forwarding includes of each relevant include file that the
 directory contains. For example, there exists a <boost/spirit/actor.hpp>
-header file.
+header file which includes all the relevant files from the boost/spirit/actor/ 
+directory.
 
 To distinguish between Spirit versions, you can inspect the version file:
 
@@ -54,9 +55,9 @@ The include directory at:
 
     BOOST_ROOT/boost/spirit/include
 
-is a special flat-structured directory that contains all the spirit headers.
-The accomodate the flat structure, the headers are prefixed with the sub-
-library name:
+is a special flat directory that contains all the spirit headers. To
+accomodate the flat structure, the headers are prefixed with the
+sub-library name:
 
 * classic_
 * karma_
@@ -102,12 +103,11 @@ As usual, these directories have their corresponding include files:
 
 The various sub-libraries include files can be found in each
 sub-directory containing the particular sub-library. The include
-structure of each sub-library are documented in each (sub)libraries'
-documentation. Each sub-library follows the same consistent scheme as
-above.
+structure of a sub-library is covered in its documentation. For
+consistency, each library follows the same scheme as above.
 
-To keep it simple for you, the client, you can simply use the main flat
-include directory where all include files are all placed together.
+To keep it simple, you should use the flat include directory at
+boost/spirit/include.
 
 [endsect] [/Include]
 
