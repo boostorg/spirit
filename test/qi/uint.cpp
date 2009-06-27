@@ -183,6 +183,16 @@ main()
         BOOST_TEST(test("   456", uint_[ref(n) = _1], space));
         BOOST_TEST(n == 456);
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // Check overflow is parse error
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::qi::uint_;
+        boost::uint8_t u;
+
+        BOOST_TEST(!test_attr("999", uint_, u));
+    }
 
     return boost::report_errors();
 }
