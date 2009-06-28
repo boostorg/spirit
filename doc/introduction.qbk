@@ -8,14 +8,16 @@
 
 [section Introduction]
 
-Boost Spirit is an object-oriented, recursive-descent parser and output generation 
-library for C++. It allows you to write grammars and format descriptions using a 
-format similar to EBNF (Extended Backus Naur Form, see __ebnf_intro__) directly in 
-C++. These inline grammar specifications can mix freely with other C++ code and, 
-thanks to the generative power of C++ templates, are immediately executable. 
-In retrospect, conventional compiler-compilers or parser-generators have to 
-perform an additional translation step from the source EBNF code to C or C++ 
-code. 
+Boost Spirit is an object-oriented, recursive-descent parser and
+output generation library for C++. It allows you to write grammars and
+format descriptions using a format similar to Extended Backus Naur
+Form (EBNF)[footnote [@http://www.cl.cam.ac.uk/%7Emgk25/iso-14977.pdf
+ISO-EBNF]] directly in C++. These inline grammar
+specifications can mix freely with other C++ code and, thanks to the
+generative power of C++ templates, are immediately executable.  In
+retrospect, conventional compiler-compilers or parser-generators have
+to perform an additional translation step from the source EBNF code to
+C or C++ code.
 
 The syntax and semantics of the libraries' API directly form domain-specific 
 embedded languages (DSEL). In fact, Spirit exposes 3 different DSELs to the 
