@@ -99,6 +99,10 @@ namespace boost { namespace spirit
         state_setter(Actor const& actor)
           : actor_(actor) {}
 
+        // see explanation for this constructor at the end of this file
+        state_setter(phoenix::actor<state_getter>, Actor const& actor)
+          : actor_(actor) {}
+
         Actor actor_;
     };
 
@@ -108,8 +112,8 @@ namespace boost { namespace spirit
     //  as a placeholder only, while it is being converted either to a 
     //  state_getter (if used as a rvalue) or to a state_setter (if used as a 
     //  lvalue). The conversion is achieved by specializing and overloading a 
-    //  couple of the Phoenix templates and functions from the Phoenix 
-    //  expression composition engine (see the end of this file).
+    //  couple of the Phoenix templates from the Phoenix expression composition
+    //  engine (see the end of this file).
     struct state_context 
     {
         typedef mpl::true_ no_nullary;
@@ -210,27 +214,23 @@ namespace boost { namespace phoenix
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  The specialization of as_composite<> below is needed to integrate the 
-    //  overload of the compose() function into Phoenix expression composition 
-    //  engine.
+    //  The specialization of as_composite<> below is needed to convert all
+    //  assignments to _state (places where it's used as a lvalue) into the
+    //  proper Phoenix actor (spirit::state_setter) allowing to change the
+    //  lexer state.
     template <typename RHS>
     struct as_composite<assign_eval, actor<spirit::state_context>, RHS>
     {
+        // For an assignment to _state (a spirit::state_context actor), this
+        // specialization makes Phoenix's compose() function construct a
+        // spirit::state_setter actor from 1. the LHS, a spirit::state_getter
+        // actor (due to the specialization of as_actor_base<> above),
+        // and 2. the RHS actor.
+        // This is why spirit::state_setter needs a constructor which takes
+        // a dummy spirit::state_getter as its first argument in addition
+        // to its real, second argument (the RHS actor).
         typedef spirit::state_setter<typename as_actor<RHS>::type> type;
     };
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  The compose function overload allows to convert all occurences of 
-    //  _state in places where it's used as a lvalue into the proper Phoenix 
-    //  actor (spirit::state_setter) allowing to change the lexer state.
-    template <typename EvalPolicy, typename RHS>
-    inline spirit::state_setter<typename as_actor<RHS>::type>
-    compose(actor<spirit::state_context>, RHS const& rhs
-      , typename enable_if<is_same<EvalPolicy, assign_eval> >::type* = NULL)
-    {
-        typedef typename as_actor<RHS>::type actor_type;
-        return spirit::state_setter<actor_type>(as_actor<RHS>::convert(rhs));
-    }
 
 }}
 
