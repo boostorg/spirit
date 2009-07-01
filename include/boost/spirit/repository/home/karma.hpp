@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/repository/karma/home/confix.hpp>
+#include <boost/spirit/repository/home/karma/confix.hpp>
 
 #endif
 
