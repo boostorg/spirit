@@ -9,5 +9,205 @@
 [section String]
 
 
+[/------------------------------------------------------------------------------]
+[section lit/string]
+
+[heading Description]
+
+The lit/string parser matches a string of characters. The lit/string
+parser is an implicit lexeme: the `skip` parser is not applied in
+between characters of the string.
+
+[heading Header]
+
+    #include <boost/spirit/home/qi/string/lit.hpp>  // main include
+    #include <boost/spirit/include/qi_lit.hpp>      // or, forwarding header
+    
+[heading Module Headers]
+
+    #include <boost/spirit/home/qi/string.hpp>      // string module
+    #include <boost/spirit/include/qi_string.hpp>   // or, forwarding header
+    #include <boost/spirit/home/qi.hpp>             // qi module
+    #include <boost/spirit/include/qi.hpp>          // or, forwarding header
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`s`]      [A literal string, e.g. "Hello", or a pointer/reference to a 
+                null-terminated array of characters or a a `std::basic_string`.]]
+    [[`fs`]     [A __lazy_argument__ that evaluates to a `std::basic_string` 
+                or a pointer/reference to a null-terminated array of characters.]]
+    [[`ns`]     [A __char_encoding_namespace__.]]]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`s`]              [Generate a string parser 
+                        from a string, `s`.]]
+    [[`lit(s)`]         [Generate a string parser 
+                        from a string, `s`.]]
+    [[`ns::string(s)`]  [Generate a string parser 
+                        from a string, `s`.]]
+    [[`fs`]             [Generate a string parser 
+                        from a string, `s`, returned by 
+                        invoking `fs` at parse time. 
+                        See __lazy_argument__]]
+    [[`lit(fs)`]        [Generate a string parser 
+                        from a string, `s`, returned by 
+                        invoking `fs` at parse time. 
+                        See __lazy_argument__]]
+    [[`ns::string(fs)`] [Generate a string parser 
+                        from a string, `s`, returned by 
+                        invoking `fs` at parse time. 
+                        See __lazy_argument__]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`s`]              
+                        [__unused__]]
+    [[`lit(s)`]         
+                        [__unused__]]
+    [[`ns::string(s)`]  [`std::basic_string<T>` where `T`
+                        is the underlying character type
+                        of `s`]]
+    [[`fs`]             [`std::basic_string<T>` where `T`
+                        is the underlying character type
+                        of `s`]]
+    [[`lit(fs)`]        [`std::basic_string<T>` where `T`
+                        is the underlying character type
+                        of `s`]]
+    [[`ns::string(fs)`] [`std::basic_string<T>` where `T`
+                        is the underlying character type
+                        of `s`]]
+]
+
+
+[heading Complexity]
+
+[:O(N)]
+
+where `N` is the number of characters in the string to be parsed.
+
+[heading Example]
+
+All code snippets below use this common test function:
+
+[reference_test]
+
+Some using declarations:
+
+[reference_using_declarations]
+
+Basic literals:
+
+[reference_string1_literals]
+
+From a `std::string`
+
+[reference_string1_std_string]
+
+Lazy strings using __phoenix__
+
+[reference_string1_phoenix]
+
+[endsect] [/ lit/strin]
+
+
+[/------------------------------------------------------------------------------]
+[section symbols]
+
+[heading Description]
+
+This class `symbols` implements a symbol table: an associative container
+(or map) of key-value pairs where the keys are strings. The `symbols`
+class can work efficiently with 8, 16, 32 and even 64 bit characters. 
+
+Traditionally, symbol table management is maintained seperately outside
+the grammar through semantic actions. Contrary to standard practice, the
+Spirit symbol table class symbols is-a parser. An instance of which may
+be used anywhere in the grammar specification. It is an example of a
+dynamic parser. A dynamic parser is characterized by its ability to
+modify its behavior at run time. Initially, an empty symbols object
+matches nothing. At any time, symbols may be added, thus, dynamically
+altering its behavior.
+
+[heading Header]
+
+    #include <boost/spirit/home/qi/string/symbols.hpp>  // main include
+    #include <boost/spirit/include/qi_symbols.hpp>      // or, forwarding header
+    
+[heading Module Headers]
+
+    #include <boost/spirit/home/qi/string.hpp>      // string module
+    #include <boost/spirit/include/qi_string.hpp>   // or, forwarding header
+    #include <boost/spirit/home/qi.hpp>             // qi module
+    #include <boost/spirit/include/qi.hpp>          // or, forwarding header
+
+Also, see __include_structure__.
+
+[heading Synopsis]
+
+    template <typename Char, typename T>
+    struct symbols;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Char`]           [The character type 
+                        of the symbol strings.]     [`char`]]
+    [[`T`]              [The data type associated 
+                        with each symbol.]          [__unused_type__]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`Sym`]        [A `symbols` type.]]
+    [[`Char`]       [A character type.]]
+    [[`T`]          [A data type.]]
+    [[`sym`]        [A `symbols` object.]]
+    [[`sym2`]       [Another `symbols` object.]]
+    [[`sseq`]       [An __stl__ container of strings.]]
+    [[`dseq`]       [An __stl__ container of data with `value_type` `T`.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]           [Semantics]]
+    [[`Sym()`]              [Construct an empty symbols.]]
+    [[`Sym(sym)`]           [Copy construct a symbols from `sym2`.]]
+    [[`Sym(sseq)`]          [Construct symbols from `sseq`.]]
+    [[`Sym(sseq)`]          [Construct symbols from `sseq` and `dseq`.]]
+    [[`sym = sym`]          [Assign `sym2` to `sym`.]]
+]
+
+[heading Attributes]
+
+The attribute of `stymbol<Char, T>` is always `T`.
+
+[heading Example]
+
+Real example code. Use Quickbook import mechanism to link to actual
+working code snippets here.
+
+[endsect] [/ symbols]
 
 [endsect]

@@ -1,11 +1,5 @@
-[/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
-    Copyright (C) 2001-2009 Hartmut Kaiser
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-===============================================================================/]
-
+[/------------------------------------------------------------------------------]
 [section XXX]
 
 [heading Description]
@@ -15,6 +9,13 @@ Description of XXX
 [heading Header]
 
     #include <boost/spirit/xxx.hpp>
+    
+[heading Module Headers]
+
+    #include <boost/spirit/xxx.hpp>
+    ...
+
+Also, see __include_structure__.
 
 [heading Synopsis]
 
@@ -30,22 +31,25 @@ Description of XXX
 
 [heading Model of]
 
-Link to concept
-
-[heading Objects]
-
-Objects provided by the library
-
 [variablelist Notation
     [[`xxx`]     [An XXX]]
 ]
+
+[heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is not
 defined in _concept-of_XXX_.
 
 [table
-    [[Expression]       [Semantics]             [Return type]       [Complexity]]
-    [[`xxx`]            [Semantics of `xxx`]    [XXX]               [Constant]]
+    [[Expression]       [Semantics]]
+    [[`xxx`]            [Semantics of `xxx`]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`xxx`]            [Attribute of `xxx`]]
 ]
 
 [heading Example]
@@ -53,4 +57,4 @@ defined in _concept-of_XXX_.
 Real example code. Use Quickbook import mechanism to link to actual
 working code snippets here.
 
-[endsect]
+[endsect] [/ XXX]

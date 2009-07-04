@@ -226,31 +226,6 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 
 [endsect]
 
-[section Lazy Arguments]
-
-For all expressions of the form:
-
-    p(a1, a2,... aN)
-
-where `p` is a parser, each of the arguments (a1...aN) can either be an
-immediate value, or a lazy function with signature:
-
-    T(Unused, Context)
-
-where `T`, the function's return value, is compatible with the argument
-type expected. For example, this is a valid expression:
-
-    eps(false) // this will always fail
-
-And so is this:
-
-    bool flag = true;
-    eps(phoenix::var(flag)) // success or fail depending on the value
-                            // of flag at parse time
-
-since `phoenix::ref(f)` is a function that returns a `bool`.
-
-[endsect]
 [section Non-terminals]
 
 [variablelist Notation

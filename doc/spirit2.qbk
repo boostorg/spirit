@@ -64,6 +64,7 @@
 [def __karma__                  /Spirit.Karma/]
 [def __lex__                    /Spirit.Lex/]
 
+[def __mpl_boolean_constant__   [@http://www.boost.org/libs/mpl/doc/refmanual/integral-constant.html MPL Boolean Constant]]
 
 [def __fixme__                  *FIXME*]
 
@@ -103,6 +104,11 @@
 [def __class_lexertl_lexer__    [link spirit.lex.reference.lexer_class.the_lexertl_lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
 [def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer_class.the_lexertl_static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
 
+[/ References to support ]
+
+[def __unused_type__            `unused_type`] [/$$$ TODO: link me $$$]
+[def __unused__                 `unused`] [/$$$ TODO: link me $$$]
+[def __info__                   `info`] [/$$$ TODO: link me $$$]
 
 [/ References to abstracts ]
 
@@ -110,6 +116,27 @@
 [def __syntax_diagrams__        [link spirit.abstracts.syntax_diagrams Syntax Diagram]]
 [def __peg__                    [link spirit.abstracts.parsing_expression_grammar Parsing Expression Grammar]]
 [def __ast__                    [Abstract Syntax Tree] [/$$$ TODO: link me $$$]
+
+[def __include_structure__      [link spirit.structure.include Include Structure]]
+
+[/ References to reference ]
+
+[def __parser_concept__             [link spirit.qi.reference.concepts.parser `Parser`]]
+[def __primitive_parser_concept__   [link spirit.qi.reference.concepts.primitiveparser `PrimitiveParser`]]
+[def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
+[def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
+
+Character Encoding Namespace
+
+[def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
+[def __context__                    Context] [/$$$ TODO: link me $$$]
+[def __compatible__                 Compatible] [/$$$ TODO: link me $$$]
+[def __atribute__                   Attribute] [/$$$ TODO: link me $$$]
+[def __compatible_atribute__        Compatible Attribute] [/$$$ TODO: link me $$$]
+[def __rule__                       Rule] [/$$$ TODO: link me $$$]
+[def __parser_conversion__          Parser Conversion] [/$$$ TODO: link me $$$]
+[def __delegate_pattern__           Delegate Design Pattern] [/$$$ TODO: link me $$$]
+[def __composite_pattern__          Composite Design Pattern] [/$$$ TODO: link me $$$]
 
 [/ Some images ]
 
