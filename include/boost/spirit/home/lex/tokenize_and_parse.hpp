@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace lex
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
         return compile<qi::domain>(xpr).parse(iter, lex.end(), unused, unused, unused);
@@ -84,7 +84,7 @@ namespace boost { namespace spirit { namespace lex
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
         return compile<qi::domain>(xpr).parse(iter, lex.end(), unused, unused, attr);
@@ -150,8 +150,8 @@ namespace boost { namespace spirit { namespace lex
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
 
         typedef
             typename result_of::compile<qi::domain, Skipper>::type
@@ -179,8 +179,8 @@ namespace boost { namespace spirit { namespace lex
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
 
         typedef
             typename result_of::compile<qi::domain, Skipper>::type

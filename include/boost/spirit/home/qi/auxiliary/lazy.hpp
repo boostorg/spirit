@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace qi
             // If you got an error_invalid_expression error message here,
             // then the expression (expr_type) is not a valid spirit qi
             // expression.
-            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, expr_type)
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, expr_type);
 
             typedef typename
                 result_of::compile<qi::domain, expr_type, modifier>::type
@@ -132,7 +132,7 @@ namespace boost { namespace spirit { namespace qi
             // If you got an error_invalid_expression error message here,
             // then the expression (expr_type) is not a valid spirit qi
             // expression.
-            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, expr_type)
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, expr_type);
 
             typedef typename
                 result_of::compile<qi::domain, expr_type, modifier>::type

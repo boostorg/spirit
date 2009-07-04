@@ -48,7 +48,7 @@ namespace boost { namespace spirit { namespace karma
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
         typedef fusion::vector<
             BOOST_PP_ENUM(N, BOOST_SPIRIT_KARMA_ATTRIBUTE_REFERENCE, A)
@@ -86,8 +86,8 @@ namespace boost { namespace spirit { namespace karma
         // If you got an error_invalid_expression error message here,
         // then either the expression (expr) or skipper is not a valid
         // spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
 
         typename result_of::compile<karma::domain, Delimiter>::type const 
             delimiter_ = compile<karma::domain>(delimiter);

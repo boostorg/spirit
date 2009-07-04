@@ -63,7 +63,7 @@ namespace boost { namespace spirit { namespace karma
             // If you got an error_invalid_expression error message here,
             // then the expression (expr_type) is not a valid spirit karma
             // expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, expr_type)
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, expr_type);
 
             typedef typename
                 result_of::compile<karma::domain, expr_type, modifier>::type
@@ -134,7 +134,7 @@ namespace boost { namespace spirit { namespace karma
             // If you got an error_invalid_expression error message here,
             // then the expression (expr_type) is not a valid spirit karma
             // expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, expr_type)
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, expr_type);
 
             typedef typename
                 result_of::compile<karma::domain, expr_type, modifier>::type

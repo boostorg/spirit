@@ -22,7 +22,7 @@ namespace boost { namespace spirit { namespace karma
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
         return karma::detail::format_manip<Expr>(xpr, unused, unused);
     }
 
@@ -35,7 +35,7 @@ namespace boost { namespace spirit { namespace karma
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
         return format_manip<Expr, mpl::false_, unused_type, Attribute>(
             xpr, unused, attr);
     }
@@ -51,8 +51,8 @@ namespace boost { namespace spirit { namespace karma
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
         return format_manip<Expr, mpl::false_, Delimiter>(
             xpr, d, pre_delimit, unused);
     }
@@ -67,8 +67,8 @@ namespace boost { namespace spirit { namespace karma
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
         return format_manip<Expr, mpl::false_, Delimiter, Attribute>(
             xpr, d, pre_delimit, attr);
     }
@@ -82,8 +82,8 @@ namespace boost { namespace spirit { namespace karma
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit karma expression.
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter)
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
         return format_manip<Expr, mpl::false_, Delimiter, Attribute>(
             xpr, d, delimit_flag::dont_predelimit, attr);
     }

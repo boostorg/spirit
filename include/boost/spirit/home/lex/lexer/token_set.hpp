@@ -242,7 +242,7 @@ namespace boost { namespace spirit { namespace lex
             // If you got an error_invalid_expression error message here,
             // then the expression (expr) is not a valid spirit lex 
             // expression.
-            BOOST_SPIRIT_ASSERT_MATCH(lex::domain, Expr)
+            BOOST_SPIRIT_ASSERT_MATCH(lex::domain, Expr);
 
             this->clear();
             define(xpr);
@@ -267,7 +267,7 @@ namespace boost { namespace spirit { namespace lex
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit lex 
         // expression.
-        BOOST_SPIRIT_ASSERT_MATCH(lex::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(lex::domain, Expr);
 
         tokset.define(xpr);
         return tokset;
@@ -281,7 +281,7 @@ namespace boost { namespace spirit { namespace lex
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit lex 
         // expression.
-        BOOST_SPIRIT_ASSERT_MATCH(lex::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(lex::domain, Expr);
 
         tokset.define(xpr);
         return tokset;

@@ -29,7 +29,7 @@ namespace boost { namespace spirit { namespace qi
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
         return qi::detail::match_manip<Expr>(xpr, unused, unused);
     }
 
@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace qi
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
         return match_manip<Expr, mpl::false_, unused_type, Attribute>(
             xpr, unused, p);
     }
@@ -63,8 +63,8 @@ namespace boost { namespace spirit { namespace qi
         // If you got an error_invalid_expression error message here,
         // then either the expression (expr) or skipper is not a valid
         // spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
         return match_manip<Expr, mpl::false_, Skipper>(
             xpr, s, post_skip, unused);
     }
@@ -83,8 +83,8 @@ namespace boost { namespace spirit { namespace qi
         // If you got an error_invalid_expression error message here,
         // then either the expression (expr) or skipper is not a valid
         // spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
         return match_manip<Expr, mpl::false_, Skipper, Attribute>(
             xpr, s, post_skip, p);
     }
@@ -102,8 +102,8 @@ namespace boost { namespace spirit { namespace qi
         // If you got an error_invalid_expression error message here,
         // then either the expression (expr) or skipper is not a valid
         // spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
         return match_manip<Expr, mpl::false_, Skipper, Attribute>(xpr, s, p);
     }
 

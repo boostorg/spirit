@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace qi
         // If you got an error_expr_is_not_convertible_to_a_parser
         // error message here, then the expression (expr) is not a
         // valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
         return compile<qi::domain>(expr).what(unused);
     }
 }}}

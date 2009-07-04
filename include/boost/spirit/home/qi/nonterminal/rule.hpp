@@ -212,7 +212,7 @@ namespace boost { namespace spirit { namespace qi
             // Report invalid expression error as early as possible.
             // If you got an error_invalid_expression error message here,
             // then the expression (expr) is not a valid spirit qi expression.
-            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
 
             f = detail::bind_parser<mpl::false_>(compile<qi::domain>(expr));
             return *this;
@@ -225,7 +225,7 @@ namespace boost { namespace spirit { namespace qi
             // Report invalid expression error as early as possible.
             // If you got an error_invalid_expression error message here,
             // then the expression (expr) is not a valid spirit qi expression.
-            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr)
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
 
             r.f = detail::bind_parser<mpl::true_>(compile<qi::domain>(expr));
             return r;

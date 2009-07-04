@@ -214,7 +214,7 @@ namespace boost { namespace spirit { namespace karma
             // Report invalid expression error as early as possible.
             // If you got an error_invalid_expression error message here,
             // then the expression (expr) is not a valid spirit karma expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
             f = detail::bind_generator<mpl::false_>(compile<karma::domain>(expr));
             return *this;
@@ -227,7 +227,7 @@ namespace boost { namespace spirit { namespace karma
             // Report invalid expression error as early as possible.
             // If you got an error_invalid_expression error message here,
             // then the expression (expr) is not a valid spirit karma expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr)
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
             r.f = detail::bind_generator<mpl::true_>(compile<karma::domain>(expr));
             return r;

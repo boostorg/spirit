@@ -46,7 +46,7 @@ namespace boost { namespace spirit { namespace lex
         // Report invalid expression error as early as possible.
         // If you got an error_invalid_expression error message here,
         // then the expression (expr) is not a valid spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typedef fusion::vector<
             BOOST_PP_ENUM(N, BOOST_SPIRIT_QI_ATTRIBUTE_REFERENCE, A)
@@ -70,8 +70,8 @@ namespace boost { namespace spirit { namespace lex
         // If you got an error_invalid_expression error message here,
         // then either the expression (expr) or skipper is not a valid
         // spirit qi expression.
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr)
-        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper)
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
+        BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Skipper);
 
         typedef
             typename result_of::compile<qi::domain, Skipper>::type
