@@ -58,7 +58,8 @@ schematic structure of a token.
 
 [fig ./images/tokenstructure.png..The structure of a token..spirit.lex.tokenstructure]
 
-The token value and the token state may be omitted for optimization reasons, 
+The token value and the lexer state the token has been recogniyed in may be 
+omitted for optimization reasons, 
 avoiding the token to carry more data than actually required. This 
 configuration can be achieved by supplying appropriate template parameters 
 for the __class_lexertl_token__ template while defining the token type. 
