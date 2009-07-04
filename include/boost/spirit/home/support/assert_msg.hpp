@@ -15,11 +15,11 @@
 #if BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG != 0
 #include <boost/static_assert.hpp>
 #define BOOST_SPIRIT_ASSERT_MSG(Cond, Msg, Types)                             \
-        BOOST_STATIC_ASSERT(Cond);
+        BOOST_STATIC_ASSERT(Cond)
 #else
 #include <boost/mpl/assert.hpp>
 #define BOOST_SPIRIT_ASSERT_MSG(Cond, Msg, Types)                             \
-        BOOST_MPL_ASSERT_MSG(Cond, Msg, Types);
+        BOOST_MPL_ASSERT_MSG(Cond, Msg, Types)
 #endif
 
 #define BOOST_SPIRIT_ASSERT_MATCH(Domain, Expr)                               \
