@@ -52,6 +52,10 @@ defined in _concept-of_XXX_.
     [[`xxx`]            [Attribute of `xxx`]]
 ]
 
+[heading Complexity]
+
+Big-O complexity of the parser
+
 [heading Example]
 
 Real example code. Use Quickbook import mechanism to link to actual
