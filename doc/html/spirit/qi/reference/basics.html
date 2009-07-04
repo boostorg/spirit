@@ -1,0 +1,97 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Basics</title>
+<link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../reference.html" title="Reference">
+<link rel="previous" href="concepts/naryparser.html" title="NaryParser">
+<link rel="next" href="string.html" title="String">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="concepts/naryparser.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="string.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.qi.reference.basics"></a><a href="basics.html" title="Basics">Basics</a>
+</h4></div></div>
+<div></div>
+</div>
+<a name="spirit.qi.reference.basics.lazy_argument"></a><h5>
+<a name="id454751"></a>
+          <a href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
+        </h5>
+<p>
+          Some parsers (e.g. primitives and non-terminals) may take in additional
+          attributes. Such parsers take the form:
+        </p>
+<pre class="programlisting"><span class="identifier">p</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
+</pre>
+<p>
+          where <tt class="computeroutput"><span class="identifier">p</span></tt> is a parser. Each
+          of the arguments (a1...aN) can either be an immediate value, or a function,
+          <tt class="computeroutput"><span class="identifier">f</span></tt>, with signature:
+        </p>
+<pre class="programlisting"><span class="identifier">T</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
+</pre>
+<p>
+          where <tt class="computeroutput"><span class="identifier">T</span></tt>, the function's
+          return value, is compatible with the argument type expected and <tt class="computeroutput"><span class="identifier">Context</span></tt> is the parser's Context type
+          (The first argument is <tt class="computeroutput"><span class="identifier">unused</span></tt>
+          to make the <tt class="computeroutput"><span class="identifier">Context</span></tt> the
+          second argument. This is done for uniformity with Semantic Actions).
+        </p>
+<a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h5>
+<a name="id454961"></a>
+          <a href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+          Encoding Namespace</a>
+        </h5>
+<p>
+          Some parsers need to know which character set a <tt class="computeroutput"><span class="keyword">char</span></tt>
+          or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt> is operating on.
+          For example, the <tt class="computeroutput"><span class="identifier">alnum</span></tt>
+          parser works differently with ISO8859.1 and ASCII encodings. Where necessary,
+          Spirit encodes (tags) the parser with the character set.
+        </p>
+<p>
+          We have a namespace for each character set Spirit will be supporting. That
+          includes <tt class="computeroutput"><span class="identifier">ascii</span></tt>, <tt class="computeroutput"><span class="identifier">iso8859_1</span></tt>, <tt class="computeroutput"><span class="identifier">standard</span></tt>
+          and <tt class="computeroutput"><span class="identifier">standard_wide</span></tt> (and
+          in the future, <tt class="computeroutput"><span class="identifier">unicode</span></tt>).
+          In each of the character encoding namespaces, we place tagged versions
+          of parsers such as <tt class="computeroutput"><span class="identifier">alnum</span></tt>,
+          <tt class="computeroutput"><span class="identifier">space</span></tt> etc.
+        </p>
+<p>
+          Example:
+        </p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span> <span class="comment">// use the ASCII space parser
+</span></pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="concepts/naryparser.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="string.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

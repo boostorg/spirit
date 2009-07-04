@@ -1,0 +1,243 @@
+[/==============================================================================
+    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2008 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Concepts]
+
+[section Parser]
+
+[heading Description]
+
+The /Parser/ is the most fundamental concept. A Parser has a member
+function, `parse`, that accepts a first-last `ForwardIterator` pair and
+returns bool as its result. The iterators delimit the data being parsed.
+The Parser's `parse` member function returns `true` if the parse
+succeeds, in which case the first iterator is advanced accordingly. Each
+Parser can represent a specific pattern or algorithm, or it can be a
+more complex parser formed as a composition of other Parsers.
+
+[variablelist Notation
+    [[`p`]              [A Parser (`expr` converts to `p` in the Semantics column).]]
+    [[`P`]              [A Parser type.]]
+    [[`Expr`]           [A Parser, or a type that can be converted to a parser, `P`.]]
+    [[`Iter`]           [a `ForwardIterator` type.]]
+    [[`f`, `l`]         [`ForwardIterator`. first/last iterator pair.]]
+    [[`Context`]        [The parser's __context__ type.]]
+    [[`context`]        [The parser's __context__, or __unused__.]]
+    [[`skip`]           [A skip Parser, or __unused__ (`skip_expr` converts to `skip` in the Semantics column).]]
+    [[`attr`]           [A __compatible_atribute__, or __unused__.]]
+    [[`expr`]           [A Parser, or an object that can be converted to a parser, `p`
+                        (`p` will be the equivalent parser in the Semantics column). See __parser_conversion__.]]
+    [[`skip_expr`]      [A skip Parser, or an object that can be converted to a skip-parser, `skip`
+                        (`skip` will be the equivalent parser in the Semantics column). See __parser_conversion__.]]
+    [[`post_skip`]      [`qi::skip_flag::postskip`]]
+    [[`skip_over(skip)`][Equivalent to:
+``while (first != last && skip.parse(f, l, unused, unused, unused))
+    {}``]]
+]
+
+[heading Valid Expressions]
+
+In the expressions below, the behavior of the parser, `p`, how `skip`
+and `attr` are handled by `p`, are left unspecified in the base `Parser`
+concept. These are specified in subsequent, more refined concepts and by
+the actual models therof.
+
+For any Parser the following expressions must be valid:
+
+[table
+    [[Expression]           [Semantics]                         [Return type]]
+    [[
+``p.parse(f, l, context, skip, attr)``]                         
+                            [Match the input sequence
+                            starting from `f`. Return
+                            `true` if successful, otherwise
+                            return `false`.]                    [`bool`]]
+    [[`p.what(context)`]    [Get information about a Parser.]   [__info__]]
+    [[`compile(expr)`]      [Compile an expression `expr` 
+                            into a parser, `p` or type `P`]     [`P`]]
+
+[[``qi::parse(f, l, expr)``]                         
+[Equivalent to 
+``p.parse(f, l, unused, unused, unused);``]                     [`bool`]]
+    
+[[``qi::parse(f, l, expr, attr)``]                         
+[Equivalent to:
+``p.parse(f, l, unused, unused, attr);``]                       [`bool`]]
+
+[[``qi::phrase_parse(
+    f, l, expr, skip_expr)``]                         
+[Equivalent to:
+``p.parse(f, l, unused, skip, unused);``]                       [`bool`]]
+    
+[[``qi::phrase_parse(
+    f, l, expr, 
+    skip_expr, post_skip)``]
+[Equivalent to:
+``p.parse(f, l, unused, skip, unused);
+skip_over(skip);``]                                             [`bool`]]
+
+[[``qi::phrase_parse(
+    f, l, expr, 
+    skip_expr, attr)``]                         
+[Equivalent to:
+``p.parse(f, l, unused, skip, attr);``]                         [`bool`]]
+    
+[[``qi::phrase_parse(
+    f, l, expr, skip_expr, 
+    post_skip, attr)``]
+[Equivalent to:
+``p.parse(f, l, unused, skip, attr);
+skip_over(skip);``]                                             [`bool`]]
+
+]
+
+[heading Type Expressions]
+
+[table
+    [[Expression]                                   [Description]]
+    [[`P::template attribute<Context, Iter>::type`] [The Parser's expected attribute.]]
+    [[`attribute_of<P, Context, Iter>::type`]       [The Parser's expected attribute.]]
+    [[`qi::is_parser<P>::type`]                     [Metafunction that evaluates to `mpl::true_` if 
+                                                    a certain type P  is a Parser, `mpl::false_`  otherwise
+                                                    (See __mpl_boolean_constant__).]]
+]
+
+[heading Postcondition]
+
+Upon return from `p.parse` the following post conditions should hold:
+
+* On a successful match, `f` is positioned one past the first 
+  non-matching character/token.
+* On a failed match, if a `skip` parser is not provided (__unused__), 
+  `f` is restored to its original position prior to entry.
+* On a failed match, if a `skip` parser is provided (not __unused__), 
+  `f` is positioned one past the first character/token not 
+  matching `skip`.
+* On a failed match, `attr` is left untouched.
+* No post-skips: trailing `skip` characters/tokens will not be skipped.
+
+[heading Models]
+
+All parsers in Spirit.Qi are models of the /Parser/ concept.
+
+[endsect] [/ Parser Concept]
+
+[section PrimitiveParser]
+
+[heading Description]
+
+These are the most basic building blocks that the client uses to build
+more complex parsers. 
+
+[variablelist Notation
+    [[`p`]     [A PrimitiveParser]]
+]
+
+[heading Valid Expressions]
+
+In addition to the requirements defined in the Parser concept, for any
+PrimitiveParser the following must be met:
+
+[table
+    [[Expression]       [Semantics]             [Return type]]
+    
+[[``p.parse(f, l, context, skip, attr)``]                         
+                                                    
+[A PrimitiveParser is required to do a pre-skip equivalent to:
+``while (first != last && skip.parse(f, l, unused, unused, unused))
+    {}``
+prior to doing the actual parse.
+] [`bool`]]
+
+]
+
+[heading Type Expressions]
+
+[table
+    [[Expression]       [Description]]
+    [[`PrimitiveParser`]            [Description of `PrimitiveParser`]]
+]
+
+[heading Invariants]
+
+For any PrimitiveParser p the following invariants always hold:
+
+[heading Models]
+
+Links to models of PrimitiveParser concept
+
+[endsect] [/ PrimitiveParser Concept]
+
+[endsect]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[/------------------------------------------------------------------------------]
+[section ParserExpression]
+
+[heading Description]
+
+A /ParserExpression/ is a C++ expression that conforms to a limited
+subset of the C++ grammar that defines the Spirit.Qi Domain Specific
+Embedded Language (DSEL). This DSEL attempts to mimick __peg__ in C++.
+Most of the time, the user will be dealing with Parser Expressions. A
+/ParserExpression/, when evaluated, returns a /Parser/.
+
+[variablelist Notation
+    [[`Expr`]           [A ParserExpression type.]]
+    [[`expr`]           [A ParserExpression.]]
+]
+
+[heading Valid Expressions]
+
+For any ParserExpression the following expressions must be valid:
+
+[table
+    [[Expression]       [Semantics]             [Return type]]
+    [[`compile(expr)`]  [Compile an expression `expr` into a __parser_concept__.]]
+]
+
+[heading Type Expressions]
+
+[table
+    [[Expression]                                   [Description]]
+    [[`traits::matches<qi::domain, Expr>::type`]    [Check if `Expr` is a valid __parser_concept__.]]
+]
+
+[heading Invariants]
+
+For any ParserExpression ParserExpression the following invariants always hold:
+
+[heading Precondition]
+
+Prior to calling FOO the following preconditions should hold:
+
+[heading Precondition]
+
+Upon return from FOO the following postconditions should hold:
+
+[heading Models]
+
+Links to models of ParserExpression concept
+
+[endsect] [/ ParserExpression Concept]

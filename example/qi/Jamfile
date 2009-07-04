@@ -15,6 +15,7 @@ exe sum : sum.cpp ;
 exe complex_number : complex_number.cpp ;
 exe employee : employee.cpp  ;
 exe roman : roman.cpp ;
+exe reference : reference.cpp ;
 exe mini_xml1 : mini_xml1.cpp ;
 exe mini_xml2 : mini_xml2.cpp ;
 exe mini_xml3 : mini_xml3.cpp ;

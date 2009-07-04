@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Predefined Primitive Generators</title>
+<title>Predefined
+        Primitive Generators</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.73.2">
-<link rel="start" href="../../../index.html" title="Spirit 2.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../quick_reference.html" title="Quick Reference">
-<link rel="prev" href="common_notation.html" title="Common Notation">
-<link rel="next" href="compound_attribute_rules.html" title="Compound Attribute Rules">
+<link rel="previous" href="common_notation.html" title="Common
+        Notation">
+<link rel="next" href="compound_attribute_rules.html" title="Compound
+        Attribute Rules">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -23,10 +26,14 @@
 <a accesskey="p" href="common_notation.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="compound_attribute_rules.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.quick_reference.predefined_primitive_generators"></a><a class="link" href="predefined_primitive_generators.html" title="Predefined Primitive Generators">Predefined
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.quick_reference.predefined_primitive_generators"></a><a href="predefined_primitive_generators.html" title="Predefined
+        Primitive Generators">Predefined
         Primitive Generators</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -34,1177 +41,781 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
+<th><p>
                   Expression
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Attribute
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Description
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">eol</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates the end of line (<code class="computeroutput"><span class="special">\</span><span class="identifier">n</span></code>)
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eol</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates the end of line (<tt class="computeroutput"><span class="special">\</span><span class="identifier">n</span></tt>)
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">eps</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
                   Generate an empty string
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  If <code class="computeroutput"><span class="identifier">b</span></code> is true, generate
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  If <tt class="computeroutput"><span class="identifier">b</span></tt> is true, generate
                   an empty string
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Attribute of <code class="computeroutput"><span class="identifier">G</span></code>
-                  where <code class="computeroutput"><span class="identifier">G</span></code> is the
-                  return type of <code class="computeroutput"><span class="identifier">fg</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Invoke <code class="computeroutput"><span class="identifier">fg</span></code> at generation
-                  time, returning a generator <code class="computeroutput"><span class="identifier">g</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  Attribute of <tt class="computeroutput"><span class="identifier">G</span></tt>
+                  where <tt class="computeroutput"><span class="identifier">G</span></tt> is the
+                  return type of <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                </p></td>
+<td><p>
+                  Invoke <tt class="computeroutput"><span class="identifier">fg</span></tt> at generation
+                  time, returning a generator <tt class="computeroutput"><span class="identifier">g</span></tt>
                   which is then called to generate.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">fg</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  see <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                </p></td>
+<td><p>
+                  see <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
                   above
-                </p>
-                </td>
-<td>
-                <p>
-                  Equivalent to <code class="computeroutput"><span class="identifier">lazy</span><span class="special">[</span><span class="identifier">fp</span><span class="special">]</span></code>
-                </p>
-                </td>
+                </p></td>
+<td><p>
+                  Equivalent to <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">[</span><span class="identifier">fp</span><span class="special">]</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">g</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Attribute of <code class="computeroutput"><span class="identifier">g</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Call semantic action <code class="computeroutput"><span class="identifier">fa</span></code>
-                  (before executing <code class="computeroutput"><span class="identifier">g</span></code>).
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">g</span><span class="special">[</span><span class="identifier">fa</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  Attribute of <tt class="computeroutput"><span class="identifier">g</span></tt>
+                </p></td>
+<td><p>
+                  Call semantic action <tt class="computeroutput"><span class="identifier">fa</span></tt>
+                  (before executing <tt class="computeroutput"><span class="identifier">g</span></tt>).
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">byte_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">byte_</span></tt>
+                </p></td>
+<td><p>
                   8 bits native endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates an 8 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">word</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">word</span></tt>
+                </p></td>
+<td><p>
                   16 bits native endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 16 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">big_word</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_word</span></tt>
+                </p></td>
+<td><p>
                   16 bits big endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 16 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">little_word</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_word</span></tt>
+                </p></td>
+<td><p>
                   16 bits little endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 16 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">dword</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">dword</span></tt>
+                </p></td>
+<td><p>
                   32 bits native endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 32 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">big_dword</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_dword</span></tt>
+                </p></td>
+<td><p>
                   32 bits big endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 32 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">little_dword</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_dword</span></tt>
+                </p></td>
+<td><p>
                   32 bits little endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 32 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">qword</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">qword</span></tt>
+                </p></td>
+<td><p>
                   64 bits native endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 64 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">big_qword</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">big_qword</span></tt>
+                </p></td>
+<td><p>
                   64 bits big endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 64 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">little_qword</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">little_qword</span></tt>
+                </p></td>
+<td><p>
                   64 bits little endian
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Generates a 64 bit binary
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Ch</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates <code class="computeroutput"><span class="identifier">ch</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Ch</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates a single char string literal, <code class="computeroutput"><span class="identifier">c</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Ch</span></tt>
+                </p></td>
+<td><p>
+                  Generates a single char string literal, <tt class="computeroutput"><span class="identifier">c</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">ch</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates <code class="computeroutput"><span class="identifier">ch</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">str</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates <code class="computeroutput"><span class="identifier">str</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates <code class="computeroutput"><span class="identifier">ch</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates <code class="computeroutput"><span class="identifier">str</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">string</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Str</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generates <code class="computeroutput"><span class="identifier">str</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">string</span><span class="special">(</span><span class="identifier">str</span><span class="special">)</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Str</span></tt>
+                </p></td>
+<td><p>
+                  Generates <tt class="computeroutput"><span class="identifier">str</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> as lower
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> as lower
                   case
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> as upper
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> as upper
                   case
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> left
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
                   aligned in column of width BOOST_KARMA_DEFAULT_FIELD_LENGTH
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> left
-                  aligned in column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
-                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> left
-                  aligned in column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                  while using <code class="computeroutput"><span class="identifier">g</span></code> to
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                  while using <tt class="computeroutput"><span class="identifier">g</span></tt> to
                   generate the necesssary padding
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> right
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
                   aligned in column of width BOOST_KARMA_DEFAULT_FIELD_LENGTH
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> right
-                  aligned in column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
-                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> right
-                  aligned in column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                  while using <code class="computeroutput"><span class="identifier">g</span></code> to
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+                  aligned in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                  while using <tt class="computeroutput"><span class="identifier">g</span></tt> to
                   generate the necesssary padding
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
                   in column of width BOOST_KARMA_DEFAULT_FIELD_LENGTH
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
-                  in column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+                  in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
-                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
-                  in column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                  while using <code class="computeroutput"><span class="identifier">g</span></code> to
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+                  in column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                  while using <tt class="computeroutput"><span class="identifier">g</span></tt> to
                   generate the necesssary padding
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> truncated
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> truncated
                   to column of width BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate <code class="computeroutput"><span class="identifier">a</span></code> truncated
-                  to column of width <code class="computeroutput"><span class="identifier">N</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Generate <tt class="computeroutput"><span class="identifier">a</span></tt> truncated
+                  to column of width <tt class="computeroutput"><span class="identifier">N</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Repeat <code class="computeroutput"><span class="identifier">a</span></code> zero or
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> zero or
                   more times
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Repeat <code class="computeroutput"><span class="identifier">a</span></code> <code class="computeroutput"><span class="identifier">N</span></code> times
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> times
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
-                  <span class="identifier">M</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Repeat <code class="computeroutput"><span class="identifier">a</span></code> <code class="computeroutput"><span class="identifier">N</span></code> to <code class="computeroutput"><span class="identifier">M</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">M</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> to <tt class="computeroutput"><span class="identifier">M</span></tt>
                   times
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
-                  <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Repeat <code class="computeroutput"><span class="identifier">a</span></code> <code class="computeroutput"><span class="identifier">N</span></code> or more times
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">N</span><span class="special">,</span>
+                  <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Repeat <tt class="computeroutput"><span class="identifier">a</span></tt> <tt class="computeroutput"><span class="identifier">N</span></tt> or more times
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Disable delimited generation for <code class="computeroutput"><span class="identifier">a</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Disable delimited generation for <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
                   Reestablish the delimiter that got inhibited by verbatim
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">A</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Use <code class="computeroutput"><span class="identifier">g</span></code> as a skipper
-                  for generating <code class="computeroutput"><span class="identifier">a</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">g</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">A</span></tt>
+                </p></td>
+<td><p>
+                  Use <tt class="computeroutput"><span class="identifier">g</span></tt> as a skipper
+                  for generating <tt class="computeroutput"><span class="identifier">a</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">float_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">float</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate a floating point number from a <code class="computeroutput"><span class="keyword">float</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">float_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">float</span></tt>
+                </p></td>
+<td><p>
+                  Generate a floating point number from a <tt class="computeroutput"><span class="keyword">float</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">double_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">double</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate a floating point number from a <code class="computeroutput"><span class="keyword">double</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">double_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">double</span></tt>
+                </p></td>
+<td><p>
+                  Generate a floating point number from a <tt class="computeroutput"><span class="keyword">double</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">long_double</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate a floating point number from a <code class="computeroutput"><span class="keyword">long</span>
-                  <span class="keyword">double</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_double</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></tt>
+                </p></td>
+<td><p>
+                  Generate a floating point number from a <tt class="computeroutput"><span class="keyword">long</span>
+                  <span class="keyword">double</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">bin</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate a binary integer from an <code class="computeroutput"><span class="keyword">unsigned</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">bin</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Generate a binary integer from an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">oct</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate an octal integer from an <code class="computeroutput"><span class="keyword">unsigned</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">oct</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Generate an octal integer from an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">hex</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Generate a hexadecimal integer from an <code class="computeroutput"><span class="keyword">unsigned</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">hex</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
+<td><p>
+                  Generate a hexadecimal integer from an <tt class="computeroutput"><span class="keyword">unsigned</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">ushort_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">short</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ushort_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">short</span></tt>
+                </p></td>
+<td><p>
                   Generate an unsigned short integer
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">ulong_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ulong_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
                   Generate an unsigned long integer
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">uint_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">uint_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">int</span></tt>
+                </p></td>
+<td><p>
                   Generate an unsigned int
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">ulong_long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span>
-                  <span class="keyword">long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">ulong_long</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">unsigned</span> <span class="keyword">long</span>
+                  <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
                   Generate an unsigned long long
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">short_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">short</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">short_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">short</span></tt>
+                </p></td>
+<td><p>
                   Generate a short integer
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">long_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
                   Generate a long integer
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">int_</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">int</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">int_</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">int</span></tt>
+                </p></td>
+<td><p>
                   Generate an int
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">long_long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">long_long</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></tt>
+                </p></td>
+<td><p>
                   Generate a long long
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Not predicate. Ensure that <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  Not predicate. Ensure that <tt class="computeroutput"><span class="identifier">a</span></tt>
                   does not succeed generating but don't create any output
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Unused</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  And predicate. Ensure that <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Unused</span></tt>
+                </p></td>
+<td><p>
+                  And predicate. Ensure that <tt class="computeroutput"><span class="identifier">a</span></tt>
                   does succeed generating but don't create any output
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Optional. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Optional. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
                   zero or one time
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Kleene. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Kleene. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
                   zero or more times
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Plus. Generate <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="special">+</span><span class="identifier">a</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Plus. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
                   one or more times
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                  <span class="identifier">b</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
-                  <span class="identifier">B</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Alternative. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                  or <code class="computeroutput"><span class="identifier">b</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Alternative. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  or <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
-                  <span class="identifier">b</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
-                  <span class="identifier">B</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  Sequence. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                  followed by <code class="computeroutput"><span class="identifier">b</span></code>
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span>
+                  <span class="identifier">B</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  Sequence. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  followed by <tt class="computeroutput"><span class="identifier">b</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
-                  <span class="identifier">b</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  List. Generate <code class="computeroutput"><span class="identifier">a</span></code>
-                  delimited <code class="computeroutput"><span class="identifier">b</span></code> one
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+                  <span class="identifier">b</span></tt>
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  List. Generate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  delimited <tt class="computeroutput"><span class="identifier">b</span></tt> one
                   or more times
-                </p>
-                </td>
+                </p></td>
 </tr>
 </tbody>
 </table></div>
