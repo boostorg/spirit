@@ -445,13 +445,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     inline void
     construct(Attribute& attr, token<Iterator, omitted, HasState>& t) {}
 
-    //  This is called from the parse function of token_set or lexer_def_
+    //  This is called from the parse function of lexer_def_
     template <typename Iterator, typename AttributeTypes, typename HasState>
     inline void
     construct(fusion::vector2<std::size_t, iterator_range<Iterator> >& attr,
         token<Iterator, AttributeTypes, HasState> const& t)
     {
-    //  The type returned by the token_set and lexer_def_ parser components
+    //  The type returned by the lexer_def_ parser components
     //  is a fusion::vector containing the token id of the matched token 
     //  and the pair of iterators to the matched character sequence.
 

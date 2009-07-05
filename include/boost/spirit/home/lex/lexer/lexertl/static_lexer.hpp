@@ -15,7 +15,6 @@
 #include <boost/spirit/home/lex/lexer/lexertl/functor.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/static_functor_data.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/iterator.hpp>
-#include <boost/spirit/home/lex/lexer/lexertl/unique_id.hpp>
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
@@ -31,59 +30,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  static_token_set
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Token
-      , typename LexerTables = static_::lexer
-      , typename Iterator = typename Token::iterator_type>
-    class static_token_set
-    {
-    protected:
-        typedef typename boost::detail::iterator_traits<Iterator>::value_type 
-            char_type;
-        typedef std::basic_string<char_type> string_type;
-        typedef LexerTables tables_type;
-
-        static std::size_t get_state_id(char const* state)
-        {
-            for (std::size_t i = 0; i < tables_type::state_count(); ++i)
-            {
-                if (boost::equals(tables_type::state_name(i), state))
-                    return i;
-            }
-            return ~0;
-        }
-
-    public:
-        typedef Token token_type;
-        typedef typename Token::id_type id_type;
-
-        static_token_set(unsigned int flags = 0) {}
-
-        // interface for token definition management
-        std::size_t add_token (char_type const* state
-          , string_type const& tokendef, std::size_t token_id) 
-        {
-            return unique_id<id_type>::get();
-        }
-
-        // interface for pattern definition management
-        void add_pattern (char_type const* state, string_type const& name
-          , string_type const& patterndef) {}
-
-        void clear() {}
-
-        std::size_t add_state(char_type const* state)
-        {
-            return get_state_id(state);
-        }
-        string_type initial_state() const 
-        { 
-            return tables_type::state_name(0);
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     //
     //  Every lexer type to be used as a lexer for Spirit has to conform to 
     //  the following public interface:
@@ -92,8 +38,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //        iterator_type   The type of the iterator exposed by this lexer.
     //        token_type      The type of the tokens returned from the exposed 
     //                        iterators.
-    //        token_set       The type of the token set representing a lexer 
-    //                        state.
     //
     //    functions:
     //        default constructor
@@ -119,9 +63,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //        Functor         The type of the InputPolicy to use to instantiate
     //                        the multi_pass iterator type to be used as the 
     //                        token iterator (returned from begin()/end()).
-    //        TokenSet        The type of the token set to use in conjunction 
-    //                        with this lexer type. This is used for the 
-    //                        token_set typedef described above only.
     //
     //    Additionally, this implementation of a static lexer has a template
     //    parameter LexerTables allowing to customize the static lexer tables
@@ -167,9 +108,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     template <typename Token = token<>
       , typename LexerTables = static_::lexer
       , typename Iterator = typename Token::iterator_type
-      , typename Functor = functor<Token, detail::static_data, Iterator>
-      , typename TokenSet 
-          = lex::token_set<static_token_set<Token, LexerTables, Iterator> > >
+      , typename Functor = functor<Token, detail::static_data, Iterator> >
     class static_lexer 
     {
     public:
@@ -187,7 +126,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  a public interface 
         typedef Token token_type;
         typedef typename Token::id_type id_type;
-        typedef TokenSet token_set;
         typedef iterator<Functor> iterator_type;
 
     private:
@@ -226,21 +164,20 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
     protected:
         //  Lexer instances can be created by means of a derived class only.
-        static_lexer(unsigned int flags) {}
+        static_lexer(unsigned int flags) : unique_id_(0) {}
 
     public:
         // interface for token definition management
         std::size_t add_token (char_type const* state, char_type tokendef
           , std::size_t token_id) 
         {
-            return unique_id<id_type>::get();
+            return unique_id_++;
         }
         std::size_t add_token (char_type const* state, string_type const& tokendef
           , std::size_t token_id) 
         {
-            return unique_id<id_type>::get();
+            return unique_id_++;
         }
-        void add_token(char_type const* state, token_set& tokset) {}
 
         // interface for pattern definition management
         void add_pattern (char_type const* state, string_type const& name
@@ -270,6 +207,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
     private:
         typename Functor::semantic_actions_type actions_;
+        std::size_t unique_id_;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -298,16 +236,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
       , typename LexerTables = static_::lexer
       , typename Iterator = typename Token::iterator_type
       , typename Functor 
-          = functor<Token, detail::static_data, Iterator, mpl::true_> 
-      , typename TokenSet 
-          = lex::token_set<static_token_set<Token, LexerTables, Iterator> > >
+          = functor<Token, detail::static_data, Iterator, mpl::true_> >
     class static_actor_lexer 
-      : public static_lexer<Token, LexerTables, Iterator, Functor, TokenSet>
+      : public static_lexer<Token, LexerTables, Iterator, Functor>
     {
     protected:
         // Lexer instances can be created by means of a derived class only.
         static_actor_lexer(unsigned int flags) 
-          : static_lexer<Token, LexerTables, Iterator, Functor, TokenSet>(flags) 
+          : static_lexer<Token, LexerTables, Iterator, Functor>(flags) 
         {}
     };
 

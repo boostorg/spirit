@@ -89,7 +89,7 @@ namespace boost { namespace spirit { namespace lex
                     token_type;
 
                     token_type &t = *first;
-                    if (token_is_valid(t)) {
+                    if (token_is_valid(t) && t.state() == first.get_state()) {
                     // any of the token definitions matched
                         qi::detail::assign_to(t, attr);
                         ++first;
@@ -165,13 +165,6 @@ namespace boost { namespace spirit { namespace lex
                     }
 
                     def.define(tokdef);
-                    return *this;
-                }
-
-                template <typename TokenSet>
-                adder const& operator()(token_set<TokenSet>& tokset) const
-                {
-                    def.define(tokset);
                     return *this;
                 }
 

@@ -22,7 +22,6 @@
 #include <boost/spirit/home/lex/lexer/lexertl/functor.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/functor_data.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/iterator.hpp>
-#include <boost/spirit/home/lex/lexer/lexertl/unique_id.hpp>
 #if defined(BOOST_SPIRIT_LEXERTL_DEBUG)
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
@@ -92,63 +91,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    //  token_set
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Token, typename Iterator = typename Token::iterator_type>
-    class token_set
-    {
-    protected:
-        typedef typename boost::detail::iterator_traits<Iterator>::value_type 
-            char_type;
-        typedef std::basic_string<char_type> string_type;
-
-    public:
-        typedef Token token_type;
-        typedef typename Token::id_type id_type;
-
-        token_set(unsigned int flags = 0)
-          : rules_(detail::map_flags(flags), &unique_id<id_type>::get)
-        {}
-
-        // interface for token definition management
-        std::size_t add_token (char_type const* state, char_type tokendef
-          , std::size_t token_id)
-        {
-            return rules_.add(state, detail::escape(tokendef), token_id, state);
-        }
-
-        std::size_t add_token (char_type const* state, string_type const& tokendef
-          , std::size_t token_id)
-        {
-            return rules_.add(state, tokendef, token_id, state);
-        }
-
-        // interface for pattern definition management
-        std::size_t add_pattern (char_type const* state, string_type const& name
-          , string_type const& patterndef)
-        {
-            add_state(state);
-            return rules_.add_macro(name.c_str(), patterndef);
-        }
-
-        boost::lexer::rules const& get_rules() const { return rules_; }
-
-        void clear() { rules_.clear(); }
-
-        std::size_t add_state(char_type const* state)
-        {
-            return rules_.add_state(state);
-        }
-        string_type initial_state() const 
-        { 
-            return string_type(rules_.initial());
-        }
-
-    private:
-        boost::lexer::basic_rules<char_type> rules_;
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     template <typename Lexer>
     bool generate_static(Lexer const& lex, std::ostream& os, char const* name);
 
@@ -161,8 +103,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //        iterator_type   The type of the iterator exposed by this lexer.
     //        token_type      The type of the tokens returned from the exposed 
     //                        iterators.
-    //        token_set       The type of the token set representing a lexer 
-    //                        state.
     //
     //    functions:
     //        default constructor
@@ -187,9 +127,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //        Functor         The type of the InputPolicy to use to instantiate
     //                        the multi_pass iterator type to be used as the 
     //                        token iterator (returned from begin()/end()).
-    //        TokenSet        The type of the token set to use in conjunction 
-    //                        with this lexer type. This is used for the 
-    //                        token_set typedef described above only.
     //
     ///////////////////////////////////////////////////////////////////////////
 
@@ -205,8 +142,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token = token<>
       , typename Iterator = typename Token::iterator_type
-      , typename Functor = functor<Token, lexertl::detail::data, Iterator>
-      , typename TokenSet = lex::token_set<token_set<Token, Iterator> > >
+      , typename Functor = functor<Token, lexertl::detail::data, Iterator> >
     class lexer 
     {
     public:
@@ -223,7 +159,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  a public interface .
         typedef Token token_type;
         typedef typename Token::id_type id_type;
-        typedef TokenSet token_set;
         typedef iterator<Functor> iterator_type;
 
     private:
@@ -259,7 +194,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  Lexer instances can be created by means of a derived class only.
         lexer(unsigned int flags) 
           : flags_(detail::map_flags(flags))
-          , rules_(flags_, &unique_id<id_type>::get)
+          , rules_(flags_)
           , initialized_dfa_(false)
         {}
 
@@ -278,29 +213,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             add_state(state);
             initialized_dfa_ = false;
             return rules_.add(state, tokendef, token_id, state);
-        }
-
-        // Allow a token_set to be associated with this lexer instance. This 
-        // copies all token definitions of the right hand side into this lexer
-        // instance.
-        void add_token(char_type const* state, token_set const& tokset)
-        {
-            add_state(state);
-            initialized_dfa_ = false;
-            rules_.add("*", tokset.get_rules(), state, state);
-        }
-
-        // Allow to associate a whole lexer instance with another lexer 
-        // instance. This copies all token definitions of the right hand side 
-        // lexer into this instance.
-        template <typename Token_, typename Iterator_, typename Functor_
-          , typename TokenSet_>
-        void add_token(char_type const* state
-          , lexer<Token_, Iterator_, Functor_, TokenSet_> const& lexer_def)
-        {
-            add_state(state);
-            initialized_dfa_ = false;
-            rules_.add("*", lexer_def.get_rules(), state, state);
         }
 
         // interface for pattern definition management
@@ -393,14 +305,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token = token<>
       , typename Iterator = typename Token::iterator_type
-      , typename Functor = functor<Token, lexertl::detail::data, Iterator, mpl::true_>
-      , typename TokenSet = lex::token_set<token_set<Token, Iterator> > >
-    class actor_lexer : public lexer<Token, Iterator, Functor, TokenSet>
+      , typename Functor = functor<Token, lexertl::detail::data, Iterator, mpl::true_> >
+    class actor_lexer : public lexer<Token, Iterator, Functor>
     {
     protected:
         //  Lexer instances can be created by means of a derived class only.
         actor_lexer(unsigned int flags) 
-          : lexer<Token, Iterator, Functor, TokenSet>(flags) {}
+          : lexer<Token, Iterator, Functor>(flags) {}
     };
 
 }}}}
