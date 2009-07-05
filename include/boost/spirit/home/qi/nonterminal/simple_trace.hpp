@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace qi
             print_indent(indent);
             BOOST_SPIRIT_DEBUG_OUT << '<' << tag << '>';
             int const n = BOOST_SPIRIT_DEBUG_PRINT_SOME;
-            for (int i = 0; first != last && i != n; ++i, ++first)
+            for (int i = 0; first != last && i != n && *first; ++i, ++first)
                 BOOST_SPIRIT_DEBUG_OUT << *first;
             BOOST_SPIRIT_DEBUG_OUT << "</" << tag << '>' << std::endl;
         }
