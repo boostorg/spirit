@@ -28,7 +28,7 @@ template <typename Char, typename Expr>
 bool test(Char const *toparse, Expr const& expr)
 {
     namespace spirit = boost::spirit;
-    BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, Expr)
+    BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, Expr);
 
     std::istringstream istrm(toparse);
     istrm >> spirit::qi::compile<spirit::qi::domain>(expr);

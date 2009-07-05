@@ -26,7 +26,7 @@ bool test(Char const *expected, Expr const& xpr)
     // Report invalid expression error as early as possible.
     // If you got an error_invalid_expression error message here,
     // then the expression (expr) is not a valid spirit karma expression.
-    BOOST_SPIRIT_ASSERT_MATCH(boost::spirit::karma::domain, Expr)
+    BOOST_SPIRIT_ASSERT_MATCH(boost::spirit::karma::domain, Expr);
 
     std::ostringstream ostrm;
     ostrm << boost::spirit::compile<boost::spirit::karma::domain>(xpr);
