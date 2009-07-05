@@ -23,13 +23,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     namespace detail
     {
         ///////////////////////////////////////////////////////////////////////
-        template <typename Iterator, typename HasActors, typename HasState>
+        template <typename Iterator, typename HasActors, typename HasState
+          , typename TokenValue>
         struct data;    // no default specialization
 
         ///////////////////////////////////////////////////////////////////////
         //  neither supports state, nor actors
-        template <typename Iterator>
-        struct data<Iterator, mpl::false_, mpl::false_>
+        template <typename Iterator, typename TokenValue>
+        struct data<Iterator, mpl::false_, mpl::false_, TokenValue>
         {
         protected:
             typedef typename 
@@ -38,6 +39,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         public:
             typedef Iterator base_iterator_type;
+            typedef unused_type token_value_type;
             typedef std::size_t state_type;
             typedef char_type const* state_name_type;
             typedef unused_type semantic_actions_type;
@@ -146,6 +148,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             Iterator const& get_first() const { return first_; }
             Iterator const& get_last() const { return last_; }
 
+            unused_type value() const { return unused; }
+
         protected:
             Iterator& first_;
             Iterator last_;
@@ -156,16 +160,17 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         ///////////////////////////////////////////////////////////////////////
         //  doesn't support lexer semantic actions
-        template <typename Iterator>
-        struct data<Iterator, mpl::false_, mpl::true_>
-          : data<Iterator, mpl::false_, mpl::false_>
+        template <typename Iterator, typename TokenValue>
+        struct data<Iterator, mpl::false_, mpl::true_, TokenValue>
+          : data<Iterator, mpl::false_, mpl::false_, TokenValue>
         {
         protected:
-            typedef data<Iterator, mpl::false_, mpl::false_> base_type;
+            typedef data<Iterator, mpl::false_, mpl::false_, TokenValue> base_type;
             typedef typename base_type::char_type char_type;
 
         public:
             typedef Iterator base_iterator_type;
+            typedef unused_type token_value_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::state_name_type state_name_type;
             typedef typename base_type::semantic_actions_type 
@@ -221,22 +226,23 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         ///////////////////////////////////////////////////////////////////////
         //  does support lexer semantic actions, may support state
-        template <typename Iterator, typename HasState>
-        struct data<Iterator, mpl::true_, HasState> 
-          : data<Iterator, mpl::false_, HasState>
+        template <typename Iterator, typename HasState, typename TokenValue>
+        struct data<Iterator, mpl::true_, HasState, TokenValue> 
+          : data<Iterator, mpl::false_, HasState, TokenValue>
         {
         public:
             typedef semantic_actions<Iterator, HasState, data> 
                 semantic_actions_type;
 
         protected:
-            typedef data<Iterator, mpl::false_, HasState> base_type;
+            typedef data<Iterator, mpl::false_, HasState, TokenValue> base_type;
             typedef typename base_type::char_type char_type;
             typedef typename semantic_actions_type::functor_wrapper_type
                 functor_wrapper_type;
 
         public:
             typedef Iterator base_iterator_type;
+            typedef TokenValue token_value_type;
             typedef typename base_type::state_type state_type;
             typedef typename base_type::state_name_type state_name_type;
 
@@ -310,10 +316,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 has_hold_ = true;
             }
 
+            TokenValue const& value() const 
+            {
+                return value_;
+            }
+            TokenValue& value()
+            {
+                return value_;
+            }
+            template <typename Value>
+            void set_value(Value const& val)
+            {
+                value_ = val;
+            }
+
         protected:
             semantic_actions_type const& actions_;
             Iterator hold_;     // iterator needed to support lex::more()
             bool has_hold_;     // 'true' if hold_ is valid
+            TokenValue value_;
         };
     }
 

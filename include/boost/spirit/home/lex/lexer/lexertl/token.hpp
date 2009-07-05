@@ -117,6 +117,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef Iterator iterator_type;
         typedef mpl::false_ has_state;
         typedef std::size_t id_type;
+        typedef unused_type token_value_type;
 
         //  default constructed tokens correspond to EOI tokens
         token() : id_(boost::lexer::npos) {}
@@ -125,6 +126,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         explicit token(int) : id_(0) {}
 
         token(id_type id, std::size_t) : id_(id) {}
+
+        token(id_type id, std::size_t, token_value_type)
+          : id_(id) {}
 
         token(id_type id, std::size_t, Iterator const& first
               , Iterator const& last)
@@ -203,6 +207,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         token(id_type id, std::size_t state)
           : base_type(id, boost::lexer::npos), state_(state) {}
+
+        token(id_type id, std::size_t state, token_value_type)
+          : base_type(id, boost::lexer::npos, unused)
+          , state_(state) {}
 
         token(id_type id, std::size_t state
               , Iterator const& first, Iterator const& last)
@@ -292,11 +300,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  from the iterator pair to the required data type is done when it is
         //  accessed for the first time.
         typedef iterator_range<Iterator> iterpair_type;
+
+    public:
+        typedef typename base_type::id_type id_type;
         typedef typename detail::token_value_type<
             iterpair_type, AttributeTypes
         >::type token_value_type;
 
-    public:
         typedef Iterator iterator_type;
 
         //  default constructed tokens correspond to EOI tokens
@@ -307,7 +317,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
           : base_type(0)
           , value_(iterpair_type(iterator_type(), iterator_type())) {}
 
-        token(std::size_t id, std::size_t state, Iterator const& first
+        token(id_type id, std::size_t state, token_value_type const& value)
+          : base_type(id, state, value)
+          , value_(value) {}
+
+        token(id_type id, std::size_t state, Iterator const& first
               , Iterator const& last)
           : base_type(id, state, first, last)
           , value_(iterpair_type(first, last)) {}

@@ -133,6 +133,43 @@ namespace boost { namespace spirit
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    //  The value_getter is used to create the _value placeholder, which is a 
+    //  Phoenix actor used to access or change the value of the current token.
+    //
+    //  This actor is invoked whenever the placeholder '_value' is used in a
+    //  lexer semantic action:
+    //
+    //      lex::token_def<> identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
+    //      this->self = identifier 
+    //          [ _value = construct_<std::string>(_start, _end) ];
+    //
+    //  The example shows how to use _value to set the identifier name as the 
+    //  token value.
+    struct value_getter
+    {
+        typedef mpl::true_ no_nullary;
+
+        template <typename Env>
+        struct result
+        {
+            typedef typename
+                remove_const<
+                    typename mpl::at_c<typename Env::args_type, 4>::type
+                >::type
+            context_type;
+
+            typedef typename context_type::token_value_type& type;
+        };
+
+        template <typename Env>
+        typename result<Env>::type 
+        eval(Env const& env) const
+        {
+            return fusion::at_c<4>(env.args()).value();
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     //  The eoi_getter is used to create the _eoi placeholder, which is a 
     //  Phoenix actor used to access the end of input iterator pointing to the 
     //  end of the underlying input sequence.
@@ -183,6 +220,10 @@ namespace boost { namespace spirit
     // '_tokenid' may be used to access and change the tokenid of the current 
     // token
     phoenix::actor<phoenix::argument<3> > const _tokenid = phoenix::argument<3>();
+
+    // '_value' may be used to access and change the token value of the current
+    // token
+    phoenix::actor<value_getter> const _value = value_getter();
 
     // _state may be used to access and change the name of the current lexer 
     // state

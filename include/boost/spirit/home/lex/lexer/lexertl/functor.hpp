@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token
-      , template <typename, typename, typename> class FunctorData
+      , template <typename, typename, typename, typename> class FunctorData
       , typename Iterator = typename Token::iterator_type
       , typename SupportsActors = mpl::false_
       , typename SupportsState = typename Token::has_state>
@@ -73,7 +73,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // Needed by compilers not implementing the resolution to DR45. For
         // reference, see
         // http://www.open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#45.
-        friend class FunctorData<Iterator, SupportsActors, SupportsState>;
+        typedef typename Token::token_value_type token_value_type;
+        friend class FunctorData<Iterator, SupportsActors, SupportsState
+          , token_value_type>;
 
         // Helper template allowing to assign a value on exit
         template <typename T>
@@ -110,7 +112,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // interface to the iterator_policies::split_functor_input policy
         typedef Token result_type;
         typedef functor unique;
-        typedef FunctorData<Iterator, SupportsActors, SupportsState> shared;
+        typedef FunctorData<Iterator, SupportsActors, SupportsState
+          , token_value_type> shared;
 
         BOOST_SPIRIT_EOF_PREFIX result_type const eof;
 
@@ -190,6 +193,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     assign_on_exit<Iterator> on_exit(data.get_first(), end);
                     return result = result_type(id, state, data.get_first(), end);
                 }
+                else if (pass_flags::pass_use_value == pass) {
+                    // return matched token using the token value as set before
+                    // using data.set_value(), advancing 'data.first_' past the 
+                    // matched sequence
+                    assign_on_exit<Iterator> on_exit(data.get_first(), end);
+                    return result = result_type(id, state, data.value());
+                }
                 else if (pass_flags::pass_fail == pass) {
                     // if the data.first_ got adjusted above, revert this adjustment
                     if (adjusted)
@@ -199,7 +209,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     return result = result_type(0); 
                 }
 
-            // if this token needs to be ignored, just repeat the matching
+            // if this token needs to be ignored, just repeat the matching,
+            // while starting right after the current match
+                data.get_first() = end;
 
             } while (true);
         }
@@ -238,7 +250,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //  eof token
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token
-      , template <typename, typename, typename> class FunctorData
+      , template <typename, typename, typename, typename> class FunctorData
       , typename Iterator, typename SupportsActors, typename SupportsState>
     typename functor<Token, FunctorData, Iterator, SupportsActors, SupportsState>::result_type const
         functor<Token, FunctorData, Iterator, SupportsActors, SupportsState>::eof = 

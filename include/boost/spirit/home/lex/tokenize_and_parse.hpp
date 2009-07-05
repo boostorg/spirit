@@ -249,6 +249,29 @@ namespace boost { namespace spirit { namespace lex
     //                  in its 'INITIAL' state.
     //
     ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename Token>
+        bool tokenize_callback(Token const& t, void (*f)(Token const&))
+        {
+            f(t);
+            return true;
+        }
+
+        template <typename Token, typename Eval>
+        bool tokenize_callback(Token const& t, phoenix::actor<Eval> const& f)
+        {
+            f(t);
+            return true;
+        }
+
+        template <typename Token>
+        bool tokenize_callback(Token const& t, bool (*f)(Token const&))
+        {
+            return f(t);
+        }
+    }
+
     template <typename Iterator, typename Lexer, typename F>
     inline bool
     tokenize(Iterator& first, Iterator last, Lexer const& lex, F f
@@ -260,7 +283,7 @@ namespace boost { namespace spirit { namespace lex
         iterator_type end = lex.end();
         for (/**/; iter != end; ++iter) 
         {
-            if (!f(*iter))
+            if (!detail::tokenize_callback(*iter, f))
                 return false;
         }
         return (iter == end) ? true : false;

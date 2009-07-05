@@ -205,7 +205,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     ///////////////////////////////////////////////////////////////////////////
     template <typename Token = token<>
       , typename Iterator = typename Token::iterator_type
-      , typename Functor = functor<Token, lexertl::detail::data, Iterator, mpl::false_>
+      , typename Functor = functor<Token, lexertl::detail::data, Iterator>
       , typename TokenSet = lex::token_set<token_set<Token, Iterator> > >
     class lexer 
     {
@@ -362,7 +362,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     private:
         // lexertl specific data
         mutable boost::lexer::basic_state_machine<char_type> state_machine_;
-        std::size_t unique_ids_;
         boost::lexer::regex_flags flags_;
         boost::lexer::basic_rules<char_type> rules_;
 
