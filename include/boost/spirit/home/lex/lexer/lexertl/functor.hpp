@@ -139,6 +139,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                     return result = mp.ftor.eof;
 #endif
 
+                data.reset_value();
                 Iterator end = data.get_first();
                 std::size_t unique_id = boost::lexer::npos;
                 std::size_t id = data.next(end, unique_id);
@@ -187,18 +188,18 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 BOOST_SCOPED_ENUM(pass_flags) pass = 
                     data.invoke_actions(state, id, unique_id, end);
 
-                if (pass_flags::pass_normal == pass) {
-                    // return matched token, advancing 'data.first_' past the 
-                    // matched sequence
-                    assign_on_exit<Iterator> on_exit(data.get_first(), end);
-                    return result = result_type(id, state, data.get_first(), end);
-                }
-                else if (pass_flags::pass_use_value == pass) {
+                if (data.has_value()) {
                     // return matched token using the token value as set before
                     // using data.set_value(), advancing 'data.first_' past the 
                     // matched sequence
                     assign_on_exit<Iterator> on_exit(data.get_first(), end);
-                    return result = result_type(id, state, data.value());
+                    return result = result_type(id, state, data.get_value());
+                }
+                else if (pass_flags::pass_normal == pass) {
+                    // return matched token, advancing 'data.first_' past the 
+                    // matched sequence
+                    assign_on_exit<Iterator> on_exit(data.get_first(), end);
+                    return result = result_type(id, state, data.get_first(), end);
                 }
                 else if (pass_flags::pass_fail == pass) {
                     // if the data.first_ got adjusted above, revert this adjustment
@@ -231,6 +232,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                       << std::endl;
 #endif
             return oldstate; 
+        }
+
+        template <typename MultiPass>
+        static std::size_t get_state(MultiPass& mp) 
+        { 
+            return mp.shared()->ftor.get_state();
         }
 
         template <typename MultiPass>

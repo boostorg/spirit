@@ -134,17 +134,16 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     //  The value_getter is used to create the _value placeholder, which is a 
-    //  Phoenix actor used to access or change the value of the current token.
+    //  Phoenix actor used to access the value of the current token.
     //
-    //  This actor is invoked whenever the placeholder '_value' is used in a
-    //  lexer semantic action:
+    //  This Phoenix actor is invoked whenever the placeholder '_value' is used
+    //  as a rvalue inside a lexer semantic action:
     //
     //      lex::token_def<> identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
-    //      this->self = identifier 
-    //          [ _value = construct_<std::string>(_start, _end) ];
+    //      this->self = identifier [ std::cout << _value ];
     //
-    //  The example shows how to use _value to set the identifier name as the 
-    //  token value.
+    //  The example shows how to use _value to print the identifier name (which
+    //  is the initial token value).
     struct value_getter
     {
         typedef mpl::true_ no_nullary;
@@ -165,7 +164,73 @@ namespace boost { namespace spirit
         typename result<Env>::type 
         eval(Env const& env) const
         {
-            return fusion::at_c<4>(env.args()).value();
+            return fusion::at_c<4>(env.args()).get_value();
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  The value_setter is a Phoenix actor used to change the name of the 
+    //  current lexer state by calling set_state_name() on the context (which 
+    //  is the 4th parameter to any lexer semantic actions).
+    //
+    //  This Phoenix actor is invoked whenever the placeholder '_value' is used
+    //  as a lvalue inside a lexer semantic action:
+    //
+    //      lex::token_def<> identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
+    //      this->self = identifier [ _value = "identifier" ];
+    //
+    //  The example shows how to change the token value after matching a token
+    //  'identifier'.
+    template <typename Actor>
+    struct value_setter
+    {
+        typedef mpl::true_ no_nullary;
+
+        template <typename Env>
+        struct result
+        {
+            typedef void type;
+        };
+
+        template <typename Env>
+        void eval(Env const& env) const
+        {
+            fusion::at_c<4>(env.args()).set_value(actor_());
+        }
+
+        value_setter(Actor const& actor)
+          : actor_(actor) {}
+
+        // see explanation for this constructor at the end of this file
+        value_setter(phoenix::actor<value_getter>, Actor const& actor)
+          : actor_(actor) {}
+
+        Actor actor_;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  The value_context is used as a noop Phoenix actor to create the 
+    //  placeholder '_value' (see below). It is a noop actor because it is used
+    //  as a placeholder only, while it is being converted either to a 
+    //  value_getter (if used as a rvalue) or to a value_setter (if used as a 
+    //  lvalue). The conversion is achieved by specializing and overloading a 
+    //  couple of the Phoenix templates from the Phoenix expression composition
+    //  engine (see the end of this file).
+    struct value_context 
+    {
+        typedef mpl::true_ no_nullary;
+
+        template <typename Env>
+        struct result
+        {
+            typedef unused_type type;
+        };
+
+        template <typename Env>
+        unused_type
+        eval(Env const& env) const
+        {
+            return unused;
         }
     };
 
@@ -223,7 +288,7 @@ namespace boost { namespace spirit
 
     // '_value' may be used to access and change the token value of the current
     // token
-    phoenix::actor<value_getter> const _value = value_getter();
+    phoenix::actor<value_context> const _value = value_context();
 
     // _state may be used to access and change the name of the current lexer 
     // state
@@ -271,6 +336,41 @@ namespace boost { namespace phoenix
         // a dummy spirit::state_getter as its first argument in addition
         // to its real, second argument (the RHS actor).
         typedef spirit::state_setter<typename as_actor<RHS>::type> type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  The specialization of as_actor_base<> below is needed to convert all
+    //  occurrences of _value in places where it's used as a rvalue into the 
+    //  proper Phoenix actor (spirit::value_getter) accessing the token value.
+    template<>
+    struct as_actor_base<actor<spirit::value_context> >
+    {
+        typedef spirit::value_getter type;
+
+        static spirit::value_getter
+        convert(actor<spirit::value_context>)
+        {
+            return spirit::value_getter();
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  The specialization of as_composite<> below is needed to convert all
+    //  assignments to _value (places where it's used as a lvalue) into the
+    //  proper Phoenix actor (spirit::value_setter) allowing to change the
+    //  token value.
+    template <typename RHS>
+    struct as_composite<assign_eval, actor<spirit::value_context>, RHS>
+    {
+        // For an assignment to _value (a spirit::value_context actor), this
+        // specialization makes Phoenix's compose() function construct a
+        // spirit::value_setter actor from 1. the LHS, a spirit::value_getter
+        // actor (due to the specialization of as_actor_base<> above),
+        // and 2. the RHS actor.
+        // This is why spirit::value_setter needs a constructor which takes
+        // a dummy spirit::value_getter as its first argument in addition
+        // to its real, second argument (the RHS actor).
+        typedef spirit::value_setter<typename as_actor<RHS>::type> type;
     };
 
 }}

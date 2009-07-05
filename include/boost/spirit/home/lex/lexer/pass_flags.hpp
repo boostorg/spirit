@@ -19,8 +19,7 @@ namespace boost { namespace spirit { namespace lex
     { 
         pass_fail = 0,        // make the current match fail in retrospective
         pass_normal = 1,      // continue normal token matching, that's the default 
-        pass_ignore = 2,      // ignore the current token and start matching the next
-        pass_use_value = 3    // continue normal matching but use token value as set before
+        pass_ignore = 2       // ignore the current token and start matching the next
     };
     BOOST_SCOPED_ENUM_END
 

@@ -251,15 +251,21 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
-        template <typename Token>
-        bool tokenize_callback(Token const& t, void (*f)(Token const&))
+        template <typename Token, typename F>
+        bool tokenize_callback(Token const& t, F f)
+        {
+            return f(t);
+        }
+
+        template <typename Token, typename Eval>
+        bool tokenize_callback(Token const& t, phoenix::actor<Eval> const& f)
         {
             f(t);
             return true;
         }
 
-        template <typename Token, typename Eval>
-        bool tokenize_callback(Token const& t, phoenix::actor<Eval> const& f)
+        template <typename Token>
+        bool tokenize_callback(Token const& t, void (*f)(Token const&))
         {
             f(t);
             return true;

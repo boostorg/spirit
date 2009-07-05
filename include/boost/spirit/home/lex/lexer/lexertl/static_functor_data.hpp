@@ -166,7 +166,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             Iterator const& get_first() const { return first_; }
             Iterator const& get_last() const { return last_; }
 
-            unused_type value() const { return unused; }
+            iterator_range<Iterator> get_value() const 
+            { 
+                return iterator_range<Iterator>(first_, last_); 
+            }
+            bool has_value() const { return false; }
+            void reset_value() {}
 
         protected:
             Iterator& first_;
@@ -274,7 +279,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             static_data (IterData const& data, Iterator& first
                   , Iterator const& last)
               : base_type(data, first, last)
-              , actions_(data.actions_), hold_(), has_hold_(false) {}
+              , actions_(data.actions_), hold_(), has_hold_(false)
+              , has_value_(false) {}
 
             // invoke attached semantic actions, if defined
             BOOST_SCOPED_ENUM(pass_flags) invoke_actions(std::size_t state
@@ -338,25 +344,27 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 has_hold_ = true;
             }
 
-            TokenValue const& value() const 
+            TokenValue const& get_value() const 
             {
-                return value_;
-            }
-            TokenValue& value()
-            {
+                if (!has_value_)
+                    value_ = base_type::get_value();
                 return value_;
             }
             template <typename Value>
             void set_value(Value const& val)
             {
                 value_ = val;
+                has_value_ = true;
             }
+            bool has_value() const { return has_value_; }
+            void reset_value() { has_value_ = false; }
 
         protected:
             semantic_actions_type const& actions_;
             Iterator hold_;     // iterator needed to support lex::more()
+            mutable TokenValue value_;  // token value to use
             bool has_hold_;     // 'true' if hold_ is valid
-            TokenValue value_;
+            bool has_value_;    // 'true' if value_ is valid
         };
     }
 
