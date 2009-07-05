@@ -80,7 +80,7 @@ namespace boost { namespace spirit
         // checking code that isn't required by the standard.
         // The workaround is to provide an additional constructor that
         // ignores its int argument and behaves like the default constructor.
-        multi_pass(int) : member(0) {}
+        multi_pass(int) : member_base((shared_data_type*)0) {}
 #endif // BOOST_WORKAROUND(__GLIBCPP__, == 20020514)
 
         ~multi_pass()
