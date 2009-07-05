@@ -3,7 +3,7 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_SPIRIT_LEXERTL_DEBUG
+// #define BOOST_SPIRIT_LEXERTL_DEBUG
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
@@ -37,12 +37,10 @@ struct handle_whitespace
         if (is_indent(start, end, level)) {
             id = ID_INDENT;
             ctx.set_value(level);
-            pass = lex::pass_flags::pass_use_value;
         }
         else if (is_dedent(start, end, level)) {
             id = ID_DEDENT;
             ctx.set_value(level);
-            pass = lex::pass_flags::pass_use_value;
         }
         else {
             pass = lex::pass_flags::pass_ignore;
@@ -185,7 +183,9 @@ int main()
     {
         set_token_value<lexer_type> lexer;
         std::vector<token_type> tokens;
-        std::string input("    \n        ");
+        std::string input(
+            "    \n"
+            "        \n");
         base_iterator_type first = input.begin();
 
         using phoenix::arg_names::_1;
@@ -195,7 +195,9 @@ int main()
         int i[] = { 8, 4, -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
-        token_data d[] = { { ID_INDENT, 1 }, { ID_INDENT, 1 }, { -1, 0 } };
+        token_data d[] = { 
+            { ID_INDENT, 1 }, { ID_INDENT, 1 }
+          , { -1, 0 } };
         BOOST_TEST(test_tokens(d, tokens));
     }
 
@@ -203,7 +205,10 @@ int main()
     {
         set_token_value<lexer_type> lexer;
         std::vector<token_type> tokens;
-        std::string input("    \n        \n    \n");
+        std::string input(
+            "    \n"
+            "        \n"
+            "    \n");
         base_iterator_type first = input.begin();
 
         using phoenix::arg_names::_1;
@@ -213,7 +218,10 @@ int main()
         int i[] = { 4, -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
-        token_data d[] = { { ID_INDENT, 1 }, { ID_INDENT, 1 }, { ID_DEDENT, 1 }, { -1, 0 } };
+        token_data d[] = { 
+            { ID_INDENT, 1 }, { ID_INDENT, 1 }
+          , { ID_DEDENT, 1 }
+          , { -1, 0 } };
         BOOST_TEST(test_tokens(d, tokens));
     }
 
@@ -221,17 +229,24 @@ int main()
     {
         set_token_value<lexer_type> lexer;
         std::vector<token_type> tokens;
-        std::string input("    \n        \n\n");
+        std::string input(
+            "    \n"
+            "        \n"
+            "            \n"
+            "    \n");
         base_iterator_type first = input.begin();
 
         using phoenix::arg_names::_1;
         BOOST_TEST(lex::tokenize(first, input.end(), lexer
           , phoenix::push_back(phoenix::ref(tokens), _1)));
 
-        int i[] = { -1 };
+        int i[] = { 4, -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
-        token_data d[] = { { ID_INDENT, 1 }, { ID_INDENT, 1 }, { ID_DEDENT, 2 }, { -1, 0 } };
+        token_data d[] = { 
+            { ID_INDENT, 1 }, { ID_INDENT, 1 }, { ID_INDENT, 1 }
+          , { ID_DEDENT, 2 }
+          , { -1, 0 } };
         BOOST_TEST(test_tokens(d, tokens));
     }
 
