@@ -10,8 +10,6 @@
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 
-#include "test_parser.hpp"
-
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,9 +38,7 @@ struct switch_state_tokens : boost::spirit::lex::lexer<Lexer>
 int main()
 {
     using namespace boost::spirit;
-    using namespace boost::spirit::qi;
     using namespace boost::spirit::lex;
-    using namespace spirit_test;
 
     typedef std::string::iterator base_iterator_type;
     typedef boost::spirit::lex::lexertl::token<base_iterator_type> token_type;
