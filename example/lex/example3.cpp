@@ -41,29 +41,25 @@ using namespace boost::spirit::lex;
 template <typename Lexer>
 struct example3_tokens : lexer<Lexer>
 {
-    typedef typename Lexer::token_set token_set;
-
     example3_tokens()
     {
         // define the tokens to match
         ellipses = "\\.\\.\\.";
         number = "[0-9]+";
 
+        // associate the tokens and the token set with the lexer
+        this->self = ellipses | '(' | ')' | number;
+
         // define the whitespace to ignore (spaces, tabs, newlines and C-style 
         // comments)
-        white_space 
+        this->self("WS") 
             =   token_def<>("[ \\t\\n]+")               // whitespace
             |   "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/"   // C style comments
             ;
-
-        // associate the tokens and the token set with the lexer
-        this->self = ellipses | '(' | ')' | number;
-        this->self("WS") = white_space;
     }
 
     // these tokens expose the iterator_range of the matched input sequence
     token_def<> ellipses, identifier, number;
-    token_set white_space;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,7 +67,7 @@ struct example3_tokens : lexer<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
 struct example3_grammar 
-  : grammar<Iterator, in_state_skipper<typename Lexer::token_set> >
+  : grammar<Iterator, in_state_skipper<Lexer> >
 {
     template <typename TokenDef>
     example3_grammar(TokenDef const& tok)
@@ -95,8 +91,7 @@ struct example3_grammar
         BOOST_SPIRIT_DEBUG_NODE(couplet);
     }
 
-    typedef typename Lexer::token_set token_set;
-    rule<Iterator, in_state_skipper<token_set> > start, couplet;
+    rule<Iterator, in_state_skipper<Lexer> > start, couplet;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -119,7 +114,7 @@ int main()
     typedef example3_tokens::iterator_type iterator_type;
 
     // this is the type of the grammar to parse
-    typedef example3_grammar<iterator_type, lexer_type> example3_grammar;
+    typedef example3_grammar<iterator_type, example3_tokens::lexer_def> example3_grammar;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
@@ -136,9 +131,8 @@ int main()
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
-    // Note, how we use the token_set defined above as the skip parser.
-    std::string ws("WS");
-    bool r = phrase_parse(iter, end, calc, in_state(ws)[tokens.white_space]);
+    // Note how we use the lexer defined above as the skip parser.
+    bool r = phrase_parse(iter, end, calc, in_state("WS")[tokens.self]);
 
     if (r && iter == end)
     {

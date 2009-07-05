@@ -32,13 +32,13 @@ int main()
     typedef lex::lexertl::lexer<token_type> lexer_type;
 
     typedef lex::lexer<lexer_type> lexer_def;
-    typedef lexer_def::token_set token_set;
 
     std::string str("def");
 
     {
         // initialize lexer
         lexer_def lex;
+        token_def ws_tok ("[\\v\\f\\n\\r]*", TOKEN_ID_WS);
         lex.self.add
             (c_comment)(cpp_comment) 
             ('1')('2')('3')
@@ -58,15 +58,10 @@ int main()
     }
 
     {
-        // init a token set
-        token_set ws;
-        ws.add
-            (' ')('\t')
-            (ws_tok)
-        ;
-
         // initialize lexer
         lexer_def lex;
+        token_def ws_tok ("[\\v\\f\\n\\r]*", TOKEN_ID_WS);
+
         lex.self.add
             (c_comment)(cpp_comment) 
             ('1')('2')('3')
@@ -74,7 +69,10 @@ int main()
             (str, TOKEN_ID_STR)
         ;
 
-        lex.self("WHITESPACE").add(ws);
+        lex.self("WHITESPACE").add
+            (' ')('\t')
+            (ws_tok)
+        ;
 
         // test lexer for different input strings
         BOOST_TEST(test (lex, "/* this is a comment */", CCOMMENT));

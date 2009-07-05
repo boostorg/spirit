@@ -46,8 +46,6 @@ using boost::phoenix::val;
 template <typename Lexer>
 struct example5_base_tokens : lexer<Lexer>
 {
-    typedef typename Lexer::token_set token_set;
-
 protected:
     // this lexer is supposed to be used as a base type only
     example5_base_tokens() {}
@@ -61,17 +59,16 @@ public:
         if_ = "if";
         while_ = "while";
 
-        // define the whitespace to ignore (spaces, tabs, newlines and C-style 
-        // comments)
-        white_space 
-            =   token_def<>("[ \\t\\n]+") 
-            |   "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/"
-            ;
-
         // associate the tokens and the token set with the lexer
         this->self += token_def<>('(') | ')' | '{' | '}' | '=' | ';' | constant;
         this->self += if_ | while_ | identifier;
-        this->self("WS") = white_space;
+
+        // define the whitespace to ignore (spaces, tabs, newlines and C-style 
+        // comments)
+        this->self("WS")
+            =   token_def<>("[ \\t\\n]+") 
+            |   "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/"
+            ;
     }
 
     // these tokens have no attribute
@@ -92,9 +89,6 @@ public:
     // avoiding them being copied around.
     token_def<std::string> identifier;
     token_def<unsigned int> constant;
-
-    // token set to be used as the skip parser
-    token_set white_space;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -102,7 +96,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
 struct example5_base_grammar 
-  : grammar<Iterator, in_state_skipper<typename Lexer::token_set> >
+  : grammar<Iterator, in_state_skipper<Lexer> >
 {
     template <typename TokenDef>
     example5_base_grammar(TokenDef const& tok)
@@ -152,7 +146,7 @@ struct example5_base_grammar
             ;
     }
 
-    typedef in_state_skipper<typename Lexer::token_set> skipper_type;
+    typedef in_state_skipper<Lexer> skipper_type;
 
     rule<Iterator, skipper_type> program, block, statement;
     rule<Iterator, skipper_type> assignment, if_stmt;
@@ -170,7 +164,6 @@ template <typename Lexer>
 struct example5_tokens : example5_base_tokens<Lexer>
 {
     typedef example5_base_tokens<Lexer> base_type;
-    typedef typename Lexer::token_set token_set;
 
     example5_tokens()
     {
@@ -240,7 +233,7 @@ int main()
     typedef example5_tokens::iterator_type iterator_type;
 
     // this is the type of the grammar to parse
-    typedef example5_grammar<iterator_type, lexer_type> example5_grammar;
+    typedef example5_grammar<iterator_type, example5_tokens::lexer_def> example5_grammar;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
@@ -257,11 +250,11 @@ int main()
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
-    // Note, how we use the token_set defined above as the skip parser. It must
+    // Note how we use the lexer defined above as the skip parser. It must
     // be explicitly wrapped inside a state directive, switching the lexer 
     // state for the duration of skipping whitespace.
     std::string ws("WS");
-    bool r = phrase_parse(iter, end, calc, in_state(ws)[tokens.white_space]);
+    bool r = phrase_parse(iter, end, calc, in_state(ws)[tokens.self]);
 
     if (r && iter == end)
     {

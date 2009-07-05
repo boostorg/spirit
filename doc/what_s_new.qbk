@@ -116,11 +116,12 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
   Both take a possibly arbitrary number of attribute arguments as its last 
   parameters (well, the number of attributes is limited by the macro
   `SPIRIT_ARGUMENTS_LIMIT`, which defaults to `PHOENIX_LIMIT`).
-* The `lex::lexertl_lexer`, `lex::lexertl_token_set`, and `lex::lexertl_token`
+* The `lex::lexertl_lexer`, and `lex::lexertl_token`
   classes have been moved to the `lex::lexertl` namespace and the names have been 
-  changed to `lex::lexertl::lexer`, `lex::lexertl::token_set`, `lex::lexertl::token`
-  (the same applies to the `lex::lexert_actor_lexer`, and the `static_lexertl_*`
-  family of types).
+  changed to `lex::lexertl::lexer`, `lex::lexertl::token` (the same applies to 
+  the `lex::lexert_actor_lexer`, and the `static_lexertl_*` family of types).
+* The class `lex::lexertl_token_set` has been removed alltogether as its 
+  complete functionality is available from the lexer class.
 * The __lex__ library has been updated to use the newest version of Ben 
   Hansons __lexertl__ lexer construction library (Boost review pending).
 * The `lex::lexer<Lexer>` template constructor now takes an optional parameter
@@ -139,7 +140,7 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
 * Lexer semantic actions now have to conform to a changed interface (see
   __sec_lex_semactions__ for details).
 * Added placeholder symbols usable from the inside of lexer semantic actions 
-  while using Phoenix: _start, _end, _eoi, _state, and _pass (see 
+  while using Phoenix: _start, _end, _eoi, _state, _value, and _pass (see 
   __sec_lex_semactions__ for more details).
 * Added (lazy) support functions usable from the inside of lexer semantic
    actions while using Phoenix: `lex::more()`, `lex::less()`, and 
