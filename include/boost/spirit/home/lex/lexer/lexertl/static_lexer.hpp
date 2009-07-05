@@ -167,8 +167,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     template <typename Token = token<>
       , typename LexerTables = static_::lexer
       , typename Iterator = typename Token::iterator_type
-      , typename Functor 
-          = functor<Token, detail::static_data, Iterator, mpl::false_>
+      , typename Functor = functor<Token, detail::static_data, Iterator>
       , typename TokenSet 
           = lex::token_set<static_token_set<Token, LexerTables, Iterator> > >
     class static_lexer 
