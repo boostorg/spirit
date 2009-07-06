@@ -1,10 +1,12 @@
 //  Copyright (c) 2009 Carl Barron
-//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <iostream>
+#include <sstream>
+
+#include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/lex.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix.hpp>
@@ -12,8 +14,9 @@
 namespace lex = boost::spirit::lex;
 namespace phoenix = boost::phoenix;
 
-template <class Lexer>
-struct multi_tokens:lex::lexer<Lexer>
+///////////////////////////////////////////////////////////////////////////////
+template <typename Lexer>
+struct multi_tokens : lex::lexer<Lexer>
 {
     int level;
 
@@ -55,34 +58,35 @@ struct multi_tokens:lex::lexer<Lexer>
 struct dumper
 {
     typedef bool result_type;
-    
-    template <class Token>
+
+    dumper(std::stringstream& strm) : strm(strm) {}
+
+    template <typename Token>
     bool operator () (Token const &t)
     {
-        char x = (char)(t.id() - lex::min_token_id + 'a');
-        std::cout << x;
+        strm << (char)(t.id() - lex::min_token_id + 'a');
         return true;
     }
+
+    std::stringstream& strm;
 };
 
+///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    std::string in("AAABBC");
-    
-    typedef lex::lexertl::token<std::string::iterator,boost::mpl::vector0<> > token_type;
+    typedef lex::lexertl::token<std::string::iterator> token_type;
     typedef lex::lexertl::actor_lexer<token_type> base_lexer_type;
     typedef multi_tokens<base_lexer_type> lexer_type;
     typedef lexer_type::iterator_type iterator;
 
-    lexer_type the_lexer;
+    std::string in("AAABBC");
     std::string::iterator first(in.begin());
-    if(lex::tokenize(first, in.end(), the_lexer, dumper()))
-    {
-        std::cout << "\nlex worked\n";
-    }
-    else
-    {
-        std::cout << "lex failed\n";
-    }
+    std::stringstream strm;
+
+    lexer_type the_lexer;
+    BOOST_TEST(lex::tokenize(first, in.end(), the_lexer, dumper(strm)));
+    BOOST_TEST(strm.str() == "aaabbddd");
+
+    return boost::report_errors();
 }
 
