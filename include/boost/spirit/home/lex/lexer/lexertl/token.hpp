@@ -198,6 +198,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef typename base_type::id_type id_type;
         typedef Iterator iterator_type;
         typedef mpl::true_ has_state;
+        typedef unused_type token_value_type;
 
         //  default constructed tokens correspond to EOI tokens
         token() : state_(boost::lexer::npos) {}

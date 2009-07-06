@@ -279,8 +279,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             static_data (IterData const& data, Iterator& first
                   , Iterator const& last)
               : base_type(data, first, last)
-              , actions_(data.actions_), hold_(), has_hold_(false)
-              , has_value_(false) {}
+              , actions_(data.actions_), hold_()
+              , value_(iterator_range<Iterator>(first, last))
+              , has_hold_(false), has_value_(false) {}
 
             // invoke attached semantic actions, if defined
             BOOST_SCOPED_ENUM(pass_flags) invoke_actions(std::size_t state
@@ -346,8 +347,6 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             TokenValue const& get_value() const 
             {
-                if (!has_value_)
-                    value_ = base_type::get_value();
                 return value_;
             }
             template <typename Value>
