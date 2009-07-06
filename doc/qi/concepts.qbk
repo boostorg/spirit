@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Concepts]
+[section Parser Concepts]
 
 Spirit.Qi parsers fall into a couple of generalized concepts. The
 /Parser/ is the most fundamental concept. All Spirit.Qi parsers are
@@ -122,7 +122,7 @@ This is typically carried out through a call to `qi::skip_over`:
 
 [heading Models] 
 
-Add links to /PrimitiveParser/ models here.
+__fixme__ Add links to /PrimitiveParser/ models here.
 
 [endsect] [/ PrimitiveParser Concept]
 
@@ -172,7 +172,7 @@ For any UnaryParser, `P`, the following invariants always hold:
 
 [heading Models]
 
-Links to models of UnaryParser concept
+__fixme__ Add links to models of UnaryParser concept
 
 [endsect] [/ UnaryParser Concept]
 
@@ -181,7 +181,7 @@ Links to models of UnaryParser concept
 
 [heading Description]
 
-`BinaryParser` is a composite parser that has a two subjects, `left` and
+/BinaryParser/ is a composite parser that has a two subjects, `left` and
 `right`. The BinaryParser allows its subjects to be treated in the same
 way as a single instance of a __parser_concept__ following the
 __composite_pattern__. 
@@ -226,7 +226,7 @@ For any BinaryParser, `P`, the following invariants always hold:
 
 [heading Models]
 
-Links to models of BinaryParser concept
+__fixme__ Add links to models of BinaryParser concept
 
 [endsect] [/ BinaryParser Concept]
 
@@ -235,7 +235,7 @@ Links to models of BinaryParser concept
 
 [heading Description]
 
-`NaryParser` is a composite parser that has one or more subjects. The
+/NaryParser/ is a composite parser that has one or more subjects. The
 NaryParser allows its subjects to be treated in the same way as a single
 instance of a __parser_concept__ following the __composite_pattern__. 
 
@@ -272,12 +272,12 @@ NaryParser the following must be met:
 
 For any NaryParser, `P`, the following invariants always holds:
 
-* For each element, `E`, in NaryParser, `P`, the following invariant always hold:
-``    traits::is_parser<E>::type evaluates to `mpl::true_``
+* For each element, `E`, in NaryParser, `P`, the following invariant always 
+  hold: `traits::is_parser<E>::type` evaluates to `mpl::true_`
 
 [heading Models]
 
-Links to models of NaryParser concept
+__fixme__ Add links to models of NaryParser concept
 
 [endsect] [/ NaryParser Concept]
 

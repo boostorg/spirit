@@ -65,7 +65,7 @@
           code see here: <a href="../../../../../example/lex/word_count.cpp" target="_top">word_count.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.prerequisites"></a><h6>
-<a name="id1129790"></a>
+<a name="id1107821"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -73,12 +73,12 @@
           library components: <span class="emphasis"><em>Spirit.Lex</em></span> and <span class="emphasis"><em>Spirit.Qi</em></span>,
           consequently we have to <code class="computeroutput"><span class="preprocessor">#include</span></code>
           the corresponding header files. Again, we need to include a couple of header
-          files from the <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix2</a>
+          files from the <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
           library. This example shows how to attach functors to parser components,
           which could be done using any type of C++ technique resulting in a callable
-          object. Using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix2</a>
+          object. Using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
           for this task simplifies things and avoids adding dependencies to other
-          libraries (<a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix2</a>
+          libraries (<a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
           is already in use for <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
           anyway).
         </p>
@@ -115,7 +115,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.defining_tokens"></a><h6>
-<a name="id1130221"></a>
+<a name="id1108252"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.defining_tokens">Defining
           Tokens</a>
         </h6>
@@ -168,7 +168,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers"></a><h6>
-<a name="id1130558"></a>
+<a name="id1108589"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.using_token_definition_instances_as_parsers">Using
           Token Definition Instances as Parsers</a>
         </h6>
@@ -329,17 +329,17 @@
 <tr><td align="left" valign="top"><p>
             All placeholders (<code class="computeroutput"><span class="identifier">_1</span></code>,
             <code class="computeroutput"><span class="identifier">_2</span></code>, etc.) used in <span class="emphasis"><em>parser</em></span>
-            semantic actions in conjunction with functors created based on <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix2</a> need to be imported
-            from the <code class="computeroutput"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">arg_names</span></code>
-            (and <span class="bold"><strong>not</strong></span> <code class="computeroutput"><span class="keyword">namespace</span>
-            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">arg_names</span></code>, which is different from
-            using placeholders in <span class="emphasis"><em>Spirit.Lex</em></span>). Using the wrong
-            placeholders leads to subtle compilation errors which are difficult to
-            backtrack to their cause.
+            semantic actions in conjunction with functors created based on <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a> need to
+            be imported from the <code class="computeroutput"><span class="keyword">namespace</span>
+            <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">arg_names</span></code> (and <span class="bold"><strong>not</strong></span>
+            <code class="computeroutput"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">arg_names</span></code>,
+            which is different from using placeholders in <span class="emphasis"><em>Spirit.Lex</em></span>).
+            Using the wrong placeholders leads to subtle compilation errors which
+            are difficult to backtrack to their cause.
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together"></a><h6>
-<a name="id1131504"></a>
+<a name="id1110669"></a>
           <a class="link" href="lexer_quickstart3.html#spirit.lex.tutorials.lexer_quickstart3.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>
