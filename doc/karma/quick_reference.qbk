@@ -157,15 +157,14 @@ type of the attribute of `a << b` will be `tuple<A, B>`.
 a: A, b: Unused --> (a << b): A
 a: Unused, b: B --> (a << b): B
 a: Unused, b: Unused --> (a << b): Unused
-a: A, b: A --> (a << b): vector<A>``
-]]
+a: A, b: A --> (a << b): vector<A>``]]
 
     [[alternative (`|`)]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): variant<Unused, A>
 a: Unused, b: B --> (a | b): variant<Unused, B>
-a: Unused, b: Unused --> (a | b): Unused``
-a: A, b: A --> (a | b): A`]]
+a: Unused, b: Unused --> (a | b): Unused
+a: A, b: A --> (a | b): A``]]
 
     [[kleene (`*`)]
 [``a: A --> *a: vector<A>

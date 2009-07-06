@@ -135,7 +135,7 @@ described above by using the predefined __spirit__ placeholders:
     [[`_tokenid`]
      [Refers to the token id of the token to be generated. Any modifications 
       to this value will be reflected in the generated token.]]
-    [[`_value`]
+    [[`_val`]
      [Refers to the value the next token will be initialized from. Any 
       modifications to this value will be reflected in the generated token.]]
     [[`_state`]
