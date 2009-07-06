@@ -104,6 +104,7 @@ boost_test_run(lex_lexertl5 lex/lexertl5.cpp COMPILE_FLAGS ${test_compile_flags}
 boost_test_run(lex_state_switcher lex/state_switcher_test.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_lexer_state_switcher lex/lexer_state_switcher.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_set_token_value lex/set_token_value.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_set_token_value_phoenix lex/set_token_value_phoenix.cpp COMPILE_FLAGS ${test_compile_flags})
 
 boost_test_run(lex_regression001 lex/regression001.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_regression002 lex/regression002.cpp COMPILE_FLAGS ${test_compile_flags})
@@ -113,7 +114,4 @@ boost_test_run(lex_regression002 lex/regression002.cpp COMPILE_FLAGS ${test_comp
 # the multi_pass tests are not completed yet
 #    [ run support/multi_pass_compile.cpp COMPILE_FLAGS ${test_compile_flags}      : : : : ]
 #    [ run support/multi_pass.cpp COMPILE_FLAGS ${test_compile_flags}              : : : : ]
-
-
-
 
