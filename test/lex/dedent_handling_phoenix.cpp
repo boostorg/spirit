@@ -44,11 +44,13 @@ struct multi_tokens : lex::lexer<Lexer>
         d = ".";
         this->self("in_dedenting") = 
                 d [ 
-                    if_(--phoenix::ref(level))
-                    [ _end = _start ]
-                    .else_
-                    [ _state = "INITIAL" ]
-                ]
+                      if_(--phoenix::ref(level)) [ 
+                          _end = _start 
+                      ]
+                      .else_ [ 
+                          _state = "INITIAL" 
+                      ]
+                  ]
             ;
     }
 
