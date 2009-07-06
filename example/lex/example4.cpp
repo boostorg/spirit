@@ -98,6 +98,8 @@ struct example4_grammar
     example4_grammar(TokenDef const& tok)
       : example4_grammar::base_type(program)
     {
+        using boost::spirit::_val;
+
         program 
             =  +block
             ;

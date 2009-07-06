@@ -117,6 +117,8 @@ struct example6_grammar
     example6_grammar(TokenDef const& tok)
       : example6_grammar::base_type(program)
     {
+        using boost::spirit::_val;
+
         program 
             =  +block
             ;
