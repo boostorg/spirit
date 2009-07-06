@@ -115,7 +115,7 @@ __fusion__. Fusion sits between MPL and STL --between compile time and
 runtime -- mapping types to values. Fusion is a direct descendant of
 both MPL and __boost_tuples__. Fusion is now a full-fledged __boost__
 library. __phoenix__ also had to be beefed up to support Spirit
-V2. The result is __phoenix2__. Last but not least, Spirit V2 uses an
+V2. The result is __boost_phoenix__. Last but not least, Spirit V2 uses an
 __todd__exprtemplates__ library called __boost_proto__.
 
 Even though it has evolved and matured to become a multi-module

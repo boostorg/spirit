@@ -15,21 +15,20 @@ pages and pages of reference doumentation.
 [section Common Notation]
 
 [variablelist Notation
-    [[`P`]              [Parser type]]
-    [[`p, a, b, c`]     [Parser objects]]
-    [[`A, B, C`]        [Attribute types of parsers A, B and C]]
-    [[`I`]              [The iterator type used for parsing]]
+    [[`G`]              [Generator type]]
+    [[`g, a, b, c`]     [Generator objects]]
+    [[`A, B, C`]        [Attribute types of generators A, B and C]]
+    [[`I`]              [The iterator type used for generation]]
     [[`Unused`]         [An `unused_type`]]
     [[`Context`]        [The enclosing rule's `Context` type]]
     [[`Attr`]           [An attribute type]]
     [[`b`]              [A boolean expression]]
-    [[`fp`]             [A (lazy parser) function with signature `P(Unused, Context)`]]
-    [[`fa`]             [A (semantic action) function with signature `void(Attr, Context, bool&)`.
+    [[`fg`]             [A (lazy generator) function with signature `G(Unused, Context)`]]
+    [[`fa`]             [A (semantic action) function with signature `void(Attr&, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
-                        force the parse to fail. Both `Context` and the boolean flag are
+                        force the generator to fail. Both `Context` and the boolean flag are
                         optional.]]
-    [[`first`]          [An iterator pointing to the start of input]]
-    [[`last`]           [An iterator pointing to the end of input]]
+    [[`outiter`]        [An output iterator to receive the generated output]]
     [[`Ch`]             [Character-class specific character type (See __char_class_types__)]]
     [[`ch`]             [Character-class specific character (See __char_class_types__)]]
     [[`ch2`]            [Character-class specific character (See __char_class_types__)]]
@@ -53,7 +52,7 @@ pages and pages of reference doumentation.
     [[`lazy(fg)`]           [Attribute of `G` where `G`
                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
                                                         `g` which is then called to generate.]]
-    [[`fg`]                 [see `lazy(fg)` above]      [Equivalent to `lazy[fp]`]]
+    [[`fg`]                 [see `lazy(fg)` above]      [Equivalent to `lazy[fg]`]]
     [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 
     [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
@@ -144,11 +143,11 @@ pages and pages of reference doumentation.
 
 The notation will be for instance: 
 
-    a: A, b: B --> (a >> b): tuple<A, B>
+    a: A, b: B --> (a << b): tuple<A, B>
 
-which reads as: given, `a` and `b` are parsers/generators, and `A` is the type 
+which reads as: given, `a` and `b` are generators, and `A` is the type 
 of the attribute of `a`, and `B` is the type of the attribute of `b`, then the 
-type of the attribute of `a >> b` will be `tuple<A, B>`.
+type of the attribute of `a << b` will be `tuple<A, B>`.
 
 [table Spirit.Karma compound generator attribute types
     [[Expression]           [Attribute]]
@@ -197,9 +196,9 @@ a: Unused --> -a: Unused``]]
 
 For all expressions of the form:
 
-    p(a1, a2,... aN)
+    g(a1, a2,... aN)
 
-where `p` is a parser, each of the arguments (a1...aN) can either be an
+where `g` is a generator, each of the arguments (a1...aN) can either be an
 immediate value, or a lazy function with signature:
 
     T(Unused, Context)
@@ -213,7 +212,7 @@ And so is this:
 
     bool flag = true;
     eps(phoenix::var(flag)) // success or fail depending on the value
-                            // of flag at parse time
+                            // of flag at generation time
 
 since `phoenix::ref(f)` is a function that returns a `bool`.
 
@@ -235,7 +234,7 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
                                 the synthesized (return value) and inherited (arguments)
                                 attributes.]]
     [[Locals]                   [`locals<L1, L2 ..., LN>`. The local variables.]]
-    [[Skipper]                  [The skip-parser type]]
+    [[Delimiter]                [The delimit-generator type]]
 ]
 
 [variablelist Template Arguments
@@ -257,9 +256,9 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
     [[`r.name(name)`]                           [Naming a rule]]
     [[`r.name()`]                               [Getting the name of a rule]]
     [[debug(r)]                                 [Debug rule `r`]]
-    [[`r = p;`]                                 [Rule definition]]
-    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` should be
-                                                compatible with the synthesized attribute of `r`. When `p`
+    [[`r = g;`]                                 [Rule definition]]
+    [[`r %= g;`]                                [Auto-rule definition. The attribute of `g` should be
+                                                compatible with the synthesized attribute of `r`. When `g`
                                                 is successful, its attribute is automatically propagated
                                                 to `r`'s synthesized attribute.]]
 
@@ -290,20 +289,20 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
 
 Has the form:
 
-    p[f]
+    g[f]
 
 where `f` is a function with the signatures:
 
-    void f(Attr const&);
-    void f(Attr const&, Context&);
-    void f(Attr const&, Context&, bool&);
+    void f(Attr&);
+    void f(Attr&, Context&);
+    void f(Attr&, Context&, bool&);
 
 You can use `__boost_bind__` to bind member functions. For function
 objects, the allowed signatures are:
 
-    void operator()(Attr const&, unused_type, unused_type) const;
-    void operator()(Attr const&, Context&, unused_type) const;
-    void operator()(Attr const&, Context&, bool&) const;
+    void operator()(Attr&, unused_type, unused_type) const;
+    void operator()(Attr&, Context&, unused_type) const;
+    void operator()(Attr&, Context&, bool&) const;
 
 The `unused_type` is used in the signatures above to signify 'don't
 care'.
@@ -314,18 +313,18 @@ care'.
 __boost_phoenix__ makes it easier to attach semantic actions. You just
 inline your lambda expressions:
 
-    p[phoenix-lambda-expression]
+    g[phoenix-lambda-expression]
 
-Spirit.Qi provides some __boost_phoenix__ placeholders to important
+__karma__ provides some __boost_phoenix__ placeholders to access important
 information from the `Attr` and `Context` that are otherwise fiddly to extract.
 
-[variablelist Spirit.Qi specific Phoenix placeholders
-    [[`_1, _2... , _N`]         [Nth attribute of `p`]]
+[variablelist Spirit.Karma specific Phoenix placeholders
+    [[`_1, _2... , _N`]         [Nth attribute of `g`]]
     [[`_val`]                   [The enclosing rule's synthesized attribute.]]
     [[`_r1, _r2... , _rN`]      [The enclosing rule's Nth inherited attribute.]]
     [[`_a, _b... , _j`]         [The enclosing rule's local variables (`_a` refers to the first).]]
     [[`_val`]                   [The enclosing rule's synthesized attribute.]]
-    [[`_pass`]                  [Assign `false` to `_pass` to force a parser failure.]]
+    [[`_pass`]                  [Assign `false` to `_pass` to force a generator failure.]]
 ]
 
 [endsect]

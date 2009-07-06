@@ -30,24 +30,24 @@
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">P</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">G</span></code></span></dt>
 <dd><p>
-              Parser type
+              Generator type
             </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">p</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">g</span><span class="special">,</span> <span class="identifier">a</span><span class="special">,</span>
           <span class="identifier">b</span><span class="special">,</span>
           <span class="identifier">c</span></code></span></dt>
 <dd><p>
-              Parser objects
+              Generator objects
             </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span>
           <span class="identifier">C</span></code></span></dt>
 <dd><p>
-              Attribute types of parsers A, B and C
+              Attribute types of generators A, B and C
             </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">I</span></code></span></dt>
 <dd><p>
-              The iterator type used for parsing
+              The iterator type used for generation
             </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Unused</span></code></span></dt>
 <dd><p>
@@ -66,23 +66,20 @@
 <dd><p>
               A boolean expression
             </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">fp</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">fg</span></code></span></dt>
 <dd><p>
-              A (lazy parser) function with signature <code class="computeroutput"><span class="identifier">P</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span></code>
+              A (lazy generator) function with signature <code class="computeroutput"><span class="identifier">G</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span></code>
             </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">fa</span></code></span></dt>
 <dd><p>
-              A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attr</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
-              flag that can be set to false to force the parse to fail. Both <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean flag are
-              optional.
+              A (semantic action) function with signature <code class="computeroutput"><span class="keyword">void</span><span class="special">(</span><span class="identifier">Attr</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">,</span> <span class="keyword">bool</span><span class="special">&amp;)</span></code>. The third parameter is a boolean
+              flag that can be set to false to force the generator to fail. Both
+              <code class="computeroutput"><span class="identifier">Context</span></code> and the boolean
+              flag are optional.
             </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">first</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">outiter</span></code></span></dt>
 <dd><p>
-              An iterator pointing to the start of input
-            </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">last</span></code></span></dt>
-<dd><p>
-              An iterator pointing to the end of input
+              An output iterator to receive the generated output
             </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Ch</span></code></span></dt>
 <dd><p>

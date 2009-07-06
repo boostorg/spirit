@@ -29,12 +29,12 @@
 <p>
           For all expressions of the form:
         </p>
-<pre class="programlisting"><span class="identifier">p</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
+<pre class="programlisting"><span class="identifier">g</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
 </pre>
 <p>
-          where <code class="computeroutput"><span class="identifier">p</span></code> is a parser, each
-          of the arguments (a1...aN) can either be an immediate value, or a lazy
-          function with signature:
+          where <code class="computeroutput"><span class="identifier">g</span></code> is a generator,
+          each of the arguments (a1...aN) can either be an immediate value, or a
+          lazy function with signature:
         </p>
 <pre class="programlisting"><span class="identifier">T</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
 </pre>
@@ -50,7 +50,7 @@
         </p>
 <pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">flag</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
 <span class="identifier">eps</span><span class="special">(</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">flag</span><span class="special">))</span> <span class="comment">// success or fail depending on the value
-</span>                        <span class="comment">// of flag at parse time
+</span>                        <span class="comment">// of flag at generation time
 </span></pre>
 <p>
           since <code class="computeroutput"><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></code> is
