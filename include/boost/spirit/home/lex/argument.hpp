@@ -309,14 +309,14 @@ namespace boost { namespace phoenix
     //  occurrences of _state in places where it's used as a rvalue into the 
     //  proper Phoenix actor (spirit::state_getter) accessing the lexer state.
     template<>
-    struct as_actor_base<actor<spirit::state_context> >
+    struct as_actor_base<actor<spirit::lex::state_context> >
     {
-        typedef spirit::state_getter type;
+        typedef spirit::lex::state_getter type;
 
-        static spirit::state_getter
-        convert(actor<spirit::state_context>)
+        static spirit::lex::state_getter
+        convert(actor<spirit::lex::state_context>)
         {
-            return spirit::state_getter();
+            return spirit::lex::state_getter();
         }
     };
 
@@ -326,7 +326,7 @@ namespace boost { namespace phoenix
     //  proper Phoenix actor (spirit::state_setter) allowing to change the
     //  lexer state.
     template <typename RHS>
-    struct as_composite<assign_eval, actor<spirit::state_context>, RHS>
+    struct as_composite<assign_eval, actor<spirit::lex::state_context>, RHS>
     {
         // For an assignment to _state (a spirit::state_context actor), this
         // specialization makes Phoenix's compose() function construct a
@@ -336,7 +336,7 @@ namespace boost { namespace phoenix
         // This is why spirit::state_setter needs a constructor which takes
         // a dummy spirit::state_getter as its first argument in addition
         // to its real, second argument (the RHS actor).
-        typedef spirit::state_setter<typename as_actor<RHS>::type> type;
+        typedef spirit::lex::state_setter<typename as_actor<RHS>::type> type;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -344,14 +344,14 @@ namespace boost { namespace phoenix
     //  occurrences of _val in places where it's used as a rvalue into the 
     //  proper Phoenix actor (spirit::value_getter) accessing the token value.
     template<>
-    struct as_actor_base<actor<spirit::value_context> >
+    struct as_actor_base<actor<spirit::lex::value_context> >
     {
-        typedef spirit::value_getter type;
+        typedef spirit::lex::value_getter type;
 
-        static spirit::value_getter
-        convert(actor<spirit::value_context>)
+        static spirit::lex::value_getter
+        convert(actor<spirit::lex::value_context>)
         {
-            return spirit::value_getter();
+            return spirit::lex::value_getter();
         }
     };
 
@@ -361,7 +361,7 @@ namespace boost { namespace phoenix
     //  proper Phoenix actor (spirit::value_setter) allowing to change the
     //  token value.
     template <typename RHS>
-    struct as_composite<assign_eval, actor<spirit::value_context>, RHS>
+    struct as_composite<assign_eval, actor<spirit::lex::value_context>, RHS>
     {
         // For an assignment to _val (a spirit::value_context actor), this
         // specialization makes Phoenix's compose() function construct a
@@ -371,7 +371,7 @@ namespace boost { namespace phoenix
         // This is why spirit::value_setter needs a constructor which takes
         // a dummy spirit::value_getter as its first argument in addition
         // to its real, second argument (the RHS actor).
-        typedef spirit::value_setter<typename as_actor<RHS>::type> type;
+        typedef spirit::lex::value_setter<typename as_actor<RHS>::type> type;
     };
 
 }}
