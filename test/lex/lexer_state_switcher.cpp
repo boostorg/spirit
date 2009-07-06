@@ -21,7 +21,7 @@ struct switch_state_tokens : boost::spirit::lex::lexer<Lexer>
     {
         using boost::phoenix::ref;
         using boost::phoenix::val;
-        using boost::spirit::_state;
+        using boost::spirit::lex::_state;
 
         identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
         this->self = identifier [ ref(state_) = _state ];
