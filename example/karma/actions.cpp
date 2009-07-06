@@ -22,57 +22,93 @@
 
 using boost::spirit::unused_type;
 
-void read_function(int& i)
+//[karma_tutorial_semantic_action_functions
+namespace client
 {
-    i = 42;
-}
+    namespace karma = boost::spirit::karma;
 
-struct read_action
-{
-    void operator()(int& i, unused_type, unused_type) const
+    // A plain function
+    void read_function(int& i)
     {
         i = 42;
     }
-};
+
+    // A member function
+    struct reader
+    {
+        void print(int& i) const
+        {
+            i = 42;
+        }
+    };
+
+    // A function object
+    struct read_action
+    {
+        void operator()(int& i, unused_type, unused_type) const
+        {
+            i = 42;
+        }
+    };
+}
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
+    using boost::spirit::karma::int_;
+    using boost::spirit::karma::generate;
+    using client::read_function;
+    using client::reader;
+    using client::read_action;
+
     { // example using plain functions
         using namespace boost::spirit;
 
         std::string generated;
-        std::back_insert_iterator<std::string> outit(generated);
-        bool result = karma::generate(outit, 
-            '{' << int_[&read_function] << '}');
+        std::back_insert_iterator<std::string> outiter(generated);
 
-        if (result)
-            std::cout << "Simple function: " << generated << std::endl;
+        //[karma_tutorial_attach_actions1
+        generate(outiter, '{' << int_[&read_function] << '}');
+        //]
+
+        std::cout << "Simple function: " << generated << std::endl;
     }
 
-    { // example using simple function objects
+    { // example using simple function object
         using namespace boost::spirit;
 
         std::string generated;
-        std::back_insert_iterator<std::string> outit(generated);
-        bool result = karma::generate(outit, 
-            '{' << int_[read_action()] << '}');
+        std::back_insert_iterator<std::string> outiter(generated);
 
-        if (result)
-            std::cout << "Simple function object: " << generated << std::endl;
+        //[karma_tutorial_attach_actions2
+        generate(outiter, '{' << int_[read_action()] << '}');
+        //]
+
+        std::cout << "Simple function object: " << generated << std::endl;
     }
 
-    { // example using boost.bind
-        using boost::spirit::int_;
-        using boost::spirit::karma::generate;
-
+    { // example using plain function with boost.bind
         std::string generated;
-        std::back_insert_iterator<std::string> outit(generated);
-        bool result = generate(outit, 
-            '{' << int_[boost::bind(read_function, _1)] << '}');
+        std::back_insert_iterator<std::string> outiter(generated);
 
-        if (result)
-            std::cout << "Boost.Bind: " << generated << std::endl;
+        //[karma_tutorial_attach_actions3
+        generate(outiter, '{' << int_[boost::bind(&read_function, _1)] << '}');
+        //]
+
+        std::cout << "Simple function with Boost.Bind: " << generated << std::endl;
+    }
+
+    { // example using member function with boost.bind
+        std::string generated;
+        std::back_insert_iterator<std::string> outiter(generated);
+
+        //[karma_tutorial_attach_actions4
+        reader r;
+        generate(outiter, '{' << int_[boost::bind(&reader::print, &r, _1)] << '}');
+        //]
+
+        std::cout << "Member function: " << generated << std::endl;
     }
 
     { // example using boost.lambda
@@ -80,14 +116,14 @@ int main()
         using namespace boost::spirit;
 
         std::string generated;
+        std::back_insert_iterator<std::string> outiter(generated);
+
+        //[karma_tutorial_attach_actions5
         std::stringstream strm("42");
+        generate(outiter, '{' << int_[strm >> lambda::_1] << '}');
+        //]
 
-        std::back_insert_iterator<std::string> outit(generated);
-        bool result = karma::generate(outit,
-            '{' << int_[strm >> lambda::_1] << '}');
-
-        if (result)
-            std::cout << "Boost.Lambda: " << generated << std::endl;
+        std::cout << "Boost.Lambda: " << generated << std::endl;
     }
 
     return 0;

@@ -103,6 +103,9 @@ gives an overview and a short description of the available functionality.
     [[`std::size_t get_state() const` and `void set_state(std::size_t state)`]
      [The functions `get_state()` and `set_state()` may be used to introspect
       and change the current lexer state.]]
+    [[`token_value_type get_value() const` and `void set_value(Value const&)`]
+     [The functions `get_value()` and `set_value()` may be used to introspect
+      and change the current token value.]]
 ]
 
 [heading Lexer Semantic Actions Using Phoenix]
