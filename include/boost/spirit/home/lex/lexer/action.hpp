@@ -21,12 +21,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace lex
 {
-    using spirit::_start;
-    using spirit::_end;
-    using spirit::_pass;
-    using spirit::_tokenid;
-    using spirit::_state;
-
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject, typename Action>
     struct action : unary_lexer<action<Subject, Action> >

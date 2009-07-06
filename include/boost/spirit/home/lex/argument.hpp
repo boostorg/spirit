@@ -26,7 +26,7 @@
 #include <boost/utility/enable_if.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit
+namespace boost { namespace spirit { namespace lex
 {
     ///////////////////////////////////////////////////////////////////////////
     //  The state_getter is a Phoenix actor used to access the name of the 
@@ -133,16 +133,16 @@ namespace boost { namespace spirit
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  The value_getter is used to create the _value placeholder, which is a 
+    //  The value_getter is used to create the _val placeholder, which is a 
     //  Phoenix actor used to access the value of the current token.
     //
-    //  This Phoenix actor is invoked whenever the placeholder '_value' is used
+    //  This Phoenix actor is invoked whenever the placeholder '_val' is used
     //  as a rvalue inside a lexer semantic action:
     //
     //      lex::token_def<> identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
-    //      this->self = identifier [ std::cout << _value ];
+    //      this->self = identifier [ std::cout << _val ];
     //
-    //  The example shows how to use _value to print the identifier name (which
+    //  The example shows how to use _val to print the identifier name (which
     //  is the initial token value).
     struct value_getter
     {
@@ -173,11 +173,11 @@ namespace boost { namespace spirit
     //  current lexer state by calling set_state_name() on the context (which 
     //  is the 4th parameter to any lexer semantic actions).
     //
-    //  This Phoenix actor is invoked whenever the placeholder '_value' is used
+    //  This Phoenix actor is invoked whenever the placeholder '_val' is used
     //  as a lvalue inside a lexer semantic action:
     //
     //      lex::token_def<> identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
-    //      this->self = identifier [ _value = "identifier" ];
+    //      this->self = identifier [ _val = "identifier" ];
     //
     //  The example shows how to change the token value after matching a token
     //  'identifier'.
@@ -210,7 +210,7 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     //  The value_context is used as a noop Phoenix actor to create the 
-    //  placeholder '_value' (see below). It is a noop actor because it is used
+    //  placeholder '_val' (see below). It is a noop actor because it is used
     //  as a placeholder only, while it is being converted either to a 
     //  value_getter (if used as a rvalue) or to a value_setter (if used as a 
     //  lvalue). The conversion is achieved by specializing and overloading a 
@@ -281,14 +281,15 @@ namespace boost { namespace spirit
     // We are reusing the placeholder '_pass' to access and change the pass
     // status of the current match (see support/argument.hpp for its 
     // definition).
+    using boost::spirit::_pass;
 
     // '_tokenid' may be used to access and change the tokenid of the current 
     // token
     phoenix::actor<phoenix::argument<3> > const _tokenid = phoenix::argument<3>();
 
-    // '_value' may be used to access and change the token value of the current
+    // '_val' may be used to access and change the token value of the current
     // token
-    phoenix::actor<value_context> const _value = value_context();
+    phoenix::actor<value_context> const _val = value_context();
 
     // _state may be used to access and change the name of the current lexer 
     // state
@@ -298,7 +299,7 @@ namespace boost { namespace spirit
     // stream used by the lexer to match tokens from
     phoenix::actor<eoi_getter> const _eoi = eoi_getter();
 
-}}
+}}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace phoenix
@@ -340,7 +341,7 @@ namespace boost { namespace phoenix
 
     ///////////////////////////////////////////////////////////////////////////
     //  The specialization of as_actor_base<> below is needed to convert all
-    //  occurrences of _value in places where it's used as a rvalue into the 
+    //  occurrences of _val in places where it's used as a rvalue into the 
     //  proper Phoenix actor (spirit::value_getter) accessing the token value.
     template<>
     struct as_actor_base<actor<spirit::value_context> >
@@ -356,13 +357,13 @@ namespace boost { namespace phoenix
 
     ///////////////////////////////////////////////////////////////////////////
     //  The specialization of as_composite<> below is needed to convert all
-    //  assignments to _value (places where it's used as a lvalue) into the
+    //  assignments to _val (places where it's used as a lvalue) into the
     //  proper Phoenix actor (spirit::value_setter) allowing to change the
     //  token value.
     template <typename RHS>
     struct as_composite<assign_eval, actor<spirit::value_context>, RHS>
     {
-        // For an assignment to _value (a spirit::value_context actor), this
+        // For an assignment to _val (a spirit::value_context actor), this
         // specialization makes Phoenix's compose() function construct a
         // spirit::value_setter actor from 1. the LHS, a spirit::value_getter
         // actor (due to the specialization of as_actor_base<> above),
