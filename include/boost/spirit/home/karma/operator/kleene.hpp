@@ -68,13 +68,13 @@ namespace boost { namespace spirit { namespace karma
             iterator_type it = traits::begin(attr);
             iterator_type end = traits::end(attr);
 
-            // kleene fails only if the embedded parser fails
+            // kleene fails only if the underlying output fails
             bool result = true;
             for (/**/; result && !traits::compare(it, end); traits::next(it))
             {
                 result = subject.generate(sink, ctx, d, traits::deref(it));
             }
-            return result;
+            return sink.good();
         }
 
         template <typename Context>
