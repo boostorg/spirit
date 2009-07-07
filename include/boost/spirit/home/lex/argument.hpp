@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace lex
         void eval(Env const& env) const
         {
             fusion::at_c<4>(env.args()).set_state_name(
-                traits::get_c_string(actor_()));
+                traits::get_c_string(actor_.eval(env)));
         }
 
         state_setter(Actor const& actor)
@@ -195,7 +195,7 @@ namespace boost { namespace spirit { namespace lex
         template <typename Env>
         void eval(Env const& env) const
         {
-            fusion::at_c<4>(env.args()).set_value(actor_());
+            fusion::at_c<4>(env.args()).set_value(actor_.eval(env));
         }
 
         value_setter(Actor const& actor)
