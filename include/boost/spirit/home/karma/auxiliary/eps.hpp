@@ -84,7 +84,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+          , Attribute const& attr) const
         {
             // only do post-delimiting when predicate is true
             return predicate_ && karma::delimit_out(sink, d);
