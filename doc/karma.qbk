@@ -12,6 +12,7 @@
 [include        karma/tutorial_intro.qbk]
 [include        karma/warming_up.qbk]
 [include        karma/actions.qbk]
+[include        karma/complex.qbk]
 [endsect]
 
 [section    Quick Reference]

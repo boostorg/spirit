@@ -1,0 +1,71 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Complex - A first more complex generator]
+
+In this section we will develop a generator for complex numbers, allowing to 
+represent a `std::complex` either as `"(real, imag)"` (where `real` and `imag` 
+are the real and imaginary parts of the complex number) or as a simple `real`
+if the imaginary part happens ot be equal to zero. This example will highlight
+the power of __karma__ allowing to combine compile time definition of 
+formatting rules with runtime based decisions which of the rules to apply. 
+Also this time, we're using __boost_phoenix__ to do the semantic actions.
+
+Our goal is to allow for two different output formats to be applied depending 
+on whether the imaginary part of the complex number is zero or not. Let's write
+both as a set of alternatives:
+
+        '(' << double_ << ", " << double_ << ')'
+    |   double_
+
+where the first alternative should be used for numbers having a non-zero 
+imaginary part, while the second is for real numbers. Generally, alternatives
+are tried in the sequence of their definition as long as one of the
+expressions (as delimited by `'|'`) succeeds. If no generator expression 
+succeeds the whole alternative fails.
+
+If we left this formatting grammar as it is our generator would always choose 
+the first alternative. We need to add some additional rules allowing to make 
+the first alternative to fail. So, if the first fails the second alternative will 
+be chosen instead. The decision about whether to choose the first alternative 
+has to be made at runtime as only then we actually know the value of the 
+imaginary part of the complex number. __karma__ provides us with with a 
+primitive generator `eps()`, which is usable as a semantic predicate. It has 
+the property to 'succeed' generating only if its argument is true (while it 
+never generates any output on its own).
+
+    double imag = ...;     // imaginary part
+
+        eps(imag != 0) << '(' << double_ << ", " << double_ << ')'
+    |   double_
+
+If one of the generator elements of a sequence fails the whole sequence will 
+fail. This is exactly what we need, forcing the second alternative to be chosen 
+for complex numbers with imaginary parts equal to zero.
+
+[import ../../example/karma/complex_number.cpp]
+
+Here goes the full example, this time with the proper semantic actions (The 
+full cpp file for this example can be found here: 
+[@../../example/karma/complex_number.cpp complex_number.cpp]):
+
+[tutorial_karma_complex_number]
+
+The `double_` generators have this action attached:
+
+    _1 = n
+
+Remember, semantic actions in __karma__ are called before the corresponding 
+generator is invoked and they are expected to provide the generator with the 
+data to be used. The semantic action above assigns the value to be generated 
+(n) to the generator (actually, the attribute of `double_`) . `_1` is a Phoenix 
+placeholder for the attribute of the generator the semantic action is attached 
+to.
+
+[endsect]
+
