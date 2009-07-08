@@ -250,31 +250,6 @@ int main()
         BOOST_TEST(test_tokens(d, tokens));
     }
 
-    // test two dedents, currently triggers a possible problem in regex engine
-    {
-        set_token_value<lexer_type> lexer;
-        std::vector<token_type> tokens;
-        std::string input(
-            "\n"
-            "    \n"
-            "        \n"
-            "\n");
-        base_iterator_type first = input.begin();
-
-        using phoenix::arg_names::_1;
-        BOOST_TEST(lex::tokenize(first, input.end(), lexer
-          , phoenix::push_back(phoenix::ref(tokens), _1)));
-
-        int i[] = { -1 };
-        BOOST_TEST(test_indents(i, lexer.indents));
-
-        token_data d[] = { 
-            { ID_INDENT, 1 }, { ID_INDENT, 1 }
-          , { ID_DEDENT, 2 }
-          , { -1, 0 } };
-        BOOST_TEST(test_tokens(d, tokens));
-    }
-
     return boost::report_errors();
 }
 
