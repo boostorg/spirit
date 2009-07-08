@@ -289,7 +289,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         {}
 
         output_proxy operator*() { return output_proxy(*this); }
-        output_iterator& operator++() { ++sink; return *this; } 
+        output_iterator& operator++() 
+        { 
+            if (NULL == buffer)
+                ++sink;           // increment only if not buffering
+            return *this; 
+        } 
         output_iterator operator++(int) 
         {
             output_iterator t(*this);
@@ -444,6 +449,19 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         buffer_sink<OutputIterator>* prev_buffer;   // previous buffer in chain
         bool enabled;
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Sink>
+    bool sink_is_good(Sink const& sink)
+    {
+        return true;      // the general case is always good
+    }
+
+    template <typename OutputIterator, typename Derived>
+    bool sink_is_good(output_iterator<OutputIterator, Derived> const& sink)
+    {
+        return sink.good(); // our own output iterators are handled separately
+    }
 
 }}}}
 

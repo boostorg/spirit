@@ -40,6 +40,7 @@ namespace boost { namespace spirit { namespace karma
 {
     BOOST_PP_REPEAT(SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_USING_ATTRIBUTE, _)
 
+    using spirit::_pass;
     using spirit::_val;
     using spirit::_a;
     using spirit::_b;

@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail 
 {
@@ -28,7 +29,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         *sink = spirit::char_class::convert<CharEncoding>::to(Tag(), p);
         ++sink;
-        return sink.good();
+        return detail::sink_is_good(sink);
     }
 
     template <typename OutputIterator, typename Attribute>
@@ -37,7 +38,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         *sink = p;
         ++sink;
-        return sink.good();
+        return detail::sink_is_good(sink);
     }
 
     template <typename OutputIterator, typename CharEncoding, typename Tag>
@@ -52,7 +53,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         *sink = p;
         ++sink;
-        return sink.good();
+        return detail::sink_is_good(sink);
     }
 
     template <typename OutputIterator>

@@ -14,6 +14,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
@@ -78,7 +79,7 @@ namespace boost { namespace spirit { namespace karma
             {
                 result = subject.generate(sink, ctx, d, traits::deref(it));
             }
-            return sink.good();
+            return detail::sink_is_good(sink);
         }
 
         template <typename Context>
