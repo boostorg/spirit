@@ -362,7 +362,7 @@ namespace boost { namespace spirit { namespace karma {
                 // than Radix
                 return static_cast<long>(n % Radix);
             }
-            
+
             template <typename T>
             static long call(T n, mpl::false_)
             {
@@ -370,7 +370,7 @@ namespace boost { namespace spirit { namespace karma {
                 using namespace std; 
                 return cast_to_long::call(fmod(n, T(Radix)));
             }
-            
+
             template <typename T>
             static long call(T n)
             {
@@ -485,7 +485,7 @@ namespace boost { namespace spirit { namespace karma {
                 *sink = is_negative ? '-' : '+';
             else 
                 *sink = ' ';
-                
+
             ++sink;
             return true;
         }
@@ -629,17 +629,18 @@ namespace boost { namespace spirit { namespace karma {
             fractional_part = floor(fractional_part * precexp + U(0.5));
             if (fractional_part >= precexp) 
             {
-                fractional_part -= precexp;
+                fractional_part = floor(fractional_part - precexp);
                 integer_part += 1;    // handle rounding overflow
             }
 
         // if trailing zeros are to be omitted, normalize the precision and
         // fractional part
             U long_int_part = floor(integer_part);
-            U long_frac_part = floor(fractional_part);
+            U long_frac_part = fractional_part;
             unsigned prec = precision;
             if (!p.trailing_zeros(n))
             {
+                U frac_part_floor = long_frac_part;
                 if (0 != long_frac_part) {
                     // remove the trailing zeros
                     while (0 != prec && 
@@ -657,7 +658,7 @@ namespace boost { namespace spirit { namespace karma {
 
                 if (precision != prec)
                 {
-                    long_frac_part = floor(fractional_part) / 
+                    long_frac_part = frac_part_floor / 
                         spirit::detail::pow10<U>(precision-prec);
                 }
             }

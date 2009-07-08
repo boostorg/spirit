@@ -297,9 +297,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         } 
         output_iterator operator++(int) 
         {
-            output_iterator t(*this);
-            ++sink; 
-            return t; 
+            if (NULL == buffer) {
+                output_iterator t(*this);
+                ++sink; 
+                return t; 
+            }
+            return *this;
         }
 
         template <typename T> 
