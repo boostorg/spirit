@@ -265,11 +265,11 @@ int main()
         BOOST_TEST(lex::tokenize(first, input.end(), lexer
           , phoenix::push_back(phoenix::ref(tokens), _1)));
 
-        int i[] = { 4, -1 };
+        int i[] = { -1 };
         BOOST_TEST(test_indents(i, lexer.indents));
 
         token_data d[] = { 
-            { ID_INDENT, 1 }, { ID_INDENT, 1 }, { ID_INDENT, 1 }
+            { ID_INDENT, 1 }, { ID_INDENT, 1 }
           , { ID_DEDENT, 2 }
           , { -1, 0 } };
         BOOST_TEST(test_tokens(d, tokens));
