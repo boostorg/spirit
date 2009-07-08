@@ -291,7 +291,13 @@ public:
             iter_._data.eol_index = ptr_->front ()._eol_index;
             iter_._token_iter = ptr_->front ()._transitions.begin ();
             iter_._token_end = ptr_->front ()._transitions.end ();
-            ++iter_;
+
+            // Deal with case where there is only a bol or eol
+            // but no other transitions.
+            if (iter_._transitions)
+            {
+                ++iter_;
+            }
         }
 
         return iter_;
