@@ -19,7 +19,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <list>
 
 namespace client
 {
@@ -32,7 +32,7 @@ namespace client
     //  more information
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
+    bool parse_numbers(Iterator first, Iterator last, std::list<double>& v)
     {
         using qi::double_;
         using qi::phrase_parse;
@@ -49,7 +49,7 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     //[tutorial_karma_numlist1
     template <typename OutputIterator>
-    bool generate_numbers(OutputIterator sink, std::vector<double> const& v)
+    bool generate_numbers(OutputIterator sink, std::list<double> const& v)
     {
         using karma::double_;
         using karma::generate_delimited;
@@ -85,7 +85,7 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        std::vector<double> v;      // here we put the data to generate
+        std::list<double> v;      // here we put the data to generate
         if (client::parse_numbers(str.begin(), str.end(), v))
         {
             // ok, we got some numbers, no print them back out
