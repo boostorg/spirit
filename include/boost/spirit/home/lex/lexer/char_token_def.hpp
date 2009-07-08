@@ -61,7 +61,8 @@ namespace boost { namespace spirit { namespace lex
     {
         typedef typename CharEncoding::char_type char_type;
 
-        char_token_def(char_type ch) : ch(ch), unique_id_(~0) {}
+        char_token_def(char_type ch) 
+          : ch(ch), unique_id_(std::size_t(~0)) {}
 
         template <typename LexerDef, typename String>
         void collect(LexerDef& lexdef, String const& state) const

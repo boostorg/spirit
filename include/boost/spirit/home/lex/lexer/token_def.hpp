@@ -125,7 +125,7 @@ namespace boost { namespace spirit { namespace lex
 
                 //  If the following assertion fires you probably forgot to  
                 //  associate this token definition with a lexer instance.
-                BOOST_ASSERT((std::size_t)(~0) != token_state_);
+                BOOST_ASSERT(std::size_t(~0) != token_state_);
 
                 token_type &t = *first;
                 if (token_id_ == t.id() && token_state_ == t.state()) {
@@ -156,7 +156,7 @@ namespace boost { namespace spirit { namespace lex
             // is not possible. Please create a separate token_def instance 
             // from the same regular expression for each lexer state it needs 
             // to be associated with.
-            BOOST_ASSERT(~0 == token_state_ || state_id == token_state_);
+            BOOST_ASSERT(std::size_t(~0) == token_state_ || state_id == token_state_);
 
             token_state_ = state_id;
             if (0 == token_id_)
@@ -183,16 +183,18 @@ namespace boost { namespace spirit { namespace lex
         // Lex interface: constructing token definitions
         token_def() 
           : proto_base_type(terminal_type::make(alias()))
-          , def_('\0'), token_id_(), unique_id_(~0), token_state_(~0)  {}
+          , def_('\0'), token_id_()
+          , unique_id_(std::size_t(~0)), token_state_(~0)  {}
 
         explicit token_def(char_type def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(alias()))
           , def_(def_), token_id_(Idtype() == id_ ? def_ : id_)
-          , unique_id_(~0), token_state_(~0) {}
+          , unique_id_(~0), token_state_(std::size_t(~0)) {}
 
         explicit token_def(string_type const& def_, Idtype id_ = Idtype())
           : proto_base_type(terminal_type::make(alias()))
-          , def_(def_), token_id_(id_), unique_id_(~0), token_state_(~0) {}
+          , def_(def_), token_id_(id_)
+          , unique_id_(std::size_t(~0)), token_state_(std::size_t(~0)) {}
 
         template <typename String>
         token_def& operator= (String const& definition)

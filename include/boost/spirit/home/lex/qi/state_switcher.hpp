@@ -77,7 +77,7 @@ namespace boost { namespace spirit { namespace qi
             //  set_state(...) or in_state(...)[...] lexer state switcher with
             //  a lexer state name unknown to the lexer (no token definitions
             //  have been associated with this lexer state).
-            BOOST_ASSERT(static_cast<std::size_t>(~0) != state);
+            BOOST_ASSERT(std::size_t(~0) != state);
             return it.set_state(state);
         }
     }
