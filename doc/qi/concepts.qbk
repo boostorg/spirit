@@ -166,7 +166,7 @@ UnaryParser the following must be met:
 
 [heading Invariants]
 
-For any UnaryParser, `P`, the following invariants always hold:
+For any UnaryParser, `P`, the following invariant always holds:
 
 * `traits::is_parser<P::subject_type>::type` evaluates to `mpl::true_`
 
@@ -270,10 +270,10 @@ NaryParser the following must be met:
 
 [heading Invariants]
 
-For any NaryParser, `P`, the following invariants always holds:
+For each element, `E`, in any NaryParser, `P`, the following invariant
+always holds: 
 
-* For each element, `E`, in NaryParser, `P`, the following invariant always 
-  hold: `traits::is_parser<E>::type` evaluates to `mpl::true_`
+* `traits::is_parser<E>::type` evaluates to `mpl::true_`
 
 [heading Models]
 

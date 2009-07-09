@@ -8,9 +8,20 @@
 
 [section String]
 
+This module includes parsers for strings. Currently, this module
+includes the literal and string parsers and the symbol table.
+
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/qi/string.hpp>
+    #include <boost/spirit/include/qi_string.hpp>
 
 [/------------------------------------------------------------------------------]
 [section lit/string]
+
+* `boost::spirit::lit`: generates a string parser (Same as `boost::spirit::qi::lit`)
+* `NS::string`: generates a string parser for the character encoding. `NS`
+   is a __char_encoding_namespace__.
 
 [heading Description]
 
@@ -20,15 +31,8 @@ between characters of the string.
 
 [heading Header]
 
-    #include <boost/spirit/home/qi/string/lit.hpp>  // main include
-    #include <boost/spirit/include/qi_lit.hpp>      // or, forwarding header
-    
-[heading Module Headers]
-
-    #include <boost/spirit/home/qi/string.hpp>      // string module
-    #include <boost/spirit/include/qi_string.hpp>   // or, forwarding header
-    #include <boost/spirit/home/qi.hpp>             // qi module
-    #include <boost/spirit/include/qi.hpp>          // or, forwarding header
+    // forwards to <boost/spirit/home/qi/string/lit.hpp>
+    #include <boost/spirit/include/qi_lit.hpp>
 
 Also, see __include_structure__.
 
@@ -38,7 +42,7 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`s`]      [A literal string, e.g. "Hello", or a pointer/reference to a 
-                null-terminated array of characters or a a `std::basic_string`.]]
+                null-terminated array of characters or a `std::basic_string`.]]
     [[`fs`]     [A __lazy_argument__ that evaluates to a `std::basic_string` 
                 or a pointer/reference to a null-terminated array of characters.]]
     [[`ns`]     [A __char_encoding_namespace__.]]]
@@ -144,15 +148,8 @@ altering its behavior.
 
 [heading Header]
 
-    #include <boost/spirit/home/qi/string/symbols.hpp>  // main include
-    #include <boost/spirit/include/qi_symbols.hpp>      // or, forwarding header
-    
-[heading Module Headers]
-
-    #include <boost/spirit/home/qi/string.hpp>      // string module
-    #include <boost/spirit/include/qi_string.hpp>   // or, forwarding header
-    #include <boost/spirit/home/qi.hpp>             // qi module
-    #include <boost/spirit/include/qi.hpp>          // or, forwarding header
+    // forwards to <boost/spirit/home/qi/string/symbols.hpp>
+    #include <boost/spirit/include/qi_symbols.hpp>
 
 Also, see __include_structure__.
 

@@ -162,7 +162,7 @@ UnaryGenerator the following must be met:
 
 [heading Invariants]
 
-For any UnaryGenerator, `G`, the following invariants always hold:
+For any UnaryGenerator, `G`, the following invariant always holds:
 
 * `traits::is_generator<G::subject_type>::type` evaluates to `mpl::true_`
 
@@ -266,10 +266,10 @@ NaryGenerator the following must be met:
 
 [heading Invariants]
 
-For any NaryGenerator, `G`, the following invariants always holds:
-
-* For each element, `E`, in NaryGenerator, `G`, the following invariant always 
-  hold: `traits::is_generator<E>::type` evaluates to `mpl::true_`
+For each element, `E`, in any NaryGenerator, `G`, the following
+invariant always holds: 
+  
+* `traits::is_generator<E>::type` evaluates to `mpl::true_`
 
 [heading Models]
 

@@ -40,6 +40,21 @@ we place tagged versions of parsers such as `alnum`, `space` etc.
 Example:
 
     using boost::spirit::ascii::space; // use the ASCII space parser
+    
+Namespaces:
+
+* boost::spirit::ascii
+* boost::spirit::iso8859_1
+* boost::spirit::standard
+* boost::spirit::standard_wide
+
+For ease of use, the components in this namespaces are also brought into
+the qi sub-namespaces with the same names:
+
+* boost::spirit::qi::ascii
+* boost::spirit::qi::iso8859_1
+* boost::spirit::qi::standard
+* boost::spirit::qi::standard_wide
 
 [endsect]
 
