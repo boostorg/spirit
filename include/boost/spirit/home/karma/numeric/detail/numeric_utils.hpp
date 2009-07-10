@@ -491,7 +491,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                long l(n);
+                boost::long_long_type l(n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
