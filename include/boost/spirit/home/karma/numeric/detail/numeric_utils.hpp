@@ -412,7 +412,6 @@ namespace boost { namespace spirit { namespace karma {
         typedef detail::divide<Radix> divide_type;
         typedef detail::remainder<Radix> remainder_type;
 
-        //  Common code for integer string representations
         template <typename OutputIterator, typename T>
         static bool
         call(OutputIterator& sink, T n, T& num, int exp)
@@ -442,6 +441,59 @@ namespace boost { namespace spirit { namespace karma {
         static bool
         call(OutputIterator& sink, T n)
         {
+            return call(sink, n, n, 0);
+        }
+
+        // helper function returning the biggest number representable either in
+        // a boost::long_long_type (if this does exist) or in a plain long
+        // otherwise
+#if defined(BOOST_HAS_LONG_LONG)
+        static std::size_t max_long()
+        {
+            return (std::numeric_limits<boost::long_long_type>::max)();
+        }
+#else
+        static std::size_t max_long()
+        {
+            return (std::numeric_limits<long>::max)();
+        }
+#endif
+
+        // Specialization for doubles and floats, falling back to long integers 
+        // for representable values. These specializations speed up formatting
+        // of floating point numbers considerably as all the required 
+        // arithmetics will be executed using integral data types.
+        template <typename OutputIterator>
+        static bool
+        call(OutputIterator& sink, long double n)
+        {
+            if (std::fabs(n) < max_long())
+            {
+                boost::long_long_type l(n);
+                return call(sink, l, l, 0);
+            }
+            return call(sink, n, n, 0);
+        }
+        template <typename OutputIterator>
+        static bool
+        call(OutputIterator& sink, double n)
+        {
+            if (std::fabs(n) < max_long())
+            {
+                boost::long_long_type l(n);
+                return call(sink, l, l, 0);
+            }
+            return call(sink, n, n, 0);
+        }
+        template <typename OutputIterator>
+        static bool
+        call(OutputIterator& sink, float n)
+        {
+            if (std::fabs(n) < max_long())
+            {
+                long l(n);
+                return call(sink, l, l, 0);
+            }
             return call(sink, n, n, 0);
         }
     };
