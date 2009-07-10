@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace qi
         //  skip:       skipper (can be unused_type)
         //  attr:       attribute (can be unused_type)
 
-        // Requirement: p.what(context) -> void
+        // Requirement: p.what(context) -> info
         //
         //  p:          a parser
         //  context:    enclosing rule context (can be unused_type)

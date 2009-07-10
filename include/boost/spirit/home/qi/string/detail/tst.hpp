@@ -105,7 +105,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Iterator, typename Alloc>
-        static bool
+        static T*
         add(
             tst_node*& start
           , Iterator first
@@ -114,7 +114,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
           , Alloc* alloc)
         {
             if (first == last)
-                return false;
+                return 0;
 
             tst_node** pp = &start;
             while (true)
@@ -132,11 +132,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     if (++first == last)
                     {
                         if (p->data == 0)
-                        {
                             p->data = alloc->new_data(val);
-                            return true;
-                        }
-                        return false;
+                        return p->data;
                     }
                     pp = &p->eq;
                 }

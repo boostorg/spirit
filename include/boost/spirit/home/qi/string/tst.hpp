@@ -65,7 +65,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         template <typename Iterator>
-        bool add(
+        T* add(
             Iterator first
           , Iterator last
           , typename boost::call_traits<T>::param_type val)

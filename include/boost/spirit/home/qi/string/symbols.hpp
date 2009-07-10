@@ -179,6 +179,20 @@ namespace boost { namespace spirit { namespace qi
         {
             lookup->for_each(f);
         }
+        
+        template <typename Str>
+        value_type& at(Str const& str)
+        {
+            return *lookup->add(traits::get_begin<Char>(str)
+                , traits::get_end<Char>(str), T());
+        }
+        
+        template <typename Str>
+        value_type* find(Str const& str)
+        {
+            return lookup->find(traits::get_begin<Char>(str)
+                , traits::get_end<Char>(str), T());
+        }
 
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
