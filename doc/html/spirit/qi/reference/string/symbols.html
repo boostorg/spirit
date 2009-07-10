@@ -30,7 +30,7 @@
 <div></div>
 </div>
 <a name="spirit.qi.reference.string.symbols.description"></a><h6>
-<a name="id458324"></a>
+<a name="id458314"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.description">Description</a>
           </h6>
 <p>
@@ -50,7 +50,7 @@
             its behavior.
           </p>
 <a name="spirit.qi.reference.string.symbols.header"></a><h6>
-<a name="id458393"></a>
+<a name="id458383"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/symbols.hpp&gt;
@@ -60,14 +60,14 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.string.symbols.synopsis"></a><h6>
-<a name="id458507"></a>
+<a name="id458496"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">symbols</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.string.symbols.template_parameters"></a><h6>
-<a name="id458601"></a>
+<a name="id458590"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.template_parameters">Template
             parameters</a>
           </h6>
@@ -114,7 +114,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.model_of"></a><h6>
-<a name="id458764"></a>
+<a name="id458754"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -151,18 +151,32 @@
               </p></dd>
 <dt><span class="term"><tt class="computeroutput"><span class="identifier">sseq</span></tt></span></dt>
 <dd><p>
-                An <span class="underline">_stl</span>_ container of strings.
+                An <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
+                of strings.
               </p></dd>
 <dt><span class="term"><tt class="computeroutput"><span class="identifier">dseq</span></tt></span></dt>
 <dd><p>
-                An <span class="underline">_stl</span>_ container of data
-                with <tt class="computeroutput"><span class="identifier">value_type</span></tt>
+                An <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a> container
+                of data with <tt class="computeroutput"><span class="identifier">value_type</span></tt>
                 <tt class="computeroutput"><span class="identifier">T</span></tt>.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt></span></dt>
+<dd><p>
+                A literal string, e.g. "Hello", or a pointer/reference
+                to a null-terminated array of characters or a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></tt>.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">d1</span></tt>...<tt class="computeroutput"><span class="identifier">dN</span></tt></span></dt>
+<dd><p>
+                Objects of type <tt class="computeroutput"><span class="identifier">T</span></tt>.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">f</span></tt></span></dt>
+<dd><p>
+                A callable function or function object.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.string.symbols.expression_semantics"></a><h6>
-<a name="id459059"></a>
+<a name="id459178"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -227,17 +241,119 @@
                     <tt class="computeroutput"><span class="identifier">sym</span></tt>.
                   </p></td>
 </tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span> <span class="special">=</span>
+                    <span class="identifier">s1</span><span class="special">,</span>
+                    <span class="identifier">s2</span><span class="special">,...</span>
+                    <span class="identifier">sN</span></tt>
+                  </p></td>
+<td><p>
+                    Assigns one or more symbols (<tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt>) to <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span> <span class="special">+=</span>
+                    <span class="identifier">s1</span><span class="special">,</span>
+                    <span class="identifier">s2</span><span class="special">,...</span>
+                    <span class="identifier">sN</span></tt>
+                  </p></td>
+<td><p>
+                    Adds one or more symbols (<tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt>) to <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">s1</span><span class="special">)(</span><span class="identifier">s2</span><span class="special">)...(</span><span class="identifier">sN</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Adds one or more symbols (<tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt>) to <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">add</span><span class="special">(</span><span class="identifier">s1</span><span class="special">,</span>
+                    <span class="identifier">d1</span><span class="special">)(</span><span class="identifier">s2</span><span class="special">,</span>
+                    <span class="identifier">d2</span><span class="special">)...(</span><span class="identifier">sN</span><span class="special">,</span>
+                    <span class="identifier">dN</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Adds one or more symbols (<tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt>) with associated data (<tt class="computeroutput"><span class="identifier">d1</span></tt>...<tt class="computeroutput"><span class="identifier">dN</span></tt>)
+                    to <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span> <span class="special">-=</span>
+                    <span class="identifier">s1</span><span class="special">,</span>
+                    <span class="identifier">s2</span><span class="special">,...</span>
+                    <span class="identifier">sN</span></tt>
+                  </p></td>
+<td><p>
+                    Remove one or more symbols (<tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt>) from <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">s1</span><span class="special">)(</span><span class="identifier">s2</span><span class="special">)...(</span><span class="identifier">sN</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Remove one or more symbols (<tt class="computeroutput"><span class="identifier">s1</span></tt>...<tt class="computeroutput"><span class="identifier">sN</span></tt>) from <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">clear</span><span class="special">()</span></tt>
+                  </p></td>
+<td><p>
+                    Erase all of the symbols in <tt class="computeroutput"><span class="identifier">sym</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">at</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Returns a reference to the object associated with symbol, <tt class="computeroutput"><span class="identifier">s</span></tt>. If <tt class="computeroutput"><span class="identifier">sym</span></tt>
+                    does not already contain such an object, <tt class="computeroutput"><span class="identifier">at</span></tt>
+                    inserts the default object <tt class="computeroutput"><span class="identifier">T</span><span class="special">()</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">find</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Returns a pointer to the object associated with symbol, <tt class="computeroutput"><span class="identifier">s</span></tt>. If <tt class="computeroutput"><span class="identifier">sym</span></tt>
+                    does not already contain such an object, <tt class="computeroutput"><span class="identifier">find</span></tt>
+                    returns a null pointer.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">sym</span><span class="special">.</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    For each symbol in <tt class="computeroutput"><span class="identifier">sym</span></tt>,
+                    <tt class="computeroutput"><span class="identifier">s</span></tt>, a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></tt>
+                    with associated data, <tt class="computeroutput"><span class="identifier">d</span></tt>,
+                    an object of type <tt class="computeroutput"><span class="identifier">T</span></tt>,
+                    invoke <tt class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span>
+                    <span class="identifier">d</span><span class="special">)</span></tt>.
+                  </p></td>
+</tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.symbols.attributes"></a><h6>
-<a name="id459423"></a>
+<a name="id460643"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.attributes">Attributes</a>
           </h6>
 <p>
-            The attribute of <tt class="computeroutput"><span class="identifier">stymbol</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></tt> is always <tt class="computeroutput"><span class="identifier">T</span></tt>.
+            The attribute of <tt class="computeroutput"><span class="identifier">symbol</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span></tt> is always <tt class="computeroutput"><span class="identifier">T</span></tt>.
           </p>
 <a name="spirit.qi.reference.string.symbols.example"></a><h6>
-<a name="id459500"></a>
+<a name="id460720"></a>
             <a href="symbols.html#spirit.qi.reference.string.symbols.example">Example</a>
           </h6>
 <p>
