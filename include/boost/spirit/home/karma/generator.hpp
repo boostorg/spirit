@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace karma
         //  delimit:    delimiter (can be unused_type)
         //  attr:       attribute (can be unused_type)
 
-        // Requirement: g.what(context) -> void
+        // Requirement: g.what(context) -> info
         //
         //  g:          a generator
         //  context:    enclosing rule context (can be unused_type)
