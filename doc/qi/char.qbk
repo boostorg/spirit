@@ -9,5 +9,27 @@
 [/ section Char]
 
 
+[/------------------------------------------------------------------------------]
+[section char_]
 
-[/ endsect]
+[heading Description]
+
+The char_ parser matches any character.  
+
+[heading Header]
+
+    #include <boost/spirit/home/qi/char/char.hpp>  // main include
+    #include <boost/spirit/include/qi_char.hpp>      // or, forwarding header
+    
+[heading Module Headers]
+
+   
+Also, see __include_structure__.
+
+
+
+
+
+[endsect] [/ char_]
+
+[endsect]
