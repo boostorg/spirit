@@ -6,11 +6,5 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Qi Components]
-
-[include        qi/primitive_parsers.qbk]
-[/include        qi/directives.qbk]
-[/include        qi/compount_parsers.qbk]
-
-[endsect] [/ Qi]
-
+[section Qi Compound Parsers]
+[endsect]
