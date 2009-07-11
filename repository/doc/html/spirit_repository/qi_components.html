@@ -44,7 +44,7 @@
         flush_multi_pass parser</a>
 </h4></div></div></div>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.description"></a><h6>
-<a name="id1029044"></a>
+<a name="id1055258"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.description">Description</a>
         </h6>
 <p>
@@ -59,26 +59,29 @@
 <pre class="programlisting"><span class="identifier">flush_multi_pass</span>
 </pre>
 <p>
-          which will class the <code class="computeroutput"><span class="identifier">clear_queue</span><span class="special">()</span></code> member function if the current iterators
+          which will call the <code class="computeroutput"><span class="identifier">clear_queue</span><span class="special">()</span></code> member function if the current iterators
           are of the type <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
-          For all other iterator types this is a no-op. The <code class="computeroutput"><span class="identifier">flush_multi_pass</span></code>
-          generates a parser component which always succeeds and which does not consume
-          any input (very much like <code class="computeroutput"><span class="identifier">eps</span></code>).
+          This will cause any buffered data to be erased. This also will invalidate
+          all other copies of multi_pass and they should not be used. If they are,
+          an <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">illegal_backtracking</span></code> exception will be
+          thrown. For all other iterator types this is a no-op. The <code class="computeroutput"><span class="identifier">flush_multi_pass</span></code> generates a parser component
+          which always succeeds and which does not consume any input (very much like
+          <code class="computeroutput"><span class="identifier">eps</span></code>).
         </p>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.header"></a><h6>
-<a name="id1029139"></a>
+<a name="id1055366"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_flush_multi_pass</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.synopsis"></a><h6>
-<a name="id1029208"></a>
+<a name="id1055436"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="identifier">flush_multi_pass</span>
 </pre>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.parameters"></a><h6>
-<a name="id1029230"></a>
+<a name="id1055457"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.parameters">Parameters</a>
         </h6>
 <p>
@@ -86,7 +89,7 @@
           not require any parameters.
         </p>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.attribute"></a><h6>
-<a name="id1029254"></a>
+<a name="id1055481"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.attribute">Attribute</a>
         </h6>
 <p>
@@ -96,7 +99,7 @@
 <pre class="programlisting"><span class="identifier">flush_multi_pass</span> <span class="special">--&gt;</span> <span class="identifier">unused</span>
 </pre>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.example"></a><h6>
-<a name="id1029303"></a>
+<a name="id1055531"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.example">Example</a>
         </h6>
 <p>
@@ -108,7 +111,7 @@
           a function prototype (for the full example code see here: <a href="../../../example/qi/flush_multi_pass.cpp" target="_top">flush_multi_pass.cpp</a>)
         </p>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.prerequisites"></a><h6>
-<a name="id1029335"></a>
+<a name="id1055563"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -145,7 +148,7 @@
 <p>
         </p>
 <a name="spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.clearing_the_internal_buffer"></a><h6>
-<a name="id1029547"></a>
+<a name="id1055774"></a>
           <a class="link" href="qi_components.html#spirit_repository.qi_components.qi_parser_primitives.qi_flush_multi_pass_parser.clearing_the_internal_buffer">Clearing
           the internal buffer</a>
         </h6>

@@ -19,9 +19,12 @@ The general syntax for using the `flush_multi_pass` is:
     flush_multi_pass
 
 which will call the `clear_queue()` member function if the current iterators
-are of the type `multi_pass`. For all other iterator types this is a no-op. 
-The `flush_multi_pass` generates a parser component which always succeeds and 
-which does not consume any input (very much like `eps`).
+are of the type `multi_pass`. This will cause any buffered data to be erased. 
+This also will invalidate all other copies of multi_pass and they should not 
+be used. If they are, an `boost::illegal_backtracking` exception will be 
+thrown. For all other iterator types this is a no-op. The `flush_multi_pass` 
+generates a parser component which always succeeds and which does not consume 
+any input (very much like `eps`).
 
 [heading Header]
 
