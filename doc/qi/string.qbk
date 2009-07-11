@@ -105,25 +105,29 @@ where `N` is the number of characters in the string to be parsed.
 
 [heading Example]
 
+Some includes:
+
+[reference_includes]
+
 All code snippets below use this common test function:
 
 [reference_test]
 
 Some using declarations:
 
-[reference_using_declarations]
+[reference_using_declarations_lit_string]
 
 Basic literals:
 
-[reference_string1_literals]
+[reference_string_literals]
 
 From a `std::string`
 
-[reference_string1_std_string]
+[reference_string_std_string]
 
 Lazy strings using __phoenix__
 
-[reference_string1_phoenix]
+[reference_string_phoenix]
 
 [endsect] [/ lit/strin]
 
@@ -226,8 +230,21 @@ The attribute of `symbol<Char, T>` is `T`.
 
 [heading Example]
 
-Real example code. Use Quickbook import mechanism to link to actual
-working code snippets here.
+Some includes:
+
+[reference_includes]
+
+Our test function:
+
+[reference_test_attr]
+
+Some using declarations:
+
+[reference_using_declarations_symbols]
+
+Symbols with data:
+
+[reference_symbols_with_data]
 
 [endsect] [/ symbols]
 
