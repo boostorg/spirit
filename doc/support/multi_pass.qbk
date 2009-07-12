@@ -82,7 +82,7 @@ Now, after the lecture on the features to be careful with when using
 That's not the case. If your grammar is deterministic, you can make use of 
 the `flush_multi_pass` pseudo parser in your grammar to ensure that data is not 
 buffered when unnecessary (`flush_multi_pass` is available from the __qi__
-parser repository). 
+parser __repo__). 
 
 Here we present a minimal example showing a minimal use case. The `multi_pass`
 iterator is highly configurable, but the default policies have been chosen so 
@@ -95,7 +95,7 @@ For the complete source code of this example please refer to
 
 [heading Using the flush_multi_pass parser]
 
-The __spirit__ repository contains the `flush_multi_pass` parser component.
+The __spirit__ __repo__ contains the `flush_multi_pass` parser component.
 This is usable in conjunction with the `multi_pass` iterator to minimize the
 buffering. It allows to insert explicit synchronization points into your 
 grammar where it is safe to clear any stored input as it is ensured that no
@@ -156,8 +156,9 @@ your own policy implementations.
 All predefined `multi_pass` policies are defined in the namespace 
 `boost::spirit::iterator_policies`.
 
-[table Predefined InputPolicy classes
+[table Predefined policy classes
     [[Class name]         [Description]]
+    [[*InputPolicy* classes]    []]
     [[`input_iterator`]   [This policy directs `multi_pass` to read from an 
                            input iterator of type `Input`.]]
     [[`lex_input`]        [This policy obtains it's input by calling yylex(), 
@@ -181,10 +182,8 @@ All predefined `multi_pass` policies are defined in the namespace
                            by each instance and its /shared/ data members will
                            be integrated with the `multi_pass` members shared 
                            by all copies.]]
-]
 
-[table Predefined OwnershipPolicy classes
-    [[Class name]         [Description]]
+    [[*OwnershipPolicy* classes]    []]
     [[`ref_counted`]      [This class uses a reference counting scheme. 
                            The `multi_pass` will delete it's shared components 
                            when the count reaches zero.]]
@@ -195,10 +194,8 @@ All predefined `multi_pass` policies are defined in the namespace
                            allocation of iterators is done. All copies are made 
                            on the stack, so the original iterator has the 
                            longest lifespan.]]
-]
 
-[table Predefined CheckingPolicy classes
-    [[Class name]         [Description]]
+    [[*CheckingPolicy* classes]    []]
     [[`no_check`]         [This policy does no checking at all.]]
     [[`buf_id_check`]     [This policy keeps around a buffer id, or a buffer 
                            age. Every time `clear_queue()` is called on a 
@@ -217,10 +214,8 @@ All predefined `multi_pass` policies are defined in the namespace
                            sure that they are all valid. This will be mostly 
                            useful for debugging purposes as it will incur 
                            significant overhead.]]
-]
 
-[table Predefined StoragePolicy classes
-    [[Class name]         [Description]]
+    [[*StoragePolicy* classes]    []]
     [[`split_std_deque`]  [Despite its name this policy keeps all buffered data 
                            in a `std::vector`. All data is stored as long as 
                            there is more than one iterator. Once the iterator 

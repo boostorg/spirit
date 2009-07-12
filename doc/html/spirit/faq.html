@@ -27,7 +27,7 @@
 <a name="spirit.faq"></a><a class="link" href="faq.html" title="Spirit FAQ"> Spirit FAQ</a>
 </h2></div></div></div>
 <a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_"></a><h4>
-<a name="id1127270"></a>
+<a name="id1133808"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_">I'm
       getting multiple symbol definition errors while using Visual C++. Anything
       I could do about that?</a>
@@ -45,7 +45,7 @@
     </p>
 <p>
       <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> allows you to define
-      a preprocessor constant disabling the usage of <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code>, while switching to <code class="computeroutput"><span class="identifier">BOOST_STATIC_ASSRT</span><span class="special">()</span></code> instead. If you define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1
+      a preprocessor constant disabling the usage of <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code>, while switching to <code class="computeroutput"><span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">()</span></code> instead. For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1
       (either by adding
     </p>
 <pre class="programlisting"><span class="special">-</span><span class="identifier">DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG</span><span class="special">=</span><span class="number">1</span>
@@ -64,7 +64,7 @@
       static_assert.
     </p>
 <a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_"></a><h4>
-<a name="id1127440"></a>
+<a name="id1133978"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">I'm
       very confused about the header hell in my boost/spirit directory. What's all
       this about?</a>

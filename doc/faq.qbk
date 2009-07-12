@@ -19,8 +19,9 @@ more powerfull version of static_assert. Unfortunately under certain
 circumstances using this macro may lead to the aformentioned linker errors. 
 
 __spirit__ allows you to define a preprocessor constant disabling the usage
-of `BOOST_MPL_ASSERT_MSG()`, while switching to `BOOST_STATIC_ASSRT()` instead.
-If you define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1 (either by adding 
+of `BOOST_MPL_ASSERT_MSG()`, while switching to `BOOST_STATIC_ASSERT()` instead.
+For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1 (either by 
+adding 
 
     -DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1
 

@@ -13,7 +13,7 @@
 The __spirit__ repository is a community effort collecting different reusable
 components (primitives, directives, grammars, etc.) for __qi__ parsers and 
 __karma__ generators. All components in the repository have been peer reviewed 
-on the __spirit_list__.
+and/or discussed on the __spirit_list__.
 
 [heading How to use this manual]
 

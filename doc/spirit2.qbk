@@ -36,6 +36,7 @@
 [def __spirit_general__         [@news://news.gmane.org/gmane.comp.spirit.general Spirit General NNTP news portal]]
 [def __gmane__                  [@http://www.gmane.org Gmane]]
 [def __mlist_archive__          [@http://news.gmane.org/gmane.comp.parsers.spirit.general]]
+[def __repo__                   [@../../repository/doc/html/index.html Repository]]
 
 [def __early_spirit__           [@http://spirit.sourceforge.net/dl_docs/pre-spirit.htm pre-Spirit]]
 [def __todd__exprtemplates__    [@http://ubiety.uwaterloo.ca/~tveldhui/papers/Expression-Templates/exprtmpl.html Expression Templates]]

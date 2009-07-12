@@ -61,7 +61,7 @@
         iterator was created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h5>
-<a name="id1119204"></a>
+<a name="id1125757"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h5>
@@ -121,7 +121,7 @@
         the <code class="computeroutput"><span class="identifier">flush_multi_pass</span></code> pseudo
         parser in your grammar to ensure that data is not buffered when unnecessary
         (<code class="computeroutput"><span class="identifier">flush_multi_pass</span></code> is available
-        from the <span class="emphasis"><em>Spirit.Qi</em></span> parser repository).
+        from the <span class="emphasis"><em>Spirit.Qi</em></span> parser <a href="../../../../repository/doc/html/index.html" target="_top">Repository</a>).
       </p>
 <p>
         Here we present a minimal example showing a minimal use case. The <code class="computeroutput"><span class="identifier">multi_pass</span></code> iterator is highly configurable,
@@ -173,12 +173,12 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h5>
-<a name="id1120281"></a>
+<a name="id1126840"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h5>
 <p>
-        The <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> repository
+        The <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> <a href="../../../../repository/doc/html/index.html" target="_top">Repository</a>
         contains the <code class="computeroutput"><span class="identifier">flush_multi_pass</span></code>
         parser component. This is usable in conjunction with the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
         iterator to minimize the buffering. It allows to insert explicit synchronization
@@ -195,7 +195,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h5>
-<a name="id1120370"></a>
+<a name="id1126933"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h5>
@@ -236,7 +236,7 @@
         the functionality groups:
       </p>
 <div class="table">
-<a name="id1120476"></a><p class="title"><b>Table 10. Policies needed for default_policy template</b></p>
+<a name="id1127039"></a><p class="title"><b>Table 10. Policies needed for default_policy template</b></p>
 <div class="table-contents"><table class="table" summary="Policies needed for default_policy template">
 <colgroup>
 <col>
@@ -319,7 +319,7 @@
         implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h5>
-<a name="id1120668"></a>
+<a name="id1127231"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h5>
@@ -328,8 +328,8 @@
         policies are defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">iterator_policies</span></code>.
       </p>
 <div class="table">
-<a name="id1120710"></a><p class="title"><b>Table 11. Predefined InputPolicy classes</b></p>
-<div class="table-contents"><table class="table" summary="Predefined InputPolicy classes">
+<a name="id1127273"></a><p class="title"><b>Table 11. Predefined policy classes</b></p>
+<div class="table-contents"><table class="table" summary="Predefined policy classes">
 <colgroup>
 <col>
 <col>
@@ -347,6 +347,17 @@
             </th>
 </tr></thead>
 <tbody>
+<tr>
+<td>
+            <p>
+              <span class="bold"><strong>InputPolicy</strong></span> classes
+            </p>
+            </td>
+<td>
+            <p>
+            </p>
+            </td>
+</tr>
 <tr>
 <td>
             <p>
@@ -410,29 +421,17 @@
             </p>
             </td>
 </tr>
-</tbody>
-</table></div>
-</div>
-<br class="table-break"><div class="table">
-<a name="id1121050"></a><p class="title"><b>Table 12. Predefined OwnershipPolicy classes</b></p>
-<div class="table-contents"><table class="table" summary="Predefined OwnershipPolicy classes">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
+<tr>
+<td>
             <p>
-              Class name
+              <span class="bold"><strong>OwnershipPolicy</strong></span> classes
             </p>
-            </th>
-<th>
+            </td>
+<td>
             <p>
-              Description
             </p>
-            </th>
-</tr></thead>
-<tbody>
+            </td>
+</tr>
 <tr>
 <td>
             <p>
@@ -462,29 +461,17 @@
             </p>
             </td>
 </tr>
-</tbody>
-</table></div>
-</div>
-<br class="table-break"><div class="table">
-<a name="id1121155"></a><p class="title"><b>Table 13. Predefined CheckingPolicy classes</b></p>
-<div class="table-contents"><table class="table" summary="Predefined CheckingPolicy classes">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
+<tr>
+<td>
             <p>
-              Class name
+              <span class="bold"><strong>CheckingPolicy</strong></span> classes
             </p>
-            </th>
-<th>
+            </td>
+<td>
             <p>
-              Description
             </p>
-            </th>
-</tr></thead>
-<tbody>
+            </td>
+</tr>
 <tr>
 <td>
             <p>
@@ -535,29 +522,17 @@
             </p>
             </td>
 </tr>
-</tbody>
-</table></div>
-</div>
-<br class="table-break"><div class="table">
-<a name="id1121308"></a><p class="title"><b>Table 14. Predefined StoragePolicy classes</b></p>
-<div class="table-contents"><table class="table" summary="Predefined StoragePolicy classes">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
+<tr>
+<td>
             <p>
-              Class name
+              <span class="bold"><strong>StoragePolicy</strong></span> classes
             </p>
-            </th>
-<th>
+            </td>
+<td>
             <p>
-              Description
             </p>
-            </th>
-</tr></thead>
-<tbody>
+            </td>
+</tr>
 <tr>
 <td>
             <p>
@@ -602,7 +577,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h5>
-<a name="id1121520"></a>
+<a name="id1128058"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h5>
@@ -648,7 +623,7 @@
         behaviors while wrapping an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h5>
-<a name="id1121942"></a>
+<a name="id1128480"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h5>
@@ -667,7 +642,7 @@
         StoragePolicy.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h5>
-<a name="id1122074"></a>
+<a name="id1128612"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <code class="computeroutput"><span class="identifier">functor_input</span></code>
         InputPolicy</a>
@@ -726,7 +701,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h5>
-<a name="id1122661"></a>
+<a name="id1129199"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h5>
@@ -743,7 +718,7 @@
         copies of a particular <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h5>
-<a name="id1122735"></a>
+<a name="id1129273"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h5>
 <p>
@@ -839,7 +814,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h5>
-<a name="id1125273"></a>
+<a name="id1131811"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h5>
 <p>
@@ -906,7 +881,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h5>
-<a name="id1125807"></a>
+<a name="id1132345"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h5>
 <p>
@@ -965,7 +940,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h5>
-<a name="id1126258"></a>
+<a name="id1132796"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h5>
 <p>
