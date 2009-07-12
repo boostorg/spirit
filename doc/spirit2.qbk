@@ -194,6 +194,7 @@ Character Encoding Namespace
 [include qi.qbk]
 [include karma.qbk]
 [include lex.qbk]
+[include support.qbk]
 [include faq.qbk]
 [include notes.qbk]
 [/include rationale.qbk]
