@@ -30,11 +30,27 @@ namespace boost { namespace spirit {
         struct no_check;
 
         // storage policies
-        struct std_deque;
+        struct split_std_deque;
         template<std::size_t N> struct fixed_size_queue;
+
+        // policy combiner
+#if defined(BOOST_SPIRIT_DEBUG)
+        template<typename Ownership = ref_counted
+          , typename Checking = buf_id_check
+          , typename Input = input_iterator
+          , typename Storage = split_std_deque>
+        struct default_policy;
+#else
+        template<typename Ownership = ref_counted
+          , typename Checking = no_check
+          , typename Input = input_iterator
+          , typename Storage = split_std_deque>
+        struct default_policy;
+#endif
     }
 
-    template <typename T, typename Policies>
+    template <typename T
+      , typename Policies = iterator_policies::default_policy<> >
     class multi_pass;
 
     template <typename T, typename Policies>

@@ -17,9 +17,9 @@ namespace boost { namespace spirit { namespace iterator_policies
     namespace input_iterator_is_valid_test_
     {
         template <typename Token>
-        inline bool token_is_valid(Token const&)
+        inline bool token_is_valid(Token const& c)
         {
-            return true;
+            return c ? true : false;
         }
     }
 
@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace iterator_policies
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename T>
-        class unique : public detail::default_input_policy
+        class unique // : public detail::default_input_policy
         {
         private:
             typedef
@@ -57,29 +57,26 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         protected:
             unique() {}
-            explicit unique(T x) : input(x) {}
+            explicit unique(T x) {}
 
-            void swap(unique& x)
-            {
-                spirit::detail::swap(input, x.input);
-            }
+            void swap(unique&) {}
 
         public:
             template <typename MultiPass>
-            static void advance_input(MultiPass& mp, value_type& t)
+            static void destroy(MultiPass&) {}
+
+            template <typename MultiPass>
+            static value_type& advance_input(MultiPass& mp, value_type& t)
             {
-                // if mp.shared is NULL then this instance of the multi_pass 
-                // represents a end iterator, so no advance functionality is 
-                // needed
-                if (0 != mp.shared()) 
-                    t = *++mp.input;
+                return t = *mp.shared()->input_++;
             }
 
             // test, whether we reached the end of the underlying stream
             template <typename MultiPass>
             static bool input_at_eof(MultiPass const& mp, value_type const&) 
             {
-                return mp.input == T();
+                static T const end_iter;
+                return mp.shared()->input_ == end_iter;
             }
 
             template <typename MultiPass>
@@ -89,17 +86,16 @@ namespace boost { namespace spirit { namespace iterator_policies
                 return token_is_valid(t);
             }
 
-        protected:
-            T input;
+            // no unique data elements
         };
 
         ///////////////////////////////////////////////////////////////////////
         template <typename T>
         struct shared
         {
-            explicit shared(T) {}
+            explicit shared(T const& input) : input_(input) {}
 
-            // no shared data elements
+            T input_;
         };
     };
 

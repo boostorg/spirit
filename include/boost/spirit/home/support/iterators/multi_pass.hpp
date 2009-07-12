@@ -64,7 +64,7 @@ namespace boost { namespace spirit
         // the base class). This is fully intended behavior as some policies
         // rely on the fact that their shared part is initialized before their
         // unique part. Please ignore the warnings, these are harmless.
-        explicit multi_pass(T input)
+        explicit multi_pass(T const& input)
           : member_base(new shared_data_type(input)), policies_base_type(input) {}
 
         multi_pass(multi_pass const& x)
@@ -192,9 +192,16 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     template <typename Policies, typename T>
     inline multi_pass<T, Policies>
-    make_multi_pass(T i)
+    make_multi_pass(T const& i)
     {
         return multi_pass<T, Policies>(i);
+    }
+
+    template <typename T>
+    inline multi_pass<T>
+    make_default_multi_pass(T const& i)
+    {
+        return multi_pass<T>(i);
     }
 
     template <typename T, typename Policies>

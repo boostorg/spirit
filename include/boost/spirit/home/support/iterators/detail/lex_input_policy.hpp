@@ -37,16 +37,10 @@ namespace boost { namespace spirit { namespace iterator_policies
 
         public:
             template <typename MultiPass>
-            static void advance_input(MultiPass& mp, value_type& t)
+            static value_type& advance_input(MultiPass& mp, value_type& t)
             {
-                // if mp.shared is NULL then this instance of the multi_pass 
-                // represents a end iterator, so no advance functionality is 
-                // needed
-                if (0 != mp.shared()) 
-                {
-                    extern int yylex();
-                    t = yylex();
-                }
+                extern int yylex();
+                return t = yylex();
             }
 
             // test, whether we reached the end of the underlying stream
