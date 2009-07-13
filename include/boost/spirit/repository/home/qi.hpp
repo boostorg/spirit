@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include <boost/spirit/repository/qi/flush_multi_pass.hpp>
+#include <boost/spirit/repository/home/qi/flush_multi_pass.hpp>
 //#include <boost/spirit/repository/qi/confix.hpp>
 //#include <boost/spirit/repository/qi/distinct.hpp>
 
