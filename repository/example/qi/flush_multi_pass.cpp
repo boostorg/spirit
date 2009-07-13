@@ -16,7 +16,7 @@
 //]
 
 //[qi_flush_multi_pass_namespace
-using namespace boost::spirit;
+namespace spirit = boost::spirit;
 using boost::spirit::repository::flush_multi_pass;
 //]
 
