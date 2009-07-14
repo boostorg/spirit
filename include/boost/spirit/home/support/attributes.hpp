@@ -422,7 +422,35 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef T type;
     };
-
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // clear
+    //
+    // Clear data efficiently ()
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct is_container;
+        
+    namespace detail
+    {
+        template <typename T>
+        void clear_impl(T& val, mpl::false_)
+        {
+            val = T();
+        }
+        
+        template <typename T>
+        void clear_impl(T& val, mpl::true_)
+        {
+            val.clear();
+        }
+    }
+    
+    template <typename T>
+    void clear(T& val)
+    {
+        detail::clear_impl(val, is_container<T>::type());
+    }
 }}}
 
 #endif
