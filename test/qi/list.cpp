@@ -64,6 +64,12 @@ main()
         BOOST_TEST(test_attr("(1,2)", '(' >> int_ % ',' >> ')', v));
         BOOST_TEST(2 == v.size() && 1 == v[0] && 2 == v[1]);
     }
+    
+    {
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("a,b", +alpha % ',', v)); 
+        BOOST_TEST(2 == v.size() && "a" == v[0] && "b" == v[1]);
+    }
 
     { // actions
         namespace phx = boost::phoenix;
