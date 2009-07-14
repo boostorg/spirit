@@ -449,7 +449,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename T>
     void clear(T& val)
     {
-        detail::clear_impl(val, is_container<T>::type());
+        detail::clear_impl(val, typename is_container<T>::type());
     }
 }}}
 
