@@ -17,6 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  policy for real_generator, which forces to output trailing zeros in the 
 //  fractional part
+//[karma_double_performance_karma_definitions
 template <typename T>
 struct double3_policy : boost::spirit::karma::real_policies<T>   
 {
@@ -27,22 +28,23 @@ struct double3_policy : boost::spirit::karma::real_policies<T>
 typedef boost::spirit::karma::real_generator<double, double3_policy<double> > 
     double3_type;
 double3_type const double3 = double3_type();
+//]
 
 void format_performance_karma()
 {
     using boost::spirit::karma::generate;
 
+    //[karma_double_performance_karma_plain
     char buffer[256];
-
+    //<-
     util::high_resolution_timer t;
-
+    //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         char *p = buffer;
-
         generate(p, double3, 12345.12345);
-
         *p = '\0';
     }
+    //]
 
     std::cout << "karma:  " << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
@@ -54,18 +56,18 @@ void format_performance_karma_rule()
 
     boost::spirit::karma::rule<char*, double()> r;
 
+    //[karma_double_performance_karma_rule
     char buffer[256];
     r %= double3;
-
+    //<-
     util::high_resolution_timer t;
-
+    //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         char *p = buffer;
-
         generate(p, r, 12345.12345);
-
         *p = '\0';
     }
+    //]
 
     std::cout << "karma (rule):  " << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
@@ -76,19 +78,18 @@ void format_performance_karma_direct()
     using boost::spirit::karma::generate;
     using boost::spirit::karma::real_inserter;
 
+    //[karma_double_performance_karma_direct
     typedef real_inserter<double, double3_policy<double> > inserter;
-
     char buffer[256];
-
+    //<-
     util::high_resolution_timer t;
-
+    //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         char *p = buffer;
-
         inserter::call(p, 12345.12345, double3_policy<double>());
-
         *p = '\0';
     }
+    //]
 
     std::cout << "karma (direct):  " << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
@@ -98,16 +99,17 @@ void format_performance_karma_string()
 {
     using boost::spirit::karma::generate;
 
+    //[karma_double_performance_karma_string
     std::string generated;
     std::back_insert_iterator<std::string> sink(generated);
-
+    //<-
     util::high_resolution_timer t;
-
+    //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         generated.clear();
-
         generate(sink, double3, 12345.12345);
     }
+    //]
 
     std::cout << "karma (string): " << t.elapsed() << std::endl;
 //     std::cout << generated << std::endl;
@@ -116,14 +118,16 @@ void format_performance_karma_string()
 // Boost.Format  
 void format_performance_boost_format()
 {
+    //[karma_double_performance_karma_format
     std::stringstream strm;
-
+    //<-
     util::high_resolution_timer t;
-
+    //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         strm.str("");
         strm << boost::format("%f") % 12345.12345;
     }
+    //]
 
     std::cout << "format: " << t.elapsed() << std::endl;
 //     std::cout << strm.str() << std::endl;
@@ -133,10 +137,12 @@ void format_performance_printf()
 {
     util::high_resolution_timer t;
 
+    //[karma_double_performance_karma_printf
     char buffer[256];
     for (int i = 0; i < NUMITERATIONS; ++i) {
         sprintf(buffer, "%f", 12345.12345);
     }
+    //]
 
     std::cout << "printf: " << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
@@ -144,15 +150,16 @@ void format_performance_printf()
 
 void format_performance_iostreams()
 {
+    //[karma_double_performance_karma_iostreams
     std::stringstream strm;
-
+    //<-
     util::high_resolution_timer t;
-
+    //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         strm.str("");
-
         strm << 12345.12345;
     }
+    //]
 
     std::cout << "iostreams: " << t.elapsed() << std::endl;
 //     std::cout << strm.str() << std::endl;

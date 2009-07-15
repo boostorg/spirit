@@ -1,0 +1,501 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Comparing the performance of a single double_ generator</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../numeric_performance.html" title="Performance of Numeric Generators">
+<link rel="prev" href="../numeric_performance.html" title="Performance of Numeric Generators">
+<link rel="next" href="format_performance.html" title="Comparing the performance of a sequence of several generators">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="format_performance.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" title="Comparing the performance of a single double_ generator">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.performance_measurements.numeric_performance.double_performance"></a><a class="link" href="double_performance.html" title="Comparing the performance of a single double_ generator">
+          Comparing the performance of a single double_ generator</a>
+</h5></div></div></div>
+<p>
+            For the full source code of the performance test please see here: <a href="../../../../../../example/karma/double_performance.cpp" target="_top">double_performance.cpp</a>).
+            All the measurements have been done by doing 1000000 iterations for each
+            formatting type (<code class="computeroutput"><span class="identifier">NUMITERATIONS</span>
+            <span class="special">==</span> <span class="number">1000000</span></code>).
+          </p>
+<p>
+            Code used to measure the performance for printf:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">buffer</span><span class="special">,</span> <span class="string">"%f"</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Code used to measure the performance for standard iostreams:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stringstream</span> <span class="identifier">strm</span><span class="special">;</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">strm</span><span class="special">.</span><span class="identifier">str</span><span class="special">(</span><span class="string">""</span><span class="special">);</span>
+    <span class="identifier">strm</span> <span class="special">&lt;&lt;</span> <span class="number">12345.12345</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Code used to measure the performance for Boost.Format:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stringstream</span> <span class="identifier">strm</span><span class="special">;</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">strm</span><span class="special">.</span><span class="identifier">str</span><span class="special">(</span><span class="string">""</span><span class="special">);</span>
+    <span class="identifier">strm</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span><span class="special">(</span><span class="string">"%f"</span><span class="special">)</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            The following code shows the common definitions used by all Karma performance
+            measurements as listed below:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">double3_policy</span> <span class="special">:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>   
+<span class="special">{</span>
+    <span class="comment">//  we want to generate up to 3 fractional digits
+</span>    <span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="identifier">precision</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span> <span class="special">{</span> <span class="keyword">return</span> <span class="number">3</span><span class="special">;</span> <span class="special">}</span>
+<span class="special">};</span>
+
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">real_generator</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="identifier">double3_policy</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span> 
+    <span class="identifier">double3_type</span><span class="special">;</span>
+<span class="identifier">double3_type</span> <span class="keyword">const</span> <span class="identifier">double3</span> <span class="special">=</span> <span class="identifier">double3_type</span><span class="special">();</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Code used to measure the performance for Karma using a plain character
+            buffer:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">char</span> <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="identifier">buffer</span><span class="special">;</span>
+    <span class="identifier">generate</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span> <span class="identifier">double3</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">);</span>
+    <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="char">'\0'</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Code used to measure the performance for Karma using an output iterator
+            on top of a std::string as the destination buffer:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">generated</span><span class="special">;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">sink</span><span class="special">(</span><span class="identifier">generated</span><span class="special">);</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="identifier">generated</span><span class="special">.</span><span class="identifier">clear</span><span class="special">();</span>
+    <span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">double3</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Code used to measure the performance for Karma using a plain character
+            buffer, but utilizing a karma::rule as the generator:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
+<span class="identifier">r</span> <span class="special">%=</span> <span class="identifier">double3</span><span class="special">;</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">char</span> <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="identifier">buffer</span><span class="special">;</span>
+    <span class="identifier">generate</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span> <span class="identifier">r</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">);</span>
+    <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="char">'\0'</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Code used to measure the performance using Karma's low level formatting
+            routine for floating point numbers.
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">real_inserter</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="identifier">double3_policy</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">inserter</span><span class="special">;</span>
+<span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
+    <span class="keyword">char</span> <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="identifier">buffer</span><span class="special">;</span>
+    <span class="identifier">inserter</span><span class="special">::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">,</span> <span class="identifier">double3_policy</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;());</span>
+    <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="char">'\0'</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<div class="table">
+<a name="id1115562"></a><p class="title"><b>Table 6. Performance comparison for a single `double`</b></p>
+<div class="table-contents"><table class="table" summary="Performance comparison for a single `double`">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Library
+                </p>
+                </th>
+<th>
+                <p>
+                  gcc 4.4.0 (MingW, 32Bit)
+                </p>
+                </th>
+<th>
+                <p>
+                  VC++ 8 SP1 (32Bit)
+                </p>
+                </th>
+<th>
+                <p>
+                  VC++ 10 beta (32Bit)
+                </p>
+                </th>
+<th>
+                <p>
+                  gcc 4.1.2 (Linux, 64Bit)
+                </p>
+                </th>
+<th>
+                <p>
+                  VC++ 10 beta (64Bit)
+                </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  printf
+                </p>
+                </td>
+<td>
+                <p>
+                  0.739 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.894 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.965 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  1.032 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.807 [s]
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  iostreams
+                </p>
+                </td>
+<td>
+                <p>
+                  2.396 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  2.013 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  2.624 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.924 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  1.468 [s]
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Boost.Format
+                </p>
+                </td>
+<td>
+                <p>
+                  9.394 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  6.888 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  8.045 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  3.034 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  5.750 [s]
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Karma (char buffer)
+                </p>
+                </td>
+<td>
+                <p>
+                  0.832 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.483 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.561 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.394 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.260 [s]
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Karma (string)
+                </p>
+                </td>
+<td>
+                <p>
+                  0.873 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  1.193 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.701 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.478 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.384 [s]
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Karma (rule)
+                </p>
+                </td>
+<td>
+                <p>
+                  0.824 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.501 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.609 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.415 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.268 [s]
+                </p>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Karma (direct)
+                </p>
+                </td>
+<td>
+                <p>
+                  0.608 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.419 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.475 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.254 [s]
+                </p>
+                </td>
+<td>
+                <p>
+                  0.207 [s]
+                </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+            </p>
+<div class="figure">
+<a name="spirit.karma.double_performance"></a><p class="title"><b>Figure 3. Performance comparison for a single double</b></p>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/double_performance.png" alt="Performance comparison for a single double"></span></div>
+</div>
+<p><br class="figure-break">
+          </p>
+<a name="spirit.karma.performance_measurements.numeric_performance.double_performance.platforms"></a><h6>
+<a name="id1115950"></a>
+            <a class="link" href="double_performance.html#spirit.karma.performance_measurements.numeric_performance.double_performance.platforms">Platforms</a>
+          </h6>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM
+            </li>
+<li class="listitem">
+              Linux, 8 Quad-Core AMD Opteron(tm) Processor, 2.8GHz, 64GByte RAM
+            </li>
+</ul></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="format_performance.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

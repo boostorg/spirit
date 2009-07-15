@@ -43,8 +43,32 @@ backtracking can occur.
 
 A grammar must be designed with care if the `multi_pass` iterator is used. 
 Any rule that may need to backtrack, such as one that contains an alternative, 
-will cause data to be buffered. The rules that are optimal to use are sequence 
-and repetition. Sequences of the form `a >> b` will not buffer data at all. 
+will cause data to be buffered. The rules that are optimal to use are 
+repetition constructs (as kleene and plus). 
+
+Sequences of the form `a >> b` will buffer data as well. This is different from 
+the behaviour of __classic__ but for a good reason. Sequences need to reset the 
+current iterator to its initial state if one of the components of a seqeunce 
+fails to match. To compensate for this behaviour we added functionality to 
+the `expect` parsers (i.e. constructs like `a > b`). Expectation points introduce
+deterministic points into the grammar ensuring no backtracking can occur if
+they match. For this reason we clear the buffers of any multi_pass iterator
+on each expectation point, ensuring minimal buffer content even for large
+grammars.
+
+[important  If you use an error handler in conjunction with the `expect` parser
+            while utilizing a `multi_pass` iterator and you intend to use
+            the error handler to force a `retry` or a `fail` (see the 
+            description of error handlers - __fixme__: insert link), then 
+            you need to instantiate the error handler using `retry` or `fail`,
+            for instance:
+``
+        rule r<iterator_type> r;
+        on_error<retry>(r, std::cout << phoenix::val("Error!"));
+``
+            If you fail to do so the resulting code will trigger an assert 
+            statement at runtime.]
+
 Any rule that repeats, such as kleene_star (`*a`) or positive such as (`+a`), 
 will only buffer the data for the current repetition.
 
@@ -158,7 +182,7 @@ All predefined `multi_pass` policies are defined in the namespace
 
 [table Predefined policy classes
     [[Class name]         [Description]]
-    [[*InputPolicy* classes]    []]
+    [[*InputPolicy* classes]]
     [[`input_iterator`]   [This policy directs `multi_pass` to read from an 
                            input iterator of type `Input`.]]
     [[`lex_input`]        [This policy obtains it's input by calling yylex(), 
@@ -183,7 +207,7 @@ All predefined `multi_pass` policies are defined in the namespace
                            be integrated with the `multi_pass` members shared 
                            by all copies.]]
 
-    [[*OwnershipPolicy* classes]    []]
+    [[*OwnershipPolicy* classes]]
     [[`ref_counted`]      [This class uses a reference counting scheme. 
                            The `multi_pass` will delete it's shared components 
                            when the count reaches zero.]]
@@ -195,7 +219,7 @@ All predefined `multi_pass` policies are defined in the namespace
                            on the stack, so the original iterator has the 
                            longest lifespan.]]
 
-    [[*CheckingPolicy* classes]    []]
+    [[*CheckingPolicy* classes]]
     [[`no_check`]         [This policy does no checking at all.]]
     [[`buf_id_check`]     [This policy keeps around a buffer id, or a buffer 
                            age. Every time `clear_queue()` is called on a 
@@ -215,7 +239,7 @@ All predefined `multi_pass` policies are defined in the namespace
                            useful for debugging purposes as it will incur 
                            significant overhead.]]
 
-    [[*StoragePolicy* classes]    []]
+    [[*StoragePolicy* classes]]
     [[`split_std_deque`]  [Despite its name this policy keeps all buffered data 
                            in a `std::vector`. All data is stored as long as 
                            there is more than one iterator. Once the iterator 

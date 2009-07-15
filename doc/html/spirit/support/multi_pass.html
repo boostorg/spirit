@@ -61,7 +61,7 @@
         iterator was created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h5>
-<a name="id1125757"></a>
+<a name="id1145723"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h5>
@@ -77,11 +77,47 @@
         A grammar must be designed with care if the <code class="computeroutput"><span class="identifier">multi_pass</span></code>
         iterator is used. Any rule that may need to backtrack, such as one that contains
         an alternative, will cause data to be buffered. The rules that are optimal
-        to use are sequence and repetition. Sequences of the form <code class="computeroutput"><span class="identifier">a</span>
-        <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>
-        will not buffer data at all. Any rule that repeats, such as kleene_star (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>) or
-        positive such as (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>),
-        will only buffer the data for the current repetition.
+        to use are repetition constructs (as kleene and plus).
+      </p>
+<p>
+        Sequences of the form <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span></code>
+        will buffer data as well. This is different from the behaviour of <span class="emphasis"><em>Spirit.Classic</em></span>
+        but for a good reason. Sequences need to reset the current iterator to its
+        initial state if one of the components of a seqeunce fails to match. To compensate
+        for this behaviour we added functionality to the <code class="computeroutput"><span class="identifier">expect</span></code>
+        parsers (i.e. constructs like <code class="computeroutput"><span class="identifier">a</span>
+        <span class="special">&gt;</span> <span class="identifier">b</span></code>).
+        Expectation points introduce deterministic points into the grammar ensuring
+        no backtracking can occur if they match. For this reason we clear the buffers
+        of any multi_pass iterator on each expectation point, ensuring minimal buffer
+        content even for large grammars.
+      </p>
+<div class="important" title="Important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+          If you use an error handler in conjunction with the <code class="computeroutput"><span class="identifier">expect</span></code>
+          parser while utilizing a <code class="computeroutput"><span class="identifier">multi_pass</span></code>
+          iterator and you intend to use the error handler to force a <code class="computeroutput"><span class="identifier">retry</span></code> or a <code class="computeroutput"><span class="identifier">fail</span></code>
+          (see the description of error handlers - <span class="bold"><strong>FIXME</strong></span>:
+          insert link), then you need to instantiate the error handler using <code class="computeroutput"><span class="identifier">retry</span></code> or <code class="computeroutput"><span class="identifier">fail</span></code>,
+          for instance: 
+</p>
+<pre class="programlisting"><span class="identifier">rule</span> <span class="identifier">r</span><span class="special">&lt;</span><span class="identifier">iterator_type</span><span class="special">&gt;</span> <span class="identifier">r</span><span class="special">;</span>
+<span class="identifier">on_error</span><span class="special">&lt;</span><span class="identifier">retry</span><span class="special">&gt;(</span><span class="identifier">r</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="string">"Error!"</span><span class="special">));</span>
+</pre>
+<p>
+          If you fail to do so the resulting code will trigger an assert statement
+          at runtime.
+        </p>
+</td></tr>
+</table></div>
+<p>
+        Any rule that repeats, such as kleene_star (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>) or positive such as (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>), will only buffer the data for the current
+        repetition.
       </p>
 <p>
         In typical grammars, ambiguity and therefore lookahead is often localized.
@@ -173,7 +209,7 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h5>
-<a name="id1126840"></a>
+<a name="id1146991"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h5>
@@ -195,7 +231,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h5>
-<a name="id1126933"></a>
+<a name="id1147085"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h5>
@@ -236,7 +272,7 @@
         the functionality groups:
       </p>
 <div class="table">
-<a name="id1127039"></a><p class="title"><b>Table 10. Policies needed for default_policy template</b></p>
+<a name="id1147190"></a><p class="title"><b>Table 12. Policies needed for default_policy template</b></p>
 <div class="table-contents"><table class="table" summary="Policies needed for default_policy template">
 <colgroup>
 <col>
@@ -319,7 +355,7 @@
         implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h5>
-<a name="id1127231"></a>
+<a name="id1147382"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h5>
@@ -328,7 +364,7 @@
         policies are defined in the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">iterator_policies</span></code>.
       </p>
 <div class="table">
-<a name="id1127273"></a><p class="title"><b>Table 11. Predefined policy classes</b></p>
+<a name="id1147424"></a><p class="title"><b>Table 13. Predefined policy classes</b></p>
 <div class="table-contents"><table class="table" summary="Predefined policy classes">
 <colgroup>
 <col>
@@ -353,10 +389,7 @@
               <span class="bold"><strong>InputPolicy</strong></span> classes
             </p>
             </td>
-<td>
-            <p>
-            </p>
-            </td>
+<td class="auto-generated"> </td>
 </tr>
 <tr>
 <td>
@@ -427,10 +460,7 @@
               <span class="bold"><strong>OwnershipPolicy</strong></span> classes
             </p>
             </td>
-<td>
-            <p>
-            </p>
-            </td>
+<td class="auto-generated"> </td>
 </tr>
 <tr>
 <td>
@@ -467,10 +497,7 @@
               <span class="bold"><strong>CheckingPolicy</strong></span> classes
             </p>
             </td>
-<td>
-            <p>
-            </p>
-            </td>
+<td class="auto-generated"> </td>
 </tr>
 <tr>
 <td>
@@ -528,10 +555,7 @@
               <span class="bold"><strong>StoragePolicy</strong></span> classes
             </p>
             </td>
-<td>
-            <p>
-            </p>
-            </td>
+<td class="auto-generated"> </td>
 </tr>
 <tr>
 <td>
@@ -577,7 +601,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h5>
-<a name="id1128058"></a>
+<a name="id1148189"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h5>
@@ -623,7 +647,7 @@
         behaviors while wrapping an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h5>
-<a name="id1128480"></a>
+<a name="id1148612"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h5>
@@ -642,7 +666,7 @@
         StoragePolicy.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h5>
-<a name="id1128612"></a>
+<a name="id1148744"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <code class="computeroutput"><span class="identifier">functor_input</span></code>
         InputPolicy</a>
@@ -701,7 +725,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h5>
-<a name="id1129199"></a>
+<a name="id1149331"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h5>
@@ -718,7 +742,7 @@
         copies of a particular <code class="computeroutput"><span class="identifier">multi_pass</span></code>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h5>
-<a name="id1129273"></a>
+<a name="id1149405"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h5>
 <p>
@@ -814,7 +838,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h5>
-<a name="id1131811"></a>
+<a name="id1150304"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h5>
 <p>
@@ -881,7 +905,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h5>
-<a name="id1132345"></a>
+<a name="id1150838"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h5>
 <p>
@@ -940,7 +964,7 @@
         constructor of <code class="computeroutput"><span class="identifier">shared</span></code>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h5>
-<a name="id1132796"></a>
+<a name="id1151289"></a>
         <a class="link" href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h5>
 <p>

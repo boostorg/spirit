@@ -34,5 +34,9 @@
 [/include        karma/debug.qbk]
 [endsect]
 
+[section Performance Measurements]
+[include        karma/numeric_performance.qbk]
+[endsect]
+
 [endsect]
 
