@@ -12,19 +12,19 @@
 
 #include "high_resolution_timer.hpp"
 
-#define NUMITERATIONS 100000
+#define NUMITERATIONS 1000000
 
 ///////////////////////////////////////////////////////////////////////////////
 //  policy for real_generator, which forces to output trailing zeros in the 
 //  fractional part
 template <typename T>
-struct double3 : boost::spirit::karma::real_policies<T>   
+struct double3_policy : boost::spirit::karma::real_policies<T>   
 {
     //  we want to generate up to 3 fractional digits
     static unsigned int precision(T) { return 3; }
 };
 
-typedef boost::spirit::karma::real_generator<double, double3<double> > 
+typedef boost::spirit::karma::real_generator<double, double3_policy<double> > 
     double3_type;
 double3_type const double3 = double3_type();
 
@@ -154,12 +154,12 @@ void format_performance_iostreams()
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-//     format_performance_printf();
-//     format_performance_iostreams();
-//     format_performance_boost_format();
+    format_performance_printf();
+    format_performance_iostreams();
+    format_performance_boost_format();
     format_performance_karma();
-//     format_performance_karma_string();
-//     format_performance_karma_rule();
+    format_performance_karma_string();
+    format_performance_karma_rule();
     return 0;
 }
 
