@@ -444,21 +444,22 @@ namespace boost { namespace spirit { namespace karma {
             return call(sink, n, n, 0);
         }
 
+    private:
         // helper function returning the biggest number representable either in
         // a boost::long_long_type (if this does exist) or in a plain long
         // otherwise
 #if defined(BOOST_HAS_LONG_LONG)
-        static boost::long_long_type max_long()
-        {
-            return (std::numeric_limits<boost::long_long_type>::max)();
-        }
+        typedef boost::long_long_type biggest_long_type;
 #else
-        static long max_long()
-        {
-            return (std::numeric_limits<long>::max)();
-        }
+        typedef long biggest_long_type;
 #endif
 
+        static biggest_long_type max_long()
+        {
+            return (std::numeric_limits<biggest_long_type>::max)();
+        }
+
+    public:
         // Specialization for doubles and floats, falling back to long integers 
         // for representable values. These specializations speed up formatting
         // of floating point numbers considerably as all the required 
@@ -469,7 +470,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                boost::long_long_type l(n);
+                biggest_long_type l(n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
@@ -480,7 +481,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                boost::long_long_type l(n);
+                biggest_long_type l(n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
@@ -491,7 +492,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                boost::long_long_type l(n);
+                biggest_long_type l(n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
