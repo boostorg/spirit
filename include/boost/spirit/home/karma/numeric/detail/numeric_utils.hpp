@@ -448,12 +448,12 @@ namespace boost { namespace spirit { namespace karma {
         // a boost::long_long_type (if this does exist) or in a plain long
         // otherwise
 #if defined(BOOST_HAS_LONG_LONG)
-        static std::size_t max_long()
+        static boost::long_long_type max_long()
         {
             return (std::numeric_limits<boost::long_long_type>::max)();
         }
 #else
-        static std::size_t max_long()
+        static long max_long()
         {
             return (std::numeric_limits<long>::max)();
         }
@@ -574,8 +574,9 @@ namespace boost { namespace spirit { namespace karma {
     //  customization of the formatting process
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, typename Policies, typename CharEncoding = unused_type
+    template <typename T
+      , typename Policies = real_policies<T>
+      , typename CharEncoding = unused_type
       , typename Tag = unused_type>
     struct real_inserter
     {
