@@ -105,14 +105,13 @@ void format_performance_string()
 void format_performance_boost_format()
 {
     //[karma_format_performance_format
-    std::stringstream strm;
+    std::string generated;
+    boost::format outformat("[%-14.3f%-14.3f]");
     //<-
     util::high_resolution_timer t;
     //->
-    for (int i = 0; i < NUMITERATIONS; ++i) {
-        strm.str("");
-        strm << boost::format("[%-14.3f%-14.3f]") % 12345.12345 % 12345.12345;
-    }
+    for (int i = 0; i < NUMITERATIONS; ++i)
+        generated = boost::str(outformat % 12345.12345 % 12345.12345);
     //]
 
     std::cout << "format: " << t.elapsed() << std::endl;

@@ -84,11 +84,10 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stringstream</span> <span class="identifier">strm</span><span class="special">;</span>
-<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
-    <span class="identifier">strm</span><span class="special">.</span><span class="identifier">str</span><span class="special">(</span><span class="string">""</span><span class="special">);</span>
-    <span class="identifier">strm</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span><span class="special">(</span><span class="string">"%f"</span><span class="special">)</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">;</span>
-<span class="special">}</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">generated</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span> <span class="identifier">double_format</span><span class="special">(</span><span class="string">"%f"</span><span class="special">);</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> 
+    <span class="identifier">generated</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">str</span><span class="special">(</span><span class="identifier">double_format</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">);</span>
 </pre>
 <p>
             </p>
@@ -136,7 +135,7 @@
             readable comparison of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 3. Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id1132788"></a><p class="title"><b>Table 6. Performance comparison for a single double (all
+<a name="id1109842"></a><p class="title"><b>Table 6. Performance comparison for a single double (all
           times in [s])</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a single double (all
           times in [s])">
@@ -269,32 +268,32 @@
                 </td>
 <td>
                 <p>
-                  9.235
+                  3.188
                 </p>
                 </td>
 <td>
                 <p>
-                  8.045
+                  3.737
                 </p>
                 </td>
 <td>
                 <p>
-                  6.619
+                  2.878
                 </p>
                 </td>
 <td>
                 <p>
-                  5.922
+                  3.217
                 </p>
                 </td>
 <td>
                 <p>
-                  5.750
+                  2.672
                 </p>
                 </td>
 <td>
                 <p>
-                  5.350
+                  2.011
                 </p>
                 </td>
 </tr>

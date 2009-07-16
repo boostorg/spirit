@@ -84,11 +84,10 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">stringstream</span> <span class="identifier">strm</span><span class="special">;</span>
-<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
-    <span class="identifier">strm</span><span class="special">.</span><span class="identifier">str</span><span class="special">(</span><span class="string">""</span><span class="special">);</span>
-    <span class="identifier">strm</span> <span class="special">&lt;&lt;</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span><span class="special">(</span><span class="string">"[%-14.3f%-14.3f]"</span><span class="special">)</span> <span class="special">%</span> <span class="number">12345.12345</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">;</span>
-<span class="special">}</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">generated</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span> <span class="identifier">outformat</span><span class="special">(</span><span class="string">"[%-14.3f%-14.3f]"</span><span class="special">);</span>
+<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
+    <span class="identifier">generated</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">str</span><span class="special">(</span><span class="identifier">outformat</span> <span class="special">%</span> <span class="number">12345.12345</span> <span class="special">%</span> <span class="number">12345.12345</span><span class="special">);</span>
 </pre>
 <p>
             </p>
@@ -147,7 +146,7 @@
             readable comparison of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 3. Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id1134288"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
+<a name="id1111334"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
           items (all times in [s])</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a sequence of several
           items (all times in [s])">
@@ -280,39 +279,39 @@
                 </td>
 <td>
                 <p>
-                  9.209
+                  6.022
                 </p>
                 </td>
 <td>
                 <p>
-                  11.862
+                  6.817
                 </p>
                 </td>
 <td>
                 <p>
-                  10.599
+                  5.793
                 </p>
                 </td>
 <td>
                 <p>
-                  9.710
+                  5.721
                 </p>
                 </td>
 <td>
                 <p>
-                  9.110
+                  4.354
                 </p>
                 </td>
 <td>
                 <p>
-                  7.933
+                  4.089
                 </p>
                 </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  Karma (char buffer)
+                  Karma
                 </p>
                 </td>
 <td>

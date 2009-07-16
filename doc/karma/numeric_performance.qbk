@@ -52,10 +52,10 @@ in seconds (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
 
 [table Performance comparison for a single double (all times in [s])
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
-    [[printf]               [0.755]          [0.965]        [0.880]           [0.713]          [0.807]        [0.694]]
-    [[iostreams]            [2.316]          [2.624]        [1.964]           [1.634]          [1.468]        [1.354]]
-    [[Boost.Format]         [9.235]          [8.045]        [6.619]           [5.922]          [5.750]        [5.350]]
-    [[Karma]                [0.813]          [0.561]        [0.368]           [0.426]          [0.260]        [0.218]]
+    [[printf]               [0.755]              [0.965]            [0.880]               [0.713]              [0.807]            [0.694]]
+    [[iostreams]            [2.316]              [2.624]            [1.964]               [1.634]              [1.468]            [1.354]]
+    [[Boost.Format]         [3.188]              [3.737]            [2.878]               [3.217]              [2.672]            [2.011]]
+    [[Karma]                [0.813]              [0.561]            [0.368]               [0.426]              [0.260]            [0.218]]
 ]
 
 [fig ./images/double_performance.png..Performance comparison for a single double..spirit.karma.double_performance]
@@ -102,10 +102,10 @@ in seconds (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
 
 [table Performance comparison for a sequence of several items (all times in [s])
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
-    [[printf]               [1.525]          [1.989]        [1.932]           [1.465]          [1.693]        [1.532]]
-    [[iostreams]            [4.592]          [5.294]        [4.367]           [3.131]          [3.272]        [2.762]]
-    [[Boost.Format]         [9.209]          [11.862]       [10.599]          [9.710]          [9.110]        [7.933]]
-    [[Karma (char buffer)]  [4.585]          [2.450]        [3.529]           [3.970]          [1.592]        [1.813]]
+    [[printf]               [1.525]              [1.989]            [1.932]               [1.465]              [1.693]            [1.532]]
+    [[iostreams]            [4.592]              [5.294]            [4.367]               [3.131]              [3.272]            [2.762]]
+    [[Boost.Format]         [6.022]              [6.817]            [5.793]               [5.721]              [4.354]            [4.089]]
+    [[Karma]                [4.585]              [2.450]            [3.529]               [3.970]              [1.592]            [1.813]]
 ]
 
 [fig ./images/format_performance.png..Performance comparison for a sequence of several items..spirit.karma.format_performance]
