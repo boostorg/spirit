@@ -575,6 +575,9 @@ namespace boost { namespace spirit { namespace karma {
     //  customization of the formatting process
     //
     ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct real_policies;
+
     template <typename T
       , typename Policies = real_policies<T>
       , typename CharEncoding = unused_type
