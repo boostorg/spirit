@@ -10,66 +10,55 @@
 
 [section:double_performance Comparing the performance of a single double_ generator]
 
+This performance measurements are centered around default formatting of a 
+single `double` floating point number using different libraries and methods. 
+The overall execution times for those examples are compared below. We compare
+using `printf`, C++ iostreams, Boost.Format, and different methods of using 
+__karma__.
+
 For the full source code of the performance test please see here:
 [@../../example/karma/double_performance.cpp double_performance.cpp]). All the 
-measurements have been done by doing 1000000 iterations for each formatting 
-type (`NUMITERATIONS == 1000000`).
+measurements have been done by executing `1000000` iterations for each 
+formatting type (`NUMITERATIONS == 1000000` in the code shown below).
 
 [import ../example/karma/double_performance.cpp]
 
-Code used to measure the performance for printf:
+Code used to measure the performance for `printf`:
 
-[karma_double_performance_karma_printf]
+[karma_double_performance_printf]
 
-Code used to measure the performance for standard iostreams:
+Code used to measure the performance for standard C++ iostreams:
 
-[karma_double_performance_karma_iostreams]
+[karma_double_performance_iostreams]
 
 Code used to measure the performance for Boost.Format:
 
-[karma_double_performance_karma_format]
+[karma_double_performance_format]
 
-The following code shows the common definitions used by all Karma performance
+The following code shows the common definitions used by all __karma__ performance
 measurements as listed below:
 
-[karma_double_performance_karma_definitions]
+[karma_double_performance_definitions]
 
-Code used to measure the performance for Karma using a plain character buffer:
+Code used to measure the performance for __karma__ using a plain character buffer:
 
-[karma_double_performance_karma_plain]
+[karma_double_performance_plain]
 
-Code used to measure the performance for Karma using an output iterator on top
-of a std::string as the destination buffer:
+The following table shows the overall performance results collected 
+while using different compilers. All measured times are 
+in seconds (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 
+4GByte RAM). For a more readable comparison of the results see this 
+[link spirit.karma.double_performance figure].
 
-[karma_double_performance_karma_string]
-
-Code used to measure the performance for Karma using a plain character buffer, 
-but utilizing a karma::rule as the generator:
-
-[karma_double_performance_karma_rule]
-
-Code used to measure the performance using Karma's low level formatting routine
-for floating point numbers.
-
-[karma_double_performance_karma_direct]
-
-[table Performance comparison for a single `double`
-    [[Library]              [gcc 4.4.0 (MingW, 32Bit)] [VC++ 8 SP1 (32Bit)]  [VC++ 10 beta (32Bit)]  [gcc 4.1.2 (Linux, 64Bit)] [VC++ 10 beta (64Bit)]]
-    [[printf]               [0.739 \[s\]]              [0.894 \[s\]]         [0.965 \[s\]]           [1.032 \[s\]]              [0.807 \[s\]]]
-    [[iostreams]            [2.396 \[s\]]              [2.013 \[s\]]         [2.624 \[s\]]           [0.924 \[s\]]              [1.468 \[s\]]]
-    [[Boost.Format]         [9.394 \[s\]]              [6.888 \[s\]]         [8.045 \[s\]]           [3.034 \[s\]]              [5.750 \[s\]]]
-    [[Karma (char buffer)]  [0.832 \[s\]]              [0.483 \[s\]]         [0.561 \[s\]]           [0.394 \[s\]]              [0.260 \[s\]]]
-    [[Karma (string)]       [0.873 \[s\]]              [1.193 \[s\]]         [0.701 \[s\]]           [0.478 \[s\]]              [0.384 \[s\]]]
-    [[Karma (rule)]         [0.824 \[s\]]              [0.501 \[s\]]         [0.609 \[s\]]           [0.415 \[s\]]              [0.268 \[s\]]]
-    [[Karma (direct)]       [0.608 \[s\]]              [0.419 \[s\]]         [0.475 \[s\]]           [0.254 \[s\]]              [0.207 \[s\]]]
+[table Performance comparison for a single double (all times in [s])
+    [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
+    [[printf]               [0.755]          [0.965]        [0.880]           [0.713]          [0.807]        [0.694]]
+    [[iostreams]            [2.316]          [2.624]        [1.964]           [1.634]          [1.468]        [1.354]]
+    [[Boost.Format]         [9.235]          [8.045]        [6.619]           [5.922]          [5.750]        [5.350]]
+    [[Karma]                [0.813]          [0.561]        [0.368]           [0.426]          [0.260]        [0.218]]
 ]
 
 [fig ./images/double_performance.png..Performance comparison for a single double..spirit.karma.double_performance]
-
-[heading Platforms]
-
-* Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM
-* Linux, 8 Quad-Core AMD Opteron(tm) Processor, 2.8GHz, 64GByte RAM
 
 [endsect]
 
@@ -84,51 +73,42 @@ type (`NUMITERATIONS == 1000000`).
 
 Code used to measure the performance for printf:
 
-[karma_format_performance_karma_printf]
+[karma_format_performance_printf]
 
 Code used to measure the performance for standard iostreams:
 
-[karma_format_performance_karma_iostreams]
+[karma_format_performance_iostreams]
 
 Code used to measure the performance for Boost.Format:
 
-[karma_format_performance_karma_format]
+[karma_format_performance_format]
 
-The following code shows the common definitions used by all Karma performance
-measurements as listed below:
+The following code shows the common definitions used by all __karma__ 
+performance measurements as listed below:
 
-[karma_format_performance_karma_definitions]
+[karma_format_performance_definitions]
 
-Code used to measure the performance for Karma using a plain character buffer:
+Code used to measure the performance for __karma__ using a plain character 
+buffer:
 
-[karma_format_performance_karma_plain]
+[karma_format_performance_plain]
 
-Code used to measure the performance for Karma using an output iterator on top
-of a std::string as the destination buffer:
+The following table shows the overall performance results collected 
+while using different compilers. All measured times are 
+in seconds (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 
+4GByte RAM). For a more readable comparison of the results see this 
+[link spirit.karma.double_performance figure].
 
-[karma_format_performance_karma_string]
 
-Code used to measure the performance for Karma using a plain character buffer, 
-but utilizing a karma::rule as the generator:
-
-[karma_format_performance_karma_rule]
-
-[table Performance comparison for a sequence of several items
-    [[Library]              [gcc 4.4.0 (MingW, 32Bit)] [VC++ 8 SP1 (32Bit)]  [VC++ 10 beta (32Bit)]  [gcc 4.1.2 (Linux, 64Bit)] [VC++ 10 beta (64Bit)]]
-    [[printf]               [1.597 \[s\]]              [2.058 \[s\]]         [1.989 \[s\]]           [1.742 \[s\]]              [1.693 \[s\]]]
-    [[iostreams]            [4.727 \[s\]]              [4.166 \[s\]]         [5.294 \[s\]]           [2.223 \[s\]]              [3.272 \[s\]]]
-    [[Boost.Format]         [9.541 \[s\]]              [11.308 \[s\]]        [11.862 \[s\]]          [5.146 \[s\]]              [9.110 \[s\]]]
-    [[Karma (char buffer)]  [4.779 \[s\]]              [4.366 \[s\]]         [2.450 \[s\]]           [1.867 \[s\]]              [1.592 \[s\]]]
-    [[Karma (string)]       [4.861 \[s\]]              [6.500 \[s\]]         [2.972 \[s\]]           [1.658 \[s\]]              [2.024 \[s\]]]
-    [[Karma (rule)]         [4.723 \[s\]]              [4.344 \[s\]]         [2.579 \[s\]]           [1.893 \[s\]]              [1.574 \[s\]]]
+[table Performance comparison for a sequence of several items (all times in [s])
+    [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
+    [[printf]               [1.525]          [1.989]        [1.932]           [1.465]          [1.693]        [1.532]]
+    [[iostreams]            [4.592]          [5.294]        [4.367]           [3.131]          [3.272]        [2.762]]
+    [[Boost.Format]         [9.209]          [11.862]       [10.599]          [9.710]          [9.110]        [7.933]]
+    [[Karma (char buffer)]  [4.585]          [2.450]        [3.529]           [3.970]          [1.592]        [1.813]]
 ]
 
 [fig ./images/format_performance.png..Performance comparison for a sequence of several items..spirit.karma.format_performance]
-
-[heading Platforms]
-
-* Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM
-* Linux, 8 Quad-Core AMD Opteron(tm) Processor, 2.8GHz, 64GByte RAM
 
 [endsect]
 

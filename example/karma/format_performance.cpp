@@ -17,7 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  policy for real_generator, which forces to output trailing zeros in the 
 //  fractional part
-//[karma_format_performance_karma_definitions
+//[karma_format_performance_definitions
 template <typename T>
 struct double3_policy : boost::spirit::karma::real_policies<T>   
 {
@@ -35,7 +35,7 @@ void format_performance_karma()
     using boost::spirit::karma::left_align;
     using boost::spirit::karma::generate;
 
-    //[karma_format_performance_karma_plain
+    //[karma_format_performance_plain
     char buffer[256];
     //<-
     util::high_resolution_timer t;
@@ -53,7 +53,7 @@ void format_performance_karma()
 //     std::cout << buffer << std::endl;
 }
 
-void format_performance_karma_rule()
+void format_performance_rule()
 {
     using boost::spirit::karma::left_align;
     using boost::spirit::karma::generate;
@@ -61,7 +61,7 @@ void format_performance_karma_rule()
     typedef boost::fusion::vector<double, double> rtype;
     boost::spirit::karma::rule<char*, rtype()> r;
 
-    //[karma_format_performance_karma_rule
+    //[karma_format_performance_rule
     char buffer[256];
     r %= '[' << left_align(14)[double3] << left_align(14)[double3] << ']';
     //<-
@@ -78,12 +78,12 @@ void format_performance_karma_rule()
 //     std::cout << buffer << std::endl;
 }
 
-void format_performance_karma_string()
+void format_performance_string()
 {
     using boost::spirit::karma::left_align;
     using boost::spirit::karma::generate;
 
-    //[karma_format_performance_karma_string
+    //[karma_format_performance_string
     std::string generated;
     std::back_insert_iterator<std::string> sink(generated);
     //<-
@@ -104,7 +104,7 @@ void format_performance_karma_string()
 // Boost.Format  
 void format_performance_boost_format()
 {
-    //[karma_format_performance_karma_format
+    //[karma_format_performance_format
     std::stringstream strm;
     //<-
     util::high_resolution_timer t;
@@ -123,7 +123,7 @@ void format_performance_printf()
 {
     util::high_resolution_timer t;
 
-    //[karma_format_performance_karma_printf
+    //[karma_format_performance_printf
     char buffer[256];
     for (int i = 0; i < NUMITERATIONS; ++i) {
         sprintf(buffer, "[%-14.3f%-14.3f]", 12345.12345, 12345.12345);
@@ -136,7 +136,7 @@ void format_performance_printf()
 
 void format_performance_iostreams()
 {
-    //[karma_format_performance_karma_iostreams
+    //[karma_format_performance_iostreams
     std::stringstream strm;
     //<-
     util::high_resolution_timer t;
@@ -166,8 +166,8 @@ int main()
     format_performance_iostreams();
     format_performance_boost_format();
     format_performance_karma();
-    format_performance_karma_string();
-    format_performance_karma_rule();
+    format_performance_string();
+    format_performance_rule();
     return 0;
 }
 

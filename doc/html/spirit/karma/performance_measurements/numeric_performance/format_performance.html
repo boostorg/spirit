@@ -95,8 +95,8 @@
 <p>
           </p>
 <p>
-            The following code shows the common definitions used by all Karma performance
-            measurements as listed below:
+            The following code shows the common definitions used by all <span class="emphasis"><em>Spirit.Karma</em></span>
+            performance measurements as listed below:
           </p>
 <p>
             </p>
@@ -119,8 +119,8 @@
 <p>
           </p>
 <p>
-            Code used to measure the performance for Karma using a plain character
-            buffer:
+            Code used to measure the performance for <span class="emphasis"><em>Spirit.Karma</em></span>
+            using a plain character buffer:
           </p>
 <p>
             </p>
@@ -141,54 +141,18 @@
 <p>
           </p>
 <p>
-            Code used to measure the performance for Karma using an output iterator
-            on top of a std::string as the destination buffer:
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">generated</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">sink</span><span class="special">(</span><span class="identifier">generated</span><span class="special">);</span>
-<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
-    <span class="identifier">generated</span><span class="special">.</span><span class="identifier">clear</span><span class="special">();</span>
-    <span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span>
-      <span class="special">,</span> <span class="char">'['</span> <span class="special">&lt;&lt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="number">14</span><span class="special">)[</span><span class="identifier">double3</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="number">14</span><span class="special">)[</span><span class="identifier">double3</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">']'</span>
-      <span class="special">,</span> <span class="number">12345.12345</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">);</span>
-<span class="special">}</span>
-</pre>
-<p>
-            </p>
-<p>
-          </p>
-<p>
-            Code used to measure the performance for Karma using a plain character
-            buffer, but utilizing a karma::rule as the generator:
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">256</span><span class="special">];</span>
-<span class="identifier">r</span> <span class="special">%=</span> <span class="char">'['</span> <span class="special">&lt;&lt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="number">14</span><span class="special">)[</span><span class="identifier">double3</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="number">14</span><span class="special">)[</span><span class="identifier">double3</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="char">']'</span><span class="special">;</span>
-<span class="keyword">for</span> <span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NUMITERATIONS</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span> <span class="special">{</span>
-    <span class="keyword">char</span> <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="identifier">buffer</span><span class="special">;</span>
-    <span class="identifier">generate</span><span class="special">(</span><span class="identifier">p</span><span class="special">,</span> <span class="identifier">r</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">,</span> <span class="number">12345.12345</span><span class="special">);</span>
-    <span class="special">*</span><span class="identifier">p</span> <span class="special">=</span> <span class="char">'\0'</span><span class="special">;</span>
-<span class="special">}</span>
-</pre>
-<p>
-            </p>
-<p>
+            The following table shows the overall performance results collected while
+            using different compilers. All measured times are in seconds (platform:
+            Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). For a more
+            readable comparison of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 3. Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id1117720"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
-          items</b></p>
+<a name="id1134288"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
+          items (all times in [s])</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a sequence of several
-          items">
+          items (all times in [s])">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -204,27 +168,32 @@
                 </th>
 <th>
                 <p>
-                  gcc 4.4.0 (MingW, 32Bit)
+                  gcc 4.4.0 (32 bit)
                 </p>
                 </th>
 <th>
                 <p>
-                  VC++ 8 SP1 (32Bit)
+                  VC++ 10 (32 bit)
                 </p>
                 </th>
 <th>
                 <p>
-                  VC++ 10 beta (32Bit)
+                  Intel 11.1 (32 bit)
                 </p>
                 </th>
 <th>
                 <p>
-                  gcc 4.1.2 (Linux, 64Bit)
+                  gcc 4.4.0 (64 bit)
                 </p>
                 </th>
 <th>
                 <p>
-                  VC++ 10 beta (64Bit)
+                  VC++ 10 (64 bit)
+                </p>
+                </th>
+<th>
+                <p>
+                  Intel 11.1 (64 bit)
                 </p>
                 </th>
 </tr></thead>
@@ -237,27 +206,32 @@
                 </td>
 <td>
                 <p>
-                  1.597 [s]
+                  1.525
                 </p>
                 </td>
 <td>
                 <p>
-                  2.058 [s]
+                  1.989
                 </p>
                 </td>
 <td>
                 <p>
-                  1.989 [s]
+                  1.932
                 </p>
                 </td>
 <td>
                 <p>
-                  1.742 [s]
+                  1.465
                 </p>
                 </td>
 <td>
                 <p>
-                  1.693 [s]
+                  1.693
+                </p>
+                </td>
+<td>
+                <p>
+                  1.532
                 </p>
                 </td>
 </tr>
@@ -269,27 +243,32 @@
                 </td>
 <td>
                 <p>
-                  4.727 [s]
+                  4.592
                 </p>
                 </td>
 <td>
                 <p>
-                  4.166 [s]
+                  5.294
                 </p>
                 </td>
 <td>
                 <p>
-                  5.294 [s]
+                  4.367
                 </p>
                 </td>
 <td>
                 <p>
-                  2.223 [s]
+                  3.131
                 </p>
                 </td>
 <td>
                 <p>
-                  3.272 [s]
+                  3.272
+                </p>
+                </td>
+<td>
+                <p>
+                  2.762
                 </p>
                 </td>
 </tr>
@@ -301,27 +280,32 @@
                 </td>
 <td>
                 <p>
-                  9.541 [s]
+                  9.209
                 </p>
                 </td>
 <td>
                 <p>
-                  11.308 [s]
+                  11.862
                 </p>
                 </td>
 <td>
                 <p>
-                  11.862 [s]
+                  10.599
                 </p>
                 </td>
 <td>
                 <p>
-                  5.146 [s]
+                  9.710
                 </p>
                 </td>
 <td>
                 <p>
-                  9.110 [s]
+                  9.110
+                </p>
+                </td>
+<td>
+                <p>
+                  7.933
                 </p>
                 </td>
 </tr>
@@ -333,91 +317,32 @@
                 </td>
 <td>
                 <p>
-                  4.779 [s]
+                  4.585
                 </p>
                 </td>
 <td>
                 <p>
-                  4.366 [s]
+                  2.450
                 </p>
                 </td>
 <td>
                 <p>
-                  2.450 [s]
+                  3.529
                 </p>
                 </td>
 <td>
                 <p>
-                  1.867 [s]
+                  3.970
                 </p>
                 </td>
 <td>
                 <p>
-                  1.592 [s]
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  Karma (string)
+                  1.592
                 </p>
                 </td>
 <td>
                 <p>
-                  4.861 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  6.500 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  2.972 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  1.658 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  2.024 [s]
-                </p>
-                </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  Karma (rule)
-                </p>
-                </td>
-<td>
-                <p>
-                  4.723 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  4.344 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  2.579 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  1.893 [s]
-                </p>
-                </td>
-<td>
-                <p>
-                  1.574 [s]
+                  1.813
                 </p>
                 </td>
 </tr>
@@ -433,18 +358,6 @@
 </div>
 <p><br class="figure-break">
           </p>
-<a name="spirit.karma.performance_measurements.numeric_performance.format_performance.platforms"></a><h6>
-<a name="id1118067"></a>
-            <a class="link" href="format_performance.html#spirit.karma.performance_measurements.numeric_performance.format_performance.platforms">Platforms</a>
-          </h6>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-              Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM
-            </li>
-<li class="listitem">
-              Linux, 8 Quad-Core AMD Opteron(tm) Processor, 2.8GHz, 64GByte RAM
-            </li>
-</ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -15,33 +15,23 @@
 #define NUMITERATIONS 1000000
 
 ///////////////////////////////////////////////////////////////////////////////
-//  policy for real_generator, which forces to output trailing zeros in the 
-//  fractional part
-//[karma_double_performance_karma_definitions
-template <typename T>
-struct double3_policy : boost::spirit::karma::real_policies<T>   
-{
-    //  we want to generate up to 3 fractional digits
-    static unsigned int precision(T) { return 3; }
-};
-
-typedef boost::spirit::karma::real_generator<double, double3_policy<double> > 
-    double3_type;
-double3_type const double3 = double3_type();
+// We generate plain floating point numbers in this test
+//[karma_double_performance_definitions
+using boost::spirit::karma::double_;
 //]
 
 void format_performance_karma()
 {
     using boost::spirit::karma::generate;
 
-    //[karma_double_performance_karma_plain
+    //[karma_double_performance_plain
     char buffer[256];
     //<-
     util::high_resolution_timer t;
     //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         char *p = buffer;
-        generate(p, double3, 12345.12345);
+        generate(p, double_, 12345.12345);
         *p = '\0';
     }
     //]
@@ -50,15 +40,15 @@ void format_performance_karma()
 //     std::cout << buffer << std::endl;
 }
 
-void format_performance_karma_rule()
+void format_performance_rule()
 {
     using boost::spirit::karma::generate;
 
     boost::spirit::karma::rule<char*, double()> r;
 
-    //[karma_double_performance_karma_rule
+    //[karma_double_performance_rule
     char buffer[256];
-    r %= double3;
+    r %= double_;
     //<-
     util::high_resolution_timer t;
     //->
@@ -73,20 +63,20 @@ void format_performance_karma_rule()
 //     std::cout << buffer << std::endl;
 }
 
-void format_performance_karma_direct()
+void format_performance_direct()
 {
     using boost::spirit::karma::generate;
     using boost::spirit::karma::real_inserter;
 
-    //[karma_double_performance_karma_direct
-    typedef real_inserter<double, double3_policy<double> > inserter;
+    //[karma_double_performance_direct
+    typedef real_inserter<double> inserter;
     char buffer[256];
     //<-
     util::high_resolution_timer t;
     //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         char *p = buffer;
-        inserter::call(p, 12345.12345, double3_policy<double>());
+        inserter::call(p, 12345.12345);
         *p = '\0';
     }
     //]
@@ -95,11 +85,11 @@ void format_performance_karma_direct()
 //     std::cout << buffer << std::endl;
 }
 
-void format_performance_karma_string()
+void format_performance_string()
 {
     using boost::spirit::karma::generate;
 
-    //[karma_double_performance_karma_string
+    //[karma_double_performance_string
     std::string generated;
     std::back_insert_iterator<std::string> sink(generated);
     //<-
@@ -107,7 +97,7 @@ void format_performance_karma_string()
     //->
     for (int i = 0; i < NUMITERATIONS; ++i) {
         generated.clear();
-        generate(sink, double3, 12345.12345);
+        generate(sink, double_, 12345.12345);
     }
     //]
 
@@ -118,7 +108,7 @@ void format_performance_karma_string()
 // Boost.Format  
 void format_performance_boost_format()
 {
-    //[karma_double_performance_karma_format
+    //[karma_double_performance_format
     std::stringstream strm;
     //<-
     util::high_resolution_timer t;
@@ -137,7 +127,7 @@ void format_performance_printf()
 {
     util::high_resolution_timer t;
 
-    //[karma_double_performance_karma_printf
+    //[karma_double_performance_printf
     char buffer[256];
     for (int i = 0; i < NUMITERATIONS; ++i) {
         sprintf(buffer, "%f", 12345.12345);
@@ -150,7 +140,7 @@ void format_performance_printf()
 
 void format_performance_iostreams()
 {
-    //[karma_double_performance_karma_iostreams
+    //[karma_double_performance_iostreams
     std::stringstream strm;
     //<-
     util::high_resolution_timer t;
@@ -172,9 +162,9 @@ int main()
     format_performance_iostreams();
     format_performance_boost_format();
     format_performance_karma();
-    format_performance_karma_string();
-    format_performance_karma_rule();
-    format_performance_karma_direct();
+    format_performance_string();
+    format_performance_rule();
+    format_performance_direct();
     return 0;
 }
 
