@@ -13,17 +13,16 @@
 This performance measurements are centered around default formatting of a 
 single `double` floating point number using different libraries and methods. 
 The overall execution times for those examples are compared below. We compare
-using `printf`, C++ iostreams, Boost.Format, and different methods of using 
-__karma__.
+using `sprintf`, C++ iostreams, __boost_format__, and __karma__.
 
 For the full source code of the performance test please see here:
 [@../../example/karma/double_performance.cpp double_performance.cpp]). All the 
-measurements have been done by executing `1000000` iterations for each 
-formatting type (`NUMITERATIONS == 1000000` in the code shown below).
+measurements have been done by executing 1000000 iterations for each 
+formatting type (NUMITERATIONS is set to 1000000 in the code shown below).
 
 [import ../example/karma/double_performance.cpp]
 
-Code used to measure the performance for `printf`:
+Code used to measure the performance for `sprintf`:
 
 [karma_double_performance_printf]
 
@@ -31,7 +30,7 @@ Code used to measure the performance for standard C++ iostreams:
 
 [karma_double_performance_iostreams]
 
-Code used to measure the performance for Boost.Format:
+Code used to measure the performance for __boost_format__:
 
 [karma_double_performance_format]
 
@@ -45,33 +44,40 @@ Code used to measure the performance for __karma__ using a plain character buffe
 [karma_double_performance_plain]
 
 The following table shows the overall performance results collected 
-while using different compilers. All measured times are 
-in seconds (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 
-4GByte RAM). For a more readable comparison of the results see this 
+while using different compilers. All times are in seconds measured for 1000000
+iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). 
+For a more readable comparison of the results see this 
 [link spirit.karma.double_performance figure].
 
-[table Performance comparison for a single double (all times in [s])
+[table Performance comparison for a single double (all times in [s], 1000000 iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
-    [[printf]               [0.755]              [0.965]            [0.880]               [0.713]              [0.807]            [0.694]]
+    [[sprintf]              [0.755]              [0.965]            [0.880]               [0.713]              [0.807]            [0.694]]
     [[iostreams]            [2.316]              [2.624]            [1.964]               [1.634]              [1.468]            [1.354]]
-    [[Boost.Format]         [3.188]              [3.737]            [2.878]               [3.217]              [2.672]            [2.011]]
-    [[Karma]                [0.813]              [0.561]            [0.368]               [0.426]              [0.260]            [0.218]]
+    [[__boost_format__]     [3.188]              [3.737]            [2.878]               [3.217]              [2.672]            [2.011]]
+    [[__karma__]            [0.813]              [0.561]            [0.368]               [0.426]              [0.260]            [0.218]]
 ]
 
 [fig ./images/double_performance.png..Performance comparison for a single double..spirit.karma.double_performance]
 
 [endsect]
 
+[////////////////////////////////////////////////////////////////////////////]
 [section:format_performance Comparing the performance of a sequence of several generators]
+
+This performance measurements are centered around formatting of a sequence of
+different items, including 2 `double` floating point numbers using different 
+libraries and methods. The overall execution times for those examples are 
+compared below. We compare using `sprintf`, C++ iostreams, __boost_format__, 
+and __karma__.
 
 For the full source code of the performance test please see here:
 [@../../example/karma/format_performance.cpp format_performance.cpp]). All the 
 measurements have been done by doing 1000000 iterations for each formatting 
-type (`NUMITERATIONS == 1000000`).
+type (NUMITERATIONS is set to 1000000).
 
 [import ../example/karma/format_performance.cpp]
 
-Code used to measure the performance for printf:
+Code used to measure the performance for sprintf:
 
 [karma_format_performance_printf]
 
@@ -79,7 +85,7 @@ Code used to measure the performance for standard iostreams:
 
 [karma_format_performance_iostreams]
 
-Code used to measure the performance for Boost.Format:
+Code used to measure the performance for __boost_format__:
 
 [karma_format_performance_format]
 
@@ -94,18 +100,17 @@ buffer:
 [karma_format_performance_plain]
 
 The following table shows the overall performance results collected 
-while using different compilers. All measured times are 
-in seconds (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 
-4GByte RAM). For a more readable comparison of the results see this 
-[link spirit.karma.double_performance figure].
+while using different compilers. All times are in seconds measured for 1000000
+iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). 
+For a more readable comparison of the results see this 
+[link spirit.karma.format_performance figure].
 
-
-[table Performance comparison for a sequence of several items (all times in [s])
+[table Performance comparison for a sequence of several items (all times in [s], 1000000 iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
-    [[printf]               [1.525]              [1.989]            [1.932]               [1.465]              [1.693]            [1.532]]
+    [[sprintf]              [1.525]              [1.989]            [1.932]               [1.465]              [1.693]            [1.532]]
     [[iostreams]            [4.592]              [5.294]            [4.367]               [3.131]              [3.272]            [2.762]]
-    [[Boost.Format]         [6.022]              [6.817]            [5.793]               [5.721]              [4.354]            [4.089]]
-    [[Karma]                [4.585]              [2.450]            [3.529]               [3.970]              [1.592]            [1.813]]
+    [[__boost_format__]     [6.022]              [6.817]            [5.793]               [5.721]              [4.354]            [4.089]]
+    [[__karma__]            [4.585]              [2.450]            [3.529]               [3.970]              [1.592]            [1.813]]
 ]
 
 [fig ./images/format_performance.png..Performance comparison for a sequence of several items..spirit.karma.format_performance]

@@ -28,13 +28,21 @@
           Comparing the performance of a sequence of several generators</a>
 </h5></div></div></div>
 <p>
-            For the full source code of the performance test please see here: <a href="../../../../../../example/karma/format_performance.cpp" target="_top">format_performance.cpp</a>).
-            All the measurements have been done by doing 1000000 iterations for each
-            formatting type (<code class="computeroutput"><span class="identifier">NUMITERATIONS</span>
-            <span class="special">==</span> <span class="number">1000000</span></code>).
+            This performance measurements are centered around formatting of a sequence
+            of different items, including 2 <code class="computeroutput"><span class="keyword">double</span></code>
+            floating point numbers using different libraries and methods. The overall
+            execution times for those examples are compared below. We compare using
+            <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams,
+            <a href="http://www.boost.org/doc/libs/1_39_0/libs/format/index.html" target="_top">Boost.Format</a>,
+            and <span class="emphasis"><em>Spirit.Karma</em></span>.
           </p>
 <p>
-            Code used to measure the performance for printf:
+            For the full source code of the performance test please see here: <a href="../../../../../../example/karma/format_performance.cpp" target="_top">format_performance.cpp</a>).
+            All the measurements have been done by doing 1000000 iterations for each
+            formatting type (NUMITERATIONS is set to 1000000).
+          </p>
+<p>
+            Code used to measure the performance for sprintf:
           </p>
 <p>
             </p>
@@ -77,7 +85,7 @@
 <p>
           </p>
 <p>
-            Code used to measure the performance for Boost.Format:
+            Code used to measure the performance for <a href="http://www.boost.org/doc/libs/1_39_0/libs/format/index.html" target="_top">Boost.Format</a>:
           </p>
 <p>
             </p>
@@ -141,15 +149,16 @@
           </p>
 <p>
             The following table shows the overall performance results collected while
-            using different compilers. All measured times are in seconds (platform:
-            Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). For a more
-            readable comparison of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 3. Performance comparison for a single double">figure</a>.
+            using different compilers. All times are in seconds measured for 1000000
+            iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
+            4GByte RAM). For a more readable comparison of the results see this
+            <a class="link" href="format_performance.html#spirit.karma.format_performance" title="Figure 4. Performance comparison for a sequence of several items">figure</a>.
           </p>
 <div class="table">
-<a name="id1111334"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
-          items (all times in [s])</b></p>
+<a name="id1101518"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
+          items (all times in [s], 1000000 iterations)</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a sequence of several
-          items (all times in [s])">
+          items (all times in [s], 1000000 iterations)">
 <colgroup>
 <col>
 <col>
@@ -200,7 +209,7 @@
 <tr>
 <td>
                 <p>
-                  printf
+                  sprintf
                 </p>
                 </td>
 <td>
@@ -274,7 +283,7 @@
 <tr>
 <td>
                 <p>
-                  Boost.Format
+                  <a href="http://www.boost.org/doc/libs/1_39_0/libs/format/index.html" target="_top">Boost.Format</a>
                 </p>
                 </td>
 <td>
@@ -311,7 +320,7 @@
 <tr>
 <td>
                 <p>
-                  Karma
+                  <span class="emphasis"><em>Spirit.Karma</em></span>
                 </p>
                 </td>
 <td>

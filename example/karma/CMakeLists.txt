@@ -8,5 +8,8 @@ boost_add_executable(calc2_ast_rpn)
 boost_add_executable(calc2_ast_vm)
 boost_add_executable(mini_xml_karma)
 
+# performance tests
+boost_add_executable(double_performance)
+boost_add_executable(format_performance)
 
 

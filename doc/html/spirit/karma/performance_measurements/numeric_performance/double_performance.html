@@ -31,18 +31,17 @@
             This performance measurements are centered around default formatting
             of a single <code class="computeroutput"><span class="keyword">double</span></code> floating
             point number using different libraries and methods. The overall execution
-            times for those examples are compared below. We compare using <code class="computeroutput"><span class="identifier">printf</span></code>, C++ iostreams, Boost.Format,
-            and different methods of using <span class="emphasis"><em>Spirit.Karma</em></span>.
+            times for those examples are compared below. We compare using <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams, <a href="http://www.boost.org/doc/libs/1_39_0/libs/format/index.html" target="_top">Boost.Format</a>,
+            and <span class="emphasis"><em>Spirit.Karma</em></span>.
           </p>
 <p>
             For the full source code of the performance test please see here: <a href="../../../../../../example/karma/double_performance.cpp" target="_top">double_performance.cpp</a>).
-            All the measurements have been done by executing <code class="computeroutput"><span class="number">1000000</span></code>
-            iterations for each formatting type (<code class="computeroutput"><span class="identifier">NUMITERATIONS</span>
-            <span class="special">==</span> <span class="number">1000000</span></code>
-            in the code shown below).
+            All the measurements have been done by executing 1000000 iterations for
+            each formatting type (NUMITERATIONS is set to 1000000 in the code shown
+            below).
           </p>
 <p>
-            Code used to measure the performance for <code class="computeroutput"><span class="identifier">printf</span></code>:
+            Code used to measure the performance for <code class="computeroutput"><span class="identifier">sprintf</span></code>:
           </p>
 <p>
             </p>
@@ -77,7 +76,7 @@
 <p>
           </p>
 <p>
-            Code used to measure the performance for Boost.Format:
+            Code used to measure the performance for <a href="http://www.boost.org/doc/libs/1_39_0/libs/format/index.html" target="_top">Boost.Format</a>:
           </p>
 <p>
             </p>
@@ -130,15 +129,16 @@
           </p>
 <p>
             The following table shows the overall performance results collected while
-            using different compilers. All measured times are in seconds (platform:
-            Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). For a more
-            readable comparison of the results see this <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 3. Performance comparison for a single double">figure</a>.
+            using different compilers. All times are in seconds measured for 1000000
+            iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
+            4GByte RAM). For a more readable comparison of the results see this
+            <a class="link" href="double_performance.html#spirit.karma.double_performance" title="Figure 3. Performance comparison for a single double">figure</a>.
           </p>
 <div class="table">
-<a name="id1109842"></a><p class="title"><b>Table 6. Performance comparison for a single double (all
-          times in [s])</b></p>
+<a name="id1100000"></a><p class="title"><b>Table 6. Performance comparison for a single double (all
+          times in [s], 1000000 iterations)</b></p>
 <div class="table-contents"><table class="table" summary="Performance comparison for a single double (all
-          times in [s])">
+          times in [s], 1000000 iterations)">
 <colgroup>
 <col>
 <col>
@@ -189,7 +189,7 @@
 <tr>
 <td>
                 <p>
-                  printf
+                  sprintf
                 </p>
                 </td>
 <td>
@@ -263,7 +263,7 @@
 <tr>
 <td>
                 <p>
-                  Boost.Format
+                  <a href="http://www.boost.org/doc/libs/1_39_0/libs/format/index.html" target="_top">Boost.Format</a>
                 </p>
                 </td>
 <td>
@@ -300,7 +300,7 @@
 <tr>
 <td>
                 <p>
-                  Karma
+                  <span class="emphasis"><em>Spirit.Karma</em></span>
                 </p>
                 </td>
 <td>

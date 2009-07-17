@@ -58,8 +58,8 @@
 [def __boost_bind__             [@http://www.boost.org/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@http://www.boost.org/libs/lambda/index.html Boost.Lambda]]
 [def __boost_tuples__           [@http://www.boost.org/libs/tuple/index.html Boost.Tuples]]
-[def __boost_proto__            [@http://www.boost.org/doc/libs/1_38_0/doc/html/proto.html Boost.Proto]]
-
+[def __boost_proto__            [@http://www.boost.org/doc/libs/1_39_0/doc/html/proto.html Boost.Proto]]
+[def __boost_format__           [@http://www.boost.org/doc/libs/1_39_0/libs/format/index.html Boost.Format]]
 
 [def __classic__                /Spirit.Classic/]
 [def __qi__                     /Spirit.Qi/]
