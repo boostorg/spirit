@@ -19,15 +19,14 @@ struct switch_state_tokens : boost::spirit::lex::lexer<Lexer>
     // define tokens and associate them with the lexer
     switch_state_tokens()
     {
-        using boost::phoenix::ref;
-        using boost::phoenix::val;
+        namespace phoenix = boost::phoenix;
         using boost::spirit::lex::_state;
 
         identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
-        this->self = identifier [ ref(state_) = _state ];
+        this->self = identifier [ phoenix::ref(state_) = _state ];
 
         integer = "[0-9]+";
-        this->self("INT") = integer [ _state = val("INITIAL") ];
+        this->self("INT") = integer [ _state = phoenix::val("INITIAL") ];
     }
 
     std::string state_;
