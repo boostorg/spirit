@@ -16,11 +16,11 @@ The overall execution times for those examples are compared below. We compare
 using `sprintf`, C++ iostreams, __boost_format__, and __karma__.
 
 For the full source code of the performance test please see here:
-[@../../example/karma/double_performance.cpp double_performance.cpp]). All the 
+[@../../benchmarks/karma/double_performance.cpp double_performance.cpp]). All the 
 measurements have been done by executing 1000000 iterations for each 
 formatting type (NUMITERATIONS is set to 1000000 in the code shown below).
 
-[import ../example/karma/double_performance.cpp]
+[import ../benchmarks/karma/double_performance.cpp]
 
 Code used to measure the performance for `sprintf`:
 
@@ -71,11 +71,11 @@ compared below. We compare using `sprintf`, C++ iostreams, __boost_format__,
 and __karma__.
 
 For the full source code of the performance test please see here:
-[@../../example/karma/format_performance.cpp format_performance.cpp]). All the 
+[@../../benchmarks/karma/format_performance.cpp format_performance.cpp]). All the 
 measurements have been done by doing 1000000 iterations for each formatting 
 type (NUMITERATIONS is set to 1000000).
 
-[import ../example/karma/format_performance.cpp]
+[import ../benchmarks/karma/format_performance.cpp]
 
 Code used to measure the performance for sprintf:
 

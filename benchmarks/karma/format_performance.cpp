@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#include "high_resolution_timer.hpp"
+#include "../high_resolution_timer.hpp"
 
 #define NUMITERATIONS 1000000
 

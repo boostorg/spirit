@@ -20,6 +20,3 @@ exe mini_xml_karma     : mini_xml_karma.cpp ;
 # not ported yet:
 # exe functor_facilities : functor_facilities.cpp ;
 
-# performance tests
-exe double_performance : double_performance.cpp ;
-exe format_performance : format_performance.cpp ;
