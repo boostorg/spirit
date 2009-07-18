@@ -57,7 +57,7 @@ namespace boost { namespace spirit { namespace traits
    /***/
 
    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-   struct is_container<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
+   struct is_container<variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
      : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
          , BOOST_SPIRIT_IS_CONTAINER, _) false> {};
 
@@ -79,10 +79,10 @@ namespace boost { namespace spirit { namespace traits
 
         // this will be instantiated if the variant holds a container
         template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-        struct value<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+        struct value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
         {
             typedef typename 
-                boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
+                variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
             types;
             typedef typename 
                 mpl::find_if<types, is_container<mpl::_1> >::type 
@@ -164,6 +164,51 @@ namespace boost { namespace spirit { namespace traits
     inline void push_back(Container& c, T const& val)
     {
         c.push_back(val);
+    }
+
+    template <typename Container, typename T>
+    inline void push_back(optional<Container>& c, T const& val)
+    {
+        if (!c)
+            c = Container();
+        push_back(boost::get<Container>(c), val);
+    }
+
+    namespace detail
+    {
+        template <typename T>
+        struct push_back_visitor : public static_visitor<>
+        {
+            push_back_visitor(T const& t) : t_(t) {}
+
+            template <typename Container>
+            void push_back_impl(Container& c, mpl::true_) const
+            {
+                push_back(c, t_);
+            }
+
+            template <typename T_>
+            void push_back_impl(T_&, mpl::false_) const
+            {
+                // this variant doesn't hold a container
+                BOOST_ASSERT(false);
+            }
+
+            template <typename T_>
+            void operator()(T_& c) const
+            {
+                push_back_impl(c, typename is_container<T_>::type());
+            }
+
+            T const& t_;
+        };
+    }
+
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T_), typename T>
+    inline void push_back(variant<BOOST_VARIANT_ENUM_PARAMS(T_)>& c
+      , T const& val)
+    {
+        apply_visitor(detail::push_back_visitor<T>(val), c);
     }
 
     template <typename Container>

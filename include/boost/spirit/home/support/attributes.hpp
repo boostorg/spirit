@@ -430,7 +430,7 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct is_container;
-        
+
     namespace detail
     {
         template <typename T>
@@ -438,14 +438,27 @@ namespace boost { namespace spirit { namespace traits
         {
             val = T();
         }
-        
+
         template <typename T>
         void clear_impl(T& val, mpl::true_)
         {
             val.clear();
         }
+
+        template <typename T>
+        void clear_impl(optional<T>& val, mpl::true_)
+        {
+            val = T();
+        }
+
+        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+        void clear_impl(boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)>& val
+          , mpl::true_)
+        {
+            val = T0();
+        }
     }
-    
+
     template <typename T>
     void clear(T& val)
     {
