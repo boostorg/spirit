@@ -66,7 +66,10 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
-            typename traits::result_of::value<Attr>::type val;
+            // synthesized attribute needs to be default constructed
+            typename traits::result_of::value<Attr>::type val =
+                typename traits::result_of::value<Attr>::type();
+
             bool r = f(component, val);
             if (!r)
             {
