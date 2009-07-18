@@ -13,7 +13,9 @@
 
 #include <boost/spirit/home/qi/operator/expect.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
+#include <boost/spirit/home/support/multi_pass_wrapper.hpp>
 #include <boost/function.hpp>
+#include <boost/assert.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
@@ -24,6 +26,42 @@ namespace boost { namespace spirit { namespace qi
       , accept
       , rethrow
     };
+
+    namespace detail
+    {
+        // Helper template allowing to manage the inhibit clear queue flag in
+        // a multi_pass iterator. This is the usual specialization used for
+        // anything but a multi_pass iterator.
+        template <typename Iterator, bool active>
+        struct reset_on_exit
+        {
+            reset_on_exit(Iterator& it) {}
+        };
+
+        // For 'retry' or 'fail' error handlers we need to inhibit the flushing 
+        // of the internal multi_pass buffers which otherwise might happen at 
+        // deterministic expectation points inside the encapsulated right hand 
+        // side of rule.
+        template <typename Iterator>
+        struct reset_on_exit<Iterator, true>
+        {
+            reset_on_exit(Iterator& it)
+              : it_(it)
+              , inhibit_clear_queue_(spirit::traits::inhibit_clear_queue(it)) 
+            {
+                spirit::traits::inhibit_clear_queue(it_, true);
+            }
+
+            ~reset_on_exit()
+            {
+                // reset inhibit flag in multi_pass on exit
+                spirit::traits::inhibit_clear_queue(it_, inhibit_clear_queue_);
+            }
+
+            Iterator& it_;
+            bool inhibit_clear_queue_;
+        };
+    }
 
     template <
         typename Iterator, typename Context
@@ -48,6 +86,11 @@ namespace boost { namespace spirit { namespace qi
             Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper) const
         {
+            typedef qi::detail::reset_on_exit<Iterator
+              , traits::is_multi_pass<Iterator>::value && 
+                  (action == retry || action == fail)> on_exit_type;
+
+            on_exit_type on_exit(first);
             while (true)
             {
                 try
@@ -71,10 +114,24 @@ namespace boost { namespace spirit { namespace qi
                     params args(first, last, x.first, x.what);
                     f(args, context, r);
 
+                    // The assertions below will fire if you are using a
+                    // multi_pass as the underlying iterator, one of your error
+                    // handlers forced to 'fail' or 'retry' its guarded rule,
+                    // and the error handler has not been instantiated using
+                    // either 'fail' or 'retry' in the first place. Please see 
+                    // the mutli_pass docs for more information.
                     switch (r)
                     {
-                        case fail: return false;
-                        case retry: continue;
+                        case fail: 
+                            BOOST_ASSERT(
+                                traits::is_multi_pass<Iterator>::value &&
+                                action != retry && action != fail);
+                            return false;
+                        case retry: 
+                            BOOST_ASSERT(
+                                traits::is_multi_pass<Iterator>::value &&
+                                action != retry && action != fail);
+                            continue;
                         case accept: return true;
                         case rethrow: throw x;
                     }

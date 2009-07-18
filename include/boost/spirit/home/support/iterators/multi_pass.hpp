@@ -129,9 +129,19 @@ namespace boost { namespace spirit
             return tmp;
         }
 
-        void clear_queue()
+        void clear_queue(BOOST_SCOPED_ENUM(traits::clear_mode) mode = 
+            traits::clear_mode::clear_if_enabled)
         {
-            policies_base_type::clear_queue(*this);
+            if (mode == traits::clear_mode::clear_always || !inhibit_clear_queue())
+                policies_base_type::clear_queue(*this);
+        }
+        bool inhibit_clear_queue() const
+        {
+            return this->member->inhibit_clear_queue_;
+        }
+        void inhibit_clear_queue(bool flag)
+        {
+            this->member->inhibit_clear_queue_ = flag;
         }
 
         bool operator==(multi_pass const& y) const
@@ -209,6 +219,30 @@ namespace boost { namespace spirit
     swap(multi_pass<T, Policies> &x, multi_pass<T, Policies> &y)
     {
         x.swap(y);
+    }
+
+    // define special functions allowing to integrate any multi_pass iterator
+    // with expectation points
+    namespace traits
+    {
+        template <typename T, typename Policies>
+        void clear_queue(multi_pass<T, Policies>& mp
+          , BOOST_SCOPED_ENUM(traits::clear_mode) mode)
+        {
+            mp.clear_queue(mode);
+        }
+
+        template <typename T, typename Policies>
+        void inhibit_clear_queue(multi_pass<T, Policies>& mp, bool flag)
+        {
+            mp.inhibit_clear_queue(flag);
+        }
+
+        template <typename T, typename Policies>
+        bool inhibit_clear_queue(multi_pass<T, Policies>& mp)
+        {
+            return mp.inhibit_clear_queue();
+        }
     }
 
 }} // namespace boost::spirit

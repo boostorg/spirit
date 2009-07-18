@@ -460,7 +460,15 @@ namespace boost { namespace spirit { namespace iterator_policies
             typedef multi_pass_shared<T, ownership_policy, checking_policy
               , input_policy, storage_policy> shared_base_type;
 
-            explicit shared(T const& input) : shared_base_type(input) {}
+            explicit shared(T const& input) 
+              : shared_base_type(input), inhibit_clear_queue_(false) {}
+
+            // This is needed for the correct implementation of expectation 
+            // points. Normally expectation points flush any multi_pass 
+            // iterator they may act on, but if the corresponding error handler
+            // is of type 'retry' no flushing of the internal buffers should be
+            // executed (even if explicitly requested).
+            bool inhibit_clear_queue_;
         };
     };
 

@@ -40,22 +40,6 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     using repository::flush_multi_pass_type;
     using repository::flush_multi_pass;
 
-    namespace detail
-    {
-        // normal iterators require no special handling
-        template <typename Iterator>
-        void clear_queue(Iterator& it)
-        {
-        }
-
-        // where a multi_pass has some means to clear the internal buffers
-        template<typename T, typename Policies>
-        void clear_queue(multi_pass<T, Policies>& it)
-        {
-            it.clear_queue();
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     // for a flush_multi_pass_parser generated parser
     struct flush_multi_pass_parser
@@ -73,7 +57,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr) const
         {
-            repository::qi::detail::clear_queue(first);
+            spirit::traits::clear_queue(first, traits::clear_mode::clear_always);
             return true;
         }
 

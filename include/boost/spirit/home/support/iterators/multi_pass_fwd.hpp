@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2007 Tobias Schwinger
+    Copyright (c) 2001-2009 Hartmut Kaiser
     http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -9,6 +10,7 @@
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_FWD_APR_18_2008_1102AM
 
 #include <cstddef>
+#include <boost/spirit/home/support/multi_pass_wrapper.hpp>
 
 namespace boost { namespace spirit {
 
@@ -62,6 +64,30 @@ namespace boost { namespace spirit {
     }
 
 }} // namespace boost::spirit
+
+namespace boost { namespace spirit { namespace traits
+{
+    // declare special functions allowing to integrate any multi_pass iterator
+    // with expectation points
+
+    // multi_pass iterators require special handling (for the non-specialized
+    // versions of these functions see support/multi_pass_wrapper.hpp)
+    template <typename T, typename Policies>
+    void clear_queue(multi_pass<T, Policies>&
+      , BOOST_SCOPED_ENUM(clear_mode) mode = clear_mode::clear_if_enabled);
+
+    template <typename T, typename Policies>
+    void inhibit_clear_queue(multi_pass<T, Policies>&, bool);
+
+    template <typename T, typename Policies>
+    bool inhibit_clear_queue(multi_pass<T, Policies>&);
+
+    // Helper template to recognize a multi_pass iterator. This specialization
+    // will be instantiated for any multi_pass iterator.
+    template <typename T, typename Policies>
+    struct is_multi_pass<multi_pass<T, Policies> > : mpl::true_ {};
+
+}}}
 
 #endif
 
