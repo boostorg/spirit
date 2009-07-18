@@ -3,16 +3,13 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-//  MSVC specific #pragma's
-#if defined(BOOST_MSVC)
-#pragma inline_depth(255)
-#pragma inline_recursion(on)
-#endif // defined(BOOST_MSVC)
-
 #include <climits>
 #include <cassert>
 
 #include <iostream> 
+#include <sstream>
+#include <boost/format.hpp>
+
 #include <boost/spirit/include/karma.hpp>
 
 #include "../high_resolution_timer.hpp"
@@ -45,8 +42,52 @@ int main()
     std::vector<double> v (MAX_ITERATION);
     std::generate(v.begin(), v.end(), random_fill()); // randomly fill the vector
 
+    // test the C libraries gcvt function (the most low level function for
+    // string conversion available)
+    {
+        std::string str;
+        util::high_resolution_timer t;
+
+        for (int i = 0; i < MAX_ITERATION; ++i)
+        {
+            gcvt(v[i], 10, buffer);
+            str = buffer;      // compensate for string ops in other benchmarks
+        }
+
+        cout << "gcvt:    " << t.elapsed() << " [s]" << flush << endl;
+    }
+
+    // test the iostreams library
+    {
+        std::stringstream str;
+        util::high_resolution_timer t;
+
+        for (int i = 0; i < MAX_ITERATION; ++i)
+        {
+            str.str("");
+            str << v[i];
+        }
+
+        cout << "iostreams: " << t.elapsed() << " [s]" << flush << endl;
+    }
+
+    // test the Boost.Format library
+    {
+        std::string str;
+        boost::format double_format("%f");
+        util::high_resolution_timer t;
+
+        for (int i = 0; i < MAX_ITERATION; ++i)
+        {
+            str = boost::str(double_format % v[i]);
+        }
+
+        cout << "Boost.Format: " << t.elapsed() << " [s]" << flush << endl;
+    }
+
     // test the Karma double_ generation routines 
     {
+        std::string str;
         util::high_resolution_timer t;
 
         for (int i = 0; i < MAX_ITERATION; ++i)
@@ -54,23 +95,12 @@ int main()
             char *ptr = buffer;
             karma::generate(ptr, double_, v[i]);
             *ptr = '\0';
+            str = buffer;      // compensate for string ops in other benchmarks
         }
 
         cout << "double_: " << t.elapsed() << " [s]" << flush << endl;
     }
-    
-    // test the C libraries gcvt function (the most low level function for
-    // string conversion available)
-    {
-        util::high_resolution_timer t;
 
-        for (int i = 0; i < MAX_ITERATION; ++i)
-        {
-            gcvt(v[i], 10, buffer);
-        }
-        
-        cout << "gcvt:    " << t.elapsed() << " [s]" << flush << endl;
-    }
     return 0;
 }
 

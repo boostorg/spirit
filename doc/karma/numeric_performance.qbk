@@ -8,6 +8,55 @@
 
 [section:numeric_performance Performance of Numeric Generators]
 
+[section:int_performance Comparing the performance of a single int_ generator]
+
+This performance measurements are centered around default formatting of a 
+single `int` integer number using different libraries and methods. 
+The overall execution times for those examples are compared below. We compare
+using `sprintf`, C++ iostreams, __boost_format__, and __karma__.
+
+For the full source code of the performance test please see here:
+[@../../benchmarks/karma/int_generator.cpp int_generator.cpp]). All the 
+measurements have been done by executing 10000000 iterations for each 
+formatting type (NUMITERATIONS is set to 10000000 in the code shown below).
+
+[import ../benchmarks/karma/int_generator.cpp]
+
+Code used to measure the performance for `ltoa`:
+
+[karma_int_performance_ltoa]
+
+Code used to measure the performance for standard C++ iostreams:
+
+[karma_int_performance_iostreams]
+
+Code used to measure the performance for __boost_format__:
+
+[karma_int_performance_format]
+
+Code used to measure the performance for __karma__ using a plain character buffer:
+
+[karma_int_performance_plain]
+
+The following table shows the overall performance results collected 
+while using different compilers. All times are in seconds measured for 10000000
+iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz, 4GByte RAM). 
+For a more readable comparison of the results see this 
+[link spirit.karma.int_performance figure].
+
+[table Performance comparison for a single int (all times in [s], 10000000 iterations)
+    [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
+    [[ltoa]                 [1.559]              [0.881]            [0.859]               [1.2]                [1.118]            [0.889]]
+    [[iostreams]            [6.484]              [13.161]           [11.636]              [3.42]               [7.812]            [7.368]]
+    [[__boost_format__]     [16.823]             [21.569]           [19.706]              [17.28]              [14.402]           [13.222]]
+    [[__karma__ int_]       [2.562]              [1.011]            [0.955]               [2.956]              [1.016]            [0.878]]
+]
+
+[fig ./images/int_performance.png..Performance comparison for a single int..spirit.karma.int_performance]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:double_performance Comparing the performance of a single double_ generator]
 
 This performance measurements are centered around default formatting of a 
@@ -54,7 +103,7 @@ For a more readable comparison of the results see this
     [[sprintf]              [0.755]              [0.965]            [0.880]               [0.713]              [0.807]            [0.694]]
     [[iostreams]            [2.316]              [2.624]            [1.964]               [1.634]              [1.468]            [1.354]]
     [[__boost_format__]     [3.188]              [3.737]            [2.878]               [3.217]              [2.672]            [2.011]]
-    [[__karma__]            [0.813]              [0.561]            [0.368]               [0.426]              [0.260]            [0.218]]
+    [[__karma__ double_]    [0.813]              [0.561]            [0.368]               [0.426]              [0.260]            [0.218]]
 ]
 
 [fig ./images/double_performance.png..Performance comparison for a single double..spirit.karma.double_performance]
