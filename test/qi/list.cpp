@@ -64,12 +64,21 @@ main()
         BOOST_TEST(test_attr("(1,2)", '(' >> int_ % ',' >> ')', v));
         BOOST_TEST(2 == v.size() && 1 == v[0] && 2 == v[1]);
     }
-    
+
     {
         std::vector<std::string> v;
         BOOST_TEST(test_attr("a,b,c,d", +alpha % ',', v));
         BOOST_TEST(4 == v.size() && "a" == v[0] && "b" == v[1]
             && "c" == v[2] && "d" == v[3]);
+    }
+
+    {
+        std::vector<boost::optional<std::string> > v;
+        BOOST_TEST(test_attr("#a,#", ('#' >> -alpha) % ',', v)); 
+        BOOST_TEST(2 == v.size() && 
+            v[0] && "a" == boost::get<std::string>(v[0]) && 
+            v[1] && boost::get<std::string>(v[1]).size() == 1 && 
+                    boost::get<std::string>(v[1])[0] == '\0');
     }
 
     { // actions
