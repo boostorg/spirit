@@ -94,7 +94,7 @@ main()
         sym.add
             ("Apple", 1)
             ("Banana", 2)
-            ("orange", 3)
+            ("Orange", 3)
         ;
 
         int i;

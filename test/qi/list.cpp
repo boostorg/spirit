@@ -67,8 +67,9 @@ main()
     
     {
         std::vector<std::string> v;
-        BOOST_TEST(test_attr("a,b", +alpha % ',', v)); 
-        BOOST_TEST(2 == v.size() && "a" == v[0] && "b" == v[1]);
+        BOOST_TEST(test_attr("a,b,c,d", +alpha % ',', v));
+        BOOST_TEST(4 == v.size() && "a" == v[0] && "b" == v[1]
+            && "c" == v[2] && "d" == v[3]);
     }
 
     { // actions

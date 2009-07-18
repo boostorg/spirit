@@ -34,6 +34,7 @@ main()
     using boost::spirit::qi::omit;
     using boost::spirit::qi::lit;
     using boost::spirit::qi::_1;
+    using boost::spirit::qi::lexeme;
 
     {
         BOOST_TEST(test("aaaaaaaa", +char_));
@@ -59,6 +60,12 @@ main()
             v[0] == 123 && v[1] == 456 && v[2] == 789 &&  v[3] == 10);
     }
 
+    {
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("a b c d", +lexeme[+alpha], v, space) && 4 == v.size() &&
+            v[0] == "a" && v[1] == "b" && v[2] == "c" &&  v[3] == "d");
+    }
+    
     {
         BOOST_TEST(test("Kim Kim Kim", +lit("Kim"), space));
     }

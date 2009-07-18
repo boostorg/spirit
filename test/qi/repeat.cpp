@@ -37,6 +37,7 @@ main()
     using boost::spirit::qi::omit;
     using boost::spirit::qi::int_;
     using boost::spirit::qi::_1;
+    using boost::spirit::qi::lexeme;
 
     {
         BOOST_TEST(test("aaaaaaaa", repeat[char_])); // kleene synonym
@@ -106,6 +107,12 @@ main()
         BOOST_TEST(test("a B cde FGH", no_case[repeat(8)[lower]], space));
     }
 
+    {
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("a b c d", repeat(4)[lexeme[+alpha]], v, space) && 4 == v.size() &&
+            v[0] == "a" && v[1] == "b" && v[2] == "c" &&  v[3] == "d");
+    }
+    
     {
         std::string s;
         BOOST_TEST(test_attr("bbbb", repeat(4)[char_], s) && s == "bbbb");
