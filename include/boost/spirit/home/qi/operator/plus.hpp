@@ -63,9 +63,11 @@ namespace boost { namespace spirit { namespace qi
             if (subject.parse(first, last, context, skipper, val))
             {
                 traits::push_back(attr, val);
+                traits::clear(val);
                 while (subject.parse(first, last, context, skipper, val))
                 {
                     traits::push_back(attr, val);
+                    traits::clear(val);
                 }
                 return true;
             }

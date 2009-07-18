@@ -432,7 +432,7 @@ namespace boost { namespace spirit { namespace traits
     struct is_container;
 
     namespace detail
-    {
+    {      
         template <typename T>
         void clear_impl(T& val, mpl::false_)
         {
@@ -463,6 +463,10 @@ namespace boost { namespace spirit { namespace traits
     void clear(T& val)
     {
         detail::clear_impl(val, typename is_container<T>::type());
+    }
+    
+    void clear(unused_type)
+    {
     }
 }}}
 

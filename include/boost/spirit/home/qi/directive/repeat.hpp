@@ -163,6 +163,7 @@ namespace boost { namespace spirit { namespace qi
                         return false;
                     }
                     traits::push_back(attr, val);
+                    traits::clear(val);
                 }
             }
             // parse some more up to the maximum specified
@@ -171,6 +172,7 @@ namespace boost { namespace spirit { namespace qi
                 if (!subject.parse(first, last, context, skipper, val))
                     break;
                 traits::push_back(attr, val);
+                traits::clear(val);
             }
             return true;
         }

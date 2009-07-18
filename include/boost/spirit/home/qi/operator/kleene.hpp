@@ -65,6 +65,7 @@ namespace boost { namespace spirit { namespace qi
             {
                 // push the parsed value into our attribute
                 traits::push_back(attr, val);
+                traits::clear(val);
             }
             return true;
         }
