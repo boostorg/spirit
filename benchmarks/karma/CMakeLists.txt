@@ -10,6 +10,7 @@
 boost_add_executable(int_generator)
 boost_add_executable(real_generator)
 boost_add_executable(format_performance)
-boost_add_executable(format_performance)
+boost_add_executable(double_performance)
+boost_add_executable(sequence_performance)
 
 
