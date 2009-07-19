@@ -308,7 +308,7 @@ namespace boost { namespace spirit { namespace karma {
             }
 
             template <typename T>
-            static T call(T& n, T, int)
+            static T call(T& n, T const&, int)
             {
                 return call(n, mpl::bool_<is_integral<T>::value>());
             }
@@ -316,7 +316,7 @@ namespace boost { namespace spirit { namespace karma {
             template <typename T>
             static T call(T& n)
             {
-                return call(n, n, 1);
+                return call(n, mpl::bool_<is_integral<T>::value>());
             }
         };
 
@@ -347,7 +347,7 @@ namespace boost { namespace spirit { namespace karma {
             template <typename T>
             static T call(T& n)
             {
-                return call(n, n, 1);
+                return call(n, n, 1, mpl::bool_<is_integral<T>::value>());
             }
         };
 

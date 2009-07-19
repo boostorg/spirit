@@ -64,25 +64,32 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     public:
         counting_sink(OutputIterator& sink_, std::size_t count_ = 0
               , bool enabled = true) 
-          : count(count_), prev_count(0), sink(sink_)
+          : count(count_), initial_count(count), prev_count(0), sink(sink_)
         {
             prev_count = sink.chain_counting(enabled ? this : NULL);
         }
         ~counting_sink() 
         {
+            if (prev_count)           // propagate count 
+                prev_count->update_count(count-initial_count);
             sink.chain_counting(prev_count);
         }
 
         void output() 
         { 
             ++count; 
-            if (prev_count)           // propagate count 
-                prev_count->output();
         }
         std::size_t get_count() const { return count; }
 
+        // propagate count from embedded counters
+        void update_count(std::size_t c)
+        {
+            count += c;
+        }
+
     private:
         std::size_t count;
+        std::size_t initial_count;
         counting_sink* prev_count;                // previous counter in chain
         OutputIterator& sink;
     };
@@ -280,10 +287,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         typedef void reference;
 
         explicit output_iterator(OutputIterator& sink_)
-          : sink(sink_), count(NULL), buffer(NULL)
+          : sink(sink_)
+          , count(NULL), buffer(NULL)
         {}
         output_iterator(output_iterator const& rhs)
-          : sink(rhs.sink), count(rhs.count), buffer(rhs.buffer)
+          : sink(rhs.sink)
+          , count(rhs.count), buffer(rhs.buffer)
           , track_position_data(rhs.track_position_data)
         {}
 
