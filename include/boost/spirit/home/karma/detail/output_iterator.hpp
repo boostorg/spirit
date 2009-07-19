@@ -236,10 +236,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             {}
 
             template <typename T> 
-            output_proxy& operator=(T const& value) 
+            void operator=(T const& value) 
             {
                 parent.output(value);
-                return *this; 
             }
 
         private:
