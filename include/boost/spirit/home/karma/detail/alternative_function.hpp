@@ -14,6 +14,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/deref.hpp>
@@ -184,7 +185,17 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 alternative_generate<Component, Attribute, expected_type>
             generate;
 
-            return generate::call(component, sink, ctx, delim, attr);
+            // wrap the given output iterator avoid output as long as one
+            // component fails
+            detail::enable_buffering<OutputIterator> buffering(sink);
+            bool r = false;
+            {
+                detail::disable_counting<OutputIterator> nocounting(sink);
+                r = generate::call(component, sink, ctx, delim, attr);
+            }
+            if (r) 
+                buffering.buffer_copy();
+            return r;
         }
 
         OutputIterator& sink;
