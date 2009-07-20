@@ -156,10 +156,10 @@ For a more readable comparison of the results see this
 
 [table Performance comparison for a sequence of several items (all times in [s], 1000000 iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
-    [[sprintf]              [1.525]              [1.989]            [1.932]               [1.465]              [1.693]            [1.532]]
-    [[iostreams]            [4.592]              [5.294]            [4.367]               [3.131]              [3.272]            [2.762]]
-    [[__boost_format__]     [6.022]              [6.817]            [5.793]               [5.721]              [4.354]            [4.089]]
-    [[__karma__]            [4.585]              [2.450]            [3.529]               [3.970]              [1.592]            [1.813]]
+    [[sprintf]              [1.725]              [1.892]            [1.903]               [1.469]              [1.608]            [1.493]]
+    [[iostreams]            [4.827]              [5.287]            [4.444]               [3.112]              [3.319]            [2.877]]
+    [[__boost_format__]     [5.881]              [7.089]            [5.801]               [5.455]              [5.254]            [4.164]]
+    [[__karma__]            [1.942]              [1.242]            [0.999]               [1.334]              [0.758]            [0.686]]
 ]
 
 [fig ./images/format_performance.png..Performance comparison for a sequence of several items..spirit.karma.format_performance]

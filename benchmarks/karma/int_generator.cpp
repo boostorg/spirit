@@ -17,7 +17,7 @@
 //      Set this to some integer in between 0 (no unrolling) and max expected 
 //      integer string len (complete unrolling). If not specified, this value
 //      defaults to 6.
-#define BOOST_KARMA_NUMERICS_LOOP_UNROLL 10
+#define BOOST_KARMA_NUMERICS_LOOP_UNROLL 6
 
 #include <boost/spirit/include/karma.hpp>
 

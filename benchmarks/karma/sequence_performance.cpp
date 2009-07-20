@@ -18,13 +18,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 #define MAX_ITERATION         10000000
 #define MAX_SEQUENCE_LENGTH   9
-#define RCHAR(z, n, _)        char_((char)std::rand()) <<
+#define RCHAR(z, n, _)        char_((char)('a' + n)) <<
 
 #define SEQUENCE_TEST(z, N, _)                                                \
     {                                                                         \
         util::high_resolution_timer t;                                        \
                                                                               \
-        std::srand(42);                                                       \
         for (int i = 0; i < MAX_ITERATION; ++i)                               \
         {                                                                     \
             char *ptr = buffer;                                               \
@@ -38,8 +37,7 @@
     /**/
 
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
+int main()
 {
     using namespace boost::spirit::karma;
     using namespace boost::spirit::ascii;
