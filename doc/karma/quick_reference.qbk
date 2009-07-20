@@ -110,6 +110,8 @@ pages and pages of reference doumentation.
     [[`delimit[a]`]         [`A`]                       [Reestablish the delimiter that got inhibited by verbatim]]
     [[`delimit(g)[a]`]      [`A`]                       [Use `g` as a skipper for generating `a`]]
 
+    [[`omit[a]`]            [`A`]                       [Consumes the attribute type of `a` without generating anything]]
+
     [[`float_`]             [`float`]                   [Generate a floating point number from a `float`]]
     [[`double_`]            [`double`]                  [Generate a floating point number from a `double`]]
     [[`long_double`]        [`long double`]             [Generate a floating point number from a `long double`]]
