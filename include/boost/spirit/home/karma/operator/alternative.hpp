@@ -43,6 +43,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename Elements>
     struct alternative : nary_generator<alternative<Elements> >
     {
+        typedef mpl::true_ requires_buffering;
+
         template <typename Context, typename Unused = unused_type>
         struct attribute
         {

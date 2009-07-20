@@ -27,7 +27,9 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/find_if.hpp>
 
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -44,11 +46,32 @@ namespace boost { namespace spirit
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
+    // specialization for sequences
+    template <typename Sequence>
+    struct sequence_requires_buffering
+    {
+        typedef typename mpl::find_if<
+            Sequence, requires_buffering<mpl::_1>
+        >::type iterator;
+
+        typedef typename mpl::not_<
+            is_same<iterator, typename mpl::end<Sequence>::type>
+        >::type type;
+    };
+
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
     template <typename Elements>
     struct sequence : nary_generator<sequence<Elements> >
     {
+        typedef typename traits::sequence_requires_buffering<Elements>::type 
+            requires_buffering;
+
         sequence(Elements const& elements)
           : elements(elements) {}
 

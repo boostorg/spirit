@@ -40,7 +40,17 @@ namespace boost { namespace spirit { namespace karma
         // then the expression (expr) is not a valid spirit karma expression.
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-        // wrap user supplied iterator into our own output iterator
+//         typedef typename result_of::compile<
+//             karma::domain, Expr, unused_type
+//         >::type generator;
+// 
+//         // wrap user supplied iterator into our own output iterator
+//         typedef typename mpl::if_<
+//             traits::requires_buffering<generator>
+//           , detail::output_iterator<OutputIterator>
+//           , detail::plain_output_iterator<OutputIterator>
+//         >::type output_iterator;
+
         detail::output_iterator<OutputIterator> sink(target_sink);
         return compile<karma::domain>(expr).generate(sink, unused, unused, unused);
     }

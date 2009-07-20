@@ -236,25 +236,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     class output_iterator : boost::noncopyable
     {
     private:
-        struct output_proxy 
-        {
-            output_proxy(output_iterator& parent) 
-              : parent(parent) 
-            {}
-
-            template <typename T> 
-            void operator=(T const& value) 
-            {
-                parent.output(value);
-            }
-
-        private:
-            output_iterator& parent;
-
-            // suppress warning about assignment operator not being generated
-            output_proxy& operator=(output_proxy const&);
-        };
-
         // get the most derived type of this class
         typedef typename mpl::if_<
             traits::is_not_unused<Derived>, Derived, output_iterator
@@ -296,7 +277,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           , track_position_data(rhs.track_position_data)
         {}
 
-        output_proxy operator*() { return output_proxy(*this); }
+        output_iterator& operator*() { return *this; }
         output_iterator& operator++() 
         { 
             if (NULL == buffer)
@@ -313,8 +294,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return *this;
         }
 
-        template <typename T> 
-        void output(T const& value) 
+        template <typename T>
+        output_iterator& operator=(T const& value) 
         { 
             if (NULL != count)          // count characters, if appropriate
                 count->output();
@@ -327,6 +308,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 buffer->output(value);
             else
                 *sink = value; 
+
+            return *this;
         }
 
         // return the current count in the output
@@ -375,6 +358,76 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // expose good bit of underlying stream object
         bool good() const { return this->sink.get_ostream().good(); }
     };
+
+//     ///////////////////////////////////////////////////////////////////////////
+//     template <typename OutputIterator, typename Derived = unused_type>
+//     class plain_output_iterator : boost::noncopyable
+//     {
+//     private:
+//         // get the most derived type of this class
+//         typedef typename mpl::if_<
+//             traits::is_not_unused<Derived>, Derived, plain_output_iterator
+//         >::type most_derived_type;
+// 
+//     public:
+//         typedef std::output_iterator_tag iterator_category;
+//         typedef void value_type;
+//         typedef void difference_type;
+//         typedef void pointer;
+//         typedef void reference;
+// 
+//         explicit plain_output_iterator(OutputIterator& sink_)
+//           : sink(sink_)
+//         {}
+//         plain_output_iterator(plain_output_iterator const& rhs)
+//           : sink(rhs.sink)
+//           , track_position_data(rhs.track_position_data)
+//         {}
+// 
+//         plain_output_iterator& operator*() { return *this; }
+// 
+//         template <typename T>
+//         plain_output_iterator& operator=(T const& value) 
+//         { 
+//             // always track position in the output (this is needed by different 
+//             // generators, such as indent, pad, etc.)
+//             track_position_data.output(value);
+// 
+//             // output value by forwarding to the underlying iterator
+//             *sink = value; 
+//             return *this; 
+//         }
+//         plain_output_iterator& operator++() 
+//         { 
+//             ++sink;
+//             return *this; 
+//         } 
+//         plain_output_iterator operator++(int) 
+//         {
+//             plain_output_iterator t(*this);
+//             ++sink; 
+//             return t; 
+//         }
+// 
+//         // return the current count in the output
+//         std::size_t get_out_count() const
+//         {
+//             return track_position_data.get_count();
+//         }
+// 
+//         // plain output iterators are considered to be good all the time
+//         bool good() const { return true; }
+// 
+//     protected:
+//         // this is the wrapped user supplied output iterator
+//         OutputIterator& sink;
+// 
+//     private:
+//         position_sink track_position_data;            // for position tracking
+// 
+//         // suppress warning about assignment operator not being generated
+//         plain_output_iterator& operator=(plain_output_iterator const&);
+//     };
 
     ///////////////////////////////////////////////////////////////////////////
     //  Helper class for exception safe enabling of character counting in the

@@ -124,6 +124,7 @@ namespace boost { namespace spirit { namespace karma
     struct repeat_generator 
       : unary_generator<repeat_generator<Subject, LoopIter> >
     {
+        typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
 
         template <typename Context, typename Unused>
@@ -158,19 +159,22 @@ namespace boost { namespace spirit { namespace karma
             {
                 // inhibit (redirect) output, disable counting while buffering
                 detail::enable_buffering<OutputIterator> buffering(sink);
-                detail::disable_counting<OutputIterator> nocounting(sink);
 
-                // generate the minimal required amount of output
-                for (/**/; !iter.got_min(i); ++i, traits::next(it))
                 {
-                    if (traits::compare(it, end) ||
-                        !subject.generate(sink, ctx, d, traits::deref(it)))
+                    detail::disable_counting<OutputIterator> nocounting(sink);
+
+                    // generate the minimal required amount of output
+                    for (/**/; !iter.got_min(i); ++i, traits::next(it))
                     {
-                        // if we fail before reaching the minimum iteration
-                        // required, do not output anything and return false
-                        return false;
+                        if (traits::compare(it, end) ||
+                            !subject.generate(sink, ctx, d, traits::deref(it)))
+                        {
+                            // if we fail before reaching the minimum iteration
+                            // required, do not output anything and return false
+                            return false;
+                        }
                     }
-                }
+                }   // re-enable counting
 
                 // copy the output generated so far to the target output iterator
                 buffering.buffer_copy();

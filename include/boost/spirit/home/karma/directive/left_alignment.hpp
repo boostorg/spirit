@@ -111,6 +111,7 @@ namespace boost { namespace spirit { namespace karma
     struct simple_left_alignment 
       : unary_generator<simple_left_alignment<Subject, Width> >
     {
+        typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
 
         template <typename Context, typename Unused>

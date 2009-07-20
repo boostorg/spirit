@@ -110,11 +110,11 @@ namespace boost { namespace spirit { namespace karma
             // maxwidth
             bool r = false;
 
-            {            
+            {
                 detail::disable_counting<OutputIterator> nocounting(sink);
                 r = e.generate(sink, ctx, d, attr);
             }   // re-enable counting
-            
+
             return r && buffering.buffer_copy(maxwidth) &&
                    buffer_copy_rest(buffering, maxwidth, restdest);
         }
@@ -133,6 +133,7 @@ namespace boost { namespace spirit { namespace karma
     struct maxwidth_width
       : unary_generator<maxwidth_width<Subject, Width, Rest> >
     {
+        typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
 
         template <typename Context, typename Unused>

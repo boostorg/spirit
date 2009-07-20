@@ -34,6 +34,7 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject>
     struct not_predicate : unary_generator<not_predicate<Subject> >
     {
+        typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
 
         template <typename Context, typename Iterator>
