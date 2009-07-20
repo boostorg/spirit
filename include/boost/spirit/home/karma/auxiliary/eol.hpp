@@ -32,7 +32,7 @@ namespace boost { namespace spirit { namespace karma
     using boost::spirit::eol;
     using boost::spirit::eoi_type;
 
-    struct eol_generator
+    struct eol_generator : generator<eol_generator>
     {
         template <typename Context, typename Unused>
         struct attribute
