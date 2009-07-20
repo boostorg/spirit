@@ -93,11 +93,11 @@ void output_container(std::ostream& os, Container const& c)
             c                                     // data
         ) << std::endl << std::endl;
 
-//     os << 
-//         karma::format(
-//             '[' << -(stream % ", ") << ']',       // format description
-//             c                                     // data
-//         ) << std::endl << std::endl;
+    os << 
+        karma::format(
+            '[' << -(stream % ", ") << ']',       // format description
+            c                                     // data
+        ) << std::endl << std::endl;
 
 //     os << 
 //         karma::format(
