@@ -464,10 +464,11 @@ namespace boost { namespace spirit { namespace traits
     {
         detail::clear_impl(val, typename is_container<T>::type());
     }
-    
-    void clear(unused_type)
+
+    inline void clear(unused_type)
     {
     }
+
 }}}
 
 #endif
