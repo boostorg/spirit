@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace karma
     struct generator
     {
         struct generator_id;
-        typedef mpl::false_ requires_buffering;
+//         typedef mpl::true_ requires_buffering;
         typedef Derived derived_type;
         typedef karma::domain domain;
 
@@ -136,8 +136,8 @@ namespace boost { namespace spirit { namespace traits // classification
     struct is_binary_generator : detail::has_binary_generator_id<T> {};
 
     // check for generator properties
-    template <typename T>
-    struct requires_buffering : T::requires_buffering {};
+//     template <typename T>
+//     struct requires_buffering : T::requires_buffering {};
 
 }}}
 
