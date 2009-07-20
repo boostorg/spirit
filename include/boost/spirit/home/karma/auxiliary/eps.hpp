@@ -44,7 +44,7 @@ namespace boost { namespace spirit { namespace karma
     using boost::spirit::eps;
     using boost::spirit::eps_type;
 
-    struct eps_generator : generator<eps_generator>
+    struct eps_generator : primitive_generator<eps_generator>
     {
         template <typename Context, typename Unused>
         struct attribute
