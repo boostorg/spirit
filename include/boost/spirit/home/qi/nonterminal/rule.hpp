@@ -253,6 +253,11 @@ namespace boost { namespace spirit { namespace qi
             {
                 value_initialized<attr_type> val;
                 context_type context(val);
+
+                // If you are seeing a compilation error here stating that the 
+                // forth parameter can't be converted to a qi::reference
+                // then you are probably trying to use a rule or a grammar with 
+                // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
                     traits::swap_impl(attr, boost::get(val));
@@ -272,6 +277,11 @@ namespace boost { namespace spirit { namespace qi
             {
                 value_initialized<attr_type> val;
                 context_type context(val, params, caller_context);
+
+                // If you are seeing a compilation error here stating that the 
+                // forth parameter can't be converted to a qi::reference
+                // then you are probably trying to use a rule or a grammar with 
+                // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
                     traits::swap_impl(attr, boost::get(val));
