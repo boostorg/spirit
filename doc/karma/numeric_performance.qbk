@@ -46,10 +46,10 @@ For a more readable comparison of the results see this
 
 [table Performance comparison for a single int (all times in [s], 10000000 iterations)
     [[Library]              [gcc 4.4.0 (32 bit)] [VC++ 10 (32 bit)] [Intel 11.1 (32 bit)] [gcc 4.4.0 (64 bit)] [VC++ 10 (64 bit)] [Intel 11.1 (64 bit)]]
-    [[ltoa]                 [1.559]              [0.881]            [0.859]               [1.2]                [1.118]            [0.889]]
-    [[iostreams]            [6.484]              [13.161]           [11.636]              [3.42]               [7.812]            [7.368]]
-    [[__boost_format__]     [16.823]             [21.569]           [19.706]              [17.28]              [14.402]           [13.222]]
-    [[__karma__ int_]       [2.562]              [1.011]            [0.955]               [2.956]              [1.016]            [0.878]]
+    [[ltoa]                 [1.542]              [0.895]            [0.884]               [1.163]              [1.099]            [0.906]]
+    [[iostreams]            [6.548]              [13.727]           [11.898]              [3.464]              [8.316]            [8.115]]
+    [[__boost_format__]     [16.998]             [21.813]           [20.477]              [17.464]             [14.662]           [13.646]]
+    [[__karma__ int_]       [1.421]              [0.744]            [0.697]               [1.072]              [0.953]            [0.606]]
 ]
 
 [fig ./images/int_performance.png..Performance comparison for a single int..spirit.karma.int_performance]

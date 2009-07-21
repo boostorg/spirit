@@ -4,6 +4,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #define FUSION_MAX_TUPLE_SIZE         10
+#define USE_FUSION_VECTOR
 
 #include <climits>
 
@@ -33,24 +34,27 @@ static char const* const literal_sequences[] = {
         for (int i = 0; i < MAX_ITERATION; ++i)                               \
         {                                                                     \
             char *ptr = buffer;                                               \
-            generate(ptr, lit(literal_sequences[N]) << char_('\0'));          \
-        }                                                                     \
-                                                                              \
-        double elapsed = t.elapsed();                                         \
-        t.restart();                                                          \
-                                                                              \
-        for (int i = 0; i < MAX_ITERATION; ++i)                               \
-        {                                                                     \
-            char *ptr = buffer;                                               \
             generate(ptr, BOOST_PP_REPEAT(N, RCHAR, _) char_('\0'));          \
         }                                                                     \
                                                                               \
         std::cout << "karma::sequence(" << BOOST_PP_INC(N) << "):\t"          \
-            << std::setw(8) << t.elapsed() << "\t"                            \
-            << std::setw(8) << elapsed << " [s]"                              \
+            << std::setw(9) << t.elapsed() << "\t"                            \
             << std::flush << std::endl;                                       \
+                                                                              \
+        BOOST_ASSERT(std::string(buffer) == literal_sequences[N]);            \
     }                                                                         \
     /**/
+
+//         double elapsed = t.elapsed();                                         \
+//         for (int i = 0; i < MAX_ITERATION; ++i)                               \
+//         {                                                                     \
+//             char *ptr = buffer;                                               \
+//             generate(ptr, lit(literal_sequences[N]) << char_('\0'));          \
+//         }                                                                     \
+//                                                                               \
+//         t.restart();                                                          \
+//                                                                               \
+//             << std::setw(9) << elapsed << " [s]"                              \
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
