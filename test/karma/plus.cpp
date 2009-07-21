@@ -14,6 +14,7 @@
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -67,9 +68,9 @@ int main()
         BOOST_TEST(test_delimited("10 , 20 , 30 , ", +(int_ << ','), v, lit(" ")));
  
         fusion::vector<char, char> cc ('a', 'c');
-        BOOST_TEST(test("ac", char_ << !+(char_(' ') << ',') << char_, cc));
+        BOOST_TEST(test("ac", char_ << &+(eps(false) << ',') << char_, cc));
         BOOST_TEST(test_delimited("a c ", 
-            char_ << !+(char_(' ') << ',') << char_, cc, " "));
+            char_ << &+(eps(false) << ',') << char_, cc, " "));
     }
 
     { // actions
