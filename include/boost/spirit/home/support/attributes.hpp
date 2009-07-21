@@ -444,19 +444,15 @@ namespace boost { namespace spirit { namespace traits
         {
             val.clear();
         }
-
-        template <typename T>
-        void clear_impl(optional<T>& val, mpl::true_)
+        
+        struct clear_visitor : static_visitor<>
         {
-            val = T();
-        }
-
-        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-        void clear_impl(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& val
-          , mpl::true_)
-        {
-            val = variant<BOOST_VARIANT_ENUM_PARAMS(T)>();
-        }
+            template <typename T>
+            void operator()(T& val) const
+            {
+                clear(val);
+            }
+        };
     }
 
     template <typename T>
@@ -467,6 +463,19 @@ namespace boost { namespace spirit { namespace traits
 
     inline void clear(unused_type)
     {
+    }
+
+    template <typename T>
+    void clear(optional<T>& val)
+    {
+        if (val)
+            clear(*val);
+    }
+
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    void clear(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& var)
+    {
+        apply_visitor(detail::clear_visitor(), var);
     }
 
 }}}
