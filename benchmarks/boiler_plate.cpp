@@ -28,7 +28,7 @@ int main()
 {
     int result;
     double base_time;
-    int ret = test::benchmark<f>::test(result, base_time);
+    int ret = test::run<f>(result, base_time, 100);
 
     std::cout
         << "f accumulated result:           "

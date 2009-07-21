@@ -90,32 +90,25 @@ namespace test
         return time.elapsed() / repeats;  // return the time of one iteration
     }
   
-    template <typename Accumulator, int Repeats = 100>
-    struct benchmark
+    template <typename Accumulator>
+    static int run(typename Accumulator::type& result, double& base_time, long repeats = 100)
     {
-        static int test(typename Accumulator::type& result, double& base_time)
+        double measured = 0;
+        while (measured < 2.0 && repeats <= 10000000)
         {
-            std::cout.setf(std::ios::scientific);
-
-            // first decide how many repetitions to measure
-            long repeats = Repeats;
-            double measured = 0;
-            while (measured < 2.0 && repeats <= 10000000)
-            {
-                repeats *= 10;
-                util::high_resolution_timer time;
-                test::hammer<Accumulator>(0, repeats);
-                measured = time.elapsed();
-            }
-
-            test::measure<Accumulator>(1, 1);
-            result = test::live_code;
-            base_time = test::measure<Accumulator>(1, repeats);
-
-            // This is ultimately responsible for preventing all the test code
-            // from being optimized away.  Change this to return 0 and you
-            // unplug the whole test's life support system.
-            return test::live_code != 0;
+            repeats *= 10;
+            util::high_resolution_timer time;
+            test::hammer<Accumulator>(0, repeats);
+            measured = time.elapsed();
         }
-    };
+
+        test::measure<Accumulator>(1, 1);
+        result = test::live_code;
+        base_time = test::measure<Accumulator>(1, repeats);
+
+        // This is ultimately responsible for preventing all the test code
+        // from being optimized away.  Change this to return 0 and you
+        // unplug the whole test's life support system.
+        return test::live_code != 0;
+    }
 }
