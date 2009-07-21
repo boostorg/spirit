@@ -167,7 +167,8 @@ namespace boost { namespace spirit { namespace karma
 
     ///////////////////////////////////////////////////////////////////////////
     template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
-    struct any_binary_generator
+    struct any_binary_generator 
+      : primitive_generator<any_binary_generator<endian, bits> >
     {
         template <typename Context, typename Unused>
         struct attribute
@@ -222,6 +223,7 @@ namespace boost { namespace spirit { namespace karma
     template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits
       , bool no_attribute>
     struct literal_binary_generator
+      : primitive_generator<literal_binary_generator<endian, bits> >
     {
         typedef boost::integer::endian<
             endian, typename karma::detail::integer<bits>::type, bits
