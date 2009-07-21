@@ -124,13 +124,13 @@ namespace boost { namespace spirit { namespace qi
                     {
                         case fail: 
                             BOOST_ASSERT(
-                                traits::is_multi_pass<Iterator>::value &&
-                                action != retry && action != fail);
+                                !traits::is_multi_pass<Iterator>::value ||
+                                (action != retry && action != fail));
                             return false;
                         case retry: 
                             BOOST_ASSERT(
-                                traits::is_multi_pass<Iterator>::value &&
-                                action != retry && action != fail);
+                                !traits::is_multi_pass<Iterator>::value ||
+                                (action != retry && action != fail));
                             continue;
                         case accept: return true;
                         case rethrow: throw x;
