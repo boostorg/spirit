@@ -128,8 +128,11 @@ namespace boost { namespace spirit { namespace karma
     struct simple_center_alignment
       : unary_generator<simple_center_alignment<Subject, Width> >
     {
-//         typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
+
+        typedef mpl::int_<
+            generator_properties::countingbuffer | subject_type::properties::value
+        > properties;
 
         template <typename Context, typename Unused>
         struct attribute
@@ -174,6 +177,11 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef Subject subject_type;
         typedef Padding padding_type;
+
+        typedef mpl::int_<
+            generator_properties::countingbuffer |
+            subject_type::properties::value | padding_type::properties::value 
+        > properties;
 
         template <typename Context, typename Unused>
         struct attribute

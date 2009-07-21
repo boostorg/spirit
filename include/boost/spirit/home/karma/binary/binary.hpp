@@ -223,7 +223,7 @@ namespace boost { namespace spirit { namespace karma
     template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits
       , bool no_attribute>
     struct literal_binary_generator
-      : primitive_generator<literal_binary_generator<endian, bits> >
+      : primitive_generator<literal_binary_generator<endian, bits, no_attribute> >
     {
         typedef boost::integer::endian<
             endian, typename karma::detail::integer<bits>::type, bits

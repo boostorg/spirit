@@ -44,8 +44,11 @@ namespace boost { namespace spirit { namespace karma
     using boost::spirit::pad;
     using boost::spirit::pad_type;
 
-    struct binary_padding_generator
+    struct binary_padding_generator 
+      : primitive_generator<binary_padding_generator>
     {
+        typedef mpl::int_<generator_properties::tracking> properties;
+
         template <typename Context, typename Unused>
         struct attribute
         {

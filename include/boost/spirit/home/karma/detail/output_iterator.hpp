@@ -55,6 +55,39 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    struct position_policy
+    {
+        position_policy() {}
+        position_policy(position_policy const& rhs) 
+          : track_position_data(rhs.track_position_data) {}
+
+        template <typename T>
+        void output(T const& value) 
+        { 
+            // track position in the output 
+            track_position_data.output(value);
+        }
+
+        // return the current count in the output
+        std::size_t get_out_count() const
+        {
+            return track_position_data.get_count();
+        }
+
+    private:
+        position_sink track_position_data;            // for position tracking
+    };
+
+    struct no_position_policy
+    {
+        no_position_policy() {}
+        no_position_policy(no_position_policy const& rhs) {}
+
+        template <typename T>
+        void output(T const& value) {}
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     //  This class is used to count the number of characters streamed into the 
     //  output.
     ///////////////////////////////////////////////////////////////////////////
@@ -92,6 +125,44 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         std::size_t initial_count;
         counting_sink* prev_count;                // previous counter in chain
         OutputIterator& sink;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename OutputIterator>
+    struct counting_policy
+    {
+    public:
+        counting_policy() : count(NULL) {}
+        counting_policy(counting_policy const& rhs) : count(rhs.count) {}
+
+        // functions related to counting
+        counting_sink<OutputIterator>* chain_counting(
+            counting_sink<OutputIterator>* count_data)
+        {
+            counting_sink<OutputIterator>* prev_count = count;
+            count = count_data;
+            return prev_count;
+        }
+
+        template <typename T>
+        void output(T const&) 
+        { 
+            // count characters, if appropriate
+            if (NULL != count)
+                count->output();
+        }
+
+    private:
+        counting_sink<OutputIterator>* count;      // for counting
+    };
+
+    struct no_counting_policy
+    {
+        no_counting_policy() {}
+        no_counting_policy(no_counting_policy const& rhs) {}
+
+        template <typename T>
+        void output(T const& value) {}
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -216,9 +287,107 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    //  forward declaration only
+    template <typename OutputIterator>
+    struct buffering_policy
+    {
+    public:
+        buffering_policy() : buffer(NULL) {}
+        buffering_policy(buffering_policy const& rhs) : buffer(rhs.buffer) {}
+
+        // functions related to counting
+        buffer_sink<OutputIterator>* chain_buffering(
+            buffer_sink<OutputIterator>* buffer_data)
+        {
+            buffer_sink<OutputIterator>* prev_buffer = buffer;
+            buffer = buffer_data;
+            return prev_buffer;
+        }
+
+        template <typename T>
+        void output(T const& value) 
+        { 
+            // count characters, if appropriate
+            if (NULL != buffer) 
+                buffer->output(value);
+        }
+
+        bool has_buffer() const { return NULL != buffer; }
+
+    private:
+        buffer_sink<OutputIterator>* buffer;
+    };
+
+    struct no_buffering_policy
+    {
+        no_buffering_policy() {}
+        no_buffering_policy(no_counting_policy const& rhs) {}
+
+        template <typename T>
+        void output(T const& value) {}
+
+        bool has_buffer() const { return false; }
+    };
+
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator> struct enable_buffering;
+    //  forward declaration only
+    template <typename OutputIterator> 
+    struct enable_buffering;
+
+    template <typename OutputIterator, typename Properties
+      , typename Derived = unused_type>
+    class output_iterator;
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Buffering, typename Counting, typename Tracking>
+    struct output_iterator_base : Buffering, Counting, Tracking
+    {
+        typedef Buffering buffering_policy;
+        typedef Counting counting_policy;
+        typedef Tracking tracking_policy;
+
+        output_iterator_base() {}
+        output_iterator_base(output_iterator_base const& rhs) 
+          : buffering_policy(rhs), counting_policy(rhs), tracking_policy(rhs)
+        {}
+
+        template <typename T>
+        void output(T const& value) 
+        { 
+            this->counting_policy::output(value);
+            this->tracking_policy::output(value);
+            this->buffering_policy::output(value);
+        }
+    };
+
+    template <typename OutputIterator, typename Properties, typename Derived>
+    struct make_output_iterator
+    {
+        // get the most derived type of this class
+        typedef typename mpl::if_<
+            traits::is_not_unused<Derived>, Derived
+          , output_iterator<OutputIterator, Properties, Derived>
+        >::type most_derived_type;
+
+        enum { properties = Properties::value };
+
+        typedef typename mpl::if_c<
+            properties & generator_properties::tracking ? true : false
+          , position_policy, no_position_policy
+        >::type tracking_type;
+
+        typedef typename mpl::if_c<
+            properties & generator_properties::buffering ? true : false
+          , buffering_policy<most_derived_type>, no_buffering_policy
+        >::type buffering_type;
+
+        typedef typename mpl::if_c<
+            properties & generator_properties::counting ? true : false
+          , counting_policy<most_derived_type>, no_counting_policy
+        >::type counting_type;
+
+        typedef output_iterator_base<
+            buffering_type, counting_type, tracking_type> type;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     //  Karma uses an output iterator wrapper for all output operations. This
@@ -232,33 +401,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //  supplied iterator. But it is possible to enable additional functionality
     //  on demand, such as counting, buffering, and position tracking.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator, typename Derived = unused_type>
-    class output_iterator : boost::noncopyable
+    template <typename OutputIterator, typename Properties, typename Derived>
+    class output_iterator 
+      : public make_output_iterator<OutputIterator, Properties, Derived>::type
+      , boost::noncopyable
     {
     private:
-        // get the most derived type of this class
-        typedef typename mpl::if_<
-            traits::is_not_unused<Derived>, Derived, output_iterator
-        >::type most_derived_type;
-
-    public:
-        // functions related to counting
-        counting_sink<most_derived_type>* chain_counting(
-            counting_sink<most_derived_type>* count_data)
-        {
-            counting_sink<most_derived_type>* prev_count = count;
-            count = count_data;
-            return prev_count;
-        }
-
-        // functions related to buffering
-        buffer_sink<most_derived_type>* chain_buffering(
-            buffer_sink<most_derived_type>* buffer_data)
-        {
-            buffer_sink<most_derived_type>* prev_buffer = buffer;
-            buffer = buffer_data;
-            return prev_buffer;
-        }
+        // base iterator type
+        typedef typename make_output_iterator<
+            OutputIterator, Properties, Derived>::type base_iterator;
 
     public:
         typedef std::output_iterator_tag iterator_category;
@@ -269,24 +420,21 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         explicit output_iterator(OutputIterator& sink_)
           : sink(sink_)
-          , count(NULL), buffer(NULL)
         {}
         output_iterator(output_iterator const& rhs)
-          : sink(rhs.sink)
-          , count(rhs.count), buffer(rhs.buffer)
-          , track_position_data(rhs.track_position_data)
+          : sink(rhs.sink), base_iterator(rhs)
         {}
 
         output_iterator& operator*() { return *this; }
         output_iterator& operator++() 
         { 
-            if (NULL == buffer)
+            if (!this->base_iterator::has_buffer())
                 ++sink;           // increment only if not buffering
             return *this; 
         } 
         output_iterator operator++(int) 
         {
-            if (NULL == buffer) {
+            if (!this->base_iterator::has_buffer()) {
                 output_iterator t(*this);
                 ++sink; 
                 return t; 
@@ -295,27 +443,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         template <typename T>
-        output_iterator& operator=(T const& value) 
+        void operator=(T const& value) 
         { 
-            if (NULL != count)          // count characters, if appropriate
-                count->output();
-
-            // always track position in the output (this is needed by different 
-            // generators, such as indent, pad, etc.)
-            track_position_data.output(value);
-
-            if (NULL != buffer)         // buffer output, if appropriate
-                buffer->output(value);
-            else
+            this->base_iterator::output(value);
+            if (!this->base_iterator::has_buffer())
                 *sink = value; 
-
-            return *this;
-        }
-
-        // return the current count in the output
-        std::size_t get_out_count() const
-        {
-            return track_position_data.get_count();
         }
 
         // plain output iterators are considered to be good all the time
@@ -326,24 +458,19 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         OutputIterator& sink;
 
     private:
-        // these are the hooks providing optional functionality
-        counting_sink<most_derived_type>* count;      // for counting
-        buffer_sink<most_derived_type>* buffer;       // for buffering
-        position_sink track_position_data;            // for position tracking
-
         // suppress warning about assignment operator not being generated
         output_iterator& operator=(output_iterator const&);
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Elem, typename Traits>
-    class output_iterator<ostream_iterator<T, Elem, Traits> >
-      : public output_iterator<ostream_iterator<T, Elem, Traits>
-          , output_iterator<ostream_iterator<T, Elem, Traits> > >
+    template <typename T, typename Elem, typename Traits, typename Properties>
+    class output_iterator<ostream_iterator<T, Elem, Traits>, Properties>
+      : public output_iterator<ostream_iterator<T, Elem, Traits>, Properties
+          , output_iterator<ostream_iterator<T, Elem, Traits>, Properties> >
     {
     private:
-        typedef output_iterator<ostream_iterator<T, Elem, Traits>
-              , output_iterator<ostream_iterator<T, Elem, Traits> > 
+        typedef output_iterator<ostream_iterator<T, Elem, Traits>, Properties
+          , output_iterator<ostream_iterator<T, Elem, Traits>, Properties> 
         > base_type;
         typedef ostream_iterator<T, Elem, Traits> base_iterator_type;
         typedef std::basic_ostream<Elem, Traits> ostream_type;
@@ -358,76 +485,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         // expose good bit of underlying stream object
         bool good() const { return this->sink.get_ostream().good(); }
     };
-
-//     ///////////////////////////////////////////////////////////////////////////
-//     template <typename OutputIterator, typename Derived = unused_type>
-//     class plain_output_iterator : boost::noncopyable
-//     {
-//     private:
-//         // get the most derived type of this class
-//         typedef typename mpl::if_<
-//             traits::is_not_unused<Derived>, Derived, plain_output_iterator
-//         >::type most_derived_type;
-// 
-//     public:
-//         typedef std::output_iterator_tag iterator_category;
-//         typedef void value_type;
-//         typedef void difference_type;
-//         typedef void pointer;
-//         typedef void reference;
-// 
-//         explicit plain_output_iterator(OutputIterator& sink_)
-//           : sink(sink_)
-//         {}
-//         plain_output_iterator(plain_output_iterator const& rhs)
-//           : sink(rhs.sink)
-//           , track_position_data(rhs.track_position_data)
-//         {}
-// 
-//         plain_output_iterator& operator*() { return *this; }
-// 
-//         template <typename T>
-//         plain_output_iterator& operator=(T const& value) 
-//         { 
-//             // always track position in the output (this is needed by different 
-//             // generators, such as indent, pad, etc.)
-//             track_position_data.output(value);
-// 
-//             // output value by forwarding to the underlying iterator
-//             *sink = value; 
-//             return *this; 
-//         }
-//         plain_output_iterator& operator++() 
-//         { 
-//             ++sink;
-//             return *this; 
-//         } 
-//         plain_output_iterator operator++(int) 
-//         {
-//             plain_output_iterator t(*this);
-//             ++sink; 
-//             return t; 
-//         }
-// 
-//         // return the current count in the output
-//         std::size_t get_out_count() const
-//         {
-//             return track_position_data.get_count();
-//         }
-// 
-//         // plain output iterators are considered to be good all the time
-//         bool good() const { return true; }
-// 
-//     protected:
-//         // this is the wrapped user supplied output iterator
-//         OutputIterator& sink;
-// 
-//     private:
-//         position_sink track_position_data;            // for position tracking
-// 
-//         // suppress warning about assignment operator not being generated
-//         plain_output_iterator& operator=(plain_output_iterator const&);
-//     };
 
     ///////////////////////////////////////////////////////////////////////////
     //  Helper class for exception safe enabling of character counting in the

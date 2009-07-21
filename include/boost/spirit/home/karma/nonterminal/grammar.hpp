@@ -38,6 +38,7 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef OutputIterator iterator_type;
         typedef rule<OutputIterator, T1, T2, T3> start_type;
+        typedef typename start_type::properties properties;
         typedef typename start_type::sig_type sig_type;
         typedef typename start_type::locals_type locals_type;
         typedef typename start_type::delimiter_type delimiter_type;
@@ -47,7 +48,8 @@ namespace boost { namespace spirit { namespace karma
         static size_t const params_size = start_type::params_size;
 
         // the output iterator is always wrapped by karma
-        typedef detail::output_iterator<OutputIterator> output_iterator;
+        typedef detail::output_iterator<OutputIterator, properties> 
+            output_iterator;
 
         grammar(start_type const& start
               , std::string const& name_ = "unnamed-grammar")

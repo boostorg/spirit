@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
-    struct semantic_predicate
+    struct semantic_predicate : primitive_generator<semantic_predicate>
     {
         template <typename Context, typename Unused>
         struct attribute

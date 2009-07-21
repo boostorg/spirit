@@ -44,6 +44,7 @@ namespace boost { namespace spirit { namespace karma
     struct verbatim_generator : unary_generator<verbatim_generator<Subject> >
     {
         typedef Subject subject_type;
+        typedef typename subject_type::properties properties;
 
         template <typename Context, typename Unused>
         struct attribute

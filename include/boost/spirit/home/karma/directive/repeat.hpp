@@ -124,8 +124,11 @@ namespace boost { namespace spirit { namespace karma
     struct repeat_generator 
       : unary_generator<repeat_generator<Subject, LoopIter> >
     {
-//         typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
+
+        typedef mpl::int_<
+            generator_properties::countingbuffer | subject_type::properties::value
+        > properties;
 
         template <typename Context, typename Unused>
         struct attribute

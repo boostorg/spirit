@@ -37,11 +37,11 @@
 namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator, typename Expr
+    template <typename OutputIterator, typename Properties, typename Expr
       , BOOST_PP_ENUM_PARAMS(N, typename A)>
     inline bool
     generate(
-        detail::output_iterator<OutputIterator>& sink
+        detail::output_iterator<OutputIterator, Properties>& sink
       , Expr const& expr
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
@@ -66,17 +66,22 @@ namespace boost { namespace spirit { namespace karma
       , Expr const& expr
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
+        typedef traits::properties<
+            typename result_of::compile<karma::domain, Expr>::type
+        > properties;
+
         // wrap user supplied iterator into our own output iterator
-        detail::output_iterator<OutputIterator> sink(target_sink);
+        detail::output_iterator<OutputIterator
+          , mpl::int_<properties::value> > sink(target_sink);
         return generate(sink, expr, BOOST_PP_ENUM_PARAMS(N, attr));
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator, typename Expr, typename Delimiter
-      , BOOST_PP_ENUM_PARAMS(N, typename A)>
+    template <typename OutputIterator, typename Properties, typename Expr
+      , typename Delimiter, BOOST_PP_ENUM_PARAMS(N, typename A)>
     inline bool
     generate_delimited(
-        detail::output_iterator<OutputIterator>& sink
+        detail::output_iterator<OutputIterator, Properties>& sink
       , Expr const& expr
       , Delimiter const& delimiter
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
@@ -117,8 +122,17 @@ namespace boost { namespace spirit { namespace karma
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
+        typedef traits::properties<
+            typename result_of::compile<karma::domain, Expr>::type
+        > properties;
+        typedef traits::properties<
+            typename result_of::compile<karma::domain, Delimiter>::type
+        > delimiter_properties;
+
         // wrap user supplied iterator into our own output iterator
-        detail::output_iterator<OutputIterator> sink(target_sink);
+        detail::output_iterator<OutputIterator
+          , mpl::int_<properties::value | delimiter_properties::value>
+        > sink(target_sink);
         return generate_delimited(sink, expr, delimiter, pre_delimit
           , BOOST_PP_ENUM_PARAMS(N, attr));
     }
@@ -132,8 +146,17 @@ namespace boost { namespace spirit { namespace karma
       , Delimiter const& delimiter
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
+        typedef traits::properties<
+            typename result_of::compile<karma::domain, Expr>::type
+        > properties;
+        typedef traits::properties<
+            typename result_of::compile<karma::domain, Delimiter>::type
+        > delimiter_properties;
+
         // wrap user supplied iterator into our own output iterator
-        detail::output_iterator<OutputIterator> sink(target_sink);
+        detail::output_iterator<OutputIterator
+          , mpl::int_<properties::value | delimiter_properties::value>
+        > sink(target_sink);
         return generate_delimited(sink, expr, delimiter
           , delimit_flag::dont_predelimit, BOOST_PP_ENUM_PARAMS(N, attr));
     }

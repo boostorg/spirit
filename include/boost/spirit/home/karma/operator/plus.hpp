@@ -39,6 +39,7 @@ namespace boost { namespace spirit { namespace karma
     struct plus : unary_generator<plus<Subject> >
     {
         typedef Subject subject_type;
+        typedef typename subject_type::properties properties;
 
         template <typename Context, typename Unused>
         struct attribute

@@ -34,8 +34,10 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject>
     struct and_predicate : unary_generator<and_predicate<Subject> >
     {
-//         typedef mpl::true_ requires_buffering;
         typedef Subject subject_type;
+        typedef mpl::int_<
+            generator_properties::countingbuffer | subject_type::properties::value
+        > properties;
 
         template <typename Context, typename Iterator>
         struct attribute

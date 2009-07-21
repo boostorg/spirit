@@ -34,6 +34,10 @@ namespace boost { namespace spirit { namespace karma
         typedef Left left_type;
         typedef Right right_type;
 
+        typedef mpl::int_<
+            left_type::properties::value | right_type::properties::value
+        > properties;
+
         template <typename Context, typename Iterator>
         struct attribute
         {

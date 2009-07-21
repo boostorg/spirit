@@ -59,6 +59,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename Rule, typename Params>
     struct parameterized_rule : generator<parameterized_rule<Rule, Params> >
     {
+        typedef mpl::int_<generator_properties::all_properties> properties;
+
         parameterized_rule(Rule const& rule, Params const& params)
           : ref(rule), params(params) {}
 
@@ -99,6 +101,7 @@ namespace boost { namespace spirit { namespace karma
         >
       , generator<rule<OutputIterator, T1, T2, T3> >
     {
+        typedef mpl::int_<generator_properties::all_properties> properties;
         typedef rule<OutputIterator, T1, T2, T3> this_type;
         typedef reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
@@ -106,7 +109,8 @@ namespace boost { namespace spirit { namespace karma
         typedef mpl::vector<T1, T2, T3> template_params;
 
         // the output iterator is always wrapped by karma
-        typedef detail::output_iterator<OutputIterator> output_iterator;
+        typedef detail::output_iterator<OutputIterator, properties> 
+            output_iterator;
 
         // locals_type is a sequence of types to be used as local variables
         typedef typename fusion::result_of::as_vector<

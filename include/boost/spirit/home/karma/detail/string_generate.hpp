@@ -24,61 +24,64 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         for (Char ch = *str; ch != 0; ch = *++str)
         {
-            if (!detail::generate_to(sink, ch))
-                return false;
+            *sink = ch;
+            ++sink;
         }
-        return true;
+        return detail::sink_is_good(sink);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a std::string
-    template <
-        typename OutputIterator, typename Char, typename Traits
+    template <typename OutputIterator, typename Char, typename Traits
       , typename Allocator>
     inline bool string_generate(OutputIterator& sink
       , std::basic_string<Char, Traits, Allocator> const& str)
     {
-        BOOST_FOREACH(Char ch, str)
-        {
-            if (!detail::generate_to(sink, ch))
-                return false;
-        }
-        return true;
+        return string_generate(sink, str.c_str());
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a pointer, converting according using a 
     //  given character class and case tag
-    template <
-        typename OutputIterator, typename Char, typename CharEncoding
+    template <typename OutputIterator, typename Char, typename CharEncoding
       , typename Tag>
     inline bool string_generate(OutputIterator& sink, Char const* str
       , CharEncoding ce, Tag tag)
     {
         for (Char ch = *str; ch != 0; ch = *++str)
         {
-            if (!detail::generate_to(sink, ch, ce, tag))
-                return false;
+            *sink = spirit::char_class::convert<CharEncoding>::to(Tag(), ch);
+            ++sink;
         }
-        return true;
+        return detail::sink_is_good(sink);
+    }
+
+    template <typename OutputIterator, typename Char>
+    inline bool string_generate(OutputIterator& sink, Char const* str
+      , unused_type, unused_type)
+    {
+        return string_generate(sink, str);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     //  generate a string given by a std::string, converting according using a 
     //  given character class and case tag
-    template <
-        typename OutputIterator, typename Char, typename CharEncoding
+    template <typename OutputIterator, typename Char, typename CharEncoding
       , typename Tag, typename Traits, typename Allocator>
     inline bool string_generate(OutputIterator& sink
       , std::basic_string<Char, Traits, Allocator> const& str
       , CharEncoding ce, Tag tag)
     {
-        BOOST_FOREACH(Char ch, str)
-        {
-            if (!detail::generate_to(sink, ch, ce, tag))
-                return false;
-        }
-        return true;
+        return string_generate(sink, str.c_str(), ce, tag);
+    }
+
+    template <typename OutputIterator, typename Char, typename Traits
+      , typename Allocator>
+    inline bool string_generate(OutputIterator& sink
+      , std::basic_string<Char, Traits, Allocator> const& str
+      , unused_type, unused_type)
+    {
+        return string_generate(sink, str.c_str());
     }
 
 }}}}

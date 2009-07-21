@@ -12,15 +12,29 @@
 #endif
 
 #include <boost/mpl/has_xxx.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/spirit/home/support/detail/scoped_enum_emulation.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 
 namespace boost { namespace spirit { namespace karma
 {
+    BOOST_SCOPED_ENUM_START(generator_properties) 
+    {
+        no_properties = 0,
+        buffering = 0x01,        // generator requires buffering
+        counting = 0x02,         // generator requires counting
+        tracking = 0x04,         // generator requires position tracking
+
+        countingbuffer = 0x03,   // buffering | counting
+        all_properties = 0x07    // buffering | counting | tracking
+    };
+    BOOST_SCOPED_ENUM_END
+
     template <typename Derived>
     struct generator
     {
         struct generator_id;
-//         typedef mpl::true_ requires_buffering;
+        typedef mpl::int_<generator_properties::no_properties> properties;
         typedef Derived derived_type;
         typedef karma::domain domain;
 
@@ -136,8 +150,8 @@ namespace boost { namespace spirit { namespace traits // classification
     struct is_binary_generator : detail::has_binary_generator_id<T> {};
 
     // check for generator properties
-//     template <typename T>
-//     struct requires_buffering : T::requires_buffering {};
+    template <typename T>
+    struct properties : T::properties {};
 
 }}}
 

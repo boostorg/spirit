@@ -93,10 +93,13 @@ namespace boost { namespace spirit { namespace karma
     inline std::basic_ostream<Char, Traits> & 
     operator<< (std::basic_ostream<Char, Traits> &os, generator<Derived> const& g)
     {
+        typedef traits::properties<
+            typename result_of::compile<karma::domain, Derived>::type
+        > properties;
         typedef karma::detail::ostream_iterator<Char, Char, Traits> outiter_type;
 
         outiter_type target_sink(os);
-        karma::detail::output_iterator<outiter_type> sink(target_sink);
+        karma::detail::output_iterator<outiter_type, properties> sink(target_sink);
 
         if (!g.derived().generate(sink, unused, unused, unused))
         {

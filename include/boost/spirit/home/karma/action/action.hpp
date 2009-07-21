@@ -33,6 +33,9 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject, typename Action>
     struct action : unary_generator<action<Subject, Action> >
     {
+        typedef Subject subject_type;
+        typedef typename subject_type::properties properties;
+
         template <typename Context, typename Unused>
         struct attribute
           : traits::attribute_of<Subject, Context, Unused>
@@ -69,7 +72,7 @@ namespace boost { namespace spirit { namespace karma
             return subject.what(context);
         }
 
-        Subject subject;
+        subject_type subject;
         Action f;
     };
 

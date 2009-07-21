@@ -47,6 +47,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename Function, typename Modifiers>
     struct lazy_generator : generator<lazy_generator<Function, Modifiers> >
     {
+        typedef mpl::int_<generator_properties::all_properties> properties;
+
         template <typename Context, typename Unused>
         struct attribute
         {
@@ -108,6 +110,8 @@ namespace boost { namespace spirit { namespace karma
     struct lazy_directive 
       : unary_generator<lazy_directive<Function, Subject, Modifiers> >
     {
+        typedef mpl::int_<generator_properties::all_properties> properties;
+
         typedef Subject subject_type;
 
         template <typename Context, typename Unused>

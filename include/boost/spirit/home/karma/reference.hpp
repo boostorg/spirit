@@ -24,6 +24,8 @@ namespace boost { namespace spirit { namespace karma
     template <typename Subject>
     struct reference : generator<reference<Subject> >
     {
+        typedef mpl::int_<generator_properties::all_properties> properties;
+
         reference(Subject& subject)
           : ref(subject) {}
 

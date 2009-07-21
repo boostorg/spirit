@@ -58,6 +58,8 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef Subject subject_type;
 
+        typedef typename subject_type::properties properties;
+
         template <typename Context, typename Unused>
         struct attribute
         {
@@ -101,6 +103,8 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef Subject subject_type;
         typedef Delimiter delimiter_type;
+
+        typedef typename subject_type::properties properties;
 
         template <typename Context, typename Unused>
         struct attribute

@@ -26,8 +26,10 @@
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/find_if.hpp>
+#include <boost/mpl/bitor.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/fusion/include/transform.hpp>
+#include <boost/mpl/accumulate.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -46,22 +48,33 @@ namespace boost { namespace spirit
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
-// namespace boost { namespace spirit { namespace traits
-// {
-//     // specialization for sequences
-//     template <typename Sequence>
-//     struct sequence_requires_buffering
-//     {
-//         typedef typename mpl::find_if<
-//             Sequence, requires_buffering<mpl::_1>
-//         >::type iterator;
-// 
-//         typedef typename mpl::not_<
-//             is_same<iterator, typename mpl::end<Sequence>::type>
-//         >::type type;
-//     };
-// 
-// }}}
+namespace boost { namespace spirit { namespace traits
+{
+    // specialization for sequences
+    template <typename Sequence>
+    struct sequence_properties
+    {
+        struct element_properties
+        {
+            template <typename T>
+            struct result;
+
+            template <typename F, typename Element>
+            struct result<F(Element)>
+            {
+                typedef properties<Element> type;
+            };
+        };
+
+        typedef typename mpl::accumulate<
+            typename fusion::result_of::transform<
+                Sequence, element_properties>::type
+          , mpl::int_<karma::generator_properties::no_properties>
+          , mpl::bitor_<mpl::_2, mpl::_1>
+        >::type type;
+    };
+
+}}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
@@ -69,8 +82,7 @@ namespace boost { namespace spirit { namespace karma
     template <typename Elements>
     struct sequence : nary_generator<sequence<Elements> >
     {
-//         typedef typename traits::sequence_requires_buffering<Elements>::type 
-//             requires_buffering;
+        typedef typename traits::sequence_properties<Elements>::type properties;
 
         sequence(Elements const& elements)
           : elements(elements) {}
