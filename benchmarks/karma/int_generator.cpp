@@ -66,7 +66,7 @@ int main()
         }
         //]
 
-        cout << "ltoa: " << t.elapsed() << " [s]" << flush << endl;
+        cout << "ltoa:\t\t" << t.elapsed() << " [s]" << flush << endl;
     }
 
     // test the iostreams library
@@ -83,7 +83,7 @@ int main()
         }
         //]
 
-        cout << "iostreams: " << t.elapsed() << " [s]" << flush << endl;
+        cout << "iostreams:\t" << t.elapsed() << " [s]" << flush << endl;
     }
 
     // test the Boost.Format library
@@ -100,7 +100,7 @@ int main()
         }
         //]
 
-        cout << "Boost.Format: " << t.elapsed() << " [s]" << flush << endl;
+        cout << "Boost.Format:\t" << t.elapsed() << " [s]" << flush << endl;
     }
 
     // test the Karma int_ generation routines 
@@ -121,7 +121,7 @@ int main()
         }
         //]
 
-        cout << "int_: " << t.elapsed() << " [s]" << flush << endl;
+        cout << "int_:\t\t" << t.elapsed() << " [s]" << flush << endl;
     }
 
     return 0;

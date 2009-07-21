@@ -36,7 +36,7 @@ void format_performance_karma()
     }
     //]
 
-    std::cout << "karma:  " << t.elapsed() << std::endl;
+    std::cout << "karma:\t\t" << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
 }
 
@@ -59,7 +59,7 @@ void format_performance_rule()
     }
     //]
 
-    std::cout << "karma (rule):  " << t.elapsed() << std::endl;
+    std::cout << "karma (rule):\t" << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
 }
 
@@ -81,7 +81,7 @@ void format_performance_direct()
     }
     //]
 
-    std::cout << "karma (direct):  " << t.elapsed() << std::endl;
+    std::cout << "karma (direct):\t" << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
 }
 
@@ -101,7 +101,7 @@ void format_performance_string()
     }
     //]
 
-    std::cout << "karma (string): " << t.elapsed() << std::endl;
+    std::cout << "karma (string):\t" << t.elapsed() << std::endl;
 //     std::cout << generated << std::endl;
 }
 
@@ -118,11 +118,11 @@ void format_performance_boost_format()
         generated = boost::str(double_format % 12345.12345);
     //]
 
-    std::cout << "format: " << t.elapsed() << std::endl;
+    std::cout << "format:\t\t" << t.elapsed() << std::endl;
 //     std::cout << strm.str() << std::endl;
 }
 
-void format_performance_printf()
+void format_performance_sprintf()
 {
     util::high_resolution_timer t;
 
@@ -133,7 +133,7 @@ void format_performance_printf()
     }
     //]
 
-    std::cout << "printf: " << t.elapsed() << std::endl;
+    std::cout << "sprintf:\t" << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
 }
 
@@ -150,14 +150,14 @@ void format_performance_iostreams()
     }
     //]
 
-    std::cout << "iostreams: " << t.elapsed() << std::endl;
+    std::cout << "iostreams:\t" << t.elapsed() << std::endl;
 //     std::cout << strm.str() << std::endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    format_performance_printf();
+    format_performance_sprintf();
     format_performance_iostreams();
     format_performance_boost_format();
     format_performance_karma();

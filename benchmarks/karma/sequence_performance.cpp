@@ -16,6 +16,12 @@
 #include "../high_resolution_timer.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
+static char const* const literal_sequences[] = {
+    "", "a", "ab", "abc", "abcd", "abcde", 
+    "abcdef", "abcdefg", "abcdefgh", "abcdefghi", "abcdefgij"
+};
+
+///////////////////////////////////////////////////////////////////////////////
 #define MAX_ITERATION         10000000
 #define MAX_SEQUENCE_LENGTH   9
 #define RCHAR(z, n, _)        char_((char)('a' + n)) <<
@@ -27,11 +33,21 @@
         for (int i = 0; i < MAX_ITERATION; ++i)                               \
         {                                                                     \
             char *ptr = buffer;                                               \
+            generate(ptr, lit(literal_sequences[N]) << char_('\0'));          \
+        }                                                                     \
+                                                                              \
+        double elapsed = t.elapsed();                                         \
+        t.restart();                                                          \
+                                                                              \
+        for (int i = 0; i < MAX_ITERATION; ++i)                               \
+        {                                                                     \
+            char *ptr = buffer;                                               \
             generate(ptr, BOOST_PP_REPEAT(N, RCHAR, _) char_('\0'));          \
         }                                                                     \
                                                                               \
         std::cout << "karma::sequence(" << BOOST_PP_INC(N) << "):\t"          \
-            << t.elapsed() << " [s]"                                          \
+            << std::setw(8) << t.elapsed() << "\t"                            \
+            << std::setw(8) << elapsed << " [s]"                              \
             << std::flush << std::endl;                                       \
     }                                                                         \
     /**/

@@ -118,7 +118,7 @@ void format_performance_boost_format()
 //     std::cout << strm.str() << std::endl;
 }
 
-void format_performance_printf()
+void format_performance_sprintf()
 {
     util::high_resolution_timer t;
 
@@ -129,7 +129,7 @@ void format_performance_printf()
     }
     //]
 
-    std::cout << "printf:\t\t" << t.elapsed() << std::endl;
+    std::cout << "sprintf:\t" << t.elapsed() << std::endl;
 //     std::cout << buffer << std::endl;
 }
 
@@ -161,7 +161,7 @@ void format_performance_iostreams()
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    format_performance_printf();
+    format_performance_sprintf();
     format_performance_iostreams();
     format_performance_boost_format();
     format_performance_karma();
