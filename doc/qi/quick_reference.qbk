@@ -74,6 +74,17 @@ pages and pages of reference doumentation.
     [[`char_(ch, ch2)`]     [`Ch`]                      [Matches a range of chars from `ch` to `ch2` (inclusive)]]
     [[`char_(chset)`]       [`Ch`]                      [Matches a character set `chset`]]
 
+    [[`alnum`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isalnum` in the current character set]]
+    [[`alpha`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isalpha` in the current character set]]
+    [[`blank`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isblank` in the current character set]]
+    [[`cntrl`]              [`Ch`]                      [Matches a character based on the equivalent of `std::iscntrl` in the current character set]]
+    [[`digit`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isdigit` in the current character set]]
+    [[`graph`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isgraph` in the current character set]]
+    [[`print`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isprint` in the current character set]]
+    [[`punct`]              [`Ch`]                      [Matches a character based on the equivalent of `std::ispunct` in the current character set]]
+    [[`space`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isspace` in the current character set]]
+    [[`xdigit`]             [`Ch`]                      [Matches a character based on the equivalent of `std::isxdigit` in the current character set]]
+
     [[`ch`]                 [`Unused`]                  [Matches `ch`]]
     [[`str`]                [`Unused`]                  [Matches `str`]]
     [[`lit(ch)`]            [`Unused`]                  [Matches `ch`]]

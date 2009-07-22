@@ -126,16 +126,6 @@ The semantic action attached to `tok.word` receives this string (represented by
 the `_1` placeholder) and uses it to calculate the number of matched
 characters: `ref(c) += size(_1)`.
 
-[important  All placeholders (`_1`, `_2`, etc.) used in /parser/ semantic 
-            actions in conjunction with functors created based on __boost_phoenix__ 
-            need to be imported from the `namespace boost::spirit::arg_names` 
-            (and *not* `namespace boost::phoenix::arg_names`, which is 
-            different from using placeholders in __lex__). 
-            Using the wrong placeholders leads to subtle compilation errors 
-            which are difficult to backtrack to their cause.
-]
-
-
 [heading Pulling Everything Together]
 
 The main function needs to implement a bit more logic now as we have to 
