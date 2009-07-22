@@ -27,16 +27,18 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // merge range and *iter
             merge(*iter, range);
 
-            // collapse all subsequent ranges that can merge with *iter
-            Iterator i;
-            value_type last =
-                iter->last == integer_traits::const_max
-                ? iter->last : iter->last+1;
-
-            for (i = iter+1; i != run.end() && last >= i->first; ++i)
+            // collapse all subsequent ranges that can merge with *iter:
+            Iterator i = iter+1;
+            // 1. skip subsequent ranges completely included in *iter
+            while (i != run.end() && i->last <= iter->last)
+                ++i;
+            // 2. collapse next range if adjacent or overlapping with *iter
+            if (i != run.end() && i->first-1 <= iter->last)
             {
                 iter->last = i->last;
+                ++i;
             }
+
             // erase all ranges that were collapsed
             run.erase(iter+1, i);
             return true;
@@ -125,44 +127,49 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     range_compare<range_type>()
                 );
 
-            typename storage_type::iterator left_iter;
-
-            // if *(iter-1) includes the 'range.first',
-            if ((iter != run.begin()) &&
-                includes(*(left_iter = (iter-1)), range.first))
+            // 'range' starts with or after another range:
+            if (iter != run.begin())
             {
-                // if the 'range' is in the middle,
-                if (left_iter->last > range.last)
+                typename storage_type::iterator const left_iter = iter-1;
+
+                // 'range' starts after '*left_iter':
+                if (left_iter->first < range.first)
                 {
-                    // break it apart into two ranges (punch a hole)
-                    Char save_last = left_iter->last;
-                    left_iter->last = range.first-1;
-                    run.insert(iter, range_type(range.last+1, save_last));
-                    return;
+                    // if 'range' is completely included inside '*left_iter':
+                    // need to break it apart into two ranges (punch a hole),
+                    if (left_iter->last > range.last)
+                    {
+                        Char save_last = left_iter->last;
+                        left_iter->last = range.first-1;
+                        run.insert(iter, range_type(range.last+1, save_last));
+                        return;
+                    }
+                    // if 'range' contains 'left_iter->last':
+                    // truncate '*left_iter' (clip its right)
+                    else if (left_iter->last >= range.first)
+                    {
+                        left_iter->last = range.first-1;
+                    }
                 }
-                else // if it is not in the middle,
+
+                // 'range' has the same left bound as '*left_iter': it
+                // must be removed or truncated by the code below
+                else
                 {
-                    // truncate it (clip its right)
-                    left_iter->last = range.first-1;
+                    iter = left_iter;
                 }
             }
 
-            // position i to the first range that 'range'
-            // does not intersect with
+            // remove or truncate subsequent ranges that overlap with 'range':
             typename storage_type::iterator i = iter;
-            while (i != run.end() && includes(range, *i))
-            {
-                i++;
-            }
-
-            // if *i includes 'range.last', truncate it (clip its left)
-            if (i != run.end() && includes(*i, range.last))
-            {
+            // 1. skip subsequent ranges completely included in 'range'
+            while (i != run.end() && i->last <= range.last)
+                ++i;
+            // 2. clip left of next range if overlapping with 'range'
+            if (i != run.end() && i->first <= range.last)
                 i->first = range.last+1;
-            }
 
-            // cleanup... erase all subsequent ranges that the
-            // 'range' includes
+            // erase all ranges that 'range' contained
             run.erase(iter, i);
         }
     }
