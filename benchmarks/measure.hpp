@@ -25,8 +25,7 @@ namespace test
     // sure it's needed.
     int live_code;
 
-    // Call objects of the given Accumulator type repeatedly with x as
-    // an argument.
+    // Call objects of the given Accumulator type repeatedly
     template <class Accumulator>
     void hammer(long const repeats)
     {
@@ -52,7 +51,6 @@ namespace test
         // this array.  1024 is an upper limit on the pipeline depth of
         // current vector machines.
         
-        int x = 0;
         const std::size_t number_of_accumulators = 1024;
         live_code = 0; // reset to zero
 
@@ -62,7 +60,7 @@ namespace test
         {
             for (Accumulator* ap = a;  ap < a + number_of_accumulators; ++ap)
             {
-                ap->benchmark(x);
+                ap->benchmark();
             }
         }
 
@@ -74,8 +72,7 @@ namespace test
         }
     }
 
-    // Measure the time required to hammer accumulators of the given
-    // type with the argument x.
+    // Measure the time required to hammer accumulators of the given type
     template <class Accumulator>
     double measure(long const repeats)
     {
@@ -93,17 +90,26 @@ namespace test
         return time.elapsed() / repeats;  // return the time of one iteration
     }
     
+    template <class Accumulator>
+    void report(char const* name, long const repeats)
+    {
+        std::cout.precision(10);
+        std::cout << name << ": ";
+        for (int i = 0; i < (20-strlen(name)); ++i)
+            std::cout << ' ';
+        std::cout << std::fixed << test::measure<Accumulator>(repeats) << " [s] ";
+        Accumulator acc; 
+        acc.benchmark(); 
+        std::cout << std::hex << "{checksum: " << acc.val << "}";
+        std::cout << std::flush << std::endl;
+    }
+    
 #define BOOST_SPIRIT_TEST_HAMMER(r, data, elem)                     \
     test::hammer<elem>(repeats);
     /***/
 
 #define BOOST_SPIRIT_TEST_MEASURE(r, data, elem)                    \
-    std::cout.precision(10);                                        \
-    std::cout                                                       \
-        << BOOST_PP_STRINGIZE(elem) << ": "                         \
-        << std::fixed                                               \
-        << test::measure<elem>(repeats)                             \
-        << " [s]" << std::flush << std::endl;
+    test::report<elem>(BOOST_PP_STRINGIZE(elem), repeats);          \
     /***/
 
 #define BOOST_SPIRIT_TEST_BENCHMARK(max_repeats, FSeq)              \

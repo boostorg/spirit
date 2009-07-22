@@ -10,9 +10,9 @@ namespace
 {
     struct f
     {
-        void benchmark(int x)
+        void benchmark()
         {
-            this->val += x; // Here is where you put code that you want
+            this->val += 5; // Here is where you put code that you want
                             // to benchmark. Make sure it returns something.
                             // Anything.
         }

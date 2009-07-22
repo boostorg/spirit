@@ -12,6 +12,7 @@
 
 namespace
 {
+    ///////////////////////////////////////////////////////////////////////////
     // Random number string generator
     std::string
     gen_int(int digits)
@@ -33,7 +34,8 @@ namespace
     ///////////////////////////////////////////////////////////////////////////
     struct atoi_test
     {
-        void benchmark(int x)
+        atoi_test() : val(0) {}
+        void benchmark()
         {
             this->val += atoi(first[0]);
             this->val += atoi(first[1]);
@@ -51,8 +53,9 @@ namespace
     
     ///////////////////////////////////////////////////////////////////////////
     struct strtol_test
-    {
-        void benchmark(int x)
+    {        
+        strtol_test() : val(0) {}
+        void benchmark()
         {
             this->val += strtol(first[0], const_cast<char**>(&last[0]), 10);
             this->val += strtol(first[1], const_cast<char**>(&last[1]), 10);
@@ -71,21 +74,30 @@ namespace
     ///////////////////////////////////////////////////////////////////////////
     struct spirit_int_test
     {
-        void benchmark(int x)
+        static int parse(char const* first, char const* last)
+        {
+            int n;
+            namespace qi = boost::spirit::qi;
+            using qi::int_;
+            qi::parse(first, last, int_, n);
+            return n;
+        }
+
+        spirit_int_test() : val(0) {}
+        void benchmark()
         {
             namespace qi = boost::spirit::qi;
             using qi::int_;
-            int n;
             
-            qi::parse(first[0], last[0], int_, n); this->val += n;
-            qi::parse(first[1], last[1], int_, n); this->val += n;
-            qi::parse(first[2], last[2], int_, n); this->val += n;
-            qi::parse(first[3], last[3], int_, n); this->val += n;
-            qi::parse(first[4], last[4], int_, n); this->val += n;
-            qi::parse(first[5], last[5], int_, n); this->val += n;
-            qi::parse(first[6], last[6], int_, n); this->val += n;
-            qi::parse(first[7], last[7], int_, n); this->val += n;
-            qi::parse(first[8], last[8], int_, n); this->val += n;
+            this->val += parse(first[0], last[0]);
+            this->val += parse(first[1], last[1]);
+            this->val += parse(first[2], last[2]);
+            this->val += parse(first[3], last[3]);
+            this->val += parse(first[4], last[4]);
+            this->val += parse(first[5], last[5]);
+            this->val += parse(first[6], last[6]);
+            this->val += parse(first[7], last[7]);
+            this->val += parse(first[8], last[8]);
         }
 
         int val;    // This is needed to avoid dead-code elimination
