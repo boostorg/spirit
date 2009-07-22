@@ -2,6 +2,8 @@
 // 2005. Distributed under the Boost Software License, Version
 // 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
+#if !defined(BOOST_SPIRIT_TEST_BENCHMARK_HPP)
+#define BOOST_SPIRIT_TEST_BENCHMARK_HPP
 
 #ifdef _MSC_VER
 // inline aggressively
@@ -10,11 +12,14 @@
 # define _SECURE_SCL 0 
 #endif
 
-#if !defined(LIVE_CODE_TYPE)
-# define LIVE_CODE_TYPE int
+#if !defined(BOOST_SPIRIT_TEST_LIVE_CODE_TYPE)
+# define BOOST_SPIRIT_TEST_LIVE_CODE_TYPE int
 #endif
 
 #include "high_resolution_timer.hpp"
+#include <iostream>
+#include  <boost/preprocessor/seq/for_each.hpp>
+#include  <boost/preprocessor/stringize.hpp>
 
 namespace test
 {
@@ -22,12 +27,12 @@ namespace test
     // code elimination doesn't optimize away anything we're testing.
     // We'll use it to compute the return code of the executable to make
     // sure it's needed.
-    LIVE_CODE_TYPE live_code;
+    BOOST_SPIRIT_TEST_LIVE_CODE_TYPE live_code;
 
     // Call objects of the given Accumulator type repeatedly with x as
     // an argument.
-    template <class Accumulator, class Arg>
-    void hammer(Arg const& x, long const repeats)
+    template <class Accumulator>
+    void hammer(long const repeats)
     {
         // Strategy: because the sum in an accumulator after each call
         // depends on the previous value of the sum, the CPU's pipeline
@@ -50,6 +55,8 @@ namespace test
         // or L3 cache, or main memory, you can increase the size of
         // this array.  1024 is an upper limit on the pipeline depth of
         // current vector machines.
+        
+        typename Accumulator::type x = Accumulator::initial();
         const std::size_t number_of_accumulators = 1024;
         live_code = 0; // reset to zero
 
@@ -59,7 +66,7 @@ namespace test
         {
             for (Accumulator* ap = a;  ap < a + number_of_accumulators; ++ap)
             {
-                (*ap)(x);
+                ap->benchmark(x);
             }
         }
 
@@ -73,42 +80,46 @@ namespace test
 
     // Measure the time required to hammer accumulators of the given
     // type with the argument x.
-    template <class Accumulator, class T>
-    double measure(T const& x, long const repeats)
+    template <class Accumulator>
+    double measure(long const repeats)
     {
         // Hammer accumulators a couple of times to ensure the
         // instruction cache is full of our test code, and that we don't
         // measure the cost of a page fault for accessing the data page
         // containing the memory where the accumulators will be
         // allocated
-        hammer<Accumulator>(x, repeats);
-        hammer<Accumulator>(x, repeats);
+        hammer<Accumulator>(repeats);
+        hammer<Accumulator>(repeats);
 
         // Now start a timer
         util::high_resolution_timer time;
-        hammer<Accumulator>(x, repeats);  // This time, we'll measure
+        hammer<Accumulator>(repeats);  // This time, we'll measure
         return time.elapsed() / repeats;  // return the time of one iteration
     }
-  
-    template <typename Accumulator>
-    static int run(typename Accumulator::type& result, double& base_time, long repeats = 100)
-    {
-        double measured = 0;
-        while (measured < 2.0 && repeats <= 10000000)
-        {
-            repeats *= 10;
-            util::high_resolution_timer time;
-            test::hammer<Accumulator>(0, repeats);
-            measured = time.elapsed();
-        }
+    
+#define BOOST_SPIRIT_TEST_HAMMER(r, data, elem)                     \
+    test::hammer<elem>(repeats);
+    /***/
 
-        test::measure<Accumulator>(1, 1);
-        result = test::live_code;
-        base_time = test::measure<Accumulator>(1, repeats);
+#define BOOST_SPIRIT_TEST_MEASURE(r, data, elem)                    \
+    std::cout                                                       \
+        << BOOST_PP_STRINGIZE(elem) << ": "                         \
+        << test::measure<elem>(repeats)                             \
+        << std::endl;
+    /***/
 
-        // This is ultimately responsible for preventing all the test code
-        // from being optimized away.  Change this to return 0 and you
-        // unplug the whole test's life support system.
-        return test::live_code != 0;
-    }
+#define BOOST_SPIRIT_TEST_BENCHMARK(max_repeats, FSeq)              \
+    long repeats = 100;                                             \
+    double measured = 0;                                            \
+    while (measured < 2.0 && repeats <= max_repeats)                \
+    {                                                               \
+        repeats *= 10;                                              \
+        util::high_resolution_timer time;                           \
+        BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_TEST_HAMMER, _, FSeq)    \
+        measured = time.elapsed();                                  \
+    }                                                               \
+    BOOST_PP_SEQ_FOR_EACH(BOOST_SPIRIT_TEST_MEASURE, _, FSeq)       \
+    /***/
 }
+
+#endif
