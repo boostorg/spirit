@@ -14,8 +14,8 @@
 
 #include "high_resolution_timer.hpp"
 #include <iostream>
-#include  <boost/preprocessor/seq/for_each.hpp>
-#include  <boost/preprocessor/stringize.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
+#include <boost/preprocessor/stringize.hpp>
 
 namespace test
 {
@@ -68,7 +68,7 @@ namespace test
 
         // Accumulate all the partial sums to avoid dead code
         // elimination.
-        for (Accumulator* ap = a;  ap < a + number_of_accumulators; ++ap)
+        for (Accumulator* ap = a; ap < a + number_of_accumulators; ++ap)
         {
             live_code += ap->val;
         }
@@ -98,10 +98,12 @@ namespace test
     /***/
 
 #define BOOST_SPIRIT_TEST_MEASURE(r, data, elem)                    \
+    std::cout.precision(10);                                        \
     std::cout                                                       \
         << BOOST_PP_STRINGIZE(elem) << ": "                         \
+        << std::fixed                                               \
         << test::measure<elem>(repeats)                             \
-        << std::endl;
+        << " [s]" << std::flush << std::endl;
     /***/
 
 #define BOOST_SPIRIT_TEST_BENCHMARK(max_repeats, FSeq)              \

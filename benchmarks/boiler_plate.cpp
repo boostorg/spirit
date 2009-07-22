@@ -24,7 +24,7 @@ namespace
 int main()
 {
     BOOST_SPIRIT_TEST_BENCHMARK(
-        100000,     // This is the maximum repetitions to execute
+        10000000,   // This is the maximum repetitions to execute
         (f)         // Place your tests here. For now, we have only one test: (f)
                     // If you have 3 tests a, b and c, this line will contain (a)(b)(c)
     )
