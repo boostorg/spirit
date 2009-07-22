@@ -12,10 +12,6 @@
 # define _SECURE_SCL 0 
 #endif
 
-#if !defined(BOOST_SPIRIT_TEST_LIVE_CODE_TYPE)
-# define BOOST_SPIRIT_TEST_LIVE_CODE_TYPE int
-#endif
-
 #include "high_resolution_timer.hpp"
 #include <iostream>
 #include  <boost/preprocessor/seq/for_each.hpp>
@@ -27,7 +23,7 @@ namespace test
     // code elimination doesn't optimize away anything we're testing.
     // We'll use it to compute the return code of the executable to make
     // sure it's needed.
-    BOOST_SPIRIT_TEST_LIVE_CODE_TYPE live_code;
+    int live_code;
 
     // Call objects of the given Accumulator type repeatedly with x as
     // an argument.
@@ -56,7 +52,7 @@ namespace test
         // this array.  1024 is an upper limit on the pipeline depth of
         // current vector machines.
         
-        typename Accumulator::type x = Accumulator::initial();
+        int x = 0;
         const std::size_t number_of_accumulators = 1024;
         live_code = 0; // reset to zero
 
