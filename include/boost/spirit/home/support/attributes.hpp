@@ -19,6 +19,7 @@
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/push_front.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
+#include <boost/fusion/include/for_each.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -426,25 +427,14 @@ namespace boost { namespace spirit { namespace traits
     ///////////////////////////////////////////////////////////////////////////
     // clear
     //
-    // Clear data efficiently ()
+    // Clear data efficiently
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
     struct is_container;
 
     namespace detail
     {
-        template <typename T>
-        void clear_impl(T& val, mpl::false_)
-        {
-            val = T();
-        }
-
-        template <typename T>
-        void clear_impl(T& val, mpl::true_)
-        {
-            val.clear();
-        }
-        
+        // this is used by the variant and fusion sequence dispatch
         struct clear_visitor : static_visitor<>
         {
             template <typename T>
@@ -453,25 +443,57 @@ namespace boost { namespace spirit { namespace traits
                 clear(val);
             }
         };
+
+        // default
+        template <typename T>
+        void clear_impl2(T& val, mpl::false_)
+        {
+            val = T();
+        }
+
+        // for fusion sequences
+        template <typename T>
+        void clear_impl2(T& val, mpl::true_) 
+        {
+            fusion::for_each(val, clear_visitor());
+        }
+
+        // dispatch default or fusion sequence
+        template <typename T>
+        void clear_impl(T& val, mpl::false_) 
+        {
+            clear_impl2(val, fusion::traits::is_sequence<T>());
+        }
+
+        // STL containers
+        template <typename T>
+        void clear_impl(T& val, mpl::true_)
+        {
+            val.clear();
+        }
     }
 
+    // main dispatch
     template <typename T>
     void clear(T& val)
     {
         detail::clear_impl(val, typename is_container<T>::type());
     }
 
+    // for unused
     inline void clear(unused_type)
     {
     }
 
+    // optionals
     template <typename T>
     void clear(optional<T>& val)
     {
         if (val)
             clear(*val);
     }
-
+    
+    // variants
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     void clear(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& var)
     {
