@@ -95,7 +95,7 @@ namespace test
     {
         std::cout.precision(10);
         std::cout << name << ": ";
-        for (int i = 0; i < (20-strlen(name)); ++i)
+        for (int i = 0; i < (20-int(strlen(name))); ++i)
             std::cout << ' ';
         std::cout << std::fixed << test::measure<Accumulator>(repeats) << " [s] ";
         Accumulator acc; 
