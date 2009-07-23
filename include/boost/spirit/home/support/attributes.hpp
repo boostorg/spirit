@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -423,7 +424,7 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef T type;
     };
-    
+
     ///////////////////////////////////////////////////////////////////////////
     // clear
     //
@@ -492,7 +493,7 @@ namespace boost { namespace spirit { namespace traits
         if (val)
             clear(*val);
     }
-    
+
     // variants
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     void clear(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& var)

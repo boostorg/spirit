@@ -71,13 +71,13 @@ namespace boost { namespace spirit { namespace traits
         {
             typedef T type;
         };
-        
+
         template <typename T>
         struct remove_value_const<T const>
         {
             typedef typename remove_value_const<T>::type type;
         };
-        
+
         template <typename F, typename S>
         struct remove_value_const<std::pair<F, S> >
         {
@@ -92,7 +92,7 @@ namespace boost { namespace spirit { namespace traits
         ///////////////////////////////////////////////////////////////////////
         template <typename Container>
         struct value
-        {            
+        {
             typedef typename detail::remove_value_const<
                 typename Container::value_type>::type
             type;

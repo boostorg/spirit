@@ -16,5 +16,6 @@
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/spirit/home/qi/auxiliary/eol.hpp>
 #include <boost/spirit/home/qi/auxiliary/eoi.hpp>
+#include <boost/spirit/home/qi/auxiliary/attr.hpp>
 
 #endif
