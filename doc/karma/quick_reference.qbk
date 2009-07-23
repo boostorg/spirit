@@ -21,7 +21,8 @@ pages and pages of reference doumentation.
     [[`I`]              [The iterator type used for generation]]
     [[`Unused`]         [An `unused_type`]]
     [[`Context`]        [The enclosing rule's `Context` type]]
-    [[`Attr`]           [An attribute type]]
+    [[`attrib`]         [A attribute value]]
+    [[`Attrib`]         [An attribute type]]
     [[`b`]              [A boolean expression]]
     [[`fg`]             [A (lazy generator) function with signature `G(Unused, Context)`]]
     [[`fa`]             [A (semantic action) function with signature `void(Attr&, Context, bool&)`.
@@ -317,7 +318,7 @@ inline your lambda expressions:
     g[phoenix-lambda-expression]
 
 __karma__ provides some __boost_phoenix__ placeholders to access important
-information from the `Attr` and `Context` that are otherwise fiddly to extract.
+information from the `Attrib` and `Context` that are otherwise fiddly to extract.
 
 [variablelist Spirit.Karma specific Phoenix placeholders
     [[`_1, _2... , _N`]         [Nth attribute of `g`]]

@@ -36,13 +36,13 @@ can be a more complex generator formed as a composition of other Generator's.
     [[`Context`]        [The generator's __context__ type.]]
     [[`context`]        [The generator's __context__, or __unused__.]]
     [[`delimit`]        [A delimiter Generator, or __unused__.]]
-    [[`attr`]           [A __compatible_atribute__, or __unused__.]]
+    [[`attrib`]         [A __compatible_atribute__, or __unused__.]]
 ]
 
 [heading Valid Expressions]
 
 In the expressions below, the behavior of the generator, `g`, as well as how 
-`delimit` and `attr` are handled by `g`, are left unspecified in the base 
+`delimit` and `attrib` are handled by `g`, are left unspecified in the base 
 `Generator` concept. These are specified in subsequent, more refined concepts 
 and by the actual models therof.
 
@@ -78,7 +78,7 @@ Upon return from `g.generate` the following post conditions should hold:
   seqeunce.
 * No pre-delimits: `delimit` characters/tokens will not be emitted in front of 
   any other output.
-* The attribute `attr` has not been modified.
+* The attribute `attrib` has not been modified.
 
 [heading Models]
 

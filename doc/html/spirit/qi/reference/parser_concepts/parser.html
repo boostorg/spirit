@@ -27,7 +27,7 @@
 <a name="spirit.qi.reference.parser_concepts.parser"></a><a class="link" href="parser.html" title="Parser">Parser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.parser.description"></a><h6>
-<a name="id1083252"></a>
+<a name="id1053760"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.description">Description</a>
           </h6>
 <p>
@@ -75,23 +75,23 @@
 <dd><p>
                 A skip Parser, or <code class="computeroutput"><span class="identifier">unused</span></code>.
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">attr</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">attrib</span></code></span></dt>
 <dd><p>
                 A Compatible Attribute, or <code class="computeroutput"><span class="identifier">unused</span></code>.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.parser.valid_expressions"></a><h6>
-<a name="id1083588"></a>
+<a name="id1054097"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
             In the expressions below, the behavior of the parser, <code class="computeroutput"><span class="identifier">p</span></code>,
-            how <code class="computeroutput"><span class="identifier">skip</span></code> and <code class="computeroutput"><span class="identifier">attr</span></code> are handled by <code class="computeroutput"><span class="identifier">p</span></code>,
-            are left unspecified in the base <code class="computeroutput"><span class="identifier">Parser</span></code>
-            concept. These are specified in subsequent, more refined concepts and
-            by the actual models therof.
+            how <code class="computeroutput"><span class="identifier">skip</span></code> and <code class="computeroutput"><span class="identifier">attrib</span></code> are handled by <code class="computeroutput"><span class="identifier">p</span></code>, are left unspecified in the base
+            <code class="computeroutput"><span class="identifier">Parser</span></code> concept. These
+            are specified in subsequent, more refined concepts and by the actual
+            models therof.
           </p>
 <p>
             For any Parser the following expressions must be valid:
@@ -162,7 +162,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.type_expressions"></a><h6>
-<a name="id1083856"></a>
+<a name="id1054364"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -215,7 +215,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.postcondition"></a><h6>
-<a name="id1084052"></a>
+<a name="id1054561"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.postcondition">Postcondition</a>
           </h6>
 <p>
@@ -240,7 +240,7 @@
               past the first character/token not matching <code class="computeroutput"><span class="identifier">skip</span></code>.
             </li>
 <li class="listitem">
-              On a failed match, <code class="computeroutput"><span class="identifier">attr</span></code>
+              On a failed match, <code class="computeroutput"><span class="identifier">attrib</span></code>
               is left untouched.
             </li>
 <li class="listitem">
@@ -249,7 +249,7 @@
             </li>
 </ul></div>
 <a name="spirit.qi.reference.parser_concepts.parser.models"></a><h6>
-<a name="id1084180"></a>
+<a name="id1054688"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.models">Models</a>
           </h6>
 <p>
