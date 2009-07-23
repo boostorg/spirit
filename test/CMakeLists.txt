@@ -20,6 +20,7 @@ ENDIF(CMAKE_COMPILER_IS_GNUCC)
 # run Qi tests
 boost_test_run(qi_actions qi/actions.cpp COMPILE_FLAGS ${test_compile_flags} BOOST_LIB spirit COMPILE_FLAGS ${test_compile_flags} )
 boost_test_run(qi_alternative qi/alternative.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(qi_attr qi/attr.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_and_predicate qi/and_predicate.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_binary qi/binary.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_char qi/char.cpp COMPILE_FLAGS ${test_compile_flags})

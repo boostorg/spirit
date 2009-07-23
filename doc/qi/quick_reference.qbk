@@ -21,10 +21,11 @@ pages and pages of reference doumentation.
     [[`I`]              [The iterator type used for parsing]]
     [[`Unused`]         [An `unused_type`]]
     [[`Context`]        [The enclosing rule's `Context` type]]
-    [[`Attr`]           [An attribute type]]
+    [[`attrib`]         [An attribute value]]
+    [[`Attrib`]         [An attribute type]]
     [[`b`]              [A boolean expression]]
     [[`fp`]             [A (lazy parser) function with signature `P(Unused, Context)`]]
-    [[`fa`]             [A (semantic action) function with signature `void(Attr, Context, bool&)`.
+    [[`fa`]             [A (semantic action) function with signature `void(Attrib, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
                         force the parse to fail. Both `Context` and the boolean flag are
                         optional.]]
@@ -74,16 +75,26 @@ pages and pages of reference doumentation.
     [[`char_(ch, ch2)`]     [`Ch`]                      [Matches a range of chars from `ch` to `ch2` (inclusive)]]
     [[`char_(chset)`]       [`Ch`]                      [Matches a character set `chset`]]
 
-    [[`alnum`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isalnum` in the current character set]]
-    [[`alpha`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isalpha` in the current character set]]
-    [[`blank`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isblank` in the current character set]]
-    [[`cntrl`]              [`Ch`]                      [Matches a character based on the equivalent of `std::iscntrl` in the current character set]]
-    [[`digit`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isdigit` in the current character set]]
-    [[`graph`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isgraph` in the current character set]]
-    [[`print`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isprint` in the current character set]]
-    [[`punct`]              [`Ch`]                      [Matches a character based on the equivalent of `std::ispunct` in the current character set]]
-    [[`space`]              [`Ch`]                      [Matches a character based on the equivalent of `std::isspace` in the current character set]]
-    [[`xdigit`]             [`Ch`]                      [Matches a character based on the equivalent of `std::isxdigit` in the current character set]]
+    [[`alnum`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isalnum` in the current character set]]
+    [[`alpha`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isalpha` in the current character set]]
+    [[`blank`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isblank` in the current character set]]
+    [[`cntrl`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::iscntrl` in the current character set]]
+    [[`digit`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isdigit` in the current character set]]
+    [[`graph`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isgraph` in the current character set]]
+    [[`print`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isprint` in the current character set]]
+    [[`punct`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::ispunct` in the current character set]]
+    [[`space`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isspace` in the current character set]]
+    [[`xdigit`]             [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isxdigit` in the current character set]]
 
     [[`ch`]                 [`Unused`]                  [Matches `ch`]]
     [[`str`]                [`Unused`]                  [Matches `str`]]
@@ -139,6 +150,9 @@ pages and pages of reference doumentation.
     [[`long_`]              [`long`]                    [Parse a long integer]]
     [[`int_`]               [`int`]                     [Parse an int]]
     [[`long_long`]          [`long long`]               [Parse a long long]]
+
+    [[`attr(attrib)`]       [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
+                                                         argument `attrib` as its attribute.]]
 
     [[`!a`]                 [`Unused`]                  [Not predicate. Ensure that `a` does not match
                                                         but don't move the iterator position]]
@@ -313,16 +327,16 @@ Has the form:
 
 where `f` is a function with the signatures:
 
-    void f(Attr const&);
-    void f(Attr const&, Context&);
-    void f(Attr const&, Context&, bool&);
+    void f(Attrib const&);
+    void f(Attrib const&, Context&);
+    void f(Attrib const&, Context&, bool&);
 
 You can use `__boost_bind__` to bind member functions. For function
 objects, the allowed signatures are:
 
-    void operator()(Attr const&, unused_type, unused_type) const;
-    void operator()(Attr const&, Context&, unused_type) const;
-    void operator()(Attr const&, Context&, bool&) const;
+    void operator()(Attrib const&, unused_type, unused_type) const;
+    void operator()(Attrib const&, Context&, unused_type) const;
+    void operator()(Attrib const&, Context&, bool&) const;
 
 The `unused_type` is used in the signatures above to signify 'don't
 care'.
@@ -336,7 +350,7 @@ inline your lambda expressions:
     p[phoenix-lambda-expression]
 
 Spirit.Qi provides some __boost_phoenix__ placeholders to important
-information from the `Attr` and `Context` that are otherwise fiddly to extract.
+information from the `Attrib` and `Context` that are otherwise fiddly to extract.
 
 [variablelist Spirit.Qi specific Phoenix placeholders
     [[`_1, _2... , _N`]         [Nth attribute of `p`]]

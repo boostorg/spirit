@@ -28,6 +28,7 @@ import testing ;
     # run Qi tests
     [ run qi/actions.cpp                    : : : : ]
     [ run qi/alternative.cpp                : : : : ]
+    [ run qi/attr.cpp                       : : : : ]
     [ run qi/and_predicate.cpp              : : : : ]
     [ run qi/binary.cpp                     : : : : ]
     [ run qi/char.cpp                       : : : : ]
