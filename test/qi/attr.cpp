@@ -48,8 +48,8 @@ main()
         double d = 0.0;
         BOOST_TEST(test_attr("", attr(val(1.0)), d) && d == 1.0);
 
-        double d1 = 1.0;
-        BOOST_TEST(test_attr("", attr(ref(d1)), d) && d == 1.0);
+        double d1 = 2.0;
+        BOOST_TEST(test_attr("", attr(ref(d1)), d) && d == 2.0);
     }
 
     return boost::report_errors();
