@@ -37,15 +37,8 @@ namespace
         atoi_test() : val(0) {}
         void benchmark()
         {
-            this->val += atoi(first[0]);
-            this->val += atoi(first[1]);
-            this->val += atoi(first[2]);
-            this->val += atoi(first[3]);
-            this->val += atoi(first[4]);
-            this->val += atoi(first[5]);
-            this->val += atoi(first[6]);
-            this->val += atoi(first[7]);
-            this->val += atoi(first[8]);
+            for (int i = 0; i < 9; ++i) 
+                this->val += atoi(first[i]);
         }
 
         int val;    // This is needed to avoid dead-code elimination
@@ -57,15 +50,8 @@ namespace
         strtol_test() : val(0) {}
         void benchmark()
         {
-            this->val += strtol(first[0], const_cast<char**>(&last[0]), 10);
-            this->val += strtol(first[1], const_cast<char**>(&last[1]), 10);
-            this->val += strtol(first[2], const_cast<char**>(&last[2]), 10);
-            this->val += strtol(first[3], const_cast<char**>(&last[3]), 10);
-            this->val += strtol(first[4], const_cast<char**>(&last[4]), 10);
-            this->val += strtol(first[5], const_cast<char**>(&last[5]), 10);
-            this->val += strtol(first[6], const_cast<char**>(&last[6]), 10);
-            this->val += strtol(first[7], const_cast<char**>(&last[7]), 10);
-            this->val += strtol(first[8], const_cast<char**>(&last[8]), 10);
+            for (int i = 0; i < 9; ++i) 
+                this->val += strtol(first[i], const_cast<char**>(&last[i]), 10);
         }
 
         int val;    // This is needed to avoid dead-code elimination
@@ -89,15 +75,8 @@ namespace
             namespace qi = boost::spirit::qi;
             using qi::int_;
             
-            this->val += parse(first[0], last[0]);
-            this->val += parse(first[1], last[1]);
-            this->val += parse(first[2], last[2]);
-            this->val += parse(first[3], last[3]);
-            this->val += parse(first[4], last[4]);
-            this->val += parse(first[5], last[5]);
-            this->val += parse(first[6], last[6]);
-            this->val += parse(first[7], last[7]);
-            this->val += parse(first[8], last[8]);
+            for (int i = 0; i < 9; ++i) 
+                this->val += parse(first[i], last[i]);
         }
 
         int val;    // This is needed to avoid dead-code elimination
