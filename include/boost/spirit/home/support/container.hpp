@@ -163,7 +163,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename T>
     inline void push_back(Container& c, T const& val)
     {
-        c.push_back(val);
+        c.insert(c.end(), val);
     }
 
     template <typename Container, typename T>
