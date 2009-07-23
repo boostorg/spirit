@@ -26,6 +26,7 @@
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
 #include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/add_const.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/if.hpp>
 #include <string>

@@ -14,6 +14,8 @@
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/type_traits/add_reference.hpp>
+#include <boost/type_traits/add_const.hpp>
 
 namespace boost { namespace spirit
 {
