@@ -8,7 +8,7 @@
 
 namespace
 {
-    struct f
+    struct f : test::base
     {
         void benchmark()
         {
@@ -16,8 +16,6 @@ namespace
                             // to benchmark. Make sure it returns something.
                             // Anything.
         }
-
-        int val;    // This is needed to avoid dead-code elimination
     };
 }
 

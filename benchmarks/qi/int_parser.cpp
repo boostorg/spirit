@@ -13,7 +13,7 @@
 namespace
 {
     ///////////////////////////////////////////////////////////////////////////
-    // Random number string generator
+    // Generate a random number string with N digits
     std::string
     gen_int(int digits)
     {
@@ -32,33 +32,27 @@ namespace
     char const* last[9];
 
     ///////////////////////////////////////////////////////////////////////////
-    struct atoi_test
+    struct atoi_test : test::base
     {
-        atoi_test() : val(0) {}
         void benchmark()
         {
             for (int i = 0; i < 9; ++i) 
                 this->val += atoi(first[i]);
         }
-
-        int val;    // This is needed to avoid dead-code elimination
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    struct strtol_test
+    struct strtol_test : test::base
     {        
-        strtol_test() : val(0) {}
         void benchmark()
         {
             for (int i = 0; i < 9; ++i) 
                 this->val += strtol(first[i], const_cast<char**>(&last[i]), 10);
         }
-
-        int val;    // This is needed to avoid dead-code elimination
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    struct spirit_int_test
+    struct spirit_int_test : test::base
     {
         static int parse(char const* first, char const* last)
         {
@@ -69,7 +63,6 @@ namespace
             return n;
         }
 
-        spirit_int_test() : val(0) {}
         void benchmark()
         {
             namespace qi = boost::spirit::qi;
@@ -78,8 +71,6 @@ namespace
             for (int i = 0; i < 9; ++i) 
                 this->val += parse(first[i], last[i]);
         }
-
-        int val;    // This is needed to avoid dead-code elimination
     };
 }
 

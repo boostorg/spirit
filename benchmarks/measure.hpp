@@ -86,8 +86,8 @@ namespace test
 
         // Now start a timer
         util::high_resolution_timer time;
-        hammer<Accumulator>(repeats);  // This time, we'll measure
-        return time.elapsed() / repeats;  // return the time of one iteration
+        hammer<Accumulator>(repeats);   // This time, we'll measure
+        return time.elapsed();          // return the elapsed time
     }
     
     template <class Accumulator>
@@ -103,6 +103,12 @@ namespace test
         std::cout << std::hex << "{checksum: " << acc.val << "}";
         std::cout << std::flush << std::endl;
     }
+    
+    struct base
+    {
+        base() : val(0) {}
+        int val;    // This is needed to avoid dead-code elimination
+    };
     
 #define BOOST_SPIRIT_TEST_HAMMER(r, data, elem)                     \
     test::hammer<elem>(repeats);
