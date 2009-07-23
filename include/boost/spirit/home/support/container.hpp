@@ -64,13 +64,38 @@ namespace boost { namespace spirit { namespace traits
 #undef BOOST_SPIRIT_IS_CONTAINER
 
     ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename T>
+        struct remove_value_const
+        {
+            typedef T type;
+        };
+        
+        template <typename T>
+        struct remove_value_const<T const>
+        {
+            typedef typename remove_value_const<T>::type type;
+        };
+        
+        template <typename F, typename S>
+        struct remove_value_const<std::pair<F, S> >
+        {
+            typedef typename remove_value_const<F>::type first_type;
+            typedef typename remove_value_const<S>::type second_type;
+            typedef std::pair<first_type, second_type> type;
+        };
+    }
+
     namespace result_of
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename Container>
         struct value
-        {
-            typedef typename Container::value_type type;
+        {            
+            typedef typename detail::remove_value_const<
+                typename Container::value_type>::type
+            type;
         };
 
         // this will be instantiated if the optional holds a container
