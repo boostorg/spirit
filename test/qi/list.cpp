@@ -6,6 +6,8 @@
 =============================================================================*/
 #include <string>
 #include <vector>
+#include <set>
+#include <map>
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -21,6 +23,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/fusion/include/std_pair.hpp>
 
 #include <string>
 #include <iostream>
@@ -79,6 +82,30 @@ main()
             v[0] && "a" == boost::get<std::string>(v[0]) && 
             v[1] && boost::get<std::string>(v[1]).size() == 1 && 
                     boost::get<std::string>(v[1])[0] == '\0');
+    }
+
+    {
+        typedef std::set<std::pair<std::string, std::string> > set_type;
+        set_type s;
+        BOOST_TEST(test_attr("k1=v1&k2=v2", 
+            (*(char_ - '=') >> '=' >> *(char_ - '&')) % '&', s));
+
+        set_type::const_iterator it = s.begin();
+        BOOST_TEST(s.size() == 2);
+        BOOST_TEST(it != s.end() && (*it).first == "k1" && (*it).second == "v1");
+        BOOST_TEST(++it != s.end() && (*it).first == "k2" && (*it).second == "v2");
+    }
+
+    {
+        typedef std::map<std::string, std::string> map_type;
+        map_type m;
+        BOOST_TEST(test_attr("k1=v1&k2=v2", 
+            (*(char_ - '=') >> '=' >> *(char_ - '&')) % '&', m));
+
+        map_type::const_iterator it = m.begin();
+        BOOST_TEST(m.size() == 2);
+        BOOST_TEST(it != m.end() && (*it).first == "k1" && (*it).second == "v1");
+        BOOST_TEST(++it != m.end() && (*it).first == "k2" && (*it).second == "v2");
     }
 
     { // actions
