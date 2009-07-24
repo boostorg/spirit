@@ -128,19 +128,35 @@
 [def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
 [def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
 
+[def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
+
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
+[def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
+[def __karma_lazy_argument__        [link spirit.karma.reference.karma_basics.lazy_argument Lazy Argument]]
+
+[def __karma_eol__                  [link spirit.karma.reference.auxiliary.eol `eol`]]
+[def __karma_eps__                  [link spirit.karma.reference.auxiliary.eps `eps`]]
+[def __karma_feps__                 [link spirit.karma.reference.auxiliary.eps `eps(b)`]]
+[def __karma_lazy__                 [link spirit.karma.reference.auxiliary.lazy `lazy(fg)`]]
+[def __karma_llazy__                [link spirit.karma.reference.auxiliary.lazy `fg`]]
 
 Character Encoding Namespace
 
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]
 [def __compatible__                 Compatible] [/$$$ TODO: link me $$$]
-[def __atribute__                   Attribute] [/$$$ TODO: link me $$$]
-[def __compatible_atribute__        Compatible Attribute] [/$$$ TODO: link me $$$]
+[def __attribute__                  Attribute] [/$$$ TODO: link me $$$]
+[def __compatible_attribute__       Compatible Attribute] [/$$$ TODO: link me $$$]
 [def __rule__                       Rule] [/$$$ TODO: link me $$$]
 [def __parser_conversion__          Parser Conversion] [/$$$ TODO: link me $$$]
 [def __delegate_pattern__           Delegate Design Pattern] [/$$$ TODO: link me $$$]
 [def __composite_pattern__          Composite Design Pattern] [/$$$ TODO: link me $$$]
+
+[def __karma_actions__              Semantic Actions] [/$$$ TODO: link me $$$]
+[def __karma_context__              Context] [/$$$ TODO: link me $$$]
+[def __karma_attribute__            Attribute] [/$$$ TODO: link me $$$]
+[def __karma_compatible_attribute__ Compatible Attribute] [/$$$ TODO: link me $$$]
+[def __karma_rule__                 Rule] [/$$$ TODO: link me $$$]
 
 [/ Some images ]
 

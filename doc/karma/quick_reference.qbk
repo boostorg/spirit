@@ -12,6 +12,7 @@ components. It is not intended to be complete, but should give you an
 easy way to recall a particular component without having to dig up on
 pages and pages of reference doumentation.
 
+[/////////////////////////////////////////////////////////////////////////////]
 [section Common Notation]
 
 [variablelist Notation
@@ -43,29 +44,31 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section Predefined Primitive Generators]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[`eol`]                [`Unused`]                  [Generates the end of line (`\n`)]]
-    [[`eps`]                [`Unused`]                  [Generate an empty string]]
-    [[`eps(b)`]             [`Unused`]                  [If `b` is true, generate an empty string]]
-    [[`lazy(fg)`]           [Attribute of `G` where `G`
-                            is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
+    [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
+    [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
+    [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
+    [[__karma_lazy__]       [Attribute of `G` where `G`
+                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
                                                         `g` which is then called to generate.]]
-    [[`fg`]                 [see `lazy(fg)` above]      [Equivalent to `lazy[fg]`]]
+    [[__karma_llazy__]      [see __karma_lazy__ above]  [Equivalent to `lazy(fg)`]]
     [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 
     [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
-    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary]]
-    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary]]
-    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary]]
-    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary]]
-    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary]]
-    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary]]
-    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary]]
-    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary]]
-    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary]]
+    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
+    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
+    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
+    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
+    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
+    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
+    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
+    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
+    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
 
     [[`char_(ch)`]          [`Ch`]                      [Generates `ch`]]
     [[`char_("c")`]         [`Ch`]                      [Generates a single char string literal, `c`]]
@@ -142,6 +145,8 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section Compound Attribute Rules]
 
 The notation will be for instance: 
@@ -194,31 +199,8 @@ a: Unused --> -a: Unused``]]
 ]
 
 [endsect]
-[section Lazy Arguments]
 
-For all expressions of the form:
-
-    g(a1, a2,... aN)
-
-where `g` is a generator, each of the arguments (a1...aN) can either be an
-immediate value, or a lazy function with signature:
-
-    T(Unused, Context)
-
-where `T`, the function's return value, is compatible with the argument
-type expected. For example, this is a valid expression:
-
-    eps(false) // this will always fail
-
-And so is this:
-
-    bool flag = true;
-    eps(phoenix::var(flag)) // success or fail depending on the value
-                            // of flag at generation time
-
-since `phoenix::ref(f)` is a function that returns a `bool`.
-
-[endsect]
+[/////////////////////////////////////////////////////////////////////////////]
 [section Non-terminals]
 
 [variablelist Notation
@@ -227,7 +209,7 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
     [[`L1`, `L2`, `LN`]         [Zero or more local variables.]]
     [[`r, r2`]                  [Rules]]
     [[`g`]                      [A grammar]]
-    [[`p`]                      [A parser expression]]
+    [[`p`]                      [A generator expression]]
     [[`my_grammar`]             [A user defined grammar]]
 ]
 
@@ -252,7 +234,7 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
                                                 its name, useful for debugging and error handling.]]
     [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`. `boost::shared_ptr` semantics.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
-    [[`r.alias()`]                              [return an alias of `r`. The alias is a parser that
+    [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
                                                 holds a reference to `r`. Reference semantics.]]
     [[`r.copy()`]                               [Get a copy of `r`. `boost::shared_ptr` semantics.]]
     [[`r.name(name)`]                           [Naming a rule]]
@@ -287,6 +269,8 @@ since `phoenix::ref(f)` is a function that returns a `bool`.
 ]
 
 [endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section Semantic Actions]
 
 Has the form:
@@ -310,6 +294,8 @@ The `unused_type` is used in the signatures above to signify 'don't
 care'.
 
 [endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section Phoenix]
 
 __boost_phoenix__ makes it easier to attach semantic actions. You just

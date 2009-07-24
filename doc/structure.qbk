@@ -109,6 +109,9 @@ consistency, each library follows the same scheme as above.
 To keep it simple, you should use the flat include directory at
 boost/spirit/include.
 
+For some additional information about the rationale you might want to have a 
+look at [link spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_ this FAQ entry].
+
 [endsect] [/Include]
 
 [endsect]

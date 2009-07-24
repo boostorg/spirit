@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +8,198 @@
 
 [section Auxiliary]
 
+This module includes different auxiliary generators not fitting into any of the 
+other categories. This module includes the `eol` and `eps`, `lazy` generators.
 
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/karma/auxiliary.hpp>
+    #include <boost/spirit/include/karma_auxiliary.hpp>
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section eol]
+
+[heading Description]
+
+The `eol` component generates a single newline character. It is equivalent
+to `lit('\n')` or simply '\\n' (please see the `lit`/`char_` generator 
+component for more details).
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/auxiliary/eol.hpp>
+    #include <boost/spirit/include/karma_eol.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__primitive_generator_concept__]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`eol`]            [Create a component generating a single end of line
+                         character in the output]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`eol`]            [__unused__]]
+]
+
+[heading Complexity]
+
+[:O(1)]
+
+The complexity is constant as a single character is generated in the output.
+
+[heading Example]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section eps]
+
+The family of `eps` components allows to create pseudo generators generating
+an empty string. This feature is sometimes useful either to force a generator
+to fail or to succeed or to insert semantic actions into the generation process.
+
+[heading Description]
+
+The `eps` creates a component generating an empty string while always 
+succeeding. The `eps(b)` component generates an empty string as well, but 
+succeeds only if `b` is `true` and fails otherwise. It's lazy variant `eps(fb)`
+is equivalent to `eps(b)` except it evaluates the supplied function `fb` at 
+generate time, while using the return value as the criteria to succeed.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/auxiliary/eps.hpp>
+    #include <boost/spirit/include/karma_eps.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__primitive_generator_concept__]
+
+[variablelist Notation
+    [[`b`]      [A boolean value.]]
+    [[`fb`]     [A __karma_lazy_argument__ that evaluates to a boolean value.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`eps`]            [Creates a component generating an empty string. 
+                         Succeeds always.]]
+    [[`eps(b)`]         [Creates a component generating an empty string. 
+                         Succeeds if `b` is `true`]]
+    [[`eps(fb)`]        [Creates a component generating an empty string. 
+                         Succeeds if `fb` returns `true` at generate time.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`eps`]            [__unused__]]
+    [[`eps(b)`]         [__unused__]]
+    [[`eps(fb)`]        [__unused__]]
+]
+
+[heading Complexity]
+
+[:O(1)]
+
+The complexity is constant as no output is generated.
+
+[heading Example]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section lazy]
+
+[heading Description]
+
+The familiy of `lazy` components allows to use a dynamically returned generator 
+component for output generation. It calls the provided function or function 
+object at generate time using its return value as the actual generator to 
+produce the output.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/auxiliary/lazy.hpp>
+    #include <boost/spirit/include/karma_lazy.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__generator_concept__]
+
+[variablelist Notation
+    [[`fg`]       [A function or function object that evaluates to a generator 
+                   object. This function will be invoked at generate time.]]
+]
+
+The signature of `fg` is expected to be
+
+    G f(Unused, Context)
+
+where `G`, the function's return value, is the type of the generator to be 
+invoked, and `Context` is the generators's __karma_context__ type (The 
+first argument is __unused__ to make the `Context` the second argument. This
+is done for uniformity with __karma_actions__).
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`fg`]             [The __boost_phoenix__ function object `fg` will be 
+                         invoked at generate time. It is expected to return a
+                         generator instance. This generator is then invoked
+                         in order to generate the output.]]
+    [[`lazy(fg)`]       [The function or function object will be invoked at 
+                         generate time. It is expected to return a generator 
+                         instance  (note this version of `lazy` does not 
+                         require `fg` to be a __boost_phoenix__ function 
+                         object). This generator is then invoked in order to 
+                         generate the output.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`fg`]             [The attribute type `G` as exposed by the generator `g` 
+                         returned from `fg`.]]
+    [[`lazy(fg)`]       [The attribute type `G` as exposed by the generator `g` 
+                         returned from `fg`.]]
+]
+
+[heading Complexity]
+
+The complexity of the `lazy` component is determined by the complexity of the 
+generator returned from `fg`.
+
+[heading Example]
+
+[endsect]
 
 [endsect]

@@ -31,6 +31,9 @@ main()
         double d = 0.0;
         BOOST_TEST(test_attr("", attr(1.0), d) && d == 1.0);
 
+        double d1 = 1.0;
+        BOOST_TEST(test_attr("", attr(d1), d) && d == 1.0);
+
         std::pair<double, double> p;
         BOOST_TEST(test_attr("1.0", double_ >> attr(1.0), p) && 
             p.first == 1.0 && p.second == 1.0);

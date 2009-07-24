@@ -151,7 +151,7 @@ pages and pages of reference doumentation.
     [[`int_`]               [`int`]                     [Parse an int]]
     [[`long_long`]          [`long long`]               [Parse a long long]]
 
-    [[`attr(attrib)`]       [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
+    [[__qi_attr__]          [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
                                                          argument `attrib` as its attribute.]]
 
     [[`!a`]                 [`Unused`]                  [Not predicate. Ensure that `a` does not match

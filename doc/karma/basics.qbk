@@ -1,0 +1,29 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section:karma_basics Basics]
+
+[heading Lazy Argument]
+
+Some generators (e.g. primitives and non-terminals) may take in additional
+attributes. Such generators take the form:
+
+    g(a1, a2,... aN)
+
+where `g` is a parser. Each of the arguments (a1...aN) can either be an
+immediate value, or a function, `f`, with signature:
+
+    T f(Unused, Context)
+
+where `T`, the function's return value, is compatible with the argument
+type expected and `Context` is the generators's __karma_context__ type (The 
+first argument is __unused__ to make the `Context` the second argument. This
+is done for uniformity with __karma_actions__).
+
+[endsect]
+

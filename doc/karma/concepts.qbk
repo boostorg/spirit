@@ -33,10 +33,10 @@ can be a more complex generator formed as a composition of other Generator's.
     [[`G`]              [A `Generator` type.]]
     [[`OutIter`]        [An `OutputIterator` type.]]
     [[`sink`]           [An `OutputIterator` instance.]]
-    [[`Context`]        [The generator's __context__ type.]]
-    [[`context`]        [The generator's __context__, or __unused__.]]
+    [[`Context`]        [The generator's __karma_context__ type.]]
+    [[`context`]        [The generator's __karma_context__, or __unused__.]]
     [[`delimit`]        [A delimiter Generator, or __unused__.]]
-    [[`attrib`]         [A __compatible_atribute__, or __unused__.]]
+    [[`attrib`]         [A __karma_compatible_attribute__, or __unused__.]]
 ]
 
 [heading Valid Expressions]

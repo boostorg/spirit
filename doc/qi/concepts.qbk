@@ -37,7 +37,7 @@ more complex parser formed as a composition of other Parsers.
     [[`Context`]        [The parser's __context__ type.]]
     [[`context`]        [The parser's __context__, or __unused__.]]
     [[`skip`]           [A skip Parser, or __unused__.]]
-    [[`attrib`]         [A __compatible_atribute__, or __unused__.]]
+    [[`attrib`]         [A __compatible_attribute__, or __unused__.]]
 ]
 
 [heading Valid Expressions]

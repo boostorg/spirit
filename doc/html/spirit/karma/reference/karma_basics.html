@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Basics</title>
+<link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../reference.html" title="Reference">
+<link rel="prev" href="generator_concepts/narygenerator.html" title="NaryGenerator">
+<link rel="next" href="auxiliary.html" title="Auxiliary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="generator_concepts/narygenerator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auxiliary.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" title="Basics">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.karma.reference.karma_basics"></a><a class="link" href="karma_basics.html" title="Basics"> Basics</a>
+</h4></div></div></div>
+<a name="spirit.karma.reference.karma_basics.lazy_argument"></a><h6>
+<a name="id1092559"></a>
+          <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+          Argument</a>
+        </h6>
+<p>
+          Some generators (e.g. primitives and non-terminals) may take in additional
+          attributes. Such generators take the form:
+        </p>
+<pre class="programlisting"><span class="identifier">g</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
+</pre>
+<p>
+          where <code class="computeroutput"><span class="identifier">g</span></code> is a parser. Each
+          of the arguments (a1...aN) can either be an immediate value, or a function,
+          <code class="computeroutput"><span class="identifier">f</span></code>, with signature:
+        </p>
+<pre class="programlisting"><span class="identifier">T</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
+</pre>
+<p>
+          where <code class="computeroutput"><span class="identifier">T</span></code>, the function's
+          return value, is compatible with the argument type expected and <code class="computeroutput"><span class="identifier">Context</span></code> is the generators's Context type
+          (The first argument is <code class="computeroutput"><span class="identifier">unused</span></code>
+          to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
+          second argument. This is done for uniformity with Semantic Actions).
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="generator_concepts/narygenerator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auxiliary.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
