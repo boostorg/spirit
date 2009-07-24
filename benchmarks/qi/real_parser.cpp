@@ -11,91 +11,92 @@
 #include <boost/spirit/include/qi.hpp>
 
 namespace
-{
-    ///////////////////////////////////////////////////////////////////////////
-    // Generate a random number string with N digits
-    std::string
-    gen_int(int digits)
+{   
+    int const ndigits = 9; 
+    std::string numbers[ndigits] =
     {
-        std::string result;
-        if (rand()%2)                       // Prepend a '-'
-            result += '-';
-        result += '1' + (rand()%9);         // The first digit cannot be '0'
-        
-        for (int i = 1; i < digits; ++i)    // Generate the remaining digits
-            result += '0' + (rand()%10);
-        return result;
-    }
-    
-    std::string numbers[9];
-    char const* first[9];
-    char const* last[9];
+        "1234",
+        "-1.2e3",
+        "0.1",
+        "-1.2e-3",
+        "-.2e3",
+        "-e3",
+        "1.2e",
+        "-5.7222349715140557e+307",
+        "2.0332938517515416e-308"
+    };
+
+    char const* first[ndigits];
+    char const* last[ndigits];
 
     ///////////////////////////////////////////////////////////////////////////
-    struct atoi_test : test::base
+    struct atof_test : test::base
     {
         void benchmark()
         {
-            for (int i = 0; i < 9; ++i) 
-                this->val += atoi(first[i]);
+            for (int i = 0; i < ndigits; ++i) 
+            {
+                double d = atof(first[i]);
+                this->val += *reinterpret_cast<int*>(&d);
+            }  
         }
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    struct strtol_test : test::base
+    struct strtod_test : test::base
     {        
         void benchmark()
         {
-            for (int i = 0; i < 9; ++i) 
-                this->val += strtol(first[i], const_cast<char**>(&last[i]), 10);
+            for (int i = 0; i < ndigits; ++i) 
+            {
+                double d = strtod(first[i], const_cast<char**>(&last[i]));
+                this->val += *reinterpret_cast<int*>(&d);
+            }                
         }
     };
     
     ///////////////////////////////////////////////////////////////////////////
-    struct spirit_int_test : test::base
+    struct spirit_double_test : test::base
     {
-        static int parse(char const* first, char const* last)
+        static double parse(char const* first, char const* last)
         {
-            int n;
+            double n;
             namespace qi = boost::spirit::qi;
-            using qi::int_;
-            qi::parse(first, last, int_, n);
+            using qi::double_;
+            qi::parse(first, last, double_, n);
             return n;
         }
 
         void benchmark()
-        {           
-            for (int i = 0; i < 9; ++i) 
-                this->val += parse(first[i], last[i]);
+        {
+            for (int i = 0; i < ndigits; ++i) 
+            {
+                double d = parse(first[i], last[i]);
+                this->val += *reinterpret_cast<int*>(&d);
+            }
         }
     };
 }
 
 int main()
-{
-    // Seed the random generator
-    srand(time(0));
-    
-    // Generate random integers with 1 .. 9 digits
-    // We test only 9 digits to avoid overflow
+{   
     std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
     std::cout << "Numbers to test:" << std::endl;
-    for (int i = 0; i < 9; ++i)
+    for (int i = 0; i < ndigits; ++i)
     {
-        numbers[i] = gen_int(i+1);
         first[i] = numbers[i].c_str();
         last[i] = first[i];
         while (*last[i])
             last[i]++;
-        std::cout << i+1 << " digit number:" << numbers[i] << std::endl;
+        std::cout << numbers[i] << std::endl;
     }
     std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
 
     BOOST_SPIRIT_TEST_BENCHMARK(
         10000000,     // This is the maximum repetitions to execute
-        (atoi_test)
-        (strtol_test)
-        (spirit_int_test)
+        (atof_test)
+        (strtod_test)
+        (spirit_double_test)
     )
     
     // This is ultimately responsible for preventing all the test code
