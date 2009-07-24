@@ -111,6 +111,7 @@
 [def __unused_type__            `unused_type`] [/$$$ TODO: link me $$$]
 [def __unused__                 `unused`] [/$$$ TODO: link me $$$]
 [def __info__                   `info`] [/$$$ TODO: link me $$$]
+[def __char_class_types__       character class types] [/$$$ TODO: link me $$$]
 
 [/ References to abstracts ]
 

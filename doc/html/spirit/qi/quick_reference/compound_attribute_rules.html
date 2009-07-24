@@ -41,7 +41,7 @@
           <span class="identifier">b</span></code> will be <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>.
         </p>
 <div class="table">
-<a name="id1052907"></a><p class="title"><b>Table 4. compound parser attribute types</b></p>
+<a name="id993906"></a><p class="title"><b>Table 4. compound parser attribute types</b></p>
 <div class="table-contents"><table class="table" summary="compound parser attribute types">
 <colgroup>
 <col>
@@ -125,27 +125,10 @@
               </td>
 <td>
               <p>
-                <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                <span class="identifier">A</span><span class="special">,</span>
-                <span class="identifier">b</span><span class="special">:</span>
-                <span class="identifier">B</span> <span class="special">--&gt;</span>
-                <span class="special">(</span><span class="identifier">a</span>
-                <span class="special">-</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></code>
-              </p>
-              </td>
-</tr>
-<tr>
-<td>
-              <p>
-                kleene (<code class="computeroutput"><span class="special">*</span></code>)
-              </p>
-              </td>
-<td>
-              <p>
                 
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
               </p>
               </td>
@@ -153,7 +136,23 @@
 <tr>
 <td>
               <p>
-                plus (<code class="computeroutput"><span class="special">+</span></code>)
+                kleene (unary <code class="computeroutput"><span class="special">*</span></code>)
+              </p>
+              </td>
+<td>
+              <p>
+                
+</p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<p>
+              </p>
+              </td>
+</tr>
+<tr>
+<td>
+              <p>
+                plus (unary <code class="computeroutput"><span class="special">+</span></code>)
               </p>
               </td>
 <td>
@@ -161,7 +160,7 @@
                 
 </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
               </p>
               </td>
@@ -219,7 +218,7 @@
 <tr>
 <td>
               <p>
-                optional (<code class="computeroutput"><span class="special">-</span></code>)
+                optional (unary <code class="computeroutput"><span class="special">-</span></code>)
               </p>
               </td>
 <td>

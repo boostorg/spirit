@@ -174,13 +174,12 @@ a: Unused, b: B --> (a | b): variant<Unused, B>
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[kleene (`*`)]
+    [[kleene (unary `*`)]
 [``a: A --> *a: vector<A>
-a: Unused --> a: Unused``]]
-
-    [[plus (`+`)]
+a: Unused --> *a: Unused``]]
+    [[plus (unary `+`)]
 [``a: A --> +a: vector<A>
-a: Unused --> a: Unused``]]
+a: Unused --> +a: Unused``]]
 
     [[list (`%`)]
 [``a: A, b: B --> (a % b): vector<A>
@@ -190,7 +189,7 @@ a: Unused, b: B --> (a % b): Unused``]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[optional (`-`)]
+    [[optional (unary `-`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 
