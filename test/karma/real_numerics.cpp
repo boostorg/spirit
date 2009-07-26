@@ -438,8 +438,9 @@ int main()
     }
 
 // support for using real_concept with a Karma generator has been implemented 
-// in Boost versions > 1.36 only
-#if BOOST_VERSION > 103600
+// in Boost versions > 1.36 only, additionally real_concept is available only
+// if BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS  is not defined
+#if BOOST_VERSION > 103600 && !defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
     {
         using boost::math::concepts::real_concept;
         typedef karma::real_generator<real_concept> custom_type;
