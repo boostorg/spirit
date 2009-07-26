@@ -19,6 +19,9 @@
 
 #include <boost/spirit/repository/home/support/confix.hpp>
 
+#include <boost/fusion/include/at.hpp>
+#include <boost/fusion/include/vector.hpp>
+
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit 
 {
@@ -46,7 +49,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
     using repository::confix;
 
     ///////////////////////////////////////////////////////////////////////////
-    // the director for a confix() generated generator
     template <typename Subject, typename Prefix, typename Suffix>
     struct confix_generator
       : spirit::karma::primitive_generator<confix_generator<Subject, Prefix, Suffix> >
@@ -116,11 +118,11 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, Subject const& subject
-          , unused_type) const
+          , Modifiers const& modifiers) const
         {
             return result_type(subject
-              , compile<karma::domain>(fusion::at_c<0>(term.args))
-              , compile<karma::domain>(fusion::at_c<1>(term.args)));
+              , compile<karma::domain>(fusion::at_c<0>(term.args), modifiers)
+              , compile<karma::domain>(fusion::at_c<1>(term.args), modifiers));
         }
     };
 
