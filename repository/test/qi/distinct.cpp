@@ -23,9 +23,9 @@
 using namespace boost;
 
 ///////////////////////////////////////////////////////////////////////////////
-//[qi_distinct_encapsulation
 namespace distinct
 {
+    //[qi_distinct_encapsulation
     namespace spirit = boost::spirit;
     namespace ascii = boost::spirit::ascii;
     namespace repo = boost::spirit::repository;
@@ -73,17 +73,17 @@ namespace distinct
         return ascii::char_(str);
     }
 
-    // the following constructs the type of a distinct_spec holding 
+    // the following constructs the type of a distinct_spec holding a
     // charset("0-9a-zA-Z_") as its tail parser
     typedef traits::char__spec<std::string>::type charset_tag_type;
     typedef traits::distinct_spec<charset_tag_type>::type keyword_tag_type;
 
-    // Define a new Qi keyword directive usable as a shortcut for a
+    // Define a new Qi 'keyword' directive usable as a shortcut for a
     // repository::distinct(char_(std::string("0-9a-zA-Z_")))
     std::string const keyword_spec("0-9a-zA-Z_");
     keyword_tag_type const keyword = distinct_spec(char__spec(keyword_spec)); 
+    //]
 }
-//]
 
 ///////////////////////////////////////////////////////////////////////////////
 int main()

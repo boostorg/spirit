@@ -26,13 +26,13 @@ the following strings in the input:
 
 It might seem unexpected, but the parser above matches all three inputs just 
 fine, even if the third input should not match at all! In order to avoid the 
-unwanted we are forced to make our rule more complicated, intermixing the 
-intended syntactic analysis with semantic verification:
+unwanted match we are forced to make our rule more complicated, intermixing 
+the intended syntactic analysis with semantic verification:
 
     lexeme["declare" >> &char_("a-zA-Z_0-9")] >> -lit(":") >> *(char_ - eol)
 
-(the rule reads as: match declare as long as it's not /directly/ followed by a 
-valid identifier).
+(the rule reads as: match `"declare"` as long as it's not /directly/ followed 
+by a valid identifier).
 
 The `distinct[]` directive can be used to simplify the rule above, allowing at 
 the same time to avoid the semantic verification at parse time:
@@ -40,9 +40,9 @@ the same time to avoid the semantic verification at parse time:
     distinct(char_("a-zA-Z_0-9"))["declare"] >> -lit(":") >> *(char_ - eol)
 
 Using the `distinct[]` component instead of the explicit sequence has the 
-advantage of being able to encapsulate the tail as separate parser construct. 
+advantage of being able to encapsulate the tail as a separate parser construct. 
 The following code snippet illustrates the idea (for the full code of this 
-example please see [@../../test/qi/distinct.cpp distinct.cpp]:
+example please see [@../../test/qi/distinct.cpp distinct.cpp]):
 
 [import ../test/qi/distinct.cpp]
 [qi_distinct_encapsulation]
@@ -50,7 +50,7 @@ example please see [@../../test/qi/distinct.cpp distinct.cpp]:
 These definitions define a new Qi parser recognizing keywords! This allows to 
 rewrite our declaration parser expression as:
 
-    distinct::keyword["declare"] >> -lit(":") >> *(char_ - eol)
+    keyword["declare"] >> -lit(":") >> *(char_ - eol)
 
 which is much more readable and concise if compared to the original parser 
 expression. In addition the new `keyword[]` directive has the advantage to be 
