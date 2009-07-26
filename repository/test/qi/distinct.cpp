@@ -38,21 +38,14 @@ namespace distinct
         // construct
         template <typename Tail>
         struct distinct_spec
-        {
-            using namespace boost::spirit;
-            typedef typename spirit::result_of::terminal<
-                repository::tag::distinct(Tail)
-            >::type type;
-        };
+          : spirit::result_of::terminal<repository::tag::distinct(Tail)>
+        {};
 
         // Metafunction allowing to get the type of any ascii::char_(...) construct
         template <typename String>
-        struct char__spec
-        {
-            typedef typename spirit::result_of::terminal<
-                spirit::tag::ascii::char_(String)
-            >::type type;
-        };
+        struct char_spec
+          : spirit::result_of::terminal<spirit::tag::ascii::char_(String)>
+        {};
     };
 
     // Define a helper function allowing to create a distinct() construct from 
@@ -67,21 +60,21 @@ namespace distinct
     // Define a helper function allowing to create a ascii::char_() construct 
     // from an arbitrary string representation
     template <typename String>
-    inline typename traits::char__spec<String>::type
-    char__spec(String const& str)
+    inline typename traits::char_spec<String>::type
+    char_spec(String const& str)
     {
         return ascii::char_(str);
     }
 
     // the following constructs the type of a distinct_spec holding a
     // charset("0-9a-zA-Z_") as its tail parser
-    typedef traits::char__spec<std::string>::type charset_tag_type;
+    typedef traits::char_spec<std::string>::type charset_tag_type;
     typedef traits::distinct_spec<charset_tag_type>::type keyword_tag_type;
 
     // Define a new Qi 'keyword' directive usable as a shortcut for a
     // repository::distinct(char_(std::string("0-9a-zA-Z_")))
     std::string const keyword_spec("0-9a-zA-Z_");
-    keyword_tag_type const keyword = distinct_spec(char__spec(keyword_spec)); 
+    keyword_tag_type const keyword = distinct_spec(char_spec(keyword_spec)); 
     //]
 }
 
@@ -95,12 +88,12 @@ int main()
         using namespace boost::spirit::ascii;
 
         qi::rule<char const*, space_type> r;
-        r = distinct::keyword["declare"] >> -lit(':') >> distinct::keyword["ident"];
+        r = distinct::keyword["description"] >> -lit(':') >> distinct::keyword["ident"];
 
-        BOOST_TEST(test("declare ident", r, space));
-        BOOST_TEST(test("declare:ident", r, space));
-        BOOST_TEST(test("declare: ident", r, space));
-        BOOST_TEST(!test("declareident", r, space));
+        BOOST_TEST(test("description ident", r, space));
+        BOOST_TEST(test("description:ident", r, space));
+        BOOST_TEST(test("description: ident", r, space));
+        BOOST_TEST(!test("descriptionident", r, space));
     }
 
     return boost::report_errors();

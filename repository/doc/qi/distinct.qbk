@@ -12,37 +12,36 @@
 
 The __qi__ `distinct` parser is a directive component allowing to avoid partial 
 matches while parsing using a skipper. A simple example is the common task of 
-matching a C identifier. Consider:
+matching a C keyword. Consider:
 
-    "declare" >> -lit(":") >> *(char_ - eol)
+    "description" >> -lit(":") >> *(char_ - eol)
 
 intending to match a variable declaration rule in some imaginary language. Let's
 assume further, that this rule is used with a `space` skipper and that we have 
 the following strings in the input:
 
-    "declare: ident\n"
-    "declare ident\n"
-    "declareident\n"
+    "description: ident\n"
+    "description ident\n"
+    "descriptionident\n"
 
 It might seem unexpected, but the parser above matches all three inputs just 
 fine, even if the third input should not match at all! In order to avoid the 
-unwanted match we are forced to make our rule more complicated, intermixing 
-the intended syntactic analysis with semantic verification:
+unwanted match we are forced to make our rule more complicated:
 
-    lexeme["declare" >> &char_("a-zA-Z_0-9")] >> -lit(":") >> *(char_ - eol)
+    lexeme["description" >> !char_("a-zA-Z_0-9")] >> -lit(":") >> *(char_ - eol)
 
-(the rule reads as: match `"declare"` as long as it's not /directly/ followed 
-by a valid identifier).
+(the rule reads as: match `"description"` as long as it's not /directly/ 
+followed by a valid identifier).
 
-The `distinct[]` directive can be used to simplify the rule above, allowing at 
-the same time to avoid the semantic verification at parse time:
+The `distinct[]` directive is meant to simplify the rule above:
 
-    distinct(char_("a-zA-Z_0-9"))["declare"] >> -lit(":") >> *(char_ - eol)
+    distinct(char_("a-zA-Z_0-9"))["description"] >> -lit(":") >> *(char_ - eol)
 
 Using the `distinct[]` component instead of the explicit sequence has the 
-advantage of being able to encapsulate the tail as a separate parser construct. 
-The following code snippet illustrates the idea (for the full code of this 
-example please see [@../../test/qi/distinct.cpp distinct.cpp]):
+advantage of being able to encapsulate the tail (i.e the `char_("a-zA-Z_0-9")`) 
+as a separate parser construct. The following code snippet illustrates the idea 
+(for the full code of this example please see 
+[@../../test/qi/distinct.cpp distinct.cpp]):
 
 [import ../test/qi/distinct.cpp]
 [qi_distinct_encapsulation]
@@ -50,7 +49,7 @@ example please see [@../../test/qi/distinct.cpp distinct.cpp]):
 These definitions define a new Qi parser recognizing keywords! This allows to 
 rewrite our declaration parser expression as:
 
-    keyword["declare"] >> -lit(":") >> *(char_ - eol)
+    keyword["description"] >> -lit(":") >> *(char_ - eol)
 
 which is much more readable and concise if compared to the original parser 
 expression. In addition the new `keyword[]` directive has the advantage to be 
@@ -109,15 +108,15 @@ To make all the code below more readable we introduce the following namespaces.
 
 We show several examples of how the `distinct[]` directive can be used to force
 correct behavior while matching keywords. The first two code snippets show 
-the correct matching of the declare keyword (in this hypothetical example we 
-allow keywords to be directly followed by an optional `"--"`):
+the correct matching of the `description` keyword (in this hypothetical example 
+we allow keywords to be directly followed by an optional `"--"`):
 
-[qi_distinct_declare_ident]
-[qi_distinct_declare__ident]
+[qi_distinct_description_ident]
+[qi_distinct_description__ident]
 
 The last example shows that the `distinct[]` parser component correctly refuses
-to match "declare-ident":
+to match "description-ident":
 
-[qi_distinct_declare_ident_error]
+[qi_distinct_description_ident_error]
 
 [endsect]

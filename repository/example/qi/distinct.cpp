@@ -23,34 +23,34 @@ using boost::spirit::repository::distinct;
 
 int main()
 {
-    //[qi_distinct_declare_ident
+    //[qi_distinct_description_ident
     {
-        std::string str("declare ident");
+        std::string str("description ident");
         std::string::iterator first(str.begin());
         bool r = qi::phrase_parse(first, str.end()
-          , distinct(alnum | '_')["declare"] >> -lit("--") >> +(alnum | '_')
+          , distinct(alnum | '_')["description"] >> -lit("--") >> +(alnum | '_')
           , space);
         BOOST_ASSERT(r && first == str.end());
     }
     //]
 
-    //[qi_distinct_declare__ident
+    //[qi_distinct_description__ident
     {
-        std::string str("declare--ident");
+        std::string str("description--ident");
         std::string::iterator first(str.begin());
         bool r = qi::phrase_parse(first, str.end()
-          , distinct(alnum | '_')["declare"] >> -lit("--") >> +(alnum | '_')
+          , distinct(alnum | '_')["description"] >> -lit("--") >> +(alnum | '_')
           , space);
         BOOST_ASSERT(r && first == str.end());
     }
     //]
 
-    //[qi_distinct_declare_ident_error
+    //[qi_distinct_description_ident_error
     {
-        std::string str("declare-ident");
+        std::string str("description-ident");
         std::string::iterator first(str.begin());
         bool r = qi::phrase_parse(first, str.end()
-          , distinct(alnum | '_')["declare"] >> -lit("--") >> +(alnum | '_')
+          , distinct(alnum | '_')["description"] >> -lit("--") >> +(alnum | '_')
           , space);
         BOOST_ASSERT(!r && first == str.begin());
     }
