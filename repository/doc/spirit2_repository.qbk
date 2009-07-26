@@ -51,8 +51,8 @@
 
 [include preface.qbk]
 
-[include karma.qbk]
-
 [include qi.qbk]
+
+[include karma.qbk]
 
 

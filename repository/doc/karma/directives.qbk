@@ -7,4 +7,5 @@
 ===============================================================================/]
 
 [section Karma Generator Directives]
+[include        confix.qbk]
 [endsect]

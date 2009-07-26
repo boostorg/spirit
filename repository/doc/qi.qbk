@@ -9,7 +9,7 @@
 [section Qi Components]
 
 [include        qi/primitive_parsers.qbk]
-[/include        qi/directives.qbk]
+[include        qi/directives.qbk]
 [/include        qi/compount_parsers.qbk]
 
 [endsect] [/ Qi]

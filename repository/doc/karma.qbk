@@ -8,8 +8,8 @@
 
 [section Karma Components]
 
-[include        karma/primitive_generators.qbk]
-[/include        karma/directives.qbk]
+[/include        karma/primitive_generators.qbk]
+[include        karma/directives.qbk]
 [/include        karma/compount_generators.qbk]
 
 [endsect]

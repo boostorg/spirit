@@ -10,7 +10,7 @@
 
 [heading Description]
 
-The __karma__ `confix` generator is a primitive generator component 
+The __karma__ `confix` generator is a generator directive component 
 allowing to embed any generated ouput inside an opening (a prefix) and a 
 closing (a suffix). A simple example is a C comment: `/* This is a C comment */`
 which can be generated using the `confix` generator as: 
@@ -67,6 +67,7 @@ using a simple: `ol["Some text"]` (which results in `<ol>Some text</ol>`).
 
 [heading Header]
 
+    // forwards to <boost/spirit/repository/home/karma/confix.hpp>
     #include <boost/spirit/repository/include/karma_confix.hpp>
 
 [heading Synopsis]
