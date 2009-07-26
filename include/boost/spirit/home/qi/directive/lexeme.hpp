@@ -14,6 +14,7 @@
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
+#include <boost/spirit/home/qi/detail/unused_skipper.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
@@ -33,14 +34,6 @@ namespace boost { namespace spirit { namespace qi
 {
     using spirit::lexeme;
     using spirit::lexeme_type;
-
-    template <typename Skipper>
-    struct unused_skipper : unused_type
-    {
-        unused_skipper(Skipper const& skipper)
-          : skipper(skipper) {}
-        Skipper const& skipper;
-    };
 
     template <typename Subject>
     struct lexeme_directive : unary_parser<lexeme_directive<Subject> >
@@ -65,7 +58,7 @@ namespace boost { namespace spirit { namespace qi
         {
             qi::skip_over(first, last, skipper);
             return subject.parse(first, last, context
-              , unused_skipper<Skipper>(skipper), attr);
+              , detail::unused_skipper<Skipper>(skipper), attr);
         }
 
         template <typename Context>

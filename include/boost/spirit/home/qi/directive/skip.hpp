@@ -17,6 +17,7 @@
 #include <boost/spirit/home/qi/operator/kleene.hpp>
 #include <boost/spirit/home/qi/directive/lexeme.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/detail/unused_skipper.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
@@ -52,24 +53,6 @@ namespace boost { namespace spirit { namespace qi
     using spirit::skip;
     using spirit::skip_type;
 
-    template <typename Skipper>
-    struct unused_skipper;
-
-    namespace detail
-    {
-        template <typename Skipper>
-        inline Skipper const& get_skipper(unused_skipper<Skipper> const& u)
-        {
-            return u.skipper;
-        }
-
-        template <typename Skipper>
-        inline Skipper const& get_skipper(Skipper const& u)
-        {
-            return u;
-        }
-    }
-
     template <typename Subject>
     struct reskip_parser : unary_parser<reskip_parser<Subject> >
     {
@@ -92,7 +75,8 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& u // --> The skipper is reintroduced
           , Attribute& attr) const
         {
-            return subject.parse(first, last, context, detail::get_skipper(u), attr);
+            return subject.parse(first, last, context
+              , detail::get_skipper(u), attr);
         }
 
         template <typename Context>

@@ -12,7 +12,7 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/qi/detail/unused_skipper.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
@@ -33,13 +33,12 @@ namespace boost { namespace spirit { namespace qi
     {
     }
 
-    template <typename Skipper>
-    struct unused_skipper;
-
     template <typename Iterator, typename Skipper>
-    inline void skip_over(Iterator&, Iterator const&, unused_skipper<Skipper> const&)
+    inline void skip_over(Iterator&, Iterator const&
+      , detail::unused_skipper<Skipper> const&)
     {
     }
+
 }}}
 
 #endif
