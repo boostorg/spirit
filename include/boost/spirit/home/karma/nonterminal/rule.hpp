@@ -177,18 +177,13 @@ namespace boost { namespace spirit { namespace karma
             bool(output_iterator&, context_type&, delimiter_type const&)>
         function_type;
 
-        rule(std::string const& name_ = "unnamed-rule")
+        explicit rule(std::string const& name_ = "unnamed-rule")
           : base_type(terminal::make(alias()))
           , name_(name_)
         {
         }
 
-        rule(rule const& rhs)
-          : base_type(terminal::make(alias()))
-          , name_(rhs.name_)
-          , f(rhs.f)
-        {
-        }
+        // the default copy constructor does the right thing
 
         rule& operator=(rule const& rhs)
         {
