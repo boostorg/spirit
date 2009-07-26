@@ -22,6 +22,7 @@ import testing ;
     test-suite spirit_v2_repository :
 
     # run Qi repository tests
+    [ run qi/distinct.cpp                   : : : : qi_repo_distinct ]
 
     # run Karma repository tests
     [ run karma/confix.cpp                  : : : : karma_repo_confix ]
