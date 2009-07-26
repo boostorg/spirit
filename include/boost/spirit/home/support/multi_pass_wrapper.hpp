@@ -6,6 +6,7 @@
 #if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_WRAPPER_JUL_12_2009_0914PM)
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_WRAPPER_JUL_12_2009_0914PM
 
+#include <boost/mpl/bool.hpp>
 #include <boost/spirit/home/support/detail/scoped_enum_emulation.hpp>
 
 namespace boost { namespace spirit { namespace traits
