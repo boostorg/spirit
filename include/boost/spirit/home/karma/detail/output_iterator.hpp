@@ -294,7 +294,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         buffering_policy() : buffer(NULL) {}
         buffering_policy(buffering_policy const& rhs) : buffer(rhs.buffer) {}
 
-        // functions related to counting
+        // functions related to buffering
         buffer_sink<OutputIterator>* chain_buffering(
             buffer_sink<OutputIterator>* buffer_data)
         {
@@ -306,7 +306,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename T>
         void output(T const& value) 
         { 
-            // count characters, if appropriate
+            // buffer characters, if appropriate
             if (NULL != buffer) 
                 buffer->output(value);
         }
