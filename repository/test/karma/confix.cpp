@@ -25,11 +25,9 @@ namespace html
     namespace traits
     {
         template <typename Prefix, typename Suffix = Prefix>
-        struct confix_spec
-        {
-            typedef typename spirit::result_of::terminal<
-                repo::tag::confix(Prefix, Suffix)>::type type;
-        };
+        struct confix_spec 
+          : spirit::result_of::terminal<repo::tag::confix(Prefix, Suffix)>
+        {};
     };
 
     template <typename Prefix, typename Suffix>

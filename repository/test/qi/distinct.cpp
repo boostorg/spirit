@@ -38,7 +38,7 @@ namespace distinct
         // construct
         template <typename Tail>
         struct distinct_spec
-          : spirit::result_of::terminal<repository::tag::distinct(Tail)>
+          : spirit::result_of::terminal<repo::tag::distinct(Tail)>
         {};
 
         // Metafunction allowing to get the type of any ascii::char_(...) construct
