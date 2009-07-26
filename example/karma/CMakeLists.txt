@@ -7,7 +7,7 @@
 #==============================================================================
 
 boost_add_executable(quick_start1)
-boost_add_executable(num_list1)
+boost_add_executable(karma_num_list1 num_list1.cpp)
 boost_add_executable(actions)
 boost_add_executable(basic_facilities DEPENDS boost_date_time)
 boost_add_executable(calc2_ast_dump)
