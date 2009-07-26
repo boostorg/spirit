@@ -85,15 +85,18 @@ namespace boost { namespace spirit
 // are placed in its char-set namespace. For example, there exist a placeholder
 // spirit::ascii::alnum for ascii versions of alnum.
 
+#define BOOST_SPIRIT_TAG_CHAR_SPEC(charset)                                     \
+    typedef tag::char_code<tag::char_, charset> char_;                          \
+    typedef tag::char_code<tag::string, charset> string;                        \
+    /***/
+
 #define BOOST_SPIRIT_CHAR_SPEC(charset)                                         \
-    typedef spirit::terminal<                                                   \
-        tag::char_code<tag::char_, charset> > char__type;                       \
+    typedef spirit::terminal<tag::charset::char_> char__type;                   \
     char__type const char_ = char__type();                                      \
                                                                                 \
     inline void silence_unused_warnings__##char_() { (void) char_; }            \
                                                                                 \
-    typedef spirit::terminal<                                                   \
-        tag::char_code<tag::string, charset> > string_type;                     \
+    typedef spirit::terminal<tag::charset::string> string_type;                 \
     string_type const string = string_type();                                   \
                                                                                 \
     inline void silence_unused_warnings__##string() { (void) string; }          \
@@ -108,9 +111,13 @@ namespace boost { namespace spirit
     /***/
 
 #define BOOST_SPIRIT_DEFINE_CHAR_CODES(charset)                                 \
+    namespace boost { namespace spirit { namespace tag { namespace charset      \
+    {                                                                           \
+        BOOST_SPIRIT_TAG_CHAR_SPEC(spirit::char_encoding::charset)              \
+    }}}}                                                                        \
     namespace boost { namespace spirit { namespace charset                      \
     {                                                                           \
-        BOOST_SPIRIT_CHAR_SPEC(spirit::char_encoding::charset)                  \
+        BOOST_SPIRIT_CHAR_SPEC(charset)                                         \
                                                                                 \
         BOOST_SPIRIT_CHAR_CODE(alnum, spirit::char_encoding::charset)           \
         BOOST_SPIRIT_CHAR_CODE(alpha, spirit::char_encoding::charset)           \
