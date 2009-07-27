@@ -140,7 +140,7 @@ other parts. __lex__ now uses the infrastructure provided by __spirit__ version
 * Lexer semantic actions now have to conform to a changed interface (see
   __sec_lex_semactions__ for details).
 * Added placeholder symbols usable from the inside of lexer semantic actions 
-  while using Phoenix: _start, _end, _eoi, _state, _value, and _pass (see 
+  while using Phoenix: _start, _end, _eoi, _state, _val, and _pass (see 
   __sec_lex_semactions__ for more details).
 * Added (lazy) support functions usable from the inside of lexer semantic
    actions while using Phoenix: `lex::more()`, `lex::less()`, and 

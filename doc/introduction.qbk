@@ -190,7 +190,7 @@ data types as long as these conform conceptually. The next table gives some
 related examples.
 
 [table Different data types usable with the output format `*(int_ << eol)`
-    [ [Data type] ]
+    [ [Data type]                 [Description] ]
     [ [`int i[4]`]                [C style arrays] ]
     [ [`std::vector<int>`]        [Standard vector] ]
     [ [`std::list<int>`]          [Standard list] ]

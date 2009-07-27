@@ -76,6 +76,7 @@
 [def __sec_qi__                 [link spirit.qi Qi]]
 [def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_qi_karma_attributes__  [link spirit.qi_and_karma.abstracts.attributes Attributes]]
+[def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
 
 [def __sec_lex__                [link spirit.lex Lex]]
 [def __sec_lex_quickstart_1__   [link spirit.lex.tutorials.lexer_quickstart1 Lex Quickstart 1 - A word counter using __lex__]]
@@ -140,8 +141,6 @@
 [def __karma_feps__                 [link spirit.karma.reference.auxiliary.eps `eps(b)`]]
 [def __karma_lazy__                 [link spirit.karma.reference.auxiliary.lazy `lazy(fg)`]]
 [def __karma_llazy__                [link spirit.karma.reference.auxiliary.lazy `fg`]]
-
-Character Encoding Namespace
 
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]

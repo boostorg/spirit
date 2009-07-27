@@ -52,11 +52,20 @@ for complex numbers with imaginary parts equal to zero.
 
 Here goes the full example, this time with the proper semantic actions (The 
 full cpp file for this example can be found here: 
-[@../../example/karma/complex_number.cpp complex_number.cpp]):
+[@../../example/karma/complex_number.cpp complex_number.cpp]).
+
+This is the complex type we will use for this and all subsequent realted 
+examples:
+
+[tutorial_karma_complex_number_type]
+
+And here you can see the full code of the generator allowing to output a 
+complex number either as a pair of numbers (if the imaginary part is non-zero)
+or as a single number (if the complex is a real number):
 
 [tutorial_karma_complex_number]
 
-The `double_` generators have this action attached:
+The `double_` generators have this semantic action attached:
 
     _1 = n
 
@@ -66,6 +75,21 @@ data to be used. The semantic action above assigns the value to be generated
 (n) to the generator (actually, the attribute of `double_`) . `_1` is a Phoenix 
 placeholder for the attribute of the generator the semantic action is attached 
 to.
+
+These semantic actions are easy to understand but have the unexpected side 
+effect of being slightly less efficient than it could be. In addition they tend
+to make the formatting grammar less readable. We will see in the next section 
+how it is possible to use built in features of __karma__ to get rid of the 
+semantic actions alltogether.
+
+[endsect]
+
+[section Complex - Made easier]
+
+In the previous section we showed how to format a complex number (i.e. a pair of 
+doubles). In this section we will build on this example with the goal to avoid
+to use semantic actions in the format specification. Let's have a look at the 
+resulting code first, trying to understand it afterwards.
 
 [endsect]
 

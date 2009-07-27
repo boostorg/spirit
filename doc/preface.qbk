@@ -132,11 +132,11 @@ the __string_template__ library which is a part of the ANTLR parser
 framework. It is a Java template engine (with ports for C# and Python)
 for generating source code, web pages, emails, or any other formatted
 text output. With it, he got the the idea of using a formal notation
-(a grammar) to describe the expected structure of an input character
-sequence. The same grammar may be used to formalize the structure of a
-corresponding output character sequence. This is possible because
-parsing is usually implemented by comparing the input with patterns
-defined by the grammar. If we use the same patterns to format a
+(a grammar) not only to describe the expected structure of an input character
+sequence. Interestingly, the same grammar may be used to formalize the 
+structure of a corresponding output character sequence as well. This is 
+possible because parsing is usually implemented by comparing the input with 
+patterns defined by the grammar. If we use the same patterns to format a
 matching output, the generated sequence will follow the rules of the
 grammar as well.
 

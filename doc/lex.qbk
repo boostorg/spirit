@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:lex __lex__]
+[section:lex Lex - Writing Lexical Analyzers]
 
 [include    lex/introduction.qbk]
 
