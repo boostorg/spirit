@@ -273,13 +273,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         ///////////////////////////////////////////////////////////////////////
         template <typename IteratorPair, typename AttributeTypes>
         struct token_value_type
-        {
-            typedef typename mpl::eval_if<
+          : mpl::eval_if<
                 is_same<AttributeTypes, mpl::vector0<> >
               , mpl::identity<IteratorPair>
-              , token_value_typesequence<IteratorPair, AttributeTypes>
-            >::type type;
-        };
+              , token_value_typesequence<IteratorPair, AttributeTypes> >
+        {};
     }
 
     template <typename Iterator, typename AttributeTypes, typename HasState>

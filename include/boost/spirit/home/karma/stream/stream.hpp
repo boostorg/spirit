@@ -161,10 +161,8 @@ namespace boost { namespace spirit { namespace karma
       : primitive_generator<any_stream_generator<T, Char, CharEncoding, Tag> >
     {
         template <typename Context, typename Unused>
-        struct attribute
-        {
-            typedef typename remove_const<T>::type type;
-        };
+        struct attribute : remove_const<T>
+        {};
 
         any_stream_generator(typename add_reference<T>::type t)
           : t_(t)

@@ -40,15 +40,9 @@ namespace boost { namespace spirit
     {
         ///////////////////////////////////////////////////////////////////////
         template <typename Iterator, typename Pred>
-        struct apply_predicate
-        {
-            typedef typename
-                mpl::apply1<
-                    Pred,
-                    typename fusion::result_of::value_of<Iterator>::type
-                >::type
-            type;
-        };
+        struct apply_predicate 
+          : mpl::apply1<Pred, typename fusion::result_of::value_of<Iterator>::type>
+        {};
 
         ///////////////////////////////////////////////////////////////////////
         //  if the predicate is true, attribute_next returns next(Iterator2),

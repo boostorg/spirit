@@ -24,21 +24,13 @@ namespace boost { namespace spirit { namespace detail
 {
     template <typename T>
     struct as_meta_element
-    {
-        typedef typename
-            mpl::eval_if_c<is_abstract<T>::value || is_function<T>::value
-              , add_reference<T>
-              , remove_const<T>
-            >::type
-        type;
-    };
+      : mpl::eval_if_c<is_abstract<T>::value || is_function<T>::value
+          , add_reference<T>, remove_const<T> >
+    {};
 
     template <typename T>
-    struct as_meta_element<T&>
-    {
-        // always store by value
-        typedef typename as_meta_element<T>::type type;
-    };
+    struct as_meta_element<T&> : as_meta_element<T>   // always store by value
+    {};
 
     template <typename T, int N>
     struct as_meta_element<T[N]>

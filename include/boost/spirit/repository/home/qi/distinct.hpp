@@ -64,10 +64,9 @@ namespace boost { namespace spirit { namespace repository {namespace qi
       : spirit::qi::unary_parser<distinct_parser<Subject, Tail, Modifier> >
     {
         template <typename Context, typename Iterator>
-        struct attribute
-        {
-            typedef typename traits::attribute_of<Subject>::type type;
-        };
+        struct attribute 
+          : traits::attribute_of<Subject>
+        {};
 
         distinct_parser(Subject const& subject, Tail const& tail)
           : subject(subject), tail(tail) {}

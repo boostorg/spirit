@@ -96,16 +96,11 @@ namespace boost { namespace spirit { namespace traits
     // the attribute in a tuple only IFF it is not already a fusion tuple.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute>
-    struct wrap_if_not_tuple
-    {
-        typedef typename
-            mpl::if_<
-                fusion::traits::is_sequence<Attribute>
-              , Attribute&
-              , fusion::vector1<Attribute&>
-            >::type
-        type;
-    };
+    struct wrap_if_not_tuple 
+      : mpl::if_<
+            fusion::traits::is_sequence<Attribute>
+          , Attribute&, fusion::vector1<Attribute&> >
+    {};
 
     template <>
     struct wrap_if_not_tuple<unused_type>
@@ -158,17 +153,13 @@ namespace boost { namespace spirit { namespace traits
     //
     // Remove unused_types from a sequence
     ///////////////////////////////////////////////////////////////////////////
+
+    // Compute the list of all *used* attributes of sub-components
+    // (filter all unused attributes from the list)
     template <typename Sequence>
     struct filter_unused_attributes
-    {
-        // Compute the list of all *used* attributes of sub-components
-        // (filter all unused attributes from the list)
-        typedef typename fusion::result_of::filter_if<
-                Sequence
-              , is_not_unused<mpl::_>
-            >::type
-        type;
-    };
+      : fusion::result_of::filter_if<Sequence, is_not_unused<mpl::_> >
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // build_fusion_vector
