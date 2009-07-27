@@ -7,6 +7,10 @@
 #if !defined(SPIRIT_EXPECT_FUNCTION_APR_29_2007_0558PM)
 #define SPIRIT_EXPECT_FUNCTION_APR_29_2007_0558PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/multi_pass_wrapper.hpp>
 

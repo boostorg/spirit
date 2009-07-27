@@ -6,8 +6,8 @@
 #if !defined(SPIRIT_LEX_SEQUENCE_MAR_28_2007_0610PM)
 #define SPIRIT_LEX_SEQUENCE_MAR_28_2007_0610PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/lex/domain.hpp>

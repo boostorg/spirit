@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_KARMA_FORMAT_MANIP_MAY_03_2007_1424PM)
 #define BOOST_SPIRIT_KARMA_FORMAT_MANIP_MAY_03_2007_1424PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <iterator>
 #include <string>
 #include <boost/spirit/home/karma/generate.hpp>

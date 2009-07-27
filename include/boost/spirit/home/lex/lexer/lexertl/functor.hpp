@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_LEXER_FUNCTOR_NOV_18_2007_1112PM)
 #define BOOST_SPIRIT_LEX_LEXER_FUNCTOR_NOV_18_2007_1112PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/mpl/bool.hpp>

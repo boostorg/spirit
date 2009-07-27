@@ -9,6 +9,10 @@
 #if !defined(BOOST_SPIRIT_ACTION_DISPATCH_APRIL_18_2008_0720AM)
 #define BOOST_SPIRIT_ACTION_DISPATCH_APRIL_18_2008_0720AM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 

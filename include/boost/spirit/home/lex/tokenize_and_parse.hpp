@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_LEXER_PARSE_NOV_17_2007_0246PM)
 #define BOOST_SPIRIT_LEXER_PARSE_NOV_17_2007_0246PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/parse.hpp>
 #include <boost/spirit/home/qi/nonterminal/grammar.hpp>

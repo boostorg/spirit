@@ -8,6 +8,10 @@
 #if !defined(BOOST_SPIRIT_EOL_APRIL_18_2008_0751PM)
 #define BOOST_SPIRIT_EOL_APRIL_18_2008_0751PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/mpl/bool.hpp>
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/parser.hpp>

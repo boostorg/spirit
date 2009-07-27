@@ -14,6 +14,10 @@
 #if !defined(BOOST_SPIRIT_HOLD_ANY_MAY_02_2007_0857AM)
 #define BOOST_SPIRIT_HOLD_ANY_MAY_02_2007_0857AM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/config.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/type_traits/is_reference.hpp>

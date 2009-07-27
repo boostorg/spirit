@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_LEXERTL_ITERATOR_TOKENISER_MARCH_22_2007_0859AM)
 #define BOOST_SPIRIT_LEXERTL_ITERATOR_TOKENISER_MARCH_22_2007_0859AM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/detail/iterator.hpp>
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
 #include <boost/spirit/home/support/detail/lexer/consts.hpp>

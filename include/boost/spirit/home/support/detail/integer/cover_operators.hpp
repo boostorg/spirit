@@ -19,6 +19,10 @@
 #ifndef BOOST_INTEGER_COVER_OPERATORS_HPP
 #define BOOST_INTEGER_COVER_OPERATORS_HPP
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 # ifndef BOOST_MINIMAL_INTEGER_COVER_OPERATORS
 #   include <boost/operators.hpp>
 # endif

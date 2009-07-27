@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_LEXER_FUNCTOR_DATA_JUN_10_2009_0954AM)
 #define BOOST_SPIRIT_LEX_LEXER_FUNCTOR_DATA_JUN_10_2009_0954AM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/support/detail/lexer/generator.hpp>

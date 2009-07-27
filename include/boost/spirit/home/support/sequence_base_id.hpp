@@ -7,6 +7,10 @@
 #if !defined(SPIRIT_SEQUENCE_BASE_ID_MAR_15_2009_1243PM)
 #define SPIRIT_SEQUENCE_BASE_ID_MAR_15_2009_1243PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/spirit/home/support/attributes.hpp>

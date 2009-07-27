@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_LEXER_MAR_17_2007_0139PM)
 #define BOOST_SPIRIT_LEX_LEXER_MAR_17_2007_0139PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <iosfwd>

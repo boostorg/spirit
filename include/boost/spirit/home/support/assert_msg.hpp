@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_ASSERT_MSG_JUN_23_2009_0836AM)
 #define BOOST_SPIRIT_ASSERT_MSG_JUN_23_2009_0836AM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 // Allow to work around the MPL problem in BOOST_MPL_ASSERT_MSG generating

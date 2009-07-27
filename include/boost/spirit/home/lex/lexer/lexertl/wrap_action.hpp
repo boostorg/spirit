@@ -9,6 +9,10 @@
 #if !defined(BOOST_SPIRIT_WRAP_ACTION_APR_19_2008_0103PM)
 #define BOOST_SPIRIT_WRAP_ACTION_APR_19_2008_0103PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/phoenix/core/actor.hpp>
 #include <boost/spirit/home/phoenix/core/argument.hpp>
 #include <boost/spirit/home/phoenix/bind.hpp>

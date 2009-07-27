@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_KARMA_PADDING_MAY_06_2008_0436PM)
 #define BOOST_SPIRIT_KARMA_PADDING_MAY_06_2008_0436PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
 

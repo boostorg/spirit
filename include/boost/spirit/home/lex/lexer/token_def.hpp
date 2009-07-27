@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_TOKEN_DEF_MAR_13_2007_0145PM)
 #define BOOST_SPIRIT_LEX_TOKEN_DEF_MAR_13_2007_0145PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>

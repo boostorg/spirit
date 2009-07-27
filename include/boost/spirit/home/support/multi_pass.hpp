@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_0201AM)
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_0201AM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 //  Include everything needed for the default configuration of multi_pass
 //  Ownership policies
 #include <boost/spirit/home/support/iterators/detail/first_owner_policy.hpp>

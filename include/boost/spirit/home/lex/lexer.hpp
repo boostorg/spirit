@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEXER_MAR_22_2007_1008PM)
 #define BOOST_SPIRIT_LEXER_MAR_22_2007_1008PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/lex/lexer/terminals.hpp>

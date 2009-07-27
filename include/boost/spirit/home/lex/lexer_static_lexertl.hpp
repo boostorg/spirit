@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_STATIC_LEXERTL_FEB_11_2008_1045AM)
 #define BOOST_SPIRIT_LEX_STATIC_LEXERTL_FEB_11_2008_1045AM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 //  These includes make available everything needed to use lexertl either 

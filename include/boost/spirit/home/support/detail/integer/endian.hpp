@@ -21,6 +21,10 @@
 #ifndef BOOST_SPIRIT_ENDIAN_HPP
 #define BOOST_SPIRIT_ENDIAN_HPP
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifdef BOOST_ENDIAN_LOG
 # include <iostream>
 #endif

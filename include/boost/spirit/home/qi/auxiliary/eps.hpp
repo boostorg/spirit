@@ -7,6 +7,10 @@
 #if !defined(BOOST_SPIRIT_EPS_MARCH_23_2007_0454PM)
 #define BOOST_SPIRIT_EPS_MARCH_23_2007_0454PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>

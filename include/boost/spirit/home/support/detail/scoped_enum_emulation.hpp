@@ -7,6 +7,10 @@
 #ifndef BOOST_SPIRIT_SCOPED_ENUM_EMULATION_HPP
 #define BOOST_SPIRIT_SCOPED_ENUM_EMULATION_HPP
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/version.hpp>
 #include <boost/config.hpp>
 

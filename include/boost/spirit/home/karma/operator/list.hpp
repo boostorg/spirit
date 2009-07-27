@@ -7,6 +7,10 @@
 #if !defined(SPIRIT_KARMA_LIST_MAY_01_2007_0229PM)
 #define SPIRIT_KARMA_LIST_MAY_01_2007_0229PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>

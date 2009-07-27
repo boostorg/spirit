@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_KARMA_UNUSED_DELIMITER_MAR_15_2009_0923PM)
 #define BOOST_SPIRIT_KARMA_UNUSED_DELIMITER_MAR_15_2009_0923PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail

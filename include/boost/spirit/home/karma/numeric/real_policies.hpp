@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_KARMA_REAL_POLICIES_MAR_02_2007_0936AM)
 #define BOOST_SPIRIT_KARMA_REAL_POLICIES_MAR_02_2007_0936AM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/config/no_tr1/cmath.hpp>

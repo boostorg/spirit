@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_KARMA_OSTREAM_ITERATOR_MAY_26_2007_1016PM)
 #define BOOST_SPIRIT_KARMA_OSTREAM_ITERATOR_MAY_26_2007_1016PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <iterator>
 
 ///////////////////////////////////////////////////////////////////////////////

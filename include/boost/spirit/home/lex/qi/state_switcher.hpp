@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_STATE_SWITCHER_SEP_23_2007_0714PM)
 #define BOOST_SPIRIT_LEX_STATE_SWITCHER_SEP_23_2007_0714PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/support/info.hpp>

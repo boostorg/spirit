@@ -7,8 +7,8 @@
 #if !defined(SPIRIT_KARMA_ALTERNATIVE_MAR_01_2007_1117AM)
 #define SPIRIT_KARMA_ALTERNATIVE_MAR_01_2007_1117AM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/karma/detail/alternative_function.hpp>

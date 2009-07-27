@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_WHAT_MAY_04_2007_0116PM)
 #define BOOST_SPIRIT_WHAT_MAY_04_2007_0116PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/mpl/assert.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>

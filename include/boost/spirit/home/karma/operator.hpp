@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_KARMA_OPERATOR_FEB_28_2007_0351PM)
 #define BOOST_SPIRIT_KARMA_OPERATOR_FEB_28_2007_0351PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/karma/operator/sequence.hpp>

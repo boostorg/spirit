@@ -6,6 +6,10 @@
 #if !defined(BOOST_SPIRIT_QI_UNUSED_SKIPPER_JUL_25_2009_0921AM)
 #define BOOST_SPIRIT_QI_UNUSED_SKIPPER_JUL_25_2009_0921AM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail

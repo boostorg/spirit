@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_IN_STATE_OCT_09_2007_0748PM)
 #define BOOST_SPIRIT_LEX_IN_STATE_OCT_09_2007_0748PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/proto/core.hpp>

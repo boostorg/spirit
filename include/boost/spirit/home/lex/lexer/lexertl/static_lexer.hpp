@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_STATIC_LEXER_FEB_10_2008_0753PM)
 #define BOOST_SPIRIT_LEX_STATIC_LEXER_FEB_10_2008_0753PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/support/safe_bool.hpp>

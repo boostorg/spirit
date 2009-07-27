@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_KARMA_UINT_FEB_23_2007_0840PM)
 #define BOOST_SPIRIT_KARMA_UINT_FEB_23_2007_0840PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <limits>

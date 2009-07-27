@@ -6,8 +6,8 @@
 #if !defined(SPIRIT_KARMA_CORE_MARCH_06_2007_0833PM)
 #define SPIRIT_KARMA_CORE_MARCH_06_2007_0833PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/karma/char.hpp>

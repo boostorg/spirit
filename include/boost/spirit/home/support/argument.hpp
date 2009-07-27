@@ -7,6 +7,10 @@
 #if !defined(BOOST_SPIRIT_ARGUMENT_FEBRUARY_17_2007_0339PM)
 #define BOOST_SPIRIT_ARGUMENT_FEBRUARY_17_2007_0339PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/preprocessor/arithmetic/inc.hpp>
 #include <boost/spirit/home/phoenix/core/actor.hpp>

@@ -6,8 +6,8 @@
 #if !defined(BOOST_SPIRIT_LEX_LEXER_SEMANTIC_ACTION_DATA_JUN_10_2009_0417PM)
 #define BOOST_SPIRIT_LEX_LEXER_SEMANTIC_ACTION_DATA_JUN_10_2009_0417PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/lex/lexer/pass_flags.hpp>
