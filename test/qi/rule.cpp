@@ -70,8 +70,21 @@ main()
         BOOST_TEST(test("aaaabababaaabba", start, space, false));
     }
 
-    { // basic tests w/ skipper
+    { // basic tests with direct initialization
 
+        rule<char const*> a ('a');
+        rule<char const*> b ('b');
+        rule<char const*> c ('c');
+        rule<char const*> start = (a | b) >> (start | b);
+
+        BOOST_TEST(test("aaaabababaaabbb", start));
+        BOOST_TEST(test("aaaabababaaabba", start, false));
+
+        // ignore the skipper!
+        BOOST_TEST(test("aaaabababaaabba", start, space, false));
+    }
+
+    { // basic tests w/ skipper
         rule<char const*, space_type> a, b, c, start;
 
         a = 'a';
@@ -141,7 +154,7 @@ main()
     }
     
     { // test unassigned rule
-        
+
         rule<char const*> a;
         BOOST_TEST(!test("x", a));
     }

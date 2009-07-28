@@ -195,7 +195,11 @@ type of the attribute of `a >> b` will be `tuple<A, B>`.
 a: A, b: Unused --> (a >> b): A
 a: Unused, b: B --> (a >> b): B
 a: Unused, b: Unused --> (a >> b): Unused
-a: A, b: A --> (a >> b): vector<A>``]]
+
+a: A, b: A --> (a >> b): vector<A>
+a: vector<A>, b: A --> (a >> b): vector<A>
+a: A, b: vector<A> --> (a >> b): vector<A>
+a: vector<A>, b: vector<A> --> (a >> b): vector<A>``]]
 
     [[expect (`>`)]         
 [``a: A, b: B --> (a > b): tuple<A, B>
