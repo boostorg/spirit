@@ -19,6 +19,7 @@
 #include <boost/type_traits/is_abstract.hpp>
 #include <boost/type_traits/is_function.hpp>
 #include <boost/type_traits/add_reference.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit { namespace detail
 {
@@ -65,6 +66,20 @@ namespace boost { namespace spirit { namespace detail
         typedef typename fusion::cons<car_type> result;
         return result(car);
     }
+
+#if defined(__GNUC__) && (__GNUC__ == 4) && (__GNUC_MINOR__ == 0)
+    // workaround for gcc-4.0 bug where illegal function types
+    // can be formed (const is added to function type)
+    // description: http://lists.boost.org/Archives/boost/2009/04/150743.php
+    template <typename Car>
+    fusion::cons<typename as_meta_element<Car>::type>
+    make_cons(Car& car, typename enable_if<is_function<Car> >::type* = 0)
+    {
+        typedef typename as_meta_element<Car>::type car_type;
+        typedef typename fusion::cons<car_type> result;
+        return result(car);
+    }
+#endif
 }}}
 
 #endif
