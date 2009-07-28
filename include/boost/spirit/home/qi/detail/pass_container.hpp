@@ -139,13 +139,12 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return f(component, attr);
         }
 
-        // Dispachtes to dispatch_main depending on the attribute type
+        // Dispaches to dispatch_main depending on the attribute type
         // of the Component
         template <typename Component>
         bool operator()(Component const& component) const
         {
             typedef typename traits::result_of::value<Attr>::type lhs;
-            typedef typename F::context_type context_type;
             typedef typename traits::attribute_of<
                 Component, context_type, iterator_type>::type
             rhs_attribute;

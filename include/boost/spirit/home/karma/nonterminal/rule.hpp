@@ -184,10 +184,23 @@ namespace boost { namespace spirit { namespace karma
         }
 
         rule(rule const& rhs)
-          : base_type(terminal::make(alias()))
+          : base_type(rhs)
           , name_(rhs.name_)
           , f(rhs.f)
         {
+        }
+
+        template <typename Expr>
+        rule (Expr const& expr, std::string const& name_ = "unnamed-rule")
+          : base_type(terminal::make(alias()))
+          , name_(name_)
+        {
+            // Report invalid expression error as early as possible.
+            // If you got an error_invalid_expression error message here, then
+            // the expression (expr) is not a valid spirit karma expression.
+            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+
+            f = detail::bind_generator<mpl::true_>(compile<karma::domain>(expr));
         }
 
         rule& operator=(rule const& rhs)
@@ -217,8 +230,8 @@ namespace boost { namespace spirit { namespace karma
         rule& operator=(Expr const& expr)
         {
             // Report invalid expression error as early as possible.
-            // If you got an error_invalid_expression error message here,
-            // then the expression (expr) is not a valid spirit karma expression.
+            // If you got an error_invalid_expression error message here, then
+            // the expression (expr) is not a valid spirit karma expression.
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
             f = detail::bind_generator<mpl::false_>(compile<karma::domain>(expr));
@@ -230,8 +243,8 @@ namespace boost { namespace spirit { namespace karma
         friend rule& operator%=(rule& r, Expr const& expr)
         {
             // Report invalid expression error as early as possible.
-            // If you got an error_invalid_expression error message here,
-            // then the expression (expr) is not a valid spirit karma expression.
+            // If you got an error_invalid_expression error message here, then
+            // the expression (expr) is not a valid spirit karma expression.
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
             r.f = detail::bind_generator<mpl::true_>(compile<karma::domain>(expr));

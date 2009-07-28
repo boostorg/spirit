@@ -177,10 +177,23 @@ namespace boost { namespace spirit { namespace qi
         }
 
         rule(rule const& rhs)
-          : base_type(terminal::make(alias()))
+          : base_type(rhs)
           , name_(rhs.name_)
           , f(rhs.f)
         {
+        }
+
+        template <typename Expr>
+        rule (Expr const& expr, std::string const& name_ = "unnamed-rule")
+          : base_type(terminal::make(alias()))
+          , name_(name_)
+        {
+            // Report invalid expression error as early as possible.
+            // If you got an error_invalid_expression error message here,
+            // then the expression (expr) is not a valid spirit qi expression.
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
+
+            f = detail::bind_parser<mpl::true_>(compile<qi::domain>(expr));
         }
 
         rule& operator=(rule const& rhs)
@@ -251,8 +264,10 @@ namespace boost { namespace spirit { namespace qi
         {
             if (f)
             {
-                value_initialized<attr_type> val;
-                context_type context(val);
+                typedef traits::make_attribute<attr_type, Attribute> make_attribute;
+
+                typename make_attribute::type attr_ = make_attribute::call(attr);
+                context_type context(attr_);
 
                 // If you are seeing a compilation error here stating that the 
                 // forth parameter can't be converted to a qi::reference
@@ -260,7 +275,6 @@ namespace boost { namespace spirit { namespace qi
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
-                    traits::swap_impl(attr, boost::get(val));
                     return true;
                 }
             }
@@ -275,8 +289,10 @@ namespace boost { namespace spirit { namespace qi
         {
             if (f)
             {
-                value_initialized<attr_type> val;
-                context_type context(val, params, caller_context);
+                typedef traits::make_attribute<attr_type, Attribute> make_attribute;
+
+                typename make_attribute::type attr_ = make_attribute::call(attr);
+                context_type context(attr_, params, caller_context);
 
                 // If you are seeing a compilation error here stating that the 
                 // forth parameter can't be converted to a qi::reference
@@ -284,7 +300,6 @@ namespace boost { namespace spirit { namespace qi
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
-                    traits::swap_impl(attr, boost::get(val));
                     return true;
                 }
             }

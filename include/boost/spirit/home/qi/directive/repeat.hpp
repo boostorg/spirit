@@ -143,7 +143,8 @@ namespace boost { namespace spirit { namespace qi
           , Attribute& attr) const
         {
             // create a local value if Attribute is not unused_type
-            typename traits::result_of::value<Attribute>::type val;
+            typename traits::result_of::value<Attribute>::type val =
+                traits::result_of::value<Attribute>::type();
             typename LoopIter::type i = iter.start();
 
             // parse the minimum required
