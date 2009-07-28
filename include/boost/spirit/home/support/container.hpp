@@ -291,7 +291,7 @@ namespace boost { namespace spirit { namespace traits
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    inline typename boost::detail::iterator_traits<Iterator>::value_type
+    inline typename boost::detail::iterator_traits<Iterator>::reference
     deref(Iterator& it)
     {
         return *it;
