@@ -470,7 +470,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                biggest_long_type l(n);
+                biggest_long_type l((biggest_long_type)n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
@@ -481,7 +481,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                biggest_long_type l(n);
+                biggest_long_type l((biggest_long_type)n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
@@ -492,7 +492,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             if (std::fabs(n) < max_long())
             {
-                biggest_long_type l(n);
+                biggest_long_type l((biggest_long_type)n);
                 return call(sink, l, l, 0);
             }
             return call(sink, n, n, 0);
