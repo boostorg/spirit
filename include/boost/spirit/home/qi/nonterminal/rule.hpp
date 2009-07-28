@@ -176,7 +176,12 @@ namespace boost { namespace spirit { namespace qi
         {
         }
 
-        // the default copy constructor does the right thing
+        rule(rule const& rhs)
+          : base_type(terminal::make(alias()))
+          , name_(rhs.name_)
+          , f(rhs.f)
+        {
+        }
 
         rule& operator=(rule const& rhs)
         {
