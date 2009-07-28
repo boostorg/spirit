@@ -1,15 +1,10 @@
 #
 # Copyright Troy D. Straszheim
+# Copyright (c) 2001-2009 Joel de Guzman
+# Copyright (c) 2001-2009 Hartmut Kaiser
 #
 # Distributed under the Boost Software License, Version 1.0.
 # See http://www.boost.org/LICENSE_1_0.txt
-#
-#   Copyright (c) 2001-2009 Joel de Guzman
-#   Copyright (c) 2001-2009 Hartmut Kaiser
-#
-#   Use, modification and distribution is subject to the Boost Software
-#   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-#   http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
 include_directories(.)
@@ -79,6 +74,7 @@ boost_test_run(karma_eol karma/eol.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_eps karma/eps.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_format_manip karma/format_manip.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_format_manip_attr karma/format_manip_attr.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_format_pointer_container karma/format_pointer_container.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_generate_attr karma/generate_attr.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_grammar karma/grammar.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_int_numerics karma/int_numerics.cpp COMPILE_FLAGS ${test_compile_flags})
