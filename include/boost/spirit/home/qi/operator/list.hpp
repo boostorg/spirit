@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace qi
         {
             // create a local value if Attribute is not unused_type
             typename traits::result_of::value<Attribute>::type val = 
-                traits::result_of::value<Attribute>::type();
+                typename traits::result_of::value<Attribute>::type();
 
             if (left.parse(first, last, context, skipper, val))
             {
