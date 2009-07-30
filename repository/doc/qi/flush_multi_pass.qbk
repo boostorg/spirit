@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Qi flush_multi_pass parser]
+[section:flush_multi_pass Qi flush_multi_pass parser]
 
 [heading Description]
 

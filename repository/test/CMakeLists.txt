@@ -19,6 +19,7 @@ IF(CMAKE_COMPILER_IS_GNUCC)
 ENDIF(CMAKE_COMPILER_IS_GNUCC)
 
 # run Qi repository tests
+boost_test_run(qi_repo_confix qi/confix.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_repo_distinct qi/distinct.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run Karma repository tests
