@@ -125,9 +125,8 @@ Boost.Phoenix headers as soon as these are available.
 
 [heading Why doesn't my symbol table work in a `no_case` directive?]
 
-In order to perform
-[/link spirit.qi.reference.directive.no_case] case-insensitive parsing with a [/$$$ TODO: link me $$$]
-[link spirit.qi.reference.string.symbols symbol table] (i.e. use a `symbols`
+In order to perform case-insensitive parsing (using __qi_no_case__) with a  
+symbol table (i.e. use a __qi_symbols__
 parser in a `no_case` directive), that symbol table needs to be filled with
 all-lowercase contents. Entries containing one or more uppercase characters
 will not match any input.
@@ -165,6 +164,8 @@ compatible type. The error above arises when this is not the case, i.e.:
   defined with another, incompatible skip parser type).
 
 [note The same applies to __karma__, replacing 'skip parser' and `lexeme`
-      by 'delimit generator' and `verbatim`.]
+      by 'delimit generator' and `verbatim`. Similarily, corresponding error 
+      messages in __karma__ reference `boost::function3` and the 3rd 
+      parameter (instead of the 4th).]
 
 [endsect]

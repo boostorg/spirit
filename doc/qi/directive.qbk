@@ -6,8 +6,16 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[/ section Directive]
+[section:directive Directive]
 
+[heading Module Header]
 
+    // forwards to <boost/spirit/home/qi/directive.hpp>
+    #include <boost/spirit/include/qi_directive.hpp>
 
-[/ endsect]
+[/------------------------------------------------------------------------------]
+[section:no_case no_case]
+
+[endsect]
+
+[endsect]

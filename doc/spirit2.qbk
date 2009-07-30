@@ -131,6 +131,8 @@
 [def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
 
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
+[def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case[a]`]]
+[def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
 
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
 [def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
