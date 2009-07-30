@@ -13,6 +13,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/repository/home/qi/distinct.hpp>
+#include <boost/spirit/repository/home/qi/directive/distinct.hpp>
 
 #endif

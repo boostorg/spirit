@@ -13,6 +13,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/repository/home/karma/confix.hpp>
+#include <boost/spirit/repository/home/karma/directive/confix.hpp>
 
 #endif
