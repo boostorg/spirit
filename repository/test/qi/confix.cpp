@@ -19,7 +19,7 @@
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
-#include <boost/spirit/repository/home/qi/confix.hpp>
+#include <boost/spirit/repository/include/qi_confix.hpp>
 
 #include <string>
 #include "test.hpp"

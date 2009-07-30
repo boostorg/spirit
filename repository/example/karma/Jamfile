@@ -7,5 +7,5 @@
 
 project spirit_v2_repository/example_karma ;
 
-exe confix : confix.cpp ;
+exe karma_confix : confix.cpp ;
 
