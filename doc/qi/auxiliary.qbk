@@ -88,24 +88,15 @@ All code snippets below use this common test function:
 
 Some using declaration:
 
-    namespace phx = boost::phoenix;
-    using boost::spirit::qi::attr;
+[reference_using_declarations_attr]
 
 Using `attr` with literals:
 
-    std::string str;
-    test_parser_attr("", attr("boost"), str);
-    std::cout << str << std::endl;            // will print 'boost'
-
-    double d;
-    test_parser_attr("", attr(1.0), d);
-    std::cout << d << std::endl;              // will print '1.0'
+[reference_attr]
 
 Using `attr` with __phoenix__ function objects:
 
-    double d = 0.0, d1 = 1.2;
-    test_parser_attr("", attr(phx::ref(d1)), d);
-    std::cout << d << std::endl;              // will print '1.2'
+[reference_attr_phoenix]
 
 [endsect] [/ auxiliary/attr]
 

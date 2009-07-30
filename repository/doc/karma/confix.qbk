@@ -31,14 +31,12 @@ construct. The following code snippet illustrates the idea:
     // construct
     namespace traits
     {
+        using namespace boost::spirit;
+
         template <typename Prefix, typename Suffix = Prefix>
-        struct confix_spec
-        {
-            using namespace boost::spirit;
-            typedef typename spirit::result_of::terminal<
-                repository::tag::confix(Prefix, Suffix)
-            >::type type;
-        };
+        struct confix_spec 
+          : spirit::result_of::terminal<repository::tag::confix(Prefix, Suffix)>
+        {};
     };
 
     // Define a helper function allowing to create a confix() construct from 

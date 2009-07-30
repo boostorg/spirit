@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Complex - A first more complex generator]
+[section:karma_complex Complex - A first more complex generator]
 
 In this section we will develop a generator for complex numbers, allowing to 
 represent a `std::complex` either as `"(real, imag)"` (where `real` and `imag` 
@@ -84,7 +84,7 @@ semantic actions alltogether.
 
 [endsect]
 
-[section Complex - Made easier]
+[section:karma_easier_complex Complex - Made easier]
 
 In the previous section we showed how to format a complex number (i.e. a pair of 
 doubles). In this section we will build on this example with the goal to avoid

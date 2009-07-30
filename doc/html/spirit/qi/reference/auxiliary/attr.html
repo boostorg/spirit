@@ -31,7 +31,7 @@
               consuming any input
             </li></ul></div>
 <a name="spirit.qi.reference.auxiliary.attr.description"></a><h6>
-<a name="id1146315"></a>
+<a name="id1067672"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.description">Description</a>
           </h6>
 <p>
@@ -42,7 +42,7 @@
             an attribute to the parsing process.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.header"></a><h6>
-<a name="id1146347"></a>
+<a name="id1067703"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/attr.hpp&gt;
@@ -52,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.model_of"></a><h6>
-<a name="id1146421"></a>
+<a name="id1067778"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -80,7 +80,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.attr.expression_semantics"></a><h6>
-<a name="id1146503"></a>
+<a name="id1067859"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -137,7 +137,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.attributes"></a><h6>
-<a name="id1146662"></a>
+<a name="id1068019"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -187,7 +187,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.complexity"></a><h6>
-<a name="id1146807"></a>
+<a name="id1068164"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -204,7 +204,7 @@
             done.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.example"></a><h6>
-<a name="id1146835"></a>
+<a name="id1068192"></a>
             <a class="link" href="attr.html#spirit.qi.reference.auxiliary.attr.example">Example</a>
           </h6>
 <p>
@@ -251,12 +251,26 @@
 <p>
             Some using declaration:
           </p>
+<p>
+            </p>
+<p>
+              
+</p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">phx</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">attr</span><span class="special">;</span>
 </pre>
 <p>
+            </p>
+<p>
+          </p>
+<p>
             Using <code class="computeroutput"><span class="identifier">attr</span></code> with literals:
           </p>
+<p>
+            </p>
+<p>
+              
+</p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">""</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">(</span><span class="string">"boost"</span><span class="special">),</span> <span class="identifier">str</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">str</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>            <span class="comment">// will print 'boost'
@@ -266,12 +280,25 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">d</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>              <span class="comment">// will print '1.0'
 </span></pre>
 <p>
+            </p>
+<p>
+          </p>
+<p>
             Using <code class="computeroutput"><span class="identifier">attr</span></code> with <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> function objects:
           </p>
+<p>
+            </p>
+<p>
+              
+</p>
 <pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">0.0</span><span class="special">,</span> <span class="identifier">d1</span> <span class="special">=</span> <span class="number">1.2</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">""</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">(</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">d1</span><span class="special">)),</span> <span class="identifier">d</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">d</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>              <span class="comment">// will print '1.2'
 </span></pre>
+<p>
+            </p>
+<p>
+          </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -126,6 +126,39 @@ main()
         std::cout << i << std::endl;
         //]
     }
+    
+    {
+        using boost::spirit::qi::parse;
+        using boost::spirit::ascii::no_case;
 
+        //[reference_no_case
+        test_parser("X", no_case[char_('x')]);
+        test_parser("6", no_case[alnum]);
+        //]
+    }
+
+    // attr()
+    {
+        //[reference_using_declarations_attr
+        namespace phx = boost::phoenix;
+        using boost::spirit::qi::attr;
+        //]
+
+        //[reference_attr
+        std::string str;
+        test_parser_attr("", attr("boost"), str);
+        std::cout << str << std::endl;            // will print 'boost'
+
+        double d;
+        test_parser_attr("", attr(1.0), d);
+        std::cout << d << std::endl;              // will print '1.0'
+        //]
+
+        //[reference_attr_phoenix
+        double d = 0.0, d1 = 1.2;
+        test_parser_attr("", attr(phx::ref(d1)), d);
+        std::cout << d << std::endl;              // will print '1.2'
+        //]
+    }
     return 0;
 }

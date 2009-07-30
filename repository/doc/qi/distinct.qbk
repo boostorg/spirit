@@ -12,13 +12,14 @@
 
 The __qi__ `distinct` parser is a directive component allowing to avoid partial 
 matches while parsing using a skipper. A simple example is the common task of 
-matching a C keyword. Consider:
+matching a C keyword. 
+Consider:
 
     "description" >> -lit(":") >> *(char_ - eol)
 
-intending to match a variable declaration rule in some imaginary language. Let's
-assume further, that this rule is used with a `space` skipper and that we have 
-the following strings in the input:
+intended to match a line in a configuration file. Let's assume further, that 
+this rule is used with a `space` skipper and that we have the following strings 
+in the input:
 
     "description: ident\n"
     "description ident\n"
