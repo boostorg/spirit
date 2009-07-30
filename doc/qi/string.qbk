@@ -246,6 +246,14 @@ Symbols with data:
 
 [reference_symbols_with_data]
 
+When symbols is used for case-insensitive parsing (in a
+[/link spirit.qi.reference.directive.no_case] `no_case` directive), added [/$$$ TODO: link me $$$]
+symbol strings should be in lowercase. Symbol strings containing one or more
+uppercase characters will not match any input when symbols is used in a
+`no_case` directive.
+
+[reference_symbols_with_no_case]
+
 [endsect] [/ symbols]
 
 [endsect] [/ String]

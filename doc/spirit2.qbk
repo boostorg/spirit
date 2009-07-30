@@ -148,6 +148,7 @@
 [def __attribute__                  Attribute] [/$$$ TODO: link me $$$]
 [def __compatible_attribute__       Compatible Attribute] [/$$$ TODO: link me $$$]
 [def __rule__                       Rule] [/$$$ TODO: link me $$$]
+[def __grammar__                    Grammar] [/$$$ TODO: link me $$$]
 [def __parser_conversion__          Parser Conversion] [/$$$ TODO: link me $$$]
 [def __delegate_pattern__           Delegate Design Pattern] [/$$$ TODO: link me $$$]
 [def __composite_pattern__          Composite Design Pattern] [/$$$ TODO: link me $$$]
@@ -157,6 +158,7 @@
 [def __karma_attribute__            Attribute] [/$$$ TODO: link me $$$]
 [def __karma_compatible_attribute__ Compatible Attribute] [/$$$ TODO: link me $$$]
 [def __karma_rule__                 Rule] [/$$$ TODO: link me $$$]
+[def __karma_grammar__              Grammar] [/$$$ TODO: link me $$$]
 
 [/ Some images ]
 

@@ -9,7 +9,7 @@
 [section:faq Spirit FAQ]
 
 [heading I'm getting multiple symbol definition errors while using Visual C++. Anything I could do about that?]
- 
+
 Do you see strange multiple symbol definition linker errors mentioning 
 `boost::mpl::failed` and `boost::spirit::qi::rule`? Then this FAQ entry might 
 be for you.
@@ -37,7 +37,7 @@ verbose error messages generated from static_assert.
 
 
 [heading I'm very confused about the header hell in my boost/spirit directory. What's all this about?]
- 
+
 The boost/spirit directory currently holds two versions of the Spirit library: 
 __classic__ (former V1.8.x) and SpiritV2. Both are completely independent 
 and usually not used at the same time. Do not mix these two in the same grammar.
@@ -72,7 +72,7 @@ This explains the need for the directory
     boost/spirit/include
 
 which contains forwarding headers as well. But this time the headers won't go 
-away. We encourage application writers t use only the includes contained in 
+away. We encourage application writers to use only the includes contained in 
 this directory. This allows us to restructure the directories underneath if 
 needed without worrying application compatibility. Please use those files in 
 your application only. If it turns out that some forwarding file is missing, 
@@ -121,5 +121,50 @@ Spirit, it is nicely integrated and very useful when it comes to writing
 semantic actions. I think using the boost/spirit/include/phoenix_... headers 
 will be safe in the future as well, as we will probably redirect to the 
 Boost.Phoenix headers as soon as these are available.
+
+
+[heading Why doesn't my symbol table work in a `no_case` directive?]
+
+In order to perform
+[/link spirit.qi.reference.directive.no_case] case-insensitive parsing with a [/$$$ TODO: link me $$$]
+[link spirit.qi.reference.string.symbols symbol table] (i.e. use a `symbols`
+parser in a `no_case` directive), that symbol table needs to be filled with
+all-lowercase contents. Entries containing one or more uppercase characters
+will not match any input.
+
+
+[heading I'm getting a compilation error mentioning `boost::function` and/or
+         `boost::function4`. What does this mean?]
+
+If you are using Visual C++ and have an error like:
+
+[pre
+error C2664: \'bool boost::function4<R,T0,T1,T2,T3>::operator ()(T0,T1,T2,T3) const\' :
+    cannot convert parameter 4 from '...' to '...'
+]
+
+or you are using GCC and have an error like:
+
+[pre
+error: no match for call to '(const boost::function<bool ()(...)>) (...)'
+note: candidates are: ... boost::function4<R,T1,T2,T3,T4>::operator()(T0,T1,T2,T3) const [with ...\]
+]
+
+then this FAQ entry may help you.
+
+The definition of a __rule__ or __grammar__ may contain a skip parser type. If
+it does, it means that non-terminal can only be used with a skip parser of a
+compatible type. The error above arises when this is not the case, i.e.:
+
+* a non-terminal defined with a skip parser type is used without a skip parser
+  (for example, a rule with a skip parser type is used inside a `lexeme`
+  directive, or a grammar with a skip parser type is used in `parse` instead of
+  `phrase_parse`),
+* or a non-terminal is used with a skip parser of an incompatible type
+  (for example, a rule defined with one skip parser type calls a second rule
+  defined with another, incompatible skip parser type).
+
+[note The same applies to __karma__, replacing 'skip parser' and `lexeme`
+      by 'delimit generator' and `verbatim`.]
 
 [endsect]

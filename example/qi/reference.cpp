@@ -86,6 +86,7 @@ main()
         //[reference_using_declarations_symbols
         using boost::spirit::qi::parse;
         using boost::spirit::qi::symbols;
+        using boost::spirit::ascii::no_case;
         //]
 
         //[reference_symbols_with_data
@@ -99,6 +100,29 @@ main()
 
         int i;
         test_parser_attr("Banana", sym, i);
+        std::cout << i << std::endl;
+        //]
+    }
+    
+    {
+        using boost::spirit::qi::parse;
+        using boost::spirit::qi::symbols;
+        using boost::spirit::ascii::no_case;
+
+        //[reference_symbols_with_no_case
+        symbols<char, int> sym;
+
+        sym.add
+            ("apple", 1)    // symbol strings are added in lowercase...
+            ("banana", 2)
+            ("orange", 3)
+        ;
+
+        int i;
+        // ...because sym is used for case-insensitive parsing
+        test_parser_attr("Apple", no_case[ sym ], i);
+        std::cout << i << std::endl;
+        test_parser_attr("ORANGE", no_case[ sym ], i);
         std::cout << i << std::endl;
         //]
     }

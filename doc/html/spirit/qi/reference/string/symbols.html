@@ -486,6 +486,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">symbols</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">no_case</span><span class="special">;</span>
 </pre>
 <p>
             </p>
@@ -509,6 +510,35 @@
 
 <span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
 <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"Banana"</span><span class="special">,</span> <span class="identifier">sym</span><span class="special">,</span> <span class="identifier">i</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            When symbols is used for case-insensitive parsing (in a <code class="computeroutput"><span class="identifier">no_case</span></code> directive), added symbol strings
+            should be in lowercase. Symbol strings containing one or more uppercase
+            characters will not match any input when symbols is used in a <code class="computeroutput"><span class="identifier">no_case</span></code> directive.
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">sym</span><span class="special">;</span>
+
+<span class="identifier">sym</span><span class="special">.</span><span class="identifier">add</span>
+    <span class="special">(</span><span class="string">"apple"</span><span class="special">,</span> <span class="number">1</span><span class="special">)</span>    <span class="comment">// symbol strings are added in lowercase...
+</span>    <span class="special">(</span><span class="string">"banana"</span><span class="special">,</span> <span class="number">2</span><span class="special">)</span>
+    <span class="special">(</span><span class="string">"orange"</span><span class="special">,</span> <span class="number">3</span><span class="special">)</span>
+<span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
+<span class="comment">// ...because sym is used for case-insensitive parsing
+</span><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"Apple"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span> <span class="identifier">sym</span> <span class="special">],</span> <span class="identifier">i</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"ORANGE"</span><span class="special">,</span> <span class="identifier">no_case</span><span class="special">[</span> <span class="identifier">sym</span> <span class="special">],</span> <span class="identifier">i</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">i</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 </pre>
 <p>

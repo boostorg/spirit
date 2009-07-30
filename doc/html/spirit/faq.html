@@ -111,7 +111,7 @@
 </pre>
 <p>
       which contains forwarding headers as well. But this time the headers won't
-      go away. We encourage application writers t use only the includes contained
+      go away. We encourage application writers to use only the includes contained
       in this directory. This allows us to restructure the directories underneath
       if needed without worrying application compatibility. Please use those files
       in your application only. If it turns out that some forwarding file is missing,
@@ -171,6 +171,69 @@
       as we will probably redirect to the Boost.Phoenix headers as soon as these
       are available.
     </p>
+<a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_"></a><h4>
+<a name="id3159214"></a>
+      <a class="link" href="faq.html#spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_">Why
+      doesn't my symbol table work in a <code class="computeroutput"><span class="identifier">no_case</span></code>
+      directive?</a>
+    </h4>
+<p>
+      In order to perform case-insensitive parsing with a <a class="link" href="qi/reference/string/symbols.html" title="symbols">symbol
+      table</a> (i.e. use a <code class="computeroutput"><span class="identifier">symbols</span></code>
+      parser in a <code class="computeroutput"><span class="identifier">no_case</span></code> directive),
+      that symbol table needs to be filled with all-lowercase contents. Entries containing
+      one or more uppercase characters will not match any input.
+    </p>
+<a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_"></a><h4>
+<a name="id3159289"></a>
+      <a class="link" href="faq.html#spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_">I'm
+      getting a compilation error mentioning <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span></code>
+      and/or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function4</span></code>. What does this mean?</a>
+    </h4>
+<p>
+      If you are using Visual C++ and have an error like:
+    </p>
+<pre class="programlisting">error C2664: 'bool boost::function4&lt;R,T0,T1,T2,T3&gt;::operator ()(T0,T1,T2,T3) const' :
+    cannot convert parameter 4 from '...' to '...'
+</pre>
+<p>
+      or you are using GCC and have an error like:
+    </p>
+<pre class="programlisting">error: no match for call to '(const boost::function&lt;bool ()(...)&gt;) (...)'
+note: candidates are: ... boost::function4&lt;R,T1,T2,T3,T4&gt;::operator()(T0,T1,T2,T3) const [with ...]
+</pre>
+<p>
+      then this FAQ entry may help you.
+    </p>
+<p>
+      The definition of a Rule or Grammar may contain a skip parser type. If it does,
+      it means that non-terminal can only be used with a skip parser of a compatible
+      type. The error above arises when this is not the case, i.e.:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+        a non-terminal defined with a skip parser type is used without a skip parser
+        (for example, a rule with a skip parser type is used inside a <code class="computeroutput"><span class="identifier">lexeme</span></code> directive, or a grammar with a skip
+        parser type is used in <code class="computeroutput"><span class="identifier">parse</span></code>
+        instead of <code class="computeroutput"><span class="identifier">phrase_parse</span></code>),
+      </li>
+<li class="listitem">
+        or a non-terminal is used with a skip parser of an incompatible type (for
+        example, a rule defined with one skip parser type calls a second rule defined
+        with another, incompatible skip parser type).
+      </li>
+</ul></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        The same applies to <span class="emphasis"><em>Spirit.Karma</em></span>, replacing 'skip parser'
+        and <code class="computeroutput"><span class="identifier">lexeme</span></code> by 'delimit generator'
+        and <code class="computeroutput"><span class="identifier">verbatim</span></code>.
+      </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
