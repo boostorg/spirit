@@ -20,8 +20,8 @@ namespace
         "0.1",
         "-1.2e-3",
         "-.2e3",
-        "-e3",
-        "1.2e",
+        "-2e6",
+        "1.2345e5",
         "-5.7222349715140557e+307",
         "2.0332938517515416e-308"
     };
@@ -89,6 +89,17 @@ int main()
         while (*last[i])
             last[i]++;
         std::cout << numbers[i] << std::endl;
+    }
+    std::cout.precision(17);
+    std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
+    std::cout << "atof/strtol/qi.double results:" << std::endl;
+    for (int i = 0; i < ndigits; ++i)
+    {
+        std::cout 
+            << atof(first[i]) << ','
+            << strtod(first[i], const_cast<char**>(&last[i])) << ','
+            << spirit_double_test::parse(first[i], last[i]) << ','
+            << std::endl;
     }
     std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
 

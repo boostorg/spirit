@@ -14,6 +14,7 @@
 
 #include "high_resolution_timer.hpp"
 #include <iostream>
+#include <cstring>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/stringize.hpp>
 
