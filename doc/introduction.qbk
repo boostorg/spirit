@@ -50,7 +50,10 @@ of the Boost Spirit library. The library consists of 4 major parts:
   descent parsers. The exposed domain-specific language can be used to describe
   the grammars to implement, and the rules for storing the parsed information.
 * __lex__: This is the library usable to create tokenizers (lexers). The
-  domain-specific language exposed by __lex__ 
+  domain-specific language exposed by __lex__ allows to define regular 
+  expressions used to match tokens, associate these regular expressions with 
+  code to be executed whenever it is matched, and to add the token definitions
+  to the lexical analyzer.
 * __karma__: This is the generator library allowing you to create code for 
   recursive descent, data type-driven output formatting. The exposed
   domain-specific language is almost equivalent to the parser description language 
@@ -126,7 +129,7 @@ simply not possible to write something like:
     a b
 
 as seen in math syntax, for example, to mean multiplication or, in our case, 
-as seen in EBNF syntax to mean sequencing (b should follow a). Spirit 
+as seen in EBNF syntax to mean sequencing (b should follow a). __qi__ 
 uses the shift `>>` operator instead for this purpose. We take the `>>` operator, 
 with arrows pointing to the right, to mean "is followed by". Thus we write: 
 
@@ -175,16 +178,16 @@ representations of the same `std::vector<int>`:
 [table Different output formats for `std::vector<int>` 
     [ [Format]                         [Example]          [Description] ]
     [ [`'[' << *(int_ << ',') << ']'`] [`[1,8,10,]`]      [Comma separated list of integers] ]
-    [ [`*('(' << int_ << ')' << ',')`] [`(1),(8),(10),]`] [Comma separated list of integers in parenthesis] ]
+    [ [`*('(' << int_ << ')' << ',')`] [`(1),(8),(10),`]  [Comma separated list of integers in parenthesis] ]
     [ [`*hex`]                         [`18a`]            [A list of hexadecimal numbers] ]
     [ [`*(double_ << ',')`]            [`1.0,8.0,10.0,`]  [A list of floating point numbers] ]
 ]
 
-The syntax is similar to /Qi/ with the exception that we use the `<<` 
+The syntax is similar to __qi__ with the exception that we use the `<<` 
 operator for output concatenation. This should be easy to understand as it 
 follows the conventions used in the Standard's I/O streams. 
 
-Another important feature of /Karma/ allows you to fully decouple the data 
+Another important feature of __karma__ allows you to fully decouple the data 
 type from the output format. You can use the same output format with different 
 data types as long as these conform conceptually. The next table gives some 
 related examples.

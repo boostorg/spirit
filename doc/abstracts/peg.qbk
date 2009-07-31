@@ -7,10 +7,13 @@
 ===============================================================================/]
 [section Parsing Expression Grammar]
 
-Parsing Expression Grammars (PEG) are a derivative of Extended
-Backus-Naur Form (EBNF) with a different interpretation, designed to
-represent a recursive descent parser. A PEG can be directly represented
-as a recursive-descent parser.
+Parsing Expression Grammars (PEG) [footnote Bryan Ford: Parsing Expression 
+Grammars: A Recognition-Based Syntactic Foundation, 
+[link http://pdos.csail.mit.edu/~baford/packrat/popl04/]] are a derivative of 
+Extended Backus-Naur Form (EBNF) [footnote Richard E. Pattis: EBNF: A Notation 
+to Describe Syntax, [link http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf]]
+with a different interpretation, designed to represent a recursive descent 
+parser. A PEG can be directly represented as a recursive-descent parser.
 
 Like EBNF, PEG is a formal grammar for describing a formal language in
 terms of a set of rules used to recognize strings of this language.

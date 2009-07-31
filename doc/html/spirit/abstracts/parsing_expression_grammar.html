@@ -28,19 +28,21 @@
       Expression Grammar</a>
 </h3></div></div></div>
 <p>
-        Parsing Expression Grammars (PEG) are a derivative of Extended Backus-Naur
-        Form (EBNF) with a different interpretation, designed to represent a recursive
-        descent parser. A PEG can be directly represented as a recursive-descent
-        parser.
+        Parsing Expression Grammars (PEG)
+        <sup>[<a name="id1055779" href="#ftn.id1055779" class="footnote">5</a>]</sup>
+        are a derivative of Extended Backus-Naur Form (EBNF)
+        <sup>[<a name="id1055791" href="#ftn.id1055791" class="footnote">6</a>]</sup>
+        with a different interpretation, designed to represent a recursive descent
+        parser. A PEG can be directly represented as a recursive-descent parser.
       </p>
 <p>
         Like EBNF, PEG is a formal grammar for describing a formal language in terms
         of a set of rules used to recognize strings of this language. Unlike EBNF,
         PEGs have an exact interpretation. There is only one valid parse tree (see
-        [Abstract Syntax Tree) for each PEG grammar.
+        Abstract Syntax Tree) for each PEG grammar.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.sequences"></a><h5>
-<a name="id1027633"></a>
+<a name="id1055812"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
       </h5>
 <p>
@@ -81,7 +83,7 @@
         </p></td></tr>
 </table></div>
 <a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a><h5>
-<a name="id1027751"></a>
+<a name="id1055929"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
       </h5>
 <p>
@@ -124,7 +126,7 @@
         about this $$$).
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.loops"></a><h5>
-<a name="id1027890"></a>
+<a name="id1056068"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
       </h5>
 <p>
@@ -187,7 +189,7 @@
         We will see more of these other mechanisms shortly.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.difference"></a><h5>
-<a name="id1028030"></a>
+<a name="id1056209"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
       </h5>
 <p>
@@ -201,6 +203,16 @@
         The expression reads: match <code class="computeroutput"><span class="identifier">a</span></code>
         but not <code class="computeroutput"><span class="identifier">b</span></code>.
       </p>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.id1055779" href="#id1055779" class="para">5</a>] </sup>
+            Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
+            Foundation, <a class="link" href="../../">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
+          </p></div>
+<div class="footnote"><p><sup>[<a name="ftn.id1055791" href="#id1055791" class="para">6</a>] </sup>
+            Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a class="link" href="../../">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
+          </p></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

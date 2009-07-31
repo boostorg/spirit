@@ -116,10 +116,10 @@
 
 [/ References to abstracts ]
 
-[def __rd__                     [Recursive Descent] [/$$$ TODO: link me $$$]
+[def __rd__                     Recursive Descent] [/$$$ TODO: link me $$$]
 [def __syntax_diagrams__        [link spirit.abstracts.syntax_diagrams Syntax Diagram]]
 [def __peg__                    [link spirit.abstracts.parsing_expression_grammar Parsing Expression Grammar]]
-[def __ast__                    [Abstract Syntax Tree] [/$$$ TODO: link me $$$]
+[def __ast__                    Abstract Syntax Tree] [/$$$ TODO: link me $$$]
 
 [def __include_structure__      [link spirit.structure.include Include Structure]]
 

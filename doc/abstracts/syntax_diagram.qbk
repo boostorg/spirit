@@ -8,9 +8,12 @@
 [section Syntax Diagram]
 
 In the next section, we will deal with Parsing Expression Grammars
-(PEG), a variant of Extended Backus-Naur Form (EBNF) with a different
-interpretation. It is easier to understand PEG using Syntax Diagrams.
-Syntax diagrams represent a grammar graphically. It was used extensibly
+(PEG) [footnote Bryan Ford: Parsing Expression Grammars: A Recognition-Based 
+Syntactic Foundation, [link http://pdos.csail.mit.edu/~baford/packrat/popl04/]], 
+a variant of Extended Backus-Naur Form (EBNF) [footnote Richard E. Pattis: EBNF: 
+A Notation to Describe Syntax, [link http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf]]
+with a different interpretation. It is easier to understand PEG using Syntax 
+Diagrams. Syntax diagrams represent a grammar graphically. It was used extensibly
 by Niklaus Wirth [footnote Niklaus Wirth: The Programming Language
 Pascal. (July 1973)] in the "Pascal User Manual". Syntax Diagrams are
 easily understandable with programmers due to its similarity to flow

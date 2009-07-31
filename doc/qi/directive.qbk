@@ -39,7 +39,8 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-[:This directive is special as it does not conform to any parser concept]
+[:This directive is special as it does not conform to any parser concept. It 
+  is a pure modifier directive.]
 
 [variablelist Notation
     [[`p`]      [A arbitrary complex parser expression embedded inside the

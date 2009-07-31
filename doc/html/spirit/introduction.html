@@ -30,7 +30,7 @@
       Boost Spirit is an object-oriented, recursive-descent parser and output generation
       library for C++. It allows you to write grammars and format descriptions using
       a format similar to Extended Backus Naur Form (EBNF)
-      <sup>[<a name="id1023412" href="#ftn.id1023412" class="footnote">1</a>]</sup>
+      <sup>[<a name="id1051539" href="#ftn.id1051539" class="footnote">1</a>]</sup>
       directly in C++. These inline grammar specifications can mix freely with other
       C++ code and, thanks to the generative power of C++ templates, are immediately
       executable. In retrospect, conventional compiler-compilers or parser-generators
@@ -87,7 +87,10 @@
 <li class="listitem">
 <span class="emphasis"><em>Spirit.Lex</em></span>: This is the library usable to create tokenizers
         (lexers). The domain-specific language exposed by <span class="emphasis"><em>Spirit.Lex</em></span>
-</li>
+        allows to define regular expressions used to match tokens, associate these
+        regular expressions with code to be executed whenever it is matched, and
+        to add the token definitions to the lexical analyzer.
+      </li>
 <li class="listitem">
 <span class="emphasis"><em>Spirit.Karma</em></span>: This is the generator library allowing
         you to create code for recursive descent, data type-driven output formatting.
@@ -131,7 +134,7 @@
 <p><br class="figure-break">
     </p>
 <a name="spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_"></a><h4>
-<a name="id1023626"></a>
+<a name="id1051752"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_parsing_with__emphasis_spirit_qi__emphasis_">A
       Quick Overview of Parsing with <span class="emphasis"><em>Spirit.Qi</em></span></a>
     </h4>
@@ -192,9 +195,9 @@
 </pre>
 <p>
       as seen in math syntax, for example, to mean multiplication or, in our case,
-      as seen in EBNF syntax to mean sequencing (b should follow a). Spirit uses
-      the shift <code class="computeroutput"><span class="special">&gt;&gt;</span></code> operator instead
-      for this purpose. We take the <code class="computeroutput"><span class="special">&gt;&gt;</span></code>
+      as seen in EBNF syntax to mean sequencing (b should follow a). <span class="emphasis"><em>Spirit.Qi</em></span>
+      uses the shift <code class="computeroutput"><span class="special">&gt;&gt;</span></code> operator
+      instead for this purpose. We take the <code class="computeroutput"><span class="special">&gt;&gt;</span></code>
       operator, with arrows pointing to the right, to mean "is followed by".
       Thus we write:
     </p>
@@ -221,7 +224,7 @@
       <code class="computeroutput"><span class="special">;</span></code>.
     </p>
 <a name="spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_"></a><h4>
-<a name="id1024578"></a>
+<a name="id1052709"></a>
       <a class="link" href="introduction.html#spirit.introduction.a_quick_overview_of_output_generation_with__emphasis_spirit_karma__emphasis_">A
       Quick Overview of Output Generation with <span class="emphasis"><em>Spirit.Karma</em></span></a>
     </h4>
@@ -254,7 +257,7 @@
       of the same <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code>:
     </p>
 <div class="table">
-<a name="id1024919"></a><p class="title"><b>Table 2. Different output formats for `std::vector&lt;int&gt;`</b></p>
+<a name="id1053050"></a><p class="title"><b>Table 2. Different output formats for `std::vector&lt;int&gt;`</b></p>
 <div class="table-contents"><table class="table" summary="Different output formats for `std::vector&lt;int&gt;`">
 <colgroup>
 <col>
@@ -309,7 +312,7 @@
           </td>
 <td>
           <p>
-            <code class="computeroutput"><span class="special">(</span><span class="number">1</span><span class="special">),(</span><span class="number">8</span><span class="special">),(</span><span class="number">10</span><span class="special">),]</span></code>
+            <code class="computeroutput"><span class="special">(</span><span class="number">1</span><span class="special">),(</span><span class="number">8</span><span class="special">),(</span><span class="number">10</span><span class="special">),</span></code>
           </p>
           </td>
 <td>
@@ -357,19 +360,19 @@
 </table></div>
 </div>
 <br class="table-break"><p>
-      The syntax is similar to <span class="emphasis"><em>Qi</em></span> with the exception that we
-      use the <code class="computeroutput"><span class="special">&lt;&lt;</span></code> operator for
-      output concatenation. This should be easy to understand as it follows the conventions
-      used in the Standard's I/O streams.
+      The syntax is similar to <span class="emphasis"><em>Spirit.Qi</em></span> with the exception
+      that we use the <code class="computeroutput"><span class="special">&lt;&lt;</span></code> operator
+      for output concatenation. This should be easy to understand as it follows the
+      conventions used in the Standard's I/O streams.
     </p>
 <p>
-      Another important feature of <span class="emphasis"><em>Karma</em></span> allows you to fully
-      decouple the data type from the output format. You can use the same output
+      Another important feature of <span class="emphasis"><em>Spirit.Karma</em></span> allows you to
+      fully decouple the data type from the output format. You can use the same output
       format with different data types as long as these conform conceptually. The
       next table gives some related examples.
     </p>
 <div class="table">
-<a name="id1026385"></a><p class="title"><b>Table 3. Different data types usable with the output format
+<a name="id1054516"></a><p class="title"><b>Table 3. Different data types usable with the output format
     `*(int_ &lt;&lt; eol)`</b></p>
 <div class="table-contents"><table class="table" summary="Different data types usable with the output format
     `*(int_ &lt;&lt; eol)`">
@@ -443,7 +446,7 @@
 </div>
 <br class="table-break"><div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id1023412" href="#id1023412" class="para">1</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id1051539" href="#id1051539" class="para">1</a>] </sup>
           <a href="http://www.cl.cam.ac.uk/%7Emgk25/iso-14977.pdf" target="_top">ISO-EBNF</a>
         </p></div>
 </div>
