@@ -102,6 +102,8 @@ namespace boost { namespace spirit { namespace karma
       , generator<rule<OutputIterator, T1, T2, T3> >
     {
         typedef mpl::int_<generator_properties::all_properties> properties;
+
+        typedef OutputIterator iterator_type;
         typedef rule<OutputIterator, T1, T2, T3> this_type;
         typedef reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;

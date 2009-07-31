@@ -99,6 +99,7 @@ namespace boost { namespace spirit { namespace qi
         >
       , parser<rule<Iterator, T1, T2, T3> >
     {
+        typedef Iterator iterator_type;
         typedef rule<Iterator, T1, T2, T3> this_type;
         typedef reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;

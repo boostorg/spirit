@@ -44,6 +44,7 @@ namespace boost { namespace spirit { namespace qi
         typedef grammar<Iterator, T1, T2, T3> base_type;
         typedef reference<start_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
+
         static size_t const params_size = start_type::params_size;
 
         grammar(

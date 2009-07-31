@@ -91,8 +91,8 @@ namespace boost { namespace spirit
     /***/
 
 #define BOOST_SPIRIT_CHAR_SPEC(charset)                                         \
-    typedef spirit::terminal<tag::charset::char_> char__type;                   \
-    char__type const char_ = char__type();                                      \
+    typedef spirit::terminal<tag::charset::char_> char_type;                    \
+    char_type const char_ = char_type();                                        \
                                                                                 \
     inline void silence_unused_warnings__##char_() { (void) char_; }            \
                                                                                 \
