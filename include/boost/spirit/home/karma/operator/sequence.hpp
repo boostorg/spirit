@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace karma
         typedef Elements elements_type;
         struct sequence_base_id;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Unused = unused_type>
         struct attribute
         {
             // Put all the element attributes in a tuple
@@ -124,8 +124,12 @@ namespace boost { namespace spirit { namespace karma
                 OutputIterator, Context, Delimiter> fail_function;
             typedef traits::attribute_not_unused<Context> predicate;
 
-            // wrap the attribute in a tuple if it is not a tuple
-            typename traits::wrap_if_not_tuple<Attribute>::type attr(attr_);
+            // wrap the attribute in a tuple if it is not a tuple or if the 
+            // attribute of this sequence is a single element tuple
+            typedef typename attribute<Context>::type_ attr_type_;
+            typename traits::wrap_if_not_tuple<Attribute
+              , typename traits::one_element_sequence<attr_type_>::type 
+            >::type attr(attr_);
 
             // return false if *any* of the generators fail
             return !spirit::any_if(elements, attr, fail_function(sink, ctx, d)

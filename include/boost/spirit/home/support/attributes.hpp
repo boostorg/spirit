@@ -95,21 +95,27 @@ namespace boost { namespace spirit { namespace traits
     // Subclass a pass_attribute specialization from this to wrap
     // the attribute in a tuple only IFF it is not already a fusion tuple.
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute>
+    template <typename Attribute, typename Force = mpl::false_>
     struct wrap_if_not_tuple 
       : mpl::if_<
             fusion::traits::is_sequence<Attribute>
           , Attribute&, fusion::vector1<Attribute&> >
     {};
 
+    template <typename Attribute>
+    struct wrap_if_not_tuple<Attribute, mpl::true_>
+    {
+        typedef fusion::vector1<Attribute&> type;
+    };
+
     template <>
-    struct wrap_if_not_tuple<unused_type>
+    struct wrap_if_not_tuple<unused_type, mpl::false_>
     {
         typedef unused_type type;
     };
 
     template <>
-    struct wrap_if_not_tuple<unused_type const>
+    struct wrap_if_not_tuple<unused_type const, mpl::false_>
     {
         typedef unused_type type;
     };
@@ -415,6 +421,19 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef T type;
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // meta function to return whether the argument is a one element fusion 
+    // sequence
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct one_element_sequence : mpl::false_ {};
+
+    template <typename T>
+    struct one_element_sequence<fusion::vector1<T> > : mpl::true_ {};
+
+    template <typename T>
+    struct one_element_sequence<fusion::vector<T> > : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
     // clear

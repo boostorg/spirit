@@ -70,8 +70,12 @@ namespace boost { namespace spirit { namespace qi
             Iterator iter = first;
             typedef traits::attribute_not_unused<Context, Iterator> predicate;
 
-            // wrap the attribute in a tuple if it is not a tuple
-            typename traits::wrap_if_not_tuple<Attribute>::type attr(attr_);
+            // wrap the attribute in a tuple if it is not a tuple or if the 
+            // attribute of this sequence is a single element tuple
+            typedef typename attribute<Context, Iterator>::type_ attr_type_;
+            typename traits::wrap_if_not_tuple<Attribute
+              , typename traits::one_element_sequence<attr_type_>::type 
+            >::type attr(attr_);
 
             // return false if *any* of the parsers fail
             if (spirit::any_if(elements, attr
