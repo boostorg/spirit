@@ -107,6 +107,8 @@ To make all the code below more readable we introduce the following namespaces.
 
 [qi_distinct_namespace]
 
+[heading Using The Distinct Directive to Match keywords]
+
 We show several examples of how the `distinct[]` directive can be used to force
 correct behavior while matching keywords. The first two code snippets show 
 the correct matching of the `description` keyword (in this hypothetical example 

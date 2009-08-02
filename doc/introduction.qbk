@@ -51,9 +51,9 @@ of the Boost Spirit library. The library consists of 4 major parts:
   the grammars to implement, and the rules for storing the parsed information.
 * __lex__: This is the library usable to create tokenizers (lexers). The
   domain-specific language exposed by __lex__ allows to define regular 
-  expressions used to match tokens, associate these regular expressions with 
-  code to be executed whenever it is matched, and to add the token definitions
-  to the lexical analyzer.
+  expressions used to match tokens (create token definitions), associate these 
+  regular expressions with code to be executed whenever they are matched, and 
+  to add the token definitions to the lexical analyzer.
 * __karma__: This is the generator library allowing you to create code for 
   recursive descent, data type-driven output formatting. The exposed
   domain-specific language is almost equivalent to the parser description language 
@@ -183,7 +183,10 @@ representations of the same `std::vector<int>`:
     [ [`*(double_ << ',')`]            [`1.0,8.0,10.0,`]  [A list of floating point numbers] ]
 ]
 
-The syntax is similar to __qi__ with the exception that we use the `<<` 
+We will see later in this documentation how it is possible to avoid printing 
+the trailing `','`.
+
+Overall, the syntax is similar to __qi__ with the exception that we use the `<<` 
 operator for output concatenation. This should be easy to understand as it 
 follows the conventions used in the Standard's I/O streams. 
 

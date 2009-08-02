@@ -9,9 +9,9 @@
 
 Parsing Expression Grammars (PEG) [footnote Bryan Ford: Parsing Expression 
 Grammars: A Recognition-Based Syntactic Foundation, 
-[link http://pdos.csail.mit.edu/~baford/packrat/popl04/]] are a derivative of 
+[@http://pdos.csail.mit.edu/~baford/packrat/popl04/]] are a derivative of 
 Extended Backus-Naur Form (EBNF) [footnote Richard E. Pattis: EBNF: A Notation 
-to Describe Syntax, [link http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf]]
+to Describe Syntax, [@http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf]]
 with a different interpretation, designed to represent a recursive descent 
 parser. A PEG can be directly represented as a recursive-descent parser.
 

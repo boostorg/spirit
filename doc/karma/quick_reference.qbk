@@ -53,10 +53,11 @@ pages and pages of reference doumentation.
     [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
     [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
     [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
-    [[__karma_lazy__]       [Attribute of `G` where `G`
+    [[[karma_lazy `lazy(fg)`]]
+                            [Attribute of `G` where `G`
                              is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
                                                         `g` which is then called to generate.]]
-    [[__karma_llazy__]      [see __karma_lazy__ above]  [Equivalent to `lazy(fg)`]]
+    [[[karma_lazy `fg`]]    [see [karma_lazy `lazy(fg)`] above]  [Equivalent to [karma_lazy `lazy(fg)`]]]
     [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 
     [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
@@ -160,7 +161,7 @@ type of the attribute of `a << b` will be `tuple<A, B>`.
 [table Spirit.Karma compound generator attribute types
     [[Expression]           [Attribute]]
 
-    [[sequence (`<<`)]
+    [[__karma_sequence__]
 [``a: A, b: B --> (a << b): tuple<A, B>
 a: A, b: Unused --> (a << b): A
 a: Unused, b: B --> (a << b): B
@@ -171,10 +172,10 @@ a: vector<A>, b: A --> (a << b): vector<A>
 a: A, b: vector<A> --> (a << b): vector<A>
 a: vector<A>, b: vector<A> --> (a << b): vector<A>``]]
 
-    [[alternative (`|`)]
+    [[__karma_alternative__]
 [``a: A, b: B --> (a | b): variant<A, B>
-a: A, b: Unused --> (a | b): variant<Unused, A>
-a: Unused, b: B --> (a | b): variant<Unused, B>
+a: A, b: Unused --> (a | b): A
+a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 

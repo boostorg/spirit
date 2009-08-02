@@ -9,7 +9,7 @@
 [section Auxiliary]
 
 This module includes different auxiliary generators not fitting into any of the 
-other categories. This module includes the `eol` and `eps`, `lazy` generators.
+other categories. It includes the `eol` and `eps`, `lazy` generators.
 
 [heading Module Header]
 

@@ -20,6 +20,7 @@
 [endsect]
 
 [section    Reference]
+[import ../example/karma/reference.cpp]
 [include        karma/concepts.qbk]
 [include        karma/basics.qbk]
 [/include        karma/char.qbk]
@@ -29,7 +30,7 @@
 [/include        karma/directive.qbk]
 [/include        karma/action.qbk]
 [/include        karma/nonterminal.qbk]
-[/include        karma/operator.qbk]
+[include        karma/operator.qbk]
 [/include        karma/stream.qbk]
 [include        karma/auxiliary.qbk]
 [/include        karma/debug.qbk]

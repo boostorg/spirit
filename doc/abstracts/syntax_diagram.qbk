@@ -9,9 +9,9 @@
 
 In the next section, we will deal with Parsing Expression Grammars
 (PEG) [footnote Bryan Ford: Parsing Expression Grammars: A Recognition-Based 
-Syntactic Foundation, [link http://pdos.csail.mit.edu/~baford/packrat/popl04/]], 
+Syntactic Foundation, [@http://pdos.csail.mit.edu/~baford/packrat/popl04/]], 
 a variant of Extended Backus-Naur Form (EBNF) [footnote Richard E. Pattis: EBNF: 
-A Notation to Describe Syntax, [link http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf]]
+A Notation to Describe Syntax, [@http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf]]
 with a different interpretation. It is easier to understand PEG using Syntax 
 Diagrams. Syntax diagrams represent a grammar graphically. It was used extensibly
 by Niklaus Wirth [footnote Niklaus Wirth: The Programming Language

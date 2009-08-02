@@ -79,6 +79,6 @@ code snippet shows the usage of `flush_multi_pass` for this purpose.
 [qi_flush_multi_pass_clear_buffer]
 
 [note Using the `flush_multi_pass` parser component with iterators other than 
-      `multi_pass` is safe to use as it has no effect on the parsing.]
+      `multi_pass` is safe as it has no effect on the parsing.]
 
 [endsect]

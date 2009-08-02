@@ -96,11 +96,11 @@ pages and pages of reference doumentation.
     [[`xdigit`]             [`Ch`]                      [Matches a character based on the equivalent of 
                                                          `std::isxdigit` in the current character set]]
 
-    [[`ch`]                 [`Unused`]                  [Matches `ch`]]
-    [[`str`]                [`Unused`]                  [Matches `str`]]
-    [[`lit(ch)`]            [`Unused`]                  [Matches `ch`]]
-    [[`lit(str)`]           [`Unused`]                  [Matches `str`]]
-    [[`string(str)`]        [`Str`]                     [Matches `str`]]
+    [[[qi_lit_string `ch`]]           [`Unused`]    [Matches `ch`]]
+    [[[qi_lit_string `str`]]          [`Unused`]    [Matches `str`]]
+    [[[qi_lit_string `lit(ch)`]]      [`Unused`]    [Matches `ch`]]
+    [[[qi_lit_string `lit(str)`]]     [`Unused`]    [Matches `str`]]
+    [[[qi_lit_string `string(str)`]]  [`Str`]       [Matches `str`]]
 
     [[__qi_symbols__]       [N/A]                       [Declare a symbol table, `sym`. `Ch` is the
                                                         underlying char type of the symbol table keys.
@@ -190,7 +190,7 @@ type of the attribute of `a >> b` will be `tuple<A, B>`.
 [table compound parser attribute types
     [[Expression]           [Attribute]]
 
-    [[sequence (`>>`)]      
+    [[sequence (`>>`)]
 [``a: A, b: B --> (a >> b): tuple<A, B>
 a: A, b: Unused --> (a >> b): A
 a: Unused, b: B --> (a >> b): B
@@ -201,17 +201,21 @@ a: vector<A>, b: A --> (a >> b): vector<A>
 a: A, b: vector<A> --> (a >> b): vector<A>
 a: vector<A>, b: vector<A> --> (a >> b): vector<A>``]]
 
-    [[expect (`>`)]         
+    [[expect (`>`)]
 [``a: A, b: B --> (a > b): tuple<A, B>
 a: A, b: Unused --> (a > b): A
 a: Unused, b: B --> (a > b): B
 a: Unused, b: Unused --> (a > b): Unused
-a: A, b: A --> (a > b): vector<A>``]]
-    
-    [[alternative (`|`)]    
+
+a: A, b: A --> (a > b): vector<A>
+a: vector<A>, b: A --> (a > b): vector<A>
+a: A, b: vector<A> --> (a > b): vector<A>
+a: vector<A>, b: vector<A> --> (a > b): vector<A>``]]
+
+    [[alternative (`|`)]
 [``a: A, b: B --> (a | b): variant<A, B>
-a: A, b: Unused --> (a | b): variant<Unused, A>
-a: Unused, b: B --> (a | b): variant<Unused, B>
+a: A, b: Unused --> (a | b): A
+a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
