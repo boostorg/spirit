@@ -166,7 +166,7 @@ namespace boost { namespace spirit { namespace qi
         struct attribute
         {
             typedef typename
-                traits::attribute_of<subject_type, Context>::type
+                traits::attribute_of<subject_type, Context, Iterator>::type
             type;
         };
 
