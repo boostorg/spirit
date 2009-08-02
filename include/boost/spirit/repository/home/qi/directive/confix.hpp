@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     using repository::confix;
 
     ///////////////////////////////////////////////////////////////////////////
-    // the director for a confix() generated parser
+    // the confix() generated parser
     template <typename Subject, typename Prefix, typename Suffix>
     struct confix_parser
       : spirit::qi::unary_parser<confix_parser<Subject, Prefix, Suffix> >
