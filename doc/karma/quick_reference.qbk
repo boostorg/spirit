@@ -182,11 +182,11 @@ a: A, b: A --> (a | b): A``]]
     [[__karma_kleene__]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
-    [[__karma_kleene__]
+    [[__karma_plus__]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 
-    [[list (`%`)]
+    [[__karma_list__]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
@@ -194,12 +194,12 @@ a: Unused, b: B --> (a % b): Unused``]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[optional (unary `-`)]
+    [[__karma_optional__]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 
-    [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
-    [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
+    [[__karma_and_predicate__]  [`a: A --> &a: Unused`]]
+    [[__karma_not_predicate__]  [`a: A --> !a: Unused`]]
 ]
 
 [endsect]

@@ -219,22 +219,22 @@ a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[difference (`-`)]     
+    [[difference (`-`)]
 [``a: A, b: B --> (a - b): A
 a: Unused, b: B --> (a - b): Unused``]]
 
-    [[kleene (unary `*`)]         
+    [[kleene (unary `*`)]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
-    [[plus (unary `+`)]           
+    [[plus (unary `+`)]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 
-    [[list (`%`)]           
+    [[list (`%`)]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[repetition]           
+    [[repetition]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
@@ -244,14 +244,14 @@ a: A, b: Unused --> (a || b): optional<A>
 a: Unused, b: B --> (a || b): optional<B>
 a: Unused, b: Unused --> (a || b): Unused``]]
 
-    [[optional (unary `-`)]       
+    [[optional (unary `-`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 
     [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
     [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
-    
-    [[permutation (`^`)]    
+
+    [[permutation (`^`)]
 [``a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a ^ b): optional<A>
 a: Unused, b: B --> (a ^ b): optional<B>

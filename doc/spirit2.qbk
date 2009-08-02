@@ -141,6 +141,7 @@
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
 [def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
 [def __unary_generator_concept__    [link spirit.karma.reference.generator_concepts.unarygenerator `UnaryGenerator`]]
+[def __binary_generator_concept__   [link spirit.karma.reference.generator_concepts.binarygenerator `BinaryGenerator`]]
 [def __nary_generator_concept__     [link spirit.karma.reference.generator_concepts.narygenerator `NaryGenerator`]]
 [def __karma_lazy_argument__        [link spirit.karma.reference.karma_basics.lazy_argument Lazy Argument]]
 
@@ -154,7 +155,7 @@
 [def __karma_kleene__               [link spirit.karma.reference.operator.kleene kleene (unary `*`)]]
 [def __karma_plus__                 [link spirit.karma.reference.operator.plus plus (unary `+`)]]
 [def __karma_list__                 [link spirit.karma.reference.operator.list list (`%`)]]
-[def __karma_optional__             [link spirit.karma.reference.operator.optional optional (`-`)]]
+[def __karma_optional__             [link spirit.karma.reference.operator.optional optional (unary `-`)]]
 [def __karma_and_predicate__        [link spirit.karma.reference.operator.and_predicate and predicate (unary `&`)]]
 [def __karma_not_predicate__        [link spirit.karma.reference.operator.not_predicate not predicate (unary `!`)]]
 

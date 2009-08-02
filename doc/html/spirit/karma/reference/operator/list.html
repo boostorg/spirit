@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Plus (unary operator+())</title>
+<title>Lists (operator%())</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="kleene.html" title="Kleene Star (unary operator*())">
-<link rel="next" href="list.html" title="Lists (operator%())">
+<link rel="prev" href="plus.html" title="Plus (unary operator+())">
+<link rel="next" href="optional.html" title="Optional (unary operator-())">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,53 +20,53 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="kleene.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="list.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="plus.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="optional.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Plus (unary operator+())">
+<div class="section" title="Lists (operator%())">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.plus"></a><a class="link" href="plus.html" title="Plus (unary operator+())"> Plus (unary
-          <code class="computeroutput"><span class="keyword">operator</span><span class="special">+()</span></code>)</a>
+<a name="spirit.karma.reference.operator.list"></a><a class="link" href="list.html" title="Lists (operator%())"> Lists (<code class="computeroutput"><span class="keyword">operator</span><span class="special">%()</span></code>)</a>
 </h5></div></div></div>
-<a name="spirit.karma.reference.operator.plus.description"></a><h6>
-<a name="id1113915"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.description">Description</a>
+<a name="spirit.karma.reference.operator.list.description"></a><h6>
+<a name="id1116033"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.description">Description</a>
           </h6>
 <p>
-            The plus generator is used to repeat the execution of an embedded generator
-            one or more times. It succeeds if the embedded generator has been successfully
-            executed at least once.
+            The list generator is used to repeat the execution of an embedded generator
+            and interspace it with the output of anyother generator one or more times.
+            It succeeds if the embedded generator has been successfully executed
+            at least once.
           </p>
-<a name="spirit.karma.reference.operator.plus.header"></a><h6>
-<a name="id1113932"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.header">Header</a>
+<a name="spirit.karma.reference.operator.list.header"></a><h6>
+<a name="id1116049"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.header">Header</a>
           </h6>
-<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/plus.hpp&gt;
-</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_plus</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/list.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
-<a name="spirit.karma.reference.operator.plus.model_of"></a><h6>
-<a name="id1114006"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.model_of">Model of</a>
+<a name="spirit.karma.reference.operator.list.model_of"></a><h6>
+<a name="id1116124"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+                <a class="link" href="../generator_concepts/binarygenerator.html" title="BinaryGenerator"><code class="computeroutput"><span class="identifier">BinaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.karma.reference.operator.plus.expression_semantics"></a><h6>
-<a name="id1114044"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.expression_semantics">Expression
+<a name="spirit.karma.reference.operator.list.expression_semantics"></a><h6>
+<a name="id1116162"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
+            is not defined in <a class="link" href="../generator_concepts/binarygenerator.html" title="BinaryGenerator"><code class="computeroutput"><span class="identifier">BinaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -88,25 +88,33 @@
 <tbody><tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+                    <span class="identifier">b</span></code>
                   </p>
                   </td>
 <td>
                   <p>
                     The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed one or more times depending on the availability of
-                    an attribute. The execution of <code class="computeroutput"><span class="identifier">a</span></code>
-                    stops after the attribute values passed to the plus generator
-                    are exhausted. The plus generator succeeds as long as its embedded
+                    an attribute. The output generated by <code class="computeroutput"><span class="identifier">a</span></code>
+                    is interspaced with the output generated by <code class="computeroutput"><span class="identifier">b</span></code>.
+                    The list generator succeeds as long as both its first embedded
                     generator has been successfully executed at least once (except
                     if the underlying output stream reports an error).
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
-<a name="spirit.karma.reference.operator.plus.attributes"></a><h6>
-<a name="id1114151"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.attributes">Attributes</a>
+<p>
+            The list expression <code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></code>
+            is a shortcut for <code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="special">*(</span><span class="identifier">b</span> <span class="special">&lt;&lt;</span>
+            <span class="identifier">a</span><span class="special">)</span></code>.
+            It is almost semantically equivalent, except for the attribute of <code class="computeroutput"><span class="identifier">b</span></code>, which gets ignored in the case of
+            the list generator.
+          </p>
+<a name="spirit.karma.reference.operator.list.attributes"></a><h6>
+<a name="id1116343"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -128,15 +136,15 @@
 <tbody><tr>
 <td>
                   <p>
-                    plus (unary <code class="computeroutput"><span class="special">+</span></code>)
+                    list (<code class="computeroutput"><span class="special">%</span></code>)
                   </p>
                   </td>
 <td>
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -155,16 +163,42 @@
             </p></td></tr>
 </table></div>
 <p>
-            The plus generator will execute its embedded generator once for each
+            The list generator will execute its embedded generator once for each
             element in the provided container attribute and as long as the embedded
-            generator succeeds. On each iteration it will pass the next consecutive
-            element from the container attribute to the embedded generator. Therefor
+            generator succeeds. The output generated by its first generator will
+            be interspaced by the output generated by the second generator. On each
+            iteration it will pass the next consecutive element from the container
+            attribute to the first embedded generator. The second embedded generator
+            does not get passed any attributes (it gets invoked using an <code class="computeroutput"><span class="identifier">unused_type</span></code> as its attribute). Therefor
             the number of iterations will not be larger than the number of elements
             in the container passed as its attribute. An empty container will make
-            the plus generator fail.
+            the list generator fail.
           </p>
+<div class="tip" title="Tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top">
 <p>
-            It is important to note, that the plus generator does not perform any
+              If you want to use the list generator and still allow for an empty
+              attribute, you can use the optional operator (see <a class="link" href="optional.html" title="Optional (unary operator-())">optional
+              (unary <code class="computeroutput"><span class="special">-</span></code>)</a>):
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="special">-(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">)</span></pre>
+<p>
+            </p>
+<p>
+              which will succeed even if the provided container attribute does not
+              contain any elements.
+            </p>
+</td></tr>
+</table></div>
+<p>
+            It is important to note, that the list generator does not perform any
             buffering of the output generated by its embedded elements. That means
             that any failing element generator might have already generated some
             output, which is <span class="emphasis"><em>not</em></span> rolled back.
@@ -178,13 +212,13 @@
 <p>
               The only compound generator performing buffering is the <a class="link" href="alternative.html" title="Alternatives (operator|())">alternative
               (<code class="computeroutput"><span class="special">|</span></code>)</a> generator.
-              This allows to force a plus generator to behave as if it did buffering
+              This allows to force a list generator to behave as if it did buffering
               by wrapping it into an alternative:
             </p>
 <p>
               
 </p>
-<pre class="programlisting"><span class="special">+</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span></pre>
+<pre class="programlisting"><span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span></pre>
 <p>
             </p>
 <p>
@@ -192,46 +226,32 @@
               a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 <p>
-              Here is why: if the first alternative (our plus generator) fails, the
+              Here is why: if the first alternative (our list generator) fails, the
               alternative discards any accumulated output and tries the second alternative,
               which will always fail; if the first alternative succeeds, the <a class="link" href="../auxiliary/eps.html" title="eps"><code class="computeroutput"><span class="identifier">eps</span></code></a>
               generator is never executed.
             </p>
-<p>
-              The expression:
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="special">+(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">))</span></pre>
-<p>
-            </p>
-<p>
-              will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
-              of its output. The overall expresion will still generate the output
-              as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
-            </p>
 </td></tr>
 </table></div>
-<a name="spirit.karma.reference.operator.plus.complexity"></a><h6>
-<a name="id1114995"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.complexity">Complexity</a>
+<a name="spirit.karma.reference.operator.list.complexity"></a><h6>
+<a name="id1116768"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the plus generator is defined by the complexity
-                of its embedded generator multiplied by the number of executed iterations.
-                The complexity of the plus generator itself is O(N), where N is the
+                The overall complexity of the list generator is defined by the complexity
+                of its embedded generators multiplied by the number of executed iterations.
+                The complexity of the list generator itself is O(N), where N is the
                 number of elements in the container passed as its attribute.
               </p>
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.karma.reference.operator.plus.example"></a><h6>
-<a name="id1115019"></a>
-            <a class="link" href="plus.html#spirit.karma.reference.operator.plus.example">Example</a>
+<a name="spirit.karma.reference.operator.list.example"></a><h6>
+<a name="id1116792"></a>
+            <a class="link" href="list.html#spirit.karma.reference.operator.list.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -285,14 +305,13 @@
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
 </pre>
 <p>
             </p>
 <p>
           </p>
 <p>
-            Basic usage of a plus generator:
+            Basic usage of a list generator:
           </p>
 <p>
             </p>
@@ -301,25 +320,10 @@
 </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v1</span><span class="special">;</span>
 <span class="identifier">v1</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1.0</span><span class="special">);</span>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0"</span><span class="special">,</span> <span class="identifier">double_</span> <span class="special">%</span> <span class="char">','</span><span class="special">,</span> <span class="identifier">v1</span><span class="special">);</span>
+
 <span class="identifier">v1</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">2.0</span><span class="special">);</span>
-<span class="identifier">v1</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">3.0</span><span class="special">);</span>
-<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0 2.0 3.0 "</span><span class="special">,</span> <span class="special">+</span><span class="identifier">double_</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">v1</span><span class="special">);</span>
-</pre>
-<p>
-            </p>
-<p>
-          </p>
-<p>
-            A more sophisticated use case showing how to leverage the fact that plus
-            is failing for empty containers passed as its attribute:
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">v2</span><span class="special">;</span>               <span class="comment">// empty container
-</span><span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"empty"</span><span class="special">,</span> <span class="special">+</span><span class="identifier">double_</span> <span class="special">|</span> <span class="string">"empty"</span><span class="special">,</span> <span class="identifier">v2</span><span class="special">);</span>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0,2.0"</span><span class="special">,</span> <span class="identifier">double_</span> <span class="special">%</span> <span class="char">','</span><span class="special">,</span> <span class="identifier">v1</span><span class="special">);</span>
 </pre>
 <p>
             </p>
@@ -337,7 +341,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="kleene.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="list.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="plus.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="optional.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
