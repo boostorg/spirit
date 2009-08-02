@@ -106,7 +106,7 @@ namespace boost { namespace spirit { namespace karma
         {
             if (detail::optional_is_valid(attr))
                 subject.generate(sink, ctx, d, detail::optional_get(attr));
-            return true;
+            return detail::sink_is_good(sink);
         }
 
         template <typename Context>
