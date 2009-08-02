@@ -11,6 +11,7 @@
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_action.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -27,7 +28,9 @@ main()
     using boost::spirit::qi::lit;
     using boost::spirit::qi::unused;
     using boost::spirit::qi::int_;
+    using boost::spirit::qi::double_;
     using boost::spirit::qi::what;
+    using boost::spirit::qi::rule;
     using boost::spirit::qi::_1;
     using boost::spirit::qi::_2;
 
@@ -93,6 +96,16 @@ main()
         char attr;
         BOOST_TEST((test_attr("ab", char_ >> 'b', attr)));
         BOOST_TEST((attr == 'a'));
+    }
+
+    {
+        // make sure single element tuples get passed through if the rhs 
+        // has a single element tuple as its attribute
+        vector<double, int> fv;
+        rule<char const*, vector<double, int>()> r;
+        r %= double_ >> ',' >> int_;
+        BOOST_TEST((test_attr("test:2.0,1", "test:" >> r, fv) && 
+            fv == vector<double, int>(2.0, 1)));
     }
 
     {

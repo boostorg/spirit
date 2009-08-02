@@ -1,9 +1,9 @@
 /*=============================================================================
     Copyright (c) 2001-2009 Joel de Guzman
-    include/qi_://spirit.sourceforge.net/
+    http://spirit.sourceforge.net/
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at include/qi_://www.boost.org/LICENSE_1_0.txt)
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>

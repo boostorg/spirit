@@ -15,6 +15,7 @@
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_nonterminal.hpp>
 #include <boost/spirit/include/support_unused.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -104,6 +105,16 @@ main()
             BOOST_TEST(test("Aa        ", left_align[char_('A') << 'a']));
 //             BOOST_TEST(test("    Aa    ", center[char_('A') << 'a']));
 //             BOOST_TEST(test("        Aa", right_align[char_('A') << 'a']));
+        }
+
+        {
+            // make sure single element tuples get passed through if the rhs 
+            // has a single element tuple as its attribute
+            typedef spirit_test::output_iterator<char>::type iterator_type;
+            fusion::vector<double, int> fv(2.0, 1);
+            karma::rule<iterator_type, fusion::vector<double, int>()> r;
+            r %= double_ << ',' << int_;
+            BOOST_TEST(test("test:2.0,1", "test:" << r, fv));
         }
 
         // action tests
