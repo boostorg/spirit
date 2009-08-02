@@ -66,7 +66,8 @@
 [def __karma__                  /Spirit.Karma/]
 [def __lex__                    /Spirit.Lex/]
 
-[def __mpl_boolean_constant__   [@http://www.boost.org/libs/mpl/doc/refmanual/integral-constant.html MPL Boolean Constant]]
+[def __mpl_boolean_constant__   [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Boolean Constant]]
+[def __mpl_int_constant__       [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Integral Constant]]
 
 [def __fixme__                  *FIXME*]
 
@@ -139,6 +140,7 @@
 
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
 [def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
+[def __unary_generator_concept__    [link spirit.karma.reference.generator_concepts.unarygenerator `UnaryGenerator`]]
 [def __nary_generator_concept__     [link spirit.karma.reference.generator_concepts.narygenerator `NaryGenerator`]]
 [def __karma_lazy_argument__        [link spirit.karma.reference.karma_basics.lazy_argument Lazy Argument]]
 

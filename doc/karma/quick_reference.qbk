@@ -179,10 +179,10 @@ a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[kleene (unary `*`)]
+    [[__karma_kleene__]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
-    [[plus (unary `+`)]
+    [[__karma_kleene__]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 

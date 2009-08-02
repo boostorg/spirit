@@ -66,16 +66,20 @@ For any Generator the following expressions must be valid:
     [[Expression]                                   [Description]]
     [[`G::template attribute<Context>::type`]       [The Generator's attribute.]]
     [[`traits::is_generator<G>::type`]              [Metafunction that evaluates to `mpl::true_` if 
-                                                    a certain type, `G` is a Generator, `mpl::false_`  
-                                                    otherwise (See __mpl_boolean_constant__).]]
+                                                     a certain type, `G` is a Generator, `mpl::false_`  
+                                                     otherwise (See __mpl_boolean_constant__).]]
+    [[`G::properties`]                              [A `mpl::int_` (See __mpl_int_constant__) holding 
+                                                     a value from the `karma::generator_properties` 
+                                                     enumeration. The default value is 
+                                                     `generator_properties::no_properties`]]
 ]
 
 [heading Postcondition]
 
 Upon return from `g.generate` the following post conditions should hold:
 
-* On successful generation, `sink` received the generated characters/tokens
-  seqeunce.
+* On successful generation, `sink` receives the generated characters/tokens
+  sequence.
 * No pre-delimits: `delimit` characters/tokens will not be emitted in front of 
   any other output.
 * The attribute `attrib` has not been modified.
@@ -118,7 +122,9 @@ This is typically carried out through a call to `karma::delimit_out`:
 
 [heading Models] 
 
-__fixme__ Add links to /PrimitiveGenerator/ models here.
+The following generators conform to this model: __karma_eol__, __karma_eps__.
+
+__fixme__ Add more links to /PrimitiveGenerator/ models here.
 
 [endsect] [/ PrimitiveGenerator Concept]
 
@@ -273,7 +279,10 @@ invariant always holds:
 
 [heading Models]
 
-__fixme__ Add links to models of NaryGenerator concept
+The following generators conform to this model: __karma_sequence__, 
+__karma_alternative__.
+
+__fixme__ Add more links to models of NaryGenerator concept
 
 [endsect] [/ NaryGenerator Concept]
 

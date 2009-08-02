@@ -211,6 +211,35 @@ variable parts. In this context you can think about __karma__'s primitive
 generators (such as the `double_` above) as of being placeholders for the 
 attribute values to print.
 
+[tip  Similarly to the tip provided above, this example could be rewritten 
+      using /Karma's/ multi-attribute API function:
+
+      ``generate(out, '(' << double_ << ", " << double_ << ')', 1.0, 2.0);``
+
+      which provides a clear and comfortable syntax, more similar to the 
+      placeholder based syntax as exposed by `printf` or `boost::format`.
+]
+
+Let's take a look from a more formal perspective. The sequence attribute 
+propagation rules define special behavior if generators exposing `unused_type` 
+as their attribute are involved:
+
+    a: A, b: Unused --> (a << b): A
+
+which reads as:
+
+[:Given `a` and `b` are generators, and `A` is the attribute type of `a`, and
+  `unused_type` is the attribute type of `b`, then the attribute type of 
+  `a << b` will be `A` as well. This rule applies regardless of the position
+  the element exposing the `unused_type` is at.]
+
+This rule is the key to the understanding of the attribute handling in 
+sequences as soon as literals are involved. It is as if elements with 
+`unused_type` attributes 'disappeared' during attribute propagation. Notably, 
+this is not only true for sequences but for any compound generator in 
+__karma__.
+
+
 [heading Attributes of Rules and Grammars]
 
 * explicit attribute type

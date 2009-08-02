@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.sequence.description"></a><h6>
-<a name="id1204546"></a>
+<a name="id1162328"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             to right as long as they succeed.
           </p>
 <a name="spirit.karma.reference.operator.sequence.header"></a><h6>
-<a name="id1204563"></a>
+<a name="id1162345"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/sequence.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.sequence.model_of"></a><h6>
-<a name="id1204637"></a>
+<a name="id1162419"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id1204673"></a>
+<a name="id1162455"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -117,8 +117,8 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-              The only compound generators performing buffering are <a class="link" href="alternative.html" title="Alternatives (operator|())">alternative
-              (<code class="computeroutput"><span class="special">|</span></code>)</a> generators.
+              The only compound generator performing buffering is <a class="link" href="alternative.html" title="Alternatives (operator|())">alternative
+              (<code class="computeroutput"><span class="special">|</span></code>)</a> generator.
               This allows to force a sequence to behave as if it did buffering by
               wrapping it into an alternative:
             </p>
@@ -131,14 +131,14 @@
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
               a failing sequence. Here is why: if the first alternative (our sequence)
-              fails the alternative discards any accumulated output and tries the
+              fails, the alternative discards any accumulated output and tries the
               second alternative, which will always fail; if the first alternative
               succeeds, the <a class="link" href="../auxiliary/eps.html" title="eps"><code class="computeroutput"><span class="identifier">eps</span></code></a> generator is never executed.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.sequence.attributes"></a><h6>
-<a name="id1204877"></a>
+<a name="id1162659"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -211,7 +211,7 @@
             the attribute supplied
           </p>
 <a name="spirit.karma.reference.operator.sequence.complexity"></a><h6>
-<a name="id1205675"></a>
+<a name="id1163457"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -226,7 +226,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.example"></a><h6>
-<a name="id1205699"></a>
+<a name="id1163481"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.example">Example</a>
           </h6>
 <p>
@@ -256,12 +256,12 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">test_generator</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">)</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">str</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">str</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
