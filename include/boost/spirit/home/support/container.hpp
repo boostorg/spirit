@@ -340,13 +340,13 @@ namespace boost { namespace spirit { namespace traits
     inline bool
     compare(unused_type*, unused_type*)
     {
-        return false;
+        return true;
     }
 
     inline bool
     compare(unused_type const*, unused_type const*)
     {
-        return false;
+        return true;
     }
 
 }}}
