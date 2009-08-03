@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2007 Joel de Guzman
+//  Copyright (c) 2001-2009 Joel de Guzman
 //  Copyright (c) 2001-2009 Hartmut Kaiser
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -17,6 +17,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/optional.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 
 namespace boost { namespace spirit
 {
@@ -34,6 +35,7 @@ namespace boost { namespace spirit { namespace karma
 {
     namespace detail
     {
+        ///////////////////////////////////////////////////////////////////////
         template <typename Attribute>
         inline bool
         optional_is_valid(boost::optional<Attribute> const& opt)
@@ -54,6 +56,7 @@ namespace boost { namespace spirit { namespace karma
             return true;
         }
 
+        ///////////////////////////////////////////////////////////////////////
         template <typename Attribute>
         inline Attribute const&
         optional_get(boost::optional<Attribute> const& opt)
@@ -73,6 +76,25 @@ namespace boost { namespace spirit { namespace karma
         {
             return unused;
         }
+
+        ///////////////////////////////////////////////////////////////////////
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute, typename Subject>
+        void generate_optional(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr, Subject const& subject
+          , mpl::true_)
+        {
+            if (optional_is_valid(attr)) 
+                subject.generate(sink, ctx, d, detail::optional_get(attr));
+        }
+
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute, typename Subject>
+        void generate_optional(OutputIterator&, Context&, Delimiter const&
+          , Attribute const&, Subject const&, mpl::false_)
+        {}
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -82,7 +104,7 @@ namespace boost { namespace spirit { namespace karma
         typedef Subject subject_type;
         typedef typename subject_type::properties properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Unused = unused_type>
         struct attribute
         {
             // Build a boost::optional from the subject's attribute. Note
@@ -104,9 +126,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            if (detail::optional_is_valid(attr))
-                subject.generate(sink, ctx, d, detail::optional_get(attr));
-            return detail::sink_is_good(sink);
+            typedef is_convertible<Attribute
+              , typename attribute<Context>::type> predicate;
+
+            detail::generate_optional(sink, ctx, d, attr, subject, predicate());
+            return sink_is_good(sink);
         }
 
         template <typename Context>
