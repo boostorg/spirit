@@ -6,9 +6,12 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#include <boost/mpl/print.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
+#include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_string.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -22,6 +25,6 @@ main()
     {
         BOOST_TEST(test("1", int_(1) << &(int_(2) << &int_(3) << int_(4))));
     }
-    
+
     return boost::report_errors();
 }

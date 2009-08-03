@@ -63,7 +63,7 @@ boost_test_run(qi_uint qi/uint.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run Karma tests
 boost_test_run(karma_actions karma/actions.cpp COMPILE_FLAGS ${test_compile_flags})
-boost_test_run(karma_and_attribute karma/and_attribute.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_and_predicate karma/and_predicate.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_alternative karma/alternative.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_binary karma/binary.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_case_handling karma/case_handling.cpp COMPILE_FLAGS ${test_compile_flags})

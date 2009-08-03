@@ -68,7 +68,7 @@ import testing ;
 
     # run Karma tests
     [ run karma/actions.cpp                 : : : : karma_actions ]
-    [ run karma/and_attribute.cpp           : : : : karma_and_attribute ]
+    [ run karma/and_predicate.cpp           : : : : karma_and_predicate ]
     [ run karma/alternative.cpp             : : : : karma_alternative ]
     [ run karma/binary.cpp                  : : : : karma_binary ]
     [ run karma/case_handling.cpp           : : : : ]
