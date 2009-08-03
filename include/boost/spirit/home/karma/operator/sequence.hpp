@@ -51,7 +51,7 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace traits
 {
     // specialization for sequences
-    template <typename Sequence>
+    template <typename Elements>
     struct sequence_properties
     {
         struct element_properties
@@ -68,7 +68,7 @@ namespace boost { namespace spirit { namespace traits
 
         typedef typename mpl::accumulate<
             typename fusion::result_of::transform<
-                Sequence, element_properties>::type
+                Elements, element_properties>::type
           , mpl::int_<karma::generator_properties::no_properties>
           , mpl::bitor_<mpl::_2, mpl::_1>
         >::type type;

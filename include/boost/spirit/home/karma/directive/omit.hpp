@@ -65,7 +65,6 @@ namespace boost { namespace spirit { namespace karma
         info what(Context& context) const
         {
             return info("omit", subject.what(context));
-
         }
 
         Subject subject;
