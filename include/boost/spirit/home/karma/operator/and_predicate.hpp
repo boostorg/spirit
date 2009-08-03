@@ -36,7 +36,8 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef Subject subject_type;
         typedef mpl::int_<
-            generator_properties::countingbuffer | subject_type::properties::value
+            generator_properties::countingbuffer | 
+            subject_type::properties::value
         > properties;
 
         template <typename Context, typename Iterator>

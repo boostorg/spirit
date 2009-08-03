@@ -13,7 +13,7 @@
 #include <string>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
-#include <boost/foreach.hpp>
+#include <boost/range/iterator_range.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -38,6 +38,19 @@ namespace boost { namespace spirit { namespace karma { namespace detail
       , std::basic_string<Char, Traits, Allocator> const& str)
     {
         return string_generate(sink, str.c_str());
+    }
+
+    template <typename OutputIterator, typename Iterator>
+    inline bool string_generate(OutputIterator& sink
+      , boost::iterator_range<Iterator> const& r)
+    {
+        Iterator end = r.end();
+        for (Iterator it = r.begin(); it != end; ++it)
+        {
+            *sink = *it;
+            ++sink;
+        }
+        return detail::sink_is_good(sink);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -75,6 +88,20 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         return string_generate(sink, str.c_str(), ce, tag);
     }
 
+    template <typename OutputIterator, typename Iterator, typename CharEncoding
+      , typename Tag>
+    inline bool string_generate(OutputIterator& sink
+      , boost::iterator_range<Iterator> const& r, CharEncoding ce, Tag tag)
+    {
+        Iterator end = r.end();
+        for (Iterator it = r.begin(); it != end; ++it)
+        {
+            *sink = spirit::char_class::convert<CharEncoding>::to(Tag(), *it);
+            ++sink;
+        }
+        return detail::sink_is_good(sink);
+    }
+
     template <typename OutputIterator, typename Char, typename Traits
       , typename Allocator>
     inline bool string_generate(OutputIterator& sink
@@ -82,6 +109,19 @@ namespace boost { namespace spirit { namespace karma { namespace detail
       , unused_type, unused_type)
     {
         return string_generate(sink, str.c_str());
+    }
+
+    template <typename OutputIterator, typename Iterator>
+    inline bool string_generate(OutputIterator& sink
+      , boost::iterator_range<Iterator> const& r, unused_type, unused_type)
+    {
+        Iterator end = r.end();
+        for (Iterator it = r.begin(); it != end; ++it)
+        {
+            *sink = *it;
+            ++sink;
+        }
+        return detail::sink_is_good(sink);
     }
 
 }}}}

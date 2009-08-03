@@ -40,7 +40,7 @@ namespace boost { namespace spirit { namespace karma
         // then the expression (expr) is not a valid spirit karma expression.
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
 
@@ -76,7 +76,7 @@ namespace boost { namespace spirit { namespace karma
         // then the expression (expr) is not a valid spirit karma expression.
         BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
 
@@ -141,10 +141,10 @@ namespace boost { namespace spirit { namespace karma
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = 
             delimit_flag::dont_predelimit)
     {
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Delimiter>::type
         > delimiter_properties;
 
@@ -197,10 +197,10 @@ namespace boost { namespace spirit { namespace karma
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
       , Attribute const& attr)
     {
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Delimiter>::type
         > delimiter_properties;
 

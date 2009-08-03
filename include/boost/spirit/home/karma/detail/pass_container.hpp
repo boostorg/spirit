@@ -122,14 +122,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         // This handles the case where the attribute of the component
         // is not a STL container or which elements are not 
-        // convertible to the target attribute's (Attr) value_type.
+        // convertible to the target attribute (Attr) value_type.
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::false_) const
         {
             // we need to dispatch again depending on the type of the attribute
             // of the current element (component). If this is has no attribute
-            // we shouldn't use an element of the container but unused_type as
-            // well
+            // we shouldn't use an element of the container but unused_type 
+            // instead
             typedef traits::is_not_unused<
                 typename traits::attribute_of<Component, context_type>::type
             > predicate;
@@ -143,7 +143,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
-            return f(component, make_iterator_range(iter, traits::end(attr)));
+            bool result = f(component, make_iterator_range(iter, traits::end(attr)));
+            if (result)
+                iter = traits::end(attr);     // adjust current iter to the end 
+            return result;
         }
 
         // Dispatches to dispatch_main depending on the attribute type

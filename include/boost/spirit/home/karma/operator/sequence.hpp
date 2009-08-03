@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace traits
             template <typename F, typename Element>
             struct result<F(Element)>
             {
-                typedef properties<Element> type;
+                typedef properties_of<Element> type;
             };
         };
 

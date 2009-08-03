@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace karma
       , Expr const& expr
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
 
@@ -122,10 +122,10 @@ namespace boost { namespace spirit { namespace karma
       , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Delimiter>::type
         > delimiter_properties;
 
@@ -146,10 +146,10 @@ namespace boost { namespace spirit { namespace karma
       , Delimiter const& delimiter
       , BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& attr))
     {
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Expr>::type
         > properties;
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Delimiter>::type
         > delimiter_properties;
 

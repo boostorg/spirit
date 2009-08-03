@@ -101,7 +101,7 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator&, Context&, Delimiter const&, 
             unused_type const&)
         {
-            // It is not possible (doesn't make sense) to use char_ without
+            // It is not possible (doesn't make sense) to use string without
             // providing any attribute, as the generator doesn't 'know' what
             // character to output. The following assertion fires if this
             // situation is detected in your code.

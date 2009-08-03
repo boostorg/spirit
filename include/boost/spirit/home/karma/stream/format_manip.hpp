@@ -97,7 +97,7 @@ namespace boost { namespace spirit { namespace karma
     inline std::basic_ostream<Char, Traits> & 
     operator<< (std::basic_ostream<Char, Traits> &os, generator<Derived> const& g)
     {
-        typedef traits::properties<
+        typedef traits::properties_of<
             typename result_of::compile<karma::domain, Derived>::type
         > properties;
         typedef karma::detail::ostream_iterator<Char, Char, Traits> outiter_type;

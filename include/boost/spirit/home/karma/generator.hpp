@@ -151,7 +151,7 @@ namespace boost { namespace spirit { namespace traits // classification
 
     // check for generator properties
     template <typename T>
-    struct properties : T::properties {};
+    struct properties_of : T::properties {};
 
 }}}
 
