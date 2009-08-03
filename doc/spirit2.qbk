@@ -159,6 +159,9 @@
 [def __karma_and_predicate__        [link spirit.karma.reference.operator.and_predicate and predicate (unary `&`)]]
 [def __karma_not_predicate__        [link spirit.karma.reference.operator.not_predicate not predicate (unary `!`)]]
 
+[def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit[a]`]]
+[def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer[a]`]]
+
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]
 [def __compatible__                 Compatible] [/$$$ TODO: link me $$$]

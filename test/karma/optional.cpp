@@ -36,6 +36,15 @@ int main()
     }
 
     {
+        boost::optional<std::string> opt;
+        BOOST_TEST(test("", -int_, opt));
+
+        opt = "string";
+        BOOST_TEST(test("", -int_, opt));
+        BOOST_TEST(test("", -int_, "string"));
+    }
+
+    {
         boost::optional<int> opt;
         BOOST_TEST(test_delimited("", -int_, opt, space));
 

@@ -8,6 +8,190 @@
 
 [section Directive]
 
+This module includes different generator directives. It includes alignement 
+directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
+(`repeat[]`), directives controlling automatic delimiting (`verbatim[]` and 
+`delimit[]`), controlling case sensitivity (`upper[]` and `lower[]`), field
+width (`max_width[]`), buffering (`buffer[]`), and attribute handling 
+(`omit[]`).
 
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/karma/directive.hpp>
+    #include <boost/spirit/include/karma_directive.hpp>
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:buffer Temporary Output Buffering (`buffer[]`)]
+
+[heading Description]
+
+All generator components (except the __karma_alternative__ generator) pass 
+their generated output directly to the underlying output stream. If a generator 
+fails halfway through, the output generated so far is not 'rolled back'. The 
+buffering generator directive allows to avoid this unwanted output to be 
+generated. It temporarily redirects the output produced by the embedded 
+generator into a buffer. This buffer is flushed to the underlying stream only
+after the embedded generator succeeded.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/directive/buffer.hpp>
+    #include <boost/spirit/include/karma_buffer.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`buffer[a]`]      [The embedded generator `a` is invoked but its output
+                         is temporarily intercepted and stored in an internal
+                         buffer. If `a` succeeds the buffer content is flushed
+                         to the underlying output stream, otherwise the buffer
+                         content is discarded. The buffer directive succeeds
+                         always (except if the underlying output stream reports 
+                         an error).]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`buffer[]`]
+[``a: A --> buffer[a]: A
+a: Unused --> buffer[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the buffering generator directive is defined by the 
+  complexity of its embedded generator. The complexity of the buffering 
+  directive generator itself is O(1).]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use this common test function:
+
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_buffer]
+
+Basic usage of a buffering generator directive. It shows how the partial 
+output generated in the first example does not show up in the generated output
+as the plus generator fails (no data is available, see __karma_plus__).
+
+[reference_karma_buffer]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:omit Consume Attribute (`omit[]`)]
+
+[heading Description]
+
+Consumes the attribute type of the embedded generator without generating 
+any output. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/directive/omit.hpp>
+    #include <boost/spirit/include/karma_omit.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`omit[a]`]        [The `omit` directive consumes the attribute type of the 
+                         embedded generator without generating any output. It 
+                         succeeds always.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`omit[]`]
+[``a: A --> omit[a]: A
+a: Unused --> omit[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the `omit` generator directive is O(1) as it does
+  not generate any output.]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use this common test function:
+
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_omit]
+
+Basic usage of a `omit` generator directive. It shows how it consumes the first 
+element of the provided attribute without generating anything, leaving the 
+second element of teh attribute to the non-wrapped `double_` generator.
+
+[reference_karma_omit]
+
+Generally, this directive is helpful in situations, where the attribute type 
+contains more information (elements) than need to be used to generate the 
+required output. Normally in such situations we would resolve to use semantic 
+actions to explicitly pass the correct parts of the overall attribute to the 
+generators. The `omit` directive helps achieving the same without having to use 
+semantic actions. 
+
+Consider the attribute type:
+
+    typedef fusion::vector<int, double, std::string> attribute_type;
+
+where we need to generate output only from the first and last element:
+
+    typedef std::back_insert:iterator<std::string> iterator_type;
+
+    karma::rule<iterator_type, attribute_type()> r;
+    r = int_[_1 = phoenix::at_c<0>(_val)] << string[_1 = phoenix::at_c<2>(_val)];
+
+    std::string str;
+    iterator_type sink(str);
+    generate(sink, r, attribute_type(1, 2.0, "example"));  // will generate: '1example'
+
+This is error prone and not really readable. The same can be achieved by using 
+the `omit` directive:
+
+    r = int_ << omit[double_] << string;
+
+which is at the same time more readable and more efficient as we don't have to 
+use semantic actions.
+
+[endsect]
 
 [endsect]

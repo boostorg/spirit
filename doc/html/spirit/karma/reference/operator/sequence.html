@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.sequence.description"></a><h6>
-<a name="id1106687"></a>
+<a name="id1140076"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             to right as long as they succeed.
           </p>
 <a name="spirit.karma.reference.operator.sequence.header"></a><h6>
-<a name="id1106704"></a>
+<a name="id1140092"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/sequence.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.sequence.model_of"></a><h6>
-<a name="id1106778"></a>
+<a name="id1140167"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id1106814"></a>
+<a name="id1140203"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -117,28 +117,23 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-              The only compound generator performing buffering is the <a class="link" href="alternative.html" title="Alternatives (operator|())">alternative
-              (<code class="computeroutput"><span class="special">|</span></code>)</a> generator.
-              This allows to force a sequence to behave as if it did buffering by
-              wrapping it into an alternative:
+              The simplest way to force a sequence to behave as if it did buffering
+              is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
 </p>
-<pre class="programlisting"><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span> <span class="special">&lt;&lt;</span> <span class="identifier">c</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span></pre>
+<pre class="programlisting"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span> <span class="special">&lt;&lt;</span> <span class="identifier">c</span><span class="special">]</span></pre>
 <p>
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing sequence. Here is why: if the first alternative (our sequence)
-              fails, the alternative discards any accumulated output and tries the
-              second alternative, which will always fail; if the first alternative
-              succeeds, the <a class="link" href="../auxiliary/eps.html" title="eps"><code class="computeroutput"><span class="identifier">eps</span></code></a> generator is never executed.
+              a failing sequence.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.sequence.attributes"></a><h6>
-<a name="id1107018"></a>
+<a name="id1142046"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -211,7 +206,7 @@
             the attribute supplied
           </p>
 <a name="spirit.karma.reference.operator.sequence.complexity"></a><h6>
-<a name="id1107816"></a>
+<a name="id1142844"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -226,7 +221,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.example"></a><h6>
-<a name="id1107840"></a>
+<a name="id1142868"></a>
             <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.example">Example</a>
           </h6>
 <p>

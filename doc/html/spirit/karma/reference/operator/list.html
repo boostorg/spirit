@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.operator.list"></a><a class="link" href="list.html" title="Lists (operator%())"> Lists (<code class="computeroutput"><span class="keyword">operator</span><span class="special">%()</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.list.description"></a><h6>
-<a name="id1116033"></a>
+<a name="id1150579"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             at least once.
           </p>
 <a name="spirit.karma.reference.operator.list.header"></a><h6>
-<a name="id1116049"></a>
+<a name="id1150595"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/list.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.list.model_of"></a><h6>
-<a name="id1116124"></a>
+<a name="id1150670"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -60,7 +60,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.list.expression_semantics"></a><h6>
-<a name="id1116162"></a>
+<a name="id1150708"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -113,7 +113,7 @@
             the list generator.
           </p>
 <a name="spirit.karma.reference.operator.list.attributes"></a><h6>
-<a name="id1116343"></a>
+<a name="id1150889"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -210,31 +210,23 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-              The only compound generator performing buffering is the <a class="link" href="alternative.html" title="Alternatives (operator|())">alternative
-              (<code class="computeroutput"><span class="special">|</span></code>)</a> generator.
-              This allows to force a list generator to behave as if it did buffering
-              by wrapping it into an alternative:
+              The simplest way to force a list generator to behave as if it did buffering
+              is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
 </p>
-<pre class="programlisting"><span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span></pre>
+<pre class="programlisting"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">]</span></pre>
 <p>
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
               a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
-<p>
-              Here is why: if the first alternative (our list generator) fails, the
-              alternative discards any accumulated output and tries the second alternative,
-              which will always fail; if the first alternative succeeds, the <a class="link" href="../auxiliary/eps.html" title="eps"><code class="computeroutput"><span class="identifier">eps</span></code></a>
-              generator is never executed.
-            </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.list.complexity"></a><h6>
-<a name="id1116768"></a>
+<a name="id1151291"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -250,7 +242,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.list.example"></a><h6>
-<a name="id1116792"></a>
+<a name="id1151315"></a>
             <a class="link" href="list.html#spirit.karma.reference.operator.list.example">Example</a>
           </h6>
 <p>

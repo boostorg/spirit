@@ -9,20 +9,24 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
-#include <boost/spirit/include/karma_auxiliary.hpp>
+#include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_string.hpp>
+#include <boost/fusion/include/std_pair.hpp>
 
 #include <iostream>
 #include "test.hpp"
 
-int
-main()
+int main()
 {
     using namespace spirit_test;
     using namespace boost::spirit;
 
     {
-        BOOST_TEST(test("1", int_(1) << &(int_(2) << &int_(3) << int_(4))));
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::omit;
+
+        std::pair<double, double> p (1.0, 2.0);
+        BOOST_TEST(test("2.0", omit[double_] << double_, p));
     }
 
     return boost::report_errors();

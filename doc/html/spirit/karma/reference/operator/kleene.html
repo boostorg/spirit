@@ -28,7 +28,7 @@
           (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.kleene.description"></a><h6>
-<a name="id1112378"></a>
+<a name="id1145768"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             generator, the Kleene star generator always succeeds.
           </p>
 <a name="spirit.karma.reference.operator.kleene.header"></a><h6>
-<a name="id1112394"></a>
+<a name="id1145785"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/kleene.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.kleene.model_of"></a><h6>
-<a name="id1112469"></a>
+<a name="id1145859"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.expression_semantics"></a><h6>
-<a name="id1112507"></a>
+<a name="id1145897"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -105,7 +105,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.attributes"></a><h6>
-<a name="id1112614"></a>
+<a name="id1146004"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -176,45 +176,35 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-              The only compound generator performing buffering is the <a class="link" href="alternative.html" title="Alternatives (operator|())">alternative
-              (<code class="computeroutput"><span class="special">|</span></code>)</a> generator.
-              This allows to force a Kleene star to behave as if it did buffering
-              by wrapping it into an alternative:
+              The simplest way to force a Kleene star to behave as if it did buffering
+              is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
 </p>
-<pre class="programlisting"><span class="special">*</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">)</span></pre>
+<pre class="programlisting"><span class="identifier">buffer</span><span class="special">[*</span><span class="identifier">a</span><span class="special">]</span></pre>
 <p>
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
               a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
-            </p>
-<p>
-              Here is why: if the first alternative (our Kleene star) fails, the
-              alternative discards any accumulated output and tries the second alternative,
-              which will always fail; if the first alternative succeeds, the <a class="link" href="../auxiliary/eps.html" title="eps"><code class="computeroutput"><span class="identifier">eps</span></code></a>
-              generator is never executed.
-            </p>
-<p>
               The expression:
             </p>
 <p>
               
 </p>
-<pre class="programlisting"><span class="special">*(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">))</span></pre>
+<pre class="programlisting"><span class="special">*(</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">])</span></pre>
 <p>
             </p>
 <p>
               will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
-              of its output. The overall expresion will still generate the output
+              of its output. The overall expression will still generate the output
               as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.complexity"></a><h6>
-<a name="id1112972"></a>
+<a name="id1146329"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -231,7 +221,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.example"></a><h6>
-<a name="id1112996"></a>
+<a name="id1146353"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.example">Example</a>
           </h6>
 <p>

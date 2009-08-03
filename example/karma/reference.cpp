@@ -42,7 +42,10 @@ void test_generator_attr(char const* expected, G const& g, T const& attr)
 
 int
 main()
-{   
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Operators
+    ///////////////////////////////////////////////////////////////////////////
     {
         //[reference_karma_using_declarations_sequence
         using boost::spirit::karma::generate;
@@ -188,6 +191,39 @@ main()
                 !((double_ | int_)[_1 = ref(v)])      << "not numeric!"
             |   !((string | eps(false))[_1 = ref(v)]) << "not a string!"
         );
+        //]
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  Directives
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        //[reference_karma_using_declarations_buffer
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::buffer;
+        //]
+
+        //[reference_karma_buffer
+        std::vector<double> v;                // empty container
+        test_generator_attr("", buffer['[' << +double_ << ']'], v);
+
+        v.push_back(1.0);                     // now, fill the container
+        v.push_back(2.0);
+        test_generator_attr("[1.02.0]", buffer['[' << +double_ << ']'], v);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_omit
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::buffer;
+        //]
+
+        //[reference_karma_omit
+        std::pair<double, double> p (1.0, 2.0);
+        test_generator_attr("2.0", omit[double_] << double_, p);
         //]
     }
 
