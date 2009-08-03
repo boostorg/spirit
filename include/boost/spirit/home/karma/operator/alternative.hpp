@@ -38,12 +38,41 @@ namespace boost { namespace spirit
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
+    // specialization for sequences
+    template <typename Elements>
+    struct alternative_properties
+    {
+        struct element_properties
+        {
+            template <typename T>
+            struct result;
+
+            template <typename F, typename Element>
+            struct result<F(Element)>
+            {
+                typedef properties_of<Element> type;
+            };
+        };
+
+        typedef typename mpl::accumulate<
+            typename fusion::result_of::transform<
+                Elements, element_properties>::type
+          , mpl::int_<karma::generator_properties::countingbuffer>
+          , mpl::bitor_<mpl::_2, mpl::_1>
+        >::type type;
+    };
+
+}}}
+
 namespace boost { namespace spirit { namespace karma
 {
     template <typename Elements>
     struct alternative : nary_generator<alternative<Elements> >
     {
-        typedef mpl::int_<generator_properties::all_properties> properties;
+        typedef typename traits::alternative_properties<Elements>::type 
+            properties;
 
         template <typename Context, typename Unused = unused_type>
         struct attribute
