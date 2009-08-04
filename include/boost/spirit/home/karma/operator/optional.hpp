@@ -76,25 +76,6 @@ namespace boost { namespace spirit { namespace karma
         {
             return unused;
         }
-
-        ///////////////////////////////////////////////////////////////////////
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute, typename Subject>
-        void generate_optional(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Attribute const& attr, Subject const& subject
-          , mpl::true_)
-        {
-            if (optional_is_valid(attr)) 
-                subject.generate(sink, ctx, d, detail::optional_get(attr));
-        }
-
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute, typename Subject>
-        void generate_optional(OutputIterator&, Context&, Delimiter const&
-          , Attribute const&, Subject const&, mpl::false_)
-        {}
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -126,10 +107,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            typedef is_convertible<Attribute
-              , typename attribute<Context>::type> predicate;
-
-            detail::generate_optional(sink, ctx, d, attr, subject, predicate());
+            if (detail::optional_is_valid(attr)) 
+                subject.generate(sink, ctx, d, detail::optional_get(attr));
             return sink_is_good(sink);
         }
 
