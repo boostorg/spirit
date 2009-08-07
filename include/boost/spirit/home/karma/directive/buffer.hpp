@@ -62,8 +62,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            // wrap the given output iterator avoid output as long as embedded
-            // generator (subject) fails
+            // wrap the given output iterator to avoid output as long as the
+            // embedded generator (subject) fails
             detail::enable_buffering<OutputIterator> buffering(sink);
             bool r = false;
             {
@@ -72,8 +72,7 @@ namespace boost { namespace spirit { namespace karma
             }
             if (r) 
                 buffering.buffer_copy();
-
-            return detail::sink_is_good(sink);
+            return r;
         }
 
         template <typename Context>
