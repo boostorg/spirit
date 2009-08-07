@@ -596,7 +596,7 @@ a: Unused --> -a: Unused``]]
            `boost::optional<A>`.]
 
 The optional generator will execute its embedded generator once if the provided
-attribute holds a valid value. It forwards the value contained in its attribute
+attribute holds a valid value. It forwards the value held in its attribute
 to the embedded generator.
 
 It is important to note, that the optional generator does not perform any 

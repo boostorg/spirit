@@ -206,7 +206,7 @@ main()
 
         //[reference_karma_buffer
         std::vector<double> v;                // empty container
-        test_generator_attr("", buffer['[' << +double_ << ']'], v);
+        test_generator_attr("", -buffer['[' << +double_ << ']'], v);
 
         v.push_back(1.0);                     // now, fill the container
         v.push_back(2.0);

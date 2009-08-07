@@ -26,7 +26,7 @@ main()
         using boost::spirit::karma::buffer;
 
         std::vector<double> v;
-        BOOST_TEST(test("", buffer['[' << +double_ << ']'], v));
+        BOOST_TEST(test("", -buffer['[' << +double_ << ']'], v));
 
         v.push_back(1.0);
         v.push_back(2.0);
@@ -40,7 +40,7 @@ main()
 
         std::vector<double> v;
         BOOST_TEST(test_delimited("", 
-            buffer['[' << +double_ << ']'], v, space));
+            -buffer['[' << +double_ << ']'], v, space));
 
         v.push_back(1.0);
         v.push_back(2.0);
