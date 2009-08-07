@@ -64,9 +64,9 @@ namespace boost { namespace spirit { namespace qi
         template <typename Context, typename Iterator>
         struct attribute : Rule::template attribute<Context, Iterator> {};
 
-        template <typename Parser, typename Context
+        template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
-        bool parse(Parser& first, Parser const& last
+        bool parse(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
           , Attribute& attr) const
         {
