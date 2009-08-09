@@ -132,15 +132,11 @@ struct mini_xml_generator
 {
     mini_xml_generator() : mini_xml_generator::base_type(xml)
     {
-        node %= 
-                string  [_1 = _string(_val)] 
-            |   xml     [_1 = _xml(_val)]
-            ;
-
+        node %= string | xml;
         xml = 
-                char_('<') << string[_1 = at_c<0>(_val)] << '>'
-            <<               (*node)[_1 = at_c<1>(_val)]
-            <<  lit("</")  << string[_1 = at_c<0>(_val)] << '>'
+                '<'  << string[_1 = at_c<0>(_val)] << '>'
+            <<         (*node)[_1 = at_c<1>(_val)]
+            <<  "</" << string[_1 = at_c<0>(_val)] << '>'
             ;
     }
 
@@ -184,8 +180,8 @@ int main(int argc, char **argv)
     mini_xml_parser xmlin;  //  Our grammar definition
     mini_xml ast; // our tree
 
-    std::string::const_iterator iter = storage.begin();
-    std::string::const_iterator end = storage.end();
+    std::string::iterator iter = storage.begin();
+    std::string::iterator end = storage.end();
     bool r = qi::phrase_parse(iter, end, xmlin, space, ast);
 
     if (r && iter == end)
@@ -209,8 +205,10 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::string::const_iterator some = iter+30;
-        std::string context(iter, (some>end)?end:some);
+        std::size_t dist = std::distance(storage.begin(), iter);
+        std::string::iterator some = 
+            iter + (std::min)(storage.size()-dist, std::size_t(30));
+        std::string context(iter, some);
         std::cout << "-------------------------\n";
         std::cout << "Parsing failed\n";
         std::cout << "stopped at: \": " << context << "...\"\n";
