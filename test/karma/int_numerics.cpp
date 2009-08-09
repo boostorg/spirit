@@ -57,11 +57,23 @@ struct test_minmax
         BOOST_TEST(test(expected_minval, gen, minval));
         BOOST_TEST(test(expected_maxval, gen(maxval)));
         BOOST_TEST(test(expected_minval, gen(minval)));
+        BOOST_TEST(test(expected_maxval, gen(maxval), maxval));
+        BOOST_TEST(test(expected_minval, gen(minval), minval));
+        BOOST_TEST(!test("", gen(maxval), maxval-1));
+        BOOST_TEST(!test("", gen(minval), minval+1));
+        BOOST_TEST(test(expected_maxval, lit(maxval)));
+        BOOST_TEST(test(expected_minval, lit(minval)));
 
         BOOST_TEST(test_delimited(expected_maxval + " ", gen, maxval, char(' ')));
         BOOST_TEST(test_delimited(expected_minval + " ", gen, minval, char(' ')));
         BOOST_TEST(test_delimited(expected_maxval + " ", gen(maxval), char(' ')));
         BOOST_TEST(test_delimited(expected_minval + " ", gen(minval), char(' ')));
+        BOOST_TEST(test_delimited(expected_maxval + " ", gen(maxval), maxval, char(' ')));
+        BOOST_TEST(test_delimited(expected_minval + " ", gen(minval), minval, char(' ')));
+        BOOST_TEST(!test_delimited("", gen(maxval), maxval-1, char(' ')));
+        BOOST_TEST(!test_delimited("", gen(minval), minval+1, char(' ')));
+        BOOST_TEST(test_delimited(expected_maxval + " ", lit(maxval), char(' ')));
+        BOOST_TEST(test_delimited(expected_minval + " ", lit(minval), char(' ')));
 
     // action tests
         BOOST_TEST(test(expected_maxval, gen[_1 = val(maxval)]));
@@ -132,6 +144,26 @@ main()
         BOOST_TEST(test_delimited("0 ", upper[int_(0)], char_(' ')));
         BOOST_TEST(test_delimited("123 ", upper[int_(123)], char_(' ')));
         BOOST_TEST(test_delimited("-123 ", upper[int_(-123)], char_(' ')));
+    }
+
+    {   // literals, make sure there are no ambiguities
+        BOOST_TEST(test("0", lit(short(0))));
+        BOOST_TEST(test("0", lit(0)));
+        BOOST_TEST(test("0", lit(0L)));
+#ifdef BOOST_HAS_LONG_LONG
+        BOOST_TEST(test("0", lit(0LL)));
+#endif
+
+        BOOST_TEST(test("0", lit(unsigned short(0))));
+        BOOST_TEST(test("0", lit(0U)));
+        BOOST_TEST(test("0", lit(0UL)));
+#ifdef BOOST_HAS_LONG_LONG
+        BOOST_TEST(test("0", lit(0ULL)));
+#endif
+
+        BOOST_TEST(test("a", lit('a')));
+        BOOST_TEST(test("a", 'a'));
+        BOOST_TEST(test(L"a", L'a'));
     }
 
     {   // lazy numerics

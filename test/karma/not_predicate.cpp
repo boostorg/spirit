@@ -6,11 +6,11 @@
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/karma_char.hpp>
+#include <boost/spirit/include/karma_string.hpp>
 
 #include <iostream>
 #include "test.hpp"
@@ -22,14 +22,14 @@ main()
     using namespace boost::spirit;
 
     {
-        BOOST_TEST(test("1", int_(1) << &(int_(2) << &int_(3) << int_(4))));
-    }
-
-    {
         using boost::spirit::ascii::char_;
+        using boost::spirit::ascii::string;
 
-        BOOST_TEST(test("b", &char_('a') << 'b' | 'c', 'a'));
-        BOOST_TEST(test("c", &char_('a') << 'b' | 'c', 'x'));
+        BOOST_TEST(test("c", !char_('a') << 'b' | 'c', 'a'));
+        BOOST_TEST(test("b", !char_('a') << 'b' | 'c', 'x'));
+
+        BOOST_TEST(test("def", !string("123") << "abc" | "def", "123"));
+        BOOST_TEST(test("abc", !string("123") << "abc" | "def", "456"));
     }
 
     return boost::report_errors();

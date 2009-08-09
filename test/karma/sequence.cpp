@@ -70,9 +70,9 @@ main()
             // sequence has an unused parameter as well
             fusion::vector<char, char> p ('a', 'e');
             BOOST_TEST(test("abcde", 
-                char_ << (char_('b') << 'c' << 'd') << char_, p));
+                char_ << (lit('b') << 'c' << 'd') << char_, p));
             BOOST_TEST(test_delimited("a b c d e ", 
-                char_ << (char_('b') << 'c' << 'd') << char_, p, char(' ')));
+                char_ << (lit('b') << 'c' << 'd') << char_, p, char(' ')));
         }
 
         {
@@ -128,7 +128,7 @@ main()
                 char(' ')));
 
             BOOST_TEST(test_delimited("a 12 c ", 
-                (char_ << int_(12) << char_)[_1 = 'a', _2 = 'c'], char(' ')));
+                (char_ << lit(12) << char_)[_1 = 'a', _2 = 'c'], char(' ')));
 
             char c = 'c';
             BOOST_TEST(test("abc", 

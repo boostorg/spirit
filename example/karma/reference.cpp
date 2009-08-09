@@ -152,22 +152,17 @@ main()
         //[reference_karma_using_declarations_and_predicate
         using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
+        using boost::spirit::karma::ascii::char_;
         using boost::spirit::karma::ascii::string;
         using boost::phoenix::ref;
         //]
 
         //[reference_karma_and_predicate
-        boost::variant<double, int, std::string> v(1.0);
-        test_generator("numeric: 1.0", 
-                &((double_ | int_)[_1 = ref(v)])      << "numeric: " << double_
-            |   &((string | eps(false))[_1 = ref(v)]) << "string: "  << string
-        );
+        test_generator_attr("b", &char_('a') << 'b' | 'c', 'a');
+        test_generator_attr("c", &char_('a') << 'b' | 'c', 'x');
 
-        v = "example"
-        test_generator("string: example", 
-                &((double_ | int_)[_1 = ref(v)])      << "numeric: " << double_
-            |   &((string | eps(false))[_1 = ref(v)]) << "string: "  << string
-        );
+        test_generator_attr("abc", &string("123") << "abc" | "def", "123");
+        test_generator_attr("def", &string("123") << "abc" | "def", "456");
         //]
     }
 
@@ -175,22 +170,17 @@ main()
         //[reference_karma_using_declarations_not_predicate
         using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
+        using boost::spirit::karma::ascii::char_;
         using boost::spirit::karma::ascii::string;
         using boost::phoenix::ref;
         //]
 
         //[reference_karma_not_predicate
-        boost::variant<double, int, std::string> v(1.0);
-        test_generator("not a string!", 
-                !((double_ | int_)[_1 = ref(v)])      << "not numeric!"
-            |   !((string | eps(false))[_1 = ref(v)]) << "not a string!"
-        );
+        test_generator_attr("c", !char_('a') << 'b' | 'c', 'a');
+        test_generator_attr("b", !char_('a') << 'b' | 'c', 'x');
 
-        v = "example"
-        test_generator("not numeric!", 
-                !((double_ | int_)[_1 = ref(v)])      << "not numeric!"
-            |   !((string | eps(false))[_1 = ref(v)]) << "not a string!"
-        );
+        test_generator_attr("def", !string("123") << "abc" | "def", "123");
+        test_generator_attr("abc", !string("123") << "abc" | "def", "456");
         //]
     }
 
@@ -224,6 +214,36 @@ main()
         //[reference_karma_omit
         std::pair<double, double> p (1.0, 2.0);
         test_generator_attr("2.0", omit[double_] << double_, p);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_int
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::int_;
+        //]
+
+        //[reference_karma_int
+        test_generator("-2", lit(-2));
+        test_generator("-2", int_(-2));
+        test_generator_attr("-2", int_(-2), -2);
+        test_generator_attr("", int_(-2), 3);    // fails (as -2 != 3)!
+        test_generator_attr("-2", int_, -2);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_uint
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::uint;
+        //]
+
+        //[reference_karma_uint
+        test_generator("2", lit(2U));
+        test_generator("2", uint(2));
+        test_generator_attr("2", uint(2), 2);
+        test_generator_attr("", uint(2), 3);    // fails (as 2 != 3)!
+        test_generator_attr("2", uint, 2);
         //]
     }
 

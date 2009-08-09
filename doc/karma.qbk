@@ -25,7 +25,7 @@
 [include        karma/basics.qbk]
 [/include        karma/char.qbk]
 [/include        karma/string.qbk]
-[/include        karma/numeric.qbk]
+[include        karma/numeric.qbk]
 [/include        karma/binary.qbk]
 [include        karma/directive.qbk]
 [/include        karma/action.qbk]

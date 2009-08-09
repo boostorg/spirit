@@ -90,6 +90,7 @@ import testing ;
     [ run karma/list.cpp                    : : : : karma_list ]
     [ run karma/lit.cpp                     : : : : karma_lit ]
     [ run karma/maxwidth.cpp                : : : : ]
+    [ run karma/not_predicate.cpp           : : : : karma_not_predicate ]
     [ run karma/omit.cpp                    : : : : karma_omit ]
     [ run karma/optional.cpp                : : : : karma_optional ]
     [ run karma/pattern.cpp                 : : : : karma_pattern ]

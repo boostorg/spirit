@@ -162,6 +162,10 @@
 [def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit[a]`]]
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer[a]`]]
 
+[template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
+[template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]
+[template floating_point[str]       [link spirit.karma.reference.numeric.floating_point [str]]]
+
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]
 [def __compatible__                 Compatible] [/$$$ TODO: link me $$$]

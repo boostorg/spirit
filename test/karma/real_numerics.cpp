@@ -410,6 +410,19 @@ int main()
     }
 
     {
+        BOOST_TEST(test("1.0", lit(1.0)));
+        BOOST_TEST(test("1.0", lit(1.0f)));
+        BOOST_TEST(test("1.0", lit(1.0l)));
+
+        BOOST_TEST(test("1.0", double_(1.0), 1.0));
+        BOOST_TEST(test("1.0", float_(1.0), 1.0f));
+        BOOST_TEST(test("1.0", long_double(1.0), 1.0l));
+        BOOST_TEST(!test("", double_(1.0), 2.0));
+        BOOST_TEST(!test("", float_(1.0), 2.0f));
+        BOOST_TEST(!test("", long_double(1.0), 2.0l));
+    }
+
+    {
         using namespace boost::spirit::ascii;
 
         ///////////////////////////////////////////////////////////////////////

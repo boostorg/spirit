@@ -28,7 +28,7 @@
           Predicate (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.not_predicate.description"></a><h6>
-<a name="id1174479"></a>
+<a name="id1223363"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             fails.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.header"></a><h6>
-<a name="id1174498"></a>
+<a name="id1223382"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/not_predicate.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.model_of"></a><h6>
-<a name="id1174572"></a>
+<a name="id1223456"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.not_predicate.expression_semantics"></a><h6>
-<a name="id1174608"></a>
+<a name="id1223492"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -108,7 +108,7 @@
             its embedded generator into a discarding device.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.attributes"></a><h6>
-<a name="id1174712"></a>
+<a name="id1223595"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -138,13 +138,25 @@
                   <p>
                     <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
                     <span class="identifier">A</span> <span class="special">--&gt;</span>
-                    <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></code>
+                    <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
                   </p>
                   </td>
 </tr></tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The attribute of the and predicate is not always <code class="computeroutput"><span class="identifier">Unused</span></code>,
+              which is different from Qi's and predicate. This is necessary as the
+              generator the and predicate is attached to most of the time needs an
+              attribute.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.operator.not_predicate.complexity"></a><h6>
-<a name="id1174824"></a>
+<a name="id1223723"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -159,7 +171,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.not_predicate.example"></a><h6>
-<a name="id1174851"></a>
+<a name="id1223749"></a>
             <a class="link" href="not_predicate.html#spirit.karma.reference.operator.not_predicate.example">Example</a>
           </h6>
 <p>
@@ -214,6 +226,7 @@
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">string</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">ref</span><span class="special">;</span>
 </pre>
@@ -229,17 +242,11 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="number">1.0</span><span class="special">);</span>
-<span class="identifier">test_generator</span><span class="special">(</span><span class="string">"not a string!"</span><span class="special">,</span> 
-        <span class="special">!((</span><span class="identifier">double_</span> <span class="special">|</span> <span class="identifier">int_</span><span class="special">)[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">)])</span>      <span class="special">&lt;&lt;</span> <span class="string">"not numeric!"</span>
-    <span class="special">|</span>   <span class="special">!((</span><span class="identifier">string</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">))[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">)])</span> <span class="special">&lt;&lt;</span> <span class="string">"not a string!"</span>
-<span class="special">);</span>
+<pre class="programlisting"><span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"c"</span><span class="special">,</span> <span class="special">!</span><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="char">'b'</span> <span class="special">|</span> <span class="char">'c'</span><span class="special">,</span> <span class="char">'a'</span><span class="special">);</span>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"b"</span><span class="special">,</span> <span class="special">!</span><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="char">'b'</span> <span class="special">|</span> <span class="char">'c'</span><span class="special">,</span> <span class="char">'x'</span><span class="special">);</span>
 
-<span class="identifier">v</span> <span class="special">=</span> <span class="string">"example"</span>
-<span class="identifier">test_generator</span><span class="special">(</span><span class="string">"not numeric!"</span><span class="special">,</span> 
-        <span class="special">!((</span><span class="identifier">double_</span> <span class="special">|</span> <span class="identifier">int_</span><span class="special">)[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">)])</span>      <span class="special">&lt;&lt;</span> <span class="string">"not numeric!"</span>
-    <span class="special">|</span>   <span class="special">!((</span><span class="identifier">string</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">(</span><span class="keyword">false</span><span class="special">))[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">)])</span> <span class="special">&lt;&lt;</span> <span class="string">"not a string!"</span>
-<span class="special">);</span>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"def"</span><span class="special">,</span> <span class="special">!</span><span class="identifier">string</span><span class="special">(</span><span class="string">"123"</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"abc"</span> <span class="special">|</span> <span class="string">"def"</span><span class="special">,</span> <span class="string">"123"</span><span class="special">);</span>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"abc"</span><span class="special">,</span> <span class="special">!</span><span class="identifier">string</span><span class="special">(</span><span class="string">"123"</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"abc"</span> <span class="special">|</span> <span class="string">"def"</span><span class="special">,</span> <span class="string">"456"</span><span class="special">);</span>
 </pre>
 <p>
             </p>

@@ -685,7 +685,12 @@ embedded generator into a discarding device.
 
 [table
     [[Expression]                 [Attribute]]
-    [[and predicate (unary `&`)]  [`a: A --> &a: Unused`]]
+    [[and predicate (unary `&`)]  [`a: A --> &a: A`]]
+]
+
+[note The attribute of the and predicate is not always `Unused`, which is 
+      different from Qi's and predicate. This is necessary as the generator the
+      and predicate is attached to most of the time needs an attribute.
 ]
 
 [heading Complexity]
@@ -756,7 +761,12 @@ embedded generator into a discarding device.
 
 [table
     [[Expression]                 [Attribute]]
-    [[not predicate (unary `!`)]  [`a: A --> !a: Unused`]]
+    [[not predicate (unary `!`)]  [`a: A --> !a: A`]]
+]
+
+[note The attribute of the and predicate is not always `Unused`, which is 
+      different from Qi's and predicate. This is necessary as the generator the
+      and predicate is attached to most of the time needs an attribute.
 ]
 
 [heading Complexity]

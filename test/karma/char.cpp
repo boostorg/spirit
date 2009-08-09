@@ -48,6 +48,9 @@ main()
         BOOST_TEST(test("x", char_('x')));
         BOOST_TEST(!test("x", char_('y')));
 
+        BOOST_TEST(test("x", char_('x'), 'x'));
+        BOOST_TEST(!test("", char_('y'), 'x'));
+
         BOOST_TEST(test("x", char_("x")));
 
 #if defined(KARMA_FAIL_COMPILATION)
@@ -78,6 +81,9 @@ main()
         BOOST_TEST(!test(L"x", char_('y')));
         BOOST_TEST(!test(L"x", char_(L'y')));
 
+        BOOST_TEST(test(L"x", char_(L'x'), L'x'));
+        BOOST_TEST(!test(L"", char_('y'), L'x'));
+
         BOOST_TEST(test(L"x", char_(L"x")));
 
 #if defined(KARMA_FAIL_COMPILATION)
@@ -97,6 +103,9 @@ main()
         BOOST_TEST(test(L" ", space, L' '));
         BOOST_TEST(test("\t", space, '\t'));
         BOOST_TEST(test(L"\t", space, L'\t'));
+
+        BOOST_TEST(!test("", space, 'x'));
+        BOOST_TEST(!test(L"", space, L'x'));
     }
 
     {
@@ -111,6 +120,9 @@ main()
         BOOST_TEST(test(L" ", space, L' '));
         BOOST_TEST(test("\t", space, '\t'));
         BOOST_TEST(test(L"\t", space, L'\t'));
+
+        BOOST_TEST(!test("", space, 'x'));
+        BOOST_TEST(!test(L"", space, L'x'));
     }
 
     {
@@ -133,6 +145,9 @@ main()
 
         BOOST_TEST(test_delimited("x ", char_('x'), ' '));
         BOOST_TEST(!test_delimited("x ", char_('y'), ' '));
+
+        BOOST_TEST(test_delimited("x ", char_('x'), 'x', ' '));
+        BOOST_TEST(!test_delimited("", char_('y'), 'x', ' '));
 
         BOOST_TEST(test_delimited("x ", char_("x"), ' '));
 
@@ -175,6 +190,12 @@ main()
 
         BOOST_TEST((test("x", ascii::char_(val('x')))));
         BOOST_TEST((test(L"x", wide::char_(val(L'x')))));
+
+        BOOST_TEST((test("x", ascii::char_(val('x')), 'x')));
+        BOOST_TEST((test(L"x", wide::char_(val(L'x')), L'x')));
+
+        BOOST_TEST((!test("", ascii::char_(val('y')), 'x')));
+        BOOST_TEST((!test(L"", wide::char_(val(L'y')), L'x')));
     }
 
     return boost::report_errors();

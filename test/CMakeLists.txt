@@ -85,6 +85,7 @@ boost_test_run(karma_left_alignment karma/left_alignment.cpp COMPILE_FLAGS ${tes
 boost_test_run(karma_list karma/list.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_lit karma/lit.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_maxwidth karma/maxwidth.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_not_predicate karma/not_predicate.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_omit karma/omit.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_optional karma/optional.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_pattern karma/pattern.cpp COMPILE_FLAGS ${test_compile_flags})

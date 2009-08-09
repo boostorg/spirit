@@ -41,6 +41,10 @@ main()
 
         BOOST_TEST(test("abc", string("abc")));
         BOOST_TEST(!test("abcd", string("abc")));
+
+        BOOST_TEST(test("abc", string("abc"), "abc"));
+        BOOST_TEST(!test("", string("abc"), "abcd"));
+        BOOST_TEST(!test("", string("abcd"), "abc"));
     }
 
     {
@@ -110,6 +114,10 @@ main()
 
         BOOST_TEST(test_delimited("abc ", string("abc"), ' '));
         BOOST_TEST(!test_delimited("abcd ", string("abc"), ' '));
+
+        BOOST_TEST(test_delimited("abc ", string("abc"), "abc", ' '));
+        BOOST_TEST(!test_delimited("", string("abc"), "abcd", ' '));
+        BOOST_TEST(!test_delimited("", string("abcd"), "abc", ' '));
     }
 
     {
@@ -147,6 +155,10 @@ main()
         std::basic_string<char> s("abc");
         BOOST_TEST((test("abc", lit(phx::val(s)))));
         BOOST_TEST((test("abc", string(phx::val(s)))));
+
+        BOOST_TEST(test("abc", string(phx::val(s)), "abc"));
+        BOOST_TEST(!test("", string(phx::val(s)), "abcd"));
+        BOOST_TEST(!test("", string(phx::val(s)), "abc"));
 
         std::basic_string<wchar_t> ws(L"abc");
         BOOST_TEST((test(L"abc", lit(phx::ref(ws)))));

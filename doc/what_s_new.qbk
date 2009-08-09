@@ -46,7 +46,7 @@ backwards compatibility for existing applications.
 
 [heading Spirit V2.1] 
 
-[heading What's changed in __qi__ and __karma__ from V2.0 to 2.x]
+[heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)]
 
 * __spirit__ is now based on the newest version of __boost_proto__
 * `qi::phrase_parse`, `qi::phrase_format` now post-skip by default.
