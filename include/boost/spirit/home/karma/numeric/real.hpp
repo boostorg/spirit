@@ -74,6 +74,19 @@ namespace boost { namespace spirit
       : mpl::true_ {};
 
     ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_terminal<karma::domain, float>             // enables lit(1.of)
+      : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, double>            // enables lit(1.0)
+      : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, long double>       // enables lit(1.0l)
+      : mpl::true_ {};
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename A0>
     struct use_terminal<karma::domain                   // enables float_(...)
       , terminal_ex<tag::float_, fusion::vector1<A0> >
@@ -195,20 +208,34 @@ namespace boost { namespace spirit { namespace karma
     {
         template <typename Context, typename Unused>
         struct attribute
-        {
-            typedef typename mpl::if_c<
-                no_attribute, unused_type, T>::type
-            type;
-        };
+          : mpl::if_c<no_attribute, unused_type, T>
+        {};
 
         literal_real_generator(typename add_const<T>::type n
               , Policies const& policies = Policies())
           : n_(n), p_(policies) {}
 
+        // A double_(1.0) which additionally has an associated attribute emits
+        // its immediate literal only if it matches the attribute, otherwise
+        // it fails.
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const&) const
+          , Attribute const& attr) const
+        {
+            if (n_ != attr)
+                return false;
+
+            typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
+            return inserter_type::call(sink, n_, p_) &&
+                   karma::delimit_out(sink, d);    // always do post-delimiting
+        }
+
+        // A double_(1.0) without any associated attribute just emits its 
+        // immediate literal
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , unused_type) const
         {
             typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
             return inserter_type::call(sink, n_, p_) &&
@@ -295,15 +322,12 @@ namespace boost { namespace spirit { namespace karma
         static bool const upper = 
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
-        static bool const no_attr =
-            !has_modifier<Modifiers, tag::lazy_eval>::value;
-
         typedef literal_real_generator<
             T, Policies
           , typename spirit::detail::get_encoding<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , no_attr
+          , false
         > result_type;
 
         template <typename Terminal>
@@ -335,6 +359,45 @@ namespace boost { namespace spirit { namespace karma
         terminal_ex<tag::real_tag<T, Policy>, fusion::vector1<A0> >
           , Modifiers>
       : make_real_direct<T, Modifiers, Policy> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename T, typename Modifiers>
+        struct basic_real_literal
+        {
+            static bool const lower =
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper =
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_real_generator<
+                T, real_policies<T>
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , true
+            > result_type;
+
+            template <typename T_>
+            result_type operator()(T_ i, unused_type) const
+            {
+                return result_type(i);
+            }
+        };
+    }
+
+    template <typename Modifiers>
+    struct make_primitive<float, Modifiers> 
+      : detail::basic_real_literal<float, Modifiers> {};
+
+    template <typename Modifiers>
+    struct make_primitive<double, Modifiers> 
+      : detail::basic_real_literal<double, Modifiers> {};
+
+    template <typename Modifiers>
+    struct make_primitive<long double, Modifiers> 
+      : detail::basic_real_literal<long double, Modifiers> {};
 
 }}}
 

@@ -195,8 +195,7 @@ namespace boost { namespace spirit
     compile(Expr const& expr)
     {
         typedef typename proto::is_expr<Expr>::type is_expr;
-        return detail::compiler<Domain>::/*template*/
-            compile(expr, unused, is_expr());
+        return detail::compiler<Domain>::compile(expr, unused, is_expr());
     }
 
     template <typename Domain, typename Expr, typename Modifiers>
@@ -204,8 +203,7 @@ namespace boost { namespace spirit
     compile(Expr const& expr, Modifiers modifiers)
     {
         typedef typename proto::is_expr<Expr>::type is_expr;
-        return detail::compiler<Domain>::/*template*/
-            compile(expr, modifiers, is_expr());
+        return detail::compiler<Domain>::compile(expr, modifiers, is_expr());
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -55,13 +55,10 @@ namespace boost { namespace spirit { namespace repository { namespace karma
     {
         typedef Subject subject_type;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef typename
-                traits::attribute_of<subject_type, Context>::type
-            type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         confix_generator(Subject const& subject, Prefix const& prefix
               , Suffix const& suffix)

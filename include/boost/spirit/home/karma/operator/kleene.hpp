@@ -41,18 +41,15 @@ namespace boost { namespace spirit { namespace karma
         typedef Subject subject_type;
         typedef typename subject_type::properties properties;
 
-        template <typename Context, typename Unused>
+        // Build a std::vector from the subject's attribute. Note
+        // that build_std_vector may return unused_type if the
+        // subject's attribute is an unused_type.
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            // Build a std::vector from the subject's attribute. Note
-            // that build_std_vector may return unused_type if the
-            // subject's attribute is an unused_type.
-            typedef typename
-                traits::build_std_vector<
-                    typename traits::attribute_of<Subject, Context>::type
-                >::type
-            type;
-        };
+          : traits::build_std_vector<
+                typename traits::attribute_of<Subject, Context, Iterator>::type
+            >
+        {};
 
         kleene(Subject const& subject)
           : subject(subject) {}

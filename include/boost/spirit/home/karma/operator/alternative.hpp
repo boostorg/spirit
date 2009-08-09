@@ -74,12 +74,12 @@ namespace boost { namespace spirit { namespace karma
         typedef typename traits::alternative_properties<Elements>::type 
             properties;
 
-        template <typename Context, typename Unused = unused_type>
+        template <typename Context, typename Iterator = unused_type>
         struct attribute
         {
             // Put all the element attributes in a tuple
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, mpl::identity
+                Elements, Context, mpl::identity, Iterator
             >::type all_attributes;
 
             // Ok, now make a variant over the attribute sequence. Note that

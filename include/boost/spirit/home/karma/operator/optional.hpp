@@ -85,18 +85,15 @@ namespace boost { namespace spirit { namespace karma
         typedef Subject subject_type;
         typedef typename subject_type::properties properties;
 
-        template <typename Context, typename Unused = unused_type>
+        // Build a boost::optional from the subject's attribute. Note
+        // that boost::optional may return unused_type if the
+        // subject's attribute is an unused_type.
+        template <typename Context, typename Iterator = unused_type>
         struct attribute
-        {
-            // Build a boost::optional from the subject's attribute. Note
-            // that boost::optional may return unused_type if the
-            // subject's attribute is an unused_type.
-            typedef typename
-                traits::build_optional<
-                    typename traits::attribute_of<Subject, Context>::type
-                >::type
-            type;
-        };
+          : traits::build_optional<
+                typename traits::attribute_of<Subject, Context, Iterator>::type
+            >
+        {};
 
         optional(Subject const& subject)
           : subject(subject) {}

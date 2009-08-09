@@ -56,13 +56,10 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     {
         typedef Subject subject_type;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef typename
-                traits::attribute_of<subject_type, Context>::type
-            type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         confix_parser(Subject const& subject, Prefix const& prefix
               , Suffix const& suffix)

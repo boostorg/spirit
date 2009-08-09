@@ -42,19 +42,15 @@ namespace boost { namespace spirit { namespace karma
             left_type::properties::value | right_type::properties::value
         > properties;
 
+        // Build a std::vector from the LHS's attribute. Note
+        // that build_std_vector may return unused_type if the
+        // subject's attribute is an unused_type.
         template <typename Context, typename Iterator>
         struct attribute
-        {
-            // Build a std::vector from the LHS's attribute. Note
-            // that build_std_vector may return unused_type if the
-            // subject's attribute is an unused_type.
-            typedef typename
-                traits::build_std_vector<
-                    typename traits::
-                        attribute_of<Left, Context, Iterator>::type
-                >::type
-            type;
-        };
+          : traits::build_std_vector<
+                typename traits::attribute_of<Left, Context, Iterator>::type
+            >
+        {};
 
         list(Left const& left, Right const& right)
           : left(left), right(right) {}

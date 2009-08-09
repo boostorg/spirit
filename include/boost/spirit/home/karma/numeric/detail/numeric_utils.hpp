@@ -49,49 +49,90 @@ namespace boost { namespace spirit { namespace karma {
         //  underflow
         //
         ///////////////////////////////////////////////////////////////////////
-        inline unsigned short absolute_value (short n)
+        template <typename T>
+        struct absolute_value_helper
         {
-            return (n >= 0) ? n : (unsigned short)(-n);
-        }
+            typedef T result_type;
+            static T call (T n)
+            {
+                // allow for ADL to find the correct overloads for fabs
+                using namespace std;
+                return fabs(n);
+            }
+        };
 
-        inline unsigned int absolute_value (int n)
-        {
-            return (n >= 0) ? n : (unsigned int)(-n);
-        }
+#define BOOST_SPIRIT_ABSOLUTE_VALUE(type, unsignedtype)                       \
+        template <>                                                           \
+        struct absolute_value_helper<type>                                    \
+        {                                                                     \
+            typedef unsignedtype result_type;                                 \
+            static result_type call(type n)                                   \
+            {                                                                 \
+                return (n >= 0) ? n : (unsignedtype)(-n);                     \
+            }                                                                 \
+        }                                                                     \
+    /**/
+#define BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(type)                            \
+        template <>                                                           \
+        struct absolute_value_helper<type>                                    \
+        {                                                                     \
+            typedef type result_type;                                         \
+            static result_type call(type n)                                   \
+            {                                                                 \
+                return n;                                                     \
+            }                                                                 \
+        }                                                                     \
+    /**/
 
-        inline unsigned long absolute_value (long n)
-        {
-            return (n >= 0) ? n : (unsigned long)(-n);
-        }
-
+        BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
+        BOOST_SPIRIT_ABSOLUTE_VALUE(int, unsigned int);
+        BOOST_SPIRIT_ABSOLUTE_VALUE(long, unsigned long);
+        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned short);
+        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned int);
+        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(unsigned long);
 #ifdef BOOST_HAS_LONG_LONG
-        inline boost::ulong_long_type absolute_value (boost::long_long_type n)
-        {
-            return (n >= 0) ? n : (boost::ulong_long_type)(-n);
-        }
+        BOOST_SPIRIT_ABSOLUTE_VALUE(boost::long_long_type, boost::ulong_long_type);
+        BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(boost::ulong_long_type);
 #endif
 
-        inline float absolute_value (float n)
-        {
-            return (spirit::detail::signbit)(n) ? -n : n;
-        }
+#undef BOOST_SPIRIT_ABSOLUTE_VALUE
+#undef BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED
 
-        inline double absolute_value (double n)
+        template <>
+        struct absolute_value_helper<float>
         {
-            return (spirit::detail::signbit)(n) ? -n : n;
-        }
+            typedef long double result_type;
+            static result_type call(float n)
+            {
+                return (spirit::detail::signbit)(n) ? -n : n;
+            }
+        };
 
-        inline long double absolute_value (long double n)
+        template <>
+        struct absolute_value_helper<double>
         {
-            return (spirit::detail::signbit)(n) ? -n : n;
-        }
+            typedef long double result_type;
+            static result_type call(double n)
+            {
+                return (spirit::detail::signbit)(n) ? -n : n;
+            }
+        };
+
+        template <>
+        struct absolute_value_helper<long double>
+        {
+            typedef long double result_type;
+            static result_type call(long double n)
+            {
+                return (spirit::detail::signbit)(n) ? -n : n;
+            }
+        };
 
         template <typename T>
-        inline T absolute_value (T n)
+        typename absolute_value_helper<T>::result_type
+        absolute_value(T n)
         {
-            // allow for ADL to find the correct overloads for fabs
-            using namespace std;
-            return fabs(n);
+            return absolute_value_helper<T>::call(n);
         }
 
         ///////////////////////////////////////////////////////////////////////

@@ -138,13 +138,10 @@ namespace boost { namespace spirit { namespace karma
             generator_properties::countingbuffer | subject_type::properties::value
         > properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef typename
-                traits::attribute_of<subject_type, Context>::type
-            type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         maxwidth_width(Subject const& subject, Width const& w = Width()
             , Rest const& r = Rest())

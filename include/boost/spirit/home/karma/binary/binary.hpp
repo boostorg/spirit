@@ -231,11 +231,8 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Context, typename Unused>
         struct attribute
-        {
-            typedef typename mpl::if_c<
-                no_attribute, unused_type, data_type>::type
-            type;
-        };
+          : mpl::if_c<no_attribute, unused_type, data_type>
+        {};
 
         template <typename T>
         literal_binary_generator(T const& t)

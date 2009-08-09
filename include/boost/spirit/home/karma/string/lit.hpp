@@ -21,6 +21,7 @@
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/detail/string_generate.hpp>
+#include <boost/spirit/home/karma/detail/string_compare.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/cons.hpp>
@@ -131,26 +132,41 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Context, typename Unused>
         struct attribute
-        {
-            typedef typename mpl::if_c<
-                no_attribute, unused_type, string_type>::type
-            type;
-        };
+          : mpl::if_c<no_attribute, unused_type, string_type>
+        {};
 
         literal_string(typename add_reference<String>::type str)
           : str_(str)
         {}
 
+        // A string("...") which additionally has an associated attribute emits
+        // its immediate literal only if it matches the attribute, otherwise
+        // it fails.
         template <
-            typename OutputIterator, typename Context, 
-            typename Delimiter, typename Attribute
-        >
-        bool generate(OutputIterator& sink, Context& /*ctx*/
-          , Delimiter const& d, Attribute const&) const
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const& attr) const
         {
-            return 
-                detail::string_generate(sink, str_, char_encoding(), Tag()) && 
-                karma::delimit_out(sink, d);      // always do post-delimiting
+            // fail if attribute isn't matched my immediate literal
+            using spirit::traits::get_c_string;
+            if (!detail::string_compare(get_c_string(attr), get_c_string(str_)
+              , char_encoding(), Tag()))
+            {
+                return false;
+            }
+            return detail::string_generate(sink, str_, char_encoding(), Tag()) && 
+                   karma::delimit_out(sink, d);      // always do post-delimiting
+        }
+
+        // A string("...") without any associated attribute just emits its 
+        // immediate literal
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , unused_type) const
+        {
+            return detail::string_generate(sink, str_, char_encoding(), Tag()) && 
+                   karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
         template <typename Context>
@@ -182,16 +198,32 @@ namespace boost { namespace spirit { namespace karma
         literal_string(typename add_reference<String>::type str)
           : str_(str) {}
 
+        // A string("...") which additionally has an associated attribute emits
+        // its immediate literal only if it matches the attribute, otherwise
+        // it fails.
         template <
-            typename OutputIterator, typename Context, 
-            typename Delimiter, typename Attribute
-        >
-        bool generate(OutputIterator& sink, Context& /*ctx*/
-          , Delimiter const& d, Attribute const& attr) const
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const& attr) const
         {
-            return 
-                detail::string_generate(sink, str_) && 
-                karma::delimit_out(sink, d);      // always do post-delimiting
+            // fail if attribute isn't matched my immediate literal
+            using spirit::traits::get_c_string;
+            if (!detail::string_compare(get_c_string(attr), get_c_string(str_)))
+                return false;
+
+            return detail::string_generate(sink, str_) && 
+                   karma::delimit_out(sink, d);      // always do post-delimiting
+        }
+
+        // A string("...") without any associated attribute just emits its 
+        // immediate literal
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , unused_type) const
+        {
+            return detail::string_generate(sink, str_) && 
+                   karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
         template <typename Context>
@@ -241,16 +273,13 @@ namespace boost { namespace spirit { namespace karma
         static bool const upper =
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
-        static bool const no_attr =
-            !has_modifier<Modifiers, tag::lazy_eval>::value;
-
         typedef typename add_const<T>::type const_string;
         typedef literal_string<
             const_string
           , typename spirit::detail::get_encoding<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , no_attr
+          , true
         > result_type;
 
         result_type operator()(
@@ -272,16 +301,13 @@ namespace boost { namespace spirit { namespace karma
         static bool const upper = 
             has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
-        static bool const no_attr =
-            !has_modifier<Modifiers, tag::lazy_eval>::value;
-
         typedef typename add_const<A0>::type const_string;
         typedef literal_string<
             const_string
           , typename spirit::detail::get_encoding<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , no_attr
+          , false
         > result_type;
 
         template <typename Terminal>

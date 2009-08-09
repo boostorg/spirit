@@ -80,6 +80,25 @@ namespace boost { namespace spirit
 #endif
 
     ///////////////////////////////////////////////////////////////////////////
+    template <>           // enables lit(unsigned short(0))
+    struct use_terminal<karma::domain, unsigned short>
+      : mpl::true_ {};
+
+    template <>           // enables lit(0U)
+    struct use_terminal<karma::domain, unsigned int>
+      : mpl::true_ {};
+
+    template <>           // enables lit(0UL)
+    struct use_terminal<karma::domain, unsigned long>
+      : mpl::true_ {};
+
+#ifdef BOOST_HAS_LONG_LONG
+    template <>           // enables lit(0ULL)
+    struct use_terminal<karma::domain, boost::ulong_long_type> 
+      : mpl::true_ {};
+#endif
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename A0>
     struct use_terminal<karma::domain         // enables ushort_(...)
       , terminal_ex<tag::ushort_, fusion::vector1<A0> >
@@ -190,6 +209,8 @@ namespace boost { namespace spirit { namespace karma
     using spirit::hex;
     using spirit::hex_type;
 
+    using spirit::lit;    // lit(1U) is equivalent to 1U
+
     ///////////////////////////////////////////////////////////////////////////
     //  This specialization is used for unsigned int generators not having a 
     //  direct initializer: uint_, ulong_ etc. These generators must be used in
@@ -220,9 +241,8 @@ namespace boost { namespace spirit { namespace karma
         generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
-            return 
-                int_inserter<Radix, CharEncoding, Tag>::call(sink, attr) &&
-                karma::delimit_out(sink, d);      // always do post-delimiting
+            return int_inserter<Radix, CharEncoding, Tag>::call(sink, attr) &&
+                   karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
         // this int has no Attribute attached, it needs to have been
@@ -231,7 +251,7 @@ namespace boost { namespace spirit { namespace karma
         static bool
         generate(OutputIterator&, Context&, Delimiter const&, unused_type)
         {
-            BOOST_SPIRIT_ASSERT_MSG(false, uint__not_usable_without_attribute, ());
+            BOOST_SPIRIT_ASSERT_MSG(false, uint_not_usable_without_attribute, ());
             return false;
         }
 
@@ -255,11 +275,8 @@ namespace boost { namespace spirit { namespace karma
     {
         template <typename Context, typename Unused>
         struct attribute
-        {
-            typedef typename mpl::if_c<
-                no_attribute, unused_type, T>::type
-            type;
-        };
+          : mpl::if_c<no_attribute, unused_type, T>
+        {};
 
         literal_uint_generator(typename add_const<T>::type n)
           : n_(n) {}
@@ -272,14 +289,29 @@ namespace boost { namespace spirit { namespace karma
         BOOST_SPIRIT_ASSERT_MSG(!std::numeric_limits<T>::is_signed,
             signed_unsigned_mismatch, ());
 
+        // A uint(1U) which additionally has an associated attribute emits
+        // its immediate literal only if it matches the attribute, otherwise
+        // it fails.
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const&) const
+          , Attribute const& attr) const
         {
-            return 
-                int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
-                karma::delimit_out(sink, d);      // always do post-delimiting
+            if (n_ != attr)
+                return false;
+
+            return int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
+                   karma::delimit_out(sink, d);      // always do post-delimiting
+        }
+
+        // A uint(1U) without any associated attribute just emits its 
+        // immediate literal
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , unused_type) const
+        {
+            return int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
+                   karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
         template <typename Context>
@@ -360,16 +392,12 @@ namespace boost { namespace spirit { namespace karma
         static bool const upper = 
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
-        static bool const no_attr =
-            !has_modifier<Modifiers, tag::lazy_eval>::value;
-
         typedef literal_uint_generator<
             T
           , typename spirit::detail::get_encoding<
                 Modifiers, unused_type, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , Radix
-          , no_attr
+          , Radix, false
         > result_type;
 
         template <typename Terminal>
@@ -421,6 +449,50 @@ namespace boost { namespace spirit { namespace karma
         terminal_ex<tag::uint_tag<T, Radix>, fusion::vector1<A0> >
           , Modifiers>
       : make_uint_direct<T, Modifiers, Radix> {};
+
+    namespace detail
+    {
+        template <typename T, typename Modifiers>
+        struct basic_uint_literal
+        {
+            static bool const lower =
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper =
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_uint_generator<
+                T
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , 10, true
+            > result_type;
+
+            template <typename T_>
+            result_type operator()(T_ i, unused_type) const
+            {
+                return result_type(i);
+            }
+        };
+    }
+
+    template <typename Modifiers>
+    struct make_primitive<unsigned short, Modifiers> 
+      : detail::basic_uint_literal<unsigned short, Modifiers> {};
+
+    template <typename Modifiers>
+    struct make_primitive<unsigned int, Modifiers> 
+      : detail::basic_uint_literal<unsigned int, Modifiers> {};
+
+    template <typename Modifiers>
+    struct make_primitive<unsigned long, Modifiers> 
+      : detail::basic_uint_literal<unsigned long, Modifiers> {};
+
+#ifdef BOOST_HAS_LONG_LONG
+    template <typename Modifiers>
+    struct make_primitive<boost::ulong_long_type, Modifiers> 
+      : detail::basic_uint_literal<boost::ulong_long_type, Modifiers> {};
+#endif
 
 }}}
 

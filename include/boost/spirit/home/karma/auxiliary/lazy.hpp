@@ -49,7 +49,7 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef mpl::int_<generator_properties::all_properties> properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
         {
             typedef typename
@@ -72,7 +72,7 @@ namespace boost { namespace spirit { namespace karma
             generator_type;
 
             typedef typename
-                traits::attribute_of<generator_type, Context, Unused>::type
+                traits::attribute_of<generator_type, Context, Iterator>::type
             type;
         };
 
@@ -114,7 +114,7 @@ namespace boost { namespace spirit { namespace karma
 
         typedef Subject subject_type;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
         {
             typedef typename
@@ -145,7 +145,7 @@ namespace boost { namespace spirit { namespace karma
             generator_type;
 
             typedef typename
-                traits::attribute_of<generator_type, Context>::type
+                traits::attribute_of<generator_type, Context, Iterator>::type
             type;
         };
 

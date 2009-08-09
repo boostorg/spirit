@@ -60,13 +60,10 @@ namespace boost { namespace spirit { namespace karma
 
         typedef typename subject_type::properties properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef typename
-                traits::attribute_of<subject_type, Context>::type
-            type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         redelimit_generator(Subject const& subject)
           : subject(subject) {}

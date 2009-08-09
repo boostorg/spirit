@@ -81,9 +81,9 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     //
     //  any_char
-    //      generates a single character from the associated parameter
+    //      generates a single character from the associated attribute
     //
-    //      Note: this generator has to have an associated parameter
+    //      Note: this generator has to have an associated attribute
     //
     ///////////////////////////////////////////////////////////////////////////
     template <typename CharEncoding, typename Tag>
@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace karma
             // providing any attribute, as the generator doesn't 'know' what
             // character to output. The following assertion fires if this
             // situation is detected in your code.
-            BOOST_SPIRIT_ASSERT_MSG(false, char__not_usable_without_attribute, ());
+            BOOST_SPIRIT_ASSERT_MSG(false, char_not_usable_without_attribute, ());
             return false;
         }
 
@@ -152,17 +152,32 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Context, typename Unused>
         struct attribute
-        {
-            typedef typename mpl::if_c<
-                no_attribute, unused_type, char_type>::type
-            type;
-        };
+          : mpl::if_c<no_attribute, unused_type, char_type>
+        {};
 
+        // A char_('x') which additionally has an associated attribute emits
+        // its immediate literal only if it matches the attribute, otherwise
+        // it fails.
         template <
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const&) const
+          , Attribute const& attr) const
+        {
+            // fail if attribute isn't matched my immediate literal
+            typedef spirit::char_class::convert<char_encoding> convert_type;
+            if (convert_type::to(Tag(), attr) != ch)
+                return false;
+
+            return karma::detail::generate_to(sink, ch) &&
+                   karma::delimit_out(sink, d);    // always do post-delimiting
+        }
+
+        // A char_('x') without any associated attribute just emits its 
+        // immediate literal
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , unused_type) const
         {
             return karma::detail::generate_to(sink, ch) &&
                    karma::delimit_out(sink, d);    // always do post-delimiting
@@ -191,14 +206,11 @@ namespace boost { namespace spirit { namespace karma
             static bool const upper =
                 has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
-            static bool const no_attr =
-                !has_modifier<Modifiers, tag::lazy_eval>::value;
-
             typedef literal_char<
                 typename spirit::detail::get_encoding<
                     Modifiers, Encoding, lower || upper>::type
               , typename get_casetag<Modifiers, lower || upper>::type
-              , no_attr>
+              , true>
             result_type;
 
             template <typename Char>
@@ -270,14 +282,11 @@ namespace boost { namespace spirit { namespace karma
         static bool const upper =
             has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
-        static bool const no_attr =
-            !has_modifier<Modifiers, tag::lazy_eval>::value;
-
         typedef literal_char<
             typename spirit::detail::get_encoding<
                 Modifiers, CharEncoding, lower || upper>::type
           , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , no_attr
+          , false
         > result_type;
 
         template <typename Terminal>

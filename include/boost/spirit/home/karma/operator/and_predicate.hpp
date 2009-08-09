@@ -42,9 +42,8 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef unused_type type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         and_predicate(Subject const& subject)
           : subject(subject) {}

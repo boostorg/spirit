@@ -90,12 +90,12 @@ namespace boost { namespace spirit { namespace karma
         typedef Elements elements_type;
         struct sequence_base_id;
 
-        template <typename Context, typename Unused = unused_type>
+        template <typename Context, typename Iterator = unused_type>
         struct attribute
         {
             // Put all the element attributes in a tuple
             typedef typename traits::build_attribute_sequence<
-                Elements, Context, mpl::identity>::type
+                Elements, Context, mpl::identity, Iterator>::type
             all_attributes;
 
             // Now, build a fusion vector over the attributes. Note

@@ -38,7 +38,7 @@ namespace boost { namespace spirit { namespace karma
 
         template <typename Context, typename Unused>
         struct attribute
-          : traits::attribute_of<Subject, Context, Unused>
+          : traits::attribute_of<Subject, Context>
         {};
 
         action(Subject const& subject, Action f)

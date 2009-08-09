@@ -127,13 +127,10 @@ namespace boost { namespace spirit { namespace karma
             generator_properties::countingbuffer | subject_type::properties::value
         > properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef typename
-                traits::attribute_of<subject_type, Context>::type
-            type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         simple_right_alignment(Subject const& subject, Width width = Width())
           : subject(subject), width(width) {}
@@ -246,7 +243,12 @@ namespace boost { namespace spirit { namespace karma
     struct make_directive<
         terminal_ex<tag::right_align, fusion::vector1<Padding> >
       , Subject, Modifiers
-      , typename enable_if<spirit::traits::matches<karma::domain, Padding> >::type>
+      , typename enable_if<
+            mpl::and_<
+                spirit::traits::matches<karma::domain, Padding>,
+                mpl::not_<mpl::bool_<integer_traits<Padding>::is_integral> >
+            >
+        >::type>
     {
         typedef typename
             result_of::compile<karma::domain, Padding, Modifiers>::type
