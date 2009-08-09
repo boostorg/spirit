@@ -81,6 +81,18 @@ namespace boost
     {
         return boost::get<T>(expr.expr);
     }
+
+    // the specialization below tells Spirit to handle expression_ast as if it 
+    // where a 'real' variant
+    namespace spirit { namespace traits
+    {
+        template <typename T>
+        struct not_is_variant;
+
+        template <>
+        struct not_is_variant<expression_ast>
+          : mpl::false_ {};
+    }}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
