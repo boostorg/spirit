@@ -25,6 +25,7 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/karma.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
@@ -128,6 +129,24 @@ void vmachine::execute(std::vector<element> const& code)
     }
 }
 
+// We need to tell fusion about our binary_op and unary_op structs
+// to make them a first-class fusion citizen
+//
+// Note: we register the members exactly in the same sequence as we need them 
+//       in the grammar
+BOOST_FUSION_ADAPT_STRUCT(
+    binary_op,
+    (expression_ast, left)
+    (expression_ast, right)
+    (int, op)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    unary_op,
+    (expression_ast, right)
+    (int, op)
+)
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Our AST grammar for the generator, this just dumps the AST as a expression
 ///////////////////////////////////////////////////////////////////////////////
@@ -137,29 +156,10 @@ struct generate_byte_code
 {
     generate_byte_code() : generate_byte_code::base_type(ast_node)
     {
-        ast_node %= 
-                int_node    [_1 = _int(_val)]
-            |   binary_node [_1 = _bin_op(_val)]
-            |   unary_node  [_1 = _unary_op(_val)]
-            ;
-
-        int_node %=
-                dword(op_int) << dword
-            ;
-
-        binary_node = 
-                (ast_node << ast_node << byte_)
-                [ 
-                    _1 = _left(_val), _2 = _right(_val), _3 = _op(_val)
-                ]
-            ;
-
-        unary_node =
-                (ast_node << byte_)
-                [
-                    _1 = _right(_val), _2 = _op(_val)
-                ]
-            ;
+        ast_node %= int_node | binary_node | unary_node;
+        int_node %= dword(op_int) << dword;
+        binary_node %= ast_node << ast_node << byte_;
+        unary_node %= ast_node << byte_;
     }
 
     karma::rule<OuputIterator, expression_ast(), Delimiter> ast_node;

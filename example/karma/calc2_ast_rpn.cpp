@@ -24,6 +24,7 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/karma.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
@@ -62,6 +63,24 @@ struct calculator
     qi::rule<Iterator, expression_ast(), space_type> expression, term, factor;
 };
 
+// We need to tell fusion about our binary_op and unary_op structs
+// to make them a first-class fusion citizen
+//
+// Note: we register the members exactly in the same sequence as we need them 
+//       in the grammar
+BOOST_FUSION_ADAPT_STRUCT(
+    binary_op,
+    (expression_ast, left)
+    (expression_ast, right)
+    (char, op)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    unary_op,
+    (expression_ast, right)
+    (char, op)
+)
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Our AST grammar for the generator, this prints the AST in reverse polish 
 //  notation
@@ -72,27 +91,9 @@ struct ast_rpn
 {
     ast_rpn() : ast_rpn::base_type(ast_node)
     {
-        ast_node %= 
-                int_        [_1 = _int(_val)]
-            |   binary_node [_1 = _bin_op(_val)]
-            |   unary_node  [_1 = _unary_op(_val)]
-            ;
-
-        binary_node = 
-                (ast_node << ast_node << char_)
-                [ 
-                    _1 = _left(_val), _2 = _right(_val), _3 = _op(_val)
-                ]
-            ;
-
-        unary_node =
-//                 verbatim [
-                    ('(' << ast_node << char_ << ')')
-                    [
-                        _1 = _right(_val), _2 = _op(_val)
-                    ]
-//                 ]
-            ;
+        ast_node %= int_ | binary_node | unary_node;
+        binary_node %= ast_node << ast_node << char_;
+        unary_node %= '(' << ast_node << char_ << ')';
     }
 
     karma::rule<OuputIterator, expression_ast(), space_type> ast_node;
