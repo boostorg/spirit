@@ -81,6 +81,18 @@ namespace boost
     {
         return boost::get<T>(expr.expr);
     }
+
+    // the specialization below tells Spirit to handle expression_ast as if it 
+    // where a 'real' variant
+    namespace spirit { namespace traits
+    {
+        template <typename T>
+        struct not_is_variant;
+
+        template <>
+        struct not_is_variant<expression_ast>
+          : mpl::false_ {};
+    }}
 }
 
 enum byte_code
@@ -163,67 +175,5 @@ struct unary_expr
 
 boost::phoenix::function<unary_expr<op_pos> > pos;
 boost::phoenix::function<unary_expr<op_neg> > neg;
-
-///////////////////////////////////////////////////////////////////////////////
-//  A couple of phoenix functions helping to access the elements of the 
-//  generated AST
-///////////////////////////////////////////////////////////////////////////////
-template <typename T>
-struct get_element
-{
-    template <typename T1>
-    struct result { typedef T const& type; };
-
-    T const& operator()(expression_ast const& expr) const
-    {
-        return boost::get<T>(expr.expr);
-    }
-};
-
-boost::phoenix::function<get_element<int> > _int;
-boost::phoenix::function<get_element<binary_op> > _bin_op;
-boost::phoenix::function<get_element<unary_op> > _unary_op;
-
-///////////////////////////////////////////////////////////////////////////////
-struct get_left
-{
-    template <typename T1>
-    struct result { typedef expression_ast const& type; };
-
-    expression_ast const& operator()(binary_op const& bin_op) const
-    {
-        return bin_op.left;
-    }
-};
-
-boost::phoenix::function<get_left> _left;
-
-struct get_right
-{
-    template <typename T1>
-    struct result { typedef expression_ast const& type; };
-
-    template <typename Node>
-    expression_ast const& operator()(Node const& op) const
-    {
-        return op.right;
-    }
-};
-
-boost::phoenix::function<get_right> _right;
-
-struct get_op
-{
-    template <typename T1>
-    struct result { typedef int type; };
-
-    template <typename Node>
-    int operator()(Node const& bin_op) const
-    {
-        return bin_op.op;
-    }
-};
-
-boost::phoenix::function<get_op> _op;
 
 #endif
