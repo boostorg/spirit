@@ -140,8 +140,8 @@ main()
             BOOST_TEST(test("AA", upper[char_ << 'a'][_1 = 'a']));
 
             BOOST_TEST(test("Aa        ", left_align[char_ << 'a'][_1 = 'A']));
-//             BOOST_TEST(test("    Aa    ", center[char_ << 'a'][_1 = 'A']));
-//             BOOST_TEST(test("        Aa", right_align[char_ << 'a'][_1 = 'A']));
+            BOOST_TEST(test("    Aa    ", center[char_ << 'a'][_1 = 'A']));
+            BOOST_TEST(test("        Aa", right_align[char_ << 'a'][_1 = 'A']));
         }
     }
 
