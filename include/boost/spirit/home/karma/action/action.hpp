@@ -36,9 +36,9 @@ namespace boost { namespace spirit { namespace karma
         typedef Subject subject_type;
         typedef typename subject_type::properties properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-          : traits::attribute_of<Subject, Context>
+          : traits::attribute_of<Subject, Context, Iterator>
         {};
 
         action(Subject const& subject, Action f)

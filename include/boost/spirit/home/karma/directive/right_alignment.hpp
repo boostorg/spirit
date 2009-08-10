@@ -173,13 +173,10 @@ namespace boost { namespace spirit { namespace karma
             subject_type::properties::value | padding_type::properties::value 
         > properties;
 
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
-        {
-            typedef typename
-                traits::attribute_of<Subject, Context>::type
-            type;
-        };
+          : traits::attribute_of<subject_type, Context, Iterator>
+        {};
 
         padding_right_alignment(Subject const& subject, Padding const& padding
               , Width width = Width())

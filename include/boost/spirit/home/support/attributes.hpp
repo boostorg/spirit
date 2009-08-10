@@ -360,6 +360,7 @@ namespace boost { namespace spirit { namespace traits
     struct make_attribute<unused_type, ActualAttribute>
     {
         typedef unused_type type;
+        typedef unused_type value_type;
         static unused_type call(unused_type)
         {
             return unused;
