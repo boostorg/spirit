@@ -95,6 +95,10 @@ pages and pages of reference doumentation.
                                                          `std::isspace` in the current character set]]
     [[`xdigit`]             [`Ch`]                      [Matches a character based on the equivalent of 
                                                          `std::isxdigit` in the current character set]]
+    [[`lower`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::islower` in the current character set]]
+    [[`upper`]              [`Ch`]                      [Matches a character based on the equivalent of 
+                                                         `std::isupper` in the current character set]]
 
     [[[qi_lit_string `ch`]]           [`Unused`]    [Matches `ch`]]
     [[[qi_lit_string `str`]]          [`Unused`]    [Matches `str`]]

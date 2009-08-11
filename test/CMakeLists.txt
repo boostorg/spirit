@@ -70,6 +70,7 @@ boost_test_run(karma_buffer karma/buffer.cpp COMPILE_FLAGS ${test_compile_flags}
 boost_test_run(karma_case_handling karma/case_handling.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_center_alignment karma/center_alignment.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_char karma/char.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_char_class karma/char_class.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_delimiter karma/delimiter.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_eol karma/eol.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(karma_eps karma/eps.cpp COMPILE_FLAGS ${test_compile_flags})

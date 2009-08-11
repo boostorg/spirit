@@ -80,6 +80,12 @@
 [def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
 [def __sec_karma_primitive__    [link spirit.karma.quick_reference.predefined_primitive_generators Predefined Primitive Generators]]
 [def __sec_karma_compound__     [link spirit.karma.quick_reference.compound_attribute_rules Compound Attribute Rules]]
+[def __karma_char_encoding_namespace__ [link spirit.karma.reference.karma_basics.character_encoding_namespace Character Encoding Namespace]]
+
+[def __karma_auxiliary__        [link spirit.karma.reference.auxiliary Auxiliary Generators]]
+[def __karma_char__             [link spirit.karma.reference.char Character Generators]]
+[def __karma_directive__        [link spirit.karma.reference.directive Generator Directives]]
+[def __karma_operator__         [link spirit.karma.reference.operator Generator Operators]]
 
 [def __sec_lex__                [link spirit.lex Lex]]
 [def __sec_lex_quickstart_1__   [link spirit.lex.tutorials.lexer_quickstart1 Lex Quickstart 1 - A word counter using __lex__]]
@@ -94,6 +100,7 @@
 
 [def __sec_ref_lex_token__      [link spirit.lex.reference.concepts.token Token Reference]]
 [def __sec_ref_lex_token_def__  [link spirit.lex.reference.concepts.tokendef TokenDef Reference]]
+
 
 [/ References to API descriptions ]
 
@@ -165,6 +172,8 @@
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
 [template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]
 [template floating_point[str]       [link spirit.karma.reference.numeric.floating_point [str]]]
+
+[template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
 
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]

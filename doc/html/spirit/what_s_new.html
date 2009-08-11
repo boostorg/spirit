@@ -27,7 +27,7 @@
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
 <a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id1104736"></a>
+<a name="id1118686"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
     </h4>
 <p>
@@ -66,11 +66,11 @@
       for existing applications.
     </p>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id1104927"></a>
+<a name="id1118877"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_"></a><h4>
-<a name="id1104940"></a>
+<a name="id1118890"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)</a>
@@ -151,22 +151,53 @@
         directive
       </li>
 <li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code>
+        directive (see <a class="link" href="karma/reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>)
+      </li>
+<li class="listitem">
+        Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code>
+        directive (see <a class="link" href="karma/reference/directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>)
+      </li>
+<li class="listitem">
 <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">delimit</span><span class="special">[]</span></code>
         now re-enables outer delimiter if used inside <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
 </li>
 <li class="listitem">
         karma: added and-predicate (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></code>) and not-predicate (<code class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></code>)
       </li>
+<li class="listitem">
+        karma: changed semantics of <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">string</span><span class="special">()</span></code>, <code class="computeroutput"><span class="identifier">int_</span><span class="special">()</span></code> et.al., and <code class="computeroutput"><span class="identifier">double_</span><span class="special">()</span></code> et.al.: all of these generators now always
+        expose an attribute. If they do not have an associate attribute, they generate
+        their immediate literal. If they have an associated attribute, the generators
+        first test if the attribute value is equal to the immediate literal. They
+        fail not while generating anything if those are not equal. Otherwise they
+        generate their immediate literal. For more information see for instance
+        <a class="link" href="karma/reference/numeric/signed_int.html" title="Signed Integer Number Generators"><code class="computeroutput"><span class="identifier">int_</span></code></a>.
+      </li>
+<li class="listitem">
+<code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">lit</span><span class="special">()</span></code> can
+        now be used to generate integer and floating point numbers
+      </li>
+<li class="listitem">
+<code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span></code> and <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span></code>
+        now can be directly initialzed using their copy constructor. I.e. this works
+        now: <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;...&gt;</span>
+        <span class="identifier">r</span> <span class="special">=</span> <span class="special">...</span><span class="identifier">some</span> <span class="identifier">parser</span><span class="special">...;</span></code>.The
+        semantics of this initalization are equivalent to initializing them using
+        <code class="computeroutput"><span class="keyword">operator</span><span class="special">%=()</span></code>
+        (auto attribute propagation is enabled).
+      </li>
 </ul></div>
-<a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x"></a><h4>
-<a name="id1105492"></a>
-      <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0_to_2_x">What's
-      changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 to 2.x</a>
+<a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_"></a><h4>
+<a name="id1122500"></a>
+      <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_">What's
+      changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 (Boost V1.37.0) to 2.x
+      (Boost V1.41.0)</a>
     </h4>
 <p>
       Here is a list of changes in <span class="emphasis"><em>Spirit.Lex</em></span> since version
-      2.0. <span class="emphasis"><em>Spirit.Lex</em></span> 2.x is a complete rewrite of the original
-      <span class="emphasis"><em>Spirit.Lex</em></span> distributed. As all parts of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+      2.0. <span class="emphasis"><em>Spirit.Lex</em></span> 2.x is a complete rewrite of the <span class="emphasis"><em>Spirit.Lex</em></span>
+      distributed with Boost V1.37. As all parts of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
       library it is usable either standalone or in conjunction with the other parts.
       <span class="emphasis"><em>Spirit.Lex</em></span> now uses the infrastructure provided by <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> version 2.1.
     </p>

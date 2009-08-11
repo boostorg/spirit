@@ -25,21 +25,21 @@ integer, and floating point number generators.
 The signed integer number generators described in this section are:
 
 [table
-    [[Expression]          [Attribute]            [Description]]
-    [[`lit(num)`]          [`Unused`]             [Generates `num`, where `num` can be a `short`,
-                                                   `int`, `long`, or `long long`]]
-    [[`short_`]            [`short`]              [Generate a short integer]]
-    [[`short_(num)`]       [`short`]              [Generate `num` as a short integer, 
-                                                   if an attribute is supplied it must match]]
-    [[`int_`]              [`int`]                [Generate an int]]
-    [[`int_(num)`]         [`int`]                [Generate `num` as an int, 
-                                                   if an attribute is supplied it must match]]
-    [[`long_`]             [`long`]               [Generate a long integer]]
-    [[`long_(num)`]        [`long`]               [Generate `num` as long integer, 
-                                                   if an attribute is supplied it must match]]
-    [[`long_long`]         [`long long`]          [Generate a long long]]
-    [[`long_long(num)`]    [`long long`]          [Generate `num` as an long long, 
-                                                   if an attribute is supplied it must match]]
+    [[Expression]          [Attribute]     [Description]]
+    [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `short`,
+                                            `int`, `long`, or `long long`]]
+    [[`short_`]            [`short`]       [Generate a short integer]]
+    [[`short_(num)`]       [`short`]       [Generate `num` as a short integer, 
+                                            if an attribute is supplied it must match]]
+    [[`int_`]              [`int`]         [Generate an int]]
+    [[`int_(num)`]         [`int`]         [Generate `num` as an int, 
+                                            if an attribute is supplied it must match]]
+    [[`long_`]             [`long`]        [Generate a long integer]]
+    [[`long_(num)`]        [`long`]        [Generate `num` as long integer, 
+                                            if an attribute is supplied it must match]]
+    [[`long_long`]         [`long long`]   [Generate a long long]]
+    [[`long_long(num)`]    [`long long`]   [Generate `num` as an long long, 
+                                            if an attribute is supplied it must match]]
     [
 [``int_generator<
     Num, Radix, force_sign
@@ -253,12 +253,12 @@ The signed integer number generators described in this section are:
 [``uint_generator<
     Num, Radix
 >()``]
-                           [`Num`]                [Generate a `Num`]]
+                           [`Num`]                [Generate an unsigned `Num`]]
     [
 [``uint_generator<
     Num, Radix
 >()(num)``]
-                           [`Num`]                [Generate `num` as a `Num`, 
+                           [`Num`]                [Generate an unsigned `num` as a `Num`, 
                                                    if an attribute is supplied it must match]]
 ]
 

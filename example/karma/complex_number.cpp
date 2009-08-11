@@ -17,6 +17,7 @@
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/fusion/include/std_pair.hpp>
 
 #include <iostream>
 #include <string>
@@ -68,7 +69,6 @@ namespace client
         using boost::spirit::karma::double_;
         using boost::spirit::karma::_1;
         using boost::spirit::karma::generate;
-        using boost::phoenix::ref;
 
         return generate(sink,
             //  Begin grammar

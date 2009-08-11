@@ -6,8 +6,197 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Char]
+[section:char Char]
 
+This module includes different character oriented generators allowing to output
+single characters. It includes the character, character range, and character 
+class generators.
 
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/karma/char.hpp>
+    #include <boost/spirit/include/karma_char.hpp>
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:char_class Character Class Generators]
+
+[heading Description]
+
+The character class generators described in this section are:
+
+[table
+    [[Expression]          [Description]]
+    [[`NS::alnum`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isalnum` in 
+                            the character set defined by `NS`]]
+    [[`NS::alpha`]         [Generates the character supplied as the attribute
+                            if it satisfies thh concept of `std::isalpha` in 
+                            the character set defined by `NS`]]
+    [[`NS::blank`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isblank` in 
+                            the character set defined by `NS`]]
+    [[`NS::cntrl`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::iscntrl` in 
+                            the character set defined by `NS`]]
+    [[`NS::digit`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isdigit` in 
+                            the character set defined by `NS`]]
+    [[`NS::graph`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isgraph` in 
+                            the character set defined by `NS`]]
+    [[`NS::print`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isprint` in 
+                            the character set defined by `NS`]]
+    [[`NS::punct`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::ispunct` in 
+                            the character set defined by `NS`]]
+    [[`NS::xdigit`]        [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isxdigit` in
+                            the character set defined by `NS`]]
+    [[`NS::lower`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::islower` in 
+                            the character set defined by `NS`]]
+    [[`NS::upper`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isupper` in 
+                            the character set defined by `NS`]]
+    [[`NS::space`]         [Generates the character supplied as the attribute
+                            if it satisfies the concept of `std::isspace` in 
+                            or a single space character the character set 
+                            defined by `NS`]]
+]
+
+In the table above, `NS` is a __karma_char_encoding_namespace__ used by the 
+corresponding character class generator. All listed generators have a mandatory 
+attribute `Ch` and will not compile if no attribute is associated.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/char/char_class.hpp>
+    #include <boost/spirit/include/karma_char_class.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__primitive_generator_concept__]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`NS::alnum`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isalnum` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::alpha`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isalpha` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::blank`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isblank` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::cntrl`]      [If the mandatory attribute satisfies the concept of 
+                         `std::iscntrl` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::digit`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isdigit` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::graph`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isgraph` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::print`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isprint` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::punct`]      [If the mandatory attribute satisfies the concept of 
+                         `std::ispunct` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::xdigit`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isxdigit` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::lower`]      [If the mandatory attribute satisfies the concept of 
+                         `std::islower` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::upper`]      [If the mandatory attribute satisfies the concept of 
+                         `std::isupper` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.]]
+    [[`NS::space`]      [If the optional attribute satisfies the concept of 
+                         `std::isspace` the generator succeeds after emitting 
+                         its attribute (except if the underlying output stream 
+                         reports an error). This generator fails otherwise 
+                         while not generating anything.If no attribute is 
+                         supplied this generator emits a single space 
+                         character in the character set defined by `NS`.]]
+]
+
+Possible values for `NS` are described in the section __karma_char_encoding_namespace__.
+
+[note   The generators `alpha` and `alnum` might seem to behave unexpected if 
+        used inside a `lower[]` or `upper[]` directive. Both directives 
+        additionally apply the semanitics of `std::islower` or `std::isupper`
+        to the respective character class. Some examples:
+``
+    std::string s;
+    std::back_insert_iterator<std::string> out(s);
+    generate(out, lower[alpha], 'a');               // succeeds emitting 'a'
+    generate(out, lower[alpha], 'A');               // fails 
+``
+        The generator directive `upper[]` behaves correspondingly.
+]
+
+[heading Attributes]
+
+[:All listed character class generators can take any attribute `Ch`. All 
+  character class generators (except `space`) require an attribute and will
+  fail compiling otherwise.]
+
+[heading Complexity]
+
+[:O(1)]
+
+The complexity is constant as the generators emit not more than one character 
+per invocation.
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use these common test functions:
+
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_char_class]
+
+Basic usage of an `alpha` generator:
+
+[reference_karma_char_class]
+
+[endsect]
 
 [endsect]

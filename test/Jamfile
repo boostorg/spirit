@@ -75,6 +75,7 @@ import testing ;
     [ run karma/case_handling.cpp           : : : : ]
     [ run karma/center_alignment.cpp        : : : : ]
     [ run karma/char.cpp                    : : : : karma_char ]
+    [ run karma/char_class.cpp              : : : : karma_char_class ]
     [ run karma/delimiter.cpp               : : : : ]
     [ run karma/eol.cpp                     : : : : karma_eol ]
     [ run karma/eps.cpp                     : : : : karma_eps ]

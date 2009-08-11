@@ -48,44 +48,71 @@ pages and pages of reference doumentation.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section Predefined Primitive Generators]
+[section:predefined_primitive_generators Predefined Generators]
 
-[table 
+See here for more information about __karma_char__.
+
+[table Predefined Character Generators
     [[Expression]           [Attribute]                 [Description]]
-    [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
-    [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
-    [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
-    [[[karma_lazy `lazy(fg)`]]
-                            [Attribute of `G` where `G`
-                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
-                                                        `g` which is then called to generate.]]
-    [[[karma_lazy `fg`]]    [see [karma_lazy `lazy(fg)`] above]  [Equivalent to [karma_lazy `lazy(fg)`]]]
-    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
-
-    [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
-    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
-    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
-    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
-    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
-    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
-    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
-    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
-    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
-    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
-
     [[`ch`]                 [`Unused`]                  [Generates `ch`]]
-    [[`str`]                [`Unused`]                  [Generates `str`]]
     [[`lit(ch)`]            [`Unused`]                  [Generates `ch`]]
-    [[`lit(str)`]           [`Unused`]                  [Generates `str`]]
-    [[`lit(num)`]           [`Unused`]                  [Generates `num`]]
 
     [[`char_(ch)`]          [`Ch`]                      [Generates `ch`, 
                                                          if an attribute is supplied it must match]]
     [[`char_("c")`]         [`Ch`]                      [Generates a single char string literal, `c`, 
                                                          if an attribute is supplied it must match]]
+
+    [[[karma_char_class `alnum`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isalnum` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `alpha`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isalpha` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `blank`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isblank` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `cntrl`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::iscntrl` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `digit`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isdigit` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `graph`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isgraph` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `print`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isprint` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `punct`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::ispunct` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `space`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isspace`, or
+                                                         a single space character in the character set 
+                                                         defined by `NS`]]
+    [[[karma_char_class `xdigit`]]  [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isxdigit` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `lower`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::islower` in 
+                                                         the character set defined by `NS`]]
+    [[[karma_char_class `upper`]]   [`Ch`]              [Generates the character supplied as the attribute
+                                                         if it satisfies the concept of `std::isupper` in 
+                                                         the character set defined by `NS`]]
+]
+
+[table Predefined String Generators
+    [[Expression]           [Attribute]                 [Description]]
+    [[`str`]                [`Unused`]                  [Generates `str`]]
+    [[`lit(str)`]           [`Unused`]                  [Generates `str`]]
     [[`string(str)`]        [`Str`]                     [Generates `str`, 
                                                          if an attribute is supplied it must match]]
+]
 
+See here for more information about __karma_directive__.
+
+[table Predefined Generator Directives
+    [[Expression]           [Attribute]                 [Description]]
     [[`lower[a]`]           [`A`]                       [Generate `a` as lower case]]
     [[`upper[a]`]           [`A`]                       [Generate `a` as upper case]]
 
@@ -125,7 +152,13 @@ pages and pages of reference doumentation.
 
     [[__karma_buffer__]     [`A`]                       [Temporarily intercepts the output generated by `a`, 
                                                          flushing it only after `a` succeeded.]]
+]
 
+See here for more information about __karma_numeric__.
+
+[table Predefined Numeric Generators
+    [[Expression]           [Attribute]                 [Description]]
+    [[`lit(num)`]           [`Unused`]                  [Generates `num`]]
     [[[floating_point `float_`]]           [`float`]       [Generate a floating point number from a `float`]]
     [[[floating_point `float_(num)`]]      [`float`]       [Generate `num` as a floating point number from a `float`, 
                                                             if an attribute is supplied it must match]]
@@ -152,6 +185,16 @@ pages and pages of reference doumentation.
     [[[unsigned_int `ulong_long`]]      [`unsigned long long`] [Generate an unsigned long long]]
     [[[unsigned_int `ulong_long(num)`]] [`unsigned long long`] [Generate `num` as an unsigned long long, 
                                                                 if an attribute is supplied it must match]]
+    [[[unsigned_int ``uint_generator<
+    Num, Radix
+>()``]]
+                                        [`Num`]                [Generate an unsigned `Num`]]
+    [[[unsigned_int ``uint_generator<
+    Num, Radix
+>()(num)``]]
+                                        [`Num`]                [Generate an unsigned `num` as a `Num`, 
+                                                                if an attribute is supplied it must match]]
+
     [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
     [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
                                                                 if an attribute is supplied it must match]]
@@ -165,12 +208,35 @@ pages and pages of reference doumentation.
     [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as an long long, 
                                                                 if an attribute is supplied it must match]]
 
-    [[[signed_int `int_generator<Num, Radix, force_sign>()`]]
+    [[[signed_int ``int_generator<
+    Num, Radix, force_sign
+>()``]]
                                         [`Num`]                [Generate a `Num`]]
-    [[[signed_int `int_generator<Num, Radix, force_sign>()(num)`]]
+    [[[signed_int ``int_generator<
+    Num, Radix, force_sign
+>()(num)``]]
                                         [`Num`]                [Generate a `num` as a `Num`, 
                                                                 if an attribute is supplied it must match]]
+]
 
+[table Predefined Binary Generators
+    [[Expression]           [Attribute]                 [Description]]
+    [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
+    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
+    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
+    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
+    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
+    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
+    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
+    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
+    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
+    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
+]
+
+See here for more information about __karma_operator__.
+
+[table Predefined Generator Operators
+    [[Expression]           [Attribute]                 [Description]]
     [[[link spirit.karma.reference.operator.not_predicate `!a`]]
                             [`A`]                       [Not predicate. Ensure that `a` does not succeed 
                                                          generating, but don't create any output]]
@@ -189,6 +255,24 @@ pages and pages of reference doumentation.
                             [`tuple<A, B>`]             [Sequence. Generate `a` followed by `b`]]
     [[[link spirit.karma.reference.operator.list `a % b`]]
                             [`vector<A>`]               [List. Generate `a` delimited `b` one or more times]]
+]
+
+[:For more information about the attribute propagation rules implemented by the 
+compound generators please see __sec_karma_compound__.]
+
+See here for more information about __karma_auxiliary__.
+
+[table Predefined Auxiliary Generators
+    [[Expression]           [Attribute]                 [Description]]
+    [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
+    [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
+    [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
+    [[[karma_lazy `lazy(fg)`]]
+                            [Attribute of `G` where `G`
+                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
+                                                        `g` which is then called to generate.]]
+    [[[karma_lazy `fg`]]    [see [karma_lazy `lazy(fg)`] above]  [Equivalent to [karma_lazy `lazy(fg)`]]]
+    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 ]
 
 [endsect]

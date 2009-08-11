@@ -25,5 +25,36 @@ type expected and `Context` is the generators's __karma_context__ type (The
 first argument is __unused__ to make the `Context` the second argument. This
 is done for uniformity with __karma_actions__).
 
+[heading Character Encoding Namespace]
+
+Some generators need to know which character set a `char` or `wchar_t` is
+operating on. For example, the `alnum` generator works differently with
+ISO8859.1 and ASCII encodings. Where necessary, Spirit encodes (tags)
+the generator with the character set. 
+
+We have a namespace for each character set Spirit will be supporting.
+That includes `ascii`, `iso8859_1`, `standard` and `standard_wide` (and
+in the future, `unicode`). In each of the character encoding namespaces,
+we place tagged versions of generators such as `alnum`, `space` etc. 
+
+Example:
+
+    using boost::spirit::ascii::space; // use the ASCII space generator
+
+Namespaces:
+
+* boost::spirit::ascii
+* boost::spirit::iso8859_1
+* boost::spirit::standard
+* boost::spirit::standard_wide
+
+For ease of use, the components in this namespaces are also brought into
+the karma sub-namespaces with the same names:
+
+* boost::spirit::karma::ascii
+* boost::spirit::karma::iso8859_1
+* boost::spirit::karma::standard
+* boost::spirit::karma::standard_wide
+
 [endsect]
 

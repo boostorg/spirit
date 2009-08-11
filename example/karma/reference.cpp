@@ -247,5 +247,20 @@ main()
         //]
     }
 
+    {
+        //[reference_karma_using_declarations_char_class
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::alpha;
+        //]
+
+        //[reference_karma_char_class
+        test_generator_attr("a", alpha, 'a');
+        test_generator_attr("A", alpha, 'A');
+        test_generator_attr("", alpha, '1');          // fails (as isalpha('1') is false)
+        test_generator_attr("A", upper[alpha], 'a');
+        test_generator_attr("", upper[alpha], 'a');   // fails (as isupper('a') is false)
+        //]
+    }
+
     return 0;
 }

@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
 <link rel="prev" href="generator_concepts/narygenerator.html" title="NaryGenerator">
-<link rel="next" href="numeric.html" title="Numeric">
+<link rel="next" href="char.html" title="Char">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,14 +20,14 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="generator_concepts/narygenerator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="numeric.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="generator_concepts/narygenerator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="char.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="Basics">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit.karma.reference.karma_basics"></a><a class="link" href="karma_basics.html" title="Basics"> Basics</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.karma_basics.lazy_argument"></a><h6>
-<a name="id1191359"></a>
+<a name="id1206926"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
           Argument</a>
         </h6>
@@ -51,6 +51,67 @@
           to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
           second argument. This is done for uniformity with Semantic Actions).
         </p>
+<a name="spirit.karma.reference.karma_basics.character_encoding_namespace"></a><h6>
+<a name="id1207062"></a>
+          <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+          Encoding Namespace</a>
+        </h6>
+<p>
+          Some generators need to know which character set a <code class="computeroutput"><span class="keyword">char</span></code>
+          or <code class="computeroutput"><span class="keyword">wchar_t</span></code> is operating on.
+          For example, the <code class="computeroutput"><span class="identifier">alnum</span></code>
+          generator works differently with ISO8859.1 and ASCII encodings. Where necessary,
+          Spirit encodes (tags) the generator with the character set.
+        </p>
+<p>
+          We have a namespace for each character set Spirit will be supporting. That
+          includes <code class="computeroutput"><span class="identifier">ascii</span></code>, <code class="computeroutput"><span class="identifier">iso8859_1</span></code>, <code class="computeroutput"><span class="identifier">standard</span></code>
+          and <code class="computeroutput"><span class="identifier">standard_wide</span></code> (and
+          in the future, <code class="computeroutput"><span class="identifier">unicode</span></code>).
+          In each of the character encoding namespaces, we place tagged versions
+          of generators such as <code class="computeroutput"><span class="identifier">alnum</span></code>,
+          <code class="computeroutput"><span class="identifier">space</span></code> etc.
+        </p>
+<p>
+          Example:
+        </p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span> <span class="comment">// use the ASCII space generator
+</span></pre>
+<p>
+          Namespaces:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            boost::spirit::ascii
+          </li>
+<li class="listitem">
+            boost::spirit::iso8859_1
+          </li>
+<li class="listitem">
+            boost::spirit::standard
+          </li>
+<li class="listitem">
+            boost::spirit::standard_wide
+          </li>
+</ul></div>
+<p>
+          For ease of use, the components in this namespaces are also brought into
+          the karma sub-namespaces with the same names:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            boost::spirit::karma::ascii
+          </li>
+<li class="listitem">
+            boost::spirit::karma::iso8859_1
+          </li>
+<li class="listitem">
+            boost::spirit::karma::standard
+          </li>
+<li class="listitem">
+            boost::spirit::karma::standard_wide
+          </li>
+</ul></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -63,7 +124,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="generator_concepts/narygenerator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="numeric.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="generator_concepts/narygenerator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="char.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -80,38 +80,10 @@
           (The full cpp file for this example can be found here: <a href="../../../../../example/karma/complex_number.cpp" target="_top">complex_number.cpp</a>).
         </p>
 <p>
-          This is the complex type we will use for this and all subsequent realted
-          examples:
-        </p>
-<p>
-          </p>
-<p>
-            
-</p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">complex</span> <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span> 
-<span class="special">{</span>
-    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">base_type</span><span class="special">;</span>
-
-    <span class="identifier">complex</span><span class="special">()</span> 
-      <span class="special">:</span> <span class="identifier">base_type</span><span class="special">(</span><span class="identifier">T</span><span class="special">(),</span> <span class="identifier">T</span><span class="special">())</span> 
-    <span class="special">{}</span>
-    <span class="identifier">complex</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">re</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">im</span><span class="special">)</span> 
-      <span class="special">:</span> <span class="identifier">base_type</span><span class="special">(</span><span class="identifier">re</span><span class="special">,</span> <span class="identifier">im</span><span class="special">)</span> 
-    <span class="special">{}</span>
-
-    <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">real</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">{</span> <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">base_type</span><span class="special">::</span><span class="identifier">first</span><span class="special">;</span> <span class="special">}</span>
-    <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">imag</span><span class="special">()</span> <span class="keyword">const</span> <span class="special">{</span> <span class="keyword">return</span> <span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">base_type</span><span class="special">::</span><span class="identifier">second</span><span class="special">;</span> <span class="special">}</span>
-<span class="special">};</span>
-</pre>
-<p>
-          </p>
-<p>
-        </p>
-<p>
-          And here you can see the full code of the generator allowing to output
-          a complex number either as a pair of numbers (if the imaginary part is
-          non-zero) or as a single number (if the complex is a real number):
+          We will use the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code> type for this and all subsequent
+          related examples. And here you can see the full code of the generator allowing
+          to output a complex number either as a pair of numbers (if the imaginary
+          part is non-zero) or as a single number (if the complex is a real number):
         </p>
 <p>
           </p>
@@ -119,7 +91,7 @@
             
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
-<span class="keyword">bool</span> <span class="identifier">generate_complex</span><span class="special">(</span><span class="identifier">OutputIterator</span> <span class="identifier">sink</span><span class="special">,</span> <span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">c</span><span class="special">)</span>
+<span class="keyword">bool</span> <span class="identifier">generate_complex</span><span class="special">(</span><span class="identifier">OutputIterator</span> <span class="identifier">sink</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">c</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">eps</span><span class="special">;</span>
     <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
@@ -148,19 +120,23 @@
 <pre class="programlisting"><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">n</span>
 </pre>
 <p>
-          Remember, semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> are called
-          before the corresponding generator is invoked and they are expected to
-          provide the generator with the data to be used. The semantic action above
-          assigns the value to be generated (n) to the generator (actually, the attribute
-          of <code class="computeroutput"><span class="identifier">double_</span></code>) . <code class="computeroutput"><span class="identifier">_1</span></code> is a Phoenix placeholder for the attribute
-          of the generator the semantic action is attached to.
+          which passes <code class="computeroutput"><span class="identifier">n</span></code> to the first
+          element of the generator the semantic action is attacjed to. Remember,
+          semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> are called before
+          the corresponding generator is invoked and they are expected to provide
+          the generator with the data to be used. The semantic action above assigns
+          the value to be generated (<code class="computeroutput"><span class="identifier">n</span></code>)
+          to the generator (actually, the attribute of <code class="computeroutput"><span class="identifier">double_</span></code>).
+          <code class="computeroutput"><span class="identifier">_1</span></code> is a Phoenix placeholder
+          referring to the attribute of the generator the semantic action is attached
+          to.
         </p>
 <p>
           These semantic actions are easy to understand but have the unexpected side
           effect of being slightly less efficient than it could be. In addition they
           tend to make the formatting grammar less readable. We will see in one of
-          the next sections how it is possible to use built in features of <span class="emphasis"><em>Spirit.Karma</em></span>
-          to get rid of the semantic actions alltogether.
+          the next sections how it is possible to use other, builtin features of
+          <span class="emphasis"><em>Spirit.Karma</em></span> to get rid of the semantic actions alltogether.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

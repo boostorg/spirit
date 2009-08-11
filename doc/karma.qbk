@@ -23,7 +23,7 @@
 [import ../example/karma/reference.cpp]
 [include        karma/concepts.qbk]
 [include        karma/basics.qbk]
-[/include        karma/char.qbk]
+[include        karma/char.qbk]
 [/include        karma/string.qbk]
 [include        karma/numeric.qbk]
 [/include        karma/binary.qbk]
