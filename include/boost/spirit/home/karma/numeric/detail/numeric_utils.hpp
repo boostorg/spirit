@@ -632,9 +632,9 @@ namespace boost { namespace spirit { namespace karma {
         call (OutputIterator& sink, float n, Policies const& p = Policies())
         {
             int fpclass = (math::fpclassify)(n);
-            if (FP_NAN == fpclass)
+            if ((int)FP_NAN == fpclass)
                 return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
-            else if (FP_INFINITE == fpclass)
+            else if ((int)FP_INFINITE == fpclass)
                 return Policies::template inf<force_sign, CharEncoding, Tag>(sink, n);
             return call_n(sink, n, p);
         }
@@ -644,9 +644,9 @@ namespace boost { namespace spirit { namespace karma {
         call (OutputIterator& sink, double n, Policies const& p = Policies())
         {
             int fpclass = (math::fpclassify)(n);
-            if (FP_NAN == fpclass)
+            if ((int)FP_NAN == fpclass)
                 return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
-            else if (FP_INFINITE == fpclass)
+            else if ((int)FP_INFINITE == fpclass)
                 return Policies::template inf<force_sign, CharEncoding, Tag>(sink, n);
             return call_n(sink, n, p);
         }
@@ -656,9 +656,9 @@ namespace boost { namespace spirit { namespace karma {
         call (OutputIterator& sink, long double n, Policies const& p = Policies())
         {
             int fpclass = (math::fpclassify)(n);
-            if (FP_NAN == fpclass)
+            if ((int)FP_NAN == fpclass)
                 return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
-            else if (FP_INFINITE == fpclass)
+            else if ((int)FP_INFINITE == fpclass)
                 return Policies::template inf<force_sign, CharEncoding, Tag>(sink, n);
             return call_n(sink, n, p);
         }
