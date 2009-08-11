@@ -50,7 +50,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename Char, typename CharEncoding, typename Tag>
     bool string_compare(Char const* attr, Char const* lit, CharEncoding ce, Tag tag)
     {
-        Char ch_attr = spirit::char_class::convert<CharEncoding>::to(Tag(), *attr);
+        Char ch_attr = *attr;
         Char ch_lit = spirit::char_class::convert<CharEncoding>::to(Tag(), *lit);
 
         while (!!ch_lit && !!ch_attr)
@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             if (ch_attr != ch_lit)
                 return false;
 
-            ch_attr = spirit::char_class::convert<CharEncoding>::to(Tag(), *++attr);
+            ch_attr = *++attr;
             ch_lit = spirit::char_class::convert<CharEncoding>::to(Tag(), *++lit);
         }
 

@@ -165,8 +165,7 @@ namespace boost { namespace spirit { namespace karma
           , Attribute const& attr) const
         {
             // fail if attribute isn't matched my immediate literal
-            typedef spirit::char_class::convert<char_encoding> convert_type;
-            if (convert_type::to(Tag(), attr) != ch)
+            if (attr != ch)
                 return false;
 
             return karma::detail::generate_to(sink, ch) &&

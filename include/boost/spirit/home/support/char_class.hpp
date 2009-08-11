@@ -46,6 +46,8 @@ namespace boost { namespace spirit { namespace tag
     struct no_case {};
     struct lower {};
     struct upper {};
+    struct lowernum {};
+    struct uppernum {};
     struct ucs4 {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -132,6 +134,14 @@ namespace boost { namespace spirit { namespace char_class
 
         template <typename Char>
         static bool
+        is(tag::lowernum, Char ch)
+        {
+            return CharEncoding::islower(char_type(ch)) || 
+                   CharEncoding::isdigit(char_type(ch));
+        }
+
+        template <typename Char>
+        static bool
         is(tag::print, Char ch)
         {
             return CharEncoding::isprint(char_type(ch));
@@ -164,6 +174,14 @@ namespace boost { namespace spirit { namespace char_class
         is(tag::upper, Char ch)
         {
             return CharEncoding::isupper(char_type(ch));
+        }
+
+        template <typename Char>
+        static bool
+        is(tag::uppernum, Char ch)
+        {
+            return CharEncoding::isupper(char_type(ch)) || 
+                   CharEncoding::isdigit(char_type(ch));
         }
     };
 
@@ -248,6 +266,11 @@ namespace boost { namespace spirit { namespace char_class
             return "lower";
         }
 
+        static char const* is(tag::lowernum)
+        {
+            return "lowernum";
+        }
+
         static char const* is(tag::print)
         {
             return "print";
@@ -271,6 +294,11 @@ namespace boost { namespace spirit { namespace char_class
         static char const* is(tag::upper)
         {
             return "upper";
+        }
+
+        static char const* is(tag::uppernum)
+        {
+            return "uppernum";
         }
 
         static char const* is(tag::ucs4)

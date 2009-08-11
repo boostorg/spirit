@@ -95,12 +95,12 @@ namespace boost { namespace spirit
     typedef spirit::terminal<tag::charset::char_> char_type;                    \
     char_type const char_ = char_type();                                        \
                                                                                 \
-    inline void silence_unused_warnings__##char_() { (void) char_; }            \
+    inline void silence_unused_warnings_##char_() { (void) char_; }             \
                                                                                 \
     typedef spirit::terminal<tag::charset::string> string_type;                 \
     string_type const string = string_type();                                   \
                                                                                 \
-    inline void silence_unused_warnings__##string() { (void) string; }          \
+    inline void silence_unused_warnings_##string() { (void) string; }           \
     /***/
 
 #define BOOST_SPIRIT_CHAR_CODE(name, charset)                                   \
@@ -108,7 +108,7 @@ namespace boost { namespace spirit
         name##_type;                                                            \
     name##_type const name = name##_type();                                     \
                                                                                 \
-    inline void silence_unused_warnings__##name() { (void) name; }              \
+    inline void silence_unused_warnings_##name() { (void) name; }               \
     /***/
 
 #define BOOST_SPIRIT_DEFINE_CHAR_CODES(charset)                                 \
@@ -134,6 +134,8 @@ namespace boost { namespace spirit
         BOOST_SPIRIT_CHAR_CODE(no_case, spirit::char_encoding::charset)         \
         BOOST_SPIRIT_CHAR_CODE(lower, spirit::char_encoding::charset)           \
         BOOST_SPIRIT_CHAR_CODE(upper, spirit::char_encoding::charset)           \
+        BOOST_SPIRIT_CHAR_CODE(lowernum, spirit::char_encoding::charset)        \
+        BOOST_SPIRIT_CHAR_CODE(uppernum, spirit::char_encoding::charset)        \
     }}}                                                                         \
     /***/
 
