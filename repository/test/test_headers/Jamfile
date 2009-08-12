@@ -16,17 +16,17 @@ import print ;
 import sequence ;
 import feature ;
 
-project boost/spirit/test/test_headers 
+project boost/spirit/repository/test/test_headers 
     : requirements 
         <include>$(BOOST_ROOT) 
-        <include>../../../..
+        <include>../../../../..
         <toolset>gcc:<cxxflags>-ftemplate-depth-300
         <toolset>darwin:<cxxflags>-ftemplate-depth-300
     ;
 
 headers = 
 [ 
-    path.glob-tree ../../../../boost/spirit/include : *.hpp : classic* phoenix1* 
+    path.glob-tree ../../../../../boost/spirit/repository/include : *.hpp 
 ] ;
 
 for local file in $(headers)
@@ -36,7 +36,7 @@ for local file in $(headers)
             <define>BOOST_SPIRIT_HEADER_NAME=$(file)
             <dependency>$(file)
         : # test name
-            [ regex.replace [ path.relative-to ../../../../boost/spirit $(file) ] "/" "_" ] 
+            [ regex.replace [ path.relative-to ../../../../../boost/spirit/repository $(file) ] "/" "_" ] 
         ;
 }
 
