@@ -24,6 +24,8 @@ namespace boost { namespace spirit { namespace qi
     template <typename Subject>
     struct reference : parser<reference<Subject> >
     {
+        typedef Subject subject_type;
+
         reference(Subject& subject)
           : ref(subject) {}
 

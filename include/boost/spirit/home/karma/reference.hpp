@@ -26,6 +26,8 @@ namespace boost { namespace spirit { namespace karma
     {
         typedef mpl::int_<generator_properties::all_properties> properties;
 
+        typedef Subject subject_type;
+
         reference(Subject& subject)
           : ref(subject) {}
 
