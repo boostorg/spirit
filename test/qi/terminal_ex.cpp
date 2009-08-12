@@ -378,7 +378,7 @@ main()
         c = 0;
 #define MP5 ops(val(5) - val(3), 2, val(2))
         check_type_3<actor<phx::composite<phx::minus_eval, fusion::vector<value<int>, value<int> > > >, int, actor<value<int> > >(MP5);
-        BOOST_TEST(test_attr("++--**/", ops(val(5) - val(3), 2, val(2)) >> '/', c) && c == 6);
+        BOOST_TEST(test_attr("++--**/", MP5 >> '/', c) && c == 6);
     }
 
     return boost::report_errors();
