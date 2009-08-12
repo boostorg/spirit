@@ -68,33 +68,27 @@ namespace boost { namespace spirit
     };
 
     template <typename Context>
-    struct attributes_of;
-
-    template <typename Attributes, typename Locals>
-    struct attributes_of<context<Attributes, Locals> >
+    struct attributes_of
     {
-        typedef typename context<Attributes, Locals>::attributes_type type;
-    };
-
-    template <typename Attributes, typename Locals>
-    struct attributes_of<context<Attributes, Locals> const>
-    {
-        typedef typename context<Attributes, Locals>::attributes_type const type;
+        typedef typename Context::attributes_type type;
     };
 
     template <typename Context>
-    struct locals_of;
-
-    template <typename Attributes, typename Locals>
-    struct locals_of<context<Attributes, Locals> >
+    struct attributes_of<Context const>
     {
-        typedef typename context<Attributes, Locals>::locals_type type;
+        typedef typename Context::attributes_type const type;
     };
 
-    template <typename Attributes, typename Locals>
-    struct locals_of<context<Attributes, Locals> const>
+    template <typename Context>
+    struct locals_of
     {
-        typedef typename context<Attributes, Locals>::locals_type const type;
+        typedef typename Context::locals_type type;
+    };
+
+    template <typename Context>
+    struct locals_of<Context const>
+    {
+        typedef typename Context::locals_type const type;
     };
 
     template <int N>
