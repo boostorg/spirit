@@ -422,7 +422,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
           : sink(sink_)
         {}
         output_iterator(output_iterator const& rhs)
-          : sink(rhs.sink), base_iterator(rhs)
+          : base_iterator(rhs), sink(rhs.sink)
         {}
 
         output_iterator& operator*() { return *this; }
