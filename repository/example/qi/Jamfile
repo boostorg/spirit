@@ -6,9 +6,15 @@
 #   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #==============================================================================
 
-project spirit_v2_repository/example_qi ;
+project spirit_v2_repository/example_qi
+    : requirements
+        <toolset>gcc:<cxxflags>-ftemplate-depth-300
+        <toolset>darwin:<cxxflags>-ftemplate-depth-300
+    ;
 
 exe qi_confix : confix.cpp ;
 exe qi_distinct : distinct.cpp ;
 exe flush_multi_pass : flush_multi_pass.cpp ;
+exe calc1_sr : calc1_sr.cpp ;
+exe mini_xml2_sr : mini_xml2_sr.cpp ;
 

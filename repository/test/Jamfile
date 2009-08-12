@@ -24,6 +24,7 @@ import testing ;
     # run Qi repository tests
     [ run qi/confix.cpp                     : : : : qi_repo_confix ]
     [ run qi/distinct.cpp                   : : : : qi_repo_distinct ]
+    [ run qi/subrule.cpp                    : : : : qi_repo_subrule ]
 
     # run Karma repository tests
     [ run karma/confix.cpp                  : : : : karma_repo_confix ]

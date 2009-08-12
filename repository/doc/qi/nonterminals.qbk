@@ -6,11 +6,6 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Karma Components]
-
-[/include        karma/primitive_generators.qbk]
-[include        karma/directives.qbk]
-[/include        karma/nonterminals.qbk]
-[/include        karma/compound_generators.qbk]
-
+[section:nonterminal Qi Parser Non-terminals]
+[include        subrule.qbk]
 [endsect]
