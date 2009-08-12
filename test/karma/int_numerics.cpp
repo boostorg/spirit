@@ -154,7 +154,7 @@ main()
         BOOST_TEST(test("0", lit(0LL)));
 #endif
 
-        BOOST_TEST(test("0", lit(unsigned short(0))));
+        BOOST_TEST(test("0", lit((unsigned short)0)));
         BOOST_TEST(test("0", lit(0U)));
         BOOST_TEST(test("0", lit(0UL)));
 #ifdef BOOST_HAS_LONG_LONG
