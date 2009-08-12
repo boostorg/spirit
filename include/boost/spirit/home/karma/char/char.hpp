@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/support/char_set/basic_chset.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
@@ -45,6 +46,14 @@ namespace boost { namespace spirit
       , terminal_ex<
             tag::char_code<tag::char_, CharEncoding>    // enables char_('x'), char_("x")
           , fusion::vector1<A0>
+        >
+    > : mpl::true_ {};
+
+    template <typename CharEncoding, typename A0, typename A1>
+    struct use_terminal<karma::domain
+      , terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>    // enables char_('a','z')
+          , fusion::vector2<A0, A1>
         >
     > : mpl::true_ {};
 
@@ -106,9 +115,8 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
-            return 
-                karma::detail::generate_to(sink, attr, char_encoding(), Tag()) &&
-                karma::delimit_out(sink, d);       // always do post-delimiting
+            return karma::detail::generate_to(sink, attr, char_encoding(), Tag()) &&
+                   karma::delimit_out(sink, d);       // always do post-delimiting
         }
 
         // any_char has no attribute attached, it needs to have been
@@ -192,6 +200,144 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // char range generator
+    template <typename CharEncoding, typename Tag>
+    struct char_range
+      : primitive_generator<char_range<CharEncoding, Tag> >
+    {
+        typedef typename CharEncoding::char_type char_type;
+        typedef CharEncoding char_encoding;
+
+        char_range(char_type from, char_type to)
+          : from(spirit::char_class::convert<char_encoding>::to(Tag(), from))
+          , to(spirit::char_class::convert<char_encoding>::to(Tag(), to)) 
+        {}
+
+        // A char_('a', 'z') which has an associated attribute emits it only if 
+        // it matches the character range, otherwise it fails.
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const& attr) const
+        {
+            // fail if attribute doesn't belong to character range
+            if ((char_type(attr) < from) || (to < char_type(attr)))
+                return false;
+
+            return karma::detail::generate_to(sink, attr) &&
+                   karma::delimit_out(sink, d);    // always do post-delimiting
+        }
+
+        // A char_('a', 'z') without any associated attribute fails compiling
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator&, Context&, Delimiter const&
+          , unused_type) const
+        {
+            BOOST_SPIRIT_ASSERT_MSG(false
+              , char_range_not_usable_without_attribute, ());
+            return false;
+        }
+
+        template <typename CharParam, typename Context>
+        bool test(CharParam ch, Context&) const
+        {
+            return !(char_type(ch) < from) && !(to < char_type(ch));
+        }
+
+        template <typename Context>
+        info what(Context& /*context*/) const
+        {
+            info result("char-range", char_encoding::toucs4(from));
+            boost::get<std::string&>(result.value) += '-';
+            boost::get<std::string&>(result.value) += to_utf8(char_encoding::toucs4(to));
+            return result;
+        }
+
+        char_type from, to;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // character set generator
+    template <typename CharEncoding, typename Tag>
+    struct char_set
+      : primitive_generator<char_set<CharEncoding, Tag> >
+    {
+        typedef typename CharEncoding::char_type char_type;
+        typedef CharEncoding char_encoding;
+
+        template <typename String>
+        char_set(String const& str)
+        {
+            typedef typename traits::char_type_of<String>::type in_type;
+
+            BOOST_SPIRIT_ASSERT_MSG((
+                (sizeof(char_type) == sizeof(in_type))
+            ), cannot_convert_string, (String));
+
+            typedef spirit::char_class::convert<char_encoding> convert_type;
+
+            char_type const* definition =
+                (char_type const*)traits::get_c_string(str);
+            char_type ch = convert_type::to(Tag(), *definition++);
+            while (ch)
+            {
+                char_type next = convert_type::to(Tag(), *definition++);
+                if (next == '-')
+                {
+                    next = convert_type::to(Tag(), *definition++);
+                    if (next == 0)
+                    {
+                        chset.set(ch);
+                        chset.set('-');
+                        break;
+                    }
+                    chset.set(ch, next);
+                }
+                else
+                {
+                    chset.set(ch);
+                }
+                ch = next;
+            }
+        }
+
+        // A char_("a-z") which has an associated attribute emits it only if 
+        // it matches the character set, otherwise it fails.
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context&, Delimiter const& d
+          , Attribute const& attr) const
+        {
+            // fail if attribute doesn't belong to character set
+            if (!chset.test(char_type(attr)))
+                return false;
+
+            return karma::detail::generate_to(sink, attr) &&
+                   karma::delimit_out(sink, d);    // always do post-delimiting
+        }
+
+        // A char_("a-z") without any associated attribute fails compiling
+        template <typename OutputIterator, typename Context, typename Delimiter>
+        bool generate(OutputIterator&, Context&, Delimiter const&
+          , unused_type) const
+        {
+            BOOST_SPIRIT_ASSERT_MSG(false
+              , char_set_not_usable_without_attribute, ());
+            return false;
+        }
+
+        template <typename Context>
+        info what(Context& /*context*/) const
+        {
+            return info("char-set");
+        }
+
+        support::detail::basic_chset<char_type> chset;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -201,7 +347,6 @@ namespace boost { namespace spirit { namespace karma
         {
             static bool const lower =
                 has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-
             static bool const upper =
                 has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
@@ -250,7 +395,6 @@ namespace boost { namespace spirit { namespace karma
     {
         static bool const lower =
             has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
-
         static bool const upper =
             has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
@@ -277,16 +421,19 @@ namespace boost { namespace spirit { namespace karma
     {
         static bool const lower =
             has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
-
         static bool const upper =
             has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
-        typedef literal_char<
-            typename spirit::detail::get_encoding<
-                Modifiers, CharEncoding, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , false
-        > result_type;
+        typedef typename spirit::detail::get_encoding<
+            Modifiers, CharEncoding, lower || upper>::type encoding;
+        typedef typename detail::get_casetag<
+            Modifiers, lower || upper>::type tag;
+
+        typedef typename mpl::if_<
+            traits::is_string<A0>
+          , char_set<encoding, tag>
+          , literal_char<encoding, tag, false>
+        >::type result_type;
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
@@ -306,7 +453,6 @@ namespace boost { namespace spirit { namespace karma
     {
         static bool const lower =
             has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
-
         static bool const upper =
             has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
 
@@ -321,6 +467,34 @@ namespace boost { namespace spirit { namespace karma
         result_type operator()(Terminal const& term, unused_type) const
         {
             return result_type(fusion::at_c<0>(term.args)[0]);
+        }
+    };
+
+    // char_('a', 'z')
+    template <typename CharEncoding, typename Modifiers, typename A0, typename A1>
+    struct make_primitive<
+        terminal_ex<
+            tag::char_code<tag::char_, CharEncoding>
+          , fusion::vector2<A0, A1>
+        >
+      , Modifiers>
+    {
+        static bool const lower =
+            has_modifier<Modifiers, tag::char_code<tag::lower, CharEncoding> >::value;
+        static bool const upper =
+            has_modifier<Modifiers, tag::char_code<tag::upper, CharEncoding> >::value;
+
+        typedef char_range<
+            typename spirit::detail::get_encoding<
+                Modifiers, CharEncoding, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+        > result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, unused_type) const
+        {
+            return result_type(fusion::at_c<0>(term.args)
+              , fusion::at_c<1>(term.args));
         }
     };
 

@@ -11,10 +11,10 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/char/detail/range.hpp>
+#include <boost/spirit/home/support/char_set/range.hpp>
 #include <vector>
 
-namespace boost { namespace spirit { namespace qi { namespace detail
+namespace boost { namespace spirit { namespace support { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     //  range_run
@@ -52,5 +52,5 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     };
 }}}}
 
-#include <boost/spirit/home/qi/char/detail/range_run_impl.hpp>
+#include <boost/spirit/home/support/char_set/range_run_impl.hpp>
 #endif

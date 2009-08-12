@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-namespace boost { namespace spirit { namespace qi { namespace detail
+namespace boost { namespace spirit { namespace support { namespace detail
 {
     ///////////////////////////////////////////////////////////////////////////
     //  A closed range (first, last)

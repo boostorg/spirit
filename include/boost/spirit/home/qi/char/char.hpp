@@ -15,9 +15,9 @@
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
+#include <boost/spirit/home/support/char_set/basic_chset.hpp>
 #include <boost/spirit/home/qi/char/char_parser.hpp>
 #include <boost/spirit/home/qi/char/char_class.hpp>
-#include <boost/spirit/home/qi/char/detail/basic_chset.hpp>
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -291,7 +291,7 @@ namespace boost { namespace spirit { namespace qi
             return info("char-set");
         }
 
-        detail::basic_chset<char_type> chset;
+        support::detail::basic_chset<char_type> chset;
     };
 
     template <typename CharEncoding>
@@ -350,7 +350,7 @@ namespace boost { namespace spirit { namespace qi
             return info("no-case-char-set");
         }
 
-        detail::basic_chset<char_type> chset;
+        support::detail::basic_chset<char_type> chset;
     };
 
     ///////////////////////////////////////////////////////////////////////////

@@ -77,8 +77,8 @@ namespace boost { namespace spirit { namespace karma
 
         // char_class shouldn't be used without any associated attribute
         template <typename OutputIterator, typename Context, typename Delimiter>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d, 
-            unused_type const&)
+        static bool generate(OutputIterator&, Context&, Delimiter const&
+          , unused_type const&)
         {
             BOOST_SPIRIT_ASSERT_MSG(false
               , char_class_not_usable_without_attribute, ());
