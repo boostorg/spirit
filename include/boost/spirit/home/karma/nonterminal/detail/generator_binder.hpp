@@ -11,16 +11,8 @@
 #pragma once
 #endif
 
-#include <utility>
-#include <boost/type_traits/remove_reference.hpp>
-#include <boost/fusion/include/value_at.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/deref.hpp>
-#include <boost/mpl/end.hpp>
-#include <boost/mpl/find_if.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
@@ -47,7 +39,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct generator_binder<Generator, mpl::true_>
     {
         generator_binder(Generator const& g)
-          : g(g) {};
+          : g(g) {}
 
         template <typename OutputIterator, typename Delimiter, typename Context>
         bool operator()(OutputIterator& sink, Context& context
@@ -67,21 +59,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         return generator_binder<Generator, Auto>(g);
     }
-
-    template <typename Types, typename Pred, typename Default>
-    struct extract_param
-    {
-        typedef typename mpl::find_if<Types, Pred>::type pos;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<pos, typename mpl::end<Types>::type>
-              , mpl::identity<Default>
-              , mpl::deref<pos>
-            >::type
-        type;
-    };
-
 }}}}
 
 #endif

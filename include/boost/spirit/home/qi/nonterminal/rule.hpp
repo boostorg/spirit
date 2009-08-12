@@ -13,14 +13,12 @@
 
 #include <boost/assert.hpp>
 #include <boost/function.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/function_types/result_type.hpp>
-#include <boost/function_types/parameter_types.hpp>
-#include <boost/function_types/is_function.hpp>
-#include <boost/type_traits/remove_reference.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/type_traits/add_reference.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/make_vector.hpp>
 #include <boost/fusion/include/cons.hpp>
 #include <boost/fusion/include/as_list.hpp>
@@ -31,8 +29,10 @@
 #include <boost/spirit/home/support/context.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/support/nonterminal/extract_param.hpp>
 #include <boost/spirit/home/support/nonterminal/locals.hpp>
 #include <boost/spirit/home/qi/reference.hpp>
+#include <boost/spirit/home/qi/nonterminal/detail/parameterized.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/parser_binder.hpp>
 
 namespace boost { namespace spirit { namespace qi
@@ -54,35 +54,6 @@ namespace boost { namespace spirit { namespace qi
 
     using spirit::info;
     using spirit::locals;
-
-    template <typename Rule, typename Params>
-    struct parameterized_rule : parser<parameterized_rule<Rule, Params> >
-    {
-        parameterized_rule(Rule const& rule, Params const& params)
-          : ref(rule), params(params) {}
-
-        template <typename Context, typename Iterator>
-        struct attribute : Rule::template attribute<Context, Iterator> {};
-
-        template <typename Iterator, typename Context
-          , typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr) const
-        {
-            // We pass the additional params argument to parse
-            return ref.get().parse(first, last, context, skipper, attr, params);
-        }
-
-        template <typename Context>
-        info what(Context& context) const
-        {
-            return ref.get().what(context);
-        }
-
-        boost::reference_wrapper<Rule const> ref;
-        Params params;
-    };
 
     template <
         typename Iterator
@@ -107,57 +78,33 @@ namespace boost { namespace spirit { namespace qi
         typedef mpl::vector<T1, T2, T3> template_params;
 
         // locals_type is a sequence of types to be used as local variables
-        typedef typename fusion::result_of::as_vector<
-            typename detail::extract_param<
-                    template_params
-                  , spirit::detail::is_locals<mpl::_>
-                  , locals<>
-                >::type
-            >::type
+        typedef typename
+            spirit::detail::extract_locals<template_params>::type
         locals_type;
 
         // The skip-parser type
         typedef typename
-            result_of::compile<
-                qi::domain
-              , typename detail::extract_param<
-                    template_params
-                  , traits::matches<qi::domain, mpl::_>
-                  , unused_type
-                >::type
-            >::type
+            spirit::detail::extract_component<
+                qi::domain, template_params>::type
         skipper_type;
 
         typedef typename
-            detail::extract_param<
-                template_params
-              , function_types::is_function<mpl::_>
-              , void()
-            >::type
+            spirit::detail::extract_sig<template_params>::type
         sig_type;
-
-        typedef typename function_types::result_type<sig_type>::type attr_type_;
 
         // This is the rule's attribute type
         typedef typename
-            mpl::if_<
-                is_same<attr_type_, void>
-              , unused_type
-              , attr_type_
-            >::type
+            spirit::detail::attr_from_sig<sig_type>::type
         attr_type;
         typedef typename add_reference<attr_type>::type attr_reference_type;
 
         // parameter_types is a sequence of types passed as parameters to the rule
         typedef typename
-            function_types::parameter_types<sig_type>::type
-        params_;
-
-        typedef typename
-            fusion::result_of::as_list<params_>::type
+            spirit::detail::params_from_sig<sig_type>::type
         parameter_types;
 
-        static size_t const params_size = mpl::size<params_>::value;
+        static size_t const params_size =
+            fusion::result_of::size<parameter_types>::type::value;
 
         typedef context<
             fusion::cons<attr_reference_type, parameter_types>
@@ -268,6 +215,10 @@ namespace boost { namespace spirit { namespace qi
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 typename make_attribute::type attr_ = make_attribute::call(attr);
+
+                // If you are seeing a compilation error here, you are probably
+                // trying to use a rule or a grammar which has inherited
+                // attributes, without passing values for them.
                 context_type context(attr_);
 
                 // If you are seeing a compilation error here stating that the 
@@ -293,6 +244,10 @@ namespace boost { namespace spirit { namespace qi
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 typename make_attribute::type attr_ = make_attribute::call(attr);
+
+                // If you are seeing a compilation error here, you are probably
+                // trying to use a rule or a grammar which has inherited
+                // attributes, passing values of incompatible types for them.
                 context_type context(attr_, params, caller_context);
 
                 // If you are seeing a compilation error here stating that the 
@@ -325,8 +280,8 @@ namespace boost { namespace spirit { namespace qi
         }
 
         // bring in the operator() overloads
-        rule const& get_rule() const { return *this; }
-        typedef this_type rule_type;
+        rule const& get_parameterized_subject() const { return *this; }
+        typedef rule parameterized_subject_type;
         #include <boost/spirit/home/qi/nonterminal/detail/fcall.hpp>
 
         std::string name_;

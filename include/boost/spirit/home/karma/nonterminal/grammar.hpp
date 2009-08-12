@@ -83,10 +83,9 @@ namespace boost { namespace spirit { namespace karma
         }
 
         // bring in the operator() overloads
-        start_type const& get_rule() const
+        start_type const& get_parameterized_subject() const
         { return this->proto_base().child0.ref.get(); }
-
-        typedef start_type rule_type;
+        typedef start_type parameterized_subject_type;
         #include <boost/spirit/home/karma/nonterminal/detail/fcall.hpp>
 
         std::string name_;

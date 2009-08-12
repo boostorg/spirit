@@ -11,16 +11,8 @@
 #pragma once
 #endif
 
-#include <utility>
-#include <boost/type_traits/remove_reference.hpp>
-#include <boost/fusion/include/value_at.hpp>
 #include <boost/fusion/include/at.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/deref.hpp>
-#include <boost/mpl/end.hpp>
-#include <boost/mpl/find_if.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
@@ -29,7 +21,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     struct parser_binder
     {
         parser_binder(Parser const& p)
-          : p(p) {};
+          : p(p) {}
 
         template <typename Iterator, typename Skipper, typename Context>
         bool operator()(
@@ -39,6 +31,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // If Auto is false, the component's attribute is unused.
             return p.parse(first, last, context, skipper, unused);
         }
+
         Parser p;
     };
 
@@ -47,7 +40,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     struct parser_binder<Parser, mpl::true_>
     {
         parser_binder(Parser const& p)
-          : p(p) {};
+          : p(p) {}
 
         template <typename Iterator, typename Skipper, typename Context>
         bool operator()(
@@ -58,6 +51,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return p.parse(first, last, context, skipper
                 , fusion::at_c<0>(context.attributes));
         }
+
         Parser p;
     };
 
@@ -67,20 +61,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     {
         return parser_binder<Parser, Auto>(p);
     }
-
-    template <typename Types, typename Pred, typename Default>
-    struct extract_param
-    {
-        typedef typename mpl::find_if<Types, Pred>::type pos;
-
-        typedef typename
-            mpl::eval_if<
-                is_same<pos, typename mpl::end<Types>::type>
-              , mpl::identity<Default>
-              , mpl::deref<pos>
-            >::type
-        type;
-    };
 }}}}
 
 #endif

@@ -28,22 +28,21 @@
     typename lazy_enable_if_c<
         (params_size == N)
       , proto::terminal<
-            parameterized_rule<rule_type
-          , fusion::vector<BOOST_PP_ENUM_PARAMS(N, A)> >
+            spirit::karma::parameterized_nonterminal<
+                parameterized_subject_type
+              , fusion::vector<BOOST_PP_ENUM_PARAMS(N, A)> >
         >
     >::type
     operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& f)) const
     {
         typedef fusion::vector<BOOST_PP_ENUM_PARAMS(N, A)> vector_type;
-        typedef parameterized_rule<
-            rule_type
-          , vector_type>
-        parameterized_rule;
-        typedef typename proto::terminal<parameterized_rule>::type result_type;
+        typedef spirit::karma::parameterized_nonterminal<
+            parameterized_subject_type, vector_type> parameterized_type;
+        typedef typename proto::terminal<parameterized_type>::type result_type;
 
         return result_type::make(
-            parameterized_rule(
-                this->get_rule()
+            parameterized_type(
+                this->get_parameterized_subject()
               , fusion::make_vector(BOOST_PP_ENUM_PARAMS(N, f)))
         );
     }
