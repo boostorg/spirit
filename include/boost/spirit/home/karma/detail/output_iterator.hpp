@@ -18,6 +18,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/mpl/if.hpp>
 
+#include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/detail/ostream_iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 

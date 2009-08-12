@@ -18,6 +18,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 
 #include <boost/type_traits/add_const.hpp>
 

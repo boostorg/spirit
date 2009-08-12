@@ -21,6 +21,8 @@
 #include <boost/fusion/include/any.hpp>
 #include <boost/fusion/include/mpl.hpp>
 #include <boost/fusion/include/for_each.hpp>
+#include <boost/mpl/accumulate.hpp>
+#include <boost/mpl/bitor.hpp>
 
 namespace boost { namespace spirit
 {

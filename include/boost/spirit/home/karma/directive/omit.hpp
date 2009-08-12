@@ -16,6 +16,7 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 
 namespace boost { namespace spirit
 {
