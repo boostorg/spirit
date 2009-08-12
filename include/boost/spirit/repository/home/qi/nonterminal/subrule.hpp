@@ -16,6 +16,7 @@
 #include <boost/spirit/home/qi/meta_compiler.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/reference.hpp>
+#include <boost/spirit/home/qi/nonterminal/detail/parameterized.hpp>
 #include <boost/spirit/home/qi/nonterminal/detail/parser_binder.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
@@ -36,7 +37,9 @@
 #include <boost/fusion/include/has_key.hpp>
 #include <boost/fusion/include/join.hpp>
 #include <boost/fusion/include/make_map.hpp>
+#include <boost/fusion/include/make_vector.hpp>
 #include <boost/fusion/include/size.hpp>
+#include <boost/fusion/include/vector.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/int.hpp>
