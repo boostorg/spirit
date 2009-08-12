@@ -61,6 +61,11 @@ See here for more information about __karma_char__.
                                                          if an attribute is supplied it must match]]
     [[`char_("c")`]         [`Ch`]                      [Generates a single char string literal, `c`, 
                                                          if an attribute is supplied it must match]]
+    [[`char_(ch, ch2)`]     [`Ch`]                      [Generates a single char string literal, `c`, 
+                                                         if `c` belongs to the chracter range from
+                                                         `ch` to `ch2`]]
+    [[`char_(charset)`]     [`Ch`]                      [Generates a single char string literal, `c`, 
+                                                         if `c` belongs to the chracter set `charset`]]
 
     [[[karma_char_class `alnum`]]   [`Ch`]              [Generates the character supplied as the attribute
                                                          if it satisfies the concept of `std::isalnum` in 

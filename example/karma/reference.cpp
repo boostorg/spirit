@@ -248,6 +248,29 @@ main()
     }
 
     {
+        //[reference_karma_using_declarations_char
+        using boost::spirit::karma::generate;
+        using boost::spirit::ascii::char_;
+        //]
+
+        //[reference_karma_char
+        test_generator("A", 'A');
+        test_generator("A", lit('A'));
+
+        test_generator_attr("a", char_, 'a');
+        test_generator("A", char_('A'));
+        test_generator_attr("A", char_('A'), 'A');
+        test_generator_attr("", char_('A'), 'B');         // fails (as 'A' != 'B')
+
+        test_generator_attr("A", char_('A', 'Z'), 'A');
+        test_generator_attr("", char_('A', 'Z'), 'a');    // fails (as 'a' does not belong to 'A'...'Z')
+
+        test_generator_attr("k", char_("a-z0-9"), 'k');
+        test_generator_attr("", char_("a-z0-9"), 'A');    // fails (as 'A' does not belong to "a-z0-9")
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_char_class
         using boost::spirit::karma::generate;
         using boost::spirit::karma::alpha;

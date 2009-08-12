@@ -28,17 +28,21 @@ The signed integer number generators described in this section are:
     [[Expression]          [Attribute]     [Description]]
     [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `short`,
                                             `int`, `long`, or `long long`]]
-    [[`short_`]            [`short`]       [Generate a short integer]]
-    [[`short_(num)`]       [`short`]       [Generate `num` as a short integer, 
+    [[`short_`]            [`short`]       [Generate a `short int` as given by the
+                                            mandatory attribute]]
+    [[`short_(num)`]       [`short`]       [Generate `num` as a `short int`, 
                                             if an attribute is supplied it must match]]
-    [[`int_`]              [`int`]         [Generate an int]]
-    [[`int_(num)`]         [`int`]         [Generate `num` as an int, 
+    [[`int_`]              [`int`]         [Generate an `int` as given by the
+                                            mandatory attribute]]
+    [[`int_(num)`]         [`int`]         [Generate `num` as an `int`, 
                                             if an attribute is supplied it must match]]
-    [[`long_`]             [`long`]        [Generate a long integer]]
-    [[`long_(num)`]        [`long`]        [Generate `num` as long integer, 
+    [[`long_`]             [`long`]        [Generate a `long int` as given by the
+                                            mandatory attribute]]
+    [[`long_(num)`]        [`long`]        [Generate `num` as `long int`, 
                                             if an attribute is supplied it must match]]
-    [[`long_long`]         [`long long`]   [Generate a long long]]
-    [[`long_long(num)`]    [`long long`]   [Generate `num` as an long long, 
+    [[`long_long`]         [`long long`]   [Generate a `long long` as given by the
+                                            mandatory attribute]]
+    [[`long_long(num)`]    [`long long`]   [Generate `num` as an `long long`, 
                                             if an attribute is supplied it must match]]
     [
 [``int_generator<

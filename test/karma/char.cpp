@@ -53,8 +53,17 @@ main()
 
         BOOST_TEST(test("x", char_("x")));
 
+        BOOST_TEST(test("a", char_('a', 'z'), 'a'));
+        BOOST_TEST(test("b", char_('a', 'z'), 'b'));
+        BOOST_TEST(!test("", char_('a', 'z'), 'A'));
+
+        BOOST_TEST(test("a", char_("a-z"), 'a'));
+        BOOST_TEST(test("b", char_("a-z"), 'b'));
+        BOOST_TEST(!test("", char_("a-z"), 'A'));
+
 #if defined(KARMA_FAIL_COMPILATION)
         BOOST_TEST(test("x", char_));           // anychar without a parameter doesn't make any sense
+        BOOST_TEST(test("", char_('a', 'z')));  // char sets without attribute neither
 #endif
     }
 
