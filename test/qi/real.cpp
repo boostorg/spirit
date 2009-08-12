@@ -100,7 +100,7 @@ template <typename T>
 bool
 compare(T n, double expected)
 {
-    T const eps = std::numeric_limits<T>::epsilon();
+    T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10);
     T delta = n - expected;
     return (delta >= -eps) && (delta <= eps);
 }
