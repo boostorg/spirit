@@ -38,6 +38,11 @@ namespace boost { namespace spirit
 
     namespace tag
     {
+        // Normally, we use proto tags as-is to distinguish operators.
+        // The special case is proto::tag::subscript. Spirit uses this
+        // as either sementic actions or directives. To distinguish between
+        // the two, we use these special tags below.
+
         struct directive;
         struct action;
     }
