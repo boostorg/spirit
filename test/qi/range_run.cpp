@@ -23,8 +23,8 @@ void acid_test()
         return; // don't do this test if we have a Char that's very big.
                 // the smaller chars will suffice for testing.
 
-    using boost::spirit::qi::detail::range_run;
-    using boost::spirit::qi::detail::range;
+    using boost::spirit::support::detail::range_run;
+    using boost::spirit::support::detail::range;
 
     typedef boost::integer_traits<Char> integer_traits;
     Char const const_min = integer_traits::const_min;
@@ -69,8 +69,8 @@ void acid_test()
 int
 main()
 {
-    using boost::spirit::qi::detail::range_run;
-    using boost::spirit::qi::detail::range;
+    using boost::spirit::support::detail::range_run;
+    using boost::spirit::support::detail::range;
 
     {
         range_run<char> rr;
