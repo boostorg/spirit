@@ -65,7 +65,7 @@ using a simple: `ol["Some text"]` (which results in `<ol>Some text</ol>`).
 
 [heading Header]
 
-    // forwards to <boost/spirit/repository/home/karma/confix.hpp>
+    // forwards to <boost/spirit/repository/home/karma/directive/confix.hpp>
     #include <boost/spirit/repository/include/karma_confix.hpp>
 
 [heading Synopsis]

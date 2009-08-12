@@ -58,6 +58,7 @@ Now, the comment parsers can be written as
 
 [heading Header]
 
+    // forwards to <boost/spirit/repository/home/qi/directive/confix.hpp>
     #include <boost/spirit/repository/include/qi_confix.hpp>
 
 [heading Synopsis]

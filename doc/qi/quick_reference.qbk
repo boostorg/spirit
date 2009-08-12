@@ -269,7 +269,7 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 
 [variablelist Notation
     [[`RT`]                     [Synthesized attribute. The rule or grammar's return type.]]
-    [[`Arg1`, `Arg2`, `ArgN`]   [Inherited attributes. Zero or more or arguments.]]
+    [[`Arg1`, `Arg2`, `ArgN`]   [Inherited attributes. Zero or more arguments.]]
     [[`L1`, `L2`, `LN`]         [Zero or more local variables.]]
     [[`r, r2`]                  [Rules]]
     [[`g`]                      [A grammar]]

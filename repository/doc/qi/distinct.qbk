@@ -59,7 +59,7 @@ above.
 
 [heading Header]
 
-    // forwards to <boost/spirit/repository/home/qi/distinct.hpp>
+    // forwards to <boost/spirit/repository/home/qi/directive/distinct.hpp>
     #include <boost/spirit/repository/include/qi_distinct.hpp>
 
 [heading Synopsis]

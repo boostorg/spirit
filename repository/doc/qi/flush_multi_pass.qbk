@@ -28,7 +28,7 @@ any input (very much like `eps`).
 
 [heading Header]
 
-    // forwards to <boost/spirit/repository/home/qi/flush_multi_pass.hpp>
+    // forwards to <boost/spirit/repository/home/qi/primitive/flush_multi_pass.hpp>
     #include <boost/spirit/repository/include/qi_flush_multi_pass.hpp>
 
 [heading Synopsis]
