@@ -29,7 +29,7 @@ The expression above links `F` to the generator, `G`.
 Semantic actions in __qi__ are invoked after a parser successfully 
 matches its input and the matched value is passed into the
 semantic action. In __karma__ the opposite happens. Semantic actions are called
-before its associated generator is invoked. They provide the data to be 
+before its associated generator is invoked. They may provide the data to be 
 generated to the generator.
 
 The function/function object signature depends on the type of the generator to
@@ -42,12 +42,22 @@ declared as:
 where the function is expected to initialize the parameter `n` with the value 
 to generate.
 
+[important  Generally, and more formally, the semantic action `F` attached to 
+            a generator `G` needs to take a reference to the generators 
+            attribute type as its first parameter. For more information about 
+            generatpor attributes please see the section __karma_attribute__.
+
+            In the example above the function F takes a `double&` as its first
+            parameter as the attribute of the `double_` generator happens to be
+            a `double`.
+]
+
 There are actually 2 more arguments being passed (the generator context and a
 reference to a boolean 'pass' parameter). We don't need these, for now, but 
 we'll see more on these other arguments later. __karma__ allows us to bind a 
 single argument function, like above. The other arguments are simply ignored.
 
-We present various ways to attach semantic actions:
+In the follwoing example we present various ways to attach semantic actions:
 
 * Using plain function pointer
 * Using simple function object
@@ -64,7 +74,8 @@ Let's assume we have:
 Take note that with function objects, we need to have an `operator()` with 3
 arguments. Since we don't care about the other two, we can use `unused_type` for
 these. We'll see more of `unused_type` elsewhere. Get used to it. `unused_type`
-is a Spirit supplied support class.
+is a Spirit supplied support class. Most of the time it stands for 'I don't 
+care, just use the appropriate default'.
 
 All following examples generate outputs of the form:
 
@@ -77,7 +88,7 @@ The first example shows how to attach a plain function:
 [karma_tutorial_attach_actions1]
 
 What's new? Well `int_` is the sibbling of `double_`. I'm sure you can guess
-what this generator does.
+what this generator does and what type of attribute it expects.
 
 The next example shows how to attach a simple function object:
 

@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -239,7 +239,7 @@ The signed integer number generators described in this section are:
 
 [table
     [[Expression]          [Attribute]            [Description]]
-    [[`lit(num)`]          [`Unused`]             [Generates `num`, where `num` can be a `unsigned short`,
+    [[`lit(num)`]          [__unused__]           [Generates `num`, where `num` can be a `unsigned short`,
                                                    `unsigned int`, `unsigned long`, or `unsigned long long`]]
     [[`ushort`]            [`unsigned short`]     [Generate a short integer]]
     [[`ushort(num)`]       [`unsigned short`]     [Generate `num` as a short integer, 
@@ -264,6 +264,21 @@ The signed integer number generators described in this section are:
 >()(num)``]
                            [`Num`]                [Generate an unsigned `num` as a `Num`, 
                                                    if an attribute is supplied it must match]]
+    [[`bin`]               [`unsigned int`]       [Generate an unsigned integer in binary 
+                                                   (base 2) representation]]
+    [[`bin(num)`]          [`unsigned int`]       [Generate `num` as an unsigned integer in
+                                                   binary (base 2) representation, if an attribute is 
+                                                   supplied it must match]]
+    [[`oct`]               [`unsigned int`]       [Generate an unsigned integer in octal (base 8) 
+                                                   representation]]
+    [[`oct(num)`]          [`unsigned int`]       [Generate `num` as an unsigned integer in
+                                                   octal (base 8) representation, if an attribute is 
+                                                   supplied it must match]]
+    [[`hex`]               [`unsigned int`]       [Generate an unsigned integer in hexadecimal 
+                                                   (base 16) representation]]
+    [[`hex(num)`]          [`unsigned int`]       [Generate `num` as an unsigned integer in
+                                                   hexadecimal (base 16) representation, if an 
+                                                   attribute is supplied it must match]]
 ]
 
 These can be used to flexibly format any unsigned integer number of any 
@@ -312,6 +327,27 @@ ulong(num)
 ulong_long(num)``]      [Generate the unsigned integer provided by the 
                          immediate literal value the generator is initialized 
                          from using the default formatting (radix is 10). If 
+                         this generator has an associated attribute it succeeds 
+                         only as long as the attribute is equal to the 
+                         immediate literal (except if the underlying output 
+                         stream reports an error). Otherwise this generator 
+                         fails and does not generate any output.]]
+    [
+[``bin
+oct
+hex``]                  [Generate the unsigned integer provided by a mandatory 
+                         attribute using the default formatting and the 
+                         corresponding radix (`bin`: radix is 2, `oct`: radix is 8,
+                         `hex`: radix is 16). This generator never fails (except 
+                         if the underlying output stream reports an error).]]
+    [
+[``bin(num)
+oct(num)
+hex(num)``]             [Generate the unsigned integer provided by the 
+                         immediate literal value the generator is initialized 
+                         from using the default formatting and the 
+                         corresponding radix (`bin`: radix is 2, `oct`: 
+                         radix is 8, `hex`: radix is 16). If 
                          this generator has an associated attribute it succeeds 
                          only as long as the attribute is equal to the 
                          immediate literal (except if the underlying output 
@@ -390,6 +426,19 @@ If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
     [[`ulong_long`]     [`unsigned long long`, attribute is mandatory 
                          (otherwise compilation will fail)]]
     [[`ulong_long(num)`][`unsigned long long`, attribute is optional, if it is 
+                         supplied, the generator compares the attribute with 
+                         `num` and succeeds only if both are equal, failing 
+                         otherwise.]]
+
+    [
+[``bin
+oct
+hex``]                  [`unsigned int`, attribute is mandatory 
+                         (otherwise compilation will fail)]]
+    [
+[``bin(num)
+oct(num)
+hex(num)``]             [`unsigned int`, attribute is optional, if it is 
                          supplied, the generator compares the attribute with 
                          `num` and succeeds only if both are equal, failing 
                          otherwise.]]

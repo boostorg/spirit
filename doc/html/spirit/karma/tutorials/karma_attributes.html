@@ -28,7 +28,7 @@
         Generator Attributes</a>
 </h4></div></div></div>
 <a name="spirit.karma.tutorials.karma_attributes.attributes_of_primitive_generators"></a><h6>
-<a name="id1183418"></a>
+<a name="id1187865"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.attributes_of_primitive_generators">Attributes
           of Primitive Generators</a>
         </h6>
@@ -59,7 +59,7 @@
 <span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">,</span> <span class="number">1</span><span class="special">);</span>
 </pre>
 <a name="spirit.karma.tutorials.karma_attributes.attributes_of_compound_generators"></a><h6>
-<a name="id1183612"></a>
+<a name="id1188060"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.attributes_of_compound_generators">Attributes
           of Compound Generators</a>
         </h6>
@@ -118,7 +118,7 @@
           Attribute Rules</a>.
         </p>
 <a name="spirit.karma.tutorials.karma_attributes.the_attribute_of_sequence_generators"></a><h6>
-<a name="id1183957"></a>
+<a name="id1188404"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.the_attribute_of_sequence_generators">The
           Attribute of Sequence Generators</a>
         </h6>
@@ -140,7 +140,7 @@
           the attribute of the second <code class="computeroutput"><span class="identifier">double_</span></code>
           (i.e. convertible to a <code class="computeroutput"><span class="keyword">double</span></code>
           as well). If we assume to have an instance of a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></code>, we can directly use the expression
-          above:
+          above to generate output for it:
         </p>
 <pre class="programlisting"><span class="comment">// the following generates: 1.0 2.0
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
@@ -184,29 +184,58 @@
           </p>
 </td></tr>
 </table></div>
+<a name="spirit.karma.tutorials.karma_attributes.the_attribute_of_alternative_generators"></a><h6>
+<a name="id1188822"></a>
+          <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.the_attribute_of_alternative_generators">The
+          Attribute of Alternative Generators</a>
+        </h6>
+<p>
+          Alternative generators are about - well - alternatives. In order to store
+          possibly different result (attribute) types from the different alternatives
+          we use the data type <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
+          The main attribute propagation rule of these generators is
+        </p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+</pre>
+<p>
+          where the <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;&gt;</span></code>
+          is again a placeholder for the concept of a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
+          Any other data type exposing the required concepts can be used instead
+          (for more information about attribute compatibility and attribute concepts
+          see the section Compatible Attributes). Alternatives have a second very
+          important attribute propagation rule:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
+</pre>
+<p>
+          which often allow to significantly simplify things. If all sub expressions
+          of a <span class="emphasis"><em>Spirit.Karma</em></span> alternative expose the same attribute
+          type, the overall alternative will expose exactly the attribute type as
+          well. We will apply this rule later for our complex number generators.
+        </p>
 <a name="spirit.karma.tutorials.karma_attributes.more_about_attributes_of_compound_generators"></a><h6>
-<a name="id1184376"></a>
+<a name="id1189018"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.more_about_attributes_of_compound_generators">More
           About Attributes of Compound Generators</a>
         </h6>
 <p>
           While generating output it is often desirable to combine some constant
           elements with variable parts. For instance, if we go back to our example
-          of formatting a complex number, we need to write it as <code class="computeroutput"><span class="special">(</span><span class="identifier">re</span><span class="special">,</span> <span class="identifier">im</span><span class="special">)</span></code>,
-          where <code class="computeroutput"><span class="identifier">re</span></code> and <code class="computeroutput"><span class="identifier">im</span></code> are the variables representing the
-          real and imaginary parts of our complex number. As we have already seen,
-          this can be achieved by writing
+          of formatting a complex number, we need to write it as <code class="computeroutput"><span class="special">(</span><span class="identifier">real</span><span class="special">,</span> <span class="identifier">imag</span><span class="special">)</span></code>,
+          where <code class="computeroutput"><span class="identifier">real</span></code> and <code class="computeroutput"><span class="identifier">imag</span> </code> are the variables representing
+          the real and imaginary parts of our complex number. As we have already
+          seen, this can be achieved by writing
         </p>
 <pre class="programlisting"><span class="char">'('</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="char">')'</span>
 </pre>
 <p>
           Fortunately, literals (such as <code class="computeroutput"><span class="char">'('</span></code>
-          and <code class="computeroutput"><span class="string">", "</span></code>) do not
+          and <code class="computeroutput"><span class="string">", "</span></code>) do <span class="emphasis"><em>not</em></span>
           expose any attribute (well actually, they do expose the special type <code class="computeroutput"><span class="identifier">unused_type</span></code>, but in this context <code class="computeroutput"><span class="identifier">unused_type</span></code> is interpreted as if the
           generator does not expose any attribute at all). It is very important to
           understand that the literals don't consume any of the elements of a fusion
-          sequence passed to this generator sequence. The following example shows
-          this:
+          sequence passed to this generator sequence. As said, thez just don't expose
+          any attribute and don't consume any data. The following example shows this:
         </p>
 <pre class="programlisting"><span class="comment">// the following generates: (1.0, 2.0)
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span><span class="special">;</span>
@@ -216,12 +245,18 @@
 </span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_pair</span><span class="special">(</span><span class="number">1.0</span><span class="special">,</span> <span class="number">2.0</span><span class="special">));</span>                 <span class="comment">// data to use as the attribute 
 </span></pre>
 <p>
+          where the first element of the pair passed in as the data to generate is
+          still associated with the first <code class="computeroutput"><span class="identifier">double_</span></code>,
+          and the second element is associated with the second <code class="computeroutput"><span class="identifier">double_</span></code>
+          generator.
+        </p>
+<p>
           This behavior should be familiar as it conforms to the way other output
           formatting libraries such as <code class="computeroutput"><span class="identifier">printf</span></code>
           or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">format</span></code> are handling their variable parts.
           In this context you can think about <span class="emphasis"><em>Spirit.Karma</em></span>'s
           primitive generators (such as the <code class="computeroutput"><span class="identifier">double_</span></code>
-          above) as of being placeholders for the attribute values to print.
+          above) as of being typesafe placeholders for the attribute values to print.
         </p>
 <div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
@@ -248,7 +283,7 @@
 </table></div>
 <p>
           Let's take a look from a more formal perspective. The sequence attribute
-          propagation rules define special behavior if generators exposing <code class="computeroutput"><span class="identifier">unused_type</span></code> as their attribute are involved:
+          propagation rules define a special behavior if generators exposing <code class="computeroutput"><span class="identifier">unused_type</span></code> as their attribute are involved:
         </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 </pre>
@@ -276,9 +311,15 @@
           <code class="computeroutput"><span class="identifier">unused_type</span></code> attributes
           'disappeared' during attribute propagation. Notably, this is not only true
           for sequences but for any compound generator in <span class="emphasis"><em>Spirit.Karma</em></span>.
+          For instance, for alternative generators the corresponding rule is:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
+</pre>
+<p>
+          again, allowing to simplify the overall attribute type of an expression.
         </p>
 <a name="spirit.karma.tutorials.karma_attributes.attributes_of_rules_and_grammars"></a><h6>
-<a name="id1185179"></a>
+<a name="id1189949"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.attributes_of_rules_and_grammars">Attributes
           of Rules and Grammars</a>
         </h6>

@@ -29,11 +29,10 @@
 </h4></div></div></div>
 <p>
           In this section we will develop a generator for complex numbers, allowing
-          to represent a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code> either as <code class="computeroutput"><span class="string">"(real,
-          imag)"</span></code> (where <code class="computeroutput"><span class="identifier">real</span></code>
-          and <code class="computeroutput"><span class="identifier">imag</span></code> are the real and
-          imaginary parts of the complex number) or as a simple <code class="computeroutput"><span class="identifier">real</span></code>
-          if the imaginary part happens ot be equal to zero. This example will highlight
+          to represent a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code> either as <code class="computeroutput"><span class="special">(</span><span class="identifier">real</span><span class="special">,</span> <span class="identifier">imag</span><span class="special">)</span></code>
+          (where <code class="computeroutput"><span class="identifier">real</span></code> and <code class="computeroutput"><span class="identifier">imag</span></code> are the real and imaginary parts
+          of the complex number) or as a simple <code class="computeroutput"><span class="identifier">real</span></code>
+          if the imaginary part happens to be equal to zero. This example will highlight
           the power of <span class="emphasis"><em>Spirit.Karma</em></span> allowing to combine compile
           time definition of formatting rules with runtime based decisions which
           of the rules to apply. Also this time, we're using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
@@ -50,14 +49,14 @@
 <p>
           where the first alternative should be used for numbers having a non-zero
           imaginary part, while the second is for real numbers. Generally, alternatives
-          are tried in the sequence of their definition as long as one of the expressions
-          (as delimited by <code class="computeroutput"><span class="char">'|'</span></code>) succeeds.
-          If no generator expression succeeds the whole alternative fails.
+          are tried in the sequence of their definition as long until one of the
+          expressions (as delimited by <code class="computeroutput"><span class="char">'|'</span></code>)
+          succeeds. If no generator expression succeeds the whole alternative fails.
         </p>
 <p>
           If we left this formatting grammar as it is our generator would always
           choose the first alternative. We need to add some additional rules allowing
-          to make the first alternative to fail. So, if the first fails the second
+          to make the first alternative failing. So, if the first fails the second
           alternative will be chosen instead. The decision about whether to choose
           the first alternative has to be made at runtime as only then we actually
           know the value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
@@ -121,7 +120,7 @@
 </pre>
 <p>
           which passes <code class="computeroutput"><span class="identifier">n</span></code> to the first
-          element of the generator the semantic action is attacjed to. Remember,
+          element of the generator the semantic action is attached to. Remember,
           semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> are called before
           the corresponding generator is invoked and they are expected to provide
           the generator with the data to be used. The semantic action above assigns
@@ -129,7 +128,9 @@
           to the generator (actually, the attribute of <code class="computeroutput"><span class="identifier">double_</span></code>).
           <code class="computeroutput"><span class="identifier">_1</span></code> is a Phoenix placeholder
           referring to the attribute of the generator the semantic action is attached
-          to.
+          to. If you need more information about semantic actions, you may want to
+          read about those in this section: <a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic
+          Actions</a>.
         </p>
 <p>
           These semantic actions are easy to understand but have the unexpected side
@@ -137,6 +138,9 @@
           tend to make the formatting grammar less readable. We will see in one of
           the next sections how it is possible to use other, builtin features of
           <span class="emphasis"><em>Spirit.Karma</em></span> to get rid of the semantic actions alltogether.
+          When writing your grammars in Spirit you should always try to avoid semantic
+          actions which is often possible. Semantic actions are really powerful tools
+          but grammars tend to be more efficient and readable without them.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

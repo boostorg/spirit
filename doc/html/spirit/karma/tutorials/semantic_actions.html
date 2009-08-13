@@ -55,7 +55,7 @@
           parser successfully matches its input and the matched value is passed into
           the semantic action. In <span class="emphasis"><em>Spirit.Karma</em></span> the opposite
           happens. Semantic actions are called before its associated generator is
-          invoked. They provide the data to be generated to the generator.
+          invoked. They may provide the data to be generated to the generator.
         </p>
 <p>
           The function/function object signature depends on the type of the generator
@@ -70,6 +70,26 @@
 <p>
           where the function is expected to initialize the parameter <code class="computeroutput"><span class="identifier">n</span></code> with the value to generate.
         </p>
+<div class="important" title="Important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            Generally, and more formally, the semantic action <code class="computeroutput"><span class="identifier">F</span></code>
+            attached to a generator <code class="computeroutput"><span class="identifier">G</span></code>
+            needs to take a reference to the generators attribute type as its first
+            parameter. For more information about generatpor attributes please see
+            the section Generator Attributes.
+          </p>
+<p>
+            In the example above the function F takes a <code class="computeroutput"><span class="keyword">double</span><span class="special">&amp;</span></code> as its first parameter as the attribute
+            of the <code class="computeroutput"><span class="identifier">double_</span></code> generator
+            happens to be a <code class="computeroutput"><span class="keyword">double</span></code>.
+          </p>
+</td></tr>
+</table></div>
 <p>
           There are actually 2 more arguments being passed (the generator context
           and a reference to a boolean 'pass' parameter). We don't need these, for
@@ -78,7 +98,7 @@
           are simply ignored.
         </p>
 <p>
-          We present various ways to attach semantic actions:
+          In the follwoing example we present various ways to attach semantic actions:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -146,7 +166,8 @@
           <code class="computeroutput"><span class="identifier">unused_type</span></code> for these.
           We'll see more of <code class="computeroutput"><span class="identifier">unused_type</span></code>
           elsewhere. Get used to it. <code class="computeroutput"><span class="identifier">unused_type</span></code>
-          is a Spirit supplied support class.
+          is a Spirit supplied support class. Most of the time it stands for 'I don't
+          care, just use the appropriate default'.
         </p>
 <p>
           All following examples generate outputs of the form:
@@ -173,7 +194,8 @@
 <p>
           What's new? Well <code class="computeroutput"><span class="identifier">int_</span></code> is
           the sibbling of <code class="computeroutput"><span class="identifier">double_</span></code>.
-          I'm sure you can guess what this generator does.
+          I'm sure you can guess what this generator does and what type of attribute
+          it expects.
         </p>
 <p>
           The next example shows how to attach a simple function object:
@@ -247,7 +269,7 @@
           The examples above can be found here: <a href="../../../../../example/karma/actions.cpp" target="_top">actions.cpp</a>
         </p>
 <a name="spirit.karma.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id1181113"></a>
+<a name="id1185550"></a>
           <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>

@@ -53,110 +53,112 @@ pages and pages of reference doumentation.
 See here for more information about __karma_char__.
 
 [table Predefined Character Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[`ch`]                 [`Unused`]                  [Generates `ch`]]
-    [[`lit(ch)`]            [`Unused`]                  [Generates `ch`]]
+    [[Expression]                   [Attribute]         [Description]]
+    [[[karma_char `ch`]]            [`Unused`]          [Generates `ch`]]
+    [[[karma_char `lit(ch)`]]       [`Unused`]          [Generates `ch`]]
 
-    [[`char_(ch)`]          [`Ch`]                      [Generates `ch`, 
-                                                         if an attribute is supplied it must match]]
-    [[`char_("c")`]         [`Ch`]                      [Generates a single char string literal, `c`, 
-                                                         if an attribute is supplied it must match]]
-    [[`char_(ch, ch2)`]     [`Ch`]                      [Generates a single char string literal, `c`, 
-                                                         if `c` belongs to the chracter range from
-                                                         `ch` to `ch2`]]
-    [[`char_(charset)`]     [`Ch`]                      [Generates a single char string literal, `c`, 
-                                                         if `c` belongs to the chracter set `charset`]]
+    [[[karma_char `char_(ch)`]]     [`Ch`]      [Generates `ch`, 
+                                                 if an attribute is supplied it must match]]
+    [[[karma_char `char_("c")`]]    [`Ch`]      [Generates a single char string literal, `c`, 
+                                                 if an attribute is supplied it must match]]
+    [[[karma_char `char_(ch, ch2)`]][`Ch`]      [Generates a single char string literal, `c`, 
+                                                 if `c` belongs to the chracter range from
+                                                 `ch` to `ch2`]]
+    [[[karma_char `char_(charset)`]][`Ch`]      [Generates a single char string literal, `c`, 
+                                                 if `c` belongs to the chracter set `charset`]]
 
-    [[[karma_char_class `alnum`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isalnum` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `alpha`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isalpha` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `blank`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isblank` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `cntrl`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::iscntrl` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `digit`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isdigit` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `graph`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isgraph` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `print`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isprint` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `punct`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::ispunct` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `space`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isspace`, or
-                                                         a single space character in the character set 
-                                                         defined by `NS`]]
-    [[[karma_char_class `xdigit`]]  [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isxdigit` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `lower`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::islower` in 
-                                                         the character set defined by `NS`]]
-    [[[karma_char_class `upper`]]   [`Ch`]              [Generates the character supplied as the attribute
-                                                         if it satisfies the concept of `std::isupper` in 
-                                                         the character set defined by `NS`]]
+    [[[karma_char_class `alnum`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isalnum` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `alpha`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isalpha` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `blank`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isblank` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `cntrl`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::iscntrl` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `digit`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isdigit` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `graph`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isgraph` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `print`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isprint` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `punct`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::ispunct` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `space`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isspace`, or
+                                                 a single space character in the character set 
+                                                 defined by `NS`]]
+    [[[karma_char_class `xdigit`]]  [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isxdigit` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `lower`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::islower` in 
+                                                 the character set defined by `NS`]]
+    [[[karma_char_class `upper`]]   [`Ch`]      [Generates the character supplied as the attribute
+                                                 if it satisfies the concept of `std::isupper` in 
+                                                 the character set defined by `NS`]]
 ]
 
+See here for more information about __karma_string__.
+
 [table Predefined String Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[`str`]                [`Unused`]                  [Generates `str`]]
-    [[`lit(str)`]           [`Unused`]                  [Generates `str`]]
-    [[`string(str)`]        [`Str`]                     [Generates `str`, 
-                                                         if an attribute is supplied it must match]]
+    [[Expression]           [Attribute]         [Description]]
+    [[`str`]                [`Unused`]          [Generates `str`]]
+    [[`lit(str)`]           [`Unused`]          [Generates `str`]]
+    [[`string(str)`]        [`Str`]             [Generates `str`, 
+                                                 if an attribute is supplied it must match]]
 ]
 
 See here for more information about __karma_directive__.
 
 [table Predefined Generator Directives
-    [[Expression]           [Attribute]                 [Description]]
-    [[`lower[a]`]           [`A`]                       [Generate `a` as lower case]]
-    [[`upper[a]`]           [`A`]                       [Generate `a` as upper case]]
+    [[Expression]           [Attribute]         [Description]]
+    [[`lower[a]`]           [`A`]               [Generate `a` as lower case]]
+    [[`upper[a]`]           [`A`]               [Generate `a` as upper case]]
 
-    [[`left_align[a]`]      [`A`]                       [Generate `a` left aligned in column of width 
-                                                         BOOST_KARMA_DEFAULT_FIELD_LENGTH]]
-    [[`left_align(N)[a]`]   [`A`]                       [Generate `a` left aligned in column of width `N`]]
-    [[`left_align(N, g)[a]`][`A`]                       [Generate `a` left aligned in column of width `N`
-                                                         while using `g` to generate the necesssary
-                                                         padding]]
-    [[`right_align[a]`]     [`A`]                       [Generate `a` right aligned in column of width 
-                                                         BOOST_KARMA_DEFAULT_FIELD_LENGTH]]
-    [[`right_align(N)[a]`]  [`A`]                       [Generate `a` right aligned in column of width `N`]]
-    [[`right_align(N, g)[a]`][`A`]                      [Generate `a` right aligned in column of width `N`
-                                                         while using `g` to generate the necesssary
-                                                         padding]]
-    [[`center[a]`]          [`A`]                       [Generate `a` centered in column of width 
-                                                         BOOST_KARMA_DEFAULT_FIELD_LENGTH]]
-    [[`center(N)[a]`]       [`A`]                       [Generate `a` centered in column of width `N`]]
-    [[`center(N, g)[a]`]    [`A`]                       [Generate `a` centered in column of width `N`
-                                                         while using `g` to generate the necesssary
-                                                         padding]]
+    [[`left_align[a]`]      [`A`]               [Generate `a` left aligned in column of width 
+                                                 BOOST_KARMA_DEFAULT_FIELD_LENGTH]]
+    [[`left_align(N)[a]`]   [`A`]               [Generate `a` left aligned in column of width `N`]]
+    [[`left_align(N, g)[a]`][`A`]               [Generate `a` left aligned in column of width `N`
+                                                 while using `g` to generate the necesssary
+                                                 padding]]
+    [[`right_align[a]`]     [`A`]               [Generate `a` right aligned in column of width 
+                                                 BOOST_KARMA_DEFAULT_FIELD_LENGTH]]
+    [[`right_align(N)[a]`]  [`A`]               [Generate `a` right aligned in column of width `N`]]
+    [[`right_align(N, g)[a]`][`A`]              [Generate `a` right aligned in column of width `N`
+                                                 while using `g` to generate the necesssary
+                                                 padding]]
+    [[`center[a]`]          [`A`]               [Generate `a` centered in column of width 
+                                                 BOOST_KARMA_DEFAULT_FIELD_LENGTH]]
+    [[`center(N)[a]`]       [`A`]               [Generate `a` centered in column of width `N`]]
+    [[`center(N, g)[a]`]    [`A`]               [Generate `a` centered in column of width `N`
+                                                 while using `g` to generate the necesssary
+                                                 padding]]
 
-    [[`maxwidth[a]`]        [`A`]                       [Generate `a` truncated to column of width 
-                                                         BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH]]
-    [[`maxwidth(N)[a]`]     [`A`]                       [Generate `a` truncated to column of width `N`]]
+    [[`maxwidth[a]`]        [`A`]               [Generate `a` truncated to column of width 
+                                                 BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH]]
+    [[`maxwidth(N)[a]`]     [`A`]               [Generate `a` truncated to column of width `N`]]
 
-    [[`repeat[a]`]          [`vector<A>`]               [Repeat `a` zero or more times]]
-    [[`repeat(N)[a]`]       [`vector<A>`]               [Repeat `a` `N` times]]
-    [[`repeat(N, M)[a]`]    [`vector<A>`]               [Repeat `a` `N` to `M` times]]
-    [[`repeat(N, inf)[a]`]  [`vector<A>`]               [Repeat `a` `N` or more times]]
+    [[`repeat[a]`]          [`vector<A>`]       [Repeat `a` zero or more times]]
+    [[`repeat(N)[a]`]       [`vector<A>`]       [Repeat `a` `N` times]]
+    [[`repeat(N, M)[a]`]    [`vector<A>`]       [Repeat `a` `N` to `M` times]]
+    [[`repeat(N, inf)[a]`]  [`vector<A>`]       [Repeat `a` `N` or more times]]
 
-    [[`verbatim[a]`]        [`A`]                       [Disable delimited generation for `a`]]
-    [[`delimit[a]`]         [`A`]                       [Reestablish the delimiter that got inhibited by verbatim]]
-    [[`delimit(g)[a]`]      [`A`]                       [Use `g` as a skipper for generating `a`]]
+    [[`verbatim[a]`]        [`A`]               [Disable delimited generation for `a`]]
+    [[`delimit[a]`]         [`A`]               [Reestablish the delimiter that got inhibited by verbatim]]
+    [[`delimit(g)[a]`]      [`A`]               [Use `g` as a skipper for generating `a`]]
 
-    [[__karma_omit__]       [`A`]                       [Consumes the attribute type of `a` without generating anything]]
+    [[__karma_omit__]       [`A`]               [Consumes the attribute type of `a` without generating anything]]
 
-    [[__karma_buffer__]     [`A`]                       [Temporarily intercepts the output generated by `a`, 
-                                                         flushing it only after `a` succeeded.]]
+    [[__karma_buffer__]     [`A`]               [Temporarily intercepts the output generated by `a`, 
+                                                 flushing it only after `a` succeeded.]]
 ]
 
 See here for more information about __karma_numeric__.
@@ -174,9 +176,9 @@ See here for more information about __karma_numeric__.
     [[[floating_point `long_double(num)`]] [`long double`] [Generate `num` as a floating point number from a `long double`, 
                                                             if an attribute is supplied it must match]]
 
-    [[`bin`]                [`unsigned`]                [Generate a binary integer from an `unsigned`]]
-    [[`oct`]                [`unsigned`]                [Generate an octal integer from an `unsigned`]]
-    [[`hex`]                [`unsigned`]                [Generate a hexadecimal integer from an `unsigned`]]
+    [[[unsigned_int `bin`]]             [`unsigned int`]       [Generate a binary integer from an `unsigned int`]]
+    [[[unsigned_int `oct`]]             [`unsigned int`]       [Generate an octal integer from an `unsigned int`]]
+    [[[unsigned_int `hex`]]             [`unsigned int`]       [Generate a hexadecimal integer from an `unsigned int`]]
 
     [[[unsigned_int `ushort_`]]         [`unsigned short`]     [Generate an unsigned short integer]]
     [[[unsigned_int `ushort_(num)`]]    [`unsigned short`]     [Generate `num` as an unsigned short integer, 
@@ -223,6 +225,8 @@ See here for more information about __karma_numeric__.
                                         [`Num`]                [Generate a `num` as a `Num`, 
                                                                 if an attribute is supplied it must match]]
 ]
+
+See here for more information about __karma_binary__.
 
 [table Predefined Binary Generators
     [[Expression]           [Attribute]                 [Description]]

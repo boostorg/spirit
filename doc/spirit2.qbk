@@ -53,7 +53,7 @@
 [def __re2c__                   [@http://re2c.sourceforge.net/ re2c]]
 [def __ragel__                  [@http://www.cs.queensu.ca/~thurston/ragel/ Ragel]]
 
-[def __boost_variant__          [@http://www.boost.org/doc/html/variant.html `boost.variant<>`]]
+[def __boost_variant__          [@http://www.boost.org/doc/html/variant.html Boost.Variant]]
 [def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<>`]]
 [def __boost_bind__             [@http://www.boost.org/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@http://www.boost.org/libs/lambda/index.html Boost.Lambda]]
@@ -84,8 +84,11 @@
 
 [def __karma_auxiliary__        [link spirit.karma.reference.auxiliary Auxiliary Generators]]
 [def __karma_char__             [link spirit.karma.reference.char Character Generators]]
+[def __karma_string__           String Generators [/link spirit.karma.reference.string String Generators]]
 [def __karma_directive__        [link spirit.karma.reference.directive Generator Directives]]
 [def __karma_operator__         [link spirit.karma.reference.operator Generator Operators]]
+[def __karma_numeric__          [link spirit.karma.reference.numeric Numeric Generators]]
+[def __karma_binary__           Binary Generators [/link spirit.karma.reference.binary Binary Generators]]
 
 [def __sec_lex__                [link spirit.lex Lex]]
 [def __sec_lex_quickstart_1__   [link spirit.lex.tutorials.lexer_quickstart1 Lex Quickstart 1 - A word counter using __lex__]]
@@ -173,6 +176,7 @@
 [template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]
 [template floating_point[str]       [link spirit.karma.reference.numeric.floating_point [str]]]
 
+[template karma_char[str]           [link spirit.karma.reference.char.char_generator [str]]]
 [template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
 
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
@@ -186,10 +190,10 @@
 [def __delegate_pattern__           Delegate Design Pattern] [/$$$ TODO: link me $$$]
 [def __composite_pattern__          Composite Design Pattern] [/$$$ TODO: link me $$$]
 
-[def __karma_actions__              Semantic Actions] [/$$$ TODO: link me $$$]
+[def __karma_actions__              [link spirit.karma.tutorials.semantic_actions Semantic Actions]]
 [def __karma_context__              Context] [/$$$ TODO: link me $$$]
-[def __karma_attribute__            Attribute] [/$$$ TODO: link me $$$]
-[def __karma_compatible_attribute__ Compatible Attribute] [/$$$ TODO: link me $$$]
+[def __karma_attribute__            Generator Attributes] [/$$$ TODO: link me $$$]
+[def __karma_compatible_attribute__ Compatible Attributes] [/$$$ TODO: link me $$$]
 [def __karma_rule__                 Rule] [/$$$ TODO: link me $$$]
 [def __karma_grammar__              Grammar] [/$$$ TODO: link me $$$]
 
