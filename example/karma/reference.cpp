@@ -248,6 +248,24 @@ main()
     }
 
     {
+        //[reference_karma_using_declarations_real
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        //]
+
+        //[reference_karma_real
+        test_generator("2.0", lit(2.0));
+        test_generator("2.0", double_(2));
+        test_generator_attr("2.0", double_(2.0), 2.0);
+        test_generator_attr("", double_(2.0), 3.0);    // fails (as 2.0 != 3.0)!
+        test_generator_attr("-2.0", double_, -2.0);
+
+        test_generator_attr("1.234e05", double_, 1234.0e2);
+        test_generator_attr("1.234e-06", double_, 0.000001234);
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_char
         using boost::spirit::karma::generate;
         using boost::spirit::ascii::char_;

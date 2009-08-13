@@ -163,9 +163,10 @@ See here for more information about __karma_directive__.
 
 See here for more information about __karma_numeric__.
 
-[table Predefined Numeric Generators
+[table Predefined Floating Point Number Generators
     [[Expression]           [Attribute]                 [Description]]
-    [[`lit(num)`]           [`Unused`]                  [Generates `num`]]
+    [[[link spirit.karma.reference.numeric `lit(num)`]]
+                            [`Unused`]                    [Generates `num`]]
     [[[floating_point `float_`]]           [`float`]       [Generate a floating point number from a `float`]]
     [[[floating_point `float_(num)`]]      [`float`]       [Generate `num` as a floating point number from a `float`, 
                                                             if an attribute is supplied it must match]]
@@ -176,10 +177,22 @@ See here for more information about __karma_numeric__.
     [[[floating_point `long_double(num)`]] [`long double`] [Generate `num` as a floating point number from a `long double`, 
                                                             if an attribute is supplied it must match]]
 
-    [[[unsigned_int `bin`]]             [`unsigned int`]       [Generate a binary integer from an `unsigned int`]]
-    [[[unsigned_int `oct`]]             [`unsigned int`]       [Generate an octal integer from an `unsigned int`]]
-    [[[unsigned_int `hex`]]             [`unsigned int`]       [Generate a hexadecimal integer from an `unsigned int`]]
+    [[[floating_point ``real_generator<
+    Num, Policies
+>()``]]
+                                        [`Num`]            [Generate a floating point number `Num` using
+                                                            the supplied floating point formatting policies]]
+    [[[floating_point ``real_generator<
+    Num, Policies
+>()(num)``]]
+                                        [`Num`]            [Generate floating point number `num` as a `Num` 
+                                                            using the supplied floating point formatting 
+                                                            policies, if an attribute is supplied it must 
+                                                            match]]
+]
 
+[table Predefined Unsigned Integer Generators
+    [[Expression]           [Attribute]                 [Description]]
     [[[unsigned_int `ushort_`]]         [`unsigned short`]     [Generate an unsigned short integer]]
     [[[unsigned_int `ushort_(num)`]]    [`unsigned short`]     [Generate `num` as an unsigned short integer, 
                                                                 if an attribute is supplied it must match]]
@@ -192,6 +205,10 @@ See here for more information about __karma_numeric__.
     [[[unsigned_int `ulong_long`]]      [`unsigned long long`] [Generate an unsigned long long]]
     [[[unsigned_int `ulong_long(num)`]] [`unsigned long long`] [Generate `num` as an unsigned long long, 
                                                                 if an attribute is supplied it must match]]
+    [[[unsigned_int `bin`]]             [`unsigned int`]       [Generate a binary integer from an `unsigned int`]]
+    [[[unsigned_int `oct`]]             [`unsigned int`]       [Generate an octal integer from an `unsigned int`]]
+    [[[unsigned_int `hex`]]             [`unsigned int`]       [Generate a hexadecimal integer from an `unsigned int`]]
+
     [[[unsigned_int ``uint_generator<
     Num, Radix
 >()``]]
@@ -201,7 +218,10 @@ See here for more information about __karma_numeric__.
 >()(num)``]]
                                         [`Num`]                [Generate an unsigned `num` as a `Num`, 
                                                                 if an attribute is supplied it must match]]
+]
 
+[table Predefined Integer Generators
+    [[Expression]           [Attribute]                 [Description]]
     [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
     [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
                                                                 if an attribute is supplied it must match]]

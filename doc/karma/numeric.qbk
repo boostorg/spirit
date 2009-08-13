@@ -61,7 +61,7 @@ These can be used to flexibly format any integer number of any compatible type
 (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.signed_int.additional_requirements below]).
 
-The interger number generators are very fast. For measurement results comapring
+The interger number generators are very fast. For measurement results comparing
 the __karma__ integer number generators with equivalent constructs provided by 
 other libraries see the section 
 [link spirit.karma.performance_measurements.numeric_performance.int_performance Performance of Numeric Generators]
@@ -110,6 +110,15 @@ long_long(num)``]       [Generate the integer provided by the immediate literal
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
+]
+
+All generators listed in the table above (except `lit(num)`) are predefined 
+specializations of the `int_generator<Num, Radix, force_sign>` basic integer
+number generator type described below. It is possible to directly use this
+type to create integer generators using a wide range of formatting.
+
+[table
+    [[Expression]       [Semantics]]
     [
 [``int_generator<
     Num, Radix, force_sign
@@ -285,7 +294,7 @@ These can be used to flexibly format any unsigned integer number of any
 compatible type (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.unsigned_int.additional_requirements below]).
 
-The interger number generators are very fast. For measurement results comapring
+The interger number generators are very fast. For measurement results comparing
 the __karma__ integer number generators with equivalent constructs provided by 
 other libraries see the section 
 [link spirit.karma.performance_measurements.numeric_performance.int_performance Performance of Numeric Generators]
@@ -353,6 +362,15 @@ hex(num)``]             [Generate the unsigned integer provided by the
                          immediate literal (except if the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
+]
+
+All generators listed in the table above (except `lit(num)`) are predefined 
+specializations of the `uint_generator<Num, Radix>` basic unsigned integer
+number generator type described below. It is possible to directly use this
+type to create unsigned integer generators using a wide range of formatting.
+
+[table
+    [[Expression]       [Semantics]]
     [
 [``uint_generator<
     Num, Radix
@@ -487,6 +505,48 @@ Basic usage of an `uint` generator:
 
 [heading Description]
 
+The floating point number generators described in this section are:
+
+[table
+    [[Expression]          [Attribute]     [Description]]
+    [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `float`,
+                                            `double`, or `long double`]]
+    [[`float_`]            [`float`]       [Generate a `float` as given by the
+                                            mandatory attribute]]
+    [[`float_(num)`]       [`float`]       [Generate `num` as a `float`, 
+                                            if an attribute is supplied it must match]]
+    [[`double_`]           [`double`]      [Generate a `double` as given by the
+                                            mandatory attribute]]
+    [[`double_(num)`]      [`double`]      [Generate `num` as a `double`, 
+                                            if an attribute is supplied it must match]]
+    [[`long_double`]       [`long double`] [Generate a `double` as given by the
+                                            mandatory attribute]]
+    [[`long_double(num)`]  [`long double`] [Generate `num` as a `double`, 
+                                            if an attribute is supplied it must match]]
+    [
+[``real_generator<
+    Num, Policies
+>()``]
+                           [`Num`]         [Generate a `Num` using the provided 
+                                            policies `Policies`]]
+    [
+[``real_generator<
+    Num, Policies
+>()(num)``]
+                           [`Num`]         [Generate `num` as a `Num` using the provided 
+                                            policies `Policies`, if an attribute is 
+                                            supplied it must match]]
+]
+
+These can be used to flexibly format any floating point number of any 
+compatible type (for more information about the requirements, see 
+[link spirit.karma.reference.numeric.floating_point.additional_requirements below]).
+
+The floating point number generators are very fast. For measurement results 
+comparing the __karma__ floating point number generators with equivalent 
+constructs provided by other libraries see the section 
+[link spirit.karma.performance_measurements.numeric_performance.double_performance Performance of Floating Point Numeric Generators]
+
 [heading Header]
 
     // forwards to <boost/spirit/home/karma/numeric/real.hpp>
@@ -499,6 +559,380 @@ Also, see __include_structure__.
 [:__primitive_generator_concept__]
 
 [heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`lit(num)`]       [Generate the floating point literal `num` using the 
+                         default formatting (no trailing zeros, `fixed` 
+                         representation for numbers `fabs(n) <= 1e5 && fabs(n) > 1e-3`,
+                         scientific representation otherwise, 3 fractional digits,
+                         sign is only printed for negative literals). This 
+                         generator never fails (except if the underlying output 
+                         stream reports an error).]]
+    [
+[``float_
+double_
+long_double``]          [Generate the floating point number provided by a 
+                         mandatory attribute using the default formatting (no 
+                         trailing zeros, `fixed` representation for numbers 
+                         `fabs(n) <= 1e5 && fabs(n) > 1e-3`, scientific 
+                         representation otherwise, 3 fractional digits,
+                         sign is only printed for negative literals). This 
+                         generator never fails (except if the underlying output 
+                         stream reports an error).]]
+    [
+[``float_(num)
+double_(num)
+long_double(num)``]     [Generate the floating point number provided by the 
+                         immediate literal value the generator is initialized 
+                         from using the default formatting (no trailing zeros, 
+                         `fixed` representation for numbers 
+                         `fabs(n) <= 1e5 && fabs(n) > 1e-3`, scientific 
+                         representation otherwise, 3 fractional digits, sign is 
+                         only printed for negative literals). If this generator 
+                         has an associated attribute it succeeds only as long as 
+                         the attribute is equal to the immediate literal (except 
+                         if the underlying output stream reports an error). 
+                         Otherwise this generator fails and does not generate 
+                         any output.]]
+]
+
+All generators listed in the table above (except `lit(num)`) are predefined 
+specializations of the `real_generator<Num, Policies>` basic floating point
+number generator type described below. It is possible to directly use this
+type to create floating point generators using a wide range of formatting.
+
+[table
+    [[Expression]       [Semantics]]
+    [
+[``real_generator<
+    Num, Policies
+>()``]
+                        [Generate the floating point number of type `Num` 
+                         provided by a mandatory attribute using the specified 
+                         `Policies`. This generator never fails 
+                         (except if the underlying output stream reports an 
+                         error).]]
+]
+
+For more information about the type `Policies` see 
+[link spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies below]).
+
+[heading Additional Requirements]
+
+The following list enumerate the requirements which must be met in order to 
+use a certain type `Num` to instantiate a `real_generator<Num, Policies>`.
+
+In order to be usable as the first template parameter for `real_generator<>` 
+the type `Num` must have defined:
+
+* comparison operators for: `<`, `<=`, `==`, `!=`, `>`, and `>=` 
+* numeric operators for: `+`, `-`, `/`, `*`, and `%`
+* functions implementing the interface and the semantics of: `std::fmod`, 
+  `std::pow`, `std::log10`, `std::lround`, `std::ltrunc`, `std::modf`, 
+  `std::floor`, and `std::ceil`
+* a valid specialization of the type `std::numeric_limits<Num>` allowing for 
+  numeric property inspection.
+
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`lit(num)`]       [__unused__]]
+
+    [[`float_`]         [`float`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [[`float_(num)`]    [`float_`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+
+    [[`double_`]        [`double`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [[`double_(num)`]   [`double`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+
+    [[`long_double`]    [`long double`, attribute is mandatory (otherwise 
+                         compilation will fail)]]
+    [[`long_double(num)`][`long double`, attribute is optional, if it is supplied, 
+                         the generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+    [
+[``real_generator<
+    Num, Policies
+>()``]                  [`Num`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [
+[``real_generator<
+    Num, Policies
+>()(num)``]             [`Num`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+]
+
+
+[heading Floating Point Formatting Policies]
+
+If special formatting of a floating point number is needed, just overload 
+the policy class `real_policies<Num>` and use it as a template
+parameter to the `real_generator<>` floating point generator. For instance:
+
+    // define a new floating point formatting policy
+    template <typename T>
+    struct scientific_policy : real_policies<T>
+    {
+        // we want the numbers always to be in scientific format
+        static int floatfield(T n) { return fmtflags::scientific; }
+    };
+
+    // define a new generator type based on the new policy
+    typedef real_generator<double, scientific_policy<double> > science_type;
+    science_type const scientific = science_type();
+
+    // use the new generator 
+    generate(sink, science_type(), 1.0);  // will output: 1.0e00
+    generate(sink, scientific, 0.1);      // will output: 1.0e-01
+
+The template parameter `T` should be the type to be formatted using the 
+overloaded policy type. At the same time `T` will be used as the attribute type 
+of the created floating point generator.
+
+[heading Floating Point Formatting Policy Expression Semantics]
+
+A floating point formatting policy should expose the following variables and 
+functions:
+
+[table
+[[Expression][Description]]
+[   [``
+        bool force_sign;
+    ``]
+    [The default behavior is to not to require generating a sign. If the variable
+     `force_sign` is specified as true, then all generated numbers will have a 
+     sign (`'+'` or `'-'`, zeros will have a space instead of a sign).]]
+[   [``
+        bool trailing_zeros(T n);
+    ``]
+    [Return whether trailing zero digits have to be emitted in the fractional 
+     part of the output. If set, this flag instructs the floating point 
+     generator to emit trailing zeros up to the required precision digits (as 
+     returned by the `precision()` function).
+
+     `n` is the floating point number to output. This can be used to 
+     adjust the required behavior depending on the value of this number.]]
+[   [``
+        int floatfield(T n);
+    ``]
+    [Decide, which representation type to use in the generated output.
+
+     By default all numbers having an absolute value of zero or in between 
+     `0.001` and `100000` will be generated using the fixed format, all others 
+     will be generated using the scientific representation.
+
+    The `trailing_zeros()` can be used to force the output of trailing zeros 
+    in the fractional part up to the number of digits returned by the 
+    `precision()` member function. The default is not to generate the trailing 
+    zeros.
+
+    `n`: is the floating point number to output. This can be used to 
+          adjust the formatting flags depending on the value of 
+          this number.
+
+    The return value has to be either `fmtflags::scientific` (generate floating
+    point values in scientific notation) or `fmtflags::fixed` (generate 
+    floating point values in fixed-point notation).
+    ]]
+[   [``
+        unsigned precision(T n);
+    ``]
+    [Return the maximum number of decimal digits to generate in the 
+     fractional part of the output.
+
+    `n`: is the floating point number to output. This can be used to 
+    adjust the required precision depending on the value of this number. If 
+    the trailing zeros flag is specified the fractional part of the output will 
+    be 'filled' with zeros, if appropriate.
+
+    *Note:* If the trailing_zeros flag is not in effect additional semantics 
+          apply. See the description for the `fraction_part()` function below. 
+          Moreover, this precision will be limited to the value of 
+          `std::numeric_limits<T>::digits10 + 1`.]]
+[   [``
+        template <bool ForceSign, 
+            typename OutputIterator>
+        bool integer_part(
+          OutputIterator& sink, T n, bool sign);
+    ``]
+    [This function is called to generate the integer part of the floating point 
+      number. 
+
+      `sink`: is the output iterator to use for generation 
+
+      `n`: is he absolute value of the integer part of the floating point number 
+      to convert (always non-negative)
+
+      `sign`: is the sign of the overall floating point number to convert.
+
+      The return value defines the outcome of the whole generator. If it is 
+      `false`, no further output is generated, imediatly returning `false` from 
+      the calling `real_generator` as well. If it is `true`, normal output 
+      generation continues.]]
+[   [``
+        template <typename OutputIterator>
+        bool dot(OutputIterator& sink, T n);
+    ``]
+    [This function is called to generate the decimal point.
+
+     `sink`: is the output iterator to use for generation 
+
+     `n`: The fractional part of the floating point number to convert. Note 
+      that this number is scaled such, that it represents the number of units 
+      which correspond to the value returned from the `precision()` function 
+      earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
+      when the function `precision()` returned `5`.
+
+      This is given to allow to decide, whether a decimal point has to be 
+      generated at all.
+
+      *Note:* If the `trailing_zeros` flag is not in effect additional comments 
+      apply. See the description for the `fraction_part()` function below.
+
+      The return value defines the outcome of the whole generator. If it is 
+      `false`, no further output is generated, imediatly returning `false` from 
+      the calling `real_generator` as well. If it is `true`, normal output 
+      generation continues.]]
+[   [``
+        template <typename OutputIterator>
+        bool fraction_part(OutputIterator& sink, 
+            T n, unsigned precision_);
+    ``]
+    [This function is called to generate the fractional part of the number.
+
+      `sink`: is the output iterator to use for generation 
+
+      `n`: The fractional part of the floating point number to convert. Note 
+      that this number is scaled such, that it represents the number of units 
+      which correspond to the value returned from the `precision()` function 
+      earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
+      when the function `precision()` returned `5`.
+
+      *Note:* If `trailing_zeros()` returns `false` the `precision` 
+      parameter will have been corrected from the value the `precision()` 
+      function returned earlier (defining the maximal number of fractional 
+      digits) in the sense, that it takes into account trailing zeros. I.e. a 
+      floating point number `0.0123` and a value of `5` returned from 
+      `precision()` will result in:
+
+      `trailing_zeros()` returned `false`: `n` will be `123`, and `precision` 
+      will be `4`
+
+      `trailing_zeros()` returned `true`: `n` will be `1230`, and `precision`
+      will be `5`
+
+      The return value defines the outcome of the whole generator. If it is 
+      `false`, no further output is generated, imediatly returning `false` from 
+      the calling `real_generator` as well. If it is `true`, normal output 
+      generation continues.]]
+[   [``
+        template <typename CharEncoding, 
+            typename Tag, typename OutputIterator>
+        bool exponent(
+            OutputIterator& sink, long n);
+    ``]
+    [This function is called to generate the exponential part of the number 
+     (this is called only if the `floatfield()` function returned the 
+     `fmtflags::scientific` flag).
+
+     `sink`: is the output iterator to use for generation 
+
+     `n`: The (signed) exponential part of the floating point number to convert. 
+
+     The template parameters `CharEncoding` and `Tag` are either of the type 
+     `unused_type` or describe the character class and conversion to be 
+     applied to any output possibly influenced by either the `lower[]` or 
+     `upper[]` directives.
+
+      The return value defines the outcome of the whole generator. If it is 
+      `false`, no further output is generated, imediatly returning `false` from 
+      the calling `real_generator` as well. If it is `true`, normal output 
+      generation continues.]]
+[   [``
+        template <bool ForceSign, 
+            typename CharEncoding, typename Tag, 
+            typename OutputIterator>
+        bool nan (OutputIterator& sink, T n);
+    ``]
+    [This function is called whenever teh number to print is a non-normal 
+     floats of type NaN.
+
+     `sink`: is the output iterator to use for generation 
+
+     `n`: is the (signed) floating point number to convert
+
+     The template parameters `CharEncoding` and `Tag` are either of the type 
+     `unused_type` or describe the character class and conversion to be 
+     applied to any output possibly influenced by either the `lower[]` or 
+     `upper[]` directives.
+
+      The return value defines the outcome of the whole generator. If it is 
+      `false`, no further output is generated, imediatly returning `false` from 
+      the calling `real_generator` as well. If it is `true`, normal output 
+      generation continues.]]
+[   [``
+        template <bool ForceSign, 
+            typename CharEncoding, typename Tag, 
+            typename OutputIterator>
+        bool inf (OutputIterator& sink, T n);
+    ``]
+    [This function is called whenever teh number to print is a non-normal 
+     floats of type Inf.
+
+     `sink`: is the output iterator to use for generation 
+
+     `n`: is the (signed) floating point number to convert
+
+     The template parameters `CharEncoding` and `Tag` are either of the type 
+     `unused_type` or describe the character class and conversion to be 
+      applied to any output possibly influenced by either the `lower[]` or 
+      `upper[]` directives.
+
+      The return value defines the outcome of the whole generator. If it is 
+      `false`, no further output is generated, imediatly returning `false` from 
+      the calling `real_generator` as well. If it is `true`, normal output 
+      generation continues.]]
+]
+
+The easiest way to implement a proper floating point formatting policy is to 
+derive a new type from the the type `real_policies<>` while overriding the 
+aspects of the formatting which need to be changed.
+
+[heading Complexity]
+
+[:O(N), where `N` is the number of digits needed to represent the generated 
+        floating point number.]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use these common test functions:
+
+[reference_karma_test]
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_real]
+
+Basic usage of an `double_` generator:
+
+[reference_karma_real]
 
 [endsect]
 
