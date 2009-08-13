@@ -28,7 +28,7 @@
         Qi subrules</a>
 </h4></div></div></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.description"></a><h6>
-<a name="id1139904"></a>
+<a name="id2702457"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.description">Description</a>
         </h6>
 <p>
@@ -39,12 +39,11 @@
         </p>
 <p>
           The strength of subrules is performance. Replacing some rules with subrules
-          can make a parser faster (for example the <span class="emphasis"><em>Spirit.Qi</em></span>
-          calc1 and mini_xml2 examples, compiled with gcc-4.4, are respectively 6%
-          and 8% faster when using subrules instead of rules). The reason is that
-          subrules allow aggressive inlining by the C++ compiler, whereas the implementation
-          of rules is based on a virtual function call which 1. has a fixed run-time
-          overhead and 2. stops inlining.
+          can make a parser slightly faster (see <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.performance">Performance</a>
+          below for measurements). The reason is that subrules allow aggressive inlining
+          by the C++ compiler, whereas the implementation of rules is based on a
+          virtual function call which, depending on the compiler, can have some run-time
+          overhead and stop inlining.
         </p>
 <p>
           The weaknesses of subrules are:
@@ -57,9 +56,8 @@
           </li>
 <li class="listitem">
             subrules put a massive strain on the C++ compiler. They increase compile
-            times (by 20% in the mini_xml2 case described above), memory usage during
-            compilation (by 14% in that case), and also the risk of hitting compiler
-            limits and/or bugs.
+            times and memory usage during compilation, and also increase the risk
+            of hitting compiler limits and/or bugs.
           </li>
 </ul></div>
 <p>
@@ -103,21 +101,21 @@
           most performance-critical parts), whereas the rest can use rules and grammars.
         </p>
 <a name="spirit_repository.qi_components.nonterminal.subrule.header"></a><h6>
-<a name="id1140288"></a>
+<a name="id2702944"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/qi/nonterminal/subrule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_subrule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.synopsis__declaration_"></a><h6>
-<a name="id1140364"></a>
+<a name="id2703046"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.synopsis__declaration_">Synopsis
           (declaration)</a>
         </h6>
 <pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
 </pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.parameters__declaration_"></a><h6>
-<a name="id1140437"></a>
+<a name="id2703144"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.parameters__declaration_">Parameters
           (declaration)</a>
         </h6>
@@ -182,7 +180,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.synopsis__usage_"></a><h6>
-<a name="id1140570"></a>
+<a name="id2703307"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.synopsis__usage_">Synopsis
           (usage)</a>
         </h6>
@@ -211,7 +209,7 @@
 <span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="special">...)</span>         <span class="comment">// Arguments to group, i.e. to start subrule srA
 </span></pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.parameters__usage_"></a><h6>
-<a name="id1140806"></a>
+<a name="id2703601"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.parameters__usage_">Parameters
           (usage)</a>
         </h6>
@@ -335,7 +333,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.groups"></a><h6>
-<a name="id1142212"></a>
+<a name="id2703978"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.groups">Groups</a>
         </h6>
 <p>
@@ -380,7 +378,7 @@
 </span><span class="special">;</span>
 </pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.attributes"></a><h6>
-<a name="id1142612"></a>
+<a name="id2704480"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.attributes">Attributes</a>
         </h6>
 <p>
@@ -408,7 +406,7 @@
           </li>
 </ul></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.locals"></a><h6>
-<a name="id1142688"></a>
+<a name="id2704589"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.locals">Locals</a>
         </h6>
 <p>
@@ -418,7 +416,7 @@
           refer to the subrule's locals, if present.
         </p>
 <a name="spirit_repository.qi_components.nonterminal.subrule.example"></a><h6>
-<a name="id1142724"></a>
+<a name="id2704639"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.example">Example</a>
         </h6>
 <p>
@@ -517,8 +515,236 @@
           structures are not shown here. The full example above can be found here:
           <a href="../../../../../example/qi/mini_xml2_sr.cpp" target="_top">../../example/qi/mini_xml2_sr.cpp</a>
         </p>
+<a name="spirit_repository.qi_components.nonterminal.subrule.performance"></a><h6>
+<a name="id2706281"></a>
+          <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.performance">Performance</a>
+        </h6>
+<p>
+          This table compares run-time and compile-time performance when converting
+          examples to subrules, with various compilers.
+        </p>
+<div class="table">
+<a name="id2706301"></a><p class="title"><b>Table 2. Subrules performance</b></p>
+<div class="table-contents"><table class="table" summary="Subrules performance">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Example
+              </p>
+              </th>
+<th>
+              <p>
+                Compiler
+              </p>
+              </th>
+<th>
+              <p>
+                Speed (run-time)
+              </p>
+              </th>
+<th>
+              <p>
+                Time (compile-time)
+              </p>
+              </th>
+<th>
+              <p>
+                Memory (compile-time)
+              </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                calc1_sr
+              </p>
+              </td>
+<td>
+              <p>
+                gcc 4.4.1
+              </p>
+              </td>
+<td>
+              <p>
+                +6%
+              </p>
+              </td>
+<td>
+              <p>
+                n/a
+              </p>
+              </td>
+<td>
+              <p>
+                n/a
+              </p>
+              </td>
+</tr>
+<tr>
+<td>
+              <p>
+                calc1_sr
+              </p>
+              </td>
+<td>
+              <p>
+                Visual C++ 2008 (VC9)
+              </p>
+              </td>
+<td>
+              <p>
+                +5%
+              </p>
+              </td>
+<td>
+              <p>
+                n/a
+              </p>
+              </td>
+<td>
+              <p>
+                n/a
+              </p>
+              </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mini_xml2_sr
+              </p>
+              </td>
+<td>
+              <p>
+                gcc 3.4.6
+              </p>
+              </td>
+<td>
+              <p>
+                -1%
+              </p>
+              </td>
+<td>
+              <p>
+                +54%
+              </p>
+              </td>
+<td>
+              <p>
+                +32%
+              </p>
+              </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mini_xml2_sr
+              </p>
+              </td>
+<td>
+              <p>
+                gcc 4.1.2
+              </p>
+              </td>
+<td>
+              <p>
+                +5%
+              </p>
+              </td>
+<td>
+              <p>
+                +58%
+              </p>
+              </td>
+<td>
+              <p>
+                +25%
+              </p>
+              </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mini_xml2_sr
+              </p>
+              </td>
+<td>
+              <p>
+                gcc 4.4.1
+              </p>
+              </td>
+<td>
+              <p>
+                +8%
+              </p>
+              </td>
+<td>
+              <p>
+                +20%
+              </p>
+              </td>
+<td>
+              <p>
+                +14%
+              </p>
+              </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mini_xml2_sr
+              </p>
+              </td>
+<td>
+              <p>
+                Visual C++ 2008 (VC9)
+              </p>
+              </td>
+<td>
+              <p>
+                +9%
+              </p>
+              </td>
+<td>
+              <p>
+                +52%
+              </p>
+              </td>
+<td>
+              <p>
+                +40%
+              </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+          The columns are:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+<span class="bold"><strong>Speed (run-time)</strong></span>: speed-up of the parser
+            resulting from the use of subrules (higher is better).
+          </li>
+<li class="listitem">
+<span class="bold"><strong>Time (compile-time)</strong></span>: increase in compile
+            time (lower is better).
+          </li>
+<li class="listitem">
+<span class="bold"><strong>Memory (compile-time)</strong></span>: increase in compiler
+            memory usage (lower is better).
+          </li>
+</ul></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.notes"></a><h6>
-<a name="id1144068"></a>
+<a name="id2706612"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.notes">Notes</a>
         </h6>
 <p>
