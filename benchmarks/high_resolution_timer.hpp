@@ -1,4 +1,5 @@
 //  Copyright (c) 2005-2009 Hartmut Kaiser
+//  Copyright (c) 2009      Edward Grace
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -299,7 +300,122 @@ namespace util
         //      || !defined(_POSIX_THREAD_CPUTIME)
         //      || _POSIX_THREAD_CPUTIME <= 0)
 
-//  For platforms other than Windows or Linux, simply fall back to boost::timer
+#if defined(BOOST_HAS_GETTIMEOFDAY)
+
+// For platforms that do not support _POSIX_TIMERS but do have
+// GETTIMEOFDAY, which is still preferable to std::clock()
+#include <stdexcept>
+#include <limits>
+
+namespace util
+{
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    //  high_resolution_timer 
+    //      A timer object measures elapsed time.
+    //
+    //  Implemented with gettimeofday() for platforms that support it,
+    //  such as Darwin (OS X) but do not support the previous options.
+    //
+    //  Copyright (c) 2009 Edward Grace
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    class high_resolution_timer
+    {
+    public:
+        high_resolution_timer() 
+        {
+            start_time.tv_sec = 0;
+            start_time.tv_usec = 0;
+
+            restart(); 
+        } 
+
+        high_resolution_timer(double t) 
+        {
+            start_time.tv_sec = time_t(t);
+            start_time.tv_usec = (t - start_time.tv_sec) * 1e6;
+        }
+
+        high_resolution_timer(high_resolution_timer const& rhs) 
+          : start_time(rhs.start_time)
+        {
+        } 
+
+        static double now()
+        {
+            // Under some implementations gettimeofday() will always
+            // return zero. If it returns anything else however then
+            // we accept this as evidence of an error.  Note we are
+            // not assuming that -1 explicitly indicates the error
+            // condition, just that non zero is indicative of the
+            // error.
+            timeval now;
+            if (gettimeofday(&now, NULL))
+                boost::throw_exception(std::runtime_error("Couldn't get current time"));
+            return double(now.tv_sec) + double(now.tv_usec) * 1e-6;
+        }
+
+        void restart() 
+        { 
+            if (gettimeofday(&start_time, NULL))
+                boost::throw_exception(std::runtime_error("Couldn't initialize start_time"));
+        } 
+
+        double elapsed() const                  // return elapsed time in seconds
+        { 
+            timeval now;
+            if (gettimeofday(&now, NULL))
+                boost::throw_exception(std::runtime_error("Couldn't get current time"));
+
+            if (now.tv_sec == start_time.tv_sec)
+                return double(now.tv_usec - start_time.tv_usec) * 1e-6;
+
+            return double(now.tv_usec - start_time.tv_sec) + 
+                (double(now.tv_usec - start_time.tv_usec) * 1e-6);
+        }
+
+        double elapsed_max() const   // return estimated maximum value for elapsed()
+        {
+            return double((std::numeric_limits<time_t>::max)() - start_time.tv_sec); 
+        }
+
+        double elapsed_min() const            // return minimum value for elapsed()
+        { 
+            // On systems without an explicit clock_getres or similar
+            // we can only estimate an upper bound on the resolution
+            // by repeatedly calling the gettimeofday function.  This
+            // is often likely to be indicative of the true
+            // resolution.
+            timeval a, b;
+            double delta(0);
+
+            if (gettimeofday(&a, NULL)) 
+                boost::throw_exception(std::runtime_error("Couldn't get resolution."));
+
+            // Spin around in a tight loop until we observe a change
+            // in the reported timer value.
+            do {
+                if (gettimeofday(&b, NULL)) 
+                    boost::throw_exception(std::runtime_error("Couldn't get resolution."));
+                delta = double(b.tv_sec - a.tv_sec) + 
+                    double(b.tv_usec - a.tv_usec) * 1e-6;
+            } while (delta <= 0.0);
+
+            return delta;
+        }
+
+    private:
+        timeval start_time;
+    }; 
+
+} 
+
+#else // BOOST_HAS_GETTIMEOFDAY
+
+//  For platforms other than Windows or Linux, or not implementing gettimeofday
+//  simply fall back to boost::timer
 #include <boost/timer.hpp>
 
 namespace util
@@ -316,5 +432,8 @@ namespace util
 
 #endif
 
-#endif  
+#endif
+
+#endif
+
 
