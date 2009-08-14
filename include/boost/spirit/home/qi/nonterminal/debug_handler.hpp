@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
 #include <boost/spirit/home/qi/operator/expect.hpp>
 #include <boost/function.hpp>

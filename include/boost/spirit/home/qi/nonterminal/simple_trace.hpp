@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/support/unused.hpp>
 #include <boost/fusion/include/out.hpp>
 #include <iostream>
 
@@ -27,31 +28,6 @@
 //  number of spaces to indent
 #if !defined(BOOST_SPIRIT_DEBUG_INDENT)
 #define BOOST_SPIRIT_DEBUG_INDENT 2
-#endif
-
-#if !defined(BOOST_FUSION_UNUSED_HAS_IO)
-namespace boost { namespace fusion
-{
-    namespace detail
-    {
-        struct unused_only
-        {
-            unused_only(unused_type const&) {}
-        };
-    }
-
-    template <typename Out>
-    inline Out& operator<<(Out& out, detail::unused_only const&)
-    {
-        return out;
-    }
-
-    template <typename In>
-    inline In& operator>>(In& in, unused_type&)
-    {
-        return in;
-    }
-}}
 #endif
 
 namespace boost { namespace spirit { namespace qi

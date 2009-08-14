@@ -92,10 +92,10 @@ namespace boost { namespace spirit { namespace karma
         //  between 0.001 and 100000 will be generated using the fixed format, 
         //  all others will be generated using the scientific representation.
         //
-        //  The trailing_zeros_flag can be used to force the output of trailing 
-        //  zeros in the fractional part up to the number of digits returned by 
-        //  the precision() member function. The default is not to generate 
-        //  the trailing zeros.
+        //  The function trailing_zeros() can be used to force the output of 
+        //  trailing zeros in the fractional part up to the number of digits 
+        //  returned by the precision() member function. The default is not to 
+        //  generate the trailing zeros.
         //  
         //      n     The floating point number to output. This can be used to 
         //            adjust the formatting flags depending on the value of 
@@ -182,13 +182,12 @@ namespace boost { namespace spirit { namespace karma
         //            I.e. a fractional part of 0.01234 is represented as 1234 
         //            when the 'precision_' parameter is 5.
         //
-        //  Note: If the trailing_zeros flag is not returned from the 
-        //        floatfield() function, the 'precision_' parameter will have 
-        //        been corrected from the value the precision() function 
-        //        returned earlier (defining the maximal number of fractional 
-        //        digits) in the sense, that it takes into account trailing 
-        //        zeros. I.e. a floating point number 0.0123 and a value of 5 
-        //        returned from precision() will result in:
+        //  Note: If trailing_zeros() does not return true the 'precision_' 
+        //        parameter will have been corrected from the value the 
+        //        precision() function returned earlier (defining the maximal 
+        //        number of fractional digits) in the sense, that it takes into 
+        //        account trailing zeros. I.e. a floating point number 0.0123 
+        //        and a value of 5 returned from precision() will result in:
         //
         //        trailing_zeros is not specified:
         //            n           123
@@ -250,7 +249,7 @@ namespace boost { namespace spirit { namespace karma
         //
         //      sink      The output iterator to use for generation
         //      n         The (signed) floating point number to convert. 
-        //      
+        //
         //  The Tag template parameter is either of the type unused_type or
         //  describes the character class and conversion to be applied to any 
         //  output possibly influenced by either the lower[...] or upper[...] 
