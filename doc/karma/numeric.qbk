@@ -736,8 +736,8 @@ functions:
 
       `p`: the instance of the policy type used to instantiate this floating 
            point generator.
-    ]
-    [``
+    ]]
+[   [``
         bool force_sign(T n);
     ``]
     [The default behavior is to not to require generating a sign. If the function
