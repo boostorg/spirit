@@ -54,7 +54,7 @@ namespace client
                     |   &punct  << "a punct"
                     |   &space  << "a space"
                     |   &cntrl  << "a cntrl"
-                    |   omit[char_] << "of unknown type"
+                    |   "of unknown type"
                     )
             ),
             //  End grammar
