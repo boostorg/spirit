@@ -305,11 +305,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         }
 
         template <typename T>
-        void output(T const& value) 
+        bool output(T const& value) 
         { 
             // buffer characters, if appropriate
-            if (NULL != buffer) 
+            if (NULL != buffer) {
                 buffer->output(value);
+                return false;
+            }
+            return true;
         }
 
         bool has_buffer() const { return NULL != buffer; }
@@ -324,7 +327,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         no_buffering_policy(no_counting_policy const& rhs) {}
 
         template <typename T>
-        void output(T const& value) {}
+        bool output(T const& value) 
+        {
+            return true;
+        }
 
         bool has_buffer() const { return false; }
     };
@@ -352,11 +358,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         {}
 
         template <typename T>
-        void output(T const& value) 
+        bool output(T const& value) 
         { 
             this->counting_policy::output(value);
             this->tracking_policy::output(value);
-            this->buffering_policy::output(value);
+            return this->buffering_policy::output(value);
         }
     };
 
@@ -446,8 +452,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename T>
         void operator=(T const& value) 
         { 
-            this->base_iterator::output(value);
-            if (!this->base_iterator::has_buffer())
+            if (this->base_iterator::output(value))
                 *sink = value; 
         }
 
