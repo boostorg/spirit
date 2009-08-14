@@ -156,6 +156,8 @@ namespace boost { namespace spirit { namespace karma
     struct any_real_generator
       : primitive_generator<any_real_generator<T, Policies, CharEncoding, Tag> >
     {
+        typedef typename Policies::properties properties;
+
         template <typename Context, typename Unused>
         struct attribute
         {
@@ -206,6 +208,8 @@ namespace boost { namespace spirit { namespace karma
       : primitive_generator<literal_real_generator<T, Policies, CharEncoding
           , Tag, no_attribute> >
     {
+        typedef typename Policies::properties properties;
+
         template <typename Context, typename Unused>
         struct attribute
           : mpl::if_c<no_attribute, unused_type, T>

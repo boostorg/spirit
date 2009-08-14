@@ -19,6 +19,8 @@
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
 
+#include <boost/mpl/bool.hpp>
+
 namespace boost { namespace spirit { namespace karma 
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -50,6 +52,14 @@ namespace boost { namespace spirit { namespace karma
         typedef T value_type;
 
         ///////////////////////////////////////////////////////////////////////
+        //  By default the policy doesn't require any special iterator 
+        //  functionality. The floating point generator exposes its properties
+        //  from here, so this needs to be updated in case other properties
+        //  need to be implemented.
+        ///////////////////////////////////////////////////////////////////////
+        typedef mpl::int_<generator_properties::no_properties> properties;
+
+        ///////////////////////////////////////////////////////////////////////
         //  Specifies, which representation type to use during output 
         //  generation.
         ///////////////////////////////////////////////////////////////////////
@@ -63,11 +73,38 @@ namespace boost { namespace spirit { namespace karma
         BOOST_SCOPED_ENUM_END
 
         ///////////////////////////////////////////////////////////////////////
-        //  The default behavior is to not to require generating a sign. If 
-        //  'force_sign' is specified as true, then all generated numbers will 
-        //  have a sign ('+' or '-', zeros will have a space instead of a sign)
+        //  This is the main function used to generate the output for a 
+        //  floating point number. It is called by the real generator in order 
+        //  to perform the conversion. In theory all of the work can be 
+        //  implemented here, but it is the easiest to use existing 
+        //  functionality provided by the type specified by the template 
+        //  parameter `Inserter`. 
+        //
+        //      sink: the output iterator to use for generation
+        //      n:    the floating point number to convert 
+        //      p:    the instance of the policy type used to instantiate this 
+        //            floating point generator.
         ///////////////////////////////////////////////////////////////////////
-        static bool const force_sign = false;
+        template <typename Inserter, typename OutputIterator, typename Policies>
+        static bool
+        call (OutputIterator& sink, T n, Policies const& p)
+        {
+            return Inserter::call_n(sink, n, p);
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        //  The default behavior is to not to require generating a sign. If 
+        //  'force_sign()' returns true, then all generated numbers will 
+        //  have a sign ('+' or '-', zeros will have a space instead of a sign)
+        // 
+        //      n     The floating point number to output. This can be used to 
+        //            adjust the required behavior depending on the value of 
+        //            this number.
+        ///////////////////////////////////////////////////////////////////////
+        static bool const force_sign(T)
+        {
+            return false;
+        }
 
         ///////////////////////////////////////////////////////////////////////
         //  Return whether trailing zero digits have to be emitted in the 
@@ -135,16 +172,20 @@ namespace boost { namespace spirit { namespace karma
         ///////////////////////////////////////////////////////////////////////
         //  Generate the integer part of the number.
         //
-        //      sink  The output iterator to use for generation
-        //      n     The absolute value of the integer part of the floating 
-        //            point number to convert (always non-negative). 
-        //      sign  The sign of the overall floating point number to convert.
+        //      sink       The output iterator to use for generation
+        //      n          The absolute value of the integer part of the floating 
+        //                 point number to convert (always non-negative). 
+        //      sign       The sign of the overall floating point number to 
+        //                 convert.
+        //      force_sign Whether a sign has to be generated even for 
+        //                 non-negative numbers
         ///////////////////////////////////////////////////////////////////////
-        template <bool ForceSign, typename OutputIterator>
-        static bool integer_part (OutputIterator& sink, T n, bool sign)
+        template <typename OutputIterator>
+        static bool integer_part (OutputIterator& sink, T n, bool sign
+          , bool force_sign)
         {
-            return sign_inserter<ForceSign>::call(
-                        sink, detail::is_zero(n), sign) &&
+            return sign_inserter::call(
+                      sink, detail::is_zero(n), sign, force_sign) &&
                    int_inserter<10>::call(sink, n);
         }
 
@@ -158,6 +199,8 @@ namespace boost { namespace spirit { namespace karma
         //            to the value returned from the precision() function 
         //            earlier. I.e. a fractional part of 0.01234 is
         //            represented as 1234 when the 'Precision' is 5.
+        //      precision   The number of digits to emit as returned by the 
+        //                  function 'precision()' above
         //
         //            This is given to allow to decide, whether a decimal point
         //            has to be generated at all.
@@ -167,7 +210,7 @@ namespace boost { namespace spirit { namespace karma
         //            function below.
         ///////////////////////////////////////////////////////////////////////
         template <typename OutputIterator>
-        static bool dot (OutputIterator& sink, T)
+        static bool dot (OutputIterator& sink, T /*n*/, unsigned /*precision*/)
         {
             return char_inserter<>::call(sink, '.');  // generate the dot by default 
         }
@@ -181,6 +224,10 @@ namespace boost { namespace spirit { namespace karma
         //            the number of units which correspond to the 'Precision'. 
         //            I.e. a fractional part of 0.01234 is represented as 1234 
         //            when the 'precision_' parameter is 5.
+        //      precision_  The corrected number of digits to emit (see note 
+        //                  below)
+        //      precision   The number of digits to emit as returned by the 
+        //                  function 'precision()' above
         //
         //  Note: If trailing_zeros() does not return true the 'precision_' 
         //        parameter will have been corrected from the value the 
@@ -200,7 +247,7 @@ namespace boost { namespace spirit { namespace karma
         ///////////////////////////////////////////////////////////////////////
         template <typename OutputIterator>
         static bool fraction_part (OutputIterator& sink, T n
-          , unsigned precision_)
+          , unsigned precision_, unsigned precision)
         {
             // allow for ADL to find the correct overload for floor and log10
             using namespace std;
@@ -213,7 +260,9 @@ namespace boost { namespace spirit { namespace karma
             bool r = true;
             for (/**/; r && digits < precision_; digits = digits + 1)
                 r = char_inserter<>::call(sink, '0');
-            return r && int_inserter<10>::call(sink, n);
+            if (precision && r)
+                r = int_inserter<10>::call(sink, n);
+            return r;
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -234,8 +283,8 @@ namespace boost { namespace spirit { namespace karma
         {
             long abs_n = detail::absolute_value(n);
             bool r = char_inserter<CharEncoding, Tag>::call(sink, 'e') &&
-                     sign_inserter<false>::call(
-                          sink, detail::is_zero(n), detail::is_negative(n));
+                     sign_inserter::call(sink, detail::is_zero(n)
+                        , detail::is_negative(n), false);
 
             // the C99 Standard requires at least two digits in the exponent
             if (r && abs_n < 10)
@@ -247,8 +296,10 @@ namespace boost { namespace spirit { namespace karma
         //  Print the textual representations for non-normal floats (NaN and 
         //  Inf)
         //
-        //      sink      The output iterator to use for generation
-        //      n         The (signed) floating point number to convert. 
+        //      sink       The output iterator to use for generation
+        //      n          The (signed) floating point number to convert. 
+        //      force_sign Whether a sign has to be generated even for 
+        //                 non-negative numbers
         //
         //  The Tag template parameter is either of the type unused_type or
         //  describes the character class and conversion to be applied to any 
@@ -258,23 +309,19 @@ namespace boost { namespace spirit { namespace karma
         //  Note: These functions get called only if fpclassify() returned 
         //        FP_INFINITY or FP_NAN.
         ///////////////////////////////////////////////////////////////////////
-        template <
-            bool ForceSign, typename CharEncoding, typename Tag
-          , typename OutputIterator>
-        static bool nan (OutputIterator& sink, T n)
+        template <typename CharEncoding, typename Tag, typename OutputIterator>
+        static bool nan (OutputIterator& sink, T n, bool force_sign)
         {
-            return sign_inserter<ForceSign>::call(
-                        sink, false, detail::is_negative(n)) &&
+            return sign_inserter::call(
+                        sink, false, detail::is_negative(n), force_sign) &&
                    string_inserter<CharEncoding, Tag>::call(sink, "nan");
         }
 
-        template <
-            bool ForceSign, typename CharEncoding, typename Tag
-          , typename OutputIterator>
-        static bool inf (OutputIterator& sink, T n)
+        template <typename CharEncoding, typename Tag, typename OutputIterator>
+        static bool inf (OutputIterator& sink, T n, bool force_sign)
         {
-            return sign_inserter<ForceSign>::call(
-                        sink, false, detail::is_negative(n)) &&
+            return sign_inserter::call(
+                        sink, false, detail::is_negative(n), force_sign) &&
                    string_inserter<CharEncoding, Tag>::call(sink, "inf");
         }
     };

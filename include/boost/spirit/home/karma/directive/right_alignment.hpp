@@ -98,7 +98,7 @@ namespace boost { namespace spirit { namespace karma
             }   // re-enable counting
 
             buffering.disable();    // do not perform buffering any more
-            
+
             // generate the left padding
             detail::enable_counting<OutputIterator> counting(sink, buffering.buffer_size());
             while(r && counting.count() < width) 

@@ -200,8 +200,8 @@ namespace boost { namespace spirit { namespace karma
         generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
-            return sign_inserter<force_sign>::call(sink
-                      , detail::is_zero(attr), detail::is_negative(attr)) &&
+            return sign_inserter::call(sink, detail::is_zero(attr)
+                      , detail::is_negative(attr), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
                       , detail::absolute_value(attr)) &&
                    karma::delimit_out(sink, d);      // always do post-delimiting
@@ -262,8 +262,8 @@ namespace boost { namespace spirit { namespace karma
             if (n_ != attr)
                 return false;
 
-            return sign_inserter<force_sign>::call(sink
-                      , detail::is_zero(n_), detail::is_negative(n_)) &&
+            return sign_inserter::call(sink, detail::is_zero(n_)
+                      , detail::is_negative(n_), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
                       , detail::absolute_value(n_)) &&
                    karma::delimit_out(sink, d);      // always do post-delimiting
@@ -275,8 +275,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , unused_type) const
         {
-            return sign_inserter<force_sign>::call(sink
-                      , detail::is_zero(n_), detail::is_negative(n_)) &&
+            return sign_inserter::call(sink, detail::is_zero(n_)
+                      , detail::is_negative(n_), force_sign) &&
                    int_inserter<Radix, CharEncoding, Tag>::call(sink
                       , detail::absolute_value(n_)) &&
                    karma::delimit_out(sink, d);      // always do post-delimiting

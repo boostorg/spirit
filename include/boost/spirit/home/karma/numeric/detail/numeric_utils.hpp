@@ -547,16 +547,15 @@ namespace boost { namespace spirit { namespace karma {
     //
     //  The sign_inserter template generates a sign for a given numeric value.
     //
-    //    The parameter ForceSign allows to generate a sign even for positive  
+    //    The parameter forcesign allows to generate a sign even for positive  
     //    numbers.
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <bool ForceSign>
     struct sign_inserter
     {
         template <typename OutputIterator>
         static bool
-        call(OutputIterator& sink, bool /*is_zero*/, bool is_negative)
+        call_noforce(OutputIterator& sink, bool /*is_zero*/, bool is_negative)
         {
             // generate a sign for negative numbers only
             if (is_negative) {
@@ -565,14 +564,10 @@ namespace boost { namespace spirit { namespace karma {
             }
             return true;
         }
-    };
 
-    template <>
-    struct sign_inserter<true>
-    {
         template <typename OutputIterator>
         static bool
-        call(OutputIterator& sink, bool is_zero, bool is_negative)
+        call_force(OutputIterator& sink, bool is_zero, bool is_negative)
         {
             // generate a sign for all numbers except zero
             if (!is_zero) 
@@ -582,6 +577,16 @@ namespace boost { namespace spirit { namespace karma {
 
             ++sink;
             return true;
+        }
+
+        template <typename OutputIterator>
+        static bool
+        call(OutputIterator& sink, bool is_zero, bool is_negative
+          , bool forcesign)
+        {
+            return forcesign ?
+                call_force(sink, is_zero, is_negative) :
+                call_noforce(sink, is_zero, is_negative);
         }
     };
 
@@ -625,18 +630,20 @@ namespace boost { namespace spirit { namespace karma {
       , typename Tag = unused_type>
     struct real_inserter
     {
-        enum { force_sign = Policies::force_sign };
-
         template <typename OutputIterator>
         static bool
         call (OutputIterator& sink, float n, Policies const& p = Policies())
         {
             int fpclass = (math::fpclassify)(n);
-            if ((int)FP_NAN == fpclass)
-                return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
-            else if ((int)FP_INFINITE == fpclass)
-                return Policies::template inf<force_sign, CharEncoding, Tag>(sink, n);
-            return call_n(sink, n, p);
+            if ((int)FP_NAN == fpclass) {
+                return Policies::template nan<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            else if ((int)FP_INFINITE == fpclass) {
+                return Policies::template inf<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            return p.template call<real_inserter>(sink, n, p);
         }
 
         template <typename OutputIterator>
@@ -644,11 +651,15 @@ namespace boost { namespace spirit { namespace karma {
         call (OutputIterator& sink, double n, Policies const& p = Policies())
         {
             int fpclass = (math::fpclassify)(n);
-            if ((int)FP_NAN == fpclass)
-                return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
-            else if ((int)FP_INFINITE == fpclass)
-                return Policies::template inf<force_sign, CharEncoding, Tag>(sink, n);
-            return call_n(sink, n, p);
+            if ((int)FP_NAN == fpclass) {
+                return Policies::template nan<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            else if ((int)FP_INFINITE == fpclass) {
+                return Policies::template inf<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            return p.template call<real_inserter>(sink, n, p);
         }
 
         template <typename OutputIterator>
@@ -656,11 +667,15 @@ namespace boost { namespace spirit { namespace karma {
         call (OutputIterator& sink, long double n, Policies const& p = Policies())
         {
             int fpclass = (math::fpclassify)(n);
-            if ((int)FP_NAN == fpclass)
-                return Policies::template nan<force_sign, CharEncoding, Tag>(sink, n);
-            else if ((int)FP_INFINITE == fpclass)
-                return Policies::template inf<force_sign, CharEncoding, Tag>(sink, n);
-            return call_n(sink, n, p);
+            if ((int)FP_NAN == fpclass) {
+                return Policies::template nan<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            else if ((int)FP_INFINITE == fpclass) {
+                return Policies::template inf<CharEncoding, Tag>(
+                    sink, n, p.force_sign(n));
+            }
+            return p.template call<real_inserter>(sink, n, p);
         }
 
         template <typename OutputIterator, typename U>
@@ -669,7 +684,7 @@ namespace boost { namespace spirit { namespace karma {
         {
             // we have no means of testing whether the number is normalized if
             // the type is not float, double or long double
-            return call_n(sink, T(n), p);
+            return p.template call<real_inserter>(sink, T(n), p);
         }
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)  
@@ -686,6 +701,7 @@ namespace boost { namespace spirit { namespace karma {
         call_n (OutputIterator& sink, U n, Policies const& p)
         {
         // prepare sign and get output format
+            bool force_sign = p.force_sign(n);
             bool sign_val = false;
             int flags = p.floatfield(n);
             if (detail::is_negative(n)) 
@@ -769,14 +785,13 @@ namespace boost { namespace spirit { namespace karma {
             }
 
         // generate integer part
-            bool r = p.template integer_part<force_sign>(
-                sink, long_int_part, sign_val);
+            bool r = p.integer_part(sink, long_int_part, sign_val, force_sign);
 
         // generate decimal point
-            r = r && p.dot(sink, long_frac_part);
+            r = r && p.dot(sink, long_frac_part, precision);
 
         // generate fractional part with the desired precision
-            r = r && p.fraction_part(sink, long_frac_part, prec);
+            r = r && p.fraction_part(sink, long_frac_part, prec, precision);
 
             if (r && 0 == (Policies::fmtflags::fixed & flags)) {
                 return p.template exponent<CharEncoding, Tag>(sink, 

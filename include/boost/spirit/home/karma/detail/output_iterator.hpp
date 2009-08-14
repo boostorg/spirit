@@ -248,7 +248,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         void enable(std::size_t width_) 
         { 
             tidy();             // release existing buffer
-            width = width_; 
+            width = (width_ == std::size_t(-1)) ? 0 : width_;
         }
 
         void tidy() 
@@ -529,7 +529,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename OutputIterator>
     struct enable_buffering
     {
-        enable_buffering(OutputIterator& sink_, std::size_t width = 0)
+        enable_buffering(OutputIterator& sink_
+              , std::size_t width = std::size_t(-1))
           : sink(sink_), prev_buffer(NULL), enabled(false)
         {
             buffer_data.enable(width);
