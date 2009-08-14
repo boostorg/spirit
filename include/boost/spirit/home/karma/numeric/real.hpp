@@ -23,7 +23,7 @@
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/real_policies.hpp>
-#include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
+#include <boost/spirit/home/karma/numeric/detail/real_utils.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/value_at.hpp>
 #include <boost/fusion/include/vector.hpp>
