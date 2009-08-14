@@ -66,7 +66,7 @@ int main()
     // basic tests with delimiter
     {
         rule<outiter_type, space_type> start;
-        subrule<0, space_type> sr;
+        subrule<0> sr;
 
         start = (
             sr = char_[_1 = 'a'] << int_[_1 = 10] << double_[_1 = 12.4]
@@ -77,9 +77,9 @@ int main()
             sr = (char_ << int_ << double_)[_1 = 'a', _2 = 10, _3 = 12.4]
         ), space));
 
-        subrule<1, space_type> a;
-        subrule<2, space_type> b;
-        subrule<3, space_type> c;
+        subrule<1> a;
+        subrule<2> b;
+        subrule<3> c;
 
         start = (
             sr = a << b << c
@@ -113,7 +113,7 @@ int main()
         typedef variant<char, int, double> var_type;
 
         rule<outiter_type, space_type, var_type()> start;
-        subrule<0, space_type, var_type()> sr;
+        subrule<0, var_type()> sr;
 
         start %= (
             sr = (char_ | int_ | double_)[_1 = _r0]
@@ -178,7 +178,7 @@ See if:
 
     {
         rule<outiter_type, space_type, void(char, int, double)> start;
-        subrule<0, space_type, void(char, int, double)> sr;
+        subrule<0, void(char, int, double)> sr;
 
         start = (
             sr = char_[_1 = _r1] << int_[_1 = _r2] << double_[_1 = _r3]
@@ -189,10 +189,10 @@ See if:
             sr = (char_ << int_ << double_)[_1 = _r1, _2 = _r2, _3 = _r3]
         )('a', 10, 12.4), space));
 
-        subrule<1, space_type, void(char, int, double)> entry;
-        subrule<2, space_type, void(char)> a;
-        subrule<3, space_type, void(int)> b;
-        subrule<4, space_type, void(double)> c;
+        subrule<1, void(char, int, double)> entry;
+        subrule<2, void(char)> a;
+        subrule<3, void(int)> b;
+        subrule<4, void(double)> c;
 
         start = (
             entry = a(_r1) << b(_r2) << c(_r3)

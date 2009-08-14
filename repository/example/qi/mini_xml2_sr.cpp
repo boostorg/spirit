@@ -172,11 +172,11 @@ namespace client
 
         qi::rule<Iterator, mini_xml(), ascii::space_type> entry;
 
-        repo::qi::subrule<0, mini_xml(), qi::locals<std::string>, ascii::space_type> xml;
-        repo::qi::subrule<1, mini_xml_node(), ascii::space_type> node;
-        repo::qi::subrule<2, std::string(), ascii::space_type> text;
-        repo::qi::subrule<3, std::string(), ascii::space_type> start_tag;
-        repo::qi::subrule<4, void(std::string), ascii::space_type> end_tag;
+        repo::qi::subrule<0, mini_xml(), qi::locals<std::string> > xml;
+        repo::qi::subrule<1, mini_xml_node()> node;
+        repo::qi::subrule<2, std::string()> text;
+        repo::qi::subrule<3, std::string()> start_tag;
+        repo::qi::subrule<4, void(std::string)> end_tag;
     };
     //]
 }

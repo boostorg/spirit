@@ -200,7 +200,6 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {
             // compute context type for this subrule
             typedef typename Def::locals_type subrule_locals_type;
-            typedef typename Def::skipper_type subrule_skipper_type;
             typedef typename Def::attr_type subrule_attr_type;
             typedef typename Def::attr_reference_type subrule_attr_reference_type;
             typedef typename Def::parameter_types subrule_parameter_types;
@@ -225,12 +224,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             // without passing values for them.
             context_type context(*this, attr_);
 
-            // If you are seeing a compilation error here stating that the
-            // forth parameter can't be converted to a qi::reference
-            // then you are probably trying to use a subrule with an
-            // incompatible skipper type.
-            return call_binder<subrule_skipper_type>(
-                first, last, context, skipper, def.binder);
+            return def.binder(first, last, context, skipper);
         }
 
         template <typename Def
@@ -243,7 +237,6 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {
             // compute context type for this subrule
             typedef typename Def::locals_type subrule_locals_type;
-            typedef typename Def::skipper_type subrule_skipper_type;
             typedef typename Def::attr_type subrule_attr_type;
             typedef typename Def::attr_reference_type subrule_attr_reference_type;
             typedef typename Def::parameter_types subrule_parameter_types;
@@ -268,23 +261,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             // passing values of incompatible types for them.
             context_type context(*this, attr_, params, caller_context);
 
-            // If you are seeing a compilation error here stating that the
-            // forth parameter can't be converted to a qi::reference
-            // then you are probably trying to use a subrule with an
-            // incompatible skipper type.
-            return call_binder<subrule_skipper_type>(
-                first, last, context, skipper, def.binder);
-        }
-
-        // wrapper to let the incoming skipper be converted to the
-        // skipper type expected by the subrule being invoked
-        template <typename Skipper, typename Iterator
-          , typename Context, typename Binder>
-        bool call_binder(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Binder const& binder) const
-        {
-            return binder(first, last, context, skipper);
+            return def.binder(first, last, context, skipper);
         }
 
         template <typename Context>
@@ -308,7 +285,6 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     template <
         int ID_
       , typename Locals
-      , typename Skipper
       , typename Attr
       , typename AttrRef
       , typename Parameters
@@ -322,7 +298,6 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         BOOST_STATIC_CONSTANT(int, ID = ID_);
 
         typedef Locals locals_type;
-        typedef Skipper skipper_type;
         typedef Attr attr_type;
         typedef AttrRef attr_reference_type;
         typedef Parameters parameter_types;
@@ -353,37 +328,30 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         int ID_
       , typename T1 = unused_type
       , typename T2 = unused_type
-      , typename T3 = unused_type
     >
     struct subrule
       : proto::extends<
             typename proto::terminal<
-                spirit::qi::reference<subrule<ID_, T1, T2, T3> const>
+                spirit::qi::reference<subrule<ID_, T1, T2> const>
             >::type
-          , subrule<ID_, T1, T2, T3>
+          , subrule<ID_, T1, T2>
         >
-      , spirit::qi::parser<subrule<ID_, T1, T2, T3> >
+      , spirit::qi::parser<subrule<ID_, T1, T2> >
     {
         typedef mpl::int_<ID_> id_type;
         BOOST_STATIC_CONSTANT(int, ID = ID_);
 
-        typedef subrule<ID_, T1, T2, T3> this_type;
+        typedef subrule<ID_, T1, T2> this_type;
         typedef spirit::qi::reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
         typedef proto::extends<terminal, this_type> base_type;
 
-        typedef mpl::vector<T1, T2, T3> template_params;
+        typedef mpl::vector<T1, T2> template_params;
 
         // locals_type is a sequence of types to be used as local variables
         typedef typename
             spirit::detail::extract_locals<template_params>::type
         locals_type;
-
-        // The skip-parser type
-        typedef typename
-            spirit::detail::extract_component<
-                spirit::qi::domain, template_params>::type
-        skipper_type;
 
         typedef typename
             spirit::detail::extract_sig<template_params>::type
@@ -424,7 +392,6 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             typedef subrule_definition<
                 ID_
               , locals_type
-              , skipper_type
               , attr_type
               , attr_reference_type
               , parameter_types

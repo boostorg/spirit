@@ -106,9 +106,9 @@ struct dump_ast
 
     karma::rule<OuputIterator, expression_ast(), space_type> entry;
 
-    repo::karma::subrule<0, expression_ast(), space_type> ast_node;
-    repo::karma::subrule<1, binary_op(), space_type> binary_node;
-    repo::karma::subrule<2, unary_op(), space_type> unary_node;
+    repo::karma::subrule<0, expression_ast()> ast_node;
+    repo::karma::subrule<1, binary_op()> binary_node;
+    repo::karma::subrule<2, unary_op()> unary_node;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

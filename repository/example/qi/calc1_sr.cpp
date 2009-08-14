@@ -62,9 +62,9 @@ namespace client
 
         qi::rule<Iterator, ascii::space_type> entry;
 
-        repo::qi::subrule<0, ascii::space_type> expression;
-        repo::qi::subrule<1, ascii::space_type> term;
-        repo::qi::subrule<2, ascii::space_type> factor;
+        repo::qi::subrule<0> expression;
+        repo::qi::subrule<1> term;
+        repo::qi::subrule<2> factor;
     };
 }
 

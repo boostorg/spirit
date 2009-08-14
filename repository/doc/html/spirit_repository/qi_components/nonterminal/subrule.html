@@ -28,7 +28,7 @@
         Qi subrules</a>
 </h4></div></div></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.description"></a><h6>
-<a name="id3151310"></a>
+<a name="id3180460"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.description">Description</a>
         </h6>
 <p>
@@ -101,21 +101,21 @@
           most performance-critical parts), whereas the rest can use rules and grammars.
         </p>
 <a name="spirit_repository.qi_components.nonterminal.subrule.header"></a><h6>
-<a name="id3151798"></a>
+<a name="id3180947"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/qi/nonterminal/subrule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_subrule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.synopsis__declaration_"></a><h6>
-<a name="id3151900"></a>
+<a name="id3181050"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.synopsis__declaration_">Synopsis
           (declaration)</a>
         </h6>
-<pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
 </pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.parameters__declaration_"></a><h6>
-<a name="id3151998"></a>
+<a name="id3181138"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.parameters__declaration_">Parameters
           (declaration)</a>
         </h6>
@@ -153,14 +153,19 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>, <code class="computeroutput"><span class="identifier">A3</span></code>
+                  <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>
                 </p>
                 </td>
 <td>
                 <p>
                   Optional types, can be specified in any order. Can be one of 1.
-                  signature, 2. locals, 3. skipper (see rules reference for more
-                  information on those parameters).
+                  signature, 2. locals (see rules reference for more information
+                  on those parameters).
+                </p>
+                <p>
+                  Note that the skipper type need not be specified in the parameters,
+                  unlike with grammars and rules. Subrules will automatically use
+                  the skipper type which is in effect when they are invoked.
                 </p>
                 </td>
 </tr>
@@ -180,7 +185,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.synopsis__usage_"></a><h6>
-<a name="id3152160"></a>
+<a name="id3181298"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.synopsis__usage_">Synopsis
           (usage)</a>
         </h6>
@@ -209,7 +214,7 @@
 <span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="special">...)</span>         <span class="comment">// Arguments to group, i.e. to start subrule srA
 </span></pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.parameters__usage_"></a><h6>
-<a name="id3152455"></a>
+<a name="id3181592"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.parameters__usage_">Parameters
           (usage)</a>
         </h6>
@@ -333,7 +338,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.groups"></a><h6>
-<a name="id3152831"></a>
+<a name="id3181968"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.groups">Groups</a>
         </h6>
 <p>
@@ -378,7 +383,7 @@
 </span><span class="special">;</span>
 </pre>
 <a name="spirit_repository.qi_components.nonterminal.subrule.attributes"></a><h6>
-<a name="id3153333"></a>
+<a name="id3182471"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.attributes">Attributes</a>
         </h6>
 <p>
@@ -406,7 +411,7 @@
           </li>
 </ul></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.locals"></a><h6>
-<a name="id3153442"></a>
+<a name="id3182580"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.locals">Locals</a>
         </h6>
 <p>
@@ -416,7 +421,7 @@
           refer to the subrule's locals, if present.
         </p>
 <a name="spirit_repository.qi_components.nonterminal.subrule.example"></a><h6>
-<a name="id3153493"></a>
+<a name="id3182630"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.example">Example</a>
         </h6>
 <p>
@@ -498,11 +503,11 @@
 
     <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">mini_xml</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">entry</span><span class="special">;</span>
 
-    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">0</span><span class="special">,</span> <span class="identifier">mini_xml</span><span class="special">(),</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">locals</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;,</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">xml</span><span class="special">;</span>
-    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">1</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">node</span><span class="special">;</span>
-    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">2</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">text</span><span class="special">;</span>
-    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">3</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">start_tag</span><span class="special">;</span>
-    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">4</span><span class="special">,</span> <span class="keyword">void</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">),</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">end_tag</span><span class="special">;</span>
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">0</span><span class="special">,</span> <span class="identifier">mini_xml</span><span class="special">(),</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">locals</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">xml</span><span class="special">;</span>
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">1</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">()&gt;</span> <span class="identifier">node</span><span class="special">;</span>
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">2</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">()&gt;</span> <span class="identifier">text</span><span class="special">;</span>
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">3</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">()&gt;</span> <span class="identifier">start_tag</span><span class="special">;</span>
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">4</span><span class="special">,</span> <span class="keyword">void</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">)&gt;</span> <span class="identifier">end_tag</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -516,7 +521,7 @@
           <a href="../../../../../example/qi/mini_xml2_sr.cpp" target="_top">../../example/qi/mini_xml2_sr.cpp</a>
         </p>
 <a name="spirit_repository.qi_components.nonterminal.subrule.performance"></a><h6>
-<a name="id3155135"></a>
+<a name="id3184181"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.performance">Performance</a>
         </h6>
 <p>
@@ -524,7 +529,7 @@
           examples to subrules, with various compilers.
         </p>
 <div class="table">
-<a name="id3155155"></a><p class="title"><b>Table 2. Subrules performance</b></p>
+<a name="id3184201"></a><p class="title"><b>Table 2. Subrules performance</b></p>
 <div class="table-contents"><table class="table" summary="Subrules performance">
 <colgroup>
 <col>
@@ -771,7 +776,7 @@
           </li>
 </ul></div>
 <a name="spirit_repository.qi_components.nonterminal.subrule.notes"></a><h6>
-<a name="id3155501"></a>
+<a name="id3184547"></a>
           <a class="link" href="subrule.html#spirit_repository.qi_components.nonterminal.subrule.notes">Notes</a>
         </h6>
 <p>

@@ -27,7 +27,7 @@
         Karma subrules</a>
 </h4></div></div></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.description"></a><h6>
-<a name="id3158498"></a>
+<a name="id3187545"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.description">Description</a>
         </h6>
 <p>
@@ -89,21 +89,21 @@
           parts), whereas the rest can use rules and grammars.
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.header"></a><h6>
-<a name="id3158846"></a>
+<a name="id3187893"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/karma/nonterminal/subrule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_subrule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.synopsis__declaration_"></a><h6>
-<a name="id3158948"></a>
+<a name="id3187995"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.synopsis__declaration_">Synopsis
           (declaration)</a>
         </h6>
-<pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
+<pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.parameters__declaration_"></a><h6>
-<a name="id3159046"></a>
+<a name="id3188083"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.parameters__declaration_">Parameters
           (declaration)</a>
         </h6>
@@ -141,14 +141,19 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>, <code class="computeroutput"><span class="identifier">A3</span></code>
+                  <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>
                 </p>
                 </td>
 <td>
                 <p>
                   Optional types, can be specified in any order. Can be one of 1.
-                  signature, 2. locals, 3. delimiter (see rules reference for more
-                  information on those parameters).
+                  signature, 2. locals (see rules reference for more information
+                  on those parameters).
+                </p>
+                <p>
+                  Note that the delimiter type need not be specified in the parameters,
+                  unlike with grammars and rules. Subrules will automatically use
+                  the delimiter type which is in effect when they are invoked.
                 </p>
                 </td>
 </tr>
@@ -168,7 +173,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.synopsis__usage_"></a><h6>
-<a name="id3159208"></a>
+<a name="id3188243"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.synopsis__usage_">Synopsis
           (usage)</a>
         </h6>
@@ -197,7 +202,7 @@
 <span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="special">...)</span>         <span class="comment">// Arguments to group, i.e. to start subrule srA
 </span></pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.parameters__usage_"></a><h6>
-<a name="id3159501"></a>
+<a name="id3188535"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.parameters__usage_">Parameters
           (usage)</a>
         </h6>
@@ -321,7 +326,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.groups"></a><h6>
-<a name="id3159879"></a>
+<a name="id3188914"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.groups">Groups</a>
         </h6>
 <p>
@@ -366,7 +371,7 @@
 </span><span class="special">;</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.attributes"></a><h6>
-<a name="id3160373"></a>
+<a name="id3189408"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.attributes">Attributes</a>
         </h6>
 <p>
@@ -395,7 +400,7 @@
           </li>
 </ul></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.locals"></a><h6>
-<a name="id3160483"></a>
+<a name="id3189517"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.locals">Locals</a>
         </h6>
 <p>
@@ -405,7 +410,7 @@
           refer to the subrule's locals, if present.
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.example"></a><h6>
-<a name="id3160533"></a>
+<a name="id3189567"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.example">Example</a>
         </h6>
 <p>
@@ -477,7 +482,7 @@
           <a href="../../../../../example/karma/mini_xml_karma_sr.cpp" target="_top">../../example/karma/mini_xml_karma_sr.cpp</a>
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.performance"></a><h6>
-<a name="id3161466"></a>
+<a name="id3190500"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.performance">Performance</a>
         </h6>
 <p>
@@ -488,7 +493,7 @@
           subrules is very similar, so performance is very similar too).
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.notes"></a><h6>
-<a name="id3161515"></a>
+<a name="id3190549"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.notes">Notes</a>
         </h6>
 <p>

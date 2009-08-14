@@ -204,7 +204,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         {
             // compute context type for this subrule
             typedef typename Def::locals_type subrule_locals_type;
-            typedef typename Def::delimiter_type subrule_delimiter_type;
             typedef typename Def::attr_type subrule_attr_type;
             typedef typename Def::attr_reference_type subrule_attr_reference_type;
             typedef typename Def::parameter_types subrule_parameter_types;
@@ -227,12 +226,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
             // without passing values for them.
             context_type context(*this, make_attribute::call(attr));
 
-            // If you are seeing a compilation error here stating that the
-            // forth parameter can't be converted to a karma::reference
-            // then you are probably trying to use a subrule with an
-            // incompatible delimiter type.
-            return call_binder<subrule_delimiter_type>(
-                sink, context, delimiter, def.binder);
+            return def.binder(sink, context, delimiter);
         }
 
         template <typename Def, typename OutputIterator, typename Context
@@ -243,7 +237,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         {
             // compute context type for this subrule
             typedef typename Def::locals_type subrule_locals_type;
-            typedef typename Def::delimiter_type subrule_delimiter_type;
             typedef typename Def::attr_type subrule_attr_type;
             typedef typename Def::attr_reference_type subrule_attr_reference_type;
             typedef typename Def::parameter_types subrule_parameter_types;
@@ -267,22 +260,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
             context_type context(*this, make_attribute::call(attr)
               , params, caller_context);
 
-            // If you are seeing a compilation error here stating that the
-            // forth parameter can't be converted to a karma::reference
-            // then you are probably trying to use a subrule with an
-            // incompatible delimiter type.
-            return call_binder<subrule_delimiter_type>(
-                sink, context, delimiter, def.binder);
-        }
-
-        // wrapper to let the incoming delimiter be converted to the
-        // delimiter type expected by the subrule being invoked
-        template <typename Delimiter, typename OutputIterator
-          , typename Context, typename Binder>
-        bool call_binder(OutputIterator& sink, Context& context
-          , Delimiter const& delimiter, Binder const& binder) const
-        {
-            return binder(sink, context, delimiter);
+            return def.binder(sink, context, delimiter);
         }
 
         template <typename Context>
@@ -306,7 +284,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
     template <
         int ID_
       , typename Locals
-      , typename Delimiter
       , typename Attr
       , typename AttrRef
       , typename Parameters
@@ -320,7 +297,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         BOOST_STATIC_CONSTANT(int, ID = ID_);
 
         typedef Locals locals_type;
-        typedef Delimiter delimiter_type;
         typedef Attr attr_type;
         typedef AttrRef attr_reference_type;
         typedef Parameters parameter_types;
@@ -351,16 +327,15 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         int ID_
       , typename T1 = unused_type
       , typename T2 = unused_type
-      , typename T3 = unused_type
     >
     struct subrule
       : proto::extends<
             typename proto::terminal<
-                spirit::karma::reference<subrule<ID_, T1, T2, T3> const>
+                spirit::karma::reference<subrule<ID_, T1, T2> const>
             >::type
-          , subrule<ID_, T1, T2, T3>
+          , subrule<ID_, T1, T2>
         >
-      , spirit::karma::generator<subrule<ID_, T1, T2, T3> >
+      , spirit::karma::generator<subrule<ID_, T1, T2> >
     {
         //FIXME should go fetch the real properties of this subrule's definition in the current context, but we don't
         // have the context here (properties would need to be 'template<typename Context> struct properties' instead)
@@ -370,23 +345,17 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         typedef mpl::int_<ID_> id_type;
         BOOST_STATIC_CONSTANT(int, ID = ID_);
 
-        typedef subrule<ID_, T1, T2, T3> this_type;
+        typedef subrule<ID_, T1, T2> this_type;
         typedef spirit::karma::reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
         typedef proto::extends<terminal, this_type> base_type;
 
-        typedef mpl::vector<T1, T2, T3> template_params;
+        typedef mpl::vector<T1, T2> template_params;
 
         // locals_type is a sequence of types to be used as local variables
         typedef typename
             spirit::detail::extract_locals<template_params>::type
         locals_type;
-
-        // The delimiter-generator type
-        typedef typename
-            spirit::detail::extract_component<
-                spirit::karma::domain, template_params>::type
-        delimiter_type;
 
         typedef typename
             spirit::detail::extract_sig<template_params>::type
@@ -428,7 +397,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
             typedef subrule_definition<
                 ID_
               , locals_type
-              , delimiter_type
               , attr_type
               , attr_reference_type
               , parameter_types

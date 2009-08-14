@@ -115,10 +115,10 @@ main()
 
     { // basic tests w/ skipper, subrules declared const
 
-        subrule<0, space_type> const entry("entry");
-        subrule<1, space_type> const a("a");
-        subrule<2, space_type> const b("b");
-        subrule<3, space_type> const c("c");
+        subrule<0> const entry("entry");
+        subrule<1> const a("a");
+        subrule<2> const b("b");
+        subrule<3> const c("c");
         rule<char const*, space_type> start("start");
 
 //        debug(entry);
@@ -145,30 +145,7 @@ main()
 
         // no-ops
         a = a;
-        subrule<1, space_type> aa(a);
-    }
-
-    { // skipper-type tests
-
-        subrule<0> entry_noskip;
-        subrule<0, space_type> entry_skip;
-        subrule<1> a;
-        subrule<2> b;
-        subrule<3> c;
-
-        // check subrules ignore the skipper
-        BOOST_TEST(test(" xabcabcacb", 'x' >> (
-            entry_noskip = *(a | b | c)
-          , a = 'a'
-          , b = 'b'
-          , c = 'c'
-        ), space));
-        BOOST_TEST(!test(" x a b c a b c a c b ", 'x' >> (
-            entry_skip = *(a | b | c)
-          , a = 'a'
-          , b = 'b'
-          , c = 'c'
-        ), space));
+        subrule<1> aa(a);
     }
 
     { // context tests

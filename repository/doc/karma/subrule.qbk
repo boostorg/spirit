@@ -51,7 +51,7 @@ rules and grammars.
 
 [heading Synopsis (declaration)]
 
-    subrule<ID, A1, A2, A3> sr(name);
+    subrule<ID, A1, A2> sr(name);
 
 [heading Parameters (declaration)]
 
@@ -59,10 +59,15 @@ rules and grammars.
     [[Parameter]            [Description]]
     [[`ID`]                 [Required numeric argument. Gives the subrule
                              a unique 'identification tag'.]]
-    [[`A1`, `A2`, `A3`]     [Optional types, can be specified in any order.
-                             Can be one of 1. signature, 2. locals, 3. delimiter
+    [[`A1`, `A2`]           [Optional types, can be specified in any order.
+                             Can be one of 1. signature, 2. locals
                              (see rules reference for more information on
-                             those parameters).]]
+                             those parameters).
+
+                             Note that the delimiter type need not be specified
+                             in the parameters, unlike with grammars and rules.
+                             Subrules will automatically use the delimiter type
+                             which is in effect when they are invoked.]]
     [[`name`]               [Optional string. Gives the subrule a name,
                              useful for debugging and error handling.]]
 ]
