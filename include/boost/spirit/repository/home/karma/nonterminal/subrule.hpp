@@ -1,23 +1,23 @@
-/*=============================================================================
-    Copyright (c) 2009 Francois Barel
-    Copyright (c) 2001-2009 Joel de Guzman
+//  Copyright (c) 2009 Francois Barel
+//  Copyright (c) 2001-2009 Joel de Guzman
+//  Copyright (c) 2001-2009 Hartmut Kaiser
+//
+//  Distributed under the Boost Software License, Version 1.0. (See accompanying
+//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-==============================================================================*/
-#if !defined(BOOST_SPIRIT_REPOSITORY_QI_SUBRULE_AUGUST_06_2009_0239AM)
-#define BOOST_SPIRIT_REPOSITORY_QI_SUBRULE_AUGUST_06_2009_0239AM
+#if !defined(BOOST_SPIRIT_REPOSITORY_KARMA_SUBRULE_AUGUST_12_2009_0813PM)
+#define BOOST_SPIRIT_REPOSITORY_KARMA_SUBRULE_AUGUST_12_2009_0813PM
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
-#include <boost/spirit/home/qi/domain.hpp>
-#include <boost/spirit/home/qi/meta_compiler.hpp>
-#include <boost/spirit/home/qi/parser.hpp>
-#include <boost/spirit/home/qi/reference.hpp>
-#include <boost/spirit/home/qi/nonterminal/detail/parameterized.hpp>
-#include <boost/spirit/home/qi/nonterminal/detail/parser_binder.hpp>
+#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
+#include <boost/spirit/home/karma/reference.hpp>
+#include <boost/spirit/home/karma/nonterminal/detail/generator_binder.hpp>
+#include <boost/spirit/home/karma/nonterminal/detail/parameterized.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
@@ -60,20 +60,20 @@ namespace boost { namespace spirit
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
     template <>
-    struct use_operator<qi::domain, proto::tag::comma>  // enables ,
+    struct use_operator<karma::domain, proto::tag::comma>   // enables ,
       : mpl::true_ {};
 
     template <>
-    struct flatten_tree<qi::domain, proto::tag::comma>  // flattens ,
+    struct flatten_tree<karma::domain, proto::tag::comma>   // flattens ,
       : mpl::true_ {};
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace repository { namespace qi
+namespace boost { namespace spirit { namespace repository { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
     // subrule_group:
-    // - parser representing a group of subrule definitions (one or more),
+    // - generator representing a group of subrule definitions (one or more),
     //   invokes first subrule on entry,
     // - also a Proto terminal, so that a group behaves like any Spirit
     //   expression.
@@ -82,18 +82,24 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     struct subrule_group
       : proto::extends<
             typename proto::terminal<
-                spirit::qi::reference<subrule_group<Defs> const>
+                spirit::karma::reference<subrule_group<Defs> const>
             >::type
           , subrule_group<Defs>
         >
-      , spirit::qi::parser<subrule_group<Defs> >
+      , spirit::karma::generator<subrule_group<Defs> >
     {
+        struct properties
+            // Forward to first subrule.
+          : remove_reference<
+                typename fusion::result_of::front<Defs>::type
+            >::type::second_type::subject_type::properties {};
+
         // Fusion associative sequence, associating each subrule ID in this
         // group (as an MPL integral constant) with its definition
         typedef Defs defs_type;
 
         typedef subrule_group<Defs> this_type;
-        typedef spirit::qi::reference<this_type const> reference_;
+        typedef spirit::karma::reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
         typedef proto::extends<terminal, this_type> base_type;
 
@@ -148,59 +154,57 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                     typename fusion::result_of::front<Defs>::type
                 >::type::second_type::attr_type> {};
 
-        template <typename Iterator, typename Context
-          , typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr) const
+        template <typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute>
+        bool generate(OutputIterator& sink, Context& context
+          , Delimiter const& delimiter, Attribute const& attr) const
         {
             // Forward to first subrule.
-            return parse_subrule(fusion::front(defs).second
-              , first, last, context, skipper, attr);
+            return generate_subrule(fusion::front(defs).second
+              , sink, context, delimiter, attr);
         }
 
-        template <typename Iterator, typename Context
-          , typename Skipper, typename Attribute, typename Params>
-        bool parse(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr, Params const& params) const
+        template <typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute
+          , typename Params>
+        bool generate(OutputIterator& sink, Context& context
+          , Delimiter const& delimiter, Attribute const& attr
+          , Params const& params) const
         {
             // Forward to first subrule.
-            return parse_subrule(fusion::front(defs).second
-              , first, last, context, skipper, attr, params);
+            return generate_subrule(fusion::front(defs).second
+              , sink, context, delimiter, attr, params);
         }
 
-        template <int ID, typename Iterator, typename Context
-          , typename Skipper, typename Attribute>
-        bool parse_subrule_id(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr) const
+        template <int ID, typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute>
+        bool generate_subrule_id(OutputIterator& sink
+          , Context& context, Delimiter const& delimiter
+          , Attribute const& attr) const
         {
-            return parse_subrule(def<ID>()
-              , first, last, context, skipper, attr);
+            return generate_subrule(def<ID>()
+              , sink, context, delimiter, attr);
         }
 
-        template <int ID, typename Iterator, typename Context
-          , typename Skipper, typename Attribute, typename Params>
-        bool parse_subrule_id(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute& attr, Params const& params) const
+        template <int ID, typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute, typename Params>
+        bool generate_subrule_id(OutputIterator& sink
+          , Context& context, Delimiter const& delimiter
+          , Attribute const& attr, Params const& params) const
         {
-            return parse_subrule(def<ID>()
-              , first, last, context, skipper, attr, params);
+            return generate_subrule(def<ID>()
+              , sink, context, delimiter, attr, params);
         }
 
-        template <typename Def
-          , typename Iterator, typename Context
-          , typename Skipper, typename Attribute>
-        bool parse_subrule(Def const& def
-          , Iterator& first, Iterator const& last
-          , Context& /*caller_context*/, Skipper const& skipper
-          , Attribute& attr) const
+        template <typename Def, typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute>
+        bool generate_subrule(Def const& def, OutputIterator& sink
+          , Context& /*caller_context*/, Delimiter const& delimiter
+          , Attribute const& attr) const
         {
             // compute context type for this subrule
             typedef typename Def::locals_type subrule_locals_type;
-            typedef typename Def::skipper_type subrule_skipper_type;
+            typedef typename Def::delimiter_type subrule_delimiter_type;
             typedef typename Def::attr_type subrule_attr_type;
             typedef typename Def::attr_reference_type subrule_attr_reference_type;
             typedef typename Def::parameter_types subrule_parameter_types;
@@ -214,36 +218,32 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 >
             context_type;
 
-            // prepare attribute
-            typedef
-                traits::make_attribute<subrule_attr_type, Attribute>
-            make_attribute;
-            typename make_attribute::type attr_ = make_attribute::call(attr);
+            // Create an attribute if none is supplied.
+            typedef traits::make_attribute<subrule_attr_type, Attribute>
+                make_attribute;
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
             // without passing values for them.
-            context_type context(*this, attr_);
+            context_type context(*this, make_attribute::call(attr));
 
             // If you are seeing a compilation error here stating that the
-            // forth parameter can't be converted to a qi::reference
+            // forth parameter can't be converted to a karma::reference
             // then you are probably trying to use a subrule with an
-            // incompatible skipper type.
-            return call_binder<subrule_skipper_type>(
-                first, last, context, skipper, def.binder);
+            // incompatible delimiter type.
+            return call_binder<subrule_delimiter_type>(
+                sink, context, delimiter, def.binder);
         }
 
-        template <typename Def
-          , typename Iterator, typename Context
-          , typename Skipper, typename Attribute, typename Params>
-        bool parse_subrule(Def const& def
-          , Iterator& first, Iterator const& last
-          , Context& caller_context, Skipper const& skipper
-          , Attribute& attr, Params const& params) const
+        template <typename Def, typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute, typename Params>
+        bool generate_subrule(Def const& def, OutputIterator& sink
+          , Context& caller_context, Delimiter const& delimiter
+          , Attribute const& attr, Params const& params) const
         {
             // compute context type for this subrule
             typedef typename Def::locals_type subrule_locals_type;
-            typedef typename Def::skipper_type subrule_skipper_type;
+            typedef typename Def::delimiter_type subrule_delimiter_type;
             typedef typename Def::attr_type subrule_attr_type;
             typedef typename Def::attr_reference_type subrule_attr_reference_type;
             typedef typename Def::parameter_types subrule_parameter_types;
@@ -257,47 +257,45 @@ namespace boost { namespace spirit { namespace repository { namespace qi
                 >
             context_type;
 
-            // prepare attribute
-            typedef
-                traits::make_attribute<subrule_attr_type, Attribute>
-            make_attribute;
-            typename make_attribute::type attr_ = make_attribute::call(attr);
+            // Create an attribute if none is supplied.
+            typedef traits::make_attribute<subrule_attr_type, Attribute>
+                make_attribute;
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
             // passing values of incompatible types for them.
-            context_type context(*this, attr_, params, caller_context);
+            context_type context(*this, make_attribute::call(attr)
+              , params, caller_context);
 
             // If you are seeing a compilation error here stating that the
-            // forth parameter can't be converted to a qi::reference
+            // forth parameter can't be converted to a karma::reference
             // then you are probably trying to use a subrule with an
-            // incompatible skipper type.
-            return call_binder<subrule_skipper_type>(
-                first, last, context, skipper, def.binder);
+            // incompatible delimiter type.
+            return call_binder<subrule_delimiter_type>(
+                sink, context, delimiter, def.binder);
         }
 
-        // wrapper to let the incoming skipper be converted to the
-        // skipper type expected by the subrule being invoked
-        template <typename Skipper, typename Iterator
+        // wrapper to let the incoming delimiter be converted to the
+        // delimiter type expected by the subrule being invoked
+        template <typename Delimiter, typename OutputIterator
           , typename Context, typename Binder>
-        bool call_binder(Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Binder const& binder) const
+        bool call_binder(OutputIterator& sink, Context& context
+          , Delimiter const& delimiter, Binder const& binder) const
         {
-            return binder(first, last, context, skipper);
+            return binder(sink, context, delimiter);
         }
 
         template <typename Context>
         info what(Context& context) const
         {
             // Forward to first subrule.
-            return fusion::front(defs).second.binder.p.what(context);
+            return fusion::front(defs).second.binder.g.what(context);
         }
 
         // bring in the operator() overloads
         this_type const& get_parameterized_subject() const { return *this; }
         typedef this_type parameterized_subject_type;
-        #include <boost/spirit/home/qi/nonterminal/detail/fcall.hpp>
+        #include <boost/spirit/home/karma/nonterminal/detail/fcall.hpp>
 
         Defs defs;
     };
@@ -308,7 +306,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     template <
         int ID_
       , typename Locals
-      , typename Skipper
+      , typename Delimiter
       , typename Attr
       , typename AttrRef
       , typename Parameters
@@ -322,7 +320,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         BOOST_STATIC_CONSTANT(int, ID = ID_);
 
         typedef Locals locals_type;
-        typedef Skipper skipper_type;
+        typedef Delimiter delimiter_type;
         typedef Attr attr_type;
         typedef AttrRef attr_reference_type;
         typedef Parameters parameter_types;
@@ -332,7 +330,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         typedef mpl::bool_<Auto_> auto_type;
         BOOST_STATIC_CONSTANT(bool, Auto = Auto_);
 
-        typedef spirit::qi::detail::parser_binder<
+        typedef spirit::karma::detail::generator_binder<
             Subject, auto_type> binder_type;
 
         subrule_definition(Subject const& subject, std::string const& name)
@@ -347,7 +345,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     // subrule placeholder:
     // - on subrule definition: helper for creation of subrule_group,
-    // - on subrule invocation: Proto terminal and parser.
+    // - on subrule invocation: Proto terminal and generator.
     ///////////////////////////////////////////////////////////////////////////
     template <
         int ID_
@@ -358,17 +356,22 @@ namespace boost { namespace spirit { namespace repository { namespace qi
     struct subrule
       : proto::extends<
             typename proto::terminal<
-                spirit::qi::reference<subrule<ID_, T1, T2, T3> const>
+                spirit::karma::reference<subrule<ID_, T1, T2, T3> const>
             >::type
           , subrule<ID_, T1, T2, T3>
         >
-      , spirit::qi::parser<subrule<ID_, T1, T2, T3> >
+      , spirit::karma::generator<subrule<ID_, T1, T2, T3> >
     {
+        //FIXME should go fetch the real properties of this subrule's definition in the current context, but we don't
+        // have the context here (properties would need to be 'template<typename Context> struct properties' instead)
+        typedef mpl::int_<
+            spirit::karma::generator_properties::all_properties> properties;
+
         typedef mpl::int_<ID_> id_type;
         BOOST_STATIC_CONSTANT(int, ID = ID_);
 
         typedef subrule<ID_, T1, T2, T3> this_type;
-        typedef spirit::qi::reference<this_type const> reference_;
+        typedef spirit::karma::reference<this_type const> reference_;
         typedef typename proto::terminal<reference_>::type terminal;
         typedef proto::extends<terminal, this_type> base_type;
 
@@ -379,11 +382,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             spirit::detail::extract_locals<template_params>::type
         locals_type;
 
-        // The skip-parser type
+        // The delimiter-generator type
         typedef typename
             spirit::detail::extract_component<
-                spirit::qi::domain, template_params>::type
-        skipper_type;
+                spirit::karma::domain, template_params>::type
+        delimiter_type;
 
         typedef typename
             spirit::detail::extract_sig<template_params>::type
@@ -393,7 +396,8 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         typedef typename
             spirit::detail::attr_from_sig<sig_type>::type
         attr_type;
-        typedef typename add_reference<attr_type>::type attr_reference_type;
+        typedef typename add_reference<
+            typename add_const<attr_type>::type>::type attr_reference_type;
 
         // parameter_types is a sequence of types passed as parameters to the subrule
         typedef typename
@@ -415,16 +419,16 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {
             // Report invalid expression error as early as possible.
             // If you got an error_invalid_expression error message here,
-            // then the expression (Expr) is not a valid spirit qi expression.
-            BOOST_SPIRIT_ASSERT_MATCH(spirit::qi::domain, Expr);
+            // then the expression (Expr) is not a valid spirit karma expression.
+            BOOST_SPIRIT_ASSERT_MATCH(spirit::karma::domain, Expr);
 
             typedef typename result_of::compile<
-                spirit::qi::domain, Expr>::type subject_type;
+                spirit::karma::domain, Expr>::type subject_type;
 
             typedef subrule_definition<
                 ID_
               , locals_type
-              , skipper_type
+              , delimiter_type
               , attr_type
               , attr_reference_type
               , parameter_types
@@ -457,7 +461,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             typedef typename helper::def_type def_type;
             typedef typename helper::type result_type;
             return result_type(fusion::make_map<id_type>(
-                def_type(compile<spirit::qi::domain>(expr), name_)));
+                def_type(compile<spirit::karma::domain>(expr), name_)));
         }
 
         template <typename Expr>
@@ -468,7 +472,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             typedef typename helper::def_type def_type;
             typedef typename helper::type result_type;
             return result_type(fusion::make_map<id_type>(
-                def_type(compile<spirit::qi::domain>(expr), sr.name_)));
+                def_type(compile<spirit::karma::domain>(expr), sr.name_)));
         }
 
         // non-const versions needed to suppress proto's %= kicking in
@@ -513,54 +517,54 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             typedef attr_type type;
         };
 
-        template <typename Iterator, typename Group
+        template <typename OutputIterator, typename Group
           , typename Attributes, typename Locals
-          , typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
+          , typename Delimiter, typename Attribute>
+        bool generate(OutputIterator& sink
           , subrule_context<Group, Attributes, Locals>& context
-          , Skipper const& skipper, Attribute& attr) const
+          , Delimiter const& delimiter, Attribute const& attr) const
         {
-            return context.group.template parse_subrule_id<ID_>(
-                first, last, context, skipper, attr);
+            return context.group.template generate_subrule_id<ID_>(
+                sink, context, delimiter, attr);
         }
 
-        template <typename Iterator, typename Context
-          , typename Skipper, typename Attribute>
-        bool parse(Iterator& /*first*/, Iterator const& /*last*/
+        template <typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute>
+        bool generate(OutputIterator& /*sink*/
           , Context& /*context*/
-          , Skipper const& /*skipper*/, Attribute& /*attr*/) const
+          , Delimiter const& /*delimiter*/, Attribute const& /*attr*/) const
         {
             // If you are seeing a compilation error here, you are trying
-            // to use a subrule as a parser outside of a subrule group.
+            // to use a subrule as a generator outside of a subrule group.
             BOOST_SPIRIT_ASSERT_MSG(false
               , subrule_used_outside_subrule_group, (id_type));
 
             return false;
         }
 
-        template <typename Iterator, typename Group
+        template <typename OutputIterator, typename Group
           , typename Attributes, typename Locals
-          , typename Skipper, typename Attribute
+          , typename Delimiter, typename Attribute
           , typename Params>
-        bool parse(Iterator& first, Iterator const& last
+        bool generate(OutputIterator& sink
           , subrule_context<Group, Attributes, Locals>& context
-          , Skipper const& skipper, Attribute& attr
+          , Delimiter const& delimiter, Attribute const& attr
           , Params const& params) const
         {
-            return context.group.template parse_subrule_id<ID_>(
-                first, last, context, skipper, attr, params);
+            return context.group.template generate_subrule_id<ID_>(
+                sink, context, delimiter, attr, params);
         }
 
-        template <typename Iterator, typename Context
-          , typename Skipper, typename Attribute
+        template <typename OutputIterator, typename Context
+          , typename Delimiter, typename Attribute
           , typename Params>
-        bool parse(Iterator& /*first*/, Iterator const& /*last*/
+        bool generate(OutputIterator& /*sink*/
           , Context& /*context*/
-          , Skipper const& /*skipper*/, Attribute& /*attr*/
+          , Delimiter const& /*delimiter*/, Attribute const& /*attr*/
           , Params const& /*params*/) const
         {
             // If you are seeing a compilation error here, you are trying
-            // to use a subrule as a parser outside of a subrule group.
+            // to use a subrule as a generator outside of a subrule group.
             BOOST_SPIRIT_ASSERT_MSG(false
               , subrule_used_outside_subrule_group, (id_type));
 
@@ -576,17 +580,17 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         // bring in the operator() overloads
         this_type const& get_parameterized_subject() const { return *this; }
         typedef this_type parameterized_subject_type;
-        #include <boost/spirit/home/qi/nonterminal/detail/fcall.hpp>
+        #include <boost/spirit/home/karma/nonterminal/detail/fcall.hpp>
 
         std::string name_;
     };
 }}}}
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace qi
+namespace boost { namespace spirit { namespace karma
 {
     ///////////////////////////////////////////////////////////////////////////
-    // Parser generators: make_xxx function (objects)
+    // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     template <typename Elements, typename Modifiers>
     struct make_composite<proto::tag::comma, Elements, Modifiers>
@@ -608,7 +612,7 @@ namespace boost { namespace spirit { namespace qi
             };
             template <typename Defs>
             struct apply<reference<
-                spirit::repository::qi::subrule_group<Defs> const> >
+                spirit::repository::karma::subrule_group<Defs> const> >
             {
                 typedef mpl::false_ type;
             };
@@ -679,7 +683,7 @@ namespace boost { namespace spirit { namespace qi
             fusion::result_of::as_map<merged_defs_type>::type defs_type;
 
 
-        typedef spirit::repository::qi::subrule_group<
+        typedef spirit::repository::karma::subrule_group<
             defs_type> result_type;
 
         result_type operator()(Elements const& elements, unused_type) const

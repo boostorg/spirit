@@ -25,4 +25,5 @@ boost_test_run(qi_repo_subrule qi/subrule.cpp COMPILE_FLAGS ${test_compile_flags
 
 # run Karma repository tests
 boost_test_run(karma_repo_confix karma/confix.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(karma_repo_subrule karma/subrule.cpp COMPILE_FLAGS ${test_compile_flags})
 

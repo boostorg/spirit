@@ -37,7 +37,7 @@ namespace client
         {
             using qi::uint_;
 
-            //[subrules_def
+            //[calc1_sr_def
             entry = (
                 expression =
                     term

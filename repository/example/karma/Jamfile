@@ -12,4 +12,6 @@ project spirit_v2_repository/example_karma
     ;
 
 exe karma_confix : confix.cpp ;
+exe calc2_ast_dump_sr : calc2_ast_dump_sr.cpp ;
+exe mini_xml_karma_sr : mini_xml_karma_sr.cpp ;
 

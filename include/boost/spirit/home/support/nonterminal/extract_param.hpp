@@ -54,46 +54,37 @@ namespace boost { namespace spirit { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     template <typename Types>
     struct extract_locals
-    {
-        typedef
-            typename fusion::result_of::as_vector<
-                typename extract_param<
-                    Types
-                  , is_locals<mpl::_>
-                  , locals<>
-                >::type
+      : fusion::result_of::as_vector<
+            typename extract_param<
+                Types
+              , is_locals<mpl::_>
+              , locals<>
             >::type
-        type;
-    };
+        >
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Domain, typename Types>
     struct extract_component
-    {
-        typedef
-            typename spirit::result_of::compile<
-                Domain
-              , typename extract_param<
-                    Types
-                  , traits::matches<Domain, mpl::_>
-                  , unused_type
-                >::type
+      : spirit::result_of::compile<
+            Domain
+          , typename extract_param<
+                Types
+              , traits::matches<Domain, mpl::_>
+              , unused_type
             >::type
-        type;
-    };
+        >
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Types>
     struct extract_sig
-    {
-        typedef
-            typename extract_param<
-                Types
-              , function_types::is_function<mpl::_>
-              , void()
-            >::type
-        type;
-    };
+      : extract_param<
+            Types
+          , function_types::is_function<mpl::_>
+          , void()
+        >
+    {};
 
     template <typename Sig>
     struct attr_from_sig

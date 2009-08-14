@@ -28,6 +28,7 @@ import testing ;
 
     # run Karma repository tests
     [ run karma/confix.cpp                  : : : : karma_repo_confix ]
+    [ run karma/subrule.cpp                 : : : : karma_repo_subrule ]
 
     ;
 }

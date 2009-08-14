@@ -1,6 +1,7 @@
 /*=============================================================================
     Copyright (c) 2001-2009 Joel de Guzman
     Copyright (c) 2001-2009 Hartmut Kaiser
+    Copyright (c) 2009 Francois Barel
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,10 +18,13 @@
 #include <boost/config/warning_disable.hpp>
 
 #include <boost/spirit/include/qi.hpp>
+//[mini_xml_karma_sr_includes
 #include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/repository/include/karma_subrule.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
+//]
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
@@ -31,8 +35,11 @@
 #include <string>
 #include <vector>
 
+//[mini_xml_karma_sr_using
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
+namespace repo = boost::spirit::repository;
+//]
 
 namespace fusion = boost::fusion;
 namespace phoenix = boost::phoenix;
@@ -127,23 +134,31 @@ phoenix::function<get_element<mini_xml> > _xml;
 ///////////////////////////////////////////////////////////////////////////////
 //  The output grammar defining the format of the generated data
 ///////////////////////////////////////////////////////////////////////////////
+//[mini_xml_karma_sr_grammar
 template <typename OutputIterator>
 struct mini_xml_generator
   : karma::grammar<OutputIterator, mini_xml()>
 {
-    mini_xml_generator() : mini_xml_generator::base_type(xml)
+    mini_xml_generator() : mini_xml_generator::base_type(entry)
     {
-        node %= string | xml;
-        xml = 
-                '<'  << string[_1 = at_c<0>(_val)] << '>'
-            <<         (*node)[_1 = at_c<1>(_val)]
-            <<  "</" << string[_1 = at_c<0>(_val)] << '>'
-            ;
+        //[mini_xml_karma_sr_def
+        entry %= (
+            xml = 
+                    '<'  << string[_1 = at_c<0>(_val)] << '>'
+                <<         (*node)[_1 = at_c<1>(_val)]
+                <<  "</" << string[_1 = at_c<0>(_val)] << '>'
+
+          , node %= string | xml
+        );
+        //]
     }
 
-    karma::rule<OutputIterator, mini_xml()> xml;
-    karma::rule<OutputIterator, mini_xml_node()> node;
+    karma::rule<OutputIterator, mini_xml()> entry;
+
+    repo::karma::subrule<0, mini_xml()> xml;
+    repo::karma::subrule<1, mini_xml_node()> node;
 };
+//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program

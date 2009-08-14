@@ -281,6 +281,16 @@ main()
             sr2 = alpha[_val = _1 + _r1 + _r2]
         )(1, 2), ch));
         BOOST_TEST(ch == 'a' + 1 + 2);
+
+#if 0   // doesn't work yet, see comment in karma/subrule.cpp
+        // multiple subrules + args
+        subrule<2, char(int, int)> sr2;
+        BOOST_TEST(test_attr("ac", (
+            sr2 = alpha[_val = _1 + _r1 + _r2] >> sr1(3)[_val += _1]
+          , sr1 = alpha[_val = _1 + _r1]
+        )(1, 2), ch));
+        BOOST_TEST(ch == 'a' + 1 + 2 + 'c' + 3);
+#endif
     }
 
     { // context (w/ reference arg) tests
