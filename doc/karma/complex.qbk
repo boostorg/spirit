@@ -249,7 +249,7 @@ the attribute values to print.
       placeholder based syntax as exposed by `printf` or `boost::format`.
 ]
 
-Let's take a look from a more formal perspective. The sequence attribute 
+Let's take a look at this from a more formal perspective. The sequence attribute 
 propagation rules define a special behavior if generators exposing `unused_type` 
 as their attribute are involved:
 
@@ -284,10 +284,16 @@ again, allowing to simplify the overall attribute type of an expression.
 [/////////////////////////////////////////////////////////////////////////////]
 [section:karma_easier_complex Complex - Made easier]
 
+[import ../../example/karma/complex_number_easier.cpp]
+
 In one of the previous sections we showed how to format a complex number (i.e. 
 a pair of doubles). In this section we will build on this example with the goal 
 to avoid to use semantic actions in the format specification. Let's have a look 
-at the resulting code first, trying to understand it afterwards.
+at the resulting code first, trying to understand it afterwards (the full cpp 
+file for this example can be found here: 
+[@../../example/karma/complex_number_easier.cpp complex_number_easier.cpp]).
+
+[tutorial_karma_complex_number_easier]
 
 [endsect]
 

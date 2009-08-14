@@ -17,6 +17,7 @@ exe karma_complex_number  : complex_number.cpp ;
 exe karma_num_list1       : num_list1.cpp ;
 exe key_value_sequence    : key_value_sequence.cpp ;
 exe mini_xml_karma        : mini_xml_karma.cpp ;
+exe printf_style_double_format : printf_style_double_format.cpp ;
 exe quick_start1          : quick_start1.cpp ;
 
 

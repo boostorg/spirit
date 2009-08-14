@@ -709,11 +709,43 @@ functions:
 [table
 [[Expression][Description]]
 [   [``
-        bool force_sign;
+        template <typename Inserter
+          , typename OutputIterator
+          , typename Policies>
+        bool call (OutputIterator& sink, T n
+          , Policies const& p);
     ``]
-    [The default behavior is to not to require generating a sign. If the variable
-     `force_sign` is specified as true, then all generated numbers will have a 
-     sign (`'+'` or `'-'`, zeros will have a space instead of a sign).]]
+    [This is the main function used to generate the output for a floating point 
+     number. It is called by the real generator in order to perform the 
+     conversion. In theory all of the work can be implemented here, but it is 
+     the easiest to use existing functionality provided by the type specified
+     by the template parameter `Inserter`. The default implementation of this
+     functions is:
+     ``
+          template <typename Inserter, typename OutputIterator
+            , typename Policies>
+          static bool
+          call (OutputIterator& sink, T n, Policies const& p)
+          {
+              return Inserter::call_n(sink, n, p);
+          }
+     ``
+      `sink`: is the output iterator to use for generation 
+
+      `n`: is the floating point number to convert 
+
+      `p`: the instance of the policy type used to instantiate this floating 
+           point generator.
+    ]
+    [``
+        bool force_sign(T n);
+    ``]
+    [The default behavior is to not to require generating a sign. If the function
+     `force_sign()` returns true, then all generated numbers will have a 
+     sign (`'+'` or `'-'`, zeros will have a space instead of a sign).
+
+     `n` is the floating point number to output. This can be used to 
+     adjust the required behavior depending on the value of this number.]]
 [   [``
         bool trailing_zeros(T n);
     ``]
@@ -764,18 +796,22 @@ functions:
 [   [``
         template <bool ForceSign, 
             typename OutputIterator>
-        bool integer_part(
-          OutputIterator& sink, T n, bool sign);
+        bool integer_part(OutputIterator& sink
+          , T n, bool sign, bool force_sign);
     ``]
     [This function is called to generate the integer part of the floating point 
       number. 
 
       `sink`: is the output iterator to use for generation 
 
-      `n`: is he absolute value of the integer part of the floating point number 
-      to convert (always non-negative)
+      `n`: is the absolute value of the integer part of the floating point 
+           number to convert (always non-negative)
 
       `sign`: is the sign of the overall floating point number to convert.
+
+      `force_sign`: is a flag whether a sign has to be generated even for non-
+                    negative numbers (this is the same as has been returned from
+                    the function `force_sign()` described above)
 
       The return value defines the outcome of the whole generator. If it is 
       `false`, no further output is generated, imediatly returning `false` from 
@@ -783,7 +819,8 @@ functions:
       generation continues.]]
 [   [``
         template <typename OutputIterator>
-        bool dot(OutputIterator& sink, T n);
+        bool dot(OutputIterator& sink, T n,
+          unsigned precision);
     ``]
     [This function is called to generate the decimal point.
 
@@ -794,6 +831,9 @@ functions:
       which correspond to the value returned from the `precision()` function 
       earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
       when the function `precision()` returned `5`.
+
+      `precision`: The number of digits to emit as returned by the function 
+                   `precision()` described above
 
       This is given to allow to decide, whether a decimal point has to be 
       generated at all.
@@ -807,8 +847,8 @@ functions:
       generation continues.]]
 [   [``
         template <typename OutputIterator>
-        bool fraction_part(OutputIterator& sink, 
-            T n, unsigned precision_);
+        bool fraction_part(OutputIterator& sink, T n
+          , unsigned adjprec, unsigned precision);
     ``]
     [This function is called to generate the fractional part of the number.
 
@@ -819,6 +859,11 @@ functions:
       which correspond to the value returned from the `precision()` function 
       earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
       when the function `precision()` returned `5`.
+
+      `adjprec`: The corrected number of digits to emit (see note below)
+
+      `precision`: The number of digits to emit as returned by the function 
+                   `precision()` described above
 
       *Note:* If `trailing_zeros()` returns `false` the `precision` 
       parameter will have been corrected from the value the `precision()` 
@@ -861,17 +906,21 @@ functions:
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
-        template <bool ForceSign, 
-            typename CharEncoding, typename Tag, 
-            typename OutputIterator>
-        bool nan (OutputIterator& sink, T n);
+        template <typename CharEncoding
+          , typename Tag, typename OutputIterator>
+        bool nan (OutputIterator& sink, T n
+          , bool force_sign);
     ``]
-    [This function is called whenever teh number to print is a non-normal 
+    [This function is called whenever the number to print is a non-normal 
      floats of type NaN.
 
      `sink`: is the output iterator to use for generation 
 
      `n`: is the (signed) floating point number to convert
+
+    `force_sign`: is a flag whether a sign has to be generated even for non-
+                  negative numbers (this is the same as has been returned from
+                  the function `force_sign()` described above)
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
@@ -883,17 +932,21 @@ functions:
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
-        template <bool ForceSign, 
-            typename CharEncoding, typename Tag, 
-            typename OutputIterator>
-        bool inf (OutputIterator& sink, T n);
+        template <typename CharEncoding
+          , typename Tag, typename OutputIterator>
+        bool inf (OutputIterator& sink, T n
+          , bool force_sign);
     ``]
-    [This function is called whenever teh number to print is a non-normal 
+    [This function is called whenever the number to print is a non-normal 
      floats of type Inf.
 
      `sink`: is the output iterator to use for generation 
 
      `n`: is the (signed) floating point number to convert
+
+    `force_sign`: is a flag whether a sign has to be generated even for non-
+                  negative numbers (this is the same as has been returned from
+                  the function `force_sign()` described above)
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 

@@ -32,7 +32,38 @@
           (i.e. a pair of doubles). In this section we will build on this example
           with the goal to avoid to use semantic actions in the format specification.
           Let's have a look at the resulting code first, trying to understand it
-          afterwards.
+          afterwards (the full cpp file for this example can be found here: <a href="../../../../../example/karma/complex_number_easier.cpp" target="_top">complex_number_easier.cpp</a>).
+        </p>
+<p>
+          </p>
+<p>
+            
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
+<span class="keyword">bool</span> <span class="identifier">generate_complex</span><span class="special">(</span><span class="identifier">OutputIterator</span> <span class="identifier">sink</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">c</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">eps</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">double_</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span>
+
+        <span class="comment">//  Begin grammar
+</span>        <span class="special">(</span>
+           <span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span> 
+            <span class="special">&lt;&lt;</span>  <span class="char">'('</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="char">')'</span>
+        <span class="special">|</span>   <span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span>
+        <span class="special">),</span>
+        <span class="comment">//  End grammar
+</span>
+        <span class="identifier">c</span><span class="special">.</span><span class="identifier">imag</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">real</span><span class="special">(),</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">imag</span><span class="special">()</span>     <span class="comment">//  Data to output
+</span>    <span class="special">);</span>
+<span class="special">}</span>
+</pre>
+<p>
+          </p>
+<p>
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

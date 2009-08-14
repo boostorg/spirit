@@ -61,7 +61,10 @@ template <typename T>
 struct signed_policy : boost::spirit::karma::real_policies<T>
 {
     // we want to always have a sign generated
-    static bool const force_sign = true;
+    static bool const force_sign(T)
+    {
+        return true;
+    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////

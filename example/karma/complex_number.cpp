@@ -41,15 +41,11 @@ namespace client
         double rN = 0.0;
         double iN = 0.0;
         bool r = phrase_parse(first, last,
-
-            //  Begin grammar
             (
                     '(' >> double_[ref(rN) = _1]
                         >> -(',' >> double_[ref(iN) = _1]) >> ')'
                 |   double_[ref(rN) = _1]
             ),
-            //  End grammar
-
             space);
 
         if (!r || first != last) // fail if we did not get a full match
