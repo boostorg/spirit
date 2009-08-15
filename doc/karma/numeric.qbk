@@ -77,6 +77,10 @@ Also, see __include_structure__.
 
 [:__primitive_generator_concept__]
 
+[variablelist Notation
+    [[`num`]            [Numeric literal, any signed integer value]]
+    [[`Num`]            [Type of `num`: any signed integer type]]]
+
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
@@ -309,6 +313,10 @@ Also, see __include_structure__.
 [heading Model of]
 
 [:__primitive_generator_concept__]
+
+[variablelist Notation
+    [[`num`]            [Numeric literal, any unsigned integer value]]
+    [[`Num`]            [Type of `num`: any unsigned integer type]]]
 
 [heading Expression Semantics]
 
@@ -557,6 +565,10 @@ Also, see __include_structure__.
 [heading Model of]
 
 [:__primitive_generator_concept__]
+
+[variablelist Notation
+    [[`num`]            [Numeric literal, any floating point value]]
+    [[`Num`]            [Type of `num`: any floating point type]]]
 
 [heading Expression Semantics]
 
@@ -873,10 +885,13 @@ functions:
       `precision()` will result in:
 
       `trailing_zeros()` returned `false`: `n` will be `123`, and `precision` 
-      will be `4`
+      will be `4` (as we need to print `0123`)
 
       `trailing_zeros()` returned `true`: `n` will be `1230`, and `precision`
-      will be `5`
+      will be `5` (as we need to print `01230`)
+
+      The missing preceding zeros in the fractional part have to be supplied 
+      by the implementation of this policy function.
 
       The return value defines the outcome of the whole generator. If it is 
       `false`, no further output is generated, imediatly returning `false` from 

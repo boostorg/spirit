@@ -33,14 +33,14 @@ using namespace boost::spirit;
 //      width:
 //          number: Left-pad the output with spaces until it is at least number 
 //                  characters wide. if number has a leading '0', that is 
-//                  interpreted as a flag, and the padding is done with '0' 
+//                  interpreted as a 'fill', the padding is done with '0' 
 //                  characters instead of spaces.
 //      precision:
 //          number: Causes the decimal portion of the output to be expressed 
 //                  in at least number digits
 //      type (only one possible):
 //          e:      force scientific notation, with a lowercase "e"
-//          E:      force scientific notation, with a lowercase "E"
+//          E:      force scientific notation, with a uppercase "E"
 //          f:      floating point format
 //          g:      use %e or %f, whichever is shorter
 //          G:      use %E or %f, whichever is shorter
@@ -59,14 +59,6 @@ namespace client
         int precision;
         char type;
     };
-
-#if defined(BOOST_SPIRIT_DEBUG)
-    std::ostream& operator<< (std::ostream& os, format_data const& d)
-    {
-        os << "(" << d.flag << "," << d.width << "," << d.precision << "," << d.type << ")";
-        return os;
-    }
-#endif
 }
 
 // We need to tell fusion about our format_data struct
@@ -250,12 +242,12 @@ typedef karma::real_generator<double, format_policies<double> > real;
 ///////////////////////////////////////////////////////////////////////////////
 int main()
 {
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "\t\tA format driven floating point number generator for Spirit...\n\n";
-    std::cout << "/////////////////////////////////////////////////////////\n\n";
+    std::cout << "/////////////////////////////////////////////////////////////\n\n";
+    std::cout << "A format driven floating point number generator for Spirit...\n\n";
+    std::cout << "/////////////////////////////////////////////////////////////\n\n";
 
     std::cout << "Give me a printf style format\n";
-    std::cout << "Type [q or Q] to quit\n\n";
+    std::cout << "Type [enter] to quit\n\n";
 
     std::string str;
     while (getline(std::cin, str))

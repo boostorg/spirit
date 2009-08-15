@@ -28,7 +28,7 @@
           Point Number Generators</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.floating_point.description"></a><h6>
-<a name="id1222685"></a>
+<a name="id1258743"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.description">Description</a>
           </h6>
 <p>
@@ -251,7 +251,7 @@
             of Floating Point Numeric Generators</a>
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.header"></a><h6>
-<a name="id1223345"></a>
+<a name="id1259403"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/real.hpp&gt;
@@ -261,7 +261,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.model_of"></a><h6>
-<a name="id1223419"></a>
+<a name="id1259478"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.model_of">Model
             of</a>
           </h6>
@@ -274,8 +274,22 @@
 <p>
             </p>
 </blockquote></div>
+<div class="variablelist" title="Notation">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
+<dd><p>
+                Numeric literal, any floating point value
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Num</span></code></span></dt>
+<dd><p>
+                Type of <code class="computeroutput"><span class="identifier">num</span></code>: any
+                floating point type
+              </p></dd>
+</dl>
+</div>
 <a name="spirit.karma.reference.numeric.floating_point.expression_semantics"></a><h6>
-<a name="id1223455"></a>
+<a name="id1259566"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -426,7 +440,7 @@
             see <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies">below</a>).
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.additional_requirements"></a><h6>
-<a name="id1224019"></a>
+<a name="id1260124"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -463,7 +477,7 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.floating_point.attributes"></a><h6>
-<a name="id1224331"></a>
+<a name="id1260436"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -621,7 +635,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies"></a><h6>
-<a name="id1224793"></a>
+<a name="id1260898"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies">Floating
             Point Formatting Policies</a>
           </h6>
@@ -654,7 +668,7 @@
             be used as the attribute type of the created floating point generator.
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.floating_point_formatting_policy_expression_semantics"></a><h6>
-<a name="id1225148"></a>
+<a name="id1261253"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.floating_point_formatting_policy_expression_semantics">Floating
             Point Formatting Policy Expression Semantics</a>
           </h6>
@@ -995,12 +1009,18 @@
                   <p>
                     <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="keyword">false</span></code>:
                     <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">123</span></code>, and <code class="computeroutput"><span class="identifier">precision</span></code>
-                    will be <code class="computeroutput"><span class="number">4</span></code>
+                    will be <code class="computeroutput"><span class="number">4</span></code> (as we
+                    need to print <code class="computeroutput"><span class="number">0123</span></code>)
                   </p>
                   <p>
                     <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="keyword">true</span></code>:
                     <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">1230</span></code>, and <code class="computeroutput"><span class="identifier">precision</span></code>
-                    will be <code class="computeroutput"><span class="number">5</span></code>
+                    will be <code class="computeroutput"><span class="number">5</span></code> (as we
+                    need to print <code class="computeroutput"><span class="number">01230</span></code>)
+                  </p>
+                  <p>
+                    The missing preceding zeros in the fractional part have to be
+                    supplied by the implementation of this policy function.
                   </p>
                   <p>
                     The return value defines the outcome of the whole generator.
@@ -1165,7 +1185,7 @@
             of the formatting which need to be changed.
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.complexity"></a><h6>
-<a name="id1230204"></a>
+<a name="id1265628"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -1180,7 +1200,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.floating_point.example"></a><h6>
-<a name="id1230238"></a>
+<a name="id1265662"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.example">Example</a>
           </h6>
 <p>

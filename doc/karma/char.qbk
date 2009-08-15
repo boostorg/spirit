@@ -27,24 +27,24 @@ The character generators described in this section are:
     [[Expression]           [Description]]
     [[`ch`]                 [Generates `ch`]]
     [[`lit(ch)`]            [Generates `ch`, same as `boost::spirit::karma::lit`]]
-    [[`NS::char_`]          [Generates the mandatory attribute as a single 
+    [[`ns::char_`]          [Generates the mandatory attribute as a single 
                              character interpreted in the character set define 
-                             by `NS`]]
-    [[`NS::char_(ch)`]      [Generates `ch` as a character interpreted in the 
-                             character set defined by `NS`, if an attribute is 
+                             by `ns`]]
+    [[`ns::char_(ch)`]      [Generates `ch` as a character interpreted in the 
+                             character set defined by `ns`, if an attribute is 
                              supplied it must match]]
-    [[`NS::char_("c")`]     [Generates `c` as a character interpreted in the 
-                             character set defined by `NS`, if an attribute is 
+    [[`ns::char_("c")`]     [Generates `c` as a character interpreted in the 
+                             character set defined by `ns`, if an attribute is 
                              supplied it must match, equivalent to `char_('c')`]]
-    [[`NS::char_(ch1, ch2)`][Generates the character supplied as the attribute
+    [[`ns::char_(ch1, ch2)`][Generates the character supplied as the attribute
                              if it belongs to the character range interpreted 
-                             in the character set defined by `NS`]]
-    [[`NS::char_(charset)`] [Generates the character supplied as the attribute
+                             in the character set defined by `ns`]]
+    [[`ns::char_(charset)`] [Generates the character supplied as the attribute
                              if it belongs to `charset` interpreted in the 
-                             character set defined by `NS`]]
+                             character set defined by `ns`]]
 ]
 
-In the table above, `NS` is a __karma_char_encoding_namespace__ used by the 
+In the table above, `ns` is a __karma_char_encoding_namespace__ used by the 
 corresponding character generator. 
 
 [heading Header]
@@ -57,6 +57,12 @@ Also, see __include_structure__.
 [heading Model of]
 
 [:__primitive_generator_concept__]
+
+[variablelist Notation
+    [[`ch`, `ch1`, `ch2`]
+                  [Character-class specific character (See __char_class_types__)]]
+    [[`charset`]  [Character-class specific character set (See __char_class_types__)]]
+    [[`ns`]       [A __char_encoding_namespace__.]]]
 
 [heading Expression Semantics]
 
@@ -71,34 +77,34 @@ not defined in __primitive_generator_concept__.
     [[`lit(ch)`]            [Generate the character literal `ch`. This generator 
                              never fails (except if the underlying output stream 
                              reports an error).]]
-    [[`NS::char_`]          [Generate the character provided by a mandatory 
+    [[`ns::char_`]          [Generate the character provided by a mandatory 
                              attribute interpreted in the character set defined 
-                             by `NS`. This generator never fails (except if the 
+                             by `ns`. This generator never fails (except if the 
                              underlying output stream reports an error).]]
-    [[`NS::char_(ch)`]      [Generate the character `ch` as provided by the 
+    [[`ns::char_(ch)`]      [Generate the character `ch` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
                              to the immediate literal (except if the underlying 
                              output stream reports an error). Otherwise this 
                              generator fails and does not generate any output.]]
-    [[`NS::char_("c")`]     [Generate the character `c` as provided by the 
+    [[`ns::char_("c")`]     [Generate the character `c` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
                              to the immediate literal (except if the underlying 
                              output stream reports an error). Otherwise this 
                              generator fails and does not generate any output.]]
-    [[`NS::char_(ch1, ch2)`][Generate the character provided by a mandatory 
+    [[`ns::char_(ch1, ch2)`][Generate the character provided by a mandatory 
                              attribute interpreted in the character set defined 
-                             by `NS`. The generator succeeds as long as the 
+                             by `ns`. The generator succeeds as long as the 
                              attribute belongs to the character range `[ch1, ch2]` 
                              (except if the underlying output stream reports an 
                              error). Otherwise this generator fails and does not 
                              generate any output.]]
-    [[`NS::char_(charset)`] [Generate the character provided by a mandatory 
+    [[`ns::char_(charset)`] [Generate the character provided by a mandatory 
                              attribute interpreted in the character set defined 
-                             by `NS`. The generator succeeds as long as the 
+                             by `ns`. The generator succeeds as long as the 
                              attribute belongs to the character set `charset` 
                              (except if the underlying output stream reports an 
                              error). Otherwise this generator fails and does not 
@@ -106,12 +112,12 @@ not defined in __primitive_generator_concept__.
 ]
 
 A character `ch` is assumed to belong to the character range defined by
-`NS::char_(ch1, ch2)` if its character value (binary representation) 
-interpreted in the character set defined by `NS` is not smaller than the 
+`ns::char_(ch1, ch2)` if its character value (binary representation) 
+interpreted in the character set defined by `ns` is not smaller than the 
 character value of `ch1` and not larger then the character value of `ch2` (i.e. 
 `ch1 <= ch <= ch2`).
 
-The `charset` parameter passed to `NS::char_(charset)` must be a string
+The `charset` parameter passed to `ns::char_(charset)` must be a string
 containing more than one character. Every single character in this string is 
 assumed to belong to the character set defined by this expression. An exception 
 to this is the `'-'` character which has a special meaning if it is not 
@@ -124,9 +130,9 @@ parameter described above. For example
 [table
     [[Example]              [Description]]
     [[`char_("abc")`]       ['a', 'b', and 'c']]
-    [[`char_("a-z")`]       [all characters from 'a' to 'z']]
-    [[`char_("a-zA-Z")`]    [all characters from 'a' to 'z' and 'A' and 'Z']]
-    [[`char_("-1-9")`]      ['-' and all characters from '0' to '9']]
+    [[`char_("a-z")`]       [all characters (and including) from 'a' to 'z']]
+    [[`char_("a-zA-Z")`]    [all characters (and including) from 'a' to 'z' and 'A' and 'Z']]
+    [[`char_("-1-9")`]      ['-' and all characters (and including) from '1' to '9']]
 ]
 
 [heading Attributes]
@@ -135,37 +141,37 @@ parameter described above. For example
     [[Expression]           [Attribute]]
     [[`ch`]                 [__unused__]]
     [[`lit(ch)`]            [__unused__]]
-    [[`NS::char_`]          [`Ch`, attribute is mandatory (otherwise compilation 
+    [[`ns::char_`]          [`Ch`, attribute is mandatory (otherwise compilation 
                              will fail)]]
-    [[`NS::char_(ch)`]      [`Ch`, attribute is optional, if it is supplied, the 
+    [[`ns::char_(ch)`]      [`Ch`, attribute is optional, if it is supplied, the 
                              generator compares the attribute with `ch` and 
                              succeeds only if both are equal, failing otherwise]]
-    [[`NS::char_("c")`]     [`Ch`, attribute is optional, if it is supplied, the 
+    [[`ns::char_("c")`]     [`Ch`, attribute is optional, if it is supplied, the 
                              generator compares the attribute with `c` and 
                              succeeds only if both are equal, failing otherwise]]
-    [[`NS::char_(ch1, ch2)`][`Ch`, attribute is mandatory (otherwise compilation 
+    [[`ns::char_(ch1, ch2)`][`Ch`, attribute is mandatory (otherwise compilation 
                              will fail), the generator succeeds if the attribute 
                              belongs to the character range `[ch1, ch2]` 
-                             interpreted in the character set defined by `NS`]]
-    [[`NS::char_(charset)`] [`Ch`, attribute is mandatory (otherwise compilation 
+                             interpreted in the character set defined by `ns`]]
+    [[`ns::char_(charset)`] [`Ch`, attribute is mandatory (otherwise compilation 
                              will fail), the generator succeeds if the attribute 
                              belongs to the character set `charset`, interpreted 
-                             in the character set defined by `NS`]]
+                             in the character set defined by `ns`]]
 ]
 
 [heading Complexity]
 
 [:O(1)]
 
-The complexity of `ch`, `lit(ch)`, `NS::char_`, `NS::char_(ch)`, and 
-`NS::char_("c")` is constant as all generators emit exactly one character per 
+The complexity of `ch`, `lit(ch)`, `ns::char_`, `ns::char_(ch)`, and 
+`ns::char_("c")` is constant as all generators emit exactly one character per 
 invocation.
 
-The character range generator (`NS::char_(ch1, ch2)`) additionally requires 
+The character range generator (`ns::char_(ch1, ch2)`) additionally requires 
 constant lookup time for the verification whether the attribute belongs to
 the character range.
 
-The character set generator (`NS::char_(charset)`) additionally requires 
+The character set generator (`ns::char_(charset)`) additionally requires 
 O(log N) lookup time for the verification whether the attribute belongs to
 the character set, where N is the number of characters in the character set.
 
@@ -199,46 +205,46 @@ The character class generators described in this section are:
 
 [table
     [[Expression]          [Description]]
-    [[`NS::alnum`]         [Generates the character supplied as the attribute
+    [[`ns::alnum`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isalnum` in 
-                            the character set defined by `NS`]]
-    [[`NS::alpha`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::alpha`]         [Generates the character supplied as the attribute
                             if it satisfies thh concept of `std::isalpha` in 
-                            the character set defined by `NS`]]
-    [[`NS::blank`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::blank`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isblank` in 
-                            the character set defined by `NS`]]
-    [[`NS::cntrl`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::cntrl`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::iscntrl` in 
-                            the character set defined by `NS`]]
-    [[`NS::digit`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::digit`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isdigit` in 
-                            the character set defined by `NS`]]
-    [[`NS::graph`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::graph`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isgraph` in 
-                            the character set defined by `NS`]]
-    [[`NS::print`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::print`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isprint` in 
-                            the character set defined by `NS`]]
-    [[`NS::punct`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::punct`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::ispunct` in 
-                            the character set defined by `NS`]]
-    [[`NS::xdigit`]        [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::xdigit`]        [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isxdigit` in
-                            the character set defined by `NS`]]
-    [[`NS::lower`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::lower`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::islower` in 
-                            the character set defined by `NS`]]
-    [[`NS::upper`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::upper`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isupper` in 
-                            the character set defined by `NS`]]
-    [[`NS::space`]         [Generates the character supplied as the attribute
+                            the character set defined by `ns`]]
+    [[`ns::space`]         [Generates the character supplied as the attribute
                             if it satisfies the concept of `std::isspace` in 
                             or a single space character the character set 
-                            defined by `NS`]]
+                            defined by `ns`]]
 ]
 
-In the table above, `NS` is a __karma_char_encoding_namespace__ used by the 
+In the table above, `ns` is a __karma_char_encoding_namespace__ used by the 
 corresponding character class generator. All listed generators have a mandatory 
 attribute `Ch` and will not compile if no attribute is associated.
 
@@ -253,6 +259,9 @@ Also, see __include_structure__.
 
 [:__primitive_generator_concept__]
 
+[variablelist Notation
+    [[`ns`]       [A __char_encoding_namespace__.]]]
+
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
@@ -260,71 +269,71 @@ not defined in __primitive_generator_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`NS::alnum`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::alnum`]      [If the mandatory attribute satisfies the concept of 
                          `std::isalnum` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::alpha`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::alpha`]      [If the mandatory attribute satisfies the concept of 
                          `std::isalpha` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::blank`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::blank`]      [If the mandatory attribute satisfies the concept of 
                          `std::isblank` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::cntrl`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::cntrl`]      [If the mandatory attribute satisfies the concept of 
                          `std::iscntrl` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::digit`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::digit`]      [If the mandatory attribute satisfies the concept of 
                          `std::isdigit` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::graph`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::graph`]      [If the mandatory attribute satisfies the concept of 
                          `std::isgraph` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::print`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::print`]      [If the mandatory attribute satisfies the concept of 
                          `std::isprint` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::punct`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::punct`]      [If the mandatory attribute satisfies the concept of 
                          `std::ispunct` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::xdigit`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::xdigit`]      [If the mandatory attribute satisfies the concept of 
                          `std::isxdigit` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::lower`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::lower`]      [If the mandatory attribute satisfies the concept of 
                          `std::islower` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::upper`]      [If the mandatory attribute satisfies the concept of 
+    [[`ns::upper`]      [If the mandatory attribute satisfies the concept of 
                          `std::isupper` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
-    [[`NS::space`]      [If the optional attribute satisfies the concept of 
+    [[`ns::space`]      [If the optional attribute satisfies the concept of 
                          `std::isspace` the generator succeeds after emitting 
                          its attribute (except if the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.If no attribute is 
                          supplied this generator emits a single space 
-                         character in the character set defined by `NS`.]]
+                         character in the character set defined by `ns`.]]
 ]
 
-Possible values for `NS` are described in the section __karma_char_encoding_namespace__.
+Possible values for `ns` are described in the section __karma_char_encoding_namespace__.
 
 [note   The generators `alpha` and `alnum` might seem to behave unexpected if 
         used inside a `lower[]` or `upper[]` directive. Both directives 
