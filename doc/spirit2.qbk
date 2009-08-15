@@ -125,7 +125,7 @@
 [def __unused_type__            `unused_type`] [/$$$ TODO: link me $$$]
 [def __unused__                 `unused`] [/$$$ TODO: link me $$$]
 [def __info__                   `info`] [/$$$ TODO: link me $$$]
-[def __char_class_types__       character class types] [/$$$ TODO: link me $$$]
+[def __char_class_types__       Character Class Types] [/$$$ TODO: link me $$$]
 
 [/ References to abstracts ]
 
@@ -169,6 +169,7 @@
 [def __karma_and_predicate__        [link spirit.karma.reference.operator.and_predicate and predicate (unary `&`)]]
 [def __karma_not_predicate__        [link spirit.karma.reference.operator.not_predicate not predicate (unary `!`)]]
 
+[template karma_align[str]          [link spirit.karma.reference.directive.alignment [str]]]
 [def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit[a]`]]
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer[a]`]]
 

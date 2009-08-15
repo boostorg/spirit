@@ -22,8 +22,8 @@ other categories. It includes the `eol` and `eps`, `lazy` generators.
 [heading Description]
 
 The `eol` component generates a single newline character. It is equivalent
-to `lit('\n')` or simply '\\n' (please see the `lit`/`char_` generator 
-component for more details).
+to `lit('\n')` or simply '\\n' (please see the [karma_char `char_`] generator 
+module for more details).
 
 [heading Header]
 

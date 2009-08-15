@@ -17,7 +17,7 @@ pages and pages of reference doumentation.
 [variablelist Notation
     [[`P`]              [Parser type]]
     [[`p, a, b, c`]     [Parser objects]]
-    [[`A, B, C`]        [Attribute types of parsers A, B and C]]
+    [[`A, B, C`]        [Attribute types of parsers `a`, `b` and `c`]]
     [[`I`]              [The iterator type used for parsing]]
     [[`Unused`]         [An `unused_type`]]
     [[`Context`]        [The enclosing rule's `Context` type]]
@@ -34,7 +34,7 @@ pages and pages of reference doumentation.
     [[`Ch`]             [Character-class specific character type (See __char_class_types__)]]
     [[`ch`]             [Character-class specific character (See __char_class_types__)]]
     [[`ch2`]            [Character-class specific character (See __char_class_types__)]]
-    [[`chset`]          [Character-set specifier string (example: "a-z0-9")]]
+    [[`charset`]        [Character-set specifier string (example: "a-z0-9")]]
     [[`str`]            [Character-class specific string (See __char_class_types__)]]
     [[`Str`]            [Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
     [[`tuple<>`]        [Used as a placeholder for a fusion sequence]]
@@ -73,7 +73,7 @@ pages and pages of reference doumentation.
     [[`char_(ch)`]          [`Ch`]                      [Matches `ch`]]
     [[`char_("c")`]         [`Ch`]                      [Matches a single char string literal, `c`]]
     [[`char_(ch, ch2)`]     [`Ch`]                      [Matches a range of chars from `ch` to `ch2` (inclusive)]]
-    [[`char_(chset)`]       [`Ch`]                      [Matches a character set `chset`]]
+    [[`char_(charset)`]     [`Ch`]                      [Matches a character set `charset`]]
 
     [[`alnum`]              [`Ch`]                      [Matches a character based on the equivalent of 
                                                          `std::isalnum` in the current character set]]

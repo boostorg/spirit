@@ -28,7 +28,7 @@
           Point Number Generators</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.floating_point.description"></a><h6>
-<a name="id1258743"></a>
+<a name="id1225771"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.description">Description</a>
           </h6>
 <p>
@@ -251,7 +251,7 @@
             of Floating Point Numeric Generators</a>
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.header"></a><h6>
-<a name="id1259403"></a>
+<a name="id1226431"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/real.hpp&gt;
@@ -261,7 +261,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.model_of"></a><h6>
-<a name="id1259478"></a>
+<a name="id1226711"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.model_of">Model
             of</a>
           </h6>
@@ -279,7 +279,9 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
 <dd><p>
-                Numeric literal, any floating point value
+                Numeric literal, any floating point value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a floating point value of type
+                <code class="computeroutput"><span class="identifier">Num</span></code>
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Num</span></code></span></dt>
 <dd><p>
@@ -289,7 +291,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.floating_point.expression_semantics"></a><h6>
-<a name="id1259566"></a>
+<a name="id1226810"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -396,7 +398,7 @@
             <code class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></code>
             basic floating point number generator type described below. It is possible
             to directly use this type to create floating point generators using a
-            wide range of formatting.
+            wide range of formatting options.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -440,7 +442,7 @@
             see <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies">below</a>).
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.additional_requirements"></a><h6>
-<a name="id1260124"></a>
+<a name="id1227368"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -477,7 +479,7 @@
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.floating_point.attributes"></a><h6>
-<a name="id1260436"></a>
+<a name="id1227680"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -635,7 +637,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies"></a><h6>
-<a name="id1260898"></a>
+<a name="id1228142"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies">Floating
             Point Formatting Policies</a>
           </h6>
@@ -668,7 +670,7 @@
             be used as the attribute type of the created floating point generator.
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.floating_point_formatting_policy_expression_semantics"></a><h6>
-<a name="id1261253"></a>
+<a name="id1228497"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.floating_point_formatting_policy_expression_semantics">Floating
             Point Formatting Policy Expression Semantics</a>
           </h6>
@@ -998,23 +1000,24 @@
                   </p>
                   <p>
                     <span class="bold"><strong>Note:</strong></span> If <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returns <code class="computeroutput"><span class="keyword">false</span></code>
-                    the <code class="computeroutput"><span class="identifier">precision</span></code>
-                    parameter will have been corrected from the value the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code>
-                    function returned earlier (defining the maximal number of fractional
-                    digits) in the sense, that it takes into account trailing zeros.
-                    I.e. a floating point number <code class="computeroutput"><span class="number">0.0123</span></code>
-                    and a value of <code class="computeroutput"><span class="number">5</span></code>
-                    returned from <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> will result in:
+                    the <code class="computeroutput"><span class="identifier">adjprec</span></code> parameter
+                    will have been corrected from the value the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> function returned earlier (defining
+                    the maximal number of fractional digits) in the sense, that it
+                    takes into account trailing zeros. I.e. a floating point number
+                    <code class="computeroutput"><span class="number">0.0123</span></code> and a value
+                    of <code class="computeroutput"><span class="number">5</span></code> returned from
+                    <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code>
+                    will result in:
                   </p>
                   <p>
                     <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="keyword">false</span></code>:
-                    <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">123</span></code>, and <code class="computeroutput"><span class="identifier">precision</span></code>
+                    <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">123</span></code>, and <code class="computeroutput"><span class="identifier">adjprec</span></code>
                     will be <code class="computeroutput"><span class="number">4</span></code> (as we
                     need to print <code class="computeroutput"><span class="number">0123</span></code>)
                   </p>
                   <p>
                     <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="keyword">true</span></code>:
-                    <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">1230</span></code>, and <code class="computeroutput"><span class="identifier">precision</span></code>
+                    <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">1230</span></code>, and <code class="computeroutput"><span class="identifier">adjprec</span></code>
                     will be <code class="computeroutput"><span class="number">5</span></code> (as we
                     need to print <code class="computeroutput"><span class="number">01230</span></code>)
                   </p>
@@ -1185,7 +1188,7 @@
             of the formatting which need to be changed.
           </p>
 <a name="spirit.karma.reference.numeric.floating_point.complexity"></a><h6>
-<a name="id1265628"></a>
+<a name="id1232659"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -1200,7 +1203,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.floating_point.example"></a><h6>
-<a name="id1265662"></a>
+<a name="id1232693"></a>
             <a class="link" href="floating_point.html#spirit.karma.reference.numeric.floating_point.example">Example</a>
           </h6>
 <p>

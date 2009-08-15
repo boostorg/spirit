@@ -188,6 +188,23 @@ main()
     //  Directives
     ///////////////////////////////////////////////////////////////////////////
     {
+        //[reference_karma_using_declarations_alignment
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::left_align;
+        using boost::spirit::karma::center;
+        using boost::spirit::karma::right_align;
+        //]
+
+        //[reference_karma_alignment
+        std::pair<double, double> p (1.0, 2.0);
+        test_generator_attr("1.0     |2.0", left_align(8)[double_] << '|' << double_, p);
+        test_generator_attr("   1.0  |2.0", center(8)[double_] << '|' << double_, p);
+        test_generator_attr("     1.0|2.0", right_align(8)[double_] << '|' << double_, p);
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_buffer
         using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;

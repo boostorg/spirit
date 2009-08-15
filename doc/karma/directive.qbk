@@ -12,13 +12,236 @@ This module includes different generator directives. It includes alignement
 directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
 (`repeat[]`), directives controlling automatic delimiting (`verbatim[]` and 
 `delimit[]`), controlling case sensitivity (`upper[]` and `lower[]`), field
-width (`max_width[]`), buffering (`buffer[]`), and attribute handling 
+width (`maxwidth[]`), buffering (`buffer[]`), and attribute handling 
 (`omit[]`).
 
 [heading Module Header]
 
     // forwards to <boost/spirit/home/karma/directive.hpp>
     #include <boost/spirit/include/karma_directive.hpp>
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:alignment Alignment Directives (`left_align[]`, `center[]`, and `right_align[]`)]
+
+[heading Description]
+
+The alignment directives allow to left align, right align or center output 
+emitted by other generators into columns of a specified width while using 
+an arbitrary generator to create the padding.
+
+[heading Header]
+
+For the `left_align[]` directive:
+
+    // forwards to <boost/spirit/home/karma/directive/left_alignment.hpp>
+    #include <boost/spirit/include/karma_left_alignment.hpp>
+
+For the `center[]` directive:
+
+    // forwards to <boost/spirit/home/karma/directive/center_alignment.hpp>
+    #include <boost/spirit/include/karma_center_alignment.hpp>
+
+For the `right_align[]` directive:
+
+    // forwards to <boost/spirit/home/karma/directive/right_alignment.hpp>
+    #include <boost/spirit/include/karma_right_alignment.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`a`, `pad`]     [Generator objects]]
+    [[`A`, `Pad`]     [Attribute types of generators `a` and `pad`]]
+    [[`width`]        [Numeric literal, any unsigned integer value, or
+                       a __karma_lazy_argument__ that evaluates to an unsigned 
+                       integer value]]]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_generator_concept__.
+
+[table 
+    [[Expression]                   [Semantics]]
+    [[`left_align[a]`]              [Generate `a` left aligned in a column of 
+                                     width as defined by the preprocessor constant
+                                     `BOOST_KARMA_DEFAULT_FIELD_LENGTH` 
+                                     (default: 10), while using `space` to emit 
+                                     the necessary padding. This generator succeeds as 
+                                     long as its embedded generator `a` does not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+    [[`left_align(width)[a]`]       [Generate `a` left aligned in a column of 
+                                     the given `width`, while using `space` to emit 
+                                     the necessary padding. This generator succeeds as 
+                                     long as its embedded generator `a` does not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+    [[`left_align(pad)[a]`]         [Generate `a` left aligned in a column of 
+                                     width as defined by the preprocessor constant
+                                     `BOOST_KARMA_DEFAULT_FIELD_LENGTH` 
+                                     (default: 10), while using the generator `pad` 
+                                     to emit the necessary padding. This generator 
+                                     succeeds as long as its embedded and padding 
+                                     generators `a` and `pad` do not fail (except 
+                                     if the underlying output stream reports an 
+                                     error).]]
+    [[`left_align(pad, width)[a]`]  [Generate `a` left aligned in a column of 
+                                     the given `width`, while using the generator 
+                                     `pad` to emit the necessary padding. This 
+                                     generator succeeds as long as its embedded 
+                                     and padding generators `a` and `pad` do not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+
+    [[`center[a]`]                  [Generate `a` centered in a column of 
+                                     width as defined by the preprocessor constant
+                                     `BOOST_KARMA_DEFAULT_FIELD_LENGTH` 
+                                     (default: 10), while using `space` to emit 
+                                     the necessary padding. This generator succeeds as 
+                                     long as its embedded generator `a` does not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+    [[`center(width)[a]`]           [Generate `a` centered in a column of 
+                                     the given `width`, while using `space` to emit 
+                                     the necessary padding. This generator succeeds as 
+                                     long as its embedded generator `a` does not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+    [[`center(pad)[a]`]             [Generate `a` centered in a column of 
+                                     width as defined by the preprocessor constant
+                                     `BOOST_KARMA_DEFAULT_FIELD_LENGTH` 
+                                     (default: 10), while using the generator `pad` 
+                                     to emit the necessary padding. This generator 
+                                     succeeds as long as its embedded and padding 
+                                     generators `a` and `pad` do not fail (except 
+                                     if the underlying output stream reports an 
+                                     error).]]
+    [[`center(pad, width)[a]`]      [Generate `a` centered in a column of 
+                                     the given `width`, while using the generator 
+                                     `pad` to emit the necessary padding. This 
+                                     generator succeeds as long as its embedded 
+                                     and padding generators `a` and `pad` do not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+
+    [[`right_align[a]`]             [Generate `a` right aligned in a column of 
+                                     width as defined by the preprocessor constant
+                                     `BOOST_KARMA_DEFAULT_FIELD_LENGTH` 
+                                     (default: 10), while using `space` to emit 
+                                     the necessary padding. This generator succeeds as 
+                                     long as its embedded generator `a` does not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+    [[`right_align(width)[a]`]      [Generate `a` right aligned in a column of 
+                                     the given `width`, while using `space` to emit 
+                                     the necessary padding. This generator succeeds as 
+                                     long as its embedded generator `a` does not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+    [[`right_align(pad)[a]`]        [Generate `a` right aligned in a column of 
+                                     width as defined by the preprocessor constant
+                                     `BOOST_KARMA_DEFAULT_FIELD_LENGTH` 
+                                     (default: 10), while using the generator `pad` 
+                                     to emit the necessary padding. This generator 
+                                     succeeds as long as its embedded and padding 
+                                     generators `a` and `pad` do not fail (except 
+                                     if the underlying output stream reports an 
+                                     error).]]
+    [[`right_align(pad, width)[a]`] [Generate `a` right aligned in a column of 
+                                     the given `width`, while using the generator 
+                                     `pad` to emit the necessary padding. This 
+                                     generator succeeds as long as its embedded 
+                                     and padding generators `a` and `pad` do not 
+                                     fail (except if the underlying output stream 
+                                     reports an error).]]
+]
+
+[note   None of the generator directives listed above limit the emitted output 
+        to the respective column width. If the emitted output is longer than 
+        the specified (or implied) column width, the generated output overruns
+        the column to the right.
+
+        If the output needs to be limitted to a specified column width, use the
+        `maxwidth[]` directive, for instance:
+        ``
+            maxwidth(8)[right_align(12)["1234567890"]]
+        ``
+        which will output: `'  123456'` (without the quotes).
+]
+
+[heading Attributes]
+
+[table 
+    [[Expression]       [Attribute]]
+    [[`left_align[]`]
+[``a: A --> left_align[a]: A
+a: Unused --> left_align[a]: Unused``]]
+    [[`left_align(width)[]`]
+[``a: A --> left_align(width)[a]: A
+a: Unused --> left_align(width)[a]: Unused``]]
+    [[`left_align(pad)[]`]
+[``a: A --> left_align(pad)[a]: A
+a: Unused --> left_align(pad)[a]: Unused``]]
+    [[`left_align(pad, width)[]`]
+[``a: A --> left_align(pad, width)[a]: A
+a: Unused --> left_align(pad, width)[a]: Unused``]]
+
+    [[`center[]`]
+[``a: A --> center[a]: A
+a: Unused --> center[a]: Unused``]]
+    [[`center(width)[]`]
+[``a: A --> center(width)[a]: A
+a: Unused --> center(width)[a]: Unused``]]
+    [[`center(pad)[]`]
+[``a: A --> center(pad)[a]: A
+a: Unused --> center(pad)[a]: Unused``]]
+    [[`center(pad, width)[]`]
+[``a: A --> center(pad, width)[a]: A
+a: Unused --> center(pad, width)[a]: Unused``]]
+
+    [[`right_align[]`]
+[``a: A --> right_align[a]: A
+a: Unused --> right_align[a]: Unused``]]
+    [[`right_align(width)[]`]
+[``a: A --> right_align(width)[a]: A
+a: Unused --> right_align(width)[a]: Unused``]]
+    [[`right_align(pad)[]`]
+[``a: A --> right_align(pad)[a]: A
+a: Unused --> right_align(pad)[a]: Unused``]]
+    [[`right_align(pad, width)[]`]
+[``a: A --> right_align(pad, width)[a]: A
+a: Unused --> right_align(pad, width)[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the alignment generator directives is defined by 
+  the complexity of its embedded and padding generator. The complexity of the 
+  left alignment directive generator itself is O(1). The complexity of the 
+  center and right alignment directive generators itself is O(N). where `N`
+  is the number of characters emitted by the embedded and padding generators.]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use this common test function:
+
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_alignment]
+
+[reference_karma_alignment]
+
+[endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:buffer Temporary Output Buffering (`buffer[]`)]
@@ -43,6 +266,10 @@ Also, see __include_structure__.
 [heading Model of]
 
 [:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`a`]     [A generator object]]
+    [[`A`]     [Attribute types of generator `a`]]]
 
 [heading Expression Semantics]
 
@@ -120,6 +347,10 @@ Also, see __include_structure__.
 
 [:__unary_generator_concept__]
 
+[variablelist Notation
+    [[`a`]     [A generator object]]
+    [[`A`]     [Attribute types of generator `a`]]]
+
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is not
@@ -128,8 +359,8 @@ defined in __unary_generator_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`omit[a]`]        [The `omit` directive consumes the attribute type of the 
-                         embedded generator without generating any output. It 
-                         succeeds always.]]
+                         embedded generator `A` without generating any output. 
+                         It succeeds always.]]
 ]
 
 [heading Attributes]

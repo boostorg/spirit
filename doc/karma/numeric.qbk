@@ -78,7 +78,9 @@ Also, see __include_structure__.
 [:__primitive_generator_concept__]
 
 [variablelist Notation
-    [[`num`]            [Numeric literal, any signed integer value]]
+    [[`num`]            [Numeric literal, any signed integer value, or
+                         a __karma_lazy_argument__ that evaluates to a signed 
+                         integer value of type `Num`]]
     [[`Num`]            [Type of `num`: any signed integer type]]]
 
 [heading Expression Semantics]
@@ -119,7 +121,7 @@ long_long(num)``]       [Generate the integer provided by the immediate literal
 All generators listed in the table above (except `lit(num)`) are predefined 
 specializations of the `int_generator<Num, Radix, force_sign>` basic integer
 number generator type described below. It is possible to directly use this
-type to create integer generators using a wide range of formatting.
+type to create integer generators using a wide range of formatting options.
 
 [table
     [[Expression]       [Semantics]]
@@ -315,7 +317,9 @@ Also, see __include_structure__.
 [:__primitive_generator_concept__]
 
 [variablelist Notation
-    [[`num`]            [Numeric literal, any unsigned integer value]]
+    [[`num`]            [Numeric literal, any unsigned integer value, or
+                         a __karma_lazy_argument__ that evaluates to an 
+                         unsigned integer value of type `Num`]]
     [[`Num`]            [Type of `num`: any unsigned integer type]]]
 
 [heading Expression Semantics]
@@ -375,7 +379,8 @@ hex(num)``]             [Generate the unsigned integer provided by the
 All generators listed in the table above (except `lit(num)`) are predefined 
 specializations of the `uint_generator<Num, Radix>` basic unsigned integer
 number generator type described below. It is possible to directly use this
-type to create unsigned integer generators using a wide range of formatting.
+type to create unsigned integer generators using a wide range of formatting
+options.
 
 [table
     [[Expression]       [Semantics]]
@@ -567,7 +572,9 @@ Also, see __include_structure__.
 [:__primitive_generator_concept__]
 
 [variablelist Notation
-    [[`num`]            [Numeric literal, any floating point value]]
+    [[`num`]            [Numeric literal, any floating point value, or
+                         a __karma_lazy_argument__ that evaluates to a floating 
+                         point value of type `Num`]]
     [[`Num`]            [Type of `num`: any floating point type]]]
 
 [heading Expression Semantics]
@@ -615,7 +622,8 @@ long_double(num)``]     [Generate the floating point number provided by the
 All generators listed in the table above (except `lit(num)`) are predefined 
 specializations of the `real_generator<Num, Policies>` basic floating point
 number generator type described below. It is possible to directly use this
-type to create floating point generators using a wide range of formatting.
+type to create floating point generators using a wide range of formatting
+options.
 
 [table
     [[Expression]       [Semantics]]
@@ -877,17 +885,17 @@ functions:
       `precision`: The number of digits to emit as returned by the function 
                    `precision()` described above
 
-      *Note:* If `trailing_zeros()` returns `false` the `precision` 
+      *Note:* If `trailing_zeros()` returns `false` the `adjprec` 
       parameter will have been corrected from the value the `precision()` 
       function returned earlier (defining the maximal number of fractional 
       digits) in the sense, that it takes into account trailing zeros. I.e. a 
       floating point number `0.0123` and a value of `5` returned from 
       `precision()` will result in:
 
-      `trailing_zeros()` returned `false`: `n` will be `123`, and `precision` 
+      `trailing_zeros()` returned `false`: `n` will be `123`, and `adjprec` 
       will be `4` (as we need to print `0123`)
 
-      `trailing_zeros()` returned `true`: `n` will be `1230`, and `precision`
+      `trailing_zeros()` returned `true`: `n` will be `1230`, and `adjprec`
       will be `5` (as we need to print `01230`)
 
       The missing preceding zeros in the fractional part have to be supplied 

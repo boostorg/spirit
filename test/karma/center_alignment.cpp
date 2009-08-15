@@ -29,7 +29,7 @@ main()
         BOOST_TEST(test("     x    ", center[char_('x')]));
         BOOST_TEST(test("     x    ", center[char_], 'x'));
         BOOST_TEST(test("     x    ", center['x']));
-                              
+
         BOOST_TEST(test("     x    ", center(10)[char_('x')]));
         BOOST_TEST(test("     x    ", center(10)[char_], 'x'));
         BOOST_TEST(test("     x    ", center(10)['x']));
@@ -66,18 +66,18 @@ main()
 
         BOOST_TEST(test("    100   ", center[int_(100)]));
         BOOST_TEST(test("    100   ", center[int_], 100));
-                                
+
         BOOST_TEST(test("    100   ", center(10)[int_(100)]));
         BOOST_TEST(test("    100   ", center(10)[int_], 100));
-                                
+
         BOOST_TEST(test("****100***", center(10, char_('*'))[int_(100)]));
         BOOST_TEST(test("****100***", center(10, '*')[int_], 100));
-                                
+
         BOOST_TEST(test("    100    ", center(11)[int_(100)]));
 
         BOOST_TEST(test("****100***", center(char_('*'))[int_(100)]));
         BOOST_TEST(test("****100***", center(char_('*'))[int_], 100));
     }
-    
+
     return boost::report_errors();
 }
