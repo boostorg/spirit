@@ -122,7 +122,12 @@ This is typically carried out through a call to `karma::delimit_out`:
 
 [heading Models] 
 
-The following generators conform to this model: __karma_eol__, __karma_eps__.
+The following generators conform to this model: 
+
+* __karma_eol__ ,
+* __karma_eps__,
+* [link spirit.karma.reference.numeric Numeric generators],
+* [karma_char Character generators].
 
 __fixme__ Add more links to /PrimitiveGenerator/ models here.
 
@@ -174,8 +179,17 @@ For any UnaryGenerator, `G`, the following invariant always holds:
 
 [heading Models]
 
-The following generators conform to this model: __karma_kleene__, 
-__karma_plus__.
+The following generators conform to this model: 
+
+* [karma_kleene Kleene Star (unary `*`)], 
+* __karma_plus__,
+* __karma_optional__,
+* __karma_and_predicate__ and __karma_not_predicate__,
+* [karma_align `left_align`], [karma_align `center`], and [karma_align `right_align`],
+* [karma_repeat `repeat`],
+* __karma_buffer__,
+* __karma_omit__.
+
 
 __fixme__ Add more links to models of UnaryGenerator concept
 
@@ -231,7 +245,9 @@ For any BinaryGenerator, `G`, the following invariants always hold:
 
 [heading Models]
 
-The following generators conform to this model: __karma_list__.
+The following generators conform to this model: 
+
+* __karma_list__.
 
 __fixme__ Add more links to models of BinaryGenerator concept
 
@@ -284,8 +300,10 @@ invariant always holds:
 
 [heading Models]
 
-The following generators conform to this model: __karma_sequence__, 
-__karma_alternative__.
+The following generators conform to this model: 
+
+* __karma_sequence__, 
+* __karma_alternative__.
 
 __fixme__ Add more links to models of NaryGenerator concept
 

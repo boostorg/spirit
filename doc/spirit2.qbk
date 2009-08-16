@@ -162,7 +162,7 @@
 [def __karma_llazy__                [link spirit.karma.reference.auxiliary.lazy `fg`]]
 [def __karma_sequence__             [link spirit.karma.reference.operator.sequence sequence (`<<`)]]
 [def __karma_alternative__          [link spirit.karma.reference.operator.alternative alternative (`|`)]]
-[def __karma_kleene__               [link spirit.karma.reference.operator.kleene kleene (unary `*`)]]
+[template karma_kleene[str]         [link spirit.karma.reference.operator.kleene [str]]]
 [def __karma_plus__                 [link spirit.karma.reference.operator.plus plus (unary `+`)]]
 [def __karma_list__                 [link spirit.karma.reference.operator.list list (`%`)]]
 [def __karma_optional__             [link spirit.karma.reference.operator.optional optional (unary `-`)]]
@@ -172,6 +172,7 @@
 [template karma_align[str]          [link spirit.karma.reference.directive.alignment [str]]]
 [def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit[a]`]]
 [def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer[a]`]]
+[template karma_repeat[str]         [link spirit.karma.reference.directive.repeat [str]]]
 
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
 [template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]

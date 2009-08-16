@@ -244,6 +244,123 @@ Some using declarations:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:repeat Repetition Directive (`repeat[]`)]
+
+[heading Description]
+
+The repetition directive allows to repeat an arbitrary generator expression 
+while optionally specifying the lower and upper repetition counts.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/directive/repeat.hpp>
+    #include <boost/spirit/include/karma_repeat.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`a`]              [A generator object]]
+    [[`num, num1, num2`][Numeric literals, any unsigned integer value, or
+                         a __karma_lazy_argument__ that evaluates to an 
+                         unsigned integer value]]
+    [[`inf`]            [Placeholder expression standing for 'no upper repeat 
+                         limit']]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_generator_concept__.
+
+[table 
+    [[Expression]                   [Semantics]]
+    [[`repeat[a]`]                  [Repeat the generator `a` zero or more times. 
+                                     This generator succeeds as long as its 
+                                     embedded generator `a` does not fail (except 
+                                     if the underlying output stream reports an 
+                                     error). This variant of `repeat[]` is 
+                                     semantically equivalent to the 
+                                     [karma_kleene Kleene Star operator `*a`]]]
+    [[`repeat(num)[a]`]             [Repeat the generator `a` exactly `num` 
+                                     times. This generator succeeds as long as its 
+                                     embedded generator `a` does not fail and 
+                                     as long as the associated attribute 
+                                     (container) contains at least `num` elements
+                                     (except if the underlying output stream 
+                                     reports an error).]]
+    [[`repeat(num1, num2)[a]`]      [Repeat the generator `a` at least `num1` 
+                                     times but not more than `num2` times. This 
+                                     generator succeeds as long as its 
+                                     embedded generator `a` does not fail and 
+                                     as long as the associated attribute 
+                                     (container) contains at least `num1` elements
+                                     (except if the underlying output stream 
+                                     reports an error). If the associated
+                                     attribute (container) does contain more 
+                                     than `num2` elements, this directive 
+                                     limits the repeat count to `num2`. ]]
+    [[`repeat(num, inf)[a]`]        [Repeat the generator `a` at least `num1` 
+                                     times. No upper limit for the repeat count
+                                     is set. This generator succeeds as long as 
+                                     its embedded generator `a` does not fail 
+                                     and as long as the associated attribute 
+                                     (container) contains at least `num` elements
+                                     (except if the underlying output stream 
+                                     reports an error).]]
+]
+
+[heading Attributes]
+
+[table 
+    [[Expression]             [Attribute]]
+    [[`repeat[a]`]
+[``a: A --> repeat[a]: vector<A>
+a: Unused --> repeat[a]: Unused``]]
+    [[`repeat(num)[a]`]
+[``a: A --> repeat(num)[a]: vector<A>
+a: Unused --> repeat(num)[a]: Unused``]]
+    [[`repeat(num1, num2)[a]`]
+[``a: A --> repeat(num1, num2)[a]: vector<A>
+a: Unused --> repeat(num1, num2)[a]: Unused``]]
+    [[`repeat(num, inf)[a]`]
+[``a: A --> repeat(num, inf)[a]: vector<A>
+a: Unused --> repeat(num, inf)[a]: Unused``]]
+]
+
+[important The table above uses `vector<A>` as placeholders only. 
+
+           The notation of `vector<A>` stands for /any STL container/ holding
+           elements of type `A`.]
+
+[heading Complexity]
+
+[:The overall complexity of the repetition generator is defined by the 
+  complexity of its embedded generator. The complexity of the repeat itself is 
+  O(N), where N is the number of repetitions to execute.]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use this common test function:
+
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_repeat]
+
+[reference_karma_repeat]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:buffer Temporary Output Buffering (`buffer[]`)]
 
 [heading Description]

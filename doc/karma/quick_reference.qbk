@@ -148,10 +148,10 @@ See here for more information about __karma_directive__.
                                                  `BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH`]]
     [[`maxwidth(num)[a]`]     [`A`]             [Generate `a` truncated to column of width `num`]]
 
-    [[`repeat[a]`]          [`vector<A>`]       [Repeat `a` zero or more times]]
-    [[`repeat(num)[a]`]     [`vector<A>`]       [Repeat `a` `N` times]]
-    [[`repeat(num1, num2)[a]`][`vector<A>`]     [Repeat `a` `num1` to `num2` times]]
-    [[`repeat(num, inf)[a]`][`vector<A>`]       [Repeat `a` `num` or more times]]
+    [[[karma_repeat `repeat[a]`]]             [`vector<A>`] [Repeat `a` zero or more times]]
+    [[[karma_repeat `repeat(num)[a]`]]        [`vector<A>`] [Repeat `a` `N` times]]
+    [[[karma_repeat `repeat(num1, num2)[a]`]] [`vector<A>`] [Repeat `a` `num1` to `num2` times]]
+    [[[karma_repeat `repeat(num, inf)[a]`]]   [`vector<A>`] [Repeat `a` `num` or more times]]
 
     [[`verbatim[a]`]        [`A`]               [Disable delimited generation for `a`]]
     [[`delimit[a]`]         [`A`]               [Reestablish the delimiter that got inhibited by verbatim]]
@@ -340,7 +340,7 @@ a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[__karma_kleene__]
+    [[[karma_kleene kleene (unary `*`)]]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
     [[__karma_plus__]
@@ -351,7 +351,7 @@ a: Unused --> +a: Unused``]]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[repetition]
+    [[[karma_repeat repetition]]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 

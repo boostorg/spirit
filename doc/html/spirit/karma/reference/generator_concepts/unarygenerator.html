@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.generator_concepts.unarygenerator"></a><a class="link" href="unarygenerator.html" title="UnaryGenerator">UnaryGenerator</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.description"></a><h6>
-<a name="id1203736"></a>
+<a name="id1222168"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             following the Delegate Design Pattern.
           </p>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.refinement_of"></a><h6>
-<a name="id1203756"></a>
+<a name="id1222189"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.refinement_of">Refinement
             of</a>
           </h6>
@@ -63,7 +63,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions"></a><h6>
-<a name="id1203833"></a>
+<a name="id1222265"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions">Valid
             Expressions</a>
           </h6>
@@ -113,7 +113,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.type_expressions"></a><h6>
-<a name="id1203948"></a>
+<a name="id1222381"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.type_expressions">Type
             Expressions</a>
           </h6>
@@ -166,7 +166,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.invariants"></a><h6>
-<a name="id1204114"></a>
+<a name="id1222546"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.invariants">Invariants</a>
           </h6>
 <p>
@@ -177,13 +177,43 @@
 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.models"></a><h6>
-<a name="id1204199"></a>
+<a name="id1222631"></a>
             <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.models">Models</a>
           </h6>
 <p>
-            The following generators conform to this model: <a class="link" href="../operator/kleene.html" title="Kleene Star (unary operator*())">kleene
-            (unary <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../operator/plus.html" title="Plus (unary operator+())">plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>.
+            The following generators conform to this model:
           </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+<a class="link" href="../operator/kleene.html" title="Kleene Star (unary operator*())">Kleene Star
+              (unary <code class="computeroutput"><span class="special">*</span></code>)</a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../operator/plus.html" title="Plus (unary operator+())">plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../operator/optional.html" title="Optional (unary operator-())">optional (unary
+              <code class="computeroutput"><span class="special">-</span></code>)</a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../operator/and_predicate.html" title="And Predicate (unary operator&amp;())">and predicate
+              (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a> and
+              <a class="link" href="../operator/not_predicate.html" title="Not Predicate (unary operator!())">not predicate
+              (unary <code class="computeroutput"><span class="special">!</span></code>)</a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], and right_align[])"><code class="computeroutput"><span class="identifier">left_align</span></code></a>, <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], and right_align[])"><code class="computeroutput"><span class="identifier">center</span></code></a>, and <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], and right_align[])"><code class="computeroutput"><span class="identifier">right_align</span></code></a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../directive/repeat.html" title="Repetition Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>,
+            </li>
+<li class="listitem">
+<a class="link" href="../directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>.
+            </li>
+</ul></div>
 <p>
             <span class="bold"><strong>FIXME</strong></span> Add more links to models of UnaryGenerator
             concept
