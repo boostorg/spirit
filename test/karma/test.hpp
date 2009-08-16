@@ -44,6 +44,19 @@ namespace spirit_test
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Char, typename T>
+    void print_if_failed(char const* func, bool result
+      , std::basic_string<Char> const& generated, T const& expected)
+    {
+        if (!result)
+            std::cerr << "in " << func << ": result is false" << std::endl;
+        else if (generated != expected)
+            std::cerr << "in " << func << ": generated \""
+                << std::string(generated.begin(), generated.end())
+                << "\"" << std::endl;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename Generator>
     inline bool test(Char const *expected, Generator const& g)
     {
@@ -58,6 +71,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g);
 
+        print_if_failed("test", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -75,6 +89,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g);
 
+        print_if_failed("test", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -94,6 +109,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g, attr);
 
+        print_if_failed("test", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -112,6 +128,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g, attr);
 
+        print_if_failed("test", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -131,6 +148,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate_delimited(outit, g, d);
 
+        print_if_failed("test_delimited", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -149,6 +167,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate_delimited(outit, g, d);
 
+        print_if_failed("test_delimited", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -169,6 +188,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate_delimited(outit, g, d, attr);
 
+        print_if_failed("test_delimited", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -188,6 +208,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate_delimited(outit, g, d, attr);
 
+        print_if_failed("test_delimited", result, generated, expected);
         return result && generated == expected;
     }
 

@@ -31,6 +31,19 @@ namespace spirit_test
         typedef std::basic_string<Char> string_type;
         typedef std::back_insert_iterator<string_type> type;
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char, typename T>
+    void print_if_failed(char const* func, bool result
+      , std::basic_string<Char> const& generated, T const& expected)
+    {
+        if (!result)
+            std::cerr << "in " << func << ": result is false" << std::endl;
+        else if (generated != expected)
+            std::cerr << "in " << func << ": generated \""
+                << std::string(generated.begin(), generated.end())
+                << "\"" << std::endl;
+    }
 }
 
 #define BOOST_PP_FILENAME_1 "karma/test_attr.hpp"
@@ -67,6 +80,7 @@ namespace spirit_test
         std::back_insert_iterator<string_type> outit(generated);
         bool result = karma::generate(outit, g, BOOST_PP_ENUM_PARAMS(N, attr));
 
+        print_if_failed("test", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -88,6 +102,7 @@ namespace spirit_test
         bool result = karma::generate_delimited(outit, g, d
           , BOOST_PP_ENUM_PARAMS(N, attr));
 
+        print_if_failed("test_delimited", result, generated, expected);
         return result && generated == expected;
     }
 
@@ -111,6 +126,7 @@ namespace spirit_test
         bool result = karma::generate_delimited(outit, g, d
           , pre_delimit, BOOST_PP_ENUM_PARAMS(N, attr));
 
+        print_if_failed("test_predelimited", result, generated, expected);
         return result && generated == expected;
     }
 

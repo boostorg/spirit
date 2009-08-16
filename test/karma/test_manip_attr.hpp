@@ -21,6 +21,22 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 
+namespace spirit_test
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Char, typename T>
+    void print_if_failed(char const* func, bool result
+      , std::basic_string<Char> const& generated, T const& expected)
+    {
+        if (!result)
+            std::cerr << "in " << func << ": result is false" << std::endl;
+        else if (generated != expected)
+            std::cerr << "in " << func << ": generated \""
+                << std::string(generated.begin(), generated.end())
+                << "\"" << std::endl;
+    }
+}
+
 #define BOOST_PP_FILENAME_1 "karma/test_manip_attr.hpp"
 #define BOOST_PP_ITERATION_LIMITS (1, SPIRIT_ARGUMENTS_LIMIT)
 #include BOOST_PP_ITERATE()
@@ -48,6 +64,8 @@ namespace spirit_test
 
         std::ostringstream ostrm;
         ostrm << karma::format(g, BOOST_PP_ENUM_PARAMS(N, attr));
+
+        print_if_failed("test", ostrm.good(), ostrm.str(), expected);
         return ostrm.good() && ostrm.str() == expected;
     }
 
@@ -61,6 +79,8 @@ namespace spirit_test
 
         std::ostringstream ostrm;
         ostrm << karma::format_delimited(g, d, BOOST_PP_ENUM_PARAMS(N, attr));
+
+        print_if_failed("test_delimited", ostrm.good(), ostrm.str(), expected);
         return ostrm.good() && ostrm.str() == expected;
     }
 
@@ -77,6 +97,8 @@ namespace spirit_test
         std::ostringstream ostrm;
         ostrm << karma::format_delimited(g, d, pre_delimit
           , BOOST_PP_ENUM_PARAMS(N, attr));
+
+        print_if_failed("test_predelimited", ostrm.good(), ostrm.str(), expected);
         return ostrm.good() && ostrm.str() == expected;
     }
 
