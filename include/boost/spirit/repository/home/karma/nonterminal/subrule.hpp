@@ -30,9 +30,6 @@
 #include <boost/fusion/include/as_map.hpp>
 #include <boost/fusion/include/at_key.hpp>
 #include <boost/fusion/include/cons.hpp>
-#include <boost/fusion/include/end.hpp>
-#include <boost/fusion/include/find_if.hpp>
-#include <boost/fusion/include/fold.hpp>
 #include <boost/fusion/include/front.hpp>
 #include <boost/fusion/include/has_key.hpp>
 #include <boost/fusion/include/join.hpp>
@@ -52,21 +49,6 @@
 # pragma warning(push)
 # pragma warning(disable: 4355) // 'this' : used in base member initializer list warning
 #endif
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit
-{
-    ///////////////////////////////////////////////////////////////////////////
-    // Enablers
-    ///////////////////////////////////////////////////////////////////////////
-    template <>
-    struct use_operator<karma::domain, proto::tag::comma>   // enables ,
-      : mpl::true_ {};
-
-    template <>
-    struct flatten_tree<karma::domain, proto::tag::comma>   // flattens ,
-      : mpl::true_ {};
-}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace repository { namespace karma
@@ -115,7 +97,7 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         {
         }
 
-        subrule_group(Defs const& defs)
+        explicit subrule_group(Defs const& defs)
           : base_type(terminal::make(reference_(*this)))
           , defs(defs)
         {
@@ -268,6 +250,20 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         {
             // Forward to first subrule.
             return fusion::front(defs).second.binder.g.what(context);
+        }
+
+        template <typename Defs2>
+        subrule_group<
+            typename fusion::result_of::as_map<
+                typename fusion::result_of::join<
+                    Defs const, Defs2 const>::type>::type>
+        operator,(subrule_group<Defs2> const& other) const
+        {
+            typedef subrule_group<
+                typename fusion::result_of::as_map<
+                    typename fusion::result_of::join<
+                        Defs const, Defs2 const>::type>::type> result_type;
+            return result_type(fusion::as_map(fusion::join(defs, other.defs)));
         }
 
         // bring in the operator() overloads
@@ -553,118 +549,6 @@ namespace boost { namespace spirit { namespace repository { namespace karma
         std::string name_;
     };
 }}}}
-
-///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace karma
-{
-    ///////////////////////////////////////////////////////////////////////////
-    // Generator generators: make_xxx function (objects)
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename Elements, typename Modifiers>
-    struct make_composite<proto::tag::comma, Elements, Modifiers>
-    {
-        // Elements is a Fusion sequence of reference<subrule_group<...> const>
-
-
-        ///////////////////////////////////////////////////////////////////////
-        // 1. confirm that, to avoid further confusion if it is not the case
-
-        // this check is done with a metafunction class instead of an MPL
-        // lambda expression with placeholders for the sake of gcc-3.x
-        struct is_not_subrule_group
-        {
-            template <typename T>
-            struct apply
-            {
-                typedef mpl::true_ type;
-            };
-            template <typename Defs>
-            struct apply<reference<
-                spirit::repository::karma::subrule_group<Defs> const> >
-            {
-                typedef mpl::false_ type;
-            };
-        };
-
-        // If you are seeing a compilation error here, you are using a comma
-        // (,) for something other than separating definitions of subrules.
-        BOOST_SPIRIT_ASSERT_MSG(
-            (is_same<
-                typename fusion::result_of::find_if<Elements
-                  , is_not_subrule_group>::type,
-                typename fusion::result_of::end<Elements>::type>::value)
-          , comma_not_separating_subrule_definitions, (Elements));
-
-
-        ///////////////////////////////////////////////////////////////////////
-        // 2. merge subrule groups together
-
-        // function object applied on each element (reference to subrule_group)
-        // with fusion::fold to compute the map of definitions for the
-        // merged subrule_group
-        struct merge_defs
-        {
-            template <typename Element, typename State>
-            struct result_
-            {
-                // Note: it is not checked that any subrule is defined at most
-                // once within a group (i.e. that keys are unique when joining
-                // the two maps). If needed, this check could be added here.
-
-                typedef
-                    typename fusion::result_of::join<
-                        State const
-                      , typename Element::subject_type::defs_type const
-                    >::type
-                type;
-            };
-
-            template <typename Signature>
-            struct result;
-            template <typename Self, typename Element, typename State>
-            struct result<Self(Element, State)>
-              : result_<
-                    typename remove_reference<Element>::type
-                  , typename remove_reference<State>::type> {};
-
-            template <typename Element, typename State>
-            typename result_<Element, State>::type
-            operator()(Element const& element, State const& state)
-            {
-                typedef typename
-                    result_<Element, State>::type result_type;
-
-                return fusion::join(
-                    state
-                  , element.ref.get().defs);
-            }
-        };
-
-        typedef
-            typename fusion::result_of::fold<
-                Elements
-              , typename fusion::result_of::make_map<>::type
-              , merge_defs>::type
-        merged_defs_type;
-
-        typedef typename
-            fusion::result_of::as_map<merged_defs_type>::type defs_type;
-
-
-        typedef spirit::repository::karma::subrule_group<
-            defs_type> result_type;
-
-        result_type operator()(Elements const& elements, unused_type) const
-        {
-            return result_type(
-                fusion::as_map(
-                    fusion::fold(
-                        elements
-                      , fusion::make_map()
-                      , merge_defs())));
-        }
-    };
-}}}
 
 #if defined(BOOST_MSVC)
 # pragma warning(pop)

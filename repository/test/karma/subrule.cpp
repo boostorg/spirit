@@ -127,28 +127,6 @@ int main()
         BOOST_TEST(test_delimited("12.4 ", start, v, space));
     }
 
-#if 0
-/*
-FIXME groups with multiple subrules don't work with inherited attributes
-because the situation is not like for rules/grammars/terminal_ex where
-the inherited attributes are an invocation of "operator()" on a customized
-proto terminal.
-    (
-        sr1 = ...
-      , sr2 = ...
-    )(a1, a2)
-Here the "target" of the "(a1, a2)" function call is a proto expr (list
-of proto::tag::comma), not yet compiled into a subrule_group which exposes
-an "operator()". So the inherited attributes are seen as a proto expr too
-(proto::tag::function) and compile stops there.
-
-See if:
-- either proto::tag::function can be handled somehow (would make
-  handling of inherited attributes different for subrules than
-  for rules/grammars/terminal_ex, probably not a good idea),
-- or rather if "operator," can be overloaded on subrule_group,
-  instead of having it handled by use_operator/make_composite.
-*/
     {
         rule<outiter_type, void(char, int, double)> start;
         subrule<0, void(char, int, double)> sr;
@@ -202,7 +180,6 @@ See if:
         )(_r1, _r2, _r3);
         BOOST_TEST(test_delimited("a 10 12.4 ", start('a', 10, 12.4), space));
     }
-#endif
 
     return boost::report_errors();
 }
