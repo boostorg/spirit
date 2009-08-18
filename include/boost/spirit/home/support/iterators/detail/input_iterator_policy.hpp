@@ -45,7 +45,7 @@ namespace boost { namespace spirit { namespace iterator_policies
                 typename boost::detail::iterator_traits<T>::difference_type
             difference_type;
             typedef
-                typename boost::detail::iterator_traits<T>::distance_type
+                typename boost::detail::iterator_traits<T>::difference_type
             distance_type;
             typedef
                 typename boost::detail::iterator_traits<T>::pointer
