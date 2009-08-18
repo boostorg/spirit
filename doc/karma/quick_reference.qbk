@@ -17,8 +17,8 @@ pages and pages of reference doumentation.
 
 [variablelist Notation
     [[`G`]              [Generator type]]
-    [[`g, a, b, c`]     [Generator objects]]
-    [[`A, B, C`]        [Attribute types of generators `a`, `b` and `c`]]
+    [[`g, a, b, c, d`]  [Generator objects]]
+    [[`A, B, C, D`]     [Attribute types of generators `a`, `b`, `c`, and `d`]]
     [[`I`]              [The iterator type used for generation]]
     [[`Unused`]         [An `unused_type`]]
     [[`Context`]        [The enclosing rule's `Context` type]]
@@ -119,9 +119,9 @@ See here for more information about __karma_string__.
 See here for more information about __karma_directive__.
 
 [table Predefined Generator Directives
-    [[Expression]           [Attribute]         [Description]]
-    [[`lower[a]`]           [`A`]               [Generate `a` as lower case]]
-    [[`upper[a]`]           [`A`]               [Generate `a` as upper case]]
+    [[Expression]           [Attribute]           [Description]]
+    [[[karma_upperlower `lower[a]`]]        [`A`] [Generate `a` as lower case]]
+    [[[karma_upperlower `upper[a]`]]        [`A`] [Generate `a` as upper case]]
 
     [[[karma_align `left_align[a]`]]        [`A`] [Generate `a` left aligned in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
@@ -144,18 +144,18 @@ See here for more information about __karma_directive__.
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[`maxwidth[a]`]        [`A`]               [Generate `a` truncated to column of width 
-                                                 `BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH`]]
-    [[`maxwidth(num)[a]`]     [`A`]             [Generate `a` truncated to column of width `num`]]
+    [[[karma_maxwidth `maxwidth[a]`]]       [`A`] [Generate `a` truncated to column of width 
+                                                   `BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH`]]
+    [[[karma_maxwidth `maxwidth(num)[a]`]]  [`A`] [Generate `a` truncated to column of width `num`]]
 
     [[[karma_repeat `repeat[a]`]]             [`vector<A>`] [Repeat `a` zero or more times]]
-    [[[karma_repeat `repeat(num)[a]`]]        [`vector<A>`] [Repeat `a` `N` times]]
+    [[[karma_repeat `repeat(num)[a]`]]        [`vector<A>`] [Repeat `a` `num` times]]
     [[[karma_repeat `repeat(num1, num2)[a]`]] [`vector<A>`] [Repeat `a` `num1` to `num2` times]]
     [[[karma_repeat `repeat(num, inf)[a]`]]   [`vector<A>`] [Repeat `a` `num` or more times]]
 
-    [[`verbatim[a]`]        [`A`]               [Disable delimited generation for `a`]]
-    [[`delimit[a]`]         [`A`]               [Reestablish the delimiter that got inhibited by verbatim]]
-    [[`delimit(g)[a]`]      [`A`]               [Use `g` as a skipper for generating `a`]]
+    [[__karma_verbatim__]   [`A`]               [Disable delimited generation for `a`]]
+    [[[karma_delimit `delimit[a]`]]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
+    [[[karma_delimit `delimit(d)[a]`]]  [`A`]   [Use `d` as a delimiter for generating `a`]]
 
     [[__karma_omit__]       [`A`]               [Consumes the attribute type of `a` without generating anything]]
 

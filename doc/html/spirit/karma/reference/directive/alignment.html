@@ -28,7 +28,7 @@
           Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, and <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.alignment.description"></a><h6>
-<a name="id1256720"></a>
+<a name="id1237194"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             an arbitrary generator to create the padding.
           </p>
 <a name="spirit.karma.reference.directive.alignment.header"></a><h6>
-<a name="id1256736"></a>
+<a name="id1237211"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.header">Header</a>
           </h6>
 <p>
@@ -65,7 +65,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.alignment.model_of"></a><h6>
-<a name="id1256960"></a>
+<a name="id1237434"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.model_of">Model
             of</a>
           </h6>
@@ -81,15 +81,19 @@
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
-            <code class="computeroutput"><span class="identifier">pad</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                Generator objects
+                A generator object
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">pad</span></code></span></dt>
+<dd><p>
+                A generator object, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a generator object
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code>,
             <code class="computeroutput"><span class="identifier">Pad</span></code></span></dt>
 <dd><p>
-                Attribute types of generators <code class="computeroutput"><span class="identifier">a</span></code>
+                Attribute types of the generators <code class="computeroutput"><span class="identifier">a</span></code>
                 and <code class="computeroutput"><span class="identifier">pad</span></code>
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">width</span></code></span></dt>
@@ -100,7 +104,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.alignment.expression_semantics"></a><h6>
-<a name="id1257094"></a>
+<a name="id1237606"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -373,13 +377,13 @@
 <pre class="programlisting"><span class="identifier">maxwidth</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="identifier">right_align</span><span class="special">(</span><span class="number">12</span><span class="special">)[</span><span class="string">"1234567890"</span><span class="special">]]</span>
 </pre>
 <p>
-              which will output: <code class="computeroutput"><span class="char">' 123456'</span></code>
+              which will output: <code class="computeroutput"><span class="string">" 123456"</span></code>
               (without the quotes).
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.attributes"></a><h6>
-<a name="id1259247"></a>
+<a name="id1238645"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -442,8 +446,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -459,8 +463,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -507,8 +511,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -524,8 +528,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -572,8 +576,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -589,8 +593,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
                   </td>
@@ -598,7 +602,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.complexity"></a><h6>
-<a name="id1260852"></a>
+<a name="id1240588"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -616,7 +620,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.alignment.example"></a><h6>
-<a name="id1260883"></a>
+<a name="id1240619"></a>
             <a class="link" href="alignment.html#spirit.karma.reference.directive.alignment.example">Example</a>
           </h6>
 <p>
@@ -678,6 +682,9 @@
 <p>
             </p>
 <p>
+          </p>
+<p>
+            Basic usage of the alignment generators:
           </p>
 <p>
             </p>

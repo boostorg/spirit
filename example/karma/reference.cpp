@@ -14,6 +14,12 @@
 #include <string>
 //]
 
+//[reference_karma_includes_simple
+#include <boost/spirit/include/karma.hpp>
+#include <iostream>
+#include <string>
+//]
+
 //[reference_karma_test
 template <typename G>
 void test_generator(char const* expected, G const& g)
@@ -34,6 +40,20 @@ void test_generator_attr(char const* expected, G const& g, T const& attr)
     std::string s;
     std::back_insert_iterator<std::string> out(s);
     if (boost::spirit::karma::generate(out, g, attr) && str == expected)
+        std::cout << "ok" << std::endl;
+    else
+        std::cout << "fail" << std::endl;
+}
+//]
+
+//[reference_karma_test_attr2
+template <typename G, typename T1, typename T2>
+void test_generator_attr(char const* expected, G const& g, T1 const& attr1, 
+    T2 const& attr2)
+{
+    std::string s;
+    std::back_insert_iterator<std::string> out(s);
+    if (boost::spirit::karma::generate(out, g, attr1, attr2) && str == expected)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -222,6 +242,54 @@ main()
 
         // fails because of insufficient number of items
         test_generator_attr("", repeat(4)['[' << double_ << ']'], v);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_delimit
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::delimit;
+        using boost::spirit::karma::verbatim;
+        //]
+
+        //[reference_karma_delimit
+        test_generator_attr("[ 2.0 , 4.3 ] ", 
+            delimit['[' << double_ << ',' << double_ << ']'], 2.0, 4.3);
+        test_generator_attr("[*2.0*,*4.3*]*", 
+            delimit('*')['[' << double_ << ',' << double_ << ']'], 2.0, 4.3);
+        test_generator_attr("[2.0, 4.3 ] ", 
+            delimit[verbatim['[' << double_ << ','] << double_ << ']'], 2.0, 4.3);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_upperlower
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        using boost::spirit::ascii::upper;
+        using boost::spirit::ascii::lower;
+        //]
+
+        //[reference_karma_upperlower
+        test_generator_attr("abc:2.0e-06", lower["ABC:" << double_], 2e-6);
+        test_generator_attr("ABC:2.0E-06", upper["abc:" << double_], 2e-6);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_maxwidth
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::double_;
+        using boost::spirit::karma::maxwidth;
+        using boost::spirit::karma::left_align;
+        using boost::spirit::karma::right_align;
+        //]
+
+        //[reference_karma_maxwidth
+        test_generator("01234", maxwidth(5)["0123456789"]);
+        test_generator("  012", maxwidth(5)[right_align(12)["0123456789"]]);
+        test_generator("0123    ", maxwidth(8)[left_align(8)["0123"]]);
         //]
     }
 

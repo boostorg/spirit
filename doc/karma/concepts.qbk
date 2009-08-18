@@ -182,13 +182,17 @@ For any UnaryGenerator, `G`, the following invariant always holds:
 The following generators conform to this model: 
 
 * [karma_kleene Kleene Star (unary `*`)], 
-* __karma_plus__,
-* __karma_optional__,
-* __karma_and_predicate__ and __karma_not_predicate__,
-* [karma_align `left_align`], [karma_align `center`], and [karma_align `right_align`],
-* [karma_repeat `repeat`],
-* __karma_buffer__,
-* __karma_omit__.
+* __karma_plus__ operator,
+* __karma_optional__ operator,
+* __karma_and_predicate__ and __karma_not_predicate__ operators,
+* [karma_align `left_align`], [karma_align `center`], and [karma_align `right_align`] directives,
+* [karma_repeat `repeat`] directive,
+* __karma_verbatim__ directive,
+* [karma_delimit `delimit`] directive,
+* [karma_upperlower `lower`] and [karma_upperlower `upper`] directives,
+* [karma_maxwidth `maxwidth`] directive,
+* __karma_buffer__ directive,
+* __karma_omit__ directive.
 
 
 __fixme__ Add more links to models of UnaryGenerator concept
