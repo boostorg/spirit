@@ -323,6 +323,36 @@ namespace util
     ///////////////////////////////////////////////////////////////////////////
     class high_resolution_timer
     {
+    private:
+        template <typename U>
+        static inline double unsigned_diff(const U &a, const U &b)
+        {
+            if (a > b)
+                return static_cast<double>(a-b);
+            return -static_cast<double>(b-a);
+        }
+
+        // @brief Return the difference between two timeval types.
+        // 
+        // @param t1 The most recent timeval.
+        // @param t0 The historical timeval.
+        // 
+        // @return The difference between the two in seconds.
+        double elapsed(const timeval &t1, const timeval &t0) const
+        { 
+            if (t1.tv_sec == t0.tv_sec)
+                return unsigned_diff(t1.tv_usec,t0.tv_usec) * 1e-6;
+
+            // We do it this way as the result of the difference of the
+            // microseconds can be negative if the clock is implemented so
+            // that the seconds timer increases in large steps.
+            //
+            // Naive subtraction of the unsigned types and conversion to
+            // double can wreak havoc!
+            return unsigned_diff(t1.tv_sec,t0.tv_sec) + 
+                unsigned_diff(t1.tv_usec,t0.tv_usec) * 1e-6; 
+        }
+
     public:
         high_resolution_timer() 
         {
@@ -368,12 +398,7 @@ namespace util
             timeval now;
             if (gettimeofday(&now, NULL))
                 boost::throw_exception(std::runtime_error("Couldn't get current time"));
-
-            if (now.tv_sec == start_time.tv_sec)
-                return double(now.tv_usec - start_time.tv_usec) * 1e-6;
-
-            return double(now.tv_usec - start_time.tv_sec) + 
-                (double(now.tv_usec - start_time.tv_usec) * 1e-6);
+            return elapsed(now,start_time);
         }
 
         double elapsed_max() const   // return estimated maximum value for elapsed()
@@ -388,19 +413,18 @@ namespace util
             // by repeatedly calling the gettimeofday function.  This
             // is often likely to be indicative of the true
             // resolution.
-            timeval a, b;
+            timeval t1, t2;
             double delta(0);
 
-            if (gettimeofday(&a, NULL)) 
+            if (gettimeofday(&t0, NULL)) 
                 boost::throw_exception(std::runtime_error("Couldn't get resolution."));
 
             // Spin around in a tight loop until we observe a change
             // in the reported timer value.
             do {
-                if (gettimeofday(&b, NULL)) 
+                if (gettimeofday(&t1, NULL)) 
                     boost::throw_exception(std::runtime_error("Couldn't get resolution."));
-                delta = double(b.tv_sec - a.tv_sec) + 
-                    double(b.tv_usec - a.tv_usec) * 1e-6;
+                delta = elapsed(t1, t0);
             } while (delta <= 0.0);
 
             return delta;
@@ -434,6 +458,17 @@ namespace util
 
 #endif
 
-#endif
+#endif  // HIGH_RESOLUTION_TIMER_AUG_14_2009_0425PM
+
+//
+// $Log: high_resolution_timer.hpp,v $
+// Revision 1.4  2009/08/14 15:28:10  graceej
+// * It is entirely possible for the updating clock to increment the
+// * seconds and *decrement* the microseconds field.  Consequently
+// * when subtracting these unsigned microseconds fields a wrap-around
+// * error can occur.  For this reason elapsed(t1, t0) is used in a
+// * similar maner to cycle.h this preserves the sign of the
+// * difference.
+//
 
 
