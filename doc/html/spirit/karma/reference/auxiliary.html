@@ -6,9 +6,8 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="previous" href="operator/not_predicate.html" title=" Not
-          Predicate (unary operator!())">
-<link rel="next" href="auxiliary/eol.html" title="eol">
+<link rel="previous" href="operator.html" title="Operator">
+<link rel="next" href="../performance_measurements.html" title="Performance Measurements">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="operator/not_predicate.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auxiliary/eol.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="operator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../performance_measurements.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage">
@@ -31,9 +30,9 @@
 <div></div>
 </div>
 <div class="toc"><dl>
-<dt><span class="section"><a href="auxiliary/eol.html">eol</a></span></dt>
-<dt><span class="section"><a href="auxiliary/eps.html">eps</a></span></dt>
-<dt><span class="section"><a href="auxiliary/lazy.html">lazy</a></span></dt>
+<dt><span class="section"><a href="auxiliary.html#spirit.karma.reference.auxiliary.eol">eol</a></span></dt>
+<dt><span class="section"><a href="auxiliary.html#spirit.karma.reference.auxiliary.eps">eps</a></span></dt>
+<dt><span class="section"><a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy">lazy</a></span></dt>
 </dl></div>
 <p>
           This module includes different auxiliary generators not fitting into any
@@ -41,12 +40,481 @@
           and <tt class="computeroutput"><span class="identifier">eps</span></tt>, <tt class="computeroutput"><span class="identifier">lazy</span></tt> generators.
         </p>
 <a name="spirit.karma.reference.auxiliary.module_header"></a><h5>
-<a name="id567076"></a>
+<a name="id567378"></a>
           <a href="auxiliary.html#spirit.karma.reference.auxiliary.module_header">Module Header</a>
         </h5>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_auxiliary</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.auxiliary.eol"></a><a href="auxiliary.html#spirit.karma.reference.auxiliary.eol" title="eol">eol</a>
+</h5></div></div>
+<div></div>
+</div>
+<a name="spirit.karma.reference.auxiliary.eol.description"></a><h6>
+<a name="id567495"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.description">Description</a>
+          </h6>
+<p>
+            The <tt class="computeroutput"><span class="identifier">eol</span></tt> component generates
+            a single newline character. It is equivalent to <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="char">'\n'</span><span class="special">)</span></tt>
+            or simply '\n' (please see the <a href="char.html#spirit.karma.reference.char.char_generator" title=" Character
+          Generators"><tt class="computeroutput"><span class="identifier">char_</span></tt></a> generator module for more
+            details).
+          </p>
+<a name="spirit.karma.reference.auxiliary.eol.header"></a><h6>
+<a name="id567582"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/eol.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_eol</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eol.model_of"></a><h6>
+<a name="id567696"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.model_of">Model of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.primitivegenerator" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<a name="spirit.karma.reference.auxiliary.eol.expression_semantics"></a><h6>
+<a name="id567749"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.primitivegenerator" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Semantics
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eol</span></tt>
+                  </p></td>
+<td><p>
+                    Create a component generating a single end of line character
+                    in the output
+                  </p></td>
+</tr></tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.eol.attributes"></a><h6>
+<a name="id567865"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.attributes">Attributes</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Attribute
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eol</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
+</tr></tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.eol.complexity"></a><h6>
+<a name="id567966"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                O(1)
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<p>
+            The complexity is constant as a single character is generated in the
+            output.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eol.example"></a><h6>
+<a name="id568007"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eol.example">Example</a>
+          </h6>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.auxiliary.eps"></a><a href="auxiliary.html#spirit.karma.reference.auxiliary.eps" title="eps">eps</a>
+</h5></div></div>
+<div></div>
+</div>
+<p>
+            The family of <tt class="computeroutput"><span class="identifier">eps</span></tt> components
+            allows to create pseudo generators generating an empty string. This feature
+            is sometimes useful either to force a generator to fail or to succeed
+            or to insert semantic actions into the generation process.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eps.description"></a><h6>
+<a name="id568071"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.description">Description</a>
+          </h6>
+<p>
+            The <tt class="computeroutput"><span class="identifier">eps</span></tt> creates a component
+            generating an empty string while always succeeding. The <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+            component generates an empty string as well, but succeeds only if <tt class="computeroutput"><span class="identifier">b</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt>
+            and fails otherwise. It's lazy variant <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></tt> is equivalent to <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt> except it evaluates the supplied function
+            <tt class="computeroutput"><span class="identifier">fb</span></tt> at generate time,
+            while using the return value as the criteria to succeed.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eps.header"></a><h6>
+<a name="id568230"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/eps.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_eps</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eps.model_of"></a><h6>
+<a name="id568343"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.model_of">Model of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.primitivegenerator" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">b</span></tt></span></dt>
+<dd><p>
+                A boolean value.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">fb</span></tt></span></dt>
+<dd><p>
+                A <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a boolean value.
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.karma.reference.auxiliary.eps.expression_semantics"></a><h6>
+<a name="id568459"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.primitivegenerator" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Semantics
+                  </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                  </p></td>
+<td><p>
+                    Creates a component generating an empty string. Succeeds always.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Creates a component generating an empty string. Succeeds if
+                    <tt class="computeroutput"><span class="identifier">b</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt>
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Creates a component generating an empty string. Succeeds if
+                    <tt class="computeroutput"><span class="identifier">fb</span></tt> returns <tt class="computeroutput"><span class="keyword">true</span></tt> at generate time.
+                  </p></td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.eps.attributes"></a><h6>
+<a name="id568712"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.attributes">Attributes</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Attribute
+                  </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.eps.complexity"></a><h6>
+<a name="id568921"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                O(1)
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<p>
+            The complexity is constant as no output is generated.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eps.example"></a><h6>
+<a name="id568961"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.eps.example">Example</a>
+          </h6>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.auxiliary.lazy"></a><a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy" title="lazy">lazy</a>
+</h5></div></div>
+<div></div>
+</div>
+<a name="spirit.karma.reference.auxiliary.lazy.description"></a><h6>
+<a name="id569004"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.description">Description</a>
+          </h6>
+<p>
+            The familiy of <tt class="computeroutput"><span class="identifier">lazy</span></tt> components
+            allows to use a dynamically returned generator component for output generation.
+            It calls the provided function or function object at generate time using
+            its return value as the actual generator to produce the output.
+          </p>
+<a name="spirit.karma.reference.auxiliary.lazy.header"></a><h6>
+<a name="id569051"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/lazy.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_lazy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.karma.reference.auxiliary.lazy.model_of"></a><h6>
+<a name="id569164"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.model_of">Model
+            of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.generator" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">fg</span></tt></span></dt>
+<dd><p>
+                A function or function object that evaluates to a generator object.
+                This function will be invoked at generate time.
+              </p></dd>
+</dl>
+</div>
+<p>
+            The signature of <tt class="computeroutput"><span class="identifier">fg</span></tt> is
+            expected to be
+          </p>
+<pre class="programlisting"><span class="identifier">G</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
+</pre>
+<p>
+            where <tt class="computeroutput"><span class="identifier">G</span></tt>, the function's
+            return value, is the type of the generator to be invoked, and <tt class="computeroutput"><span class="identifier">Context</span></tt> is the generators's Context
+            type (The first argument is <tt class="computeroutput"><span class="identifier">unused</span></tt>
+            to make the <tt class="computeroutput"><span class="identifier">Context</span></tt> the
+            second argument. This is done for uniformity with <a href="../tutorials/semantic_actions.html" title="Semantic Actions">Semantic
+            Actions</a>).
+          </p>
+<a name="spirit.karma.reference.auxiliary.lazy.expression_semantics"></a><h6>
+<a name="id569373"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.generator" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Semantics
+                  </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                  </p></td>
+<td><p>
+                    The <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+                    function object <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                    will be invoked at generate time. It is expected to return a
+                    generator instance. This generator is then invoked in order to
+                    generate the output.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The function or function object will be invoked at generate time.
+                    It is expected to return a generator instance (note this version
+                    of <tt class="computeroutput"><span class="identifier">lazy</span></tt> does
+                    not require <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                    to be a <a href="../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
+                    function object). This generator is then invoked in order to
+                    generate the output.
+                  </p></td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.lazy.attributes"></a><h6>
+<a name="id569590"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.attributes">Attributes</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Attribute
+                  </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                  </p></td>
+<td><p>
+                    The attribute type <tt class="computeroutput"><span class="identifier">G</span></tt>
+                    as exposed by the generator <tt class="computeroutput"><span class="identifier">g</span></tt>
+                    returned from <tt class="computeroutput"><span class="identifier">fg</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The attribute type <tt class="computeroutput"><span class="identifier">G</span></tt>
+                    as exposed by the generator <tt class="computeroutput"><span class="identifier">g</span></tt>
+                    returned from <tt class="computeroutput"><span class="identifier">fg</span></tt>.
+                  </p></td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.lazy.complexity"></a><h6>
+<a name="id569798"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.complexity">Complexity</a>
+          </h6>
+<p>
+            The complexity of the <tt class="computeroutput"><span class="identifier">lazy</span></tt>
+            component is determined by the complexity of the generator returned from
+            <tt class="computeroutput"><span class="identifier">fg</span></tt>.
+          </p>
+<a name="spirit.karma.reference.auxiliary.lazy.example"></a><h6>
+<a name="id569852"></a>
+            <a href="auxiliary.html#spirit.karma.reference.auxiliary.lazy.example">Example</a>
+          </h6>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -59,7 +527,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="operator/not_predicate.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auxiliary/eol.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="operator.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../performance_measurements.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

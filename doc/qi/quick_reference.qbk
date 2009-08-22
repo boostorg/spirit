@@ -46,7 +46,9 @@ pages and pages of reference doumentation.
 [endsect]
 [section Qi Parsers]
 
-[table char
+[section char]
+
+[table
     [[Expression]           [Attribute]                 [Description]]
     [[`char_`]              [`Ch`]                      [Matches any character]]
     [[`char_(ch)`]          [`Ch`]                      [Matches `ch`]]
@@ -80,7 +82,10 @@ pages and pages of reference doumentation.
                                                          `std::isupper` in the current character set]]
 ]
 
-[table numeric
+[endsect]
+[section numeric]
+
+[table
     [[Expression]           [Attribute]                 [Description]]
     [[`float_`]             [`float`]                   [Parse a floating point number into a `float`]]
     [[`double_`]            [`double`]                  [Parse a floating point number into a `double`]]
@@ -99,7 +104,10 @@ pages and pages of reference doumentation.
     [[`long_long`]          [`long long`]               [Parse a long long]]
 ]
 
-[table string
+[endsect]
+[section string]
+
+[table 
     [[Expression]           [Attribute]                 [Description]]
     [[[qi_lit_string `ch`]]           [`Unused`]    [Matches `ch`]]
     [[[qi_lit_string `str`]]          [`Unused`]    [Matches `str`]]
@@ -127,7 +135,10 @@ pages and pages of reference doumentation.
                                                         the key]]
 ]
 
-[table auxiliary
+[endsect]
+[section auxiliary]
+
+[table 
     [[Expression]           [Attribute]                 [Description]]
     [[`eol`]                [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
     [[`eoi`]                [`Unused`]                  [Matches the end of input (first == last)]]
@@ -141,7 +152,10 @@ pages and pages of reference doumentation.
                                                          argument `attrib` as its attribute.]]
 ]
 
-[table binary
+[endsect]
+[section binary]
+
+[table 
     [[Expression]           [Attribute]                 [Description]]
     [[`byte_`]              [8 bits native endian]      [Matches an 8 bit binary]]
     [[`word`]               [16 bits native endian]     [Matches a 16 bit binary]]
@@ -155,7 +169,10 @@ pages and pages of reference doumentation.
     [[`little_qword`]       [64 bits little endian]     [Matches a 64 bit binary]]
 ]
 
-[table directive
+[endsect]
+[section directive]
+
+[table 
     [[Expression]           [Attribute]                 [Description]]
     [[`lexeme[a]`]          [`A`]                       [Disable skip parsing for `a`]]
     [[__qi_no_case__]       [`A`]                       [Inhibits case-sensitivity for `a`]]
@@ -171,7 +188,10 @@ pages and pages of reference doumentation.
     [[`skip(p)[a]`]         [`A`]                       [Use `p` as a skipper for parsing `a`]]
 ]
 
-[table operator
+[endsect]
+[section operator]
+
+[table 
     [[Expression]           [Attribute]                 [Description]]
     [[`!a`]                 [`Unused`]                  [Not predicate. Ensure that `a` does not match
                                                         but don't move the iterator position]]
@@ -194,11 +214,15 @@ pages and pages of reference doumentation.
                             ]                           [Permutation. Parse `a` and `b` in any order]]
 ]
 
-[table action
+[endsect]
+[section action]
+
+[table 
     [[Expression]           [Attribute]                 [Description]]
     [[`p[fa]`]              [Attribute of `p`]          [Call semantic action, `fa` if p succeeds.]]
 ]
 
+[endsect]
 [endsect]
 [section Compound Attribute Rules]
 
