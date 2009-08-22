@@ -44,31 +44,10 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section Predefined Primitive Parsers]
+[section Qi Parsers]
 
-[table 
+[table char
     [[Expression]           [Attribute]                 [Description]]
-    [[`eol`]                [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
-    [[`eoi`]                [`Unused`]                  [Matches the end of input (first == last)]]
-    [[`eps`]                [`Unused`]                  [Match an empty string]]
-    [[`eps(b)`]             [`Unused`]                  [If `b` is true, match an empty string]]
-    [[`lazy(fp)`]           [Attribute of `P` where `P`
-                            is the return type of `fp`] [Invoke `fp` at parse time, returning a parser
-                                                        `p` which is then called to parse.]]
-    [[`fp`]                 [see `lazy(fp)` above]      [Equivalent to `lazy[fp]`]]
-    [[`p[fa]`]              [Attribute of `p`]          [Call semantic action, `fa` if p succeeds.]]
-
-    [[`byte_`]              [8 bits native endian]      [Matches an 8 bit binary]]
-    [[`word`]               [16 bits native endian]     [Matches a 16 bit binary]]
-    [[`big_word`]           [16 bits big endian]        [Matches a 16 bit binary]]
-    [[`little_word`]        [16 bits little endian]     [Matches a 16 bit binary]]
-    [[`dword`]              [32 bits native endian]     [Matches a 32 bit binary]]
-    [[`big_dword`]          [32 bits big endian]        [Matches a 32 bit binary]]
-    [[`little_dword`]       [32 bits little endian]     [Matches a 32 bit binary]]
-    [[`qword`]              [64 bits native endian]     [Matches a 64 bit binary]]
-    [[`big_qword`]          [64 bits big endian]        [Matches a 64 bit binary]]
-    [[`little_qword`]       [64 bits little endian]     [Matches a 64 bit binary]]
-
     [[`char_`]              [`Ch`]                      [Matches any character]]
     [[`char_(ch)`]          [`Ch`]                      [Matches `ch`]]
     [[`char_("c")`]         [`Ch`]                      [Matches a single char string literal, `c`]]
@@ -99,7 +78,29 @@ pages and pages of reference doumentation.
                                                          `std::islower` in the current character set]]
     [[`upper`]              [`Ch`]                      [Matches a character based on the equivalent of 
                                                          `std::isupper` in the current character set]]
+]
 
+[table numeric
+    [[Expression]           [Attribute]                 [Description]]
+    [[`float_`]             [`float`]                   [Parse a floating point number into a `float`]]
+    [[`double_`]            [`double`]                  [Parse a floating point number into a `double`]]
+    [[`long_double`]        [`long double`]             [Parse a floating point number into a `long double`]]
+
+    [[`bin`]                [`unsigned`]                [Parse a binary integer into an `unsigned`]]
+    [[`oct`]                [`unsigned`]                [Parse an octal integer into an `unsigned`]]
+    [[`hex`]                [`unsigned`]                [Parse a hexadecimal integer into an `unsigned`]]
+    [[`ushort_`]            [`unsigned short`]          [Parse an unsigned short integer]]
+    [[`ulong_`]             [`unsigned long`]           [Parse an unsigned long integer]]
+    [[`uint_`]              [`unsigned int`]            [Parse an unsigned int]]
+    [[`ulong_long`]         [`unsigned long long`]      [Parse an unsigned long long]]
+    [[`short_`]             [`short`]                   [Parse a short integer]]
+    [[`long_`]              [`long`]                    [Parse a long integer]]
+    [[`int_`]               [`int`]                     [Parse an int]]
+    [[`long_long`]          [`long long`]               [Parse a long long]]
+]
+
+[table string
+    [[Expression]           [Attribute]                 [Description]]
     [[[qi_lit_string `ch`]]           [`Unused`]    [Matches `ch`]]
     [[[qi_lit_string `str`]]          [`Unused`]    [Matches `str`]]
     [[[qi_lit_string `lit(ch)`]]      [`Unused`]    [Matches `ch`]]
@@ -124,8 +125,38 @@ pages and pages of reference doumentation.
     [[`sym`]                [`T`]                       [Matches entries in the symbol table, `sym`. If
                                                         successful, returns the data associated with
                                                         the key]]
+]
 
+[table auxiliary
+    [[Expression]           [Attribute]                 [Description]]
+    [[`eol`]                [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
+    [[`eoi`]                [`Unused`]                  [Matches the end of input (first == last)]]
+    [[`eps`]                [`Unused`]                  [Match an empty string]]
+    [[`eps(b)`]             [`Unused`]                  [If `b` is true, match an empty string]]
+    [[`lazy(fp)`]           [Attribute of `P` where `P`
+                            is the return type of `fp`] [Invoke `fp` at parse time, returning a parser
+                                                        `p` which is then called to parse.]]
+    [[`fp`]                 [see `lazy(fp)` above]      [Equivalent to `lazy[fp]`]]
+    [[__qi_attr__]          [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
+                                                         argument `attrib` as its attribute.]]
+]
 
+[table binary
+    [[Expression]           [Attribute]                 [Description]]
+    [[`byte_`]              [8 bits native endian]      [Matches an 8 bit binary]]
+    [[`word`]               [16 bits native endian]     [Matches a 16 bit binary]]
+    [[`big_word`]           [16 bits big endian]        [Matches a 16 bit binary]]
+    [[`little_word`]        [16 bits little endian]     [Matches a 16 bit binary]]
+    [[`dword`]              [32 bits native endian]     [Matches a 32 bit binary]]
+    [[`big_dword`]          [32 bits big endian]        [Matches a 32 bit binary]]
+    [[`little_dword`]       [32 bits little endian]     [Matches a 32 bit binary]]
+    [[`qword`]              [64 bits native endian]     [Matches a 64 bit binary]]
+    [[`big_qword`]          [64 bits big endian]        [Matches a 64 bit binary]]
+    [[`little_qword`]       [64 bits little endian]     [Matches a 64 bit binary]]
+]
+
+[table directive
+    [[Expression]           [Attribute]                 [Description]]
     [[`lexeme[a]`]          [`A`]                       [Disable skip parsing for `a`]]
     [[__qi_no_case__]       [`A`]                       [Inhibits case-sensitivity for `a`]]
     [[`omit[a]`]            [`Unused`]                  [Ignores the attribute type of `a`]]
@@ -138,26 +169,10 @@ pages and pages of reference doumentation.
 
     [[`skip[a]`]            [`A`]                       [Reestablish the skipper that got inhibited by lexeme]]
     [[`skip(p)[a]`]         [`A`]                       [Use `p` as a skipper for parsing `a`]]
+]
 
-    [[`float_`]             [`float`]                   [Parse a floating point number into a `float`]]
-    [[`double_`]            [`double`]                  [Parse a floating point number into a `double`]]
-    [[`long_double`]        [`long double`]             [Parse a floating point number into a `long double`]]
-
-    [[`bin`]                [`unsigned`]                [Parse a binary integer into an `unsigned`]]
-    [[`oct`]                [`unsigned`]                [Parse an octal integer into an `unsigned`]]
-    [[`hex`]                [`unsigned`]                [Parse a hexadecimal integer into an `unsigned`]]
-    [[`ushort_`]            [`unsigned short`]          [Parse an unsigned short integer]]
-    [[`ulong_`]             [`unsigned long`]           [Parse an unsigned long integer]]
-    [[`uint_`]              [`unsigned int`]            [Parse an unsigned int]]
-    [[`ulong_long`]         [`unsigned long long`]      [Parse an unsigned long long]]
-    [[`short_`]             [`short`]                   [Parse a short integer]]
-    [[`long_`]              [`long`]                    [Parse a long integer]]
-    [[`int_`]               [`int`]                     [Parse an int]]
-    [[`long_long`]          [`long long`]               [Parse a long long]]
-
-    [[__qi_attr__]          [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
-                                                         argument `attrib` as its attribute.]]
-
+[table operator
+    [[Expression]           [Attribute]                 [Description]]
     [[`!a`]                 [`Unused`]                  [Not predicate. Ensure that `a` does not match
                                                         but don't move the iterator position]]
     [[`&a`]                 [`Unused`]                  [And predicate. Ensure that `a` matches
@@ -177,6 +192,11 @@ pages and pages of reference doumentation.
                                 `optional<A>,`
                                 `optional<B> >`
                             ]                           [Permutation. Parse `a` and `b` in any order]]
+]
+
+[table action
+    [[Expression]           [Attribute]                 [Description]]
+    [[`p[fa]`]              [Attribute of `p`]          [Call semantic action, `fa` if p succeeds.]]
 ]
 
 [endsect]
