@@ -11,12 +11,8 @@
 [/section Portability]
 [/endsect]
 
-[/section Porting from Spirit 1.8.x]
-[/endsect]
-
-[section Style Guide]
-[include        notes/style_guide.qbk]
-[endsect]
+[include notes/porting_from_1_8.qbk]
+[include notes/style_guide.qbk]
 
 [/section Techniques]
 [/endsect]

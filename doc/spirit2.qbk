@@ -78,9 +78,11 @@
 [def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_qi_karma_attributes__  [link spirit.qi_and_karma.abstracts.attributes Attributes]]
 [def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
-[def __sec_karma_primitive__    [link spirit.karma.quick_reference.predefined_primitive_generators Predefined Primitive Generators]]
+[def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Primitive Generators]]
 [def __sec_karma_compound__     [link spirit.karma.quick_reference.compound_attribute_rules Compound Attribute Rules]]
 [def __karma_char_encoding_namespace__ [link spirit.karma.reference.karma_basics.character_encoding_namespace Character Encoding Namespace]]
+[def __sec_qi_quickref__        [link spirit.qi.quick_reference Qi Quick Reference]]
+[def __sec_karma_quickref__     [link spirit.karma.quick_reference Karma Quick Reference]]
 
 [def __karma_auxiliary__        [link spirit.karma.reference.auxiliary Auxiliary Generators]]
 [def __karma_char__             [link spirit.karma.reference.char Character Generators]]
@@ -135,6 +137,7 @@
 [def __ast__                    Abstract Syntax Tree] [/$$$ TODO: link me $$$]
 
 [def __include_structure__      [link spirit.structure.include Include Structure]]
+[def __include_structure_faq__  [link spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_ Header Hell]]
 
 [/ References to reference ]
 

@@ -6,6 +6,8 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
+[section Style Guide]
+
 At some point, especially when there are lots of semantic actions attached to
 various points, the grammar tends to be quite difficult to follow. In order to
 keep an easy-to-read, consistent en aesthetically pleasing look to the Spirit
@@ -85,3 +87,5 @@ and Hartmut Kaiser.
            )
            >> statement_part
        ;
+
+[endsect]

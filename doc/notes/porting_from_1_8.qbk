@@ -1,0 +1,136 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Porting from Spirit 1.8.x]
+
+[import ../example/qi/porting_guide_classic.cpp]
+[import ../example/qi/porting_guide_qi.cpp]
+
+The current version of __spirit__ is a complete rewrite of earlier versions (we
+refer to those as __classic__). The parser generators are now only one part of 
+the whole library called __qi__. It is conceptually different and exposes a 
+completely different interface. Generally, there is no easy (or automated) way 
+of converting parsers written for __classic__ to __qi__. Therefore this section 
+can give only guidelines on how to approach porting your older parsers to the
+current version of __spirit__.
+
+[heading Include Files]
+
+The overall directory structure of the __spirit__ directories is described 
+in the section __include_structure__ and the FAQ entry 
+__include_structure_faq__. This should give you a good overview on whow to find 
+the needed header files for your new parsers. Moreover, each reference section
+lists the required include files needed for any particular component.
+
+It is possible to tell from the name of a header file, what version it belongs 
+to. While all main include files for __classic__ have the string 'classic_' in 
+their name, for instance:
+
+    #include <boost/spirit/include/classic_core.hpp>
+
+we named all main include files for __qi__ to have the string 'qi_' in their
+name, for instance:
+
+    #include <boost/spirit/include/qi_core.hpp>
+
+The following table gives a rough list of corresponding header file between 
+__classic__ and __qi__, but this can be used as a starting point only, as 
+several components have either been moved to different submodules or might not
+exist in the never version anymore. We list only include files for the topmost 
+submodules. For header files referring to more lower level components please
+refer to the corresponding reference documentation of this component.
+
+[table
+    [[Include file in /Spirit.Classic/] [Include file in /Spirit.Qi/]]
+    [[`classic.hpp`]                    [`qi.hpp`]]
+    [[`classic_actor.hpp`]              [none, use __phoenix__ for writing semantic actions]]
+    [[`classic_attribute.hpp`]          [none, use local variables for rules instead of closures, 
+                                         the primitives parsers now directly support lazy
+                                         parametrization]]
+    [[`classic_core.hpp`]               [`qi_core.hpp`]]
+    [[`classic_debug.hpp`]              [`qi_debug.hpp`]]
+    [[`classic_dynamic.hpp`]            [none, use predicates instead of if_p, while_p, for_p
+                                         (included by `qi_core.hpp`), the equivalent for lazy_p 
+                                         is now included by `qi_auxiliary.hpp`]]
+    [[`classic_error_handling.hpp`]     [none, included in `qi_core.hpp`]]
+    [[`classic_meta.hpp`]               [none]]
+    [[`classic_symbols.hpp`]            [none, included in `qi_core.hpp`]]
+    [[`classic_utility.hpp`]            [none, not part of __qi__ anymore, these components
+                                         will be added over time to the __repo__]]
+]
+
+[heading The Free Parse Functions]
+
+The free parse functions (i.e. the main parser API) has been changed. This 
+includes the names of teh free functions as well as their interface. In 
+__classic__ all free functions were named `parse`. In __qi__ thez are are named 
+either `qi::parse` or `qi::phrase_parse` depending on whether the parsing should 
+be done using a skipper (`qi::phrase_parse`) or not (`qi::parse`). All free 
+functions now return a simple `bool`. A returned `true` means success (i.e. the
+parser has matched) or `false` (i.e. the parser either didn't match). This is
+equivalent to the former old `parse_info` member `hit`. __qi__ doesn't support
+tracking of the matched input length anymore. The old `parse_info` member 
+`full` can be emulated by comparing the iterators after `qi::parse` returned.
+
+All code examples in this section assume the following include statements and 
+using directives to be inserted. For __classic__:
+
+[porting_guide_classic_includes]
+[porting_guide_classic_namespace]
+
+and for __qi__:
+
+[porting_guide_qi_includes]
+[porting_guide_qi_namespace]
+
+The following similar examples should clearify the differences. First the 
+base example in __classic__:
+
+[porting_guide_classic_parse]
+
+And here is the equivalent piece of code using __qi__:
+
+[porting_guide_qi_parse]
+
+The changes required for phrase parsing (i.e. parsing using a skipper) are 
+similar. Here is how phrase parsing worked in __classic__:
+
+[porting_guide_classic_phrase_parse]
+
+And here the equivalent example in __qi__:
+
+[porting_guide_qi_phrase_parse]
+
+Note, how character parsers are now in a separate namespace (here 
+`boost::spirit::ascii::space`) as __qi__ now supports working with different 
+character sets. See the section __char_encoding_namespace__ for more information.
+
+[heading Naming Conventions]
+
+In __classic__ all parser primitives have suffixes appended to their names, 
+encoding their type: `"_p"` for parsers, `"_a"` for lazy actions, `"_d"` for 
+directives, etc. In __qi__ we don't have anything similar. The only suffixes
+are single underscore letters `"_"` applied where the name would otherwise 
+conflict with a keyword or otherwie predefined name (such as `int_` for the
+integer parser). Please see the __sec_qi_quickref__ for an overview on the 
+names for the different available parser primitives, directives and operators.
+
+[heading Parser Attributes]
+
+In __classic__ most of the parser primitives don't expose a specific attribute 
+type. Most parsers expose the pair of iterators pointing to the matched input
+sequence. As in __qi__ all parsers expose a parser specific attribute type it
+introduces a special directive `raw[]` allowing to achieve a similar effect as
+in __classic__. The `raw[]` directive exposes the pair of iterators pointing 
+to the matching sequence of its embedded parser. Even if we very much encourage 
+you to rewrite your parsers to take advantage of the generates parser specific 
+attributes, sometimes it is helpful to get access to the underlying matched 
+input sequence.
+
+[endsect]
+

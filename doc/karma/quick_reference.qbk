@@ -48,11 +48,13 @@ pages and pages of reference doumentation.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:predefined_primitive_generators Predefined Generators]
+[section:primitive_generators Primitive Generators]
+
+[section:char Character Generators]
 
 See here for more information about __karma_char__.
 
-[table Predefined Character Generators
+[table 
     [[Expression]                   [Attribute]         [Description]]
     [[[karma_char `ch`]]            [`Unused`]          [Generates `ch`]]
     [[[karma_char `lit(ch)`]]       [`Unused`]          [Generates `ch`]]
@@ -106,9 +108,13 @@ See here for more information about __karma_char__.
                                                  the character set defined by `NS`]]
 ]
 
+[endsect]
+
+[section:string String Generators]
+
 See here for more information about __karma_string__.
 
-[table Predefined String Generators
+[table 
     [[Expression]           [Attribute]         [Description]]
     [[`str`]                [`Unused`]          [Generates `str`]]
     [[`lit(str)`]           [`Unused`]          [Generates `str`]]
@@ -116,9 +122,184 @@ See here for more information about __karma_string__.
                                                  if an attribute is supplied it must match]]
 ]
 
+[endsect]
+
+[section:floating_point Floating Point Number Generators]
+
+See here for more information about __karma_numeric__.
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[[link spirit.karma.reference.numeric `lit(num)`]]
+                            [`Unused`]                    [Generates `num`]]
+    [[[floating_point `float_`]]           [`float`]       [Generate a floating point number from a `float`]]
+    [[[floating_point `float_(num)`]]      [`float`]       [Generate `num` as a floating point number from a `float`, 
+                                                            if an attribute is supplied it must match]]
+    [[[floating_point `double_`]]          [`double`]      [Generate a floating point number from a `double`]]
+    [[[floating_point `double_(num)`]]     [`double`]      [Generate a `num` as a floating point number from a `double`, 
+                                                            if an attribute is supplied it must match]]
+    [[[floating_point `long_double`]]      [`long double`] [Generate a floating point number from a `long double`]]
+    [[[floating_point `long_double(num)`]] [`long double`] [Generate `num` as a floating point number from a `long double`, 
+                                                            if an attribute is supplied it must match]]
+
+    [[[floating_point ``real_generator<
+    Num, Policies
+>()``]]
+                                        [`Num`]            [Generate a floating point number `Num` using
+                                                            the supplied floating point formatting policies]]
+    [[[floating_point ``real_generator<
+    Num, Policies
+>()(num)``]]
+                                        [`Num`]            [Generate floating point number `num` as a `Num` 
+                                                            using the supplied floating point formatting 
+                                                            policies, if an attribute is supplied it must 
+                                                            match]]
+]
+
+[endsect]
+
+[section:unsigned_int Unsigned Integer Generators]
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[[unsigned_int `ushort_`]]         [`unsigned short`]     [Generate an unsigned short integer]]
+    [[[unsigned_int `ushort_(num)`]]    [`unsigned short`]     [Generate `num` as an unsigned short integer, 
+                                                                if an attribute is supplied it must match]]
+    [[[unsigned_int `uint_`]]           [`unsigned int`]       [Generate an unsigned int]]
+    [[[unsigned_int `uint_(num)`]]      [`unsigned int`]       [Generate `num` as an unsigned int, 
+                                                                if an attribute is supplied it must match]]
+    [[[unsigned_int `ulong_`]]          [`unsigned long`]      [Generate an unsigned long integer]]
+    [[[unsigned_int `ulong_(num)`]]     [`unsigned long`]      [Generate `num` as an unsigned long integer, 
+                                                                if an attribute is supplied it must match]]
+    [[[unsigned_int `ulong_long`]]      [`unsigned long long`] [Generate an unsigned long long]]
+    [[[unsigned_int `ulong_long(num)`]] [`unsigned long long`] [Generate `num` as an unsigned long long, 
+                                                                if an attribute is supplied it must match]]
+    [[[unsigned_int `bin`]]             [`unsigned int`]       [Generate a binary integer from an `unsigned int`]]
+    [[[unsigned_int `oct`]]             [`unsigned int`]       [Generate an octal integer from an `unsigned int`]]
+    [[[unsigned_int `hex`]]             [`unsigned int`]       [Generate a hexadecimal integer from an `unsigned int`]]
+
+    [[[unsigned_int ``uint_generator<
+    Num, Radix
+>()``]]
+                                        [`Num`]                [Generate an unsigned `Num`]]
+    [[[unsigned_int ``uint_generator<
+    Num, Radix
+>()(num)``]]
+                                        [`Num`]                [Generate an unsigned `num` as a `Num`, 
+                                                                if an attribute is supplied it must match]]
+]
+
+[endsect]
+
+[section:signed_int Integer Generators]
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
+    [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
+                                                                if an attribute is supplied it must match]]
+    [[[signed_int `int_`]]              [`int`]                [Generate an int]]
+    [[[signed_int `int_(num)`]]         [`int`]                [Generate `num` as an int, 
+                                                                if an attribute is supplied it must match]]
+    [[[signed_int `long_`]]             [`long`]               [Generate a long integer]]
+    [[[signed_int `long_(num)`]]        [`long`]               [Generate `num` as long integer, 
+                                                                if an attribute is supplied it must match]]
+    [[[signed_int `long_long`]]         [`long long`]          [Generate a long long]]
+    [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as an long long, 
+                                                                if an attribute is supplied it must match]]
+
+    [[[signed_int ``int_generator<
+    Num, Radix, force_sign
+>()``]]
+                                        [`Num`]                [Generate a `Num`]]
+    [[[signed_int ``int_generator<
+    Num, Radix, force_sign
+>()(num)``]]
+                                        [`Num`]                [Generate a `num` as a `Num`, 
+                                                                if an attribute is supplied it must match]]
+]
+
+[endsect]
+
+[section:binary Binary Generators]
+
+See here for more information about __karma_binary__.
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
+    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
+    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
+    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
+    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
+    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
+    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
+    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
+    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
+    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
+]
+
+[endsect]
+
+[section:auxiliary Auxiliary Generators]
+
+See here for more information about __karma_auxiliary__.
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
+    [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
+    [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
+    [[[karma_lazy `lazy(fg)`]]
+                            [Attribute of `G` where `G`
+                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
+                                                        `g` which is then called to generate.]]
+    [[[karma_lazy `fg`]]    [see [karma_lazy `lazy(fg)`] above]  [Equivalent to [karma_lazy `lazy(fg)`]]]
+    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
+]
+
+[endsect]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:operators Generator Operators]
+
+See here for more information about __karma_operator__.
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[[link spirit.karma.reference.operator.not_predicate `!a`]]
+                            [`A`]                       [Not predicate. Ensure that `a` does not succeed 
+                                                         generating, but don't create any output]]
+    [[[link spirit.karma.reference.operator.not_predicate `&a`]]
+                            [`A`]                       [And predicate. Ensure that `a` does succeed
+                                                         generating, but don't create any output]]
+    [[[link spirit.karma.reference.operator.optional `-a`]]
+                            [`optional<A>`]             [Optional. Generate `a` zero or one time]]
+    [[[link spirit.karma.reference.operator.kleene `*a`]]
+                            [`vector<A>`]               [Kleene. Generate `a` zero or more times]]
+    [[[link spirit.karma.reference.operator.plus `+a`]]
+                            [`vector<A>`]               [Plus. Generate `a` one or more times]]
+    [[[link spirit.karma.reference.operator.alternative `a | b`]]
+                            [`variant<A, B>`]           [Alternative. Generate `a` or `b`]]
+    [[[link spirit.karma.reference.operator.sequence `a << b`]]
+                            [`tuple<A, B>`]             [Sequence. Generate `a` followed by `b`]]
+    [[[link spirit.karma.reference.operator.list `a % b`]]
+                            [`vector<A>`]               [List. Generate `a` delimited `b` one or more times]]
+]
+
+[:For more information about the attribute propagation rules implemented by the 
+compound generators please see __sec_karma_compound__.]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:directives Generator Directives]
+
 See here for more information about __karma_directive__.
 
-[table Predefined Generator Directives
+[table 
     [[Expression]           [Attribute]           [Description]]
     [[[karma_upperlower `lower[a]`]]        [`A`] [Generate `a` as lower case]]
     [[[karma_upperlower `upper[a]`]]        [`A`] [Generate `a` as upper case]]
@@ -161,149 +342,6 @@ See here for more information about __karma_directive__.
 
     [[__karma_buffer__]     [`A`]               [Temporarily intercepts the output generated by `a`, 
                                                  flushing it only after `a` succeeded.]]
-]
-
-See here for more information about __karma_numeric__.
-
-[table Predefined Floating Point Number Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[[link spirit.karma.reference.numeric `lit(num)`]]
-                            [`Unused`]                    [Generates `num`]]
-    [[[floating_point `float_`]]           [`float`]       [Generate a floating point number from a `float`]]
-    [[[floating_point `float_(num)`]]      [`float`]       [Generate `num` as a floating point number from a `float`, 
-                                                            if an attribute is supplied it must match]]
-    [[[floating_point `double_`]]          [`double`]      [Generate a floating point number from a `double`]]
-    [[[floating_point `double_(num)`]]     [`double`]      [Generate a `num` as a floating point number from a `double`, 
-                                                            if an attribute is supplied it must match]]
-    [[[floating_point `long_double`]]      [`long double`] [Generate a floating point number from a `long double`]]
-    [[[floating_point `long_double(num)`]] [`long double`] [Generate `num` as a floating point number from a `long double`, 
-                                                            if an attribute is supplied it must match]]
-
-    [[[floating_point ``real_generator<
-    Num, Policies
->()``]]
-                                        [`Num`]            [Generate a floating point number `Num` using
-                                                            the supplied floating point formatting policies]]
-    [[[floating_point ``real_generator<
-    Num, Policies
->()(num)``]]
-                                        [`Num`]            [Generate floating point number `num` as a `Num` 
-                                                            using the supplied floating point formatting 
-                                                            policies, if an attribute is supplied it must 
-                                                            match]]
-]
-
-[table Predefined Unsigned Integer Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[[unsigned_int `ushort_`]]         [`unsigned short`]     [Generate an unsigned short integer]]
-    [[[unsigned_int `ushort_(num)`]]    [`unsigned short`]     [Generate `num` as an unsigned short integer, 
-                                                                if an attribute is supplied it must match]]
-    [[[unsigned_int `uint_`]]           [`unsigned int`]       [Generate an unsigned int]]
-    [[[unsigned_int `uint_(num)`]]      [`unsigned int`]       [Generate `num` as an unsigned int, 
-                                                                if an attribute is supplied it must match]]
-    [[[unsigned_int `ulong_`]]          [`unsigned long`]      [Generate an unsigned long integer]]
-    [[[unsigned_int `ulong_(num)`]]     [`unsigned long`]      [Generate `num` as an unsigned long integer, 
-                                                                if an attribute is supplied it must match]]
-    [[[unsigned_int `ulong_long`]]      [`unsigned long long`] [Generate an unsigned long long]]
-    [[[unsigned_int `ulong_long(num)`]] [`unsigned long long`] [Generate `num` as an unsigned long long, 
-                                                                if an attribute is supplied it must match]]
-    [[[unsigned_int `bin`]]             [`unsigned int`]       [Generate a binary integer from an `unsigned int`]]
-    [[[unsigned_int `oct`]]             [`unsigned int`]       [Generate an octal integer from an `unsigned int`]]
-    [[[unsigned_int `hex`]]             [`unsigned int`]       [Generate a hexadecimal integer from an `unsigned int`]]
-
-    [[[unsigned_int ``uint_generator<
-    Num, Radix
->()``]]
-                                        [`Num`]                [Generate an unsigned `Num`]]
-    [[[unsigned_int ``uint_generator<
-    Num, Radix
->()(num)``]]
-                                        [`Num`]                [Generate an unsigned `num` as a `Num`, 
-                                                                if an attribute is supplied it must match]]
-]
-
-[table Predefined Integer Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
-    [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
-                                                                if an attribute is supplied it must match]]
-    [[[signed_int `int_`]]              [`int`]                [Generate an int]]
-    [[[signed_int `int_(num)`]]         [`int`]                [Generate `num` as an int, 
-                                                                if an attribute is supplied it must match]]
-    [[[signed_int `long_`]]             [`long`]               [Generate a long integer]]
-    [[[signed_int `long_(num)`]]        [`long`]               [Generate `num` as long integer, 
-                                                                if an attribute is supplied it must match]]
-    [[[signed_int `long_long`]]         [`long long`]          [Generate a long long]]
-    [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as an long long, 
-                                                                if an attribute is supplied it must match]]
-
-    [[[signed_int ``int_generator<
-    Num, Radix, force_sign
->()``]]
-                                        [`Num`]                [Generate a `Num`]]
-    [[[signed_int ``int_generator<
-    Num, Radix, force_sign
->()(num)``]]
-                                        [`Num`]                [Generate a `num` as a `Num`, 
-                                                                if an attribute is supplied it must match]]
-]
-
-See here for more information about __karma_binary__.
-
-[table Predefined Binary Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
-    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
-    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
-    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
-    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
-    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
-    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
-    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
-    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
-    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
-]
-
-See here for more information about __karma_operator__.
-
-[table Predefined Generator Operators
-    [[Expression]           [Attribute]                 [Description]]
-    [[[link spirit.karma.reference.operator.not_predicate `!a`]]
-                            [`A`]                       [Not predicate. Ensure that `a` does not succeed 
-                                                         generating, but don't create any output]]
-    [[[link spirit.karma.reference.operator.not_predicate `&a`]]
-                            [`A`]                       [And predicate. Ensure that `a` does succeed
-                                                         generating, but don't create any output]]
-    [[[link spirit.karma.reference.operator.optional `-a`]]
-                            [`optional<A>`]             [Optional. Generate `a` zero or one time]]
-    [[[link spirit.karma.reference.operator.kleene `*a`]]
-                            [`vector<A>`]               [Kleene. Generate `a` zero or more times]]
-    [[[link spirit.karma.reference.operator.plus `+a`]]
-                            [`vector<A>`]               [Plus. Generate `a` one or more times]]
-    [[[link spirit.karma.reference.operator.alternative `a | b`]]
-                            [`variant<A, B>`]           [Alternative. Generate `a` or `b`]]
-    [[[link spirit.karma.reference.operator.sequence `a << b`]]
-                            [`tuple<A, B>`]             [Sequence. Generate `a` followed by `b`]]
-    [[[link spirit.karma.reference.operator.list `a % b`]]
-                            [`vector<A>`]               [List. Generate `a` delimited `b` one or more times]]
-]
-
-[:For more information about the attribute propagation rules implemented by the 
-compound generators please see __sec_karma_compound__.]
-
-See here for more information about __karma_auxiliary__.
-
-[table Predefined Auxiliary Generators
-    [[Expression]           [Attribute]                 [Description]]
-    [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
-    [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
-    [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
-    [[[karma_lazy `lazy(fg)`]]
-                            [Attribute of `G` where `G`
-                             is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
-                                                        `g` which is then called to generate.]]
-    [[[karma_lazy `fg`]]    [see [karma_lazy `lazy(fg)`] above]  [Equivalent to [karma_lazy `lazy(fg)`]]]
-    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 ]
 
 [endsect]

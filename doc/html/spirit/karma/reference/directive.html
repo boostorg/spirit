@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Directive</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="previous" href="numeric.html" title=" Numeric">
+<link rel="prev" href="numeric.html" title="Numeric">
 <link rel="next" href="operator.html" title="Operator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,55 +22,48 @@
 <div class="spirit-nav">
 <a accesskey="p" href="numeric.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="operator.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.karma.reference.directive"></a><a href="directive.html" title="Directive">Directive</a>
-</h4></div></div>
-<div></div>
-</div>
+<div class="section" title="Directive">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.karma.reference.directive"></a><a class="link" href="directive.html" title="Directive">Directive</a>
+</h4></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.alignment"> Alignment
-          Directives (<tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></tt>, <tt class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></tt>, and <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></tt>)</a></span></dt>
+          Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, and <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.repeat"> Repetition
-          Directive (<tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></tt>)</a></span></dt>
+          Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.delimit"> Directives
-          Controlling Automatic Delimiting (<tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>)</a></span></dt>
+          Controlling Automatic Delimiting (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.upperlower"> Directives
-          Controlling Case Sensitivity (<tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>)</a></span></dt>
+          Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.maxwidth"> Controlling
-          the Maximum Field Wield (<tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt>)</a></span></dt>
+          the Maximum Field Wield (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.buffer"> Temporary
-          Output Buffering (<tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></tt>)</a></span></dt>
+          Output Buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>)</a></span></dt>
 <dt><span class="section"><a href="directive.html#spirit.karma.reference.directive.omit"> Consume Attribute
-          (<tt class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a></span></dt>
 </dl></div>
 <p>
           This module includes different generator directives. It includes alignement
-          directives (<tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></tt>, <tt class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></tt>, and <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></tt>), repetition (<tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></tt>), directives controlling automatic delimiting
-          (<tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt>
-          and <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>),
-          controlling case sensitivity (<tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>), field width (<tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt>), buffering (<tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></tt>), and attribute handling (<tt class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></tt>).
+          directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, and <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>), repetition (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>), directives controlling automatic delimiting
+          (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
+          and <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>),
+          controlling case sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>), field width (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>), buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>), and attribute handling (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>).
         </p>
-<a name="spirit.karma.reference.directive.module_header"></a><h5>
-<a name="id527376"></a>
-          <a href="directive.html#spirit.karma.reference.directive.module_header">Module Header</a>
-        </h5>
+<a name="spirit.karma.reference.directive.module_header"></a><h6>
+<a name="id1247611"></a>
+          <a class="link" href="directive.html#spirit.karma.reference.directive.module_header">Module Header</a>
+        </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_directive</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.alignment"></a><a href="directive.html#spirit.karma.reference.directive.alignment" title=" Alignment
-          Directives (left_align[], center[], and right_align[])"> Alignment
-          Directives (<tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></tt>, <tt class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></tt>, and <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Alignment Directives (left_align[], center[], and right_align[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.alignment"></a><a class="link" href="directive.html#spirit.karma.reference.directive.alignment" title="Alignment Directives (left_align[], center[], and right_align[])"> Alignment
+          Directives (<code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, and <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.alignment.description"></a><h6>
-<a name="id527544"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.description">Description</a>
+<a name="id1249654"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.description">Description</a>
           </h6>
 <p>
             The alignment directives allow to left align, right align or center output
@@ -78,80 +71,80 @@
             an arbitrary generator to create the padding.
           </p>
 <a name="spirit.karma.reference.directive.alignment.header"></a><h6>
-<a name="id527576"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.header">Header</a>
+<a name="id1249671"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.header">Header</a>
           </h6>
 <p>
-            For the <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></tt>
+            For the <code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/left_alignment.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_left_alignment</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            For the <tt class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></tt>
+            For the <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/center_alignment.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_center_alignment</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            For the <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></tt>
+            For the <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/right_alignment.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_right_alignment</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.alignment.model_of"></a><h6>
-<a name="id527910"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.model_of">Model
+<a name="id1249894"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">pad</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">pad</span></code></span></dt>
 <dd><p>
-                A generator object, or a <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                A generator object, or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt>,
-            <tt class="computeroutput"><span class="identifier">Pad</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code>,
+            <code class="computeroutput"><span class="identifier">Pad</span></code></span></dt>
 <dd><p>
-                Attribute types of the generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                and <tt class="computeroutput"><span class="identifier">pad</span></tt>
+                Attribute types of the generators <code class="computeroutput"><span class="identifier">a</span></code>
+                and <code class="computeroutput"><span class="identifier">pad</span></code>
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">width</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">width</span></code></span></dt>
 <dd><p>
-                Numeric literal, any unsigned integer value, or a <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Numeric literal, any unsigned integer value, or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to an unsigned integer value
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.alignment.expression_semantics"></a><h6>
-<a name="id528121"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.expression_semantics">Expression
+<a name="id1250044"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -159,199 +152,251 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> left
                     aligned in a column of width as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></tt>
-                    (default: 10), while using <tt class="computeroutput"><span class="identifier">space</span></tt>
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    (default: 10), while using <code class="computeroutput"><span class="identifier">space</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail (except if the underlying output stream reports
                     an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
-                    aligned in a column of the given <tt class="computeroutput"><span class="identifier">width</span></tt>,
-                    while using <tt class="computeroutput"><span class="identifier">space</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> left
+                    aligned in a column of the given <code class="computeroutput"><span class="identifier">width</span></code>,
+                    while using <code class="computeroutput"><span class="identifier">space</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail (except if the underlying output stream reports
                     an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> left
                     aligned in a column of width as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></tt>
-                    (default: 10), while using the generator <tt class="computeroutput"><span class="identifier">pad</span></tt>
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    (default: 10), while using the generator <code class="computeroutput"><span class="identifier">pad</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded and padding generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">pad</span></tt> do not
+                    as its embedded and padding generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">pad</span></code> do not
                     fail (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
-                    <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> left
-                    aligned in a column of the given <tt class="computeroutput"><span class="identifier">width</span></tt>,
-                    while using the generator <tt class="computeroutput"><span class="identifier">pad</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
+                    <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> left
+                    aligned in a column of the given <code class="computeroutput"><span class="identifier">width</span></code>,
+                    while using the generator <code class="computeroutput"><span class="identifier">pad</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded and padding generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">pad</span></tt> do not
+                    as its embedded and padding generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">pad</span></code> do not
                     fail (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
                     in a column of width as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></tt>
-                    (default: 10), while using <tt class="computeroutput"><span class="identifier">space</span></tt>
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    (default: 10), while using <code class="computeroutput"><span class="identifier">space</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail (except if the underlying output stream reports
                     an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
-                    in a column of the given <tt class="computeroutput"><span class="identifier">width</span></tt>,
-                    while using <tt class="computeroutput"><span class="identifier">space</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
+                    in a column of the given <code class="computeroutput"><span class="identifier">width</span></code>,
+                    while using <code class="computeroutput"><span class="identifier">space</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail (except if the underlying output stream reports
                     an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
                     in a column of width as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></tt>
-                    (default: 10), while using the generator <tt class="computeroutput"><span class="identifier">pad</span></tt>
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    (default: 10), while using the generator <code class="computeroutput"><span class="identifier">pad</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded and padding generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">pad</span></tt> do not
+                    as its embedded and padding generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">pad</span></code> do not
                     fail (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
-                    <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> centered
-                    in a column of the given <tt class="computeroutput"><span class="identifier">width</span></tt>,
-                    while using the generator <tt class="computeroutput"><span class="identifier">pad</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
+                    <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> centered
+                    in a column of the given <code class="computeroutput"><span class="identifier">width</span></code>,
+                    while using the generator <code class="computeroutput"><span class="identifier">pad</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded and padding generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">pad</span></tt> do not
+                    as its embedded and padding generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">pad</span></code> do not
                     fail (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> right
                     aligned in a column of width as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></tt>
-                    (default: 10), while using <tt class="computeroutput"><span class="identifier">space</span></tt>
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    (default: 10), while using <code class="computeroutput"><span class="identifier">space</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail (except if the underlying output stream reports
                     an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
-                    aligned in a column of the given <tt class="computeroutput"><span class="identifier">width</span></tt>,
-                    while using <tt class="computeroutput"><span class="identifier">space</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> right
+                    aligned in a column of the given <code class="computeroutput"><span class="identifier">width</span></code>,
+                    while using <code class="computeroutput"><span class="identifier">space</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail (except if the underlying output stream reports
                     an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> right
                     aligned in a column of width as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></tt>
-                    (default: 10), while using the generator <tt class="computeroutput"><span class="identifier">pad</span></tt>
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_LENGTH</span></code>
+                    (default: 10), while using the generator <code class="computeroutput"><span class="identifier">pad</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded and padding generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">pad</span></tt> do not
+                    as its embedded and padding generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">pad</span></code> do not
                     fail (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
-                    <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> right
-                    aligned in a column of the given <tt class="computeroutput"><span class="identifier">width</span></tt>,
-                    while using the generator <tt class="computeroutput"><span class="identifier">pad</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
+                    <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> right
+                    aligned in a column of the given <code class="computeroutput"><span class="identifier">width</span></code>,
+                    while using the generator <code class="computeroutput"><span class="identifier">pad</span></code>
                     to emit the necessary padding. This generator succeeds as long
-                    as its embedded and padding generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">pad</span></tt> do not
+                    as its embedded and padding generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">pad</span></code> do not
                     fail (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               None of the generator directives listed above limit the emitted output
               to the respective column width. If the emitted output is longer than
@@ -360,20 +405,20 @@
             </p>
 <p>
               If the output needs to be limitted to a specified column width, use
-              the <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt>
+              the <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>
               directive, for instance: 
 </p>
 <pre class="programlisting"><span class="identifier">maxwidth</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="identifier">right_align</span><span class="special">(</span><span class="number">12</span><span class="special">)[</span><span class="string">"1234567890"</span><span class="special">]]</span>
 </pre>
 <p>
-              which will output: <tt class="computeroutput"><span class="string">" 123456"</span></tt>
+              which will output: <code class="computeroutput"><span class="string">" 123456"</span></code>
               (without the quotes).
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.attributes"></a><h6>
-<a name="id529664"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.attributes">Attributes</a>
+<a name="id1251083"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -381,190 +426,218 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
-                    <span class="identifier">width</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
+                    <span class="identifier">width</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">left_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
-                    <span class="identifier">width</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
+                    <span class="identifier">width</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">center</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
-                    <span class="identifier">width</span><span class="special">)[]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span>
+                    <span class="identifier">width</span><span class="special">)[]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">pad</span><span class="special">:</span> <span class="identifier">Pad</span> <span class="special">--&gt;</span> <span class="identifier">right_align</span><span class="special">(</span><span class="identifier">pad</span><span class="special">,</span> <span class="identifier">width</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.alignment.complexity"></a><h6>
-<a name="id532034"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.complexity">Complexity</a>
+<a name="id1252884"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -574,15 +647,15 @@
                 by the complexity of its embedded and padding generator. The complexity
                 of the left alignment directive generator itself is O(1). The complexity
                 of the center and right alignment directive generators itself is
-                O(N). where <tt class="computeroutput"><span class="identifier">N</span></tt> is
+                O(N). where <code class="computeroutput"><span class="identifier">N</span></code> is
                 the number of characters emitted by the embedded and padding generators.
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.alignment.example"></a><h6>
-<a name="id532088"></a>
-            <a href="directive.html#spirit.karma.reference.directive.alignment.example">Example</a>
+<a name="id1252915"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.alignment.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -662,73 +735,69 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.repeat"></a><a href="directive.html#spirit.karma.reference.directive.repeat" title=" Repetition
-          Directive (repeat[])"> Repetition
-          Directive (<tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Repetition Directive (repeat[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.repeat"></a><a class="link" href="directive.html#spirit.karma.reference.directive.repeat" title="Repetition Directive (repeat[])"> Repetition
+          Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.repeat.description"></a><h6>
-<a name="id533592"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.description">Description</a>
+<a name="id1254024"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
             The repetition directive allows to repeat an arbitrary generator expression
             while optionally specifying the lower and upper repetition counts.
           </p>
 <a name="spirit.karma.reference.directive.repeat.header"></a><h6>
-<a name="id533624"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.header">Header</a>
+<a name="id1254041"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/repeat.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_repeat</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.repeat.model_of"></a><h6>
-<a name="id533737"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.model_of">Model
+<a name="id1254115"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">num</span><span class="special">,</span> <span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">num</span><span class="special">,</span> <span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span></code></span></dt>
 <dd><p>
-                Numeric literals, any unsigned integer value, or a <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Numeric literals, any unsigned integer value, or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to an unsigned integer value
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">inf</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">inf</span></code></span></dt>
 <dd><p>
                 Placeholder expression standing for 'no upper repeat limit'
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id533901"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.expression_semantics">Expression
+<a name="id1254238"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -736,80 +805,99 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
                     zero or more times. This generator succeeds as long as its embedded
-                    generator <tt class="computeroutput"><span class="identifier">a</span></tt> does
+                    generator <code class="computeroutput"><span class="identifier">a</span></code> does
                     not fail (except if the underlying output stream reports an error).
-                    This variant of <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></tt> is semantically equivalent
-                    to the <a href="operator.html#spirit.karma.reference.operator.kleene" title=" Kleene Star
-          (unary operator*())">Kleene
-                    Star operator <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt></a>
-                  </p></td>
+                    This variant of <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code> is semantically equivalent
+                    to the <a class="link" href="operator.html#spirit.karma.reference.operator.kleene" title="Kleene Star (unary operator*())">Kleene
+                    Star operator <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code></a>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    exactly <tt class="computeroutput"><span class="identifier">num</span></tt> times.
-                    This generator succeeds as long as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt> does not fail and as long
-                    as the associated attribute (container) contains at least <tt class="computeroutput"><span class="identifier">num</span></tt> elements (except if the
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                    exactly <code class="computeroutput"><span class="identifier">num</span></code> times.
+                    This generator succeeds as long as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code> does not fail and as long
+                    as the associated attribute (container) contains at least <code class="computeroutput"><span class="identifier">num</span></code> elements (except if the
                     underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
-                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    at least <tt class="computeroutput"><span class="identifier">num1</span></tt>
-                    times but not more than <tt class="computeroutput"><span class="identifier">num2</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
+                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                    at least <code class="computeroutput"><span class="identifier">num1</span></code>
+                    times but not more than <code class="computeroutput"><span class="identifier">num2</span></code>
                     times. This generator succeeds as long as its embedded generator
-                    <tt class="computeroutput"><span class="identifier">a</span></tt> does not fail
+                    <code class="computeroutput"><span class="identifier">a</span></code> does not fail
                     and as long as the associated attribute (container) contains
-                    at least <tt class="computeroutput"><span class="identifier">num1</span></tt>
+                    at least <code class="computeroutput"><span class="identifier">num1</span></code>
                     elements (except if the underlying output stream reports an error).
                     If the associated attribute (container) does contain more than
-                    <tt class="computeroutput"><span class="identifier">num2</span></tt> elements,
-                    this directive limits the repeat count to <tt class="computeroutput"><span class="identifier">num2</span></tt>.
-                  </p></td>
+                    <code class="computeroutput"><span class="identifier">num2</span></code> elements,
+                    this directive limits the repeat count to <code class="computeroutput"><span class="identifier">num2</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
-                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    at least <tt class="computeroutput"><span class="identifier">num1</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
+                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                    at least <code class="computeroutput"><span class="identifier">num1</span></code>
                     times. No upper limit for the repeat count is set. This generator
-                    succeeds as long as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    succeeds as long as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail and as long as the associated attribute (container)
-                    contains at least <tt class="computeroutput"><span class="identifier">num</span></tt>
+                    contains at least <code class="computeroutput"><span class="identifier">num</span></code>
                     elements (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.attributes"></a><h6>
-<a name="id534479"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.attributes">Attributes</a>
+<a name="id1254628"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -817,92 +905,104 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
-                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
+                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
-                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
+                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
-              The table above uses <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as placeholders only.
+              The table above uses <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as placeholders only.
             </p>
 <p>
-              The notation of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> stands for <span class="emphasis"><em>any STL container</em></span>
-              holding elements of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
+              The notation of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> stands for <span class="emphasis"><em>any STL container</em></span>
+              holding elements of type <code class="computeroutput"><span class="identifier">A</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.complexity"></a><h6>
-<a name="id535436"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.complexity">Complexity</a>
+<a name="id1255346"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -916,8 +1016,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.repeat.example"></a><h6>
-<a name="id535476"></a>
-            <a href="directive.html#spirit.karma.reference.directive.repeat.example">Example</a>
+<a name="id1255370"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.repeat.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -978,7 +1078,7 @@
 <p>
           </p>
 <p>
-            Basic usage of <tt class="computeroutput"><span class="identifier">repeat</span></tt>
+            Basic usage of <code class="computeroutput"><span class="identifier">repeat</span></code>
             generator directive:
           </p>
 <p>
@@ -1002,87 +1102,83 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.delimit"></a><a href="directive.html#spirit.karma.reference.directive.delimit" title=" Directives
-          Controlling Automatic Delimiting (verbatim[] and delimit[])"> Directives
-          Controlling Automatic Delimiting (<tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Directives Controlling Automatic Delimiting (verbatim[] and delimit[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.delimit"></a><a class="link" href="directive.html#spirit.karma.reference.directive.delimit" title="Directives Controlling Automatic Delimiting (verbatim[] and delimit[])"> Directives
+          Controlling Automatic Delimiting (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.delimit.description"></a><h6>
-<a name="id536954"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.description">Description</a>
+<a name="id1257021"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.description">Description</a>
           </h6>
 <p>
-            The directives <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> can be used to control automatic delimiting.
-            The directive <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> disabled any automatic delimiting,
-            while the directive <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt> (re-)enable automatic delimiting.
+            The directives <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> can be used to control automatic delimiting.
+            The directive <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> disabled any automatic delimiting,
+            while the directive <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code> (re-)enable automatic delimiting.
           </p>
 <a name="spirit.karma.reference.directive.delimit.header"></a><h6>
-<a name="id537053"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.header">Header</a>
+<a name="id1257081"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.header">Header</a>
           </h6>
 <p>
-            For the <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt>
+            For the <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/verbatim.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_verbatim</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            For the <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>
+            For the <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/delimit.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_delimit</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.delimit.model_of"></a><h6>
-<a name="id537285"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.model_of">Model
+<a name="id1257237"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">d</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">d</span></code></span></dt>
 <dd><p>
-                A generator object, or a <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                A generator object, or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt>,
-            <tt class="computeroutput"><span class="identifier">D</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code>,
+            <code class="computeroutput"><span class="identifier">D</span></code></span></dt>
 <dd><p>
-                Attribute types of the generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                and <tt class="computeroutput"><span class="identifier">d</span></tt>
+                Attribute types of the generators <code class="computeroutput"><span class="identifier">a</span></code>
+                and <code class="computeroutput"><span class="identifier">d</span></code>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.delimit.expression_semantics"></a><h6>
-<a name="id537459"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.expression_semantics">Expression
+<a name="id1257363"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1090,54 +1186,70 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Enable automatic delimiting for the embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt> while using the <tt class="computeroutput"><span class="identifier">space</span></tt> generator as the delimiting
-                    generator. If used inside a <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> directive it re-enables the
-                    delimiter generator as used outside of this <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> instead. The directive succeeds
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Enable automatic delimiting for the embedded generator <code class="computeroutput"><span class="identifier">a</span></code> while using the <code class="computeroutput"><span class="identifier">space</span></code> generator as the delimiting
+                    generator. If used inside a <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> directive it re-enables the
+                    delimiter generator as used outside of this <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> instead. The directive succeeds
                     as long as the embedded generator succeeded (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Enable automatic delimiting for the embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt> while using the generator
-                    <tt class="computeroutput"><span class="identifier">d</span></tt> as the delimiting
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Enable automatic delimiting for the embedded generator <code class="computeroutput"><span class="identifier">a</span></code> while using the generator
+                    <code class="computeroutput"><span class="identifier">d</span></code> as the delimiting
                     generator. The directive succeeds as long as the embedded generator
                     succeeded (except if the underlying output stream reports an
                     error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Disable automatic delimiting for the embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>. The directive succeeds as
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Disable automatic delimiting for the embedded generator <code class="computeroutput"><span class="identifier">a</span></code>. The directive succeeds as
                     long as the embedded generator succeeded (except if the underlying
                     output stream reports an error). This directive it has no effect
                     if it is used when no delimiting is active.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.attributes"></a><h6>
-<a name="id537796"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.attributes">Attributes</a>
+<a name="id1257597"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1145,68 +1257,78 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">d</span><span class="special">:</span> <span class="identifier">D</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">d</span><span class="special">:</span> <span class="identifier">D</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.complexity"></a><h6>
-<a name="id538380"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.complexity">Complexity</a>
+<a name="id1258041"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the generator directives <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>
-                and <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt>
+                The overall complexity of the generator directives <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>
+                and <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
                 is defined by the complexity of its embedded generators. The complexity
                 of the directives themselves is O(1).
               </p>
@@ -1214,8 +1336,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.delimit.example"></a><h6>
-<a name="id538452"></a>
-            <a href="directive.html#spirit.karma.reference.directive.delimit.example">Example</a>
+<a name="id1258087"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.delimit.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1275,7 +1397,7 @@
 <p>
           </p>
 <p>
-            Basic usage of <tt class="computeroutput"><span class="identifier">delimit</span></tt>
+            Basic usage of <code class="computeroutput"><span class="identifier">delimit</span></code>
             generator directive:
           </p>
 <p>
@@ -1295,75 +1417,71 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.upperlower"></a><a href="directive.html#spirit.karma.reference.directive.upperlower" title=" Directives
-          Controlling Case Sensitivity (upper[] and lower[])"> Directives
-          Controlling Case Sensitivity (<tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Directives Controlling Case Sensitivity (upper[] and lower[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.upperlower"></a><a class="link" href="directive.html#spirit.karma.reference.directive.upperlower" title="Directives Controlling Case Sensitivity (upper[] and lower[])"> Directives
+          Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.upperlower.description"></a><h6>
-<a name="id539818"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.description">Description</a>
+<a name="id1260741"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.description">Description</a>
           </h6>
 <p>
-            The generator directives <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[]</span></tt> force their embedded generators to
+            The generator directives <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[]</span></code> force their embedded generators to
             emit lower case or upper case only characters based on the interpretation
-            of the generated characters in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt> (see <a href="../../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            of the generated characters in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code> (see <a class="link" href="../../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>).
           </p>
 <a name="spirit.karma.reference.directive.upperlower.header"></a><h6>
-<a name="id539924"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.header">Header</a>
+<a name="id1260806"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/upper_lower_case.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_upper_lower_case</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.upperlower.model_of"></a><h6>
-<a name="id540038"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.model_of">Model
+<a name="id1260880"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-                Attribute type of the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                Attribute type of the generator <code class="computeroutput"><span class="identifier">a</span></code>
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">ns</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a href="../../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                A <a class="link" href="../../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
                 Encoding Namespace</a>.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.upperlower.expression_semantics"></a><h6>
-<a name="id540190"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.expression_semantics">Expression
+<a name="id1260990"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1371,44 +1489,56 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> as
-                    lower case, interpreted in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>. The directive succeeds
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> as
+                    lower case, interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>. The directive succeeds
                     as long as the embedded generator succeeded (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Generate <tt class="computeroutput"><span class="identifier">a</span></tt> as
-                    upper case, interpreted in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>. The directive succeeds
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate <code class="computeroutput"><span class="identifier">a</span></code> as
+                    upper case, interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>. The directive succeeds
                     as long as the embedded generator succeeded (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               If both directives are 'active' with regard to a generator, the innermost
               of those directives takes precendence. For instance: 
@@ -1416,19 +1546,19 @@
 <pre class="programlisting"><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[</span><span class="char">'A'</span> <span class="special">&lt;&lt;</span> <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[</span><span class="char">'b'</span><span class="special">]])</span>
 </pre>
 <p>
-              will generate <tt class="computeroutput"><span class="string">"aB"</span></tt>
+              will generate <code class="computeroutput"><span class="string">"aB"</span></code>
               (without the quotes).
             </p>
 <p>
               Further, the directives will have no effect on generators not emitting
               characters having an upper case or lower case equivalent in the character
-              set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+              set defined by <code class="computeroutput"><span class="identifier">ns</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.attributes"></a><h6>
-<a name="id540572"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.attributes">Attributes</a>
+<a name="id1261256"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1436,54 +1566,62 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">lower</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">ns</span><span class="special">:</span><span class="identifier">upper</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.complexity"></a><h6>
-<a name="id540991"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.complexity">Complexity</a>
+<a name="id1261574"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the generator directives <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[]</span></tt>
-                and <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[]</span></tt>
+                The overall complexity of the generator directives <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">lower</span><span class="special">[]</span></code>
+                and <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">upper</span><span class="special">[]</span></code>
                 is defined by the complexity of its embedded generators. The directives
                 themselves are compile time only directives, having no impact on
                 runtime performance.
@@ -1492,8 +1630,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.upperlower.example"></a><h6>
-<a name="id541082"></a>
-            <a href="directive.html#spirit.karma.reference.directive.upperlower.example">Example</a>
+<a name="id1261634"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.upperlower.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1552,8 +1690,8 @@
 <p>
           </p>
 <p>
-            Basic usage of the <tt class="computeroutput"><span class="identifier">upper</span></tt>
-            and <tt class="computeroutput"><span class="identifier">lower</span></tt> generator directives:
+            Basic usage of the <code class="computeroutput"><span class="identifier">upper</span></code>
+            and <code class="computeroutput"><span class="identifier">lower</span></code> generator directives:
           </p>
 <p>
             </p>
@@ -1568,74 +1706,70 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.maxwidth"></a><a href="directive.html#spirit.karma.reference.directive.maxwidth" title=" Controlling
-          the Maximum Field Wield (maxwidth[])"> Controlling
-          the Maximum Field Wield (<tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Controlling the Maximum Field Wield (maxwidth[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.maxwidth"></a><a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth" title="Controlling the Maximum Field Wield (maxwidth[])"> Controlling
+          the Maximum Field Wield (<code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.maxwidth.description"></a><h6>
-<a name="id542153"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.description">Description</a>
+<a name="id1262419"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.description">Description</a>
           </h6>
 <p>
-            The <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt>
+            The <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>
             directive allows to limit (truncate) the overall length of the output
             generated by the embedded generator.
           </p>
 <a name="spirit.karma.reference.directive.maxwidth.header"></a><h6>
-<a name="id542200"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.header">Header</a>
+<a name="id1262446"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/maxwidth.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_maxwidth</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.maxwidth.model_of"></a><h6>
-<a name="id542314"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.model_of">Model
+<a name="id1262521"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-                Attribute type of the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                Attribute type of the generator <code class="computeroutput"><span class="identifier">a</span></code>
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">num</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
 <dd><p>
-                Numeric literal, any unsigned integer value, or a <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Numeric literal, any unsigned integer value, or a <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to an unsigned integer value
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.maxwidth.expression_semantics"></a><h6>
-<a name="id542466"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.expression_semantics">Expression
+<a name="id1262634"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1643,51 +1777,63 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Limit the overall length of the emitted output of the embedded
                     generator (including characters generated by automatic delimiting)
                     to the number of characters as defined by the preprocessor constant
-                    <tt class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH</span></tt>.
+                    <code class="computeroutput"><span class="identifier">BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH</span></code>.
                     Any additional output is truncated. The directive succeeds as
                     long as the embedded generator succeeded (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Limit the overall length of the emitted output of the embedded
                     generator (including characters generated by automatic delimiting)
-                    to the number of characters as defined by <tt class="computeroutput"><span class="identifier">num</span></tt>.
+                    to the number of characters as defined by <code class="computeroutput"><span class="identifier">num</span></code>.
                     Any additional output is truncated. The directive succeeds as
                     long as the embedded generator succeeded (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
-              The <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt>
+              The <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code>
               generator directive does not pads the generated output to fill the
               specified column width. If the emitted output is shorter than the specified
               (or implied) column width, the generated output will be more narrow
@@ -1695,19 +1841,19 @@
             </p>
 <p>
               If the output needs to always be equal to a specified column width,
-              use one of the alignment directives <tt class="computeroutput"><span class="identifier">left</span><span class="special">-</span><span class="identifier">align</span><span class="special">[]</span></tt>, <tt class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></tt>, or <tt class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></tt>, for instance: 
+              use one of the alignment directives <code class="computeroutput"><span class="identifier">left</span><span class="special">-</span><span class="identifier">align</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">center</span><span class="special">[]</span></code>, or <code class="computeroutput"><span class="identifier">right_align</span><span class="special">[]</span></code>, for instance: 
 </p>
 <pre class="programlisting"><span class="identifier">maxwidth</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="identifier">left_align</span><span class="special">(</span><span class="number">8</span><span class="special">)[</span><span class="string">"1234"</span><span class="special">]]</span>
 </pre>
 <p>
-              which will output: <tt class="computeroutput"><span class="string">"1234 "</span></tt>
+              which will output: <code class="computeroutput"><span class="string">"1234 "</span></code>
               (without the quotes).
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.maxwidth.attributes"></a><h6>
-<a name="id542855"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.attributes">Attributes</a>
+<a name="id1263449"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1715,63 +1861,71 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">maxwidth</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">maxwidth</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.maxwidth.complexity"></a><h6>
-<a name="id543244"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.complexity">Complexity</a>
+<a name="id1263745"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the generator directive <tt class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></tt> is defined by the complexity of
+                The overall complexity of the generator directive <code class="computeroutput"><span class="identifier">maxwidth</span><span class="special">[]</span></code> is defined by the complexity of
                 its embedded generator. The complexity of the directive itself is
-                O(N), where <tt class="computeroutput"><span class="identifier">N</span></tt> is
+                O(N), where <code class="computeroutput"><span class="identifier">N</span></code> is
                 the number of characters generated by the maxwidth directive.
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.maxwidth.example"></a><h6>
-<a name="id543314"></a>
-            <a href="directive.html#spirit.karma.reference.directive.maxwidth.example">Example</a>
+<a name="id1263787"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.maxwidth.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1831,7 +1985,7 @@
 <p>
           </p>
 <p>
-            Basic usage of <tt class="computeroutput"><span class="identifier">maxwidth</span></tt>
+            Basic usage of <code class="computeroutput"><span class="identifier">maxwidth</span></code>
             generator directive:
           </p>
 <p>
@@ -1848,23 +2002,18 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.buffer"></a><a href="directive.html#spirit.karma.reference.directive.buffer" title=" Temporary
-          Output Buffering (buffer[])"> Temporary
-          Output Buffering (<tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Temporary Output Buffering (buffer[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.buffer"></a><a class="link" href="directive.html#spirit.karma.reference.directive.buffer" title="Temporary Output Buffering (buffer[])"> Temporary
+          Output Buffering (<code class="computeroutput"><span class="identifier">buffer</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.buffer.description"></a><h6>
-<a name="id544426"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.description">Description</a>
+<a name="id1264602"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.description">Description</a>
           </h6>
 <p>
-            All generator components (except the <a href="operator.html#spirit.karma.reference.operator.alternative" title=" Alternatives
-          (operator|())">alternative
-            (<tt class="computeroutput"><span class="special">|</span></tt>)</a> generator) pass
+            All generator components (except the <a class="link" href="operator.html#spirit.karma.reference.operator.alternative" title="Alternatives (operator|())">alternative
+            (<code class="computeroutput"><span class="special">|</span></code>)</a> generator) pass
             their generated output directly to the underlying output stream. If a
             generator fails halfway through, the output generated so far is not 'rolled
             back'. The buffering generator directive allows to avoid this unwanted
@@ -1873,50 +2022,50 @@
             underlying stream only after the embedded generator succeeded.
           </p>
 <a name="spirit.karma.reference.directive.buffer.header"></a><h6>
-<a name="id544475"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.header">Header</a>
+<a name="id1264631"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/buffer.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_buffer</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.buffer.model_of"></a><h6>
-<a name="id544589"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.model_of">Model
+<a name="id1264705"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-                Attribute type of generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                Attribute type of generator <code class="computeroutput"><span class="identifier">a</span></code>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.buffer.expression_semantics"></a><h6>
-<a name="id544706"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.expression_semantics">Expression
+<a name="id1264794"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1924,43 +2073,50 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    The embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is invoked but its output is temporarily intercepted and stored
-                    in an internal buffer. If <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    in an internal buffer. If <code class="computeroutput"><span class="identifier">a</span></code>
                     succeeds the buffer content is flushed to the underlying output
                     stream, otherwise the buffer content is discarded. The buffer
                     directive succeeds as long as the embedded generator succeeded
                     (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
+<tr><td align="left" valign="top"><p>
               If you want to make the buffered generator succeed regardless of the
-              outcome of the embedded generator, simply wrap the <tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt> into an additional optional: <tt class="computeroutput"><span class="special">-</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt> (see <a href="operator.html#spirit.karma.reference.operator.optional" title=" Optional
-          (unary operator-())">optional
-              (unary <tt class="computeroutput"><span class="special">-</span></tt>)</a>).
+              outcome of the embedded generator, simply wrap the <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code> into an additional optional: <code class="computeroutput"><span class="special">-</span><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code> (see <a class="link" href="operator.html#spirit.karma.reference.operator.optional" title="Optional (unary operator-())">optional
+              (unary <code class="computeroutput"><span class="special">-</span></code>)</a>).
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.buffer.attributes"></a><h6>
-<a name="id544957"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.attributes">Attributes</a>
+<a name="id1264967"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1968,31 +2124,37 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.buffer.complexity"></a><h6>
-<a name="id545169"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.complexity">Complexity</a>
+<a name="id1265128"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -2006,8 +2168,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.buffer.example"></a><h6>
-<a name="id545209"></a>
-            <a href="directive.html#spirit.karma.reference.directive.buffer.example">Example</a>
+<a name="id1265152"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.buffer.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -2070,9 +2232,8 @@
 <p>
             Basic usage of a buffering generator directive. It shows how the partial
             output generated in the first example does not show up in the generated
-            output as the plus generator fails (no data is available, see <a href="operator.html#spirit.karma.reference.operator.plus" title=" Plus (unary
-          operator+())">plus
-            (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>).
+            output as the plus generator fails (no data is available, see <a class="link" href="operator.html#spirit.karma.reference.operator.plus" title="Plus (unary operator+())">plus
+            (unary <code class="computeroutput"><span class="special">+</span></code>)</a>).
           </p>
 <p>
             </p>
@@ -2091,68 +2252,64 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.omit"></a><a href="directive.html#spirit.karma.reference.directive.omit" title=" Consume Attribute
-          (omit[])"> Consume Attribute
-          (<tt class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Consume Attribute (omit[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.omit"></a><a class="link" href="directive.html#spirit.karma.reference.directive.omit" title="Consume Attribute (omit[])"> Consume Attribute
+          (<code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.omit.description"></a><h6>
-<a name="id546572"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.description">Description</a>
+<a name="id1267544"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.description">Description</a>
           </h6>
 <p>
             Consumes the attribute type of the embedded generator without generating
             any output.
           </p>
 <a name="spirit.karma.reference.directive.omit.header"></a><h6>
-<a name="id546602"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.header">Header</a>
+<a name="id1267561"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/omit.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_omit</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.omit.model_of"></a><h6>
-<a name="id546717"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.model_of">Model
+<a name="id1267635"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code></span></dt>
 <dd><p>
-                Attribute type of generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                Attribute type of generator <code class="computeroutput"><span class="identifier">a</span></code>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.omit.expression_semantics"></a><h6>
-<a name="id546834"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.expression_semantics">Expression
+<a name="id1267724"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -2160,27 +2317,35 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    The <tt class="computeroutput"><span class="identifier">omit</span></tt> directive
-                    consumes the attribute type of the embedded generator <tt class="computeroutput"><span class="identifier">A</span></tt> without generating any output.
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The <code class="computeroutput"><span class="identifier">omit</span></code> directive
+                    consumes the attribute type of the embedded generator <code class="computeroutput"><span class="identifier">A</span></code> without generating any output.
                     It succeeds always.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.omit.attributes"></a><h6>
-<a name="id546990"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.attributes">Attributes</a>
+<a name="id1267838"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -2188,45 +2353,51 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.omit.complexity"></a><h6>
-<a name="id547201"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.complexity">Complexity</a>
+<a name="id1267999"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the <tt class="computeroutput"><span class="identifier">omit</span></tt>
+                The overall complexity of the <code class="computeroutput"><span class="identifier">omit</span></code>
                 generator directive is O(1) as it does not generate any output.
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.omit.example"></a><h6>
-<a name="id547251"></a>
-            <a href="directive.html#spirit.karma.reference.directive.omit.example">Example</a>
+<a name="id1268030"></a>
+            <a class="link" href="directive.html#spirit.karma.reference.directive.omit.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -2287,10 +2458,10 @@
 <p>
           </p>
 <p>
-            Basic usage of a <tt class="computeroutput"><span class="identifier">omit</span></tt>
+            Basic usage of a <code class="computeroutput"><span class="identifier">omit</span></code>
             generator directive. It shows how it consumes the first element of the
             provided attribute without generating anything, leaving the second element
-            of the attribute to the non-wrapped <tt class="computeroutput"><span class="identifier">double_</span></tt>
+            of the attribute to the non-wrapped <code class="computeroutput"><span class="identifier">double_</span></code>
             generator.
           </p>
 <p>
@@ -2310,7 +2481,7 @@
             type contains more information (elements) than need to be used to generate
             the required output. Normally in such situations we would resolve to
             use semantic actions to explicitly pass the correct parts of the overall
-            attribute to the generators. The <tt class="computeroutput"><span class="identifier">omit</span></tt>
+            attribute to the generators. The <code class="computeroutput"><span class="identifier">omit</span></code>
             directive helps achieving the same without having to use semantic actions.
           </p>
 <p>
@@ -2332,7 +2503,7 @@
 </span></pre>
 <p>
             This is error prone and not really readable. The same can be achieved
-            by using the <tt class="computeroutput"><span class="identifier">omit</span></tt> directive:
+            by using the <code class="computeroutput"><span class="identifier">omit</span></code> directive:
           </p>
 <pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">int_</span> <span class="special">&lt;&lt;</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">string</span><span class="special">;</span>
 </pre>

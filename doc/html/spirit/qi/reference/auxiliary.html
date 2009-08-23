@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Auxiliary</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="previous" href="basics.html" title="Basics">
-<link rel="next" href="directive.html" title=" Directive">
+<link rel="prev" href="basics.html" title="Basics">
+<link rel="next" href="directive.html" title="Directive">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,95 +22,89 @@
 <div class="spirit-nav">
 <a accesskey="p" href="basics.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="directive.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.qi.reference.auxiliary"></a><a href="auxiliary.html" title="Auxiliary">Auxiliary</a>
-</h4></div></div>
-<div></div>
-</div>
+<div class="section" title="Auxiliary">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.qi.reference.auxiliary"></a><a class="link" href="auxiliary.html" title="Auxiliary">Auxiliary</a>
+</h4></div></div></div>
 <div class="toc"><dl><dt><span class="section"><a href="auxiliary.html#spirit.qi.reference.auxiliary.attr">attr</a></span></dt></dl></div>
 <p>
           This module includes different auxiliary parsers not fitting into any of
-          the other categories. This module includes the <tt class="computeroutput"><span class="identifier">attr</span></tt>,
-          <tt class="computeroutput"><span class="identifier">eoi</span></tt>, <tt class="computeroutput"><span class="identifier">eol</span></tt>,
-          <tt class="computeroutput"><span class="identifier">eps</span></tt>, and <tt class="computeroutput"><span class="identifier">lazy</span></tt> parsers.
+          the other categories. This module includes the <code class="computeroutput"><span class="identifier">attr</span></code>,
+          <code class="computeroutput"><span class="identifier">eoi</span></code>, <code class="computeroutput"><span class="identifier">eol</span></code>,
+          <code class="computeroutput"><span class="identifier">eps</span></code>, and <code class="computeroutput"><span class="identifier">lazy</span></code> parsers.
         </p>
-<a name="spirit.qi.reference.auxiliary.module_header"></a><h5>
-<a name="id457799"></a>
-          <a href="auxiliary.html#spirit.qi.reference.auxiliary.module_header">Module Header</a>
-        </h5>
+<a name="spirit.qi.reference.auxiliary.module_header"></a><h6>
+<a name="id1175803"></a>
+          <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.module_header">Module Header</a>
+        </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_auxiliary</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.qi.reference.auxiliary.attr"></a><a href="auxiliary.html#spirit.qi.reference.auxiliary.attr" title="attr">attr</a>
-</h5></div></div>
-<div></div>
-</div>
-<div class="itemizedlist"><ul type="disc"><li>
-<tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">attr</span></tt>: generates a pseudo parser not
+<div class="section" title="attr">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.auxiliary.attr"></a><a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr" title="attr">attr</a>
+</h5></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">attr</span></code>: generates a pseudo parser not
               consuming any input
             </li></ul></div>
 <a name="spirit.qi.reference.auxiliary.attr.description"></a><h6>
-<a name="id457956"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.description">Description</a>
+<a name="id1175907"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.description">Description</a>
           </h6>
 <p>
-            The <tt class="computeroutput"><span class="identifier">attr</span></tt> parser does
+            The <code class="computeroutput"><span class="identifier">attr</span></code> parser does
             not consume any input, for this reason it always matches an empty string.
-            The parser generated by <tt class="computeroutput"><span class="identifier">attr</span></tt>
+            The parser generated by <code class="computeroutput"><span class="identifier">attr</span></code>
             always succeeds. It's purpose is to expose its specified parameter as
             an attribute to the parsing process.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.header"></a><h6>
-<a name="id458011"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.header">Header</a>
+<a name="id1175938"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/attr.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_attr</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.model_of"></a><h6>
-<a name="id458124"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.model_of">Model of</a>
+<a name="id1176013"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="parser_concepts.html#spirit.qi.reference.parser_concepts.parser" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>
+                <a class="link" href="parser_concepts.html#spirit.qi.reference.parser_concepts.parser" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">attrib</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">attrib</span></code></span></dt>
 <dd><p>
                 A arbitrary typed constant value, e.g. 0.0, "Hello", or
                 a variable of arbitrary type.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">fattrib</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">fattrib</span></code></span></dt>
 <dd><p>
-                A <a href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
+                A <a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
                 that evaluates to an arbitrary type.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.auxiliary.attr.expression_semantics"></a><h6>
-<a name="id458242"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.expression_semantics">Expression
+<a name="id1176094"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
-            Semantics of an <tt class="computeroutput"><span class="identifier">attr</span><span class="special">()</span></tt> expression are fully defined by the
-            <a href="parser_concepts.html#spirit.qi.reference.parser_concepts.parser" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a> concept.
+            Semantics of an <code class="computeroutput"><span class="identifier">attr</span><span class="special">()</span></code> expression are fully defined by the
+            <a class="link" href="parser_concepts.html#spirit.qi.reference.parser_concepts.parser" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a> concept.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -118,39 +112,51 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">attrib</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generate a pseudo parser exposing the current value of <tt class="computeroutput"><span class="identifier">attrib</span></tt> as its attribute value
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">attrib</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate a pseudo parser exposing the current value of <code class="computeroutput"><span class="identifier">attrib</span></code> as its attribute value
                     while not consuming any input at parse time.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">fattrib</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">fattrib</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generate a pseudo parser exposing as its attribute the value
-                    returned by invoking <tt class="computeroutput"><span class="identifier">fattrib</span></tt>
-                    at parse time, while not consuming any input. See <a href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                    returned by invoking <code class="computeroutput"><span class="identifier">fattrib</span></code>
+                    at parse time, while not consuming any input. See <a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
                     Argument</a>
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.attributes"></a><h6>
-<a name="id458469"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.attributes">Attributes</a>
+<a name="id1176254"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -158,37 +164,49 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">attrib</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Attrib</span></tt>, which
-                    is the type of <tt class="computeroutput"><span class="identifier">attrib</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">attrib</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>, which
+                    is the type of <code class="computeroutput"><span class="identifier">attrib</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">fattrib</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Attrib</span></tt>, which
-                    is the return type of <tt class="computeroutput"><span class="identifier">fattrib</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">attr</span><span class="special">(</span><span class="identifier">fattrib</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attrib</span></code>, which
+                    is the return type of <code class="computeroutput"><span class="identifier">fattrib</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.auxiliary.attr.complexity"></a><h6>
-<a name="id458665"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.complexity">Complexity</a>
+<a name="id1176399"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -204,8 +222,8 @@
             done.
           </p>
 <a name="spirit.qi.reference.auxiliary.attr.example"></a><h6>
-<a name="id458705"></a>
-            <a href="auxiliary.html#spirit.qi.reference.auxiliary.attr.example">Example</a>
+<a name="id1176427"></a>
+            <a class="link" href="auxiliary.html#spirit.qi.reference.auxiliary.attr.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -264,7 +282,7 @@
 <p>
           </p>
 <p>
-            Using <tt class="computeroutput"><span class="identifier">attr</span></tt> with literals:
+            Using <code class="computeroutput"><span class="identifier">attr</span></code> with literals:
           </p>
 <p>
             </p>
@@ -284,7 +302,7 @@
 <p>
           </p>
 <p>
-            Using <tt class="computeroutput"><span class="identifier">attr</span></tt> with <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> function objects:
+            Using <code class="computeroutput"><span class="identifier">attr</span></code> with <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> function objects:
           </p>
 <p>
             </p>

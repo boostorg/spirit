@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Operator</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="previous" href="directive.html" title="Directive">
+<link rel="prev" href="directive.html" title="Directive">
 <link rel="next" href="auxiliary.html" title="Auxiliary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,59 +22,52 @@
 <div class="spirit-nav">
 <a accesskey="p" href="directive.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auxiliary.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.karma.reference.operator"></a><a href="operator.html" title="Operator">Operator</a>
-</h4></div></div>
-<div></div>
-</div>
+<div class="section" title="Operator">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.karma.reference.operator"></a><a class="link" href="operator.html" title="Operator">Operator</a>
+</h4></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.sequence"> Sequences
-          (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.alternative"> Alternatives
-          (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">|()</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="keyword">operator</span><span class="special">|()</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.kleene"> Kleene Star
-          (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></tt>)</a></span></dt>
+          (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.plus"> Plus (unary
-          <tt class="computeroutput"><span class="keyword">operator</span><span class="special">+()</span></tt>)</a></span></dt>
-<dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.list"> Lists (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">%()</span></tt>)</a></span></dt>
+          <code class="computeroutput"><span class="keyword">operator</span><span class="special">+()</span></code>)</a></span></dt>
+<dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.list"> Lists (<code class="computeroutput"><span class="keyword">operator</span><span class="special">%()</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.optional"> Optional
-          (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">-()</span></tt>)</a></span></dt>
+          (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">-()</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.and_predicate"> And
-          Predicate (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></tt>)</a></span></dt>
+          Predicate (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator.html#spirit.karma.reference.operator.not_predicate"> Not
-          Predicate (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></tt>)</a></span></dt>
+          Predicate (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></code>)</a></span></dt>
 </dl></div>
 <p>
           This module includes different generators which get instantiated if one
           of the overloaded operators is used with more primitive generator constructs.
-          It includes sequences (<tt class="computeroutput"><span class="special">&lt;&lt;</span></tt>),
-          alternatives (<tt class="computeroutput"><span class="special">|</span></tt>), Kleene star
-          (unary <tt class="computeroutput"><span class="special">*</span></tt>), plus (unary <tt class="computeroutput"><span class="special">+</span></tt>), optional (unary <tt class="computeroutput"><span class="special">-</span></tt>),
-          lists (<tt class="computeroutput"><span class="special">%</span></tt>), and the two predicates,
-          the <span class="emphasis"><em>and</em></span> predicate (unary <tt class="computeroutput"><span class="special">&amp;</span></tt>)
-          and the <span class="emphasis"><em>not</em></span> predicate (unary <tt class="computeroutput"><span class="special">!</span></tt>).
+          It includes sequences (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>),
+          alternatives (<code class="computeroutput"><span class="special">|</span></code>), Kleene star
+          (unary <code class="computeroutput"><span class="special">*</span></code>), plus (unary <code class="computeroutput"><span class="special">+</span></code>), optional (unary <code class="computeroutput"><span class="special">-</span></code>),
+          lists (<code class="computeroutput"><span class="special">%</span></code>), and the two predicates,
+          the <span class="emphasis"><em>and</em></span> predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)
+          and the <span class="emphasis"><em>not</em></span> predicate (unary <code class="computeroutput"><span class="special">!</span></code>).
         </p>
-<a name="spirit.karma.reference.operator.module_header"></a><h5>
-<a name="id549195"></a>
-          <a href="operator.html#spirit.karma.reference.operator.module_header">Module Header</a>
-        </h5>
+<a name="spirit.karma.reference.operator.module_header"></a><h6>
+<a name="id1269444"></a>
+          <a class="link" href="operator.html#spirit.karma.reference.operator.module_header">Module Header</a>
+        </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.sequence"></a><a href="operator.html#spirit.karma.reference.operator.sequence" title=" Sequences
-          (operator&lt;&lt;())"> Sequences
-          (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Sequences (operator&lt;&lt;())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.sequence"></a><a class="link" href="operator.html#spirit.karma.reference.operator.sequence" title="Sequences (operator&lt;&lt;())"> Sequences
+          (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.sequence.description"></a><h6>
-<a name="id549331"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.description">Description</a>
+<a name="id1269530"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
             Generator sequences are used to consecutively combine different, more
@@ -82,37 +75,37 @@
             to right as long as they succeed.
           </p>
 <a name="spirit.karma.reference.operator.sequence.header"></a><h6>
-<a name="id549363"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.header">Header</a>
+<a name="id1269547"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/sequence.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.sequence.model_of"></a><h6>
-<a name="id549476"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.model_of">Model
+<a name="id1269621"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><tt class="computeroutput"><span class="identifier">NaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id549529"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
+<a name="id1269657"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><tt class="computeroutput"><span class="identifier">NaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -120,25 +113,33 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
-                    <span class="identifier">b</span></tt>
-                  </p></td>
-<td><p>
-                    The generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">b</span></tt> are executed
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+                    <span class="identifier">b</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">b</span></code> are executed
                     sequentially from left to right and as long as they succeed.
                     A failed generator stops the execution of the entire sequence
                     and makes the sequence fail as well.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <p>
@@ -147,16 +148,15 @@
             might have already generated some output, which is <span class="emphasis"><em>not</em></span>
             rolled back.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               The simplest way to force a sequence to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a href="directive.html#spirit.karma.reference.directive.buffer" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
+              is to wrap it into a buffering directive (see <a class="link" href="directive.html#spirit.karma.reference.directive.buffer" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
@@ -171,8 +171,8 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.sequence.attributes"></a><h6>
-<a name="id549803"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
+<a name="id1269850"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -180,19 +180,25 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    sequence (<tt class="computeroutput"><span class="special">&lt;&lt;</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    sequence (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
@@ -206,27 +212,27 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
-              The table above uses <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt> and <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as placeholders only.
+              The table above uses <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> and <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as placeholders only.
             </p>
 <p>
-              The notation <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt> stands for <span class="emphasis"><em>any fusion
-              sequence of two elements</em></span>, where <tt class="computeroutput"><span class="identifier">A</span></tt>
-              is the type of its first element and <tt class="computeroutput"><span class="identifier">B</span></tt>
+              The notation <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> stands for <span class="emphasis"><em>any fusion
+              sequence of two elements</em></span>, where <code class="computeroutput"><span class="identifier">A</span></code>
+              is the type of its first element and <code class="computeroutput"><span class="identifier">B</span></code>
               is the type of its second element.
             </p>
 <p>
-              The notation of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> stands for <span class="emphasis"><em>any STL container</em></span>
-              holding elements of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
+              The notation of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> stands for <span class="emphasis"><em>any STL container</em></span>
+              holding elements of type <code class="computeroutput"><span class="identifier">A</span></code>.
             </p>
 </td></tr>
 </table></div>
@@ -238,8 +244,8 @@
             the attribute supplied
           </p>
 <a name="spirit.karma.reference.operator.sequence.complexity"></a><h6>
-<a name="id550879"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
+<a name="id1270648"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -253,8 +259,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.example"></a><h6>
-<a name="id550918"></a>
-            <a href="operator.html#spirit.karma.reference.operator.sequence.example">Example</a>
+<a name="id1270672"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.sequence.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -328,18 +334,14 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.alternative"></a><a href="operator.html#spirit.karma.reference.operator.alternative" title=" Alternatives
-          (operator|())"> Alternatives
-          (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">|()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Alternatives (operator|())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.alternative"></a><a class="link" href="operator.html#spirit.karma.reference.operator.alternative" title="Alternatives (operator|())"> Alternatives
+          (<code class="computeroutput"><span class="keyword">operator</span><span class="special">|()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.alternative.description"></a><h6>
-<a name="id552025"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.description">Description</a>
+<a name="id1272590"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.description">Description</a>
           </h6>
 <p>
             Generator alternatives are used to combine different, more primitive
@@ -347,37 +349,37 @@
             from left to right until one of them succeeds.
           </p>
 <a name="spirit.karma.reference.operator.alternative.header"></a><h6>
-<a name="id552057"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.header">Header</a>
+<a name="id1272607"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/alternative.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_alternative</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.alternative.model_of"></a><h6>
-<a name="id552172"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.model_of">Model
+<a name="id1272681"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><tt class="computeroutput"><span class="identifier">NaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.alternative.expression_semantics"></a><h6>
-<a name="id552226"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.expression_semantics">Expression
+<a name="id1272715"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><tt class="computeroutput"><span class="identifier">NaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.narygenerator" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -385,27 +387,35 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                    <span class="identifier">b</span></tt>
-                  </p></td>
-<td><p>
-                    The generators <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">b</span></tt> are executed
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                    <span class="identifier">b</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generators <code class="computeroutput"><span class="identifier">a</span></code>
+                    and <code class="computeroutput"><span class="identifier">b</span></code> are executed
                     sequentially from left to right and until one of them succeeds.
                     A failed generator forces the alternative generator to try the
                     next one. The alternative fails as a whole only if all elements
                     of the alternative fail. Each element of the alternative gets
                     passed the whole attribute of the alternative.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <p>
@@ -415,8 +425,8 @@
             an element succeeded.
           </p>
 <a name="spirit.karma.reference.operator.alternative.attributes"></a><h6>
-<a name="id552394"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.attributes">Attributes</a>
+<a name="id1272826"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -424,19 +434,25 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    alternative (<tt class="computeroutput"><span class="special">|</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    alternative (<code class="computeroutput"><span class="special">|</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
@@ -446,18 +462,18 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The table above uses <tt class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
-              <tt class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt>
-              stands for the type <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt>.
+<tr><td align="left" valign="top"><p>
+              The table above uses <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> as a placeholder only. The notation
+              <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>
+              stands for the type <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>.
             </p></td></tr>
 </table></div>
 <p>
@@ -471,8 +487,8 @@
             an example of this behavior.
           </p>
 <a name="spirit.karma.reference.operator.alternative.complexity"></a><h6>
-<a name="id553065"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.complexity">Complexity</a>
+<a name="id1273326"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -487,8 +503,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.alternative.example"></a><h6>
-<a name="id553105"></a>
-            <a href="operator.html#spirit.karma.reference.operator.alternative.example">Example</a>
+<a name="id1273350"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.alternative.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -550,9 +566,9 @@
           </p>
 <p>
             Basic usage of an alternative. While being only the second alternative,
-            the <tt class="computeroutput"><span class="identifier">double_</span></tt> generator
+            the <code class="computeroutput"><span class="identifier">double_</span></code> generator
             is chosen for output formatting because the supplied attribute type is
-            not compatible (i.e. not convertible) to the attribute type of the <tt class="computeroutput"><span class="identifier">string</span></tt> alternative.
+            not compatible (i.e. not convertible) to the attribute type of the <code class="computeroutput"><span class="identifier">string</span></code> alternative.
           </p>
 <p>
             </p>
@@ -569,7 +585,7 @@
           </p>
 <p>
             The same formatting rules may be used to output a string. This time we
-            supply the string <tt class="computeroutput"><span class="string">"example"</span></tt>,
+            supply the string <code class="computeroutput"><span class="string">"example"</span></code>,
             resulting in the first alternative to be chosen for the generated output.
           </p>
 <p>
@@ -586,18 +602,14 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.kleene"></a><a href="operator.html#spirit.karma.reference.operator.kleene" title=" Kleene Star
-          (unary operator*())"> Kleene Star
-          (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Kleene Star (unary operator*())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.kleene"></a><a class="link" href="operator.html#spirit.karma.reference.operator.kleene" title="Kleene Star (unary operator*())"> Kleene Star
+          (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.kleene.description"></a><h6>
-<a name="id554601"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.description">Description</a>
+<a name="id1274443"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.description">Description</a>
           </h6>
 <p>
             Kleene star generators are used to repeat the execution of an embedded
@@ -605,37 +617,37 @@
             generator, the Kleene star generator always succeeds.
           </p>
 <a name="spirit.karma.reference.operator.kleene.header"></a><h6>
-<a name="id554634"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.header">Header</a>
+<a name="id1274460"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/kleene.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_kleene</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.kleene.model_of"></a><h6>
-<a name="id554748"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.model_of">Model
+<a name="id1275648"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.expression_semantics"></a><h6>
-<a name="id554799"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
+<a name="id1275686"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -643,30 +655,38 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed zero or more times depending on the availability
-                    of an attribute. The execution of <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    of an attribute. The execution of <code class="computeroutput"><span class="identifier">a</span></code>
                     stops after the attribute values passed to the Kleene star generator
                     are exhausted. The Kleene star always succeeds (except if the
                     underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.attributes"></a><h6>
-<a name="id554948"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
+<a name="id1275793"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -674,38 +694,44 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    kleene (unary <tt class="computeroutput"><span class="special">*</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    kleene (unary <code class="computeroutput"><span class="special">*</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The table above uses <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
-              of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+<tr><td align="left" valign="top"><p>
+              The table above uses <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as a placeholder only. The notation
+              of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
               stands for <span class="emphasis"><em>any STL container</em></span> holding elements
-              of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
+              of type <code class="computeroutput"><span class="identifier">A</span></code>.
             </p></td></tr>
 </table></div>
 <p>
@@ -723,16 +749,15 @@
             failing element generator might have already generated some output, which
             is <span class="emphasis"><em>not</em></span> rolled back.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               The simplest way to force a Kleene star to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a href="directive.html#spirit.karma.reference.directive.buffer" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
+              is to wrap it into a buffering directive (see <a class="link" href="directive.html#spirit.karma.reference.directive.buffer" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
@@ -742,7 +767,7 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
+              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
               The expression:
             </p>
 <p>
@@ -752,15 +777,15 @@
 <p>
             </p>
 <p>
-              will not generate any partial output from a generator <tt class="computeroutput"><span class="identifier">a</span></tt> if it fails generating in the middle
+              will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
               of its output. The overall expression will still generate the output
-              as produced by all succeeded invocations of the generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
+              as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.complexity"></a><h6>
-<a name="id555415"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
+<a name="id1276118"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -776,8 +801,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.example"></a><h6>
-<a name="id555457"></a>
-            <a href="operator.html#spirit.karma.reference.operator.kleene.example">Example</a>
+<a name="id1276142"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.kleene.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -856,18 +881,14 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.plus"></a><a href="operator.html#spirit.karma.reference.operator.plus" title=" Plus (unary
-          operator+())"> Plus (unary
-          <tt class="computeroutput"><span class="keyword">operator</span><span class="special">+()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Plus (unary operator+())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.plus"></a><a class="link" href="operator.html#spirit.karma.reference.operator.plus" title="Plus (unary operator+())"> Plus (unary
+          <code class="computeroutput"><span class="keyword">operator</span><span class="special">+()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.plus.description"></a><h6>
-<a name="id556706"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.description">Description</a>
+<a name="id1277062"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.description">Description</a>
           </h6>
 <p>
             The plus generator is used to repeat the execution of an embedded generator
@@ -875,36 +896,36 @@
             executed at least once.
           </p>
 <a name="spirit.karma.reference.operator.plus.header"></a><h6>
-<a name="id556739"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.header">Header</a>
+<a name="id1277078"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/plus.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_plus</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.plus.model_of"></a><h6>
-<a name="id556853"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.model_of">Model of</a>
+<a name="id1277153"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.plus.expression_semantics"></a><h6>
-<a name="id556904"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.expression_semantics">Expression
+<a name="id1277191"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -912,31 +933,39 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">+</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed one or more times depending on the availability of
-                    an attribute. The execution of <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    an attribute. The execution of <code class="computeroutput"><span class="identifier">a</span></code>
                     stops after the attribute values passed to the plus generator
                     are exhausted. The plus generator succeeds as long as its embedded
                     generator has been successfully executed at least once (except
                     if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.plus.attributes"></a><h6>
-<a name="id557048"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.attributes">Attributes</a>
+<a name="id1277298"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -944,38 +973,44 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    plus (unary <code class="computeroutput"><span class="special">+</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The table above uses <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
-              of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+<tr><td align="left" valign="top"><p>
+              The table above uses <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as a placeholder only. The notation
+              of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
               stands for <span class="emphasis"><em>any STL container</em></span> holding elements
-              of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
+              of type <code class="computeroutput"><span class="identifier">A</span></code>.
             </p></td></tr>
 </table></div>
 <p>
@@ -993,16 +1028,15 @@
             that any failing element generator might have already generated some
             output, which is <span class="emphasis"><em>not</em></span> rolled back.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               The simplest way to force a plus generator to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a href="directive.html#spirit.karma.reference.directive.buffer" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
+              is to wrap it into a buffering directive (see <a class="link" href="directive.html#spirit.karma.reference.directive.buffer" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
@@ -1012,7 +1046,7 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
+              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
               The expression:
             </p>
 <p>
@@ -1022,15 +1056,15 @@
 <p>
             </p>
 <p>
-              will not generate any partial output from a generator <tt class="computeroutput"><span class="identifier">a</span></tt> if it fails generating in the middle
+              will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
               of its output. The overall expression will still generate the output
-              as produced by all succeeded invocations of the generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
+              as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.plus.complexity"></a><h6>
-<a name="id557516"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.complexity">Complexity</a>
+<a name="id1277623"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -1045,8 +1079,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.plus.example"></a><h6>
-<a name="id557557"></a>
-            <a href="operator.html#spirit.karma.reference.operator.plus.example">Example</a>
+<a name="id1277647"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.plus.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1141,16 +1175,13 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.list"></a><a href="operator.html#spirit.karma.reference.operator.list" title=" Lists (operator%())"> Lists (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">%()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Lists (operator%())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.list"></a><a class="link" href="operator.html#spirit.karma.reference.operator.list" title="Lists (operator%())"> Lists (<code class="computeroutput"><span class="keyword">operator</span><span class="special">%()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.list.description"></a><h6>
-<a name="id558935"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.description">Description</a>
+<a name="id1278846"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.description">Description</a>
           </h6>
 <p>
             The list generator is used to repeat the execution of an embedded generator
@@ -1159,36 +1190,36 @@
             at least once.
           </p>
 <a name="spirit.karma.reference.operator.list.header"></a><h6>
-<a name="id558968"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.header">Header</a>
+<a name="id1278862"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/list.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.list.model_of"></a><h6>
-<a name="id559082"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.model_of">Model of</a>
+<a name="id1278937"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.binarygenerator" title="BinaryGenerator"><tt class="computeroutput"><span class="identifier">BinaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.binarygenerator" title="BinaryGenerator"><code class="computeroutput"><span class="identifier">BinaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.list.expression_semantics"></a><h6>
-<a name="id559134"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.expression_semantics">Expression
+<a name="id1278975"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.binarygenerator" title="BinaryGenerator"><tt class="computeroutput"><span class="identifier">BinaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.binarygenerator" title="BinaryGenerator"><code class="computeroutput"><span class="identifier">BinaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1196,39 +1227,47 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
-                    <span class="identifier">b</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span>
+                    <span class="identifier">b</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed one or more times depending on the availability of
-                    an attribute. The output generated by <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    is interspaced with the output generated by <tt class="computeroutput"><span class="identifier">b</span></tt>.
+                    an attribute. The output generated by <code class="computeroutput"><span class="identifier">a</span></code>
+                    is interspaced with the output generated by <code class="computeroutput"><span class="identifier">b</span></code>.
                     The list generator succeeds as long as both its first embedded
                     generator has been successfully executed at least once (except
                     if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <p>
-            The list expression <tt class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></tt>
-            is a shortcut for <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="special">*(</span><span class="identifier">b</span> <span class="special">&lt;&lt;</span>
-            <span class="identifier">a</span><span class="special">)</span></tt>.
-            It is almost semantically equivalent, except for the attribute of <tt class="computeroutput"><span class="identifier">b</span></tt>, which gets ignored in the case of
+            The list expression <code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></code>
+            is a shortcut for <code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="special">*(</span><span class="identifier">b</span> <span class="special">&lt;&lt;</span>
+            <span class="identifier">a</span><span class="special">)</span></code>.
+            It is almost semantically equivalent, except for the attribute of <code class="computeroutput"><span class="identifier">b</span></code>, which gets ignored in the case of
             the list generator.
           </p>
 <a name="spirit.karma.reference.operator.list.attributes"></a><h6>
-<a name="id559392"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.attributes">Attributes</a>
+<a name="id1279156"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1236,38 +1275,44 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    list (<tt class="computeroutput"><span class="special">%</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    list (<code class="computeroutput"><span class="special">%</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The table above uses <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
-              of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+<tr><td align="left" valign="top"><p>
+              The table above uses <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as a placeholder only. The notation
+              of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
               stands for <span class="emphasis"><em>any STL container</em></span> holding elements
-              of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
+              of type <code class="computeroutput"><span class="identifier">A</span></code>.
             </p></td></tr>
 </table></div>
 <p>
@@ -1277,22 +1322,21 @@
             be interspaced by the output generated by the second generator. On each
             iteration it will pass the next consecutive element from the container
             attribute to the first embedded generator. The second embedded generator
-            does not get passed any attributes (it gets invoked using an <tt class="computeroutput"><span class="identifier">unused_type</span></tt> as its attribute). Therefor
+            does not get passed any attributes (it gets invoked using an <code class="computeroutput"><span class="identifier">unused_type</span></code> as its attribute). Therefor
             the number of iterations will not be larger than the number of elements
             in the container passed as its attribute. An empty container will make
             the list generator fail.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               If you want to use the list generator and still allow for an empty
-              attribute, you can use the optional operator (see <a href="operator.html#spirit.karma.reference.operator.optional" title=" Optional
-          (unary operator-())">optional
-              (unary <tt class="computeroutput"><span class="special">-</span></tt>)</a>):
+              attribute, you can use the optional operator (see <a class="link" href="operator.html#spirit.karma.reference.operator.optional" title="Optional (unary operator-())">optional
+              (unary <code class="computeroutput"><span class="special">-</span></code>)</a>):
             </p>
 <p>
               
@@ -1312,16 +1356,15 @@
             that any failing element generator might have already generated some
             output, which is <span class="emphasis"><em>not</em></span> rolled back.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               The simplest way to force a list generator to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a href="directive.html#spirit.karma.reference.directive.buffer" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
+              is to wrap it into a buffering directive (see <a class="link" href="directive.html#spirit.karma.reference.directive.buffer" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
@@ -1331,13 +1374,13 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
+              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.list.complexity"></a><h6>
-<a name="id559962"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.complexity">Complexity</a>
+<a name="id1279558"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -1352,8 +1395,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.list.example"></a><h6>
-<a name="id560003"></a>
-            <a href="operator.html#spirit.karma.reference.operator.list.example">Example</a>
+<a name="id1279582"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.list.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1432,55 +1475,51 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.optional"></a><a href="operator.html#spirit.karma.reference.operator.optional" title=" Optional
-          (unary operator-())"> Optional
-          (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">-()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Optional (unary operator-())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.optional"></a><a class="link" href="operator.html#spirit.karma.reference.operator.optional" title="Optional (unary operator-())"> Optional
+          (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">-()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.optional.description"></a><h6>
-<a name="id561226"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.description">Description</a>
+<a name="id1281743"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.description">Description</a>
           </h6>
 <p>
             The optional generator is used to conditionally execute an embedded generator.
             It succeeds always.
           </p>
 <a name="spirit.karma.reference.operator.optional.header"></a><h6>
-<a name="id561257"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.header">Header</a>
+<a name="id1281760"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/optional.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_optional</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.optional.model_of"></a><h6>
-<a name="id561371"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.model_of">Model
+<a name="id1281834"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.optional.expression_semantics"></a><h6>
-<a name="id561424"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.expression_semantics">Expression
+<a name="id1281873"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1488,28 +1527,36 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed depending on the availability of an attribute. The
                     optional generator succeeds as long as its embedded generator
                     succeeds (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.optional.attributes"></a><h6>
-<a name="id561561"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.attributes">Attributes</a>
+<a name="id1281972"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1517,37 +1564,43 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    optional (unary <tt class="computeroutput"><span class="special">-</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    optional (unary <code class="computeroutput"><span class="special">-</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The table above uses <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
-              of <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
-              stands for the data type <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>.
+<tr><td align="left" valign="top"><p>
+              The table above uses <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as a placeholder only. The notation
+              of <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+              stands for the data type <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>.
             </p></td></tr>
 </table></div>
 <p>
@@ -1561,16 +1614,15 @@
             means that any failing element might have already generated some output,
             which is <span class="emphasis"><em>not</em></span> rolled back.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               The simplest way to force a optional generator to behave as if it did
-              buffering is to wrap it into a buffering directive (see <a href="directive.html#spirit.karma.reference.directive.buffer" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
+              buffering is to wrap it into a buffering directive (see <a class="link" href="directive.html#spirit.karma.reference.directive.buffer" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
             </p>
 <p>
               
@@ -1580,13 +1632,13 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
+              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.optional.complexity"></a><h6>
-<a name="id561977"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.complexity">Complexity</a>
+<a name="id1282269"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -1600,8 +1652,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.optional.example"></a><h6>
-<a name="id562016"></a>
-            <a href="operator.html#spirit.karma.reference.operator.optional.example">Example</a>
+<a name="id1282293"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.optional.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1692,18 +1744,14 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.and_predicate"></a><a href="operator.html#spirit.karma.reference.operator.and_predicate" title=" And
-          Predicate (unary operator&amp;())"> And
-          Predicate (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="And Predicate (unary operator&amp;())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.and_predicate"></a><a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate" title="And Predicate (unary operator&amp;())"> And
+          Predicate (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.and_predicate.description"></a><h6>
-<a name="id563286"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.description">Description</a>
+<a name="id1283231"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.description">Description</a>
           </h6>
 <p>
             The and predicate generator is used to test, whether the embedded generator
@@ -1711,37 +1759,37 @@
             succeeds.
           </p>
 <a name="spirit.karma.reference.operator.and_predicate.header"></a><h6>
-<a name="id563319"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.header">Header</a>
+<a name="id1283250"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/and_predicate.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_and_predicate</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.and_predicate.model_of"></a><h6>
-<a name="id563435"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.model_of">Model
+<a name="id1283325"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.and_predicate.expression_semantics"></a><h6>
-<a name="id563490"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.expression_semantics">Expression
+<a name="id1283361"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1749,24 +1797,32 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed for the sole purpose of testing whether it succeeds.
                     The and predicate generator succeeds as long as its embedded
                     generator succeeds (except if the underlying output stream reports
                     an error). The and predicate never produces any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <p>
@@ -1774,8 +1830,8 @@
             its embedded generator into a discarding device.
           </p>
 <a name="spirit.karma.reference.operator.and_predicate.attributes"></a><h6>
-<a name="id563634"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.attributes">Attributes</a>
+<a name="id1283464"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1783,39 +1839,47 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    and predicate (unary <tt class="computeroutput"><span class="special">&amp;</span></tt>)
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+<td>
+                  <p>
+                    and predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
                     <span class="identifier">A</span> <span class="special">--&gt;</span>
-                    <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></tt>
-                  </p></td>
+                    <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The attribute of the and predicate is not always <tt class="computeroutput"><span class="identifier">Unused</span></tt>,
+<tr><td align="left" valign="top"><p>
+              The attribute of the and predicate is not always <code class="computeroutput"><span class="identifier">Unused</span></code>,
               which is different from Qi's and predicate. This is necessary as the
               generator the and predicate is attached to most of the time needs an
               attribute.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.and_predicate.complexity"></a><h6>
-<a name="id563799"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.complexity">Complexity</a>
+<a name="id1283607"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -1829,8 +1893,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.and_predicate.example"></a><h6>
-<a name="id563839"></a>
-            <a href="operator.html#spirit.karma.reference.operator.and_predicate.example">Example</a>
+<a name="id1283634"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.and_predicate.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1911,18 +1975,14 @@
 <p>
           </p>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.not_predicate"></a><a href="operator.html#spirit.karma.reference.operator.not_predicate" title=" Not
-          Predicate (unary operator!())"> Not
-          Predicate (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Not Predicate (unary operator!())">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.not_predicate"></a><a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate" title="Not Predicate (unary operator!())"> Not
+          Predicate (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.not_predicate.description"></a><h6>
-<a name="id565292"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.description">Description</a>
+<a name="id1284708"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.description">Description</a>
           </h6>
 <p>
             The not predicate generator is used to test, whether the embedded generator
@@ -1930,37 +1990,37 @@
             fails.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.header"></a><h6>
-<a name="id565324"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.header">Header</a>
+<a name="id1284727"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/not_predicate.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_not_predicate</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.model_of"></a><h6>
-<a name="id565438"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.model_of">Model
+<a name="id1284801"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.not_predicate.expression_semantics"></a><h6>
-<a name="id565493"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.expression_semantics">Expression
+<a name="id1284837"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="generator_concepts.html#spirit.karma.reference.generator_concepts.unarygenerator" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -1968,24 +2028,32 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed for the sole purpose of testing whether it succeeds.
                     The not predicate generator succeeds as long as its embedded
                     generator fails (except if the underlying output stream reports
                     an error). The not predicate never produces any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <p>
@@ -1993,8 +2061,8 @@
             its embedded generator into a discarding device.
           </p>
 <a name="spirit.karma.reference.operator.not_predicate.attributes"></a><h6>
-<a name="id565638"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.attributes">Attributes</a>
+<a name="id1284940"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -2002,39 +2070,47 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    not predicate (unary <tt class="computeroutput"><span class="special">!</span></tt>)
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+<td>
+                  <p>
+                    not predicate (unary <code class="computeroutput"><span class="special">!</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
                     <span class="identifier">A</span> <span class="special">--&gt;</span>
-                    <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></tt>
-                  </p></td>
+                    <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The attribute of the and predicate is not always <tt class="computeroutput"><span class="identifier">Unused</span></tt>,
+<tr><td align="left" valign="top"><p>
+              The attribute of the and predicate is not always <code class="computeroutput"><span class="identifier">Unused</span></code>,
               which is different from Qi's and predicate. This is necessary as the
               generator the and predicate is attached to most of the time needs an
               attribute.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.not_predicate.complexity"></a><h6>
-<a name="id565803"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.complexity">Complexity</a>
+<a name="id1285068"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -2048,8 +2124,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.not_predicate.example"></a><h6>
-<a name="id565843"></a>
-            <a href="operator.html#spirit.karma.reference.operator.not_predicate.example">Example</a>
+<a name="id1285094"></a>
+            <a class="link" href="operator.html#spirit.karma.reference.operator.not_predicate.example">Example</a>
           </h6>
 <p>
             Some includes:
