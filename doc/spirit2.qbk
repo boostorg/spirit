@@ -81,6 +81,8 @@
 [def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Primitive Generators]]
 [def __sec_karma_compound__     [link spirit.karma.quick_reference.compound_attribute_rules Compound Attribute Rules]]
 [def __karma_char_encoding_namespace__ [link spirit.karma.reference.karma_basics.character_encoding_namespace Character Encoding Namespace]]
+[def __sec_qi_reference__       [link spirit.qi.reference Qi Reference]]
+[def __sec_karma_reference__    [link spirit.karma.reference Karma Reference]]
 [def __sec_qi_quickref__        [link spirit.qi.quick_reference Qi Quick Reference]]
 [def __sec_karma_quickref__     [link spirit.karma.quick_reference Karma Quick Reference]]
 
