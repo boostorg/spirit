@@ -16,6 +16,43 @@
 using namespace boost::spirit;
 //]
 
+//[porting_guide_qi_grammar
+struct roman : public grammar<roman>
+{
+    template <typename Iterator>
+    struct roman : qi::grammar<Iterator, unsigned()>
+    {
+        roman() : qi::grammar<Iterator, unsigned()>(first)
+        {
+            hundreds.add
+                ("C"  , 100)("CC"  , 200)("CCC"  , 300)("CD" , 400)("D" , 500)
+                ("DC" , 600)("DCC" , 700)("DCCC" , 800)("CM" , 900) ;
+
+            tens.add
+                ("X"  , 10)("XX"  , 20)("XXX"  , 30)("XL" , 40)("L" , 50)
+                ("LX" , 60)("LXX" , 70)("LXXX" , 80)("XC" , 90) ;
+
+            ones.add
+                ("I"  , 1)("II"  , 2)("III"  , 3)("IV" , 4)("V" , 5)
+                ("VI" , 6)("VII" , 7)("VIII" , 8)("IX" , 9) ;
+
+            // _val refers to the attribute of the rule on the left hand side 
+            first = eps          [_val = 0] 
+                >>  (  +lit('M') [_val += 1000]
+                    ||  hundreds [_val += _1]
+                    ||  tens     [_val += _1]
+                    ||  ones     [_val += _1]
+                    ) ;
+        }
+
+        qi::rule<Iterator, unsigned()> first;
+        symbols<char, unsigned> hundreds;
+        symbols<char, unsigned> tens;
+        symbols<char, unsigned> ones;
+    };
+};
+//]
+
 int main()
 {
     {
@@ -32,6 +69,7 @@ int main()
         else
             std::cout << "stopped at: " << std::string(it, input.end()) << "\n";
 
+        // seldomly needed: use std::distance to calculate the length of the match
         std::cout << "matched length: " << std::distance(input.begin(), it) << "\n";
         //]
     }
@@ -50,7 +88,19 @@ int main()
         else
             std::cout << "stopped at: " << std::string(it, input.end()) << "\n";
 
+        // seldomly needed: use std::distance to calculate the length of the match
         std::cout << "matched length: " << std::distance(input.begin(), it) << "\n";
+        //]
+    }
+
+    {
+        //[porting_guide_qi_use_grammar
+        std::string input("MMIX");        // MMIX == 2009
+        std::string::iterator it = input.begin();
+        unsigned value = 0;
+        roman r;
+        if (qi::parse(it, input.end(), r, value)) 
+            std::cout << "successfully matched: " << value << "\n";
         //]
     }
     return 0;

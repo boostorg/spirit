@@ -50,13 +50,13 @@ refer to the corresponding reference documentation of this component.
 [table
     [[Include file in /Spirit.Classic/] [Include file in /Spirit.Qi/]]
     [[`classic.hpp`]                    [`qi.hpp`]]
-    [[`classic_actor.hpp`]              [none, use __phoenix__ for writing semantic actions]]
+    [[`classic_actor.hpp`]              [none, use __boost_phoenix__ for writing semantic actions]]
     [[`classic_attribute.hpp`]          [none, use local variables for rules instead of closures, 
                                          the primitives parsers now directly support lazy
                                          parametrization]]
     [[`classic_core.hpp`]               [`qi_core.hpp`]]
     [[`classic_debug.hpp`]              [`qi_debug.hpp`]]
-    [[`classic_dynamic.hpp`]            [none, use predicates instead of if_p, while_p, for_p
+    [[`classic_dynamic.hpp`]            [none, use __qi__ predicates instead of if_p, while_p, for_p
                                          (included by `qi_core.hpp`), the equivalent for lazy_p 
                                          is now included by `qi_auxiliary.hpp`]]
     [[`classic_error_handling.hpp`]     [none, included in `qi_core.hpp`]]
@@ -100,7 +100,7 @@ And here is the equivalent piece of code using __qi__:
 [porting_guide_qi_parse]
 
 The changes required for phrase parsing (i.e. parsing using a skipper) are 
-similar. Here is how phrase parsing worked in __classic__:
+similar. Here is how phrase parsing works in __classic__:
 
 [porting_guide_classic_phrase_parse]
 
@@ -108,7 +108,7 @@ And here the equivalent example in __qi__:
 
 [porting_guide_qi_phrase_parse]
 
-Note, how character parsers are now in a separate namespace (here 
+Note, how character parsers are in a separate namespace (here 
 `boost::spirit::ascii::space`) as __qi__ now supports working with different 
 character sets. See the section __char_encoding_namespace__ for more information.
 
@@ -118,7 +118,7 @@ In __classic__ all parser primitives have suffixes appended to their names,
 encoding their type: `"_p"` for parsers, `"_a"` for lazy actions, `"_d"` for 
 directives, etc. In __qi__ we don't have anything similar. The only suffixes
 are single underscore letters `"_"` applied where the name would otherwise 
-conflict with a keyword or otherwie predefined name (such as `int_` for the
+conflict with a keyword or predefined name (such as `int_` for the
 integer parser). Please see the __sec_qi_quickref__ for an overview on the 
 names for the different available parser primitives, directives and operators.
 
@@ -133,6 +133,72 @@ to the matching sequence of its embedded parser. Even if we very much encourage
 you to rewrite your parsers to take advantage of the generates parser specific 
 attributes, sometimes it is helpful to get access to the underlying matched 
 input sequence.
+
+[heading Grammars and Rules]
+
+The `grammar<>` and `rule<>` types are of equal importance to __qi__ as they 
+are for __classic__. Their main purpose is still the same: they allow to 
+define non-terminals and they are the main building blocks for more complex 
+parsers. Nevertheless, both types have been redesigned and their interfaces 
+have changed. Let's have a look at two examples first, we'll explain the 
+differences afterwards. Here is a simple grammar and its usage in __classic__:
+
+[porting_guide_classic_grammar]
+[porting_guide_classic_use_grammar]
+
+And here is a similar grammar and its usage in __qi__:
+
+[porting_guide_qi_grammar]
+[porting_guide_qi_use_grammar]
+
+Both versions look similarily enough, but we see several differences (we will 
+cover each of those differences in more detail below):
+
+* Neither the grammars nor the rules depend on a scanner type anymore, both 
+  depend only on the underlying iterator type. That means the dreaded scanner 
+  business is no issue anymore!
+* Grammars have no embedded class `definition` anymore
+* Grammars and rules may have an explicit attribute type specified in their 
+  definition
+* Grammars do not have any explicit start rules anymore. Instead one of the 
+  contained rules is used as a start rule by default.
+
+The first two points are tightly interrelated. The scanner business (see the 
+FAQ number one of __classic__ here: __scanner_business__) has been 
+a problem for a long time. The grammar and rule types have been specifically 
+redesigned to avoid this problem in the future. This also means that we don't 
+need any delayed instantiation of the inner definition class in a grammar 
+anymore. So the redesign not only helped fixing a long standing design problem, 
+it helped to simplify things considerably.
+
+All __qi__ parser components have well defined attribute types. Grammars and 
+rules are no exception. But since both need to be generic enough to be usable 
+for any parser their attribute type has to be explicitely specified. In the
+example above the `roman` grammar and the rule `first` both have an `unsigned` 
+attribute:
+
+    // grammar definition
+    template <typename Iterator>
+    struct roman : qi::grammar<Iterator, unsigned()> {...};
+
+    // rule definition
+    qi::rule<Iterator, unsigned()> first;
+
+The used notation resembles the definition of a function type. This is very
+natural as you can think of the synthesized attribute of the grammar and the 
+rule as of its 'return value'. In fact the rule and the grammar both 'return'
+an unsigned value - the value they matched. 
+
+If no attribute is desired none needs to be specified. The default attrribute 
+type for both, grammars and rules, is __unused_type__, which is a special 
+placeholder type.
+
+The last difference might seem to be rather cosmetic and insignificant. But it 
+turns out that not having to specify which rule in a grammar is the start rule
+(by returning it from the function `start()`) also means that any rule in a
+grammar can be directly used as the start rule. Nevertheless, the grammar base 
+class gets initialized with the rule it has to use as the start rule in case 
+the grammar instance is directly used as a parser.
 
 [endsect]
 

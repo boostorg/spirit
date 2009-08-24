@@ -71,6 +71,7 @@
 
 [def __fixme__                  *FIXME*]
 
+[def __scanner_business__       [@boost:/libs/spirit/classic/doc/faq.html#scanner_business The Scanner Business]]
 
 [/ Sections ]
 
