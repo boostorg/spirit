@@ -78,15 +78,7 @@ The complexity is constant as no input is consumed and no matching is done.
 
 [heading Example]
 
-Some includes:
-
-[reference_includes]
-
-All code snippets below use this common test function:
-
-[reference_test]
-
-Some using declaration:
+Some using declarations:
 
 [reference_using_declarations_attr]
 

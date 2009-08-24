@@ -49,37 +49,39 @@ pages and pages of reference doumentation.
 [section char]
 
 [table
-    [[Expression]           [Attribute]                 [Description]]
-    [[`char_`]              [`Ch`]                      [Matches any character]]
-    [[`char_(ch)`]          [`Ch`]                      [Matches `ch`]]
-    [[`char_("c")`]         [`Ch`]                      [Matches a single char string literal, `c`]]
-    [[`char_(ch, ch2)`]     [`Ch`]                      [Matches a range of chars from `ch` to `ch2` (inclusive)]]
-    [[`char_(charset)`]     [`Ch`]                      [Matches a character set `charset`]]
+    [[Expression]               [Attribute]       [Description]]
+    [[[qi_lit_string `ch`]]     [`Unused`]        [Matches `ch`]]
+    [[[qi_lit_string `lit(ch)`]][`Unused`]        [Matches `ch`]]
+    [[`char_`]                  [`Ch`]            [Matches any character]]
+    [[`char_(ch)`]              [`Ch`]            [Matches `ch`]]
+    [[`char_("c")`]             [`Ch`]            [Matches a single char string literal, `c`]]
+    [[`char_(ch, ch2)`]         [`Ch`]            [Matches a range of chars from `ch` to `ch2` (inclusive)]]
+    [[`char_(charset)`]         [`Ch`]            [Matches a character set `charset`]]
 
-    [[`alnum`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isalnum` in the current character set]]
-    [[`alpha`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isalpha` in the current character set]]
-    [[`blank`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isblank` in the current character set]]
-    [[`cntrl`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::iscntrl` in the current character set]]
-    [[`digit`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isdigit` in the current character set]]
-    [[`graph`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isgraph` in the current character set]]
-    [[`print`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isprint` in the current character set]]
-    [[`punct`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::ispunct` in the current character set]]
-    [[`space`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isspace` in the current character set]]
-    [[`xdigit`]             [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isxdigit` in the current character set]]
-    [[`lower`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::islower` in the current character set]]
-    [[`upper`]              [`Ch`]                      [Matches a character based on the equivalent of 
-                                                         `std::isupper` in the current character set]]
+    [[`alnum`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isalnum` in the current character set]]
+    [[`alpha`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isalpha` in the current character set]]
+    [[`blank`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isblank` in the current character set]]
+    [[`cntrl`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::iscntrl` in the current character set]]
+    [[`digit`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isdigit` in the current character set]]
+    [[`graph`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isgraph` in the current character set]]
+    [[`print`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isprint` in the current character set]]
+    [[`punct`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::ispunct` in the current character set]]
+    [[`space`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isspace` in the current character set]]
+    [[`xdigit`]                 [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isxdigit` in the current character set]]
+    [[`lower`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::islower` in the current character set]]
+    [[`upper`]                  [`Ch`]            [Matches a character based on the equivalent of 
+                                                  `std::isupper` in the current character set]]
 ]
 
 [endsect]
@@ -109,9 +111,7 @@ pages and pages of reference doumentation.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[[qi_lit_string `ch`]]           [`Unused`]    [Matches `ch`]]
     [[[qi_lit_string `str`]]          [`Unused`]    [Matches `str`]]
-    [[[qi_lit_string `lit(ch)`]]      [`Unused`]    [Matches `ch`]]
     [[[qi_lit_string `lit(str)`]]     [`Unused`]    [Matches `str`]]
     [[[qi_lit_string `string(str)`]]  [`Str`]       [Matches `str`]]
 

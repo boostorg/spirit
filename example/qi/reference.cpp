@@ -86,7 +86,6 @@ main()
         //[reference_using_declarations_symbols
         using boost::spirit::qi::parse;
         using boost::spirit::qi::symbols;
-        using boost::spirit::ascii::no_case;
         //]
 
         //[reference_symbols_with_data
@@ -128,9 +127,13 @@ main()
     }
     
     {
+        //[reference_using_declarations_no_case
         using boost::spirit::qi::parse;
         using boost::spirit::ascii::no_case;
-
+        using boost::spirit::ascii::char_;
+        using boost::spirit::ascii::alnum;
+        //]
+        
         //[reference_no_case
         test_parser("X", no_case[char_('x')]);
         test_parser("6", no_case[alnum]);
@@ -155,7 +158,8 @@ main()
         //]
 
         //[reference_attr_phoenix
-        double d = 0.0, d1 = 1.2;
+        d = 0.0;
+        double d1 = 1.2;
         test_parser_attr("", attr(phx::ref(d1)), d);
         std::cout << d << std::endl;              // will print '1.2'
         //]

@@ -284,7 +284,7 @@ again, allowing to simplify the overall attribute type of an expression.
 [/////////////////////////////////////////////////////////////////////////////]
 [section:karma_easier_complex Complex - Made easier]
 
-[import ../../example/karma/complex_number_easier.cpp]
+[/ import ../../example/karma/complex_number_easier.cpp]
 
 In one of the previous sections we showed how to format a complex number (i.e. 
 a pair of doubles). In this section we will build on this example with the goal 
@@ -293,7 +293,7 @@ at the resulting code first, trying to understand it afterwards (the full cpp
 file for this example can be found here: 
 [@../../example/karma/complex_number_easier.cpp complex_number_easier.cpp]).
 
-[tutorial_karma_complex_number_easier]
+[/ tutorial_karma_complex_number_easier]
 
 [endsect]
 

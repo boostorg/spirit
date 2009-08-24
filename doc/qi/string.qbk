@@ -105,14 +105,6 @@ where `N` is the number of characters in the string to be parsed.
 
 [heading Example]
 
-Some includes:
-
-[reference_includes]
-
-All code snippets below use this common test function:
-
-[reference_test]
-
 Some using declarations:
 
 [reference_using_declarations_lit_string]
@@ -229,14 +221,6 @@ defined in __primitive_parser_concept__.
 The attribute of `symbol<Char, T>` is `T`.
 
 [heading Example]
-
-Some includes:
-
-[reference_includes]
-
-Our test function:
-
-[reference_test_attr]
 
 Some using declarations:
 

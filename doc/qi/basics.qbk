@@ -56,5 +56,26 @@ the qi sub-namespaces with the same names:
 * boost::spirit::qi::standard
 * boost::spirit::qi::standard_wide
 
+[heading Examples]
+
+All sections in the reference present some real world examples. The
+examples use a common test harness to keep the example code as minimal
+and direct to the point as possible. The test harness is presented
+below.
+
+Some includes:
+
+[reference_includes]
+
+Our test functions:
+
+This one tests the parsers without attributes.
+
+[reference_test]
+
+This one tests the parsers with user supplied attributes.
+
+[reference_test_attr]
+
 [endsect]
 

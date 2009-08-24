@@ -88,17 +88,9 @@ __boost_proto__ expression into the corresponding parser expressions).
 
 [heading Example]
 
-Some includes:
+Some using declarations:
 
-[reference_includes]
-
-All code snippets below use this common test function:
-
-[reference_test]
-
-Some using declaration:
-
-[reference_using_declarations_symbols]
+[reference_using_declarations_no_case]
 
 Simple usage of `no_case[]`:
 

@@ -92,7 +92,7 @@ int main()
     }
     std::cout.precision(17);
     std::cout << "///////////////////////////////////////////////////////////////////////////" << std::endl;
-    std::cout << "atof/strtol/qi.double results:" << std::endl;
+    std::cout << "atof/strtod/qi.double results:" << std::endl;
     for (int i = 0; i < ndigits; ++i)
     {
         std::cout 
