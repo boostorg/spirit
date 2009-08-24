@@ -29,22 +29,43 @@
 </h5></div></div>
 <div></div>
 </div>
-<div class="itemizedlist"><ul type="disc"><li>
-<tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">no_case</span></tt>: generates a parser directive
-              forcing all embedded parsers to do case in-sensitive matching.
-            </li></ul></div>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Name
+                  </p></th>
+<th><p>
+                    Description
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">NS</span><span class="special">::</span><span class="identifier">no_case</span></tt>
+                  </p></td>
+<td><p>
+                    Parser directive that forces its subject parser (and all its
+                    children) to do case insensitive matching.<tt class="computeroutput"><span class="identifier">NS</span></tt>
+                    is a <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>
+                  </p></td>
+</tr></tbody>
+</table></div>
 <a name="spirit.qi.reference.directive.no_case.description"></a><h6>
-<a name="id460839"></a>
+<a name="id460967"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.description">Description</a>
           </h6>
 <p>
             The <tt class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></tt>
-            directive does not consume any input on it's own. The actual matching
-            is done by the embedded parsers. It's purpose is to force all matching
-            of all embedded parsers to be case in-sensitive.
+            directive does not consume any input. The actual matching is done by
+            its subject parser. It's purpose is to force matching of the subject
+            parser (and all its children) to be case insensitive.
           </p>
 <a name="spirit.qi.reference.directive.no_case.header"></a><h6>
-<a name="id460889"></a>
+<a name="id461016"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/no_case.hpp&gt;
@@ -54,39 +75,44 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.no_case.model_of"></a><h6>
-<a name="id461002"></a>
+<a name="id461129"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.model_of">Model
             of</a>
           </h6>
-<div class="blockquote"><blockquote class="blockquote">
 <p>
-              </p>
-<p>
-                This directive is special as it does not conform to any parser concept.
-                It is a pure modifier directive.
-              </p>
-<p>
-            </p>
-</blockquote></div>
+            The Model Of <tt class="computeroutput"><span class="identifier">no_case</span></tt>
+            is the model of its subject parser.
+          </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
 <dt><span class="term"><tt class="computeroutput"><span class="identifier">p</span></tt></span></dt>
 <dd><p>
-                A arbitrary complex parser expression embedded inside the <tt class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></tt>
-                directive.
+                A parser.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">P</span></tt></span></dt>
+<dd><p>
+                A Parser type.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">ns</span></tt></span></dt>
+<dd><p>
+                A <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                Encoding Namespace</a>.
               </p></dd>
 </dl>
 </div>
+<p>
+            ]
+          </p>
 <a name="spirit.qi.reference.directive.no_case.expression_semantics"></a><h6>
-<a name="id461086"></a>
+<a name="id461259"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             The <tt class="computeroutput"><span class="identifier">no_case</span><span class="special">[]</span></tt>
             directive has no special parser semantics. It is a pure modifier directive.
-            It indirectly influences the way all embedded parsers do their matching.
+            It indirectly influences the way all subject parsers do their matching.
             It adds information (the <tt class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">no_case</span></tt>)
             to the <tt class="computeroutput"><span class="identifier">Modifier</span></tt> template
             parameter used while tranforming the <tt class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">expr</span></tt>
@@ -123,7 +149,7 @@
 </tr></thead>
 <tbody><tr>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">no_case</span><span class="special">[</span><span class="identifier">p</span><span class="special">]</span></tt>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">no_case</span><span class="special">[</span><span class="identifier">p</span><span class="special">]</span></tt>
                   </p></td>
 <td><p>
                     Force <tt class="computeroutput"><span class="identifier">p</span></tt> to match
@@ -132,7 +158,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.no_case.attributes"></a><h6>
-<a name="id461509"></a>
+<a name="id461692"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -150,29 +176,29 @@
 </tr></thead>
 <tbody><tr>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">no_case</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">no_case</span><span class="special">[</span><span class="identifier">p</span><span class="special">]</span></tt>
                   </p></td>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">A</span></tt>, the no_case
-                    directive exposes the attribute of its embedded parser.
+                    The attribute of subject parser, <tt class="computeroutput"><span class="identifier">P</span></tt>.
                   </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.no_case.complexity"></a><h6>
-<a name="id461626"></a>
+<a name="id461819"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The complexity is defined by the complexity of the embedded parser
+                The complexity is defined by the complexity of the subject parser,
+                <tt class="computeroutput"><span class="identifier">P</span></tt>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.no_case.example"></a><h6>
-<a name="id461663"></a>
+<a name="id461868"></a>
             <a href="no_case.html#spirit.qi.reference.directive.no_case.example">Example</a>
           </h6>
 <p>

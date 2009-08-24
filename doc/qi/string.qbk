@@ -19,9 +19,12 @@ includes the literal and string parsers and the symbol table.
 [/------------------------------------------------------------------------------]
 [section lit/string]
 
-* `boost::spirit::lit`: generates a string parser (Same as `boost::spirit::qi::lit`)
-* `NS::string`: generates a string parser for the character encoding. `NS`
-   is a __char_encoding_namespace__.
+[table
+    [[Name]                     [Description]]
+    [[`boost::spirit::lit`]     [String parser (Same as `boost::spirit::qi::lit`)]]
+    [[`NS::string`]             [String parser for the character encoding. `NS`
+                                is a __char_encoding_namespace__]]
+]
 
 [heading Description]
 
@@ -126,6 +129,12 @@ Lazy strings using __phoenix__
 
 [/------------------------------------------------------------------------------]
 [section symbols]
+
+[table
+    [[Name]                                 [Description]]
+    [[`boost::spirit::symbols<Char, T>`]    [A template class for creating, 
+                                            managing and using symbol tables.]]
+]
 
 [heading Description]
 

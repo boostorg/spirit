@@ -20,15 +20,21 @@ other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, and
 
 [/------------------------------------------------------------------------------]
 [section:no_case no_case]
-
-* `boost::spirit::no_case`: generates a parser directive forcing all embedded 
-  parsers to do case in-sensitive matching.
+  
+[table
+    [[Name]                         [Description]]
+    [[`boost::spirit::NS::no_case`] [Parser directive that forces its subject 
+                                    parser (and all its children) to do case 
+                                    insensitive matching. `NS` is a 
+                                    __char_encoding_namespace__]]
+]
 
 [heading Description]
 
-The `no_case[]` directive does not consume any input on it's own. The actual 
-matching is done  by the embedded parsers. It's purpose is to force all 
-matching of all embedded parsers to be case in-sensitive.
+The `no_case[]` directive does not consume any input. The actual
+matching is done by its subject parser. It's purpose is to force
+matching of the subject parser (and all its children) to be case
+insensitive. 
 
 [heading Header]
 
@@ -39,22 +45,22 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-[:This directive is special as it does not conform to any parser concept. It 
-  is a pure modifier directive.]
+The model of `no_case` is the model of its subject parser.
 
 [variablelist Notation
-    [[`p`]      [A arbitrary complex parser expression embedded inside the
-                 `no_case[]` directive.]]
+    [[`p`]      [A parser.]]
+    [[`P`]      [A Parser type.]]
+    [[`ns`]     [A __char_encoding_namespace__.]]
 ]
 
 [heading Expression Semantics]
 
-The `no_case[]` directive has no special parser semantics. It is a pure 
-modifier directive. It indirectly influences the way all embedded parsers do 
-their matching. It adds information (the `tag::no_case`) to the `Modifier` 
-template parameter used while tranforming the `proto::expr` into the 
-corresponding parser expression. This is achieved by the following 
-specialization:
+The `no_case[]` directive has no special parser semantics. It is a pure
+modifier directive. It indirectly influences the way all subject parsers
+do their matching. It adds information (the `tag::no_case`) to the
+`Modifier` template parameter used while tranforming the `proto::expr`
+into the corresponding parser expression. This is achieved by the
+following specialization: 
 
     namespace boost { namespace spirit
     {
@@ -71,20 +77,19 @@ __boost_proto__ expression into the corresponding parser expressions).
 
 [table
     [[Expression]       [Semantics]]
-    [[`no_case[p]`]     [Force `p` to match its input case in-sensitive.]]
+    [[`ns::no_case[p]`] [Force `p` to match its input case in-sensitive.]]
 ]
 
 [heading Attributes]
 
 [table
     [[Expression]       [Attribute]]
-    [[`no_case[a]`]     [`A`, the no_case directive exposes the attribute of 
-                         its embedded parser.]]
+    [[`ns::no_case[p]`] [The attribute of subject parser, `P`.]]
 ]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the embedded parser]
+[:The complexity is defined by the complexity of the subject parser, `P`]
 
 [heading Example]
 

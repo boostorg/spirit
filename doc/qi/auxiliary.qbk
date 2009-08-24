@@ -20,7 +20,11 @@ other categories. This module includes the `attr`, `eoi`, `eol`, `eps`, and
 [/------------------------------------------------------------------------------]
 [section attr]
 
-* `boost::spirit::attr`: generates a pseudo parser not consuming any input
+[table
+    [[Name]                     [Description]]
+    [[`boost::spirit::attr`]    [A pseudo parser that injects an attribute
+                                but does not consume any input.]]
+]
 
 [heading Description]
 
