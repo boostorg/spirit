@@ -1,0 +1,172 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>eol</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../auxiliary.html" title="Auxiliary">
+<link rel="prev" href="../auxiliary.html" title="Auxiliary">
+<link rel="next" href="eps.html" title="eps">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="eps.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" title="eol">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.auxiliary.eol"></a><a class="link" href="eol.html" title="eol">eol</a>
+</h5></div></div></div>
+<a name="spirit.karma.reference.auxiliary.eol.description"></a><h6>
+<a name="id1263516"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.description">Description</a>
+          </h6>
+<p>
+            The <code class="computeroutput"><span class="identifier">eol</span></code> component generates
+            a single newline character. It is equivalent to <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="char">'\n'</span><span class="special">)</span></code>
+            or simply '\n' (please see the <a class="link" href="../char/char_generator.html" title="Character Generators"><code class="computeroutput"><span class="identifier">char_</span></code></a> generator module for more
+            details).
+          </p>
+<a name="spirit.karma.reference.auxiliary.eol.header"></a><h6>
+<a name="id1263569"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/eol.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_eol</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eol.model_of"></a><h6>
+<a name="id1263643"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.model_of">Model of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<a name="spirit.karma.reference.auxiliary.eol.expression_semantics"></a><h6>
+<a name="id1263682"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Semantics
+                  </p>
+                  </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eol</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Create a component generating a single end of line character
+                    in the output
+                  </p>
+                  </td>
+</tr></tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.eol.attributes"></a><h6>
+<a name="id1263770"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.attributes">Attributes</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Attribute
+                  </p>
+                  </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eol</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
+</tr></tbody>
+</table></div>
+<a name="spirit.karma.reference.auxiliary.eol.complexity"></a><h6>
+<a name="id1263848"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                O(1)
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<p>
+            The complexity is constant as a single character is generated in the
+            output.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eol.example"></a><h6>
+<a name="id1263876"></a>
+            <a class="link" href="eol.html#spirit.karma.reference.auxiliary.eol.example">Example</a>
+          </h6>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="eps.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
