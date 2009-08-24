@@ -61,7 +61,12 @@ These can be used to flexibly format any integer number of any compatible type
 (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.signed_int.additional_requirements below]).
 
-The interger number generators are very fast. For measurement results comparing
+[note   The generators `long_long` and `long_long(num)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `long long` 
+        (64 bit) integer types).]
+
+The integer number generators are very fast. For measurement results comparing
 the __karma__ integer number generators with equivalent constructs provided by 
 other libraries see the section 
 [link spirit.karma.performance_measurements.numeric_performance.int_performance Performance of Numeric Generators]
@@ -176,7 +181,8 @@ If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
 * numeric operators for: `+`, `-`, `/`, `*`, `%`, and unary `-`
 * helper functions implementing the interface and the semantics of: `std::fmod`, 
   `std::fabs`, `std::pow`, `std::lround`, `std::ltrunc`, `std::floor`, and
-  `std::ceil`.
+  `std::ceil`. These need to be defined in a way so that they will be found 
+  using argument dependent lookup (ADL).
 
 [heading Attributes]
 
@@ -300,7 +306,12 @@ These can be used to flexibly format any unsigned integer number of any
 compatible type (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.unsigned_int.additional_requirements below]).
 
-The interger number generators are very fast. For measurement results comparing
+[note   The generators `ulong_long` and `ulong_long(num)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `unsigned long long` 
+        (64 bit) unsigned integer types).]
+
+The integer number generators are very fast. For measurement results comparing
 the __karma__ integer number generators with equivalent constructs provided by 
 other libraries see the section 
 [link spirit.karma.performance_measurements.numeric_performance.int_performance Performance of Numeric Generators]
@@ -426,7 +437,9 @@ If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
 * comparison operators for: `<`, `<=`, `==`, `!=`, `>`, and `>=` 
 * numeric operators for: `+`, `-`, `/`, `*`, and `%`
 * helper functions implementing the interface and the semantics of: `std::fmod`, 
-  `std::pow`, `std::lround`, `std::ltrunc`, `std::floor`, and `std::ceil`.
+  `std::pow`, `std::lround`, `std::ltrunc`, `std::floor`, and `std::ceil`. 
+  These need to be defined in a way so that they will be found using argument 
+  dependent lookup (ADL).
 
 [heading Attributes]
 
@@ -653,7 +666,8 @@ the type `Num` must have defined:
 * numeric operators for: `+`, `-`, `/`, `*`, and `%`
 * functions implementing the interface and the semantics of: `std::fmod`, 
   `std::pow`, `std::log10`, `std::lround`, `std::ltrunc`, `std::modf`, 
-  `std::floor`, and `std::ceil`
+  `std::floor`, and `std::ceil`. These need to be defined in a way so that they 
+  will be found using argument dependent lookup (ADL).
 * a valid specialization of the type `std::numeric_limits<Num>` allowing for 
   numeric property inspection.
 

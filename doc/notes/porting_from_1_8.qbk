@@ -189,6 +189,12 @@ natural as you can think of the synthesized attribute of the grammar and the
 rule as of its 'return value'. In fact the rule and the grammar both 'return'
 an unsigned value - the value they matched. 
 
+[note    The function type notation allows to specify parameters as well. These
+         are interpreted as the types of inherited attributes the rule or 
+         grammar expect to be passed during parsing. For more information 
+         please see the section about inherited and synthesized attributes for
+         rules and grammars.]
+
 If no attribute is desired none needs to be specified. The default attrribute 
 type for both, grammars and rules, is __unused_type__, which is a special 
 placeholder type.
