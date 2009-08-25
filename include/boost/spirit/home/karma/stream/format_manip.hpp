@@ -100,7 +100,7 @@ namespace boost { namespace spirit { namespace karma
         typedef traits::properties_of<
             typename result_of::compile<karma::domain, Derived>::type
         > properties;
-        typedef karma::detail::ostream_iterator<Char, Char, Traits> outiter_type;
+        typedef karma::ostream_iterator<Char, Char, Traits> outiter_type;
 
         outiter_type target_sink(os);
         karma::detail::output_iterator<outiter_type, properties> sink(target_sink);

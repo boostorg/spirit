@@ -13,7 +13,7 @@
 #include <iterator>
 
 ///////////////////////////////////////////////////////////////////////////////
-namespace boost { namespace spirit { namespace karma { namespace detail
+namespace boost { namespace spirit { namespace karma 
 {
     ///////////////////////////////////////////////////////////////////////////
     //  We need our own implementation of an ostream_iterator just to be able
@@ -60,6 +60,6 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         Elem const* delim;
     };
 
-}}}}
+}}}
 
 #endif

@@ -143,11 +143,11 @@ namespace boost { namespace spirit { namespace karma
         >
         static bool generate(
             karma::detail::output_iterator<
-                karma::detail::ostream_iterator<T, Char, Traits>, Properties
+                karma::ostream_iterator<T, Char, Traits>, Properties
             >& sink, Context&, Delimiter const& d, Attribute const& attr)
         {
             typedef karma::detail::output_iterator<
-                karma::detail::ostream_iterator<T, Char, Traits>, Properties
+                karma::ostream_iterator<T, Char, Traits>, Properties
             > output_iterator;
             typedef karma::detail::iterator_sink<
                 output_iterator, Char, CharEncoding, Tag
@@ -226,11 +226,11 @@ namespace boost { namespace spirit { namespace karma
           , typename Context, typename Delimiter, typename Attribute>
         bool generate(
             karma::detail::output_iterator<
-                karma::detail::ostream_iterator<T1, Char, Traits>, Properties
+                karma::ostream_iterator<T1, Char, Traits>, Properties
             >& sink, Context&, Delimiter const& d, Attribute const&)
         {
             typedef karma::detail::output_iterator<
-                karma::detail::ostream_iterator<T1, Char, Traits>, Properties
+                karma::ostream_iterator<T1, Char, Traits>, Properties
             > output_iterator;
             typedef karma::detail::iterator_sink<
                 output_iterator, Char, CharEncoding, Tag

@@ -19,7 +19,7 @@
 #include <boost/mpl/if.hpp>
 
 #include <boost/spirit/home/karma/generator.hpp>
-#include <boost/spirit/home/karma/detail/ostream_iterator.hpp>
+#include <boost/spirit/home/karma/stream/ostream_iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 
 namespace boost { namespace spirit { namespace karma { namespace detail 
@@ -470,15 +470,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Elem, typename Traits, typename Properties>
-    class output_iterator<ostream_iterator<T, Elem, Traits>, Properties>
-      : public output_iterator<ostream_iterator<T, Elem, Traits>, Properties
-          , output_iterator<ostream_iterator<T, Elem, Traits>, Properties> >
+    class output_iterator<karma::ostream_iterator<T, Elem, Traits>, Properties>
+      : public output_iterator<karma::ostream_iterator<T, Elem, Traits>, Properties
+          , output_iterator<karma::ostream_iterator<T, Elem, Traits>, Properties> >
     {
     private:
-        typedef output_iterator<ostream_iterator<T, Elem, Traits>, Properties
-          , output_iterator<ostream_iterator<T, Elem, Traits>, Properties> 
+        typedef output_iterator<karma::ostream_iterator<T, Elem, Traits>, Properties
+          , output_iterator<karma::ostream_iterator<T, Elem, Traits>, Properties> 
         > base_type;
-        typedef ostream_iterator<T, Elem, Traits> base_iterator_type;
+        typedef karma::ostream_iterator<T, Elem, Traits> base_iterator_type;
         typedef std::basic_ostream<Elem, Traits> ostream_type;
 
     public:

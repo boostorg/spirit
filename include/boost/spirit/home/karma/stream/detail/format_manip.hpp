@@ -13,7 +13,7 @@
 #include <iterator>
 #include <string>
 #include <boost/spirit/home/karma/generate.hpp>
-#include <boost/spirit/home/karma/detail/ostream_iterator.hpp>
+#include <boost/spirit/home/karma/stream/ostream_iterator.hpp>
 #include <boost/mpl/bool.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     operator<< (std::basic_ostream<Char, Traits> &os
       , format_manip<Expr, Copy> const& fm)
     {
-        ostream_iterator<Char, Char, Traits> sink(os);
+        karma::ostream_iterator<Char, Char, Traits> sink(os);
         if (!karma::generate (sink, fm.expr))
         {
             os.setstate(std::ios_base::failbit);
@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     operator<< (std::basic_ostream<Char, Traits> &os
       , format_manip<Expr, Copy, unused_type, Attribute> const& fm)
     {
-        ostream_iterator<Char, Char, Traits> sink(os);
+        karma::ostream_iterator<Char, Char, Traits> sink(os);
         if (!karma::generate(sink, fm.expr, fm.attr))
         {
             os.setstate(std::ios_base::failbit);
@@ -88,7 +88,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     operator<< (std::basic_ostream<Char, Traits> &os
       , format_manip<Expr, Copy, Delimiter> const& fm)
     {
-        ostream_iterator<Char, Char, Traits> sink(os);
+        karma::ostream_iterator<Char, Char, Traits> sink(os);
         if (!karma::generate_delimited(sink, fm.expr, fm.delim, fm.pre))
         {
             os.setstate(std::ios_base::failbit);
@@ -103,7 +103,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     operator<< (std::basic_ostream<Char, Traits> &os
       , format_manip<Expr, Copy, Delimiter, Attribute> const& fm)
     {
-        ostream_iterator<Char, Char, Traits> sink(os);
+        karma::ostream_iterator<Char, Char, Traits> sink(os);
         if (!karma::generate_delimited(sink, fm.expr, fm.delim, fm.pre, fm.attr))
         {
             os.setstate(std::ios_base::failbit);
