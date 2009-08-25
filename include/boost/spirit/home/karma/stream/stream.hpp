@@ -12,7 +12,6 @@
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
-#include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
@@ -33,6 +32,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
 {
+    namespace tag
+    {
+        template <typename Char>
+        struct stream_tag {};
+    }
+
+    namespace karma
+    {
+        ///////////////////////////////////////////////////////////////////////
+        // This one is the class that the user can instantiate directly in 
+        // order to create a customized int generator
+        template <typename Char>
+        struct stream_generator
+          : spirit::terminal<tag::stream_tag<Char> > 
+        {};
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
@@ -56,16 +72,27 @@ namespace boost { namespace spirit
 
     template <>                                         // enables stream(f)
     struct use_lazy_terminal<
-        karma::domain
-      , tag::stream
-      , 1 /*arity*/
+        karma::domain, tag::stream, 1   /*arity*/
     > : mpl::true_ {};
 
     template <>                                         // enables wstream(f)
     struct use_lazy_terminal<
-        karma::domain
-      , tag::wstream
-      , 1 /*arity*/
+        karma::domain, tag::wstream, 1  /*arity*/
+    > : mpl::true_ {};
+
+    // enables stream_generator<char_type>
+    template <typename Char>
+    struct use_terminal<karma::domain, tag::stream_tag<Char> >
+      : mpl::true_ {};
+
+    template <typename Char, typename A0>
+    struct use_terminal<karma::domain
+      , terminal_ex<tag::stream_tag<Char>, fusion::vector1<A0> >
+    > : mpl::true_ {};
+
+    template <typename Char>
+    struct use_lazy_terminal<
+        karma::domain, tag::stream_tag<Char>, 1  /*arity*/
     > : mpl::true_ {};
 
 }}
@@ -78,8 +105,8 @@ namespace boost { namespace spirit { namespace karma
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename CharEncoding, typename Tag>
-    struct stream_generator
-      : primitive_generator<stream_generator<Char, CharEncoding, Tag> >
+    struct any_stream_generator
+      : primitive_generator<any_stream_generator<Char, CharEncoding, Tag> >
     {
         template <typename Context, typename Unused>
         struct attribute
@@ -87,7 +114,7 @@ namespace boost { namespace spirit { namespace karma
             typedef spirit::hold_any type;
         };
 
-        // stream_generator has an attached attribute 
+        // any_stream_generator has an attached attribute 
         template <
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute
@@ -157,18 +184,20 @@ namespace boost { namespace spirit { namespace karma
 
     
     template <typename T, typename Char, typename CharEncoding, typename Tag>
-    struct any_stream_generator
-      : primitive_generator<any_stream_generator<T, Char, CharEncoding, Tag> >
+    struct lit_stream_generator
+      : primitive_generator<lit_stream_generator<T, Char, CharEncoding, Tag> >
     {
         template <typename Context, typename Unused>
-        struct attribute : remove_const<T>
-        {};
+        struct attribute 
+        {
+            typedef unused_type type;
+        };
 
-        any_stream_generator(typename add_reference<T>::type t)
+        lit_stream_generator(typename add_reference<T>::type t)
           : t_(t)
         {}
 
-        // any_stream_generator has an attached parameter
+        // lit_stream_generator has an attached parameter
 
         // this overload will be used in the normal case (not called from
         // format_manip).
@@ -237,7 +266,7 @@ namespace boost { namespace spirit { namespace karma
         static bool const upper =
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
-        typedef stream_generator<
+        typedef any_stream_generator<
             Char
           , typename spirit::detail::get_encoding<
                 Modifiers, unused_type, lower || upper>::type
@@ -260,6 +289,11 @@ namespace boost { namespace spirit { namespace karma
     struct make_primitive<tag::wstream, Modifiers> 
       : make_stream<wchar_t, Modifiers> {};
 
+    // any_stream_generator<char_type>
+    template <typename Char, typename Modifiers>
+    struct make_primitive<tag::stream_tag<Char>, Modifiers> 
+      : make_stream<Char, Modifiers> {};
+
     ///////////////////////////////////////////////////////////////////////////
     template <typename Char, typename A0, typename Modifiers>
     struct make_any_stream
@@ -271,7 +305,7 @@ namespace boost { namespace spirit { namespace karma
             has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
         typedef typename add_const<A0>::type const_attribute;
-        typedef any_stream_generator<
+        typedef lit_stream_generator<
             const_attribute, Char
           , typename spirit::detail::get_encoding<
                 Modifiers, unused_type, lower || upper>::type
@@ -296,6 +330,13 @@ namespace boost { namespace spirit { namespace karma
     struct make_primitive<
             terminal_ex<tag::wstream, fusion::vector1<A0> >, Modifiers>
       : make_any_stream<wchar_t, A0, Modifiers> {};
+
+    // any_stream_generator<char_type>(...)
+    template <typename Char, typename Modifiers, typename A0>
+    struct make_primitive<
+            terminal_ex<tag::stream_tag<Char>, fusion::vector1<A0> >
+          , Modifiers>
+      : make_any_stream<Char, A0, Modifiers> {};
 
 }}}
 
