@@ -111,6 +111,25 @@ main()
     }
 
     {
+        typedef karma::stream_generator<utf8_char> utf8_stream_type;
+        utf8_stream_type const utf8_stream = utf8_stream_type();
+
+        BOOST_TEST(test_delimited("x ", utf8_stream, 'x', ' '));
+        BOOST_TEST(test_delimited("xyz ", utf8_stream, "xyz", ' '));
+        BOOST_TEST(test_delimited("xyz ", utf8_stream, std::string("xyz"), ' '));
+        BOOST_TEST(test_delimited("1 ", utf8_stream, 1, ' '));
+        BOOST_TEST(test_delimited("1.1 ", utf8_stream, 1.1, ' '));
+        BOOST_TEST(test_delimited("{1.2,2.4} ", utf8_stream, complex(1.2, 2.4), ' '));
+
+        BOOST_TEST(test("x", utf8_stream('x')));
+        BOOST_TEST(test("xyz", utf8_stream("xyz")));
+        BOOST_TEST(test("xyz", utf8_stream(std::string("xyz"))));
+        BOOST_TEST(test("1", utf8_stream(1)));
+        BOOST_TEST(test("1.1", utf8_stream(1.1)));
+        BOOST_TEST(test("{1.2,2.4}", utf8_stream(complex(1.2, 2.4))));
+    }
+
+    {
         using namespace boost::spirit::ascii;
 
         BOOST_TEST(test_delimited("x ", lower[stream], 'X', ' '));
