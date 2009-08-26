@@ -28,7 +28,7 @@ The character generators described in this section are:
     [[`ch`]                 [Generates `ch`]]
     [[`lit(ch)`]            [Generates `ch`, same as `boost::spirit::karma::lit`]]
     [[`ns::char_`]          [Generates the mandatory attribute as a single 
-                             character interpreted in the character set define 
+                             character interpreted in the character set defined 
                              by `ns`]]
     [[`ns::char_(ch)`]      [Generates `ch` as a character interpreted in the 
                              character set defined by `ns`, if an attribute is 

@@ -34,12 +34,12 @@ struct roman : qi::grammar<Iterator, unsigned()>
             ("I"  , 1)("II"  , 2)("III"  , 3)("IV" , 4)("V" , 5)
             ("VI" , 6)("VII" , 7)("VIII" , 8)("IX" , 9) ;
 
-        // _val refers to the attribute of the rule on the left hand side 
-        first = eps          [_val = 0] 
-            >>  (  +lit('M') [_val += 1000]
-                ||  hundreds [_val += _1]
-                ||  tens     [_val += _1]
-                ||  ones     [_val += _1]
+        // qi::_val refers to the attribute of the rule on the left hand side 
+        first = eps          [qi::_val = 0] 
+            >>  (  +lit('M') [qi::_val += 1000]
+                ||  hundreds [qi::_val += qi::_1]
+                ||  tens     [qi::_val += qi::_1]
+                ||  ones     [qi::_val += qi::_1]
                 ) ;
     }
 

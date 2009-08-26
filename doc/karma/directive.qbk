@@ -486,7 +486,7 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-[:__unary_generator_concept__]
+[:The model of `lower[]` and `upper[]` is the model of its subject generator.]
 
 [variablelist Notation
     [[`a`]            [A generator object]]
@@ -495,8 +495,31 @@ Also, see __include_structure__.
 
 [heading Expression Semantics]
 
-Semantics of an expression is defined only where it differs from, or is not
-defined in __unary_generator_concept__.
+The `lower[]` and `upper[]` directives have no special generator semantics. 
+They are pure modifier directives. They indirectly influence the way all 
+subject generators work. They add information (the `tag::upper` or `tag::lower`) 
+to the `Modifier` template parameter used while tranforming the `proto::expr`
+into the corresponding generator expression. This is achieved by the
+following specializations: 
+
+    namespace boost { namespace spirit
+    {
+        template <typename CharEncoding>
+        struct is_modifier_directive<
+                karma::domain
+              , tag::char_code<tag::lower, CharEncoding> >
+          : mpl::true_ 
+        {};
+
+        template <typename CharEncoding>
+        struct is_modifier_directive<
+                karma::domain
+              , tag::char_code<tag::upper, CharEncoding> >
+          : mpl::true_ 
+    }}
+
+(for more details see the section describing the compilation process of the 
+__boost_proto__ expression into the corresponding parser expressions).
 
 [table
     [[Expression]       [Semantics]]

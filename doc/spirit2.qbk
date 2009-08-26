@@ -116,6 +116,7 @@
 [def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
 [def __api_generate_static__    [link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
+[template karma_format[str]     [str] [/link spirit.karma.reference.format [str]]]
 
 [/ References to classes ]
 
@@ -190,6 +191,8 @@
 
 [template karma_char[str]           [link spirit.karma.reference.char.char_generator [str]]]
 [template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
+
+[template karma_string[str]         [link spirit.karma.reference.string [str]]]
 
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]

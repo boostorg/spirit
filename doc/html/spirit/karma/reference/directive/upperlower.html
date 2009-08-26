@@ -28,7 +28,7 @@
           Controlling Case Sensitivity (<code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.upperlower.description"></a><h6>
-<a name="id1278074"></a>
+<a name="id1238930"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.description">Description</a>
           </h6>
 <p>
@@ -38,7 +38,7 @@
             Encoding Namespace</a>).
           </p>
 <a name="spirit.karma.reference.directive.upperlower.header"></a><h6>
-<a name="id1278139"></a>
+<a name="id1238995"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/upper_lower_case.hpp&gt;
@@ -48,7 +48,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.upperlower.model_of"></a><h6>
-<a name="id1278213"></a>
+<a name="id1239070"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.model_of">Model
             of</a>
           </h6>
@@ -56,7 +56,7 @@
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+                The model of <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code> is the model of its subject generator.
               </p>
 <p>
             </p>
@@ -80,13 +80,41 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.upperlower.expression_semantics"></a><h6>
-<a name="id1278322"></a>
+<a name="id1239188"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
-            Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
+            The <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>
+            and <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>
+            directives have no special generator semantics. They are pure modifier
+            directives. They indirectly influence the way all subject generators
+            work. They add information (the <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">upper</span></code>
+            or <code class="computeroutput"><span class="identifier">tag</span><span class="special">::</span><span class="identifier">lower</span></code>) to the <code class="computeroutput"><span class="identifier">Modifier</span></code>
+            template parameter used while tranforming the <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">expr</span></code>
+            into the corresponding generator expression. This is achieved by the
+            following specializations:
+          </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">spirit</span>
+<span class="special">{</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">is_modifier_directive</span><span class="special">&lt;</span>
+            <span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span>
+          <span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">char_code</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">lower</span><span class="special">,</span> <span class="identifier">CharEncoding</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+      <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> 
+    <span class="special">{};</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">is_modifier_directive</span><span class="special">&lt;</span>
+            <span class="identifier">karma</span><span class="special">::</span><span class="identifier">domain</span>
+          <span class="special">,</span> <span class="identifier">tag</span><span class="special">::</span><span class="identifier">char_code</span><span class="special">&lt;</span><span class="identifier">tag</span><span class="special">::</span><span class="identifier">upper</span><span class="special">,</span> <span class="identifier">CharEncoding</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+      <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span> 
+<span class="special">}}</span>
+</pre>
+<p>
+            (for more details see the section describing the compilation process
+            of the <a href="http://www.boost.org/doc/libs/1_39_0/doc/html/proto.html" target="_top">Boost.Proto</a>
+            expression into the corresponding parser expressions).
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -162,7 +190,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.attributes"></a><h6>
-<a name="id1278589"></a>
+<a name="id1240888"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -218,7 +246,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.upperlower.complexity"></a><h6>
-<a name="id1278907"></a>
+<a name="id1241206"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -235,7 +263,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.upperlower.example"></a><h6>
-<a name="id1278967"></a>
+<a name="id1241266"></a>
             <a class="link" href="upperlower.html#spirit.karma.reference.directive.upperlower.example">Example</a>
           </h6>
 <p>

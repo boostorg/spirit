@@ -185,7 +185,7 @@ automatically insert delimiting spaces in between all primitives).
 
 [heading The Attribute of Alternative Generators]
 
-Alternative generators are about - well - alternatives. In order to store 
+Alternative generators are all about - well - alternatives. In order to store 
 possibly different result (attribute) types from the different alternatives
 we use the data type __boost_variant__. The main attribute propagation rule
 of these generators is
@@ -200,7 +200,7 @@ second very important attribute propagation rule:
 
     a: A, b: A --> (a | b): A
 
-which often allow to significantly simplify things. If all sub expressions of 
+often allowing to simplify things significantly. If all sub expressions of 
 a __karma__ alternative expose the same attribute type, the overall alternative 
 will expose exactly the attribute type as well. We will apply this rule later
 for our complex number generators.
@@ -220,7 +220,7 @@ Fortunately, literals (such as `'('` and `", "`) do /not/ expose any attribute
 context `unused_type` is interpreted as if the generator does not expose any 
 attribute at all). It is very important to understand that the literals don't 
 consume any of the elements of a fusion sequence passed to this generator 
-sequence. As said, thez just don't expose any attribute and don't consume any
+sequence. As said, they just don't expose any attribute and don't consume any
 data. The following example shows this:
 
     // the following generates: (1.0, 2.0)

@@ -60,8 +60,28 @@ void test_generator_attr(char const* expected, G const& g, T1 const& attr1,
 }
 //]
 
-int
-main()
+//[reference_karma_stream_complex
+// a simple complex number representation z = a + bi
+struct complex
+{
+    complex (double a, double b)
+      : a(a), b(b)
+    {}
+
+    double a;
+    double b;
+};
+
+// define streaming operator for the type complex
+std::ostream& 
+operator<< (std::ostream& os, complex const& z)
+{
+    os << "{" << z.a << "," << z.b << "}";
+    return os;
+}
+//]
+
+int main()
 {
     ///////////////////////////////////////////////////////////////////////////
     // Operators
@@ -374,6 +394,7 @@ main()
     {
         //[reference_karma_using_declarations_char
         using boost::spirit::karma::generate;
+        using boost::spirit::karma::lit;
         using boost::spirit::ascii::char_;
         //]
 
@@ -406,6 +427,87 @@ main()
         test_generator_attr("", alpha, '1');          // fails (as isalpha('1') is false)
         test_generator_attr("A", upper[alpha], 'a');
         test_generator_attr("", upper[alpha], 'a');   // fails (as isupper('a') is false)
+        //]
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // string
+    {
+        //[reference_karma_using_declarations_string
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::lit;
+        using boost::spirit::ascii::string;
+        //]
+
+        //[reference_karma_string
+        test_generator("abc", "abc");
+        test_generator("abc", lit("abc"));
+        test_generator("abc", lit(std::string("abc")));
+
+        test_generator_attr("abc", string, "abc");
+        test_generator("abc", string("abc"));
+        test_generator("abc", string(std::string("abc")));
+
+        test_generator_attr("abc", string("abc"), "abc");
+        test_generator_attr("", string("abc"), "cba");     // fails (as "abc" != "cba")
+        //]
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // auxiliary
+    {
+        //[reference_karma_using_declarations_eol
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::eol;
+        //]
+
+        //[reference_karma_eol
+        test_generator("\n", eol);
+        test_generator("abc\n", "abc" << eol);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_eps
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::eps;
+        //]
+
+        //[reference_karma_eps
+        test_generator("abc", eps[cout << "starting eps example"] << "abc");
+        test_generator("abc", eps(true) << "abc");
+        test_generator("", eps(false) << "abc");      // fails as eps expression is 'false'
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_lazy
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::lazy;
+        using boost::spirit::karma::_1;
+        using boost::spirit::ascii::string;
+        using boost::phoenix::val;
+        //]
+
+        //[reference_karma_lazy
+        test_generator_attr("abc", lazy(val(string)), "abc");
+        test_generator("abc", lazy(val(string))[_1 = "abc"]);
+        //]
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // stream module
+    {
+        //[reference_karma_using_declarations_stream
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::stream;
+        //]
+
+        //[reference_karma_stream
+        test_generator_attr("abc", stream, "abc");
+        test_generator("abc", stream("abc"));
+        test_generator_attr("{1.2,2.4}", stream, complex(1.2, 2.4));
+        test_generator("{1.2,2.4}", stream(complex(1.2, 2.4)));
         //]
     }
 

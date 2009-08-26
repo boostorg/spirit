@@ -86,7 +86,15 @@ Also, see __include_structure__.
     [[`num`]            [Numeric literal, any signed integer value, or
                          a __karma_lazy_argument__ that evaluates to a signed 
                          integer value of type `Num`]]
-    [[`Num`]            [Type of `num`: any signed integer type]]]
+    [[`Num`]            [Type of `num`: any signed integer type]]
+    [[`Radix`]          [A constant integer literal specifying the required 
+                         radix for the output conversion. Valid values are `2`, 
+                         `8`, `10`, and `16`.]]
+    [[`force_sign`]     [A constant boolean literal specifying whether the
+                         generated number should always have a sign (`'+'` for
+                         positive numbers, `'-'` for negative numbers and a 
+                         '` `' for zero).]]
+    ]
 
 [heading Expression Semantics]
 
@@ -331,7 +339,10 @@ Also, see __include_structure__.
     [[`num`]            [Numeric literal, any unsigned integer value, or
                          a __karma_lazy_argument__ that evaluates to an 
                          unsigned integer value of type `Num`]]
-    [[`Num`]            [Type of `num`: any unsigned integer type]]]
+    [[`Num`]            [Type of `num`: any unsigned integer type]]
+    [[`Radix`]          [A integer literal specifying the required radix for 
+                         the output conversion. Valid values are `2`, `8`, `10`,
+                         and `16`.]]]
 
 [heading Expression Semantics]
 
