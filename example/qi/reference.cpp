@@ -104,10 +104,19 @@ main()
     }
     
     {
+        //[reference_using_declarations_no_case
         using boost::spirit::qi::parse;
-        using boost::spirit::qi::symbols;
         using boost::spirit::ascii::no_case;
-
+        using boost::spirit::ascii::char_;
+        using boost::spirit::ascii::alnum;
+        using boost::spirit::qi::symbols;
+        //]
+        
+        //[reference_no_case
+        test_parser("X", no_case[char_('x')]);
+        test_parser("6", no_case[alnum]);
+        //]
+        
         //[reference_symbols_with_no_case
         symbols<char, int> sym;
 
@@ -123,20 +132,6 @@ main()
         std::cout << i << std::endl;
         test_parser_attr("ORANGE", no_case[ sym ], i);
         std::cout << i << std::endl;
-        //]
-    }
-    
-    {
-        //[reference_using_declarations_no_case
-        using boost::spirit::qi::parse;
-        using boost::spirit::ascii::no_case;
-        using boost::spirit::ascii::char_;
-        using boost::spirit::ascii::alnum;
-        //]
-        
-        //[reference_no_case
-        test_parser("X", no_case[char_('x')]);
-        test_parser("6", no_case[alnum]);
         //]
     }
 

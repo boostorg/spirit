@@ -18,6 +18,8 @@ other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, and
     // forwards to <boost/spirit/home/qi/directive.hpp>
     #include <boost/spirit/include/qi_directive.hpp>
 
+Also, see __include_structure__.
+
 [/------------------------------------------------------------------------------]
 [section:no_case no_case]
   
@@ -55,29 +57,13 @@ The model of `no_case` is the model of its subject parser.
 
 [heading Expression Semantics]
 
-The `no_case[]` directive has no special parser semantics. It is a pure
-modifier directive. It indirectly influences the way all subject parsers
-do their matching. It adds information (the `tag::no_case`) to the
-`Modifier` template parameter used while tranforming the `proto::expr`
-into the corresponding parser expression. This is achieved by the
-following specialization: 
-
-    namespace boost { namespace spirit
-    {
-        template <typename CharEncoding>
-        struct is_modifier_directive<
-                qi::domain
-              , tag::char_code<tag::no_case, CharEncoding> >
-          : mpl::true_ 
-        {};
-    }}
-
-(for more details see the section describing the compilation process of the 
-__boost_proto__ expression into the corresponding parser expressions).
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
 
 [table
     [[Expression]       [Semantics]]
-    [[`ns::no_case[p]`] [Force `p` to match its input case in-sensitive.]]
+    [[`ns::no_case[p]`] [Force matching of the subject parser, `p`
+                        (and all its children) to be case insensitive]]
 ]
 
 [heading Attributes]

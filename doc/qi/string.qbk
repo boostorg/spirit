@@ -16,6 +16,8 @@ includes the literal and string parsers and the symbol table.
     // forwards to <boost/spirit/home/qi/string.hpp>
     #include <boost/spirit/include/qi_string.hpp>
 
+Also, see __include_structure__.
+
 [/------------------------------------------------------------------------------]
 [section lit/string]
 
@@ -131,9 +133,11 @@ Lazy strings using __phoenix__
 [section symbols]
 
 [table
-    [[Name]                                 [Description]]
-    [[`boost::spirit::symbols<Char, T>`]    [A template class for creating, 
-                                            managing and using symbol tables.]]
+    [[Name]                             [Description]]
+    [[`boost::spirit::qi::symbols`]     [A template class for creating, 
+                                        managing and using symbol tables.]]
+    [[`boost::spirit::qi::tst`]         [Search implementation using a Ternary State Tree (TST).]]
+    [[`boost::spirit::qi::tst_map`]     [Search implementation using a Hash map and TST hybrid.]]
 ]
 
 [heading Description]
@@ -160,7 +164,7 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Char, typename T>
+    template <typename Char, typename T, typename Lookup>
     struct symbols;
 
 [heading Template parameters]
@@ -171,6 +175,8 @@ Also, see __include_structure__.
                         of the symbol strings.]     [`char`]]
     [[`T`]              [The data type associated 
                         with each symbol.]          [__unused_type__]]
+    [[`Lookup`]         [The symbol search
+                        implementation]             [`tst<Char, T>`]]
 ]
 
 [heading Model of]
@@ -199,9 +205,11 @@ defined in __primitive_parser_concept__.
 [table
     [[Expression]                   [Semantics]]
     [[`Sym()`]                      [Construct an empty symbols.]]
-    [[`Sym(sym)`]                   [Copy construct a symbols from `sym2`.]]
-    [[`Sym(sseq)`]                  [Construct symbols from `sseq`.]]
-    [[`Sym(sseq)`]                  [Construct symbols from `sseq` and `dseq`.]]
+    [[`Sym(sym)`]                   [Copy construct a symbols from `sym2` (Another `symbols` object).]]
+    [[`Sym(sseq)`]                  [Construct symbols from `sseq` (An __stl__ container of strings).]]
+    [[`Sym(sseq, dseq)`]            [Construct symbols from `sseq` and `dseq`
+                                    (An __stl__ container of strings and an __stl__ container of 
+                                    data with `value_type` `T`).]]
     [[`sym = sym`]                  [Assign `sym2` to `sym`.]]
     [[`sym = s1, s2,... sN`]        [Assigns one or more symbols (`s1`...`sN`) to `sym`.]]
     [[`sym += s1, s2,... sN`]       [Adds one or more symbols (`s1`...`sN`) to `sym`.]]
@@ -228,6 +236,35 @@ defined in __primitive_parser_concept__.
 [heading Attributes]
 
 The attribute of `symbol<Char, T>` is `T`.
+
+[heading Complexity]
+
+The default implementation uses a Ternary Search Tree (TST) with
+complexity:
+
+[:O(log n+k)]
+
+Where k is the length of the string to be searched and in a TST with n
+strings.
+
+TSTs are faster than hashing for many typical search problems especially
+when the search interface is iterator based. TSTs are many times faster
+than hash tables for unsuccessful searches since mismatches are
+discovered earlier after examining only a few characters. Hash tables
+always examine an entire key when searching.
+
+An alternative implementation uses a hybrid hash-map front end (for the
+first character) plus a TST: `tst_map`. This gives us a complexity of 
+
+[:O(1 + log n+k-1)]
+
+This is found to be significantly faster than plain TST, albeit with a
+bit more memory usage requirements (each slot in the hash-map is a TST
+node). If you require a lot of symbols to be searched, use the `tst_map`
+implementation. This can be done by using `tst_map` as the third
+template parameter to the symbols class:
+
+    symbols<Char, T, tst_map<Char, T> > sym;
 
 [heading Example]
 

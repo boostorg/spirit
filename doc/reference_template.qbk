@@ -1,3 +1,10 @@
+[section Module]
+
+[heading Module Headers]
+
+    #include <boost/spirit/xxx.hpp>
+
+Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
 [section XXX]
@@ -14,10 +21,7 @@ Description of XXX
 [heading Header]
 
     #include <boost/spirit/xxx.hpp>
-    
-[heading Module Headers]
 
-    #include <boost/spirit/xxx.hpp>
     ...
 
 Also, see __include_structure__.
@@ -67,3 +71,5 @@ Real example code. Use Quickbook import mechanism to link to actual
 working code snippets here.
 
 [endsect] [/ XXX]
+
+[endsect] [/ Module]
