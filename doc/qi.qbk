@@ -34,7 +34,7 @@
 [include        qi/action.qbk]
 [include        qi/auxiliary.qbk]
 [include        qi/binary.qbk]
-[/ include        qi/char.qbk]
+[include        qi/char.qbk]
 [include        qi/directive.qbk]
 [include        qi/nonterminal.qbk]
 [include        qi/numeric.qbk]

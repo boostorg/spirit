@@ -5,31 +5,190 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
+[section Char]
 
-[/ section Char]
+This module includes parsers for single characters. Currently, this
+module includes literal chars (e.g. `'x'`, `L'x'`), `char_` (single
+characters, ranges and character sets) and the encoding specific
+character classifiers (`alnum`, `alpha`, `digit`, `xdigit`, etc.).
 
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/qi/char.hpp>
+    #include <boost/spirit/include/qi_char.hpp>
+
+Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section char_]
+[section lit/char_]
+
+[table
+    [[Name]                     [Description]]
+    [[`boost::spirit::lit`]     [Char parser (Same as `boost::spirit::qi::lit`)]]
+    [[`NS::char_`]              [Char parser for the character encoding. `NS`
+                                is a __char_encoding_namespace__]]
+]
 
 [heading Description]
 
-The char_ parser matches any character.  
+The `char_` parser matches a single characters. The `char_` parser has
+an assocaiated __char_encoding_namespace__. This is needed when doing
+basic operations such as inhibiting case sensitivity.
+
+There are various forms of `char_`. When the plain `char_` is used
+without an argument, e.g.:
+
+    char_               // matches any character
+
+it matches any character in the assocaiated __char_encoding_namespace__.
+When given a single argument, e.g.:
+
+    char_('x')          // matches `x`
+    char_(L'x')         // matches `x`
+    char_(x)            // x is a char
+
+it matches the supplied character. When given two arguments, e.g.:
+
+    char_('a','z')      // alphabetic characters
+    char_(L'0',L'9')    // digits
+
+it matches a range of characters. A range of characters is created from
+a low/high character pair. Such a parser matches a single character that
+is in the range, including both endpoints. Note, the first character
+must be /before/ the second, according to the underlying
+__char_encoding_namespace__.
+
+Character mapping is inherently platform dependent. It is not guaranteed
+in the standard for example that `'A' < 'Z'`, that is why in Spirit2, we
+purposely attach a specific __char_encoding_namespace__ (such as ASCII,
+ISO-8859-1) to the `char_` parser to eliminate such ambiguities.
+
+[note *Sparse bit vectors*
+
+To accomodate 16/32 and 64 bit characters, the char-set statically
+switches from a `std::bitset` implementation when the character type is
+not greater than 8 bits, to a sparse bit/boolean set which uses a sorted
+vector of disjoint ranges (`range_run`). The set is constructed from
+ranges such that adjacent or overlapping ranges are coalesced.
+
+`range_runs` are very space-economical in situations where there are lots
+of ranges and a few individual disjoint values. Searching is O(log n)
+where n is the number of ranges.]
+
+Lastly, when given a string (a plain C string, a `std::basic_string`,
+etc.), the string is regarded as a char-set definition string following
+a syntax that resembles posix style regular expression character sets
+(except that double quotes delimit the set elements instead of square
+brackets and there is no special negation ^ character). Examples:
+
+    char_("a-zA-Z")     // alphabetic characters
+    char_("0-9a-fA-F")  // hexadecimal characters
+    char_("actgACTG")   // DNA identifiers
+    char_("\x7f\x7e")   // Hexadecimal 0x7F and 0x7E
+
+`lit`, when passed a single character, behaves like the single argument
+`char_` except that `lit` does not synthesize an attribute. A plain
+`char` or `wchar_t` is equivalent to a `lit`.
+
+Examples:
+
+    'x'
+    lit('x')
+    lit(L'x')
+    lit(c) // c is a char
 
 [heading Header]
 
-    #include <boost/spirit/home/qi/char/char.hpp>  // main include
-    #include <boost/spirit/include/qi_char.hpp>      // or, forwarding header
-    
-[heading Module Headers]
+    // forwards to <boost/spirit/home/qi/char/char.hpp>
+    #include <boost/spirit/qi_char.hpp>
 
-   
 Also, see __include_structure__.
 
+[heading Model of]
 
+[:__primitive_parser_concept__]
 
+[variablelist Notation
+    [[`c`, `f`, `l`]    [A literal char, e.g. `'x'`, `L'x'` or anything that can be
+                        converted to a `char` or `wchar_t`.]]
+    [[`fc`, `ff`, `fl`] [A __lazy_argument__ that evaluates to a `char` or `wchar_t`.]]
+    [[`ns`]             [A __char_encoding_namespace__.]]
+    [[`cs`]             [A literal string, e.g. "a-zA-Z", or a pointer/reference to a
+                        null-terminated array of characters or a `std::basic_string`
+                        that specifies a char-set definition string following a syntax
+                        that resembles posix style regular expression character sets
+                        (without the square brackets and the negation `^` character).]]
+    [[`fcs`]            [A __lazy_argument__ that evaluates to a `std::basic_string`
+                        or a pointer/reference to a null-terminated array of characters
+                        that specifies a char-set definition string (see `cs` above).]]
+    [[`cp`]             [A char parser, a char range parser or a char set parser.]]
+]
 
+[heading Expression Semantics]
 
-[endsect] [/ char_]
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`c`]              [Create char parser from a char, `c`.]]
+    [[`lit(c)`]         [Create a char parser from a char, `c`.]]
+    [[`ns::char_`]      [Create a char parser that matches any character in the
+                        `ns` encoding.]]
+    [[`ns::char_(c)`]   [Create a char parser with `ns` encoding from a char, `c`.]]
+    [[`ns::char_(f, l)`][Create a char-range parser that matches characters from
+                        range (`f` to `l`, inclusive) with `ns` encoding.]]
+    [[`ns::char_(cs)`]  [Create a char-set parser with `ns` encoding from a char-set
+                        definition string, `cs`.]]
+    [[`fc`]             [Create a char parser from a char, `c`, returned by
+                        invoking `fc` at parse time. See __lazy_argument__]]
+    [[`lit(fc)`]        [Create a char parser from a char, `c`, returned by
+                        invoking `fc` at parse time. See __lazy_argument__]]
+    [[`ns::char_(fc)`]  [Create a char parser from a char, `c`, returned by
+                        invoking `fc` at parse time. See __lazy_argument__]]
+    [[`ns::char_(ff, fl)`][Create a char-range parser that matches characters from
+                        range (`f` to `l`, inclusive), returned by invoking
+                        `ff` and `fl`, respectively, with `ns` encoding.
+                        See __lazy_argument__]]
+    [[`ns::char_(fcs)`] [Create a char-set parser with `ns` encoding from a char-set
+                        definition string, `cs`, returned by invoking `fcs` at
+                        parse time. See __lazy_argument__]]
+    [[`~cp`]            [Negate `cp`. The result is a negated char parser that
+                        matches any character in the `ns` encoding except the
+                        characters matched by `cp`.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`c`]              [__unused__]]
+    [[`lit(c)`]         [__unused__]]
+    [[`ns::char_`]      [The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`ns::char_(c)`]   [The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`ns::char_(f, l)`][The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`ns::char_(cs)`]  [The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`fc`]             [The character type of `c`, where `c` is returned by
+                        invoking `fc` at parse time.]]
+    [[`lit(fc)`]        [The character type of `c`, where `c` is returned by
+                        invoking `fc` at parse time.]]
+    [[`ns::char_(fc)`]  [The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`ns::char_(ff, fl)`][The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`ns::char_(fcs)`] [The character type of the __char_encoding_namespace__, `ns`.]]
+    [[`~cp`]            [The attribute of `cp`.]]
+]
+
+[heading Complexity]
+
+[:*O(N)*, except for char-sets with 16-bit (or more) characters (e.g.
+`wchar_t`). These have *O(log N)* complexity, where N is the number of
+distinct character ranges in the set.]
+
+[heading Example]
+
+Real example code. Use Quickbook import mechanism to link to actual
+working code snippets here.
+
+[endsect] [/ XXX]
 
 [endsect]

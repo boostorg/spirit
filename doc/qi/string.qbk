@@ -30,9 +30,25 @@ Also, see __include_structure__.
 
 [heading Description]
 
-The lit/string parser matches a string of characters. The lit/string
-parser is an implicit lexeme: the `skip` parser is not applied in
-between characters of the string.
+The `string` parser matches a string of characters. The `string` parser
+is an implicit lexeme: the `skip` parser is not applied in between
+characters of the string. The `string` parser has an assocaiated
+__char_encoding_namespace__. This is needed when doing basic operations
+such as inhibiting case sensitivity. Examples:
+
+    string("Hello")
+    string(L"Hello")
+    string(s) // s is a std::string
+
+`lit`, like `string`, also matches a string of characters. The main
+difference is that `lit` does not synthesize an attribute. A plain
+string like `"hello"` or a `std::basic_string` is equivalent to a `lit`.
+Examples:
+
+    "Hello"
+    lit("Hello")
+    lit(L"Hello")
+    lit(s) // s is a std::string
 
 [heading Header]
 
@@ -46,9 +62,9 @@ Also, see __include_structure__.
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`s`]      [A literal string, e.g. "Hello", or a pointer/reference to a 
+    [[`s`]      [A literal string, e.g. "Hello", or a pointer/reference to a
                 null-terminated array of characters or a `std::basic_string`.]]
-    [[`fs`]     [A __lazy_argument__ that evaluates to a `std::basic_string` 
+    [[`fs`]     [A __lazy_argument__ that evaluates to a `std::basic_string`
                 or a pointer/reference to a null-terminated array of characters.]]
     [[`ns`]     [A __char_encoding_namespace__.]]]
 
@@ -59,46 +75,47 @@ not defined in __primitive_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`s`]              [Generate a string parser 
+    [[`s`]              [Create string parser
                         from a string, `s`.]]
-    [[`lit(s)`]         [Generate a string parser 
+    [[`lit(s)`]         [Create a string parser
                         from a string, `s`.]]
-    [[`ns::string(s)`]  [Generate a string parser 
+    [[`ns::string(s)`]  [Create a string parser with `ns` encoding
                         from a string, `s`.]]
-    [[`fs`]             [Generate a string parser 
-                        from a string, `s`, returned by 
-                        invoking `fs` at parse time. 
-                        See __lazy_argument__]]
-    [[`lit(fs)`]        [Generate a string parser 
-                        from a string, `s`, returned by 
-                        invoking `fs` at parse time. 
-                        See __lazy_argument__]]
-    [[`ns::string(fs)`] [Generate a string parser 
-                        from a string, `s`, returned by 
-                        invoking `fs` at parse time. 
-                        See __lazy_argument__]]
+    [[`fs`]             [Create a string parser
+                        from a string, `s`, returned by
+                        invoking `fs` at parse time.
+                        See __lazy_argument__.]]
+    [[`lit(fs)`]        [Create a string parser
+                        from a string, `s`, returned by
+                        invoking `fs` at parse time.
+                        See __lazy_argument__.]]
+    [[`ns::string(fs)`] [Create a string parser
+                        from a string, `s`, returned by
+                        invoking `fs` at parse time.
+                        See __lazy_argument__.]]
 ]
 
 [heading Attributes]
 
 [table
     [[Expression]       [Attribute]]
-    [[`s`]              
-                        [__unused__]]
-    [[`lit(s)`]         
-                        [__unused__]]
+    [[`s`]              [__unused__]]
+    [[`lit(s)`]         [__unused__]]
     [[`ns::string(s)`]  [`std::basic_string<T>` where `T`
                         is the underlying character type
-                        of `s`]]
+                        of `s`.]]
     [[`fs`]             [`std::basic_string<T>` where `T`
                         is the underlying character type
-                        of `s`]]
+                        of `s`, where `s` is returned by
+                        invoking `fs` at parse time.]]
     [[`lit(fs)`]        [`std::basic_string<T>` where `T`
                         is the underlying character type
-                        of `s`]]
+                        of `s`, where `s` is returned by
+                        invoking `fs` at parse time.]]
     [[`ns::string(fs)`] [`std::basic_string<T>` where `T`
                         is the underlying character type
-                        of `s`]]
+                        of `s`, where `s` is returned by
+                        invoking `fs` at parse time.]]
 ]
 
 
@@ -134,7 +151,7 @@ Lazy strings using __phoenix__
 
 [table
     [[Name]                             [Description]]
-    [[`boost::spirit::qi::symbols`]     [A template class for creating, 
+    [[`boost::spirit::qi::symbols`]     [A template class for creating,
                                         managing and using symbol tables.]]
     [[`boost::spirit::qi::tst`]         [Search implementation using a Ternary State Tree (TST).]]
     [[`boost::spirit::qi::tst_map`]     [Search implementation using a Hash map and TST hybrid.]]
@@ -144,7 +161,7 @@ Lazy strings using __phoenix__
 
 This class `symbols` implements a symbol table: an associative container
 (or map) of key-value pairs where the keys are strings. The `symbols`
-class can work efficiently with 8, 16, 32 and even 64 bit characters. 
+class can work efficiently with 8, 16, 32 and even 64 bit characters.
 
 Traditionally, symbol table management is maintained seperately outside
 the grammar through semantic actions. Contrary to standard practice, the
@@ -171,9 +188,9 @@ Also, see __include_structure__.
 
 [table
     [[Parameter]        [Description]               [Default]]
-    [[`Char`]           [The character type 
+    [[`Char`]           [The character type
                         of the symbol strings.]     [`char`]]
-    [[`T`]              [The data type associated 
+    [[`T`]              [The data type associated
                         with each symbol.]          [__unused_type__]]
     [[`Lookup`]         [The symbol search
                         implementation]             [`tst<Char, T>`]]
@@ -191,7 +208,7 @@ Also, see __include_structure__.
     [[`sym2`]       [Another `symbols` object.]]
     [[`sseq`]       [An __stl__ container of strings.]]
     [[`dseq`]       [An __stl__ container of data with `value_type` `T`.]]
-    [[`s1`...`sN`]  [A literal string, e.g. "Hello", or a pointer/reference to a 
+    [[`s1`...`sN`]  [A literal string, e.g. "Hello", or a pointer/reference to a
                     null-terminated array of characters or a `std::basic_string`.]]
     [[`d1`...`dN`]  [Objects of type `T`.]]
     [[`f`]          [A callable function or function object.]]
@@ -208,27 +225,27 @@ defined in __primitive_parser_concept__.
     [[`Sym(sym)`]                   [Copy construct a symbols from `sym2` (Another `symbols` object).]]
     [[`Sym(sseq)`]                  [Construct symbols from `sseq` (An __stl__ container of strings).]]
     [[`Sym(sseq, dseq)`]            [Construct symbols from `sseq` and `dseq`
-                                    (An __stl__ container of strings and an __stl__ container of 
+                                    (An __stl__ container of strings and an __stl__ container of
                                     data with `value_type` `T`).]]
     [[`sym = sym`]                  [Assign `sym2` to `sym`.]]
     [[`sym = s1, s2,... sN`]        [Assigns one or more symbols (`s1`...`sN`) to `sym`.]]
     [[`sym += s1, s2,... sN`]       [Adds one or more symbols (`s1`...`sN`) to `sym`.]]
     [[`sym.add(s1)(s2)...(sN)`]     [Adds one or more symbols (`s1`...`sN`) to `sym`.]]
-    [[`sym.add(s1, d1)(s2, d2)...(sN, dN)`]     
-                                    [Adds one or more symbols (`s1`...`sN`) 
+    [[`sym.add(s1, d1)(s2, d2)...(sN, dN)`]
+                                    [Adds one or more symbols (`s1`...`sN`)
                                     with associated data (`d1`...`dN`) to `sym`.]]
     [[`sym -= s1, s2,... sN`]       [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
     [[`sym.remove(s1)(s2)...(sN)`]  [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
     [[`sym.clear()`]                [Erase all of the symbols in `sym`.]]
-    [[`sym.at(s)`]                  [Returns a reference to the object associated 
-                                    with symbol, `s`. If `sym` does not already 
-                                    contain such an object, `at` inserts the default 
+    [[`sym.at(s)`]                  [Returns a reference to the object associated
+                                    with symbol, `s`. If `sym` does not already
+                                    contain such an object, `at` inserts the default
                                     object `T()`.]]
-    [[`sym.find(s)`]                [Returns a pointer to the object associated 
-                                    with symbol, `s`. If `sym` does not already 
-                                    contain such an object, `find` returns a null 
+    [[`sym.find(s)`]                [Returns a pointer to the object associated
+                                    with symbol, `s`. If `sym` does not already
+                                    contain such an object, `find` returns a null
                                     pointer.]]
-    [[`sym.for_each(f)`]            [For each symbol in `sym`, `s`, a 
+    [[`sym.for_each(f)`]            [For each symbol in `sym`, `s`, a
                                     `std::basic_string<Char>` with associated data,
                                     `d`, an object of type `T`, invoke `f(s, d)`.]]
 ]
@@ -254,7 +271,7 @@ discovered earlier after examining only a few characters. Hash tables
 always examine an entire key when searching.
 
 An alternative implementation uses a hybrid hash-map front end (for the
-first character) plus a TST: `tst_map`. This gives us a complexity of 
+first character) plus a TST: `tst_map`. This gives us a complexity of
 
 [:O(1 + log n+k-1)]
 
@@ -276,10 +293,10 @@ Symbols with data:
 
 [reference_symbols_with_data]
 
-When symbols is used for case-insensitive parsing (in a
-__qi_no_case__ directive), added symbol strings should be in lowercase. 
-Symbol strings containing one or more uppercase characters will not match any 
-input when symbols is used in a `no_case` directive.
+When `symbols` is used for case-insensitive parsing (in a __qi_no_case__
+directive), added symbol strings should be in lowercase. Symbol strings
+containing one or more uppercase characters will not match any input
+when symbols is used in a `no_case` directive.
 
 [reference_symbols_with_no_case]
 
