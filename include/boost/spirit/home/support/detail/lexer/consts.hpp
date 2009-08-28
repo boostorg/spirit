@@ -22,8 +22,10 @@ namespace lexer
 
     const std::size_t max_macro_len = 30;
     const std::size_t num_chars = 256;
+    // If sizeof(wchar_t) == sizeof(size_t) then don't overflow to 0
+    // by adding one to comparison.
     const std::size_t num_wchar_ts =
-        (boost::integer_traits<wchar_t>::const_max + 1 < 0x110000) ?
+        (boost::integer_traits<wchar_t>::const_max < 0x110000) ?
         boost::integer_traits<wchar_t>::const_max + 1 : 0x110000;
     const std::size_t null_token = static_cast<std::size_t> (~0);
     const std::size_t bol_token = static_cast<std::size_t> (~1);
