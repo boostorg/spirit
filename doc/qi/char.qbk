@@ -32,31 +32,39 @@ Also, see __include_structure__.
 [heading Description]
 
 The `char_` parser matches a single characters. The `char_` parser has
-an assocaiated __char_encoding_namespace__. This is needed when doing
-basic operations such as inhibiting case sensitivity.
+an associated __char_encoding_namespace__. This is needed when doing
+basic operations such as inhibiting case sensitivity and dealing with
+character ranges.
 
-There are various forms of `char_`. When the plain `char_` is used
-without an argument, e.g.:
+There are various forms of `char_`. 
+
+[heading char_]
+
+The no argument form of `char_` matches any character in the assocaiated
+__char_encoding_namespace__.
 
     char_               // matches any character
 
-it matches any character in the assocaiated __char_encoding_namespace__.
-When given a single argument, e.g.:
+[heading `char_(ch)`]
+
+The single argument form of `char_` (with a character argument) matches
+the supplied character. 
 
     char_('x')          // matches `x`
-    char_(L'x')         // matches `x`
-    char_(x)            // x is a char
+    char_(L'x')         // matches L`x`
+    char_(x)            // matches `x` (a char)
 
-it matches the supplied character. When given two arguments, e.g.:
+[heading char_(first, last)]
+
+`char_` with two arguments, matches a range of characters.
 
     char_('a','z')      // alphabetic characters
     char_(L'0',L'9')    // digits
 
-it matches a range of characters. A range of characters is created from
-a low/high character pair. Such a parser matches a single character that
-is in the range, including both endpoints. Note, the first character
-must be /before/ the second, according to the underlying
-__char_encoding_namespace__.
+A range of characters is created from a low-high character pair. Such a
+parser matches a single character that is in the range, including both
+endpoints. Note, the first character must be /before/ the second,
+according to the underlying __char_encoding_namespace__.
 
 Character mapping is inherently platform dependent. It is not guaranteed
 in the standard for example that `'A' < 'Z'`, that is why in Spirit2, we
@@ -75,6 +83,8 @@ ranges such that adjacent or overlapping ranges are coalesced.
 of ranges and a few individual disjoint values. Searching is O(log n)
 where n is the number of ranges.]
 
+[heading char_(def)]
+
 Lastly, when given a string (a plain C string, a `std::basic_string`,
 etc.), the string is regarded as a char-set definition string following
 a syntax that resembles posix style regular expression character sets
@@ -86,9 +96,18 @@ brackets and there is no special negation ^ character). Examples:
     char_("actgACTG")   // DNA identifiers
     char_("\x7f\x7e")   // Hexadecimal 0x7F and 0x7E
 
+[heading lit(ch)]
+
 `lit`, when passed a single character, behaves like the single argument
 `char_` except that `lit` does not synthesize an attribute. A plain
 `char` or `wchar_t` is equivalent to a `lit`.
+
+[note `lit` is reused by both the [qi_lit_string string parsers] and the
+char parsers. In general, a char parser is created when you pass in a
+character and a string parser is created when you pass in a string. The
+exception is when you pass a single element literal string, e.g.
+`lit("x")`. In this case, we optimize this to create a char parser
+instead of a string parser.] 
 
 Examples:
 
@@ -186,8 +205,25 @@ distinct character ranges in the set.]
 
 [heading Example]
 
-Real example code. Use Quickbook import mechanism to link to actual
-working code snippets here.
+Some using declarations:
+
+[reference_using_declarations_lit_char]
+
+Basic literals:
+
+[reference_char_literals]
+
+Range:
+
+[reference_char_range]
+
+Character set:
+
+[reference_char_set]
+
+Lazy char_ using __phoenix__
+
+[reference_char_phoenix]
 
 [endsect] [/ XXX]
 

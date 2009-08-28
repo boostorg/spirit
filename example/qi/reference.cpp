@@ -41,7 +41,39 @@ void test_parser_attr(char const* input, P const& p, T& attr)
 
 int
 main()
-{   
+{
+    {
+        //[reference_using_declarations_lit_char
+        using boost::spirit::qi::parse;
+        using boost::spirit::qi::lit;
+        using boost::spirit::ascii::char_;
+        //]
+        
+        //[reference_char_literals
+        test_parser("x", 'x');                      // plain literal
+        test_parser("x", lit('x'));                 // explicit literal
+        test_parser("x", char_('x'));               // ascii::char_
+        //]
+        
+        //[reference_char_range
+        char ch;
+        test_parser_attr("5", char_('0','9'), ch);  // ascii::char_ range
+        std::cout << ch << std::endl;               // prints '5'
+        //]
+        
+        //[reference_char_set
+        test_parser_attr("5", char_("0-9"), ch);    // ascii::char_ set
+        std::cout << ch << std::endl;               // prints '5'
+        //]
+        
+        //[reference_char_phoenix
+        namespace phx = boost::phoenix;        
+        test_parser("x", phx::val('x'));            // direct
+        test_parser("5", 
+            char_(phx::val('0'),phx::val('9')));    // ascii::char_ range
+        //]
+    }
+    
     {
         //[reference_using_declarations_lit_string
         using boost::spirit::qi::parse;

@@ -64,16 +64,34 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.lit_string.description"></a><h6>
-<a name="id464968"></a>
+<a name="id467610"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.description">Description</a>
           </h6>
 <p>
-            The lit/string parser matches a string of characters. The lit/string
+            The <tt class="computeroutput"><span class="identifier">string</span></tt> parser matches
+            a string of characters. The <tt class="computeroutput"><span class="identifier">string</span></tt>
             parser is an implicit lexeme: the <tt class="computeroutput"><span class="identifier">skip</span></tt>
-            parser is not applied in between characters of the string.
+            parser is not applied in between characters of the string. The <tt class="computeroutput"><span class="identifier">string</span></tt> parser has an assocaiated <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a>. This is needed when doing basic operations
+            such as inhibiting case sensitivity. Examples:
           </p>
+<pre class="programlisting"><span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span>
+<span class="identifier">string</span><span class="special">(</span><span class="identifier">L</span><span class="string">"Hello"</span><span class="special">)</span>
+<span class="identifier">string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span> <span class="comment">// s is a std::string
+</span></pre>
+<p>
+            <tt class="computeroutput"><span class="identifier">lit</span></tt>, like <tt class="computeroutput"><span class="identifier">string</span></tt>, also matches a string of characters.
+            The main difference is that <tt class="computeroutput"><span class="identifier">lit</span></tt>
+            does not synthesize an attribute. A plain string like <tt class="computeroutput"><span class="string">"hello"</span></tt>
+            or a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></tt> is equivalent to a <tt class="computeroutput"><span class="identifier">lit</span></tt>. Examples:
+          </p>
+<pre class="programlisting"><span class="string">"Hello"</span>
+<span class="identifier">lit</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span>
+<span class="identifier">lit</span><span class="special">(</span><span class="identifier">L</span><span class="string">"Hello"</span><span class="special">)</span>
+<span class="identifier">lit</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span> <span class="comment">// s is a std::string
+</span></pre>
 <a name="spirit.qi.reference.string.lit_string.header"></a><h6>
-<a name="id465012"></a>
+<a name="id467952"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/lit.hpp&gt;
@@ -83,7 +101,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.string.lit_string.model_of"></a><h6>
-<a name="id465125"></a>
+<a name="id468065"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.model_of">Model
             of</a>
           </h6>
@@ -118,7 +136,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.string.lit_string.expression_semantics"></a><h6>
-<a name="id465318"></a>
+<a name="id468258"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -173,7 +191,7 @@
                     Create a string parser from a string, <tt class="computeroutput"><span class="identifier">s</span></tt>,
                     returned by invoking <tt class="computeroutput"><span class="identifier">fs</span></tt>
                     at parse time. See <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                    Argument</a>
+                    Argument</a>.
                   </p></td>
 </tr>
 <tr>
@@ -184,7 +202,7 @@
                     Create a string parser from a string, <tt class="computeroutput"><span class="identifier">s</span></tt>,
                     returned by invoking <tt class="computeroutput"><span class="identifier">fs</span></tt>
                     at parse time. See <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                    Argument</a>
+                    Argument</a>.
                   </p></td>
 </tr>
 <tr>
@@ -195,13 +213,13 @@
                     Create a string parser from a string, <tt class="computeroutput"><span class="identifier">s</span></tt>,
                     returned by invoking <tt class="computeroutput"><span class="identifier">fs</span></tt>
                     at parse time. See <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                    Argument</a>
+                    Argument</a>.
                   </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.lit_string.attributes"></a><h6>
-<a name="id465806"></a>
+<a name="id468747"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -241,7 +259,7 @@
 <td><p>
                     <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>
                     where <tt class="computeroutput"><span class="identifier">T</span></tt> is the
-                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>
+                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>.
                   </p></td>
 </tr>
 <tr>
@@ -251,7 +269,10 @@
 <td><p>
                     <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>
                     where <tt class="computeroutput"><span class="identifier">T</span></tt> is the
-                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>
+                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>,
+                    where <tt class="computeroutput"><span class="identifier">s</span></tt> is returned
+                    by invoking <tt class="computeroutput"><span class="identifier">fs</span></tt>
+                    at parse time.
                   </p></td>
 </tr>
 <tr>
@@ -261,7 +282,10 @@
 <td><p>
                     <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>
                     where <tt class="computeroutput"><span class="identifier">T</span></tt> is the
-                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>
+                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>,
+                    where <tt class="computeroutput"><span class="identifier">s</span></tt> is returned
+                    by invoking <tt class="computeroutput"><span class="identifier">fs</span></tt>
+                    at parse time.
                   </p></td>
 </tr>
 <tr>
@@ -271,13 +295,16 @@
 <td><p>
                     <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>
                     where <tt class="computeroutput"><span class="identifier">T</span></tt> is the
-                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>
+                    underlying character type of <tt class="computeroutput"><span class="identifier">s</span></tt>,
+                    where <tt class="computeroutput"><span class="identifier">s</span></tt> is returned
+                    by invoking <tt class="computeroutput"><span class="identifier">fs</span></tt>
+                    at parse time.
                   </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.string.lit_string.complexity"></a><h6>
-<a name="id466380"></a>
+<a name="id469397"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -294,7 +321,7 @@
             of characters in the string to be parsed.
           </p>
 <a name="spirit.qi.reference.string.lit_string.example"></a><h6>
-<a name="id466433"></a>
+<a name="id469450"></a>
             <a href="lit_string.html#spirit.qi.reference.string.lit_string.example">Example</a>
           </h6>
 <p>

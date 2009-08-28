@@ -154,6 +154,7 @@
 [def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case[a]`]]
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
 [template qi_lit_string[str]        [link spirit.qi.reference.string.lit_string [str]]]
+[template qi_lit_char[char]         [link spirit.qi.reference.string.lit_char [char]]]
 
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
 [def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
@@ -214,11 +215,11 @@
 
 [/ Some images ]
 
-[def __note__                   [$images/note.png]]
-[def __tip__                    [$images/tip.png]]
-[def __important__              [$images/important.png]]
-[def __caution__                [$images/caution.png]]
-[def __danger__                 [$images/alert.png]]
+[def __note__                   [$../images/note.png]]
+[def __tip__                    [$../images/tip.png]]
+[def __important__              [$../images/important.png]]
+[def __caution__                [$../images/caution.png]]
+[def __danger__                 [$../images/alert.png]]
 
 [/ some templates]
 

@@ -64,14 +64,148 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.char.lit_char_.description"></a><h6>
-<a name="id461074"></a>
+<a name="id461091"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.description">Description</a>
           </h6>
 <p>
-            Description of XXX
+            The <tt class="computeroutput"><span class="identifier">char_</span></tt> parser matches
+            a single characters. The <tt class="computeroutput"><span class="identifier">char_</span></tt>
+            parser has an associated <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a>. This is needed when doing basic operations
+            such as inhibiting case sensitivity and dealing with character ranges.
           </p>
+<p>
+            There are various forms of <tt class="computeroutput"><span class="identifier">char_</span></tt>.
+          </p>
+<a name="spirit.qi.reference.char.lit_char_.char_"></a><h6>
+<a name="id461173"></a>
+            <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.char_">char_</a>
+          </h6>
+<p>
+            The no argument form of <tt class="computeroutput"><span class="identifier">char_</span></tt>
+            matches any character in the assocaiated <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a>.
+          </p>
+<pre class="programlisting"><span class="identifier">char_</span>               <span class="comment">// matches any character
+</span></pre>
+<a name="spirit.qi.reference.char.lit_char_._code__phrase_role__identifier__char___phrase__phrase_role__special_____phrase__phrase_role__identifier__ch__phrase__phrase_role__special_____phrase___code_"></a><h6>
+<a name="id461248"></a>
+            <a href="lit_char_.html#spirit.qi.reference.char.lit_char_._code__phrase_role__identifier__char___phrase__phrase_role__special_____phrase__phrase_role__identifier__ch__phrase__phrase_role__special_____phrase___code_"><tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt></a>
+          </h6>
+<p>
+            The single argument form of <tt class="computeroutput"><span class="identifier">char_</span></tt>
+            (with a character argument) matches the supplied character.
+          </p>
+<pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="char">'x'</span><span class="special">)</span>          <span class="comment">// matches `x`
+</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">L</span><span class="char">'x'</span><span class="special">)</span>         <span class="comment">// matches L`x`
+</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// matches `x` (a char)
+</span></pre>
+<a name="spirit.qi.reference.char.lit_char_.char__first__last_"></a><h6>
+<a name="id461408"></a>
+            <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.char__first__last_">char_(first,
+            last)</a>
+          </h6>
+<p>
+            <tt class="computeroutput"><span class="identifier">char_</span></tt> with two arguments,
+            matches a range of characters.
+          </p>
+<pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">,</span><span class="char">'z'</span><span class="special">)</span>      <span class="comment">// alphabetic characters
+</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">L</span><span class="char">'0'</span><span class="special">,</span><span class="identifier">L</span><span class="char">'9'</span><span class="special">)</span>    <span class="comment">// digits
+</span></pre>
+<p>
+            A range of characters is created from a low-high character pair. Such
+            a parser matches a single character that is in the range, including both
+            endpoints. Note, the first character must be <span class="emphasis"><em>before</em></span>
+            the second, according to the underlying <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a>.
+          </p>
+<p>
+            Character mapping is inherently platform dependent. It is not guaranteed
+            in the standard for example that <tt class="computeroutput"><span class="char">'A'</span>
+            <span class="special">&lt;</span> <span class="char">'Z'</span></tt>,
+            that is why in Spirit2, we purposely attach a specific <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a> (such as ASCII, ISO-8859-1) to the <tt class="computeroutput"><span class="identifier">char_</span></tt> parser to eliminate such ambiguities.
+          </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top">
+<p>
+              <span class="bold"><b>Sparse bit vectors</b></span>
+            </p>
+<p>
+              To accomodate 16/32 and 64 bit characters, the char-set statically
+              switches from a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">bitset</span></tt>
+              implementation when the character type is not greater than 8 bits,
+              to a sparse bit/boolean set which uses a sorted vector of disjoint
+              ranges (<tt class="computeroutput"><span class="identifier">range_run</span></tt>).
+              The set is constructed from ranges such that adjacent or overlapping
+              ranges are coalesced.
+            </p>
+<p>
+              <tt class="computeroutput"><span class="identifier">range_runs</span></tt> are very
+              space-economical in situations where there are lots of ranges and a
+              few individual disjoint values. Searching is O(log n) where n is the
+              number of ranges.
+            </p>
+</td></tr>
+</table></div>
+<a name="spirit.qi.reference.char.lit_char_.char__def_"></a><h6>
+<a name="id461688"></a>
+            <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.char__def_">char_(def)</a>
+          </h6>
+<p>
+            Lastly, when given a string (a plain C string, a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></tt>,
+            etc.), the string is regarded as a char-set definition string following
+            a syntax that resembles posix style regular expression character sets
+            (except that double quotes delimit the set elements instead of square
+            brackets and there is no special negation ^ character). Examples:
+          </p>
+<pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a-zA-Z"</span><span class="special">)</span>     <span class="comment">// alphabetic characters
+</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"0-9a-fA-F"</span><span class="special">)</span>  <span class="comment">// hexadecimal characters
+</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"actgACTG"</span><span class="special">)</span>   <span class="comment">// DNA identifiers
+</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"\x7f\x7e"</span><span class="special">)</span>   <span class="comment">// Hexadecimal 0x7F and 0x7E
+</span></pre>
+<a name="spirit.qi.reference.char.lit_char_.lit_ch_"></a><h6>
+<a name="id461851"></a>
+            <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.lit_ch_">lit(ch)</a>
+          </h6>
+<p>
+            <tt class="computeroutput"><span class="identifier">lit</span></tt>, when passed a single
+            character, behaves like the single argument <tt class="computeroutput"><span class="identifier">char_</span></tt>
+            except that <tt class="computeroutput"><span class="identifier">lit</span></tt> does
+            not synthesize an attribute. A plain <tt class="computeroutput"><span class="keyword">char</span></tt>
+            or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt> is equivalent
+            to a <tt class="computeroutput"><span class="identifier">lit</span></tt>.
+          </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              <tt class="computeroutput"><span class="identifier">lit</span></tt> is reused by both
+              the <a href="../string/lit_string.html" title="lit/string">string parsers</a>
+              and the char parsers. In general, a char parser is created when you
+              pass in a character and a string parser is created when you pass in
+              a string. The exception is when you pass a single element literal string,
+              e.g. <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"x"</span><span class="special">)</span></tt>.
+              In this case, we optimize this to create a char parser instead of a
+              string parser.
+            </p></td></tr>
+</table></div>
+<p>
+            Examples:
+          </p>
+<pre class="programlisting"><span class="char">'x'</span>
+<span class="identifier">lit</span><span class="special">(</span><span class="char">'x'</span><span class="special">)</span>
+<span class="identifier">lit</span><span class="special">(</span><span class="identifier">L</span><span class="char">'x'</span><span class="special">)</span>
+<span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="comment">// c is a char
+</span></pre>
 <a name="spirit.qi.reference.char.lit_char_.header"></a><h6>
-<a name="id461103"></a>
+<a name="id462101"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/char/char.hpp&gt;
@@ -81,7 +215,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.char.lit_char_.model_of"></a><h6>
-<a name="id461207"></a>
+<a name="id462205"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -140,7 +274,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.char.lit_char_.expression_semantics"></a><h6>
-<a name="id461633"></a>
+<a name="id462631"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -258,6 +392,8 @@
                     invoking <tt class="computeroutput"><span class="identifier">ff</span></tt> and
                     <tt class="computeroutput"><span class="identifier">fl</span></tt>, respectively,
                     with <tt class="computeroutput"><span class="identifier">ns</span></tt> encoding.
+                    See <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                    Argument</a>
                   </p></td>
 </tr>
 <tr>
@@ -286,7 +422,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.char.lit_char_.attributes"></a><h6>
-<a name="id462645"></a>
+<a name="id463653"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -302,29 +438,219 @@
                     Attribute
                   </p></th>
 </tr></thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">xxx</span></tt>
+                    <tt class="computeroutput"><span class="identifier">c</span></tt>
                   </p></td>
 <td><p>
-                    Attribute of <tt class="computeroutput"><span class="identifier">xxx</span></tt>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
                   </p></td>
-</tr></tbody>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span>
+                    <span class="identifier">l</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">cs</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">fc</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of <tt class="computeroutput"><span class="identifier">c</span></tt>,
+                    where <tt class="computeroutput"><span class="identifier">c</span></tt> is returned
+                    by invoking <tt class="computeroutput"><span class="identifier">fc</span></tt>
+                    at parse time.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">fc</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of <tt class="computeroutput"><span class="identifier">c</span></tt>,
+                    where <tt class="computeroutput"><span class="identifier">c</span></tt> is returned
+                    by invoking <tt class="computeroutput"><span class="identifier">fc</span></tt>
+                    at parse time.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">fc</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ff</span><span class="special">,</span>
+                    <span class="identifier">fl</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">fcs</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="special">~</span><span class="identifier">cp</span></tt>
+                  </p></td>
+<td><p>
+                    The attribute of <tt class="computeroutput"><span class="identifier">cp</span></tt>.
+                  </p></td>
+</tr>
+</tbody>
 </table></div>
 <a name="spirit.qi.reference.char.lit_char_.complexity"></a><h6>
-<a name="id462747"></a>
+<a name="id464532"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.complexity">Complexity</a>
           </h6>
+<div class="blockquote"><blockquote class="blockquote">
 <p>
-            Big-O complexity of the parser
-          </p>
+              </p>
+<p>
+                <span class="bold"><b>O(N)</b></span>, except for char-sets with
+                16-bit (or more) characters (e.g. <tt class="computeroutput"><span class="keyword">wchar_t</span></tt>).
+                These have <span class="bold"><b>O(log N)</b></span> complexity,
+                where N is the number of distinct character ranges in the set.
+              </p>
+<p>
+            </p>
+</blockquote></div>
 <a name="spirit.qi.reference.char.lit_char_.example"></a><h6>
-<a name="id462775"></a>
+<a name="id464594"></a>
             <a href="lit_char_.html#spirit.qi.reference.char.lit_char_.example">Example</a>
           </h6>
 <p>
-            Real example code. Use Quickbook import mechanism to link to actual working
-            code snippets here.
+            Some using declarations:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Basic literals:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"x"</span><span class="special">,</span> <span class="char">'x'</span><span class="special">);</span>                      <span class="comment">// plain literal
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"x"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="char">'x'</span><span class="special">));</span>                 <span class="comment">// explicit literal
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"x"</span><span class="special">,</span> <span class="identifier">char_</span><span class="special">(</span><span class="char">'x'</span><span class="special">));</span>               <span class="comment">// ascii::char_
+</span></pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Range:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">char</span> <span class="identifier">ch</span><span class="special">;</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"5"</span><span class="special">,</span> <span class="identifier">char_</span><span class="special">(</span><span class="char">'0'</span><span class="special">,</span><span class="char">'9'</span><span class="special">),</span> <span class="identifier">ch</span><span class="special">);</span>  <span class="comment">// ascii::char_ range
+</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ch</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>               <span class="comment">// prints '5'
+</span></pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Character set:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"5"</span><span class="special">,</span> <span class="identifier">char_</span><span class="special">(</span><span class="string">"0-9"</span><span class="special">),</span> <span class="identifier">ch</span><span class="special">);</span>    <span class="comment">// ascii::char_ set
+</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ch</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>               <span class="comment">// prints '5'
+</span></pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            Lazy char_ using <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">phx</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span>        
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"x"</span><span class="special">,</span> <span class="identifier">phx</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="char">'x'</span><span class="special">));</span>            <span class="comment">// direct
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"5"</span><span class="special">,</span> 
+    <span class="identifier">char_</span><span class="special">(</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="char">'0'</span><span class="special">),</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="char">'9'</span><span class="special">)));</span>    <span class="comment">// ascii::char_ range
+</span></pre>
+<p>
+            </p>
+<p>
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
