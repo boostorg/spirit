@@ -9,12 +9,16 @@
 [section:char Char]
 
 This module includes different character oriented generators allowing to output
-single characters. It includes the character and character class generators.
+single characters. Currently, it includes literal chars (e.g. `'x'`, `L'x'`), 
+`char_` (single characters, ranges and character sets) and the encoding 
+specific character classifiers (`alnum`, `alpha`, `digit`, `xdigit`, etc.). 
 
 [heading Module Header]
 
     // forwards to <boost/spirit/home/karma/char.hpp>
     #include <boost/spirit/include/karma_char.hpp>
+
+Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:char_generator Character Generators]

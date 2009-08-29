@@ -20,6 +20,8 @@ width (`maxwidth[]`), buffering (`buffer[]`), and attribute handling
     // forwards to <boost/spirit/home/karma/directive.hpp>
     #include <boost/spirit/include/karma_directive.hpp>
 
+Also, see __include_structure__.
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:alignment Alignment Directives (`left_align[]`, `center[]`, and `right_align[]`)]
 

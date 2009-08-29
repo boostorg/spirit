@@ -19,6 +19,8 @@ includes sequences (`<<`), alternatives (`|`), Kleene star (unary `*`), plus
     // forwards to <boost/spirit/home/karma/operator.hpp>
     #include <boost/spirit/include/karma_operator.hpp>
 
+Also, see __include_structure__.
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:sequence Sequences (`operator<<()`)]
 

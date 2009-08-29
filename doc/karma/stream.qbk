@@ -130,6 +130,14 @@ arbitrary underlying character type.
                              is assumed to be `Char`.]]
 ]
 
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Char`]           [The character type used by 
+                         the underlying ostream]    [`char`]]
+]
+
 [heading Additional Requirements]
 
 All of the stream generators listed above require the type of the value to 
@@ -179,6 +187,7 @@ instance.
 
 [heading Complexity]
 
+[:O(N), where N is the number of characters emitted by the stream generator]
 
 [heading Example]
 

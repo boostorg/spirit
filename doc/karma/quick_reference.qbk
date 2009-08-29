@@ -48,7 +48,7 @@ pages and pages of reference doumentation.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:primitive_generators Primitive Generators]
+[section:primitive_generators Karma Generators]
 
 [section:char Character Generators]
 
@@ -160,6 +160,36 @@ See here for more information about __karma_numeric__.
 
 [endsect]
 
+[section:signed_int Integer Generators]
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
+    [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
+                                                                if an attribute is supplied it must match]]
+    [[[signed_int `int_`]]              [`int`]                [Generate an int]]
+    [[[signed_int `int_(num)`]]         [`int`]                [Generate `num` as an int, 
+                                                                if an attribute is supplied it must match]]
+    [[[signed_int `long_`]]             [`long`]               [Generate a long integer]]
+    [[[signed_int `long_(num)`]]        [`long`]               [Generate `num` as long integer, 
+                                                                if an attribute is supplied it must match]]
+    [[[signed_int `long_long`]]         [`long long`]          [Generate a long long]]
+    [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as an long long, 
+                                                                if an attribute is supplied it must match]]
+
+    [[[signed_int ``int_generator<
+    Num, Radix, force_sign
+>()``]]
+                                        [`Num`]                [Generate a `Num`]]
+    [[[signed_int ``int_generator<
+    Num, Radix, force_sign
+>()(num)``]]
+                                        [`Num`]                [Generate a `num` as a `Num`, 
+                                                                if an attribute is supplied it must match]]
+]
+
+[endsect]
+
 [section:unsigned_int Unsigned Integer Generators]
 
 [table 
@@ -193,32 +223,33 @@ See here for more information about __karma_numeric__.
 
 [endsect]
 
-[section:signed_int Integer Generators]
+[section:stream Stream Generators]
+
+See here for more information about __karma_stream__.
 
 [table 
-    [[Expression]           [Attribute]                 [Description]]
-    [[[signed_int `short_`]]            [`short`]              [Generate a short integer]]
-    [[[signed_int `short_(num)`]]       [`short`]              [Generate `num` as a short integer, 
-                                                                if an attribute is supplied it must match]]
-    [[[signed_int `int_`]]              [`int`]                [Generate an int]]
-    [[[signed_int `int_(num)`]]         [`int`]                [Generate `num` as an int, 
-                                                                if an attribute is supplied it must match]]
-    [[[signed_int `long_`]]             [`long`]               [Generate a long integer]]
-    [[[signed_int `long_(num)`]]        [`long`]               [Generate `num` as long integer, 
-                                                                if an attribute is supplied it must match]]
-    [[[signed_int `long_long`]]         [`long long`]          [Generate a long long]]
-    [[[signed_int `long_long(num)`]]    [`long long`]          [Generate `num` as an long long, 
-                                                                if an attribute is supplied it must match]]
-
-    [[[signed_int ``int_generator<
-    Num, Radix, force_sign
->()``]]
-                                        [`Num`]                [Generate a `Num`]]
-    [[[signed_int ``int_generator<
-    Num, Radix, force_sign
->()(num)``]]
-                                        [`Num`]                [Generate a `num` as a `Num`, 
-                                                                if an attribute is supplied it must match]]
+    [[Expression]           [Attribute]     [Description]]
+    [[[karma_stream `stream`]]     [`hold_any`] [Generates narrow character (`char`) based output 
+                                                 using the matching streaming `operator<<()`]]
+    [[[karma_stream `stream(s)`]]  [`Unused`]   [Generates narrow character (`char`) based output 
+                                                 from the immediate argument `s` using the matching 
+                                                 streaming `operator<<()`]]
+    [[[karma_stream `wstream`]]    [`hold_any`] [Generates narrow character (`wchar_t`) based output 
+                                                 using the matching streaming `operator<<()`]]
+    [[[karma_stream `wstream(s)`]] [`Unused`]   [Generates wide character (`wchar_t`) based output 
+                                                 from the immediate argument `s` using the matching 
+                                                 streaming `operator<<()`]]
+    [
+[[karma_stream ``stream_generator<
+    Char
+>()``]]                     [`hold_any`]    [Generates output based on the given character type 
+                                             (`Char`) using the matching streaming `operator<<()`]]
+    [
+[[karma_stream ``stream_generator<
+    Char
+>()(s)``]]                  [`Unused`]      [Generates output based on the given character type
+                                             `Char` from the immediate argument `s` using the 
+                                             matching streaming `operator<<()`]]
 ]
 
 [endsect]
@@ -228,17 +259,19 @@ See here for more information about __karma_numeric__.
 See here for more information about __karma_binary__.
 
 [table 
-    [[Expression]           [Attribute]                 [Description]]
-    [[`byte_`]              [8 bits native endian]      [Generates an 8 bit binary]]
-    [[`word`]               [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
-    [[`big_word`]           [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
-    [[`little_word`]        [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
-    [[`dword`]              [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
-    [[`big_dword`]          [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
-    [[`little_dword`]       [32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
-    [[`qword`]              [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
-    [[`big_qword`]          [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
-    [[`little_qword`]       [64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
+    [[Expression]                          [Attribute]                 [Description]]
+    [[[karma_native_binary `byte_`]]       [8 bits native endian]      [Generates an 8 bit binary]]
+    [[[karma_native_binary `word`]]        [16 bits native endian]     [Generates a 16 bit binary in native endian representation]]
+    [[[karma_big_binary `big_word`]]       [16 bits big endian]        [Generates a 16 bit binary in big endian representation]]
+    [[[karma_little_binary `little_word`]] [16 bits little endian]     [Generates a 16 bit binary in little endian representation]]
+    [[[karma_native_binary `dword`]]       [32 bits native endian]     [Generates a 32 bit binary in native endian representation]]
+    [[[karma_big_binary `big_dword`]]      [32 bits big endian]        [Generates a 32 bit binary in big endian representation]]
+    [[[karma_little_binary `little_dword`]][32 bits little endian]     [Generates a 32 bit binary in little endian representation]]
+    [[[karma_native_binary `qword`]]       [64 bits native endian]     [Generates a 64 bit binary in native endian representation]]
+    [[[karma_big_binary `big_qword`]]      [64 bits big endian]        [Generates a 64 bit binary in big endian representation]]
+    [[[karma_little_binary `little_qword`]][64 bits little endian]     [Generates a 64 bit binary in little endian representation]]
+    [[`pad(num)`]                          [`Unused`]                  [Generate additional null bytes allowing to align generated 
+                                                                        output with memory addresses divisible by `num`.]]
 ]
 
 [endsect]

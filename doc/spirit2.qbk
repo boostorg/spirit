@@ -93,7 +93,8 @@
 [def __karma_directive__        [link spirit.karma.reference.directive Generator Directives]]
 [def __karma_operator__         [link spirit.karma.reference.operator Generator Operators]]
 [def __karma_numeric__          [link spirit.karma.reference.numeric Numeric Generators]]
-[def __karma_binary__           Binary Generators [/link spirit.karma.reference.binary Binary Generators]]
+[def __karma_binary__           [link spirit.karma.reference.binary Binary Generators]]
+[def __karma_stream__           [link spirit.karma.reference.stream Stream Generators]]
 
 [def __sec_lex__                [link spirit.lex Lex]]
 [def __sec_lex_quickstart_1__   [link spirit.lex.tutorials.lexer_quickstart1 Lex Quickstart 1 - A word counter using __lex__]]
@@ -195,6 +196,12 @@
 
 [template karma_string[str]         [link spirit.karma.reference.string [str]]]
 
+[template karma_stream[str]         [link spirit.karma.reference.stream [str]]]
+
+[template karma_native_binary[str]  [link spirit.karma.reference.binary.binary_native [str]]]
+[template karma_little_binary[str]  [link spirit.karma.reference.binary.binary_little [str]]]
+[template karma_big_binary[str]     [link spirit.karma.reference.binary.binary_big [str]]]
+
 [def __actions__                    Semantic Actions] [/$$$ TODO: link me $$$]
 [def __context__                    Context] [/$$$ TODO: link me $$$]
 [def __compatible__                 Compatible] [/$$$ TODO: link me $$$]
@@ -273,5 +280,4 @@
 [include repository.qbk]
 [include acknowledgments.qbk]
 [include references.qbk]
-
 

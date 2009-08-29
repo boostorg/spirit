@@ -60,6 +60,32 @@ void test_generator_attr(char const* expected, G const& g, T1 const& attr1,
 }
 //]
 
+//[reference_karma_binary_test
+template <typename G>
+void test_binary_generator(char const* expected, std::size_t size, G const& g)
+{
+    std::string s;
+    std::back_insert_iterator<std::string> out(s);
+    if (boost::spirit::karma::generate(out, g) && !std::memcmp(s.c_str(), expected, size))
+        std::cout << "ok" << std::endl;
+    else
+        std::cout << "fail" << std::endl;
+}
+//]
+
+//[reference_karma_binary_test_attr
+template <typename G, typename T>
+void test_binary_generator_attr(char const* expected, std::size_t size, G const& g, T const& attr)
+{
+    std::string s;
+    std::back_insert_iterator<std::string> out(s);
+    if (boost::spirit::karma::generate(out, g, attr) && !std::memcmp(s.c_str(), expected, size))
+        std::cout << "ok" << std::endl;
+    else
+        std::cout << "fail" << std::endl;
+}
+//]
+
 //[reference_karma_stream_complex
 // a simple complex number representation z = a + bi
 struct complex
@@ -508,6 +534,70 @@ int main()
         test_generator("abc", stream("abc"));
         test_generator_attr("{1.2,2.4}", stream, complex(1.2, 2.4));
         test_generator("{1.2,2.4}", stream(complex(1.2, 2.4)));
+        //]
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // binary module
+    {
+        //[reference_karma_using_declarations_native_binary
+        using boost::spirit::karma::generate;
+        //]
+
+        //[reference_karma_native_binary_little
+        test_binary_generator("\x01", 1, byte_(0x01));
+        test_binary_generator("\x01\x02", 2, word(0x0201));
+        test_binary_generator("\x01\x02\x03\x04", 4, dword(0x04030201));
+        test_binary_generator("\x01\x02\x03\x04\x05\x06\x07\x08", 8, qword(0x0807060504030201LL));
+
+        test_binary_generator_attr("\x01", 1, byte_, 0x01);
+        test_binary_generator_attr("\x01\x02", 2, word, 0x0201);
+        test_binary_generator_attr("\x01\x02\x03\x04", 4, dword, 0x04030201);
+        test_binary_generator_attr("\x01\x02\x03\x04\x05\x06\x07\x08", 8, qword, 0x0807060504030201LL);
+        //]
+
+        //[reference_karma_native_binary_big
+        test_binary_generator("\x01", 1, byte_(0x01));
+        test_binary_generator("\x02\x01", 2, word(0x0201));
+        test_binary_generator("\x04\x03\x02\x01", 4, dword(0x04030201));
+        test_binary_generator("\x08\x07\x06\x05\x04\x03\x02\x01", 8, qword(0x0807060504030201LL));
+
+        test_binary_generator_attr("\x01", 1, byte_, 0x01);
+        test_binary_generator_attr("\x02\x01", 2, word, 0x0201);
+        test_binary_generator_attr("\x04\x03\x02\x01", 4, dword, 0x04030201);
+        test_binary_generator_attr("\x08\x07\x06\x05\x04\x03\x02\x01", 8, qword, 0x0807060504030201LL);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_little_binary
+        using boost::spirit::karma::generate;
+        //]
+
+        //[reference_karma_little_binary
+        test_binary_generator("\x01\x02", 2, little_word(0x0201));
+        test_binary_generator("\x01\x02\x03\x04", 4, little_dword(0x04030201));
+        test_binary_generator("\x01\x02\x03\x04\x05\x06\x07\x08", 8, little_qword(0x0807060504030201LL));
+
+        test_binary_generator_attr("\x01\x02", 2, little_word, 0x0201);
+        test_binary_generator_attr("\x01\x02\x03\x04", 4, little_dword, 0x04030201);
+        test_binary_generator_attr("\x01\x02\x03\x04\x05\x06\x07\x08", 8, little_qword, 0x0807060504030201LL);
+        //]
+    }
+
+    {
+        //[reference_karma_using_declarations_big_binary
+        using boost::spirit::karma::generate;
+        //]
+
+        //[reference_karma_big_binary
+        test_binary_generator("\x02\x01", 2, big_word(0x0201));
+        test_binary_generator("\x04\x03\x02\x01", 4, big_dword(0x04030201));
+        test_binary_generator("\x08\x07\x06\x05\x04\x03\x02\x01", 8, big_qword(0x0807060504030201LL));
+
+        test_binary_generator_attr("\x02\x01", 2, big_word, 0x0201);
+        test_binary_generator_attr("\x04\x03\x02\x01", 4, big_dword, 0x04030201);
+        test_binary_generator_attr("\x08\x07\x06\x05\x04\x03\x02\x01", 8, big_qword, 0x0807060504030201LL);
         //]
     }
 

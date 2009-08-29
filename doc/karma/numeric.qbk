@@ -17,6 +17,8 @@ integer, and floating point number generators.
     // forwards to <boost/spirit/home/karma/numeric.hpp>
     #include <boost/spirit/include/karma_numeric.hpp>
 
+Also, see __include_structure__.
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section:signed_int Signed Integer Number Generators]
 
@@ -170,6 +172,19 @@ type to create integer generators using a wide range of formatting options.
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
+]
+
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Num`]            [The type of the integer 
+                         to generate]               [`int`]]
+    [[`Radix`]          [The radix to use while 
+                         converting the integer]    [`10`]]
+    [[`force_sign`]     [If `true`, all numbers will
+                         have a sign (space for 
+                         zero)]                     [`false`]]
 ]
 
 [heading Additional Requirements]
@@ -432,6 +447,16 @@ options.
                          any output.]]
 ]
 
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Num`]            [The type of the integer 
+                         to generate]               [`unsigned int`]]
+    [[`Radix`]          [The radix to use while 
+                         converting the integer]    [`10`]]
+]
+
 [heading Additional Requirements]
 
 The following lists enumerate the requirements which must be met in order to 
@@ -662,6 +687,17 @@ options.
                          error).]]
 ]
 
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Num`]            [The type of the floating 
+                         point number to generate]  [`double`]]
+    [[`Policies`]       [The policies to use while 
+                         converting the floatng 
+                         point number]              [`real_policies<Num>`]]
+]
+
 For more information about the type `Policies` see 
 [link spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies below]).
 
@@ -722,16 +758,16 @@ the type `Num` must have defined:
 
 [heading Floating Point Formatting Policies]
 
-If special formatting of a floating point number is needed, just overload 
+If special formatting of a floating point number is needed, overload 
 the policy class `real_policies<Num>` and use it as a template
 parameter to the `real_generator<>` floating point generator. For instance:
 
     // define a new floating point formatting policy
-    template <typename T>
-    struct scientific_policy : real_policies<T>
+    template <typename Num>
+    struct scientific_policy : real_policies<Num>
     {
         // we want the numbers always to be in scientific format
-        static int floatfield(T n) { return fmtflags::scientific; }
+        static int floatfield(Num n) { return fmtflags::scientific; }
     };
 
     // define a new generator type based on the new policy
@@ -742,9 +778,10 @@ parameter to the `real_generator<>` floating point generator. For instance:
     generate(sink, science_type(), 1.0);  // will output: 1.0e00
     generate(sink, scientific, 0.1);      // will output: 1.0e-01
 
-The template parameter `T` should be the type to be formatted using the 
-overloaded policy type. At the same time `T` will be used as the attribute type 
-of the created floating point generator.
+The template parameter `Num` should be the type to be formatted using the 
+overloaded policy type. At the same time `Num` will be used as the attribute 
+type of the created floating point generator.
+
 
 [heading Floating Point Formatting Policy Expression Semantics]
 
@@ -757,7 +794,7 @@ functions:
         template <typename Inserter
           , typename OutputIterator
           , typename Policies>
-        bool call (OutputIterator& sink, T n
+        bool call (OutputIterator& sink, Num n
           , Policies const& p);
     ``]
     [This is the main function used to generate the output for a floating point 
@@ -770,7 +807,7 @@ functions:
           template <typename Inserter, typename OutputIterator
             , typename Policies>
           static bool
-          call (OutputIterator& sink, T n, Policies const& p)
+          call (OutputIterator& sink, Num n, Policies const& p)
           {
               return Inserter::call_n(sink, n, p);
           }
@@ -783,7 +820,7 @@ functions:
            point generator.
     ]]
 [   [``
-        bool force_sign(T n);
+        bool force_sign(Num n);
     ``]
     [The default behavior is to not to require generating a sign. If the function
      `force_sign()` returns true, then all generated numbers will have a 
@@ -792,7 +829,7 @@ functions:
      `n` is the floating point number to output. This can be used to 
      adjust the required behavior depending on the value of this number.]]
 [   [``
-        bool trailing_zeros(T n);
+        bool trailing_zeros(Num n);
     ``]
     [Return whether trailing zero digits have to be emitted in the fractional 
      part of the output. If set, this flag instructs the floating point 
@@ -802,7 +839,7 @@ functions:
      `n` is the floating point number to output. This can be used to 
      adjust the required behavior depending on the value of this number.]]
 [   [``
-        int floatfield(T n);
+        int floatfield(Num n);
     ``]
     [Decide, which representation type to use in the generated output.
 
@@ -824,7 +861,7 @@ functions:
     floating point values in fixed-point notation).
     ]]
 [   [``
-        unsigned precision(T n);
+        unsigned precision(Num n);
     ``]
     [Return the maximum number of decimal digits to generate in the 
      fractional part of the output.
@@ -842,7 +879,7 @@ functions:
         template <bool ForceSign, 
             typename OutputIterator>
         bool integer_part(OutputIterator& sink
-          , T n, bool sign, bool force_sign);
+          , Num n, bool sign, bool force_sign);
     ``]
     [This function is called to generate the integer part of the floating point 
       number. 
@@ -859,12 +896,12 @@ functions:
                     the function `force_sign()` described above)
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, imediatly returning `false` from 
+      `false`, no further output is generated, immediatly returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
         template <typename OutputIterator>
-        bool dot(OutputIterator& sink, T n,
+        bool dot(OutputIterator& sink, Num n,
           unsigned precision);
     ``]
     [This function is called to generate the decimal point.
@@ -887,12 +924,12 @@ functions:
       apply. See the description for the `fraction_part()` function below.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, imediatly returning `false` from 
+      `false`, no further output is generated, immediatly returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
         template <typename OutputIterator>
-        bool fraction_part(OutputIterator& sink, T n
+        bool fraction_part(OutputIterator& sink, Num n
           , unsigned adjprec, unsigned precision);
     ``]
     [This function is called to generate the fractional part of the number.
@@ -927,7 +964,7 @@ functions:
       by the implementation of this policy function.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, imediatly returning `false` from 
+      `false`, no further output is generated, immediatly returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
@@ -950,17 +987,17 @@ functions:
      `upper[]` directives.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, imediatly returning `false` from 
+      `false`, no further output is generated, immediatly returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
         template <typename CharEncoding
           , typename Tag, typename OutputIterator>
-        bool nan (OutputIterator& sink, T n
+        bool nan (OutputIterator& sink, Num n
           , bool force_sign);
     ``]
     [This function is called whenever the number to print is a non-normal 
-     floats of type NaN.
+     floating point number of type `NaN`.
 
      `sink`: is the output iterator to use for generation 
 
@@ -976,17 +1013,17 @@ functions:
      `upper[]` directives.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, imediatly returning `false` from 
+      `false`, no further output is generated, immediatly returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
         template <typename CharEncoding
           , typename Tag, typename OutputIterator>
-        bool inf (OutputIterator& sink, T n
+        bool inf (OutputIterator& sink, Num n
           , bool force_sign);
     ``]
     [This function is called whenever the number to print is a non-normal 
-     floats of type Inf.
+     floating point number of type `Inf`.
 
      `sink`: is the output iterator to use for generation 
 
@@ -1002,14 +1039,15 @@ functions:
       `upper[]` directives.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, imediatly returning `false` from 
+      `false`, no further output is generated, immediatly returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 ]
 
-The easiest way to implement a proper floating point formatting policy is to 
-derive a new type from the the type `real_policies<>` while overriding the 
-aspects of the formatting which need to be changed.
+[tip  The easiest way to implement a proper floating point formatting policy is 
+      to derive a new type from the the type `real_policies<>` while overriding 
+      the aspects of the formatting which need to be changed.]
+
 
 [heading Complexity]
 

@@ -16,6 +16,8 @@ other categories. It includes the `eol` and `eps`, `lazy` generators.
     // forwards to <boost/spirit/home/karma/auxiliary.hpp>
     #include <boost/spirit/include/karma_auxiliary.hpp>
 
+Also, see __include_structure__.
+
 [/////////////////////////////////////////////////////////////////////////////]
 [section eol]
 
