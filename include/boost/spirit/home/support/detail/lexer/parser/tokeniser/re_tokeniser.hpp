@@ -152,6 +152,7 @@ public:
                     if (state_._curr - 1 == state_._start)
                     {
                         token_.set (num_token::CHARSET, bol_token);
+                        state_._seen_BOL_assertion = true;
                     }
                     else
                     {
@@ -159,12 +160,12 @@ public:
                             map_, token_);
                     }
 
-                    state_._seen_BOL_assertion = true;
                     break;
                 case '$':
                     if (state_._curr == state_._end)
                     {
                         token_.set (num_token::CHARSET, eol_token);
+                        state_._seen_EOL_assertion = true;
                     }
                     else
                     {
@@ -172,7 +173,6 @@ public:
                             map_, token_);
                     }
 
-                    state_._seen_EOL_assertion = true;
                     break;
                 case '.':
                 {
