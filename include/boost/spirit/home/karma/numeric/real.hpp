@@ -48,7 +48,7 @@ namespace boost { namespace spirit
         ///////////////////////////////////////////////////////////////////////
         // This one is the class that the user can instantiate directly in 
         // order to create a customized real generator
-        template <typename T, typename Policies = real_policies<T> >
+        template <typename T = double, typename Policies = real_policies<T> >
         struct real_generator
           : spirit::terminal<tag::real_tag<T, Policies> > 
         {

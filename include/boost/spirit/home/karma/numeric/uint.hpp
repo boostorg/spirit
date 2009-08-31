@@ -40,7 +40,7 @@ namespace boost { namespace spirit
         ///////////////////////////////////////////////////////////////////////
         // This one is the class that the user can instantiate directly in 
         // order to create a customized int generator
-        template <typename T, unsigned Radix = 10>
+        template <typename T = unsigned int, unsigned Radix = 10>
         struct uint_generator
           : spirit::terminal<tag::uint_tag<T, Radix> > 
         {};

@@ -170,13 +170,10 @@ namespace boost { namespace spirit { namespace karma
     struct any_binary_generator 
       : primitive_generator<any_binary_generator<endian, bits> >
     {
-        template <typename Context, typename Unused>
-        struct attribute
-        {
-            typedef boost::integer::endian<
-                endian, typename karma::detail::integer<bits>::type, bits
-            > type;
-        };
+        template <typename Context, typename Unused = unused_type>
+        struct attribute 
+          : karma::detail::integer<bits>
+        {};
 
         template <
             typename OutputIterator, typename Context, typename Delimiter
@@ -187,7 +184,9 @@ namespace boost { namespace spirit { namespace karma
             // Even if the endian types are not pod's (at least not in the
             // definition of C++03) it seems to be safe to assume they are.
             // This allows us to treat them as a sequence of consecutive bytes.
-            typename attribute<Context, unused_type>::type p; 
+            boost::integer::endian<
+                endian, typename karma::detail::integer<bits>::type, bits
+            > p;
             p = attr;
             unsigned char const* bytes =
                 reinterpret_cast<unsigned char const*>(&p);
@@ -220,19 +219,15 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits
-      , bool no_attribute>
+    template <BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
     struct literal_binary_generator
-      : primitive_generator<literal_binary_generator<endian, bits, no_attribute> >
+      : primitive_generator<literal_binary_generator<endian, bits> >
     {
-        typedef boost::integer::endian<
-            endian, typename karma::detail::integer<bits>::type, bits
-        > data_type;
-
         template <typename Context, typename Unused>
         struct attribute
-          : mpl::if_c<no_attribute, unused_type, data_type>
-        {};
+        {
+            typedef unused_type type;
+        };
 
         template <typename T>
         literal_binary_generator(T const& t)
@@ -267,6 +262,10 @@ namespace boost { namespace spirit { namespace karma
             return karma::detail::what<endian>::is();
         }
 
+        typedef boost::integer::endian<
+            endian, typename karma::detail::integer<bits>::type, bits
+        > data_type;
+
         data_type data_;
     };
 
@@ -291,10 +290,7 @@ namespace boost { namespace spirit { namespace karma
           , BOOST_SCOPED_ENUM(boost::integer::endianness) endian, int bits>
         struct basic_binary_literal
         {
-            static bool const no_attr =
-                !has_modifier<Modifiers, tag::lazy_eval>::value;
-
-            typedef literal_binary_generator<endian, bits, no_attr> result_type;
+            typedef literal_binary_generator<endian, bits> result_type;
 
             template <typename Terminal>
             result_type operator()(Terminal const& term, unused_type) const

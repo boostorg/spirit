@@ -34,7 +34,7 @@ namespace boost { namespace spirit
 {
     namespace tag
     {
-        template <typename Char>
+        template <typename Char = char>
         struct stream_tag {};
     }
 
