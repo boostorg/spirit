@@ -26,6 +26,13 @@ Description of XXX
 
 Also, see __include_structure__.
 
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::xx`]]
+]
+
 [heading Synopsis]
 
     template <typename T>

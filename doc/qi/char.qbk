@@ -20,20 +20,13 @@ character classifiers (`alnum`, `alpha`, `digit`, `xdigit`, etc.).
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section lit/char_]
-
-[table
-    [[Name]                     [Description]]
-    [[`boost::spirit::lit`]     [Char parser (Same as `boost::spirit::qi::lit`)]]
-    [[`NS::char_`]              [Char parser for the character encoding. `NS`
-                                is a __char_encoding_namespace__]]
-]
+[section Char]
 
 [heading Description]
 
-The `char_` parser matches a single characters. The `char_` parser has
-an associated __char_encoding_namespace__. This is needed when doing
-basic operations such as inhibiting case sensitivity and dealing with
+The `char_` parser matches single characters. The `char_` parser has an
+associated __char_encoding_namespace__. This is needed when doing basic
+operations such as inhibiting case sensitivity and dealing with
 character ranges.
 
 There are various forms of `char_`. 
@@ -45,7 +38,7 @@ __char_encoding_namespace__.
 
     char_               // matches any character
 
-[heading `char_(ch)`]
+[heading char_(ch)]
 
 The single argument form of `char_` (with a character argument) matches
 the supplied character. 
@@ -123,23 +116,30 @@ Examples:
 
 Also, see __include_structure__.
 
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::lit // alias: boost::spirit::qi::lit` ]]
+    [[`ns::char_`]]
+]
+
+In the table above, `ns` is a __char_encoding_namespace__. 
+
 [heading Model of]
 
 [:__primitive_parser_concept__]
 
 [variablelist Notation
     [[`c`, `f`, `l`]    [A literal char, e.g. `'x'`, `L'x'` or anything that can be
-                        converted to a `char` or `wchar_t`.]]
-    [[`fc`, `ff`, `fl`] [A __lazy_argument__ that evaluates to a `char` or `wchar_t`.]]
+                        converted to a `char` or `wchar_t`, or a __lazy_argument__ 
+                        that evaluates to anything that can be converted to a `char` 
+                        or `wchar_t`.]]
     [[`ns`]             [A __char_encoding_namespace__.]]
-    [[`cs`]             [A literal string, e.g. "a-zA-Z", or a pointer/reference to a
-                        null-terminated array of characters or a `std::basic_string`
+    [[`cs`]             [A __string__ or a __lazy_argument__ that evaluates to a __string__
                         that specifies a char-set definition string following a syntax
                         that resembles posix style regular expression character sets
-                        (without the square brackets and the negation `^` character).]]
-    [[`fcs`]            [A __lazy_argument__ that evaluates to a `std::basic_string`
-                        or a pointer/reference to a null-terminated array of characters
-                        that specifies a char-set definition string (see `cs` above).]]
+                        (except the square brackets and the negation `^` character).]]
     [[`cp`]             [A char parser, a char range parser or a char set parser.]]
 ]
 
@@ -159,19 +159,6 @@ not defined in __primitive_parser_concept__.
                         range (`f` to `l`, inclusive) with `ns` encoding.]]
     [[`ns::char_(cs)`]  [Create a char-set parser with `ns` encoding from a char-set
                         definition string, `cs`.]]
-    [[`fc`]             [Create a char parser from a char, `c`, returned by
-                        invoking `fc` at parse time. See __lazy_argument__]]
-    [[`lit(fc)`]        [Create a char parser from a char, `c`, returned by
-                        invoking `fc` at parse time. See __lazy_argument__]]
-    [[`ns::char_(fc)`]  [Create a char parser from a char, `c`, returned by
-                        invoking `fc` at parse time. See __lazy_argument__]]
-    [[`ns::char_(ff, fl)`][Create a char-range parser that matches characters from
-                        range (`f` to `l`, inclusive), returned by invoking
-                        `ff` and `fl`, respectively, with `ns` encoding.
-                        See __lazy_argument__]]
-    [[`ns::char_(fcs)`] [Create a char-set parser with `ns` encoding from a char-set
-                        definition string, `cs`, returned by invoking `fcs` at
-                        parse time. See __lazy_argument__]]
     [[`~cp`]            [Negate `cp`. The result is a negated char parser that
                         matches any character in the `ns` encoding except the
                         characters matched by `cp`.]]
@@ -181,19 +168,14 @@ not defined in __primitive_parser_concept__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`c`]              [__unused__]]
-    [[`lit(c)`]         [__unused__]]
+    [[`c`]              [__unused__ or if `c` is a __lazy_argument__, the character 
+                        type returned by invoking it.]]
+    [[`lit(c)`]         [__unused__ or if `c` is a __lazy_argument__, the character 
+                        type returned by invoking it.]]
     [[`ns::char_`]      [The character type of the __char_encoding_namespace__, `ns`.]]
     [[`ns::char_(c)`]   [The character type of the __char_encoding_namespace__, `ns`.]]
     [[`ns::char_(f, l)`][The character type of the __char_encoding_namespace__, `ns`.]]
     [[`ns::char_(cs)`]  [The character type of the __char_encoding_namespace__, `ns`.]]
-    [[`fc`]             [The character type of `c`, where `c` is returned by
-                        invoking `fc` at parse time.]]
-    [[`lit(fc)`]        [The character type of `c`, where `c` is returned by
-                        invoking `fc` at parse time.]]
-    [[`ns::char_(fc)`]  [The character type of the __char_encoding_namespace__, `ns`.]]
-    [[`ns::char_(ff, fl)`][The character type of the __char_encoding_namespace__, `ns`.]]
-    [[`ns::char_(fcs)`] [The character type of the __char_encoding_namespace__, `ns`.]]
     [[`~cp`]            [The attribute of `cp`.]]
 ]
 
@@ -225,6 +207,6 @@ Lazy char_ using __phoenix__
 
 [reference_char_phoenix]
 
-[endsect] [/ XXX]
+[endsect] [/ Char]
 
 [endsect]

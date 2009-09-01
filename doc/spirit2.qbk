@@ -150,11 +150,12 @@
 [def __primitive_parser_concept__   [link spirit.qi.reference.parser_concepts.primitiveparser `PrimitiveParser`]]
 [def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
 [def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
+[def __string__                     [link spirit.qi.reference.basics.string String]]
 
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
 [def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case[a]`]]
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
-[template qi_lit_string[str]        [link spirit.qi.reference.string.lit_string [str]]]
+[template qi_lit_string[str]        [link spirit.qi.reference.string.string [str]]]
 [template qi_lit_char[char]         [link spirit.qi.reference.string.lit_char [char]]]
 
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
@@ -251,17 +252,17 @@
     </figure>
 ''']
 
-[def __sd_start_stop__              [$images/start_stop.png]]
-[def __sd_terminals__               [$images/terminal.png]]
-[def __sd_non_terminals__           [$images/non-terminal.png]]
-[def __sd_sequence__                [$images/sequence.png]]
-[def __sd_choice__                  [$images/alternative.png]]
-[def __sd_optional__                [$images/optional.png]]
-[def __sd_plus__                    [$images/plus.png]]
-[def __sd_kleene__                  [$images/kleene.png]]
-[def __sd_predicate__               [$images/predicate.png]]
-[def __sd_and_predicate__           [$images/and_predicate.png]]
-[def __sd_not_predicate__           [$images/not_predicate.png]]
+[def __sd_start_stop__              [$../../images/start_stop.png]]
+[def __sd_terminals__               [$../../images/terminal.png]]
+[def __sd_non_terminals__           [$../../images/non-terminal.png]]
+[def __sd_sequence__                [$../../images/sequence.png]]
+[def __sd_choice__                  [$../../images/alternative.png]]
+[def __sd_optional__                [$../../images/optional.png]]
+[def __sd_plus__                    [$../../images/plus.png]]
+[def __sd_kleene__                  [$../../images/kleene.png]]
+[def __sd_predicate__               [$../../images/predicate.png]]
+[def __sd_and_predicate__           [$../../images/and_predicate.png]]
+[def __sd_not_predicate__           [$../../images/not_predicate.png]]
 
 [/ Here we go ]
 

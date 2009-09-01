@@ -22,14 +22,6 @@ Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
 [section:no_case no_case]
-  
-[table
-    [[Name]                         [Description]]
-    [[`boost::spirit::NS::no_case`] [Parser directive that forces its subject 
-                                    parser (and all its children) to do case 
-                                    insensitive matching. `NS` is a 
-                                    __char_encoding_namespace__]]
-]
 
 [heading Description]
 
@@ -44,6 +36,15 @@ insensitive.
     #include <boost/spirit/include/qi_no_case.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`ns::no_case`]]
+]
+
+In the table above, `ns` is a __char_encoding_namespace__. 
 
 [heading Model of]
 

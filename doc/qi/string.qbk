@@ -19,14 +19,7 @@ includes the literal and string parsers and the symbol table.
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section lit/string]
-
-[table
-    [[Name]                     [Description]]
-    [[`boost::spirit::lit`]     [String parser (Same as `boost::spirit::qi::lit`)]]
-    [[`NS::string`]             [String parser for the character encoding. `NS`
-                                is a __char_encoding_namespace__]]
-]
+[section String]
 
 [heading Description]
 
@@ -54,18 +47,23 @@ Examples:
 
     // forwards to <boost/spirit/home/qi/string/lit.hpp>
     #include <boost/spirit/include/qi_lit.hpp>
+    
+[heading Namespace]
 
-Also, see __include_structure__.
+[table
+    [[Name]]
+    [[`boost::spirit::lit // alias: boost::spirit::qi::lit`]]
+    [[`ns::string`]]
+]
+
+In the table above, `ns` is a __char_encoding_namespace__. 
 
 [heading Model of]
 
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`s`]      [A literal string, e.g. "Hello", or a pointer/reference to a
-                null-terminated array of characters or a `std::basic_string`.]]
-    [[`fs`]     [A __lazy_argument__ that evaluates to a `std::basic_string`
-                or a pointer/reference to a null-terminated array of characters.]]
+    [[`s`]      [A __string__ or a __lazy_argument__ that evaluates to a __string__.]]
     [[`ns`]     [A __char_encoding_namespace__.]]]
 
 [heading Expression Semantics]
@@ -81,18 +79,6 @@ not defined in __primitive_parser_concept__.
                         from a string, `s`.]]
     [[`ns::string(s)`]  [Create a string parser with `ns` encoding
                         from a string, `s`.]]
-    [[`fs`]             [Create a string parser
-                        from a string, `s`, returned by
-                        invoking `fs` at parse time.
-                        See __lazy_argument__.]]
-    [[`lit(fs)`]        [Create a string parser
-                        from a string, `s`, returned by
-                        invoking `fs` at parse time.
-                        See __lazy_argument__.]]
-    [[`ns::string(fs)`] [Create a string parser
-                        from a string, `s`, returned by
-                        invoking `fs` at parse time.
-                        See __lazy_argument__.]]
 ]
 
 [heading Attributes]
@@ -104,20 +90,7 @@ not defined in __primitive_parser_concept__.
     [[`ns::string(s)`]  [`std::basic_string<T>` where `T`
                         is the underlying character type
                         of `s`.]]
-    [[`fs`]             [`std::basic_string<T>` where `T`
-                        is the underlying character type
-                        of `s`, where `s` is returned by
-                        invoking `fs` at parse time.]]
-    [[`lit(fs)`]        [`std::basic_string<T>` where `T`
-                        is the underlying character type
-                        of `s`, where `s` is returned by
-                        invoking `fs` at parse time.]]
-    [[`ns::string(fs)`] [`std::basic_string<T>` where `T`
-                        is the underlying character type
-                        of `s`, where `s` is returned by
-                        invoking `fs` at parse time.]]
 ]
-
 
 [heading Complexity]
 
@@ -143,19 +116,11 @@ Lazy strings using __phoenix__
 
 [reference_string_phoenix]
 
-[endsect] [/ lit/strin]
+[endsect] [/ lit/string]
 
 
 [/------------------------------------------------------------------------------]
-[section symbols]
-
-[table
-    [[Name]                             [Description]]
-    [[`boost::spirit::qi::symbols`]     [A template class for creating,
-                                        managing and using symbol tables.]]
-    [[`boost::spirit::qi::tst`]         [Search implementation using a Ternary State Tree (TST).]]
-    [[`boost::spirit::qi::tst_map`]     [Search implementation using a Hash map and TST hybrid.]]
-]
+[section Symbols]
 
 [heading Description]
 
@@ -178,6 +143,15 @@ altering its behavior.
     #include <boost/spirit/include/qi_symbols.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::qi::symbols`]]
+    [[`boost::spirit::qi::tst`]]
+    [[`boost::spirit::qi::tst_map`]]
+]
 
 [heading Synopsis]
 
@@ -204,12 +178,10 @@ Also, see __include_structure__.
     [[`Sym`]        [A `symbols` type.]]
     [[`Char`]       [A character type.]]
     [[`T`]          [A data type.]]
-    [[`sym`]        [A `symbols` object.]]
-    [[`sym2`]       [Another `symbols` object.]]
+    [[`sym`, `sym2`][`symbols` objects.]]
     [[`sseq`]       [An __stl__ container of strings.]]
     [[`dseq`]       [An __stl__ container of data with `value_type` `T`.]]
-    [[`s1`...`sN`]  [A literal string, e.g. "Hello", or a pointer/reference to a
-                    null-terminated array of characters or a `std::basic_string`.]]
+    [[`s1`...`sN`]  [A __string__.]]
     [[`d1`...`dN`]  [Objects of type `T`.]]
     [[`f`]          [A callable function or function object.]]
 ]

@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>lit/string</title>
+<title>String</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../string.html" title="String">
 <link rel="previous" href="../string.html" title="String">
-<link rel="next" href="symbols.html" title="symbols">
+<link rel="next" href="symbols.html" title="Symbols">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,47 +25,13 @@
 <div class="section" lang="en">
 <div class="titlepage">
 <div><div><h5 class="title">
-<a name="spirit.qi.reference.string.lit_string"></a><a href="lit_string.html" title="lit/string">lit/string</a>
+<a name="spirit.qi.reference.string.string"></a><a href="string.html" title="String">String</a>
 </h5></div></div>
 <div></div>
 </div>
-<div class="informaltable"><table class="table">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th><p>
-                    Name
-                  </p></th>
-<th><p>
-                    Description
-                  </p></th>
-</tr></thead>
-<tbody>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span></tt>
-                  </p></td>
-<td><p>
-                    String parser (Same as <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lit</span></tt>)
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">string</span></tt>
-                  </p></td>
-<td><p>
-                    String parser for the character encoding. <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                    is a <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>
-                  </p></td>
-</tr>
-</tbody>
-</table></div>
-<a name="spirit.qi.reference.string.lit_string.description"></a><h6>
-<a name="id468529"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.description">Description</a>
+<a name="spirit.qi.reference.string.string.description"></a><h6>
+<a name="id467243"></a>
+            <a href="string.html#spirit.qi.reference.string.string.description">Description</a>
           </h6>
 <p>
             The <tt class="computeroutput"><span class="identifier">string</span></tt> parser matches
@@ -90,20 +56,40 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">L</span><span class="string">"Hello"</span><span class="special">)</span>
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span> <span class="comment">// s is a std::string
 </span></pre>
-<a name="spirit.qi.reference.string.lit_string.header"></a><h6>
-<a name="id468871"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.header">Header</a>
+<a name="spirit.qi.reference.string.string.header"></a><h6>
+<a name="id467584"></a>
+            <a href="string.html#spirit.qi.reference.string.string.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/string/lit.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_lit</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
+<a name="spirit.qi.reference.string.string.namespace"></a><h6>
+<a name="id467684"></a>
+            <a href="string.html#spirit.qi.reference.string.string.namespace">Namespace</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup><col></colgroup>
+<thead><tr><th><p>
+                    Name
+                  </p></th></tr></thead>
+<tbody>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
+                    boost::spirit::qi::lit</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">string</span></tt>
+                  </p></td></tr>
+</tbody>
+</table></div>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            In the table above, <tt class="computeroutput"><span class="identifier">ns</span></tt>
+            is a <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a>.
           </p>
-<a name="spirit.qi.reference.string.lit_string.model_of"></a><h6>
-<a name="id468984"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.model_of">Model
-            of</a>
+<a name="spirit.qi.reference.string.string.model_of"></a><h6>
+<a name="id467844"></a>
+            <a href="string.html#spirit.qi.reference.string.string.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -130,9 +116,9 @@
               </p></dd>
 </dl>
 </div>
-<a name="spirit.qi.reference.string.lit_string.expression_semantics"></a><h6>
-<a name="id469126"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.expression_semantics">Expression
+<a name="spirit.qi.reference.string.string.expression_semantics"></a><h6>
+<a name="id467987"></a>
+            <a href="string.html#spirit.qi.reference.string.string.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
@@ -180,9 +166,9 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.string.lit_string.attributes"></a><h6>
-<a name="id469386"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.attributes">Attributes</a>
+<a name="spirit.qi.reference.string.string.attributes"></a><h6>
+<a name="id468246"></a>
+            <a href="string.html#spirit.qi.reference.string.string.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -226,9 +212,9 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.string.lit_string.complexity"></a><h6>
-<a name="id469655"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.complexity">Complexity</a>
+<a name="spirit.qi.reference.string.string.complexity"></a><h6>
+<a name="id468514"></a>
+            <a href="string.html#spirit.qi.reference.string.string.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -243,9 +229,9 @@
             where <tt class="computeroutput"><span class="identifier">N</span></tt> is the number
             of characters in the string to be parsed.
           </p>
-<a name="spirit.qi.reference.string.lit_string.example"></a><h6>
-<a name="id469709"></a>
-            <a href="lit_string.html#spirit.qi.reference.string.lit_string.example">Example</a>
+<a name="spirit.qi.reference.string.string.example"></a><h6>
+<a name="id468565"></a>
+            <a href="string.html#spirit.qi.reference.string.string.example">Example</a>
           </h6>
 <p>
             Some using declarations:

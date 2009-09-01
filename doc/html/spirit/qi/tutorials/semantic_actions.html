@@ -3,11 +3,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Semantic Actions</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="prev" href="warming_up.html" title="Warming up">
-<link rel="next" href="complex___our_first_complex_parser.html" title="Complex - Our first complex parser">
+<link rel="previous" href="warming_up.html" title="Warming up">
+<link rel="next" href="complex___our_first_complex_parser.html" title="Complex
+        - Our first complex parser">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,10 +23,13 @@
 <div class="spirit-nav">
 <a accesskey="p" href="warming_up.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="complex___our_first_complex_parser.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Semantic Actions">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.qi.tutorials.semantic_actions"></a><a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic Actions</a>
-</h4></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.qi.tutorials.semantic_actions"></a><a href="semantic_actions.html" title="Semantic Actions">Semantic Actions</a>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           Our parser above is really nothing but a recognizer. It answers the question
           "did the input match our grammar?", but it does not do anything
@@ -37,22 +41,22 @@
           Enter Semantic actions. Semantic actions may be attached to any point in
           the grammar specification. These actions are C++ functions or function
           objects that are called whenever a part of the parser successfully recognizes
-          a portion of the input. Say you have a parser <code class="computeroutput"><span class="identifier">P</span></code>,
-          and a C++ function <code class="computeroutput"><span class="identifier">F</span></code>, you
-          can make the parser call <code class="computeroutput"><span class="identifier">F</span></code>
-          whenever it matches an input by attaching <code class="computeroutput"><span class="identifier">F</span></code>:
+          a portion of the input. Say you have a parser <tt class="computeroutput"><span class="identifier">P</span></tt>,
+          and a C++ function <tt class="computeroutput"><span class="identifier">F</span></tt>, you
+          can make the parser call <tt class="computeroutput"><span class="identifier">F</span></tt>
+          whenever it matches an input by attaching <tt class="computeroutput"><span class="identifier">F</span></tt>:
         </p>
 <pre class="programlisting"><span class="identifier">P</span><span class="special">[</span><span class="identifier">F</span><span class="special">]</span>
 </pre>
 <p>
-          The expression above links <code class="computeroutput"><span class="identifier">F</span></code>
-          to the parser, <code class="computeroutput"><span class="identifier">P</span></code>.
+          The expression above links <tt class="computeroutput"><span class="identifier">F</span></tt>
+          to the parser, <tt class="computeroutput"><span class="identifier">P</span></tt>.
         </p>
 <p>
           The function/function object signature depends on the type of the parser
-          to which it is attached. The parser <code class="computeroutput"><span class="identifier">double_</span></code>
-          passes the parsed number. Thus, if we were to attach a function <code class="computeroutput"><span class="identifier">F</span></code> to <code class="computeroutput"><span class="identifier">double_</span></code>,
-          we need <code class="computeroutput"><span class="identifier">F</span></code> to be declared
+          to which it is attached. The parser <tt class="computeroutput"><span class="identifier">double_</span></tt>
+          passes the parsed number. Thus, if we were to attach a function <tt class="computeroutput"><span class="identifier">F</span></tt> to <tt class="computeroutput"><span class="identifier">double_</span></tt>,
+          we need <tt class="computeroutput"><span class="identifier">F</span></tt> to be declared
           as:
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">F</span><span class="special">(</span><span class="keyword">double</span> <span class="identifier">n</span><span class="special">);</span>
@@ -67,22 +71,22 @@
 <p>
           Presented are various ways to attach semantic actions:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             Using plain function pointer
           </li>
-<li class="listitem">
+<li>
             Using simple function object
           </li>
-<li class="listitem">
+<li>
             Using <a href="http://www.boost.org/libs/bind/index.html" target="_top">Boost.Bind</a>
             with a plain function
           </li>
-<li class="listitem">
+<li>
             Using <a href="http://www.boost.org/libs/bind/index.html" target="_top">Boost.Bind</a>
             with a member function
           </li>
-<li class="listitem">
+<li>
             Using <a href="http://www.boost.org/libs/lambda/index.html" target="_top">Boost.Lambda</a>
 </li>
 </ul></div>
@@ -128,11 +132,11 @@
 <p>
         </p>
 <p>
-          Take note that with function objects, we need to have an <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>
+          Take note that with function objects, we need to have an <tt class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></tt>
           with 3 arguments. Since we don't care about the other two, we can use
-          <code class="computeroutput"><span class="identifier">unused_type</span></code> for these.
-          We'll see more of <code class="computeroutput"><span class="identifier">unused_type</span></code>
-          elsewhere. Get used to it. <code class="computeroutput"><span class="identifier">unused_type</span></code>
+          <tt class="computeroutput"><span class="identifier">unused_type</span></tt> for these.
+          We'll see more of <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+          elsewhere. Get used to it. <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
           is a Spirit supplied support class.
         </p>
 <p>
@@ -158,8 +162,8 @@
 <p>
         </p>
 <p>
-          What's new? Well <code class="computeroutput"><span class="identifier">int_</span></code> is
-          the sibbling of <code class="computeroutput"><span class="identifier">double_</span></code>.
+          What's new? Well <tt class="computeroutput"><span class="identifier">int_</span></tt> is
+          the sibbling of <tt class="computeroutput"><span class="identifier">double_</span></tt>.
           I'm sure you can guess what this parser does.
         </p>
 <p>
@@ -232,10 +236,10 @@
 <p>
           The examples above can be found here: <a href="../../../../../example/qi/actions.cpp" target="_top">../../example/qi/actions.cpp</a>
         </p>
-<a name="spirit.qi.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id1110591"></a>
-          <a class="link" href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.phoenix">Phoenix</a>
-        </h6>
+<a name="spirit.qi.tutorials.semantic_actions.phoenix"></a><h5>
+<a name="id419017"></a>
+          <a href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.phoenix">Phoenix</a>
+        </h5>
 <p>
           <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>, a companion
           library bundled with Spirit, is specifically suited for binding semantic

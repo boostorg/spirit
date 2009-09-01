@@ -3,11 +3,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Syntax Diagram</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../index.html" title="Spirit 2.1">
 <link rel="up" href="../abstracts.html" title="Abstracts">
-<link rel="prev" href="../abstracts.html" title="Abstracts">
-<link rel="next" href="parsing_expression_grammar.html" title="Parsing Expression Grammar">
+<link rel="previous" href="../abstracts.html" title="Abstracts">
+<link rel="next" href="parsing_expression_grammar.html" title="Parsing
+      Expression Grammar">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,28 +23,31 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../abstracts.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="parsing_expression_grammar.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Syntax Diagram">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="spirit.abstracts.syntax_diagram"></a><a class="link" href="syntax_diagram.html" title="Syntax Diagram">Syntax Diagram</a>
-</h3></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h3 class="title">
+<a name="spirit.abstracts.syntax_diagram"></a><a href="syntax_diagram.html" title="Syntax Diagram">Syntax Diagram</a>
+</h3></div></div>
+<div></div>
+</div>
 <p>
         In the next section, we will deal with Parsing Expression Grammars (PEG)
-        <sup>[<a name="id1106335" href="#ftn.id1106335" class="footnote">2</a>]</sup>
+        <sup>[<a name="id414675" href="#ftn.id414675">2</a>]</sup>
         , a variant of Extended Backus-Naur Form (EBNF)
-        <sup>[<a name="id1106347" href="#ftn.id1106347" class="footnote">3</a>]</sup>
+        <sup>[<a name="id414694" href="#ftn.id414694">3</a>]</sup>
         with a different interpretation. It is easier to understand PEG using Syntax
         Diagrams. Syntax diagrams represent a grammar graphically. It was used extensibly
         by Niklaus Wirth
-        <sup>[<a name="id1106359" href="#ftn.id1106359" class="footnote">4</a>]</sup>
+        <sup>[<a name="id414714" href="#ftn.id414714">4</a>]</sup>
         in the "Pascal User Manual". Syntax Diagrams are easily understandable
         with programmers due to its similarity to flow charts. The isomorphism of
         the diagrams and functions make it ideal for representing Recursive Descent
         parsers which are essentially mutually recursive functions.
       </p>
-<a name="spirit.abstracts.syntax_diagram.elements"></a><h5>
-<a name="id1106371"></a>
-        <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.elements">Elements</a>
-      </h5>
+<a name="spirit.abstracts.syntax_diagram.elements"></a><h4>
+<a name="id414737"></a>
+        <a href="syntax_diagram.html#spirit.abstracts.syntax_diagram.elements">Elements</a>
+      </h4>
 <p>
         All diagrams have one entry and exit point. Arrows connect all possible paths
         through the grammar from the entry point to the exit point.
@@ -84,10 +88,10 @@
 <p>
         </p>
 </blockquote></div>
-<a name="spirit.abstracts.syntax_diagram.constructs"></a><h5>
-<a name="id1106471"></a>
-        <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.constructs">Constructs</a>
-      </h5>
+<a name="spirit.abstracts.syntax_diagram.constructs"></a><h4>
+<a name="id414857"></a>
+        <a href="syntax_diagram.html#spirit.abstracts.syntax_diagram.constructs">Constructs</a>
+      </h4>
 <p>
         The most basic composition is the Sequence. B follows A:
       </p>
@@ -155,10 +159,10 @@
         is a crucial difference between PEG and general Context Free Grammars (CFGs).
         This behavior is quite obvious with syntax diagrams as they resemble flow-charts.
       </p>
-<a name="spirit.abstracts.syntax_diagram.predicates"></a><h5>
-<a name="id1106632"></a>
-        <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.predicates">Predicates</a>
-      </h5>
+<a name="spirit.abstracts.syntax_diagram.predicates"></a><h4>
+<a name="id415040"></a>
+        <a href="syntax_diagram.html#spirit.abstracts.syntax_diagram.predicates">Predicates</a>
+      </h4>
 <p>
         Now, the following are Syntax Diagram versions of PEG predicates. These are
         not traditionally found in Syntax Diagrams. These are special extensions
@@ -211,14 +215,14 @@
       </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id1106335" href="#id1106335" class="para">2</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id414675" href="#id414675">2</a>] </sup>
             Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
             Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
           </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id1106347" href="#id1106347" class="para">3</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id414694" href="#id414694">3</a>] </sup>
             Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
           </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id1106359" href="#id1106359" class="para">4</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id414714" href="#id414714">4</a>] </sup>
             Niklaus Wirth: The Programming Language Pascal. (July 1973)
           </p></div>
 </div>

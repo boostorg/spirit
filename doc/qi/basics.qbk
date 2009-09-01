@@ -77,5 +77,42 @@ This one tests the parsers with user supplied attributes.
 
 [reference_test_attr]
 
+[heading String]
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/support/string_traits.hpp>
+    #include <boost/spirit/support_string_traits.hpp>
+
+A string can be any object `s`, of type, `S`, that satisfies the
+following expression traits:
+
+[table
+    [[Expression]                               [Semantics]]
+    [[`boost::spirit::traits::is_string<S>`]    [Metafunction that evaluates to `mpl::true_` if 
+                                                a certain type, `S` is a string, `mpl::false_`  
+                                                otherwise (See __mpl_boolean_constant__).]]
+    [[`boost::spirit::traits::char_type_of<S>`] [Metafunction that returns the underlying 
+                                                char type of a string type, `S`.]]
+    [[`boost::spirit::traits::get_c_string(s)`] [Function that returns the underlying 
+                                                raw C-string from `s`.]]
+    [[`boost::spirit::traits::get_begin(s)`]    [Function that returns an __stl__ iterator from `s`
+                                                that points to the beginning the string.]]                                                
+    [[`boost::spirit::traits::get_end(s)`]      [Function that returns an __stl__ iterator from `s`
+                                                that points to the end of the string.]]
+                                                
+]
+
+[heading Models]
+
+Predefined models include:
+
+* any literal string, e.g. "Hello, World", 
+* a pointer/reference to a null-terminated array of characters
+* a `std::basic_string<Char>`
+
+The namespace `boost::spirit::traits` is open for users to provide their
+own specializations.
+
 [endsect]
 
