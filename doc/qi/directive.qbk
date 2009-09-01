@@ -21,7 +21,7 @@ other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, and
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:no_case no_case]
+[section:no_case Inhibiting Case Sensitivity (`no_case[]`)]
 
 [heading Description]
 

@@ -191,5 +191,49 @@ main()
         std::cout << d << std::endl;              // will print '1.2'
         //]
     }
+    
+    // eol
+    {
+        //[reference_using_declarations_eol
+        using boost::spirit::qi::eol;
+        //]
+
+        //[reference_eol
+        test_parser("\n", eol);
+        //]
+    }
+    
+    // eoi
+    {
+        //[reference_using_declarations_eoi
+        using boost::spirit::qi::eoi;
+        //]
+
+        //[reference_eoi
+        test_parser("", eoi);
+        //]
+    }
+    
+    // lazy
+    {
+        //[reference_using_declarations_lazy
+        using boost::spirit::qi::lazy;
+        using boost::spirit::ascii::string;
+        using boost::phoenix::val;
+        //]
+
+        //[reference_lazy
+        /*` Here, the phoenix::val expression creates a function
+            that returns its argument when invoked. The lazy expression
+            defers the invocation of this function at parse time. Then,
+            this parser (string parser) is called into action. All this
+            takes place at parse time.
+         */
+        test_parser("Hello", lazy(val(string("Hello"))));
+        
+        //` The above is quivalent to:
+        test_parser("Hello", val(string("Hello")));
+        //]
+    }
     return 0;
 }

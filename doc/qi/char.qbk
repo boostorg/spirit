@@ -20,7 +20,7 @@ character classifiers (`alnum`, `alpha`, `digit`, `xdigit`, etc.).
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section Char]
+[section:char Char (`char_`, `lit`)]
 
 [heading Description]
 

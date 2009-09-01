@@ -19,7 +19,7 @@ includes the literal and string parsers and the symbol table.
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section String]
+[section:string String (`string`, `lit`)]
 
 [heading Description]
 
@@ -120,7 +120,7 @@ Lazy strings using __phoenix__
 
 
 [/------------------------------------------------------------------------------]
-[section Symbols]
+[section:symbols Symbols (`symbols`)]
 
 [heading Description]
 
