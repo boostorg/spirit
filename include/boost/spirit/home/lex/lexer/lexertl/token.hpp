@@ -274,7 +274,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         template <typename IteratorPair, typename AttributeTypes>
         struct token_value_type
           : mpl::eval_if<
-                is_same<AttributeTypes, mpl::vector0<> >
+                mpl::or_<
+                    is_same<AttributeTypes, mpl::vector0<> >
+                  , is_same<AttributeTypes, mpl::vector<> > >
               , mpl::identity<IteratorPair>
               , token_value_typesequence<IteratorPair, AttributeTypes> >
         {};
@@ -423,11 +425,23 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         }
     }
 
-    //  This is called from the parse function of token_def if the token type
+    //  These are called from the parse function of token_def if the token type
     //  has no special attribute type assigned 
     template <typename Attribute, typename Iterator, typename HasState>
     inline void construct(Attribute& attr, 
         token<Iterator, mpl::vector0<>, HasState>& t)
+    {
+    //  The default type returned by the token_def parser component (if it
+    //  has no token value type assigned) is the pair of iterators to the 
+    //  matched character sequence.
+
+        qi::detail::assign_to(t.value().begin(), t.value().end(), attr);
+    }
+
+    // same as above but using mpl::vector<> instead of mpl::vector0<>
+    template <typename Attribute, typename Iterator, typename HasState>
+    inline void construct(Attribute& attr, 
+        token<Iterator, mpl::vector<>, HasState>& t)
     {
     //  The default type returned by the token_def parser component (if it
     //  has no token value type assigned) is the pair of iterators to the 
