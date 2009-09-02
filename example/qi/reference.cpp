@@ -231,8 +231,25 @@ main()
          */
         test_parser("Hello", lazy(val(string("Hello"))));
         
-        //` The above is quivalent to:
+        //` The above is equivalent to:
         test_parser("Hello", val(string("Hello")));
+        //]
+    }
+    
+    // char class
+    {
+        //[reference_using_declarations_char_class
+        using boost::spirit::ascii::alnum;
+        using boost::spirit::ascii::blank;
+        using boost::spirit::ascii::digit;
+        using boost::spirit::ascii::lower;
+        //]
+
+        //[reference_char_class        
+        test_parser("1", alnum);
+        test_parser(" ", blank);
+        test_parser("1", digit);
+        test_parser("a", lower);
         //]
     }
     return 0;

@@ -51,7 +51,8 @@ main()
     }
 
     {
-        using namespace boost::spirit::iso8859_1;
+        // we use the hoisted qi namespace this time
+        using namespace boost::spirit::qi::iso8859_1; 
         BOOST_TEST(test("1", alnum));
         BOOST_TEST(!test(" ", alnum));
         BOOST_TEST(!test("1", alpha));

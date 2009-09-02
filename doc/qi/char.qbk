@@ -209,4 +209,91 @@ Lazy char_ using __phoenix__
 
 [endsect] [/ Char]
 
+[/------------------------------------------------------------------------------]
+[section:char_class Char Classification (`alnum`, `digit`, etc.)]
+
+[heading Description]
+
+The framework has the full repertoire of single character parsers for
+character classification. This includes the usual `alnum`, `alpha`,
+`digit`, `xdigit`, etc. parsers. These parsers have an associated
+__char_encoding_namespace__. This is needed when doing basic operations
+such as inhibiting case sensitivity.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/char/char_class.hpp>
+    #include <boost/spirit/qi_char_class.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`ns::alnum`]]
+    [[`ns::alpha`]]
+    [[`ns::blank`]]
+    [[`ns::cntrl`]]
+    [[`ns::digit`]]
+    [[`ns::graph`]]
+    [[`ns::lower`]]
+    [[`ns::print`]]
+    [[`ns::punct`]]
+    [[`ns::space`]]
+    [[`ns::upper`]]
+    [[`ns::xdigit`]]
+]
+
+In the table above, `ns` is a __char_encoding_namespace__. 
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`ns`]             [A __char_encoding_namespace__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`ns::alnum`]      [Matches alpha-numeric characters]]
+    [[`ns::alpha`]      [Matches alphabetic characters]]
+    [[`ns::blank`]      [Matches spaces or tabs]]
+    [[`ns::cntrl`]      [Matches control characters]]
+    [[`ns::digit`]      [Matches numeric digits]]
+    [[`ns::graph`]      [Matches non-space printing characters]]
+    [[`ns::lower`]      [Matches lower case letters]]
+    [[`ns::print`]      [Matches printable characters]]
+    [[`ns::punct`]      [Matches punctuation symbols]]
+    [[`ns::space`]      [Matches spaces, tabs, returns, and newlines]]
+    [[`ns::upper`]      [Matches upper case letters]]
+    [[`ns::xdigit`]     [Matches hexadecimal digits]]
+]
+
+[heading Attributes]
+
+[:The character type of the __char_encoding_namespace__, `ns`.]
+
+[heading Complexity]
+
+[:O(N)]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_char_class]
+
+Basic usage:
+
+[reference_char_class]
+
+[endsect] [/ Char Classification]
+
 [endsect]
