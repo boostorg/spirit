@@ -31,6 +31,12 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+    // hoist the char classification namespaces into qi sub-namespaces of the same name
+    namespace ascii { using namespace boost::spirit::ascii; }
+    namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
+    namespace standard { using namespace boost::spirit::standard; }
+    namespace standard_wide { using namespace boost::spirit::standard_wide; }
+
     ///////////////////////////////////////////////////////////////////////////
     // Generic char classification parser (for alnum, alpha, graph, etc.)
     ///////////////////////////////////////////////////////////////////////////

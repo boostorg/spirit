@@ -42,7 +42,7 @@ namespace boost { namespace spirit { namespace qi
     using spirit::attr;
 
     template <typename Value>
-    struct attr_parser : parser<attr_parser<Value> >
+    struct attr_parser : primitive_parser<attr_parser<Value> >
     {
         template <typename Context, typename Iterator>
         struct attribute
