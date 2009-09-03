@@ -226,6 +226,11 @@ namespace boost { namespace spirit { namespace traits
                     >::type
                 type;
             };
+
+            // never called, but needed for decltype-based result_of (C++0x)
+            template <typename Element>
+            typename result<element_attribute(Element)>::type
+            operator()(Element&) const;
         };
 
         // Compute the list of attributes of all sub-components

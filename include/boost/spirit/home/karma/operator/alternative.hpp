@@ -56,6 +56,11 @@ namespace boost { namespace spirit { namespace traits
             {
                 typedef properties_of<Element> type;
             };
+
+            // never called, but needed for decltype-based result_of (C++0x)
+            template <typename Element>
+            typename result<element_properties(Element)>::type
+            operator()(Element&) const;
         };
 
         typedef typename mpl::accumulate<
