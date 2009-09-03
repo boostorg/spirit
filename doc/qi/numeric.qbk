@@ -6,8 +6,224 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[/ section Numeric]
+[section Numeric]
+
+The library includes a couple of predefined objects for parsing signed
+and unsigned integers and real numbers. These parsers are fully
+parametric. Most of the important aspects of numeric parsing can be
+finely adjusted to suit. This includes the radix base, the minimum and
+maximum number of allowable digits, the exponent, the fraction etc.
+Policies control the real number parsers' behavior. There are some
+predefined policies covering the most common real number formats but the
+user can supply her own when needed.
 
 
 
-[/ endsect]
+[/------------------------------------------------------------------------------]
+[section:uint Unsigned Integers (`uint_`, etc.)]
+
+[heading Description]
+
+The `uint_parser` class is the simplest among the members of the
+numerics package. The `uint_parser` can parse unsigned integers of
+arbitrary length and size. The `uint_parser` parser can be used to parse
+ordinary primitive C/C++ integers or even user defined scalars such as
+bigints (unlimited precision integers). The `uint_parser` is a template
+class. Template parameters fine tune its behavior. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/numeric/uint.hpp>
+    #include <boost/spirit/include/qi_uint.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::bin           // alias: boost::spirit::qi::bin`]]
+    [[`boost::spirit::oct           // alias: boost::spirit::qi::oct`]]
+    [[`boost::spirit::hex           // alias: boost::spirit::qi::hex`]]
+    [[`boost::spirit::ushort_       // alias: boost::spirit::qi::ushort_`]]
+    [[`boost::spirit::ulong_        // alias: boost::spirit::qi::ulong_`]]
+    [[`boost::spirit::uint_         // alias: boost::spirit::qi::uint_`]]
+    [[`boost::spirit::ulong_long    // alias: boost::spirit::qi::ulong_long`]]
+]
+
+[note `ulong_long` is only available on platforms where the preprocessor
+constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
+native support for `unsigned long long` (64 bit) unsigned integer
+types).]
+
+[heading Synopsis]
+
+    template <
+        typename T
+      , unsigned Radix
+      , unsigned MinDigits
+      , int MaxDigits>
+    struct uint_parser;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`T`]          [The numeric base type of the 
+                    numeric parser.]                    []]
+    [[`Radix`]      [The radix base. This can be 
+                    either 2: binary, 8: octal, 
+                    10: decimal and 16: hexadecimal.]   [10]]
+    [[`MinDigits`]  [The minimum number of digits 
+                    allowable.]                         [1]]
+    [[`MaxDigits`]  [The maximum number of digits 
+                    allowable. If this is -1, then the 
+                    maximum limit becomes unbounded.]   [-1]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`NP`]         [An instance of `uint_parser` (type).]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`NP()`]           [Instantiate and (default) construct a `uint_parser`]]
+    [[`bin`]            [Create a `uint_parser<unsigned, 2, 1, -1>`]]
+    [[`oct`]            [Create a `uint_parser<unsigned, 8, 1, -1>`]]
+    [[`hex`]            [Create a `uint_parser<unsigned, 16, 1, -1>`]]
+    [[`ushort_`]        [Create a `uint_parser<unsigned short, 10, 1, -1>`]]
+    [[`ulong_`]         [Create a `uint_parser<unsigned long, 10, 1, -1>`]]
+    [[`uint_`]          [Create a `uint_parser<unsigned int, 10, 1, -1>`]]
+    [[`ulong_long`]     [Create a `uint_parser<unsigned long long, 10, 1, -1>`]]
+]
+
+[heading Attributes]
+
+[:`T`, The numeric base type of the numeric parser.]
+
+[heading Complexity]
+
+[:O(N), where N is the number of digits being parsed.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_uint]
+
+Basic unsigned integers:
+
+[reference_uint]
+
+[reference_thousand_separated]
+
+[endsect] [/ Unsigned Integers]
+
+[/------------------------------------------------------------------------------]
+[section:int Signed Integers (`int_`, etc.)]
+
+[heading Description]
+
+The `int_parser` can parse signed integers of arbitrary length and size.
+This is almost the same as the `uint_parser`. The only difference is the
+additional task of parsing the `'+'` or `'-'` sign preceding the number.
+The class interface is the same as that of the `uint_parser`.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/numeric/int.hpp>
+    #include <boost/spirit/include/qi_int.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::short_        // alias: boost::spirit::qi::short_`]]
+    [[`boost::spirit::long_         // alias: boost::spirit::qi::long_`]]
+    [[`boost::spirit::int_          // alias: boost::spirit::qi::int_`]]
+    [[`boost::spirit::long_long     // alias: boost::spirit::qi::long_long`]]
+]
+
+[note `long_long` is only available on platforms where the preprocessor
+constant `BOOST_HAS_LONG_LONG` is defined (i.e. on platforms having
+native support for `signed long long` (64 bit) unsigned integer types).]
+
+[heading Synopsis]
+
+    template <
+        typename T
+      , unsigned Radix
+      , unsigned MinDigits
+      , int MaxDigits>
+    struct int_parser;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`T`]          [The numeric base type of the 
+                    numeric parser.]                    []]
+    [[`Radix`]      [The radix base. This can be 
+                    either 2: binary, 8: octal, 
+                    10: decimal and 16: hexadecimal.]   [10]]
+    [[`MinDigits`]  [The minimum number of digits 
+                    allowable.]                         [1]]
+    [[`MaxDigits`]  [The maximum number of digits 
+                    allowable. If this is -1, then the 
+                    maximum limit becomes unbounded.]   [-1]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`NP`]         [An instance of `int_parser` (type).]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`NP()`]           [Instantiate and (default) construct an `int_parser`]]
+    [[`short_`]         [Create an `int_parser<short, 10, 1, -1>`]]
+    [[`long_`]          [Create an `int_parser<long, 10, 1, -1>`]]
+    [[`int_`]           [Create an `int_parser<int, 10, 1, -1>`]]
+    [[`long_long`]      [Create an `int_parser<long long, 10, 1, -1>`]]
+]
+
+[heading Attributes]
+
+[:`T`, The numeric base type of the numeric parser.]
+
+[heading Complexity]
+
+[:O(N), where N is the number of digits being parsed.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_int]
+
+Basic signed integers:
+
+[reference_int]
+
+[endsect] [/ Signed Integers]
+
+[endsect]

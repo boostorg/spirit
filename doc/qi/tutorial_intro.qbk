@@ -22,10 +22,10 @@ understand and maintain.
 One prime objective is to make the tool easy to use. When one thinks of a
 parser generator, the usual reaction is "it must be big and complex with a
 steep learning curve." Not so. Spirit is designed to be fully scalable. The
-framework is structured in layers. This permits learning on an as-needed basis,
+library is structured in layers. This permits learning on an as-needed basis,
 after only learning the minimal core and basic concepts.
 
-For development simplicity and ease in deployment, the entire framework
+For development simplicity and ease in deployment, the entire library
 consists of only header files, with no libraries to link against or build.
 Just put the spirit distribution in your include path, compile and run. Code
 size? -very tight -essentially comparable to hand written recursive descent

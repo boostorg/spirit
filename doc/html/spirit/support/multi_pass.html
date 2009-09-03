@@ -64,7 +64,7 @@
         iterator was created.
       </p>
 <a name="spirit.support.multi_pass.using_the_multi_pass"></a><h4>
-<a name="id639815"></a>
+<a name="id644002"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.using_the_multi_pass">Using the
         multi_pass</a>
       </h4>
@@ -212,7 +212,7 @@
 <p>
       </p>
 <a name="spirit.support.multi_pass.using_the_flush_multi_pass_parser"></a><h4>
-<a name="id641602"></a>
+<a name="id645789"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.using_the_flush_multi_pass_parser">Using
         the flush_multi_pass parser</a>
       </h4>
@@ -234,7 +234,7 @@
         thrown.
       </p>
 <a name="spirit.support.multi_pass.the_multi_pass_policies"></a><h4>
-<a name="id641757"></a>
+<a name="id645944"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.the_multi_pass_policies">The multi_pass
         Policies</a>
       </h4>
@@ -270,12 +270,12 @@
         policy in a single class. But it has shown to be more convenient to split
         this into four different groups of functions, i.e. four separate, but well
         coordinated policies. For this reason the <tt class="computeroutput"><span class="identifier">multi_pass</span></tt>
-        framework implements a template <tt class="computeroutput"><span class="identifier">iterator_policies</span><span class="special">::</span><span class="identifier">default_policy</span></tt>
+        library implements a template <tt class="computeroutput"><span class="identifier">iterator_policies</span><span class="special">::</span><span class="identifier">default_policy</span></tt>
         allowing to combine several different policies, each implementing one of
         the functionality groups:
       </p>
 <div class="table">
-<a name="id641921"></a><p class="title"><b>Table 13. Policies needed for default_policy template</b></p>
+<a name="id646108"></a><p class="title"><b>Table 13. Policies needed for default_policy template</b></p>
 <table class="table" summary="Policies needed for default_policy template">
 <colgroup>
 <col>
@@ -331,14 +331,13 @@
 </table>
 </div>
 <p>
-        The <tt class="computeroutput"><span class="identifier">multi_pass</span></tt> framework
-        contains several predefined policy implementations for each of the policy
-        types as described above. First we will describe those predefined types.
-        Afterwards we will give some guidelines how you can write your own policy
-        implementations.
+        The <tt class="computeroutput"><span class="identifier">multi_pass</span></tt> library contains
+        several predefined policy implementations for each of the policy types as
+        described above. First we will describe those predefined types. Afterwards
+        we will give some guidelines how you can write your own policy implementations.
       </p>
 <a name="spirit.support.multi_pass.predefined_policies"></a><h4>
-<a name="id642185"></a>
+<a name="id646372"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.predefined_policies">Predefined
         policies</a>
       </h4>
@@ -347,7 +346,7 @@
         policies are defined in the namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">iterator_policies</span></tt>.
       </p>
 <div class="table">
-<a name="id642250"></a><p class="title"><b>Table 14. Predefined policy classes</b></p>
+<a name="id646436"></a><p class="title"><b>Table 14. Predefined policy classes</b></p>
 <table class="table" summary="Predefined policy classes">
 <colgroup>
 <col>
@@ -528,7 +527,7 @@
 </table>
 </div>
 <a name="spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass"></a><h4>
-<a name="id643198"></a>
+<a name="id647384"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.combinations__how_to_specify_your_own_custom_multi_pass">Combinations:
         How to specify your own custom multi_pass</a>
       </h4>
@@ -574,7 +573,7 @@
         behaviors while wrapping an <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream_iterator</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></tt>.
       </p>
 <a name="spirit.support.multi_pass.dealing_with_constant_look_ahead"></a><h4>
-<a name="id643815"></a>
+<a name="id648002"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.dealing_with_constant_look_ahead">Dealing
         with constant look ahead</a>
       </h4>
@@ -593,7 +592,7 @@
         StoragePolicy.
       </p>
 <a name="spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy"></a><h4>
-<a name="id644030"></a>
+<a name="id648217"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.how_to_write_a_functor_for_use_with_the__code__phrase_role__identifier__functor_input__phrase___code__inputpolicy">How
         to write a functor for use with the <tt class="computeroutput"><span class="identifier">functor_input</span></tt>
         InputPolicy</a>
@@ -652,7 +651,7 @@
 <span class="special">}</span>
 </pre>
 <a name="spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass"></a><h4>
-<a name="id644849"></a>
+<a name="id649036"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.how_to_write_policies_for_use_with_multi_pass">How
         to write policies for use with multi_pass</a>
       </h4>
@@ -669,7 +668,7 @@
         copies of a particular <tt class="computeroutput"><span class="identifier">multi_pass</span></tt>.
       </p>
 <a name="spirit.support.multi_pass.inputpolicy"></a><h4>
-<a name="id644975"></a>
+<a name="id649162"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.inputpolicy">InputPolicy</a>
       </h4>
 <p>
@@ -765,7 +764,7 @@
         constructor of <tt class="computeroutput"><span class="identifier">shared</span></tt>.
       </p>
 <a name="spirit.support.multi_pass.ownershippolicy"></a><h4>
-<a name="id646185"></a>
+<a name="id650371"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.ownershippolicy">OwnershipPolicy</a>
       </h4>
 <p>
@@ -832,7 +831,7 @@
         constructor of <tt class="computeroutput"><span class="identifier">shared</span></tt>.
       </p>
 <a name="spirit.support.multi_pass.checkingpolicy"></a><h4>
-<a name="id646929"></a>
+<a name="id651115"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.checkingpolicy">CheckingPolicy</a>
       </h4>
 <p>
@@ -891,7 +890,7 @@
         constructor of <tt class="computeroutput"><span class="identifier">shared</span></tt>.
       </p>
 <a name="spirit.support.multi_pass.storagepolicy"></a><h4>
-<a name="id647564"></a>
+<a name="id651750"></a>
         <a href="multi_pass.html#spirit.support.multi_pass.storagepolicy">StoragePolicy</a>
       </h4>
 <p>

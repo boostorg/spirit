@@ -252,5 +252,37 @@ main()
         test_parser("a", lower);
         //]
     }
+    
+    // uint
+    {
+        //[reference_using_declarations_uint
+        using boost::spirit::qi::uint_;
+        using boost::spirit::qi::uint_parser;
+        //]
+
+        //[reference_uint
+        test_parser("12345", uint_);
+        //]
+        
+        //[reference_thousand_separated
+        //`Thousand separated number parser:
+        uint_parser<unsigned, 10, 1, 3> uint3_p;        //  1..3 digits
+        uint_parser<unsigned, 10, 3, 3> uint3_3_p;      //  exactly 3 digits        
+        test_parser("12,345,678", uint3_p >> *(',' >> uint3_3_p));
+        //]
+    }
+    
+    // int
+    {
+        //[reference_using_declarations_int
+        using boost::spirit::qi::int_;
+        //]
+
+        //[reference_int
+        test_parser("+12345", int_);
+        test_parser("-12345", int_);
+        //]
+    }
+
     return 0;
 }

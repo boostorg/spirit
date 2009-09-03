@@ -39,7 +39,7 @@ to use, while being scalable from trivial to very complicated applications.
 
 In terms of development simplicity and ease in deployment, the same is true for 
 __karma__ as has been described elsewhere in this docs for __qi__: the entire 
-framework consists of only header files, with no libraries to link against or 
+library consists of only header files, with no libraries to link against or 
 build. Just put the spirit distribution in your include path, compile and run. 
 Code size? -very tight -essentially comparable to hand written code.
 

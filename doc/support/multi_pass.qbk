@@ -153,7 +153,7 @@ The multi_pass class has two template parameters:
 It is possible to implement all of the required functionality of the combinded 
 policy in a single class. But it has shown to be more convenient to split this 
 into four different groups of functions, i.e. four separate, but well 
-coordinated policies. For this reason the `multi_pass` framework
+coordinated policies. For this reason the `multi_pass` library
 implements a template `iterator_policies::default_policy` allowing to combine
 several different policies, each implementing one of the functionality groups:
 
@@ -170,7 +170,7 @@ several different policies, each implementing one of the functionality groups:
                              determined and managed by the StoragePolicy.]]
 ]
 
-The `multi_pass` framework contains several predefined policy implementations
+The `multi_pass` library contains several predefined policy implementations
 for each of the policy types as described above. First we will describe those
 predefined types. Afterwards we will give some guidelines how you can write 
 your own policy implementations.

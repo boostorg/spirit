@@ -214,7 +214,7 @@ Lazy char_ using __phoenix__
 
 [heading Description]
 
-The framework has the full repertoire of single character parsers for
+The library has the full repertoire of single character parsers for
 character classification. This includes the usual `alnum`, `alpha`,
 `digit`, `xdigit`, etc. parsers. These parsers have an associated
 __char_encoding_namespace__. This is needed when doing basic operations
