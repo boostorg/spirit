@@ -99,7 +99,7 @@ namespace boost { namespace spirit
                     proto::when<proto::binary_expr<proto::tag::subscript
                       , proto::and_<
                             proto::terminal<proto::_>
-                          , proto::if_<use_directive<Domain, proto::_child_c<0> >()> >
+                          , proto::if_<use_directive<Domain, proto::_value >()> >
                       , meta_grammar>,
                         detail::make_directive<Domain, meta_grammar>
                     >,
