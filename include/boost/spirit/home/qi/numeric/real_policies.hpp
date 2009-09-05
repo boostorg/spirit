@@ -92,7 +92,7 @@ namespace boost { namespace spirit { namespace qi
         //  starting with a non-digit character (such as NaN, Inf, QNaN etc.).
         //
         //  The second call allows to recognize representation formats starting
-        //  with a 1.0 (such as 1.0#QNAN or 1.0#INF etc.).
+        //  with a 1.0 (such as 1.0#NAN or 1.0#INF etc.).
         //
         //  The functions should return true if a Nan or Inf has been found. In
         //  this case the attr should be set to the matched value (NaN or
