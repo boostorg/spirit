@@ -84,7 +84,7 @@ namespace boost { namespace spirit { namespace qi
     // This one is the class that the user can instantiate directly
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename T = double,
+        typename T,
         typename RealPolicies = real_policies<T>
     >
     struct real_parser

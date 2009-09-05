@@ -27,103 +27,103 @@
 # pragma warning(disable: 4127)   // conditional expression is constant
 #endif
 
-namespace boost { namespace spirit { namespace qi  { namespace detail
+namespace boost { namespace spirit { namespace traits
 {
-    namespace
-    {
-        using spirit::detail::pow10;
+    using spirit::detail::pow10;
 
-        template <typename T>
-        inline void
-        scale_number(int exp, T& n)
+    template <typename T>
+    inline void
+    scale(int exp, T& n)
+    {
+        if (exp >= 0)
         {
-            if (exp >= 0)
+            // $$$ Why is this failing for boost.math.concepts ? $$$
+            //~ int nn = std::numeric_limits<T>::max_exponent10;
+            //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
+            n *= pow10<T>(exp);
+        }
+        else
+        {
+            if (exp < std::numeric_limits<T>::min_exponent10)
             {
-                // $$$ Why is this failing for boost.math.concepts ? $$$
-                //~ int nn = std::numeric_limits<T>::max_exponent10;
-                //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
-                n *= pow10<T>(exp);
+                n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
+                n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
             }
             else
             {
-                if (exp < std::numeric_limits<T>::min_exponent10)
-                {
-                    n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
-                    n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
-                }
-                else
-                {
-                    n /= pow10<T>(-exp);
-                }
+                n /= pow10<T>(-exp);
             }
-        }
-
-        inline void
-        scale_number(int /*exp*/, unused_type /*n*/)
-        {
-            // no-op for unused_type
-        }
-
-        template <typename T>
-        inline void
-        scale_number(int exp, int frac, T& n)
-        {
-            scale_number(exp - frac, n);
-        }
-
-        inline void
-        scale_number(int /*exp*/, int /*frac*/, unused_type /*n*/)
-        {
-            // no-op for unused_type
-        }
-
-          inline float
-        negate_number(bool neg, float n)
-        {
-            return neg ? spirit::detail::changesign(n) : n;
-        }
-
-        inline double
-        negate_number(bool neg, double n)
-        {
-            return neg ? spirit::detail::changesign(n) : n;
-        }
-
-        inline long double
-        negate_number(bool neg, long double n)
-        {
-            return neg ? spirit::detail::changesign(n) : n;
-        }
-
-        template <typename T>
-        inline T
-        negate_number(bool neg, T const& n)
-        {
-            return neg ? -n : n;
-        }
-
-        inline unused_type
-        negate_number(bool /*neg*/, unused_type n)
-        {
-            // no-op for unused_type
-            return n;
-        }
-
-        template <typename T>
-        inline bool
-        number_equal_to_one(T const& value)
-        {
-            return value == 1.0;
-        }
-
-        inline bool
-        number_equal_to_one(unused_type)
-        {
-            // no-op for unused_type
-            return false;
         }
     }
 
+    inline void
+    scale(int /*exp*/, unused_type /*n*/)
+    {
+        // no-op for unused_type
+    }
+
+    template <typename T>
+    inline void
+    scale(int exp, int frac, T& n)
+    {
+        scale(exp - frac, n);
+    }
+
+    inline void
+    scale(int /*exp*/, int /*frac*/, unused_type /*n*/)
+    {
+        // no-op for unused_type
+    }
+
+      inline float
+    negate(bool neg, float n)
+    {
+        return neg ? spirit::detail::changesign(n) : n;
+    }
+
+    inline double
+    negate(bool neg, double n)
+    {
+        return neg ? spirit::detail::changesign(n) : n;
+    }
+
+    inline long double
+    negate(bool neg, long double n)
+    {
+        return neg ? spirit::detail::changesign(n) : n;
+    }
+
+    template <typename T>
+    inline T
+    negate(bool neg, T const& n)
+    {
+        return neg ? -n : n;
+    }
+
+    inline unused_type
+    negate(bool /*neg*/, unused_type n)
+    {
+        // no-op for unused_type
+        return n;
+    }
+
+    template <typename T>
+    inline bool
+    is_equal_to_one(T const& value)
+    {
+        return value == 1.0;
+    }
+
+    inline bool
+    is_equal_to_one(unused_type)
+    {
+        // no-op for unused_type
+        return false;
+    }
+}}}
+
+namespace boost { namespace spirit { namespace qi  { namespace detail
+{
     template <typename T, typename RealPolicies>
     struct real_impl
     {
@@ -153,7 +153,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     p.parse_inf(first, last, attr))
                 {
                     // If we got a negative sign, negate the number
-                    attr = negate_number(neg, attr);
+                    attr = traits::negate(neg, attr);
                     return true;    // got a NaN or Inf, return early
                 }
 
@@ -224,7 +224,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 {
                     // Got the exponent value. Scale the number by
                     // exp-frac_digits.
-                    scale_number(exp, frac_digits, n);
+                    traits::scale(exp, frac_digits, n);
                 }
                 else
                 {
@@ -236,9 +236,9 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
-                scale_number(-frac_digits, n);
+                traits::scale(-frac_digits, n);
             }
-            else if (number_equal_to_one(n))
+            else if (traits::is_equal_to_one(n))
             {
                 // There is a chance of having to parse one of the 1.0#...
                 // styles some implementations use for representing NaN or Inf.
@@ -248,13 +248,13 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                     p.parse_inf(first, last, attr))
                 {
                     // If we got a negative sign, negate the number
-                    attr = negate_number(neg, attr);
+                    attr = traits::negate(neg, attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
             }
 
             // If we got a negative sign, negate the number
-            attr = negate_number(neg, n);
+            attr = traits::negate(neg, n);
 
             // Success!!!
             return true;

@@ -163,7 +163,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         static void add(T& n, Char ch, mpl::false_) // unchecked add
         {
             const int digit = radix_traits<Radix>::digit(ch);
-            n = n * Radix + digit;
+            n = n * T(int(Radix + digit));
         }
 
         template <typename T, typename Char>
@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         static void add(T& n, Char ch, mpl::false_) // unchecked subtract
         {
             const int digit = radix_traits<Radix>::digit(ch);
-            n = n * Radix - digit;
+            n = n * T(int(Radix - digit));
         }
 
         template <typename T, typename Char>
@@ -269,6 +269,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                     ||  (MaxDigits > radix_traits<Radix>::template digits<T>::value)
                     )
                   && std::numeric_limits<T>::is_modulo
+                  && !std::numeric_limits<T>::is_bounded
                 >()
             );
         }
@@ -349,7 +350,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 }
             }
 
-            Attribute val = Accumulate ? attr : 0;
+            Attribute val = Accumulate ? attr : Attribute(0);
             std::size_t count = 0;
             char_type ch;
 
@@ -450,7 +451,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 }
             }
 
-            Attribute val = Accumulate ? attr : 0;
+            Attribute val = Accumulate ? attr : Attribute(0);
             char_type ch = *it;
 
             if (!radix_check::is_valid(ch) || !extractor::call(ch, 0, val))
