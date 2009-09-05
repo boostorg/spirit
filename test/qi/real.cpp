@@ -105,6 +105,21 @@ compare(T n, double expected)
     return (delta >= -eps) && (delta <= eps);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// A custom real type
+struct custom_real
+{
+    double n;
+    custom_real() : n(0) {}
+    custom_real(double n_) : n(n_) {}
+    friend custom_real operator*(custom_real a, custom_real b) 
+        { return custom_real(a.n * b.n); }
+    friend custom_real operator+(custom_real a, custom_real b) 
+        { return custom_real(a.n + b.n); }
+    friend custom_real operator-(custom_real a, custom_real b) 
+        { return custom_real(a.n - b.n); }
+};
+
 int
 main()
 {
@@ -384,6 +399,16 @@ main()
         BOOST_TEST(!test("-1.2e", custom_real));
         BOOST_TEST(!test_attr("-1.2e", custom_real, d));
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //  custom real tests
+    ///////////////////////////////////////////////////////////////////////////
+    //~ {
+        //~ using boost::spirit::qi::double_;
+        //~ custom_real n;
+
+        //~ BOOST_TEST(test_attr("-123456e6", double_, n));
+    //~ }
 
     return boost::report_errors();
 }

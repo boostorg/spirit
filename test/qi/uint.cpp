@@ -38,6 +38,20 @@
     char const* max_hex = "FFFFFFFF";
     char const* hex_overflow = "100000000";
 
+///////////////////////////////////////////////////////////////////////////////
+// A custom int type
+struct custom_int
+{
+    int n;
+    custom_int() : n(0) {}
+    explicit custom_int(int n_) : n(n_) {}
+    custom_int& operator=(int n_) { n = n_; return *this; }
+    friend custom_int operator*(custom_int a, custom_int b) 
+        { return custom_int(a.n * b.n); }
+    friend custom_int operator+(custom_int a, custom_int b) 
+        { return custom_int(a.n + b.n); }
+};
+
 int
 main()
 {
@@ -192,6 +206,20 @@ main()
         boost::uint8_t u;
 
         BOOST_TEST(!test_attr("999", uint_, u));
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //  custom uint tests
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::qi::uint_;
+        using boost::spirit::qi::uint_parser;
+        custom_int u;
+
+        BOOST_TEST(test_attr("123456", uint_, u));
+
+        uint_parser<custom_int, 10, 1, 2> uint2;
+        BOOST_TEST(test_attr("12", uint2, u));
     }
 
     return boost::report_errors();

@@ -17,7 +17,19 @@ Policies control the real number parsers' behavior. There are some
 predefined policies covering the most common real number formats but the
 user can supply her own when needed.
 
+The numeric parsers are fine tuned (employing loop unrolling and
+extensive template metaprogramming) with exceptional performance that
+rivals the low level C functions such as `atof`, `strtod`, `atol`,
+`strtol`. Benchmarks reveal up to 4X speed over the C counterparts. This
+goes to show that you can write extremely tight generic C++ code that
+rivals, if not surpasses C. 
 
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/qi/numeric.hpp>
+    #include <boost/spirit/include/qi_numeric.hpp>
+
+Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
 [section:uint Unsigned Integers (`uint_`, etc.)]
@@ -28,8 +40,9 @@ The `uint_parser` class is the simplest among the members of the
 numerics package. The `uint_parser` can parse unsigned integers of
 arbitrary length and size. The `uint_parser` parser can be used to parse
 ordinary primitive C/C++ integers or even user defined scalars such as
-bigints (unlimited precision integers). The `uint_parser` is a template
-class. Template parameters fine tune its behavior. 
+bigints (unlimited precision integers) as long as the type follows
+certain expression requirements (documented below). The `uint_parser` is
+a template class. Template parameters fine tune its behavior. 
 
 [heading Header]
 
@@ -87,6 +100,7 @@ types).]
 
 [variablelist Notation
     [[`NP`]         [An instance of `uint_parser` (type).]]
+    [[`n`]          [An object of `T`, the numeric base type.]]
 ]
 
 [heading Expression Semantics]
@@ -114,6 +128,28 @@ not defined in __primitive_parser_concept__.
 
 [:O(N), where N is the number of digits being parsed.]
 
+[heading Minimum Expression Requirements for `T`]
+
+The numeric base type, `T`, the expression requirements below must be
+valid:
+
+[table
+    [[Expression]                           [Semantics]]
+    [[`T()`]                                [Default construct.]]
+    [[`T(0)`]                               [Construct from an `int`.]]
+    [[`n + n`]                              [Addition.]]
+    [[`n * n`]                              [Multiplication.]]
+    [[`std::numeric_limits<T>::is_bounded`] [`true` or `false` if `T` bounded.]]
+    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`. 
+                                            Required only if `T` is bounded.]]
+]
+
 [heading Example]
 
 Some using declarations:
@@ -137,6 +173,11 @@ The `int_parser` can parse signed integers of arbitrary length and size.
 This is almost the same as the `uint_parser`. The only difference is the
 additional task of parsing the `'+'` or `'-'` sign preceding the number.
 The class interface is the same as that of the `uint_parser`.
+
+The `int_parser` parser can be used to parse ordinary primitive C/C++
+integers or even user defined scalars such as bigints (unlimited
+precision integers) as long as the type follows certain expression
+requirements (documented below). 
 
 [heading Header]
 
@@ -190,6 +231,7 @@ native support for `signed long long` (64 bit) unsigned integer types).]
 
 [variablelist Notation
     [[`NP`]         [An instance of `int_parser` (type).]]
+    [[`n`]          [An object of `T`, the numeric base type.]]
 ]
 
 [heading Expression Semantics]
@@ -212,7 +254,30 @@ not defined in __primitive_parser_concept__.
 
 [heading Complexity]
 
-[:O(N), where N is the number of digits being parsed.]
+[:O(N), where N is the number of digits being parsed plus the sign.]
+
+[heading Minimum Expression Requirements for `T`]
+
+The numeric base type, `T`, the expression requirements below must be
+valid:
+
+[table
+    [[Expression]                           [Semantics]]
+    [[`T()`]                                [Default construct.]]
+    [[`T(0)`]                               [Construct from an `int`.]]
+    [[`n + n`]                              [Addition.]]
+    [[`n - n`]                              [Subtraction.]]
+    [[`n * n`]                              [Multiplication.]]
+    [[`std::numeric_limits<T>::is_bounded`] [`true` or `false` if `T` bounded.]]
+    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`. 
+                                            Required only if `T` is bounded.]]
+]
 
 [heading Example]
 
@@ -225,5 +290,269 @@ Basic signed integers:
 [reference_int]
 
 [endsect] [/ Signed Integers]
+
+[/------------------------------------------------------------------------------]
+[section:real Real Numbers (`float_`, `double_`, etc.)]
+
+[heading Description]
+
+The `real_parser` can parse real numbers of arbitrary length and size
+limited by its template parameter, `T`. The numeric base type `T` can be
+a user defined numeric type such as fixed_point (fixed point reals) and
+bignum (unlimited precision numbers) as long as the type follows certain
+expression requirements (documented below).
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/numeric/real.hpp>
+    #include <boost/spirit/include/qi_real.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::float_        // alias: boost::spirit::qi::float_`]]
+    [[`boost::spirit::double_       // alias: boost::spirit::qi::double_`]]
+    [[`boost::spirit::long_double   // alias: boost::spirit::qi::long_double`]]
+]
+
+[heading Synopsis]
+
+    template <typename T, typename RealPolicies>
+    struct real_parser;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`T`]                  [The numeric base type of the 
+                            numeric parser.]                []]
+    [[`RealPolicies`]       [Policies control the 
+                            parser's behavior.]             [`real_policies<T>`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`NP`]         [An instance of `real_parser` (type).]]
+    [[`RP`]         [A `RealPolicies` (type).]]
+    [[`n`]          [An object of `T`, the numeric base type.]]
+    [[`exp`]        [A `int` exponent.]]
+    [[`b`]          [A `bool` flag.]]
+    [[`f`, `l`]     [`ForwardIterator`. first/last iterator pair.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`NP()`]           [Instantiate and (default) construct an `real_parser`]]
+    [[`float_`]         [Create an `real_parser<float, real_policies<T> >`]]
+    [[`double_`]        [Create an `real_parser<double, real_policies<T> >`]]
+    [[`long_double`]    [Create an `real_parser<long double, real_policies<T> >`]]
+]
+
+[heading Attributes]
+
+[:`T`, The numeric base type of the numeric parser.]
+
+[heading Complexity]
+
+[:O(N), where N is the number of characters (including the digits,
+exponent, sign, etc.) being parsed.]
+
+[heading Minimum Expression Requirements for `T`]
+
+The numeric base type, `T`, the minimum expression requirements listed
+below must be valid. Take note that additional requirements may be
+imposed by custom policies. 
+
+[table
+    [[Expression]                           [Semantics]]
+    [[`T()`]                                [Default construct.]]
+    [[`T(0)`]                               [Construct from an `int`.]]
+    [[`n + n`]                              [Addition.]]
+    [[`n - n`]                              [Subtraction.]]
+    [[`n * n`]                              [Multiplication.]]
+    [[`std::numeric_limits<T>::is_bounded`] [`true` or `false` if `T` bounded.]]
+    [[`std::numeric_limits<T>::digits`]     [Maximum Digits for `T`, radix digits. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::digits10`]   [Maximum Digits for `T`, base 10. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::max()`]      [Maximum value for `T`. 
+                                            Required only if `T` is bounded.]]
+    [[`std::numeric_limits<T>::min()`]      [Minimum value for `T`. 
+                                            Required only if `T` is bounded.]]
+                                            
+                                            
+    [[`boost::spirit::traits::scale(exp, n)`]    
+                                            [Multiply `n` by `10^exp`. Default implementation
+                                            is provided for `float`, `double` and `long double`.]]
+
+    [[`boost::spirit::traits::negate(b, n)`]    
+                                            [Negate `n` if `b` is `true`. Default implementation
+                                            is provided for `float`, `double` and `long double`.]]
+
+    [[`boost::spirit::traits::is_equal_to_one(n)`]    
+                                            [Return `true` if `n` is equal to `1.0`. Default implementation
+                                            is provided for `float`, `double` and `long double`.]]
+                                            
+]
+
+[note The additional spirit real number traits above are provided to
+allow custom implementations to implement efficient real number parsers.
+For example, for certain custom real numbers, scaling to a base 10
+exponent is a very cheap operation.]
+
+[heading `RealPolicies`]
+
+The `RealPolicies` template parameter is a class that groups all the
+policies that control the parser's behavior. It defaults to
+`real_policies<T>`. Policies control the real number parsers' behavior.
+
+The default policies provided are designed to parse C/C++ style real
+numbers of the form `nnn.fff.Eeee` where `nnn` is the whole number part,
+`fff` is the fractional part, `E` is `'e'` or `'E'` and `eee` is the
+exponent optionally preceded by `'-'` or `'+'` with the additional
+detection of NaN and Inf. This corresponds to the following (pseudo)
+grammar:
+
+    realliteral
+        =   -(lit('+') | '-') >>
+            (
+                    -lit("1.0#") >> (lit("NAN") | "nan")
+                |   lexeme[lit("INF") >> -lit("INITY")] 
+                |   lexeme[lit("inf") >> -lit("inity")] 
+                |   fractionalconstant >> !exponentpart
+                |  +digit >> exponentpart
+            )
+        ;
+
+    fractionalconstant
+        =  *digit >> '.' >> +digit
+        |  +digit >> -lit('.')
+        ;
+
+    exponentpart
+        =   (lit('e') | 'E') >> -(lit('+') | '-') >> +digit
+        ;
+
+The default policies are provided to take care of the most common case
+(there are many ways to represent, and hence parse, real numbers). In
+most cases, the default setting of the real_parser is sufficient and can
+be used straight out of the box. 
+
+The default policies implementation recognizes representations of NaN
+and Inf as mandated by the C99 Standard and as proposed for inclusion
+into the C++0x Standard: nan, nan(...), inf and infinity (the matching
+is performed case-insensitively).
+
+There are four `RealPolicies` pre-defined for immediate use:
+
+[table Predefined Policies
+
+    [[Policy]                               [Description]]
+    [[`ureal_policies<double> >`]           [Without sign.]]
+    [[`real_policies<double> >`]            [With sign.]]
+    [[`strict_ureal_policies<double> >`]    [Without sign, dot required.]]
+    [[`strict_real_policies<double> >`]     [With sign, dot required.]]
+]
+
+[note Integers are considered a subset of real numbers, so for instance,
+`double_` recognizes integer numbers (without a dot) just as well. To
+avoid this ambiguity, `strict_ureal_policies` and `strict_real_policies`
+require a dot to be present for a number to be considered a successful
+match.]
+
+[heading `RealPolicies` Expression Requirements]
+
+For models of `RealPolicies` the following expressions must be valid:
+
+[table
+    [[Expression]                           [Semantics]]
+    [[`RP::allow_leading_dot`]              [Allow leading dot.]]
+    [[`RP::allow_trailing_dot`]             [Allow trailing dot.]]
+    [[`RP::expect_dot`]                     [Require a dot.]]
+    [[`RP::parse_sign(f, l)`]               [Parse the prefix sign (e.g. '-'). 
+                                            Return `true` if successful, otherwise `false`.]]
+    [[`RP::parse_n(f, l, n)`]               [Parse the integer at the left of the decimal point. 
+                                            Return `true` if successful, otherwise `false`.
+                                            If successful, place the result into `n`.]]
+    [[`RP::parse_dot(f, l)`]                [Parse the decimal point. 
+                                            Return `true` if successful, otherwise `false`.]]
+    [[`RP::parse_frac_n(f, l, n)`]          [Parse the fraction after the decimal point. 
+                                            Return `true` if successful, otherwise `false`.
+                                            If successful, place the result into `n`.]]
+    [[`RP::parse_exp(f, l)`]                [Parse the exponent prefix (e.g. 'e'). 
+                                            Return `true` if successful, otherwise `false`.]]
+    [[`RP::parse_exp_n(f, l, n)`]           [Parse the actual exponent. 
+                                            Return `true` if successful, otherwise `false`.
+                                            If successful, place the result into `n`.]]
+    [[`RP::parse_nan(f, l, n)`]             [Parse a NaN. 
+                                            Return `true` if successful, otherwise `false`.
+                                            If successful, place the result into `n`.]]
+    [[`RP::parse_inf(f, l, n)`]             [Parse an Inf. 
+                                            Return `true` if successful, otherwise `false`.
+                                            If successful, place the result into `n`.]]
+]
+
+The `parse_nan` and `parse_inf` functions get called whenever:
+
+[:a number to parse does not start with a digit (after having
+successfully parsed an optional sign)]
+
+or
+
+[:after a real number of the value 1 (having no exponential
+part and a fractional part value of 0) has been parsed.]
+
+The first call recognizes representations of NaN or Inf starting with a
+non-digit character (such as NaN, Inf, QNaN etc.). The second call
+allows to recognize representation formats starting with a `1.0` (such
+as `1.0#QNAN` or `1.0#INF` etc.).
+
+The functions should return true if a Nan or Inf has been found. In this
+case the attribute `n` should be set to the matched value (NaN or Inf).
+The optional sign will be automatically applied afterwards.
+
+[heading `RealPolicies` Specializations]
+
+The easiest way to implement a proper real parsing policy is to derive a
+new type from the the type `real_policies` while overriding the aspects
+of the parsing which need to be changed. For example, here's the
+implementation of thye redefined `strict_real_policies`:
+
+    template <typename T>
+    struct strict_real_policies : real_policies<T>
+    {
+        static bool const expect_dot = true;
+    };
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_real]
+
+Basic real number parsing:
+
+[reference_real]
+
+A custom real number policy:
+
+[reference_test_real_policy]
+
+And its use:
+
+[reference_custom_real]
+
+[endsect] [/ Real Numbers]
 
 [endsect]

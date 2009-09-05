@@ -58,6 +58,19 @@ BOOST_STATIC_ASSERT(sizeof(long long) == 8);
     char const* long_long_underflow = "-9223372036854775809";
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+// A custom int type
+struct custom_int
+{
+    int n;
+    custom_int() : n(0) {}
+    explicit custom_int(int n_) : n(n_) {}
+    custom_int& operator=(int n_) { n = n_; return *this; }
+    friend custom_int operator*(custom_int a, custom_int b) { return custom_int(a.n * b.n); }
+    friend custom_int operator+(custom_int a, custom_int b) { return custom_int(a.n + b.n); }
+    friend custom_int operator-(custom_int a, custom_int b) { return custom_int(a.n - b.n); }
+};
+
 int
 main()
 {
@@ -189,6 +202,19 @@ main()
         BOOST_TEST(n == 789 && m == 789);
         BOOST_TEST(test("   456", int_[ref(n) = _1], space));
         BOOST_TEST(n == 456);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    //  custom int tests
+    ///////////////////////////////////////////////////////////////////////////
+    {
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::int_parser;
+        custom_int i;
+
+        BOOST_TEST(test_attr("-123456", int_, i));
+        int_parser<custom_int, 10, 1, 2> int2;
+        BOOST_TEST(test_attr("-12", int2, i));
     }
 
     return boost::report_errors();

@@ -36,6 +36,8 @@
           (<tt class="computeroutput"><span class="identifier">uint_</span></tt>, etc.)</a></span></dt>
 <dt><span class="section"><a href="numeric/int.html"> Signed Integers
           (<tt class="computeroutput"><span class="identifier">int_</span></tt>, etc.)</a></span></dt>
+<dt><span class="section"><a href="numeric/real.html"> Real Numbers (<tt class="computeroutput"><span class="identifier">float_</span></tt>, <tt class="computeroutput"><span class="identifier">double_</span></tt>,
+          etc.)</a></span></dt>
 </dl></div>
 <p>
           The library includes a couple of predefined objects for parsing signed
@@ -46,6 +48,25 @@
           real number parsers' behavior. There are some predefined policies covering
           the most common real number formats but the user can supply her own when
           needed.
+        </p>
+<p>
+          The numeric parsers are fine tuned (employing loop unrolling and extensive
+          template metaprogramming) with exceptional performance that rivals the
+          low level C functions such as <tt class="computeroutput"><span class="identifier">atof</span></tt>,
+          <tt class="computeroutput"><span class="identifier">strtod</span></tt>, <tt class="computeroutput"><span class="identifier">atol</span></tt>,
+          <tt class="computeroutput"><span class="identifier">strtol</span></tt>. Benchmarks reveal
+          up to 4X speed over the C counterparts. This goes to show that you can
+          write extremely tight generic C++ code that rivals, if not surpasses C.
+        </p>
+<a name="spirit.qi.reference.numeric.module_header"></a><h5>
+<a name="id471768"></a>
+          <a href="numeric.html#spirit.qi.reference.numeric.module_header">Module Header</a>
+        </h5>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_numeric</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+          Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

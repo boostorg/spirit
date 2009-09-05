@@ -39,6 +39,75 @@ void test_parser_attr(char const* input, P const& p, T& attr)
 }
 //]
 
+//[reference_test_real_policy
+///////////////////////////////////////////////////////////////////////////////
+//  These policies can be used to parse thousand separated
+//  numbers with at most 2 decimal digits after the decimal
+//  point. e.g. 123,456,789.01
+///////////////////////////////////////////////////////////////////////////////
+template <typename T>
+struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
+{
+    //  2 decimal places Max
+    template <typename Iterator, typename Attribute>
+    static bool
+    parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr)
+    {
+        return boost::spirit::qi::
+            extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
+    }
+
+    //  No exponent
+    template <typename Iterator>
+    static bool
+    parse_exp(Iterator&, Iterator const&)
+    {
+        return false;
+    }
+
+    //  No exponent
+    template <typename Iterator, typename Attribute>
+    static bool
+    parse_exp_n(Iterator&, Iterator const&, Attribute&)
+    {
+        return false;
+    }
+
+    //  Thousands separated numbers
+    template <typename Iterator, typename Attribute>
+    static bool
+    parse_n(Iterator& first, Iterator const& last, Attribute& attr)
+    {
+        using boost::spirit::qi::uint_parser;
+        namespace qi = boost::spirit::qi;
+
+        uint_parser<unsigned, 10, 1, 3> uint3;
+        uint_parser<unsigned, 10, 3, 3> uint3_3;
+
+        T result = 0;
+        if (parse(first, last, uint3, result))
+        {
+            bool hit = false;
+            T n;
+            Iterator save = first;
+
+            while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))
+            {
+                result = result * 1000 + n;
+                save = first;
+                hit = true;
+            }
+
+            first = save;
+            if (hit)
+                attr = result;
+            return hit;
+        }
+        return false;
+    }
+};
+//]
+
 int
 main()
 {
@@ -281,6 +350,23 @@ main()
         //[reference_int
         test_parser("+12345", int_);
         test_parser("-12345", int_);
+        //]
+    }
+    
+    // real
+    {
+        //[reference_using_declarations_real
+        using boost::spirit::qi::double_;
+        using boost::spirit::qi::real_parser;
+        //]
+
+        //[reference_real
+        test_parser("+12345e6", double_);
+        //]
+        
+        //[reference_custom_real
+        real_parser<double, ts_real_policies<double> > ts_real;
+        test_parser("123,456,789.01", ts_real);
         //]
     }
 
