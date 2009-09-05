@@ -145,7 +145,7 @@
           Our test functions:
         </p>
 <p>
-          This one tests the parsers without attributes.
+          These functions test the parsers without attributes.
         </p>
 <p>
           </p>
@@ -155,9 +155,25 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_parser</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">input</span><span class="special">,</span> <span class="identifier">P</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">)</span>
 <span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">;</span>
+
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">))</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">))</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="keyword">else</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">input</span><span class="special">,</span> <span class="identifier">P</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
+    
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">space</span><span class="special">))</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -168,7 +184,7 @@
 <p>
         </p>
 <p>
-          This one tests the parsers with user supplied attributes.
+          These functions test the parsers with user supplied attributes.
         </p>
 <p>
           </p>
@@ -178,9 +194,25 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">test_parser_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">input</span><span class="special">,</span> <span class="identifier">P</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
 <span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">;</span>
+
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">))</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">))</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+    <span class="keyword">else</span>
+        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+<span class="special">}</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">P</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">test_phrase_parser_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">input</span><span class="special">,</span> <span class="identifier">P</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">))</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -191,11 +223,11 @@
 <p>
         </p>
 <a name="spirit.qi.reference.basics.string"></a><h5>
-<a name="id459078"></a>
+<a name="id460177"></a>
           <a href="basics.html#spirit.qi.reference.basics.string">String</a>
         </h5>
 <a name="spirit.qi.reference.basics.header"></a><h5>
-<a name="id459101"></a>
+<a name="id460199"></a>
           <a href="basics.html#spirit.qi.reference.basics.header">Header</a>
         </h5>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;
@@ -272,7 +304,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.basics.models"></a><h5>
-<a name="id459757"></a>
+<a name="id460855"></a>
           <a href="basics.html#spirit.qi.reference.basics.models">Models</a>
         </h5>
 <p>

@@ -414,51 +414,57 @@ exponent is a very cheap operation.]
 [heading `RealPolicies`]
 
 The `RealPolicies` template parameter is a class that groups all the
-policies that control the parser's behavior. It defaults to
-`real_policies<T>`. Policies control the real number parsers' behavior.
+policies that control the parser's behavior. Policies control the real
+number parsers' behavior. 
 
-The default policies provided are designed to parse C/C++ style real
-numbers of the form `nnn.fff.Eeee` where `nnn` is the whole number part,
-`fff` is the fractional part, `E` is `'e'` or `'E'` and `eee` is the
-exponent optionally preceded by `'-'` or `'+'` with the additional
-detection of NaN and Inf. This corresponds to the following (pseudo)
-grammar:
+The default is `real_policies<T>`. The default is provided to take care
+of the most common case (there are many ways to represent, and hence
+parse, real numbers). In most cases, the default policies are sufficient
+and can be used straight out of the box. They are designed to parse
+C/C++ style floating point numbers of the form `nnn.fff.Eeee` where
+`nnn` is the whole number part, `fff` is the fractional part, `E` is
+`'e'` or `'E'` and `eee` is the exponent optionally preceded by `'-'` or
+`'+'` with the additional detection of NaN and Inf as mandated by the
+C99 Standard and proposed for inclusion into the C++0x Standard: nan,
+nan(...), inf and infinity (the matching is case-insensitive). This
+corresponds to the following grammar: 
 
-    realliteral
-        =   -(lit('+') | '-') >>
-            (
-                    -lit("1.0#") >> (lit("NAN") | "nan")
-                |   lexeme[lit("INF") >> -lit("INITY")] 
-                |   lexeme[lit("inf") >> -lit("inity")] 
-                |   fractionalconstant >> !exponentpart
-                |  +digit >> exponentpart
+    sign
+        =   lit('+') | '-'
+        ;
+
+    nan 
+        =   -lit("1.0#") >> no_case["nan"] 
+            >> -('(' >> *(char_ - ')') >> ')')
+        ;
+        
+    inf
+        =   no_case[lit("inf") >> -lit("inity")]
+        ;
+
+    floating_literal
+        =   -sign >>
+            (       nan
+                |   inf
+                |   fractional_constant >> !exponent_part
+                |  +digit >> exponent_part
             )
         ;
 
-    fractionalconstant
+    fractional_constant
         =  *digit >> '.' >> +digit
         |  +digit >> -lit('.')
         ;
 
-    exponentpart
-        =   (lit('e') | 'E') >> -(lit('+') | '-') >> +digit
+    exponent_part
+        =   (lit('e') | 'E') >> -sign >> +digit
         ;
-
-The default policies are provided to take care of the most common case
-(there are many ways to represent, and hence parse, real numbers). In
-most cases, the default setting of the real_parser is sufficient and can
-be used straight out of the box. 
-
-The default policies implementation recognizes representations of NaN
-and Inf as mandated by the C99 Standard and as proposed for inclusion
-into the C++0x Standard: nan, nan(...), inf and infinity (the matching
-is performed case-insensitively).
 
 There are four `RealPolicies` pre-defined for immediate use:
 
 [table Predefined Policies
 
-    [[Policy]                               [Description]]
+    [[Policies]                             [Description]]
     [[`ureal_policies<double> >`]           [Without sign.]]
     [[`real_policies<double> >`]            [With sign.]]
     [[`strict_ureal_policies<double> >`]    [Without sign, dot required.]]
@@ -515,8 +521,8 @@ part and a fractional part value of 0) has been parsed.]
 
 The first call recognizes representations of NaN or Inf starting with a
 non-digit character (such as NaN, Inf, QNaN etc.). The second call
-allows to recognize representation formats starting with a `1.0` (such
-as `1.0#QNAN` or `1.0#INF` etc.).
+recognizes representation formats starting with a `1.0` (such as
+`"1.0#NAN"` or `"1.0#INF"` etc.).
 
 The functions should return true if a Nan or Inf has been found. In this
 case the attribute `n` should be set to the matched value (NaN or Inf).
@@ -527,7 +533,7 @@ The optional sign will be automatically applied afterwards.
 The easiest way to implement a proper real parsing policy is to derive a
 new type from the the type `real_policies` while overriding the aspects
 of the parsing which need to be changed. For example, here's the
-implementation of thye redefined `strict_real_policies`:
+implementation of the pre-defined `strict_real_policies`:
 
     template <typename T>
     struct strict_real_policies : real_policies<T>

@@ -21,6 +21,82 @@ other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, and
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
+[section:lexeme Inhibiting Skipping (`lexeme[]`)]
+
+[heading Description]
+
+The `lexeme[]` directive turns off white space skipping. At the phrase
+level, the parser ignores white spaces, possibly including comments. Use
+`lexeme` in situations where you want to work at the character level
+instead of the phrase level. Parsers can be made to work at the
+character level by enclosing the pertinent parts inside the `lexeme`
+directive. For example, here's a rule that parses integers:
+
+    integer = lexeme[ -(lit('+') | '-') >> +digit ];
+
+The `lexeme` directive instructs its subject parser to work on the
+character level. Without it, the `integer` rule would have allowed
+erroneous embedded white spaces in inputs such as `"1 2 345"` which will
+be parsed as `"12345"`.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/lexeme.hpp>
+    #include <boost/spirit/include/qi_lexeme.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::qi::lexeme`]]
+]
+
+[heading Model of]
+
+The model of `lexeme` is the model of its subject parser.
+
+[variablelist Notation
+    [[`p`]      [A __parser_concept__.]]
+    [[`P`]      [A __parser_concept__ type.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`lexeme[p]`]      [Turns off white space skipping for the 
+                        subject parser, `p` (and all its children).]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`lexeme[p]`]      [The attribute of subject parser, `P`.]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `P`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_lexeme]
+
+Simple usage of `lexeme[]`:
+
+[reference_lexeme]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
 [section:no_case Inhibiting Case Sensitivity (`no_case[]`)]
 
 [heading Description]
@@ -51,8 +127,8 @@ In the table above, `ns` is a __char_encoding_namespace__.
 The model of `no_case` is the model of its subject parser.
 
 [variablelist Notation
-    [[`p`]      [A parser.]]
-    [[`P`]      [A Parser type.]]
+    [[`p`]      [A __parser_concept__.]]
+    [[`P`]      [A __parser_concept__ type.]]
     [[`ns`]     [A __char_encoding_namespace__.]]
 ]
 
@@ -92,6 +168,136 @@ A more sophisticated use case of `no_case[]` in conjunction with a symbol
 table (see __qi_symbols__ for more details):
 
 [reference_symbols_with_no_case]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:omit Ignoring Attribute (`omit[]`)]
+
+[heading Description]
+
+The `omit[]` ignores the attribute of its subject parser replacing it
+with __unused__.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/omit.hpp>
+    #include <boost/spirit/include/qi_omit.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::qi::omit`]]
+]
+
+[heading Model of]
+
+The model of `omit` is the model of its subject parser.
+
+[variablelist Notation
+    [[`p`]      [A __parser_concept__.]]
+    [[`P`]      [A __parser_concept__ type.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`omit[p]`]        [Ignore the attribute of the subject parser, `p`]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`omit[p]`]        [__unused_type__]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `P`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_omit]
+
+[reference_omit]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:raw Transduction Parsing (`raw[]`)]
+
+[heading Description]
+
+The `raw[]` disregards the attribute of its subject parser, instead
+exposing the half-open range `[first, last)` pointing to the matched
+characters from the input stream. The `raw[]` directive breings back the
+classic Spirit transduction (un-attributed) behavior for a subject
+parser.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/raw.hpp>
+    #include <boost/spirit/include/qi_raw.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::qi::raw`]]
+]
+
+[heading Model of]
+
+The model of `raw` is the model of its subject parser.
+
+[variablelist Notation
+    [[`p`]      [A __parser_concept__.]]
+    [[`P`]      [A __parser_concept__ type.]]
+    [[`Iter`]   [A `ForwardIterator` type.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`raw[p]`]         [Disregard the attribute of the subject parser, `p`.
+                        Expose instead the half-open range `[first, last)` 
+                        pointing to the matched characters from the input stream.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`omit[p]`]        [[boost_iterator_range `Iter`]]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `P`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_raw]
+
+[reference_raw]
 
 [endsect]
 

@@ -17,9 +17,25 @@
 template <typename P>
 void test_parser(char const* input, P const& p)
 {
+    using boost::spirit::qi::parse;
+
     std::string s(input);
     std::string::iterator f(s.begin());
-    if (boost::spirit::qi::parse(f, s.end(), p))
+    if (parse(f, s.end(), p))
+        std::cout << "ok" << std::endl;
+    else
+        std::cout << "fail" << std::endl;
+}
+
+template <typename P>
+void test_phrase_parser(char const* input, P const& p)
+{
+    using boost::spirit::qi::phrase_parse;
+    using boost::spirit::qi::ascii::space;
+    
+    std::string s(input);
+    std::string::iterator f(s.begin());
+    if (phrase_parse(f, s.end(), p, space))
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -30,9 +46,25 @@ void test_parser(char const* input, P const& p)
 template <typename P, typename T>
 void test_parser_attr(char const* input, P const& p, T& attr)
 {
+    using boost::spirit::qi::parse;
+
     std::string s(input);
     std::string::iterator f(s.begin());
-    if (boost::spirit::qi::parse(f, s.end(), p, attr))
+    if (parse(f, s.end(), p, attr))
+        std::cout << "ok" << std::endl;
+    else
+        std::cout << "fail" << std::endl;
+}
+
+template <typename P, typename T>
+void test_phrase_parser_attr(char const* input, P const& p, T& attr)
+{
+    using boost::spirit::qi::phrase_parse;
+    using boost::spirit::qi::ascii::space;
+
+    std::string s(input);
+    std::string::iterator f(s.begin());
+    if (phrase_parse(f, s.end(), p, space, attr))
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -113,7 +145,6 @@ main()
 {
     {
         //[reference_using_declarations_lit_char
-        using boost::spirit::qi::parse;
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::char_;
         //]
@@ -145,7 +176,6 @@ main()
     
     {
         //[reference_using_declarations_lit_string
-        using boost::spirit::qi::parse;
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::string;
         //]
@@ -158,7 +188,6 @@ main()
     }
     
     {
-        using boost::spirit::qi::parse;
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::string;
         
@@ -171,7 +200,6 @@ main()
     }
     
     {
-        using boost::spirit::qi::parse;
         using boost::spirit::qi::lit;
         using boost::spirit::ascii::string;
         
@@ -185,7 +213,6 @@ main()
     
     {
         //[reference_using_declarations_symbols
-        using boost::spirit::qi::parse;
         using boost::spirit::qi::symbols;
         //]
 
@@ -205,8 +232,21 @@ main()
     }
     
     {
+        //[reference_using_declarations_lexeme
+        using boost::spirit::qi::lexeme;
+        using boost::spirit::qi::lit;
+        using boost::spirit::ascii::digit;
+        //]
+        
+        //[reference_lexeme
+        /*`The use of lexeme here will prevent skipping in between the
+            digits and the sign making inputs such as `"1 2 345"` erroneous.*/
+        test_phrase_parser("12345", lexeme[ -(lit('+') | '-') >> +digit ]);
+        //]
+    }
+    
+    {
         //[reference_using_declarations_no_case
-        using boost::spirit::qi::parse;
         using boost::spirit::ascii::no_case;
         using boost::spirit::ascii::char_;
         using boost::spirit::ascii::alnum;
@@ -233,6 +273,37 @@ main()
         std::cout << i << std::endl;
         test_parser_attr("ORANGE", no_case[ sym ], i);
         std::cout << i << std::endl;
+        //]
+    }
+    
+    {
+        //[reference_using_declarations_omit
+        using boost::spirit::qi::omit;
+        using boost::spirit::qi::int_;
+        using boost::spirit::ascii::char_;
+        //]
+        
+        //[reference_omit
+        /*`This parser ignores the first two characters
+            and extracts the succeeding `int`:*/
+        int i;
+        test_parser_attr("xx345", omit[char_ >> char_] >> int_, i);
+        std::cout << i << std::endl; // should print 345
+        //]
+    }
+    
+    {
+        //[reference_using_declarations_raw
+        using boost::spirit::qi::raw;
+        using boost::spirit::ascii::alpha;
+        using boost::spirit::ascii::alnum;
+        //]
+        
+        //[reference_raw
+        //`This parser matches and extracts C++ identifiers:
+        std::string id;
+        test_parser_attr("James007", raw[(alpha | '_') >> *(alnum | '_')], id);
+        std::cout << id << std::endl; // should print James007
         //]
     }
 

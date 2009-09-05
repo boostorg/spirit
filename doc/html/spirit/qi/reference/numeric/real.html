@@ -34,7 +34,7 @@
 <div></div>
 </div>
 <a name="spirit.qi.reference.numeric.real.description"></a><h6>
-<a name="id477656"></a>
+<a name="id482306"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.description">Description</a>
           </h6>
 <p>
@@ -47,7 +47,7 @@
             (documented below).
           </p>
 <a name="spirit.qi.reference.numeric.real.header"></a><h6>
-<a name="id477722"></a>
+<a name="id482372"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/numeric/real.hpp&gt;
@@ -57,7 +57,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.numeric.real.namespace"></a><h6>
-<a name="id477835"></a>
+<a name="id482486"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -81,14 +81,14 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.real.synopsis"></a><h6>
-<a name="id478037"></a>
+<a name="id482687"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">RealPolicies</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">real_parser</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.numeric.real.template_parameters"></a><h6>
-<a name="id478131"></a>
+<a name="id482782"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.template_parameters">Template
             parameters</a>
           </h6>
@@ -134,7 +134,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.real.model_of"></a><h6>
-<a name="id478297"></a>
+<a name="id482947"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -180,7 +180,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.numeric.real.expression_semantics"></a><h6>
-<a name="id478576"></a>
+<a name="id483227"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -240,7 +240,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.numeric.real.attributes"></a><h6>
-<a name="id478964"></a>
+<a name="id483614"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -254,7 +254,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.numeric.real.complexity"></a><h6>
-<a name="id479011"></a>
+<a name="id483662"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -268,7 +268,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.numeric.real.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_"></a><h6>
-<a name="id479052"></a>
+<a name="id483703"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.minimum_expression_requirements_for__code__phrase_role__identifier__t__phrase___code_">Minimum
             Expression Requirements for <tt class="computeroutput"><span class="identifier">T</span></tt></a>
           </h6>
@@ -434,18 +434,20 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code_"></a><h6>
-<a name="id480284"></a>
+<a name="id484936"></a>
             <a href="real.html#spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code_"><tt class="computeroutput"><span class="identifier">RealPolicies</span></tt></a>
           </h6>
 <p>
             The <tt class="computeroutput"><span class="identifier">RealPolicies</span></tt> template
             parameter is a class that groups all the policies that control the parser's
-            behavior. It defaults to <tt class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>. Policies control the real number
-            parsers' behavior.
+            behavior. Policies control the real number parsers' behavior.
           </p>
 <p>
-            The default policies provided are designed to parse C/C++ style real
-            numbers of the form <tt class="computeroutput"><span class="identifier">nnn</span><span class="special">.</span><span class="identifier">fff</span><span class="special">.</span><span class="identifier">Eeee</span></tt>
+            The default is <tt class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></tt>. The default is provided to take
+            care of the most common case (there are many ways to represent, and hence
+            parse, real numbers). In most cases, the default policies are sufficient
+            and can be used straight out of the box. They are designed to parse C/C++
+            style floating point numbers of the form <tt class="computeroutput"><span class="identifier">nnn</span><span class="special">.</span><span class="identifier">fff</span><span class="special">.</span><span class="identifier">Eeee</span></tt>
             where <tt class="computeroutput"><span class="identifier">nnn</span></tt> is the whole
             number part, <tt class="computeroutput"><span class="identifier">fff</span></tt> is the
             fractional part, <tt class="computeroutput"><span class="identifier">E</span></tt> is
@@ -453,47 +455,48 @@
             and <tt class="computeroutput"><span class="identifier">eee</span></tt> is the exponent
             optionally preceded by <tt class="computeroutput"><span class="char">'-'</span></tt>
             or <tt class="computeroutput"><span class="char">'+'</span></tt> with the additional
-            detection of NaN and Inf. This corresponds to the following (pseudo)
+            detection of NaN and Inf as mandated by the C99 Standard and proposed
+            for inclusion into the C++0x Standard: nan, nan(...), inf and infinity
+            (the matching is case-insensitive). This corresponds to the following
             grammar:
           </p>
-<pre class="programlisting"><span class="identifier">realliteral</span>
-    <span class="special">=</span>   <span class="special">-(</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'+'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'-'</span><span class="special">)</span> <span class="special">&gt;&gt;</span>
-        <span class="special">(</span>
-                <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"1.0#"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">(</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"NAN"</span><span class="special">)</span> <span class="special">|</span> <span class="string">"nan"</span><span class="special">)</span>
-            <span class="special">|</span>   <span class="identifier">lexeme</span><span class="special">[</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"INF"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"INITY"</span><span class="special">)]</span> 
-            <span class="special">|</span>   <span class="identifier">lexeme</span><span class="special">[</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"inf"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"inity"</span><span class="special">)]</span> 
-            <span class="special">|</span>   <span class="identifier">fractionalconstant</span> <span class="special">&gt;&gt;</span> <span class="special">!</span><span class="identifier">exponentpart</span>
-            <span class="special">|</span>  <span class="special">+</span><span class="identifier">digit</span> <span class="special">&gt;&gt;</span> <span class="identifier">exponentpart</span>
+<pre class="programlisting"><span class="identifier">sign</span>
+    <span class="special">=</span>   <span class="identifier">lit</span><span class="special">(</span><span class="char">'+'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'-'</span>
+    <span class="special">;</span>
+
+<span class="identifier">nan</span> 
+    <span class="special">=</span>   <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"1.0#"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">no_case</span><span class="special">[</span><span class="string">"nan"</span><span class="special">]</span> 
+        <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">'('</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">')'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">')'</span><span class="special">)</span>
+    <span class="special">;</span>
+    
+<span class="identifier">inf</span>
+    <span class="special">=</span>   <span class="identifier">no_case</span><span class="special">[</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"inf"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"inity"</span><span class="special">)]</span>
+    <span class="special">;</span>
+
+<span class="identifier">floating_literal</span>
+    <span class="special">=</span>   <span class="special">-</span><span class="identifier">sign</span> <span class="special">&gt;&gt;</span>
+        <span class="special">(</span>       <span class="identifier">nan</span>
+            <span class="special">|</span>   <span class="identifier">inf</span>
+            <span class="special">|</span>   <span class="identifier">fractional_constant</span> <span class="special">&gt;&gt;</span> <span class="special">!</span><span class="identifier">exponent_part</span>
+            <span class="special">|</span>  <span class="special">+</span><span class="identifier">digit</span> <span class="special">&gt;&gt;</span> <span class="identifier">exponent_part</span>
         <span class="special">)</span>
     <span class="special">;</span>
 
-<span class="identifier">fractionalconstant</span>
+<span class="identifier">fractional_constant</span>
     <span class="special">=</span>  <span class="special">*</span><span class="identifier">digit</span> <span class="special">&gt;&gt;</span> <span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">digit</span>
     <span class="special">|</span>  <span class="special">+</span><span class="identifier">digit</span> <span class="special">&gt;&gt;</span> <span class="special">-</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'.'</span><span class="special">)</span>
     <span class="special">;</span>
 
-<span class="identifier">exponentpart</span>
-    <span class="special">=</span>   <span class="special">(</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'e'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'E'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'+'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'-'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">digit</span>
+<span class="identifier">exponent_part</span>
+    <span class="special">=</span>   <span class="special">(</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'e'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'E'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-</span><span class="identifier">sign</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">digit</span>
     <span class="special">;</span>
 </pre>
-<p>
-            The default policies are provided to take care of the most common case
-            (there are many ways to represent, and hence parse, real numbers). In
-            most cases, the default setting of the real_parser is sufficient and
-            can be used straight out of the box.
-          </p>
-<p>
-            The default policies implementation recognizes representations of NaN
-            and Inf as mandated by the C99 Standard and as proposed for inclusion
-            into the C++0x Standard: nan, nan(...), inf and infinity (the matching
-            is performed case-insensitively).
-          </p>
 <p>
             There are four <tt class="computeroutput"><span class="identifier">RealPolicies</span></tt>
             pre-defined for immediate use:
           </p>
 <div class="table">
-<a name="id481117"></a><p class="title"><b>Table 5. Predefined Policies</b></p>
+<a name="id485775"></a><p class="title"><b>Table 5. Predefined Policies</b></p>
 <table class="table" summary="Predefined Policies">
 <colgroup>
 <col>
@@ -501,7 +504,7 @@
 </colgroup>
 <thead><tr>
 <th><p>
-                  Policy
+                  Policies
                 </p></th>
 <th><p>
                   Description
@@ -560,7 +563,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__expression_requirements"></a><h6>
-<a name="id481423"></a>
+<a name="id486080"></a>
             <a href="real.html#spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__expression_requirements"><tt class="computeroutput"><span class="identifier">RealPolicies</span></tt> Expression Requirements</a>
           </h6>
 <p>
@@ -726,7 +729,9 @@
 <p>
             The first call recognizes representations of NaN or Inf starting with
             a non-digit character (such as NaN, Inf, QNaN etc.). The second call
-            allows to recognize representation formats starting with a <tt class="computeroutput"><span class="number">1.0</span></tt> (such as <tt class="computeroutput"><span class="number">1.0</span><span class="preprocessor">#QNAN</span></tt> or <tt class="computeroutput"><span class="number">1.0</span><span class="preprocessor">#INF</span></tt> etc.).
+            recognizes representation formats starting with a <tt class="computeroutput"><span class="number">1.0</span></tt>
+            (such as <tt class="computeroutput"><span class="string">"1.0#NAN"</span></tt>
+            or <tt class="computeroutput"><span class="string">"1.0#INF"</span></tt> etc.).
           </p>
 <p>
             The functions should return true if a Nan or Inf has been found. In this
@@ -735,14 +740,14 @@
             be automatically applied afterwards.
           </p>
 <a name="spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__specializations"></a><h6>
-<a name="id482594"></a>
+<a name="id487242"></a>
             <a href="real.html#spirit.qi.reference.numeric.real._code__phrase_role__identifier__realpolicies__phrase___code__specializations"><tt class="computeroutput"><span class="identifier">RealPolicies</span></tt> Specializations</a>
           </h6>
 <p>
             The easiest way to implement a proper real parsing policy is to derive
             a new type from the the type <tt class="computeroutput"><span class="identifier">real_policies</span></tt>
             while overriding the aspects of the parsing which need to be changed.
-            For example, here's the implementation of thye redefined <tt class="computeroutput"><span class="identifier">strict_real_policies</span></tt>:
+            For example, here's the implementation of the pre-defined <tt class="computeroutput"><span class="identifier">strict_real_policies</span></tt>:
           </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">strict_real_policies</span> <span class="special">:</span> <span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span>
@@ -751,7 +756,7 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.numeric.real.example"></a><h6>
-<a name="id482793"></a>
+<a name="id487441"></a>
             <a href="real.html#spirit.qi.reference.numeric.real.example">Example</a>
           </h6>
 <p>

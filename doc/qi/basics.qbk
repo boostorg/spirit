@@ -69,11 +69,11 @@ Some includes:
 
 Our test functions:
 
-This one tests the parsers without attributes.
+These functions test the parsers without attributes.
 
 [reference_test]
 
-This one tests the parsers with user supplied attributes.
+These functions test the parsers with user supplied attributes.
 
 [reference_test_attr]
 
