@@ -58,7 +58,7 @@
             of the <span class="emphasis"><em>Spirit.Lex</em></span> library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id647318"></a>
+<a name="id649021"></a>
             <a href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -126,9 +126,9 @@
             <span class="emphasis"><em>value</em></span> types exposed by the various token types (token
             definitions), the general type of the token value is a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
             As a minimum (for the default configuration) this token value variant
-            will be configured to always hold a <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>
-            containing the pair of iterators pointing to the matched input sequence
-            for this token instance.
+            will be configured to always hold a <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a> containing the
+            pair of iterators pointing to the matched input sequence for this token
+            instance.
           </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -137,11 +137,11 @@
 </tr>
 <tr><td colspan="2" align="left" valign="top"><p>
               If the lexical analyzer is used in conjunction with a <span class="emphasis"><em>Spirit.Qi</em></span>
-              parser, the stored <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>
-              token value will be converted to the requested token type (parser attribute)
-              exactly once. This happens at the time of the first access to the token
-              value requiring the corresponding type conversion. The converted token
-              value will be stored in the <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
+              parser, the stored <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a> token value
+              will be converted to the requested token type (parser attribute) exactly
+              once. This happens at the time of the first access to the token value
+              requiring the corresponding type conversion. The converted token value
+              will be stored in the <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
               replacing the initially stored iterator range. This avoids to convert
               the input sequence to the token value more than once, thus optimizing
               the integration of the lexer with <span class="emphasis"><em>Spirit.Qi</em></span>, even
@@ -173,7 +173,7 @@
                 This is either a mpl sequence containing all attribute types used
                 for the token definitions or the type <tt class="computeroutput"><span class="identifier">omitted</span></tt>.
                 If the mpl sequence is empty (which is the default), all token instances
-                will store a <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span></tt> pointing to the start and the
+                will store a <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a><tt class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span></tt> pointing to the start and the
                 end of the matched section in the input stream. If the type is <tt class="computeroutput"><span class="identifier">omitted</span></tt>, the generated tokens will
                 contain no token value (attribute) at all.
               </p></dd>
@@ -189,13 +189,14 @@
 </div>
 <p>
             Normally, during its construction, a token instance always holds the
-            <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>
-            as its token value (except, if it has been defined using the <tt class="computeroutput"><span class="identifier">omitted</span></tt> token value type). This iterator
-            range then is converted in place to the requested token value type (attribute)
-            when it is requested for the first time.
+            <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a> as its token
+            value (except, if it has been defined using the <tt class="computeroutput"><span class="identifier">omitted</span></tt>
+            token value type). This iterator range then is converted in place to
+            the requested token value type (attribute) when it is requested for the
+            first time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id648080"></a>
+<a name="id649778"></a>
             <a href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -224,9 +225,9 @@
                 to the <span class="emphasis"><em>Spirit.Qi</em></span> library, whenever this token
                 definition is used as a parser component. The default attribute type
                 is <tt class="computeroutput"><span class="identifier">unused_type</span></tt>, which
-                means the token instance holds a <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>
-                pointing to the start and the end of the matched section in the input
-                stream. If the attribute is <tt class="computeroutput"><span class="identifier">omitted</span></tt>
+                means the token instance holds a <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a> pointing
+                to the start and the end of the matched section in the input stream.
+                If the attribute is <tt class="computeroutput"><span class="identifier">omitted</span></tt>
                 the token instance will expose no token type at all. Any other type
                 will be used directly as the token value type.
               </p></dd>
@@ -254,10 +255,10 @@
 <tr><td colspan="2" align="left" valign="top">
 <p>
               If you don't list any token value types in the token type definition
-              declaration (resulting in the usage of the default <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>
-              token type) everything will compile and work just fine, just a bit
-              less efficient. This is because the token value will be converted from
-              the matched input sequence every time it is requested.
+              declaration (resulting in the usage of the default <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a> token type)
+              everything will compile and work just fine, just a bit less efficient.
+              This is because the token value will be converted from the matched
+              input sequence every time it is requested.
             </p>
 <p>
               But as soon as you specify at least one token value type while defining
@@ -268,7 +269,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_"></a><h6>
-<a name="id648491"></a>
+<a name="id650179"></a>
             <a href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_">Examples
             of using <a href="../../reference/token_class.html" title="Token Class"><tt class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></tt></a></a>
           </h6>

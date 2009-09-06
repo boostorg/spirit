@@ -9,7 +9,8 @@
 <link rel="up" href="../directive.html" title=" Directive">
 <link rel="previous" href="raw.html" title=" Transduction
           Parsing (raw[])">
-<link rel="next" href="../numeric.html" title="Numeric">
+<link rel="next" href="skip.html" title=" Re-Establish
+          Skipping (skip[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,7 +23,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="raw.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="raw.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="skip.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage">
@@ -34,7 +35,7 @@
 <div></div>
 </div>
 <a name="spirit.qi.reference.directive.repeat.description"></a><h6>
-<a name="id477025"></a>
+<a name="id477289"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
@@ -56,7 +57,7 @@
             </li>
 </ul></div>
 <a name="spirit.qi.reference.directive.repeat.header"></a><h6>
-<a name="id477094"></a>
+<a name="id477358"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/repeat.hpp&gt;
@@ -66,7 +67,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.repeat.namespace"></a><h6>
-<a name="id477207"></a>
+<a name="id477472"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -86,7 +87,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.model_of"></a><h6>
-<a name="id477358"></a>
+<a name="id477622"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.model_of">Model of</a>
           </h6>
 <p>
@@ -111,7 +112,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id477540"></a>
+<a name="id477804"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -177,7 +178,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.attributes"></a><h6>
-<a name="id477942"></a>
+<a name="id478207"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <p>
@@ -214,44 +215,44 @@
 </tr>
 <tr>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
                   </p></td>
 <td>
 <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">n</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
-                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
+                    <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
                   </p></td>
 <td>
 <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">max</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
+                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span>
                     <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
                   </p></td>
 <td>
 <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">min</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
 </td>
@@ -259,7 +260,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.repeat.complexity"></a><h6>
-<a name="id478831"></a>
+<a name="id479094"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -274,7 +275,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.repeat.example"></a><h6>
-<a name="id478882"></a>
+<a name="id479144"></a>
             <a href="repeat.html#spirit.qi.reference.directive.repeat.example">Example</a>
           </h6>
 <p>
@@ -345,7 +346,7 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"1011101011110010"</span><span class="special">,</span> <span class="identifier">repeat</span><span class="special">(</span><span class="number">3</span><span class="special">)[</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'1'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'0'</span><span class="special">]);</span>
+<pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"1011101011110010"</span><span class="special">,</span> <span class="identifier">repeat</span><span class="special">(</span><span class="number">16</span><span class="special">)[</span><span class="identifier">lit</span><span class="special">(</span><span class="char">'1'</span><span class="special">)</span> <span class="special">|</span> <span class="char">'0'</span><span class="special">]);</span>
 </pre>
 <p>
             </p>
@@ -403,7 +404,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="raw.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="raw.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="skip.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

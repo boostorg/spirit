@@ -30,7 +30,7 @@
 <div></div>
 </div>
 <a name="spirit.qi.reference.basics.lazy_argument"></a><h5>
-<a name="id457850"></a>
+<a name="id457970"></a>
           <a href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
         </h5>
 <p>
@@ -54,7 +54,7 @@
           second argument. This is done for uniformity with Semantic Actions).
         </p>
 <a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h5>
-<a name="id458058"></a>
+<a name="id458178"></a>
           <a href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h5>
@@ -115,7 +115,7 @@
           </li>
 </ul></div>
 <a name="spirit.qi.reference.basics.examples"></a><h5>
-<a name="id458333"></a>
+<a name="id458453"></a>
           <a href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
         </h5>
 <p>
@@ -159,7 +159,7 @@
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">))</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">f</span> <span class="special">==</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">())</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -173,7 +173,7 @@
     
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">space</span><span class="special">))</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">space</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">f</span> <span class="special">==</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">())</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -198,7 +198,7 @@
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">))</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">f</span> <span class="special">==</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">())</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -212,7 +212,7 @@
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">(</span><span class="identifier">input</span><span class="special">);</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">begin</span><span class="special">());</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">))</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">phrase_parse</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">p</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">f</span> <span class="special">==</span> <span class="identifier">s</span><span class="special">.</span><span class="identifier">end</span><span class="special">())</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -223,11 +223,11 @@
 <p>
         </p>
 <a name="spirit.qi.reference.basics.string"></a><h5>
-<a name="id460648"></a>
+<a name="id460925"></a>
           <a href="basics.html#spirit.qi.reference.basics.string">String</a>
         </h5>
 <a name="spirit.qi.reference.basics.header"></a><h5>
-<a name="id460671"></a>
+<a name="id460947"></a>
           <a href="basics.html#spirit.qi.reference.basics.header">Header</a>
         </h5>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;
@@ -304,7 +304,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.basics.models"></a><h5>
-<a name="id461326"></a>
+<a name="id461603"></a>
           <a href="basics.html#spirit.qi.reference.basics.models">Models</a>
         </h5>
 <p>

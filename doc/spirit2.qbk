@@ -54,7 +54,7 @@
 [def __ragel__                  [@http://www.cs.queensu.ca/~thurston/ragel/ Ragel]]
 
 [def __boost_variant__          [@http://www.boost.org/doc/html/variant.html Boost.Variant]]
-[def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<>`]]
+[def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range`]]
 [def __boost_bind__             [@http://www.boost.org/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@http://www.boost.org/libs/lambda/index.html Boost.Lambda]]
 [def __boost_tuples__           [@http://www.boost.org/libs/tuple/index.html Boost.Tuples]]
@@ -152,7 +152,6 @@
 [def __string__                     [link spirit.qi.reference.basics.string String]]
 
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
-[def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case[a]`]]
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
 [template qi_lit_string[str]        [link spirit.qi.reference.string.string [str]]]
 [template qi_lit_char[char]         [link spirit.qi.reference.string.lit_char [char]]]
@@ -273,6 +272,13 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 
 [def __qi_quickref__                [link spirit.qi.quick_reference Qi Quick Reference]]
 [def __qi_comp_attr_notation__      [link spirit.qi.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
+
+[def __qi_lexeme__                  [link spirit.qi.reference.directive.lexeme `lexeme`]]
+[def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case`]]
+[def __qi_omit__                    [link spirit.qi.reference.directive.omit `omit`]]
+[def __qi_raw__                     [link spirit.qi.reference.directive.raw `raw`]]
+[def __qi_repeat__                  [link spirit.qi.reference.directive.repeat `repeat`]]
+[def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
 
 [/ $$$ End $$$ ]
 [/ ----------------------------------------------------------------------------]

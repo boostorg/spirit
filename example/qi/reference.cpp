@@ -21,7 +21,7 @@ void test_parser(char const* input, P const& p)
 
     std::string s(input);
     std::string::iterator f(s.begin());
-    if (parse(f, s.end(), p))
+    if (parse(f, s.end(), p) && f == s.end())
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -35,7 +35,7 @@ void test_phrase_parser(char const* input, P const& p)
     
     std::string s(input);
     std::string::iterator f(s.begin());
-    if (phrase_parse(f, s.end(), p, space))
+    if (phrase_parse(f, s.end(), p, space) && f == s.end())
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -50,7 +50,7 @@ void test_parser_attr(char const* input, P const& p, T& attr)
 
     std::string s(input);
     std::string::iterator f(s.begin());
-    if (parse(f, s.end(), p, attr))
+    if (parse(f, s.end(), p, attr) && f == s.end())
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -64,7 +64,7 @@ void test_phrase_parser_attr(char const* input, P const& p, T& attr)
 
     std::string s(input);
     std::string::iterator f(s.begin());
-    if (phrase_parse(f, s.end(), p, space, attr))
+    if (phrase_parse(f, s.end(), p, space, attr) && f == s.end())
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -355,6 +355,20 @@ main()
         test_parser_attr("\x0bHello World", 
             char_[phx::ref(n) = _1] >> repeat(phx::ref(n))[char_], str);
         std::cout << n << ',' << str << std::endl;  // will print "11,Hello World"
+        //]
+    }
+    
+    {
+        //[reference_using_declarations_skip
+        using boost::spirit::qi::skip;
+        using boost::spirit::qi::int_;
+        using boost::spirit::ascii::space;
+        //]
+        
+        //[reference_skip
+        /*`Explicitly specify a skip parser. This parser parses comma 
+            delimited numbers, ignoring spaces.*/
+        test_parser("1, 2, 3, 4, 5", skip(space)[int_ >> *(',' >> int_)]);
         //]
     }
 

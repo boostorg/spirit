@@ -100,7 +100,7 @@ Here is the template prototype of the __class_lexertl_token__ template:
                        attribute types used for the token definitions or the
                        type `omitted`. If the mpl sequence is empty (which is 
                        the default), all token instances will store a 
-                       `boost::iterator_range<Iterator>` pointing to the start
+                       __boost_iterator_range__`<Iterator>` pointing to the start
                        and the end of the matched section in the input stream.
                        If the type is `omitted`, the generated tokens will
                        contain no token value (attribute) at all.]]

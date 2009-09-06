@@ -53,8 +53,8 @@ function after any of of the generated tokens is recognized. For this reason
 we need to implement a functor taking at least the generated token as an 
 argument and returning a boolean value allowing to stop the tokenization 
 process. The default token type used in this example carries a token value of
-the type `iterator_range<BaseIterator>` pointing to the matched range in the 
-underlying input sequence. 
+the type __boost_iterator_range__`<BaseIterator>` pointing to the matched 
+range in the underlying input sequence. 
 
 [wcf_functor]
 

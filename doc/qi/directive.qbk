@@ -374,15 +374,15 @@ See __qi_comp_attr_notation__.
     [[`repeat[a]`]
 [``a: A --> repeat[a]: vector<A>
 a: Unused --> repeat[a]: Unused``]]
-    [[`repeat(num)[a]`]
-[``a: A --> repeat(num)[a]: vector<A>
-a: Unused --> repeat(num)[a]: Unused``]]
-    [[`repeat(num1, num2)[a]`]
-[``a: A --> repeat(num1, num2)[a]: vector<A>
-a: Unused --> repeat(num1, num2)[a]: Unused``]]
-    [[`repeat(num, inf)[a]`]
-[``a: A --> repeat(num, inf)[a]: vector<A>
-a: Unused --> repeat(num, inf)[a]: Unused``]]
+    [[`repeat(n)[a]`]
+[``a: A --> repeat(n)[a]: vector<A>
+a: Unused --> repeat(n)[a]: Unused``]]
+    [[`repeat(min, max)[a]`]
+[``a: A --> repeat(min, max)[a]: vector<A>
+a: Unused --> repeat(min, max)[a]: Unused``]]
+    [[`repeat(min, inf)[a]`]
+[``a: A --> repeat(min, inf)[a]: vector<A>
+a: Unused --> repeat(min, inf)[a]: Unused``]]
 ]
 
 [heading Complexity]
@@ -408,6 +408,91 @@ the length of the incoming string. Here's a sample input:
 [:__pascal_string__]
 
 [reference_repeat_pascal]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:skip Re-Establish Skipping (`skip[]`)]
+
+[heading Description]
+
+The `skip` directive is the inverse of __qi_lexeme__. While the
+__qi_lexeme__ directive turns off white space skipping, the `skip`
+directive turns it on again. This is simply done by wrapping the parts
+inside the `skip` directive:
+
+    skip[a]
+
+It is also possible to supply a skip parser to the `skip` directive:
+
+    skip(p)[a] // Use `p` as a skipper for parsing `a`
+
+This makes it possible to:
+* Perform localized phrase level parsing while doing character level parsing.
+* Replace the current skipper anywhere with an entirely different 
+  skipper while doing phrase level parsing.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/skip.hpp>
+    #include <boost/spirit/include/qi_skip.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::skip // alias: boost::spirit::qi::skip` ]]
+]
+
+[heading Model of]
+
+The model of `skip` is the model of its subject parser.
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
+
+[table
+    [[Expression]       [Semantics]]
+    
+    [[`skip[a]`]        [Re-establish the skipper that got inhibited by lexeme]]
+    [[`skip(p)[a]`]     [Use `p` as a skipper for parsing `a`]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`skip[a]`]      
+[``a: A --> skip[a]: A
+a: Unused --> lexeme[a]: Unused``]]
+    [[`skip(p)[a]`]      
+[``a: A --> skip(p)[a]: A
+a: Unused --> lexeme[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `p`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_skip]
+
+Simple usage of `skip[]`:
+
+[reference_skip]
 
 [endsect]
 
