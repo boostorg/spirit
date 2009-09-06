@@ -6,10 +6,10 @@
 ==============================================================================*/
 #include <boost/version.hpp>
 
-// This is the same as the one in fusion in Boost 1.40. This is provided
-// for compatibility with Boost 1.39 and below.
+// This is the same as the one in fusion in Boost 1.41. This is provided
+// for compatibility with Boost 1.40 and below.
 
-#if (BOOST_VERSION > 103900)
+#if (BOOST_VERSION > 104000)
 
 #include <boost/fusion/include/make_vector.hpp>
 
