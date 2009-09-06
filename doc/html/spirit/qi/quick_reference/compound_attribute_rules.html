@@ -32,44 +32,81 @@
 </h4></div></div>
 <div></div>
 </div>
+<a name="spirit.qi.quick_reference.compound_attribute_rules.notation"></a><h5>
+<a name="id446182"></a>
+          <a href="compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Notation</a>
+        </h5>
 <p>
-          The notation will be for instance:
+          The notation we will use will be of the form:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span><span class="special">,</span> <span class="special">...</span> <span class="special">--&gt;</span> <span class="identifier">composite</span><span class="special">-</span><span class="identifier">expression</span><span class="special">:</span> <span class="identifier">composite</span><span class="special">-</span><span class="identifier">attribute</span>
+</pre>
+<p>
+          <tt class="computeroutput"><span class="identifier">a</span></tt>, <tt class="computeroutput"><span class="identifier">b</span></tt>,
+          etc. are the operands. <tt class="computeroutput"><span class="identifier">A</span></tt>,
+          <tt class="computeroutput"><span class="identifier">B</span></tt>, etc. are the operand's
+          attribute types. <tt class="computeroutput"><span class="identifier">composite</span><span class="special">-</span><span class="identifier">expression</span></tt>
+          is the expression involving the operands and <tt class="computeroutput"><span class="identifier">composite</span><span class="special">-</span><span class="identifier">attribute</span></tt>
+          is the resulting attribute type of the composite expression.
+        </p>
+<p>
+          For instance:
         </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 </pre>
 <p>
-          which reads as: given, <tt class="computeroutput"><span class="identifier">a</span></tt>
-          and <tt class="computeroutput"><span class="identifier">b</span></tt> are parsers/generators,
-          and <tt class="computeroutput"><span class="identifier">A</span></tt> is the type of the
-          attribute of <tt class="computeroutput"><span class="identifier">a</span></tt>, and <tt class="computeroutput"><span class="identifier">B</span></tt> is the type of the attribute of <tt class="computeroutput"><span class="identifier">b</span></tt>, then the type of the attribute of
-          <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
-          <span class="identifier">b</span></tt> will be <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt>.
+          reads as: given, <tt class="computeroutput"><span class="identifier">a</span></tt> and
+          <tt class="computeroutput"><span class="identifier">b</span></tt> are parsers, and <tt class="computeroutput"><span class="identifier">A</span></tt> is the type of the attribute of <tt class="computeroutput"><span class="identifier">a</span></tt>, and <tt class="computeroutput"><span class="identifier">B</span></tt>
+          is the type of the attribute of <tt class="computeroutput"><span class="identifier">b</span></tt>,
+          then the type of the attribute of <tt class="computeroutput"><span class="identifier">a</span>
+          <span class="special">&gt;&gt;</span> <span class="identifier">b</span></tt>
+          will be <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt>.
         </p>
-<div class="table">
-<a name="id446428"></a><p class="title"><b>Table 4. compound parser attribute types</b></p>
-<table class="table" summary="compound parser attribute types">
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+            In the attribute tables, we will use <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> and <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></tt> as placeholders only. The notation
+            of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
+            stands for <span class="emphasis"><em>any <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+            container</em></span> holding elements of type <tt class="computeroutput"><span class="identifier">A</span></tt>
+            and the notation <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></tt> stands for <span class="emphasis"><em>any <a href="http://spirit.sourceforge.net/dl_more/fusion_v2/libs/fusion/doc/html/index.html" target="_top">Fusion</a>
+            sequence</em></span> holding <tt class="computeroutput"><span class="identifier">A</span></tt>,
+            <tt class="computeroutput"><span class="identifier">B</span></tt>, ... etc. elements.
+            Finally, <tt class="computeroutput"><span class="identifier">Unused</span></tt> stands
+            for <tt class="computeroutput"><span class="identifier">unused_type</span></tt>.
+          </p></td></tr>
+</table></div>
+<a name="spirit.qi.quick_reference.compound_attribute_rules.compound_parser_attribute_types"></a><h5>
+<a name="id446888"></a>
+          <a href="compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.compound_parser_attribute_types">Compound
+          Parser Attribute Types</a>
+        </h5>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th><p>
-                Expression
-              </p></th>
+                  Expression
+                </p></th>
 <th><p>
-                Attribute
-              </p></th>
+                  Attribute
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
 <td><p>
-                sequence (<tt class="computeroutput"><span class="special">&gt;&gt;</span></tt>)
-              </p></td>
+                  sequence (<tt class="computeroutput"><span class="special">&gt;&gt;</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
@@ -79,18 +116,18 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                expect (<tt class="computeroutput"><span class="special">&gt;</span></tt>)
-              </p></td>
+                  expect (<tt class="computeroutput"><span class="special">&gt;</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
@@ -100,165 +137,164 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                alternative (<tt class="computeroutput"><span class="special">|</span></tt>)
-              </p></td>
+                  alternative (<tt class="computeroutput"><span class="special">|</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                difference (<tt class="computeroutput"><span class="special">-</span></tt>)
-              </p></td>
+                  difference (<tt class="computeroutput"><span class="special">-</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                kleene (unary <tt class="computeroutput"><span class="special">*</span></tt>)
-              </p></td>
+                  kleene (unary <tt class="computeroutput"><span class="special">*</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)
-              </p></td>
+                  plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                list (<tt class="computeroutput"><span class="special">%</span></tt>)
-              </p></td>
+                  list (<tt class="computeroutput"><span class="special">%</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                repetition
-              </p></td>
+                  repetition
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                sequential or (<tt class="computeroutput"><span class="special">||</span></tt>)
-              </p></td>
+                  sequential or (<tt class="computeroutput"><span class="special">||</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                optional (unary <tt class="computeroutput"><span class="special">-</span></tt>)
-              </p></td>
+                  optional (unary <tt class="computeroutput"><span class="special">-</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 <tr>
 <td><p>
-                and predicate (<tt class="computeroutput"><span class="special">&amp;</span></tt>)
-              </p></td>
+                  and predicate (<tt class="computeroutput"><span class="special">&amp;</span></tt>)
+                </p></td>
 <td><p>
-                <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                <span class="identifier">A</span> <span class="special">--&gt;</span>
-                <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></tt>
-              </p></td>
+                  <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                  <span class="identifier">A</span> <span class="special">--&gt;</span>
+                  <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></tt>
+                </p></td>
 </tr>
 <tr>
 <td><p>
-                not predicate (<tt class="computeroutput"><span class="special">!</span></tt>)
-              </p></td>
+                  not predicate (<tt class="computeroutput"><span class="special">!</span></tt>)
+                </p></td>
 <td><p>
-                <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                <span class="identifier">A</span> <span class="special">--&gt;</span>
-                <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></tt>
-              </p></td>
+                  <tt class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                  <span class="identifier">A</span> <span class="special">--&gt;</span>
+                  <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></tt>
+                </p></td>
 </tr>
 <tr>
 <td><p>
-                permutation (<tt class="computeroutput"><span class="special">^</span></tt>)
-              </p></td>
+                  permutation (<tt class="computeroutput"><span class="special">^</span></tt>)
+                </p></td>
 <td>
 <p>
-                
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">^</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">^</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">^</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">^</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">^</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
+                </p>
 </td>
 </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

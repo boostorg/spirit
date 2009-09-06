@@ -120,7 +120,7 @@ directives, etc. In __qi__ we don't have anything similar. The only suffixes
 are single underscore letters `"_"` applied where the name would otherwise 
 conflict with a keyword or predefined name (such as `int_` for the
 integer parser). Overall, most, if not all primitive parsers and directives
-have been renamed. Please see the __sec_qi_quickref__ for an overview on the 
+have been renamed. Please see the __qi_quickref__ for an overview on the 
 names for the different available parser primitives, directives and operators.
 
 [heading Parser Attributes]

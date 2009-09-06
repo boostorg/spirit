@@ -306,6 +306,57 @@ main()
         std::cout << id << std::endl; // should print James007
         //]
     }
+    
+    {
+        //[reference_using_declarations_repeat
+        using boost::spirit::qi::repeat;
+        using boost::spirit::qi::lit;
+        using boost::spirit::qi::uint_parser;
+        using boost::spirit::qi::_1;
+        using boost::spirit::ascii::char_;
+        namespace phx = boost::phoenix;
+        //]
+        
+        //[reference_repeat
+        //`A parser for a file name with a maximum of 255 characters:
+        test_parser("batman.jpeg", repeat(1, 255)[char_("a-zA-Z_./")]);
+        
+        /*`A parser for a specific bitmap file format which has exactly 4096 RGB color information.
+            (for the purpose of this example, we will be testing only 3 RGB color information.)
+         */
+        uint_parser<unsigned, 16, 6, 6> rgb;
+        std::vector<unsigned> colors;
+        test_parser_attr("ffffff0000003f3f3f", repeat(3)[rgb], colors);
+        std::cout 
+            << std::hex
+            << colors[0] << ',' 
+            << colors[1] << ',' 
+            << colors[2] << std::endl;
+        
+        /*`A 256 bit binary string (1..256 1s or 0s). (For the purpose of this example, 
+            we will be testing only 16 bits.)
+         */
+        test_parser("1011101011110010", repeat(16)[lit('1') | '0']);
+        //]
+        
+        std::cout << std::dec; // reset to decimal
+        
+        //[reference_repeat_pascal
+        /*`This trivial example cannot be practically defined in traditional EBNF. 
+            Although some EBNF variants allow more powerful repetition constructs other 
+            than the Kleene Star, we are still limited to parsing fixed strings. 
+            The nature of EBNF forces the repetition factor to be a constant. 
+            On the other hand, Spirit allows the repetition factor to be variable at 
+            run time. We could write a grammar that accepts the input string above. 
+            Example using phoenix: 
+         */
+        std::string str;
+        int n;
+        test_parser_attr("\x0bHello World", 
+            char_[phx::ref(n) = _1] >> repeat(phx::ref(n))[char_], str);
+        std::cout << n << ',' << str << std::endl;  // will print "11,Hello World"
+        //]
+    }
 
     // attr()
     {

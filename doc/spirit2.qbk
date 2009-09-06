@@ -55,7 +55,6 @@
 
 [def __boost_variant__          [@http://www.boost.org/doc/html/variant.html Boost.Variant]]
 [def __boost_iterator_range__   [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<>`]]
-[template boost_iterator_range[i]     [@http://www.boost.org/libs/range/doc/utility_class.html#iter_range `boost::iterator_range<`[i]`>`]]
 [def __boost_bind__             [@http://www.boost.org/libs/bind/index.html Boost.Bind]]
 [def __boost_lambda__           [@http://www.boost.org/libs/lambda/index.html Boost.Lambda]]
 [def __boost_tuples__           [@http://www.boost.org/libs/tuple/index.html Boost.Tuples]]
@@ -85,7 +84,6 @@
 [def __karma_char_encoding_namespace__ [link spirit.karma.reference.karma_basics.character_encoding_namespace Character Encoding Namespace]]
 [def __sec_qi_reference__       [link spirit.qi.reference Qi Reference]]
 [def __sec_karma_reference__    [link spirit.karma.reference Karma Reference]]
-[def __sec_qi_quickref__        [link spirit.qi.quick_reference Qi Quick Reference]]
 [def __sec_karma_quickref__     [link spirit.karma.quick_reference Karma Quick Reference]]
 
 [def __karma_auxiliary__        [link spirit.karma.reference.auxiliary Auxiliary Generators]]
@@ -158,6 +156,8 @@
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
 [template qi_lit_string[str]        [link spirit.qi.reference.string.string [str]]]
 [template qi_lit_char[char]         [link spirit.qi.reference.string.lit_char [char]]]
+[def __qi_kleene__                  Kleene Star] [/$$$ TODO: link me $$$]
+[def __qi_plus__                    Plus] [/$$$ TODO: link me $$$]
 
 [def __generator_concept__          [link spirit.karma.reference.generator_concepts.generator `Generator`]]
 [def __primitive_generator_concept__ [link spirit.karma.reference.generator_concepts.primitivegenerator `PrimitiveGenerator`]]
@@ -264,6 +264,19 @@
 [def __sd_predicate__               [$../../images/predicate.png]]
 [def __sd_and_predicate__           [$../../images/and_predicate.png]]
 [def __sd_not_predicate__           [$../../images/not_predicate.png]]
+[def __pascal_string__              [$../../../../images/pascal_string.png]]
+
+
+[/ ----------------------------------------------------------------------------]
+[/ $$$ Now I'm confused with all this adhoc links. Let's fix this somehow.
+For now, I'll put my stuff here adhoc (JDG). $$$]
+
+[def __qi_quickref__                [link spirit.qi.quick_reference Qi Quick Reference]]
+[def __qi_comp_attr_notation__      [link spirit.qi.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
+
+[/ $$$ End $$$ ]
+[/ ----------------------------------------------------------------------------]
+
 
 [/ Here we go ]
 

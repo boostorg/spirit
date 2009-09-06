@@ -50,7 +50,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::qi::lexeme`]]
+    [[`boost::spirit::lexeme // alias: boost::spirit::qi::lexeme` ]]
 ]
 
 [heading Model of]
@@ -58,8 +58,7 @@ Also, see __include_structure__.
 The model of `lexeme` is the model of its subject parser.
 
 [variablelist Notation
-    [[`p`]      [A __parser_concept__.]]
-    [[`P`]      [A __parser_concept__ type.]]
+    [[`a`]      [A __parser_concept__.]]
 ]
 
 [heading Expression Semantics]
@@ -69,20 +68,24 @@ not defined in the subject's concept.
 
 [table
     [[Expression]       [Semantics]]
-    [[`lexeme[p]`]      [Turns off white space skipping for the 
-                        subject parser, `p` (and all its children).]]
+    [[`lexeme[a]`]      [Turns off white space skipping for the 
+                        subject parser, `a` (and all its children).]]
 ]
 
 [heading Attributes]
 
+See __qi_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
-    [[`lexeme[p]`]      [The attribute of subject parser, `P`.]]
+    [[`lexeme[a]`]      
+[``a: A --> lexeme[a]: A
+a: Unused --> lexeme[a]: Unused``]]
 ]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `P`]
+[:The complexity is defined by the complexity of the subject parser, `p`]
 
 [heading Example]
 
@@ -127,8 +130,7 @@ In the table above, `ns` is a __char_encoding_namespace__.
 The model of `no_case` is the model of its subject parser.
 
 [variablelist Notation
-    [[`p`]      [A __parser_concept__.]]
-    [[`P`]      [A __parser_concept__ type.]]
+    [[`a`]      [A __parser_concept__.]]
     [[`ns`]     [A __char_encoding_namespace__.]]
 ]
 
@@ -139,20 +141,24 @@ not defined in the subject's concept.
 
 [table
     [[Expression]       [Semantics]]
-    [[`ns::no_case[p]`] [Force matching of the subject parser, `p`
+    [[`ns::no_case[a]`] [Force matching of the subject parser, `a`
                         (and all its children) to be case insensitive]]
 ]
 
 [heading Attributes]
 
+See __qi_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
-    [[`ns::no_case[p]`] [The attribute of subject parser, `P`.]]
+    [[`ns::no_case[a]`] 
+[``a: A --> ns::no_case[a]: A
+a: Unused --> ns::no_case[a]: Unused``]]
 ]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `P`]
+[:The complexity is defined by the complexity of the subject parser, `p`]
 
 [heading Example]
 
@@ -190,7 +196,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::qi::omit`]]
+    [[`boost::spirit::omit // alias: boost::spirit::qi::omit` ]]
 ]
 
 [heading Model of]
@@ -198,8 +204,7 @@ Also, see __include_structure__.
 The model of `omit` is the model of its subject parser.
 
 [variablelist Notation
-    [[`p`]      [A __parser_concept__.]]
-    [[`P`]      [A __parser_concept__ type.]]
+    [[`a`]      [A __parser_concept__.]]
 ]
 
 [heading Expression Semantics]
@@ -209,19 +214,19 @@ not defined in the subject's concept.
 
 [table
     [[Expression]       [Semantics]]
-    [[`omit[p]`]        [Ignore the attribute of the subject parser, `p`]]
+    [[`omit[a]`]        [Ignore the attribute of the subject parser, `a`]]
 ]
 
 [heading Attributes]
 
 [table
     [[Expression]       [Attribute]]
-    [[`omit[p]`]        [__unused_type__]]
+    [[`omit[a]`]        [__unused_type__]]
 ]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `P`]
+[:The complexity is defined by the complexity of the subject parser, `p`]
 
 [heading Example]
 
@@ -255,7 +260,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::qi::raw`]]
+    [[`boost::spirit::raw // alias: boost::spirit::qi::raw` ]]
 ]
 
 [heading Model of]
@@ -263,8 +268,7 @@ Also, see __include_structure__.
 The model of `raw` is the model of its subject parser.
 
 [variablelist Notation
-    [[`p`]      [A __parser_concept__.]]
-    [[`P`]      [A __parser_concept__ type.]]
+    [[`a`]      [A __parser_concept__.]]
     [[`Iter`]   [A `ForwardIterator` type.]]
 ]
 
@@ -275,21 +279,27 @@ not defined in the subject's concept.
 
 [table
     [[Expression]       [Semantics]]
-    [[`raw[p]`]         [Disregard the attribute of the subject parser, `p`.
+    [[`raw[a]`]         [Disregard the attribute of the subject parser, `a`.
                         Expose instead the half-open range `[first, last)` 
                         pointing to the matched characters from the input stream.]]
 ]
 
 [heading Attributes]
 
+See __qi_comp_attr_notation__.
+
 [table
-    [[Expression]       [Attribute]]
-    [[`omit[p]`]        [[boost_iterator_range `Iter`]]]
+    [[Expression]       [Attribute]]    
+    [[`raw[a]`] 
+[``a: A --> raw[a]: boost::iterator_range<Iter> 
+a: Unused --> raw[a]: Unused``]]
 ]
+
+[note See __boost_iterator_range__.]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `P`]
+[:The complexity is defined by the complexity of the subject parser, `p`]
 
 [heading Example]
 
@@ -298,6 +308,106 @@ Some using declarations:
 [reference_using_declarations_raw]
 
 [reference_raw]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:repeat Repetition (`repeat[]`)]
+
+[heading Description]
+
+The `repeat[]` provides a more powerful and flexible mechanism for
+repeating a parser. There are grammars that are impractical and
+cumbersome, if not impossible, for the basic EBNF iteration syntax 
+(__qi_kleene__ and the __qi_plus__) to specify. Examples:
+
+* A file name may have a maximum of 255 characters only.
+* A specific bitmap file format has exactly 4096 RGB color information.
+* A 256 bit binary string (1..256 1s or 0s).
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/repeat.hpp>
+    #include <boost/spirit/include/qi_repeat.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::repeat    // alias: boost::spirit::qi::repeat` ]]
+    [[`boost::spirit::inf       // alias: boost::spirit::qi::inf` ]]
+]
+
+[heading Model of]
+
+The model of `repeat` is the model of its subject parser.
+
+[variablelist Notation
+    [[`a`]              [A __parser_concept__.]]
+    [[`n`,`min`,`max`]  [An `int` anything that can be converted to an 
+                        `int`, or a __lazy_argument__ that evaluates to 
+                        anything that can be converted to an `int`.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
+
+[table
+    [[Expression]               [Semantics]]
+    [[`repeat[a]`]              [Repeat `a` zero or more times. Same as __qi_kleene__.]]
+    [[`repeat(n)[a]`]           [Repeat `a` exactly `n` times.]]
+    [[`repeat(min, max)[a]`]    [Repeat `a` at least `min` times and at most `max` times.]]
+    [[`repeat(min, inf)[a]`]    [Repeat `a` at least `min` or more (continuing until `a` 
+                                fails or the input is consumed).]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table 
+    [[Expression]             [Attribute]]
+    [[`repeat[a]`]
+[``a: A --> repeat[a]: vector<A>
+a: Unused --> repeat[a]: Unused``]]
+    [[`repeat(num)[a]`]
+[``a: A --> repeat(num)[a]: vector<A>
+a: Unused --> repeat(num)[a]: Unused``]]
+    [[`repeat(num1, num2)[a]`]
+[``a: A --> repeat(num1, num2)[a]: vector<A>
+a: Unused --> repeat(num1, num2)[a]: Unused``]]
+    [[`repeat(num, inf)[a]`]
+[``a: A --> repeat(num, inf)[a]: vector<A>
+a: Unused --> repeat(num, inf)[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity is defined by the complexity of its subject
+parser. The complexity of `repeat` itself is O(N), where N is the number
+of repetitions to execute.] 
+
+[heading Example]
+
+Using the repeat directive, we can now write our examples above.
+
+Some using declarations:
+
+[reference_using_declarations_repeat]
+
+[reference_repeat]
+    
+The Loop parsers can be dynamic. Consider the parsing of a binary file
+of Pascal-style length prefixed string, where the first byte determines
+the length of the incoming string. Here's a sample input:
+
+[:__pascal_string__]
+
+[reference_repeat_pascal]
 
 [endsect]
 

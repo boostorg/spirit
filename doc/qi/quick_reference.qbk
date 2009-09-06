@@ -226,16 +226,35 @@ pages and pages of reference doumentation.
 [endsect]
 [section Compound Attribute Rules]
 
-The notation will be for instance: 
+[heading Notation]
+
+The notation we will use will be of the form:
+
+    a: A, b: B, ... --> composite-expression: composite-attribute
+
+`a`, `b`, etc. are the operands. `A`, `B`, etc. are the operand's
+attribute types. `composite-expression` is the expression involving the
+operands and `composite-attribute` is the resulting attribute type of
+the composite expression.
+
+For instance: 
 
     a: A, b: B --> (a >> b): tuple<A, B>
 
-which reads as: given, `a` and `b` are parsers/generators, and `A` is the type 
-of the attribute of `a`, and `B` is the type of the attribute of `b`, then the 
-type of the attribute of `a >> b` will be `tuple<A, B>`.
+reads as: given, `a` and `b` are parsers, and `A` is the type of the
+attribute of `a`, and `B` is the type of the attribute of `b`, then the
+type of the attribute of `a >> b` will be `tuple<A, B>`. 
 
+[important In the attribute tables, we will use `vector<A>` and
+`tuple<A, B...>` as placeholders only. The notation of `vector<A>`
+stands for ['any __stl__ container] holding elements of type `A` and the
+notation `tuple<A, B...>` stands for ['any __fusion__ sequence] holding
+`A`, `B`, ... etc. elements. Finally, `Unused` stands for
+__unused_type__. ] 
 
-[table compound parser attribute types
+[heading Compound Parser Attribute Types]
+
+[table 
     [[Expression]           [Attribute]]
 
     [[sequence (`>>`)]

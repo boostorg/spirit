@@ -58,6 +58,8 @@ defined in _concept-of_XXX_.
 
 [heading Attributes]
 
+See __qi_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
     [[`xxx`]            [Attribute of `xxx`]]

@@ -1,0 +1,239 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title> Transduction
+          Parsing (raw[])</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../directive.html" title=" Directive">
+<link rel="previous" href="omit.html" title=" Ignoring Attribute
+          (omit[])">
+<link rel="next" href="repeat.html" title=" Repetition
+          (repeat[])">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="omit.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="repeat.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.directive.raw"></a><a href="raw.html" title=" Transduction
+          Parsing (raw[])"> Transduction
+          Parsing (<tt class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
+<a name="spirit.qi.reference.directive.raw.description"></a><h6>
+<a name="id475662"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.description">Description</a>
+          </h6>
+<p>
+            The <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></tt>
+            disregards the attribute of its subject parser, instead exposing the
+            half-open range <tt class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></tt> pointing to the matched characters from
+            the input stream. The <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></tt> directive breings back the classic
+            Spirit transduction (un-attributed) behavior for a subject parser.
+          </p>
+<a name="spirit.qi.reference.directive.raw.header"></a><h6>
+<a name="id475759"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/raw.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_raw</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.qi.reference.directive.raw.namespace"></a><h6>
+<a name="id475873"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.namespace">Namespace</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup><col></colgroup>
+<thead><tr><th><p>
+                    Name
+                  </p></th></tr></thead>
+<tbody><tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">raw</span> <span class="comment">// alias:
+                    boost::spirit::qi::raw</span></tt>
+                  </p></td></tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.directive.raw.model_of"></a><h6>
+<a name="id475976"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.model_of">Model of</a>
+          </h6>
+<p>
+            The model of <tt class="computeroutput"><span class="identifier">raw</span></tt> is the
+            model of its subject parser.
+          </p>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dd><p>
+                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Iter</span></tt></span></dt>
+<dd><p>
+                A <tt class="computeroutput"><span class="identifier">ForwardIterator</span></tt>
+                type.
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.qi.reference.directive.raw.expression_semantics"></a><h6>
+<a name="id476100"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in the subject's concept.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Semantics
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td><p>
+                    Disregard the attribute of the subject parser, <tt class="computeroutput"><span class="identifier">a</span></tt>. Expose instead the half-open
+                    range <tt class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></tt> pointing to the matched characters
+                    from the input stream.
+                  </p></td>
+</tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.directive.raw.attributes"></a><h6>
+<a name="id476258"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.attributes">Attributes</a>
+          </h6>
+<p>
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Attribute
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td>
+<p>
+                    
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">Iter</span><span class="special">&gt;</span> 
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
+<p>
+                  </p>
+</td>
+</tr></tbody>
+</table></div>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              See <a href="http://www.boost.org/libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;&gt;</span></tt></a>.
+            </p></td></tr>
+</table></div>
+<a name="spirit.qi.reference.directive.raw.complexity"></a><h6>
+<a name="id476548"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                The complexity is defined by the complexity of the subject parser,
+                <tt class="computeroutput"><span class="identifier">p</span></tt>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<a name="spirit.qi.reference.directive.raw.example"></a><h6>
+<a name="id476596"></a>
+            <a href="raw.html#spirit.qi.reference.directive.raw.example">Example</a>
+          </h6>
+<p>
+            Some using declarations:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">raw</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">alpha</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">alnum</span><span class="special">;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            </p>
+<p>
+              This parser matches and extracts C++ identifiers:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">id</span><span class="special">;</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"James007"</span><span class="special">,</span> <span class="identifier">raw</span><span class="special">[(</span><span class="identifier">alpha</span> <span class="special">|</span> <span class="char">'_'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="identifier">alnum</span> <span class="special">|</span> <span class="char">'_'</span><span class="special">)],</span> <span class="identifier">id</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">id</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// should print James007
+</span></pre>
+<p>
+            </p>
+<p>
+          </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="omit.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="repeat.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
