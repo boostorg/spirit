@@ -18,7 +18,7 @@ The string generators described in this section are:
 [table
     [[Expression]           [Description]]
     [[`str`]                [Generates `str`]]
-    [[`lit(str)`]           [Generates `str`, same as `boost::spirit::karma::lit`]]
+    [[`lit(str)`]           [Generates `str`, same as `boost::spirit::lit`]]
     [[`ns::string`]         [Generates the mandatory attribute as a string
                              interpreted in the character set defined by `ns`]]
     [[`ns::string(str)`]    [Generates `str` as a character interpreted in the 

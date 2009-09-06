@@ -30,7 +30,7 @@ The character generators described in this section are:
 [table
     [[Expression]           [Description]]
     [[`ch`]                 [Generates `ch`]]
-    [[`lit(ch)`]            [Generates `ch`, same as `boost::spirit::karma::lit`]]
+    [[`lit(ch)`]            [Generates `ch`, same as `boost::spirit::lit`]]
     [[`ns::char_`]          [Generates the mandatory attribute as a single 
                              character interpreted in the character set defined 
                              by `ns`]]

@@ -1,15 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Character
-          Generators</title>
+<title>Character Generators</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../char.html" title=" Char">
-<link rel="previous" href="../char.html" title=" Char">
-<link rel="next" href="char_class.html" title=" Character
-          Class Generators">
+<link rel="up" href="../char.html" title="Char">
+<link rel="prev" href="../char.html" title="Char">
+<link rel="next" href="char_class.html" title="Character Class Generators">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,18 +22,14 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../char.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../char.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="char_class.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.char.char_generator"></a><a href="char_generator.html" title=" Character
-          Generators"> Character
+<div class="section" title="Character Generators">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.char.char_generator"></a><a class="link" href="char_generator.html" title="Character Generators"> Character
           Generators</a>
-</h5></div></div>
-<div></div>
-</div>
+</h5></div></div></div>
 <a name="spirit.karma.reference.char.char_generator.description"></a><h6>
-<a name="id532086"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.description">Description</a>
+<a name="id1230622"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.description">Description</a>
           </h6>
 <p>
             The character generators described in this section are:
@@ -46,145 +40,177 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ch</span></tt>
-                  </p></td>
-<td><p>
-                    Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ch</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generates <code class="computeroutput"><span class="identifier">ch</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>,
-                    same as <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">lit</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generates <code class="computeroutput"><span class="identifier">ch</span></code>,
+                    same as <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generates the mandatory attribute as a single character interpreted
-                    in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                  </p></td>
+                    in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generates <tt class="computeroutput"><span class="identifier">ch</span></tt>
-                    as a character interpreted in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>, if an attribute is supplied
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generates <code class="computeroutput"><span class="identifier">ch</span></code>
+                    as a character interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>, if an attribute is supplied
                     it must match
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generates <tt class="computeroutput"><span class="identifier">c</span></tt> as
-                    a character interpreted in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>, if an attribute is supplied
-                    it must match, equivalent to <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'c'</span><span class="special">)</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generates <code class="computeroutput"><span class="identifier">c</span></code> as
+                    a character interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>, if an attribute is supplied
+                    it must match, equivalent to <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="char">'c'</span><span class="special">)</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span>
-                    <span class="identifier">ch2</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span>
+                    <span class="identifier">ch2</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generates the character supplied as the attribute if it belongs
                     to the character range interpreted in the character set defined
-                    by <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                  </p></td>
+                    by <code class="computeroutput"><span class="identifier">ns</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generates the character supplied as the attribute if it belongs
-                    to <tt class="computeroutput"><span class="identifier">charset</span></tt> interpreted
-                    in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                  </p></td>
+                    to <code class="computeroutput"><span class="identifier">charset</span></code> interpreted
+                    in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <p>
-            In the table above, <tt class="computeroutput"><span class="identifier">ns</span></tt>
-            is a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+            In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
+            is a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
             Encoding Namespace</a> used by the corresponding character generator.
           </p>
 <a name="spirit.karma.reference.char.char_generator.header"></a><h6>
-<a name="id532711"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.header">Header</a>
+<a name="id1231067"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_char_</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.model_of"></a><h6>
-<a name="id532825"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.model_of">Model
+<a name="id1231141"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">ch</span></tt>,
-            <tt class="computeroutput"><span class="identifier">ch1</span></tt>, <tt class="computeroutput"><span class="identifier">ch2</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span></code>,
+            <code class="computeroutput"><span class="identifier">ch1</span></code>, <code class="computeroutput"><span class="identifier">ch2</span></code></span></dt>
 <dd><p>
                 Character-class specific character (See Character Class Types), or
-                a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a character-class specific character
                 value
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">charset</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">charset</span></code></span></dt>
 <dd><p>
                 Character-set specifier string (See Character Class Types), or a
-                <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a character-set specifier string,
                 or a pointer/reference to a null-terminated array of characters.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">ns</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a href="../../../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                A <a class="link" href="../../../qi/reference/basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
                 Encoding Namespace</a>.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_generator.expression_semantics"></a><h6>
-<a name="id533013"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.expression_semantics">Expression
+<a name="id1231270"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -192,123 +218,155 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ch</span></tt>
-                  </p></td>
-<td><p>
-                    Generate the character literal <tt class="computeroutput"><span class="identifier">ch</span></tt>.
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ch</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
                     This generator never fails (except if the underlying output stream
                     reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generate the character literal <tt class="computeroutput"><span class="identifier">ch</span></tt>.
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
                     This generator never fails (except if the underlying output stream
                     reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generate the character provided by a mandatory attribute interpreted
-                    in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                    in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>.
                     This generator never fails (except if the underlying output stream
                     reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generate the character <tt class="computeroutput"><span class="identifier">ch</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character <code class="computeroutput"><span class="identifier">ch</span></code>
                     as provided by the immediate literal value the generator is initialized
                     from. If this generator has an associated attribute it succeeds
                     only as long as the attribute is equal to the immediate literal
                     (except if the underlying output stream reports an error). Otherwise
                     this generator fails and does not generate any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generate the character <tt class="computeroutput"><span class="identifier">c</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character <code class="computeroutput"><span class="identifier">c</span></code>
                     as provided by the immediate literal value the generator is initialized
                     from. If this generator has an associated attribute it succeeds
                     only as long as the attribute is equal to the immediate literal
                     (except if the underlying output stream reports an error). Otherwise
                     this generator fails and does not generate any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span>
-                    <span class="identifier">ch2</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span>
+                    <span class="identifier">ch2</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generate the character provided by a mandatory attribute interpreted
-                    in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                    in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>.
                     The generator succeeds as long as the attribute belongs to the
-                    character range <tt class="computeroutput"><span class="special">[</span><span class="identifier">ch1</span><span class="special">,</span>
-                    <span class="identifier">ch2</span><span class="special">]</span></tt>
+                    character range <code class="computeroutput"><span class="special">[</span><span class="identifier">ch1</span><span class="special">,</span>
+                    <span class="identifier">ch2</span><span class="special">]</span></code>
                     (except if the underlying output stream reports an error). Otherwise
                     this generator fails and does not generate any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Generate the character provided by a mandatory attribute interpreted
-                    in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>.
+                    in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>.
                     The generator succeeds as long as the attribute belongs to the
-                    character set <tt class="computeroutput"><span class="identifier">charset</span></tt>
+                    character set <code class="computeroutput"><span class="identifier">charset</span></code>
                     (except if the underlying output stream reports an error). Otherwise
                     this generator fails and does not generate any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <p>
-            A character <tt class="computeroutput"><span class="identifier">ch</span></tt> is assumed
-            to belong to the character range defined by <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">)</span></tt> if its character value (binary representation)
-            interpreted in the character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>
-            is not smaller than the character value of <tt class="computeroutput"><span class="identifier">ch1</span></tt>
-            and not larger then the character value of <tt class="computeroutput"><span class="identifier">ch2</span></tt>
-            (i.e. <tt class="computeroutput"><span class="identifier">ch1</span> <span class="special">&lt;=</span>
+            A character <code class="computeroutput"><span class="identifier">ch</span></code> is assumed
+            to belong to the character range defined by <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">)</span></code> if its character value (binary representation)
+            interpreted in the character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>
+            is not smaller than the character value of <code class="computeroutput"><span class="identifier">ch1</span></code>
+            and not larger then the character value of <code class="computeroutput"><span class="identifier">ch2</span></code>
+            (i.e. <code class="computeroutput"><span class="identifier">ch1</span> <span class="special">&lt;=</span>
             <span class="identifier">ch</span> <span class="special">&lt;=</span>
-            <span class="identifier">ch2</span></tt>).
+            <span class="identifier">ch2</span></code>).
           </p>
 <p>
-            The <tt class="computeroutput"><span class="identifier">charset</span></tt> parameter
-            passed to <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></tt>
+            The <code class="computeroutput"><span class="identifier">charset</span></code> parameter
+            passed to <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></code>
             must be a string containing more than one character. Every single character
             in this string is assumed to belong to the character set defined by this
-            expression. An exception to this is the <tt class="computeroutput"><span class="char">'-'</span></tt>
+            expression. An exception to this is the <code class="computeroutput"><span class="char">'-'</span></code>
             character which has a special meaning if it is not specified as the first
-            and not the last character in <tt class="computeroutput"><span class="identifier">charset</span></tt>.
-            If the <tt class="computeroutput"><span class="char">'-'</span></tt> is used in between
+            and not the last character in <code class="computeroutput"><span class="identifier">charset</span></code>.
+            If the <code class="computeroutput"><span class="char">'-'</span></code> is used in between
             to characters it is interpreted as spanning a character range. A character
-            <tt class="computeroutput"><span class="identifier">ch</span></tt> is considered to belong
-            to the defined character set <tt class="computeroutput"><span class="identifier">charset</span></tt>
+            <code class="computeroutput"><span class="identifier">ch</span></code> is considered to belong
+            to the defined character set <code class="computeroutput"><span class="identifier">charset</span></code>
             if it matches one of the characters as specified by the string parameter
             described above. For example
           </p>
@@ -318,51 +376,71 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Example
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"abc"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"abc"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     'a', 'b', and 'c'
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a-z"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a-z"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     all characters (and including) from 'a' to 'z'
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a-zA-Z"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"a-zA-Z"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     all characters (and including) from 'a' to 'z' and 'A' and 'Z'
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"-1-9"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">char_</span><span class="special">(</span><span class="string">"-1-9"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     '-' and all characters (and including) from '1' to '9'
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.attributes"></a><h6>
-<a name="id534066"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.attributes">Attributes</a>
+<a name="id1232022"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -370,89 +448,121 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ch</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ch</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Ch</span></tt>, attribute
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Ch</span></code>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Ch</span></tt>, attribute
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Ch</span></code>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <tt class="computeroutput"><span class="identifier">ch</span></tt> and succeeds
+                    with <code class="computeroutput"><span class="identifier">ch</span></code> and succeeds
                     only if both are equal, failing otherwise
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Ch</span></tt>, attribute
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Ch</span></code>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <tt class="computeroutput"><span class="identifier">c</span></tt> and succeeds
+                    with <code class="computeroutput"><span class="identifier">c</span></code> and succeeds
                     only if both are equal, failing otherwise
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span>
-                    <span class="identifier">ch2</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Ch</span></tt>, attribute
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span>
+                    <span class="identifier">ch2</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Ch</span></code>, attribute
                     is mandatory (otherwise compilation will fail), the generator
-                    succeeds if the attribute belongs to the character range <tt class="computeroutput"><span class="special">[</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">]</span></tt> interpreted in the character
-                    set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                  </p></td>
+                    succeeds if the attribute belongs to the character range <code class="computeroutput"><span class="special">[</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">]</span></code> interpreted in the character
+                    set defined by <code class="computeroutput"><span class="identifier">ns</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Ch</span></tt>, attribute
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Ch</span></code>, attribute
                     is mandatory (otherwise compilation will fail), the generator
-                    succeeds if the attribute belongs to the character set <tt class="computeroutput"><span class="identifier">charset</span></tt>, interpreted in the
-                    character set defined by <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                  </p></td>
+                    succeeds if the attribute belongs to the character set <code class="computeroutput"><span class="identifier">charset</span></code>, interpreted in the
+                    character set defined by <code class="computeroutput"><span class="identifier">ns</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.complexity"></a><h6>
-<a name="id534643"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.complexity">Complexity</a>
+<a name="id1233537"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -464,24 +574,24 @@
             </p>
 </blockquote></div>
 <p>
-            The complexity of <tt class="computeroutput"><span class="identifier">ch</span></tt>,
-            <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>,
-            <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>, <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></tt>, and <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></tt> is constant as all generators emit exactly
+            The complexity of <code class="computeroutput"><span class="identifier">ch</span></code>,
+            <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>,
+            <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>, and <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="string">"c"</span><span class="special">)</span></code> is constant as all generators emit exactly
             one character per invocation.
           </p>
 <p>
-            The character range generator (<tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">)</span></tt>) additionally requires constant lookup
+            The character range generator (<code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch1</span><span class="special">,</span> <span class="identifier">ch2</span><span class="special">)</span></code>) additionally requires constant lookup
             time for the verification whether the attribute belongs to the character
             range.
           </p>
 <p>
-            The character set generator (<tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></tt>) additionally requires O(log N) lookup
+            The character set generator (<code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">charset</span><span class="special">)</span></code>) additionally requires O(log N) lookup
             time for the verification whether the attribute belongs to the character
             set, where N is the number of characters in the character set.
           </p>
 <a name="spirit.karma.reference.char.char_generator.example"></a><h6>
-<a name="id534914"></a>
-            <a href="char_generator.html#spirit.karma.reference.char.char_generator.example">Example</a>
+<a name="id1233721"></a>
+            <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -560,7 +670,7 @@
 <p>
           </p>
 <p>
-            Basic usage of <tt class="computeroutput"><span class="identifier">char_</span></tt>
+            Basic usage of <code class="computeroutput"><span class="identifier">char_</span></code>
             generators:
           </p>
 <p>

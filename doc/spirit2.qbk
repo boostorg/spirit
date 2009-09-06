@@ -190,7 +190,7 @@
 
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
 [template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]
-[template floating_point[str]       [link spirit.karma.reference.numeric.floating_point [str]]]
+[template real_number[str]          [link spirit.karma.reference.numeric.real_number [str]]]
 
 [template karma_char[str]           [link spirit.karma.reference.char.char_generator [str]]]
 [template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
@@ -229,6 +229,7 @@
 [def __caution__                [$../images/caution.png]]
 [def __danger__                 [$../images/alert.png]]
 
+[/////////////////////////////////////////////////////////////////////////////]
 [/ some templates]
 
 [/  fig[ref title label]

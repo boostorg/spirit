@@ -37,8 +37,8 @@ pages and pages of reference doumentation.
     [[`charset`]        [Character-set specifier string (example: "a-z0-9")]]
     [[`str`]            [Character-class specific string (See __char_class_types__)]]
     [[`Str`]            [Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
-    [[`num`]            [Numeric literal, any integer or floating point type]]
-    [[`Num`]            [Attribute of `num`: any integer or floating point type]]
+    [[`num`]            [Numeric literal, any integer or real number type]]
+    [[`Num`]            [Attribute of `num`: any integer or real number type]]
     [[`tuple<>`]        [Used as a placeholder for a fusion sequence]]
     [[`vector<>`]       [Used as a placeholder for an STL container]]
     [[`variant<>`]      [Used as a placeholder for a boost::variant]]
@@ -126,34 +126,34 @@ See here for more information about __karma_string__.
 
 [endsect]
 
-[section:floating_point Floating Point Number Generators]
+[section:real_number Real Number Generators]
 
 See here for more information about __karma_numeric__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
     [[[link spirit.karma.reference.numeric `lit(num)`]]
-                            [`Unused`]                    [Generates `num`]]
-    [[[floating_point `float_`]]           [`float`]       [Generate a floating point number from a `float`]]
-    [[[floating_point `float_(num)`]]      [`float`]       [Generate `num` as a floating point number from a `float`, 
+                            [`Unused`]                  [Generates `num`]]
+    [[[real_number `float_`]]           [`float`]       [Generate a real number from a `float`]]
+    [[[real_number `float_(num)`]]      [`float`]       [Generate `num` as a real number from a `float`, 
                                                             if an attribute is supplied it must match]]
-    [[[floating_point `double_`]]          [`double`]      [Generate a floating point number from a `double`]]
-    [[[floating_point `double_(num)`]]     [`double`]      [Generate a `num` as a floating point number from a `double`, 
+    [[[real_number `double_`]]          [`double`]      [Generate a real number from a `double`]]
+    [[[real_number `double_(num)`]]     [`double`]      [Generate a `num` as a real number from a `double`, 
                                                             if an attribute is supplied it must match]]
-    [[[floating_point `long_double`]]      [`long double`] [Generate a floating point number from a `long double`]]
-    [[[floating_point `long_double(num)`]] [`long double`] [Generate `num` as a floating point number from a `long double`, 
+    [[[real_number `long_double`]]      [`long double`] [Generate a real number from a `long double`]]
+    [[[real_number `long_double(num)`]] [`long double`] [Generate `num` as a real number from a `long double`, 
                                                             if an attribute is supplied it must match]]
 
-    [[[floating_point ``real_generator<
+    [[[real_number ``real_generator<
     Num, Policies
 >()``]]
-                                        [`Num`]            [Generate a floating point number `Num` using
-                                                            the supplied floating point formatting policies]]
-    [[[floating_point ``real_generator<
+                                        [`Num`]            [Generate a real number `Num` using
+                                                            the supplied real number formatting policies]]
+    [[[real_number ``real_generator<
     Num, Policies
 >()(num)``]]
-                                        [`Num`]            [Generate floating point number `num` as a `Num` 
-                                                            using the supplied floating point formatting 
+                                        [`Num`]            [Generate real number `num` as a `Num` 
+                                                            using the supplied real number formatting 
                                                             policies, if an attribute is supplied it must 
                                                             match]]
 ]

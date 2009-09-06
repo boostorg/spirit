@@ -16,7 +16,7 @@ other categories. This module includes the `attr`, `eoi`, `eol`, `eps`, and
 
     // forwards to <boost/spirit/home/qi/auxiliary.hpp>
     #include <boost/spirit/include/qi_auxiliary.hpp>
-    
+
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]

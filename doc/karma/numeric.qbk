@@ -9,8 +9,8 @@
 [section:numeric Numeric]
 
 This module includes different numeric generators allowing to format arbitrary 
-integer and floating point types. It includes the signed integer, unsigned 
-integer, and floating point number generators.
+integer and real number types. It includes the signed integer, unsigned 
+integer, and real number generators.
 
 [heading Module Header]
 
@@ -29,7 +29,8 @@ The signed integer number generators described in this section are:
 [table
     [[Expression]          [Attribute]     [Description]]
     [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `short`,
-                                            `int`, `long`, or `long long`]]
+                                            `int`, `long`, or `long long`, same as 
+                                            `boost::spirit::lit`]]
     [[`short_`]            [`short`]       [Generate a `short int` as given by the
                                             mandatory attribute]]
     [[`short_(num)`]       [`short`]       [Generate `num` as a `short int`, 
@@ -284,7 +285,8 @@ The signed integer number generators described in this section are:
 [table
     [[Expression]          [Attribute]            [Description]]
     [[`lit(num)`]          [__unused__]           [Generates `num`, where `num` can be a `unsigned short`,
-                                                   `unsigned int`, `unsigned long`, or `unsigned long long`]]
+                                                   `unsigned int`, `unsigned long`, or `unsigned long long`, 
+                                                   same as `boost::spirit::lit`]]
     [[`ushort`]            [`unsigned short`]     [Generate a short integer]]
     [[`ushort(num)`]       [`unsigned short`]     [Generate `num` as a short integer, 
                                                    if an attribute is supplied it must match]]
@@ -563,16 +565,17 @@ Basic usage of an `uint` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:floating_point Floating Point Number Generators]
+[section:real_number Real Number Generators]
 
 [heading Description]
 
-The floating point number generators described in this section are:
+The real number generators described in this section are:
 
 [table
     [[Expression]          [Attribute]     [Description]]
     [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `float`,
-                                            `double`, or `long double`]]
+                                            `double`, or `long double`, same as 
+                                            `boost::spirit::lit`]]
     [[`float_`]            [`float`]       [Generate a `float` as given by the
                                             mandatory attribute]]
     [[`float_(num)`]       [`float`]       [Generate `num` as a `float`, 
@@ -600,12 +603,12 @@ The floating point number generators described in this section are:
                                             supplied it must match]]
 ]
 
-These can be used to flexibly format any floating point number of any 
+These can be used to flexibly format any real number of any 
 compatible type (for more information about the requirements, see 
-[link spirit.karma.reference.numeric.floating_point.additional_requirements below]).
+[link spirit.karma.reference.numeric.real_number.additional_requirements below]).
 
-The floating point number generators are very fast. For measurement results 
-comparing the __karma__ floating point number generators with equivalent 
+The real number generators are very fast. For measurement results 
+comparing the __karma__ real number generators with equivalent 
 constructs provided by other libraries see the section 
 [link spirit.karma.performance_measurements.numeric_performance.double_performance Performance of Floating Point Numeric Generators]
 
@@ -621,10 +624,10 @@ Also, see __include_structure__.
 [:__primitive_generator_concept__]
 
 [variablelist Notation
-    [[`num`]            [Numeric literal, any floating point value, or
-                         a __karma_lazy_argument__ that evaluates to a floating 
-                         point value of type `Num`]]
-    [[`Num`]            [Type of `num`: any floating point type]]]
+    [[`num`]            [Numeric literal, any real number value, or
+                         a __karma_lazy_argument__ that evaluates to a real
+                         number value of type `Num`]]
+    [[`Num`]            [Type of `num`: any real number type]]]
 
 [heading Expression Semantics]
 
@@ -633,7 +636,7 @@ not defined in __primitive_generator_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`lit(num)`]       [Generate the floating point literal `num` using the 
+    [[`lit(num)`]       [Generate the real number literal `num` using the 
                          default formatting (no trailing zeros, `fixed` 
                          representation for numbers `fabs(n) <= 1e5 && fabs(n) > 1e-3`,
                          scientific representation otherwise, 3 fractional digits,
@@ -643,7 +646,7 @@ not defined in __primitive_generator_concept__.
     [
 [``float_
 double_
-long_double``]          [Generate the floating point number provided by a 
+long_double``]          [Generate the real number provided by a 
                          mandatory attribute using the default formatting (no 
                          trailing zeros, `fixed` representation for numbers 
                          `fabs(n) <= 1e5 && fabs(n) > 1e-3`, scientific 
@@ -654,7 +657,7 @@ long_double``]          [Generate the floating point number provided by a
     [
 [``float_(num)
 double_(num)
-long_double(num)``]     [Generate the floating point number provided by the 
+long_double(num)``]     [Generate the real point number provided by the 
                          immediate literal value the generator is initialized 
                          from using the default formatting (no trailing zeros, 
                          `fixed` representation for numbers 
@@ -669,9 +672,9 @@ long_double(num)``]     [Generate the floating point number provided by the
 ]
 
 All generators listed in the table above (except `lit(num)`) are predefined 
-specializations of the `real_generator<Num, Policies>` basic floating point
+specializations of the `real_generator<Num, Policies>` basic real
 number generator type described below. It is possible to directly use this
-type to create floating point generators using a wide range of formatting
+type to create real number generators using a wide range of formatting
 options.
 
 [table
@@ -680,7 +683,7 @@ options.
 [``real_generator<
     Num, Policies
 >()``]
-                        [Generate the floating point number of type `Num` 
+                        [Generate the real number of type `Num` 
                          provided by a mandatory attribute using the specified 
                          `Policies`. This generator never fails 
                          (except if the underlying output stream reports an 
@@ -691,15 +694,13 @@ options.
 
 [table
     [[Parameter]        [Description]               [Default]]
-    [[`Num`]            [The type of the floating 
-                         point number to generate]  [`double`]]
+    [[`Num`]            [The type of the real number to generate]  [`double`]]
     [[`Policies`]       [The policies to use while 
-                         converting the floatng 
-                         point number]              [`real_policies<Num>`]]
+                         converting the real number] [`real_policies<Num>`]]
 ]
 
 For more information about the type `Policies` see 
-[link spirit.karma.reference.numeric.floating_point.floating_point_formatting_policies below]).
+[link spirit.karma.reference.numeric.real_number.real_number_formatting_policies below]).
 
 [heading Additional Requirements]
 
@@ -756,13 +757,13 @@ the type `Num` must have defined:
 ]
 
 
-[heading Floating Point Formatting Policies]
+[heading Real Number Formatting Policies]
 
-If special formatting of a floating point number is needed, overload 
+If special formatting of a real number is needed, overload 
 the policy class `real_policies<Num>` and use it as a template
-parameter to the `real_generator<>` floating point generator. For instance:
+parameter to the `real_generator<>` real number generator. For instance:
 
-    // define a new floating point formatting policy
+    // define a new real number formatting policy
     template <typename Num>
     struct scientific_policy : real_policies<Num>
     {
@@ -780,12 +781,12 @@ parameter to the `real_generator<>` floating point generator. For instance:
 
 The template parameter `Num` should be the type to be formatted using the 
 overloaded policy type. At the same time `Num` will be used as the attribute 
-type of the created floating point generator.
+type of the created real number generator.
 
 
-[heading Floating Point Formatting Policy Expression Semantics]
+[heading Real Number Formatting Policy Expression Semantics]
 
-A floating point formatting policy should expose the following variables and 
+A real number formatting policy should expose the following variables and 
 functions:
 
 [table
@@ -797,7 +798,7 @@ functions:
         bool call (OutputIterator& sink, Num n
           , Policies const& p);
     ``]
-    [This is the main function used to generate the output for a floating point 
+    [This is the main function used to generate the output for a real
      number. It is called by the real generator in order to perform the 
      conversion. In theory all of the work can be implemented here, but it is 
      the easiest to use existing functionality provided by the type specified
@@ -814,10 +815,10 @@ functions:
      ``
       `sink`: is the output iterator to use for generation 
 
-      `n`: is the floating point number to convert 
+      `n`: is the real number to convert 
 
-      `p`: the instance of the policy type used to instantiate this floating 
-           point generator.
+      `p`: the instance of the policy type used to instantiate this real 
+           number generator.
     ]]
 [   [``
         bool force_sign(Num n);
@@ -826,17 +827,17 @@ functions:
      `force_sign()` returns true, then all generated numbers will have a 
      sign (`'+'` or `'-'`, zeros will have a space instead of a sign).
 
-     `n` is the floating point number to output. This can be used to 
+     `n` is the real number to output. This can be used to 
      adjust the required behavior depending on the value of this number.]]
 [   [``
         bool trailing_zeros(Num n);
     ``]
     [Return whether trailing zero digits have to be emitted in the fractional 
-     part of the output. If set, this flag instructs the floating point 
+     part of the output. If set, this flag instructs the real number
      generator to emit trailing zeros up to the required precision digits (as 
      returned by the `precision()` function).
 
-     `n` is the floating point number to output. This can be used to 
+     `n` is the real number to output. This can be used to 
      adjust the required behavior depending on the value of this number.]]
 [   [``
         int floatfield(Num n);
@@ -852,13 +853,13 @@ functions:
     `precision()` member function. The default is not to generate the trailing 
     zeros.
 
-    `n`: is the floating point number to output. This can be used to 
+    `n`: is the real number to output. This can be used to 
           adjust the formatting flags depending on the value of 
           this number.
 
-    The return value has to be either `fmtflags::scientific` (generate floating
-    point values in scientific notation) or `fmtflags::fixed` (generate 
-    floating point values in fixed-point notation).
+    The return value has to be either `fmtflags::scientific` (generate real
+    number values in scientific notation) or `fmtflags::fixed` (generate 
+    real number values in fixed-point notation).
     ]]
 [   [``
         unsigned precision(Num n);
@@ -866,7 +867,7 @@ functions:
     [Return the maximum number of decimal digits to generate in the 
      fractional part of the output.
 
-    `n`: is the floating point number to output. This can be used to 
+    `n`: is the real number to output. This can be used to 
     adjust the required precision depending on the value of this number. If 
     the trailing zeros flag is specified the fractional part of the output will 
     be 'filled' with zeros, if appropriate.
@@ -881,15 +882,15 @@ functions:
         bool integer_part(OutputIterator& sink
           , Num n, bool sign, bool force_sign);
     ``]
-    [This function is called to generate the integer part of the floating point 
+    [This function is called to generate the integer part of the real
       number. 
 
       `sink`: is the output iterator to use for generation 
 
-      `n`: is the absolute value of the integer part of the floating point 
+      `n`: is the absolute value of the integer part of the real
            number to convert (always non-negative)
 
-      `sign`: is the sign of the overall floating point number to convert.
+      `sign`: is the sign of the overall real number to convert.
 
       `force_sign`: is a flag whether a sign has to be generated even for non-
                     negative numbers (this is the same as has been returned from
@@ -908,7 +909,7 @@ functions:
 
      `sink`: is the output iterator to use for generation 
 
-     `n`: The fractional part of the floating point number to convert. Note 
+     `n`: The fractional part of the real number to convert. Note 
       that this number is scaled such, that it represents the number of units 
       which correspond to the value returned from the `precision()` function 
       earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
@@ -936,7 +937,7 @@ functions:
 
       `sink`: is the output iterator to use for generation 
 
-      `n`: The fractional part of the floating point number to convert. Note 
+      `n`: The fractional part of the real number to convert. Note 
       that this number is scaled such, that it represents the number of units 
       which correspond to the value returned from the `precision()` function 
       earlier. I.e. a fractional part of `0.01234` is represented as `1234` 
@@ -951,7 +952,7 @@ functions:
       parameter will have been corrected from the value the `precision()` 
       function returned earlier (defining the maximal number of fractional 
       digits) in the sense, that it takes into account trailing zeros. I.e. a 
-      floating point number `0.0123` and a value of `5` returned from 
+      real number `0.0123` and a value of `5` returned from 
       `precision()` will result in:
 
       `trailing_zeros()` returned `false`: `n` will be `123`, and `adjprec` 
@@ -979,7 +980,7 @@ functions:
 
      `sink`: is the output iterator to use for generation 
 
-     `n`: The (signed) exponential part of the floating point number to convert. 
+     `n`: The (signed) exponential part of the real number to convert. 
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
@@ -997,11 +998,11 @@ functions:
           , bool force_sign);
     ``]
     [This function is called whenever the number to print is a non-normal 
-     floating point number of type `NaN`.
+     real number of type `NaN`.
 
      `sink`: is the output iterator to use for generation 
 
-     `n`: is the (signed) floating point number to convert
+     `n`: is the (signed) real number to convert
 
     `force_sign`: is a flag whether a sign has to be generated even for non-
                   negative numbers (this is the same as has been returned from
@@ -1023,11 +1024,11 @@ functions:
           , bool force_sign);
     ``]
     [This function is called whenever the number to print is a non-normal 
-     floating point number of type `Inf`.
+     real number of type `Inf`.
 
      `sink`: is the output iterator to use for generation 
 
-     `n`: is the (signed) floating point number to convert
+     `n`: is the (signed) real number to convert
 
     `force_sign`: is a flag whether a sign has to be generated even for non-
                   negative numbers (this is the same as has been returned from
@@ -1044,7 +1045,7 @@ functions:
       generation continues.]]
 ]
 
-[tip  The easiest way to implement a proper floating point formatting policy is 
+[tip  The easiest way to implement a proper real number formatting policy is 
       to derive a new type from the the type `real_policies<>` while overriding 
       the aspects of the formatting which need to be changed.]
 
@@ -1052,7 +1053,7 @@ functions:
 [heading Complexity]
 
 [:O(N), where `N` is the number of digits needed to represent the generated 
-        floating point number.]
+        real number.]
 
 [heading Example]
 
