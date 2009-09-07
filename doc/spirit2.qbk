@@ -147,9 +147,6 @@
 
 [def __parser_concept__             [link spirit.qi.reference.parser_concepts.parser `Parser`]]
 [def __primitive_parser_concept__   [link spirit.qi.reference.parser_concepts.primitiveparser `PrimitiveParser`]]
-[def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
-[def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
-[def __string__                     [link spirit.qi.reference.basics.string String]]
 
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
@@ -271,9 +268,23 @@
 [/ $$$ Now I'm confused with all this adhoc links. Let's fix this somehow.
 For now, I'll put my stuff here adhoc (JDG). $$$]
 
+[/ quick-ref]
 [def __qi_quickref__                [link spirit.qi.quick_reference Qi Quick Reference]]
 [def __qi_comp_attr_notation__      [link spirit.qi.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
 
+[/ basics]
+[def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
+[def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
+[def __string__                     [link spirit.qi.reference.basics.string String]]
+
+[/ auxiliary]
+[def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr`]]
+[def __qi_eol__                     [link spirit.qi.reference.auxiliary.eol `eol`]]
+[def __qi_eoi__                     [link spirit.qi.reference.auxiliary.eoi `eoi`]]
+[def __qi_eps__                     [link spirit.qi.reference.auxiliary.eps `eps`]]
+[def __qi_lazy__                    [link spirit.qi.reference.auxiliary.lazy `lazy`]]
+
+[/ directives]
 [def __qi_lexeme__                  [link spirit.qi.reference.directive.lexeme `lexeme`]]
 [def __qi_no_case__                 [link spirit.qi.reference.directive.no_case `no_case`]]
 [def __qi_omit__                    [link spirit.qi.reference.directive.omit `omit`]]

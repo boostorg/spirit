@@ -419,6 +419,38 @@ main()
         //]
     }
     
+    // eps
+    {
+        //[reference_using_declarations_eps
+        using boost::spirit::qi::eps;
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::_1;
+        namespace phx = boost::phoenix;
+        //]
+
+        //[reference_eps
+        //`Basic `eps`:
+        test_parser("", eps); // always matches
+        //]
+        
+        //[reference_eps_if
+        /*`This example simulates the "classic" `if_p` parser. Here, `int_` will be 
+            tried only if the condition, `c`, is true.
+         */
+        bool c = true; // a flag
+        test_parser("1234", eps(phx::ref(c) == true) >> int_);
+        //]
+        
+        //[reference_eps_while
+        /*`This example simulates the "classic" `while_p` parser. Here, the kleene loop
+            will exit once the condition, c, becomes true. Notice that the condition, `c,
+            is turned to `false` when we get to parse `4`.
+         */
+        test_phrase_parser("1 2 3 4", 
+            *(eps(phx::ref(c) == true) >> int_[phx::ref(c) = (_1 == 4)]));
+        //]
+    }
+    
     // lazy
     {
         //[reference_using_declarations_lazy

@@ -215,6 +215,102 @@ Using `eoi`:
 [endsect] [/ End of Input]
 
 [/------------------------------------------------------------------------------]
+[section:eps Epsilon (`eps`)]
+
+[heading Description]
+
+The Epsilon (`eps`) is a multi-purpose parser that returns a zero length
+match. 
+
+[heading Simple Form]
+
+In its simplest form, `eps` matches the null string and always returns a
+match of zero length:
+
+    eps // always returns a zero-length match
+
+This form is usually used to trigger a semantic action unconditionally.
+For example, it is useful in triggering error messages when a set of
+alternatives fail:
+
+    r = a | b | c | eps[error()]; // Call error if a, b, or c fails to match
+
+[heading Semantic Predicate]
+
+Semantic predicates allow you to attach a conditional function anywhere
+in the grammar. In this role, the epsilon takes a __lazy_argument__ that
+returns `true` or `false`. The __lazy_argument__ is typically a test
+that is called to resolve ambiguity in the grammar. A parse failure will
+be reported when the __lazy_argument__ result evaluates to `false`.
+Otherwise an empty match will be reported. The general form is:
+
+    eps_p(f) >> rest;
+
+The __lazy_argument__ `f` is called to do a semantic test (say, checking
+if a symbol is in the symbol table). If test returns true, `rest` will
+be evaluated. Otherwise, the production will return early with a
+no-match without ever touching rest. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/eps.hpp>
+    #include <boost/spirit/include/qi_eps.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::eps // alias: boost::spirit::qi::eps`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`f`]    [A __lazy_argument__ that evaluates `bool`.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`eps`]            [Match an empty string (always matches).]]
+    [[`eps(f)`]         [If `f` evaluates to `true`, match an empty string.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`eps`]            [__unused__]]
+]
+
+[heading Complexity]
+
+[:For plain (`eps`) the complexity is O(1). For Semantic predicates
+(`eps(f)`) the complexity is defined by the function `f`.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_eps]
+
+[reference_eps]
+
+[reference_eps_if]
+
+[reference_eps_while]
+
+[endsect] [/Epsilon]
+
+[/------------------------------------------------------------------------------]
 [section:lazy Lazy (`lazy`)]
 
 [heading Description]
