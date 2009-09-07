@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace lex
             typedef typename mpl::if_<
                 traits::is_not_unused<Attribute>
               , typename mpl::if_<
-                    is_same<Attribute, omit>, unused_type, Attribute
+                    is_same<Attribute, lex::omit>, unused_type, Attribute
                 >::type
               , iterator_range<iterator_type>
             >::type type;
