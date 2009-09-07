@@ -291,7 +291,7 @@ namespace boost { namespace spirit { namespace lex
 
         iterator_type iter = lex.begin(first, last, initial_state);
         iterator_type end = lex.end();
-        for (/**/; iter != end; ++iter) 
+        for (/**/; iter != end && token_is_valid(*iter); ++iter) 
         {
             if (!detail::tokenize_callback(*iter, f))
                 return false;
