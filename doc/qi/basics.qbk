@@ -76,6 +76,11 @@ These functions test the parsers with user supplied attributes.
 
 [reference_test_attr]
 
+The `print_info` utility function prints information contained in the
+__info__ class.
+
+[reference_print_info]
+
 [heading String]
 
 [heading Header]

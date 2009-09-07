@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Directives Controlling Automatic Delimiting (verbatim[] and delimit[])</title>
+<title> Directives
+          Controlling Automatic Delimiting (verbatim[] and delimit[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../directive.html" title="Directive">
-<link rel="prev" href="repeat.html" title="Repetition Directive (repeat[])">
-<link rel="next" href="upperlower.html" title="Directives Controlling Case Sensitivity (upper[] and lower[])">
+<link rel="previous" href="repeat.html" title=" Repetition
+          Directive (repeat[])">
+<link rel="next" href="upperlower.html" title=" Directives
+          Controlling Case Sensitivity (upper[] and lower[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,83 +25,87 @@
 <div class="spirit-nav">
 <a accesskey="p" href="repeat.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="upperlower.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Directives Controlling Automatic Delimiting (verbatim[] and delimit[])">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.delimit"></a><a class="link" href="delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[] and delimit[])"> Directives
-          Controlling Automatic Delimiting (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.delimit"></a><a href="delimit.html" title=" Directives
+          Controlling Automatic Delimiting (verbatim[] and delimit[])"> Directives
+          Controlling Automatic Delimiting (<tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.karma.reference.directive.delimit.description"></a><h6>
-<a name="id1282786"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.description">Description</a>
+<a name="id614802"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.description">Description</a>
           </h6>
 <p>
-            The directives <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code> and <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> can be used to control automatic delimiting.
-            The directive <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> disabled any automatic delimiting,
-            while the directive <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code> (re-)enable automatic delimiting.
+            The directives <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt> and <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> can be used to control automatic delimiting.
+            The directive <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> disabled any automatic delimiting,
+            while the directive <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt> (re-)enable automatic delimiting.
           </p>
 <a name="spirit.karma.reference.directive.delimit.header"></a><h6>
-<a name="id1282846"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.header">Header</a>
+<a name="id614901"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.header">Header</a>
           </h6>
 <p>
-            For the <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
+            For the <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/verbatim.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_verbatim</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            For the <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>
+            For the <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>
             directive:
           </p>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/delimit.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_delimit</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.delimit.model_of"></a><h6>
-<a name="id1283002"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.model_of">Model
+<a name="id615133"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+                <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">d</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">d</span></tt></span></dt>
 <dd><p>
-                A generator object, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                A generator object, or a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a generator object
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">A</span></code>,
-            <code class="computeroutput"><span class="identifier">D</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">A</span></tt>,
+            <tt class="computeroutput"><span class="identifier">D</span></tt></span></dt>
 <dd><p>
-                Attribute types of the generators <code class="computeroutput"><span class="identifier">a</span></code>
-                and <code class="computeroutput"><span class="identifier">d</span></code>
+                Attribute types of the generators <tt class="computeroutput"><span class="identifier">a</span></tt>
+                and <tt class="computeroutput"><span class="identifier">d</span></tt>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.delimit.expression_semantics"></a><h6>
-<a name="id1283128"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.expression_semantics">Expression
+<a name="id615307"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
+            is not defined in <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -106,73 +113,57 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Enable automatic delimiting for the embedded generator <code class="computeroutput"><span class="identifier">a</span></code> while using the <code class="computeroutput"><span class="identifier">space</span></code> generator as the delimiting
-                    generator. If used inside a <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> directive it re-enables the
-                    delimiter generator as used outside of this <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code> instead. The directive succeeds
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td><p>
+                    Enable automatic delimiting for the embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt> while using the <tt class="computeroutput"><span class="identifier">space</span></tt> generator as the delimiting
+                    generator. If used inside a <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> directive it re-enables the
+                    delimiter generator as used outside of this <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt> instead. The directive succeeds
                     as long as the embedded generator succeeded (except if the underlying
                     output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Enable automatic delimiting for the embedded generator <code class="computeroutput"><span class="identifier">a</span></code> while using the generator
-                    <code class="computeroutput"><span class="identifier">d</span></code> as the delimiting
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td><p>
+                    Enable automatic delimiting for the embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt> while using the generator
+                    <tt class="computeroutput"><span class="identifier">d</span></tt> as the delimiting
                     generator. The directive succeeds as long as the embedded generator
                     succeeded (except if the underlying output stream reports an
                     error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Disable automatic delimiting for the embedded generator <code class="computeroutput"><span class="identifier">a</span></code>. The directive succeeds as
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td><p>
+                    Disable automatic delimiting for the embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>. The directive succeeds as
                     long as the embedded generator succeeded (except if the underlying
                     output stream reports an error). This directive it has no effect
                     if it is used when no delimiting is active.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.attributes"></a><h6>
-<a name="id1283362"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.attributes">Attributes</a>
+<a name="id615645"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -181,78 +172,68 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr>
 <tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">d</span><span class="special">:</span> <span class="identifier">D</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">d</span><span class="special">:</span> <span class="identifier">D</span> <span class="special">--&gt;</span> <span class="identifier">delimit</span><span class="special">(</span><span class="identifier">d</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr>
 <tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">verbatim</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.complexity"></a><h6>
-<a name="id1284647"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.complexity">Complexity</a>
+<a name="id616242"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The overall complexity of the generator directives <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>
-                and <code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>
+                The overall complexity of the generator directives <tt class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></tt>
+                and <tt class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></tt>
                 is defined by the complexity of its embedded generators. The complexity
                 of the directives themselves is O(1).
               </p>
@@ -260,8 +241,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.delimit.example"></a><h6>
-<a name="id1284692"></a>
-            <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.example">Example</a>
+<a name="id616315"></a>
+            <a href="delimit.html#spirit.karma.reference.directive.delimit.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -321,7 +302,7 @@
 <p>
           </p>
 <p>
-            Basic usage of <code class="computeroutput"><span class="identifier">delimit</span></code>
+            Basic usage of <tt class="computeroutput"><span class="identifier">delimit</span></tt>
             generator directive:
           </p>
 <p>

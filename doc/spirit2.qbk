@@ -266,6 +266,10 @@
 [/ $$$ Now I'm confused with all this adhoc links. Let's fix this somehow.
 For now, I'll put my stuff here adhoc (JDG). $$$]
 
+[/ support]
+[def __info__                       `info`] [/ TODO Link Me]
+[def __qi_error_handler__           Error Handler] [/ TODO Link Me]
+
 [/ quick-ref]
 [def __qi_quickref__                [link spirit.qi.quick_reference Qi Quick Reference]]
 [def __qi_comp_attr_notation__      [link spirit.qi.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
@@ -299,6 +303,12 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_raw__                     [link spirit.qi.reference.directive.raw `raw`]]
 [def __qi_repeat__                  [link spirit.qi.reference.directive.repeat `repeat`]]
 [def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
+
+[/ operator]
+[def __qi_sequence__                [link spirit.qi.reference.operator.sequence Sequence Operator]]
+[def __qi_expect__                  [link spirit.qi.reference.operator.expect Expect Operator]]
+[def __qi_expectation_failure__     [link spirit.qi.reference.operator.expect.expectation_failure `expectation_failure`]]
+
 
 [/ $$$ End $$$ ]
 [/ ----------------------------------------------------------------------------]

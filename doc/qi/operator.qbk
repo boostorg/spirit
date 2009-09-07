@@ -112,6 +112,172 @@ Some using declarations:
 [endsect] [/ Alternative]
 
 [/------------------------------------------------------------------------------]
+[section:expect Expectation (`operator>()`)]
+
+[heading Description]
+
+Like the __qi_sequence__, the expectation operator, `>`, parses two or
+more operands (`a`, `b`, ... etc.), in sequence:
+
+    a > b > ...
+
+However, while the plain __qi_sequence__ simply returns a no-match
+(returns `false`) when one of the elements fail, the expectation: `>`
+operator throws an __qi_expectation_failure__`<Iter>` when the second or
+succeeding operands (all operands except the first) fail to match.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/expect.hpp>
+    #include <boost/spirit/include/qi_expect.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__nary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+    [[`Iter`]       [a `ForwardIterator` type.]]
+]
+
+[heading Expectation Failure]
+
+When any operand, except the first, fail to match an
+`expectation_failure<Iter>` is thrown:
+
+    template <typename Iter>
+    struct expectation_failure
+    {
+        Iter first;     // [first, last) iterator pointing
+        Iter last;      // to the error position in the input.
+        __info__ what;      // Information about the nature of the error.
+    };
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __nary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a > b`]          [Match `a` followed by `b`. If `a` fails, no-match.
+                        If `b` fails, throw an `expectation_failure<Iter>`]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a > b`]  
+[``a: A, b: B --> (a > b): tuple<A, B>
+a: A, b: Unused --> (a > b): A
+a: Unused, b: B --> (a > b): B
+a: Unused, b: Unused --> (a > b): Unused
+
+a: A, b: A --> (a > b): vector<A>
+a: vector<A>, b: A --> (a > b): vector<A>
+a: A, b: vector<A> --> (a > b): vector<A>
+a: vector<A>, b: vector<A> --> (a > b): vector<A>``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the expectation parser is defined by the sum
+of the complexities of its elements. The complexity of the expectation
+operator itself is O(N), where N is the number of elements in the
+sequence.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_expect]
+
+[reference_expect]
+
+[endsect] [/ Expectation]
+
+[/------------------------------------------------------------------------------]
+[section:permutation Permutation (`operator^()`)]
+
+[heading Description]
+
+The permutation operator, `^`, matches one or more operands (`a`, `b`,
+... etc.) in any order: 
+
+    a ^ b ^ ...
+
+The operands are the elements in the permutation set. Each element in
+the permutation set may occur at most once, but not all elements of the
+given set need to be present. For example:
+
+     char_('a') ^ 'b' ^ 'c'
+
+matches:
+
+     "a", "ab", "abc", "cba", "bca" ... etc.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/permutation.hpp>
+    #include <boost/spirit/include/qi_permutation.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__nary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __nary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a ^ b`]          [Match `a` or `b` in any order. Each operand 
+                        may match zero or one time.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a ^ b`]  
+[``a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >
+a: A, b: Unused --> (a ^ b): optional<A>
+a: Unused, b: B --> (a ^ b): optional<B>
+a: Unused, b: Unused --> (a ^ b): Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the permutation parser is defined by the sum
+of the complexities of its elements, s, multiplied by log s. The
+complexity of the permutation parser itself is O(N log N), where N is
+the number of elements.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_permutation]
+
+[reference_permutation]
+
+[endsect] [/ Permutation]
+
+[/------------------------------------------------------------------------------]
 [section:sequence Sequence (`operator>>()`)]
 
 [heading Description]

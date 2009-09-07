@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Kleene Star (unary operator*())</title>
+<title> Kleene Star
+          (unary operator*())</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="alternative.html" title="Alternatives (operator|())">
-<link rel="next" href="plus.html" title="Plus (unary operator+())">
+<link rel="previous" href="alternative.html" title=" Alternatives
+          (operator|())">
+<link rel="next" href="plus.html" title=" Plus (unary
+          operator+())">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,14 +25,18 @@
 <div class="spirit-nav">
 <a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="plus.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Kleene Star (unary operator*())">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.kleene"></a><a class="link" href="kleene.html" title="Kleene Star (unary operator*())"> Kleene Star
-          (unary <code class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.kleene"></a><a href="kleene.html" title=" Kleene Star
+          (unary operator*())"> Kleene Star
+          (unary <tt class="computeroutput"><span class="keyword">operator</span><span class="special">*()</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.karma.reference.operator.kleene.description"></a><h6>
-<a name="id1301864"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.description">Description</a>
+<a name="id633124"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.description">Description</a>
           </h6>
 <p>
             Kleene star generators are used to repeat the execution of an embedded
@@ -37,37 +44,37 @@
             generator, the Kleene star generator always succeeds.
           </p>
 <a name="spirit.karma.reference.operator.kleene.header"></a><h6>
-<a name="id1301881"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.header">Header</a>
+<a name="id633157"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/kleene.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_kleene</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.kleene.model_of"></a><h6>
-<a name="id1301956"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.model_of">Model
+<a name="id633271"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
+                <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.expression_semantics"></a><h6>
-<a name="id1301994"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
+<a name="id633323"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
+            is not defined in <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -75,41 +82,33 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                    <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>
+                  </p></td>
+<td><p>
+                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
                     is executed zero or more times depending on the availability
-                    of an attribute. The execution of <code class="computeroutput"><span class="identifier">a</span></code>
+                    of an attribute. The execution of <tt class="computeroutput"><span class="identifier">a</span></tt>
                     stops after the attribute values passed to the Kleene star generator
                     are exhausted. The Kleene star always succeeds (except if the
                     underlying output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.attributes"></a><h6>
-<a name="id1302101"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
+<a name="id633473"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -118,45 +117,39 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>
+                    (Kleene star, unary <tt class="computeroutput"><span class="special">*</span></tt>)
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>
-                    (Kleene star, unary <code class="computeroutput"><span class="special">*</span></code>)
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr></tbody>
 </table></div>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              The table above uses <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as a placeholder only. The notation
-              of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+<tr><td colspan="2" align="left" valign="top"><p>
+              The table above uses <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
+              of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
               stands for <span class="emphasis"><em>any STL container</em></span> holding elements
-              of type <code class="computeroutput"><span class="identifier">A</span></code>.
+              of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
             </p></td></tr>
 </table></div>
 <p>
@@ -174,15 +167,16 @@
             failing element generator might have already generated some output, which
             is <span class="emphasis"><em>not</em></span> rolled back.
           </p>
-<div class="tip" title="Tip"><table border="0" summary="Tip">
+<div class="tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td align="left" valign="top">
+<tr><td colspan="2" align="left" valign="top">
 <p>
               The simplest way to force a Kleene star to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
+              is to wrap it into a buffering directive (see <a href="../directive/buffer.html" title=" Temporary
+          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
             </p>
 <p>
               
@@ -192,7 +186,7 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
+              a failing generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
               The expression:
             </p>
 <p>
@@ -202,15 +196,15 @@
 <p>
             </p>
 <p>
-              will not generate any partial output from a generator <code class="computeroutput"><span class="identifier">a</span></code> if it fails generating in the middle
+              will not generate any partial output from a generator <tt class="computeroutput"><span class="identifier">a</span></tt> if it fails generating in the middle
               of its output. The overall expression will still generate the output
-              as produced by all succeeded invocations of the generator <code class="computeroutput"><span class="identifier">a</span></code>.
+              as produced by all succeeded invocations of the generator <tt class="computeroutput"><span class="identifier">a</span></tt>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.complexity"></a><h6>
-<a name="id1302448"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
+<a name="id633970"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -226,8 +220,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.example"></a><h6>
-<a name="id1302472"></a>
-            <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.example">Example</a>
+<a name="id634013"></a>
+            <a href="kleene.html#spirit.karma.reference.operator.kleene.example">Example</a>
           </h6>
 <p>
             Some includes:

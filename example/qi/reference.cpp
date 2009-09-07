@@ -11,6 +11,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <iostream>
 #include <string>
+#include <cstdlib>
 //]
 
 //[reference_test
@@ -19,9 +20,9 @@ void test_parser(char const* input, P const& p)
 {
     using boost::spirit::qi::parse;
 
-    std::string s(input);
-    std::string::iterator f(s.begin());
-    if (parse(f, s.end(), p) && f == s.end())
+    char const* f(input);
+    char const* l(f + strlen(f));
+    if (parse(f, l, p) && f == l)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -33,9 +34,9 @@ void test_phrase_parser(char const* input, P const& p)
     using boost::spirit::qi::phrase_parse;
     using boost::spirit::qi::ascii::space;
     
-    std::string s(input);
-    std::string::iterator f(s.begin());
-    if (phrase_parse(f, s.end(), p, space) && f == s.end())
+    char const* f(input);
+    char const* l(f + strlen(f));
+    if (phrase_parse(f, l, p, space) && f == l)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -48,9 +49,9 @@ void test_parser_attr(char const* input, P const& p, T& attr)
 {
     using boost::spirit::qi::parse;
 
-    std::string s(input);
-    std::string::iterator f(s.begin());
-    if (parse(f, s.end(), p, attr) && f == s.end())
+    char const* f(input);
+    char const* l(f + strlen(f));
+    if (parse(f, l, p, attr) && f == l)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -62,12 +63,39 @@ void test_phrase_parser_attr(char const* input, P const& p, T& attr)
     using boost::spirit::qi::phrase_parse;
     using boost::spirit::qi::ascii::space;
 
-    std::string s(input);
-    std::string::iterator f(s.begin());
-    if (phrase_parse(f, s.end(), p, space, attr) && f == s.end())
+    char const* f(input);
+    char const* l(f + strlen(f));
+    if (phrase_parse(f, l, p, space, attr) && f == l)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
+}
+//]
+
+//[reference_print_info
+struct printer
+{
+    typedef boost::spirit::utf8_string string;
+
+    void element(string const& tag, string const& value, int depth) const
+    {
+        for (int i = 0; i < (depth*4); ++i) // indent to depth
+            std::cout << ' ';
+
+        std::cout << "tag: " << tag;
+        if (value != "")
+            std::cout << ", value: " << value;
+        std::cout << std::endl;
+    }
+};
+
+void print_info(boost::spirit::info const& what)
+{
+    using boost::spirit::basic_info_walker;
+
+    printer pr;
+    basic_info_walker<printer> walker(pr, what.tag, 0);
+    boost::apply_visitor(walker, what.value);
 }
 //]
 
@@ -621,6 +649,50 @@ main()
         //]
 
     }
+    
+    // permutation
+    {
+        //[reference_using_declarations_permutation
+        using boost::spirit::ascii::char_;
+        //]
+        
+        //[reference_permutation
+        //`Parse a string containing DNA codes (ACTG)
+        test_parser("ACTGGCTAGACT", *(char_('A') ^ 'C' ^ 'T' ^ 'G'));
+        //]
+    }
+    
+    // expect
+    {
+        //[reference_using_declarations_expect
+        using boost::spirit::ascii::char_;
+        using boost::spirit::qi::expectation_failure;
+        //]
+
+        //[reference_expect
+        /*`The code below uses an expectation operator to throw an __qi_expectation_failure__
+            with a deliberate parsing error when `"o"` is expected and `"i"` is what is
+            found in the input. The `catch` block prints the information related to the
+            error. Note: This is low level code that demonstrates the /bare-metal/. Typically,
+            you use an __qi_error_handler__ to deal with the error.
+         */
+        try
+        {
+            test_parser("xi", char_('x') > char_('o')); // should throw an exception
+        }
+        catch (expectation_failure<char const*> const& x)
+        {
+            std::cout << "expected: "; print_info(x.what);
+            std::cout << "got: \"" << std::string(x.first, x.last) << '"' << std::endl;
+        }
+        /*`The code above will print:[teletype]
+        
+                expected: tag: literal-char, value: o
+                got: "i"``[c++]``
+         */
+        //]
+    }
+
 
     return 0;
 }
