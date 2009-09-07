@@ -97,12 +97,12 @@ namespace boost { namespace spirit { namespace lex
             //  The return value of the token_def is either the specified 
             //  attribute type, or the pair of iterators from the match of the 
             //  corresponding token (if no attribute type has been specified),
-            //  or unused_type (if omitted has been specified).
+            //  or unused_type (if omit has been specified).
             typedef typename Iterator::base_iterator_type iterator_type;
             typedef typename mpl::if_<
                 traits::is_not_unused<Attribute>
               , typename mpl::if_<
-                    is_same<Attribute, omitted>, unused_type, Attribute
+                    is_same<Attribute, omit>, unused_type, Attribute
                 >::type
               , iterator_range<iterator_type>
             >::type type;
