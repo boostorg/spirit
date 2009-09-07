@@ -537,6 +537,35 @@ main()
         test_parser("123,456,789.01", ts_real);
         //]
     }
+    
+    // sequence
+    {
+        //[reference_using_declarations_sequence
+        using boost::spirit::ascii::char_;
+        using boost::spirit::qi::_1;
+        using boost::spirit::qi::_2;
+        namespace bf = boost::fusion;
+        //]
+        
+        //[reference_sequence
+        //`Simple usage:
+        test_parser("xy", char_ >> char_);
+        
+        //`Extracting the attribute tuple (using __fusion__):
+        bf::vector<char, char> attr;
+        test_parser_attr("xy", char_ >> char_, attr);
+        std::cout << bf::at_c<0>(attr) << ',' << bf::at_c<1>(attr) << std::endl;
+        
+        //`Extracting the attribute vector (using __stl__):
+        std::vector<char> vec;
+        test_parser_attr("xy", char_ >> char_, vec);
+        std::cout << vec[0] << ',' << vec[1] << std::endl;
+        
+        //`Extracting the attributes using __qi_semantic_actions__ (using __phoenix__):
+        test_parser("xy", (char_ >> char_)[std::cout << _1 << ',' << _2 << std::endl]);
+        //]
+
+    }
 
     return 0;
 }

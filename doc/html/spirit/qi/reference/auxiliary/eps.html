@@ -1,0 +1,309 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title> Epsilon (eps)</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../auxiliary.html" title="Auxiliary">
+<link rel="previous" href="eoi.html" title=" End of Input
+          (eoi)">
+<link rel="next" href="lazy.html" title=" Lazy (lazy)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="eoi.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lazy.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.auxiliary.eps"></a><a href="eps.html" title=" Epsilon (eps)"> Epsilon (<tt class="computeroutput"><span class="identifier">eps</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
+<a name="spirit.qi.reference.auxiliary.eps.description"></a><h6>
+<a name="id464811"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.description">Description</a>
+          </h6>
+<p>
+            The Epsilon (<tt class="computeroutput"><span class="identifier">eps</span></tt>) is
+            a multi-purpose parser that returns a zero length match.
+          </p>
+<a name="spirit.qi.reference.auxiliary.eps.simple_form"></a><h6>
+<a name="id464852"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.simple_form">Simple
+            Form</a>
+          </h6>
+<p>
+            In its simplest form, <tt class="computeroutput"><span class="identifier">eps</span></tt>
+            matches the null string and always returns a match of zero length:
+          </p>
+<pre class="programlisting"><span class="identifier">eps</span> <span class="comment">// always returns a zero-length match
+</span></pre>
+<p>
+            This form is usually used to trigger a semantic action unconditionally.
+            For example, it is useful in triggering error messages when a set of
+            alternatives fail:
+          </p>
+<pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span> <span class="special">|</span> <span class="identifier">c</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">[</span><span class="identifier">error</span><span class="special">()];</span> <span class="comment">// Call error if a, b, or c fails to match
+</span></pre>
+<a name="spirit.qi.reference.auxiliary.eps.semantic_predicate"></a><h6>
+<a name="id464999"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.semantic_predicate">Semantic
+            Predicate</a>
+          </h6>
+<p>
+            Semantic predicates allow you to attach a conditional function anywhere
+            in the grammar. In this role, the epsilon takes a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+            Argument</a> that returns <tt class="computeroutput"><span class="keyword">true</span></tt>
+            or <tt class="computeroutput"><span class="keyword">false</span></tt>. The <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+            Argument</a> is typically a test that is called to resolve ambiguity
+            in the grammar. A parse failure will be reported when the <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+            Argument</a> result evaluates to <tt class="computeroutput"><span class="keyword">false</span></tt>.
+            Otherwise an empty match will be reported. The general form is:
+          </p>
+<pre class="programlisting"><span class="identifier">eps_p</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">rest</span><span class="special">;</span>
+</pre>
+<p>
+            The <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
+            <tt class="computeroutput"><span class="identifier">f</span></tt> is called to do a semantic
+            test (say, checking if a symbol is in the symbol table). If test returns
+            true, <tt class="computeroutput"><span class="identifier">rest</span></tt> will be evaluated.
+            Otherwise, the production will return early with a no-match without ever
+            touching rest.
+          </p>
+<a name="spirit.qi.reference.auxiliary.eps.header"></a><h6>
+<a name="id465183"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/auxiliary/eps.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_eps</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.qi.reference.auxiliary.eps.namespace"></a><h6>
+<a name="id465296"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.namespace">Namespace</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup><col></colgroup>
+<thead><tr><th><p>
+                    Name
+                  </p></th></tr></thead>
+<tbody><tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">eps</span> <span class="comment">// alias:
+                    boost::spirit::qi::eps</span></tt>
+                  </p></td></tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.auxiliary.eps.model_of"></a><h6>
+<a name="id465398"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.model_of">Model of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">f</span></tt></span></dt>
+<dd><p>
+                A <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
+                that evaluates <tt class="computeroutput"><span class="keyword">bool</span></tt>.
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.qi.reference.auxiliary.eps.expression_semantics"></a><h6>
+<a name="id465502"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Semantics
+                  </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                  </p></td>
+<td><p>
+                    Match an empty string (always matches).
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    If <tt class="computeroutput"><span class="identifier">f</span></tt> evaluates
+                    to <tt class="computeroutput"><span class="keyword">true</span></tt>, match an
+                    empty string.
+                  </p></td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.qi.reference.auxiliary.eps.attributes"></a><h6>
+<a name="id465685"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.attributes">Attributes</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Attribute
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">eps</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
+</tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.auxiliary.eps.complexity"></a><h6>
+<a name="id465785"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                For plain (<tt class="computeroutput"><span class="identifier">eps</span></tt>) the
+                complexity is O(1). For Semantic predicates (<tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">f</span><span class="special">)</span></tt>) the complexity is defined by the
+                function <tt class="computeroutput"><span class="identifier">f</span></tt>.
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<a name="spirit.qi.reference.auxiliary.eps.example"></a><h6>
+<a name="id465872"></a>
+            <a href="eps.html#spirit.qi.reference.auxiliary.eps.example">Example</a>
+          </h6>
+<p>
+            Some using declarations:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">eps</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">_1</span><span class="special">;</span>
+<span class="keyword">namespace</span> <span class="identifier">phx</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">phoenix</span><span class="special">;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            </p>
+<p>
+              Basic <tt class="computeroutput"><span class="identifier">eps</span></tt>:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">""</span><span class="special">,</span> <span class="identifier">eps</span><span class="special">);</span> <span class="comment">// always matches
+</span></pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            </p>
+<p>
+              This example simulates the "classic" <tt class="computeroutput"><span class="identifier">if_p</span></tt>
+              parser. Here, <tt class="computeroutput"><span class="identifier">int_</span></tt>
+              will be tried only if the condition, <tt class="computeroutput"><span class="identifier">c</span></tt>,
+              is true.
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">c</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span> <span class="comment">// a flag
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"1234"</span><span class="special">,</span> <span class="identifier">eps</span><span class="special">(</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">);</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            </p>
+<p>
+              This example simulates the "classic" <tt class="computeroutput"><span class="identifier">while_p</span></tt>
+              parser. Here, the kleene loop will exit once the condition, c, becomes
+              true. Notice that the condition, <tt class="computeroutput"><span class="identifier">c</span><span class="special">,</span> <span class="identifier">is</span> <span class="identifier">turned</span> <span class="identifier">to</span>
+              </tt>false<tt class="computeroutput"> <span class="identifier">when</span> <span class="identifier">we</span> <span class="identifier">get</span>
+              <span class="identifier">to</span> <span class="identifier">parse</span>
+              </tt>4`.
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="string">"1 2 3 4"</span><span class="special">,</span> 
+    <span class="special">*(</span><span class="identifier">eps</span><span class="special">(</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">true</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">[</span><span class="identifier">phx</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">_1</span> <span class="special">==</span> <span class="number">4</span><span class="special">)]));</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="eoi.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lazy.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

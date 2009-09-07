@@ -145,9 +145,6 @@
 
 [/ References to reference ]
 
-[def __parser_concept__             [link spirit.qi.reference.parser_concepts.parser `Parser`]]
-[def __primitive_parser_concept__   [link spirit.qi.reference.parser_concepts.primitiveparser `PrimitiveParser`]]
-
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr(attrib)`]]
 [def __qi_symbols__                 [link spirit.qi.reference.string.symbols `symbols<Ch, T>`]]
 [template qi_lit_string[str]        [link spirit.qi.reference.string.string [str]]]
@@ -271,6 +268,13 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [/ quick-ref]
 [def __qi_quickref__                [link spirit.qi.quick_reference Qi Quick Reference]]
 [def __qi_comp_attr_notation__      [link spirit.qi.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
+
+[/ concepts]
+[def __parser_concept__             [link spirit.qi.reference.parser_concepts.parser `Parser`]]
+[def __primitive_parser_concept__   [link spirit.qi.reference.parser_concepts.primitiveparser `PrimitiveParser`]]
+[def __unary_parser_concept__       [link spirit.qi.reference.parser_concepts.unaryparser `UnaryParser`]]
+[def __binary_parser_concept__      [link spirit.qi.reference.parser_concepts.binaryparser `BinaryParser`]]
+[def __nary_parser_concept__        [link spirit.qi.reference.parser_concepts.naryparser `NaryParser`]]
 
 [/ basics]
 [def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]

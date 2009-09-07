@@ -5,9 +5,97 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
+[section Operator]
 
-[/ section Operator]
+Operators are used as a means for object composition and embedding.
+Simple parsers may be composed to form composites through operator
+overloading, crafted to approximate the syntax of an Extended
+Backus-Normal Form (EBNF) variant. An expression such as:
 
+    a | b
 
+actually yields a new parser type which is a composite of its operands,
+`a` and `b`. 
 
-[/ endsect]
+This module includes different parsers which get instantiated if one of
+the overloaded operators is used with more primitive parser constructs.
+It includes Alternative (`|`), And predicate (unary `&`), Difference
+(`-`), Expect (`>`), Kleene star (unary `*`), Lists (unary `%`), Not
+predicate (unary `!`), Optional (`-`), Permutation (`^`), Plus (unary
+`+`), Sequence (`>>`) and Sequential-Or (`||`).
+
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/karma/operator.hpp>
+    #include <boost/spirit/include/karma_operator.hpp>
+
+Also, see __include_structure__.
+
+[/------------------------------------------------------------------------------]
+[section:sequence Sequence (`operator>>()`)]
+
+[heading Description]
+
+The most basic is the sequence operator, `>>`, which basically just
+parses two or more operands (`a`, `b`, ... etc.), in sequence. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/sequence.hpp>
+    #include <boost/spirit/include/qi_sequence.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__nary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __nary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a >> b`]         [Match `a` followed by `b`.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a >> b`]  
+[``a: A, b: B --> (a >> b): tuple<A, B>
+a: A, b: Unused --> (a >> b): A
+a: Unused, b: B --> (a >> b): B
+a: Unused, b: Unused --> (a >> b): Unused
+
+a: A, b: A --> (a >> b): vector<A>
+a: vector<A>, b: A --> (a >> b): vector<A>
+a: A, b: vector<A> --> (a >> b): vector<A>
+a: vector<A>, b: vector<A> --> (a >> b): vector<A>``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the sequence parser is defined by the sum of
+the complexities of its elements. The complexity of the sequence itself
+is O(N), where N is the number of elements in the sequence.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_sequence]
+
+[reference_sequence]
+
+[endsect] [/ Sequence]
+
+[endsect]
