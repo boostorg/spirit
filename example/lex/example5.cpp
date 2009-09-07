@@ -15,7 +15,7 @@
 //  The main purpose of this example is to show how inheritance can be used to 
 //  overload parts of a base grammar and add token definitions to a base lexer.
 //
-//  Further, it shows how you can use the 'omitted' attribute type specifier 
+//  Further, it shows how you can use the 'omit' attribute type specifier 
 //  for token definitions to force the token to have no attribute (expose an 
 //  unused attribute).
 //
@@ -72,7 +72,7 @@ public:
     }
 
     // these tokens have no attribute
-    token_def<omitted> if_, while_;
+    token_def<omit> if_, while_;
 
     // The following two tokens have an associated attribute type, 'identifier'
     // carries a string (the identifier name) and 'constant' carries the 
@@ -182,7 +182,7 @@ struct example5_tokens : example5_base_tokens<Lexer>
     }
 
     // this token has no attribute
-    token_def<omitted> else_;
+    token_def<omit> else_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

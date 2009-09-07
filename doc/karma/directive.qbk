@@ -179,6 +179,8 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table 
     [[Expression]       [Attribute]]
     [[`left_align[]`]
@@ -321,6 +323,8 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table 
     [[Expression]             [Attribute]]
     [[`repeat[a]`]
@@ -429,6 +433,8 @@ defined in __unary_generator_concept__.
 ]
 
 [heading Attributes]
+
+See __karma_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]
@@ -549,6 +555,8 @@ __boost_proto__ expression into the corresponding parser expressions).
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
     [[`ns:lower[a]`]
@@ -652,6 +660,8 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
     [[`maxwidth[a]`]
@@ -739,6 +749,8 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
     [[`buffer[a]`]
@@ -810,6 +822,8 @@ defined in __unary_generator_concept__.
 ]
 
 [heading Attributes]
+
+See __karma_comp_attr_notation__.
 
 [table
     [[Expression]       [Attribute]]

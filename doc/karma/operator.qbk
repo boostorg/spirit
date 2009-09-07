@@ -10,8 +10,8 @@
 
 This module includes different generators which get instantiated if one of the
 overloaded operators is used with more primitive generator constructs. It 
-includes sequences (`<<`), alternatives (`|`), Kleene star (unary `*`), plus 
-(unary `+`), optional (unary `-`), lists (`%`), and the two predicates, the 
+includes sequences (`a << b`), alternatives (`a | b`), Kleene star (unary `*`), 
+plus (unary `+`), optional (unary `-`), lists (`a % b`), and the two predicates, the 
 /and/ predicate (unary `&`) and the /not/ predicate (unary `!`).
 
 [heading Module Header]
@@ -67,9 +67,11 @@ have already generated some output, which is /not/ rolled back.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]       [Attribute]]
-    [[sequence (`<<`)]  
+    [[`a << b` (sequence)]  
 [``a: A, b: B --> (a << b): tuple<A, B>
 a: A, b: Unused --> (a << b): A
 a: Unused, b: B --> (a << b): B
@@ -164,9 +166,11 @@ content will be forwarded to the actual output only after an element succeeded.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]        [Attribute]]
-    [[alternative (`|`)]
+    [[`a | b` (alternative)]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): A
 a: Unused, b: B --> (a | b): B
@@ -259,9 +263,11 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]           [Attribute]]
-    [[kleene (unary `*`)]
+    [[`*a` (Kleene star, unary `*`)]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
 ]
@@ -365,9 +371,11 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]         [Attribute]]
-    [[plus (unary `+`)]
+    [[`+a` (unary `+`)]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 ]
@@ -479,9 +487,11 @@ in the case of the list generator.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]         [Attribute]]
-    [[list (`%`)]
+    [[`a % b` (list)]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 ]
@@ -586,9 +596,11 @@ defined in __unary_generator_concept__.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]           [Attribute]]
-    [[optional (unary `-`)]
+    [[`-a` (optional, unary `-`)]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 ]
@@ -685,9 +697,11 @@ embedded generator into a discarding device.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]                 [Attribute]]
-    [[and predicate (unary `&`)]  [`a: A --> &a: A`]]
+    [[`&a` (and predicate, unary `&`)]  [`a: A --> &a: A`]]
 ]
 
 [note The attribute of the and predicate is not always `Unused`, which is 
@@ -761,9 +775,11 @@ embedded generator into a discarding device.
 
 [heading Attributes]
 
+See __karma_comp_attr_notation__.
+
 [table
     [[Expression]                 [Attribute]]
-    [[not predicate (unary `!`)]  [`a: A --> !a: A`]]
+    [[`!a` (not predicate, unary `!`)]  [`a: A --> !a: A`]]
 ]
 
 [note The attribute of the and predicate is not always `Unused`, which is 

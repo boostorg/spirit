@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     // read input from the given file
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
 
-    // Specifying 'omitted' as the token attribute type generates a token class 
+    // Specifying 'omit' as the token attribute type generates a token class 
     // notholding any token attribute at all (not even the iterator_range of the 
     // matched input sequence), therefor optimizing the token, the lexer, and 
     // possibly the parser implementation as much as possible. 
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     //
     // As a result the token instances contain the token ids as the only data 
     // member.
-    typedef lexertl::token<char const*, omitted, boost::mpl::false_> token_type;
+    typedef lexertl::token<char const*, omit, boost::mpl::false_> token_type;
 
     // Define the lexer type to be used as the base class for our token 
     // definition.

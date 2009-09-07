@@ -98,11 +98,11 @@ Here is the template prototype of the __class_lexertl_token__ template:
                        `char const*`.]]
     [[AttributeTypes] [This is either a mpl sequence containing all 
                        attribute types used for the token definitions or the
-                       type `omitted`. If the mpl sequence is empty (which is 
+                       type `omit`. If the mpl sequence is empty (which is 
                        the default), all token instances will store a 
                        __boost_iterator_range__`<Iterator>` pointing to the start
                        and the end of the matched section in the input stream.
-                       If the type is `omitted`, the generated tokens will
+                       If the type is `omit`, the generated tokens will
                        contain no token value (attribute) at all.]]
     [[HasState]       [This is either `mpl::true_` or `mpl::false_`, allowing
                        to control whether the generated token instances will
@@ -113,7 +113,7 @@ Here is the template prototype of the __class_lexertl_token__ template:
 
 Normally, during its construction, a token instance always holds the 
 __boost_iterator_range__ as its token value (except, if it has been defined 
-using the `omitted` token value type). This iterator range then is 
+using the `omit` token value type). This iterator range then is 
 converted in place to the requested token value type (attribute) when it is
 requested for the first time.
 
@@ -141,7 +141,7 @@ The template prototype of this class is shown here:
                        `unused_type`, which means the token instance holds a
                        __boost_iterator_range__ pointing to the start
                        and the end of the matched section in the input stream.
-                       If the attribute is `omitted` the token instance will
+                       If the attribute is `omit` the token instance will
                        expose no token type at all. Any other type will be 
                        used directly as the token value type.]]
     [[Char]           [This is the value type of the iterator for the 
@@ -197,8 +197,8 @@ token definition as well.
 
 [example4_token]
 
-To avoid the token to have a token value at all, the special tag `omitted` can 
-be used: `token_def<omitted>` and `lexertl_token<base_iterator_type, omitted>`.
+To avoid the token to have a token value at all, the special tag `omit` can 
+be used: `token_def<omit>` and `lexertl_token<base_iterator_type, omit>`.
 
 
 

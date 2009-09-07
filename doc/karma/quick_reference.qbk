@@ -384,6 +384,8 @@ See here for more information about __karma_directive__.
 [/////////////////////////////////////////////////////////////////////////////]
 [section Compound Attribute Rules]
 
+[heading Notation]
+
 The notation will be for instance: 
 
     a: A, b: B --> (a << b): tuple<A, B>

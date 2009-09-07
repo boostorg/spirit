@@ -104,7 +104,7 @@ struct word_count_tokens : lexer<Lexer>
 int main(int argc, char* argv[])
 {
 
-/*<  Specifying `omitted` as the token attribute type generates a token class 
+/*<  Specifying `omit` as the token attribute type generates a token class 
      not holding any token attribute at all (not even the iterator range of the 
      matched input sequence), therefore optimizing the token, the lexer, and 
      possibly the parser implementation as much as possible. Specifying 
@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
      type and an iterator, both holding no lexer state, allowing for even more 
      aggressive optimizations. As a result the token instances contain the token 
      ids as the only data member.
->*/  typedef lexertl::token<char const*, omitted, boost::mpl::false_> token_type;
+>*/  typedef lexertl::token<char const*, omit, boost::mpl::false_> token_type;
 
 /*<  This defines the lexer type to use
 >*/  typedef lexertl::actor_lexer<token_type> lexer_type;

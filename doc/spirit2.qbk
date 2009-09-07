@@ -214,6 +214,7 @@
 [def __karma_compatible_attribute__ Compatible Attributes] [/$$$ TODO: link me $$$]
 [def __karma_rule__                 Rule] [/$$$ TODO: link me $$$]
 [def __karma_grammar__              Grammar] [/$$$ TODO: link me $$$]
+[def __karma_comp_attr_notation__   [link spirit.karma.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
 
 [/ Some images ]
 

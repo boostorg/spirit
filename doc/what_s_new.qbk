@@ -159,5 +159,7 @@ version 2.1.
 * Added (lazy) support functions usable from the inside of lexer semantic
    actions while using Phoenix: `lex::more()`, `lex::less()`, and 
    `lex::lookahead()` (see  __sec_lex_semactions__ for more details).
+* Removed `lex::omitted` in favor of `lex::omit` to unify the overall 
+  interface.
 
 [endsect]
