@@ -566,6 +566,41 @@ main()
         //]
 
     }
+    
+    // alternative
+    {
+        //[reference_using_declarations_alternative
+        using boost::spirit::ascii::string;
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::_1;
+        using boost::variant;
+        //]
+        
+        //[reference_alternative
+        //`Simple usage:
+        test_parser("Hello", string("Hello") | int_);
+        test_parser("123", string("Hello") | int_);
+
+        //`Extracting the attribute variant (using __boost_variant__):
+        variant<std::string, int> attr;
+        test_parser_attr("Hello", string("Hello") | int_, attr);
+        
+        /*`This should print `"Hello"`. Note: There are better ways to extract the value
+            from the variant. See __boost_variant__ visitation. This code is solely
+            for demonstration.
+         */
+        if (boost::get<int>(&attr))
+            std::cout << boost::get<int>(attr) << std::endl;
+        else
+            std::cout << boost::get<std::string>(attr) << std::endl;
+
+        /*`Extracting the attributes using __qi_semantic_actions__ with __phoenix__
+            (this should print `123`):
+         */
+        test_parser("123", (string("Hello") | int_)[std::cout << _1 << std::endl]);
+        //]
+
+    }
 
     return 0;
 }

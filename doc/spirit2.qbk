@@ -281,6 +281,9 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
 [def __string__                     [link spirit.qi.reference.basics.string String]]
 
+[/ action]
+[def __qi_semantic_actions__        Semantic Actions] [/ TODO Link Me]
+
 [/ auxiliary]
 [def __qi_attr__                    [link spirit.qi.reference.auxiliary.attr `attr`]]
 [def __qi_eol__                     [link spirit.qi.reference.auxiliary.eol `eol`]]

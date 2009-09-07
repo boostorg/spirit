@@ -32,12 +32,94 @@ predicate (unary `!`), Optional (`-`), Permutation (`^`), Plus (unary
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
+[section:alternative Alternative (`operator|()`)]
+
+[heading Description]
+
+The alternative operator, `|`, matches one of two or more operands 
+(`a`, `b`, ... etc.):
+
+    a | b | ...
+
+Alternative operands are tried one by one on a first-match-wins basis
+starting from the leftmost operand. After a successfully matched
+alternative is found, the parser concludes its search, essentially
+short-circuiting the search for other potentially viable candidates.
+This short-circuiting implicitly gives the highest priority to the
+leftmost alternative.
+
+Short-circuiting is done in the same manner as C or C++'s logical
+expressions; e.g. `if (x < 3 || y < 2)` where, if `x < 3`, the `y < 2`
+test is not done at all. In addition to providing an implicit priority
+rule for alternatives which is necessary, given its non-deterministic
+nature, short-circuiting improves the execution time. If the order of
+your alternatives is logically irrelevant, strive to put the (expected)
+most common choice first for maximum efficiency.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/alternative.hpp>
+    #include <boost/spirit/include/qi_alternative.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__nary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __nary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a | b`]          [Match `a` or `b`.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a | b`]  
+[``a: A, b: B --> (a | b): variant<A, B>
+a: A, b: Unused --> (a | b): A
+a: Unused, b: B --> (a | b): B
+a: Unused, b: Unused --> (a | b): Unused
+a: A, b: A --> (a | b): A``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the alternative parser is defined by the sum
+of the complexities of its elements. The complexity of the alternative
+parser itself is O(N), where N is the number of alternatives.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_alternative]
+
+[reference_alternative]
+
+[endsect] [/ Alternative]
+
+[/------------------------------------------------------------------------------]
 [section:sequence Sequence (`operator>>()`)]
 
 [heading Description]
 
 The most basic is the sequence operator, `>>`, which basically just
-parses two or more operands (`a`, `b`, ... etc.), in sequence. 
+parses two or more operands (`a`, `b`, ... etc.), in sequence:
+
+    a >> b >> ...
 
 [heading Header]
 
