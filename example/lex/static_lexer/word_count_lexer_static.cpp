@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     //
     // As a result the token instances contain the token ids as the only data 
     // member.
-    typedef lexertl::token<char const*, omit, boost::mpl::false_> token_type;
+    typedef lexertl::token<char const*, lex::omit, boost::mpl::false_> token_type;
 
     // Define the lexer type to be used as the base class for our token 
     // definition.

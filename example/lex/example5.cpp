@@ -72,7 +72,7 @@ public:
     }
 
     // these tokens have no attribute
-    token_def<omit> if_, while_;
+    token_def<lex::omit> if_, while_;
 
     // The following two tokens have an associated attribute type, 'identifier'
     // carries a string (the identifier name) and 'constant' carries the 
@@ -182,7 +182,7 @@ struct example5_tokens : example5_base_tokens<Lexer>
     }
 
     // this token has no attribute
-    token_def<omit> else_;
+    token_def<lex::omit> else_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

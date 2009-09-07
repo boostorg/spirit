@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
      type and an iterator, both holding no lexer state, allowing for even more 
      aggressive optimizations. As a result the token instances contain the token 
      ids as the only data member.
->*/  typedef lexertl::token<char const*, omit, boost::mpl::false_> token_type;
+>*/  typedef lexertl::token<char const*, lex::omit, boost::mpl::false_> token_type;
 
 /*<  This defines the lexer type to use
 >*/  typedef lexertl::actor_lexer<token_type> lexer_type;

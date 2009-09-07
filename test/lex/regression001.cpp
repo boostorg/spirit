@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     std::string str ("test");
 
     // token type
-    typedef lexertl::token<base_iterator, omit, boost::mpl::false_> token_type;
+    typedef lexertl::token<base_iterator, lex::omit, boost::mpl::false_> token_type;
 
     // lexer type
     typedef lexertl::actor_lexer<token_type> lexer_type;
