@@ -564,7 +564,27 @@ main()
         //`Extracting the attributes using __qi_semantic_actions__ (using __phoenix__):
         test_parser("xy", (char_ >> char_)[std::cout << _1 << ',' << _2 << std::endl]);
         //]
+    }
+    
+    // sequential_or
+    {
+        //[reference_using_declarations_sequential_or
+        using boost::spirit::qi::int_;
+        //]
+        
+        //[reference_sequential_or
+        //`Correctly parsing a number with optional fractional digits:
+        test_parser("123.456", int_ || ('.' >> int_));  // full
+        test_parser("123", int_ || ('.' >> int_));      // just the whole number
+        test_parser(".456", int_ || ('.' >> int_));     // just the fraction
 
+        /*`A naive but incorrect solution would try to do this using optionals (e.g.):
+                
+                int_ >> -('.' >> int_)  // will not match ".456"
+                -int_ >> ('.' >> int_)  // will not match "123"
+                -int_ >> -('.' >> int_) // will match empty strings! Ooops.
+         */
+        //]
     }
     
     // alternative

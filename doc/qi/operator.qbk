@@ -116,8 +116,8 @@ Some using declarations:
 
 [heading Description]
 
-The most basic is the sequence operator, `>>`, which basically just
-parses two or more operands (`a`, `b`, ... etc.), in sequence:
+The sequence operator, `>>`, which parses two or more operands (`a`,
+`b`, ... etc.), in sequence:
 
     a >> b >> ...
 
@@ -179,5 +179,76 @@ Some using declarations:
 [reference_sequence]
 
 [endsect] [/ Sequence]
+
+[/------------------------------------------------------------------------------]
+[section:sequential_or Sequential Or (`operator||()`)]
+
+[heading Description]
+
+The sequential-or operator, `||`, where the expression `a || b` reads as
+match `a` or `b` and in sequence. That is, if both `a` and `b` match, it
+must be in sequence; this is equivalent to `a >> -b | b`:
+
+    a || b || ...
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/sequential_or.hpp>
+    #include <boost/spirit/include/qi_sequential_or.hpp>
+
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__nary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __nary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a || b`]         [Match `a` or `b` in sequence. equivalent to `a >> -b | b`]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a || b`]  
+[``a: A, b: B --> (a || b): tuple<A, B>
+a: A, b: Unused --> (a || b): A
+a: Unused, b: B --> (a || b): B
+a: Unused, b: Unused --> (a || b): Unused
+
+a: A, b: A --> (a || b): vector<A>
+a: vector<A>, b: A --> (a || b): vector<A>
+a: A, b: vector<A> --> (a || b): vector<A>
+a: vector<A>, b: vector<A> --> (a || b): vector<A>``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the sequential-or parser is defined by the
+sum of the complexities of its elements. The complexity of the
+sequential-or itself is O(N), where N is the number of elements in the
+sequence.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_sequential_or]
+
+[reference_sequential_or]
+
+[endsect] [/ Sequential Or]
 
 [endsect]
