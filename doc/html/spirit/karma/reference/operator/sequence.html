@@ -1,13 +1,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Sequences (operator&lt;&lt;())</title>
+<title> Sequences
+          (operator&lt;&lt;())</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="../operator.html" title="Operator">
-<link rel="next" href="alternative.html" title="Alternatives (operator|())">
+<link rel="previous" href="../operator.html" title="Operator">
+<link rel="next" href="alternative.html" title=" Alternatives
+          (operator|())">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,14 +24,18 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../operator.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="alternative.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Sequences (operator&lt;&lt;())">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.sequence"></a><a class="link" href="sequence.html" title="Sequences (operator&lt;&lt;())"> Sequences
-          (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.sequence"></a><a href="sequence.html" title=" Sequences
+          (operator&lt;&lt;())"> Sequences
+          (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;()</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.karma.reference.operator.sequence.description"></a><h6>
-<a name="id1310969"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.description">Description</a>
+<a name="id614180"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.description">Description</a>
           </h6>
 <p>
             Generator sequences are used to consecutively combine different, more
@@ -37,37 +43,37 @@
             to right as long as they succeed.
           </p>
 <a name="spirit.karma.reference.operator.sequence.header"></a><h6>
-<a name="id1310986"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.header">Header</a>
+<a name="id614213"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/sequence.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_sequence</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.sequence.model_of"></a><h6>
-<a name="id1311060"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.model_of">Model
+<a name="id614327"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/narygenerator.html" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>
+                <a href="../generator_concepts/narygenerator.html" title="NaryGenerator"><tt class="computeroutput"><span class="identifier">NaryGenerator</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.expression_semantics"></a><h6>
-<a name="id1312213"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
+<a name="id614380"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/narygenerator.html" title="NaryGenerator"><code class="computeroutput"><span class="identifier">NaryGenerator</span></code></a>.
+            is not defined in <a href="../generator_concepts/narygenerator.html" title="NaryGenerator"><tt class="computeroutput"><span class="identifier">NaryGenerator</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -75,33 +81,25 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
-                    <span class="identifier">b</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    The generators <code class="computeroutput"><span class="identifier">a</span></code>
-                    and <code class="computeroutput"><span class="identifier">b</span></code> are executed
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
+                    <span class="identifier">b</span></tt>
+                  </p></td>
+<td><p>
+                    The generators <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    and <tt class="computeroutput"><span class="identifier">b</span></tt> are executed
                     sequentially from left to right and as long as they succeed.
                     A failed generator stops the execution of the entire sequence
                     and makes the sequence fail as well.
-                  </p>
-                  </td>
+                  </p></td>
 </tr></tbody>
 </table></div>
 <p>
@@ -110,15 +108,16 @@
             might have already generated some output, which is <span class="emphasis"><em>not</em></span>
             rolled back.
           </p>
-<div class="tip" title="Tip"><table border="0" summary="Tip">
+<div class="tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td align="left" valign="top">
+<tr><td colspan="2" align="left" valign="top">
 <p>
               The simplest way to force a sequence to behave as if it did buffering
-              is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>):
+              is to wrap it into a buffering directive (see <a href="../directive/buffer.html" title=" Temporary
+          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt></a>):
             </p>
 <p>
               
@@ -133,8 +132,8 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.sequence.attributes"></a><h6>
-<a name="id1312406"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
+<a name="id614653"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -142,25 +141,19 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
+<td><p>
+                    sequence (<tt class="computeroutput"><span class="special">&lt;&lt;</span></tt>)
+                  </p></td>
 <td>
-                  <p>
-                    sequence (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
@@ -174,27 +167,27 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr></tbody>
 </table></div>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top">
+<tr><td colspan="2" align="left" valign="top">
 <p>
-              The table above uses <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> and <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as placeholders only.
+              The table above uses <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt> and <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as placeholders only.
             </p>
 <p>
-              The notation <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code> stands for <span class="emphasis"><em>any fusion
-              sequence of two elements</em></span>, where <code class="computeroutput"><span class="identifier">A</span></code>
-              is the type of its first element and <code class="computeroutput"><span class="identifier">B</span></code>
+              The notation <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></tt> stands for <span class="emphasis"><em>any fusion
+              sequence of two elements</em></span>, where <tt class="computeroutput"><span class="identifier">A</span></tt>
+              is the type of its first element and <tt class="computeroutput"><span class="identifier">B</span></tt>
               is the type of its second element.
             </p>
 <p>
-              The notation of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> stands for <span class="emphasis"><em>any STL container</em></span>
-              holding elements of type <code class="computeroutput"><span class="identifier">A</span></code>.
+              The notation of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> stands for <span class="emphasis"><em>any STL container</em></span>
+              holding elements of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
             </p>
 </td></tr>
 </table></div>
@@ -206,8 +199,8 @@
             the attribute supplied
           </p>
 <a name="spirit.karma.reference.operator.sequence.complexity"></a><h6>
-<a name="id1313204"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
+<a name="id615730"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -221,8 +214,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.sequence.example"></a><h6>
-<a name="id1313228"></a>
-            <a class="link" href="sequence.html#spirit.karma.reference.operator.sequence.example">Example</a>
+<a name="id615770"></a>
+            <a href="sequence.html#spirit.karma.reference.operator.sequence.example">Example</a>
           </h6>
 <p>
             Some includes:
