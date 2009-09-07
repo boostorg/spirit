@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //  doesn't support working with lexer states.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct token<Iterator, omitted, mpl::false_>
+    struct token<Iterator, omit, mpl::false_>
     {
         typedef Iterator iterator_type;
         typedef mpl::false_ has_state;
@@ -188,11 +188,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //  supports working with lexer states.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
-    struct token<Iterator, omitted, mpl::true_>
-      : token<Iterator, omitted, mpl::false_>
+    struct token<Iterator, omit, mpl::true_>
+      : token<Iterator, omit, mpl::false_>
     {
     private:
-        typedef token<Iterator, omitted, mpl::false_> base_type;
+        typedef token<Iterator, omit, mpl::false_> base_type;
 
     public:
         typedef typename base_type::id_type id_type;
@@ -256,7 +256,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         //  The type of the data item stored with a token instance is defined 
         //  by the template parameter 'AttributeTypes' and may be:
         //  
-        //     omitted:           no data item is stored with the token 
+        //     omit:              no data item is stored with the token 
         //                        instance (this is handled by the 
         //                        specializations of the token class
         //                        below)
@@ -283,14 +283,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     }
 
     template <typename Iterator, typename AttributeTypes, typename HasState>
-    struct token : token<Iterator, omitted, HasState>
+    struct token : token<Iterator, omit, HasState>
     {
     private: // precondition assertions
 #if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
         BOOST_STATIC_ASSERT((mpl::is_sequence<AttributeTypes>::value || 
-                            is_same<AttributeTypes, omitted>::value));
+                            is_same<AttributeTypes, omit>::value));
 #endif
-        typedef token<Iterator, omitted, HasState> base_type;
+        typedef token<Iterator, omit, HasState> base_type;
 
     protected: 
         //  If no additional token value types are given, the the token will 
@@ -456,7 +456,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     //  constructed values.
     template <typename Attribute, typename Iterator, typename HasState>
     inline void
-    construct(Attribute& attr, token<Iterator, omitted, HasState>& t) {}
+    construct(Attribute& attr, token<Iterator, omit, HasState>& t) {}
 
     //  This is called from the parse function of lexer_def_
     template <typename Iterator, typename AttributeTypes, typename HasState>
