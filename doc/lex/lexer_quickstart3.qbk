@@ -20,7 +20,7 @@ an abstraction layer hiding implementation specifics of the used lexer
 library. The [link spirit.lex.flowcontrol picture] below shows the common 
 flow control implemented while parsing combined with lexical analysis.
 
-[fig ./images/flowofcontrol.png..The common flow control implemented while parsing combined with lexical analysis..spirit.lex.flowcontrol]
+[fig flowofcontrol.png..The common flow control implemented while parsing combined with lexical analysis..spirit.lex.flowcontrol]
 
 Another problem related to the integration of the lexical analyzer with the 
 parser was to find a way how the defined tokens syntactically could be blended

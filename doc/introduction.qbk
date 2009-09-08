@@ -60,7 +60,7 @@ of the Boost Spirit library. The library consists of 4 major parts:
   used in __qi__, except that it is used to describe the required output 
   format to generate from a given data structure.
 
-[fig ./images/spiritstructure.png..The overall structure of the Boost Spirit library..spirit.spiritstructure]
+[fig spiritstructure.png..The overall structure of the Boost Spirit library..spirit.spiritstructure]
 
 The separate sublibraries __qi__, __karma__ and __lex__ are well integrated 
 with any of the other parts. Because of their similar structure and identical 
@@ -77,7 +77,7 @@ some input being converted to some internal representation. After some
 external representation. The picture highlights Spirit's place in this data 
 transformation flow.
 
-[fig ./images/spiritkarmaflow.png..The place of __qi__ and __karma__ in a data transformation flow of a typical application..spirit.spiritkarmaflow]
+[fig spiritkarmaflow.png..The place of __qi__ and __karma__ in a data transformation flow of a typical application..spirit.spiritkarmaflow]
 
 [heading A Quick Overview of Parsing with __qi__]
 

@@ -52,7 +52,7 @@ For a more readable comparison of the results see this
     [[__karma__ int_]       [1.421]              [0.744]            [0.697]               [1.072]              [0.953]            [0.606]]
 ]
 
-[fig ./images/int_performance.png..Performance comparison for a single int..spirit.karma.int_performance]
+[fig int_performance.png..Performance comparison for a single int..spirit.karma.int_performance]
 
 [endsect]
 
@@ -106,7 +106,7 @@ For a more readable comparison of the results see this
     [[__karma__ double_]    [0.813]              [0.561]            [0.368]               [0.426]              [0.260]            [0.218]]
 ]
 
-[fig ./images/double_performance.png..Performance comparison for a single double..spirit.karma.double_performance]
+[fig double_performance.png..Performance comparison for a single double..spirit.karma.double_performance]
 
 [endsect]
 
@@ -162,7 +162,7 @@ For a more readable comparison of the results see this
     [[__karma__]            [1.942]              [1.242]            [0.999]               [1.334]              [0.758]            [0.686]]
 ]
 
-[fig ./images/format_performance.png..Performance comparison for a sequence of several items..spirit.karma.format_performance]
+[fig format_performance.png..Performance comparison for a sequence of several items..spirit.karma.format_performance]
 
 [endsect]
 

@@ -34,6 +34,13 @@ module for more details).
 
 Also, see __include_structure__.
 
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::eol // alias: boost::spirit::karma::eol`]]
+]
+
 [heading Model of]
 
 [:__primitive_generator_concept__]
@@ -93,11 +100,41 @@ to fail or to succeed or to insert semantic actions into the generation process.
 
 [heading Description]
 
-The `eps` creates a component generating an empty string while always 
-succeeding. The `eps(b)` component generates an empty string as well, but 
+The Epsilon (`eps`) is a multi-purpose generator that emits a yero length 
+string. 
+
+[heading Simple Form]
+
+In its simplest form, `eps` creates a component generating an empty string 
+while always succeeding:
+
+    eps       // always emits a zero-length string
+
+This form is usually used to trigger a semantic action unconditionally.
+For example, it is useful in triggering error messages when a set of
+alternatives fail:
+
+    r = a | b | c | eps[error()]; // Call error if a, b, and c fail to generate
+
+[heading Semantic Predicate]
+
+The `eps(b)` component generates an empty string as well, but 
 succeeds only if `b` is `true` and fails otherwise. It's lazy variant `eps(fb)`
 is equivalent to `eps(b)` except it evaluates the supplied function `fb` at 
 generate time, while using the return value as the criteria to succeed.
+
+Semantic predicates allow you to attach a conditional function anywhere
+in the grammar. In this role, the epsilon takes a __karma_lazy_argument__ that
+returns `true` or `false`. The __karma_lazy_argument__ is typically a test
+that is called to resolve ambiguity in the grammar. A generator failure will
+be reported when the __karma_lazy_argument__ result evaluates to `false`.
+Otherwise an empty string will be emitted. The general form is:
+
+    eps_p(fb) << rest;
+
+The __karma_lazy_argument__ `fb` is called to do a semantic test. If the test 
+returns true, `rest` will be evaluated. Otherwise, the production will return 
+early without ever touching rest. 
 
 [heading Header]
 
@@ -105,6 +142,13 @@ generate time, while using the return value as the criteria to succeed.
     #include <boost/spirit/include/karma_eps.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::eps // alias: boost::spirit::karma::eps`]]
+]
 
 [heading Model of]
 
@@ -185,13 +229,21 @@ produce the output.
 
 Also, see __include_structure__.
 
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::lazy // alias: boost::spirit::karma::lazy`]]
+]
+
 [heading Model of]
 
 [:__generator_concept__]
 
 [variablelist Notation
     [[`fg`]       [A function or function object that evaluates to a generator 
-                   object. This function will be invoked at generate time.]]
+                   object (an object exposing the __generator_concept__). This 
+                   function will be invoked at generate time.]]
 ]
 
 The signature of `fg` is expected to be

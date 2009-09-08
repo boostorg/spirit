@@ -102,12 +102,12 @@ supplied by the attribute.
 `char_` except that `lit` does not consume an attribute. A plain
 `char` or `wchar_t` is equivalent to a `lit`.
 
-[note `lit` is reused by both the [karma_string string generators], the
-      char generators, and the numeric generators (see [signed_int signed integer], 
+[note `lit` is reused by the [karma_string String Generators], the
+      char generators, and the Numeric Generators (see [signed_int signed integer], 
       [unsigned_int unsigned integer], and [real_number real number] generators). In 
       general, a char generator is created when you pass in a
       character, a string generator is created when you pass in a string, and a 
-      numeric generator is used when you use a numeric literal. The
+      numeric generator is created when you use a numeric literal. The
       exception is when you pass a single element literal string, e.g.
       `lit("x")`. In this case, we optimize this to create a char generator
       instead of a string generator.] 

@@ -239,7 +239,7 @@
         <title>'''[title]'''</title>
         <inlinemediaobject>
             <imageobject>
-                <imagedata fileref="'''[ref]'''"></imagedata>
+                <imagedata fileref="./images/'''[ref]'''"></imagedata>
             </imageobject>
             <textobject>
                 <phrase role="alt">'''[title]'''</phrase>

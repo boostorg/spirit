@@ -8,9 +8,20 @@
 
 [section:numeric Numeric]
 
-This module includes different numeric generators allowing to format arbitrary 
-integer and real number types. It includes the signed integer, unsigned 
-integer, and real number generators.
+The library includes a couple of predefined objects for generating signed
+and unsigned integers and real numbers. These generators are fully
+parametric. Most of the important aspects of numeric generation can be
+finely adjusted to suit. This includes the radix base, the exponent, the 
+fraction etc. Policies control the real number generators' behavior. There are 
+some predefined policies covering the most common real number formats but the
+user can supply her own when needed.
+
+The numeric parsers are fine tuned (employing loop unrolling and
+extensive template metaprogramming) with exceptional performance that
+rivals the low level C functions such as `ltoa`, `ssprintf`, and `_gcvt`. 
+Benchmarks reveal up to 2X speed over the C counterparts (see here: 
+__sec_karma_numeric_performance__). This goes to show that you can write 
+extremely tight generic C++ code that rivals, if not surpasses C. 
 
 [heading Module Header]
 
@@ -20,326 +31,24 @@ integer, and real number generators.
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:signed_int Signed Integer Number Generators]
-
-[heading Description]
-
-The signed integer number generators described in this section are:
-
-[table
-    [[Expression]          [Attribute]     [Description]]
-    [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `short`,
-                                            `int`, `long`, or `long long`, same as 
-                                            `boost::spirit::lit`]]
-    [[`short_`]            [`short`]       [Generate a `short int` as given by the
-                                            mandatory attribute]]
-    [[`short_(num)`]       [`short`]       [Generate `num` as a `short int`, 
-                                            if an attribute is supplied it must match]]
-    [[`int_`]              [`int`]         [Generate an `int` as given by the
-                                            mandatory attribute]]
-    [[`int_(num)`]         [`int`]         [Generate `num` as an `int`, 
-                                            if an attribute is supplied it must match]]
-    [[`long_`]             [`long`]        [Generate a `long int` as given by the
-                                            mandatory attribute]]
-    [[`long_(num)`]        [`long`]        [Generate `num` as `long int`, 
-                                            if an attribute is supplied it must match]]
-    [[`long_long`]         [`long long`]   [Generate a `long long` as given by the
-                                            mandatory attribute]]
-    [[`long_long(num)`]    [`long long`]   [Generate `num` as an `long long`, 
-                                            if an attribute is supplied it must match]]
-    [
-[``int_generator<
-    Num, Radix, force_sign
->()``]
-                           [`Num`]                [Generate a `Num`]]
-    [
-[``int_generator<
-    Num, Radix, force_sign
->()(num)``]
-                           [`Num`]                [Generate `num` as a `Num`, 
-                                                   if an attribute is supplied it must match]]
-]
-
-These can be used to flexibly format any integer number of any compatible type
-(for more information about the requirements, see 
-[link spirit.karma.reference.numeric.signed_int.additional_requirements below]).
-
-[note   The generators `long_long` and `long_long(num)` are only available on 
-        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
-        defined (i.e. on platforms having native support for `long long` 
-        (64 bit) integer types).]
-
-The integer number generators are very fast. For measurement results comparing
-the __karma__ integer number generators with equivalent constructs provided by 
-other libraries see the section 
-[link spirit.karma.performance_measurements.numeric_performance.int_performance Performance of Numeric Generators]
-
-[heading Header]
-
-    // forwards to <boost/spirit/home/karma/numeric/int.hpp>
-    #include <boost/spirit/include/karma_int.hpp>
-
-Also, see __include_structure__.
-
-[heading Model of]
-
-[:__primitive_generator_concept__]
-
-[variablelist Notation
-    [[`num`]            [Numeric literal, any signed integer value, or
-                         a __karma_lazy_argument__ that evaluates to a signed 
-                         integer value of type `Num`]]
-    [[`Num`]            [Type of `num`: any signed integer type]]
-    [[`Radix`]          [A constant integer literal specifying the required 
-                         radix for the output conversion. Valid values are `2`, 
-                         `8`, `10`, and `16`.]]
-    [[`force_sign`]     [A constant boolean literal specifying whether the
-                         generated number should always have a sign (`'+'` for
-                         positive numbers, `'-'` for negative numbers and a 
-                         '` `' for zero).]]
-    ]
-
-[heading Expression Semantics]
-
-Semantics of an expression is defined only where it differs from, or is
-not defined in __primitive_generator_concept__.
-
-[table
-    [[Expression]       [Semantics]]
-    [[`lit(num)`]       [Generate the integer literal `num` using the default
-                         formatting (radix is 10, sign is only printed for 
-                         negative literals). This generator never fails (except 
-                         if the underlying output stream reports an error).]]
-    [
-[``short_
-int_
-long_
-long_long``]            [Generate the integer provided by a mandatory attribute
-                         using the default formatting (radix is 10, sign is 
-                         only printed for negative literals). This generator 
-                         never fails (except if the underlying output stream 
-                         reports an error).]]
-    [
-[``short_(num)
-int_(num)
-long_(num)
-long_long(num)``]       [Generate the integer provided by the immediate literal
-                         value the generator is initialized from using the 
-                         default formatting (radix is 10, sign is only printed 
-                         for negative literals). If this generator has an 
-                         associated attribute it succeeds only as long as the 
-                         attribute is equal to the immediate literal (except if 
-                         the underlying output stream reports an error). 
-                         Otherwise this generator fails and does not generate 
-                         any output.]]
-]
-
-All generators listed in the table above (except `lit(num)`) are predefined 
-specializations of the `int_generator<Num, Radix, force_sign>` basic integer
-number generator type described below. It is possible to directly use this
-type to create integer generators using a wide range of formatting options.
-
-[table
-    [[Expression]       [Semantics]]
-    [
-[``int_generator<
-    Num, Radix, force_sign
->()``]
-                        [Generate the integer of type `Num` provided by a 
-                         mandatory attribute using the specified `Radix` 
-                         (possible values are `2`, `8`, `10`, and `16`, the 
-                         default value is `10`). If `force_sign` is `false` 
-                         (the default), a sign is only printed for negative 
-                         literals. If `force_sign` is `true`, all numbers will 
-                         be printed using a sign, i.e. `'-'` for negative 
-                         numbers, `'+'` for positive numbers, and `' '` for 
-                         zeros. This generator never fails (except if the 
-                         underlying output stream reports an error).]]
-    [
-[``int_generator<
-    Num, Radix, force_sign
->()(num)``]
-                        [Generate the integer of type `Num` provided by the 
-                         immediate literal value the generator is initialized 
-                         from, using the specified `Radix` (possible values are
-                         `2`, `8`, `10`, and `16`, the default value is `10`). 
-                         If `force_sign` is `false` (the default), a sign is 
-                         only printed for negative literals. If `force_sign` is 
-                         `true`, all numbers will be printed using a sign, i.e.
-                         `'-'` for negative numbers, `'+'` for positive numbers,
-                         and `' '` for zeros. If this generator has an 
-                         associated attribute it succeeds only as long as the 
-                         attribute is equal to the immediate literal (except if 
-                         the underlying output stream reports an error). 
-                         Otherwise this generator fails and does not generate 
-                         any output.]]
-]
-
-[heading Template parameters]
-
-[table
-    [[Parameter]        [Description]               [Default]]
-    [[`Num`]            [The type of the integer 
-                         to generate]               [`int`]]
-    [[`Radix`]          [The radix to use while 
-                         converting the integer]    [`10`]]
-    [[`force_sign`]     [If `true`, all numbers will
-                         have a sign (space for 
-                         zero)]                     [`false`]]
-]
-
-[heading Additional Requirements]
-
-The following lists enumerate the requirements which must be met in order to 
-use a certain type `Num` to instantiate and use a 
-`int_generator<Num, Radix, force_sign>`.
-
-If `boost::is_integral<Num>::value` is `true` the type `Num` must have defined:
-
-* comparison operators for: `<`, `<=`, `==`, `!=`, `>`, and `>=` 
-* numeric operators for: `+`, `-`, `/`, `*`, `%`, and unary `-`
-
-If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
-
-* comparison operators for: `<`, `<=`, `==`, `!=`, `>`, and `>=` 
-* numeric operators for: `+`, `-`, `/`, `*`, `%`, and unary `-`
-* helper functions implementing the interface and the semantics of: `std::fmod`, 
-  `std::fabs`, `std::pow`, `std::lround`, `std::ltrunc`, `std::floor`, and
-  `std::ceil`. These need to be defined in a way so that they will be found 
-  using argument dependent lookup (ADL).
-
-[heading Attributes]
-
-[table
-    [[Expression]       [Attribute]]
-    [[`lit(num)`]       [__unused__]]
-    [[`short_`]         [`short`, attribute is mandatory (otherwise compilation 
-                         will fail)]]
-    [[`short_(num)`]    [`short`, attribute is optional, if it is supplied, the 
-                         generator compares the attribute with `num` and 
-                         succeeds only if both are equal, failing otherwise.]]
-
-    [[`int_`]           [`int`, attribute is mandatory (otherwise compilation 
-                         will fail)]]
-    [[`int_(num)`]      [`int`, attribute is optional, if it is supplied, the 
-                         generator compares the attribute with `num` and 
-                         succeeds only if both are equal, failing otherwise.]]
-
-    [[`long_`]          [`long`, attribute is mandatory (otherwise compilation 
-                         will fail)]]
-    [[`long_(num)`]     [`long`, attribute is optional, if it is supplied, the 
-                         generator compares the attribute with `num` and 
-                         succeeds only if both are equal, failing otherwise.]]
-
-    [[`long_long`]      [`long long`, attribute is mandatory (otherwise compilation 
-                         will fail)]]
-    [[`long_long(num)`] [`long long`, attribute is optional, if it is supplied, the 
-                         generator compares the attribute with `num` and 
-                         succeeds only if both are equal, failing otherwise.]]
-
-    [
-[``int_generator<
-    Num, Radix, force_sign
->()``]                  [`Num`, attribute is mandatory (otherwise compilation 
-                         will fail)]]
-    [
-[``int_generator<
-    Num, Radix, force_sign
->()(num)``]             [`Num`, attribute is optional, if it is supplied, the 
-                         generator compares the attribute with `num` and 
-                         succeeds only if both are equal, failing otherwise.]]
-]
-
-[heading Complexity]
-
-[:O(N), where `N` is the number of digits needed to represent the generated 
- integer number]
-
-[heading Example]
-
-Some includes:
-
-[reference_karma_includes]
-
-All code snippets below use these common test functions:
-
-[reference_karma_test]
-[reference_karma_test_attr]
-
-Some using declarations:
-
-[reference_karma_using_declarations_int]
-
-Basic usage of an `int_` generator:
-
-[reference_karma_int]
-
-[endsect]
-
-[/////////////////////////////////////////////////////////////////////////////]
 [section:unsigned_int Unsigned Integer Number Generators]
 
 [heading Description]
-The signed integer number generators described in this section are:
 
-[table
-    [[Expression]          [Attribute]            [Description]]
-    [[`lit(num)`]          [__unused__]           [Generates `num`, where `num` can be a `unsigned short`,
-                                                   `unsigned int`, `unsigned long`, or `unsigned long long`, 
-                                                   same as `boost::spirit::lit`]]
-    [[`ushort`]            [`unsigned short`]     [Generate a short integer]]
-    [[`ushort(num)`]       [`unsigned short`]     [Generate `num` as a short integer, 
-                                                   if an attribute is supplied it must match]]
-    [[`uint`]              [`unsigned int`]       [Generate an int]]
-    [[`uint(num)`]         [`unsigned int`]       [Generate `num` as an int, 
-                                                   if an attribute is supplied it must match]]
-    [[`ulong`]             [`unsigned long`]      [Generate a long integer]]
-    [[`ulong(num)`]        [`unsigned long`]      [Generate `num` as long integer, 
-                                                   if an attribute is supplied it must match]]
-    [[`ulong_long`]        [`unsigned long long`] [Generate a long long]]
-    [[`ulong_long(num)`]   [`unsigned long long`] [Generate `num` as an long long, 
-                                                   if an attribute is supplied it must match]]
-    [
-[``uint_generator<
-    Num, Radix
->()``]
-                           [`Num`]                [Generate an unsigned `Num`]]
-    [
-[``uint_generator<
-    Num, Radix
->()(num)``]
-                           [`Num`]                [Generate an unsigned `num` as a `Num`, 
-                                                   if an attribute is supplied it must match]]
-    [[`bin`]               [`unsigned int`]       [Generate an unsigned integer in binary 
-                                                   (base 2) representation]]
-    [[`bin(num)`]          [`unsigned int`]       [Generate `num` as an unsigned integer in
-                                                   binary (base 2) representation, if an attribute is 
-                                                   supplied it must match]]
-    [[`oct`]               [`unsigned int`]       [Generate an unsigned integer in octal (base 8) 
-                                                   representation]]
-    [[`oct(num)`]          [`unsigned int`]       [Generate `num` as an unsigned integer in
-                                                   octal (base 8) representation, if an attribute is 
-                                                   supplied it must match]]
-    [[`hex`]               [`unsigned int`]       [Generate an unsigned integer in hexadecimal 
-                                                   (base 16) representation]]
-    [[`hex(num)`]          [`unsigned int`]       [Generate `num` as an unsigned integer in
-                                                   hexadecimal (base 16) representation, if an 
-                                                   attribute is supplied it must match]]
-]
+The `uint_generator` class is the simplest among the members of the
+numerics package. The `uint_generator` can generate unsigned integers of
+arbitrary length and size. The `uint_generator` generator can be used to 
+generate ordinary primitive C/C++ integers or even user defined scalars such as
+bigints (unlimited precision integers) as long as the type follows
+certain expression requirements (for more information about the requirements, see 
+[link spirit.karma.reference.numeric.unsigned_int.additional_requirements below])). 
+The `uint_generator` is a template class. Template parameters fine tune its behavior. 
 
-These can be used to flexibly format any unsigned integer number of any 
-compatible type (for more information about the requirements, see 
-[link spirit.karma.reference.numeric.unsigned_int.additional_requirements below]).
-
-[note   The generators `ulong_long` and `ulong_long(num)` are only available on 
-        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
-        defined (i.e. on platforms having native support for `unsigned long long` 
-        (64 bit) unsigned integer types).]
-
-The integer number generators are very fast. For measurement results comparing
-the __karma__ integer number generators with equivalent constructs provided by 
-other libraries see the section 
-[link spirit.karma.performance_measurements.numeric_performance.int_performance Performance of Numeric Generators]
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric literal.] 
 
 [heading Header]
 
@@ -347,6 +56,42 @@ other libraries see the section
     #include <boost/spirit/include/karma_uint.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::bin           // alias: boost::spirit::karma::bin`]]
+    [[`boost::spirit::oct           // alias: boost::spirit::karma::oct`]]
+    [[`boost::spirit::hex           // alias: boost::spirit::karma::hex`]]
+    [[`boost::spirit::ushort_       // alias: boost::spirit::karma::ushort_`]]
+    [[`boost::spirit::ulong_        // alias: boost::spirit::karma::ulong_`]]
+    [[`boost::spirit::uint_         // alias: boost::spirit::karma::uint_`]]
+    [[`boost::spirit::ulong_long    // alias: boost::spirit::karma::ulong_long`]]
+]
+
+[note   The generators `ulong_long` and `ulong_long(num)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `unsigned long long` 
+        (64 bit) unsigned integer types).]
+
+[heading Synopsis]
+
+    template <
+        typename Num
+      , unsigned Radix>
+    struct uint_generator;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`Num`]        [The numeric base type of the 
+                     numeric generator.]                [`unsigned int`]]
+    [[`Radix`]      [The radix base. This can be 
+                     either 2: binary, 8: octal, 
+                     10: decimal and 16: hexadecimal.]  [10]]
+]
 
 [heading Model of]
 
@@ -356,10 +101,12 @@ Also, see __include_structure__.
     [[`num`]            [Numeric literal, any unsigned integer value, or
                          a __karma_lazy_argument__ that evaluates to an 
                          unsigned integer value of type `Num`]]
-    [[`Num`]            [Type of `num`: any unsigned integer type]]
+    [[`Num`]            [Type of `num`: any unsigned integer type, or in case
+                         of a __karma_lazy_argument__, its return value]]
     [[`Radix`]          [A integer literal specifying the required radix for 
                          the output conversion. Valid values are `2`, `8`, `10`,
-                         and `16`.]]]
+                         and `16`.]]
+]
 
 [heading Expression Semantics]
 
@@ -447,16 +194,6 @@ options.
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
-]
-
-[heading Template parameters]
-
-[table
-    [[Parameter]        [Description]               [Default]]
-    [[`Num`]            [The type of the integer 
-                         to generate]               [`unsigned int`]]
-    [[`Radix`]          [The radix to use while 
-                         converting the integer]    [`10`]]
 ]
 
 [heading Additional Requirements]
@@ -565,52 +302,269 @@ Basic usage of an `uint` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
+[section:signed_int Signed Integer Number Generators]
+
+[heading Description]
+
+The `int_generator` can generate signed integers of arbitrary length and size.
+This is almost the same as the `int_generator`. The only difference is the
+additional task of generating the `'+'` or `'-'` sign preceding the number.
+The class interface is the same as that of the `int_generator`.
+
+The `int_generator` generator can be used to emit ordinary primitive C/C++
+integers or even user defined scalars such as bigints (unlimited
+precision integers) as long as the type follows certain expression
+requirements (for more information about the requirements, see 
+[link spirit.karma.reference.numeric.signed_int.additional_requirements below]). 
+
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric literal.] 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/numeric/int.hpp>
+    #include <boost/spirit/include/karma_int.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::short_        // alias: boost::spirit::karma::short_`]]
+    [[`boost::spirit::int_          // alias: boost::spirit::karma::int_`]]
+    [[`boost::spirit::long_         // alias: boost::spirit::karma::long_`]]
+    [[`boost::spirit::long_long     // alias: boost::spirit::karma::long_long`]]
+]
+
+[note   The generators `long_long` and `long_long(num)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `long long` 
+        (64 bit) integer types).]
+
+[heading Synopsis]
+
+    template <
+        typename T
+      , unsigned Radix
+      , bool force_sign>
+    struct int_generator;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                        [Default]]
+    [[`T`]          [The numeric base type of the 
+                     numeric parser.]                    [`int`]]
+    [[`Radix`]      [The radix base. This can be 
+                     either 2: binary, 8: octal, 
+                     10: decimal and 16: hexadecimal.]   [10]]
+    [[`force_sign`] [If `true`, all numbers will
+                     have a sign (space for zero)]       [`false`]]
+]
+
+[heading Model of]
+
+[:__primitive_generator_concept__]
+
+[variablelist Notation
+    [[`num`]            [Numeric literal, any signed integer value, or
+                         a __karma_lazy_argument__ that evaluates to a signed 
+                         integer value of type `Num`]]
+    [[`Num`]            [Type of `num`: any signed integer type]]
+    [[`Radix`]          [A constant integer literal specifying the required 
+                         radix for the output conversion. Valid values are `2`, 
+                         `8`, `10`, and `16`.]]
+    [[`force_sign`]     [A constant boolean literal specifying whether the
+                         generated number should always have a sign (`'+'` for
+                         positive numbers, `'-'` for negative numbers and a 
+                         '` `' for zero).]]
+    ]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_generator_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`lit(num)`]       [Generate the integer literal `num` using the default
+                         formatting (radix is 10, sign is only printed for 
+                         negative literals). This generator never fails (except 
+                         if the underlying output stream reports an error).]]
+    [
+[``short_
+int_
+long_
+long_long``]            [Generate the integer provided by a mandatory attribute
+                         using the default formatting (radix is 10, sign is 
+                         only printed for negative literals). This generator 
+                         never fails (except if the underlying output stream 
+                         reports an error).]]
+    [
+[``short_(num)
+int_(num)
+long_(num)
+long_long(num)``]       [Generate the integer provided by the immediate literal
+                         value the generator is initialized from using the 
+                         default formatting (radix is 10, sign is only printed 
+                         for negative literals). If this generator has an 
+                         associated attribute it succeeds only as long as the 
+                         attribute is equal to the immediate literal (except if 
+                         the underlying output stream reports an error). 
+                         Otherwise this generator fails and does not generate 
+                         any output.]]
+]
+
+All generators listed in the table above (except `lit(num)`) are predefined 
+specializations of the `int_generator<Num, Radix, force_sign>` basic integer
+number generator type described below. It is possible to directly use this
+type to create integer generators using a wide range of formatting options.
+
+[table
+    [[Expression]       [Semantics]]
+    [
+[``int_generator<
+    Num, Radix, force_sign
+>()``]
+                        [Generate the integer of type `Num` provided by a 
+                         mandatory attribute using the specified `Radix` 
+                         (possible values are `2`, `8`, `10`, and `16`, the 
+                         default value is `10`). If `force_sign` is `false` 
+                         (the default), a sign is only printed for negative 
+                         literals. If `force_sign` is `true`, all numbers will 
+                         be printed using a sign, i.e. `'-'` for negative 
+                         numbers, `'+'` for positive numbers, and `' '` for 
+                         zeros. This generator never fails (except if the 
+                         underlying output stream reports an error).]]
+    [
+[``int_generator<
+    Num, Radix, force_sign
+>()(num)``]
+                        [Generate the integer of type `Num` provided by the 
+                         immediate literal value the generator is initialized 
+                         from, using the specified `Radix` (possible values are
+                         `2`, `8`, `10`, and `16`, the default value is `10`). 
+                         If `force_sign` is `false` (the default), a sign is 
+                         only printed for negative literals. If `force_sign` is 
+                         `true`, all numbers will be printed using a sign, i.e.
+                         `'-'` for negative numbers, `'+'` for positive numbers,
+                         and `' '` for zeros. If this generator has an 
+                         associated attribute it succeeds only as long as the 
+                         attribute is equal to the immediate literal (except if 
+                         the underlying output stream reports an error). 
+                         Otherwise this generator fails and does not generate 
+                         any output.]]
+]
+
+[heading Additional Requirements]
+
+The following lists enumerate the requirements which must be met in order to 
+use a certain type `Num` to instantiate and use a 
+`int_generator<Num, Radix, force_sign>`.
+
+If `boost::is_integral<Num>::value` is `true` the type `Num` must have defined:
+
+* comparison operators for: `<`, `<=`, `==`, `!=`, `>`, and `>=` 
+* numeric operators for: `+`, `-`, `/`, `*`, `%`, and unary `-`
+
+If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
+
+* comparison operators for: `<`, `<=`, `==`, `!=`, `>`, and `>=` 
+* numeric operators for: `+`, `-`, `/`, `*`, `%`, and unary `-`
+* helper functions implementing the interface and the semantics of: `std::fmod`, 
+  `std::fabs`, `std::pow`, `std::lround`, `std::ltrunc`, `std::floor`, and
+  `std::ceil`. These need to be defined in a way so that they will be found 
+  using argument dependent lookup (ADL).
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`lit(num)`]       [__unused__]]
+    [[`short_`]         [`short`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [[`short_(num)`]    [`short`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+
+    [[`int_`]           [`int`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [[`int_(num)`]      [`int`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+
+    [[`long_`]          [`long`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [[`long_(num)`]     [`long`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+
+    [[`long_long`]      [`long long`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [[`long_long(num)`] [`long long`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+
+    [
+[``int_generator<
+    Num, Radix, force_sign
+>()``]                  [`Num`, attribute is mandatory (otherwise compilation 
+                         will fail)]]
+    [
+[``int_generator<
+    Num, Radix, force_sign
+>()(num)``]             [`Num`, attribute is optional, if it is supplied, the 
+                         generator compares the attribute with `num` and 
+                         succeeds only if both are equal, failing otherwise.]]
+]
+
+[heading Complexity]
+
+[:O(N), where `N` is the number of digits needed to represent the generated 
+ integer number]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use these common test functions:
+
+[reference_karma_test]
+[reference_karma_test_attr]
+
+Some using declarations:
+
+[reference_karma_using_declarations_int]
+
+Basic usage of an `int_` generator:
+
+[reference_karma_int]
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
 [section:real_number Real Number Generators]
 
 [heading Description]
 
-The real number generators described in this section are:
-
-[table
-    [[Expression]          [Attribute]     [Description]]
-    [[`lit(num)`]          [`Unused`]      [Generates `num`, where `num` can be a `float`,
-                                            `double`, or `long double`, same as 
-                                            `boost::spirit::lit`]]
-    [[`float_`]            [`float`]       [Generate a `float` as given by the
-                                            mandatory attribute]]
-    [[`float_(num)`]       [`float`]       [Generate `num` as a `float`, 
-                                            if an attribute is supplied it must match]]
-    [[`double_`]           [`double`]      [Generate a `double` as given by the
-                                            mandatory attribute]]
-    [[`double_(num)`]      [`double`]      [Generate `num` as a `double`, 
-                                            if an attribute is supplied it must match]]
-    [[`long_double`]       [`long double`] [Generate a `double` as given by the
-                                            mandatory attribute]]
-    [[`long_double(num)`]  [`long double`] [Generate `num` as a `double`, 
-                                            if an attribute is supplied it must match]]
-    [
-[``real_generator<
-    Num, Policies
->()``]
-                           [`Num`]         [Generate a `Num` using the provided 
-                                            policies `Policies`]]
-    [
-[``real_generator<
-    Num, Policies
->()(num)``]
-                           [`Num`]         [Generate `num` as a `Num` using the provided 
-                                            policies `Policies`, if an attribute is 
-                                            supplied it must match]]
-]
-
-These can be used to flexibly format any real number of any 
-compatible type (for more information about the requirements, see 
+The `real_generator` can generate  real numbers of arbitrary length and size
+limited by its template parameter, `Num`. The numeric base type `Num` can be
+a user defined numeric type such as fixed_point (fixed point reals) and
+bignum (unlimited precision numbers) as long as the type follows certain
+expression requirements (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.real_number.additional_requirements below]).
 
-The real number generators are very fast. For measurement results 
-comparing the __karma__ real number generators with equivalent 
-constructs provided by other libraries see the section 
-[link spirit.karma.performance_measurements.numeric_performance.double_performance Performance of Floating Point Numeric Generators]
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric literal.] 
 
 [heading Header]
 
@@ -618,6 +572,32 @@ constructs provided by other libraries see the section
     #include <boost/spirit/include/karma_real.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::float_        // alias: boost::spirit::karma::float_`]]
+    [[`boost::spirit::double_       // alias: boost::spirit::karma::double_`]]
+    [[`boost::spirit::long_double   // alias: boost::spirit::karma::long_double`]]
+]
+
+[heading Synopsis]
+
+    template <typename Num, typename RealPolicies>
+    struct real_generator;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]        [Description]               [Default]]
+    [[`Num`]            [The type of the real number to generate]  [`double`]]
+    [[`RealPolicies`]   [The policies to use while 
+                         converting the real number] [`real_policies<Num>`]]
+]
+
+For more information about the type `RealPolicies` see 
+[link spirit.karma.reference.numeric.real_number.real_number_formatting_policies below]).
 
 [heading Model of]
 
@@ -627,7 +607,8 @@ Also, see __include_structure__.
     [[`num`]            [Numeric literal, any real number value, or
                          a __karma_lazy_argument__ that evaluates to a real
                          number value of type `Num`]]
-    [[`Num`]            [Type of `num`: any real number type]]]
+    [[`Num`]            [Type of `num`: any real number type]]
+]
 
 [heading Expression Semantics]
 
@@ -672,7 +653,7 @@ long_double(num)``]     [Generate the real point number provided by the
 ]
 
 All generators listed in the table above (except `lit(num)`) are predefined 
-specializations of the `real_generator<Num, Policies>` basic real
+specializations of the `real_generator<Num, RealPolicies>` basic real
 number generator type described below. It is possible to directly use this
 type to create real number generators using a wide range of formatting
 options.
@@ -681,26 +662,14 @@ options.
     [[Expression]       [Semantics]]
     [
 [``real_generator<
-    Num, Policies
+    Num, RealPolicies
 >()``]
                         [Generate the real number of type `Num` 
                          provided by a mandatory attribute using the specified 
-                         `Policies`. This generator never fails 
+                         `RealPolicies`. This generator never fails 
                          (except if the underlying output stream reports an 
                          error).]]
 ]
-
-[heading Template parameters]
-
-[table
-    [[Parameter]        [Description]               [Default]]
-    [[`Num`]            [The type of the real number to generate]  [`double`]]
-    [[`Policies`]       [The policies to use while 
-                         converting the real number] [`real_policies<Num>`]]
-]
-
-For more information about the type `Policies` see 
-[link spirit.karma.reference.numeric.real_number.real_number_formatting_policies below]).
 
 [heading Additional Requirements]
 

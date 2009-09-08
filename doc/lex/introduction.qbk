@@ -148,7 +148,7 @@ of to the character sequence. The tokens in this sequence are constructed on
 the fly by analyzing the underlying character sequence and 
 matching this to the patterns as defined by the application.
 
-[fig ./images/lexerflow.png..The Library structure and Common Flow of Information while using __lex__ in an application..spirit.lexerflow]
+[fig lexerflow.png..The Library structure and Common Flow of Information while using __lex__ in an application..spirit.lexerflow]
 
 
 [endsect]

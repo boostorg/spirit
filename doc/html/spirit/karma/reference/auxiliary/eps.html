@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>eps</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
-<link rel="previous" href="eol.html" title="eol">
+<link rel="prev" href="eol.html" title="eol">
 <link rel="next" href="lazy.html" title="lazy">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,76 +22,135 @@
 <div class="spirit-nav">
 <a accesskey="p" href="eol.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lazy.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.auxiliary.eps"></a><a href="eps.html" title="eps">eps</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="eps">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.auxiliary.eps"></a><a class="link" href="eps.html" title="eps">eps</a>
+</h5></div></div></div>
 <p>
-            The family of <tt class="computeroutput"><span class="identifier">eps</span></tt> components
+            The family of <code class="computeroutput"><span class="identifier">eps</span></code> components
             allows to create pseudo generators generating an empty string. This feature
             is sometimes useful either to force a generator to fail or to succeed
             or to insert semantic actions into the generation process.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.description"></a><h6>
-<a name="id602800"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.description">Description</a>
+<a name="id1269940"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.description">Description</a>
           </h6>
 <p>
-            The <tt class="computeroutput"><span class="identifier">eps</span></tt> creates a component
-            generating an empty string while always succeeding. The <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
-            component generates an empty string as well, but succeeds only if <tt class="computeroutput"><span class="identifier">b</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt>
-            and fails otherwise. It's lazy variant <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></tt> is equivalent to <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt> except it evaluates the supplied function
-            <tt class="computeroutput"><span class="identifier">fb</span></tt> at generate time,
+            The Epsilon (<code class="computeroutput"><span class="identifier">eps</span></code>) is
+            a multi-purpose generator that emits a yero length string.
+          </p>
+<a name="spirit.karma.reference.auxiliary.eps.simple_form"></a><h6>
+<a name="id1269964"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.simple_form">Simple
+            Form</a>
+          </h6>
+<p>
+            In its simplest form, <code class="computeroutput"><span class="identifier">eps</span></code>
+            creates a component generating an empty string while always succeeding:
+          </p>
+<pre class="programlisting"><span class="identifier">eps</span>       <span class="comment">// always emits a zero-length string
+</span></pre>
+<p>
+            This form is usually used to trigger a semantic action unconditionally.
+            For example, it is useful in triggering error messages when a set of
+            alternatives fail:
+          </p>
+<pre class="programlisting"><span class="identifier">r</span> <span class="special">=</span> <span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span> <span class="special">|</span> <span class="identifier">c</span> <span class="special">|</span> <span class="identifier">eps</span><span class="special">[</span><span class="identifier">error</span><span class="special">()];</span> <span class="comment">// Call error if a, b, and c fail to generate
+</span></pre>
+<a name="spirit.karma.reference.auxiliary.eps.semantic_predicate"></a><h6>
+<a name="id1270065"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.semantic_predicate">Semantic
+            Predicate</a>
+          </h6>
+<p>
+            The <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
+            component generates an empty string as well, but succeeds only if <code class="computeroutput"><span class="identifier">b</span></code> is <code class="computeroutput"><span class="keyword">true</span></code>
+            and fails otherwise. It's lazy variant <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code> except it evaluates the supplied function
+            <code class="computeroutput"><span class="identifier">fb</span></code> at generate time,
             while using the return value as the criteria to succeed.
           </p>
+<p>
+            Semantic predicates allow you to attach a conditional function anywhere
+            in the grammar. In this role, the epsilon takes a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+            Argument</a> that returns <code class="computeroutput"><span class="keyword">true</span></code>
+            or <code class="computeroutput"><span class="keyword">false</span></code>. The <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+            Argument</a> is typically a test that is called to resolve ambiguity
+            in the grammar. A generator failure will be reported when the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+            Argument</a> result evaluates to <code class="computeroutput"><span class="keyword">false</span></code>.
+            Otherwise an empty string will be emitted. The general form is:
+          </p>
+<pre class="programlisting"><span class="identifier">eps_p</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">rest</span><span class="special">;</span>
+</pre>
+<p>
+            The <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+            Argument</a> <code class="computeroutput"><span class="identifier">fb</span></code> is
+            called to do a semantic test. If the test returns true, <code class="computeroutput"><span class="identifier">rest</span></code> will be evaluated. Otherwise,
+            the production will return early without ever touching rest.
+          </p>
 <a name="spirit.karma.reference.auxiliary.eps.header"></a><h6>
-<a name="id602958"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.header">Header</a>
+<a name="id1270252"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/eps.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_eps</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
+<a name="spirit.karma.reference.auxiliary.eps.namespace"></a><h6>
+<a name="id1270327"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.namespace">Namespace</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup><col></colgroup>
+<thead><tr><th>
+                  <p>
+                    Name
+                  </p>
+                  </th></tr></thead>
+<tbody><tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">eps</span> <span class="comment">// alias:
+                    boost::spirit::karma::eps</span></code>
+                  </p>
+                  </td></tr></tbody>
+</table></div>
 <a name="spirit.karma.reference.auxiliary.eps.model_of"></a><h6>
-<a name="id603072"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.model_of">Model of</a>
+<a name="id1270405"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">b</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">b</span></code></span></dt>
 <dd><p>
                 A boolean value.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">fb</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">fb</span></code></span></dt>
 <dd><p>
-                A <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                A <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a boolean value.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.auxiliary.eps.expression_semantics"></a><h6>
-<a name="id603187"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.expression_semantics">Expression
+<a name="id1270491"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -99,47 +158,63 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">eps</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eps</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Creates a component generating an empty string. Succeeds always.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Creates a component generating an empty string. Succeeds if
-                    <tt class="computeroutput"><span class="identifier">b</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt> (except if the underlying
+                    <code class="computeroutput"><span class="identifier">b</span></code> is <code class="computeroutput"><span class="keyword">true</span></code> (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Creates a component generating an empty string. Succeeds if
-                    <tt class="computeroutput"><span class="identifier">fb</span></tt> returns <tt class="computeroutput"><span class="keyword">true</span></tt> at generate time (except
+                    <code class="computeroutput"><span class="identifier">fb</span></code> returns <code class="computeroutput"><span class="keyword">true</span></code> at generate time (except
                     if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.eps.attributes"></a><h6>
-<a name="id603444"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.attributes">Attributes</a>
+<a name="id1270678"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -147,43 +222,59 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">eps</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eps</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">eps</span><span class="special">(</span><span class="identifier">fb</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.eps.complexity"></a><h6>
-<a name="id603652"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.complexity">Complexity</a>
+<a name="id1270840"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -198,8 +289,8 @@
             The complexity is constant as no output is generated.
           </p>
 <a name="spirit.karma.reference.auxiliary.eps.example"></a><h6>
-<a name="id603692"></a>
-            <a href="eps.html#spirit.karma.reference.auxiliary.eps.example">Example</a>
+<a name="id1270868"></a>
+            <a class="link" href="eps.html#spirit.karma.reference.auxiliary.eps.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -259,7 +350,7 @@
 <p>
           </p>
 <p>
-            Basic usage of the <tt class="computeroutput"><span class="identifier">eps</span></tt>
+            Basic usage of the <code class="computeroutput"><span class="identifier">eps</span></code>
             generator:
           </p>
 <p>

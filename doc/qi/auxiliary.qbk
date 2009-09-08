@@ -233,7 +233,7 @@ This form is usually used to trigger a semantic action unconditionally.
 For example, it is useful in triggering error messages when a set of
 alternatives fail:
 
-    r = a | b | c | eps[error()]; // Call error if a, b, or c fails to match
+    r = a | b | c | eps[error()]; // Call error if a, b, and c fail to match
 
 [heading Semantic Predicate]
 
