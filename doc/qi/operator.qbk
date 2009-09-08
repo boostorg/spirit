@@ -9,13 +9,13 @@
 
 Operators are used as a means for object composition and embedding.
 Simple parsers may be composed to form composites through operator
-overloading, crafted to approximate the syntax of an Extended
-Backus-Normal Form (EBNF) variant. An expression such as:
+overloading, crafted to approximate the syntax of __peg__ (PEG). An
+expression such as:
 
     a | b
 
-actually yields a new parser type which is a composite of its operands,
-`a` and `b`. 
+yields a new parser type which is a composite of its operands, `a` and
+`b`. 
 
 This module includes different parsers which get instantiated if one of
 the overloaded operators is used with more primitive parser constructs.
@@ -112,6 +112,63 @@ Some using declarations:
 [endsect] [/ Alternative]
 
 [/------------------------------------------------------------------------------]
+[section:and_predicate And Predicate (`operator&()`)]
+
+[heading Description]
+
+Syntactic predicates assert a certain conditional syntax to be satisfied
+before evaluating another production. Similar to semantic predicates,
+__qi_eps__, syntactic predicates do not consume any input. The `and
+predicate`, `&`, is a positive syntactic predicate that returns a zero
+length match only if its predicate matches.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/and_predicate.hpp>
+    #include <boost/spirit/include/qi_and_predicate.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`&a`]             [If the predicate `a` matches, return a zero 
+                        length match. Otherwise, fail.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`&a`]             [__unused_type__]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the predicate, `a`]
+
+[heading Example]
+
+Real example code. Use Quickbook import mechanism to link to actual
+working code snippets here.
+
+[endsect] [/ And Predicate]
+
+[/------------------------------------------------------------------------------]
 [section:expect Expectation (`operator>()`)]
 
 [heading Description]
@@ -200,6 +257,63 @@ Some using declarations:
 [reference_expect]
 
 [endsect] [/ Expectation]
+
+[/------------------------------------------------------------------------------]
+[section:not_predicate Not Predicate (`operator!()`)]
+
+[heading Description]
+
+Syntactic predicates assert a certain conditional syntax to be satisfied
+before evaluating another production. Similar to semantic predicates,
+__qi_eps__, syntactic predicates do not consume any input. The `not
+predicate`, `!`, is a negative syntactic predicate that returns a zero
+length match only if its predicate fails to match.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/not_predicate.hpp>
+    #include <boost/spirit/include/qi_not_predicate.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`!a`]             [If the predicate `a` matches, fail. Otherwise, 
+                        return a zero length match.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`!a`]             [__unused_type__]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the predicate, `a`]
+
+[heading Example]
+
+Real example code. Use Quickbook import mechanism to link to actual
+working code snippets here.
+
+[endsect] [/ Not Predicate]
 
 [/------------------------------------------------------------------------------]
 [section:permutation Permutation (`operator^()`)]

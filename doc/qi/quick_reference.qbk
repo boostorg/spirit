@@ -193,10 +193,10 @@ pages and pages of reference doumentation.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[`!a`]                 [`Unused`]                  [Not predicate. Ensure that `a` does not match
-                                                        but don't move the iterator position]]
-    [[`&a`]                 [`Unused`]                  [And predicate. Ensure that `a` matches
-                                                        but don't move the iterator position]]
+    [[`!a`]                 [`Unused`]                  [Not predicate. If the predicate `a` matches, 
+                                                        fail. Otherwise, return a zero length match.]]
+    [[`&a`]                 [`Unused`]                  [And predicate. If the predicate `a` matches, 
+                                                        return a zero length match. Otherwise, fail.]]
     [[`-a`]                 [`optional<A>`]             [Optional. Parse `a` zero or one time]]
     [[`*a`]                 [`vector<A>`]               [Kleene. Parse `a` zero or more times]]
     [[`+a`]                 [`vector<A>`]               [Plus. Parse `a` one or more times]]

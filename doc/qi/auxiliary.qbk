@@ -281,7 +281,7 @@ not defined in __primitive_parser_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`eps`]            [Match an empty string (always matches).]]
-    [[`eps(f)`]         [If `f` evaluates to `true`, match an empty string.]]
+    [[`eps(f)`]         [If `f` evaluates to `true`, return a zero length match.]]
 ]
 
 [heading Attributes]

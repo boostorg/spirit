@@ -55,7 +55,7 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-The model of `lexeme` is the model of its subject parser.
+[:__unary_parser_concept__]
 
 [variablelist Notation
     [[`a`]      [A __parser_concept__.]]
@@ -64,7 +64,7 @@ The model of `lexeme` is the model of its subject parser.
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
-not defined in the subject's concept.
+not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
@@ -85,7 +85,7 @@ a: Unused --> lexeme[a]: Unused``]]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `p`]
+[:The complexity is defined by the complexity of the subject parser, `a`]
 
 [heading Example]
 
@@ -158,7 +158,7 @@ a: Unused --> ns::no_case[a]: Unused``]]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `p`]
+[:The complexity is defined by the complexity of the subject parser, `a`]
 
 [heading Example]
 
@@ -201,7 +201,7 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-The model of `omit` is the model of its subject parser.
+[:__unary_parser_concept__]
 
 [variablelist Notation
     [[`a`]      [A __parser_concept__.]]
@@ -210,7 +210,7 @@ The model of `omit` is the model of its subject parser.
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
-not defined in the subject's concept.
+not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
@@ -226,7 +226,7 @@ not defined in the subject's concept.
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `p`]
+[:The complexity is defined by the complexity of the subject parser, `a`]
 
 [heading Example]
 
@@ -265,7 +265,7 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-The model of `raw` is the model of its subject parser.
+[:__unary_parser_concept__]
 
 [variablelist Notation
     [[`a`]      [A __parser_concept__.]]
@@ -275,7 +275,7 @@ The model of `raw` is the model of its subject parser.
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
-not defined in the subject's concept.
+not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
@@ -299,7 +299,7 @@ a: Unused --> raw[a]: Unused``]]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `p`]
+[:The complexity is defined by the complexity of the subject parser, `a`]
 
 [heading Example]
 
@@ -342,7 +342,7 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-The model of `repeat` is the model of its subject parser.
+[:__unary_parser_concept__]
 
 [variablelist Notation
     [[`a`]              [A __parser_concept__.]]
@@ -354,7 +354,7 @@ The model of `repeat` is the model of its subject parser.
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
-not defined in the subject's concept.
+not defined in __unary_parser_concept__.
 
 [table
     [[Expression]               [Semantics]]
@@ -448,7 +448,7 @@ Also, see __include_structure__.
 
 [heading Model of]
 
-The model of `skip` is the model of its subject parser.
+[:__unary_parser_concept__]
 
 [variablelist Notation
     [[`a`]      [A __parser_concept__.]]
@@ -457,7 +457,7 @@ The model of `skip` is the model of its subject parser.
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
-not defined in the subject's concept.
+not defined in __unary_parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
@@ -482,7 +482,7 @@ a: Unused --> lexeme[a]: Unused``]]
 
 [heading Complexity]
 
-[:The complexity is defined by the complexity of the subject parser, `p`]
+[:The complexity is defined by the complexity of the subject parser, `a`]
 
 [heading Example]
 

@@ -1,0 +1,181 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title> And
+          Predicate (operator&amp;())</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../operator.html" title="Operator">
+<link rel="previous" href="alternative.html" title=" Alternative
+          (operator|())">
+<link rel="next" href="expect.html" title=" Expectation
+          (operator&gt;())">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="expect.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.operator.and_predicate"></a><a href="and_predicate.html" title=" And
+          Predicate (operator&amp;())"> And
+          Predicate (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
+<a name="spirit.qi.reference.operator.and_predicate.description"></a><h6>
+<a name="id500086"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.description">Description</a>
+          </h6>
+<p>
+            Syntactic predicates assert a certain conditional syntax to be satisfied
+            before evaluating another production. Similar to semantic predicates,
+            <a href="../auxiliary/eps.html" title=" Epsilon (eps)"><tt class="computeroutput"><span class="identifier">eps</span></tt></a>,
+            syntactic predicates do not consume any input. The <tt class="computeroutput"><span class="keyword">and</span>
+            <span class="identifier">predicate</span></tt>, <tt class="computeroutput"><span class="special">&amp;</span></tt>,
+            is a positive syntactic predicate that returns a zero length match only
+            if its predicate matches.
+          </p>
+<a name="spirit.qi.reference.operator.and_predicate.header"></a><h6>
+<a name="id500168"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/and_predicate.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_and_predicate</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.qi.reference.operator.and_predicate.model_of"></a><h6>
+<a name="id500282"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.model_of">Model
+            of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dd><p>
+                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.qi.reference.operator.and_predicate.expression_semantics"></a><h6>
+<a name="id500382"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Semantics
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                  </p></td>
+<td><p>
+                    If the predicate <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    matches, return a zero length match. Otherwise, fail.
+                  </p></td>
+</tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.operator.and_predicate.attributes"></a><h6>
+<a name="id500514"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.attributes">Attributes</a>
+          </h6>
+<p>
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Expression
+                  </p></th>
+<th><p>
+                    Attribute
+                  </p></th>
+</tr></thead>
+<tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  </p></td>
+</tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.operator.and_predicate.complexity"></a><h6>
+<a name="id500634"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                The complexity is defined by the complexity of the predicate, <tt class="computeroutput"><span class="identifier">a</span></tt>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<a name="spirit.qi.reference.operator.and_predicate.example"></a><h6>
+<a name="id500682"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.example">Example</a>
+          </h6>
+<p>
+            Real example code. Use Quickbook import mechanism to link to actual working
+            code snippets here.
+          </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="expect.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
