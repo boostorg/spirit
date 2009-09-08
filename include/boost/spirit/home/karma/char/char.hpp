@@ -100,6 +100,9 @@ namespace boost { namespace spirit { namespace karma
     struct any_char
       : char_generator<any_char<CharEncoding, Tag>, CharEncoding, Tag>
     {
+        typedef typename CharEncoding::char_type char_type;
+        typedef CharEncoding char_encoding;
+
         template <typename Context, typename Unused>
         struct attribute
         {
