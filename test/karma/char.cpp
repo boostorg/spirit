@@ -65,6 +65,37 @@ main()
         BOOST_TEST(test("x", char_));           // anychar without a parameter doesn't make any sense
         BOOST_TEST(test("", char_('a', 'z')));  // char sets without attribute neither
 #endif
+
+        BOOST_TEST(!test("", ~char_('x')));
+
+        BOOST_TEST(!test("", ~char_('x'), 'x'));
+        BOOST_TEST(test("x", ~char_('y'), 'x'));
+
+        BOOST_TEST(!test("", ~char_("x")));
+
+        BOOST_TEST(!test("", ~char_('a', 'z'), 'a'));
+        BOOST_TEST(!test("", ~char_('a', 'z'), 'b'));
+        BOOST_TEST(test("A", ~char_('a', 'z'), 'A'));
+
+        BOOST_TEST(!test("", ~char_("a-z"), 'a'));
+        BOOST_TEST(!test("", ~char_("a-z"), 'b'));
+        BOOST_TEST(test("A", ~char_("a-z"), 'A'));
+
+        BOOST_TEST(test("x", ~~char_('x')));
+        BOOST_TEST(!test("x", ~~char_('y')));
+
+        BOOST_TEST(test("x", ~~char_('x'), 'x'));
+        BOOST_TEST(!test("", ~~char_('y'), 'x'));
+
+        BOOST_TEST(test("x", ~~char_("x")));
+
+        BOOST_TEST(test("a", ~~char_('a', 'z'), 'a'));
+        BOOST_TEST(test("b", ~~char_('a', 'z'), 'b'));
+        BOOST_TEST(!test("", ~~char_('a', 'z'), 'A'));
+
+        BOOST_TEST(test("a", ~~char_("a-z"), 'a'));
+        BOOST_TEST(test("b", ~~char_("a-z"), 'b'));
+        BOOST_TEST(!test("", ~~char_("a-z"), 'A'));
     }
 
     {
@@ -98,6 +129,14 @@ main()
 #if defined(KARMA_FAIL_COMPILATION)
         BOOST_TEST(test("x", char_));           // anychar without a parameter doesn't make any sense
 #endif
+
+        BOOST_TEST(!test(L"", ~char_('x')));
+        BOOST_TEST(!test(L"", ~char_(L'x')));
+
+        BOOST_TEST(!test(L"", ~char_(L'x'), L'x'));
+        BOOST_TEST(test(L"x", ~char_('y'), L'x'));
+
+        BOOST_TEST(!test(L"", ~char_(L"x")));
     }
 
     {
@@ -115,6 +154,12 @@ main()
 
         BOOST_TEST(!test("", space, 'x'));
         BOOST_TEST(!test(L"", space, L'x'));
+
+        BOOST_TEST(!test(" ", ~space, ' '));
+        BOOST_TEST(!test(L" ", ~space, L' '));
+
+        BOOST_TEST(test("x", ~space, 'x'));
+        BOOST_TEST(test(L"x", ~space, L'x'));
     }
 
     {

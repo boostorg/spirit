@@ -1,15 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Char (char_, lit)</title>
+<title>Char (char_, lit)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../char.html" title="Char">
-<link rel="previous" href="../char.html" title="Char">
-<link rel="next" href="char_class.html" title=" Char Classification
-          (alnum, digit,
-          etc.)">
+<link rel="prev" href="../char.html" title="Char">
+<link rel="next" href="char_class.html" title="Char Classification (alnum, digit, etc.)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,57 +22,54 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../char.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../char.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="char_class.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.qi.reference.char.char"></a><a href="char.html" title=" Char (char_, lit)"> Char (<tt class="computeroutput"><span class="identifier">char_</span></tt>, <tt class="computeroutput"><span class="identifier">lit</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Char (char_, lit)">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.char.char"></a><a class="link" href="char.html" title="Char (char_, lit)"> Char (<code class="computeroutput"><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">lit</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.qi.reference.char.char.description"></a><h6>
-<a name="id468796"></a>
-            <a href="char.html#spirit.qi.reference.char.char.description">Description</a>
+<a name="id1192901"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.description">Description</a>
           </h6>
 <p>
-            The <tt class="computeroutput"><span class="identifier">char_</span></tt> parser matches
-            single characters. The <tt class="computeroutput"><span class="identifier">char_</span></tt>
-            parser has an associated <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            The <code class="computeroutput"><span class="identifier">char_</span></code> parser matches
+            single characters. The <code class="computeroutput"><span class="identifier">char_</span></code>
+            parser has an associated <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>. This is needed when doing basic operations
             such as inhibiting case sensitivity and dealing with character ranges.
           </p>
 <p>
-            There are various forms of <tt class="computeroutput"><span class="identifier">char_</span></tt>.
+            There are various forms of <code class="computeroutput"><span class="identifier">char_</span></code>.
           </p>
 <a name="spirit.qi.reference.char.char.char_"></a><h6>
-<a name="id468877"></a>
-            <a href="char.html#spirit.qi.reference.char.char.char_">char_</a>
+<a name="id1192948"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.char_">char_</a>
           </h6>
 <p>
-            The no argument form of <tt class="computeroutput"><span class="identifier">char_</span></tt>
-            matches any character in the assocaiated <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            The no argument form of <code class="computeroutput"><span class="identifier">char_</span></code>
+            matches any character in the assocaiated <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>.
           </p>
 <pre class="programlisting"><span class="identifier">char_</span>               <span class="comment">// matches any character
 </span></pre>
 <a name="spirit.qi.reference.char.char.char__ch_"></a><h6>
-<a name="id468946"></a>
-            <a href="char.html#spirit.qi.reference.char.char.char__ch_">char_(ch)</a>
+<a name="id1192989"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.char__ch_">char_(ch)</a>
           </h6>
 <p>
-            The single argument form of <tt class="computeroutput"><span class="identifier">char_</span></tt>
+            The single argument form of <code class="computeroutput"><span class="identifier">char_</span></code>
             (with a character argument) matches the supplied character.
           </p>
-<pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="char">'x'</span><span class="special">)</span>          <span class="comment">// matches `x`
-</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">L</span><span class="char">'x'</span><span class="special">)</span>         <span class="comment">// matches L`x`
-</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// matches `x` (a char)
+<pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="char">'x'</span><span class="special">)</span>          <span class="comment">// matches 'x'
+</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">L</span><span class="char">'x'</span><span class="special">)</span>         <span class="comment">// matches L'x'
+</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// matches x (a char)
 </span></pre>
 <a name="spirit.qi.reference.char.char.char__first__last_"></a><h6>
-<a name="id469077"></a>
-            <a href="char.html#spirit.qi.reference.char.char.char__first__last_">char_(first,
+<a name="id1193077"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.char__first__last_">char_(first,
             last)</a>
           </h6>
 <p>
-            <tt class="computeroutput"><span class="identifier">char_</span></tt> with two arguments,
+            <code class="computeroutput"><span class="identifier">char_</span></code> with two arguments,
             matches a range of characters.
           </p>
 <pre class="programlisting"><span class="identifier">char_</span><span class="special">(</span><span class="char">'a'</span><span class="special">,</span><span class="char">'z'</span><span class="special">)</span>      <span class="comment">// alphabetic characters
@@ -84,36 +79,36 @@
             A range of characters is created from a low-high character pair. Such
             a parser matches a single character that is in the range, including both
             endpoints. Note, the first character must be <span class="emphasis"><em>before</em></span>
-            the second, according to the underlying <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            the second, according to the underlying <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>.
           </p>
 <p>
             Character mapping is inherently platform dependent. It is not guaranteed
-            in the standard for example that <tt class="computeroutput"><span class="char">'A'</span>
-            <span class="special">&lt;</span> <span class="char">'Z'</span></tt>,
-            that is why in Spirit2, we purposely attach a specific <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-            Encoding Namespace</a> (such as ASCII, ISO-8859-1) to the <tt class="computeroutput"><span class="identifier">char_</span></tt> parser to eliminate such ambiguities.
+            in the standard for example that <code class="computeroutput"><span class="char">'A'</span>
+            <span class="special">&lt;</span> <span class="char">'Z'</span></code>,
+            that is why in Spirit2, we purposely attach a specific <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            Encoding Namespace</a> (such as ASCII, ISO-8859-1) to the <code class="computeroutput"><span class="identifier">char_</span></code> parser to eliminate such ambiguities.
           </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
-              <span class="bold"><b>Sparse bit vectors</b></span>
+              <span class="bold"><strong>Sparse bit vectors</strong></span>
             </p>
 <p>
               To accomodate 16/32 and 64 bit characters, the char-set statically
-              switches from a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">bitset</span></tt>
+              switches from a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">bitset</span></code>
               implementation when the character type is not greater than 8 bits,
               to a sparse bit/boolean set which uses a sorted vector of disjoint
-              ranges (<tt class="computeroutput"><span class="identifier">range_run</span></tt>).
+              ranges (<code class="computeroutput"><span class="identifier">range_run</span></code>).
               The set is constructed from ranges such that adjacent or overlapping
               ranges are coalesced.
             </p>
 <p>
-              <tt class="computeroutput"><span class="identifier">range_runs</span></tt> are very
+              <code class="computeroutput"><span class="identifier">range_runs</span></code> are very
               space-economical in situations where there are lots of ranges and a
               few individual disjoint values. Searching is O(log n) where n is the
               number of ranges.
@@ -121,11 +116,11 @@
 </td></tr>
 </table></div>
 <a name="spirit.qi.reference.char.char.char__def_"></a><h6>
-<a name="id469359"></a>
-            <a href="char.html#spirit.qi.reference.char.char.char__def_">char_(def)</a>
+<a name="id1193257"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.char__def_">char_(def)</a>
           </h6>
 <p>
-            Lastly, when given a string (a plain C string, a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></tt>,
+            Lastly, when given a string (a plain C string, a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></code>,
             etc.), the string is regarded as a char-set definition string following
             a syntax that resembles posix style regular expression character sets
             (except that double quotes delimit the set elements instead of square
@@ -137,29 +132,29 @@
 </span><span class="identifier">char_</span><span class="special">(</span><span class="string">"\x7f\x7e"</span><span class="special">)</span>   <span class="comment">// Hexadecimal 0x7F and 0x7E
 </span></pre>
 <a name="spirit.qi.reference.char.char.lit_ch_"></a><h6>
-<a name="id469522"></a>
-            <a href="char.html#spirit.qi.reference.char.char.lit_ch_">lit(ch)</a>
+<a name="id1193370"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.lit_ch_">lit(ch)</a>
           </h6>
 <p>
-            <tt class="computeroutput"><span class="identifier">lit</span></tt>, when passed a single
-            character, behaves like the single argument <tt class="computeroutput"><span class="identifier">char_</span></tt>
-            except that <tt class="computeroutput"><span class="identifier">lit</span></tt> does
-            not synthesize an attribute. A plain <tt class="computeroutput"><span class="keyword">char</span></tt>
-            or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt> is equivalent
-            to a <tt class="computeroutput"><span class="identifier">lit</span></tt>.
+            <code class="computeroutput"><span class="identifier">lit</span></code>, when passed a single
+            character, behaves like the single argument <code class="computeroutput"><span class="identifier">char_</span></code>
+            except that <code class="computeroutput"><span class="identifier">lit</span></code> does
+            not synthesize an attribute. A plain <code class="computeroutput"><span class="keyword">char</span></code>
+            or <code class="computeroutput"><span class="keyword">wchar_t</span></code> is equivalent
+            to a <code class="computeroutput"><span class="identifier">lit</span></code>.
           </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              <tt class="computeroutput"><span class="identifier">lit</span></tt> is reused by both
-              the <a href="../string/string.html" title=" String (string, lit)">string parsers</a>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">lit</span></code> is reused by both
+              the <a class="link" href="../string/string.html" title="String (string, lit)">string parsers</a>
               and the char parsers. In general, a char parser is created when you
               pass in a character and a string parser is created when you pass in
               a string. The exception is when you pass a single element literal string,
-              e.g. <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"x"</span><span class="special">)</span></tt>.
+              e.g. <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"x"</span><span class="special">)</span></code>.
               In this case, we optimize this to create a char parser instead of a
               string parser.
             </p></td></tr>
@@ -173,93 +168,99 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="comment">// c is a char
 </span></pre>
 <a name="spirit.qi.reference.char.char.header"></a><h6>
-<a name="id469770"></a>
-            <a href="char.html#spirit.qi.reference.char.char.header">Header</a>
+<a name="id1193533"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/char/char.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">qi_char</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.char.char.namespace"></a><h6>
-<a name="id469872"></a>
-            <a href="char.html#spirit.qi.reference.char.char.namespace">Namespace</a>
+<a name="id1193601"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
+                  </p>
+                  </th></tr></thead>
 <tbody>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
-                    boost::spirit::qi::lit</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
-                  </p></td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
+                    boost::spirit::qi::lit</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td></tr>
 </tbody>
 </table></div>
 <p>
-            In the table above, <tt class="computeroutput"><span class="identifier">ns</span></tt>
-            is a <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+            In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
+            is a <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
             Encoding Namespace</a>.
           </p>
 <a name="spirit.qi.reference.char.char.model_of"></a><h6>
-<a name="id470034"></a>
-            <a href="char.html#spirit.qi.reference.char.char.model_of">Model of</a>
+<a name="id1194491"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>
+                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">c</span></tt>,
-            <tt class="computeroutput"><span class="identifier">f</span></tt>, <tt class="computeroutput"><span class="identifier">l</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">c</span></code>,
+            <code class="computeroutput"><span class="identifier">f</span></code>, <code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
-                A literal char, e.g. <tt class="computeroutput"><span class="char">'x'</span></tt>,
-                <tt class="computeroutput"><span class="identifier">L</span><span class="char">'x'</span></tt>
-                or anything that can be converted to a <tt class="computeroutput"><span class="keyword">char</span></tt>
-                or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt>, or a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
-                that evaluates to anything that can be converted to a <tt class="computeroutput"><span class="keyword">char</span></tt> or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt>.
+                A literal char, e.g. <code class="computeroutput"><span class="char">'x'</span></code>,
+                <code class="computeroutput"><span class="identifier">L</span><span class="char">'x'</span></code>
+                or anything that can be converted to a <code class="computeroutput"><span class="keyword">char</span></code>
+                or <code class="computeroutput"><span class="keyword">wchar_t</span></code>, or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
+                that evaluates to anything that can be converted to a <code class="computeroutput"><span class="keyword">char</span></code> or <code class="computeroutput"><span class="keyword">wchar_t</span></code>.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">ns</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
 <dd><p>
-                A <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                A <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
                 Encoding Namespace</a>.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">cs</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">cs</span></code></span></dt>
 <dd><p>
-                A <a href="../basics.html#spirit.qi.reference.basics.string">String</a>
-                or a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a <a href="../basics.html#spirit.qi.reference.basics.string">String</a>
+                A <a class="link" href="../basics.html#spirit.qi.reference.basics.string">String</a>
+                or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a <a class="link" href="../basics.html#spirit.qi.reference.basics.string">String</a>
                 that specifies a char-set definition string following a syntax that
                 resembles posix style regular expression character sets (except the
-                square brackets and the negation <tt class="computeroutput"><span class="special">^</span></tt>
+                square brackets and the negation <code class="computeroutput"><span class="special">^</span></code>
                 character).
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">cp</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">cp</span></code></span></dt>
 <dd><p>
                 A char parser, a char range parser or a char set parser.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.char.char.expression_semantics"></a><h6>
-<a name="id470350"></a>
-            <a href="char.html#spirit.qi.reference.char.char.expression_semantics">Expression
+<a name="id1194698"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>.
+            is not defined in <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -267,82 +268,114 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">c</span></tt>
-                  </p></td>
-<td><p>
-                    Create char parser from a char, <tt class="computeroutput"><span class="identifier">c</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">c</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Create char parser from a char, <code class="computeroutput"><span class="identifier">c</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Create a char parser from a char, <tt class="computeroutput"><span class="identifier">c</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Create a char parser from a char, <code class="computeroutput"><span class="identifier">c</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
-                  </p></td>
-<td><p>
-                    Create a char parser that matches any character in the <tt class="computeroutput"><span class="identifier">ns</span></tt> encoding.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Create a char parser that matches any character in the <code class="computeroutput"><span class="identifier">ns</span></code> encoding.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Create a char parser with <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                    encoding from a char, <tt class="computeroutput"><span class="identifier">c</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Create a char parser with <code class="computeroutput"><span class="identifier">ns</span></code>
+                    encoding from a char, <code class="computeroutput"><span class="identifier">c</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span>
-                    <span class="identifier">l</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span>
+                    <span class="identifier">l</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Create a char-range parser that matches characters from range
-                    (<tt class="computeroutput"><span class="identifier">f</span></tt> to <tt class="computeroutput"><span class="identifier">l</span></tt>, inclusive) with <tt class="computeroutput"><span class="identifier">ns</span></tt> encoding.
-                  </p></td>
+                    (<code class="computeroutput"><span class="identifier">f</span></code> to <code class="computeroutput"><span class="identifier">l</span></code>, inclusive) with <code class="computeroutput"><span class="identifier">ns</span></code> encoding.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">cs</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Create a char-set parser with <tt class="computeroutput"><span class="identifier">ns</span></tt>
-                    encoding from a char-set definition string, <tt class="computeroutput"><span class="identifier">cs</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">cs</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Create a char-set parser with <code class="computeroutput"><span class="identifier">ns</span></code>
+                    encoding from a char-set definition string, <code class="computeroutput"><span class="identifier">cs</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">~</span><span class="identifier">cp</span></tt>
-                  </p></td>
-<td><p>
-                    Negate <tt class="computeroutput"><span class="identifier">cp</span></tt>. The
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">~</span><span class="identifier">cp</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Negate <code class="computeroutput"><span class="identifier">cp</span></code>. The
                     result is a negated char parser that matches any character in
-                    the <tt class="computeroutput"><span class="identifier">ns</span></tt> encoding
-                    except the characters matched by <tt class="computeroutput"><span class="identifier">cp</span></tt>.
-                  </p></td>
+                    the <code class="computeroutput"><span class="identifier">ns</span></code> encoding
+                    except the characters matched by <code class="computeroutput"><span class="identifier">cp</span></code>.
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.char.char.attributes"></a><h6>
-<a name="id470910"></a>
-            <a href="char.html#spirit.qi.reference.char.char.attributes">Attributes</a>
+<a name="id1195104"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -350,100 +383,132 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">c</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt> or if
-                    <tt class="computeroutput"><span class="identifier">c</span></tt> is a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>,
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">c</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code> or if
+                    <code class="computeroutput"><span class="identifier">c</span></code> is a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>,
                     the character type returned by invoking it.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt> or if
-                    <tt class="computeroutput"><span class="identifier">c</span></tt> is a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>,
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code> or if
+                    <code class="computeroutput"><span class="identifier">c</span></code> is a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>,
                     the character type returned by invoking it.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></tt>
-                  </p></td>
-<td><p>
-                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span>
-                    <span class="identifier">l</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">f</span><span class="special">,</span>
+                    <span class="identifier">l</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">cs</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    The character type of the <a href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
-                    Encoding Namespace</a>, <tt class="computeroutput"><span class="identifier">ns</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">cs</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The character type of the <a class="link" href="../basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+                    Encoding Namespace</a>, <code class="computeroutput"><span class="identifier">ns</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">~</span><span class="identifier">cp</span></tt>
-                  </p></td>
-<td><p>
-                    The attribute of <tt class="computeroutput"><span class="identifier">cp</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">~</span><span class="identifier">cp</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The attribute of <code class="computeroutput"><span class="identifier">cp</span></code>.
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.char.char.complexity"></a><h6>
-<a name="id471452"></a>
-            <a href="char.html#spirit.qi.reference.char.char.complexity">Complexity</a>
+<a name="id1195497"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <span class="bold"><b>O(N)</b></span>, except for char-sets with
-                16-bit (or more) characters (e.g. <tt class="computeroutput"><span class="keyword">wchar_t</span></tt>).
-                These have <span class="bold"><b>O(log N)</b></span> complexity,
+                <span class="bold"><strong>O(N)</strong></span>, except for char-sets with
+                16-bit (or more) characters (e.g. <code class="computeroutput"><span class="keyword">wchar_t</span></code>).
+                These have <span class="bold"><strong>O(log N)</strong></span> complexity,
                 where N is the number of distinct character ranges in the set.
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.char.char.example"></a><h6>
-<a name="id471514"></a>
-            <a href="char.html#spirit.qi.reference.char.char.example">Example</a>
+<a name="id1195538"></a>
+            <a class="link" href="char.html#spirit.qi.reference.char.char.example">Example</a>
           </h6>
 <p>
             Some using declarations:

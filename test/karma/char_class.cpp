@@ -48,6 +48,55 @@ int main()
 
     {
         using namespace boost::spirit::ascii;
+        BOOST_TEST(!test("", ~alpha, 'a'));
+        BOOST_TEST(test("1", ~alpha, '1'));
+        BOOST_TEST(!test("", ~blank, ' '));
+        BOOST_TEST(test("x", ~blank, 'x'));
+        BOOST_TEST(!test("", ~digit, '1'));
+        BOOST_TEST(test("x", ~digit, 'x'));
+        BOOST_TEST(!test("", ~lower, 'a'));
+        BOOST_TEST(test("A", ~lower, 'A'));
+        BOOST_TEST(!test("", ~punct, '!'));
+        BOOST_TEST(test("x", ~punct, 'x'));
+        BOOST_TEST(!test("", ~space));
+        BOOST_TEST(!test("", ~space, ' '));
+        BOOST_TEST(!test("", ~space, '\r'));
+        BOOST_TEST(!test("", ~space, '\t'));
+        BOOST_TEST(!test("", ~upper, 'A'));
+        BOOST_TEST(test("a", ~upper, 'a'));
+        BOOST_TEST(!test("", ~xdigit, 'A'));
+        BOOST_TEST(!test("", ~xdigit, '0'));
+        BOOST_TEST(!test("", ~xdigit, 'f'));
+        BOOST_TEST(test("g", ~xdigit, 'g'));
+    }
+
+    {
+        using namespace boost::spirit::ascii;
+        BOOST_TEST(test("a", ~~alpha, 'a'));
+        BOOST_TEST(!test("", ~~alpha, '1'));
+        BOOST_TEST(test(" ", ~~blank, ' '));
+        BOOST_TEST(!test("", ~~blank, 'x'));
+        BOOST_TEST(test("1", ~~digit, '1'));
+        BOOST_TEST(!test("", ~~digit, 'x'));
+        BOOST_TEST(test("a", ~~lower, 'a'));
+        BOOST_TEST(!test("", ~~lower, 'A'));
+        BOOST_TEST(test("!", ~~punct, '!'));
+        BOOST_TEST(!test("", ~~punct, 'x'));
+        BOOST_TEST(test(" ", ~~space));
+        BOOST_TEST(test(" ", ~~space, ' '));
+        BOOST_TEST(!test("", ~~space, '\n'));
+        BOOST_TEST(test("\r", ~~space, '\r'));
+        BOOST_TEST(test("\t", ~~space, '\t'));
+        BOOST_TEST(test("A", ~~upper, 'A'));
+        BOOST_TEST(!test("", ~~upper, 'a'));
+        BOOST_TEST(test("A", ~~xdigit, 'A'));
+        BOOST_TEST(test("0", ~~xdigit, '0'));
+        BOOST_TEST(test("f", ~~xdigit, 'f'));
+        BOOST_TEST(!test("", ~~xdigit, 'g'));
+    }
+
+    {
+        using namespace boost::spirit::ascii;
         BOOST_TEST(test("a", lower[alpha], 'a'));
         BOOST_TEST(!test("", lower[alpha], 'A'));
         BOOST_TEST(!test("", lower[alpha], '1'));

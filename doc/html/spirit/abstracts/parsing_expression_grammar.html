@@ -1,14 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Parsing
-      Expression Grammar</title>
+<title>Parsing Expression Grammar</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.1">
 <link rel="up" href="../abstracts.html" title="Abstracts">
-<link rel="previous" href="syntax_diagram.html" title="Syntax Diagram">
-<link rel="next" href="../qi.html" title=" Qi - Writing Parsers">
+<link rel="prev" href="syntax_diagram.html" title="Syntax Diagram">
+<link rel="next" href="../qi.html" title="Qi - Writing Parsers">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -23,20 +22,16 @@
 <div class="spirit-nav">
 <a accesskey="p" href="syntax_diagram.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../qi.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h3 class="title">
-<a name="spirit.abstracts.parsing_expression_grammar"></a><a href="parsing_expression_grammar.html" title="Parsing
-      Expression Grammar">Parsing
+<div class="section" title="Parsing Expression Grammar">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="spirit.abstracts.parsing_expression_grammar"></a><a class="link" href="parsing_expression_grammar.html" title="Parsing Expression Grammar">Parsing
       Expression Grammar</a>
-</h3></div></div>
-<div></div>
-</div>
+</h3></div></div></div>
 <p>
         Parsing Expression Grammars (PEG)
-        <sup>[<a name="id415249" href="#ftn.id415249">5</a>]</sup>
+        <sup>[<a name="id1140724" href="#ftn.id1140724" class="footnote">5</a>]</sup>
         are a derivative of Extended Backus-Naur Form (EBNF)
-        <sup>[<a name="id415266" href="#ftn.id415266">6</a>]</sup>
+        <sup>[<a name="id1140736" href="#ftn.id1140736" class="footnote">6</a>]</sup>
         with a different interpretation, designed to represent a recursive descent
         parser. A PEG can be directly represented as a recursive-descent parser.
       </p>
@@ -46,24 +41,24 @@
         PEGs have an exact interpretation. There is only one valid parse tree (see
         Abstract Syntax Tree) for each PEG grammar.
       </p>
-<a name="spirit.abstracts.parsing_expression_grammar.sequences"></a><h4>
-<a name="id415303"></a>
-        <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
-      </h4>
+<a name="spirit.abstracts.parsing_expression_grammar.sequences"></a><h5>
+<a name="id1140757"></a>
+        <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
+      </h5>
 <p>
         Sequences are represented by juxtaposition like in EBNF:
       </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="identifier">b</span>
 </pre>
 <p>
-        The PEG expression above states that, in order for this to succeed, <tt class="computeroutput"><span class="identifier">a</span></tt> must follow <tt class="computeroutput"><span class="identifier">b</span></tt>.
+        The PEG expression above states that, in order for this to succeed, <code class="computeroutput"><span class="identifier">a</span></code> must follow <code class="computeroutput"><span class="identifier">b</span></code>.
         Here's the syntax diagram:
       </p>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../images/sequence.png" alt="sequence"></span>
+            <span class="inlinemediaobject"><img src="../../../../images/sequence.png" alt="sequence"></span>
           </p>
 <p>
         </p>
@@ -74,66 +69,66 @@
 <pre class="programlisting"><span class="char">'x'</span> <span class="identifier">digit</span>
 </pre>
 <p>
-        which means the character <tt class="computeroutput"><span class="identifier">x</span></tt>
+        which means the character <code class="computeroutput"><span class="identifier">x</span></code>
         must be followed by a digit.
       </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-          In Spirit.Qi, we use the <tt class="computeroutput"><span class="special">&gt;&gt;</span></tt>
+<tr><td align="left" valign="top"><p>
+          In Spirit.Qi, we use the <code class="computeroutput"><span class="special">&gt;&gt;</span></code>
           for sequences since C++ does not allow juxtaposition
         </p></td></tr>
 </table></div>
-<a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a><h4>
-<a name="id415453"></a>
-        <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
-      </h4>
+<a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a><h5>
+<a name="id1140874"></a>
+        <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
+      </h5>
 <p>
         Alternatives are represented in PEG using the slash:
       </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">/</span> <span class="identifier">b</span>
 </pre>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-          In Spirit.Qi, we use the <tt class="computeroutput"><span class="special">|</span></tt>
+<tr><td align="left" valign="top"><p>
+          In Spirit.Qi, we use the <code class="computeroutput"><span class="special">|</span></code>
           for alternatives just as in EBNF
         </p></td></tr>
 </table></div>
 <p>
         Alternatives allow for choices. The expression above reads: try to match
-        <tt class="computeroutput"><span class="identifier">a</span></tt>. If <tt class="computeroutput"><span class="identifier">a</span></tt>
-        succeeds, success, if not try to match <tt class="computeroutput"><span class="identifier">b</span></tt>.
+        <code class="computeroutput"><span class="identifier">a</span></code>. If <code class="computeroutput"><span class="identifier">a</span></code>
+        succeeds, success, if not try to match <code class="computeroutput"><span class="identifier">b</span></code>.
         This is a bit of a deviation from the usual EBNF interpretation where you
-        simply match <tt class="computeroutput"><span class="identifier">a</span></tt> <span class="bold"><b>or</b></span> <tt class="computeroutput"><span class="identifier">b</span></tt>.
+        simply match <code class="computeroutput"><span class="identifier">a</span></code> <span class="bold"><strong>or</strong></span> <code class="computeroutput"><span class="identifier">b</span></code>.
         Here's the syntax diagram:
       </p>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../images/alternative.png" alt="alternative"></span>
+            <span class="inlinemediaobject"><img src="../../../../images/alternative.png" alt="alternative"></span>
           </p>
 <p>
         </p>
 </blockquote></div>
 <p>
         PEGs allow for ambiguity in the alternatives. In the expression above, both
-        <tt class="computeroutput"><span class="identifier">a</span></tt> or <tt class="computeroutput"><span class="identifier">b</span></tt>
+        <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code>
         can both match an input string. However, only the first matching alternative
         is valid. As noted, there can only be one valid parse tree ($$$ explain more
         about this $$$).
       </p>
-<a name="spirit.abstracts.parsing_expression_grammar.loops"></a><h4>
-<a name="id415639"></a>
-        <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
-      </h4>
+<a name="spirit.abstracts.parsing_expression_grammar.loops"></a><h5>
+<a name="id1141013"></a>
+        <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
+      </h5>
 <p>
         Again, like EBNF, PEG uses the regular-expression Kleene star and the plus
         loops:
@@ -141,12 +136,12 @@
 <pre class="programlisting"><span class="identifier">a</span><span class="special">*</span>
 <span class="identifier">a</span><span class="special">+</span>
 </pre>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
+<tr><td align="left" valign="top"><p>
           Spirit.Qi uses the prefix star and plus since there is no postfix star
           or plus in C++.
         </p></td></tr>
@@ -158,7 +153,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../images/kleene.png" alt="kleene"></span>
+            <span class="inlinemediaobject"><img src="../../../../images/kleene.png" alt="kleene"></span>
           </p>
 <p>
         </p>
@@ -167,14 +162,14 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../images/plus.png" alt="plus"></span>
+            <span class="inlinemediaobject"><img src="../../../../images/plus.png" alt="plus"></span>
           </p>
 <p>
         </p>
 </blockquote></div>
 <p>
-        The first, called the Kleene star, matches zero or more of its subject <tt class="computeroutput"><span class="identifier">a</span></tt>. The second, plus, matches one ore more
-        of its subject <tt class="computeroutput"><span class="identifier">a</span></tt>.
+        The first, called the Kleene star, matches zero or more of its subject <code class="computeroutput"><span class="identifier">a</span></code>. The second, plus, matches one ore more
+        of its subject <code class="computeroutput"><span class="identifier">a</span></code>.
       </p>
 <p>
         Unlike EBNF, PEGs have greedy loops. It will match as much as it can until
@@ -193,10 +188,10 @@
         a major gotcha. PEG provides a couple of other mechanisms to circumvent this.
         We will see more of these other mechanisms shortly.
       </p>
-<a name="spirit.abstracts.parsing_expression_grammar.difference"></a><h4>
-<a name="id415835"></a>
-        <a href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
-      </h4>
+<a name="spirit.abstracts.parsing_expression_grammar.difference"></a><h5>
+<a name="id1141154"></a>
+        <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
+      </h5>
 <p>
         In certain cases, you may want to restrict a certain expression. You can
         think of a PEG expression as a match for a potentially infinite set of strings.
@@ -205,16 +200,16 @@
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span>
 </pre>
 <p>
-        The expression reads: match <tt class="computeroutput"><span class="identifier">a</span></tt>
-        but not <tt class="computeroutput"><span class="identifier">b</span></tt>.
+        The expression reads: match <code class="computeroutput"><span class="identifier">a</span></code>
+        but not <code class="computeroutput"><span class="identifier">b</span></code>.
       </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id415249" href="#id415249">5</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id1140724" href="#id1140724" class="para">5</a>] </sup>
             Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
             Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
           </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id415266" href="#id415266">6</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id1140736" href="#id1140736" class="para">6</a>] </sup>
             Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
           </p></div>
 </div>

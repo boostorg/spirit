@@ -78,5 +78,16 @@ These test the generators with one or more user supplied attributes.
 [reference_karma_test_attr]
 [reference_karma_test_attr2]
 
+[heading Models]
+
+Predefined models include:
+
+* any literal string, e.g. "Hello, World", 
+* a pointer/reference to a null-terminated array of characters
+* a `std::basic_string<Char>`
+
+The namespace `boost::spirit::traits` is open for users to provide their
+own specializations.
+
 [endsect]
 

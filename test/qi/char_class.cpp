@@ -51,6 +51,32 @@ main()
     }
 
     {
+        using namespace boost::spirit::ascii;
+        BOOST_TEST(!test("1", ~alnum));
+        BOOST_TEST(test(" ", ~alnum));
+        BOOST_TEST(test("1", ~alpha));
+        BOOST_TEST(!test("x", ~alpha));
+        BOOST_TEST(!test(" ", ~blank));
+        BOOST_TEST(test("x", ~blank));
+        BOOST_TEST(!test("1", ~digit));
+        BOOST_TEST(test("x", ~digit));
+        BOOST_TEST(!test("a", ~lower));
+        BOOST_TEST(test("A", ~lower));
+        BOOST_TEST(!test("!", ~punct));
+        BOOST_TEST(test("x", ~punct));
+        BOOST_TEST(!test(" ", ~space));
+        BOOST_TEST(!test("\n", ~space));
+        BOOST_TEST(!test("\r", ~space));
+        BOOST_TEST(!test("\t", ~space));
+        BOOST_TEST(!test("A", ~upper));
+        BOOST_TEST(test("a", ~upper));
+        BOOST_TEST(!test("A", ~xdigit));
+        BOOST_TEST(!test("0", ~xdigit));
+        BOOST_TEST(!test("f", ~xdigit));
+        BOOST_TEST(test("g", ~xdigit));
+    }
+
+    {
         // we use the hoisted qi namespace this time
         using namespace boost::spirit::qi::iso8859_1; 
         BOOST_TEST(test("1", alnum));

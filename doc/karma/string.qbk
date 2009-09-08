@@ -15,19 +15,25 @@ character sequences. It includes variants of the `string` generator.
 
 The string generators described in this section are:
 
-[table
-    [[Expression]           [Description]]
-    [[`str`]                [Generates `str`]]
-    [[`lit(str)`]           [Generates `str`, same as `boost::spirit::lit`]]
-    [[`ns::string`]         [Generates the mandatory attribute as a string
-                             interpreted in the character set defined by `ns`]]
-    [[`ns::string(str)`]    [Generates `str` as a character interpreted in the 
-                             character set defined by `ns`, if an attribute is 
-                             supplied it must match]]
-]
+The `string` generator emits a string of characters. The `string` generator
+is implicitly verbatim: the `delimit` parser is not applied in between
+characters of the string. The `string` generator has an assocaiated
+__karma_char_encoding_namespace__. This is needed when doing basic operations
+such as forcing lower or upper case. Examples:
 
-In the table above, `ns` is a __karma_char_encoding_namespace__ used by the 
-corresponding string generator. 
+    string("Hello")
+    string(L"Hello")
+    string(s)         // s is a std::string
+
+`lit`, like `string`, also emits a string of characters. The main
+difference is that `lit` does not consumes an attribute. A plain
+string like `"hello"` or a `std::basic_string` is equivalent to a `lit`.
+Examples:
+
+    "Hello"
+    lit("Hello")
+    lit(L"Hello")
+    lit(s)            // s is a std::string
 
 [heading Header]
 
@@ -36,15 +42,27 @@ corresponding string generator.
 
 Also, see __include_structure__.
 
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::lit // alias: boost::spirit::karma::lit`]]
+    [[`ns::string`]]
+]
+
+In the table above, `ns` is a __karma_char_encoding_namespace__ used by the 
+corresponding string generator. 
+
 [heading Model of]
 
 [:__primitive_generator_concept__]
 
 [variablelist Notation
-    [[`str`]      [Character-class specific string (See __char_class_types__),
+    [[`s`]        [Character-class specific string (See __char_class_types__),
                    or a __karma_lazy_argument__ that evaluates to a 
                    character-class specific string value]]
-    [[`ns`]       [A __char_encoding_namespace__.]]]
+    [[`S`]        [The type of a character-clas specific string `s`.]]
+    [[`ns`]       [A __karma_char_encoding_namespace__.]]]
 
 [heading Expression Semantics]
 
@@ -53,17 +71,17 @@ not defined in __primitive_generator_concept__.
 
 [table
     [[Expression]           [Description]]
-    [[`str`]                [Generate the string literal `str`. This generator 
+    [[`s`]                  [Generate the string literal `s`. This generator 
                              never fails (except if the underlying output stream 
                              reports an error).]]
-    [[`lit(str)`]           [Generate the string literal `str`. This generator 
+    [[`lit(s)`]             [Generate the string literal `s`. This generator 
                              never fails (except if the underlying output stream 
                              reports an error).]]
     [[`ns::string`]         [Generate the string provided by a mandatory 
                              attribute interpreted in the character set defined 
                              by `ns`. This generator never fails (except if the 
                              underlying output stream reports an error).]]
-    [[`ns::string(str)`]    [Generate the string `str` as provided by the 
+    [[`ns::string(s)`]      [Generate the string `s` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
@@ -72,7 +90,7 @@ not defined in __primitive_generator_concept__.
                              generator fails and does not generate any output.]]
 ]
 
-[note   The generators `lit(str)` and `string(str)` can be initialized either 
+[note   The generators `lit(s)` and `string(s)` can be initialized either 
         using a string literal value (i.e. `"abc"`), or using a 
         `std::basic_string<char_type, ...>`, where `char_type` is the required
         value type of the underlying character sequence.]
@@ -81,12 +99,12 @@ not defined in __primitive_generator_concept__.
 
 [table
     [[Expression]           [Attribute]]
-    [[`str`]                [__unused__]]
-    [[`lit(str)`]           [__unused__]]
-    [[`ns::string`]         [`Str`, attribute is mandatory (otherwise compilation 
+    [[`s`]                  [__unused__]]
+    [[`lit(s)`]             [__unused__]]
+    [[`ns::string`]         [`S`, attribute is mandatory (otherwise compilation 
                              will fail)]]
-    [[`ns::string(str)`]    [`Str`, attribute is optional, if it is supplied, the 
-                             generator compares the attribute with `str` and 
+    [[`ns::string(s)`]      [`S`, attribute is optional, if it is supplied, the 
+                             generator compares the attribute with `s` and 
                              succeeds only if both are equal, failing otherwise]]
 ]
 

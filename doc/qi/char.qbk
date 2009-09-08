@@ -43,9 +43,9 @@ __char_encoding_namespace__.
 The single argument form of `char_` (with a character argument) matches
 the supplied character. 
 
-    char_('x')          // matches `x`
-    char_(L'x')         // matches L`x`
-    char_(x)            // matches `x` (a char)
+    char_('x')          // matches 'x'
+    char_(L'x')         // matches L'x'
+    char_(x)            // matches x (a char)
 
 [heading char_(first, last)]
 
