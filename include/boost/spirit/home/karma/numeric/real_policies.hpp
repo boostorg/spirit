@@ -14,7 +14,6 @@
 #include <boost/math/special_functions/fpclassify.hpp>
 
 #include <boost/spirit/home/support/char_class.hpp>
-#include <boost/spirit/home/support/detail/scoped_enum_emulation.hpp>
 #include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
@@ -64,14 +63,15 @@ namespace boost { namespace spirit { namespace karma
         //  Specifies, which representation type to use during output 
         //  generation.
         ///////////////////////////////////////////////////////////////////////
-        BOOST_SCOPED_ENUM_START(fmtflags)
+        struct fmtflags
         {
-            scientific = 0,   // Generate floating-point values in scientific 
-                              // format (with an exponent field).
-            fixed = 1         // Generate floating-point values in fixed-point 
-                              // format (with no exponent field). 
+            enum {
+                scientific = 0,   // Generate floating-point values in scientific 
+                                  // format (with an exponent field).
+                fixed = 1         // Generate floating-point values in fixed-point 
+                                  // format (with no exponent field). 
+            };
         };
-        BOOST_SCOPED_ENUM_END
 
         ///////////////////////////////////////////////////////////////////////
         //  This is the main function used to generate the output for a 

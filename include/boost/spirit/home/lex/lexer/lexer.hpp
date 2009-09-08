@@ -11,7 +11,6 @@
 #endif
 
 #include <boost/spirit/home/support/info.hpp>
-#include <boost/spirit/home/support/detail/scoped_enum_emulation.hpp>
 #include <boost/spirit/home/qi/skip_over.hpp>
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
@@ -279,13 +278,14 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     //  The match_flags flags are used to influence different matching 
     //  modes of the lexer
-    BOOST_SCOPED_ENUM_START(match_flags) 
+    struct match_flags
     {
-        match_default = 0,          // no flags
-        match_not_dot_newline = 1,  // the regex '.' doesn't match newlines
-        match_icase = 2             // all matching operations are case insensitive
+        enum enum_type {
+            match_default = 0,          // no flags
+            match_not_dot_newline = 1,  // the regex '.' doesn't match newlines
+            match_icase = 2             // all matching operations are case insensitive
+        };
     };
-    BOOST_SCOPED_ENUM_END
 
     ///////////////////////////////////////////////////////////////////////////
     //  This represents a lexer object
