@@ -19,6 +19,7 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
+#include <boost/spirit/home/karma/char/char_generator.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
@@ -97,11 +98,8 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     template <typename CharEncoding, typename Tag>
     struct any_char
-      : primitive_generator<any_char<CharEncoding, Tag> >
+      : char_generator<any_char<CharEncoding, Tag>, CharEncoding, Tag>
     {
-        typedef typename CharEncoding::char_type char_type;
-        typedef CharEncoding char_encoding;
-
         template <typename Context, typename Unused>
         struct attribute
         {
@@ -109,21 +107,17 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // any_char has an attached parameter
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+        template <typename Attribute, typename CharParam, typename Context>
+        bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
-            return karma::detail::generate_to(sink, attr, char_encoding(), Tag()) &&
-                   karma::delimit_out(sink, d);       // always do post-delimiting
+            ch = attr;
+            return true;
         }
 
         // any_char has no attribute attached, it needs to have been
         // initialized from a direct literal
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        static bool generate(OutputIterator&, Context&, Delimiter const&, 
-            unused_type const&)
+        template <typename CharParam, typename Context>
+        bool test(unused_type, CharParam&, Context&) const
         {
             // It is not possible (doesn't make sense) to use char_ without
             // providing any attribute, as the generator doesn't 'know' what
@@ -149,7 +143,8 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     template <typename CharEncoding, typename Tag, bool no_attribute>
     struct literal_char
-      : primitive_generator<literal_char<CharEncoding, Tag, no_attribute> >
+      : char_generator<literal_char<CharEncoding, Tag, no_attribute>
+          , CharEncoding, Tag>
     {
         typedef typename CharEncoding::char_type char_type;
         typedef CharEncoding char_encoding;
@@ -166,28 +161,22 @@ namespace boost { namespace spirit { namespace karma
         // A char_('x') which additionally has an associated attribute emits
         // its immediate literal only if it matches the attribute, otherwise
         // it fails.
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+        // any_char has an attached parameter
+        template <typename Attribute, typename CharParam, typename Context>
+        bool test(Attribute const& attr, CharParam& ch_, Context&) const
         {
             // fail if attribute isn't matched my immediate literal
-            if (attr != ch)
-                return false;
-
-            return karma::detail::generate_to(sink, ch) &&
-                   karma::delimit_out(sink, d);    // always do post-delimiting
+            ch_ = attr;
+            return attr == ch;
         }
 
         // A char_('x') without any associated attribute just emits its 
         // immediate literal
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , unused_type) const
+        template <typename CharParam, typename Context>
+        bool test(unused_type, CharParam& ch_, Context&) const
         {
-            return karma::detail::generate_to(sink, ch) &&
-                   karma::delimit_out(sink, d);    // always do post-delimiting
+            ch_ = ch;
+            return true;
         }
 
         template <typename Context>
@@ -203,7 +192,7 @@ namespace boost { namespace spirit { namespace karma
     // char range generator
     template <typename CharEncoding, typename Tag>
     struct char_range
-      : primitive_generator<char_range<CharEncoding, Tag> >
+      : char_generator<char_range<CharEncoding, Tag>, CharEncoding, Tag>
     {
         typedef typename CharEncoding::char_type char_type;
         typedef CharEncoding char_encoding;
@@ -215,34 +204,21 @@ namespace boost { namespace spirit { namespace karma
 
         // A char_('a', 'z') which has an associated attribute emits it only if 
         // it matches the character range, otherwise it fails.
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+        template <typename Attribute, typename CharParam, typename Context>
+        bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
             // fail if attribute doesn't belong to character range
-            if ((char_type(attr) < from) || (to < char_type(attr)))
-                return false;
-
-            return karma::detail::generate_to(sink, attr) &&
-                   karma::delimit_out(sink, d);    // always do post-delimiting
+            ch = attr;
+            return (from <= char_type(attr)) && (char_type(attr) <= to);
         }
 
         // A char_('a', 'z') without any associated attribute fails compiling
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        bool generate(OutputIterator&, Context&, Delimiter const&
-          , unused_type) const
+        template <typename CharParam, typename Context>
+        bool test(unused_type, CharParam&, Context&) const
         {
             BOOST_SPIRIT_ASSERT_MSG(false
               , char_range_not_usable_without_attribute, ());
             return false;
-        }
-
-        template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context&) const
-        {
-            return !(char_type(ch) < from) && !(to < char_type(ch));
         }
 
         template <typename Context>
@@ -261,7 +237,7 @@ namespace boost { namespace spirit { namespace karma
     // character set generator
     template <typename CharEncoding, typename Tag>
     struct char_set
-      : primitive_generator<char_set<CharEncoding, Tag> >
+      : char_generator<char_set<CharEncoding, Tag>, CharEncoding, Tag>
     {
         typedef typename CharEncoding::char_type char_type;
         typedef CharEncoding char_encoding;
@@ -304,24 +280,17 @@ namespace boost { namespace spirit { namespace karma
 
         // A char_("a-z") which has an associated attribute emits it only if 
         // it matches the character set, otherwise it fails.
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+        template <typename Attribute, typename CharParam, typename Context>
+        bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
             // fail if attribute doesn't belong to character set
-            if (!chset.test(char_type(attr)))
-                return false;
-
-            return karma::detail::generate_to(sink, attr) &&
-                   karma::delimit_out(sink, d);    // always do post-delimiting
+            ch = attr;
+            return chset.test(char_type(attr));
         }
 
         // A char_("a-z") without any associated attribute fails compiling
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        bool generate(OutputIterator&, Context&, Delimiter const&
-          , unused_type) const
+        template <typename CharParam, typename Context>
+        bool test(unused_type, CharParam&, Context&) const
         {
             BOOST_SPIRIT_ASSERT_MSG(false
               , char_set_not_usable_without_attribute, ());

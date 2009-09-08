@@ -51,7 +51,7 @@ namespace boost { namespace spirit { namespace qi
         typedef Char char_type;
         struct char_parser_id;
 
-        // if Char is unused_type, Derived must supply its own attribute
+        // if Attr is unused_type, Derived must supply its own attribute
         // metafunction
         template <typename Context, typename Iterator>
         struct attribute

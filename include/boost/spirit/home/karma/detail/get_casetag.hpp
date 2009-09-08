@@ -21,9 +21,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename Modifiers>
     struct get_casetag<Modifiers, true>
       : mpl::if_<has_modifier<Modifiers, tag::char_code_base<tag::lower> >
-          , tag::lower
-          , tag::upper
-        > {};
+          , tag::lower, tag::upper> {};
 
 }}}}
 

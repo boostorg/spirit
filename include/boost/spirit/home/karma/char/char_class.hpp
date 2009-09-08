@@ -46,9 +46,11 @@ namespace boost { namespace spirit { namespace karma
     //      class
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Tag>
+    template <typename Tag, typename CharEncoding, typename CharClass>
     struct char_class
-      : primitive_generator<char_class<Tag> >
+      : char_generator<
+            char_class<Tag, CharEncoding, CharClass>
+          , CharEncoding, CharClass>
     {
         typedef typename Tag::char_encoding char_encoding;
         typedef typename char_encoding::char_type char_type;
@@ -61,24 +63,18 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // char_class needs an attached attribute
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+        template <typename Attribute, typename CharParam, typename Context>
+        bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
-            using spirit::char_class::classify;
-            if (!classify<char_encoding>::is(classification(), attr))
-                return false;     // allow proper character class only
+            ch = attr;
 
-            return karma::detail::generate_to(sink, attr) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            using spirit::char_class::classify;
+            return classify<char_encoding>::is(classification(), attr);
         }
 
         // char_class shouldn't be used without any associated attribute
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        static bool generate(OutputIterator&, Context&, Delimiter const&
-          , unused_type const&)
+        template <typename CharParam, typename Context>
+        bool test(unused_type, CharParam& ch, Context&) const
         {
             BOOST_SPIRIT_ASSERT_MSG(false
               , char_class_not_usable_without_attribute, ());
@@ -101,7 +97,7 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     template <typename CharEncoding>
     struct any_space
-      : primitive_generator<any_space<CharEncoding> >
+      : char_generator<any_space<CharEncoding>, CharEncoding, tag::space>
     {
         typedef typename CharEncoding::char_type char_type;
         typedef CharEncoding char_encoding;
@@ -113,27 +109,21 @@ namespace boost { namespace spirit { namespace karma
         };
 
         // any_space has an attached parameter
-        template <
-            typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+        template <typename Attribute, typename CharParam, typename Context>
+        bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
-            using spirit::char_class::classify;
-            if (!classify<char_encoding>::is(tag::space(), attr))
-                return false;     // allow whitespace only
+            ch = attr;
 
-            return karma::detail::generate_to(sink, attr) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            using spirit::char_class::classify;
+            return classify<char_encoding>::is(tag::space(), attr);
         }
 
         // any_space has no attribute attached, use single space character
-        template <typename OutputIterator, typename Context, typename Delimiter>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d, 
-            unused_type const&)
+        template <typename CharParam, typename Context>
+        bool test(unused_type, CharParam& ch, Context&) const
         {
-            return karma::detail::generate_to(sink, ' ') &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            ch = ' ';
+            return true;
         }
 
         template <typename Context>
@@ -183,7 +173,13 @@ namespace boost { namespace spirit { namespace karma
           , CharEncoding>
         tag_type;
 
-        typedef char_class<tag_type> result_type;
+        typedef char_class<
+            tag_type
+          , typename spirit::detail::get_encoding<
+                Modifiers, CharEncoding, lower || upper>::type
+          , typename detail::get_casetag<Modifiers, lower || upper>::type
+        > result_type;
+
         result_type operator()(unused_type, unused_type) const
         {
             return result_type();
