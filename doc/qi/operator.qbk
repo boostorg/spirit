@@ -32,12 +32,12 @@ predicate (unary `!`), Optional (`-`), Permutation (`^`), Plus (unary
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:alternative Alternative (`operator|()`)]
+[section:alternative Alternative (`a|b`)]
 
 [heading Description]
 
-The alternative operator, `|`, matches one of two or more operands 
-(`a`, `b`, ... etc.):
+The alternative operator, `a|b`, matches one of two or more operands
+(`a`, `b`, ... etc.): 
 
     a | b | ...
 
@@ -112,14 +112,14 @@ Some using declarations:
 [endsect] [/ Alternative]
 
 [/------------------------------------------------------------------------------]
-[section:and_predicate And Predicate (`operator&()`)]
+[section:and_predicate And Predicate (`&a`)]
 
 [heading Description]
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
 __qi_eps__, syntactic predicates do not consume any input. The /and
-predicate/, `&`, is a positive syntactic predicate that returns a zero
+predicate/, `&a`, is a positive syntactic predicate that returns a zero
 length match only if its predicate matches.
 
 [heading Header]
@@ -168,11 +168,72 @@ See __qi_comp_attr_notation__.
 [endsect] [/ And Predicate]
 
 [/------------------------------------------------------------------------------]
-[section:expect Expectation (`operator>()`)]
+[section:difference Difference (`a-b`)]
 
 [heading Description]
 
-Like the __qi_sequence__, the expectation operator, `>`, parses two or
+The difference operator, `a-b`, is a binary operator that matches the
+first (LHS) operand but not the second (RHS). [footnote Unlike classic
+Spirit, with Spirit2, the expression will always fail if the RHS is a
+successful match regardless if the RHS matches less characters. For
+example, the rule `lit("policeman") - "police"` will always fail to
+match. Spirit2 does not count the matching chars while parsing and there
+is no reliable and fast way to check if the LHS matches more than the
+RHS.]
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/difference.hpp>
+    #include <boost/spirit/include/qi_difference.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__binary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __binary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a - b`]          [Parse `a` but not `b`.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a - b`]
+[``a: A, b: B --> (a - b): A
+a: Unused, b: B --> (a - b): Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity of the difference parser is defined by the sum of the
+complexities of both operands.]
+
+[heading Example]
+
+[reference_difference]
+
+[endsect] [/ Difference]
+
+[/------------------------------------------------------------------------------]
+[section:expect Expectation (`a>b`)]
+
+[heading Description]
+
+Like the __qi_sequence__, the expectation operator, `a>b`, parses two or
 more operands (`a`, `b`, ... etc.), in sequence:
 
     a > b > ...
@@ -258,14 +319,71 @@ Some using declarations:
 [endsect] [/ Expectation]
 
 [/------------------------------------------------------------------------------]
-[section:not_predicate Not Predicate (`operator!()`)]
+[section:kleene Kleene (`*a`)]
+
+[heading Description]
+
+The kleene operator, `*a`, is a unary operator that matches its operand
+zero or more times.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/kleene.hpp>
+    #include <boost/spirit/include/qi_kleene.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`*a`]             [Match `a` zero or more times.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`*a`]
+[``a: A --> *a: vector<A>
+a: Unused --> *a: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the Kleene star is defined by the complexity
+of its subject, `a`, multiplied by the number of repetitions. The
+complexity of the Kleene star itself is O(N), where N is the number
+successful repetitions.]
+
+[heading Example]
+
+[reference_kleene]
+
+[endsect] [/ Kleene]
+
+[/------------------------------------------------------------------------------]
+[section:not_predicate Not Predicate (`!a`)]
 
 [heading Description]
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
 __qi_eps__, syntactic predicates do not consume any input. The /not
-predicate/, `!`, is a negative syntactic predicate that returns a zero
+predicate/, `!a`, is a negative syntactic predicate that returns a zero
 length match only if its predicate fails to match.
 
 [heading Header]
@@ -314,11 +432,11 @@ See __qi_comp_attr_notation__.
 [endsect] [/ Not Predicate]
 
 [/------------------------------------------------------------------------------]
-[section:permutation Permutation (`operator^()`)]
+[section:permutation Permutation (`a^b`)]
 
 [heading Description]
 
-The permutation operator, `^`, matches one or more operands (`a`, `b`,
+The permutation operator, `a^b`, matches one or more operands (`a`, `b`,
 ... etc.) in any order: 
 
     a ^ b ^ ...
@@ -390,7 +508,63 @@ Some using declarations:
 [endsect] [/ Permutation]
 
 [/------------------------------------------------------------------------------]
-[section:sequence Sequence (`operator>>()`)]
+[section:plus Plus (`+a`)]
+
+[heading Description]
+
+The plus operator, `+a`, is a unary operator that matches its operand one
+or more times.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/plus.hpp>
+    #include <boost/spirit/include/qi_plus.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`+a`]             [Match `a` one or more times.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`+a`]
+[``a: A --> +a: vector<A>
+a: Unused --> +a: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the Plus is defined by the complexity of its
+subject, `a`, multiplied by the number of repetitions. The complexity of
+the Plus itself is O(N), where N is the number successful repetitions.]
+
+[heading Example]
+
+[reference_plus]
+
+[endsect] [/ Plus]
+
+[/------------------------------------------------------------------------------]
+[section:sequence Sequence (`a>>b`)]
 
 [heading Description]
 
@@ -459,7 +633,7 @@ Some using declarations:
 [endsect] [/ Sequence]
 
 [/------------------------------------------------------------------------------]
-[section:sequential_or Sequential Or (`operator||()`)]
+[section:sequential_or Sequential Or (`a||b`)]
 
 [heading Description]
 

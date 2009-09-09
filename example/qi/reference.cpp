@@ -743,5 +743,51 @@ main()
         //]
     }
     
+    // difference
+    {
+        //[reference_difference
+        //`Some using declarations:
+        using boost::spirit::ascii::char_;
+        
+        /*`Parse a C/C++ style comment:
+         */
+        test_parser("/*A Comment*/", "/*" >> *(char_ - "*/") >> "*/");
+        //]
+    }
+    
+    // kleene
+    {
+        //[reference_kleene
+        //`Some using declarations:
+        using boost::spirit::qi::int_;
+        
+        /*`Parse a comma separated list of numbers and put them in a vector:
+         */
+        std::vector<int> attr;
+        test_phrase_parser_attr(
+            "111, 222, 333, 444, 555", int_ >> *(',' >> int_), attr);
+        std::cout 
+            << attr[0] << ',' << attr[1] << ',' << attr[2] << ',' 
+            << attr[4] << ',' << attr[5] 
+            << std::endl;
+        //]
+    }
+    
+    // plus
+    {
+        //[reference_plus
+        //`Some using declarations:
+        using boost::spirit::ascii::alpha;
+        using boost::spirit::qi::lexeme;
+
+        /*`Parse one or more strings containing one or more alphabetic 
+            characters and put them in a vector:
+         */
+        std::vector<std::string> attr;
+        test_phrase_parser_attr("yaba daba doo", +lexeme[+alpha], attr);
+        std::cout << attr[0] << ',' << attr[1] << ',' << attr[2] << std::endl;
+        //]
+    }
+    
     return 0;
 }

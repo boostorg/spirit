@@ -2,15 +2,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title> And
-          Predicate (operator&amp;())</title>
+          Predicate (&amp;a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="previous" href="alternative.html" title=" Alternative
-          (operator|())">
-<link rel="next" href="expect.html" title=" Expectation
-          (operator&gt;())">
+          (a|b)">
+<link rel="next" href="difference.html" title=" Difference
+          (a-b)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -23,19 +23,19 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="expect.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="difference.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage">
 <div><div><h5 class="title">
 <a name="spirit.qi.reference.operator.and_predicate"></a><a href="and_predicate.html" title=" And
-          Predicate (operator&amp;())"> And
-          Predicate (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></tt>)</a>
+          Predicate (&amp;a)"> And
+          Predicate (<tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>)</a>
 </h5></div></div>
 <div></div>
 </div>
 <a name="spirit.qi.reference.operator.and_predicate.description"></a><h6>
-<a name="id500454"></a>
+<a name="id500469"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.description">Description</a>
           </h6>
 <p>
@@ -43,11 +43,12 @@
             before evaluating another production. Similar to semantic predicates,
             <a href="../auxiliary/eps.html" title=" Epsilon (eps)"><tt class="computeroutput"><span class="identifier">eps</span></tt></a>,
             syntactic predicates do not consume any input. The <span class="emphasis"><em>and predicate</em></span>,
-            <tt class="computeroutput"><span class="special">&amp;</span></tt>, is a positive syntactic
-            predicate that returns a zero length match only if its predicate matches.
+            <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>,
+            is a positive syntactic predicate that returns a zero length match only
+            if its predicate matches.
           </p>
 <a name="spirit.qi.reference.operator.and_predicate.header"></a><h6>
-<a name="id500523"></a>
+<a name="id500542"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/and_predicate.hpp&gt;
@@ -57,7 +58,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.and_predicate.model_of"></a><h6>
-<a name="id500637"></a>
+<a name="id500656"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.model_of">Model
             of</a>
           </h6>
@@ -80,7 +81,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.and_predicate.expression_semantics"></a><h6>
-<a name="id500738"></a>
+<a name="id500757"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -112,7 +113,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.and_predicate.attributes"></a><h6>
-<a name="id500869"></a>
+<a name="id500888"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.attributes">Attributes</a>
           </h6>
 <p>
@@ -142,7 +143,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.and_predicate.complexity"></a><h6>
-<a name="id500989"></a>
+<a name="id501009"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -155,7 +156,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.and_predicate.example"></a><h6>
-<a name="id501038"></a>
+<a name="id501057"></a>
             <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.example">Example</a>
           </h6>
 <p>
@@ -200,7 +201,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="expect.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="difference.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

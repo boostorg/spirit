@@ -2,15 +2,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title> Not
-          Predicate (operator!())</title>
+          Predicate (!a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="previous" href="expect.html" title=" Expectation
-          (operator&gt;())">
+<link rel="previous" href="kleene.html" title=" Kleene (*a)">
 <link rel="next" href="permutation.html" title=" Permutation
-          (operator^())">
+          (a^b)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -23,19 +22,19 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="expect.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="permutation.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="kleene.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="permutation.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage">
 <div><div><h5 class="title">
 <a name="spirit.qi.reference.operator.not_predicate"></a><a href="not_predicate.html" title=" Not
-          Predicate (operator!())"> Not
-          Predicate (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">!()</span></tt>)</a>
+          Predicate (!a)"> Not
+          Predicate (<tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>)</a>
 </h5></div></div>
 <div></div>
 </div>
 <a name="spirit.qi.reference.operator.not_predicate.description"></a><h6>
-<a name="id503676"></a>
+<a name="id505881"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.description">Description</a>
           </h6>
 <p>
@@ -43,12 +42,12 @@
             before evaluating another production. Similar to semantic predicates,
             <a href="../auxiliary/eps.html" title=" Epsilon (eps)"><tt class="computeroutput"><span class="identifier">eps</span></tt></a>,
             syntactic predicates do not consume any input. The <span class="emphasis"><em>not predicate</em></span>,
-            <tt class="computeroutput"><span class="special">!</span></tt>, is a negative syntactic
-            predicate that returns a zero length match only if its predicate fails
-            to match.
+            <tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>,
+            is a negative syntactic predicate that returns a zero length match only
+            if its predicate fails to match.
           </p>
 <a name="spirit.qi.reference.operator.not_predicate.header"></a><h6>
-<a name="id503745"></a>
+<a name="id505954"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/not_predicate.hpp&gt;
@@ -58,7 +57,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.not_predicate.model_of"></a><h6>
-<a name="id503859"></a>
+<a name="id506069"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.model_of">Model
             of</a>
           </h6>
@@ -81,7 +80,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.not_predicate.expression_semantics"></a><h6>
-<a name="id503959"></a>
+<a name="id506169"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -113,7 +112,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.not_predicate.attributes"></a><h6>
-<a name="id504092"></a>
+<a name="id506302"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.attributes">Attributes</a>
           </h6>
 <p>
@@ -143,7 +142,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.not_predicate.complexity"></a><h6>
-<a name="id504212"></a>
+<a name="id506422"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -156,7 +155,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.not_predicate.example"></a><h6>
-<a name="id504261"></a>
+<a name="id506471"></a>
             <a href="not_predicate.html#spirit.qi.reference.operator.not_predicate.example">Example</a>
           </h6>
 <p>
@@ -230,7 +229,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="expect.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="permutation.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="kleene.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="permutation.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

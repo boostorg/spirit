@@ -2,15 +2,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title> Expectation
-          (operator&gt;())</title>
+          (a&gt;b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="previous" href="and_predicate.html" title=" And
-          Predicate (operator&amp;())">
-<link rel="next" href="not_predicate.html" title=" Not
-          Predicate (operator!())">
+<link rel="previous" href="difference.html" title=" Difference
+          (a-b)">
+<link rel="next" href="kleene.html" title=" Kleene (*a)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -23,25 +22,25 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="and_predicate.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="not_predicate.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="difference.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="kleene.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" lang="en">
 <div class="titlepage">
 <div><div><h5 class="title">
 <a name="spirit.qi.reference.operator.expect"></a><a href="expect.html" title=" Expectation
-          (operator&gt;())"> Expectation
-          (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&gt;()</span></tt>)</a>
+          (a&gt;b)"> Expectation
+          (<tt class="computeroutput"><span class="identifier">a</span><span class="special">&gt;</span><span class="identifier">b</span></tt>)</a>
 </h5></div></div>
 <div></div>
 </div>
 <a name="spirit.qi.reference.operator.expect.description"></a><h6>
-<a name="id501256"></a>
+<a name="id502303"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.description">Description</a>
           </h6>
 <p>
             Like the <a href="sequence.html" title=" Sequence
-          (operator&gt;&gt;())">Sequence
-            Operator</a>, the expectation operator, <tt class="computeroutput"><span class="special">&gt;</span></tt>,
+          (a&gt;&gt;b)">Sequence
+            Operator</a>, the expectation operator, <tt class="computeroutput"><span class="identifier">a</span><span class="special">&gt;</span><span class="identifier">b</span></tt>,
             parses two or more operands (<tt class="computeroutput"><span class="identifier">a</span></tt>,
             <tt class="computeroutput"><span class="identifier">b</span></tt>, ... etc.), in sequence:
           </p>
@@ -49,14 +48,14 @@
 </pre>
 <p>
             However, while the plain <a href="sequence.html" title=" Sequence
-          (operator&gt;&gt;())">Sequence
+          (a&gt;&gt;b)">Sequence
             Operator</a> simply returns a no-match (returns <tt class="computeroutput"><span class="keyword">false</span></tt>)
             when one of the elements fail, the expectation: <tt class="computeroutput"><span class="special">&gt;</span></tt>
             operator throws an <a href="expect.html#spirit.qi.reference.operator.expect.expectation_failure"><tt class="computeroutput"><span class="identifier">expectation_failure</span></tt></a><tt class="computeroutput"><span class="special">&lt;</span><span class="identifier">Iter</span><span class="special">&gt;</span></tt> when the second or succeeding operands
             (all operands except the first) fail to match.
           </p>
 <a name="spirit.qi.reference.operator.expect.header"></a><h6>
-<a name="id501450"></a>
+<a name="id502507"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/expect.hpp&gt;
@@ -66,7 +65,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.expect.model_of"></a><h6>
-<a name="id501563"></a>
+<a name="id502621"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -94,7 +93,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.expect.expectation_failure"></a><h6>
-<a name="id501708"></a>
+<a name="id502766"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.expectation_failure">Expectation
             Failure</a>
           </h6>
@@ -110,7 +109,7 @@
 </span><span class="special">};</span>
 </pre>
 <a name="spirit.qi.reference.operator.expect.expression_semantics"></a><h6>
-<a name="id501901"></a>
+<a name="id502958"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -143,7 +142,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.attributes"></a><h6>
-<a name="id502102"></a>
+<a name="id503160"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.attributes">Attributes</a>
           </h6>
 <p>
@@ -187,7 +186,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.expect.complexity"></a><h6>
-<a name="id503000"></a>
+<a name="id504058"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -203,7 +202,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.expect.example"></a><h6>
-<a name="id503040"></a>
+<a name="id504098"></a>
             <a href="expect.html#spirit.qi.reference.operator.expect.example">Example</a>
           </h6>
 <p>
@@ -273,7 +272,7 @@ got: "i"
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="and_predicate.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="not_predicate.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="difference.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="kleene.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
