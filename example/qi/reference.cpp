@@ -794,30 +794,32 @@ main()
         //[reference_optional
         //`Some using declarations:
         using boost::spirit::ascii::char_;
+        using boost::spirit::qi::lexeme;
         using boost::spirit::qi::int_;
         using boost::fusion::vector;
         using boost::fusion::at_c;
         using boost::optional;
 
-        /*`Parse a person info with name (in quotes) optional age and 
-            optional sex, all separated by comma.
+        /*`Parse a person info with name (in quotes) optional age [footnote 
+            James Bond is shy about his age :-)] and optional sex, all 
+            separated by comma.
          */
         vector<std::string, optional<int>, optional<char> > attr;
         
         test_phrase_parser_attr(
             "\"James Bond\", M"
-          , '"' >> +(char_ - '"') >> '"' >> -(',' >> int_) >> -(',' >> char_)
+          , lexeme['"' >> +(char_ - '"') >> '"']    // name
+                >> -(',' >> int_)                   // optional age
+                >> -(',' >> char_)                  // optional sex
           , attr);
         
-        // Should print: JamesBond,M
-        std::cout << at_c<0>(attr);
-        if (at_c<1>(attr))
+        // Should print: James Bond,M
+        std::cout << at_c<0>(attr);                 // print name
+        if (at_c<1>(attr))                          // print optional age
             std::cout << ',' << *at_c<1>(attr);
-        if (at_c<2>(attr))
+        if (at_c<2>(attr))                          // print optional sex
             std::cout << ',' << *at_c<2>(attr);
-        std::cout << std::endl;
-        
-        //`James Bond is shy about his age :-)
+        std::cout << std::endl;        
         //]
     }
     

@@ -171,6 +171,7 @@
               
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">lexeme</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">at_c</span><span class="special">;</span>
@@ -180,8 +181,9 @@
 <p>
             </p>
 <p>
-              Parse a person info with name (in quotes) optional age and optional
-              sex, all separated by comma.
+              Parse a person info with name (in quotes) optional age
+              <sup>[<a name="id508152" href="#ftn.id508152">8</a>]</sup>
+              and optional sex, all separated by comma.
             </p>
 <p>
             </p>
@@ -192,25 +194,29 @@
 
 <span class="identifier">test_phrase_parser_attr</span><span class="special">(</span>
     <span class="string">"\"James Bond\", M"</span>
-  <span class="special">,</span> <span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">char_</span><span class="special">)</span>
-  <span class="special">,</span> <span class="identifier">attr</span><span class="special">);</span>
+  <span class="special">,</span> <span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">]</span>    <span class="comment">// name
+</span>        <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span>                   <span class="comment">// optional age
+</span>        <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">char_</span><span class="special">)</span>                  <span class="comment">// optional sex
+</span>  <span class="special">,</span> <span class="identifier">attr</span><span class="special">);</span>
 
-<span class="comment">// Should print: JamesBond,M
-</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">);</span>
-<span class="keyword">if</span> <span class="special">(</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">))</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="special">*</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">);</span>
-<span class="keyword">if</span> <span class="special">(</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">))</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="special">*</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">);</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span></pre>
+<span class="comment">// Should print: James Bond,M
+</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">);</span>                 <span class="comment">// print name
+</span><span class="keyword">if</span> <span class="special">(</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">))</span>                          <span class="comment">// print optional age
+</span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="special">*</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">);</span>
+<span class="keyword">if</span> <span class="special">(</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">))</span>                          <span class="comment">// print optional sex
+</span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="special">*</span><span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">2</span><span class="special">&gt;(</span><span class="identifier">attr</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>        
+</pre>
 <p>
-            </p>
-<p>
-            </p>
-<p>
-              James Bond is shy about his age :-)
             </p>
 <p>
           </p>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a name="ftn.id508152" href="#id508152">8</a>] </sup>
+                  James Bond is shy about his age :-)
+                </p></div>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
