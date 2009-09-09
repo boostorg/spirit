@@ -20,152 +20,138 @@ Stroustrup]]
 
 [heading /80s/]
 
-In the mid-80s, Joel wrote his first calculator in Pascal. It was an
-unforgettable coding experience. He was amazed at how a mutually
+In the mid-80s, Joel wrote his first calculator in Pascal. Such an
+unforgettable coding experience, he was amazed at how a mutually
 recursive set of functions can model a grammar specification. In time,
 the skills he acquired from that academic experience became very
-practical. Periodically Joel was tasked to do some parsing. For
-instance, whenever he needed to perform any form of I/O, even in
-binary, he tried to approach the task somewhat formally by writing a
-grammar using Pascal-like syntax diagrams and then a corresponding
-recursive-descent parser. This worked very well.
+practical as he was tasked to do some parsing. For instance, whenever he
+needed to perform any form of binary or text I/O, he tried to approach
+each task somewhat formally by writing a grammar using Pascal-like
+syntax diagrams and then a corresponding recursive-descent parser. This
+process worked very well.
 
 [heading /90s/]
 
-The arrival of the Internet and the World Wide Web magnified this
-thousand-fold. At one point Joel had to write an HTML parser for a Web
-browser project. He got a recursive-descent HTML parser working based
-on the W3C formal specifications easily. He was certainly glad that
-HTML had a formal grammar specification. Because of the influence of
-the Internet, Joel then had to do more parsing. RFC specifications
-were everywhere! SGML, HTML, XML, email addresses and even those
-seemingly trivial URLs were all formally specified using small
-EBNF-style grammar specifications. This made him wish for a tool
-similar to larger parser generators such as YACC and ANTLR, where a
-parser is built automatically from a grammar specification.
+The arrival of the Internet and the World Wide Web magnified the need
+for parsing a thousand-fold. At one point Joel had to write an HTML
+parser for a Web browser project. Using the W3C formal specifications,
+he easily wrote a recursive-descent HTML parser. With the influence of
+the Internet, RFC specifications were abundent. SGML, HTML, XML, email
+addresses and even those seemingly trivial URLs were all formally
+specified using small EBNF-style grammar specifications. Joel had more
+parsing to do, and he wished for a tool similar to larger parser
+generators such as YACC and ANTLR, where a parser is built automatically
+from a grammar specification. 
 
-This ideal tool would be able to parse anything from email addresses
-and command lines, to XML and scripting languages. Scalability was a
-prime goal. The tool should be able to do this without incurring a
-heavy development load, which was not possible with the above
-mentioned parser generators.
+This ideal tool would be able to parse anything from email addresses and
+command lines, to XML and scripting languages. Scalability was a primary
+goal. The tool would be able to do this without incurring a heavy
+development load, which was not possible with the above mentioned parser
+generators. The result was Spirit.
 
-The result was Spirit. Spirit was a personal project that was
-conceived when Joel was involved in R&D in Japan. Inspired by the
-GoF's composite and interpreter patterns, he realized that he can
-model a recursive-descent parser with hierarchical-object composition
-of primitives (terminals) and composites (productions). The original
-version was implemented with run-time polymorphic classes. A parser
-was generated at run time by feeding in production rule strings such
-as:
+Spirit was a personal project that was conceived when Joel was involved
+in R&D in Japan. Inspired by the GoF's composite and interpreter
+patterns, he realized that he can model a recursive-descent parser with
+hierarchical-object composition of primitives (terminals) and composites
+(productions). The original version was implemented with run-time
+polymorphic classes. A parser was generated at run time by feeding in
+production rule strings such as: 
 
     "prod ::= {'A' | 'B'} 'C';"
 
-A compile function compiled the parser, dynamically creating a
-hierarchy of objects and linking semantic actions on the fly. A very
-early text can be found here: __early_spirit__.
+A compile function compiled the parser, dynamically creating a hierarchy
+of objects and linking semantic actions on the fly. A very early text
+can be found here: __early_spirit__.
 
 [heading /2001 to 2006/]
 
-Version 1.0 to 1.8 was a complete rewrite of the original Spirit
-parser using expression templates and static polymorphism, inspired by
-the works of Todd Veldhuizen (__todd__exprtemplates__, C++ Report,
-June 1995). Initially, the static-Spirit version was meant only to
-replace the core of the original dynamic-Spirit. Dynamic-spirit needed
-a parser to implement itself anyway. The original employed a
-hand-coded recursive-descent parser to parse the input grammar
-specification strings. It was at this time when Hartmut joined the
-Spirit development.
+Version 1.0 to 1.8 was a complete rewrite of the original Spirit parser
+using expression templates and static polymorphism, inspired by the
+works of Todd Veldhuizen (__todd__exprtemplates__, C++ Report, June
+1995). Initially, the static-Spirit version was meant only to replace
+the core of the original dynamic-Spirit. Dynamic-Spirit needed a parser
+to implement itself anyway. The original employed a hand-coded
+recursive-descent parser to parse the input grammar specification
+strings. It was at this time when Hartmut Kaiser joined the Spirit
+development. 
 
-After its initial "open-source" debut in May 2001, static-Spirit
-became a success. At around November 2001, the Spirit website had an
-activity percentile of 98%, making it the number one parser tool at
-Source Forge at the time. Not bad for a niche project like a parser
-library. The "static" portion of Spirit was forgotten and
-static-Spirit simply became Spirit. The library soon evolved to
-acquire more dynamic features.
+After its initial "open-source" debut in May 2001, static-Spirit became
+a success. At around November 2001, the Spirit website had an activity
+percentile of 98%, making it the number one parser tool at Source Forge
+at the time. Not bad for a niche project like a parser library. The
+"static" portion of Spirit was forgotten and static-Spirit simply became
+Spirit. The library soon evolved to acquire more dynamic features.
 
-Spirit was formally accepted into __boost__ in October 2002. Boost is
-a peer-reviewed, open collaborative development effort around a
-collection of free Open Source C++ libraries covering a wide range of
-domains. The Boost Libraries have become widely known as an industry
-standard for design and implementation quality, robustness, and
-reusability.
+Spirit was formally accepted into __boost__ in October 2002. Boost is a
+peer-reviewed, open collaborative development effort around a collection
+of free Open Source C++ libraries covering a wide range of domains. The
+Boost Libraries have become widely known as an industry standard for
+design and implementation quality, robustness, and reusability.
 
 [heading /2007/]
 
-Over the years, especially after Spirit was accepted into Boost,
-Spirit has served its purpose quite admirably. The focus of what we'll
-now call [*/Classic-Spirit/] (versions prior to 2.0) was on
-transduction parsing where the input string is merely translated to an
-output string. A lot of parsers are of the transduction type. When the
-time came to add attributes to the parser library, it was done in a
-rather ad-hoc manner, with the goal being 100% backward compatible
-with classic Spirit. As a result, some parsers have attributes, some
-don't.
+Over the years, especially after Spirit was accepted into Boost, Spirit
+has served its purpose quite admirably. [*/Classic-Spirit/] (versions
+prior to 2.0) focused on transduction parsing, where the input string is
+merely translated to an output string. Many parsers fall into the
+transduction type. When the time came to add attributes to the parser
+library, it was done in a rather ad-hoc manner, with the goal being 100%
+backward compatible with Classic Spirit. As a result, some parsers have
+attributes, some don't. 
 
 Spirit V2 is another major rewrite. Spirit V2 grammars are fully
-attributed (see __attr_grammar__) which means that all parser
-components have attributes. To do this efficiently and elegantly, we
-had to use a couple of infrastructure libraries. Some did not exist,
-some were quite new when Spirit debuted, and some needed work. __mpl__
-is an important infrastructure library, yet is not sufficient to
-implement Spirit V2. Another library had to be written:
-__fusion__. Fusion sits between MPL and STL --between compile time and
-runtime -- mapping types to values. Fusion is a direct descendant of
-both MPL and __boost_tuples__. Fusion is now a full-fledged __boost__
-library. __phoenix__ also had to be beefed up to support Spirit
-V2. The result is __boost_phoenix__. Last but not least, Spirit V2 uses an
-__todd__exprtemplates__ library called __boost_proto__.
+attributed (see __attr_grammar__) which means that all parser components
+have attributes. To do this efficiently and elegantly, we had to use a
+couple of infrastructure libraries. Some did not exist, some were quite
+new when Spirit debuted, and some needed work. __mpl__ is an important
+infrastructure library, yet is not sufficient to implement Spirit V2.
+Another library had to be written: __fusion__. Fusion sits between MPL
+and STL --between compile time and runtime -- mapping types to values.
+Fusion is a direct descendant of both MPL and __boost_tuples__. Fusion
+is now a full-fledged __boost__ library. __phoenix__ also had to be
+beefed up to support Spirit V2. The result is __boost_phoenix__. Last
+but not least, Spirit V2 uses an __todd__exprtemplates__ library called
+__boost_proto__.
 
-Even though it has evolved and matured to become a multi-module
-library, Spirit is still used for micro-parsing tasks as well as
-scripting languages. Like C++, you only pay for features that you
-need. The power of Spirit comes from its modularity and
-extensibility. Instead of giving you a sledgehammer, it gives you the
-right ingredients to create a sledgehammer easily.
+Even though it has evolved and matured to become a multi-module library,
+Spirit is still used for micro-parsing tasks as well as scripting
+languages. Like C++, you only pay for features that you need. The power
+of Spirit comes from its modularity and extensibility. Instead of giving
+you a sledgehammer, it gives you the right ingredients to easily create
+a sledgehammer.
 
 [heading New Ideas: Spirit V2]
 
-Just before the development of Spirit V2 began, Hartmut came across
-the __string_template__ library which is a part of the ANTLR parser
-framework. It is a Java template engine (with ports for C# and Python)
-for generating source code, web pages, emails, or any other formatted
-text output. With it, he got the the idea of using a formal notation
-(a grammar) not only to describe the expected structure of an input character
-sequence. Interestingly, the same grammar may be used to formalize the 
-structure of a corresponding output character sequence as well. This is 
-possible because parsing is usually implemented by comparing the input with 
-patterns defined by the grammar. If we use the same patterns to format a
-matching output, the generated sequence will follow the rules of the
-grammar as well.
-
-This insight lead to the implementation of a grammar driven output
-generation library compatibile with the Spirit parser library. As it
-turned out, parsing and generation are tightly connected and have very
-similar concepts. The duality of these two sides of the same medal is
-ubiquitous, which allowed us to build the parser library __qi__ and
-the generator library __karma__ using the same component
-infastructure.
+Just before the development of Spirit V2 began, Hartmut came across the
+__string_template__ library that is a part of the ANTLR parser
+framework. ['attribute quote to http://www.stringtemplate.org/] It is a
+Java template engine (with ports for C# and Python) for generating
+source code, web pages, emails, or any other formatted text output.
+['end of quote!] The concepts presented in that library lead Hartmut to
+the next step in the evolution of Spirit. Parsing and generation are
+tightly connected to a formal notation, or a grammar. The grammar
+describes both input and output, and therefore, a parser library should
+have a grammar driven output. This duality is expressed in Spirit by the
+parser library __qi__ and the generator library __karma__ using the same
+component infastructure. 
 
 The idea of creating a lexer library well integrated with the Spirit
-parsers is not new. This has been discussed almost since
-Classic-Spirit (pre V2) initially debuted. Several attempts to
-integrate existing lexer libraries and frameworks with Spirit have
-been made and served as a proof of concept and usability (for example
-see __wave__: The Boost C/C++ Preprocessor Library, and __slex__: a
-fully dynamic C++ lexer implemented with Spirit).  Based on these
-experiences we added __lex__: a fully integrated lexer library to the
-mix, allowing the user to take advantage of the power of regular
-expressions for token matching, removing pressure from the parser
-components, simplifying parser grammars. Again, Spirit's modular
-structure allowed us to reuse the same underlying component library as
-for the parser and generator libraries.
+parsers is not new. This has been discussed almost since Classic-Spirit
+(pre V2) initially debuted. Several attempts to integrate existing lexer
+libraries and frameworks with Spirit have been made and served as a
+proof of concept and usability (for example see __wave__: The Boost
+C/C++ Preprocessor Library, and __slex__: a fully dynamic C++ lexer
+implemented with Spirit). Based on these experiences we added __lex__: a
+fully integrated lexer library to the mix, allowing the user to take
+advantage of the power of regular expressions for token matching,
+removing pressure from the parser components, simplifying parser
+grammars. Again, Spirit's modular structure allowed us to reuse the same
+underlying component library as for the parser and generator libraries.
 
 [heading How to use this manual]
 
-Each major section (there are 3: __sec_qi__, __sec_karma__, and __sec_lex__) is
-roughly divided into 3 parts:
+Each major section (there are 3: __sec_qi__, __sec_karma__, and
+__sec_lex__) is roughly divided into 3 parts:
 
 # Tutorials: A step by step guide with heavily annotated code. These
   are meant to get the user acquainted with the library as quickly as
@@ -207,16 +193,16 @@ These icons precede some text to indicate:
                                         trouble if ignored]]
 ]
 
-This documentation is automatically generated by Boost QuickBook documentation
-tool. QuickBook can be found in the __boost_tools__.
+This documentation is automatically generated by Boost QuickBook
+documentation tool. QuickBook can be found in the __boost_tools__.
 
 [heading Support]
 
-Please direct all questions to Spirit's mailing list. You can subscribe to the
-__spirit_list__. The mailing list has a searchable archive. A search link to
-this archive is provided in __spirit__'s home page. You may also read and post
-messages to the mailing list through __spirit_general__ (thanks to __gmane__).
-The news group mirrors the mailing list. Here is a link to the archives:
-__mlist_archive__.
+Please direct all questions to Spirit's mailing list. You can subscribe
+to the __spirit_list__. The mailing list has a searchable archive. A
+search link to this archive is provided in __spirit__'s home page. You
+may also read and post messages to the mailing list through
+__spirit_general__ (thanks to __gmane__). The news group mirrors the
+mailing list. Here is a link to the archives: __mlist_archive__.
 
 [endsect] [/ Preface]

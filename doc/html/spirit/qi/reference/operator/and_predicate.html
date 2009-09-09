@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>And Predicate (operator&amp;())</title>
+<title> And
+          Predicate (operator&amp;())</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="alternative.html" title="Alternative (operator|())">
-<link rel="next" href="expect.html" title="Expectation (operator&gt;())">
+<link rel="previous" href="alternative.html" title=" Alternative
+          (operator|())">
+<link rel="next" href="expect.html" title=" Expectation
+          (operator&gt;())">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,65 +25,68 @@
 <div class="spirit-nav">
 <a accesskey="p" href="alternative.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="expect.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="And Predicate (operator&amp;())">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.and_predicate"></a><a class="link" href="and_predicate.html" title="And Predicate (operator&amp;())"> And
-          Predicate (<code class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.operator.and_predicate"></a><a href="and_predicate.html" title=" And
+          Predicate (operator&amp;())"> And
+          Predicate (<tt class="computeroutput"><span class="keyword">operator</span><span class="special">&amp;()</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.qi.reference.operator.and_predicate.description"></a><h6>
-<a name="id1168336"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.description">Description</a>
+<a name="id500454"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.description">Description</a>
           </h6>
 <p>
             Syntactic predicates assert a certain conditional syntax to be satisfied
             before evaluating another production. Similar to semantic predicates,
-            <a class="link" href="../auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a>,
-            syntactic predicates do not consume any input. The <code class="computeroutput"><span class="keyword">and</span>
-            <span class="identifier">predicate</span></code>, <code class="computeroutput"><span class="special">&amp;</span></code>,
-            is a positive syntactic predicate that returns a zero length match only
-            if its predicate matches.
+            <a href="../auxiliary/eps.html" title=" Epsilon (eps)"><tt class="computeroutput"><span class="identifier">eps</span></tt></a>,
+            syntactic predicates do not consume any input. The <span class="emphasis"><em>and predicate</em></span>,
+            <tt class="computeroutput"><span class="special">&amp;</span></tt>, is a positive syntactic
+            predicate that returns a zero length match only if its predicate matches.
           </p>
 <a name="spirit.qi.reference.operator.and_predicate.header"></a><h6>
-<a name="id1168382"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.header">Header</a>
+<a name="id500523"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/and_predicate.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_and_predicate</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.and_predicate.model_of"></a><h6>
-<a name="id1168468"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.model_of">Model
+<a name="id500637"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+                <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.and_predicate.expression_semantics"></a><h6>
-<a name="id1168539"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.expression_semantics">Expression
+<a name="id500738"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
+            is not defined in <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -88,37 +94,29 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    If the predicate <code class="computeroutput"><span class="identifier">a</span></code>
+<td><p>
+                    <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                  </p></td>
+<td><p>
+                    If the predicate <tt class="computeroutput"><span class="identifier">a</span></tt>
                     matches, return a zero length match. Otherwise, fail.
-                  </p>
-                  </td>
+                  </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.and_predicate.attributes"></a><h6>
-<a name="id1168636"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.attributes">Attributes</a>
+<a name="id500869"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -127,50 +125,68 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.and_predicate.complexity"></a><h6>
-<a name="id1168729"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.complexity">Complexity</a>
+<a name="id500989"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The complexity is defined by the complexity of the predicate, <code class="computeroutput"><span class="identifier">a</span></code>
+                The complexity is defined by the complexity of the predicate, <tt class="computeroutput"><span class="identifier">a</span></tt>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.and_predicate.example"></a><h6>
-<a name="id1168760"></a>
-            <a class="link" href="and_predicate.html#spirit.qi.reference.operator.and_predicate.example">Example</a>
+<a name="id501038"></a>
+            <a href="and_predicate.html#spirit.qi.reference.operator.and_predicate.example">Example</a>
           </h6>
 <p>
-            Real example code. Use Quickbook import mechanism to link to actual working
-            code snippets here.
+            </p>
+<p>
+              Some using declarations:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span></pre>
+<p>
+            </p>
+<p>
+            </p>
+<p>
+              Basic look-ahead example: make sure that the last character is a semicolon,
+              but don't consume it, just peek at the next character:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="string">"Hello ;"</span><span class="special">,</span> <span class="identifier">lit</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="special">&amp;</span><span class="identifier">lit</span><span class="special">(</span><span class="char">';'</span><span class="special">),</span> <span class="keyword">false</span><span class="special">);</span>
+</pre>
+<p>
+            </p>
+<p>
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

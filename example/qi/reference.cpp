@@ -16,27 +16,29 @@
 
 //[reference_test
 template <typename P>
-void test_parser(char const* input, P const& p)
+void test_parser(
+    char const* input, P const& p, bool full_match = true)
 {
     using boost::spirit::qi::parse;
 
     char const* f(input);
     char const* l(f + strlen(f));
-    if (parse(f, l, p) && f == l)
+    if (parse(f, l, p) && (!full_match || (f == l)))
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
 }
 
 template <typename P>
-void test_phrase_parser(char const* input, P const& p)
+void test_phrase_parser(
+    char const* input, P const& p, bool full_match = true)
 {
     using boost::spirit::qi::phrase_parse;
     using boost::spirit::qi::ascii::space;
     
     char const* f(input);
     char const* l(f + strlen(f));
-    if (phrase_parse(f, l, p, space) && f == l)
+    if (phrase_parse(f, l, p, space) && (!full_match || (f == l)))
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -45,27 +47,29 @@ void test_phrase_parser(char const* input, P const& p)
 
 //[reference_test_attr
 template <typename P, typename T>
-void test_parser_attr(char const* input, P const& p, T& attr)
+void test_parser_attr(
+    char const* input, P const& p, T& attr, bool full_match = true)
 {
     using boost::spirit::qi::parse;
 
     char const* f(input);
     char const* l(f + strlen(f));
-    if (parse(f, l, p, attr) && f == l)
+    if (parse(f, l, p, attr) && (!full_match || (f == l)))
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
 }
 
 template <typename P, typename T>
-void test_phrase_parser_attr(char const* input, P const& p, T& attr)
+void test_phrase_parser_attr(
+    char const* input, P const& p, T& attr, bool full_match = true)
 {
     using boost::spirit::qi::phrase_parse;
     using boost::spirit::qi::ascii::space;
 
     char const* f(input);
     char const* l(f + strlen(f));
-    if (phrase_parse(f, l, p, space, attr) && f == l)
+    if (phrase_parse(f, l, p, space, attr) && (!full_match || (f == l)))
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -693,6 +697,51 @@ main()
         //]
     }
 
+    // and-predicate
+    {
+        //[reference_and_predicate
+        //`Some using declarations:
+        using boost::spirit::lit;
+        
+        /*`Basic look-ahead example: make sure that the last character is a
+            semicolon, but don't consume it, just peek at the next character:
+         */
+        test_phrase_parser("Hello ;", lit("Hello") >> &lit(';'), false);
+        //]
+    }
+    
+    // not-predicate
+    {
+        //[reference_not_predicate
+        //`Some using declarations:
+        using boost::spirit::ascii::char_;
+        using boost::spirit::ascii::alpha;
+        using boost::spirit::qi::lit;
+        using boost::spirit::qi::symbols;
+        
+        /*`Here's an alternative to the `*(r - x) >> x` idiom using the
+            not-predicate instead. This parses a list of characters terminated
+            by a ';':
+         */
+        test_parser("abcdef;", *(!lit(';') >> char_) >> ';');
+        
+        /*`The following parser ensures that we match distinct keywords 
+            (stored in a symbol table). To do this, we make sure that the  
+            keyword does not follow an alpha or an underscore:
+         */
+        symbols<char, int> keywords;
+        keywords = "begin", "end", "for";
+        
+        // This should fail:
+        test_parser("beginner", keywords >> !(alpha | '_'));
 
+        // This is ok:
+        test_parser("end ", keywords >> !(alpha | '_'), false);
+
+        // This is ok:
+        test_parser("for()", keywords >> !(alpha | '_'), false);
+        //]
+    }
+    
     return 0;
 }

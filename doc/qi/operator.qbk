@@ -118,8 +118,8 @@ Some using declarations:
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
-__qi_eps__, syntactic predicates do not consume any input. The `and
-predicate`, `&`, is a positive syntactic predicate that returns a zero
+__qi_eps__, syntactic predicates do not consume any input. The /and
+predicate/, `&`, is a positive syntactic predicate that returns a zero
 length match only if its predicate matches.
 
 [heading Header]
@@ -163,8 +163,7 @@ See __qi_comp_attr_notation__.
 
 [heading Example]
 
-Real example code. Use Quickbook import mechanism to link to actual
-working code snippets here.
+[reference_and_predicate]
 
 [endsect] [/ And Predicate]
 
@@ -265,8 +264,8 @@ Some using declarations:
 
 Syntactic predicates assert a certain conditional syntax to be satisfied
 before evaluating another production. Similar to semantic predicates,
-__qi_eps__, syntactic predicates do not consume any input. The `not
-predicate`, `!`, is a negative syntactic predicate that returns a zero
+__qi_eps__, syntactic predicates do not consume any input. The /not
+predicate/, `!`, is a negative syntactic predicate that returns a zero
 length match only if its predicate fails to match.
 
 [heading Header]
@@ -310,8 +309,7 @@ See __qi_comp_attr_notation__.
 
 [heading Example]
 
-Real example code. Use Quickbook import mechanism to link to actual
-working code snippets here.
+[reference_not_predicate]
 
 [endsect] [/ Not Predicate]
 

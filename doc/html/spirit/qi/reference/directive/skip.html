@@ -1,12 +1,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Re-Establish Skipping (skip[])</title>
+<title> Re-Establish
+          Skipping (skip[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../directive.html" title="Directive">
-<link rel="prev" href="repeat.html" title="Repetition (repeat[])">
+<link rel="up" href="../directive.html" title=" Directive">
+<link rel="previous" href="repeat.html" title=" Repetition
+          (repeat[])">
 <link rel="next" href="../numeric.html" title="Numeric">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,26 +24,32 @@
 <div class="spirit-nav">
 <a accesskey="p" href="repeat.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Re-Establish Skipping (skip[])">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.directive.skip"></a><a class="link" href="skip.html" title="Re-Establish Skipping (skip[])"> Re-Establish
-          Skipping (<code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.directive.skip"></a><a href="skip.html" title=" Re-Establish
+          Skipping (skip[])"> Re-Establish
+          Skipping (<tt class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.qi.reference.directive.skip.description"></a><h6>
-<a name="id1152243"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.description">Description</a>
+<a name="id483376"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.description">Description</a>
           </h6>
 <p>
-            The <code class="computeroutput"><span class="identifier">skip</span></code> directive is
-            the inverse of <a class="link" href="lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a>. While the <a class="link" href="lexeme.html" title="Inhibiting Skipping (lexeme[])"><code class="computeroutput"><span class="identifier">lexeme</span></code></a> directive turns off white
-            space skipping, the <code class="computeroutput"><span class="identifier">skip</span></code>
+            The <tt class="computeroutput"><span class="identifier">skip</span></tt> directive is
+            the inverse of <a href="lexeme.html" title=" Inhibiting
+          Skipping (lexeme[])"><tt class="computeroutput"><span class="identifier">lexeme</span></tt></a>. While the <a href="lexeme.html" title=" Inhibiting
+          Skipping (lexeme[])"><tt class="computeroutput"><span class="identifier">lexeme</span></tt></a> directive turns off white
+            space skipping, the <tt class="computeroutput"><span class="identifier">skip</span></tt>
             directive turns it on again. This is simply done by wrapping the parts
-            inside the <code class="computeroutput"><span class="identifier">skip</span></code> directive:
+            inside the <tt class="computeroutput"><span class="identifier">skip</span></tt> directive:
           </p>
 <pre class="programlisting"><span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span>
 </pre>
 <p>
-            It is also possible to supply a skip parser to the <code class="computeroutput"><span class="identifier">skip</span></code>
+            It is also possible to supply a skip parser to the <tt class="computeroutput"><span class="identifier">skip</span></tt>
             directive:
           </p>
 <pre class="programlisting"><span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span> <span class="comment">// Use `p` as a skipper for parsing `a`
@@ -52,63 +60,59 @@
             with an entirely different skipper while doing phrase level parsing.
           </p>
 <a name="spirit.qi.reference.directive.skip.header"></a><h6>
-<a name="id1152365"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.header">Header</a>
+<a name="id483574"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/skip.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_skip</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.skip.namespace"></a><h6>
-<a name="id1152440"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.namespace">Namespace</a>
+<a name="id483689"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th>
-                  <p>
+<thead><tr><th><p>
                     Name
-                  </p>
-                  </th></tr></thead>
-<tbody><tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">skip</span> <span class="comment">// alias:
-                    boost::spirit::qi::skip</span></code>
-                  </p>
-                  </td></tr></tbody>
+                  </p></th></tr></thead>
+<tbody><tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">skip</span> <span class="comment">// alias:
+                    boost::spirit::qi::skip</span></tt>
+                  </p></td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.skip.model_of"></a><h6>
-<a name="id1152518"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.model_of">Model of</a>
+<a name="id483791"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
+                <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.skip.expression_semantics"></a><h6>
-<a name="id1152586"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.expression_semantics">Expression
+<a name="id483892"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
+            is not defined in <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -116,51 +120,39 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td><p>
                     Re-establish the skipper that got inhibited by lexeme
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Use <code class="computeroutput"><span class="identifier">p</span></code> as a skipper
-                    for parsing <code class="computeroutput"><span class="identifier">a</span></code>
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
+<td><p>
+                    Use <tt class="computeroutput"><span class="identifier">p</span></tt> as a skipper
+                    for parsing <tt class="computeroutput"><span class="identifier">a</span></tt>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.skip.attributes"></a><h6>
-<a name="id1152737"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.attributes">Attributes</a>
+<a name="id484098"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -169,69 +161,61 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">skip</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">lexeme</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr>
 <tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">skip</span><span class="special">(</span><span class="identifier">p</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">lexeme</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.skip.complexity"></a><h6>
-<a name="id1153037"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.complexity">Complexity</a>
+<a name="id484491"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
                 The complexity is defined by the complexity of the subject parser,
-                <code class="computeroutput"><span class="identifier">a</span></code>
+                <tt class="computeroutput"><span class="identifier">a</span></tt>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.skip.example"></a><h6>
-<a name="id1153069"></a>
-            <a class="link" href="skip.html#spirit.qi.reference.directive.skip.example">Example</a>
+<a name="id484539"></a>
+            <a href="skip.html#spirit.qi.reference.directive.skip.example">Example</a>
           </h6>
 <p>
             Some using declarations:
@@ -250,7 +234,7 @@
 <p>
           </p>
 <p>
-            Simple usage of <code class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></code>:
+            Simple usage of <tt class="computeroutput"><span class="identifier">skip</span><span class="special">[]</span></tt>:
           </p>
 <p>
             </p>
