@@ -432,6 +432,60 @@ See __qi_comp_attr_notation__.
 [endsect] [/ Not Predicate]
 
 [/------------------------------------------------------------------------------]
+[section:optional Optional (`-a`)]
+
+[heading Description]
+
+The optional operator, `-a`, is a unary operator that matches its
+operand zero or one time.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/optional.hpp>
+    #include <boost/spirit/include/qi_optional.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`-a`]             [Match `a` zero or one time.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`-a`]
+[``a: A --> -a: optional<A>
+a: Unused --> -a: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the operand, `a`]
+
+[heading Example]
+
+[reference_optional]
+
+[endsect] [/ Optional]
+
+[/------------------------------------------------------------------------------]
 [section:permutation Permutation (`a^b`)]
 
 [heading Description]

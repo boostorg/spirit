@@ -768,7 +768,7 @@ main()
             "111, 222, 333, 444, 555", int_ >> *(',' >> int_), attr);
         std::cout 
             << attr[0] << ',' << attr[1] << ',' << attr[2] << ',' 
-            << attr[4] << ',' << attr[5] 
+            << attr[3] << ',' << attr[4] 
             << std::endl;
         //]
     }
@@ -786,6 +786,38 @@ main()
         std::vector<std::string> attr;
         test_phrase_parser_attr("yaba daba doo", +lexeme[+alpha], attr);
         std::cout << attr[0] << ',' << attr[1] << ',' << attr[2] << std::endl;
+        //]
+    }
+    
+    // optional
+    {
+        //[reference_optional
+        //`Some using declarations:
+        using boost::spirit::ascii::char_;
+        using boost::spirit::qi::int_;
+        using boost::fusion::vector;
+        using boost::fusion::at_c;
+        using boost::optional;
+
+        /*`Parse a person info with name (in quotes) optional age and 
+            optional sex, all separated by comma.
+         */
+        vector<std::string, optional<int>, optional<char> > attr;
+        
+        test_phrase_parser_attr(
+            "\"James Bond\", M"
+          , '"' >> +(char_ - '"') >> '"' >> -(',' >> int_) >> -(',' >> char_)
+          , attr);
+        
+        // Should print: JamesBond,M
+        std::cout << at_c<0>(attr);
+        if (at_c<1>(attr))
+            std::cout << ',' << *at_c<1>(attr);
+        if (at_c<2>(attr))
+            std::cout << ',' << *at_c<2>(attr);
+        std::cout << std::endl;
+        
+        //`James Bond is shy about his age :-)
         //]
     }
     
