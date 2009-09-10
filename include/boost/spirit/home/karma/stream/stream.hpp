@@ -43,7 +43,7 @@ namespace boost { namespace spirit
         ///////////////////////////////////////////////////////////////////////
         // This one is the class that the user can instantiate directly in 
         // order to create a customized int generator
-        template <typename Char>
+        template <typename Char = char>
         struct stream_generator
           : spirit::terminal<tag::stream_tag<Char> > 
         {};
