@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>lazy</title>
+<title>Lazy (lazy)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../auxiliary.html" title="Auxiliary">
-<link rel="previous" href="eps.html" title="eps">
+<link rel="prev" href="eps.html" title="Epsilon (eps)">
 <link rel="next" href="../directive.html" title="Directive">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,94 +22,95 @@
 <div class="spirit-nav">
 <a accesskey="p" href="eps.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../auxiliary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../directive.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.auxiliary.lazy"></a><a href="lazy.html" title="lazy">lazy</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Lazy (lazy)">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.auxiliary.lazy"></a><a class="link" href="lazy.html" title="Lazy (lazy)"> Lazy (<code class="computeroutput"><span class="identifier">lazy</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.auxiliary.lazy.description"></a><h6>
-<a name="id609519"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.description">Description</a>
+<a name="id747900"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.description">Description</a>
           </h6>
 <p>
-            The familiy of <tt class="computeroutput"><span class="identifier">lazy</span></tt> components
+            The familiy of <code class="computeroutput"><span class="identifier">lazy</span></code> components
             allows to use a dynamically returned generator component for output generation.
             It calls the provided function or function object at generate time using
             its return value as the actual generator to produce the output.
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.header"></a><h6>
-<a name="id609566"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.header">Header</a>
+<a name="id747924"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/auxiliary/lazy.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_lazy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.namespace"></a><h6>
-<a name="id609680"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.namespace">Namespace</a>
+<a name="id747998"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
-<tbody><tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lazy</span> <span class="comment">// alias:
-                    boost::spirit::karma::lazy</span></tt>
-                  </p></td></tr></tbody>
+                  </p>
+                  </th></tr></thead>
+<tbody><tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lazy</span> <span class="comment">// alias:
+                    boost::spirit::karma::lazy</span></code>
+                  </p>
+                  </td></tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.lazy.model_of"></a><h6>
-<a name="id609784"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.model_of">Model
+<a name="id748077"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../generator_concepts/generator.html" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>
+                <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">fg</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">fg</span></code></span></dt>
 <dd><p>
                 A function or function object that evaluates to a generator object
-                (an object exposing the <a href="../generator_concepts/generator.html" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>). This function
+                (an object exposing the <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>). This function
                 will be invoked at generate time.
               </p></dd>
 </dl>
 </div>
 <p>
-            The signature of <tt class="computeroutput"><span class="identifier">fg</span></tt> is
+            The signature of <code class="computeroutput"><span class="identifier">fg</span></code> is
             expected to be
           </p>
 <pre class="programlisting"><span class="identifier">G</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
 </pre>
 <p>
-            where <tt class="computeroutput"><span class="identifier">G</span></tt>, the function's
-            return value, is the type of the generator to be invoked, and <tt class="computeroutput"><span class="identifier">Context</span></tt> is the generators's Context
-            type (The first argument is <tt class="computeroutput"><span class="identifier">unused</span></tt>
-            to make the <tt class="computeroutput"><span class="identifier">Context</span></tt> the
-            second argument. This is done for uniformity with <a href="../../tutorials/semantic_actions.html" title="Semantic Actions">Semantic
+            where <code class="computeroutput"><span class="identifier">G</span></code>, the function's
+            return value, is the type of the generator to be invoked, and <code class="computeroutput"><span class="identifier">Context</span></code> is the generators's Context
+            type (The first argument is <code class="computeroutput"><span class="identifier">unused</span></code>
+            to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
+            second argument. This is done for uniformity with <a class="link" href="../../tutorials/semantic_actions.html" title="Semantic Actions">Semantic
             Actions</a>).
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.expression_semantics"></a><h6>
-<a name="id610012"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.expression_semantics">Expression
+<a name="id748228"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../generator_concepts/generator.html" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>.
+            is not defined in <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -117,49 +118,61 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">fg</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">fg</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     The <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
-                    function object <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                    function object <code class="computeroutput"><span class="identifier">fg</span></code>
                     will be invoked at generate time. It is expected to return a
                     generator instance. This generator is then invoked in order to
                     generate the output. This generator will succeed as long as the
                     invoked generated succeeds as well (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     The function or function object will be invoked at generate time.
                     It is expected to return a generator instance (note this version
-                    of <tt class="computeroutput"><span class="identifier">lazy</span></tt> does
-                    not require <tt class="computeroutput"><span class="identifier">fg</span></tt>
+                    of <code class="computeroutput"><span class="identifier">lazy</span></code> does
+                    not require <code class="computeroutput"><span class="identifier">fg</span></code>
                     to be a <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Boost.Phoenix</a>
                     function object). This generator is then invoked in order to
                     generate the output. This generator will succeed as long as the
                     invoked generated succeeds as well (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.lazy.attributes"></a><h6>
-<a name="id610236"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.attributes">Attributes</a>
+<a name="id748381"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -167,48 +180,60 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">fg</span></tt>
-                  </p></td>
-<td><p>
-                    The attribute type <tt class="computeroutput"><span class="identifier">G</span></tt>
-                    as exposed by the generator <tt class="computeroutput"><span class="identifier">g</span></tt>
-                    returned from <tt class="computeroutput"><span class="identifier">fg</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">fg</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The attribute type <code class="computeroutput"><span class="identifier">G</span></code>
+                    as exposed by the generator <code class="computeroutput"><span class="identifier">g</span></code>
+                    returned from <code class="computeroutput"><span class="identifier">fg</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    The attribute type <tt class="computeroutput"><span class="identifier">G</span></tt>
-                    as exposed by the generator <tt class="computeroutput"><span class="identifier">g</span></tt>
-                    returned from <tt class="computeroutput"><span class="identifier">fg</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lazy</span><span class="special">(</span><span class="identifier">fg</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The attribute type <code class="computeroutput"><span class="identifier">G</span></code>
+                    as exposed by the generator <code class="computeroutput"><span class="identifier">g</span></code>
+                    returned from <code class="computeroutput"><span class="identifier">fg</span></code>.
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.auxiliary.lazy.complexity"></a><h6>
-<a name="id610443"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.complexity">Complexity</a>
+<a name="id748530"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.complexity">Complexity</a>
           </h6>
 <p>
-            The complexity of the <tt class="computeroutput"><span class="identifier">lazy</span></tt>
+            The complexity of the <code class="computeroutput"><span class="identifier">lazy</span></code>
             component is determined by the complexity of the generator returned from
-            <tt class="computeroutput"><span class="identifier">fg</span></tt>.
+            <code class="computeroutput"><span class="identifier">fg</span></code>.
           </p>
 <a name="spirit.karma.reference.auxiliary.lazy.example"></a><h6>
-<a name="id610497"></a>
-            <a href="lazy.html#spirit.karma.reference.auxiliary.lazy.example">Example</a>
+<a name="id748561"></a>
+            <a class="link" href="lazy.html#spirit.karma.reference.auxiliary.lazy.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -289,7 +314,7 @@
 <p>
           </p>
 <p>
-            Basic usage of the <tt class="computeroutput"><span class="identifier">lazy</span></tt>
+            Basic usage of the <code class="computeroutput"><span class="identifier">lazy</span></code>
             generator:
           </p>
 <p>

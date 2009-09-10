@@ -6,10 +6,19 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:string String]
+[section String]
 
 This module includes different string oriented generators allowing to output
 character sequences. It includes variants of the `string` generator.
+
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/karma/string.hpp>
+    #include <boost/spirit/include/karma_string.hpp>
+
+Also, see __include_structure__.
+
+[section:string String (`string`, `lit`)]
 
 [heading Description]
 
@@ -133,3 +142,4 @@ Basic usage of `string` generators:
 
 [endsect]
 
+[endsect]

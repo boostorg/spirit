@@ -22,7 +22,7 @@ plus (unary `+`), optional (unary `-`), lists (`a % b`), and the two predicates,
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:sequence Sequences (`operator<<()`)]
+[section:sequence Sequences (`a << b`)]
 
 [heading Description]
 
@@ -125,7 +125,7 @@ Basic usage of a sequence:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:alternative Alternatives (`operator|()`)]
+[section:alternative Alternative (`a | b`)]
 
 [heading Description]
 
@@ -227,7 +227,7 @@ generated output.
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:kleene Kleene Star (unary `operator*()`)]
+[section:kleene Kleene Star (`*a`)]
 
 [heading Description]
 
@@ -333,7 +333,7 @@ Basic usage of a Kleene star generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:plus Plus (unary `operator+()`)]
+[section:plus Plus (`+a`)]
 
 [heading Description]
 
@@ -445,7 +445,7 @@ failing for empty containers passed as its attribute:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:list Lists (`operator%()`)]
+[section:list Lists (`a % b`)]
 
 [heading Description]
 
@@ -562,7 +562,7 @@ Basic usage of a list generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:optional Optional (unary `operator-()`)]
+[section:optional Optional (`-a`)]
 
 [heading Description]
 
@@ -658,7 +658,7 @@ Usage and result of an empty optional generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:and_predicate And Predicate (unary `operator&()`)]
+[section:and_predicate And Predicate (`&a`)]
 
 [heading Description]
 
@@ -736,7 +736,7 @@ Basic usage of an and predicate generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:not_predicate Not Predicate (unary `operator!()`)]
+[section:not_predicate Not Predicate (`!a`)]
 
 [heading Description]
 

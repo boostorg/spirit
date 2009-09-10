@@ -31,7 +31,7 @@ extremely tight generic C++ code that rivals, if not surpasses C.
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:unsigned_int Unsigned Integer Number Generators]
+[section:unsigned_int Unsigned Integer Number Generators (`uint_`, etc.)]
 
 [heading Description]
 
@@ -61,6 +61,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::karma::lit`]]
     [[`boost::spirit::bin           // alias: boost::spirit::karma::bin`]]
     [[`boost::spirit::oct           // alias: boost::spirit::karma::oct`]]
     [[`boost::spirit::hex           // alias: boost::spirit::karma::hex`]]
@@ -302,7 +303,7 @@ Basic usage of an `uint` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:signed_int Signed Integer Number Generators]
+[section:signed_int Signed Integer Number Generators (`int_`, etc.)]
 
 [heading Description]
 
@@ -334,6 +335,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::karma::lit`]]
     [[`boost::spirit::short_        // alias: boost::spirit::karma::short_`]]
     [[`boost::spirit::int_          // alias: boost::spirit::karma::int_`]]
     [[`boost::spirit::long_         // alias: boost::spirit::karma::long_`]]
@@ -549,7 +551,7 @@ Basic usage of an `int_` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:real_number Real Number Generators]
+[section:real_number Real Number Generators (`float_`, `double_`, etc.)]
 
 [heading Description]
 
@@ -577,6 +579,7 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
+    [[`boost::spirit::lit           // alias: boost::spirit::karma::lit`]]
     [[`boost::spirit::float_        // alias: boost::spirit::karma::float_`]]
     [[`boost::spirit::double_       // alias: boost::spirit::karma::double_`]]
     [[`boost::spirit::long_double   // alias: boost::spirit::karma::long_double`]]

@@ -19,7 +19,7 @@ other categories. It includes the `eol` and `eps`, `lazy` generators.
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section eol]
+[section:eol End of Line (`eol`)]
 
 [heading Description]
 
@@ -92,7 +92,7 @@ Basic usage of the `eol` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section eps]
+[section:eps Epsilon (`eps`)]
 
 The family of `eps` components allows to create pseudo generators generating
 an empty string. This feature is sometimes useful either to force a generator
@@ -213,7 +213,7 @@ Basic usage of the `eps` generator:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section lazy]
+[section:lazy Lazy (`lazy`)]
 
 [heading Description]
 

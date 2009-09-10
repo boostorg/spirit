@@ -1,16 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Repetition
-          Directive (repeat[])</title>
+<title>Repetition Directive (repeat[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../directive.html" title="Directive">
-<link rel="previous" href="alignment.html" title=" Alignment
-          Directives (left_align[], center[], and right_align[])">
-<link rel="next" href="delimit.html" title=" Directives
-          Controlling Automatic Delimiting (verbatim[] and delimit[])">
+<link rel="prev" href="alignment.html" title="Alignment Directives (left_align[], center[], right_align[])">
+<link rel="next" href="delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], delimit[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,110 +22,111 @@
 <div class="spirit-nav">
 <a accesskey="p" href="alignment.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="delimit.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.directive.repeat"></a><a href="repeat.html" title=" Repetition
-          Directive (repeat[])"> Repetition
-          Directive (<tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Repetition Directive (repeat[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.directive.repeat"></a><a class="link" href="repeat.html" title="Repetition Directive (repeat[])"> Repetition
+          Directive (<code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.directive.repeat.description"></a><h6>
-<a name="id618842"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.description">Description</a>
+<a name="id757916"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.description">Description</a>
           </h6>
 <p>
             The repetition directive allows to repeat an arbitrary generator expression
             while optionally specifying the lower and upper repetition counts. It
             provides a more powerful and flexible mechanism for repeating a generator.
             There are grammars that are impractical and cumbersome, if not impossible,
-            for the basic EBNF iteration syntax ( <a href="../operator/kleene.html" title=" Kleene Star
-          (unary operator*())">unary
-            <tt class="computeroutput"><span class="char">'*'</span></tt></a> and the [karma_plus
-            unary <tt class="computeroutput"><span class="char">'+'</span></tt>]) to specify. Examples:
+            for the basic EBNF iteration syntax ( <a class="link" href="../operator/kleene.html" title="Kleene Star (*a)">unary
+            <code class="computeroutput"><span class="char">'*'</span></code></a> and the [karma_plus
+            unary <code class="computeroutput"><span class="char">'+'</span></code>]) to specify. Examples:
           </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
               A file name may have a maximum of 255 characters only.
             </li>
-<li>
+<li class="listitem">
               A specific bitmap file format has exactly 4096 RGB color information.
             </li>
-<li>
+<li class="listitem">
               A 256 bit binary string (1..256 1s or 0s).
             </li>
 </ul></div>
 <a name="spirit.karma.reference.directive.repeat.header"></a><h6>
-<a name="id618929"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.header">Header</a>
+<a name="id757965"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/directive/repeat.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_repeat</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.repeat.namespace"></a><h6>
-<a name="id619042"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.namespace">Namespace</a>
+<a name="id758039"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
+                  </p>
+                  </th></tr></thead>
 <tbody>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repeat</span> <span class="comment">// alias:
-                    boost::spirit::karma::repeat</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">inf</span> <span class="comment">// alias:
-                    boost::spirit::karma::inf</span></tt>
-                  </p></td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">repeat</span> <span class="comment">// alias:
+                    boost::spirit::karma::repeat</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">inf</span> <span class="comment">// alias:
+                    boost::spirit::karma::inf</span></code>
+                  </p>
+                  </td></tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.model_of"></a><h6>
-<a name="id619194"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.model_of">Model
+<a name="id758156"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
                 A generator object
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">num</span><span class="special">,</span> <span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">num</span><span class="special">,</span> <span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span></code></span></dt>
 <dd><p>
-                Numeric literals, any unsigned integer value, or a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Numeric literals, any unsigned integer value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to an unsigned integer value
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">inf</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">inf</span></code></span></dt>
 <dd><p>
                 Placeholder expression standing for 'no upper repeat limit'
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.repeat.expression_semantics"></a><h6>
-<a name="id619360"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.expression_semantics">Expression
+<a name="id758278"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -136,83 +134,102 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
                     zero or more times. This generator succeeds as long as its embedded
-                    generator <tt class="computeroutput"><span class="identifier">a</span></tt> does
+                    generator <code class="computeroutput"><span class="identifier">a</span></code> does
                     not fail (except if the underlying output stream reports an error).
-                    This variant of <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></tt> is semantically equivalent
-                    to the <a href="../operator/kleene.html" title=" Kleene Star
-          (unary operator*())">Kleene
-                    Star operator <tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt></a>
-                  </p></td>
+                    This variant of <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[]</span></code> is semantically equivalent
+                    to the <a class="link" href="../operator/kleene.html" title="Kleene Star (*a)">Kleene
+                    Star operator <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code></a>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    exactly <tt class="computeroutput"><span class="identifier">num</span></tt> times.
-                    This generator succeeds as long as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt> does not fail and as long
-                    as the associated attribute (container) contains at least <tt class="computeroutput"><span class="identifier">num</span></tt> elements (except if the
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                    exactly <code class="computeroutput"><span class="identifier">num</span></code> times.
+                    This generator succeeds as long as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code> does not fail and as long
+                    as the associated attribute (container) contains at least <code class="computeroutput"><span class="identifier">num</span></code> elements (except if the
                     underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
-                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    at least <tt class="computeroutput"><span class="identifier">num1</span></tt>
-                    times but not more than <tt class="computeroutput"><span class="identifier">num2</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
+                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                    at least <code class="computeroutput"><span class="identifier">num1</span></code>
+                    times but not more than <code class="computeroutput"><span class="identifier">num2</span></code>
                     times. This generator succeeds as long as its embedded generator
-                    <tt class="computeroutput"><span class="identifier">a</span></tt> does not fail
+                    <code class="computeroutput"><span class="identifier">a</span></code> does not fail
                     and as long as the associated attribute (container) contains
-                    at least <tt class="computeroutput"><span class="identifier">num1</span></tt>
+                    at least <code class="computeroutput"><span class="identifier">num1</span></code>
                     elements (except if the underlying output stream reports an error).
                     If the associated attribute (container) does contain more than
-                    <tt class="computeroutput"><span class="identifier">num2</span></tt> elements,
-                    this directive limits the repeat count to <tt class="computeroutput"><span class="identifier">num2</span></tt>.
-                  </p></td>
+                    <code class="computeroutput"><span class="identifier">num2</span></code> elements,
+                    this directive limits the repeat count to <code class="computeroutput"><span class="identifier">num2</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
-                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Repeat the generator <tt class="computeroutput"><span class="identifier">a</span></tt>
-                    at least <tt class="computeroutput"><span class="identifier">num1</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
+                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Repeat the generator <code class="computeroutput"><span class="identifier">a</span></code>
+                    at least <code class="computeroutput"><span class="identifier">num1</span></code>
                     times. No upper limit for the repeat count is set. This generator
-                    succeeds as long as its embedded generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+                    succeeds as long as its embedded generator <code class="computeroutput"><span class="identifier">a</span></code>
                     does not fail and as long as the associated attribute (container)
-                    contains at least <tt class="computeroutput"><span class="identifier">num</span></tt>
+                    contains at least <code class="computeroutput"><span class="identifier">num</span></code>
                     elements (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.attributes"></a><h6>
-<a name="id619938"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.attributes">Attributes</a>
+<a name="id758668"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.attributes">Attributes</a>
           </h6>
 <p>
-            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -221,92 +238,104 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
-                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span>
+                    <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num1</span><span class="special">,</span> <span class="identifier">num2</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
-                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span>
+                    <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(</span><span class="identifier">num</span><span class="special">,</span> <span class="identifier">inf</span><span class="special">)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
-              The table above uses <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as placeholders only.
+              The table above uses <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as placeholders only.
             </p>
 <p>
-              The notation of <tt class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> stands for <span class="emphasis"><em>any STL container</em></span>
-              holding elements of type <tt class="computeroutput"><span class="identifier">A</span></tt>.
+              The notation of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> stands for <span class="emphasis"><em>any STL container</em></span>
+              holding elements of type <code class="computeroutput"><span class="identifier">A</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.directive.repeat.complexity"></a><h6>
-<a name="id620910"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.complexity">Complexity</a>
+<a name="id760627"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -320,8 +349,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.repeat.example"></a><h6>
-<a name="id620951"></a>
-            <a href="repeat.html#spirit.karma.reference.directive.repeat.example">Example</a>
+<a name="id760651"></a>
+            <a class="link" href="repeat.html#spirit.karma.reference.directive.repeat.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -382,7 +411,7 @@
 <p>
           </p>
 <p>
-            Basic usage of <tt class="computeroutput"><span class="identifier">repeat</span></tt>
+            Basic usage of <code class="computeroutput"><span class="identifier">repeat</span></code>
             generator directive:
           </p>
 <p>

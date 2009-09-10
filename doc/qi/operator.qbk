@@ -32,7 +32,7 @@ predicate (unary `!`), Optional (`-`), Permutation (`^`), Plus (unary
 Also, see __include_structure__.
 
 [/------------------------------------------------------------------------------]
-[section:alternative Alternative (`a|b`)]
+[section:alternative Alternative (`a | b`)]
 
 [heading Description]
 
@@ -168,7 +168,7 @@ See __qi_comp_attr_notation__.
 [endsect] [/ And Predicate]
 
 [/------------------------------------------------------------------------------]
-[section:difference Difference (`a-b`)]
+[section:difference Difference (`a - b`)]
 
 [heading Description]
 
@@ -229,7 +229,7 @@ complexities of both operands.]
 [endsect] [/ Difference]
 
 [/------------------------------------------------------------------------------]
-[section:expect Expectation (`a>b`)]
+[section:expect Expectation (`a > b`)]
 
 [heading Description]
 
@@ -486,7 +486,7 @@ a: Unused --> -a: Unused``]]
 [endsect] [/ Optional]
 
 [/------------------------------------------------------------------------------]
-[section:permutation Permutation (`a^b`)]
+[section:permutation Permutation (`a ^ b`)]
 
 [heading Description]
 
@@ -618,7 +618,7 @@ the Plus itself is O(N), where N is the number successful repetitions.]
 [endsect] [/ Plus]
 
 [/------------------------------------------------------------------------------]
-[section:sequence Sequence (`a>>b`)]
+[section:sequence Sequence (`a >> b`)]
 
 [heading Description]
 
@@ -687,7 +687,7 @@ Some using declarations:
 [endsect] [/ Sequence]
 
 [/------------------------------------------------------------------------------]
-[section:sequential_or Sequential Or (`a||b`)]
+[section:sequential_or Sequential Or (`a || b`)]
 
 [heading Description]
 

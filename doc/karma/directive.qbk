@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Directive]
+[section:directive Directive]
 
 This module includes different generator directives. It includes alignement 
 directives (`left_align[]`, `center[]`, and `right_align[]`), repetition 
@@ -23,7 +23,7 @@ width (`maxwidth[]`), buffering (`buffer[]`), and attribute handling
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:alignment Alignment Directives (`left_align[]`, `center[]`, and `right_align[]`)]
+[section:alignment Alignment Directives (`left_align[]`, `center[]`, `right_align[]`)]
 
 [heading Description]
 
@@ -398,7 +398,7 @@ Basic usage of `repeat` generator directive:
 [endsect] [/ repeat]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:delimit Directives Controlling Automatic Delimiting (`verbatim[]` and `delimit[]`)]
+[section:delimit Directives Controlling Automatic Delimiting (`verbatim[]`, `delimit[]`)]
 
 [heading Description]
 
@@ -509,7 +509,7 @@ Basic usage of `delimit` generator directive:
 [endsect] [/ verbatim/delimit]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:upperlower Directives Controlling Case Sensitivity (`upper[]` and `lower[]`)]
+[section:upperlower Directives Controlling Case Sensitivity (`upper[]`, `lower[]`)]
 
 [heading Description]
 

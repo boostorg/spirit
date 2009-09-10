@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -25,34 +25,9 @@ Also, see __include_structure__.
 
 [heading Description]
 
-The binary generators described in this section are:
-
-[table
-    [[Expression]           [Description]]
-    [[`byte_`]              [Generates the mandatory attribute as a single byte 
-                             (8 bit binary value) using native endian 
-                             representation]]
-    [[`word`]               [Generates the mandatory attribute as a 16 bit 
-                             binary value using native endian representation]]
-    [[`dword`]              [Generates the mandatory attribute as a 32 bit 
-                             binary value using native endian representation]]
-    [[`qword`]              [Generates the mandatory attribute as a 64 bit 
-                             binary value using native endian representation]]
-    [[`byte_(b)`]           [Generates the immediate parameter as a single byte 
-                             (8 bit binary value) using native endian 
-                             representation]]
-    [[`word(w)`]            [Generates the immediate parameter as a 16 bit 
-                             binary value using native endian representation]]
-    [[`dword(dw)`]          [Generates the immediate parameter as a 32 bit 
-                             binary value using native endian representation]]
-    [[`qword(qw)`]          [Generates the immediate parameter as a 64 bit 
-                             binary value using native endian representation]]
-]
-
-[note   The generators `qword` and `qword(qw)` are only available on 
-        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
-        defined (i.e. on platforms having native support for `unsigned long long` 
-        (64 bit) integer types).]
+The binary native endianness generators described in this section are used to
+emit binary byte streams layed out conforming to the native endianess (byte 
+order) of the target architecture.
 
 [heading Header]
 
@@ -60,6 +35,21 @@ The binary generators described in this section are:
     #include <boost/spirit/include/karma_binary.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::byte_ // alias: boost::spirit::karma::byte_` ]]
+    [[`boost::spirit::word  // alias: boost::spirit::karma::word` ]]
+    [[`boost::spirit::dword // alias: boost::spirit::karma::dword` ]]
+    [[`boost::spirit::qword // alias: boost::spirit::karma::qword` ]]
+]
+
+[note   The generators `qword` and `qword(qw)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `unsigned long long` 
+        (64 bit) integer types).]
 
 [heading Model of]
 
@@ -180,28 +170,9 @@ platforms:
 
 [heading Description]
 
-The binary generators described in this section are:
-
-[table
-    [[Expression]           [Description]]
-    [[`little_word`]        [Generates the mandatory attribute as a 16 bit 
-                             binary value using little endian representation]]
-    [[`little_dword`]       [Generates the mandatory attribute as a 32 bit 
-                             binary value using little endian representation]]
-    [[`little_qword`]       [Generates the mandatory attribute as a 64 bit 
-                             binary value using little endian representation]]
-    [[`little_word(w)`]     [Generates the immediate parameter as a 16 bit 
-                             binary value using little endian representation]]
-    [[`little_dword(dw)`]   [Generates the immediate parameter as a 32 bit 
-                             binary value using little endian representation]]
-    [[`little_qword(qw)`]   [Generates the immediate parameter as a 64 bit 
-                             binary value using little endian representation]]
-]
-
-[note   The generators `little_qword` and `little_qword(qw)` are only available 
-        on platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
-        defined (i.e. on platforms having native support for `unsigned long long` 
-        (64 bit) integer types).]
+The little native endianness generators described in this section are used to
+emit binary byte streams layed out conforming to the little endianess byte 
+order.
 
 [heading Header]
 
@@ -209,6 +180,20 @@ The binary generators described in this section are:
     #include <boost/spirit/include/karma_binary.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::little_word  // alias: boost::spirit::karma::little_word` ]]
+    [[`boost::spirit::little_dword // alias: boost::spirit::karma::little_dword` ]]
+    [[`boost::spirit::little_qword // alias: boost::spirit::karma::little_qword` ]]
+]
+
+[note   The generators `little_qword` and `little_qword(qw)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `unsigned long long` 
+        (64 bit) integer types).]
 
 [heading Model of]
 
@@ -310,28 +295,9 @@ Basic usage of the little binary generators:
 
 [heading Description]
 
-The binary generators described in this section are:
-
-[table
-    [[Expression]           [Description]]
-    [[`big_word`]           [Generates the mandatory attribute as a 16 bit 
-                             binary value using big endian representation]]
-    [[`big_dword`]          [Generates the mandatory attribute as a 32 bit 
-                             binary value using big endian representation]]
-    [[`big_qword`]          [Generates the mandatory attribute as a 64 bit 
-                             binary value using big endian representation]]
-    [[`big_word(w)`]        [Generates the immediate parameter as a 16 bit 
-                             binary value using big endian representation]]
-    [[`big_dword(dw)`]      [Generates the immediate parameter as a 32 bit 
-                             binary value using big endian representation]]
-    [[`big_qword(qw)`]      [Generates the immediate parameter as a 64 bit 
-                             binary value using big endian representation]]
-]
-
-[note   The generators `big_qword` and `big_qword(qw)` are only available on 
-        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
-        defined (i.e. on platforms having native support for `unsigned long long` 
-        (64 bit) integer types).]
+The big native endianness generators described in this section are used to
+emit binary byte streams layed out conforming to the big endianess byte 
+order.
 
 [heading Header]
 
@@ -339,6 +305,20 @@ The binary generators described in this section are:
     #include <boost/spirit/include/karma_binary.hpp>
 
 Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::big_word  // alias: boost::spirit::karma::big_word` ]]
+    [[`boost::spirit::big_dword // alias: boost::spirit::karma::big_dword` ]]
+    [[`boost::spirit::big_qword // alias: boost::spirit::karma::big_qword` ]]
+]
+
+[note   The generators `big_qword` and `big_qword(qw)` are only available on 
+        platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
+        defined (i.e. on platforms having native support for `unsigned long long` 
+        (64 bit) integer types).]
 
 [heading Model of]
 

@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,39 +10,7 @@
 
 This module includes the description of the different variants of the `stream` 
 generator. It can be used to utilize existing streaming operators 
-(`operator<<()`) for output generation.
-
-[heading Description]
-
-The stream generators described in this section are:
-
-[table
-    [[Expression]           [Description]]
-    [[`stream`]             [Generates narrow character (`char`) based output 
-                             from the mandatory attribute using the matching 
-                             streaming `operator<<()`]]
-    [[`stream(s)`]          [Generates narrow character (`char`) based output 
-                             from the immediate argument `s` using the matching 
-                             streaming `operator<<()`]]
-    [[`wstream`]            [Generates wide character (`wchar_t`) based output 
-                             from the mandatory attribute using the matching 
-                             streaming `operator<<()`]]
-    [[`wstream(s)`]         [Generates wide character (`wchar_t`) based output 
-                             from the immediate argument `s` using the matching 
-                             streaming `operator<<()`]]
-    [
-[``stream_generator<
-    Char
->()``]                      [Generates output based on the given character type
-                             `Char` from the mandatory attribute using the 
-                             matching streaming `operator<<()`]]
-    [
-[``stream_generator<
-    Char
->()(s)``]                   [Generates output based on the given character type
-                             `Char` from the immediate argument `s` using the 
-                             matching streaming `operator<<()`]]
-]
+(`operator<<(std::ostream&, ...)`) for output generation.
 
 [heading Header]
 
@@ -50,6 +18,49 @@ The stream generators described in this section are:
     #include <boost/spirit/include/karma_stream.hpp>
 
 Also, see __include_structure__.
+
+[section Stream (`stream`, `wstream`, etc.)]
+
+[heading Description]
+
+The `stream_generator` is a primitive which allows to use pre-existing standard
+streaming operators for output generation integrated with __karma__. It 
+provides a wrapper generator dispatching the value to output to the stream 
+operator of the corresponding type. Any value `a` to be formatted using the
+`stream_generator` will result in invoking the standard streaming operator
+for its type `A`, for instance:
+
+    std::ostream& operator<< (std::ostream&, A const&);
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/stream.hpp>
+    #include <boost/spirit/include/karma_stream.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::stream  // alias: boost::spirit::karma::stream`]]
+    [[`boost::spirit::wstream // alias: boost::spirit::karma::wstream`]]
+]
+
+[heading Synopsis]
+
+    template <typename Char>
+    struct stream_generator;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`Char`]   [The character type to use to generate 
+                 the output. This type will be used while 
+                 assigning the generated characters to the 
+                 underlying output iterator.]           [`char`]]
+]
 
 [heading Model of]
 
@@ -60,9 +71,7 @@ Also, see __include_structure__.
                  streaming `operator<<()` or a __karma_lazy_argument__ that 
                  evaluates to any type with a defined matching streaming 
                  `operator<<()`.]]
-    [[`Char`]   [The character type to use to generate the output. This type 
-                 will be used while assigning the generated characters to the 
-                 underlying output iterator.]]]
+]
 
 [heading Expression Semantics]
 
@@ -130,14 +139,6 @@ arbitrary underlying character type.
                              is assumed to be `Char`.]]
 ]
 
-[heading Template parameters]
-
-[table
-    [[Parameter]        [Description]               [Default]]
-    [[`Char`]           [The character type used by 
-                         the underlying ostream]    [`char`]]
-]
-
 [heading Additional Requirements]
 
 All of the stream generators listed above require the type of the value to 
@@ -180,9 +181,9 @@ instance.
 
 [important The attribute type `hold_any` exposed by some of the stream 
            generators is semantically and syntactically equivalent to 
-           the type `boost::any`. It has been added to /Spirit/ as it has 
-           better a performance and a smaller footprint if compared to 
-           `boost::any`.
+           the type implemented by __boost_any__. It has been added to /Spirit/ 
+           as it has better a performance and a smaller footprint if compared to 
+           __boost_any__.
 ]
 
 [heading Complexity]
@@ -211,5 +212,7 @@ And a class definition used in the examples:
 Basic usage of `stream` generators:
 
 [reference_karma_stream]
+
+[endsect]
 
 [endsect]

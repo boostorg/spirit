@@ -21,7 +21,7 @@ specific character classifiers (`alnum`, `alpha`, `digit`, `xdigit`, etc.).
 Also, see __include_structure__.
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:char_generator Character Generators]
+[section:char_generator Character Generators (`char_`, `lit`)]
 
 [heading Description]
 
@@ -301,7 +301,7 @@ Basic usage of `char_` generators:
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section:char_class Character Class Generators]
+[section:char_class Character Classification (`alnum`, `digit`, etc.)]
 
 [heading Description]
 

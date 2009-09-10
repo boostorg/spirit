@@ -1,14 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Real
-          Number Generators</title>
+<title>Real Number Generators (float_, double_, etc.)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../numeric.html" title=" Numeric">
-<link rel="previous" href="signed_int.html" title=" Signed
-          Integer Number Generators">
+<link rel="up" href="../numeric.html" title="Numeric">
+<link rel="prev" href="signed_int.html" title="Signed Integer Number Generators (int_, etc.)">
 <link rel="next" href="../stream.html" title="Stream">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -24,38 +22,35 @@
 <div class="spirit-nav">
 <a accesskey="p" href="signed_int.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../stream.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.numeric.real_number"></a><a href="real_number.html" title=" Real
-          Number Generators"> Real
-          Number Generators</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Real Number Generators (float_, double_, etc.)">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.numeric.real_number"></a><a class="link" href="real_number.html" title="Real Number Generators (float_, double_, etc.)"> Real
+          Number Generators (<code class="computeroutput"><span class="identifier">float_</span></code>,
+          <code class="computeroutput"><span class="identifier">double_</span></code>, etc.)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.numeric.real_number.description"></a><h6>
-<a name="id581133"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.description">Description</a>
+<a name="id720991"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.description">Description</a>
           </h6>
 <p>
-            The <tt class="computeroutput"><span class="identifier">real_generator</span></tt> can
+            The <code class="computeroutput"><span class="identifier">real_generator</span></code> can
             generate real numbers of arbitrary length and size limited by its template
-            parameter, <tt class="computeroutput"><span class="identifier">Num</span></tt>. The numeric
-            base type <tt class="computeroutput"><span class="identifier">Num</span></tt> can be
+            parameter, <code class="computeroutput"><span class="identifier">Num</span></code>. The numeric
+            base type <code class="computeroutput"><span class="identifier">Num</span></code> can be
             a user defined numeric type such as fixed_point (fixed point reals) and
             bignum (unlimited precision numbers) as long as the type follows certain
             expression requirements (for more information about the requirements,
-            see <a href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">below</a>).
+            see <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">below</a>).
           </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              <tt class="computeroutput"><span class="identifier">lit</span></tt> is reused by the
-              <a href="../string.html" title=" String">String Generators</a>,
-              the <a href="../char.html" title=" Char">Character Generators</a>,
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
+              <a class="link" href="../string.html" title="String">String Generators</a>,
+              the <a class="link" href="../char.html" title="Char">Character Generators</a>,
               and the Numeric Generators. In general, a char generator is created
               when you pass in a character, a string generator is created when you
               pass in a string, and a numeric generator is created when you use a
@@ -63,49 +58,63 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.header"></a><h6>
-<a name="id581257"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.header">Header</a>
+<a name="id721058"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/real.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_real</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.real_number.namespace"></a><h6>
-<a name="id581371"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.namespace">Namespace</a>
+<a name="id721133"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
+                  </p>
+                  </th></tr></thead>
 <tbody>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">float_</span> <span class="comment">// alias:
-                    boost::spirit::karma::float_</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">double_</span> <span class="comment">//
-                    alias: boost::spirit::karma::double_</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">long_double</span> <span class="comment">//
-                    alias: boost::spirit::karma::long_double</span></tt>
-                  </p></td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
+                    boost::spirit::karma::lit</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">float_</span> <span class="comment">// alias:
+                    boost::spirit::karma::float_</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">double_</span> <span class="comment">//
+                    alias: boost::spirit::karma::double_</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">long_double</span> <span class="comment">//
+                    alias: boost::spirit::karma::long_double</span></code>
+                  </p>
+                  </td></tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.synopsis"></a><h6>
-<a name="id581574"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.synopsis">Synopsis</a>
+<a name="id721326"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Num</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">RealPolicies</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">real_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.real_number.template_parameters"></a><h6>
-<a name="id581670"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.template_parameters">Template
+<a name="id721393"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -115,82 +124,100 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Parameter
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Default
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Num</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Num</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     The type of the real number to generate
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">double</span></tt>
-                  </p></td>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">double</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">RealPolicies</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">RealPolicies</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     The policies to use while converting the real number
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></tt>
-                  </p></td>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <p>
-            For more information about the type <tt class="computeroutput"><span class="identifier">RealPolicies</span></tt>
-            see <a href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policies">below</a>).
+            For more information about the type <code class="computeroutput"><span class="identifier">RealPolicies</span></code>
+            see <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policies">below</a>).
           </p>
 <a name="spirit.karma.reference.numeric.real_number.model_of"></a><h6>
-<a name="id581880"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.model_of">Model
+<a name="id721549"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
+                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">num</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
 <dd><p>
-                Numeric literal, any real number value, or a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a real number value of type <tt class="computeroutput"><span class="identifier">Num</span></tt>
+                Numeric literal, any real number value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a real number value of type <code class="computeroutput"><span class="identifier">Num</span></code>
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">Num</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Num</span></code></span></dt>
 <dd><p>
-                Type of <tt class="computeroutput"><span class="identifier">num</span></tt>: any
+                Type of <code class="computeroutput"><span class="identifier">num</span></code>: any
                 real number type
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.real_number.expression_semantics"></a><h6>
-<a name="id582020"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.expression_semantics">Expression
+<a name="id721651"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
+            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -198,33 +225,41 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    Generate the real number literal <tt class="computeroutput"><span class="identifier">num</span></tt>
-                    using the default formatting (no trailing zeros, <tt class="computeroutput"><span class="identifier">fixed</span></tt> representation for numbers
-                    <tt class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the real number literal <code class="computeroutput"><span class="identifier">num</span></code>
+                    using the default formatting (no trailing zeros, <code class="computeroutput"><span class="identifier">fixed</span></code> representation for numbers
+                    <code class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span>
                     <span class="special">&lt;=</span> <span class="number">1e5</span>
                     <span class="special">&amp;&amp;</span> <span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">&gt;</span>
-                    <span class="number">1e-3</span></tt>, scientific representation
+                    <span class="number">1e-3</span></code>, scientific representation
                     otherwise, 3 fractional digits, sign is only printed for negative
                     literals). This generator never fails (except if the underlying
                     output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">float_</span>
@@ -232,22 +267,24 @@
 <span class="identifier">long_double</span></pre>
 <p>
                   </p>
-</td>
-<td><p>
+                  </td>
+<td>
+                  <p>
                     Generate the real number provided by a mandatory attribute using
-                    the default formatting (no trailing zeros, <tt class="computeroutput"><span class="identifier">fixed</span></tt>
-                    representation for numbers <tt class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">&lt;=</span>
+                    the default formatting (no trailing zeros, <code class="computeroutput"><span class="identifier">fixed</span></code>
+                    representation for numbers <code class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">&lt;=</span>
                     <span class="number">1e5</span> <span class="special">&amp;&amp;</span>
                     <span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span>
-                    <span class="special">&gt;</span> <span class="number">1e-3</span></tt>,
+                    <span class="special">&gt;</span> <span class="number">1e-3</span></code>,
                     scientific representation otherwise, 3 fractional digits, sign
                     is only printed for negative literals). This generator never
                     fails (except if the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">float_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
@@ -255,28 +292,30 @@
 <span class="identifier">long_double</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></pre>
 <p>
                   </p>
-</td>
-<td><p>
+                  </td>
+<td>
+                  <p>
                     Generate the real point number provided by the immediate literal
                     value the generator is initialized from using the default formatting
-                    (no trailing zeros, <tt class="computeroutput"><span class="identifier">fixed</span></tt>
-                    representation for numbers <tt class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">&lt;=</span>
+                    (no trailing zeros, <code class="computeroutput"><span class="identifier">fixed</span></code>
+                    representation for numbers <code class="computeroutput"><span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">&lt;=</span>
                     <span class="number">1e5</span> <span class="special">&amp;&amp;</span>
                     <span class="identifier">fabs</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span>
-                    <span class="special">&gt;</span> <span class="number">1e-3</span></tt>,
+                    <span class="special">&gt;</span> <span class="number">1e-3</span></code>,
                     scientific representation otherwise, 3 fractional digits, sign
                     is only printed for negative literals). If this generator has
                     an associated attribute it succeeds only as long as the attribute
                     is equal to the immediate literal (except if the underlying output
                     stream reports an error). Otherwise this generator fails and
                     does not generate any output.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <p>
-            All generators listed in the table above (except <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>) are predefined specializations of the
-            <tt class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">RealPolicies</span><span class="special">&gt;</span></tt>
+            All generators listed in the table above (except <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>) are predefined specializations of the
+            <code class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">RealPolicies</span><span class="special">&gt;</span></code>
             basic real number generator type described below. It is possible to directly
             use this type to create real number generators using a wide range of
             formatting options.
@@ -287,16 +326,20 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">real_generator</span><span class="special">&lt;</span>
@@ -304,57 +347,59 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-</td>
-<td><p>
-                    Generate the real number of type <tt class="computeroutput"><span class="identifier">Num</span></tt>
-                    provided by a mandatory attribute using the specified <tt class="computeroutput"><span class="identifier">RealPolicies</span></tt>. This generator
+                  </td>
+<td>
+                  <p>
+                    Generate the real number of type <code class="computeroutput"><span class="identifier">Num</span></code>
+                    provided by a mandatory attribute using the specified <code class="computeroutput"><span class="identifier">RealPolicies</span></code>. This generator
                     never fails (except if the underlying output stream reports an
                     error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.additional_requirements"></a><h6>
-<a name="id582781"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">Additional
+<a name="id722195"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.additional_requirements">Additional
             Requirements</a>
           </h6>
 <p>
             The following list enumerate the requirements which must be met in order
-            to use a certain type <tt class="computeroutput"><span class="identifier">Num</span></tt>
-            to instantiate a <tt class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></tt>.
+            to use a certain type <code class="computeroutput"><span class="identifier">Num</span></code>
+            to instantiate a <code class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></code>.
           </p>
 <p>
-            In order to be usable as the first template parameter for <tt class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;&gt;</span></tt>
-            the type <tt class="computeroutput"><span class="identifier">Num</span></tt> must have
+            In order to be usable as the first template parameter for <code class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;&gt;</span></code>
+            the type <code class="computeroutput"><span class="identifier">Num</span></code> must have
             defined:
           </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
-              comparison operators for: <tt class="computeroutput"><span class="special">&lt;</span></tt>,
-              <tt class="computeroutput"><span class="special">&lt;=</span></tt>, <tt class="computeroutput"><span class="special">==</span></tt>,
-              <tt class="computeroutput"><span class="special">!=</span></tt>, <tt class="computeroutput"><span class="special">&gt;</span></tt>,
-              and <tt class="computeroutput"><span class="special">&gt;=</span></tt>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              comparison operators for: <code class="computeroutput"><span class="special">&lt;</span></code>,
+              <code class="computeroutput"><span class="special">&lt;=</span></code>, <code class="computeroutput"><span class="special">==</span></code>,
+              <code class="computeroutput"><span class="special">!=</span></code>, <code class="computeroutput"><span class="special">&gt;</span></code>,
+              and <code class="computeroutput"><span class="special">&gt;=</span></code>
 </li>
-<li>
-              numeric operators for: <tt class="computeroutput"><span class="special">+</span></tt>,
-              <tt class="computeroutput"><span class="special">-</span></tt>, <tt class="computeroutput"><span class="special">/</span></tt>,
-              <tt class="computeroutput"><span class="special">*</span></tt>, and <tt class="computeroutput"><span class="special">%</span></tt>
+<li class="listitem">
+              numeric operators for: <code class="computeroutput"><span class="special">+</span></code>,
+              <code class="computeroutput"><span class="special">-</span></code>, <code class="computeroutput"><span class="special">/</span></code>,
+              <code class="computeroutput"><span class="special">*</span></code>, and <code class="computeroutput"><span class="special">%</span></code>
 </li>
-<li>
-              functions implementing the interface and the semantics of: <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fmod</span></tt>, <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></tt>,
-              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">log10</span></tt>, <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">lround</span></tt>,
-              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ltrunc</span></tt>, <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">modf</span></tt>,
-              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">floor</span></tt>, and <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ceil</span></tt>.
+<li class="listitem">
+              functions implementing the interface and the semantics of: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fmod</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></code>,
+              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">log10</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">lround</span></code>,
+              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ltrunc</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">modf</span></code>,
+              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">floor</span></code>, and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ceil</span></code>.
               These need to be defined in a way so that they will be found using
               argument dependent lookup (ADL).
             </li>
-<li>
-              a valid specialization of the type <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></tt> allowing for numeric property inspection.
+<li class="listitem">
+              a valid specialization of the type <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></code> allowing for numeric property inspection.
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.real_number.attributes"></a><h6>
-<a name="id583255"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.attributes">Attributes</a>
+<a name="id722504"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -362,85 +407,117 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">float_</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">float</span></tt>, attribute
-                    is mandatory (otherwise compilation will fail)
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">float_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">float_</span></tt>, attribute
-                    is optional, if it is supplied, the generator compares the attribute
-                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
-                    succeeds only if both are equal, failing otherwise.
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">double_</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">double</span></tt>, attribute
-                    is mandatory (otherwise compilation will fail)
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">double</span></tt>, attribute
-                    is optional, if it is supplied, the generator compares the attribute
-                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
-                    succeeds only if both are equal, failing otherwise.
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">long_double</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></tt>,
-                    attribute is mandatory (otherwise compilation will fail)
-                  </p></td>
-</tr>
-<tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">long_double</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></tt>,
-                    attribute is optional, if it is supplied, the generator compares
-                    the attribute with <tt class="computeroutput"><span class="identifier">num</span></tt>
-                    and succeeds only if both are equal, failing otherwise.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">float_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">float</span></code>, attribute
+                    is mandatory (otherwise compilation will fail)
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">float_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">float_</span></code>, attribute
+                    is optional, if it is supplied, the generator compares the attribute
+                    with <code class="computeroutput"><span class="identifier">num</span></code> and
+                    succeeds only if both are equal, failing otherwise.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">double_</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">double</span></code>, attribute
+                    is mandatory (otherwise compilation will fail)
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">double</span></code>, attribute
+                    is optional, if it is supplied, the generator compares the attribute
+                    with <code class="computeroutput"><span class="identifier">num</span></code> and
+                    succeeds only if both are equal, failing otherwise.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">long_double</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></code>,
+                    attribute is mandatory (otherwise compilation will fail)
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">long_double</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></code>,
+                    attribute is optional, if it is supplied, the generator compares
+                    the attribute with <code class="computeroutput"><span class="identifier">num</span></code>
+                    and succeeds only if both are equal, failing otherwise.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">real_generator</span><span class="special">&lt;</span>
@@ -448,15 +525,17 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-</td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Num</span></tt>, attribute
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Num</span></code>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">real_generator</span><span class="special">&lt;</span>
@@ -464,25 +543,27 @@
 <span class="special">&gt;()(</span><span class="identifier">num</span><span class="special">)</span></pre>
 <p>
                   </p>
-</td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Num</span></tt>, attribute
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Num</span></code>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
+                    with <code class="computeroutput"><span class="identifier">num</span></code> and
                     succeeds only if both are equal, failing otherwise.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.real_number_formatting_policies"></a><h6>
-<a name="id583882"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policies">Real
+<a name="id722964"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policies">Real
             Number Formatting Policies</a>
           </h6>
 <p>
             If special formatting of a real number is needed, overload the policy
-            class <tt class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></tt>
-            and use it as a template parameter to the <tt class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;&gt;</span></tt> real number generator. For instance:
+            class <code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></code>
+            and use it as a template parameter to the <code class="computeroutput"><span class="identifier">real_generator</span><span class="special">&lt;&gt;</span></code> real number generator. For instance:
           </p>
 <pre class="programlisting"><span class="comment">// define a new real number formatting policy
 </span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Num</span><span class="special">&gt;</span>
@@ -501,14 +582,14 @@
 </span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">scientific</span><span class="special">,</span> <span class="number">0.1</span><span class="special">);</span>      <span class="comment">// will output: 1.0e-01
 </span></pre>
 <p>
-            The template parameter <tt class="computeroutput"><span class="identifier">Num</span></tt>
+            The template parameter <code class="computeroutput"><span class="identifier">Num</span></code>
             should be the type to be formatted using the overloaded policy type.
-            At the same time <tt class="computeroutput"><span class="identifier">Num</span></tt>
+            At the same time <code class="computeroutput"><span class="identifier">Num</span></code>
             will be used as the attribute type of the created real number generator.
           </p>
 <a name="spirit.karma.reference.numeric.real_number.real_number_formatting_policy_expression_semantics"></a><h6>
-<a name="id584385"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policy_expression_semantics">Real
+<a name="id724438"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.real_number_formatting_policy_expression_semantics">Real
             Number Formatting Policy Expression Semantics</a>
           </h6>
 <p>
@@ -521,17 +602,21 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Inserter</span>
@@ -542,14 +627,14 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This is the main function used to generate the output for a real
                     number. It is called by the real generator in order to perform
                     the conversion. In theory all of the work can be implemented
                     here, but it is the easiest to use existing functionality provided
-                    by the type specified by the template parameter <tt class="computeroutput"><span class="identifier">Inserter</span></tt>. The default implementation
+                    by the type specified by the template parameter <code class="computeroutput"><span class="identifier">Inserter</span></code>. The default implementation
                     of this functions is: 
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Inserter</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">OutputIterator</span>
@@ -561,141 +646,141 @@
 <span class="special">}</span>
 </pre>
 <p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: is the real
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: is the real
                     number to convert
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">p</span></tt>: the instance
+                  <p>
+                    <code class="computeroutput"><span class="identifier">p</span></code>: the instance
                     of the policy type used to instantiate this real number generator.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">bool</span> <span class="identifier">force_sign</span><span class="special">(</span><span class="identifier">Num</span> <span class="identifier">n</span><span class="special">);</span>
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     The default behavior is to not to require generating a sign.
-                    If the function <tt class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></tt> returns true, then all generated
-                    numbers will have a sign (<tt class="computeroutput"><span class="char">'+'</span></tt>
-                    or <tt class="computeroutput"><span class="char">'-'</span></tt>, zeros will
+                    If the function <code class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></code> returns true, then all generated
+                    numbers will have a sign (<code class="computeroutput"><span class="char">'+'</span></code>
+                    or <code class="computeroutput"><span class="char">'-'</span></code>, zeros will
                     have a space instead of a sign).
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt> is the real
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code> is the real
                     number to output. This can be used to adjust the required behavior
                     depending on the value of this number.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">bool</span> <span class="identifier">trailing_zeros</span><span class="special">(</span><span class="identifier">Num</span> <span class="identifier">n</span><span class="special">);</span>
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     Return whether trailing zero digits have to be emitted in the
                     fractional part of the output. If set, this flag instructs the
                     real number generator to emit trailing zeros up to the required
-                    precision digits (as returned by the <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> function).
+                    precision digits (as returned by the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> function).
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt> is the real
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code> is the real
                     number to output. This can be used to adjust the required behavior
                     depending on the value of this number.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">int</span> <span class="identifier">floatfield</span><span class="special">(</span><span class="identifier">Num</span> <span class="identifier">n</span><span class="special">);</span>
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     Decide, which representation type to use in the generated output.
                   </p>
-<p>
+                  <p>
                     By default all numbers having an absolute value of zero or in
-                    between <tt class="computeroutput"><span class="number">0.001</span></tt> and
-                    <tt class="computeroutput"><span class="number">100000</span></tt> will be generated
+                    between <code class="computeroutput"><span class="number">0.001</span></code> and
+                    <code class="computeroutput"><span class="number">100000</span></code> will be generated
                     using the fixed format, all others will be generated using the
                     scientific representation.
                   </p>
-<p>
-                    The <tt class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></tt> can be used to force the output
+                  <p>
+                    The <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> can be used to force the output
                     of trailing zeros in the fractional part up to the number of
-                    digits returned by the <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> member function. The default
+                    digits returned by the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> member function. The default
                     is not to generate the trailing zeros.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: is the real
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: is the real
                     number to output. This can be used to adjust the formatting flags
                     depending on the value of this number.
                   </p>
-<p>
-                    The return value has to be either <tt class="computeroutput"><span class="identifier">fmtflags</span><span class="special">::</span><span class="identifier">scientific</span></tt>
-                    (generate real number values in scientific notation) or <tt class="computeroutput"><span class="identifier">fmtflags</span><span class="special">::</span><span class="identifier">fixed</span></tt> (generate real number
+                  <p>
+                    The return value has to be either <code class="computeroutput"><span class="identifier">fmtflags</span><span class="special">::</span><span class="identifier">scientific</span></code>
+                    (generate real number values in scientific notation) or <code class="computeroutput"><span class="identifier">fmtflags</span><span class="special">::</span><span class="identifier">fixed</span></code> (generate real number
                     values in fixed-point notation).
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">unsigned</span> <span class="identifier">precision</span><span class="special">(</span><span class="identifier">Num</span> <span class="identifier">n</span><span class="special">);</span>
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     Return the maximum number of decimal digits to generate in the
                     fractional part of the output.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: is the real
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: is the real
                     number to output. This can be used to adjust the required precision
                     depending on the value of this number. If the trailing zeros
                     flag is specified the fractional part of the output will be 'filled'
                     with zeros, if appropriate.
                   </p>
-<p>
-                    <span class="bold"><b>Note:</b></span> If the trailing_zeros
+                  <p>
+                    <span class="bold"><strong>Note:</strong></span> If the trailing_zeros
                     flag is not in effect additional semantics apply. See the description
-                    for the <tt class="computeroutput"><span class="identifier">fraction_part</span><span class="special">()</span></tt> function below. Moreover, this
-                    precision will be limited to the value of <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">digits10</span>
-                    <span class="special">+</span> <span class="number">1</span></tt>.
+                    for the <code class="computeroutput"><span class="identifier">fraction_part</span><span class="special">()</span></code> function below. Moreover, this
+                    precision will be limited to the value of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">digits10</span>
+                    <span class="special">+</span> <span class="number">1</span></code>.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">bool</span> <span class="identifier">ForceSign</span><span class="special">,</span> 
@@ -705,44 +790,44 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This function is called to generate the integer part of the real
                     number.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: is the absolute
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: is the absolute
                     value of the integer part of the real number to convert (always
                     non-negative)
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sign</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sign</span></code>: is the
                     sign of the overall real number to convert.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">force_sign</span></tt>: is
+                  <p>
+                    <code class="computeroutput"><span class="identifier">force_sign</span></code>: is
                     a flag whether a sign has to be generated even for non- negative
                     numbers (this is the same as has been returned from the function
-                    <tt class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></tt>
+                    <code class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></code>
                     described above)
                   </p>
-<p>
+                  <p>
                     The return value defines the outcome of the whole generator.
-                    If it is <tt class="computeroutput"><span class="keyword">false</span></tt>,
-                    no further output is generated, immediatly returning <tt class="computeroutput"><span class="keyword">false</span></tt> from the calling <tt class="computeroutput"><span class="identifier">real_generator</span></tt> as well. If
-                    it is <tt class="computeroutput"><span class="keyword">true</span></tt>, normal
+                    If it is <code class="computeroutput"><span class="keyword">false</span></code>,
+                    no further output is generated, immediatly returning <code class="computeroutput"><span class="keyword">false</span></code> from the calling <code class="computeroutput"><span class="identifier">real_generator</span></code> as well. If
+                    it is <code class="computeroutput"><span class="keyword">true</span></code>, normal
                     output generation continues.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
@@ -751,50 +836,50 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This function is called to generate the decimal point.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: The fractional
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: The fractional
                     part of the real number to convert. Note that this number is
                     scaled such, that it represents the number of units which correspond
-                    to the value returned from the <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> function earlier. I.e. a fractional
-                    part of <tt class="computeroutput"><span class="number">0.01234</span></tt> is
-                    represented as <tt class="computeroutput"><span class="number">1234</span></tt>
-                    when the function <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> returned <tt class="computeroutput"><span class="number">5</span></tt>.
+                    to the value returned from the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> function earlier. I.e. a fractional
+                    part of <code class="computeroutput"><span class="number">0.01234</span></code> is
+                    represented as <code class="computeroutput"><span class="number">1234</span></code>
+                    when the function <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="number">5</span></code>.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">precision</span></tt>: The
-                    number of digits to emit as returned by the function <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">precision</span></code>: The
+                    number of digits to emit as returned by the function <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code>
                     described above
                   </p>
-<p>
+                  <p>
                     This is given to allow to decide, whether a decimal point has
                     to be generated at all.
                   </p>
-<p>
-                    <span class="bold"><b>Note:</b></span> If the <tt class="computeroutput"><span class="identifier">trailing_zeros</span></tt>
+                  <p>
+                    <span class="bold"><strong>Note:</strong></span> If the <code class="computeroutput"><span class="identifier">trailing_zeros</span></code>
                     flag is not in effect additional comments apply. See the description
-                    for the <tt class="computeroutput"><span class="identifier">fraction_part</span><span class="special">()</span></tt> function below.
+                    for the <code class="computeroutput"><span class="identifier">fraction_part</span><span class="special">()</span></code> function below.
                   </p>
-<p>
+                  <p>
                     The return value defines the outcome of the whole generator.
-                    If it is <tt class="computeroutput"><span class="keyword">false</span></tt>,
-                    no further output is generated, immediatly returning <tt class="computeroutput"><span class="keyword">false</span></tt> from the calling <tt class="computeroutput"><span class="identifier">real_generator</span></tt> as well. If
-                    it is <tt class="computeroutput"><span class="keyword">true</span></tt>, normal
+                    If it is <code class="computeroutput"><span class="keyword">false</span></code>,
+                    no further output is generated, immediatly returning <code class="computeroutput"><span class="keyword">false</span></code> from the calling <code class="computeroutput"><span class="identifier">real_generator</span></code> as well. If
+                    it is <code class="computeroutput"><span class="keyword">true</span></code>, normal
                     output generation continues.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
@@ -803,69 +888,69 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This function is called to generate the fractional part of the
                     number.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: The fractional
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: The fractional
                     part of the real number to convert. Note that this number is
                     scaled such, that it represents the number of units which correspond
-                    to the value returned from the <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> function earlier. I.e. a fractional
-                    part of <tt class="computeroutput"><span class="number">0.01234</span></tt> is
-                    represented as <tt class="computeroutput"><span class="number">1234</span></tt>
-                    when the function <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> returned <tt class="computeroutput"><span class="number">5</span></tt>.
+                    to the value returned from the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> function earlier. I.e. a fractional
+                    part of <code class="computeroutput"><span class="number">0.01234</span></code> is
+                    represented as <code class="computeroutput"><span class="number">1234</span></code>
+                    when the function <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="number">5</span></code>.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">adjprec</span></tt>: The
+                  <p>
+                    <code class="computeroutput"><span class="identifier">adjprec</span></code>: The
                     corrected number of digits to emit (see note below)
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">precision</span></tt>: The
-                    number of digits to emit as returned by the function <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">precision</span></code>: The
+                    number of digits to emit as returned by the function <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code>
                     described above
                   </p>
-<p>
-                    <span class="bold"><b>Note:</b></span> If <tt class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></tt> returns <tt class="computeroutput"><span class="keyword">false</span></tt>
-                    the <tt class="computeroutput"><span class="identifier">adjprec</span></tt> parameter
-                    will have been corrected from the value the <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> function returned earlier (defining
+                  <p>
+                    <span class="bold"><strong>Note:</strong></span> If <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returns <code class="computeroutput"><span class="keyword">false</span></code>
+                    the <code class="computeroutput"><span class="identifier">adjprec</span></code> parameter
+                    will have been corrected from the value the <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> function returned earlier (defining
                     the maximal number of fractional digits) in the sense, that it
-                    takes into account trailing zeros. I.e. a real number <tt class="computeroutput"><span class="number">0.0123</span></tt> and a value of <tt class="computeroutput"><span class="number">5</span></tt> returned from <tt class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></tt> will result in:
+                    takes into account trailing zeros. I.e. a real number <code class="computeroutput"><span class="number">0.0123</span></code> and a value of <code class="computeroutput"><span class="number">5</span></code> returned from <code class="computeroutput"><span class="identifier">precision</span><span class="special">()</span></code> will result in:
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></tt> returned <tt class="computeroutput"><span class="keyword">false</span></tt>:
-                    <tt class="computeroutput"><span class="identifier">n</span></tt> will be <tt class="computeroutput"><span class="number">123</span></tt>, and <tt class="computeroutput"><span class="identifier">adjprec</span></tt>
-                    will be <tt class="computeroutput"><span class="number">4</span></tt> (as we
-                    need to print <tt class="computeroutput"><span class="number">0123</span></tt>)
+                  <p>
+                    <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="keyword">false</span></code>:
+                    <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">123</span></code>, and <code class="computeroutput"><span class="identifier">adjprec</span></code>
+                    will be <code class="computeroutput"><span class="number">4</span></code> (as we
+                    need to print <code class="computeroutput"><span class="number">0123</span></code>)
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></tt> returned <tt class="computeroutput"><span class="keyword">true</span></tt>:
-                    <tt class="computeroutput"><span class="identifier">n</span></tt> will be <tt class="computeroutput"><span class="number">1230</span></tt>, and <tt class="computeroutput"><span class="identifier">adjprec</span></tt>
-                    will be <tt class="computeroutput"><span class="number">5</span></tt> (as we
-                    need to print <tt class="computeroutput"><span class="number">01230</span></tt>)
+                  <p>
+                    <code class="computeroutput"><span class="identifier">trailing_zeros</span><span class="special">()</span></code> returned <code class="computeroutput"><span class="keyword">true</span></code>:
+                    <code class="computeroutput"><span class="identifier">n</span></code> will be <code class="computeroutput"><span class="number">1230</span></code>, and <code class="computeroutput"><span class="identifier">adjprec</span></code>
+                    will be <code class="computeroutput"><span class="number">5</span></code> (as we
+                    need to print <code class="computeroutput"><span class="number">01230</span></code>)
                   </p>
-<p>
+                  <p>
                     The missing preceding zeros in the fractional part have to be
                     supplied by the implementation of this policy function.
                   </p>
-<p>
+                  <p>
                     The return value defines the outcome of the whole generator.
-                    If it is <tt class="computeroutput"><span class="keyword">false</span></tt>,
-                    no further output is generated, immediatly returning <tt class="computeroutput"><span class="keyword">false</span></tt> from the calling <tt class="computeroutput"><span class="identifier">real_generator</span></tt> as well. If
-                    it is <tt class="computeroutput"><span class="keyword">true</span></tt>, normal
+                    If it is <code class="computeroutput"><span class="keyword">false</span></code>,
+                    no further output is generated, immediatly returning <code class="computeroutput"><span class="keyword">false</span></code> from the calling <code class="computeroutput"><span class="identifier">real_generator</span></code> as well. If
+                    it is <code class="computeroutput"><span class="keyword">true</span></code>, normal
                     output generation continues.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">,</span> 
@@ -875,41 +960,41 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This function is called to generate the exponential part of the
-                    number (this is called only if the <tt class="computeroutput"><span class="identifier">floatfield</span><span class="special">()</span></tt> function returned the <tt class="computeroutput"><span class="identifier">fmtflags</span><span class="special">::</span><span class="identifier">scientific</span></tt> flag).
+                    number (this is called only if the <code class="computeroutput"><span class="identifier">floatfield</span><span class="special">()</span></code> function returned the <code class="computeroutput"><span class="identifier">fmtflags</span><span class="special">::</span><span class="identifier">scientific</span></code> flag).
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: The (signed)
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: The (signed)
                     exponential part of the real number to convert.
                   </p>
-<p>
-                    The template parameters <tt class="computeroutput"><span class="identifier">CharEncoding</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">Tag</span></tt> are either
-                    of the type <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  <p>
+                    The template parameters <code class="computeroutput"><span class="identifier">CharEncoding</span></code>
+                    and <code class="computeroutput"><span class="identifier">Tag</span></code> are either
+                    of the type <code class="computeroutput"><span class="identifier">unused_type</span></code>
                     or describe the character class and conversion to be applied
-                    to any output possibly influenced by either the <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>
-                    or <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt>
+                    to any output possibly influenced by either the <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>
+                    or <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>
                     directives.
                   </p>
-<p>
+                  <p>
                     The return value defines the outcome of the whole generator.
-                    If it is <tt class="computeroutput"><span class="keyword">false</span></tt>,
-                    no further output is generated, immediatly returning <tt class="computeroutput"><span class="keyword">false</span></tt> from the calling <tt class="computeroutput"><span class="identifier">real_generator</span></tt> as well. If
-                    it is <tt class="computeroutput"><span class="keyword">true</span></tt>, normal
+                    If it is <code class="computeroutput"><span class="keyword">false</span></code>,
+                    no further output is generated, immediatly returning <code class="computeroutput"><span class="keyword">false</span></code> from the calling <code class="computeroutput"><span class="identifier">real_generator</span></code> as well. If
+                    it is <code class="computeroutput"><span class="keyword">true</span></code>, normal
                     output generation continues.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span>
@@ -919,48 +1004,48 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This function is called whenever the number to print is a non-normal
-                    real number of type <tt class="computeroutput"><span class="identifier">NaN</span></tt>.
+                    real number of type <code class="computeroutput"><span class="identifier">NaN</span></code>.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: is the (signed)
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: is the (signed)
                     real number to convert
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">force_sign</span></tt>: is
+                  <p>
+                    <code class="computeroutput"><span class="identifier">force_sign</span></code>: is
                     a flag whether a sign has to be generated even for non- negative
                     numbers (this is the same as has been returned from the function
-                    <tt class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></tt>
+                    <code class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></code>
                     described above)
                   </p>
-<p>
-                    The template parameters <tt class="computeroutput"><span class="identifier">CharEncoding</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">Tag</span></tt> are either
-                    of the type <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  <p>
+                    The template parameters <code class="computeroutput"><span class="identifier">CharEncoding</span></code>
+                    and <code class="computeroutput"><span class="identifier">Tag</span></code> are either
+                    of the type <code class="computeroutput"><span class="identifier">unused_type</span></code>
                     or describe the character class and conversion to be applied
-                    to any output possibly influenced by either the <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>
-                    or <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt>
+                    to any output possibly influenced by either the <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>
+                    or <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>
                     directives.
                   </p>
-<p>
+                  <p>
                     The return value defines the outcome of the whole generator.
-                    If it is <tt class="computeroutput"><span class="keyword">false</span></tt>,
-                    no further output is generated, immediatly returning <tt class="computeroutput"><span class="keyword">false</span></tt> from the calling <tt class="computeroutput"><span class="identifier">real_generator</span></tt> as well. If
-                    it is <tt class="computeroutput"><span class="keyword">true</span></tt>, normal
+                    If it is <code class="computeroutput"><span class="keyword">false</span></code>,
+                    no further output is generated, immediatly returning <code class="computeroutput"><span class="keyword">false</span></code> from the calling <code class="computeroutput"><span class="identifier">real_generator</span></code> as well. If
+                    it is <code class="computeroutput"><span class="keyword">true</span></code>, normal
                     output generation continues.
                   </p>
-</td>
+                  </td>
 </tr>
 <tr>
 <td>
-<p>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span>
@@ -970,75 +1055,75 @@
 </pre>
 <p>
                   </p>
-</td>
+                  </td>
 <td>
-<p>
+                  <p>
                     This function is called whenever the number to print is a non-normal
-                    real number of type <tt class="computeroutput"><span class="identifier">Inf</span></tt>.
+                    real number of type <code class="computeroutput"><span class="identifier">Inf</span></code>.
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
+                  <p>
+                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
                     output iterator to use for generation
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">n</span></tt>: is the (signed)
+                  <p>
+                    <code class="computeroutput"><span class="identifier">n</span></code>: is the (signed)
                     real number to convert
                   </p>
-<p>
-                    <tt class="computeroutput"><span class="identifier">force_sign</span></tt>: is
+                  <p>
+                    <code class="computeroutput"><span class="identifier">force_sign</span></code>: is
                     a flag whether a sign has to be generated even for non- negative
                     numbers (this is the same as has been returned from the function
-                    <tt class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></tt>
+                    <code class="computeroutput"><span class="identifier">force_sign</span><span class="special">()</span></code>
                     described above)
                   </p>
-<p>
-                    The template parameters <tt class="computeroutput"><span class="identifier">CharEncoding</span></tt>
-                    and <tt class="computeroutput"><span class="identifier">Tag</span></tt> are either
-                    of the type <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  <p>
+                    The template parameters <code class="computeroutput"><span class="identifier">CharEncoding</span></code>
+                    and <code class="computeroutput"><span class="identifier">Tag</span></code> are either
+                    of the type <code class="computeroutput"><span class="identifier">unused_type</span></code>
                     or describe the character class and conversion to be applied
-                    to any output possibly influenced by either the <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>
-                    or <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt>
+                    to any output possibly influenced by either the <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>
+                    or <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>
                     directives.
                   </p>
-<p>
+                  <p>
                     The return value defines the outcome of the whole generator.
-                    If it is <tt class="computeroutput"><span class="keyword">false</span></tt>,
-                    no further output is generated, immediatly returning <tt class="computeroutput"><span class="keyword">false</span></tt> from the calling <tt class="computeroutput"><span class="identifier">real_generator</span></tt> as well. If
-                    it is <tt class="computeroutput"><span class="keyword">true</span></tt>, normal
+                    If it is <code class="computeroutput"><span class="keyword">false</span></code>,
+                    no further output is generated, immediatly returning <code class="computeroutput"><span class="keyword">false</span></code> from the calling <code class="computeroutput"><span class="identifier">real_generator</span></code> as well. If
+                    it is <code class="computeroutput"><span class="keyword">true</span></code>, normal
                     output generation continues.
                   </p>
-</td>
+                  </td>
 </tr>
 </tbody>
 </table></div>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
+<tr><td align="left" valign="top"><p>
               The easiest way to implement a proper real number formatting policy
-              is to derive a new type from the the type <tt class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;&gt;</span></tt> while overriding the aspects
+              is to derive a new type from the the type <code class="computeroutput"><span class="identifier">real_policies</span><span class="special">&lt;&gt;</span></code> while overriding the aspects
               of the formatting which need to be changed.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.real_number.complexity"></a><h6>
-<a name="id588003"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.complexity">Complexity</a>
+<a name="id726987"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                O(N), where <tt class="computeroutput"><span class="identifier">N</span></tt> is
+                O(N), where <code class="computeroutput"><span class="identifier">N</span></code> is
                 the number of digits needed to represent the generated real number.
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.real_number.example"></a><h6>
-<a name="id588052"></a>
-            <a href="real_number.html#spirit.karma.reference.numeric.real_number.example">Example</a>
+<a name="id727019"></a>
+            <a class="link" href="real_number.html#spirit.karma.reference.numeric.real_number.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -1116,7 +1201,7 @@
 <p>
           </p>
 <p>
-            Basic usage of an <tt class="computeroutput"><span class="identifier">double_</span></tt>
+            Basic usage of an <code class="computeroutput"><span class="identifier">double_</span></code>
             generator:
           </p>
 <p>
