@@ -181,7 +181,7 @@ namespace boost { namespace spirit { namespace traits
 
     // Default implementation for other types: try a C-style string
     // conversion.
-    // These overloads are explicitely disabled for containers,
+    // These overloads are explicitly disabled for containers,
     // as they would be ambiguous with the previous ones.
     template <typename T, typename Str>
     inline typename disable_if<is_container<Str>
