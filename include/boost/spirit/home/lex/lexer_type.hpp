@@ -26,7 +26,7 @@ namespace boost { namespace spirit { namespace lex
         // Requirement: l.collect(def, state) -> void
         //
         //  l:          a lexer
-        //  def:        token definition
+        //  def:        token definition container
         //  state:      lexer state this token definition needs to be added to
 
         Derived const& derived() const

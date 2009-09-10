@@ -31,7 +31,7 @@ namespace boost { namespace spirit { namespace lex
         template <typename LexerDef, typename String>
         void collect(LexerDef& lexdef, String const& state) const
         {
-            // first collect the token definition information for the token_def 
+            // collect the token definition information for the token_def 
             // this action is attached to
             subject.collect(lexdef, state);
         }

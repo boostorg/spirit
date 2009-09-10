@@ -65,7 +65,7 @@ namespace boost { namespace spirit { namespace lex
         {
             typedef typename LexerDef::id_type id_type;
             if (std::size_t(~0) == id_)
-                id_ = next_id<id_type>::get();
+                id_ = lexdef.get_next_id();
             unique_id_ = lexdef.add_token (state.c_str(), str_, id_);
         }
 

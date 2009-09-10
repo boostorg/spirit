@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         suffix += name_suffix;
 
         generate_delimiter(os_);
-        os_ << "// this defines a generic accessor for the information above\n";
+        os_ << "// this defines a generic accessors for the information above\n";
         os_ << "struct lexer" << suffix << "\n{\n";
         os_ << "    // return the number of lexer states\n";
         os_ << "    static std::size_t const state_count()\n";

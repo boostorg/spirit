@@ -135,7 +135,7 @@ namespace boost { namespace spirit { namespace lex
                   , id_type token_id = id_type()) const
                 {
                     if (id_type() == token_id)
-                        token_id = next_id<id_type>::get();
+                        token_id = def.def.get_next_id();
                     def.def.add_token (def.state.c_str(), s, token_id);
                     return *this;
                 }
@@ -148,7 +148,7 @@ namespace boost { namespace spirit { namespace lex
                     // make sure we have a token id
                     if (id_type() == token_id) {
                         if (id_type() == tokdef.id()) {
-                            token_id = next_id<id_type>::get();
+                            token_id = def.def.get_next_id();
                             tokdef.id(token_id);
                         }
                         else {
@@ -280,7 +280,8 @@ namespace boost { namespace spirit { namespace lex
     //  modes of the lexer
     struct match_flags
     {
-        enum enum_type {
+        enum enum_type 
+        {
             match_default = 0,          // no flags
             match_not_dot_newline = 1,  // the regex '.' doesn't match newlines
             match_icase = 2             // all matching operations are case insensitive
@@ -290,12 +291,21 @@ namespace boost { namespace spirit { namespace lex
     ///////////////////////////////////////////////////////////////////////////
     //  This represents a lexer object
     ///////////////////////////////////////////////////////////////////////////
+
+    // this is the first token id automatically assigned by the library if needed
+    enum tokenids 
+    {
+        min_token_id = 0x10000
+    };
+
     template <typename Lexer>
     class lexer : public Lexer
     {
     private:
         // avoid warnings about using 'this' in constructor
         lexer& this_() { return *this; }
+
+        typename Lexer::id_type next_token_id;
 
     public:
         typedef Lexer lexer_type;
@@ -308,7 +318,10 @@ namespace boost { namespace spirit { namespace lex
         typedef std::basic_string<char_type> string_type;
 
         lexer(unsigned int flags = match_flags::match_default) 
-          : lexer_type(flags), self(this_(), lexer_type::initial_state()) {}
+          : lexer_type(flags)
+          , next_token_id(min_token_id)
+          , self(this_(), lexer_type::initial_state()) 
+        {}
 
         // access iterator interface
         template <typename Iterator>
@@ -320,6 +333,9 @@ namespace boost { namespace spirit { namespace lex
 
         std::size_t map_state(char_type const* state)
             { return this->lexer_type::add_state(state); }
+
+        //  create a unique token id
+        id_type get_next_id() { return next_token_id++; }
 
         lexer_def self;  // allow for easy token definition
     };

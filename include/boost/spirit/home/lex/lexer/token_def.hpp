@@ -33,37 +33,6 @@
 namespace boost { namespace spirit { namespace lex
 {
     ///////////////////////////////////////////////////////////////////////////
-    //  create a unique token id, note this is not thread safe
-    ///////////////////////////////////////////////////////////////////////////
-    enum tokenids 
-    {
-        // this is the first token id automatically assigned by the library
-        // if needed
-        min_token_id = 0x10000
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  The next_id template needs to be specialized for any non-default token 
-    //  id type used by a custom token type. It needs to expose a function
-    //  'static Idtype get()' returning the next available token id each time 
-    //  it is called.
-    template <typename Idtype>
-    struct next_id;
-
-    ///////////////////////////////////////////////////////////////////////////
-    //  Default specialization for the next_id template returning the next 
-    //  available token id.
-    template <>
-    struct next_id<std::size_t>
-    {
-        static std::size_t get()
-        {
-            static std::size_t next_token_id = min_token_id;
-            return next_token_id++;
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     //  This component represents a token definition
     ///////////////////////////////////////////////////////////////////////////
     template<typename Attribute = unused_type
@@ -160,7 +129,7 @@ namespace boost { namespace spirit { namespace lex
 
             token_state_ = state_id;
             if (0 == token_id_)
-                token_id_ = next_id<Idtype>::get();
+                token_id_ = lexdef.get_next_id();
 
             if (0 == def_.which()) {
                 unique_id_ = lexdef.add_token(state.c_str()
