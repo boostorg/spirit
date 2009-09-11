@@ -107,8 +107,8 @@
 [def __sec_lex_attributes__     [link spirit.lex.abstracts.lexer_attributes Lexer Attributes]]
 [def __sec_lex_semactions__     [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
 
-[def __sec_ref_lex_token__      [link spirit.lex.reference.concepts.token Token Reference]]
-[def __sec_ref_lex_token_def__  [link spirit.lex.reference.concepts.tokendef TokenDef Reference]]
+[def __sec_ref_lex_token__      [link spirit.lex.reference.token Token Class]]
+[def __sec_ref_lex_token_def__  [link spirit.lex.reference.tokendef TokenDef Class]]
 
 
 [/ References to API descriptions ]

@@ -42,23 +42,23 @@
             class to the user. The only real limitation posed on this token class
             is consequently, that it has to carry at least the token id of the token
             it represents. For more information about the interface a user defined
-            token type has to expose please look at the <a class="link" href="../../../../">Token
-            Reference</a> reference. The library provides a default token type
-            based on the <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
-            library which should be sufficient in most use cases: the <a class="link" href="../../reference/token_class.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
+            token type has to expose please look at the <a class="link" href="../../reference/token.html" title="Token Class">Token
+            Class</a> reference. The library provides a default token type based
+            on the <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
+            library which should be sufficient in most use cases: the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
             type. This section focusses on the description of general features a
             token class may implement and how this integrates with the other parts
             of the <span class="emphasis"><em>Spirit.Lex</em></span> library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id869880"></a>
+<a name="id884079"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
 <p>
             It is very important to understand the difference between a token definition
-            (represented by the <a class="link" href="../../reference/tokendef_class.html" title="TokenDef Class"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a>
-            template) and a token itself (for instance represented by the <a class="link" href="../../reference/token_class.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
+            (represented by the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a>
+            template) and a token itself (for instance represented by the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
             template).
           </p>
 <p>
@@ -109,7 +109,7 @@
             The token value and the lexer state the token has been recogniyed in
             may be omitted for optimization reasons, avoiding the token to carry
             more data than actually required. This configuration can be achieved
-            by supplying appropriate template parameters for the <a class="link" href="../../reference/token_class.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
+            by supplying appropriate template parameters for the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
             template while defining the token type.
           </p>
 <p>
@@ -141,7 +141,7 @@
             </p></td></tr>
 </table></div>
 <p>
-            Here is the template prototype of the <a class="link" href="../../reference/token_class.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
+            Here is the template prototype of the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
             template:
           </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -188,12 +188,12 @@
             first time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id870373"></a>
+<a name="id884572"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
 <p>
-            The token definitions (represented by the <a class="link" href="../../reference/tokendef_class.html" title="TokenDef Class"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a>
+            The token definitions (represented by the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a>
             template) are normally used as part of the definition of the lexical
             analyzer. At the same time a token definition instance may be used as
             a parser component in <span class="emphasis"><em>Spirit.Qi</em></span>.
@@ -254,16 +254,16 @@
             </p>
 <p>
               But as soon as you specify at least one token value type while defining
-              the token type you'll have to list all value types used for <a class="link" href="../../reference/tokendef_class.html" title="TokenDef Class"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a>
+              the token type you'll have to list all value types used for <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a>
               declarations in the token definition class, otherwise compilation errors
               will occur.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_"></a><h6>
-<a name="id870624"></a>
+<a name="id884823"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token_class___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_">Examples
-            of using <a class="link" href="../../reference/token_class.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a></a>
+            of using <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a></a>
           </h6>
 <p>
             Let's start with some examples. We refer to one of the <span class="emphasis"><em>Spirit.Lex</em></span>
@@ -311,7 +311,7 @@
 <p>
             As the parsers generated by <span class="emphasis"><em>Spirit.Qi</em></span> are fully
             attributed, any <span class="emphasis"><em>Spirit.Qi</em></span> parser component needs
-            to expose a certain type as its parser attribute. Naturally, the <a class="link" href="../../reference/tokendef_class.html" title="TokenDef Class"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a> exposes the token value
+            to expose a certain type as its parser attribute. Naturally, the <a class="link" href="../../../../"><code class="computeroutput"><span class="identifier">token_def</span><span class="special">&lt;&gt;</span></code></a> exposes the token value
             type as its parser attribute, enabling a smooth integration with <span class="emphasis"><em>Spirit.Qi</em></span>.
           </p>
 <p>
