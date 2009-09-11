@@ -80,7 +80,7 @@
             Generally, and more formally, the semantic action <code class="computeroutput"><span class="identifier">F</span></code>
             attached to a generator <code class="computeroutput"><span class="identifier">G</span></code>
             needs to take a reference to the generators attribute type as its first
-            parameter. For more information about generatpor attributes please see
+            parameter. For more information about generator attributes please see
             the section Generator Attributes.
           </p>
 <p>
@@ -98,7 +98,14 @@
           are simply ignored.
         </p>
 <p>
-          In the follwoing example we present various ways to attach semantic actions:
+          Overall, the possible signatures for semantic actions are:
+        </p>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attr</span><span class="special">&amp;);</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attr</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;);</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attr</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;);</span>
+</pre>
+<p>
+          In the following example we present various ways to attach semantic actions:
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -269,7 +276,7 @@
           The examples above can be found here: <a href="../../../../../example/karma/actions.cpp" target="_top">actions.cpp</a>
         </p>
 <a name="spirit.karma.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id664650"></a>
+<a name="id726357"></a>
           <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>

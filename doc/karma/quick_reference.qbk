@@ -32,8 +32,7 @@ pages and pages of reference doumentation.
                         optional.]]
     [[`outiter`]        [An output iterator to receive the generated output]]
     [[`Ch`]             [Character-class specific character type (See __char_class_types__)]]
-    [[`ch`]             [Character-class specific character (See __char_class_types__)]]
-    [[`ch2`]            [Character-class specific character (See __char_class_types__)]]
+    [[`ch, ch2`]        [Character-class specific character (See __char_class_types__)]]
     [[`charset`]        [Character-set specifier string (example: "a-z0-9")]]
     [[`str`]            [Character-class specific string (See __char_class_types__)]]
     [[`Str`]            [Attribute of `str`: `std::basic_string<T>` where `T` is the underlying character type of `str`]]
@@ -532,6 +531,8 @@ objects, the allowed signatures are:
 The `unused_type` is used in the signatures above to signify 'don't
 care'.
 
+For more information see __karma_actions__.
+
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -553,6 +554,8 @@ information from the `Attrib` and `Context` that are otherwise fiddly to extract
     [[`_val`]                   [The enclosing rule's synthesized attribute.]]
     [[`_pass`]                  [Assign `false` to `_pass` to force a generator failure.]]
 ]
+
+For more information see __karma_actions__.
 
 [endsect]
 

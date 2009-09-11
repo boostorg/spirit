@@ -45,7 +45,7 @@ to generate.
 [important  Generally, and more formally, the semantic action `F` attached to 
             a generator `G` needs to take a reference to the generators 
             attribute type as its first parameter. For more information about 
-            generatpor attributes please see the section __karma_attribute__.
+            generator attributes please see the section __karma_attribute__.
 
             In the example above the function F takes a `double&` as its first
             parameter as the attribute of the `double_` generator happens to be
@@ -57,7 +57,13 @@ reference to a boolean 'pass' parameter). We don't need these, for now, but
 we'll see more on these other arguments later. __karma__ allows us to bind a 
 single argument function, like above. The other arguments are simply ignored.
 
-In the follwoing example we present various ways to attach semantic actions:
+Overall, the possible signatures for semantic actions are:
+
+    void f(Attr&);
+    void f(Attr&, Context&);
+    void f(Attr&, Context&, bool&);
+
+In the following example we present various ways to attach semantic actions:
 
 * Using plain function pointer
 * Using simple function object

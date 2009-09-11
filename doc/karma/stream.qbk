@@ -19,7 +19,7 @@ generator. It can be used to utilize existing streaming operators
 
 Also, see __include_structure__.
 
-[section Stream (`stream`, `wstream`, etc.)]
+[section:stream Stream (`stream`, `wstream`, etc.)]
 
 [heading Description]
 

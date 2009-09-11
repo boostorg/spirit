@@ -55,7 +55,7 @@ backwards compatibility for existing applications.
 * Changed parameter sequence of `qi::phrase_parse`, `qi::phrase_match`, 
   `karma::generate_delimited`, and `match_delimited`. The attribute is now 
   always the last parameter.
-* Added new overloads of those functions allowing to explicitely specify the
+* Added new overloads of those functions allowing to explicitly specify the
   post-skipping and pre-delimiting behavior.
 * Added multi attribute API functions
 * Removed `grammar_def<>`

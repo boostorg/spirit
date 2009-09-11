@@ -217,6 +217,14 @@
 [def __karma_grammar__              Grammar] [/$$$ TODO: link me $$$]
 [def __karma_comp_attr_notation__   [link spirit.karma.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
 
+[/////////////////////////////////////////////////////////////////////////////]
+[def __lexer_concept__              [link spirit.lex.reference.lexer_concepts.lexer `Lexer`]]
+[def __primitive_lexer_concept__    [link spirit.lex.reference.lexer_concepts.primitivelexer `PrimitiveLexer`]]
+[def __unary_lexer_concept__        [link spirit.lex.reference.lexer_concepts.unarylexer `UnaryLexer`]]
+[def __nary_lexer_concept__         [link spirit.lex.reference.lexer_concepts.narylexer `NaryLexer`]]
+
+[def __lex_actions__                [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
+
 [/ Some images ]
 
 [def __note__                   [$../images/note.png]]

@@ -174,7 +174,7 @@ it helped to simplify things considerably.
 
 All __qi__ parser components have well defined attribute types. Grammars and 
 rules are no exception. But since both need to be generic enough to be usable 
-for any parser their attribute type has to be explicitely specified. In the
+for any parser their attribute type has to be explicitly specified. In the
 example above the `roman` grammar and the rule `first` both have an `unsigned` 
 attribute:
 
