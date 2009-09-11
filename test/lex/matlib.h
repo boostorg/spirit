@@ -56,7 +56,7 @@ struct add_row
 };
 
 template <class Lexer>
-struct matlib_tokens:boost::spirit::lex::lexer<Lexer>
+struct matlib_tokens : boost::spirit::lex::lexer<Lexer>
 {
     matlib_tokens(std::vector<std::vector<double> > &a)
       : matrix(a)
