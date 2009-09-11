@@ -292,7 +292,9 @@ namespace boost { namespace spirit { namespace lex
     //  This represents a lexer object
     ///////////////////////////////////////////////////////////////////////////
 
-    // this is the first token id automatically assigned by the library if needed
+    ///////////////////////////////////////////////////////////////////////////
+    // This is the first token id automatically assigned by the library 
+    // if needed
     enum tokenids 
     {
         min_token_id = 0x10000

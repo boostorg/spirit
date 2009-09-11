@@ -16,7 +16,9 @@
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/size_t.hpp>
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
+#include <boost/spirit/home/lex/lexer/lexertl/static_version.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace lex { namespace lexertl 
@@ -95,6 +97,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         generate_delimiter(os_);
         os_ << "// this defines a generic accessors for the information above\n";
         os_ << "struct lexer" << suffix << "\n{\n";
+        os_ << "    // version number of compatible static lexer engine\n";
+        os_ << "    enum { static_version = " 
+            << boost::lexical_cast<std::string>(SPIRIT_STATIC_LEXER_VERSION) << " };\n\n";
         os_ << "    // return the number of lexer states\n";
         os_ << "    static std::size_t const state_count()\n";
         os_ << "    {\n        return lexer_state_count" << suffix << "; \n    }\n\n";

@@ -25,7 +25,7 @@ namespace boost { namespace spirit { namespace lex
 
         // Requirement: l.collect(def, state) -> void
         //
-        //  l:          a lexer
+        //  l:          a lexer component
         //  def:        token definition container
         //  state:      lexer state this token definition needs to be added to
 
@@ -46,13 +46,13 @@ namespace boost { namespace spirit { namespace lex
     {
         struct unary_lexer_id;
 
-        // Requirement: l.subject -> subject lexer
+        // Requirement: l.subject -> subject lexer component
         //
-        // l:   a unary lexer
+        // l:   a unary lexer component
 
-        // Requirement: L::subject_type -> subject lexer type
+        // Requirement: L::subject_type -> subject lexer component type
         //
-        // L:   a unary lexer type
+        // L:   a unary lexer component type
     };
 
     template <typename Derived>
@@ -62,11 +62,11 @@ namespace boost { namespace spirit { namespace lex
 
         // Requirement: l.elements -> fusion sequence
         //
-        // l:   a composite lexer
+        // l:   a composite lexer component
 
         // Requirement: L::elements_type -> fusion sequence
         //
-        // L:   a composite lexer type
+        // L:   a composite lexer component type
     };
 
 }}}
