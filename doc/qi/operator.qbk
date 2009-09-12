@@ -36,7 +36,7 @@ Also, see __include_structure__.
 
 [heading Description]
 
-The alternative operator, `a|b`, matches one of two or more operands
+The alternative operator, `a | b`, matches one of two or more operands
 (`a`, `b`, ... etc.): 
 
     a | b | ...
@@ -172,7 +172,7 @@ See __qi_comp_attr_notation__.
 
 [heading Description]
 
-The difference operator, `a-b`, is a binary operator that matches the
+The difference operator, `a - b`, is a binary operator that matches the
 first (LHS) operand but not the second (RHS). [footnote Unlike classic
 Spirit, with Spirit2, the expression will always fail if the RHS is a
 successful match regardless if the RHS matches less characters. For
@@ -233,7 +233,7 @@ complexities of both operands.]
 
 [heading Description]
 
-Like the __qi_sequence__, the expectation operator, `a>b`, parses two or
+Like the __qi_sequence__, the expectation operator, `a > b`, parses two or
 more operands (`a`, `b`, ... etc.), in sequence:
 
     a > b > ...
@@ -256,7 +256,7 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`a`, `b`]     [A __parser_concept__]]
-    [[`Iter`]       [a `ForwardIterator` type.]]
+    [[`Iter`]       [a __fwditer__ type.]]
 ]
 
 [heading Expectation Failure]
@@ -376,6 +376,65 @@ successful repetitions.]
 [endsect] [/ Kleene]
 
 [/------------------------------------------------------------------------------]
+[section:list List (`a % b`)]
+
+[heading Description]
+
+The list operator, `a % b`, is a binary operator that matches a list of
+one or more repetitions of `a` separated by occurrences of `b`. This is
+equivalent to `a >> *(b >> a)`.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/operator/list.hpp>
+    #include <boost/spirit/include/qi_list.hpp>
+    
+Also, see __include_structure__.
+
+[heading Model of]
+
+[:__binary_parser_concept__]
+
+[variablelist Notation
+    [[`a`, `b`]     [A __parser_concept__]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __binary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`a % b`]          [Match a list of one or more repetitions of `a` 
+                        separated by occurrences of `b`. This is equivalent 
+                        to `a >> *(b >> a)`.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`a - b`]
+[``a: A, b: B --> (a % b): vector<A>
+a: Unused, b: B --> (a % b): Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity of the List is defined by the complexity of its
+subject, `a`, multiplied by the number of repetitions. The complexity of
+the List itself is O(N), where N is the number successful repetitions.]
+
+[heading Example]
+
+[reference_list]
+
+[endsect] [/ List]
+
+[/------------------------------------------------------------------------------]
 [section:not_predicate Not Predicate (`!a`)]
 
 [heading Description]
@@ -490,7 +549,7 @@ a: Unused --> -a: Unused``]]
 
 [heading Description]
 
-The permutation operator, `a^b`, matches one or more operands (`a`, `b`,
+The permutation operator, `a ^ b`, matches one or more operands (`a`, `b`,
 ... etc.) in any order: 
 
     a ^ b ^ ...
@@ -622,7 +681,7 @@ the Plus itself is O(N), where N is the number successful repetitions.]
 
 [heading Description]
 
-The sequence operator, `>>`, which parses two or more operands (`a`,
+The sequence operator, `a >> b`, which parses two or more operands (`a`,
 `b`, ... etc.), in sequence:
 
     a >> b >> ...
@@ -691,9 +750,9 @@ Some using declarations:
 
 [heading Description]
 
-The sequential-or operator, `||`, where the expression `a || b` reads as
-match `a` or `b` and in sequence. That is, if both `a` and `b` match, it
-must be in sequence; this is equivalent to `a >> -b | b`:
+The sequential-or operator, `a || b`, where the expression `a || b`
+reads as match `a` or `b` and in sequence. That is, if both `a` and `b`
+match, it must be in sequence; this is equivalent to `a >> -b | b`:
 
     a || b || ...
 

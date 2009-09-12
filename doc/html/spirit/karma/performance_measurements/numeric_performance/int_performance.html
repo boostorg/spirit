@@ -1,13 +1,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Comparing the performance of a single int_ generator</title>
+<title>
+          Comparing the performance of a single int_ generator</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../numeric_performance.html" title="Performance of Numeric Generators">
-<link rel="prev" href="../numeric_performance.html" title="Performance of Numeric Generators">
-<link rel="next" href="double_performance.html" title="Comparing the performance of a single double_ generator">
+<link rel="up" href="../numeric_performance.html" title="
+        Performance of Numeric Generators">
+<link rel="previous" href="../numeric_performance.html" title="
+        Performance of Numeric Generators">
+<link rel="next" href="double_performance.html" title="
+          Comparing the performance of a single double_ generator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,16 +26,20 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="double_performance.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Comparing the performance of a single int_ generator">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.performance_measurements.numeric_performance.int_performance"></a><a class="link" href="int_performance.html" title="Comparing the performance of a single int_ generator">
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.performance_measurements.numeric_performance.int_performance"></a><a href="int_performance.html" title="
+          Comparing the performance of a single int_ generator">
           Comparing the performance of a single int_ generator</a>
-</h5></div></div></div>
+</h5></div></div>
+<div></div>
+</div>
 <p>
             This performance measurements are centered around default formatting
-            of a single <code class="computeroutput"><span class="keyword">int</span></code> integer
+            of a single <tt class="computeroutput"><span class="keyword">int</span></tt> integer
             number using different libraries and methods. The overall execution times
-            for those examples are compared below. We compare using <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams, <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>,
+            for those examples are compared below. We compare using <tt class="computeroutput"><span class="identifier">sprintf</span></tt>, C++ iostreams, <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>,
             and <span class="emphasis"><em>Spirit.Karma</em></span>.
           </p>
 <p>
@@ -41,7 +49,7 @@
             shown below).
           </p>
 <p>
-            Code used to measure the performance for <code class="computeroutput"><span class="identifier">ltoa</span></code>:
+            Code used to measure the performance for <tt class="computeroutput"><span class="identifier">ltoa</span></tt>:
           </p>
 <p>
             </p>
@@ -122,12 +130,12 @@
             using different compilers. All times are in seconds measured for 10000000
             iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
             4GByte RAM). For a more readable comparison of the results see this
-            <a class="link" href="int_performance.html#spirit.karma.int_performance" title="Figure 3. Performance comparison for a single int">figure</a>.
+            <a href="int_performance.html#spirit.karma.int_performance" title="Figure 3. Performance comparison for a single int">figure</a>.
           </p>
 <div class="table">
-<a name="id869046"></a><p class="title"><b>Table 6. Performance comparison for a single int (all
+<a name="id661519"></a><p class="title"><b>Table 6. Performance comparison for a single int (all
           times in [s], 10000000 iterations)</b></p>
-<div class="table-contents"><table class="table" summary="Performance comparison for a single int (all
+<table class="table" summary="Performance comparison for a single int (all
           times in [s], 10000000 iterations)">
 <colgroup>
 <col>
@@ -139,201 +147,132 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
+<th><p>
                   Library
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   gcc 4.4.0 (32 bit)
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   VC++ 10 (32 bit)
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Intel 11.1 (32 bit)
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   gcc 4.4.0 (64 bit)
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   VC++ 10 (64 bit)
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Intel 11.1 (64 bit)
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                <p>
+<td><p>
                   ltoa
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   1.542
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.895
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.884
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   1.163
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   1.099
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.906
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   iostreams
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   6.548
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   13.727
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   11.898
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   3.464
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   8.316
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   8.115
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   16.998
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   21.813
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   20.477
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   17.464
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   14.662
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   13.646
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   <span class="emphasis"><em>Spirit.Karma</em></span> int_
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   1.421
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.744
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.697
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   1.072
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.953
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   0.606
-                </p>
-                </td>
+                </p></td>
 </tr>
 </tbody>
-</table></div>
+</table>
 </div>
-<br class="table-break"><p>
+<p>
             </p>
 <div class="figure">
 <a name="spirit.karma.int_performance"></a><p class="title"><b>Figure 3. Performance comparison for a single int</b></p>
-<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/int_performance.png" alt="Performance comparison for a single int"></span></div>
+<span class="inlinemediaobject"><img src="./images/int_performance.png" alt="Performance
+            comparison for a single int"></span>
 </div>
-<p><br class="figure-break">
+<p>
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

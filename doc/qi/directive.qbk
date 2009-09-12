@@ -269,7 +269,7 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`a`]      [A __parser_concept__.]]
-    [[`Iter`]   [A `ForwardIterator` type.]]
+    [[`Iter`]   [A __fwditer__ type.]]
 ]
 
 [heading Expression Semantics]

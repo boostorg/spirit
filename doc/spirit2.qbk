@@ -275,6 +275,12 @@
 [/ $$$ Now I'm confused with all this adhoc links. Let's fix this somehow.
 For now, I'll put my stuff here adhoc (JDG). $$$]
 
+[/ external]
+
+[def __fwditer__                    [@http://www.sgi.com/tech/stl/ForwardIterator.html `ForwardIterator`]]
+[def __concepts__                   [@http://www.boost.org/community/generic_programming.html#concept concepts]]
+[def __endianness__                 [@http://en.wikipedia.org/wiki/Endianness endianness]]
+
 [/ support]
 [def __info__                       `info`] [/ TODO Link Me]
 [def __qi_error_handler__           Error Handler] [/ TODO Link Me]
@@ -291,7 +297,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __nary_parser_concept__        [link spirit.qi.reference.parser_concepts.naryparser `NaryParser`]]
 
 [/ basics]
-[def __lazy_argument__              [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
+[def __qi_lazy_argument__           [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
 [def __char_encoding_namespace__    [link spirit.qi.reference.basics.character_encoding_namespace Character Encoding Namespace]]
 [def __string__                     [link spirit.qi.reference.basics.string String]]
 
@@ -314,9 +320,19 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_skip__                    [link spirit.qi.reference.directive.skip `skip`]]
 
 [/ operator]
-[def __qi_sequence__                [link spirit.qi.reference.operator.sequence Sequence Operator]]
-[def __qi_expect__                  [link spirit.qi.reference.operator.expect Expect Operator]]
+[def __qi_alternative__             [link spirit.qi.reference.operator.alternative Alternative]]
+[def __qi_and_predicate__           [link spirit.qi.reference.operator.and_predicate And Predicate]]
+[def __qi_difference__              [link spirit.qi.reference.operator.difference Difference]]
+[def __qi_expect__                  [link spirit.qi.reference.operator.expect Expect]]
 [def __qi_expectation_failure__     [link spirit.qi.reference.operator.expect.expectation_failure `expectation_failure`]]
+[def __qi_kleene__                  [link spirit.qi.reference.operator.kleene Kleene]]
+[def __qi_list__                    [link spirit.qi.reference.operator.list List]]
+[def __qi_not_predicate__           [link spirit.qi.reference.operator.not_predicate Not Predicate]]
+[def __qi_optional__                [link spirit.qi.reference.operator.optional Optional]]
+[def __qi_permutation__             [link spirit.qi.reference.operator.permutation Permutation]]
+[def __qi_plus__                    [link spirit.qi.reference.operator.plus Plus]]
+[def __qi_sequence__                [link spirit.qi.reference.operator.sequence Sequence]]
+[def __qi_sequential_or__           [link spirit.qi.reference.operator.sequential_or Sequential Or]]
 
 
 [/ $$$ End $$$ ]

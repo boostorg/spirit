@@ -343,7 +343,7 @@ Also, see __include_structure__.
     [[`n`]          [An object of `T`, the numeric base type.]]
     [[`exp`]        [A `int` exponent.]]
     [[`b`]          [A `bool` flag.]]
-    [[`f`, `l`]     [`ForwardIterator`. first/last iterator pair.]]
+    [[`f`, `l`]     [__fwditer__. first/last iterator pair.]]
 ]
 
 [heading Expression Semantics]

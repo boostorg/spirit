@@ -1,12 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Employee - Parsing into structs</title>
+<title>Employee
+        - Parsing into structs</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="prev" href="roman_numerals.html" title="Roman Numerals">
+<link rel="previous" href="roman_numerals.html" title="Roman Numerals">
 <link rel="next" href="mini_xml___asts_.html" title="Mini XML - ASTs!">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,11 +23,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="roman_numerals.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="mini_xml___asts_.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Employee - Parsing into structs">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.qi.tutorials.employee___parsing_into_structs"></a><a class="link" href="employee___parsing_into_structs.html" title="Employee - Parsing into structs">Employee
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.qi.tutorials.employee___parsing_into_structs"></a><a href="employee___parsing_into_structs.html" title="Employee
+        - Parsing into structs">Employee
         - Parsing into structs</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           It's a common question in the <a href="http://www.nabble.com/The-Spirit-Parser-Library-f3430.html" target="_top">Spirit
           General List</a>: how do I parse and place the results into a C++ struct?
@@ -35,17 +40,17 @@
           attributed, makes it even easier. The next example demonstrates some features
           of Spirit2 that makes this easy. In the process, you'll learn about:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             More about attributes
           </li>
-<li class="listitem">
+<li>
             Auto rules
           </li>
-<li class="listitem">
+<li>
             Some more built-in parsers
           </li>
-<li class="listitem">
+<li>
             Directives
           </li>
 </ul></div>
@@ -153,15 +158,15 @@
 <span class="keyword">struct</span> <span class="identifier">employee_parser</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">employee</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span>
 </pre>
 <p>
-          <code class="computeroutput"><span class="identifier">employee_parser</span></code> is a grammar.
+          <tt class="computeroutput"><span class="identifier">employee_parser</span></tt> is a grammar.
           Like before, we make it a template so that we can reuse it for different
           iterator types. The grammar's signature is:
         </p>
 <pre class="programlisting"><span class="identifier">employee</span><span class="special">()</span>
 </pre>
 <p>
-          meaning, the parser generates employee structs. <code class="computeroutput"><span class="identifier">employee_parser</span></code>
-          skips white spaces using <code class="computeroutput"><span class="identifier">space_type</span></code>
+          meaning, the parser generates employee structs. <tt class="computeroutput"><span class="identifier">employee_parser</span></tt>
+          skips white spaces using <tt class="computeroutput"><span class="identifier">space_type</span></tt>
           as its skip parser.
         </p>
 <pre class="programlisting"><span class="identifier">employee_parser</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">employee_parser</span><span class="special">::</span><span class="identifier">base_type</span><span class="special">(</span><span class="identifier">start</span><span class="special">)</span>
@@ -173,19 +178,19 @@
 <span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">employee</span><span class="special">(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
 </pre>
 <p>
-          Declares two rules: <code class="computeroutput"><span class="identifier">quoted_string</span></code>
-          and <code class="computeroutput"><span class="identifier">start</span></code>. <code class="computeroutput"><span class="identifier">start</span></code> has the same template parameters
-          as the grammar itself. <code class="computeroutput"><span class="identifier">quoted_string</span></code>
-          has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> attribute.
+          Declares two rules: <tt class="computeroutput"><span class="identifier">quoted_string</span></tt>
+          and <tt class="computeroutput"><span class="identifier">start</span></tt>. <tt class="computeroutput"><span class="identifier">start</span></tt> has the same template parameters
+          as the grammar itself. <tt class="computeroutput"><span class="identifier">quoted_string</span></tt>
+          has a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></tt> attribute.
         </p>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h6>
-<a name="id643355"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
-        </h6>
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h5>
+<a name="id429318"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
+        </h5>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
 </pre>
 <p>
-          <code class="computeroutput"><span class="identifier">lexeme</span></code> inhibits space skipping
+          <tt class="computeroutput"><span class="identifier">lexeme</span></tt> inhibits space skipping
           from the open brace to the closing brace. The expression parses quoted
           strings.
         </p>
@@ -195,35 +200,35 @@
           parses one or more chars, except the double quote. It stops when it sees
           a double quote.
         </p>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h6>
-<a name="id643468"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
-        </h6>
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h5>
+<a name="id429473"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
+        </h5>
 <p>
           The expression:
         </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span>
 </pre>
 <p>
-          parses <code class="computeroutput"><span class="identifier">a</span></code> but not <code class="computeroutput"><span class="identifier">b</span></code>. Its attribute is just <code class="computeroutput"><span class="identifier">A</span></code>, the attribute of <code class="computeroutput"><span class="identifier">a</span></code>.
-          <code class="computeroutput"><span class="identifier">b</span></code>'s attribute is ignored.
+          parses <tt class="computeroutput"><span class="identifier">a</span></tt> but not <tt class="computeroutput"><span class="identifier">b</span></tt>. Its attribute is just <tt class="computeroutput"><span class="identifier">A</span></tt>, the attribute of <tt class="computeroutput"><span class="identifier">a</span></tt>.
+          <tt class="computeroutput"><span class="identifier">b</span></tt>'s attribute is ignored.
           Hence, the attribute of:
         </p>
 <pre class="programlisting"><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span>
 </pre>
 <p>
-          is just <code class="computeroutput"><span class="keyword">char</span></code>.
+          is just <tt class="computeroutput"><span class="keyword">char</span></tt>.
         </p>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h6>
-<a name="id643576"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
-        </h6>
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h5>
+<a name="id429632"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
+        </h5>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
 </pre>
 <p>
           is the close kin of the kleene star we got so used to in our tutorial.
-          Like it's kin, the kleene star, its attribute is a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> where <code class="computeroutput"><span class="identifier">A</span></code>
-          is the attribute of <code class="computeroutput"><span class="identifier">a</span></code>.
+          Like it's kin, the kleene star, its attribute is a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> where <tt class="computeroutput"><span class="identifier">A</span></tt>
+          is the attribute of <tt class="computeroutput"><span class="identifier">a</span></tt>.
           So, putting all these together, the attribute of
         </p>
 <pre class="programlisting"><span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span>
@@ -233,11 +238,11 @@
         </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h6>
-<a name="id643702"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h5>
+<a name="id429818"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
-        </h6>
+        </h5>
 <p>
           Now what's the attribute of
         </p>
@@ -257,45 +262,45 @@
 <pre class="programlisting"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span> <span class="identifier">C</span><span class="special">&gt;</span>
 </pre>
 <p>
-          where <code class="computeroutput"><span class="identifier">A</span></code> is the attribute
-          of <code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">B</span></code>
-          is the attribute of <code class="computeroutput"><span class="identifier">b</span></code> and
-          <code class="computeroutput"><span class="identifier">C</span></code> is the attribute of
-          <code class="computeroutput"><span class="identifier">c</span></code>. What is <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></code>? - a tuple.
+          where <tt class="computeroutput"><span class="identifier">A</span></tt> is the attribute
+          of <tt class="computeroutput"><span class="identifier">a</span></tt>, <tt class="computeroutput"><span class="identifier">B</span></tt>
+          is the attribute of <tt class="computeroutput"><span class="identifier">b</span></tt> and
+          <tt class="computeroutput"><span class="identifier">C</span></tt> is the attribute of
+          <tt class="computeroutput"><span class="identifier">c</span></tt>. What is <tt class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></tt>? - a tuple.
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             If you don't know what I am talking about, see: <a href="http://tinyurl.com/6xun4j" target="_top">Fusion
             Vector</a>. It might be a good idea to have a look into <a href="http://spirit.sourceforge.net/dl_more/fusion_v2/libs/fusion/doc/html/index.html" target="_top">Fusion</a>
             at this point. You'll definitely see more of it in the coming pages.
           </p></td></tr>
 </table></div>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h6>
-<a name="id643924"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h5>
+<a name="id430140"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
-        </h6>
+        </h5>
 <p>
           Some parsers, especially those very little literal parsers you see, like
-          <code class="computeroutput"><span class="char">'"'</span></code>, do not have attributes.
+          <tt class="computeroutput"><span class="char">'"'</span></tt>, do not have attributes.
         </p>
 <p>
           Nodes without attributes are disregarded. In a sequence, like above, all
-          nodes with no attributes are filtered out of the <code class="computeroutput"><span class="identifier">fusion</span><span class="special">:</span><span class="identifier">vector</span></code>.
-          So, since <code class="computeroutput"><span class="char">'"'</span></code> has no attribute,
-          and <code class="computeroutput"><span class="special">+(</span><span class="identifier">char_</span>
-          <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span></code> has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code> attribute, the whole expression's attribute
+          nodes with no attributes are filtered out of the <tt class="computeroutput"><span class="identifier">fusion</span><span class="special">:</span><span class="identifier">vector</span></tt>.
+          So, since <tt class="computeroutput"><span class="char">'"'</span></tt> has no attribute,
+          and <tt class="computeroutput"><span class="special">+(</span><span class="identifier">char_</span>
+          <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span></tt> has a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></tt> attribute, the whole expression's attribute
           should have been:
         </p>
 <pre class="programlisting"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span> <span class="special">&gt;</span>
 </pre>
 <p>
           But wait, there's one more collapsing rule: If after the attribute is a
-          single element <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></code>, The element is stripped naked
+          single element <tt class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></tt>, The element is stripped naked
           from its container. So, to make a long story short, the attribute of the
           expression:
         </p>
@@ -306,11 +311,11 @@
         </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h6>
-<a name="id644162"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h5>
+<a name="id430489"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
-        </h6>
+        </h5>
 <p>
           It is typical to see rules like:
         </p>
@@ -324,11 +329,11 @@
 <pre class="programlisting"><span class="identifier">r</span> <span class="special">%=</span> <span class="identifier">p</span><span class="special">;</span>
 </pre>
 <p>
-          The attribute of <code class="computeroutput"><span class="identifier">p</span></code> automatically
-          uses the attribute of <code class="computeroutput"><span class="identifier">r</span></code>.
+          The attribute of <tt class="computeroutput"><span class="identifier">p</span></tt> automatically
+          uses the attribute of <tt class="computeroutput"><span class="identifier">r</span></tt>.
         </p>
 <p>
-          So, going back to our <code class="computeroutput"><span class="identifier">quoted_string</span></code>
+          So, going back to our <tt class="computeroutput"><span class="identifier">quoted_string</span></tt>
           rule:
         </p>
 <pre class="programlisting"><span class="identifier">quoted_string</span> <span class="special">%=</span> <span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
@@ -339,15 +344,15 @@
 <pre class="programlisting"><span class="identifier">quoted_string</span> <span class="special">=</span> <span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">][</span><span class="identifier">val_</span> <span class="special">=</span> <span class="identifier">_1</span><span class="special">];</span>
 </pre>
 <p>
-          The attribute of the <code class="computeroutput"><span class="identifier">quoted_string</span></code>
-          rule: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> <span class="bold"><strong>is compatible</strong></span>
-          with the attribute of the RHS: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>. The RHS extracts the parsed attribute
+          The attribute of the <tt class="computeroutput"><span class="identifier">quoted_string</span></tt>
+          rule: <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></tt> <span class="bold"><b>is compatible</b></span>
+          with the attribute of the RHS: <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></tt>. The RHS extracts the parsed attribute
           directly into the rule's attribute, in-situ.
         </p>
-<a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h6>
-<a name="id644960"></a>
-          <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
-        </h6>
+<a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h5>
+<a name="id430934"></a>
+          <a href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
+        </h5>
 <p>
           We're down to one rule, the start rule:
         </p>
@@ -369,28 +374,28 @@
 <p>
           These nodes do not have an attribute:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem"><code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></code></li>
-<li class="listitem"><code class="computeroutput"><span class="char">'{'</span></code></li>
-<li class="listitem"><code class="computeroutput"><span class="char">'}'</span></code></li>
+<div class="itemizedlist"><ul type="disc">
+<li><tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></tt></li>
+<li><tt class="computeroutput"><span class="char">'{'</span></tt></li>
+<li><tt class="computeroutput"><span class="char">'}'</span></tt></li>
 </ul></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-            In case you are wondering, <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></code> is the same as "employee".
-            We had to wrap it inside <code class="computeroutput"><span class="identifier">lit</span></code>
-            because immediately after it is <code class="computeroutput"><span class="special">&gt;&gt;</span>
-            <span class="char">'{'</span></code>. You can't right-shift a <code class="computeroutput"><span class="keyword">char</span><span class="special">[]</span></code>
-            and a <code class="computeroutput"><span class="keyword">char</span></code> - you know, C++
+<tr><td colspan="2" align="left" valign="top"><p>
+            In case you are wondering, <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></tt> is the same as "employee".
+            We had to wrap it inside <tt class="computeroutput"><span class="identifier">lit</span></tt>
+            because immediately after it is <tt class="computeroutput"><span class="special">&gt;&gt;</span>
+            <span class="char">'{'</span></tt>. You can't right-shift a <tt class="computeroutput"><span class="keyword">char</span><span class="special">[]</span></tt>
+            and a <tt class="computeroutput"><span class="keyword">char</span></tt> - you know, C++
             syntax rules.
           </p></td></tr>
 </table></div>
 <p>
-          Recall that the attribute of <code class="computeroutput"><span class="identifier">start</span></code>
-          is the <code class="computeroutput"><span class="identifier">employee</span></code> struct:
+          Recall that the attribute of <tt class="computeroutput"><span class="identifier">start</span></tt>
+          is the <tt class="computeroutput"><span class="identifier">employee</span></tt> struct:
         </p>
 <p>
           </p>
@@ -410,11 +415,11 @@
 <p>
         </p>
 <p>
-          Now everything is clear, right? The <code class="computeroutput"><span class="keyword">struct</span>
-          <span class="identifier">employee</span></code> <span class="bold"><strong>IS</strong></span>
-          compatible with <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></code>. So, the RHS of <code class="computeroutput"><span class="identifier">start</span></code>
-          uses start's attribute (a <code class="computeroutput"><span class="keyword">struct</span>
-          <span class="identifier">employee</span></code>) in-situ when it does
+          Now everything is clear, right? The <tt class="computeroutput"><span class="keyword">struct</span>
+          <span class="identifier">employee</span></tt> <span class="bold"><b>IS</b></span>
+          compatible with <tt class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></tt>. So, the RHS of <tt class="computeroutput"><span class="identifier">start</span></tt>
+          uses start's attribute (a <tt class="computeroutput"><span class="keyword">struct</span>
+          <span class="identifier">employee</span></tt>) in-situ when it does
           its work.
         </p>
 </div>

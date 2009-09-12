@@ -8,7 +8,7 @@
 
 [section Generator Concepts]
 
-__karma__ generators fall into a couple of generalized concepts. The
+__karma__ generators fall into a couple of generalized __concepts__. The
 /Generator/ is the most fundamental concept. All __karma__ generators are
 models of the /Generator/ concept. /PrimitiveGenerator/, /UnaryGenerator/,
 /BinaryGenerator/ and /NaryGenerator/ are all refinements of the /Generator/

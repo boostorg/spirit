@@ -8,7 +8,7 @@
 
 [section Parser Concepts]
 
-Spirit.Qi parsers fall into a couple of generalized concepts. The
+Spirit.Qi parsers fall into a couple of generalized __concepts__. The
 /Parser/ is the most fundamental concept. All Spirit.Qi parsers are
 models of the /Parser/ concept. /PrimitiveParser/, /UnaryParser/,
 /BinaryParser/ and /NaryParser/ are all refinements of the /Parser/
@@ -22,7 +22,7 @@ The following sections provide details on these concepts.
 [heading Description]
 
 The /Parser/ is the most fundamental concept. A Parser has a member
-function, `parse`, that accepts a first-last `ForwardIterator` pair and
+function, `parse`, that accepts a first-last __fwditer__ pair and
 returns bool as its result. The iterators delimit the data being parsed.
 The Parser's `parse` member function returns `true` if the parse
 succeeds, in which case the first iterator is advanced accordingly. Each
@@ -32,8 +32,8 @@ more complex parser formed as a composition of other Parsers.
 [variablelist Notation
     [[`p`]              [A `Parser`.]]
     [[`P`]              [A `Parser` type.]]
-    [[`Iter`]           [a `ForwardIterator` type.]]
-    [[`f`, `l`]         [`ForwardIterator`. first/last iterator pair.]]
+    [[`Iter`]           [a __fwditer__ type.]]
+    [[`f`, `l`]         [__fwditer__. first/last iterator pair.]]
     [[`Context`]        [The parser's __context__ type.]]
     [[`context`]        [The parser's __context__, or __unused__.]]
     [[`skip`]           [A skip Parser, or __unused__.]]

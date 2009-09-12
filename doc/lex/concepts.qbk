@@ -8,7 +8,7 @@
 
 [section:lexer_concepts Lexer Concepts]
 
-__lex__ components fall into a couple of generalized concepts. The
+__lex__ components fall into a couple of generalized __concepts__. The
 /Lexer/ is the most fundamental concept. All __lex__ components are
 models of the /Lexer/ concept. /PrimitiveLexer/, /UnaryLexer/,
 and /NaryLexer/ are all refinements of the /Lexer/ concept.

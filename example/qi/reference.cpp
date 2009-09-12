@@ -823,5 +823,23 @@ main()
         //]
     }
     
+    // list
+    {
+        //[reference_list
+        //`Some using declarations:
+        using boost::spirit::qi::int_;
+        
+        /*`Parse a comma separated list of numbers and put them in a vector:
+         */
+        std::vector<int> attr;
+        test_phrase_parser_attr(
+            "111, 222, 333, 444, 555", int_ % ',', attr);
+        std::cout 
+            << attr[0] << ',' << attr[1] << ',' << attr[2] << ',' 
+            << attr[3] << ',' << attr[4] 
+            << std::endl;
+        //]
+    }
+    
     return 0;
 }
