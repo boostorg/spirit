@@ -326,10 +326,76 @@
             <a href="binary_native.html#spirit.qi.reference.binary.binary_native.example">Example</a>
           </h6>
 <p>
-            Some includes:
-          </p>
+            </p>
 <p>
-            [reference_qi_native_binary]
+              Using declarations and variables:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">byte_</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">word</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">dword</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">qword</span><span class="special">;</span>
+
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint8_t</span> <span class="identifier">uc</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint16_t</span> <span class="identifier">us</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint32_t</span> <span class="identifier">ui</span><span class="special">;</span>
+<span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint64_t</span> <span class="identifier">ul</span><span class="special">;</span>
+</pre>
+<p>
+            </p>
+<p>
+            </p>
+<p>
+              Basic usage of the native binary parsers for little endian platforms:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01"</span><span class="special">,</span> <span class="identifier">byte_</span><span class="special">,</span> <span class="identifier">uc</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">uc</span> <span class="special">==</span> <span class="number">0x01</span><span class="special">);</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02"</span><span class="special">,</span> <span class="identifier">word</span><span class="special">,</span> <span class="identifier">us</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">us</span> <span class="special">==</span> <span class="number">0x0201</span><span class="special">);</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04"</span><span class="special">,</span> <span class="identifier">dword</span><span class="special">,</span> <span class="identifier">ui</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ui</span> <span class="special">==</span> <span class="number">0x04030201</span><span class="special">);</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04\x05\x06\x07\x08"</span><span class="special">,</span> <span class="identifier">qword</span><span class="special">,</span> <span class="identifier">ul</span><span class="special">);</span>
+<span class="identifier">assert</span><span class="special">(</span><span class="identifier">ul</span> <span class="special">==</span> <span class="number">0</span><span class="identifier">x0807060504030201LL</span><span class="special">);</span>
+
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01"</span><span class="special">,</span> <span class="identifier">byte_</span><span class="special">(</span><span class="number">0x01</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02"</span><span class="special">,</span> <span class="identifier">word</span><span class="special">(</span><span class="number">0x0201</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04"</span><span class="special">,</span> <span class="identifier">dword</span><span class="special">(</span><span class="number">0x04030201</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04\x05\x06\x07\x08"</span><span class="special">,</span>
+    <span class="identifier">qword</span><span class="special">(</span><span class="number">0</span><span class="identifier">x0807060504030201LL</span><span class="special">));</span>
+</pre>
+<p>
+            </p>
+<p>
+            </p>
+<p>
+              Basic usage of the native binary parsers for big endian platforms:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01"</span><span class="special">,</span> <span class="identifier">byte_</span><span class="special">,</span> <span class="identifier">uc</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">uc</span> <span class="special">==</span> <span class="number">0x01</span><span class="special">);</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02"</span><span class="special">,</span> <span class="identifier">word</span><span class="special">,</span> <span class="identifier">us</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">us</span> <span class="special">==</span>  <span class="number">0x0102</span><span class="special">);</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04"</span><span class="special">,</span> <span class="identifier">dword</span><span class="special">,</span> <span class="identifier">ui</span><span class="special">);</span> <span class="identifier">assert</span><span class="special">(</span><span class="identifier">ui</span> <span class="special">==</span> <span class="number">0x01020304</span><span class="special">);</span>
+<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04\x05\x06\x07\x08"</span><span class="special">,</span> <span class="identifier">qword</span><span class="special">,</span> <span class="identifier">ul</span><span class="special">);</span>
+<span class="identifier">assert</span><span class="special">(</span><span class="number">0</span><span class="identifier">x0102030405060708LL</span><span class="special">);</span>
+
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01"</span><span class="special">,</span> <span class="identifier">byte_</span><span class="special">(</span><span class="number">0x01</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02"</span><span class="special">,</span> <span class="identifier">word</span><span class="special">(</span><span class="number">0x0102</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04"</span><span class="special">,</span> <span class="identifier">dword</span><span class="special">(</span><span class="number">0x01020304</span><span class="special">));</span>
+<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"\x01\x02\x03\x04\x05\x06\x07\x08"</span><span class="special">,</span>
+    <span class="identifier">qword</span><span class="special">(</span><span class="number">0</span><span class="identifier">x0102030405060708LL</span><span class="special">));</span>
+</pre>
+<p>
+            </p>
+<p>
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

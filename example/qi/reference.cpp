@@ -841,5 +841,167 @@ main()
         //]
     }
     
+    // native binary
+    {
+        //[reference_qi_native_binary
+        //`Using declarations and variables: 
+        using boost::spirit::qi::byte_;
+        using boost::spirit::qi::word;
+        using boost::spirit::qi::dword;
+        using boost::spirit::qi::qword;
+        
+        boost::uint8_t uc;
+        boost::uint16_t us;
+        boost::uint32_t ui;
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->
+        boost::uint64_t ul;
+//<-
+#endif
+
+#ifdef BOOST_LITTLE_ENDIAN
+//->
+        //`Basic usage of the native binary parsers for little endian platforms: 
+        test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);
+        test_parser_attr("\x01\x02", word, us); assert(us == 0x0201);
+        test_parser_attr("\x01\x02\x03\x04", dword, ui); assert(ui == 0x04030201);
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->
+        test_parser_attr("\x01\x02\x03\x04\x05\x06\x07\x08", qword, ul);
+        assert(ul == 0x0807060504030201LL);
+
+//<-
+#endif
+//->
+        test_parser("\x01", byte_(0x01));
+        test_parser("\x01\x02", word(0x0201));
+        test_parser("\x01\x02\x03\x04", dword(0x04030201));
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->        
+        test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
+            qword(0x0807060504030201LL));
+//<-
+#endif
+#else
+//->
+        //`Basic usage of the native binary parsers for big endian platforms: 
+        test_parser_attr("\x01", byte_, uc); assert(uc == 0x01);
+        test_parser_attr("\x01\x02", word, us); assert(us ==  0x0102);
+        test_parser_attr("\x01\x02\x03\x04", dword, ui); assert(ui == 0x01020304);
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->        
+        test_parser_attr("\x01\x02\x03\x04\x05\x06\x07\x08", qword, ul);
+        assert(0x0102030405060708LL);
+
+//<-
+#endif
+//->
+        test_parser("\x01", byte_(0x01));
+        test_parser("\x01\x02", word(0x0102));
+        test_parser("\x01\x02\x03\x04", dword(0x01020304));
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->        
+        test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
+            qword(0x0102030405060708LL));
+//<-
+#endif
+#endif
+//->        
+        //]
+    }
+    
+    // little binary
+    {
+        //[reference_qi_little_binary
+        //`Using declarations and variables: 
+        using boost::spirit::qi::little_word;
+        using boost::spirit::qi::little_dword;
+        using boost::spirit::qi::little_qword;
+        
+        boost::uint8_t uc;
+        boost::uint16_t us;
+        boost::uint32_t ui;
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->
+        boost::uint64_t ul;
+//<-
+#endif
+
+//->
+        //`Basic usage of the little endian binary parsers: 
+        test_parser_attr("\x01\x02", little_word, us); assert(us == 0x0201);
+        test_parser_attr("\x01\x02\x03\x04", little_dword, ui); assert(ui == 0x04030201);
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->
+        test_parser_attr("\x01\x02\x03\x04\x05\x06\x07\x08", little_qword, ul);
+        assert(ul == 0x0807060504030201LL);
+
+//<-
+#endif
+//->
+        test_parser("\x01\x02", little_word(0x0201));
+        test_parser("\x01\x02\x03\x04", little_dword(0x04030201));
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->        
+        test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
+            little_qword(0x0807060504030201LL));
+//<-
+#endif
+//->        
+        //]
+    }
+    
+    // big binary
+    {
+        //[reference_qi_big_binary
+        //`Using declarations and variables: 
+        using boost::spirit::qi::big_word;
+        using boost::spirit::qi::big_dword;
+        using boost::spirit::qi::big_qword;
+        
+        boost::uint8_t uc;
+        boost::uint16_t us;
+        boost::uint32_t ui;
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->
+        boost::uint64_t ul;
+//<-
+#endif
+
+//->
+        //`Basic usage of the big endian binary parsers: 
+        test_parser_attr("\x01\x02", big_word, us); assert(us ==  0x0102);
+        test_parser_attr("\x01\x02\x03\x04", big_dword, ui); assert(ui == 0x01020304);
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->        
+        test_parser_attr("\x01\x02\x03\x04\x05\x06\x07\x08", big_qword, ul);
+        assert(0x0102030405060708LL);
+
+//<-
+#endif
+//->
+        test_parser("\x01\x02", big_word(0x0102));
+        test_parser("\x01\x02\x03\x04", big_dword(0x01020304));
+//<-
+#ifdef BOOST_HAS_LONG_LONG
+//->        
+        test_parser("\x01\x02\x03\x04\x05\x06\x07\x08",
+            big_qword(0x0102030405060708LL));
+//<-
+#endif
+//->        
+        //]
+    }
+   
     return 0;
 }
