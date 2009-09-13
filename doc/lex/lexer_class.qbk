@@ -6,14 +6,14 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Lexer Class]
+[section:lexer Lexer Class]
 
-[heading The lexertl_lexer Class Implementing the Dynamic Model]
+[heading The lexertl::lexer Class Implementing the Dynamic Model]
 
-[heading The lexertl_actor_lexer Class Implementing the Dynamic Model]
+[heading The lexertl::actor_lexer Class Implementing the Dynamic Model]
 
-[heading The lexertl_static_lexer Class Implementing the Static Model]
+[heading The lexertl::static_lexer Class Implementing the Static Model]
 
-[heading The lexertl_static_actor_lexer Class Implementing the Static Model]
+[heading The lexertl::static_actor_lexer Class Implementing the Static Model]
 
 [endsect]

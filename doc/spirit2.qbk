@@ -27,7 +27,7 @@
 [def __spirit_list__            [@http://www.nabble.com/The-Spirit-Parser-Library-f3430.html Spirit General List]]
 [def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
 [def __boost_phoenix__          [@../../phoenix/doc/html/index.html Boost.Phoenix]]
-[def __fusion__                 [@http://spirit.sourceforge.net/dl_more/fusion_v2/libs/fusion/doc/html/index.html Fusion]]
+[def __fusion__                 [@boost:/libs/fusion/doc/html/index.html Boost.Fusion]]
 [def __mpl__                    [@http://www.boost.org/libs/mpl/index.html Boost.Mpl]]
 [def __stl__                    [@http://www.sgi.com/tech/stl/ STL]]
 [def __boost__                  [@http://www.boost.org/ Boost]]
@@ -110,6 +110,7 @@
 [def __sec_ref_lex_token__      [link spirit.lex.reference.token Token Class]]
 [def __sec_ref_lex_token_def__  [link spirit.lex.reference.tokendef TokenDef Class]]
 
+[def __lex_char_encoding_namespace__ [link spirit.lex.reference.lex_basics.character_encoding_namespace Character Encoding Namespace]]
 
 [/ References to API descriptions ]
 
@@ -121,11 +122,11 @@
 
 [/ References to classes ]
 
-[def __class_token_def__        [link spirit.lex.reference.tokendef_class `token_def<>`]]
+[def __class_token_def__        [link spirit.lex.reference.tokendef `token_def<>`]]
 
-[def __class_lexertl_token__    [link spirit.lex.reference.token_class `lexertl_token<>`]]
-[def __class_lexertl_lexer__    [link spirit.lex.reference.lexer_class.the_lexertl_lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
-[def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer_class.the_lexertl_static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
+[def __class_lexertl_token__    [link spirit.lex.reference.token `lexertl_token<>`]]
+[def __class_lexertl_lexer__    [link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
+[def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
 
 [/ References to support ]
 
@@ -160,6 +161,7 @@
 [def __nary_generator_concept__     [link spirit.karma.reference.generator_concepts.narygenerator `NaryGenerator`]]
 [def __karma_lazy_argument__        [link spirit.karma.reference.karma_basics.lazy_argument Lazy Argument]]
 
+[/////////////////////////////////////////////////////////////////////////////]
 [def __karma_eol__                  [link spirit.karma.reference.auxiliary.eol `eol`]]
 [def __karma_eps__                  [link spirit.karma.reference.auxiliary.eps `eps`]]
 [def __karma_feps__                 [link spirit.karma.reference.auxiliary.eps `eps(b)`]]
@@ -209,6 +211,7 @@
 [def __delegate_pattern__           Delegate Design Pattern] [/$$$ TODO: link me $$$]
 [def __composite_pattern__          Composite Design Pattern] [/$$$ TODO: link me $$$]
 
+[/////////////////////////////////////////////////////////////////////////////]
 [def __karma_actions__              [link spirit.karma.tutorials.semantic_actions Semantic Actions]]
 [def __karma_context__              Context] [/$$$ TODO: link me $$$]
 [def __karma_attribute__            Generator Attributes] [/$$$ TODO: link me $$$]

@@ -95,7 +95,7 @@ topic (the full generated code can be viewed
 [note  The generated code will have compiled in the version number of the 
        current __lex__ library. This version number is used at compilation time
        of your static lexer object to ensure this is compiled using exactly the
-       same version of the __lex__ library as the lexer table have been 
+       same version of the __lex__ library as the lexer tables have been 
        generated with. If the versions do not match you will see an compilation 
        error mentioning an `incompatible_static_lexer_version`.
 ]

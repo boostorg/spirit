@@ -1,17 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Optional
-          (-a)</title>
+<title>Optional (-a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="previous" href="not_predicate.html" title=" Not
-          Predicate (!a)">
-<link rel="next" href="permutation.html" title=" Permutation
-          (a ^
-          b)">
+<link rel="prev" href="not_predicate.html" title="Not Predicate (!a)">
+<link rel="next" href="permutation.html" title="Permutation (a ^ b)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -26,64 +22,60 @@
 <div class="spirit-nav">
 <a accesskey="p" href="not_predicate.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="permutation.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.optional"></a><a href="optional.html" title=" Optional
-          (-a)"> Optional
-          (<tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Optional (-a)">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.operator.optional"></a><a class="link" href="optional.html" title="Optional (-a)"> Optional
+          (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.qi.reference.operator.optional.description"></a><h6>
-<a name="id515613"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.description">Description</a>
+<a name="id705668"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.description">Description</a>
           </h6>
 <p>
-            The optional operator, <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>, is a unary operator that matches
+            The optional operator, <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>, is a unary operator that matches
             its operand zero or one time.
           </p>
 <a name="spirit.qi.reference.operator.optional.header"></a><h6>
-<a name="id515659"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.header">Header</a>
+<a name="id705695"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/optional.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_optional</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.optional.model_of"></a><h6>
-<a name="id515774"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.model_of">Model
+<a name="id705770"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>
+                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>
+                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.optional.expression_semantics"></a><h6>
-<a name="id515873"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.expression_semantics">Expression
+<a name="id705841"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>.
+            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -91,29 +83,37 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    Match <tt class="computeroutput"><span class="identifier">a</span></tt> zero
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Match <code class="computeroutput"><span class="identifier">a</span></code> zero
                     or one time.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.optional.attributes"></a><h6>
-<a name="id516005"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.attributes">Attributes</a>
+<a name="id705939"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.attributes">Attributes</a>
           </h6>
 <p>
-            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -122,44 +122,50 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.optional.complexity"></a><h6>
-<a name="id516225"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.complexity">Complexity</a>
+<a name="id706107"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The complexity is defined by the complexity of the operand, <tt class="computeroutput"><span class="identifier">a</span></tt>
+                The complexity is defined by the complexity of the operand, <code class="computeroutput"><span class="identifier">a</span></code>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.optional.example"></a><h6>
-<a name="id516274"></a>
-            <a href="optional.html#spirit.qi.reference.operator.optional.example">Example</a>
+<a name="id706138"></a>
+            <a class="link" href="optional.html#spirit.qi.reference.operator.optional.example">Example</a>
           </h6>
 <p>
             </p>
@@ -183,7 +189,7 @@
             </p>
 <p>
               Parse a person info with name (in quotes) optional age
-              <sup>[<a name="id516552" href="#ftn.id516552">8</a>]</sup>
+              <sup>[<a name="id706342" href="#ftn.id706342" class="footnote">8</a>]</sup>
               and optional sex, all separated by comma.
             </p>
 <p>
@@ -214,7 +220,7 @@
           </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id516552" href="#id516552">8</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id706342" href="#id706342" class="para">8</a>] </sup>
                   James Bond is shy about his age :-)
                 </p></div>
 </div>

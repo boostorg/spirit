@@ -1,0 +1,214 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Tokens Matching Single Characters</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../primitives.html" title="Token definition Primitives">
+<link rel="prev" href="../primitives.html" title="Token definition Primitives">
+<link rel="next" href="../lexer.html" title="Lexer Class">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../primitives.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../primitives.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../lexer.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" title="Tokens Matching Single Characters">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.lex.reference.primitives.char_tokendef"></a><a class="link" href="char_tokendef.html" title="Tokens Matching Single Characters"> Tokens
+          Matching Single Characters</a>
+</h5></div></div></div>
+<a name="spirit.lex.reference.primitives.char_tokendef.description"></a><h6>
+<a name="id886933"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.description">Description</a>
+          </h6>
+<p>
+            The character based token definitions described in this section are:
+          </p>
+<p>
+            The <code class="computeroutput"><span class="identifier">char_</span></code> creates token
+            definitions matching single characters. The <code class="computeroutput"><span class="identifier">char_</span></code>
+            token definition has an associated <a class="link" href="../lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
+            Encoding Namespace</a>. This is needed when doing basic operations
+            such as forcing lower or upper case and dealing with character ranges.
+          </p>
+<a name="spirit.lex.reference.primitives.char_tokendef.header"></a><h6>
+<a name="id889231"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.header">Header</a>
+          </h6>
+<a name="spirit.lex.reference.primitives.char_tokendef.module_headers"></a><h6>
+<a name="id889246"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.module_headers">Module
+            Headers</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/lex/lexer/char_token_def.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">lex_char_token_def</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.lex.reference.primitives.char_tokendef.namespace"></a><h6>
+<a name="id889323"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.namespace">Namespace</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup><col></colgroup>
+<thead><tr><th>
+                  <p>
+                    Name
+                  </p>
+                  </th></tr></thead>
+<tbody>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
+                    boost::spirit::lex::lit</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                  </p>
+                  </td></tr>
+</tbody>
+</table></div>
+<p>
+            In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
+            is a <a class="link" href="../lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
+            Encoding Namespace</a>.
+          </p>
+<a name="spirit.lex.reference.primitives.char_tokendef.model_of"></a><h6>
+<a name="id889444"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.model_of">Model
+            of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a class="link" href="../lexer_concepts/primitivelexer.html" title="PrimitiveLexer"><code class="computeroutput"><span class="identifier">PrimitiveLexer</span></code></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist" title="Notation">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span></code>,
+            <code class="computeroutput"><span class="identifier">ch1</span></code>, <code class="computeroutput"><span class="identifier">ch2</span></code></span></dt>
+<dd><p>
+                Character-class specific character (See Character Class Types), or
+                a <a class="link" href="../../../karma/reference/karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a character-class specific character
+                value
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
+<dd><p>
+                A <a class="link" href="../lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
+                Encoding Namespace</a>.
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.lex.reference.primitives.char_tokendef.expression_semantics"></a><h6>
+<a name="id889548"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a class="link" href="../lexer_concepts/primitivelexer.html" title="PrimitiveLexer"><code class="computeroutput"><span class="identifier">PrimitiveLexer</span></code></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                  </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ch</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
+                    This generator never fails (except if the underlying output stream
+                    reports an error).
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
+                    This generator never fails (except if the underlying output stream
+                    reports an error).
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Generate the character <code class="computeroutput"><span class="identifier">ch</span></code>
+                    as provided by the immediate literal value the generator is initialized
+                    from. If this generator has an associated attribute it succeeds
+                    only as long as the attribute is equal to the immediate literal
+                    (except if the underlying output stream reports an error). Otherwise
+                    this generator fails and does not generate any output.
+                  </p>
+                  </td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.lex.reference.primitives.char_tokendef.example"></a><h6>
+<a name="id889730"></a>
+            <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.example">Example</a>
+          </h6>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../primitives.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../primitives.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../lexer.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

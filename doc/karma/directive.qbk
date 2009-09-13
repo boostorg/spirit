@@ -173,7 +173,7 @@ defined in __unary_generator_concept__.
                                      reports an error).]]
 ]
 
-[note   None of the generator directives listed above limit the emitted output 
+[note   None of the generator directives listed above limits the emitted output 
         to the respective column width. If the emitted output is longer than 
         the specified (or implied) column width, the generated output overruns
         the column to the right.
@@ -183,7 +183,7 @@ defined in __unary_generator_concept__.
         ``
             maxwidth(8)[right_align(12)["1234567890"]]
         ``
-        which will output: `"  123456"` (without the quotes).
+        which will output (without the quotes): ``"  123456"``
 ]
 
 [heading Attributes]
@@ -516,7 +516,7 @@ Basic usage of `delimit` generator directive:
 The generator directives `ns::lower[]` and `ns::upper[]` force their embedded
 generators to emit lower case or upper case only characters based on the 
 interpretation of the generated characters in the character set defined by 
-`ns` (see __char_encoding_namespace__).
+`ns` (see __karma_char_encoding_namespace__).
 
 [heading Header]
 
