@@ -319,9 +319,10 @@ namespace boost { namespace spirit { namespace lex
         typedef detail::lexer_def_<lexer> lexer_def;
         typedef std::basic_string<char_type> string_type;
 
-        lexer(unsigned int flags = match_flags::match_default) 
+        lexer(unsigned int flags = match_flags::match_default
+            , id_type first_id = min_token_id) 
           : lexer_type(flags)
-          , next_token_id(min_token_id)
+          , next_token_id(first_id)
           , self(this_(), lexer_type::initial_state()) 
         {}
 

@@ -51,7 +51,8 @@ namespace boost { namespace spirit { namespace qi
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename TokenId>
-    struct plain_token
+    struct plain_token 
+      : primitive_parser<plain_token<TokenId> >
     {
         template <typename Context, typename Iterator>
         struct attribute

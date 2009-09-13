@@ -49,6 +49,8 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace lex
 { 
+    using spirit::lit;    // lit('x') is equivalent to 'x'
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  char_token_def 
