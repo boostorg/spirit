@@ -21,7 +21,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <iostream>
@@ -32,20 +32,21 @@
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::lex;
-using namespace boost::spirit::arg_names;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition: We use the lexertl based lexer engine as the underlying 
 //                    lexer type.
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct print_numbers_tokens : lexer_def<Lexer>
+struct print_numbers_tokens : lexer<Lexer>
 {
-    // define tokens and associate it with the lexer
-    template <typename Self>
-    void def (Self& self)
+    // define tokens and associate it with the lexer, we set the lexer flags
+    // not to match newlines while matching a dot, so we need to add the
+    // '\n' explicitly below
+    print_numbers_tokens()
+      : print_numbers_tokens::base_type(match_flags::match_not_dot_newline)
     {
-        self = token_def<int>("[0-9]*") | ".|\n";
+        this->self = token_def<int>("[0-9]*") | ".|\n";
     }
 };
 
@@ -56,8 +57,11 @@ template <typename Iterator>
 struct print_numbers_grammar : grammar<Iterator>
 {
     print_numbers_grammar()
-      : grammar<Iterator>(start)
+      : print_numbers_grammar::base_type(start)
     {
+        // we just know, that the token ids get assigned starting min_token_id
+        // so, "[0-9]*" gets the id 'min_token_id' and ".|\n" gets the id
+        // 'min_token_id+1'.
         start =  *(   token(lex::min_token_id)  [ std::cout << _1  << "\n" ] 
                   |   token(lex::min_token_id+1)
                   )
@@ -74,30 +78,26 @@ int main(int argc, char* argv[])
     typedef std::string::iterator base_iterator_type;
 
     // the token type to be used, 'int' is available as the type of the token 
-    // value and no lexer state is supported
-    typedef lexertl_token<
-        base_iterator_type, boost::mpl::vector<int>, boost::mpl::false_
-    > token_type;
-    
+    // attribute and no lexer state is supported
+    typedef lexertl::token<base_iterator_type, boost::mpl::vector<int>
+      , boost::mpl::false_> token_type;
+
     // lexer type
-    typedef lexertl_lexer<token_type> lexer_type;
-    
+    typedef lexertl::lexer<token_type> lexer_type;
+
     // iterator type exposed by the lexer 
-    typedef 
-        lexer_iterator<print_numbers_tokens<lexer_type> >::type 
-    iterator_type;
+    typedef print_numbers_tokens<lexer_type>::iterator_type iterator_type;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
-    print_numbers_tokens<lexer_type> print_tokens;    // Our token definition
-    print_numbers_grammar<iterator_type> print;       // Our grammar definition
+    print_numbers_tokens<lexer_type> print_tokens;    // Our lexer
+    print_numbers_grammar<iterator_type> print;       // Our parser 
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "print_numbers.input" : argv[1]));
     base_iterator_type first = str.begin();
-    bool r = tokenize_and_parse(first, str.end(), make_lexer(print_tokens), 
-        print);
+    bool r = tokenize_and_parse(first, str.end(), print_tokens, print);
 
     if (r) {
         std::cout << "-------------------------\n";

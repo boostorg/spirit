@@ -23,35 +23,34 @@ using namespace spirit_test;
 ///////////////////////////////////////////////////////////////////////////////
 //  policy for real_generator, which forces the scientific notation
 template <typename T>
-struct scientific_policy : boost::spirit::karma::real_generator_policies<T>
+struct scientific_policy : boost::spirit::karma::real_policies<T>
 {
     //  we want the numbers always to be in scientific format
-    typedef boost::spirit::karma::real_generator_policies<T> base_type;
-    static int floatfield(T) { return base_type::scientific; }
+    typedef boost::spirit::karma::real_policies<T> base_type;
+    static int floatfield(T) { return base_type::fmtflags::scientific; }
 };
 
-///////////////////////////////////////////////////////////////////////////////
-//  policy for real_generator, which forces the fixed notation
+// ///////////////////////////////////////////////////////////////////////////////
+// //  policy for real_generator, which forces the fixed notation
 template <typename T>
-struct fixed_policy : boost::spirit::karma::real_generator_policies<T>
+struct fixed_policy : boost::spirit::karma::real_policies<T>
 {
-    typedef boost::spirit::karma::real_generator_policies<T> base_type;
+    typedef boost::spirit::karma::real_policies<T> base_type;
 
     //  we want the numbers always to be in scientific format
-    static int floatfield(T) { return base_type::fixed; }
+    static int floatfield(T) { return base_type::fmtflags::fixed; }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 //  policy for real_generator, which forces to output trailing zeros in the 
 //  fractional part
 template <typename T>
-struct trailing_zeros_policy 
-  : boost::spirit::karma::real_generator_policies<T>   // 4 digits
+struct trailing_zeros_policy : boost::spirit::karma::real_policies<T>   // 4 digits
 {
     //  we want the numbers always to contain trailing zeros up to 4 digits in 
     //  the fractional part
-    static bool const trailing_zeros = true;
-    
+    static bool trailing_zeros(T) { return true; }
+
     //  we want to generate up to 4 fractional digits 
     static unsigned int precision(T) { return 4; }
 };
@@ -59,34 +58,60 @@ struct trailing_zeros_policy
 ///////////////////////////////////////////////////////////////////////////////
 //  policy for real_generator, which forces the sign to be generated
 template <typename T>
-struct signed_policy 
-  : boost::spirit::karma::real_generator_policies<T>
+struct signed_policy : boost::spirit::karma::real_policies<T>
 {
     // we want to always have a sign generated
-    static bool const force_sign = true;
+    static bool const force_sign(T)
+    {
+        return true;
+    }
 };
 
-// support for using real_concept with a Karma generator has been implemented 
-// in Boost versions > 1.36 only, additionally real_concept is available only
-// if BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS  is not defined
-#if BOOST_VERSION > 103600 && !defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
 ///////////////////////////////////////////////////////////////////////////////
-//  We need to specialize is_real_lit_tag to allow to use a real_concept as a
-//  literal below
-namespace boost { namespace spirit 
+//  policy for real_generator, which forces to output trailing zeros in the 
+//  fractional part
+template <typename T>
+struct bordercase_policy : boost::spirit::karma::real_policies<T>
 {
-    template <typename Domain>
-    struct is_real_lit_tag<boost::math::concepts::real_concept, Domain> 
-      : boost::mpl::true_ {};
-}}
-#endif
+    //  we want to generate up to the maximum significant amount of fractional 
+    // digits 
+    static unsigned int precision(T) 
+    { 
+        return std::numeric_limits<T>::digits10 + 1; 
+    }
+};
 
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
+//  policy for real_generator, which forces to output trailing zeros in the 
+//  fractional part
+template <typename T>
+struct statefull_policy : boost::spirit::karma::real_policies<T>
+{
+    statefull_policy(int precision = 4, bool trailingzeros = false)
+      : precision_(precision), trailingzeros_(trailingzeros)
+    {}
+
+    //  we want to generate up to the maximum significant amount of fractional 
+    // digits 
+    unsigned int precision(T) const
+    { 
+        return precision_; 
+    }
+
+    bool trailing_zeros(T) const
+    {
+        return trailingzeros_;
+    }
+
+    int precision_;
+    bool trailingzeros_;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+int main()
 {
     using namespace boost::spirit;
-    
+
     {
         ///////////////////////////////////////////////////////////////////////
         // use the default real_policies
@@ -96,7 +121,7 @@ main()
         BOOST_TEST(test("1.001", double_, 1.001));
         BOOST_TEST(test("1.01", double_, 1.010));
         BOOST_TEST(test("1.1", double_, 1.100));
-        
+
         BOOST_TEST(test("1.234e-04", double_, 0.00012345));
         BOOST_TEST(test("0.001", double_, 0.0012345));
         BOOST_TEST(test("0.012", double_, 0.012345));
@@ -107,18 +132,18 @@ main()
         BOOST_TEST(test("1234.5", double_, 1234.5));
         BOOST_TEST(test("12342.0", double_, 12342.));
         BOOST_TEST(test("1.234e05", double_, 123420.));
-        
+
         BOOST_TEST(test("-1.0", double_, -1.0));
         BOOST_TEST(test("-1.234", double_, -1.2345));
         BOOST_TEST(test("-1.235", double_, -1.2346));
         BOOST_TEST(test("-1234.2", double_, -1234.2));
-        
+
         BOOST_TEST(test("1.0", double_(1.0)));
         BOOST_TEST(test("1.0", double_(1.0001)));
         BOOST_TEST(test("1.001", double_(1.001)));
         BOOST_TEST(test("1.01", double_(1.010)));
         BOOST_TEST(test("1.1", double_(1.100)));
-        
+
         BOOST_TEST(test("1.234e-04", double_(0.00012345)));
         BOOST_TEST(test("0.001", double_(0.0012345)));
         BOOST_TEST(test("0.012", double_(0.012345)));
@@ -130,7 +155,7 @@ main()
         BOOST_TEST(test("12342.0", double_(12342.)));
         BOOST_TEST(test("1.234e05", double_(123420.)));
     }
-    
+
     {
         ///////////////////////////////////////////////////////////////////////
         // test NaN and Inf
@@ -139,7 +164,7 @@ main()
         BOOST_TEST(test("inf", double_, std::numeric_limits<double>::infinity()));
         BOOST_TEST(test("-inf", double_, -std::numeric_limits<double>::infinity()));
 
-        typedef karma::real_spec<double, signed_policy<double> > signed_type;
+        typedef karma::real_generator<double, signed_policy<double> > signed_type;
         signed_type const signed_ = signed_type();
 
         BOOST_TEST(test("+nan", signed_, std::numeric_limits<double>::quiet_NaN()));
@@ -147,17 +172,32 @@ main()
         BOOST_TEST(test("+inf", signed_, std::numeric_limits<double>::infinity()));
         BOOST_TEST(test("-inf", signed_, -std::numeric_limits<double>::infinity()));
         BOOST_TEST(test(" 0.0", signed_, 0.0));
-        
+
         BOOST_TEST(test("+nan", signed_(std::numeric_limits<double>::quiet_NaN())));
         BOOST_TEST(test("-nan", signed_(-std::numeric_limits<double>::quiet_NaN())));
         BOOST_TEST(test("+inf", signed_(std::numeric_limits<double>::infinity())));
         BOOST_TEST(test("-inf", signed_(-std::numeric_limits<double>::infinity())));
         BOOST_TEST(test(" 0.0", signed_(0.0)));
     }
-    
+
     {
         ///////////////////////////////////////////////////////////////////////
-        typedef karma::real_spec<double, trailing_zeros_policy<double> > 
+        typedef karma::real_generator<double, statefull_policy<double> > 
+            statefull_type;
+
+        statefull_policy<double> policy(5, true);
+        statefull_type const statefull = statefull_type(policy);
+
+        BOOST_TEST(test("0.00000", statefull, 0.0));
+        BOOST_TEST(test("0.00000", statefull(0.0)));
+
+        using namespace boost::phoenix;
+        BOOST_TEST(test("0.00000", statefull(val(0.0))));
+    }
+
+    {
+        ///////////////////////////////////////////////////////////////////////
+        typedef karma::real_generator<double, trailing_zeros_policy<double> > 
             trailing_zeros_type;
         trailing_zeros_type const trail_zeros = trailing_zeros_type();
 
@@ -167,7 +207,7 @@ main()
         BOOST_TEST(test("1.0010", trail_zeros, 1.001));
         BOOST_TEST(test("1.0100", trail_zeros, 1.010));
         BOOST_TEST(test("1.1000", trail_zeros, 1.100));
-        
+
         BOOST_TEST(test("1.2345e-04", trail_zeros, 0.00012345));
         BOOST_TEST(test("0.0012", trail_zeros, 0.0012345));
         BOOST_TEST(test("0.0123", trail_zeros, 0.012345));
@@ -178,18 +218,18 @@ main()
         BOOST_TEST(test("1234.5000", trail_zeros, 1234.5));
         BOOST_TEST(test("12342.0000", trail_zeros, 12342.));
         BOOST_TEST(test("1.2342e05", trail_zeros, 123420.));
-        
+
         BOOST_TEST(test("-1.0000", trail_zeros, -1.0));
         BOOST_TEST(test("-1.2345", trail_zeros, -1.2345));
         BOOST_TEST(test("-1.2346", trail_zeros, -1.2346));
         BOOST_TEST(test("-1234.2000", trail_zeros, -1234.2));
-        
+
         BOOST_TEST(test("1.0000", trail_zeros(1.0)));
         BOOST_TEST(test("1.0001", trail_zeros(1.0001)));
         BOOST_TEST(test("1.0010", trail_zeros(1.001)));
         BOOST_TEST(test("1.0100", trail_zeros(1.010)));
         BOOST_TEST(test("1.1000", trail_zeros(1.100)));
-        
+
         BOOST_TEST(test("1.2345e-04", trail_zeros(0.00012345)));
         BOOST_TEST(test("0.0012", trail_zeros(0.0012345)));
         BOOST_TEST(test("0.0123", trail_zeros(0.012345)));
@@ -201,8 +241,10 @@ main()
         BOOST_TEST(test("12342.0000", trail_zeros(12342.)));
         BOOST_TEST(test("1.2342e05", trail_zeros(123420.)));
     }
-    
+
     {
+        using namespace boost::spirit::ascii;
+
         ///////////////////////////////////////////////////////////////////////
         BOOST_TEST(test_delimited("0.0 ", double_, 0.0, char_(' ')));
         BOOST_TEST(test_delimited("1.0 ", double_, 1.0, char_(' ')));
@@ -210,7 +252,7 @@ main()
         BOOST_TEST(test_delimited("1.001 ", double_, 1.001, char_(' ')));
         BOOST_TEST(test_delimited("1.01 ", double_, 1.010, char_(' ')));
         BOOST_TEST(test_delimited("1.1 ", double_, 1.100, char_(' ')));
-        
+
         BOOST_TEST(test_delimited("1.234e-04 ", double_, 0.00012345, char_(' ')));
         BOOST_TEST(test_delimited("0.001 ", double_, 0.0012345, char_(' ')));
         BOOST_TEST(test_delimited("0.012 ", double_, 0.012345, char_(' ')));
@@ -221,18 +263,18 @@ main()
         BOOST_TEST(test_delimited("1234.5 ", double_, 1234.5, char_(' ')));
         BOOST_TEST(test_delimited("12342.0 ", double_, 12342., char_(' ')));
         BOOST_TEST(test_delimited("1.234e05 ", double_, 123420., char_(' ')));
-        
+
         BOOST_TEST(test_delimited("-1.0 ", double_, -1.0, char_(' ')));
         BOOST_TEST(test_delimited("-1.234 ", double_, -1.2345, char_(' ')));
         BOOST_TEST(test_delimited("-1.235 ", double_, -1.2346, char_(' ')));
         BOOST_TEST(test_delimited("-1234.2 ", double_, -1234.2, char_(' ')));
-        
+
         BOOST_TEST(test_delimited("1.0 ", double_(1.0), char_(' ')));
         BOOST_TEST(test_delimited("1.0 ", double_(1.0001), char_(' ')));
         BOOST_TEST(test_delimited("1.001 ", double_(1.001), char_(' ')));
         BOOST_TEST(test_delimited("1.01 ", double_(1.010), char_(' ')));
         BOOST_TEST(test_delimited("1.1 ", double_(1.100), char_(' ')));
-        
+
         BOOST_TEST(test_delimited("1.234e-04 ", double_(0.00012345), char_(' ')));
         BOOST_TEST(test_delimited("0.001 ", double_(0.0012345), char_(' ')));
         BOOST_TEST(test_delimited("0.012 ", double_(0.012345), char_(' ')));
@@ -246,6 +288,8 @@ main()
     }
 
     {
+        using namespace boost::spirit::ascii;
+
         ///////////////////////////////////////////////////////////////////////
         // test NaN and Inf
         BOOST_TEST(test_delimited("nan ", double_, 
@@ -257,7 +301,7 @@ main()
         BOOST_TEST(test_delimited("-inf ", double_, 
             -std::numeric_limits<double>::infinity(), char_(' ')));
 
-        typedef karma::real_spec<double, signed_policy<double> > signed_type;
+        typedef karma::real_generator<double, signed_policy<double> > signed_type;
         signed_type const signed_ = signed_type();
 
         BOOST_TEST(test_delimited("+nan ", signed_, 
@@ -273,15 +317,15 @@ main()
 
     {
         using namespace boost::spirit::ascii;
-        
+
         ///////////////////////////////////////////////////////////////////////
-        typedef karma::real_spec<double, scientific_policy<double> > 
+        typedef karma::real_generator<double, scientific_policy<double> > 
             science_type;
         science_type const science = science_type();
-        
+
         BOOST_TEST(test("0.0e00", science, 0.0));
         BOOST_TEST(test("1.0e00", science, 1.0));
-        
+
         BOOST_TEST(test("1.234e-05", science, 0.000012345));
         BOOST_TEST(test("1.234e-04", science, 0.00012345));
         BOOST_TEST(test("1.234e-03", science, 0.0012345));
@@ -330,17 +374,17 @@ main()
         BOOST_TEST(test("-1.234E04", upper[science], -12342.));
         BOOST_TEST(test("-1.234E05", upper[science], -123420.));
     }
-    
+
     {
         using namespace boost::spirit::ascii;
-        
+
         ///////////////////////////////////////////////////////////////////////
-        typedef karma::real_spec<double, fixed_policy<double> > fixed_type;
+        typedef karma::real_generator<double, fixed_policy<double> > fixed_type;
         fixed_type const fixed = fixed_type();
-        
+
         BOOST_TEST(test("0.0", fixed, 0.0));
         BOOST_TEST(test("1.0", fixed, 1.0));
-        
+
         BOOST_TEST(test("0.0", fixed, 0.000012345));
         BOOST_TEST(test("0.0", fixed, 0.00012345));
         BOOST_TEST(test("0.001", fixed, 0.0012345));
@@ -369,8 +413,21 @@ main()
     }
 
     {
+        BOOST_TEST(test("1.0", lit(1.0)));
+        BOOST_TEST(test("1.0", lit(1.0f)));
+        BOOST_TEST(test("1.0", lit(1.0l)));
+
+        BOOST_TEST(test("1.0", double_(1.0), 1.0));
+        BOOST_TEST(test("1.0", float_(1.0), 1.0f));
+        BOOST_TEST(test("1.0", long_double(1.0), 1.0l));
+        BOOST_TEST(!test("", double_(1.0), 2.0));
+        BOOST_TEST(!test("", float_(1.0), 2.0f));
+        BOOST_TEST(!test("", long_double(1.0), 2.0l));
+    }
+
+    {
         using namespace boost::spirit::ascii;
-        
+
         ///////////////////////////////////////////////////////////////////////
         // test NaN and Inf
         BOOST_TEST(test("NAN", upper[double_], 
@@ -382,7 +439,7 @@ main()
         BOOST_TEST(test("-INF", upper[double_], 
             -std::numeric_limits<double>::infinity()));
 
-        typedef karma::real_spec<double, signed_policy<double> > signed_type;
+        typedef karma::real_generator<double, signed_policy<double> > signed_type;
         signed_type const signed_ = signed_type();
 
         BOOST_TEST(test("+NAN", upper[signed_], 
@@ -402,7 +459,7 @@ main()
 #if BOOST_VERSION > 103600 && !defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
     {
         using boost::math::concepts::real_concept;
-        typedef karma::real_spec<real_concept> custom_type;
+        typedef karma::real_generator<real_concept> custom_type;
         custom_type const custom = custom_type();
 
         BOOST_TEST(test("0.0", custom, real_concept(0.0)));
@@ -411,7 +468,7 @@ main()
         BOOST_TEST(test("1.001", custom, real_concept(1.001)));
         BOOST_TEST(test("1.01", custom, real_concept(1.010)));
         BOOST_TEST(test("1.1", custom, real_concept(1.100)));
-        
+
         BOOST_TEST(test("1.234e-04", custom, real_concept(0.00012345)));
         BOOST_TEST(test("0.001", custom, real_concept(0.0012345)));
         BOOST_TEST(test("0.012", custom, real_concept(0.012345)));
@@ -422,18 +479,18 @@ main()
         BOOST_TEST(test("1234.5", custom, real_concept(1234.5)));
         BOOST_TEST(test("12342.0", custom, real_concept(12342.)));
         BOOST_TEST(test("1.234e05", custom, real_concept(123420.)));
-        
+
         BOOST_TEST(test("-1.0", custom, real_concept(-1.0)));
         BOOST_TEST(test("-1.234", custom, real_concept(-1.2345)));
         BOOST_TEST(test("-1.235", custom, real_concept(-1.2346)));
         BOOST_TEST(test("-1234.2", custom, real_concept(-1234.2)));
-        
+
         BOOST_TEST(test("1.0", custom(real_concept(1.0))));
         BOOST_TEST(test("1.0", custom(real_concept(1.0001))));
         BOOST_TEST(test("1.001", custom(real_concept(1.001))));
         BOOST_TEST(test("1.01", custom(real_concept(1.010))));
         BOOST_TEST(test("1.1", custom(real_concept(1.100))));
-        
+
         BOOST_TEST(test("1.234e-04", custom(real_concept(0.00012345))));
         BOOST_TEST(test("0.001", custom(real_concept(0.0012345))));
         BOOST_TEST(test("0.012", custom(real_concept(0.012345))));
@@ -447,5 +504,23 @@ main()
     }
 #endif
 
+    {
+        ///////////////////////////////////////////////////////////////////////
+        typedef karma::real_generator<double, bordercase_policy<double> > 
+            bordercase_type;
+        bordercase_type const bordercase = bordercase_type();
+
+//         BOOST_TEST(test("-5.7222349715140557e307", 
+//             bordercase(-5.7222349715140557e307)));
+
+        BOOST_TEST(test("1.7976931348623158e308", 
+            bordercase(1.7976931348623158e308)));       // DBL_MAX
+        BOOST_TEST(test("-1.7976931348623158e308", 
+            bordercase(-1.7976931348623158e308)));      // -DBL_MAX
+        BOOST_TEST(test("2.2250738585072014e-308", 
+            bordercase(2.2250738585072014e-308)));      // DBL_MIN
+        BOOST_TEST(test("-2.2250738585072014e-308", 
+            bordercase(-2.2250738585072014e-308)));     // -DBL_MIN
+    }
     return boost::report_errors();
 }

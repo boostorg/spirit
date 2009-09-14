@@ -10,8 +10,24 @@
 #include <boost/spirit/home/phoenix/stl/algorithm/querying.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/assign/list_of.hpp>
+
+#include <boost/config.hpp>
+
+#ifdef BOOST_HAS_HASH
+#include BOOST_HASH_SET_HEADER
+#include BOOST_HASH_MAP_HEADER
+#define BOOST_PHOENIX_HAS_HASH
+#define BOOST_PHOENIX_HASH_NAMESPACE BOOST_STD_EXTENSION_NAMESPACE
+#elif defined(BOOST_DINKUMWARE_STDLIB)
+#include <hash_set>
+#include <hash_map>
+#define BOOST_PHOENIX_HAS_HASH
+#define BOOST_PHOENIX_HASH_NAMESPACE stdext
+#endif
 
 #include <set>
+#include <map>
 #include <functional>
 
 namespace
@@ -43,6 +59,19 @@ namespace
 
         std::set<int> s(array, array + 3);
         BOOST_TEST(find(arg1, 2)(s) == s.find(2));
+
+        std::map<int, int> m = boost::assign::map_list_of(0, 1)(2, 3)(4, 5);
+        BOOST_TEST(find(arg1, 2)(m) == m.find(2));
+
+#ifdef BOOST_PHOENIX_HAS_HASH
+
+        BOOST_PHOENIX_HASH_NAMESPACE::hash_set<int> hs(array, array + 3);
+        BOOST_TEST(find(arg1, 2)(hs) == hs.find(2));
+
+        BOOST_PHOENIX_HASH_NAMESPACE::hash_map<int, int> hm = boost::assign::map_list_of(0, 1)(2, 3)(4, 5);
+        BOOST_TEST(find(arg1, 2)(hm) == hm.find(2));
+
+#endif
 
         return;
     }

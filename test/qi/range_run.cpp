@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cctype>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/spirit/home/qi/char/detail/range_run.hpp>
+#include <boost/spirit/home/support/char_set/range_run.hpp>
 #include <boost/random.hpp>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/integer_traits.hpp>
@@ -23,8 +23,8 @@ void acid_test()
         return; // don't do this test if we have a Char that's very big.
                 // the smaller chars will suffice for testing.
 
-    using boost::spirit::qi::detail::range_run;
-    using boost::spirit::qi::detail::range;
+    using boost::spirit::support::detail::range_run;
+    using boost::spirit::support::detail::range;
 
     typedef boost::integer_traits<Char> integer_traits;
     Char const const_min = integer_traits::const_min;
@@ -69,15 +69,15 @@ void acid_test()
 int
 main()
 {
-    using boost::spirit::qi::detail::range_run;
-    using boost::spirit::qi::detail::range;
+    using boost::spirit::support::detail::range_run;
+    using boost::spirit::support::detail::range;
 
     {
         range_run<char> rr;
         rr.set(range<char>('a', 'a'));
         for (char c = 0; c < 127; ++c)
         {
-            BOOST_TEST(c == 'a' == rr.test(c));
+            BOOST_TEST((c == 'a') == rr.test(c));
         }
     }
     {
@@ -95,7 +95,7 @@ main()
         rr.set(range<char>(0, 0));
         for (char c = 0; c < 127; ++c)
         {
-            BOOST_TEST(c == 0 == rr.test(c));
+            BOOST_TEST((c == 0) == rr.test(c));
         }
         rr.set(range<char>(0, 50));
         for (char c = 0; c < 127; ++c)
@@ -108,7 +108,7 @@ main()
         rr.set(range<unsigned char>(255, 255));
         for (unsigned char c = 0; c < 255; ++c)
         {
-            BOOST_TEST(c == 255 == rr.test(c));
+            BOOST_TEST((c == 255) == rr.test(c));
         }
         rr.set(range<unsigned char>(250, 255));
         for (unsigned char c = 0; c < 255; ++c)

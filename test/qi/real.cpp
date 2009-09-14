@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
     Copyright (c) 2001-2009 Hartmut Kaiser
 
     Use, modification and distribution is subject to the Boost Software
@@ -12,11 +12,10 @@
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
-#include <boost/spirit/home/support/detail/math/fpclassify.hpp>
-#include <boost/spirit/home/support/detail/math/signbit.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/math/special_functions/sign.hpp>
 
 #include "test.hpp"
-using namespace spirit_test;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  These policies can be used to parse thousand separated
@@ -56,11 +55,11 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     static bool
     parse_n(Iterator& first, Iterator const& last, Attribute& attr)
     {
-        using namespace boost::spirit::qi;
-        using namespace boost::spirit;
+        using boost::spirit::qi::uint_parser;
+        namespace qi = boost::spirit::qi;
 
-        uint_spec<unsigned, 10, 1, 3> uint3;
-        uint_spec<unsigned, 10, 3, 3> uint3_3;
+        uint_parser<unsigned, 10, 1, 3> uint3;
+        uint_parser<unsigned, 10, 3, 3> uint3_3;
 
         T result = 0;
         if (parse(first, last, uint3, result))
@@ -69,7 +68,7 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
             T n;
             Iterator save = first;
 
-            while (parse(first, last, ',') && parse(first, last, uint3_3, n))
+            while (qi::parse(first, last, ',') && qi::parse(first, last, uint3_3, n))
             {
                 result = result * 1000 + n;
                 save = first;
@@ -101,23 +100,41 @@ template <typename T>
 bool
 compare(T n, double expected)
 {
-    double const eps = 0.00001;
+    T const eps = std::pow(10.0, -std::numeric_limits<T>::digits10);
     T delta = n - expected;
     return (delta >= -eps) && (delta <= eps);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// A custom real type
+struct custom_real
+{
+    double n;
+    custom_real() : n(0) {}
+    custom_real(double n_) : n(n_) {}
+    friend custom_real operator*(custom_real a, custom_real b) 
+        { return custom_real(a.n * b.n); }
+    friend custom_real operator+(custom_real a, custom_real b) 
+        { return custom_real(a.n + b.n); }
+    friend custom_real operator-(custom_real a, custom_real b) 
+        { return custom_real(a.n - b.n); }
+};
+
 int
 main()
 {
+    using spirit_test::test;
+    using spirit_test::test_attr;
+
     ///////////////////////////////////////////////////////////////////////////////
     //  thousand separated numbers
     ///////////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::uint_spec;
+        using boost::spirit::qi::uint_parser;
         using boost::spirit::qi::parse;
 
-        uint_spec<unsigned, 10, 1, 3> uint3;
-        uint_spec<unsigned, 10, 3, 3> uint3_3;
+        uint_parser<unsigned, 10, 1, 3> uint3;
+        uint_parser<unsigned, 10, 3, 3> uint3_3;
 
     #define r (uint3 >> *(',' >> uint3_3))
 
@@ -133,11 +150,11 @@ main()
     //  unsigned real number tests
     ///////////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::real_spec;
+        using boost::spirit::qi::real_parser;
         using boost::spirit::qi::parse;
         using boost::spirit::qi::ureal_policies;
 
-        real_spec<double, ureal_policies<double> > udouble;
+        real_parser<double, ureal_policies<double> > udouble;
         double  d;
 
         BOOST_TEST(test("1234", udouble));
@@ -204,7 +221,7 @@ main()
 //  signed real number tests
 ///////////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::double_;
+        using boost::spirit::qi::double_;
         using boost::spirit::qi::parse;
         double  d;
 
@@ -238,8 +255,21 @@ main()
         BOOST_TEST(!test("-1.2e", double_));
         BOOST_TEST(!test_attr("-1.2e", double_, d));
 
-        using boost::spirit::math::fpclassify;
-        using boost::spirit::math::signbit;
+        BOOST_TEST(test_attr("-5.7222349715140557e+307", double_, d));
+        BOOST_TEST(d == -5.7222349715140557e+307); // exact!
+
+        BOOST_TEST(test_attr("2.0332938517515416e-308", double_, d));
+        BOOST_TEST(d == 2.0332938517515416e-308); // exact!
+
+        BOOST_TEST(test_attr("20332938517515416e291", double_, d));
+        BOOST_TEST(d == 20332938517515416e291); // exact!
+
+        BOOST_TEST(test_attr("2.0332938517515416e307", double_, d));
+        BOOST_TEST(d == 2.0332938517515416e307); // exact!
+
+        using boost::math::fpclassify;
+        using boost::spirit::detail::signbit;   // Boost version is broken
+
         BOOST_TEST(test("-inf", double_));
         BOOST_TEST(test("-infinity", double_));
         BOOST_TEST(test_attr("-inf", double_, d) &&
@@ -272,13 +302,13 @@ main()
     //  strict real number tests
     ///////////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::real_spec;
+        using boost::spirit::qi::real_parser;
         using boost::spirit::qi::parse;
         using boost::spirit::qi::strict_ureal_policies;
         using boost::spirit::qi::strict_real_policies;
 
-        real_spec<double, strict_ureal_policies<double> > strict_udouble;
-        real_spec<double, strict_real_policies<double> > strict_double;
+        real_parser<double, strict_ureal_policies<double> > strict_udouble;
+        real_parser<double, strict_real_policies<double> > strict_double;
         double  d;
 
         BOOST_TEST(!test("1234", strict_udouble));
@@ -296,8 +326,8 @@ main()
         BOOST_TEST(test("3.E6", strict_double));
         BOOST_TEST(test_attr("3.E6", strict_double, d) && compare(d, 3e6));
 
-        real_spec<double, no_trailing_dot_policy<double> > notrdot_real;
-        real_spec<double, no_leading_dot_policy<double> > nolddot_real;
+        real_parser<double, no_trailing_dot_policy<double> > notrdot_real;
+        real_parser<double, no_leading_dot_policy<double> > nolddot_real;
 
         BOOST_TEST(!test("1234.", notrdot_real));          //  Bad trailing dot
         BOOST_TEST(!test(".1234", nolddot_real));          //  Bad leading dot
@@ -307,9 +337,9 @@ main()
     //  Special thousands separated numbers
     ///////////////////////////////////////////////////////////////////////////
     {
-        using boost::spirit::qi::real_spec;
+        using boost::spirit::qi::real_parser;
         using boost::spirit::qi::parse;
-        real_spec<double, ts_real_policies<double> > ts_real;
+        real_parser<double, ts_real_policies<double> > ts_real;
         double  d;
 
         BOOST_TEST(test("123,456,789.01", ts_real));
@@ -332,13 +362,13 @@ main()
     ///////////////////////////////////////////////////////////////////////////
     {
         using boost::math::concepts::real_concept;
-        using boost::spirit::qi::real_spec;
+        using boost::spirit::qi::real_parser;
         using boost::spirit::qi::real_policies;
         using boost::spirit::qi::parse;
-        
-        real_spec<real_concept, real_policies<real_concept> > custom_real;
+
+        real_parser<real_concept, real_policies<real_concept> > custom_real;
         real_concept d;
-        
+
         BOOST_TEST(test("-1234", custom_real));
         BOOST_TEST(test_attr("-1234", custom_real, d) && compare(d, -1234));
 
@@ -370,5 +400,15 @@ main()
         BOOST_TEST(!test_attr("-1.2e", custom_real, d));
     }
     
+    ///////////////////////////////////////////////////////////////////////////
+    //  custom real tests
+    ///////////////////////////////////////////////////////////////////////////
+    //~ {
+        //~ using boost::spirit::qi::double_;
+        //~ custom_real n;
+
+        //~ BOOST_TEST(test_attr("-123456e6", double_, n));
+    //~ }
+
     return boost::report_errors();
 }

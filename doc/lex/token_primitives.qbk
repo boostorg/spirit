@@ -1,0 +1,92 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section:primitives Token definition Primitives]
+
+This module includes different primitives allowing to create token definitions.
+It includes `char_`, `string`, character literals, and string literals.
+
+[heading Module Headers]
+
+    // forwards to <boost/spirit/home/lex/primitives.hpp>
+    #include <boost/spirit/include/lex_primitives.hpp>
+
+Also, see __include_structure__.
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:char_tokendef Tokens Matching Single Characters]
+
+[heading Description]
+
+The character based token definitions described in this section are:
+
+The `char_` creates token definitions matching single characters. The `char_` 
+token definition has an associated __lex_char_encoding_namespace__. This is needed when doing basic
+operations such as forcing lower or upper case and dealing with
+character ranges.
+
+
+[heading Header]
+
+[heading Module Headers]
+
+    // forwards to <boost/spirit/home/lex/lexer/char_token_def.hpp>
+    #include <boost/spirit/include/lex_char_token_def.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::lit // alias: boost::spirit::lex::lit` ]]
+    [[`ns::char_`]]
+]
+
+In the table above, `ns` is a __lex_char_encoding_namespace__. 
+
+[heading Model of]
+
+[:__primitive_lexer_concept__]
+
+[variablelist Notation
+    [[`ch`, `ch1`, `ch2`]
+                  [Character-class specific character (See __char_class_types__),
+                   or a __karma_lazy_argument__ that evaluates to a 
+                   character-class specific character value]]
+    [[`ns`]       [A __lex_char_encoding_namespace__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in __primitive_lexer_concept__.
+
+[table
+    [[Expression]           [Description]]
+    [[`ch`]                 [Generate the character literal `ch`. This generator 
+                             never fails (except if the underlying output stream 
+                             reports an error).]]
+    [[`lit(ch)`]            [Generate the character literal `ch`. This generator 
+                             never fails (except if the underlying output stream 
+                             reports an error).]]
+    [[`ns::char_(ch)`]      [Generate the character `ch` as provided by the 
+                             immediate literal value the generator is initialized 
+                             from. If this generator has an associated attribute 
+                             it succeeds only as long as the attribute is equal 
+                             to the immediate literal (except if the underlying 
+                             output stream reports an error). Otherwise this 
+                             generator fails and does not generate any output.]]
+]
+
+[heading Example]
+
+
+[endsect] [/ char]
+
+[endsect] [/ Module]

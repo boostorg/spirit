@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,6 +19,7 @@
 #define SPIRIT_EXAMPLE_CALC2_AST_APR_30_2008_1011AM
 
 #include <boost/variant/recursive_variant.hpp>
+#include <boost/variant/get.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
@@ -43,10 +44,10 @@ struct expression_ast
 
     // expose variant types 
     typedef type::types types;
-    
+
     // expose variant functionality
     int which() const { return expr.which(); }
-    
+
     // constructors
     expression_ast()
       : expr(nil()) {}
@@ -59,10 +60,10 @@ struct expression_ast
 
     expression_ast(unsigned int expr)
       : expr(expr) {}
-      
+
     expression_ast(type const& expr)
       : expr(expr) {}
-      
+
     expression_ast& operator+=(expression_ast const& rhs);
     expression_ast& operator-=(expression_ast const& rhs);
     expression_ast& operator*=(expression_ast const& rhs);
@@ -72,10 +73,26 @@ struct expression_ast
 };
 
 // expose variant functionality
-template <typename T>
-inline T get(expression_ast const& expr)
+namespace boost
 {
-    return boost::get<T>(expr.expr);
+    // this function has to live in namespace boost for ADL to correctly find it
+    template <typename T>
+    inline T get(expression_ast const& expr)
+    {
+        return boost::get<T>(expr.expr);
+    }
+
+    // the specialization below tells Spirit to handle expression_ast as if it 
+    // where a 'real' variant
+    namespace spirit { namespace traits
+    {
+        template <typename T>
+        struct not_is_variant;
+
+        template <>
+        struct not_is_variant<expression_ast>
+          : mpl::false_ {};
+    }}
 }
 
 enum byte_code
@@ -158,67 +175,5 @@ struct unary_expr
 
 boost::phoenix::function<unary_expr<op_pos> > pos;
 boost::phoenix::function<unary_expr<op_neg> > neg;
-
-///////////////////////////////////////////////////////////////////////////////
-//  A couple of phoenix functions helping to access the elements of the 
-//  generated AST
-///////////////////////////////////////////////////////////////////////////////
-template <typename T>
-struct get_element
-{
-    template <typename T1>
-    struct result { typedef T const& type; };
-
-    T const& operator()(expression_ast const& expr) const
-    {
-        return boost::get<T>(expr.expr);
-    }
-};
-
-boost::phoenix::function<get_element<int> > _int;
-boost::phoenix::function<get_element<binary_op> > _bin_op;
-boost::phoenix::function<get_element<unary_op> > _unary_op;
-
-///////////////////////////////////////////////////////////////////////////////
-struct get_left
-{
-    template <typename T1>
-    struct result { typedef expression_ast const& type; };
-
-    expression_ast const& operator()(binary_op const& bin_op) const
-    {
-        return bin_op.left;
-    }
-};
-
-boost::phoenix::function<get_left> _left;
-
-struct get_right
-{
-    template <typename T1>
-    struct result { typedef expression_ast const& type; };
-
-    template <typename Node>
-    expression_ast const& operator()(Node const& op) const
-    {
-        return op.right;
-    }
-};
-
-boost::phoenix::function<get_right> _right;
-
-struct get_op
-{
-    template <typename T1>
-    struct result { typedef int type; };
-
-    template <typename Node>
-    int operator()(Node const& bin_op) const
-    {
-        return bin_op.op;
-    }
-};
-
-boost::phoenix::function<get_op> _op;
 
 #endif

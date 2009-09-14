@@ -41,15 +41,15 @@ int main()
     std::cout << 
         karma::format_delimited(
             *int_,                                // format description
-            v,                                    // data
-            space                                 // delimiter
+            space,                                // delimiter
+            v                                     // data
         ) << std::endl << std::endl;
 
     std::cout << 
         karma::format_delimited(
             '[' << *int_ << ']',                  // format description
-            v,                                    // data
-            space                                 // delimiter
+            space,                                // delimiter
+            v                                     // data
         ) << std::endl << std::endl;
 
     // output the container as a comma separated list
@@ -98,8 +98,8 @@ int main()
                 // no delimiting within verbatim
                 *verbatim["  <li>" << int_ << "</li>"]
             << "</ol>",                           // format description
-            v,                                    // data
-            '\n'                                  // delimiter
+            '\n',                                 // delimiter
+            v                                     // data
         ) << std::endl;
 
     // output the container as right aligned column
@@ -109,8 +109,8 @@ int main()
            *verbatim[
                 "|" << right_align[int_] << "|"
             ],                                    // format description
-            v,                                    // data
-            '\n'                                  // delimiter
+            '\n',                                 // delimiter
+            v                                     // data
         ) << std::endl;
 
     std::cout << std::endl;

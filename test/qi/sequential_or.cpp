@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,12 +22,16 @@
 #include <iostream>
 #include "test.hpp"
 
-using namespace spirit_test;
-
 int
 main()
 {
-    using namespace boost::spirit;
+    using spirit_test::test;
+    using spirit_test::test_attr;
+
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::_1;
+    using boost::spirit::qi::_2;
+    using boost::spirit::ascii::char_;
     using boost::spirit::ascii::alpha;
     using boost::fusion::vector;
     using boost::fusion::at_c;
@@ -59,9 +63,22 @@ main()
         BOOST_TEST((!test("a123", int_ || alpha)));
     }
 
+    {   // test unused attribute handling
+
+        vector<optional<int>, optional<char> > attr;
+        BOOST_TEST((test_attr("123ab", int_ || ("a" >> char_), attr)));
+        BOOST_TEST((at_c<0>(attr).get() == 123));
+        BOOST_TEST((at_c<1>(attr).get() == 'b'));
+    }
+
+    {   // test unused attribute handling
+
+        optional<int> attr;
+        BOOST_TEST((test_attr("123a", int_ || "a", attr)));
+        BOOST_TEST((attr == 123));
+    }
+
     {   // test action
-        using namespace boost::phoenix;
-        using namespace boost::spirit::arg_names;
         namespace phx = boost::phoenix;
 
         optional<int> i;

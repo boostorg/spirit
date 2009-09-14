@@ -26,6 +26,7 @@
 #include <cstdlib> 
 
 #include <boost/range.hpp>
+#include <boost/array.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 
@@ -59,17 +60,24 @@ void output_container(std::ostream& os, Container const& c)
 {
     // output the container as a space separated sequence
     os << 
+        karma::format(
+            *stream,                              // format description
+            c                                     // data
+        ) << std::endl << std::endl;
+
+    // output the container as a space separated sequence
+    os << 
         karma::format_delimited(
             *stream,                              // format description
-            c,                                    // data
-            space                                 // delimiter
+            space,                                // delimiter
+            c                                     // data
         ) << std::endl << std::endl;
 
     os << 
         karma::format_delimited(
             '[' << *stream << ']',                // format description
-            c,                                    // data
-            space                                 // delimiter
+            space,                                // delimiter
+            c                                     // data
         ) << std::endl << std::endl;
 
     // output the container as a comma separated list
@@ -91,6 +99,12 @@ void output_container(std::ostream& os, Container const& c)
             c                                     // data
         ) << std::endl << std::endl;
 
+//     os << 
+//         karma::format(
+//             '[' << (+stream | "empty") << ']',    // format description
+//             c                                     // data
+//         ) << std::endl << std::endl;
+
     // output the container as a comma separated list of items enclosed in '()'
     os << 
         karma::format(
@@ -105,15 +119,15 @@ void output_container(std::ostream& os, Container const& c)
              )  << ']',                           // format description
             c                                     // data
         ) << std::endl << std::endl;
-        
+
     // output the container as a HTML list
     os << 
         karma::format_delimited(
-            "<ol>" << 
+            /*"<ol>" << */
                 *verbatim["<li>" << stream << "</li>"]
-            << "</ol>",                           // format description
-            c,                                    // data
-            '\n'                                  // delimiter
+            /*<< "</ol>"*/,                           // format description
+            '\n',                                 // delimiter
+            c                                     // data
         ) << std::endl;
 
     // output the container as right aligned column
@@ -122,8 +136,8 @@ void output_container(std::ostream& os, Container const& c)
            *verbatim[
                 "|" << right_align[stream] << "|"
             ],                                    // format description
-            c,                                    // data
-            '\n'                                  // delimiter
+            '\n',                                 // delimiter
+            c                                     // data
         ) << std::endl;
 
     os << std::endl;
@@ -132,15 +146,24 @@ void output_container(std::ostream& os, Container const& c)
 int main()
 {
     ///////////////////////////////////////////////////////////////////////////
+    // C-style array
+    int i[4] = { 3, 6, 9, 12 };
+    
+    std::cout << "-------------------------------------------------------------" 
+              << std::endl;
+    std::cout << "int i[]" << std::endl;
+    output_container(std::cout, boost::make_iterator_range(i, i+4));
+
+    ///////////////////////////////////////////////////////////////////////////
     // vector
-    std::vector<int> v (8);
+    std::vector<int> v (5);
     std::generate(v.begin(), v.end(), std::rand); // randomly fill the vector
 
     std::cout << "-------------------------------------------------------------" 
               << std::endl;
     std::cout << "std::vector<int>" << std::endl;
     output_container(std::cout, v);
-        
+
     ///////////////////////////////////////////////////////////////////////////
     // list
     std::list<char> l;
@@ -154,15 +177,6 @@ int main()
     output_container(std::cout, l);
 
     ///////////////////////////////////////////////////////////////////////////
-    // C-style array
-    int i[4] = { 3, 6, 9, 12 };
-    
-    std::cout << "-------------------------------------------------------------" 
-              << std::endl;
-    std::cout << "int i[]" << std::endl;
-    output_container(std::cout, boost::make_iterator_range(i, i+4));
-    
-    ///////////////////////////////////////////////////////////////////////////
     // strings
     std::string str("Hello world!");
 
@@ -170,7 +184,17 @@ int main()
               << std::endl;
     std::cout << "std::string" << std::endl;
     output_container(std::cout, str);
-        
+
+    ///////////////////////////////////////////////////////////////////////////
+    // boost::array
+    boost::array<long, 5> arr;
+    std::generate(arr.begin(), arr.end(), std::rand); // randomly fill the array
+
+    std::cout << "-------------------------------------------------------------" 
+              << std::endl;
+    std::cout << "boost::array<long, 5>" << std::endl;
+    output_container(std::cout, arr);
+
     ///////////////////////////////////////////////////////////////////////////
     //  vector of boost::date objects
     //  Note: any registered facets get used!
@@ -187,18 +211,18 @@ int main()
               << std::endl;
     std::cout << "std::vector<boost::date>" << std::endl;
     output_container(std::cout, dates);
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  map of int --> string mappings
-    std::map<int, std::string> mappings;
-    mappings.insert(std::make_pair(0, "zero"));
-    mappings.insert(std::make_pair(1, "one"));
-    mappings.insert(std::make_pair(2, "two"));
-
-    std::cout << "-------------------------------------------------------------" 
-              << std::endl;
-    std::cout << "std::map<int, std::string>" << std::endl;
-    output_container(std::cout, mappings);
+//     std::map<int, std::string> mappings;
+//     mappings.insert(std::make_pair(0, "zero"));
+//     mappings.insert(std::make_pair(1, "one"));
+//     mappings.insert(std::make_pair(2, "two"));
+// 
+//     std::cout << "-------------------------------------------------------------" 
+//               << std::endl;
+//     std::cout << "std::map<int, std::string>" << std::endl;
+//     output_container(std::cout, mappings);
 
     return 0;
 }

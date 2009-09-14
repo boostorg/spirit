@@ -15,7 +15,6 @@
 #include <vector>
 #include <list>
 
-#include <boost/static_assert.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/assign/std/vector.hpp>
 #include <boost/assign/std/list.hpp>
@@ -24,30 +23,20 @@
 template <typename Char, typename Expr>
 bool test(Char const *expected, Expr const& xpr)
 {
-    namespace spirit = boost::spirit;
-    typedef 
-        spirit::traits::is_component<spirit::karma::domain, Expr> 
-    is_component;
-
-    // report invalid expression error as early as possible
-    BOOST_MPL_ASSERT_MSG(is_component::value,
-        xpr_is_not_convertible_to_a_generator, ());
-
-    typedef
-        typename spirit::result_of::as_component<spirit::karma::domain, Expr>::type
-    component;
-    typedef typename component::director director;
-
-    component c = spirit::as_component(spirit::karma::domain(), xpr);
+    // Report invalid expression error as early as possible.
+    // If you got an error_invalid_expression error message here,
+    // then the expression (expr) is not a valid spirit karma expression.
+    BOOST_SPIRIT_ASSERT_MATCH(boost::spirit::karma::domain, Expr);
 
     std::ostringstream ostrm;
-    ostrm << c;
+    ostrm << boost::spirit::compile<boost::spirit::karma::domain>(xpr);
     return ostrm.good() && ostrm.str() == expected;
 }
 
-template <typename Char, typename Expr, typename Parameter, typename Delimiter>
+template <typename Char, typename Expr, typename Copy, typename Delimiter
+  , typename Attribute>
 bool test(Char const *expected, 
-    boost::spirit::karma::detail::format_manip<Expr, Parameter, Delimiter> const& fm)
+    boost::spirit::karma::detail::format_manip<Expr, Copy, Delimiter, Attribute> const& fm)
 {
     std::ostringstream ostrm;
     ostrm << fm;
@@ -60,13 +49,15 @@ main()
 {
     using namespace boost::spirit;
     using namespace boost::spirit::ascii;
-    using namespace boost::spirit::arg_names;
     using namespace boost::spirit::karma;
 
     namespace fusion = boost::fusion;
     using namespace boost::phoenix;
 
     {
+        BOOST_TEST(test( "a", 
+            char_('a')
+        ));
         BOOST_TEST(test( "a", 
             char_[_1 = val('a')]
         ));
@@ -80,10 +71,10 @@ main()
             format(char_, 'a') 
         ));
         BOOST_TEST(test( "a ", 
-            format_delimited(char_, 'a', space) 
+            format_delimited(char_, space, 'a') 
         ));
     }
-    
+
     {
         BOOST_TEST(test( "ab", 
             char_[_1 = val('a')] << char_[_1 = val('b')] 
@@ -94,17 +85,17 @@ main()
         BOOST_TEST(test( "a b ", 
             format_delimited(char_[_1 = val('a')] << char_[_1 = val('b')], space) 
         ));
-        
+
         fusion::vector<char, char> t('a', 'b');
 
         BOOST_TEST(test( "ab", 
             format(char_ << char_, t) 
         ));
         BOOST_TEST(test( "a b ", 
-            format_delimited(char_ << char_, t, space) 
+            format_delimited(char_ << char_, space, t) 
         ));
     }
-    
+
     {
         BOOST_TEST(test( "abc", 
             char_[_1 = 'a'] << char_[_1 = 'b'] << char_[_1 = 'c']
@@ -122,7 +113,7 @@ main()
             format(char_ << char_ << char_, t) 
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(char_ << char_ << char_, t, space) 
+            format_delimited(char_ << char_ << char_, space, t) 
         ));
     }
 
@@ -137,7 +128,7 @@ main()
             format(char_ << int_, t) 
         ));
         BOOST_TEST(test( "a 2 ", 
-            format_delimited(char_ << int_, t, space) 
+            format_delimited(char_ << int_, space, t) 
         ));
     }
     
@@ -147,7 +138,7 @@ main()
         // output all elements of a vector
         std::vector<char> v;
         v += 'a', 'b', 'c';
-        
+
         BOOST_TEST(test( "abc", 
             (*char_)[_1 = v] 
         ));
@@ -155,7 +146,7 @@ main()
             format(*char_, v)
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(*char_, v, space)
+            format_delimited(*char_, space, v)
         ));
 
         // output a comma separated list of vector elements
@@ -172,13 +163,13 @@ main()
             format(char_ % ',', v)
         ));
         BOOST_TEST(test( "a , b , c ", 
-            format_delimited(char_ % ',', v, space)
+            format_delimited(char_ % ',', space, v)
         ));
 
         // output all elements of a list
         std::list<char> l;
         l += 'a', 'b', 'c';
-        
+
 //         BOOST_TEST(test( "abc", 
 //             (*char_)[_1 = l] 
 //         ));
@@ -192,7 +183,7 @@ main()
             format(*char_, l)
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(*char_, l, space)
+            format_delimited(*char_, space, l)
         ));
     }
 

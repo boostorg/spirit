@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -8,14 +8,16 @@
 
 [section Introduction]
 
-Boost Spirit is an object-oriented, recursive-descent parser and output generation 
-library for C++. It allows you to write grammars and format descriptions using a 
-format similar to EBNF (Extended Backus Naur Form, see [4]) directly in 
-C++. These inline grammar specifications can mix freely with other C++ code and, 
-thanks to the generative power of C++ templates, are immediately executable. 
-In retrospect, conventional compiler-compilers or parser-generators have to 
-perform an additional translation step from the source EBNF code to C or C++ 
-code. 
+Boost Spirit is an object-oriented, recursive-descent parser and
+output generation library for C++. It allows you to write grammars and
+format descriptions using a format similar to Extended Backus Naur
+Form (EBNF)[footnote [@http://www.cl.cam.ac.uk/%7Emgk25/iso-14977.pdf
+ISO-EBNF]] directly in C++. These inline grammar
+specifications can mix freely with other C++ code and, thanks to the
+generative power of C++ templates, are immediately executable.  In
+retrospect, conventional compiler-compilers or parser-generators have
+to perform an additional translation step from the source EBNF code to
+C or C++ code.
 
 The syntax and semantics of the libraries' API directly form domain-specific 
 embedded languages (DSEL). In fact, Spirit exposes 3 different DSELs to the 
@@ -28,13 +30,14 @@ user:
 Since the target input grammars and output formats are written entirely in C++ 
 we do not need any separate tools to compile, preprocess or integrate those 
 into the build process. __spirit__ allows seamless integration of the parsing 
-and output generation process with other C++ code. Often this allows for 
+and output generation process with other C++ code. This often allows for 
 simpler and more efficient code.
 
-Both the created parsers and generators are fully attributed which allows you to 
-easily build and handle hierarchical data structures in memory. These data
-structures resemble the structure of the input data and can directly be used to 
-generate arbitrarily-formatted output.
+Both the created parsers and generators are fully attributed (more on
+that later) which allows you to easily build and handle hierarchical
+data structures in memory. These data structures resemble the
+structure of the input data and can directly be used to generate
+arbitrarily-formatted output.
 
 The [link spirit.spiritstructure figure] below depicts the overall structure 
 of the Boost Spirit library. The library consists of 4 major parts:
@@ -42,19 +45,22 @@ of the Boost Spirit library. The library consists of 4 major parts:
 * __classic__: This is the almost-unchanged code base taken from the 
   former Boost Spirit V1.8 distribution. It has been moved into the namespace 
   boost::spirit::classic. A special compatibility layer has been added to 
-  ensure complete compatibility with existing code using Spirit V1.8.
+  ensure complete compatibility with existing code using Spirit V1.8. 
 * __qi__: This is the parser library allowing you to build recursive 
   descent parsers. The exposed domain-specific language can be used to describe
   the grammars to implement, and the rules for storing the parsed information.
 * __lex__: This is the library usable to create tokenizers (lexers). The
-  domain-specific language exposed by __lex__ 
+  domain-specific language exposed by __lex__ allows to define regular 
+  expressions used to match tokens (create token definitions), associate these 
+  regular expressions with code to be executed whenever they are matched, and 
+  to add the token definitions to the lexical analyzer.
 * __karma__: This is the generator library allowing you to create code for 
   recursive descent, data type-driven output formatting. The exposed
   domain-specific language is almost equivalent to the parser description language 
   used in __qi__, except that it is used to describe the required output 
   format to generate from a given data structure.
 
-[fig ./images/spiritstructure.png..The overall structure of the Boost Spirit library..spirit.spiritstructure]
+[fig spiritstructure.png..The overall structure of the Boost Spirit library..spirit.spiritstructure]
 
 The separate sublibraries __qi__, __karma__ and __lex__ are well integrated 
 with any of the other parts. Because of their similar structure and identical 
@@ -71,7 +77,7 @@ some input being converted to some internal representation. After some
 external representation. The picture highlights Spirit's place in this data 
 transformation flow.
 
-[fig ./images/spiritkarmaflow.png..The place of __qi__ and __karma__ in a data transformation flow of a typical application..spirit.spiritkarmaflow]
+[fig spiritkarmaflow.png..The place of __qi__ and __karma__ in a data transformation flow of a typical application..spirit.spiritkarmaflow]
 
 [heading A Quick Overview of Parsing with __qi__]
 
@@ -115,15 +121,15 @@ inputs such as:
     1 + ((6 * 200) - 20) / 6
     (1 + (2 + (3 + (4 + 5))))
 
-Certainly we have done some modifications to the original EBNF syntax. This is 
-done to conform to C++ syntax rules. Most notably we see the abundance of 
-shift >> operators. Since there are no 'empty' operators in C++, it is simply 
-not possible to write something like: 
+Certainly we have modified the original EBNF syntax. This is done to
+conform to C++ syntax rules. Most notably we see the abundance of
+shift >> operators. Since there are no 'empty' operators in C++, it is
+simply not possible to write something like:
 
     a b
 
 as seen in math syntax, for example, to mean multiplication or, in our case, 
-as seen in EBNF syntax to mean sequencing (b should follow a). Spirit 
+as seen in EBNF syntax to mean sequencing (b should follow a). __qi__ 
 uses the shift `>>` operator instead for this purpose. We take the `>>` operator, 
 with arrows pointing to the right, to mean "is followed by". Thus we write: 
 
@@ -172,22 +178,25 @@ representations of the same `std::vector<int>`:
 [table Different output formats for `std::vector<int>` 
     [ [Format]                         [Example]          [Description] ]
     [ [`'[' << *(int_ << ',') << ']'`] [`[1,8,10,]`]      [Comma separated list of integers] ]
-    [ [`*('(' << int_ << ')' << ',')`] [`(1),(8),(10),]`] [Comma separated list of integers in parenthesis] ]
+    [ [`*('(' << int_ << ')' << ',')`] [`(1),(8),(10),`]  [Comma separated list of integers in parenthesis] ]
     [ [`*hex`]                         [`18a`]            [A list of hexadecimal numbers] ]
     [ [`*(double_ << ',')`]            [`1.0,8.0,10.0,`]  [A list of floating point numbers] ]
 ]
 
-The syntax is similar to /Qi/ with the exception that we use the `<<` 
+We will see later in this documentation how it is possible to avoid printing 
+the trailing `','`.
+
+Overall, the syntax is similar to __qi__ with the exception that we use the `<<` 
 operator for output concatenation. This should be easy to understand as it 
 follows the conventions used in the Standard's I/O streams. 
 
-Another important feature of /karma/ allows you to fully decouple the data 
+Another important feature of __karma__ allows you to fully decouple the data 
 type from the output format. You can use the same output format with different 
 data types as long as these conform conceptually. The next table gives some 
 related examples.
 
 [table Different data types usable with the output format `*(int_ << eol)`
-    [ [Data type] ]
+    [ [Data type]                 [Description] ]
     [ [`int i[4]`]                [C style arrays] ]
     [ [`std::vector<int>`]        [Standard vector] ]
     [ [`std::list<int>`]          [Standard list] ]

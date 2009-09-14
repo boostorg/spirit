@@ -1,11 +1,13 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <string>
 #include <vector>
+#include <set>
+#include <map>
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -21,6 +23,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/fusion/include/std_pair.hpp>
 
 #include <string>
 #include <iostream>
@@ -31,7 +34,6 @@ using namespace spirit_test;
 int
 main()
 {
-    using namespace boost::spirit;
     using namespace boost::spirit::ascii;
 
     {
@@ -50,13 +52,72 @@ main()
         BOOST_TEST(s == "abcdefgh");
     }
 
+    {
+        using boost::spirit::int_;
+
+        std::vector<int> v;
+        BOOST_TEST(test_attr("1,2", int_ % ',', v));
+        BOOST_TEST(2 == v.size() && 1 == v[0] && 2 == v[1]);
+    }
+
+    {
+        using boost::spirit::int_;
+
+        std::vector<int> v;
+        BOOST_TEST(test_attr("(1,2)", '(' >> int_ % ',' >> ')', v));
+        BOOST_TEST(2 == v.size() && 1 == v[0] && 2 == v[1]);
+    }
+
+    {
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("a,b,c,d", +alpha % ',', v));
+        BOOST_TEST(4 == v.size() && "a" == v[0] && "b" == v[1]
+            && "c" == v[2] && "d" == v[3]);
+    }
+
+    {
+        std::vector<boost::optional<std::string> > v;
+        BOOST_TEST(test_attr("#a,#", ('#' >> -alpha) % ',', v)); 
+        BOOST_TEST(2 == v.size() && 
+            v[0] && "a" == boost::get<std::string>(v[0]) && 
+            v[1] && boost::get<std::string>(v[1]).size() == 1 && 
+                    boost::get<std::string>(v[1])[0] == '\0');
+    }
+
+    {
+        typedef std::set<std::pair<std::string, std::string> > set_type;
+        set_type s;
+        BOOST_TEST(test_attr("k1=v1&k2=v2", 
+            (*(char_ - '=') >> '=' >> *(char_ - '&')) % '&', s));
+
+        set_type::const_iterator it = s.begin();
+        BOOST_TEST(s.size() == 2);
+        BOOST_TEST(it != s.end() && (*it).first == "k1" && (*it).second == "v1");
+        BOOST_TEST(++it != s.end() && (*it).first == "k2" && (*it).second == "v2");
+    }
+
+    {
+        typedef std::map<std::string, std::string> map_type;
+        map_type m;
+        BOOST_TEST(test_attr("k1=v1&k2=v2", 
+            (*(char_ - '=') >> '=' >> *(char_ - '&')) % '&', m));
+
+        map_type::const_iterator it = m.begin();
+        BOOST_TEST(m.size() == 2);
+        BOOST_TEST(it != m.end() && (*it).first == "k1" && (*it).second == "v1");
+        BOOST_TEST(++it != m.end() && (*it).first == "k2" && (*it).second == "v2");
+    }
+
     { // actions
-        using namespace boost::phoenix;
-        using boost::spirit::arg_names::_1;
+        namespace phx = boost::phoenix;
+        using boost::phoenix::begin;
+        using boost::phoenix::end;
+        using boost::phoenix::construct;
+        using boost::spirit::qi::_1;
 
         std::string s;
         BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')
-            [ref(s) = construct<std::string>(begin(_1), end(_1))]));
+            [phx::ref(s) = construct<std::string>(begin(_1), end(_1))]));
     }
 
     return boost::report_errors();

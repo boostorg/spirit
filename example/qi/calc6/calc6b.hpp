@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -13,12 +13,19 @@
 //  Our expression grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-expression<Iterator>::expression(std::vector<int>& code, symbols<char, int>& vars)
+expression<Iterator>::expression(std::vector<int>& code, qi::symbols<char, int>& vars)
   : expression::base_type(expr)
   , code(code)
   , vars(vars)
   , op(code)
 {
+    using qi::lexeme;
+    using qi::uint_;
+    using namespace qi::labels;
+    using qi::on_error;
+    using qi::fail;
+    using ascii::alnum;
+
     expr =
         additive_expr.alias()
         ;

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -96,7 +96,7 @@ expression<Iterator>::expression(
                 expr                        [++_b]
                 >> *(',' > expr             [++_b])
             )
-        >   char_(')')                      [op(_a, _b, pass)]
+        >   lit(')')                        [op(_a, _b, _pass)]
         ;
 
     expr.name("expression");
@@ -110,7 +110,7 @@ expression<Iterator>::expression(
     variable.name("variable");
     function_call.name("function-call");
 
-    on_error<fail>(expr, error_handler(_4, _3, _2));
+    on_error<fail>(expr, ::error_handler(_4, _3, _2)); // $$$ fix!
 }
 
 #endif

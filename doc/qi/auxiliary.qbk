@@ -1,0 +1,387 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section Auxiliary]
+
+This module includes different auxiliary parsers not fitting into any of the 
+other categories. This module includes the `attr`, `eoi`, `eol`, `eps`, and 
+`lazy` parsers.
+
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary.hpp>
+    #include <boost/spirit/include/qi_auxiliary.hpp>
+
+Also, see __include_structure__.
+
+[/------------------------------------------------------------------------------]
+[section:attr Attribute (`attr`)]
+
+[heading Description]
+
+The Attribute parser does not consume any input, for this reason it
+always matches an empty string and always succeeds. It's purpose is to
+expose its specified parameter as an attribute. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/attr.hpp>
+    #include <boost/spirit/include/qi_attr.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::attr // alias: boost::spirit::qi::attr`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`a`]          [A arbitrary typed constant value, e.g. 0.0, "Hello", or a 
+                    variable of arbitrary type or a __lazy_argument__ that evaluates 
+                    to an arbitrary type.]]
+    [[`A`]          [The type of `a` or if it is a __lazy_argument__, its
+                    return type.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`attr(a)`]        [Create a pseudo parser exposing the current value of
+                        `a` as its attribute without consuming any input 
+                        at parse time.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`attr(a)`]        [`A`]]
+]
+
+
+[heading Complexity]
+
+[:O(1)]
+
+The complexity is constant as no input is consumed and no matching is done.
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_attr]
+
+Using `attr` with literals:
+
+[reference_attr]
+
+Using `attr` with __phoenix__ function objects:
+
+[reference_attr_phoenix]
+
+[endsect] [/ Attribute]
+
+[/------------------------------------------------------------------------------]
+[section:eol End of Line (`eol`)]
+
+[heading Description]
+
+The `eol` parser matches the end of line (CR/LF and combinations
+thereof).
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/eol.hpp>
+    #include <boost/spirit/include/qi_eol.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::eol // alias: boost::spirit::qi::eol`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`eol`]            [Create a parser that matches the end of line.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`eol`]            [__unused__]]
+]
+
+[heading Complexity]
+
+[:O(1)]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_eol]
+
+Using `eol`:
+
+[reference_eol]
+
+[endsect] [/ End of Line]
+
+[/------------------------------------------------------------------------------]
+[section:eoi End of Input (`eoi`)]
+
+[heading Description]
+
+The `eoi` parser matches the end of input (returns a sucessful match
+with 0 length when the input is exhausted)
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/eoi.hpp>
+    #include <boost/spirit/include/qi_eoi.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::eoi // alias: boost::spirit::qi::eoi`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`eoi`]            [Create a parser that matches the end of input.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`eoi`]            [__unused__]]
+]
+
+[heading Complexity]
+
+[:O(1)]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_eoi]
+
+Using `eoi`:
+
+[reference_eoi]
+
+[endsect] [/ End of Input]
+
+[/------------------------------------------------------------------------------]
+[section:eps Epsilon (`eps`)]
+
+[heading Description]
+
+The Epsilon (`eps`) is a multi-purpose parser that returns a zero length
+match. 
+
+[heading Simple Form]
+
+In its simplest form, `eps` matches the null string and always returns a
+match of zero length:
+
+    eps // always returns a zero-length match
+
+This form is usually used to trigger a semantic action unconditionally.
+For example, it is useful in triggering error messages when a set of
+alternatives fail:
+
+    r = a | b | c | eps[error()]; // Call error if a, b, and c fail to match
+
+[heading Semantic Predicate]
+
+Semantic predicates allow you to attach a conditional function anywhere
+in the grammar. In this role, the epsilon takes a __lazy_argument__ that
+returns `true` or `false`. The __lazy_argument__ is typically a test
+that is called to resolve ambiguity in the grammar. A parse failure will
+be reported when the __lazy_argument__ result evaluates to `false`.
+Otherwise an empty match will be reported. The general form is:
+
+    eps_p(f) >> rest;
+
+The __lazy_argument__ `f` is called to do a semantic test (say, checking
+if a symbol is in the symbol table). If test returns true, `rest` will
+be evaluated. Otherwise, the production will return early with a
+no-match without ever touching rest. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/eps.hpp>
+    #include <boost/spirit/include/qi_eps.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::eps // alias: boost::spirit::qi::eps`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`f`]    [A __lazy_argument__ that evaluates `bool`.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`eps`]            [Match an empty string (always matches).]]
+    [[`eps(f)`]         [If `f` evaluates to `true`, return a zero length match.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`eps`]            [__unused__]]
+]
+
+[heading Complexity]
+
+[:For plain (`eps`) the complexity is O(1). For Semantic predicates
+(`eps(f)`) the complexity is defined by the function `f`.]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_eps]
+
+[reference_eps]
+
+[reference_eps_if]
+
+[reference_eps_while]
+
+[endsect] [/Epsilon]
+
+[/------------------------------------------------------------------------------]
+[section:lazy Lazy (`lazy`)]
+
+[heading Description]
+
+The `lazy` parser, as its name suggests, invokes a lazy __phoenix__
+function that returns a parser at parse time. This parser will be
+used once it is created to continue the parse.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/lazy.hpp>
+    #include <boost/spirit/include/qi_lazy.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::lazy // alias: boost::spirit::qi::lazy`]]
+]
+
+[heading Model of]
+
+[:__parser_concept__]
+
+[variablelist Notation  
+    [[`fp`]     [A __lazy_argument__ that evaluates to a
+                __parser_concept__.]] 
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`fp`]             [Create a lazy-parser from a __lazy_argument__, `fp`.
+                        `fp` will be invoked at parse time. `fp` is expected to 
+                        return a __parser_concept__ object. This parser is then 
+                        invoked in order to parse the input.]]
+    [[`lazy(fp)`]       [Create a lazy-parser from a __lazy_argument__, `fp`.
+                        `fp` will be invoked at parse time. `fp` is expected to 
+                        return a __parser_concept__ object. This parser is then 
+                        invoked in order to parse the input.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`fp`]             [The attribute type of the return type of `fp`.]]
+    [[`lazy(fp)`]       [The attribute type of the return type of `fp`.]]
+]
+
+[heading Complexity]
+
+The complexity of the `lazy` parser is determined by the complexity of
+the parser returned from `fp`. 
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_lazy]
+
+Using `lazy`:
+
+[reference_lazy]
+
+[endsect] [/ Lazy]
+
+[endsect] [/ Auxiliary]

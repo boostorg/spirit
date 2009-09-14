@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,13 +18,13 @@
 #include <string>
 #include <vector>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
 using boost::phoenix::function;
 using boost::phoenix::ref;
+
+using boost::spirit::qi::unused_type;
+
+namespace qi = boost::spirit::qi;
+namespace ascii = boost::spirit::ascii;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  The Virtual Machine
@@ -105,7 +105,7 @@ struct error_handler_
 
     template <typename Iterator>
     void operator()(
-        std::string const& what
+        qi::info const& what
       , Iterator err_pos, Iterator last) const
     {
         std::cout
@@ -125,16 +125,16 @@ function<error_handler_> const error_handler = error_handler_();
 //  Our expression grammar and compiler
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct expression : grammar<Iterator, space_type>
+struct expression : qi::grammar<Iterator, ascii::space_type>
 {
-    expression(std::vector<int>& code, symbols<char, int>& vars);
+    expression(std::vector<int>& code, qi::symbols<char, int>& vars);
 
-    rule<Iterator, space_type>
+    qi::rule<Iterator, ascii::space_type>
         expr, additive_expr, multiplicative_expr
       , unary_expr, primary_expr, variable;
 
     std::vector<int>& code;
-    symbols<char, int>& vars;
+    qi::symbols<char, int>& vars;
     function<compile_op> op;
 };
 
@@ -146,7 +146,7 @@ struct var_adder
     template <typename, typename>
     struct result { typedef void type; };
 
-    var_adder(symbols<char, int>& vars)
+    var_adder(qi::symbols<char, int>& vars)
       : vars(vars)
     {
     }
@@ -156,24 +156,24 @@ struct var_adder
         vars.add(var.begin(), var.end(), nvars++);
     };
 
-    symbols<char, int>& vars;
+    qi::symbols<char, int>& vars;
 };
 
 template <typename Iterator>
-struct statement : grammar<Iterator, space_type>
+struct statement : qi::grammar<Iterator, ascii::space_type>
 {
     statement(std::vector<int>& code);
 
     std::vector<int>& code;
-    symbols<char, int> vars;
+    qi::symbols<char, int> vars;
     int nvars;
 
     expression<Iterator> expr;
-    rule<Iterator, space_type> start, var_decl;
-    rule<Iterator, std::string(), space_type> identifier;
-    rule<Iterator, int(), space_type> var_ref;
-    rule<Iterator, locals<int>, space_type> assignment;
-    rule<Iterator, void(int), space_type> assignment_rhs;
+    qi::rule<Iterator, ascii::space_type> start, var_decl;
+    qi::rule<Iterator, std::string(), ascii::space_type> identifier;
+    qi::rule<Iterator, int(), ascii::space_type> var_ref;
+    qi::rule<Iterator, qi::locals<int>, ascii::space_type> assignment;
+    qi::rule<Iterator, void(int), ascii::space_type> assignment_rhs;
 
     function<var_adder> add_var;
     function<compile_op> op;

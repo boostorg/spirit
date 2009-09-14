@@ -1,0 +1,58 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[article Spirit Repository
+    [quickbook 1.4]
+    [version 0.1]
+    [authors [de Guzman, Joel], [Kaiser, Hartmut]]
+    [copyright 2001 2002 2003 2004 2005 2006 2007 2008 2009 Joel de Guzman, Hartmut Kaiser]
+    [purpose Parser and Generator Library]
+    [license
+        Distributed under the Boost Software License, Version 1.0.
+        (See accompanying file LICENSE_1_0.txt or copy at
+        [@http://www.boost.org/LICENSE_1_0.txt])
+    ]
+]
+
+[/ May 26, 2009 ]
+
+[def __spirit__                 [@http://spirit.sourceforge.net Spirit]]
+[def __spirit_list__            [@http://www.nabble.com/The-Spirit-Parser-Library-f3430.html Spirit General List]]
+[def __phoenix__                [@../../phoenix/doc/html/index.html Phoenix]]
+[def __boost_phoenix__               [@../../phoenix/doc/html/index.html Phoenix2]]
+[def __fusion__                 [@http://spirit.sourceforge.net/dl_more/fusion_v2/libs/fusion/doc/html/index.html Fusion]]
+[def __mpl__                    [@http://www.boost.org/libs/mpl/index.html MPL]]
+[def __boost__                  [@http://www.boost.org/ Boost]]
+[def __boost_tools__            [@http://www.boost.org/tools/index.html Boost Tools]]
+[def __spirit_list__            [@https://lists.sourceforge.net/lists/listinfo/spirit-general Spirit Mailing List]]
+[def __spirit_general__         [@news://news.gmane.org/gmane.comp.spirit.general Spirit General NNTP news portal]]
+[def __gmane__                  [@http://www.gmane.org Gmane]]
+[def __mlist_archive__          [@http://news.gmane.org/gmane.comp.parsers.spirit.general]]
+
+[def __classic__                /Spirit.Classic/]
+[def __qi__                     /Spirit.Qi/]
+[def __karma__                  /Spirit.Karma/]
+[def __lex__                    /Spirit.Lex/]
+
+[/ Some images ]
+
+[def __note__                   [$images/note.png]]
+[def __tip__                    [$images/tip.png]]
+[def __important__              [$images/important.png]]
+[def __caution__                [$images/caution.png]]
+[def __danger__                 [$images/alert.png]]
+
+[/ Here we go ]
+
+[include preface.qbk]
+
+[include qi.qbk]
+
+[include karma.qbk]
+
+

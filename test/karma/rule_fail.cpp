@@ -19,20 +19,19 @@ using namespace boost::spirit;
 using namespace boost::spirit::karma;
 using namespace boost::spirit::ascii;
 
-// this test must fail compiling
+// this test must fail compiling as the rule is used with an incompatible 
+// delimiter type
 int main()
 {
-    using boost::make_function_output_iterator;
-    using spirit_test::make_string_appender;
-    
+    typedef spirit_test::output_iterator<char>::type outiter_type;
+
     std::string generated;
-    
-    rule<char const*, rule<char const*> > def;
+
+    rule<outiter_type, rule<outiter_type> > def;
     def = int_(1) << ',' << int_(0);
-    
-    bool r = generate_delimited(
-                make_function_output_iterator(make_string_appender(generated)), 
-                def, char_('%') << '\n');
+
+    std::back_insert_iterator<std::string> outit(generated);
+    generate_delimited(outit, def, char_('%') << '\n');
 
     return 0;
 }

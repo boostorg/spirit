@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,8 +17,10 @@ int
 main()
 {
     using spirit_test::test;
-    using namespace boost::spirit;
-    using namespace boost::spirit::ascii;
+    using boost::spirit::ascii::space;
+    using boost::spirit::ascii::space_type;
+    using boost::spirit::ascii::digit;
+    using boost::spirit::qi::lexeme;
     using boost::spirit::qi::rule;
 
     {
@@ -27,7 +29,8 @@ main()
         BOOST_TEST((test(" 12345", lexeme[+digit], space)));
         BOOST_TEST((test(" 12345  ", lexeme[+digit], space, false)));
 
-        rule<char const*, space_type> r, rr;
+        rule<char const*, space_type> rr;
+        rule<char const*> r;
         r = +digit;
         rr = lexeme[r];
         BOOST_TEST((!test(" 1 2 3 4 5", rr, space)));

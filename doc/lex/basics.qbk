@@ -1,0 +1,71 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section:lex_basics Basics]
+
+[heading Character Encoding Namespace]
+
+Some generators need to know which character set a `char` or `wchar_t` is
+operating on. For example, the regular expression `[a-9]` spans a different 
+set of characters in different character sets. Where necessary, Spirit encodes 
+(tags) the token definitions with the character set. 
+
+We have a namespace for each character set Spirit will be supporting.
+That includes `ascii`, `iso8859_1`, `standard` and `standard_wide` (and
+in the future, `unicode`). In each of the character encoding namespaces,
+we place tagged versions of token definitions such as `char_` and `string`. 
+
+Example:
+
+    using boost::spirit::ascii::char_; // use ASCII character token definitions
+
+Namespaces:
+
+* boost::spirit::ascii
+* boost::spirit::iso8859_1
+* boost::spirit::standard
+* boost::spirit::standard_wide
+
+For ease of use, the components in this namespaces are also brought into
+the lex sub-namespaces with the same names:
+
+* boost::spirit::lex::ascii
+* boost::spirit::lex::iso8859_1
+* boost::spirit::lex::standard
+* boost::spirit::lex::standard_wide
+
+[heading Examples]
+
+All sections in the reference present some real world examples. The
+examples use a common test harness to keep the example code as minimal
+and direct to the point as possible. The test harness is presented
+below.
+
+Some includes:
+
+[reference_lex_includes]
+
+Our test functions:
+
+This one tests token definitions.
+
+[reference_lex_test]
+
+[heading Models]
+
+Predefined models include:
+
+* any literal string, e.g. "Hello, World", 
+* a pointer/reference to a null-terminated array of characters
+* a `std::basic_string<Char>`
+
+The namespace `boost::spirit::traits` is open for users to provide their
+own specializations.
+
+[endsect]
+

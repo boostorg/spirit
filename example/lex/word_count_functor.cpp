@@ -51,7 +51,7 @@
 
 #include <boost/config/warning_disable.hpp>
 //[wcf_includes
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
 //]
@@ -62,7 +62,6 @@
 #include "example.hpp"
 
 //[wcf_namespaces
-using namespace boost::spirit;
 using namespace boost::spirit::lex;
 //]
 
@@ -91,14 +90,13 @@ enum token_ids
     example we use the Lexertl based lexer engine as the underlying lexer type. 
 */
 template <typename Lexer>
-struct word_count_tokens : lexer_def<Lexer>
+struct word_count_tokens : lexer<Lexer>
 {
-    template <typename Self>
-    void def (Self& self)
+    word_count_tokens()
     {
         // define tokens (the regular expression to match and the corresponding
         // token id) and add them to the lexer 
-        self.add
+        this->self.add
             ("[^ \t\n]+", ID_WORD) // words (anything except ' ', '\t' or '\n')
             ("\n", ID_EOL)         // newline characters
             (".", ID_CHAR)         // anything else is a plain character
@@ -114,9 +112,9 @@ struct word_count_tokens : lexer_def<Lexer>
 */
 struct counter
 {
-//<- this is an implementation detail and doesn't show up in the documentation
+//<- this is an implementation detail specific to boost::bind and doesn't show 
+//   up in the documentation
     typedef bool result_type;
-    
 //->
     // the function operator gets called for each of the matched tokens
     // c, l, w are references to the counters used to keep track of the numbers
@@ -126,8 +124,8 @@ struct counter
         switch (t.id()) {
         case ID_WORD:       // matched a word
         // since we're using a default token type in this example, every 
-        // token instance contains a `iterator_range<BaseIterator>` as its 
-        // token value pointing to the matched character sequence in the input 
+        // token instance contains a `iterator_range<BaseIterator>` as its token
+        // attribute pointing to the matched character sequence in the input 
             ++w; c += t.value().size(); 
             break;
         case ID_EOL:        // matched a newline character
@@ -147,8 +145,8 @@ struct counter
 /*` The main function simply loads the given file into memory (as a 
     `std::string`), instantiates an instance of the token definition template
     using the correct iterator type (`word_count_tokens<char const*>`),
-    and finally calls `lex::tokenize`, passing an instance of the counter functor
-    defined above. The return value of `lex::tokenize` will be `true` if the 
+    and finally calls `lex::tokenize`, passing an instance of the counter function
+    object. The return value of `lex::tokenize()` will be `true` if the 
     whole input sequence has been successfully tokenized, and `false` otherwise.
 */
 int main(int argc, char* argv[])
@@ -160,13 +158,13 @@ int main(int argc, char* argv[])
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
 
     // create the token definition instance needed to invoke the lexical analyzer
-    word_count_tokens<lexertl_lexer<> > word_count_functor;
+    word_count_tokens<lexertl::lexer<> > word_count_functor;
 
     // tokenize the given string, the bound functor gets invoked for each of 
     // the matched tokens
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    bool r = lex::tokenize(first, last, make_lexer(word_count_functor), 
+    bool r = tokenize(first, last, word_count_functor, 
         boost::bind(counter(), _1, boost::ref(c), boost::ref(w), boost::ref(l)));
 
     // print results

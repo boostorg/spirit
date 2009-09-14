@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -13,7 +13,7 @@ __spirit__ libraries. You never pay for features you don't use. It is nicely
 integrated with the other parts of __spirit__ but nevertheless can be used 
 separately to build standalone lexical analyzers. 
 The first quick start example describes a standalone application: 
-counting characters, words and lines in a file, very similar to what the well 
+counting characters, words, and lines in a file, very similar to what the well 
 known Unix command `wc` is doing (for the full example code see here:
 [@../../example/lex/word_count_functor.cpp word_count_functor.cpp]).
 
@@ -53,8 +53,8 @@ function after any of of the generated tokens is recognized. For this reason
 we need to implement a functor taking at least the generated token as an 
 argument and returning a boolean value allowing to stop the tokenization 
 process. The default token type used in this example carries a token value of
-the type `iterator_range<BaseIterator>` pointing to the matched range in the 
-underlying input sequence. 
+the type __boost_iterator_range__`<BaseIterator>` pointing to the matched 
+range in the underlying input sequence. 
 
 [wcf_functor]
 
@@ -72,7 +72,7 @@ over the lexer iterators [`first`, `last`) as well.
 
 [heading Comparing __lex__ with __flex__]
 
-This example was deliberately chosen to be similar as much as possible to the 
+This example was deliberately chosen to be as much as possible similar to the 
 equivalent __flex__ program (see below), which isn't too different from what 
 has to be written when using __lex__. 
 

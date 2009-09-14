@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,6 +11,8 @@
 #include <boost/spirit/include/qi_numeric.hpp>
 #include <boost/spirit/include/qi_directive.hpp>
 #include <boost/spirit/include/qi_action.hpp>
+#include <boost/spirit/include/qi_nonterminal.hpp>
+#include <boost/spirit/include/qi_auxiliary.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -28,6 +30,7 @@ main()
     using namespace boost::spirit;
     using namespace boost::spirit::ascii;
     using spirit_test::test;
+    using spirit_test::print_info;
     using boost::spirit::qi::expectation_failure;
 
     {
@@ -42,10 +45,10 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what << std::endl;
+            std::cout << "expected: "; print_info(x.what);
             std::cout << "got: \"" << x.first << '"' << std::endl;
 
-            BOOST_TEST(x.what == "'o'");
+            BOOST_TEST(boost::get<std::string>(x.what.value) == "o");
             BOOST_TEST(std::string(x.first, x.last) == "i");
         }
     }
@@ -53,17 +56,17 @@ main()
     {
         try
         {
-            BOOST_TEST((test(" a a ", char_ > char_, space)));
-            BOOST_TEST((test(" x i ", char_('x') > char_('i'), space)));
-            BOOST_TEST((!test(" x i ", char_('x') > char_('o'), space)));
+            BOOST_TEST((test(" a a", char_ > char_, space)));
+            BOOST_TEST((test(" x i", char_('x') > char_('i'), space)));
+            BOOST_TEST((!test(" x i", char_('x') > char_('o'), space)));
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what << std::endl;
+            std::cout << "expected: "; print_info(x.what);
             std::cout << "got: \"" << x.first << '"' << std::endl;
 
-            BOOST_TEST(x.what == "'o'");
-            BOOST_TEST(std::string(x.first, x.last) == "i ");
+            BOOST_TEST(boost::get<std::string>(x.what.value) == "o");
+            BOOST_TEST(std::string(x.first, x.last) == "i");
         }
     }
 
@@ -76,12 +79,20 @@ main()
         }
         catch (expectation_failure<char const*> const& x)
         {
-            std::cout << "expected: " << x.what << std::endl;
+            std::cout << "expected: "; print_info(x.what);
             std::cout << "got: \"" << x.first << '"' << std::endl;
 
-            BOOST_TEST(x.what == "case-insensitive \"nend\"");
+            BOOST_TEST(x.what.tag == "no-case-literal-string");
+            BOOST_TEST(boost::get<std::string>(x.what.value) == "nend");
             BOOST_TEST(std::string(x.first, x.last) == "END");
         }
+    }
+
+    {
+        using boost::spirit::qi::rule;
+        using boost::spirit::eps;
+        rule<const wchar_t*, void(int)> r;
+        r = eps > eps(_r1);
     }
 
     return boost::report_errors();

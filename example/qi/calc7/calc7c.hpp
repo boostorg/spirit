@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,6 +21,15 @@ statement<Iterator>::statement(std::vector<int>& code)
   , add_var(vars)
   , op(code)
 {
+    using qi::lexeme;
+    using qi::lit;
+    using qi::raw;
+    using namespace qi::labels;
+    using qi::on_error;
+    using qi::fail;
+    using ascii::alnum;
+    using ascii::alpha;
+
     identifier %=
         raw[lexeme[alpha >> *(alnum | '_')]]
         ;
@@ -48,7 +57,7 @@ statement<Iterator>::statement(std::vector<int>& code)
 
     assignment_rhs =
             expr
-        >   char_(';')       [op(op_store, _r1)]
+        >   lit(';')        [op(op_store, _r1)]
         ;
 
     if_statement =

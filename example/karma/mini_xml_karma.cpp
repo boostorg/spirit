@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <boost/config/warning_disable.hpp>
+
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -32,7 +33,6 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
 
 namespace fusion = boost::fusion;
 namespace phoenix = boost::phoenix;
@@ -80,6 +80,7 @@ struct mini_xml_parser :
 
         start_tag =
                 '<'
+            >>  !lit('/')
             >>  lexeme[+(char_ - '>')       [_val += _1]]
             >>  '>'
         ;
@@ -132,14 +133,11 @@ struct mini_xml_generator
 {
     mini_xml_generator() : mini_xml_generator::base_type(xml)
     {
-        node %= 
-                lit[_1 = _string(_r0)] 
-            |   xml[_1 = _xml(_r0)]
-            ;
-
-        xml =   char_('<') << lit(at_c<0>(_r0)) << '>'
-            <<  (*node)[_1 = at_c<1>(_r0)]
-            <<  lit("</")  << lit(at_c<0>(_r0)) << '>'
+        node %= string | xml;
+        xml = 
+                '<'  << string[_1 = at_c<0>(_val)] << '>'
+            <<         (*node)[_1 = at_c<1>(_val)]
+            <<  "</" << string[_1 = at_c<0>(_val)] << '>'
             ;
     }
 
@@ -185,7 +183,7 @@ int main(int argc, char **argv)
 
     std::string::const_iterator iter = storage.begin();
     std::string::const_iterator end = storage.end();
-    bool r = qi::phrase_parse(iter, end, xmlin, ast, space);
+    bool r = qi::phrase_parse(iter, end, xmlin, space, ast);
 
     if (r && iter == end)
     {
@@ -199,7 +197,8 @@ int main(int argc, char **argv)
         mini_xml_generator xmlout;                 //  Our grammar definition
 
         std::string generated;
-        bool r = karma::generate(std::back_inserter(generated), xmlout, ast);
+        outiter_type outit(generated);
+        bool r = karma::generate(outit, xmlout, ast);
 
         if (r)
             std::cout << generated << std::endl;
@@ -207,8 +206,11 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::string::const_iterator some = iter+30;
-        std::string context(iter, (some>end)?end:some);
+        std::string::const_iterator begin = storage.begin();
+        std::size_t dist = std::distance(begin, iter);
+        std::string::const_iterator some = 
+            iter + (std::min)(storage.size()-dist, std::size_t(30));
+        std::string context(iter, some);
         std::cout << "-------------------------\n";
         std::cout << "Parsing failed\n";
         std::cout << "stopped at: \": " << context << "...\"\n";

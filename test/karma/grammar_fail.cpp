@@ -6,6 +6,7 @@
 =============================================================================*/
 
 #include <boost/config/warning_disable.hpp>
+
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -19,29 +20,27 @@ using namespace boost::spirit;
 using namespace boost::spirit::karma;
 using namespace boost::spirit::ascii;
 
-struct num_list : grammar<char const*, rule<char const*> >
+typedef spirit_test::output_iterator<char>::type outiter_type;
+
+struct num_list : grammar<outiter_type, rule<outiter_type> >
 {
-    num_list()
+    num_list() : num_list::base_type(start)
     {
-        using boost::spirit::int_;
         start = int_(1) << ',' << int_(0);
     }
 
-    rule<char const*, rule<char const*> > start;
+    rule<outiter_type, rule<outiter_type> > start;
 };
 
-// this test must fail compiling
+// this test must fail compiling as the rule is used with an incompatible 
+// delimiter type
 int main()
 {
-    using boost::make_function_output_iterator;
-    using spirit_test::make_string_appender;
-    
     std::string generated;
-    
+
+    std::back_insert_iterator<std::string> outit(generated);
     num_list def;
-    bool r = generate_delimited(
-                make_function_output_iterator(make_string_appender(generated)), 
-                make_generator(def), char_('%') << '\n');
+    generate_delimited(outit, def, char_('%') << '\n');
 
     return 0;
 }

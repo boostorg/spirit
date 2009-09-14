@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,55 +21,59 @@
 #include <iostream>
 #include <string>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-
-///////////////////////////////////////////////////////////////////////////////
-//  Semantic actions
-///////////////////////////////////////////////////////////////////////////////
-namespace
+namespace client
 {
-    void do_int(int n)  { std::cout << "push " << n << std::endl; }
-    void do_add()       { std::cout << "add\n"; }
-    void do_subt()      { std::cout << "subtract\n"; }
-    void do_mult()      { std::cout << "mult\n"; }
-    void do_div()       { std::cout << "divide\n"; }
-    void do_neg()       { std::cout << "negate\n"; }
-}
+    namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
 
-///////////////////////////////////////////////////////////////////////////////
-//  Our calculator grammar
-///////////////////////////////////////////////////////////////////////////////
-template <typename Iterator>
-struct calculator : grammar<Iterator, space_type>
-{
-    calculator() : calculator::base_type(expression)
+    ///////////////////////////////////////////////////////////////////////////////
+    //  Semantic actions
+    ///////////////////////////////////////////////////////////////////////////////
+    namespace
     {
-        expression =
-            term
-            >> *(   ('+' >> term            [&do_add])
-                |   ('-' >> term            [&do_subt])
-                )
-            ;
-
-        term =
-            factor
-            >> *(   ('*' >> factor          [&do_mult])
-                |   ('/' >> factor          [&do_div])
-                )
-            ;
-
-        factor =
-            uint_                           [&do_int]
-            |   '(' >> expression >> ')'
-            |   ('-' >> factor              [&do_neg])
-            |   ('+' >> factor)
-            ;
+        void do_int(int n)  { std::cout << "push " << n << std::endl; }
+        void do_add()       { std::cout << "add\n"; }
+        void do_subt()      { std::cout << "subtract\n"; }
+        void do_mult()      { std::cout << "mult\n"; }
+        void do_div()       { std::cout << "divide\n"; }
+        void do_neg()       { std::cout << "negate\n"; }
     }
 
-    rule<Iterator, space_type> expression, term, factor;
-};
+    ///////////////////////////////////////////////////////////////////////////////
+    //  Our calculator grammar
+    ///////////////////////////////////////////////////////////////////////////////
+    template <typename Iterator>
+    struct calculator : qi::grammar<Iterator, ascii::space_type>
+    {
+        calculator() : calculator::base_type(expression)
+        {
+            using qi::uint_;
+
+            expression =
+                term
+                >> *(   ('+' >> term            [&do_add])
+                    |   ('-' >> term            [&do_subt])
+                    )
+                ;
+
+            term =
+                factor
+                >> *(   ('*' >> factor          [&do_mult])
+                    |   ('/' >> factor          [&do_div])
+                    )
+                ;
+
+            factor =
+                uint_                           [&do_int]
+                |   '(' >> expression >> ')'
+                |   ('-' >> factor              [&do_neg])
+                |   ('+' >> factor)
+                ;
+        }
+
+        qi::rule<Iterator, ascii::space_type> expression, term, factor;
+    };
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -82,8 +86,9 @@ main()
     std::cout << "/////////////////////////////////////////////////////////\n\n";
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
+    using boost::spirit::ascii::space;
     typedef std::string::const_iterator iterator_type;
-    typedef calculator<iterator_type> calculator;
+    typedef client::calculator<iterator_type> calculator;
 
     calculator calc; // Our grammar
 

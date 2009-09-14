@@ -1,5 +1,4 @@
 //  Copyright (c) 2001-2009 Hartmut Kaiser
-//  Copyright (c) 2001-2007 Joel de Guzman
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +21,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
 #include <iostream>
@@ -32,6 +31,7 @@
 #include "example.hpp"
 
 using namespace boost::spirit;
+using namespace boost::spirit::ascii;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::lex;
 using boost::phoenix::ref;
@@ -40,10 +40,9 @@ using boost::phoenix::ref;
 //  Token definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct example2_tokens : lexer_def<Lexer>
+struct example2_tokens : lexer<Lexer>
 {
-    template <typename Self>
-    void def (Self& self)
+    example2_tokens()
     {
         //  A 'word' is comprised of one or more letters and an optional 
         //  apostrophe. If it contains an apostrophe, there may only be one and 
@@ -51,11 +50,15 @@ struct example2_tokens : lexer_def<Lexer>
         //  For example, "I'm" and "doesn't" meet the definition of 'word' we 
         //  define below.
         word = "[a-zA-Z]+('[a-zA-Z]+)?";
-        
-        // associate the tokens and the token set with the lexer
-        self = token_def<>(',') | '!' | '.' | '?' | ' ' | '\n' | word;
+
+        // Associate the tokens and the token set with the lexer. Note that 
+        // single character token definitions as used below always get 
+        // interpreted literally and never as special regex characters. This is
+        // done to be able to assign single characters the id of their character
+        // code value, allowing to reference those as literals in Qi grammars.
+        this->self = token_def<>(',') | '!' | '.' | '?' | ' ' | '\n' | word;
     }
-    
+
     token_def<> word;
 };
 
@@ -67,8 +70,8 @@ struct example2_grammar : grammar<Iterator>
 {
     template <typename TokenDef>
     example2_grammar(TokenDef const& tok)
-      : example2_grammar::base_type(story), 
-        paragraphs(0), commands(0), questions(0), statements(0)
+      : example2_grammar::base_type(story)
+      , paragraphs(0), commands(0), questions(0), statements(0)
     {
         story 
             =  +paragraph
@@ -112,38 +115,36 @@ int main()
 {
     // iterator type used to expose the underlying input stream
     typedef std::string::iterator base_iterator_type;
-    
+
     // This is the token type to return from the lexer iterator
-    typedef lexertl_token<base_iterator_type> token_type;
-    
+    typedef lexertl::token<base_iterator_type> token_type;
+
     // This is the lexer type to use to tokenize the input.
     // Here we use the lexertl based lexer engine.
-    typedef lexertl_lexer<token_type> lexer_type;
-    
+    typedef lexertl::lexer<token_type> lexer_type;
+
     // This is the token definition type (derived from the given lexer type).
     typedef example2_tokens<lexer_type> example2_tokens;
-    
+
     // this is the iterator type exposed by the lexer 
-    typedef lexer<example2_tokens>::iterator_type iterator_type;
+    typedef example2_tokens::iterator_type iterator_type;
 
     // this is the type of the grammar to parse
     typedef example2_grammar<iterator_type> example2_grammar;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
-    example2_tokens tokens;                         // Our token definition
-    example2_grammar calc(tokens);                  // Our grammar definition
-
-    lexer<example2_tokens> lex(tokens);             // Our lexer
+    example2_tokens tokens;                         // Our lexer
+    example2_grammar calc(tokens);                  // Our parser 
 
     std::string str (read_from_file("example2.input"));
 
     // At this point we generate the iterator pair used to expose the
     // tokenized input stream.
     std::string::iterator it = str.begin();
-    iterator_type iter = lex.begin(it, str.end());
-    iterator_type end = lex.end();
-        
+    iterator_type iter = tokens.begin(it, str.end());
+    iterator_type end = tokens.end();
+
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
     bool r = parse(iter, end, calc);

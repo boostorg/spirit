@@ -1,0 +1,392 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:karma_complex Complex - A first more complex generator]
+
+In this section we will develop a generator for complex numbers, allowing to 
+represent a `std::complex` either as `(real, imag)` (where `real` and `imag` 
+are the real and imaginary parts of the complex number) or as a simple `real`
+if the imaginary part happens to be equal to zero. This example will highlight
+the power of __karma__ allowing to combine compile time definition of 
+formatting rules with runtime based decisions which of the rules to apply. 
+Also this time, we're using __boost_phoenix__ to do the semantic actions.
+
+Our goal is to allow for two different output formats to be applied depending 
+on whether the imaginary part of the complex number is zero or not. Let's write
+both as a set of alternatives:
+
+        '(' << double_ << ", " << double_ << ')'
+    |   double_
+
+where the first alternative should be used for numbers having a non-zero 
+imaginary part, while the second is for real numbers. Generally, alternatives
+are tried in the sequence of their definition as long until one of the
+expressions (as delimited by `'|'`) succeeds. If no generator expression 
+succeeds the whole alternative fails.
+
+If we left this formatting grammar as is our generator would always choose 
+the first alternative. We need to add some additional rules allowing to make 
+the first alternative failing. So, if the first fails the second alternative will 
+be chosen instead. The decision about whether to choose the first alternative 
+has to be made at runtime as only then we actually know the value of the 
+imaginary part of the complex number. __karma__ provides us with with a 
+primitive generator `eps()`, which is usable as a semantic predicate. It has 
+the property to 'succeed' generating only if its argument is true (while it 
+never generates any output on its own).
+
+    double imag = ...;     // imaginary part
+
+        eps(imag != 0) << '(' << double_ << ", " << double_ << ')'
+    |   double_
+
+If one of the generator elements of a sequence fails the whole sequence will 
+fail. This is exactly what we need, forcing the second alternative to be chosen 
+for complex numbers with imaginary parts equal to zero.
+
+[import ../../example/karma/complex_number.cpp]
+
+Here goes the full example, this time with the proper semantic actions (The 
+full cpp file for this example can be found here: 
+[@../../example/karma/complex_number.cpp complex_number.cpp]).
+
+We will use the `std::complex` type for this and all subsequent related 
+examples. And here you can see the full code of the generator allowing to 
+output a complex number either as a pair of numbers (if the imaginary part is 
+non-zero) or as a single number (if the complex is a real number):
+
+[tutorial_karma_complex_number]
+
+The `double_` generators have this semantic action attached:
+
+    _1 = n
+
+which passes `n` to the first element of the generator the semantic action is
+attached to. Remember, semantic actions in __karma__ are called before the 
+corresponding generator is invoked and they are expected to provide the 
+generator with the data to be used. The semantic action above assigns the value 
+to be generated (`n`) to the generator (actually, the attribute of `double_`). 
+`_1` is a Phoenix placeholder referring to the attribute of the generator the 
+semantic action is attached to. If you need more information about semantic 
+actions, you may want to read about those in this section: __karma_actions__.
+
+These semantic actions are easy to understand but have the unexpected side 
+effect of being slightly less efficient than it could be. In addition they tend
+to make the formatting grammar less readable. We will see in one of the next 
+sections how it is possible to use other, builtin features of __karma__ to get 
+rid of the semantic actions alltogether. When writing your grammars in Spirit
+you should always try to avoid semantic actions which is often possible. 
+Semantic actions are really powerful tools but grammars tend to be more 
+efficient and readable without them.
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:karma_attributes Understanding Generator Attributes]
+
+[heading Attributes of Primitive Generators]
+
+Before we can start simplifying the complex number example from the previous
+section we need to introduce the notion of generator attributes. Every generator 
+component in __karma__ exposes a specific attribute type. We have already seen
+that the attribute type of the `double_` generator is `double`. Other primitive
+generator components have other intuitive attribute types, such as for instance
+`int_` which has `int`, or `ascii::char_` which has `char`. For a full list of
+available generator primitives and their attribute types please see the section
+__sec_karma_primitive__.
+
+The attribute type of a generator defines what data types this generator is 
+able to consume in order to produce its output. For primitive generators the 
+normal C++ convertibility rules apply. Any data type convertible to the 
+attribute type of a primitive generator can be used to provide the data to 
+generate. As an example, it is possible to use an integer value in conjunction
+with a `double_` generator:
+
+    // the following generates: 1.0
+    std::string str;
+    std::back_insert_iterator<std::string> out(str);
+    generate(out, double_, 1);
+
+[heading Attributes of Compound Generators]
+
+__karma__ implements well defined attribute type propagation rules for all 
+compound generators, such as sequences, alternatives, Kleene star, etc. The 
+main attribute propagation rule for a sequences is for instance:
+
+    a: A, b: B --> (a << b): tuple<A, B>
+
+which reads as:
+
+[:Given `a` and `b` are generators, and `A` is the attribute type of `a`, and
+  `B` is the attribute type of `b`, then the attribute type of `a << b` will be
+  `tuple<A, B>`.]
+
+[note The notation `tuple<A, B>` is used as a placeholder expression for any 
+      fusion sequence holding the types A and B, such as 
+      `boost::fusion::tuple<A, B>` or `std::pair<A, B>` (for more information 
+      see __fusion__).]
+
+As you can see, in order for a type to be compatible with the attribute type 
+of a __karma__ compound generator it has to 
+
+* either be convertible to the attribute type, 
+* or it has to expose certain functionalities, i.e. it needs to conform to a 
+  concept compatible with the generator.
+
+Each compound generator implements its own set of attribute propagation rules.
+For a full list of how the different compound generators consume attributes
+see the section __sec_karma_compound__.
+
+[heading The Attribute of Sequence Generators]
+
+Sequences require an attribute type to expose the concept of a fusion sequence,
+where all elements of that fusion sequence have to be compatible with the 
+corresponding element of the __karma__ generator sequence. For example, the
+expression:
+
+    double_ << double_
+
+is able to consume any fusion sequence holding two types, where both types have
+to be convertible to `double`. The first element of the fusion sequence has to 
+be compatible with the attribute of the first `double_` (i.e. it needs to be
+convertible to a `double`), and the second element of the fusion sequence has 
+to be compatible with the attribute of the second `double_` (i.e. convertible 
+to a `double` as well). If we assume to have an instance of a 
+`std::pair<double, double>`, we can directly use the expression above to 
+generate output for it:
+
+    // the following generates: 1.0 2.0
+    std::string str;
+    std::back_insert_iterator<std::string> out(str);
+    generate(out, 
+        double_ << double_,             // generator grammar (format description)
+        ascii::space,                   // delimiter grammar
+        std::make_pair(1.0, 2.0));      // data to use as the attribute 
+
+(where the `ascii::space` generator is used as the delimiter, allowing to 
+automatically insert delimiting spaces in between all primitives). 
+
+[tip  *For sequences only:* __karma__ exposes a set of API functions usable 
+      mainly with sequences. Very much like the functions of the `printf` 
+      family these functions allow to pass the attributes for each of the 
+      elements of the sequence separately. Using the corresponding overload of 
+      /Karma's/ `generate()` the expression above could be rewritten as:
+
+      ``generate(out, double_ << double_, space, 1.0, 2.0);``
+
+      where the first attribute (`1.0`) is used for the first `double_`, and 
+      the second attribute (`2.0`) is used for the second `double_`.
+]
+
+[heading The Attribute of Alternative Generators]
+
+Alternative generators are all about - well - alternatives. In order to store 
+possibly different result (attribute) types from the different alternatives
+we use the data type __boost_variant__. The main attribute propagation rule
+of these generators is
+
+    a: A, b: B --> (a | b): variant<A, B>
+
+where the `variant<>` is again a placeholder for the concept of a 
+__boost_variant__. Any other data type exposing the required concepts can be
+used instead (for more information about attribute compatibility and attribute
+concepts see the section __karma_compatible_attribute__). Alternatives have a 
+second very important attribute propagation rule:
+
+    a: A, b: A --> (a | b): A
+
+often allowing to simplify things significantly. If all sub expressions of 
+a __karma__ alternative expose the same attribute type, the overall alternative 
+will expose exactly the same attribute type as well. We will apply this rule 
+later for our complex number generators.
+
+[heading More About Attributes of Compound Generators]
+
+While generating output it is often desirable to combine some constant 
+elements with variable parts. For instance, if we go back to our example of
+formatting a complex number, we need to write it as `(real, imag)`, where `real` 
+and `imag ` are the variables representing the real and imaginary parts of our
+complex number. As we have already seen, this can be achieved by writing
+
+    '(' << double_ << ", " << double_ << ')'
+
+Fortunately, literals (such as `'('` and `", "`) do /not/ expose any attribute
+(well actually, they do expose the special type `unused_type`, but in this 
+context `unused_type` is interpreted as if the generator does not expose any 
+attribute at all). It is very important to understand that the literals don't 
+consume any of the elements of a fusion sequence passed to this generator 
+sequence. As said, they just don't expose any attribute and don't consume any
+data. The following example shows this:
+
+    // the following generates: (1.0, 2.0)
+    std::string str;
+    std::back_insert_iterator<std::string> out(str);
+    generate(out, 
+        '(' << double_ << ", " << double_ << ')',  // generator grammar (format description)
+        std::make_pair(1.0, 2.0));                 // data to use as the attribute 
+
+where the first element of the pair passed in as the data to generate is still
+associated with the first `double_`, and the second element is associated with 
+the second `double_` generator. 
+
+This behavior should be familiar as it conforms to the way other output 
+formatting libraries such as `printf` or `boost::format` are handling their
+variable parts. In this context you can think about __karma__'s primitive
+generators (such as the `double_` above) as of being typesafe placeholders for 
+the attribute values to print.
+
+[tip  Similarly to the tip provided above, this example could be rewritten 
+      using /Karma's/ multi-attribute API function:
+
+      ``generate(out, '(' << double_ << ", " << double_ << ')', 1.0, 2.0);``
+
+      which provides a clear and comfortable syntax, more similar to the 
+      placeholder based syntax as exposed by `printf` or `boost::format`.
+]
+
+Let's take a look at this from a more formal perspective. The sequence attribute 
+propagation rules define a special behavior if generators exposing `unused_type` 
+as their attribute are involved (see __sec_karma_compound__):
+
+    a: A, b: Unused --> (a << b): A
+
+which reads as:
+
+[:Given `a` and `b` are generators, and `A` is the attribute type of `a`, and
+  `unused_type` is the attribute type of `b`, then the attribute type of 
+  `a << b` will be `A` as well. This rule applies regardless of the position
+  the element exposing the `unused_type` is at.]
+
+This rule is the key to the understanding of the attribute handling in 
+sequences as soon as literals are involved. It is as if elements with 
+`unused_type` attributes 'disappeared' during attribute propagation. Notably, 
+this is not only true for sequences but for any compound generator in 
+__karma__. For instance, for alternative generators the corresponding rule
+is:
+
+    a: A, b: Unused --> (a | b): A
+
+again, allowing to simplify the overall attribute type of an expression.
+
+[heading Attributes of Rules and Grammars]
+
+* explicit attribute type
+* attribute propagation
+  * explicit and operator%=
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:karma_easier_complex Complex - Made easier]
+
+[import ../../example/karma/complex_number_easier.cpp]
+
+In one of the previous sections we showed how to format a complex number (i.e. 
+a pair of doubles). In this section we will build on this example with the goal 
+to avoid to use semantic actions in the format specification. Let's have a look 
+at the resulting code first, trying to understand it afterwards (the full source 
+file for this example can be found here: 
+[@../../example/karma/complex_number_easier.cpp complex_number_easier.cpp]):
+
+[tutorial_karma_complex_number_easier]
+
+Let's try to cover some basic library features first.
+
+[heading Making Numeric Generators Fail]
+
+All __karma_numerics__ (such as `double_`, et.al.) take the value to 
+emit from an attached attribute. In addition, they may be initialized from a 
+literal value. For instance, to emit a constant `0.0` you may write: 
+`double_(0.0)`. The difference to a simple `0.0` or `lit(0.0)` is that the 
+`double_(0.0)` consumes an attribute, if one is available. Additionally, it 
+compares its immediate value to the value of the supplied attribute, and fails 
+if those are not equal. This feature, namely to succeed generating only if 
+the attribute matches the immediate value, enables numeric generators to be 
+used to dynamically control the way output is generated.
+
+[note  There are more generators exposing the feature to fail if their 
+       immediate value is not equal to the supplied attribute. Here are some:
+       all __karma_char__, all [karma_string String Generators]. Generally,
+       all generators having a sibling created by a variant of `lit()` belong
+       into this category.]
+
+[heading Predicates - The Conditionals for Output Generators]
+
+In addition to the __karma_eps__ generator mentioned earlier __karma__ provides 
+two special operators enabling dynamic flow control: the 
+__karma_and_predicate__ and the __karma_not_predicate__. The main property of 
+both predicates is to discard all output emitted by the generator they are 
+attached to. This is equivalent to the behaviour of predicates used for 
+parsing. There the predicates do not consume any input allowing to look ahead
+in the input stream. The and predicate succeeds as long as its associated 
+generator suceeds, while the not predicate succeeds only if its associated 
+generator fails.
+
+[note The generator predicates in __karma__ consume an attribute, if 
+      available. This makes them behave differently from predicates in __qi__,
+      where they do not expose any attribute. This is because predicates
+      allow to make decisions based on data available only at runtime. While
+      in __qi__ during parsing the decision is made based on the look ahead 
+      input, in __karma__ the criteria has to be supplied by the user. The 
+      simplest way to do this is by providing an attribute.]
+
+[heading Ignoring Supplied Attributes]
+
+Sometimes it is desirable to 'skip' (i.e. ignore) a provided attribute. This 
+happens for instance in alternative generators, where some of the alternatives
+need to extract only part of the overall attribute passed to the alternative
+generator. __karma__ has a special pseudo generator for that: the directive 
+__karma_omit__. This directive consumes an attribute of the type defined by its
+embedded generator but it does not emit any output.
+
+
+[heading Putting everything together]
+
+Very similar to our first example ealier we use two alternatives to allow for 
+two different output formats depending on whether the imaginery part of the 
+complex number is equal to zero or not. The first alternative is executed if the 
+imaginary part is not zero, the second alternative otherwise. This time we make
+the decision during runtime using the __karma_not_predicate__ (the `operator!`) 
+combined with the feature of many Karma primitive generators allowing them to
+/fail/ under certain conditions. Here is the first alternative again for your 
+reference:
+
+    !double_(0.0) << '(' << double_ << ", " << double_ << ')'
+
+The generator `!double_(0.0)` does several things. First, because of the 
+__karma_not_predicate__, it succeeds only if the `double_(0.0)` generator 
+/fails/, making the whole first alternative fail otherwise. Second, the 
+`double_(0.0)` generator succeeds only if the value of its attribute is equal 
+to its immediate parameter (i.e. in this case `0.0`). Third, the 
+not predicate does not emit any output (regardless whether it succeeds or 
+fails), discarding any possibble output emitted by the `double_(0.0)`.
+
+As we pass the imaginery part of the complex number as the attribute value for 
+the `!double_(0.0)`, the overall first alternative will be chosen only if 
+it is not equal to zero (the `!double_(0.0)` does not fail). Exactly what we 
+need! 
+
+Now, the second alternative simply needs to emit the real part of the complex 
+number only. In order to simplify the overall grammar we strive to unify the 
+attribute types of all alternatives. As the attribute type exposed by the first 
+alternative is `tuple<double, double, double>`, we need to skip the first and 
+last element of the attribute (remember, we pass the real part as the second 
+attribute element). We achieve this by using the `omit[]` directive:
+
+    omit[double_] << double_ << omit[double_]
+
+[important  Generally, it is preferrable to use generator constructs not 
+            requiring semantic actions. The reason is that semantic actions 
+            often use constructs like: `double_[_1 = c.real()]`. But this
+            assignment is a real one! The data is really /copied/ to the 
+            attribute value of the generator the action is attached to. On the
+            other hand, grammars without anz semantic actions usually don't 
+            have to copy the attributes, making them more efficient.]
+
+[endsect]
+

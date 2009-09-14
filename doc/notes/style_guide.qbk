@@ -1,20 +1,22 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
+[section Style Guide]
+
 At some point, especially when there are lots of semantic actions attached to
 various points, the grammar tends to be quite difficult to follow. In order to
 keep an easy-to-read, consistent en aesthetically pleasing look to the Spirit
 code, the following coding styleguide is advised.
 
-This coding style is adapted and extended from the ANTLR\/PCCTS style (Terrence
-Parr) and [@http://groups.yahoo.com/group/boost/files/coding_guidelines.html
-Boost coding guidelines] (David Abrahams and Nathan Myers) and is the
-combined work of Joel de Guzman, Chris Uzdavinis and Hartmut Kaiser.
+This coding style is adapted and extended from the ANTLR\/PCCTS style and 
+[@http://www.boost.org/development/requirements.html Boost Library Requirements 
+and Guidelines] and is the combined work of Joel de Guzman, Chris Uzdavinis,
+and Hartmut Kaiser.
 
 * Rule names use std C++ (Boost) convention. The rule name may be very long.
 * The '=' is neatly indented 4 spaces below. Like in Boost, use spaces instead
@@ -85,3 +87,5 @@ combined work of Joel de Guzman, Chris Uzdavinis and Hartmut Kaiser.
            )
            >> statement_part
        ;
+
+[endsect]

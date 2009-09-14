@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2002-2007 Joel de Guzman
+    Copyright (c) 2002-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,35 +24,43 @@
 #include <string>
 #include <vector>
 
-using namespace boost::phoenix;
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
-///////////////////////////////////////////////////////////////////////////////
-//  Our number list compiler
-///////////////////////////////////////////////////////////////////////////////
-//[tutorial_numlist3
-template <typename Iterator>
-bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
+namespace client
 {
-    bool r = phrase_parse(first, last,
+    namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
+    namespace phoenix = boost::phoenix;
 
-        //  Begin grammar
-        (
-            double_[push_back(ref(v), _1)] % ','
-        )
-        ,
-        //  End grammar
+    ///////////////////////////////////////////////////////////////////////////////
+    //  Our number list compiler
+    ///////////////////////////////////////////////////////////////////////////////
+    //[tutorial_numlist3
+    template <typename Iterator>
+    bool parse_numbers(Iterator first, Iterator last, std::vector<double>& v)
+    {
+        using qi::double_;
+        using qi::phrase_parse;
+        using qi::_1;
+        using ascii::space;
+        using phoenix::push_back;
+        using phoenix::ref;
 
-        space);
+        bool r = phrase_parse(first, last,
 
-    if (first != last) // fail if we did not get a full match
-        return false;
-    return r;
+            //  Begin grammar
+            (
+                double_[push_back(ref(v), _1)] % ','
+            )
+            ,
+            //  End grammar
+
+            space);
+
+        if (first != last) // fail if we did not get a full match
+            return false;
+        return r;
+    }
+    //]
 }
-//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -75,7 +83,7 @@ main()
             break;
 
         std::vector<double> v;
-        if (parse_numbers(str.begin(), str.end(), v))
+        if (client::parse_numbers(str.begin(), str.end(), v))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";

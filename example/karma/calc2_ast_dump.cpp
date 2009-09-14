@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,8 +15,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/karma.hpp>
 
 #include <iostream>
 #include <vector>
@@ -24,15 +22,19 @@
 
 #include "calc2_ast.hpp"
 
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/karma.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our calculator parser grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
+struct calculator 
+  : qi::grammar<Iterator, expression_ast(), space_type>
 {
     calculator() : calculator::base_type(expression)
     {
@@ -61,6 +63,24 @@ struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
     qi::rule<Iterator, expression_ast(), space_type> expression, term, factor;
 };
 
+// We need to tell fusion about our binary_op and unary_op structs
+// to make them a first-class fusion citizen
+//
+// Note: we register the members exactly in the same sequence as we need them 
+//       in the grammar
+BOOST_FUSION_ADAPT_STRUCT(
+    binary_op,
+    (expression_ast, left)
+    (char, op)
+    (expression_ast, right)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    unary_op,
+    (char, op)
+    (expression_ast, right)
+)
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Our AST grammar for the generator, this just dumps the AST as a expression
 ///////////////////////////////////////////////////////////////////////////////
@@ -70,25 +90,9 @@ struct dump_ast
 {
     dump_ast() : dump_ast::base_type(ast_node)
     {
-        ast_node %= 
-                int_        [_1 = _int(_val)]
-            |   binary_node [_1 = _bin_op(_val)]
-            |   unary_node  [_1 = _unary_op(_val)]
-            ;
-            
-        binary_node = 
-                ('(' << ast_node << char_ << ast_node << ')')
-                [ 
-                    _1 = _left(_val), _2 = _op(_val), _3 = _right(_val)
-                ]
-            ;
-
-        unary_node =
-                ('(' << char_ << ast_node << ')')
-                [
-                    _1 = _op(_val), _2 = _right(_val)
-                ]
-            ;
+        ast_node %= int_ | binary_node | unary_node;
+        binary_node %= '(' << ast_node << char_ << ast_node << ')';
+        unary_node %= '(' << char_ << ast_node << ')';
     }
 
     karma::rule<OuputIterator, expression_ast(), space_type> ast_node;
@@ -128,18 +132,19 @@ main()
         expression_ast ast;
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        bool r = qi::phrase_parse(iter, end, calc, ast, space);
+        bool r = qi::phrase_parse(iter, end, calc, space, ast);
 
         if (r && iter == end)
         {
             std::string generated;
-            r = karma::generate_delimited(
-                std::back_inserter(generated), ast_grammar, ast, space);
-            
+            output_iterator_type outit(generated);
+            r = karma::generate_delimited(outit, ast_grammar, space, ast);
+
             if (r)
             {
-                std::cout << "AST for '" << str << "': " << generated 
+                std::cout << "Got AST:" << std::endl << generated 
                           << std::endl;
+                std::cout << "-------------------------\n";
             }
             else
             {

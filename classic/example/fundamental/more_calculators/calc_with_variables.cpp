@@ -192,7 +192,7 @@ struct calculator : public grammar<calculator>
                 ;
 
             declaration =
-                "var" >> var_decl >> *(',' >> var_decl)
+                lexeme_d["var" >> space_p] >> var_decl >> *(',' >> var_decl)
                 ;
 
             statement =

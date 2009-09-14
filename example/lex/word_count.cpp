@@ -37,7 +37,7 @@
 #include <boost/config/warning_disable.hpp>
 //[wcp_includes
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
 #include <boost/spirit/include/phoenix_container.hpp>
@@ -50,6 +50,7 @@
 
 //[wcp_namespaces
 using namespace boost::spirit;
+using namespace boost::spirit::ascii;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::lex;
 //]
@@ -67,29 +68,29 @@ enum tokenids
 
 //[wcp_token_definition
 template <typename Lexer>
-struct word_count_tokens : lexer_def<Lexer>
+struct word_count_tokens : lexer<Lexer>
 {
-    template <typename Self>
-    void def (Self& self)
+    word_count_tokens()
     {
         // define patterns (lexer macros) to be used during token definition 
         // below
-        self.add_pattern
+        this->self.add_pattern
             ("WORD", "[^ \t\n]+")
         ;
-            
+
         // define tokens and associate them with the lexer
         word = "{WORD}";    // reference the pattern 'WORD' as defined above
 
         // this lexer will recognize 3 token types: words, newlines, and 
         // everything else
-        self.add
+        this->self.add
             (word)          // no token id is needed here
             ('\n')          // characters are usable as tokens as well
-            (".", IDANY)
+            (".", IDANY)    // string literals will not be esacped by the library
         ;
     }
-    
+
+    // the token 'word' exposes the matched string as its parser attribute
     token_def<std::string> word;
 };
 //]
@@ -103,19 +104,14 @@ struct word_count_grammar : grammar<Iterator>
 {
     template <typename TokenDef>
     word_count_grammar(TokenDef const& tok)
-      : grammar<Iterator>(start), c(0), w(0), l(0)
+      : word_count_grammar::base_type(start)
+      , c(0), w(0), l(0)
     {
         using boost::phoenix::ref;
         using boost::phoenix::size;
-        
-        // As documented in the Spirit.Qi documentation, any placeholders 
-        // (_1 et.al.) used in semantic actions inside a grammar need to be 
-        // imported from the namespace boost::spirit::arg_names, and not from 
-        // the corresponding namespace in Phoenix.
-        using boost::spirit::arg_names::_1;
 
         start =  *(   tok.word      [++ref(w), ref(c) += size(_1)]
-                  |   char_('\n')   [++ref(c), ++ref(l)] 
+                  |   lit('\n')     [++ref(c), ++ref(l)] 
                   |   token(IDANY)  [++ref(c)]
                   )
               ;
@@ -130,33 +126,33 @@ struct word_count_grammar : grammar<Iterator>
 //[wcp_main
 int main(int argc, char* argv[])
 {
-/*< define the token type to be used: `std::string` is available as the 
-     type of the token value 
->*/  typedef lexertl_token<
+/*<  Define the token type to be used: `std::string` is available as the 
+     type of the token attribute 
+>*/  typedef lexertl::token<
         char const*, boost::mpl::vector<std::string>
     > token_type;
 
-/*< define the lexer type to use implementing the state machine
->*/  typedef lexertl_lexer<token_type> lexer_type;
+/*<  Define the lexer type to use implementing the state machine
+>*/  typedef lexertl::lexer<token_type> lexer_type;
 
-/*< define the iterator type exposed by the lexer type
->*/  typedef lexer_iterator<word_count_tokens<lexer_type> >::type iterator_type;
+/*<  Define the iterator type exposed by the lexer type
+>*/  typedef word_count_tokens<lexer_type>::iterator_type iterator_type;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
-    word_count_tokens<lexer_type> word_count;          // Our token definition
-    word_count_grammar<iterator_type> g (word_count);  // Our grammar definition
+    word_count_tokens<lexer_type> word_count;          // Our lexer
+    word_count_grammar<iterator_type> g (word_count);  // Our parser 
 
     // read in the file int memory
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    
-    // Parsing is done based on the the token stream, not the character 
-    // stream read from the input. The function `tokenize_and_parse()` wraps
-    // the passed iterator range `[first, last)` by the lexical analyzer and 
-    // uses its exposed iterators to parse the toke stream.
-    bool r = tokenize_and_parse(first, last, make_lexer(word_count), g);
+
+/*<  Parsing is done based on the the token stream, not the character 
+     stream read from the input. The function `tokenize_and_parse()` wraps
+     the passed iterator range `[first, last)` by the lexical analyzer and 
+     uses its exposed iterators to parse the toke stream.
+>*/  bool r = tokenize_and_parse(first, last, word_count, g);
 
     if (r) {
         std::cout << "lines: " << g.l << ", words: " << g.w 

@@ -1,0 +1,499 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Joel de Guzman
+    Copyright (C) 2001-2009 Hartmut Kaiser
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section:directive Directive]
+
+This module includes different directives usable to augment and parametrize 
+other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, and 
+`skip` directives.
+
+
+[heading Module Header]
+
+    // forwards to <boost/spirit/home/qi/directive.hpp>
+    #include <boost/spirit/include/qi_directive.hpp>
+
+Also, see __include_structure__.
+
+[/------------------------------------------------------------------------------]
+[section:lexeme Inhibiting Skipping (`lexeme[]`)]
+
+[heading Description]
+
+The `lexeme[]` directive turns off white space skipping. At the phrase
+level, the parser ignores white spaces, possibly including comments. Use
+`lexeme` in situations where you want to work at the character level
+instead of the phrase level. Parsers can be made to work at the
+character level by enclosing the pertinent parts inside the `lexeme`
+directive. For example, here's a rule that parses integers:
+
+    integer = lexeme[ -(lit('+') | '-') >> +digit ];
+
+The `lexeme` directive instructs its subject parser to work on the
+character level. Without it, the `integer` rule would have allowed
+erroneous embedded white spaces in inputs such as `"1 2 345"` which will
+be parsed as `"12345"`.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/lexeme.hpp>
+    #include <boost/spirit/include/qi_lexeme.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::lexeme // alias: boost::spirit::qi::lexeme` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`lexeme[a]`]      [Turns off white space skipping for the 
+                        subject parser, `a` (and all its children).]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`lexeme[a]`]      
+[``a: A --> lexeme[a]: A
+a: Unused --> lexeme[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_lexeme]
+
+Simple usage of `lexeme[]`:
+
+[reference_lexeme]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:no_case Inhibiting Case Sensitivity (`no_case[]`)]
+
+[heading Description]
+
+The `no_case[]` directive does not consume any input. The actual
+matching is done by its subject parser. It's purpose is to force
+matching of the subject parser (and all its children) to be case
+insensitive. 
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/no_case.hpp>
+    #include <boost/spirit/include/qi_no_case.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`ns::no_case`]]
+]
+
+In the table above, `ns` is a __char_encoding_namespace__. 
+
+[heading Model of]
+
+The model of `no_case` is the model of its subject parser.
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+    [[`ns`]     [A __char_encoding_namespace__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in the subject's concept.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`ns::no_case[a]`] [Force matching of the subject parser, `a`
+                        (and all its children) to be case insensitive]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`ns::no_case[a]`] 
+[``a: A --> ns::no_case[a]: A
+a: Unused --> ns::no_case[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_no_case]
+
+Simple usage of `no_case[]`:
+
+[reference_no_case]
+
+A more sophisticated use case of `no_case[]` in conjunction with a symbol 
+table (see __qi_symbols__ for more details):
+
+[reference_symbols_with_no_case]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:omit Ignoring Attribute (`omit[]`)]
+
+[heading Description]
+
+The `omit[]` ignores the attribute of its subject parser replacing it
+with __unused__.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/omit.hpp>
+    #include <boost/spirit/include/qi_omit.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::omit // alias: boost::spirit::qi::omit` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`omit[a]`]        [Ignore the attribute of the subject parser, `a`]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]       [Attribute]]
+    [[`omit[a]`]        [__unused_type__]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_omit]
+
+[reference_omit]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:raw Transduction Parsing (`raw[]`)]
+
+[heading Description]
+
+The `raw[]` disregards the attribute of its subject parser, instead
+exposing the half-open range `[first, last)` pointing to the matched
+characters from the input stream. The `raw[]` directive breings back the
+classic Spirit transduction (un-attributed) behavior for a subject
+parser.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/raw.hpp>
+    #include <boost/spirit/include/qi_raw.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::raw // alias: boost::spirit::qi::raw` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+    [[`Iter`]   [A __fwditer__ type.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`raw[a]`]         [Disregard the attribute of the subject parser, `a`.
+                        Expose instead the half-open range `[first, last)` 
+                        pointing to the matched characters from the input stream.]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]    
+    [[`raw[a]`] 
+[``a: A --> raw[a]: boost::iterator_range<Iter> 
+a: Unused --> raw[a]: Unused``]]
+]
+
+[note See __boost_iterator_range__.]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_raw]
+
+[reference_raw]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:repeat Repetition (`repeat[]`)]
+
+[heading Description]
+
+The `repeat[]` provides a more powerful and flexible mechanism for
+repeating a parser. There are grammars that are impractical and
+cumbersome, if not impossible, for the basic EBNF iteration syntax 
+(__qi_kleene__ and the __qi_plus__) to specify. Examples:
+
+* A file name may have a maximum of 255 characters only.
+* A specific bitmap file format has exactly 4096 RGB color information.
+* A 256 bit binary string (1..256 1s or 0s).
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/repeat.hpp>
+    #include <boost/spirit/include/qi_repeat.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::repeat    // alias: boost::spirit::qi::repeat` ]]
+    [[`boost::spirit::inf       // alias: boost::spirit::qi::inf` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]              [A __parser_concept__.]]
+    [[`n`,`min`,`max`]  [An `int` anything that can be converted to an 
+                        `int`, or a __lazy_argument__ that evaluates to 
+                        anything that can be converted to an `int`.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]               [Semantics]]
+    [[`repeat[a]`]              [Repeat `a` zero or more times. Same as __qi_kleene__.]]
+    [[`repeat(n)[a]`]           [Repeat `a` exactly `n` times.]]
+    [[`repeat(min, max)[a]`]    [Repeat `a` at least `min` times and at most `max` times.]]
+    [[`repeat(min, inf)[a]`]    [Repeat `a` at least `min` or more (continuing until `a` 
+                                fails or the input is consumed).]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table 
+    [[Expression]             [Attribute]]
+    [[`repeat[a]`]
+[``a: A --> repeat[a]: vector<A>
+a: Unused --> repeat[a]: Unused``]]
+    [[`repeat(n)[a]`]
+[``a: A --> repeat(n)[a]: vector<A>
+a: Unused --> repeat(n)[a]: Unused``]]
+    [[`repeat(min, max)[a]`]
+[``a: A --> repeat(min, max)[a]: vector<A>
+a: Unused --> repeat(min, max)[a]: Unused``]]
+    [[`repeat(min, inf)[a]`]
+[``a: A --> repeat(min, inf)[a]: vector<A>
+a: Unused --> repeat(min, inf)[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The overall complexity is defined by the complexity of its subject
+parser. The complexity of `repeat` itself is O(N), where N is the number
+of repetitions to execute.] 
+
+[heading Example]
+
+Using the repeat directive, we can now write our examples above.
+
+Some using declarations:
+
+[reference_using_declarations_repeat]
+
+[reference_repeat]
+    
+The Loop parsers can be dynamic. Consider the parsing of a binary file
+of Pascal-style length prefixed string, where the first byte determines
+the length of the incoming string. Here's a sample input:
+
+[:__pascal_string__]
+
+[reference_repeat_pascal]
+
+[endsect]
+
+[/------------------------------------------------------------------------------]
+[section:skip Re-Establish Skipping (`skip[]`)]
+
+[heading Description]
+
+The `skip` directive is the inverse of __qi_lexeme__. While the
+__qi_lexeme__ directive turns off white space skipping, the `skip`
+directive turns it on again. This is simply done by wrapping the parts
+inside the `skip` directive:
+
+    skip[a]
+
+It is also possible to supply a skip parser to the `skip` directive:
+
+    skip(p)[a] // Use `p` as a skipper for parsing `a`
+
+This makes it possible to:
+* Perform localized phrase level parsing while doing character level parsing.
+* Replace the current skipper anywhere with an entirely different 
+  skipper while doing phrase level parsing.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/directive/skip.hpp>
+    #include <boost/spirit/include/qi_skip.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::skip // alias: boost::spirit::qi::skip` ]]
+]
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`a`]      [A __parser_concept__.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    
+    [[`skip[a]`]        [Re-establish the skipper that got inhibited by lexeme]]
+    [[`skip(p)[a]`]     [Use `p` as a skipper for parsing `a`]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`skip[a]`]      
+[``a: A --> skip[a]: A
+a: Unused --> lexeme[a]: Unused``]]
+    [[`skip(p)[a]`]      
+[``a: A --> skip(p)[a]: A
+a: Unused --> lexeme[a]: Unused``]]
+]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the subject parser, `a`]
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_skip]
+
+Simple usage of `skip[]`:
+
+[reference_skip]
+
+[endsect]
+
+[endsect]

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,14 +20,13 @@
 #include <string>
 #include <vector>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
 using boost::phoenix::function;
 using boost::phoenix::ref;
 using boost::phoenix::size;
+
+using namespace boost::spirit;
+using namespace boost::spirit::qi;
+using namespace boost::spirit::ascii;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  The Virtual Machine
@@ -152,7 +151,7 @@ struct error_handler_
 
     template <typename Iterator>
     void operator()(
-        std::string const& what
+        info const& what
       , Iterator err_pos, Iterator last) const
     {
         std::cout
@@ -270,15 +269,15 @@ struct expression : grammar<Iterator, white_space<Iterator> >
       , symbols<char, int>& vars
       , symbols<char, function_info>& functions);
 
-    typedef white_space<Iterator> white_space;
+    typedef white_space<Iterator> white_space_;
 
-    rule<Iterator, white_space>
+    rule<Iterator, white_space_>
         expr, equality_expr, relational_expr
       , logical_expr, additive_expr, multiplicative_expr
       , unary_expr, primary_expr, variable
     ;
 
-    rule<Iterator, locals<function_info, int>, white_space> function_call;
+    rule<Iterator, locals<function_info, int>, white_space_> function_call;
 
     std::vector<int>& code;
     symbols<char, int>& vars;
@@ -294,7 +293,7 @@ struct statement : grammar<Iterator, white_space<Iterator> >
 {
     statement(std::vector<int>& code, symbols<char, function_info>& functions);
 
-    typedef white_space<Iterator> white_space;
+    typedef white_space<Iterator> white_space_;
 
     std::vector<int>& code;
     symbols<char, int> vars;
@@ -303,16 +302,16 @@ struct statement : grammar<Iterator, white_space<Iterator> >
     bool has_return;
 
     expression<Iterator> expr;
-    rule<Iterator, white_space>
+    rule<Iterator, white_space_>
         statement_, statement_list, var_decl, compound_statement
       , return_statement;
 
-    rule<Iterator, locals<int>, white_space> if_statement;
-    rule<Iterator, locals<int, int>, white_space> while_statement;
-    rule<Iterator, std::string(), white_space> identifier;
-    rule<Iterator, int(), white_space> var_ref;
-    rule<Iterator, locals<int>, white_space> assignment;
-    rule<Iterator, void(int), white_space> assignment_rhs;
+    rule<Iterator, locals<int>, white_space_> if_statement;
+    rule<Iterator, locals<int, int>, white_space_> while_statement;
+    rule<Iterator, std::string(), white_space_> identifier;
+    rule<Iterator, int(), white_space_> var_ref;
+    rule<Iterator, locals<int>, white_space_> assignment;
+    rule<Iterator, void(int), white_space_> assignment_rhs;
 
     function<var_adder> add_var;
     function<compile_op> op;
@@ -326,11 +325,11 @@ struct program : grammar<Iterator, white_space<Iterator> >
 {
     program(std::vector<int>& code);
 
-    typedef white_space<Iterator> white_space;
+    typedef white_space<Iterator> white_space_;
 
     std::vector<int>& code;
-    rule<Iterator, std::string(), white_space> identifier;
-    rule<Iterator, white_space> start;
+    rule<Iterator, std::string(), white_space_> identifier;
+    rule<Iterator, white_space_> start;
 
     typedef
         locals<
@@ -340,9 +339,9 @@ struct program : grammar<Iterator, white_space<Iterator> >
     function_locals;
 
     symbols<char, function_info> functions;
-    statement<Iterator> statement;
+    statement<Iterator> statement_;
 
-    rule<Iterator, function_locals, white_space> function;
+    rule<Iterator, function_locals, white_space_> function;
     boost::phoenix::function<function_adder> add_function;
     boost::phoenix::function<function_state_reset> state_reset;
     boost::phoenix::function<compile_op> op;

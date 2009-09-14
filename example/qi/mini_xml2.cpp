@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -27,144 +27,150 @@
 #include <string>
 #include <vector>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
-namespace fusion = boost::fusion;
-namespace phoenix = boost::phoenix;
-
-using phoenix::at_c;
-using phoenix::push_back;
-
-///////////////////////////////////////////////////////////////////////////////
-//  Our mini XML tree representation
-///////////////////////////////////////////////////////////////////////////////
-struct mini_xml;
-
-typedef
-    boost::variant<
-        boost::recursive_wrapper<mini_xml>
-      , std::string
-    >
-mini_xml_node;
-
-struct mini_xml
+namespace client
 {
-    std::string name;                           // tag name
-    std::vector<mini_xml_node> children;        // children
-};
+    namespace fusion = boost::fusion;
+    namespace phoenix = boost::phoenix;
+    namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  Our mini XML tree representation
+    ///////////////////////////////////////////////////////////////////////////
+    struct mini_xml;
+
+    typedef
+        boost::variant<
+            boost::recursive_wrapper<mini_xml>
+          , std::string
+        >
+    mini_xml_node;
+
+    struct mini_xml
+    {
+        std::string name;                           // tag name
+        std::vector<mini_xml_node> children;        // children
+    };
+}
 
 // We need to tell fusion about our mini_xml struct
 // to make it a first-class fusion citizen
 BOOST_FUSION_ADAPT_STRUCT(
-    mini_xml,
+    client::mini_xml,
     (std::string, name)
-    (std::vector<mini_xml_node>, children)
+    (std::vector<client::mini_xml_node>, children)
 )
 
-///////////////////////////////////////////////////////////////////////////////
-//  Print out the mini xml tree
-///////////////////////////////////////////////////////////////////////////////
-int const tabsize = 4;
-
-void tab(int indent)
+namespace client
 {
-    for (int i = 0; i < indent; ++i)
-        std::cout << ' ';
+    ///////////////////////////////////////////////////////////////////////////
+    //  Print out the mini xml tree
+    ///////////////////////////////////////////////////////////////////////////
+    int const tabsize = 4;
+
+    void tab(int indent)
+    {
+        for (int i = 0; i < indent; ++i)
+            std::cout << ' ';
+    }
+
+    struct mini_xml_printer
+    {
+        mini_xml_printer(int indent = 0)
+          : indent(indent)
+        {
+        }
+
+        void operator()(mini_xml const& xml) const;
+
+        int indent;
+    };
+
+    struct mini_xml_node_printer : boost::static_visitor<>
+    {
+        mini_xml_node_printer(int indent = 0)
+          : indent(indent)
+        {
+        }
+
+        void operator()(mini_xml const& xml) const
+        {
+            mini_xml_printer(indent+tabsize)(xml);
+        }
+
+        void operator()(std::string const& text) const
+        {
+            tab(indent+tabsize);
+            std::cout << "text: \"" << text << '"' << std::endl;
+        }
+
+        int indent;
+    };
+
+    void mini_xml_printer::operator()(mini_xml const& xml) const
+    {
+        tab(indent);
+        std::cout << "tag: " << xml.name << std::endl;
+        tab(indent);
+        std::cout << '{' << std::endl;
+
+        BOOST_FOREACH(mini_xml_node const& node, xml.children)
+        {
+            boost::apply_visitor(mini_xml_node_printer(indent), node);
+        }
+
+        tab(indent);
+        std::cout << '}' << std::endl;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  Our mini XML grammar definition
+    ///////////////////////////////////////////////////////////////////////////
+    //[tutorial_xml2_grammar
+    template <typename Iterator>
+    struct mini_xml_grammar
+      : qi::grammar<Iterator, mini_xml(), qi::locals<std::string>, ascii::space_type>
+    {
+        mini_xml_grammar()
+          : mini_xml_grammar::base_type(xml)
+        {
+            using qi::lit;
+            using qi::lexeme;
+            using ascii::char_;
+            using ascii::string;
+            using namespace qi::labels;
+
+            text %= lexeme[+(char_ - '<')];
+            node %= xml | text;
+
+            start_tag %=
+                    '<'
+                >>  !lit('/')
+                >>  lexeme[+(char_ - '>')]
+                >>  '>'
+            ;
+
+            end_tag =
+                    "</"
+                >>  string(_r1)
+                >>  '>'
+            ;
+
+            xml %=
+                    start_tag[_a = _1]
+                >>  *node
+                >>  end_tag(_a)
+            ;
+        }
+
+        qi::rule<Iterator, mini_xml(), qi::locals<std::string>, ascii::space_type> xml;
+        qi::rule<Iterator, mini_xml_node(), ascii::space_type> node;
+        qi::rule<Iterator, std::string(), ascii::space_type> text;
+        qi::rule<Iterator, std::string(), ascii::space_type> start_tag;
+        qi::rule<Iterator, void(std::string), ascii::space_type> end_tag;
+    };
+    //]
 }
-
-struct mini_xml_printer
-{
-    mini_xml_printer(int indent = 0)
-      : indent(indent)
-    {
-    }
-
-    void operator()(mini_xml const& xml) const;
-
-    int indent;
-};
-
-struct mini_xml_node_printer : boost::static_visitor<>
-{
-    mini_xml_node_printer(int indent = 0)
-      : indent(indent)
-    {
-    }
-
-    void operator()(mini_xml const& xml) const
-    {
-        mini_xml_printer(indent+tabsize)(xml);
-    }
-
-    void operator()(std::string const& text) const
-    {
-        tab(indent+tabsize);
-        std::cout << "text: \"" << text << '"' << std::endl;
-    }
-
-    int indent;
-};
-
-void mini_xml_printer::operator()(mini_xml const& xml) const
-{
-    tab(indent);
-    std::cout << "tag: " << xml.name << std::endl;
-    tab(indent);
-    std::cout << '{' << std::endl;
-
-    BOOST_FOREACH(mini_xml_node const& node, xml.children)
-    {
-        boost::apply_visitor(mini_xml_node_printer(indent), node);
-    }
-
-    tab(indent);
-    std::cout << '}' << std::endl;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//  Our mini XML grammar definition
-///////////////////////////////////////////////////////////////////////////////
-//[tutorial_xml2_grammar
-template <typename Iterator>
-struct mini_xml_grammar
-  : grammar<Iterator, mini_xml(), locals<std::string>, space_type>
-{
-    mini_xml_grammar()
-      : mini_xml_grammar::base_type(xml)
-    {
-        text %= lexeme[+(char_ - '<')];
-        node %= xml | text;
-
-        start_tag %=
-                '<'
-            >>  !char_('/')
-            >>  lexeme[+(char_ - '>')]
-            >>  '>'
-        ;
-
-        end_tag =
-                "</"
-            >>  lit(_r1)
-            >>  '>'
-        ;
-
-        xml %=
-                start_tag[_a = _1]
-            >>  *node
-            >>  end_tag(_a)
-        ;
-    }
-
-    rule<Iterator, mini_xml(), locals<std::string>, space_type> xml;
-    rule<Iterator, mini_xml_node(), space_type> node;
-    rule<Iterator, std::string(), space_type> text;
-    rule<Iterator, std::string(), space_type> start_tag;
-    rule<Iterator, void(std::string), space_type> end_tag;
-};
-//]
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -198,20 +204,21 @@ int main(int argc, char **argv)
         std::istream_iterator<char>(),
         std::back_inserter(storage));
 
-    typedef mini_xml_grammar<std::string::const_iterator> mini_xml_grammar;
+    typedef client::mini_xml_grammar<std::string::const_iterator> mini_xml_grammar;
     mini_xml_grammar xml; // Our grammar
-    mini_xml ast; // our tree
+    client::mini_xml ast; // Our tree
 
+    using boost::spirit::ascii::space;
     std::string::const_iterator iter = storage.begin();
     std::string::const_iterator end = storage.end();
-    bool r = phrase_parse(iter, end, xml, ast, space);
+    bool r = phrase_parse(iter, end, xml, space, ast);
 
     if (r && iter == end)
     {
         std::cout << "-------------------------\n";
         std::cout << "Parsing succeeded\n";
         std::cout << "-------------------------\n";
-        mini_xml_printer printer;
+        client::mini_xml_printer printer;
         printer(ast);
         return 0;
     }

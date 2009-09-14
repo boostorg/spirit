@@ -1,12 +1,12 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section:lex __lex__]
+[section:lex Lex - Writing Lexical Analyzers]
 
 [include    lex/introduction.qbk]
 
@@ -32,19 +32,19 @@
 [endsect]
 
 [section:quick_reference Quick Reference]
+[include        lex/quick_reference.qbk]
 [endsect]
 
 [section:reference Reference]
-[section:concepts        Concepts]
-[include            reference/lex/lexer.qbk]
-[include            reference/lex/token.qbk]
-[include            reference/lex/tokendef.qbk]
-[include            reference/lex/tokenset.qbk]
-[endsect]
-[include        reference/lex/lexer_class.qbk]
-[include        reference/lex/token_class.qbk]
-[include        reference/lex/tokendef_class.qbk]
-[include        reference/lex/tokenset_class.qbk]
+[import ../example/lex/reference.cpp]
+[include            lex/concepts.qbk]
+[include            lex/basics.qbk]
+[include            lex/token_primitives.qbk]
+[/include            lex/token.qbk]
+[/include            lex/tokendef.qbk]
+[include        lex/lexer_class.qbk]
+[include        lex/token_class.qbk]
+[include        lex/tokendef_class.qbk]
 [endsect]
 
 [endsect]

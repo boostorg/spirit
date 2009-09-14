@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -20,7 +20,7 @@ an abstraction layer hiding implementation specifics of the used lexer
 library. The [link spirit.lex.flowcontrol picture] below shows the common 
 flow control implemented while parsing combined with lexical analysis.
 
-[fig ./images/flowofcontrol.png..The common flow control implemented while parsing combined with lexical analysis..spirit.lex.flowcontrol]
+[fig flowofcontrol.png..The common flow control implemented while parsing combined with lexical analysis..spirit.lex.flowcontrol]
 
 Another problem related to the integration of the lexical analyzer with the 
 parser was to find a way how the defined tokens syntactically could be blended
@@ -41,11 +41,11 @@ of semantic actions of a parser (for the full example code see here:
 
 This example uses two of the __spirit__ library components: __lex__ and __qi__,
 consequently we have to `#include` the corresponding header files. Again, we
-need to include a couple of header files from the __phoenix2__ library. This 
+need to include a couple of header files from the __boost_phoenix__ library. This 
 example shows how to attach functors to parser components, which 
 could be done using any type of C++ technique resulting in a callable object.
-Using __phoenix2__ for this task simplifies things and avoids adding 
-dependencies to other libraries (__phoenix2__ is already in use for 
+Using __boost_phoenix__ for this task simplifies things and avoids adding 
+dependencies to other libraries (__boost_phoenix__ is already in use for 
 __spirit__ anyway).
 
 [wcp_includes]
@@ -125,16 +125,6 @@ carry the string representation of the matched input sequence as its value.
 The semantic action attached to `tok.word` receives this string (represented by 
 the `_1` placeholder) and uses it to calculate the number of matched
 characters: `ref(c) += size(_1)`.
-
-[important  All placeholders (`_1`, `_2`, etc.) used in /parser/ semantic 
-            actions in conjunction with functors created based on __phoenix2__ 
-            need to be imported from the `namespace boost::spirit::arg_names` 
-            (and *not* `namespace boost::phoenix::arg_names`, which is 
-            different from using placeholders in __lex__). 
-            Using the wrong placeholders leads to subtle compilation errors 
-            which are difficult to backtrack to their cause.
-]
-
 
 [heading Pulling Everything Together]
 

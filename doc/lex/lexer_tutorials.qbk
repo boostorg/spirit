@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -53,7 +53,7 @@ start examples (__sec_lex_quickstart_1__ and __sec_lex_quickstart_2__)
 introduce the __lex__ library while building two standalone applications, not
 being connected to or depending on any other part of __spirit__. The section
 __sec_lex_quickstart_3__ demonstrates how to use a lexer in conjunction with a 
-parser (where certainly the parser is built using __qi__). 
+parser (where obviously the parser is built using __qi__). 
 
 [endsect]
 

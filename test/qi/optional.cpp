@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +22,11 @@ main()
 {
     using spirit_test::test;
     using spirit_test::test_attr;
-    using namespace boost::spirit;
+
+    using boost::spirit::qi::_1;
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::omit;
+    using boost::spirit::ascii::char_;
 
     {
         BOOST_TEST((test("1234", -int_)));
@@ -30,7 +34,8 @@ main()
     }
 
     {   // test propagation of unused
-        using namespace boost::fusion;
+        using boost::fusion::at_c;
+        using boost::fusion::vector;
 
         vector<char, char> v;
         BOOST_TEST((test_attr("a1234c", char_ >> -omit[int_] >> char_, v)));
@@ -42,16 +47,14 @@ main()
         BOOST_TEST((at_c<0>(v) == 'a'));
         BOOST_TEST((at_c<1>(v) == 'c'));
 
-        //~ char ch;
-        //~ BOOST_TEST((test_attr(",c", -(',' >> char_), ch)));
-        //~ BOOST_TEST((ch == 'c'));
+        char ch;
+        BOOST_TEST((test_attr(",c", -(',' >> char_), ch)));
+        BOOST_TEST((ch == 'c'));
     }
 
     {   // test action
 
-        using namespace boost::phoenix;
         namespace phx = boost::phoenix;
-        using namespace boost::spirit::arg_names;
 
         boost::optional<int> n = 0;
         BOOST_TEST((test("1234", (-int_)[phx::ref(n) = _1])));

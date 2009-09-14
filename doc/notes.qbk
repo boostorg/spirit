@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -8,17 +8,13 @@
 
 [section Notes]
 
-[section Portability]
-[endsect]
+[/section Portability]
+[/endsect]
 
-[section Porting from Spirit 1.8.x]
-[endsect]
+[include notes/porting_from_1_8.qbk]
+[include notes/style_guide.qbk]
 
-[section Style Guide]
-[include        notes/style_guide.qbk]
-[endsect]
-
-[section Techniques]
-[endsect]
+[/section Techniques]
+[/endsect]
 
 [endsect]

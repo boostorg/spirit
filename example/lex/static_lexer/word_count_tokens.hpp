@@ -23,16 +23,17 @@ enum tokenids
 // possible use cases: a dynamic lexical analyzer, a code generator, and a
 // static lexical analyzer.
 template <typename BaseLexer>
-struct word_count_tokens : boost::spirit::lex::lexer_def<BaseLexer> 
+struct word_count_tokens : boost::spirit::lex::lexer<BaseLexer> 
 {
-    template <typename Self>
-    void def (Self& self)
+    word_count_tokens()
+      : word_count_tokens::base_type(
+          boost::spirit::lex::match_flags::match_not_dot_newline)
     {
         // define tokens and associate them with the lexer
         word = "[^ \t\n]+";
-        self = word | '\n' | token_def<>(".", IDANY);
+        this->self = word | '\n' | boost::spirit::lex::token_def<>(".", IDANY);
     }
-    
+
     boost::spirit::lex::token_def<std::string> word;
 };
 //]

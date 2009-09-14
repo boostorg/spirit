@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,14 +16,14 @@ template <typename Iterator>
 program<Iterator>::program(std::vector<int>& code)
   : program::base_type(start)
   , code(code)
-  , statement(code, functions)
+  , statement_(code, functions)
   , add_function(function_adder(functions))
-  , state_reset(function_state_reset(code, statement.vars, statement.nvars))
+  , state_reset(function_state_reset(code, statement_.vars, statement_.nvars))
   , op(code)
 {
-    bool& has_return = statement.has_return;
-    int& nvars = statement.nvars;
-    boost::phoenix::function<var_adder>& add_var = statement.add_var;
+    bool& has_return = statement_.has_return;
+    int& nvars = statement_.nvars;
+    boost::phoenix::function<var_adder>& add_var = statement_.add_var;
 
     identifier %=
         raw[lexeme[alpha >> *(alnum | '_')]]
@@ -42,7 +42,7 @@ program<Iterator>::program(std::vector<int>& code)
                 >> *(',' > identifier           [add_var(_1)])
             )
         >   ')'
-        >   char_('{')                          [
+        >   lit('{')                            [
                                                     _b = size(ref(code)),
                                                     add_function(
                                                         _a     // function name
@@ -51,8 +51,8 @@ program<Iterator>::program(std::vector<int>& code)
                                                     ),
                                                     op(op_stk_adj, 0)   // adjust this later
                                                 ]
-        >   statement
-        >   char_('}')                          [state_reset(_b)]
+        >   statement_
+        >   lit('}')                            [state_reset(_b)]
         ;
 
     start =
@@ -63,7 +63,7 @@ program<Iterator>::program(std::vector<int>& code)
     function.name("function");
     start.name("program");
 
-    on_error<fail>(start, error_handler(_4, _3, _2));
+    on_error<fail>(start, ::error_handler(_4, _3, _2));
 }
 
 #endif

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,13 +24,16 @@
 #include <iostream>
 #include "test.hpp"
 
-using namespace spirit_test;
-
 int
 main()
 {
-    using namespace boost::spirit;
+    using spirit_test::test;
+    using spirit_test::test_attr;
     using namespace boost::spirit::ascii;
+    using boost::spirit::qi::omit;
+    using boost::spirit::qi::uint_;
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::lexeme;
 
     {
         BOOST_TEST(test("aaaaaaaa", *char_));
@@ -42,46 +45,50 @@ main()
 
     {
         BOOST_TEST(test(" a a aaa aa", *char_, space));
-        BOOST_TEST(test("12345 678 9 ", *digit, space));
+        BOOST_TEST(test("12345 678 9", *digit, space));
     }
 
     {
         BOOST_TEST(test("aBcdeFGH", no_case[*char_]));
-        BOOST_TEST(test("a B cde FGH  ", no_case[*char_], space));
+        BOOST_TEST(test("a B cde FGH", no_case[*char_], space));
     }
 
     {
-        using boost::spirit::uint;
-        BOOST_TEST(test("12345 678 955 987", *uint, space));
-        BOOST_TEST(test("12345, 678, 955, 987", uint >> *(',' >> uint), space));
+        BOOST_TEST(test("12345 678 955 987", *uint_, space));
+        BOOST_TEST(test("12345, 678, 955, 987", uint_ >> *(',' >> uint_), space));
     }
 
     {
-        std::vector<char> v;
-        BOOST_TEST(test_attr("bbbb", *char_, v) && 4 == v.size() &&
-            v[0] == 'b' && v[1] == 'b' && v[2] == 'b' &&  v[3] == 'b');
+        std::string s;
+        BOOST_TEST(test_attr("bbbb", *char_, s) && 4 == s.size() && s == "bbbb");
 
-        v.clear();
-        BOOST_TEST(test_attr("b b b b ", *char_, v, space) && 4 == v.size() &&
-            v[0] == 'b' && v[1] == 'b' && v[2] == 'b' && v[3] == 'b');
+        s.clear();
+        BOOST_TEST(test_attr("b b b b ", *char_, s, space)  && s == "bbbb");
 
-        v.clear();
-        BOOST_TEST(test_attr("bbbb", *omit[char_('b')], v) && 0 == v.size());
+        // The following 4 tests show that omit does not inhibit explicit attributes
+        s.clear();
+        BOOST_TEST(test_attr("bbbb", *omit[char_('b')], s) && s == "bbbb");
 
-        v.clear();
-        BOOST_TEST(test_attr("bbbb", omit[*char_('b')], v) && 0 == v.size());
+        s.clear();
+        BOOST_TEST(test_attr("bbbb", omit[*char_('b')], s) && s == "bbbb");
 
-        v.clear();
-        BOOST_TEST(test_attr("b b b b ", *omit[char_('b')], v, space) && 0 == v.size());
+        s.clear();
+        BOOST_TEST(test_attr("b b b b", *omit[char_('b')], s, space) && s == "bbbb");
 
-        v.clear();
-        BOOST_TEST(test_attr("b b b b ", omit[*char_('b')], v, space) && 0 == v.size());
+        s.clear();
+        BOOST_TEST(test_attr("b b b b", omit[*char_('b')], s, space) && s == "bbbb");
     }
 
     {
         std::vector<int> v;
         BOOST_TEST(test_attr("123 456 789 10", *int_, v, space) && 4 == v.size() &&
             v[0] == 123 && v[1] == 456 && v[2] == 789 &&  v[3] == 10);
+    }
+    
+    {
+        std::vector<std::string> v;
+        BOOST_TEST(test_attr("a b c d", *lexeme[+alpha], v, space) && 4 == v.size() &&
+            v[0] == "a" && v[1] == "b" && v[2] == "c" &&  v[3] == "d");
     }
 
     {
@@ -92,7 +99,7 @@ main()
 
     { // actions
         namespace phx = boost::phoenix;
-        using boost::spirit::arg_names::_1;
+        using boost::spirit::_1;
 
         std::vector<char> v;
         BOOST_TEST(test("bbbb", (*char_)[phx::ref(v) = _1]) && 4 == v.size() &&
@@ -101,7 +108,7 @@ main()
 
     { // more actions
         namespace phx = boost::phoenix;
-        using boost::spirit::arg_names::_1;
+        using boost::spirit::_1;
 
         std::vector<int> v;
         BOOST_TEST(test("123 456 789", (*int_)[phx::ref(v) = _1], space) && 3 == v.size() &&

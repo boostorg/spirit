@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,13 +19,12 @@
 #include <iostream>
 #include "test.hpp"
 
-using namespace spirit_test;
-
 int
 main()
 {
-    using namespace boost::spirit;
     using namespace boost::spirit::ascii;
+    using boost::spirit::lit;
+    using spirit_test::test;
 
     {
         BOOST_TEST(test("b", char_ - 'a'));
@@ -47,16 +46,16 @@ main()
     {
         // $$$ See difference.hpp why these tests are not done anymore. $$$
 
-        //~ BOOST_TEST(test("switcher", lit("switcher") - "switch"));
-        //~ BOOST_TEST(test("    switcher    ", lit("switcher") - "switch", space));
+        // BOOST_TEST(test("switcher", lit("switcher") - "switch"));
+        // BOOST_TEST(test("    switcher    ", lit("switcher") - "switch", space));
 
         BOOST_TEST(!test("switch", lit("switch") - "switch"));
     }
 
     {
-        using boost::spirit::arg_names::_1;
+        using boost::spirit::_1;
         namespace phx = boost::phoenix;
-        
+
         std::string s;
 
         BOOST_TEST(test(
@@ -67,7 +66,7 @@ main()
         s.clear();
 
         BOOST_TEST(test(
-            "    /*abcdefghijk*/    "
+            "    /*abcdefghijk*/"
           , "/*" >> *(char_ - "*/")[phx::ref(s) += _1] >> "*/"
           , space
         ));

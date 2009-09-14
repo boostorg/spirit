@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2002-2007 Joel de Guzman
+    Copyright (c) 2002-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,38 +22,44 @@
 #include <string>
 //]
 
-//[tutorial_adder_using
-using namespace boost::phoenix;
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-//]
-
-///////////////////////////////////////////////////////////////////////////////
-//  Our adder
-///////////////////////////////////////////////////////////////////////////////
-
-//[tutorial_adder
-template <typename Iterator>
-bool adder(Iterator first, Iterator last, double& n)
+namespace client
 {
-    bool r = phrase_parse(first, last,
+    //[tutorial_adder_using
+    namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
+    namespace phoenix = boost::phoenix;
 
-        //  Begin grammar
-        (
-            double_[ref(n) = _1] >> *(',' >> double_[ref(n) += _1])
-        )
-        ,
-        //  End grammar
+    using qi::double_;
+    using qi::_1;
+    using ascii::space;
+    using phoenix::ref;
+    //]
 
-        space);
+    ///////////////////////////////////////////////////////////////////////////
+    //  Our adder
+    ///////////////////////////////////////////////////////////////////////////
 
-    if (first != last) // fail if we did not get a full match
-        return false;
-    return r;
+    //[tutorial_adder
+    template <typename Iterator>
+    bool adder(Iterator first, Iterator last, double& n)
+    {
+        bool r = qi::phrase_parse(first, last,
+
+            //  Begin grammar
+            (
+                double_[ref(n) = _1] >> *(',' >> double_[ref(n) += _1])
+            )
+            ,
+            //  End grammar
+
+            space);
+
+        if (first != last) // fail if we did not get a full match
+            return false;
+        return r;
+    }
+    //]
 }
-//]
 
 ////////////////////////////////////////////////////////////////////////////
 //  Main program
@@ -76,7 +82,7 @@ main()
             break;
 
         double n;
-        if (adder(str.begin(), str.end(), n))
+        if (client::adder(str.begin(), str.end(), n))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";

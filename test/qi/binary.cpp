@@ -1,27 +1,34 @@
-//  Copyright (c) 2001-2009 Hartmut Kaiser
-//
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+/*=============================================================================
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+==============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/qi_binary.hpp>
-#include <boost/spirit/include/qi_parse.hpp>
-
 #include <boost/cstdint.hpp>
-
 #include "test.hpp"
 
-using namespace spirit_test;
-
 ///////////////////////////////////////////////////////////////////////////////
-int
-main()
+int main()
 {
-    using namespace boost::spirit;
-    using namespace boost::phoenix;
-    using namespace boost::spirit::arg_names;
+    using spirit_test::test_attr;
+    using spirit_test::test;
+
+    using boost::spirit::qi::byte_;
+    using boost::spirit::qi::word;
+    using boost::spirit::qi::dword;
+    using boost::spirit::qi::big_word;
+    using boost::spirit::qi::big_dword;
+    using boost::spirit::qi::little_word;
+    using boost::spirit::qi::little_dword;
+#ifdef BOOST_HAS_LONG_LONG
+    using boost::spirit::qi::qword;
+    using boost::spirit::qi::big_qword;
+    using boost::spirit::qi::little_qword;
+#endif
 
     boost::uint8_t uc;
     boost::uint16_t us;
@@ -32,7 +39,7 @@ main()
 
     {   // test native endian binaries
 #ifdef BOOST_LITTLE_ENDIAN
-        BOOST_TEST(test_attr("\x01", byte, uc) && uc == 0x01);
+        BOOST_TEST(test_attr("\x01", byte_, uc) && uc == 0x01);
         BOOST_TEST(test_attr("\x01\x02", word, us) && us == 0x0201);
         BOOST_TEST(test_attr("\x01\x02\x03\x04", dword, ui) && ui == 0x04030201);
 #ifdef BOOST_HAS_LONG_LONG
@@ -40,7 +47,7 @@ main()
             ul == 0x0807060504030201LL);
 #endif
 #else
-        BOOST_TEST(test_attr("\x01", byte, uc) && uc == 0x01);
+        BOOST_TEST(test_attr("\x01", byte_, uc) && uc == 0x01);
         BOOST_TEST(test_attr("\x01\x02", word, us) && us ==  0x0102);
         BOOST_TEST(test_attr("\x01\x02\x03\x04", dword, ui) && ui == 0x01020304);
 #ifdef BOOST_HAS_LONG_LONG
@@ -52,7 +59,7 @@ main()
 
     {   // test native endian binaries
 #ifdef BOOST_LITTLE_ENDIAN
-        BOOST_TEST(test("\x01", byte(0x01)));
+        BOOST_TEST(test("\x01", byte_(0x01)));
         BOOST_TEST(test("\x01\x02", word(0x0201)));
         BOOST_TEST(test("\x01\x02\x03\x04", dword(0x04030201)));
 #ifdef BOOST_HAS_LONG_LONG
@@ -60,7 +67,7 @@ main()
             qword(0x0807060504030201LL)));
 #endif
 #else
-        BOOST_TEST(test("\x01", byte(0x01)));
+        BOOST_TEST(test("\x01", byte_(0x01)));
         BOOST_TEST(test("\x01\x02", word(0x0102)));
         BOOST_TEST(test("\x01\x02\x03\x04", dword(0x01020304)));
 #ifdef BOOST_HAS_LONG_LONG

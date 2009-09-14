@@ -35,7 +35,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex_lexer_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_container.hpp>
 
@@ -47,7 +47,6 @@
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
 using namespace boost::spirit::lex;
-using namespace boost::spirit::arg_names;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition: We use the lexertl based lexer engine as the underlying 
@@ -59,35 +58,35 @@ enum tokenids
 };
 
 template <typename Lexer>
-struct strip_comments_tokens : lexer_def<Lexer>
+struct strip_comments_tokens : lexer<Lexer>
 {
-    template <typename Self>
-    void def (Self& self)
+    strip_comments_tokens() 
+      : strip_comments_tokens::base_type(match_flags::match_default)
     {
         // define tokens and associate them with the lexer
-        cppcomment = "//[^\n]*";
-        ccomment = "/\\*";
-        endcomment = "\\*/";
-        
+        cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
+        ccomment = "\\/\\*";            // '/*'
+        endcomment = "\\*\\/";          // '*/'
+
         // The following tokens are associated with the default lexer state 
         // (the "INITIAL" state). Specifying 'INITIAL' as a lexer state is 
         // strictly optional.
-        self.add
+        this->self.add
             (cppcomment)    // no explicit token id is associated
             (ccomment)
             (".", IDANY)    // IDANY is the token id associated with this token 
                             // definition
         ;
-        
+
         // The following tokens are associated with the lexer state "COMMENT".
         // We switch lexer states from inside the parsing process using the 
         // in_state("COMMENT")[] parser component as shown below.
-        self("COMMENT").add
+        this->self("COMMENT").add
             (endcomment)
             (".", IDANY)
         ;
     }
-    
+
     token_def<> cppcomment, ccomment, endcomment;
 };
 
@@ -99,7 +98,7 @@ struct strip_comments_grammar : grammar<Iterator>
 {
     template <typename TokenDef>
     strip_comments_grammar(TokenDef const& tok)
-      : grammar<Iterator>(start)
+      : strip_comments_grammar::base_type(start)
     {
         // The in_state("COMMENT")[...] parser component switches the lexer 
         // state to be 'COMMENT' during the matching of the embedded parser.
@@ -124,26 +123,24 @@ int main(int argc, char* argv[])
 {
     // iterator type used to expose the underlying input stream
     typedef std::string::iterator base_iterator_type;
-    
+
     // lexer type
-    typedef lexertl_lexer<lexertl_token<base_iterator_type> > lexer_type;
-    
+    typedef lexertl::lexer<lexertl::token<base_iterator_type> > lexer_type;
+
     // iterator type exposed by the lexer 
-    typedef 
-        lexer_iterator<strip_comments_tokens<lexer_type> >::type 
-    iterator_type;
+    typedef strip_comments_tokens<lexer_type>::iterator_type iterator_type;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
-    strip_comments_tokens<lexer_type> strip_comments;           // Our token definition
-    strip_comments_grammar<iterator_type> g (strip_comments);   // Our grammar definition
+    strip_comments_tokens<lexer_type> strip_comments;           // Our lexer
+    strip_comments_grammar<iterator_type> g (strip_comments);   // Our parser 
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();
 
-    bool r = tokenize_and_parse(first, str.end(), make_lexer(strip_comments), g);
+    bool r = tokenize_and_parse(first, str.end(), strip_comments, g);
 
     if (r) {
         std::cout << "-------------------------\n";

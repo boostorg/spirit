@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -50,7 +50,7 @@ statement<Iterator>::statement(
 
     assignment_rhs =
             expr
-        >   char_(';')      [op(op_store, _r1)]
+        >   lit(';')        [op(op_store, _r1)]
         ;
 
     if_statement =
@@ -137,7 +137,7 @@ statement<Iterator>::statement(
     statement_.name("statement");
     statement_list.name("statement-list");
 
-    on_error<fail>(statement_list, error_handler(_4, _3, _2));
+    on_error<fail>(statement_list, ::error_handler(_4, _3, _2));
 }
 
 #endif

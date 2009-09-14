@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,11 +18,17 @@
 #include <iostream>
 #include "test.hpp"
 
-using namespace spirit_test;
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
+using spirit_test::test;
+using spirit_test::test_attr;
+
+using boost::spirit::ascii::space_type;
+using boost::spirit::ascii::space;
+using boost::spirit::int_;
+using boost::spirit::qi::grammar;
+using boost::spirit::qi::rule;
+using boost::spirit::_val;
+using boost::spirit::_r1;
+using boost::spirit::lit;
 
 struct num_list : grammar<char const*, space_type>
 {
@@ -101,7 +107,7 @@ main()
     { // direct access to the rules
 
         num_list g;
-        BOOST_TEST(test("123", g.num));
+        BOOST_TEST(test("123", g.num, space));
         BOOST_TEST(test("123, 456, 789", g.start, space));
     }
 

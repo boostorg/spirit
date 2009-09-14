@@ -14,19 +14,19 @@
 
 #include "test.hpp"
 
-using namespace spirit_test;
-
 ///////////////////////////////////////////////////////////////////////////////
 int 
 main()
 {
+    using namespace spirit_test;
     using namespace boost::spirit;
+    using namespace boost::spirit::ascii;
 
     {
         BOOST_TEST(test("x         ", left_align[char_('x')]));
         BOOST_TEST(test("x         ", left_align[char_], 'x'));
         BOOST_TEST(test("x         ", left_align['x']));
-        
+
         BOOST_TEST(test("x         ", left_align(10)[char_('x')]));
         BOOST_TEST(test("x         ", left_align(10)[char_], 'x'));
         BOOST_TEST(test("x         ", left_align(10)['x']));
@@ -40,18 +40,18 @@ main()
         BOOST_TEST(test("x*********", left_align(char_('*'))['x']));
 
         BOOST_TEST(test("abc       ", left_align[lit("abc")]));
-        BOOST_TEST(test("abc       ", left_align[lit], "abc"));
-        
+        BOOST_TEST(test("abc       ", left_align[string], "abc"));
+
         BOOST_TEST(test("abc       ", left_align(10)[lit("abc")]));
-        BOOST_TEST(test("abc       ", left_align(10)[lit], "abc"));
+        BOOST_TEST(test("abc       ", left_align(10)[string], "abc"));
         BOOST_TEST(test("abc       ", left_align(10)["abc"]));
 
         BOOST_TEST(test("abc*******", left_align(10, char_('*'))[lit("abc")]));
-        BOOST_TEST(test("abc*******", left_align(10, '*')[lit], "abc"));
+        BOOST_TEST(test("abc*******", left_align(10, '*')[string], "abc"));
         BOOST_TEST(test("abc*******", left_align(10, '*')["abc"]));
 
         BOOST_TEST(test("abc*******", left_align(char_('*'))[lit("abc")]));
-        BOOST_TEST(test("abc*******", left_align(char_('*'))[lit], "abc"));
+        BOOST_TEST(test("abc*******", left_align(char_('*'))[string], "abc"));
         BOOST_TEST(test("abc*******", left_align(char_('*'))["abc"]));
 
         BOOST_TEST(test("100       ", left_align[int_(100)]));

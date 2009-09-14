@@ -1,16 +1,14 @@
-[/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
-    Copyright (C) 2001-2008 Hartmut Kaiser
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-===============================================================================/]
-
+[/------------------------------------------------------------------------------]
 [section XXX]
 
 [heading Description]
 
 Description of XXX concept
+
+[heading Refinement of]
+
+[:Link to base concept]
 
 [variablelist Notation
     [[`xxx`]     [An XXX]]
@@ -18,29 +16,37 @@ Description of XXX concept
 
 [heading Valid Expressions]
 
-(For any Forward Sequence the following expressions must be valid:)
+(For any XXX the following expressions must be valid:)
 
 In addition to the requirements defined in _XXX-Basic_concept_, for any
 XXX the following must be met:
 
 [table
-    [[Expression]       [Semantics]             [Return type]       [Complexity]]
-    [[`xxx`]            [Semantics of `xxx`]    [XXX]               [Constant]]
+    [[Expression]       [Semantics]             [Return type]]
+    [[`xxx`]            [Semantics of `xxx`]    [XXX]]
 ]
 
-[heading Type Requirements]
+[heading Type Expressions]
 
 [table
-    [[Expression]       [Requirements]]
-    [[`xxx`]            [Requirements for `xxx`]]
+    [[Expression]       [Description]]
+    [[`XXX`]            [Description of `XXX`]]
 ]
 
 [heading Invariants]
 
 For any XXX xxx the following invariants always hold:
 
+[heading Precondition]
+
+Prior to calling FOO the following preconditions should hold:
+
+[heading Precondition]
+
+Upon return from FOO the following postconditions should hold:
+
 [heading Models]
 
 Links to models of XXX concept
 
-[endsect]
+[endsect] [/ XXX Concept]

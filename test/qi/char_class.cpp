@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
-    Copyright (c) 2001-2007 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,14 +8,13 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
-#include <boost/spirit/include/qi_domain.hpp>
-#include <boost/spirit/include/support_attribute_of.hpp>
 #include <boost/spirit/include/support_argument.hpp>
+#include <boost/spirit/include/support_attributes.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-
 #include <boost/type_traits/is_same.hpp>
 #include <boost/static_assert.hpp>
+
 #include <iostream>
 #include "test.hpp"
 
@@ -52,7 +51,34 @@ main()
     }
 
     {
-        using namespace boost::spirit::iso8859_1;
+        using namespace boost::spirit::ascii;
+        BOOST_TEST(!test("1", ~alnum));
+        BOOST_TEST(test(" ", ~alnum));
+        BOOST_TEST(test("1", ~alpha));
+        BOOST_TEST(!test("x", ~alpha));
+        BOOST_TEST(!test(" ", ~blank));
+        BOOST_TEST(test("x", ~blank));
+        BOOST_TEST(!test("1", ~digit));
+        BOOST_TEST(test("x", ~digit));
+        BOOST_TEST(!test("a", ~lower));
+        BOOST_TEST(test("A", ~lower));
+        BOOST_TEST(!test("!", ~punct));
+        BOOST_TEST(test("x", ~punct));
+        BOOST_TEST(!test(" ", ~space));
+        BOOST_TEST(!test("\n", ~space));
+        BOOST_TEST(!test("\r", ~space));
+        BOOST_TEST(!test("\t", ~space));
+        BOOST_TEST(!test("A", ~upper));
+        BOOST_TEST(test("a", ~upper));
+        BOOST_TEST(!test("A", ~xdigit));
+        BOOST_TEST(!test("0", ~xdigit));
+        BOOST_TEST(!test("f", ~xdigit));
+        BOOST_TEST(test("g", ~xdigit));
+    }
+
+    {
+        // we use the hoisted qi namespace this time
+        using namespace boost::spirit::qi::iso8859_1; 
         BOOST_TEST(test("1", alnum));
         BOOST_TEST(!test(" ", alnum));
         BOOST_TEST(!test("1", alpha));
@@ -138,10 +164,11 @@ main()
         using boost::spirit::traits::attribute_of;
         using boost::spirit::iso8859_1::alpha;
         using boost::spirit::iso8859_1::alpha_type;
+        using boost::spirit::result_of::compile;
 
         BOOST_STATIC_ASSERT((
             boost::is_same<
-                attribute_of<domain, alpha_type, char const*, int>::type
+                attribute_of<compile<domain, alpha_type>::type>::type
               , unsigned char>::value));
 
         int attr = 0;
@@ -159,9 +186,9 @@ main()
 
     {   // test action
 
-        using namespace boost::phoenix;
         using namespace boost::spirit::ascii;
-        using boost::spirit::arg_names::_1;
+        using boost::phoenix::ref;
+        using boost::spirit::_1;
         char ch;
 
         BOOST_TEST(test("x", alnum[ref(ch) = _1]));

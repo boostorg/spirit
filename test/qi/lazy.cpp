@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,19 +23,36 @@ int
 main()
 {
     using spirit_test::test;
-    using namespace boost::spirit;
-    using namespace boost::spirit::qi;
-    using namespace boost::phoenix;
-    using namespace boost::spirit::arg_names;
+    using spirit_test::test_attr;
+
+    namespace qi = boost::spirit::qi;
+    using boost::spirit::qi::_1;
+    using boost::spirit::qi::_val;
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::rule;
+    using boost::spirit::ascii::char_;
+
+    using boost::phoenix::val;
+    using boost::phoenix::ref;
 
     {
-        BOOST_TEST(test("123", lazy(val(int_))));
+        BOOST_TEST(test("123", val(int_)));
     }
 
     {
         int result;
-        BOOST_TEST(test("123", lazy(val(int_))[ref(result) = _1]));
+        BOOST_TEST(test("123", qi::lazy(val(int_))[ref(result) = _1]));
         BOOST_TEST((result == 123));
+    }
+
+    {
+        rule<char const*, char()> r;
+
+        r = char_[_val = _1] >> *qi::lazy(_val);
+
+        BOOST_TEST(test("aaaaaaaaaaaa", r));
+        BOOST_TEST(!test("abbbbbbbbbb", r));
+        BOOST_TEST(test("bbbbbbbbbbb", r));
     }
 
     {
@@ -43,7 +60,7 @@ main()
 
         r =
                 '<' >> *(char_ - '>')[_val += _1] >> '>'
-            >>  "</" >> lazy(_val) >> '>'
+            >>  "</" >> qi::lazy(_val) >> '>'
         ;
 
         BOOST_TEST(test("<tag></tag>", r));

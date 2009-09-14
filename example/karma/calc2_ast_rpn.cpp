@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
-    Copyright (c) 2001-2008 Hartmut Kaiser
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -15,8 +15,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/karma.hpp>
 
 #include <iostream>
 #include <vector>
@@ -24,15 +22,19 @@
 
 #include "calc2_ast.hpp"
 
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/karma.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Our calculator parser grammar
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
+struct calculator 
+  : qi::grammar<Iterator, expression_ast(), space_type>
 {
     calculator() : calculator::base_type(expression)
     {
@@ -61,6 +63,24 @@ struct calculator : qi::grammar<Iterator, expression_ast(), space_type>
     qi::rule<Iterator, expression_ast(), space_type> expression, term, factor;
 };
 
+// We need to tell fusion about our binary_op and unary_op structs
+// to make them a first-class fusion citizen
+//
+// Note: we register the members exactly in the same sequence as we need them 
+//       in the grammar
+BOOST_FUSION_ADAPT_STRUCT(
+    binary_op,
+    (expression_ast, left)
+    (expression_ast, right)
+    (char, op)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    unary_op,
+    (expression_ast, right)
+    (char, op)
+)
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Our AST grammar for the generator, this prints the AST in reverse polish 
 //  notation
@@ -71,27 +91,9 @@ struct ast_rpn
 {
     ast_rpn() : ast_rpn::base_type(ast_node)
     {
-        ast_node %= 
-                int_        [_1 = _int(_val)]
-            |   binary_node [_1 = _bin_op(_val)]
-            |   unary_node  [_1 = _unary_op(_val)]
-            ;
-            
-        binary_node = 
-                (ast_node << ast_node << char_)
-                [ 
-                    _1 = _left(_val), _2 = _right(_val), _3 = _op(_val)
-                ]
-            ;
-
-        unary_node =
-                verbatim [
-                    ('(' << ast_node << char_ << ')')
-                    [
-                        _1 = _right(_val), _2 = _op(_val)
-                    ]
-                ]
-            ;
+        ast_node %= int_ | binary_node | unary_node;
+        binary_node %= ast_node << ast_node << char_;
+        unary_node %= '(' << ast_node << char_ << ')';
     }
 
     karma::rule<OuputIterator, expression_ast(), space_type> ast_node;
@@ -119,7 +121,7 @@ main()
     // Our generator grammar definitions
     typedef std::back_insert_iterator<std::string> output_iterator_type;
     typedef ast_rpn<output_iterator_type> ast_rpn;
-    
+
     ast_rpn ast_grammar;
 
     std::string str;
@@ -129,21 +131,22 @@ main()
             break;
 
         expression_ast ast;   // this will hold the generated AST
-        
+
         std::string::const_iterator iter = str.begin();
         std::string::const_iterator end = str.end();
-        bool r = qi::phrase_parse(iter, end, calc, ast, space);
+        bool r = qi::phrase_parse(iter, end, calc, space, ast);
 
         if (r && iter == end)
         {
             std::string generated;
-            r = karma::generate_delimited(
-                std::back_inserter(generated), ast_grammar, ast, space);
-            
+            output_iterator_type outit(generated);
+            r = karma::generate_delimited(outit, ast_grammar, space, ast);
+
             if (r)
             {
-                std::cout << "RPN for '" << str << "': " << generated 
+                std::cout << "RPN for '" << str << "': \n" << generated 
                           << std::endl;
+                std::cout << "-------------------------\n";
             }
             else
             {

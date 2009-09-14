@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -10,18 +10,20 @@
 
 [heading Spirit Classic]
 
-The Spirit V1.8.x code base has been integrated with Spirit V2. It is now called
-__classic__. Even if the directory structure has changed (the Spirit Classic
-headers are now moved to the '''$BOOST_ROOT/boost/spirit/home/classic''' directory),
-we created forwarding headers allowing to compile existing applications without
-any change. These forwarding headers are deprecated, though, which will result
-in corresponding warnings generated for each of the headers starting with Boost
-V1.38. The forwarding headers are expected to be removed in the future.
+The Spirit V1.8.x code base has been integrated with Spirit V2. It is
+now called __classic__. Since the directory structure has changed (the
+Spirit Classic headers are now moved to the
+'''$BOOST_ROOT/boost/spirit/home/classic''' directory), we created
+forwarding headers allowing existing applications to compile without
+any change. However, these forwarding headers are deprecated, which
+will result in corresponding warnings generated for each of the
+headers starting with Boost V1.38. The forwarding headers are expected
+to be removed in the future.
 
-The recommended way of using Spirit Classic now is to include header files from
-the directory '''$BOOST_ROOT/boost/spirit/include'''. All files of Spirit Classic
-in this directory have a 'classic_' prefixed to their name. For example the
-include
+The recommended way of using Spirit Classic now is to include header
+files from the directory '''$BOOST_ROOT/boost/spirit/include'''. All
+Spirit Classic headers in this directory have a 'classic_' prefixed to
+their name. For example the include
 
     #include <boost/spirit/core/core.hpp>
 
@@ -29,17 +31,135 @@ now should be written as:
 
     #include <boost/spirit/include/classic_core.hpp>
 
-To avoid namespace conflicts with the new Spirit V2 library we moved Spirit Classic
-into the namespace `boost::spirit::classic`. All references to the former
-namespace `boost::spirit` need to be adjusted as soon as the header names are
-corrected as described above. As an alternative you can define the preprocessor
-constant `BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic
-code to be in the namespace `boost::spirit` as before. This is not recommended,
-though, as it may result in naming clashes.
+To avoid namespace conflicts with the new Spirit V2 library we moved
+Spirit Classic into the namespace `boost::spirit::classic`. All
+references to the former namespace `boost::spirit` need to be adjusted
+as soon as the header names are corrected as described above. As an
+alternative you can define the preprocessor constant
+`BOOST_SPIRIT_USE_OLD_NAMESPACE`, which will force the Spirit Classic
+code to be in the namespace `boost::spirit` as before. This is not
+recommended, though, as it may result in naming clashes.
 
-The change of the namespace will be automatically deactivated whenever the
-deprecated include files are being used. This ensures full backwards
-compatibility for existing applications.
+The change of the namespace will be automatically deactivated whenever
+the deprecated include files are being used. This ensures full
+backwards compatibility for existing applications.
 
+[heading Spirit V2.1] 
+
+[heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)]
+
+* __spirit__ is now based on the newest version of __boost_proto__
+* `qi::phrase_parse`, `qi::phrase_format` now post-skip by default.
+* `karma::generate_delimited` and `karma::format_delimited` now don't do pre-
+  delimiting by default.
+* Changed parameter sequence of `qi::phrase_parse`, `qi::phrase_match`, 
+  `karma::generate_delimited`, and `match_delimited`. The attribute is now 
+  always the last parameter.
+* Added new overloads of those functions allowing to explicitly specify the
+  post-skipping and pre-delimiting behavior.
+* Added multi attribute API functions
+* Removed `grammar_def<>`
+* Removed functions `make_parser()` and `make_generator()`
+* Removed `qi::none` and `karma::none`
+* Sequences and lists now accept a standard container as their attribute
+* The string placeholder terminal now can take other strings as its parameter 
+  (i.e. std::string)
+* All terminals taking literals now accept a (lazy) function object as well
+* All placeholders for terminals and directives (such as `int_`, `double_`, 
+  `verbatim`, etc.) were previously defined in the namespace `boost::spirit` 
+  only. Now these are additionally imported into the namespaces
+  `spirit::qi`, `spirit::karma`, and `spirit::lex` (if they are supported by 
+  the corresponding sub-library).
+* The terminal placeholders `char_` and `string` are not defined in the
+  namespace `boost::spirit` anymore as they have been moved to the 
+  character set namespaces, allowing to do proper character set 
+  handling based on the used namespace (as `spirit::ascii`, etc.)
+* The `uint`, `ushort`, `ulong`, and `byte` terminal placeholders have been 
+  renamed to `uint_`, `ushort_`, `ulong_`, and `byte_`.
+* `qi::skip[]` now re-enables outer skipper if used inside `lexeme[]`
+* Added `karma::maxwidth[]` directive
+* Added `karma::omit[]` directive (see __karma_omit__)
+* Added `karma::buffer[]` directive (see __karma_buffer__)
+* `karma::delimit[]` now re-enables outer delimiter if used inside `verbatim[]`
+* karma: added and-predicate (`operator&()`) and not-predicate (`operator!()`)
+* karma: changed semantics of `char_()`, `string()`, `int_()` et.al., and 
+  `double_()` et.al.: all of these generators now always expose an attribute. 
+  If they do not have an associate attribute, they generate their immediate 
+  literal. If they have an associated attribute, the generators first test if 
+  the attribute value is equal to the immediate literal. They fail not 
+  while generating anything if those are not equal. Otherwise they generate 
+  their immediate literal. For more information see for instance 
+  [signed_int `int_`].
+* `karma::lit()` can now be used to generate integer and floating point numbers
+* `qi::rule` and `karma::rule` now can be directly initialzed using their copy
+  constructor. I.e. this works now: `qi::rule<...> r = ...some parser...;`.The
+  semantics of this initalization are equivalent to initializing them using 
+  `operator%=()` (auto attribute propagation is enabled).
+
+[heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)]
+
+Here is a list of changes in __lex__ since version 2.0. __lex__ 2.x is a 
+complete rewrite of the __lex__ distributed with Boost V1.37. As all parts of 
+the __spirit__ library it is usable either standalone or in conjunction with 
+the other parts. __lex__ now uses the infrastructure provided by __spirit__ 
+version 2.1.
+
+* The lex::lexer_def class has been renamed to lex::lexer, while the original
+  class lex::lexer does not exist anymore. This simplifies the creation of
+  lexers.
+* The lex::lexer class does not have the function `def(Self& self)` anymore, 
+  token definitions can be added to the lexer at any time, usually in the 
+  constructor of the user defined lexer class:
+``
+      template <typename Lexer>
+      struct example_tokens : lex::lexer<Lexer>
+      {
+            example_lexer()
+            {
+                // your token definitions here
+                this->self = ...
+            }
+      };
+``
+* The new lexer class now can be directly used, their is no need anymore to 
+  wrap it using the `make_lexer()` template as before. Therefore the function
+  `make_lexer()` has been removed.
+* The `lex::tokenize_and_parse()` and `lex::tokenize_and_phrase_parse()` functions 
+  have been changed to match the parameter sequence as implemented by the 
+  `qi::parse()` and `qi::phrase_parse()` functions. 
+  Both take a possibly arbitrary number of attribute arguments as its last 
+  parameters (well, the number of attributes is limited by the macro
+  `SPIRIT_ARGUMENTS_LIMIT`, which defaults to `PHOENIX_LIMIT`).
+* The `lex::lexertl_lexer`, and `lex::lexertl_token`
+  classes have been moved to the `lex::lexertl` namespace and the names have been 
+  changed to `lex::lexertl::lexer`, `lex::lexertl::token` (the same applies to 
+  the `lex::lexert_actor_lexer`, and the `static_lexertl_*` family of types).
+* The class `lex::lexertl_token_set` has been removed alltogether as its 
+  complete functionality is available from the lexer class.
+* The __lex__ library has been updated to use the newest version of Ben 
+  Hansons __lexertl__ lexer construction library (Boost review pending).
+* The `lex::lexer<Lexer>` template constructor now takes an optional parameter
+  specifying the `match_flags` to be used for table generation. Currently, there
+  are the following flags available:
+``
+        match_flags::match_default,          // no flags
+        match_flags::match_not_dot_newline,  // the regex '.' doesn't match newlines
+        match_flags::match_icase             // all matching operations are case insensitive
+``
+  If no parameter is passed to the constructor, `match_flags::match_default` is 
+  used, i.e. the `.` matches newlines and matching is case sensitive.
+* The `char_()` and `string()` placeholders can now be used for token 
+  definitions as a replacement for `token_def`, although it is still
+  possible to use the latter.
+* Lexer semantic actions now have to conform to a changed interface (see
+  __sec_lex_semactions__ for details).
+* Added placeholder symbols usable from the inside of lexer semantic actions 
+  while using Phoenix: _start, _end, _eoi, _state, _val, and _pass (see 
+  __sec_lex_semactions__ for more details).
+* Added (lazy) support functions usable from the inside of lexer semantic
+   actions while using Phoenix: `lex::more()`, `lex::less()`, and 
+   `lex::lookahead()` (see  __sec_lex_semactions__ for more details).
+* Removed `lex::omitted` in favor of `lex::omit` to unify the overall 
+  interface.
 
 [endsect]

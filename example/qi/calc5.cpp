@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -28,163 +28,170 @@
 #include <string>
 #include <vector>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
-using boost::phoenix::ref;
-using boost::phoenix::push_back;
-using boost::phoenix::val;
-using boost::phoenix::construct;
-
-///////////////////////////////////////////////////////////////////////////////
-//  The Virtual Machine
-///////////////////////////////////////////////////////////////////////////////
-enum byte_code
+namespace client
 {
-    op_neg,     //  negate the top stack entry
-    op_add,     //  add top two stack entries
-    op_sub,     //  subtract top two stack entries
-    op_mul,     //  multiply top two stack entries
-    op_div,     //  divide top two stack entries
-    op_int,     //  push constant integer into the stack
-};
+    namespace qi = boost::spirit::qi;
+    namespace phoenix = boost::phoenix;
+    namespace ascii = boost::spirit::ascii;
 
-class vmachine
-{
-public:
-
-    vmachine(unsigned stackSize = 4096)
-      : stack(stackSize)
-      , stack_ptr(stack.begin())
+    ///////////////////////////////////////////////////////////////////////////
+    //  The Virtual Machine
+    ///////////////////////////////////////////////////////////////////////////
+    enum byte_code
     {
-    }
+        op_neg,     //  negate the top stack entry
+        op_add,     //  add top two stack entries
+        op_sub,     //  subtract top two stack entries
+        op_mul,     //  multiply top two stack entries
+        op_div,     //  divide top two stack entries
+        op_int,     //  push constant integer into the stack
+    };
 
-    int top() const { return stack_ptr[-1]; };
-    void execute(std::vector<int> const& code);
-
-private:
-
-    std::vector<int> stack;
-    std::vector<int>::iterator stack_ptr;
-};
-
-void vmachine::execute(std::vector<int> const& code)
-{
-    std::vector<int>::const_iterator pc = code.begin();
-    stack_ptr = stack.begin();
-
-    while (pc != code.end())
+    class vmachine
     {
-        switch (*pc++)
+    public:
+
+        vmachine(unsigned stackSize = 4096)
+          : stack(stackSize)
+          , stack_ptr(stack.begin())
         {
-            case op_neg:
-                stack_ptr[-1] = -stack_ptr[-1];
-                break;
+        }
 
-            case op_add:
-                --stack_ptr;
-                stack_ptr[-1] += stack_ptr[0];
-                break;
+        int top() const { return stack_ptr[-1]; };
+        void execute(std::vector<int> const& code);
 
-            case op_sub:
-                --stack_ptr;
-                stack_ptr[-1] -= stack_ptr[0];
-                break;
+    private:
 
-            case op_mul:
-                --stack_ptr;
-                stack_ptr[-1] *= stack_ptr[0];
-                break;
+        std::vector<int> stack;
+        std::vector<int>::iterator stack_ptr;
+    };
 
-            case op_div:
-                --stack_ptr;
-                stack_ptr[-1] /= stack_ptr[0];
-                break;
+    void vmachine::execute(std::vector<int> const& code)
+    {
+        std::vector<int>::const_iterator pc = code.begin();
+        stack_ptr = stack.begin();
 
-            case op_int:
-                *stack_ptr++ = *pc++;
-                break;
+        while (pc != code.end())
+        {
+            switch (*pc++)
+            {
+                case op_neg:
+                    stack_ptr[-1] = -stack_ptr[-1];
+                    break;
+
+                case op_add:
+                    --stack_ptr;
+                    stack_ptr[-1] += stack_ptr[0];
+                    break;
+
+                case op_sub:
+                    --stack_ptr;
+                    stack_ptr[-1] -= stack_ptr[0];
+                    break;
+
+                case op_mul:
+                    --stack_ptr;
+                    stack_ptr[-1] *= stack_ptr[0];
+                    break;
+
+                case op_div:
+                    --stack_ptr;
+                    stack_ptr[-1] /= stack_ptr[0];
+                    break;
+
+                case op_int:
+                    *stack_ptr++ = *pc++;
+                    break;
+            }
         }
     }
-}
 
-///////////////////////////////////////////////////////////////////////////////
-//  Our calculator grammar and compiler
-///////////////////////////////////////////////////////////////////////////////
-template <typename Iterator>
-struct calculator : grammar<Iterator, space_type>
-{
-    calculator(std::vector<int>& code)
-      : calculator::base_type(expression)
-      , code(code)
+    ///////////////////////////////////////////////////////////////////////////
+    //  Our calculator grammar and compiler
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator>
+    struct calculator : qi::grammar<Iterator, ascii::space_type>
     {
-        expression =
-            term
-            >> *(   ('+' > term             [push_back(ref(code), op_add)])
-                |   ('-' > term             [push_back(ref(code), op_sub)])
-                )
-            ;
+        calculator(std::vector<int>& code)
+          : calculator::base_type(expression)
+          , code(code)
+        {
+            using namespace qi::labels;
+            using qi::uint_;
+            using qi::on_error;
+            using qi::fail;
 
-        term =
-            factor
-            >> *(   ('*' > factor           [push_back(ref(code), op_mul)])
-                |   ('/' > factor           [push_back(ref(code), op_div)])
-                )
-            ;
+            using phoenix::val;
+            using phoenix::ref;
+            using phoenix::push_back;
+            using phoenix::construct;
 
-        factor =
-            uint_                           [
-                                                push_back(ref(code), op_int),
-                                                push_back(ref(code), _1)
-                                            ]
-            |   '(' > expression > ')'
-            |   ('-' > factor               [push_back(ref(code), op_neg)])
-            |   ('+' > factor)
-            ;
+            expression =
+                term
+                >> *(   ('+' > term             [push_back(ref(code), op_add)])
+                    |   ('-' > term             [push_back(ref(code), op_sub)])
+                    )
+                ;
 
-        expression.name("expression");
-        term.name("term");
-        factor.name("factor");
+            term =
+                factor
+                >> *(   ('*' > factor           [push_back(ref(code), op_mul)])
+                    |   ('/' > factor           [push_back(ref(code), op_div)])
+                    )
+                ;
 
-        on_error<fail>
-        (
-            expression
-          , std::cout
-                << val("Error! Expecting ")
-                << _4                               // what failed?
-                << val(" here: \"")
-                << construct<std::string>(_3, _2)   // iterators to error-pos, end
-                << val("\"")
-                << std::endl
-        );
-    }
+            factor =
+                uint_                           [
+                                                    push_back(ref(code), op_int),
+                                                    push_back(ref(code), _1)
+                                                ]
+                |   '(' > expression > ')'
+                |   ('-' > factor               [push_back(ref(code), op_neg)])
+                |   ('+' > factor)
+                ;
 
-    rule<Iterator, space_type> expression, term, factor;
-    std::vector<int>& code;
-};
+            expression.name("expression");
+            term.name("term");
+            factor.name("factor");
 
-template <typename Grammar>
-bool compile(Grammar const& calc, std::string const& expr)
-{
-    std::string::const_iterator iter = expr.begin();
-    std::string::const_iterator end = expr.end();
-    bool r = phrase_parse(iter, end, calc, space);
+            on_error<fail>
+            (
+                expression
+              , std::cout
+                    << val("Error! Expecting ")
+                    << _4                               // what failed?
+                    << val(" here: \"")
+                    << construct<std::string>(_3, _2)   // iterators to error-pos, end
+                    << val("\"")
+                    << std::endl
+            );
+        }
 
-    if (r && iter == end)
+        qi::rule<Iterator, ascii::space_type> expression, term, factor;
+        std::vector<int>& code;
+    };
+
+    template <typename Grammar>
+    bool compile(Grammar const& calc, std::string const& expr)
     {
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing succeeded\n";
-        std::cout << "-------------------------\n";
-        return true;
-    }
-    else
-    {
-        std::cout << "-------------------------\n";
-        std::cout << "Parsing failed\n";
-        std::cout << "-------------------------\n";
-        return false;
+        std::string::const_iterator iter = expr.begin();
+        std::string::const_iterator end = expr.end();
+        bool r = phrase_parse(iter, end, calc, ascii::space);
+
+        if (r && iter == end)
+        {
+            std::cout << "-------------------------\n";
+            std::cout << "Parsing succeeded\n";
+            std::cout << "-------------------------\n";
+            return true;
+        }
+        else
+        {
+            std::cout << "-------------------------\n";
+            std::cout << "Parsing failed\n";
+            std::cout << "-------------------------\n";
+            return false;
+        }
     }
 }
 
@@ -200,9 +207,9 @@ main()
     std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
     typedef std::string::const_iterator iterator_type;
-    typedef calculator<iterator_type> calculator;
+    typedef client::calculator<iterator_type> calculator;
 
-    vmachine mach;                  //  Our virtual machine
+    client::vmachine mach;          //  Our virtual machine
     std::vector<int> code;          //  Our VM code
     calculator calc(code);          //  Our grammar
 
@@ -213,7 +220,7 @@ main()
             break;
 
         code.clear();
-        if (::compile(calc, str))
+        if (client::compile(calc, str))
         {
             mach.execute(code);
             std::cout << "\n\nresult = " << mach.top() << std::endl;

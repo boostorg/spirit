@@ -1,10 +1,9 @@
 /*=============================================================================
-    Copyright (c) 2001-2008 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -19,41 +18,50 @@
 //  * Using boost.bind with a member function
 //  * Using boost.lambda
 
-using namespace boost::spirit;
-
 //[tutorial_semantic_action_functions
-// A plain function
-void write(int const& i)
+namespace client
 {
-    std::cout << i << std::endl;
+    namespace qi = boost::spirit::qi;
+
+    // A plain function
+    void print(int const& i)
+    {
+        std::cout << i << std::endl;
+    }
+
+    // A member function
+    struct writer
+    {
+        void print(int const& i) const
+        {
+            std::cout << i << std::endl;
+        }
+    };
+
+    // A function object
+    struct print_action
+    {
+        void operator()(int const& i, qi::unused_type, qi::unused_type) const
+        {
+            std::cout << i << std::endl;
+        }
+    };
 }
-
-// A member function
-struct writer
-{
-    void print(int const& i) const
-    {
-        std::cout << i << std::endl;
-    }
-};
-
-// A function object
-struct write_action
-{
-    void operator()(int const& i, unused_type, unused_type) const
-    {
-        std::cout << i << std::endl;
-    }
-};
 //]
 
 int main()
 {
+    using boost::spirit::qi::int_;
+    using boost::spirit::qi::parse;
+    using client::print;
+    using client::writer;
+    using client::print_action;
+
     { // example using plain function
 
         char const *first = "{42}", *last = first + std::strlen(first);
         //[tutorial_attach_actions1
-        qi::parse(first, last, '{' >> int_[&write] >> '}');
+        parse(first, last, '{' >> int_[&print] >> '}');
         //]
     }
 
@@ -61,7 +69,7 @@ int main()
 
         char const *first = "{43}", *last = first + std::strlen(first);
         //[tutorial_attach_actions2
-        qi::parse(first, last, '{' >> int_[write_action()] >> '}');
+        parse(first, last, '{' >> int_[print_action()] >> '}');
         //]
     }
 
@@ -69,7 +77,7 @@ int main()
 
         char const *first = "{44}", *last = first + std::strlen(first);
         //[tutorial_attach_actions3
-        qi::parse(first, last, '{' >> int_[boost::bind(&write, _1)] >> '}');
+        parse(first, last, '{' >> int_[boost::bind(&print, _1)] >> '}');
         //]
     }
 
@@ -78,7 +86,7 @@ int main()
         char const *first = "{44}", *last = first + std::strlen(first);
         //[tutorial_attach_actions4
         writer w;
-        qi::parse(first, last, '{' >> int_[boost::bind(&writer::print, &w, _1)] >> '}');
+        parse(first, last, '{' >> int_[boost::bind(&writer::print, &w, _1)] >> '}');
         //]
     }
 
@@ -88,7 +96,7 @@ int main()
         char const *first = "{45}", *last = first + std::strlen(first);
         using lambda::_1;
         //[tutorial_attach_actions5
-        qi::parse(first, last, '{' >> int_[std::cout << _1 << '\n'] >> '}');
+        parse(first, last, '{' >> int_[std::cout << _1 << '\n'] >> '}');
         //]
     }
 

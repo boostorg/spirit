@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2002-2007 Joel de Guzman
+    Copyright (c) 2002-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,37 +22,40 @@
 #include <string>
 #include <complex>
 
-using namespace boost::phoenix;
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::arg_names;
-
 ///////////////////////////////////////////////////////////////////////////////
 //  Our complex number parser/compiler
 ///////////////////////////////////////////////////////////////////////////////
 //[tutorial_complex_number
-template <typename Iterator>
-bool parse_complex(Iterator first, Iterator last, std::complex<double>& c)
+namespace client
 {
-    double rN = 0.0;
-    double iN = 0.0;
-    bool r = phrase_parse(first, last,
+    template <typename Iterator>
+    bool parse_complex(Iterator first, Iterator last, std::complex<double>& c)
+    {
+        using boost::spirit::qi::double_;
+        using boost::spirit::qi::_1;
+        using boost::spirit::qi::phrase_parse;
+        using boost::spirit::ascii::space;
+        using boost::phoenix::ref;
 
-        //  Begin grammar
-        (
-                '(' >> double_[ref(rN) = _1]
-                    >> -(',' >> double_[ref(iN) = _1]) >> ')'
-            |   double_[ref(rN) = _1]
-        ),
-        //  End grammar
+        double rN = 0.0;
+        double iN = 0.0;
+        bool r = phrase_parse(first, last,
 
-        space);
+            //  Begin grammar
+            (
+                    '(' >> double_[ref(rN) = _1]
+                        >> -(',' >> double_[ref(iN) = _1]) >> ')'
+                |   double_[ref(rN) = _1]
+            ),
+            //  End grammar
 
-    if (!r || first != last) // fail if we did not get a full match
-        return false;
-    c = std::complex<double>(rN, iN);
-    return r;
+            space);
+
+        if (!r || first != last) // fail if we did not get a full match
+            return false;
+        c = std::complex<double>(rN, iN);
+        return r;
+    }
 }
 //]
 
@@ -76,7 +79,7 @@ main()
             break;
 
         std::complex<double> c;
-        if (parse_complex(str.begin(), str.end(), c))
+        if (client::parse_complex(str.begin(), str.end(), c))
         {
             std::cout << "-------------------------\n";
             std::cout << "Parsing succeeded\n";
