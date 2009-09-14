@@ -414,7 +414,7 @@ namespace util
             // by repeatedly calling the gettimeofday function.  This
             // is often likely to be indicative of the true
             // resolution.
-            timeval t1, t2;
+            timeval t0, t1;
             double delta(0);
 
             if (gettimeofday(&t0, NULL)) 
