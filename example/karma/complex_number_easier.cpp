@@ -61,7 +61,6 @@ namespace client
     template <typename OutputIterator>
     bool generate_complex(OutputIterator sink, std::complex<double> const& c)
     {
-        using boost::spirit::karma::eps;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::omit;
         using boost::spirit::karma::generate;
@@ -70,8 +69,7 @@ namespace client
 
             //  Begin grammar
             (
-               !double_(0.0) 
-                <<  '(' << double_ << ", " << double_ << ')'
+               !double_(0.0) << '(' << double_ << ", " << double_ << ')'
             |   omit[double_] << double_ << omit[double_]
             ),
             //  End grammar

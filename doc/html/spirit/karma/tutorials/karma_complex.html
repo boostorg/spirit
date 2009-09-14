@@ -54,12 +54,12 @@
           succeeds. If no generator expression succeeds the whole alternative fails.
         </p>
 <p>
-          If we left this formatting grammar as it is our generator would always
-          choose the first alternative. We need to add some additional rules allowing
-          to make the first alternative failing. So, if the first fails the second
-          alternative will be chosen instead. The decision about whether to choose
-          the first alternative has to be made at runtime as only then we actually
-          know the value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
+          If we left this formatting grammar as is our generator would always choose
+          the first alternative. We need to add some additional rules allowing to
+          make the first alternative failing. So, if the first fails the second alternative
+          will be chosen instead. The decision about whether to choose the first
+          alternative has to be made at runtime as only then we actually know the
+          value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
           provides us with with a primitive generator <code class="computeroutput"><span class="identifier">eps</span><span class="special">()</span></code>, which is usable as a semantic predicate.
           It has the property to 'succeed' generating only if its argument is true
           (while it never generates any output on its own).

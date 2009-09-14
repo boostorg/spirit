@@ -385,7 +385,16 @@ See here for more information about __karma_directive__.
 
 [heading Notation]
 
-The notation will be for instance: 
+The notation we will use will be of the form:
+
+    a: A, b: B, ... --> composite-expression: composite-attribute
+
+`a`, `b`, etc. are the operands. `A`, `B`, etc. are the operand's
+attribute types. `composite-expression` is the expression involving the
+operands and `composite-attribute` is the resulting attribute type of
+the composite expression.
+
+For instance: 
 
     a: A, b: B --> (a << b): tuple<A, B>
 
@@ -393,7 +402,17 @@ which reads as: given, `a` and `b` are generators, and `A` is the type
 of the attribute of `a`, and `B` is the type of the attribute of `b`, then the 
 type of the attribute of `a << b` will be `tuple<A, B>`.
 
-[table Spirit.Karma compound generator attribute types
+[important In the attribute tables, we will use `vector<A>` and
+`tuple<A, B...>` as placeholders only. The notation of `vector<A>`
+stands for ['any __stl__ container] holding elements of type `A` and the
+notation `tuple<A, B...>` stands for ['any __fusion__ sequence] holding
+`A`, `B`, ... etc. elements. The notation of `variant<A, B, ...>` stands for
+['a __boost_variant__] capable of holding `A`, `B`, ... etc. elements. Finally, 
+`Unused` stands for __unused_type__. ] 
+
+[heading Compound Generator Attribute Types]
+
+[table 
     [[Expression]           [Attribute]]
 
     [[__karma_sequence__]

@@ -62,7 +62,7 @@
 [def __boost_format__           [@boost:/libs/format/index.html Boost.Format]]
 [def __boost_any__              [@boost:/libs/any/index.html Boost.Any]]
 
-[def __classic__                /Spirit.Classic/]
+[def __classic__                [@boost:/libs/spirit/classic/index.html /Spirit.Classic/]]
 [def __qi__                     /Spirit.Qi/]
 [def __karma__                  /Spirit.Karma/]
 [def __lex__                    /Spirit.Lex/]
@@ -80,7 +80,7 @@
 [def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_qi_karma_attributes__  [link spirit.qi_and_karma.abstracts.attributes Attributes]]
 [def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
-[def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Primitive Generators]]
+[def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Karma Generators]]
 [def __sec_karma_compound__     [link spirit.karma.quick_reference.compound_attribute_rules Compound Attribute Rules]]
 [def __karma_char_encoding_namespace__ [link spirit.karma.reference.karma_basics.character_encoding_namespace Character Encoding Namespace]]
 [def __sec_qi_reference__       [link spirit.qi.reference Qi Reference]]
@@ -185,10 +185,12 @@
 [template karma_upperlower[str]     [link spirit.karma.reference.directive.upperlower [str]]]
 [template karma_maxwidth[str]       [link spirit.karma.reference.directive.maxwidth [str]]]
 
+[def __karma_numerics__             [link spirit.karma.reference.numeric numeric generators]]
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
 [template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]
 [template real_number[str]          [link spirit.karma.reference.numeric.real_number [str]]]
 
+[def __karma_char__                 [link spirit.karma.reference.numeric character generators]]
 [template karma_char[str]           [link spirit.karma.reference.char.char_generator [str]]]
 [template karma_char_class[str]     [link spirit.karma.reference.char.char_class [str]]]
 
@@ -341,8 +343,11 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [/ $$$ End $$$ ]
 [/ ----------------------------------------------------------------------------]
 
-
 [/ Here we go ]
+
+This is the documentation of the newest version of __spirit__ (currently, 
+V2.1). If you're looking for the documentation of Spirit's previous version 
+(formerly Spirit V1.8), see __classic__. 
 
 [include preface.qbk]
 [include what_s_new.qbk]

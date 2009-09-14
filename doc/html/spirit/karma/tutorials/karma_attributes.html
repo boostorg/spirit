@@ -28,7 +28,7 @@
         Generator Attributes</a>
 </h4></div></div></div>
 <a name="spirit.karma.tutorials.karma_attributes.attributes_of_primitive_generators"></a><h6>
-<a name="id725788"></a>
+<a name="id730986"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.attributes_of_primitive_generators">Attributes
           of Primitive Generators</a>
         </h6>
@@ -41,7 +41,7 @@
           such as for instance <code class="computeroutput"><span class="identifier">int_</span></code>
           which has <code class="computeroutput"><span class="keyword">int</span></code>, or <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span></code> which has <code class="computeroutput"><span class="keyword">char</span></code>.
           For a full list of available generator primitives and their attribute types
-          please see the section <a class="link" href="../quick_reference/primitive_generators.html" title="Karma Generators">Primitive
+          please see the section <a class="link" href="../quick_reference/primitive_generators.html" title="Karma Generators">Karma
           Generators</a>.
         </p>
 <p>
@@ -59,7 +59,7 @@
 <span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">,</span> <span class="number">1</span><span class="special">);</span>
 </pre>
 <a name="spirit.karma.tutorials.karma_attributes.attributes_of_compound_generators"></a><h6>
-<a name="id725980"></a>
+<a name="id731178"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.attributes_of_compound_generators">Attributes
           of Compound Generators</a>
         </h6>
@@ -118,7 +118,7 @@
           Attribute Rules</a>.
         </p>
 <a name="spirit.karma.tutorials.karma_attributes.the_attribute_of_sequence_generators"></a><h6>
-<a name="id726325"></a>
+<a name="id731523"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.the_attribute_of_sequence_generators">The
           Attribute of Sequence Generators</a>
         </h6>
@@ -147,13 +147,12 @@
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">str</span><span class="special">);</span>
 <span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> 
     <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span><span class="special">,</span>             <span class="comment">// generator grammar (format description)
-</span>    <span class="identifier">space</span><span class="special">,</span>                          <span class="comment">// delimiter grammar
+</span>    <span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">,</span>                   <span class="comment">// delimiter grammar
 </span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">make_pair</span><span class="special">(</span><span class="number">1.0</span><span class="special">,</span> <span class="number">2.0</span><span class="special">));</span>      <span class="comment">// data to use as the attribute 
 </span></pre>
 <p>
-          (where the <code class="computeroutput"><span class="identifier">space</span></code> generator
-          is used as the delimiter, allowing to automatically insert delimiting spaces
-          in between all primitives).
+          (where the <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span></code> generator is used as the delimiter,
+          allowing to automatically insert delimiting spaces in between all primitives).
         </p>
 <div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
@@ -185,7 +184,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_attributes.the_attribute_of_alternative_generators"></a><h6>
-<a name="id726742"></a>
+<a name="id731955"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.the_attribute_of_alternative_generators">The
           Attribute of Alternative Generators</a>
         </h6>
@@ -210,11 +209,11 @@
 <p>
           often allowing to simplify things significantly. If all sub expressions
           of a <span class="emphasis"><em>Spirit.Karma</em></span> alternative expose the same attribute
-          type, the overall alternative will expose exactly the attribute type as
-          well. We will apply this rule later for our complex number generators.
+          type, the overall alternative will expose exactly the same attribute type
+          as well. We will apply this rule later for our complex number generators.
         </p>
 <a name="spirit.karma.tutorials.karma_attributes.more_about_attributes_of_compound_generators"></a><h6>
-<a name="id726939"></a>
+<a name="id733030"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.more_about_attributes_of_compound_generators">More
           About Attributes of Compound Generators</a>
         </h6>
@@ -285,7 +284,8 @@
           Let's take a look at this from a more formal perspective. The sequence
           attribute propagation rules define a special behavior if generators exposing
           <code class="computeroutput"><span class="identifier">unused_type</span></code> as their attribute
-          are involved:
+          are involved (see <a class="link" href="../quick_reference/compound_attribute_rules.html" title="Compound Attribute Rules">Compound
+          Attribute Rules</a>):
         </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 </pre>
@@ -321,7 +321,7 @@
           again, allowing to simplify the overall attribute type of an expression.
         </p>
 <a name="spirit.karma.tutorials.karma_attributes.attributes_of_rules_and_grammars"></a><h6>
-<a name="id727955"></a>
+<a name="id733770"></a>
           <a class="link" href="karma_attributes.html#spirit.karma.tutorials.karma_attributes.attributes_of_rules_and_grammars">Attributes
           of Rules and Grammars</a>
         </h6>

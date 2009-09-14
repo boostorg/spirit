@@ -45,7 +45,7 @@ of the Boost Spirit library. The library consists of 4 major parts:
 * __classic__: This is the almost-unchanged code base taken from the 
   former Boost Spirit V1.8 distribution. It has been moved into the namespace 
   boost::spirit::classic. A special compatibility layer has been added to 
-  ensure complete compatibility with existing code using Spirit V1.8.
+  ensure complete compatibility with existing code using Spirit V1.8. 
 * __qi__: This is the parser library allowing you to build recursive 
   descent parsers. The exposed domain-specific language can be used to describe
   the grammars to implement, and the rules for storing the parsed information.

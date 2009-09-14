@@ -28,11 +28,24 @@
         Attribute Rules</a>
 </h4></div></div></div>
 <a name="spirit.karma.quick_reference.compound_attribute_rules.notation"></a><h6>
-<a name="id739315"></a>
+<a name="id747156"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Notation</a>
         </h6>
 <p>
-          The notation will be for instance:
+          The notation we will use will be of the form:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span><span class="special">,</span> <span class="special">...</span> <span class="special">--&gt;</span> <span class="identifier">composite</span><span class="special">-</span><span class="identifier">expression</span><span class="special">:</span> <span class="identifier">composite</span><span class="special">-</span><span class="identifier">attribute</span>
+</pre>
+<p>
+          <code class="computeroutput"><span class="identifier">a</span></code>, <code class="computeroutput"><span class="identifier">b</span></code>,
+          etc. are the operands. <code class="computeroutput"><span class="identifier">A</span></code>,
+          <code class="computeroutput"><span class="identifier">B</span></code>, etc. are the operand's
+          attribute types. <code class="computeroutput"><span class="identifier">composite</span><span class="special">-</span><span class="identifier">expression</span></code>
+          is the expression involving the operands and <code class="computeroutput"><span class="identifier">composite</span><span class="special">-</span><span class="identifier">attribute</span></code>
+          is the resulting attribute type of the composite expression.
+        </p>
+<p>
+          For instance:
         </p>
 <pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 </pre>
@@ -44,38 +57,60 @@
           <code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span>
           <span class="identifier">b</span></code> will be <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>.
         </p>
-<div class="table">
-<a name="id740870"></a><p class="title"><b>Table 5. Spirit.Karma compound generator attribute types</b></p>
-<div class="table-contents"><table class="table" summary="Spirit.Karma compound generator attribute types">
+<div class="important" title="Important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            In the attribute tables, we will use <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> and <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></code> as placeholders only. The notation
+            of <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+            stands for <span class="emphasis"><em>any <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
+            container</em></span> holding elements of type <code class="computeroutput"><span class="identifier">A</span></code>
+            and the notation <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">...&gt;</span></code> stands for <span class="emphasis"><em>any <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a> sequence</em></span>
+            holding <code class="computeroutput"><span class="identifier">A</span></code>, <code class="computeroutput"><span class="identifier">B</span></code>, ... etc. elements. The notation
+            of <code class="computeroutput"><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">,</span> <span class="special">...&gt;</span></code> stands for <span class="emphasis"><em>a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a></em></span>
+            capable of holding <code class="computeroutput"><span class="identifier">A</span></code>,
+            <code class="computeroutput"><span class="identifier">B</span></code>, ... etc. elements.
+            Finally, <code class="computeroutput"><span class="identifier">Unused</span></code> stands
+            for <code class="computeroutput"><span class="identifier">unused_type</span></code>.
+          </p></td></tr>
+</table></div>
+<a name="spirit.karma.quick_reference.compound_attribute_rules.compound_generator_attribute_types"></a><h6>
+<a name="id747692"></a>
+          <a class="link" href="compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.compound_generator_attribute_types">Compound
+          Generator Attribute Types</a>
+        </h6>
+<div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
-              <p>
-                Expression
-              </p>
-              </th>
+                <p>
+                  Expression
+                </p>
+                </th>
 <th>
-              <p>
-                Attribute
-              </p>
-              </th>
+                <p>
+                  Attribute
+                </p>
+                </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)">sequence
-                (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/sequence.html" title="Sequences (a &lt;&lt; b)">sequence
+                  (<code class="computeroutput"><span class="special">&lt;&lt;</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
@@ -85,146 +120,144 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/alternative.html" title="Alternative (a | b)">alternative
-                (<code class="computeroutput"><span class="special">|</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/alternative.html" title="Alternative (a | b)">alternative
+                  (<code class="computeroutput"><span class="special">|</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/kleene.html" title="Kleene Star (*a)">kleene (unary
-                <code class="computeroutput"><span class="special">*</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/kleene.html" title="Kleene Star (*a)">kleene (unary
+                  <code class="computeroutput"><span class="special">*</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">*</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/plus.html" title="Plus (+a)">plus (unary
-                <code class="computeroutput"><span class="special">+</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/plus.html" title="Plus (+a)">plus (unary
+                  <code class="computeroutput"><span class="special">+</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">+</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/list.html" title="Lists (a % b)">list (<code class="computeroutput"><span class="special">%</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/list.html" title="Lists (a % b)">list (<code class="computeroutput"><span class="special">%</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/directive/repeat.html" title="Repetition Directive (repeat[])">repetition</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/directive/repeat.html" title="Repetition Directive (repeat[])">repetition</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">repeat</span><span class="special">(...,...)[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/optional.html" title="Optional (-a)">optional
-                (unary <code class="computeroutput"><span class="special">-</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/optional.html" title="Optional (-a)">optional
+                  (unary <code class="computeroutput"><span class="special">-</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                
+                <p>
+                  
 </p>
-<pre class="programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
-              </p>
-              </td>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/and_predicate.html" title="And Predicate (&amp;a)">and
-                predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/and_predicate.html" title="And Predicate (&amp;a)">and
+                  predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                <span class="identifier">A</span> <span class="special">--&gt;</span>
-                <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
-              </p>
-              </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                  <span class="identifier">A</span> <span class="special">--&gt;</span>
+                  <span class="special">&amp;</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
+                </p>
+                </td>
 </tr>
 <tr>
 <td>
-              <p>
-                <a class="link" href="../reference/operator/not_predicate.html" title="Not Predicate (!a)">not
-                predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>
-              </p>
-              </td>
+                <p>
+                  <a class="link" href="../reference/operator/not_predicate.html" title="Not Predicate (!a)">not
+                  predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>
+                </p>
+                </td>
 <td>
-              <p>
-                <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
-                <span class="identifier">A</span> <span class="special">--&gt;</span>
-                <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
-              </p>
-              </td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
+                  <span class="identifier">A</span> <span class="special">--&gt;</span>
+                  <span class="special">!</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span></code>
+                </p>
+                </td>
 </tr>
 </tbody>
 </table></div>
-</div>
-<br class="table-break">
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

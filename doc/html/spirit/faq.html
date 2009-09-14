@@ -27,7 +27,7 @@
 <a name="spirit.faq"></a><a class="link" href="faq.html" title="Spirit FAQ"> Spirit FAQ</a>
 </h2></div></div></div>
 <a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_"></a><h4>
-<a name="id897851"></a>
+<a name="id906330"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_">I'm
       getting multiple symbol definition errors while using Visual C++. Anything
       I could do about that?</a>
@@ -64,20 +64,20 @@
       static_assert.
     </p>
 <a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_"></a><h4>
-<a name="id898022"></a>
+<a name="id907183"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">I'm
       very confused about the header hell in my boost/spirit directory. What's all
       this about?</a>
     </h4>
 <p>
       The boost/spirit directory currently holds two versions of the Spirit library:
-      <span class="emphasis"><em>Spirit.Classic</em></span> (former V1.8.x) and SpiritV2. Both are
-      completely independent and usually not used at the same time. Do not mix these
-      two in the same grammar.
+      <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+      (former V1.8.x) and SpiritV2. Both are completely independent and usually not
+      used at the same time. Do not mix these two in the same grammar.
     </p>
 <p>
-      <span class="emphasis"><em>Spirit.Classic</em></span> evolved over years in a fairly complex
-      directory structure:
+      <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
+      evolved over years in a fairly complex directory structure:
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">actor</span>
 <span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">attribute</span>
@@ -93,7 +93,7 @@
 </pre>
 <p>
       While introducing Spirit V2 we restructured the directory structure in order
-      to accommodate two versions at the same time. All of <span class="emphasis"><em>Spirit.Classic</em></span>
+      to accommodate two versions at the same time. All of <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
       now lives in the directory
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">classic</span> 
@@ -118,7 +118,7 @@
       please report this as a bug.
     </p>
 <p>
-      Spirit V2 is not about parsing only anymore (as <span class="emphasis"><em>Spirit.Classic</em></span>).
+      Spirit V2 is not about parsing only anymore (as <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>).
       It now consists out of 3 parts (sub-libraries): <span class="emphasis"><em>Spirit.Qi</em></span>,
       <span class="emphasis"><em>Spirit.Karma</em></span>, and <span class="emphasis"><em>Spirit.Lex</em></span>. The
       header files for those live in
@@ -133,10 +133,10 @@
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span>
 </pre>
 <p>
-      <span class="emphasis"><em>Spirit.Qi</em></span> is the direct successor to <span class="emphasis"><em>Spirit.Classic</em></span>
+      <span class="emphasis"><em>Spirit.Qi</em></span> is the direct successor to <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
       as it implements a DSEL (domain specific embedded language) allowing to write
       parsers using the syntax of C++ itself (parsers in the sense turning a sequence
-      of bytes into an internal data structure). It is not compatible with <span class="emphasis"><em>Spirit.Classic</em></span>,
+      of bytes into an internal data structure). It is not compatible with <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>,
       the main concepts are similar, though.
     </p>
 <p>
@@ -172,7 +172,7 @@
       are available.
     </p>
 <a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_"></a><h4>
-<a name="id898532"></a>
+<a name="id907708"></a>
       <a class="link" href="faq.html#spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_">Why
       doesn't my symbol table work in a <code class="computeroutput"><span class="identifier">no_case</span></code>
       directive?</a>
@@ -186,7 +186,7 @@
       one or more uppercase characters will not match any input.
     </p>
 <a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_"></a><h4>
-<a name="id898602"></a>
+<a name="id907779"></a>
       <a class="link" href="faq.html#spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_">I'm
       getting a compilation error mentioning <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span></code>
       and/or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function4</span></code>. What does this mean?</a>
