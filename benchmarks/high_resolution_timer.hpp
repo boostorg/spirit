@@ -306,6 +306,7 @@ namespace util
 // GETTIMEOFDAY, which is still preferable to std::clock()
 #include <stdexcept>
 #include <limits>
+#include <sys/time.h>
 
 namespace util
 {
