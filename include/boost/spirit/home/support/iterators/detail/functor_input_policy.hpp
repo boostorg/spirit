@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,7 +10,7 @@
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 #include <boost/assert.hpp>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     namespace is_valid_test_
     {
@@ -20,7 +20,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             return true;
         }
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     //  class functor_input
     //  Implementation of the InputPolicy used by multi_pass
@@ -64,7 +64,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
                 // if mp.shared is NULL then this instance of the multi_pass 
                 // represents a end iterator, so no advance functionality is 
                 // needed
-                if (0 != mp.shared) 
+                if (0 != mp.shared()) 
                     t = mp.ftor();
             }
 

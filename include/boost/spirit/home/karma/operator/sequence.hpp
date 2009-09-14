@@ -1,5 +1,5 @@
 //  Copyright (c) 2001-2009 Hartmut Kaiser
-//  Copyright (c) 2001-2007 Joel de Guzman
+//  Copyright (c) 2001-2009 Joel de Guzman
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,83 +7,188 @@
 #if !defined(SPIRIT_KARMA_SEQUENCE_FEB_28_2007_0247PM)
 #define SPIRIT_KARMA_SEQUENCE_FEB_28_2007_0247PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/karma/domain.hpp>
-#include <boost/spirit/home/karma/operator/detail/sequence.hpp>
-#include <boost/spirit/home/support/attribute_transform.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/karma/detail/fail_function.hpp>
+#include <boost/spirit/home/karma/detail/pass_container.hpp>
+#include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/algorithm/any_if.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/sequence_base_id.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/as_vector.hpp>
-#include <boost/fusion/include/transform.hpp>
-#include <boost/fusion/include/filter_if.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/not.hpp>
+#include <boost/mpl/bitor.hpp>
+#include <boost/mpl/int.hpp>
+#include <boost/fusion/include/transform.hpp>
+#include <boost/mpl/accumulate.hpp>
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_operator<karma::domain, proto::tag::shift_left> // enables <<
+      : mpl::true_ {};
+
+    template <>
+    struct flatten_tree<karma::domain, proto::tag::shift_left> // flattens <<
+      : mpl::true_ {};
+
+}}
+
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace traits
+{
+    // specialization for sequences
+    template <typename Elements>
+    struct sequence_properties
+    {
+        struct element_properties
+        {
+            template <typename T>
+            struct result;
+
+            template <typename F, typename Element>
+            struct result<F(Element)>
+            {
+                typedef properties_of<Element> type;
+            };
+
+            // never called, but needed for decltype-based result_of (C++0x)
+            template <typename Element>
+            typename result<element_properties(Element)>::type
+            operator()(Element&) const;
+        };
+
+        typedef typename mpl::accumulate<
+            typename fusion::result_of::transform<
+                Elements, element_properties>::type
+          , mpl::int_<karma::generator_properties::no_properties>
+          , mpl::bitor_<mpl::_2, mpl::_1>
+        >::type type;
+    };
+
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    struct sequence
+    template <typename Elements>
+    struct sequence : nary_generator<sequence<Elements> >
     {
-        template <typename T>
-        struct transform_child : mpl::identity<T> {};
+        typedef typename traits::sequence_properties<Elements>::type properties;
 
-        template <typename All, typename Filtered>
-        struct build_container
+        sequence(Elements const& elements)
+          : elements(elements) {}
+
+        typedef Elements elements_type;
+        struct sequence_base_id;
+
+        template <typename Context, typename Iterator = unused_type>
+        struct attribute
         {
-            typedef
-                typename fusion::result_of::as_vector<Filtered>::type
+            // Put all the element attributes in a tuple
+            typedef typename traits::build_attribute_sequence<
+                Elements, Context, mpl::identity, Iterator>::type
+            all_attributes;
+
+            // Now, build a fusion vector over the attributes. Note
+            // that build_fusion_vector 1) removes all unused attributes
+            // and 2) may return unused_type if all elements have
+            // unused_type(s).
+            typedef typename
+                traits::build_fusion_vector<all_attributes>::type
+            type_;
+
+            // Finally, strip single element vectors into its
+            // naked form: vector1<T> --> T
+            typedef typename
+                traits::strip_single_element_vector<type_>::type
             type;
         };
 
-        template <typename Component, typename Context, typename Iterator>
-        struct attribute :
-            build_fusion_sequence<
-                sequence, Component, Iterator, Context, mpl::true_
-            >
+        // standard case. Attribute is a fusion tuple
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate_impl(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute& attr_, mpl::false_) const
         {
-        };
+            typedef detail::fail_function<
+                OutputIterator, Context, Delimiter> fail_function;
+            typedef traits::attribute_not_unused<Context> predicate;
+
+            // wrap the attribute in a tuple if it is not a tuple or if the 
+            // attribute of this sequence is a single element tuple
+            typedef typename attribute<Context>::type_ attr_type_;
+            typename traits::wrap_if_not_tuple<Attribute
+              , typename traits::one_element_sequence<attr_type_>::type 
+            >::type attr(attr_);
+
+            // return false if *any* of the generators fail
+            return !spirit::any_if(elements, attr, fail_function(sink, ctx, d)
+              , predicate());
+        }
+
+        // Special case when Attribute is an stl container
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate_impl(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr_, mpl::true_) const
+        {
+            // return false if *any* of the generators fail
+            typedef detail::fail_function<
+                OutputIterator, Context, Delimiter> fail_function;
+
+            return !fusion::any(elements, detail::make_pass_container(
+                fail_function(sink, ctx, d), attr_));
+        }
+
+        // main generate function. Dispatches to generate_impl depending
+        // on the Attribute type.
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
+          , Attribute const& attr) const
+        {
+            return generate_impl(sink, ctx, d, attr
+              , traits::is_container<Attribute>());
+        }
 
         template <typename Context>
-        struct attribute_not_unused
+        info what(Context& context) const
         {
-            template <typename Component>
-            struct apply
-              : spirit::traits::is_not_unused<typename
-                  traits::attribute_of<karma::domain, Component, Context>::type>
-            {};
-        };
-
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Parameter const& param)
-        {
-            detail::sequence_generate<OutputIterator, Context, Delimiter>
-                f (sink, ctx, d);
-
-            typedef attribute_not_unused<Context> predicate;
-
-            // f returns true if *any* of the generators fail
-            return !spirit::any_if(component.elements, param, f, predicate());
-        }
-
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
-        {
-            std::string result = "sequence[";
-            fusion::for_each(component.elements,
-                spirit::detail::what_function<Context>(result, ctx));
-            result += "]";
+            info result("sequence");
+            fusion::for_each(elements,
+                spirit::detail::what_function<Context>(result, context));
             return result;
         }
+
+        Elements elements;
     };
 
-}}} // namespace boost::spirit::karma
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Generator generators: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Modifiers>
+    struct make_composite<proto::tag::shift_left, Elements, Modifiers>
+      : make_nary_composite<Elements, sequence>
+    {};
+
+}}} 
 
 #endif

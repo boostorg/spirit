@@ -6,12 +6,11 @@
 #if !defined(BOOST_SPIRIT_KARMA_BINARY_MAY_04_2007_0859AM)
 #define BOOST_SPIRIT_KARMA_BINARY_MAY_04_2007_0859AM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/karma/binary/binary.hpp>
 #include <boost/spirit/home/karma/binary/padding.hpp>
-#include <boost/spirit/home/karma/binary/meta_grammar.hpp>
 
 #endif

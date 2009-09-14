@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,51 +7,77 @@
 #if !defined(SPIRIT_OMIT_MARCH_24_2007_0802AM)
 #define SPIRIT_OMIT_MARCH_24_2007_0802AM
 
-#include <boost/spirit/home/support/component.hpp>
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+#include <boost/spirit/home/qi/meta_compiler.hpp>
+#include <boost/spirit/home/qi/skip_over.hpp>
+#include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/qi/skip.hpp>
+#include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/common_terminals.hpp>
+
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_directive<qi::domain, tag::omit> // enables omit
+      : mpl::true_ {};
+}}
 
 namespace boost { namespace spirit { namespace qi
 {
-    struct omit_director
+    using spirit::omit;
+    using spirit::omit_type;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // omit_directive forces the attribute of subject parser
+    // to be unused_type
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject>
+    struct omit_directive : unary_parser<omit_directive<Subject> >
     {
-        template <typename Component, typename Context, typename Iterator>
+        typedef Subject subject_type;
+        omit_directive(Subject const& subject)
+          : subject(subject) {}
+
+        template <typename Context, typename Iterator>
         struct attribute
         {
             typedef unused_type type;
         };
 
-        template <
-            typename Component
-          , typename Iterator, typename Context
+        template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
-        static bool parse(
-            Component const& component
-          , Iterator& first, Iterator const& last
-          , Context& context, Skipper const& skipper
-          , Attribute&)
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper, Attribute& attr) const
         {
-            typedef typename
-                result_of::subject<Component>::type::director
-            director;
-
-            qi::skip(first, last, skipper);
-            return director::parse(
-                spirit::subject(component), first, last, context, skipper, unused);
+            return subject.parse(first, last, context, skipper, attr);
         }
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        info what(Context& context) const
         {
-            std::string result = "omit[";
+            return info("omit", subject.what(context));
 
-            typedef typename
-                result_of::subject<Component>::type::director
-            director;
+        }
 
-            result += director::what(subject(component), ctx);
-            result += "]";
-            return result;
+        Subject subject;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Parser generators: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Subject, typename Modifiers>
+    struct make_directive<tag::omit, Subject, Modifiers>
+    {
+        typedef omit_directive<Subject> result_type;
+        result_type operator()(unused_type, Subject const& subject, unused_type) const
+        {
+            return result_type(subject);
         }
     };
 }}}

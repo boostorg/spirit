@@ -6,11 +6,10 @@
 #if !defined(BOOST_SPIRIT_KARMA_STRING_FEB_23_2007_0156PM)
 #define BOOST_SPIRIT_KARMA_STRING_FEB_23_2007_0156PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/karma/string/lit.hpp>
-#include <boost/spirit/home/karma/string/meta_grammar.hpp>
 
 #endif

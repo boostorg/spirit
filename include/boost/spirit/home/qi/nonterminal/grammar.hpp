@@ -1,78 +1,92 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_GRAMMAR_FEB_19_2007_0236PM)
-#define BOOST_SPIRIT_GRAMMAR_FEB_19_2007_0236PM
+#if !defined(BOOST_SPIRIT_GRAMMAR_FEBRUARY_19_2007_0236PM)
+#define BOOST_SPIRIT_GRAMMAR_FEBRUARY_19_2007_0236PM
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 #include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/qi/nonterminal/nonterminal.hpp>
-#include <boost/spirit/home/qi/nonterminal/grammar_fwd.hpp>
+#include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
-#include <boost/spirit/home/qi/nonterminal/nonterminal_director.hpp>
-#include <boost/fusion/include/at.hpp>
+#include <boost/spirit/home/qi/reference.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/type_traits/is_convertible.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
-    template <typename Iterator, typename T0 , typename T1 , typename T2>
+    template <
+        typename Iterator
+      , typename T1 = unused_type
+      , typename T2 = unused_type
+      , typename T3 = unused_type
+    >
     struct grammar
-      : nonterminal<
-            grammar<Iterator, T0, T1, T2>
-          , typename qi::rule<Iterator, T0, T1, T2>::sig_type
-          , typename qi::rule<Iterator, T0, T1, T2>::locals_type
-        >, noncopyable
+      : proto::extends<
+            typename proto::terminal<
+                reference<rule<Iterator, T1, T2, T3> const>
+            >::type
+          , grammar<Iterator, T1, T2, T3>
+        >
+      , parser<grammar<Iterator, T1, T2, T3> >
+      , noncopyable
     {
         typedef Iterator iterator_type;
-        typedef qi::rule<Iterator, T0, T1, T2> start_type;
+        typedef rule<Iterator, T1, T2, T3> start_type;
         typedef typename start_type::sig_type sig_type;
         typedef typename start_type::locals_type locals_type;
         typedef typename start_type::skipper_type skipper_type;
-        typedef grammar<Iterator, T0, T1, T2> base_type;
+        typedef grammar<Iterator, T1, T2, T3> base_type;
+        typedef reference<start_type const> reference_;
+        typedef typename proto::terminal<reference_>::type terminal;
 
-        grammar(start_type const& start, std::string const& name_ = std::string())
-          : start(start), name_(name_) {}
+        static size_t const params_size = start_type::params_size;
+
+        grammar(
+            start_type const& start
+          , std::string const& name_ = "unnamed-grammar")
+        : proto::extends<terminal, base_type>(terminal::make(start.alias()))
+        , name_(name_)
+        {}
 
         std::string name() const
         {
             return name_;
         }
 
-        void name(std::string const& name__)
+        void name(std::string const& str)
         {
-            name_ = name__;
+            name_ = str;
         }
 
-        start_type const& start;
+        template <typename Context, typename Skipper, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr) const
+        {
+            return this->proto_base().child0.parse(
+                first, last, context, skipper, attr);
+        }
+
+        template <typename Context>
+        info what(Context& context) const
+        {
+            return info(name_);
+        }
+
+        // bring in the operator() overloads
+        start_type const& get_parameterized_subject() const
+        { return this->proto_base().child0.ref.get(); }
+        typedef start_type parameterized_subject_type;
+        #include <boost/spirit/home/qi/nonterminal/detail/fcall.hpp>
+
         std::string name_;
 
-    private:
-
-        template <typename Iterator_, typename Context, typename Skipper>
-        bool parse(
-            Iterator_& first, Iterator_ const& last
-          , Context& context, Skipper const& skipper) const
-        {
-            return start.parse(first, last, context, skipper);
-        }
-
-        std::string what() const
-        {
-            if (name().empty())
-            {
-                return start.what();
-            }
-            else
-            {
-                return name();
-            }
-        }
-
-        friend struct nonterminal_director;
     };
 }}}
 

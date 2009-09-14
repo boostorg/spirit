@@ -1,21 +1,26 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(BOOST_SPIRIT_NUMERIC_UTILS_APR_17_2006_0830AM)
-#define BOOST_SPIRIT_NUMERIC_UTILS_APR_17_2006_0830AM
+#if !defined(BOOST_SPIRIT_NUMERIC_UTILS_APRIL_17_2006_0830AM)
+#define BOOST_SPIRIT_NUMERIC_UTILS_APRIL_17_2006_0830AM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/qi/numeric/detail/numeric_utils.hpp>
 #include <boost/assert.hpp>
 #include <boost/mpl/assert.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     //  Extract the prefix sign (- or +), return true if a '-' was found
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator>
     inline bool
     extract_sign(Iterator& first, Iterator const& last)
@@ -32,21 +37,24 @@ namespace boost { namespace spirit { namespace qi
         return false;
     }
 
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     // Low level unsigned integer parser
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits
       , bool Accumulate = false>
     struct extract_uint
     {
         // check template parameter 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 
         template <typename Iterator, typename Attribute>
         static bool call(Iterator& first, Iterator const& last, Attribute& attr)
         {
+            if (first == last)
+                return false;
+
             typedef detail::extract_int<
                 T
               , Radix
@@ -66,14 +74,14 @@ namespace boost { namespace spirit { namespace qi
         }
     };
 
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     // Low level signed integer parser
-    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     template <typename T, unsigned Radix, unsigned MinDigits, int MaxDigits>
     struct extract_int
     {
         // check template parameter 'Radix' for validity
-        BOOST_MPL_ASSERT_MSG(
+        BOOST_SPIRIT_ASSERT_MSG(
             Radix == 2 || Radix == 8 || Radix == 10 || Radix == 16,
             not_supported_radix, ());
 

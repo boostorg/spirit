@@ -6,12 +6,14 @@
 #if !defined(BOOST_SPIRIT_KARMA_FORMAT_MANIP_MAY_01_2007_1211PM)
 #define BOOST_SPIRIT_KARMA_FORMAT_MANIP_MAY_01_2007_1211PM
 
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #include <boost/spirit/home/karma/generate.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/karma/stream/detail/format_manip.hpp>
-
-#include <boost/mpl/assert.hpp>
-#include <boost/utility/enable_if.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma 
@@ -21,92 +23,95 @@ namespace boost { namespace spirit { namespace karma
     inline detail::format_manip<Expr> 
     format(Expr const& xpr)
     {
-        typedef spirit::traits::is_component<karma::domain, Expr> is_component;
-
-        // report invalid expression error as early as possible
-        BOOST_MPL_ASSERT_MSG(is_component::value,
-            xpr_is_not_convertible_to_a_generator, (Expr));
-
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit karma expression.
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
         return karma::detail::format_manip<Expr>(xpr, unused, unused);
     }
 
-    template <typename Expr, typename Parameter>
-    inline detail::format_manip<Expr, Parameter> 
-    format(Expr const& xpr, Parameter const& p)
+    template <typename Expr, typename Attribute>
+    inline detail::format_manip<Expr, mpl::false_, unused_type, Attribute> 
+    format(Expr const& xpr, Attribute const& attr)
     {
-        typedef spirit::traits::is_component<karma::domain, Expr> is_component;
+        using karma::detail::format_manip;
 
-        // report invalid expression error as early as possible
-        BOOST_MPL_ASSERT_MSG(is_component::value,
-            xpr_is_not_convertible_to_a_generator, (Expr, Parameter));
-
-        return karma::detail::format_manip<Expr, Parameter>(xpr, p, unused);
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit karma expression.
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        return format_manip<Expr, mpl::false_, unused_type, Attribute>(
+            xpr, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Delimiter>
-    inline detail::format_manip<Expr, unused_type, Delimiter> 
-    format_delimited(Expr const& xpr, Delimiter const& d)
+    inline detail::format_manip<Expr, mpl::false_, Delimiter> 
+    format_delimited(Expr const& xpr, Delimiter const& d
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit = delimit_flag::dont_predelimit)
     {
-        typedef
-            spirit::traits::is_component<karma::domain, Expr>
-        expr_is_component;
-        typedef
-            spirit::traits::is_component<karma::domain, Delimiter>
-        delimiter_is_component;
+        using karma::detail::format_manip;
 
-        // report invalid expression errors as early as possible
-        BOOST_MPL_ASSERT_MSG(expr_is_component::value,
-            xpr_is_not_convertible_to_a_generator, (Expr, Delimiter));
-
-        BOOST_MPL_ASSERT_MSG(delimiter_is_component::value,
-            delimiter_is_not_convertible_to_a_generator, (Expr, Delimiter));
-
-        return karma::detail::format_manip<Expr, unused_type, Delimiter>(
-            xpr, unused, d);
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit karma expression.
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
+        return format_manip<Expr, mpl::false_, Delimiter>(
+            xpr, d, pre_delimit, unused);
     }
 
-    template <typename Expr, typename Parameter, typename Delimiter>
-    inline detail::format_manip<Expr, Parameter, Delimiter> 
-    format_delimited(Expr const& xpr, Parameter const& p, Delimiter const& d)
+    template <typename Expr, typename Delimiter, typename Attribute>
+    inline detail::format_manip<Expr, mpl::false_, Delimiter, Attribute> 
+    format_delimited(Expr const& xpr, Delimiter const& d
+      , BOOST_SCOPED_ENUM(delimit_flag) pre_delimit, Attribute const& attr)
     {
-        typedef
-            spirit::traits::is_component<karma::domain, Expr>
-        expr_is_component;
-        typedef
-            spirit::traits::is_component<karma::domain, Delimiter>
-        delimiter_is_component;
+        using karma::detail::format_manip;
 
-        // report invalid expression errors as early as possible
-        BOOST_MPL_ASSERT_MSG(expr_is_component::value,
-            xpr_is_not_convertible_to_a_generator, 
-            (Expr, Parameter, Delimiter));
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit karma expression.
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
+        return format_manip<Expr, mpl::false_, Delimiter, Attribute>(
+            xpr, d, pre_delimit, attr);
+    }
 
-        BOOST_MPL_ASSERT_MSG(delimiter_is_component::value,
-            delimiter_is_not_convertible_to_a_generator, 
-            (Expr, Parameter, Delimiter));
+    template <typename Expr, typename Delimiter, typename Attribute>
+    inline detail::format_manip<Expr, mpl::false_, Delimiter, Attribute> 
+    format_delimited(Expr const& xpr, Delimiter const& d, Attribute const& attr)
+    {
+        using karma::detail::format_manip;
 
-        return karma::detail::format_manip<Expr, Parameter, Delimiter>(
-            xpr, p, d);
+        // Report invalid expression error as early as possible.
+        // If you got an error_invalid_expression error message here,
+        // then the expression (expr) is not a valid spirit karma expression.
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
+        BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Delimiter);
+        return format_manip<Expr, mpl::false_, Delimiter, Attribute>(
+            xpr, d, delimit_flag::dont_predelimit, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template<typename Char, typename Traits, typename Expr> 
-    inline typename 
-        enable_if<
-            spirit::traits::is_component<karma::domain, Expr>,
-            std::basic_ostream<Char, Traits> & 
-        >::type
-    operator<< (std::basic_ostream<Char, Traits> &os, Expr const& xpr)
+    template<typename Char, typename Traits, typename Derived> 
+    inline std::basic_ostream<Char, Traits> & 
+    operator<< (std::basic_ostream<Char, Traits> &os, generator<Derived> const& g)
     {
-        karma::detail::ostream_iterator<Char, Char, Traits> sink(os);
-        if (!karma::generate (sink, xpr))
+        typedef traits::properties_of<
+            typename result_of::compile<karma::domain, Derived>::type
+        > properties;
+        typedef karma::ostream_iterator<Char, Char, Traits> outiter_type;
+
+        outiter_type target_sink(os);
+        karma::detail::output_iterator<outiter_type, properties> sink(target_sink);
+
+        if (!g.derived().generate(sink, unused, unused, unused))
         {
             os.setstate(std::ios_base::failbit);
         }
         return os;
     }
-    
+
 }}}
 
 #endif 

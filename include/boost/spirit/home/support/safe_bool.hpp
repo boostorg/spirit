@@ -1,5 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2003 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
+    Copyright (c) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,50 +8,23 @@
 #if !defined(BOOST_SPIRIT_SAFE_BOOL_HPP)
 #define BOOST_SPIRIT_SAFE_BOOL_HPP
 
-#include <boost/config.hpp>
-#include <boost/detail/workaround.hpp>
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 namespace boost { namespace spirit
 {
-    namespace detail
+    template<class Tag>
+    class safe_bool 
     {
-        template <typename T>
-        struct no_base {};
-
-        template <typename T>
-        struct safe_bool_impl
-        {
-#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3003))
-            void stub(T*) {}
-            typedef void (safe_bool_impl::*type)(T*);
-#else
-            typedef T* TP; // workaround to make parsing easier
-            TP stub;
-            typedef TP safe_bool_impl::*type;
-#endif
-        };
-    }
-
-    template <typename Derived, typename Base = detail::no_base<Derived> >
-    struct safe_bool : Base
-    {
-    private:
-        typedef detail::safe_bool_impl<Derived> impl_type;
-        typedef typename impl_type::type bool_type;
-
     public:
-        operator bool_type() const
-        {
-            return static_cast<const Derived*>(this)->operator_bool() ?
-                &impl_type::stub : 0;
-        }
+        typedef void (safe_bool::*result_type)();
+        result_type operator()(bool b) { return b ? &safe_bool::true_ : 0; }
 
-        operator bool_type()
-        {
-            return static_cast<Derived*>(this)->operator_bool() ?
-                &impl_type::stub : 0;
-        }
+    private:
+        void true_() {}
     };
+
 }}
 
 #endif

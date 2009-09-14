@@ -1,11 +1,15 @@
 /*=============================================================================
-    Copyright (c) 2001-2007 Joel de Guzman
+    Copyright (c) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
 #if !defined(BOOST_SPIRIT_STRING_PARSE_APR_18_2006_1125PM)
 #define BOOST_SPIRIT_STRING_PARSE_APR_18_2006_1125PM
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 

@@ -1,5 +1,5 @@
-//  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001 Daniel C. Nuffer
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,7 +12,7 @@
 #include <boost/assert.hpp>
 #include <cstdlib>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     ///////////////////////////////////////////////////////////////////////////
     //  class fixed_size_queue
@@ -38,12 +38,10 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             typedef detail::fixed_size_queue<Value, N> queue_type;
 
         protected:
-            unique()
-            {}
+            unique() {}
 
             unique(unique const& x)
-              : queuePosition(x.queuePosition)
-            {}
+              : queuePosition(x.queuePosition) {}
 
             void swap(unique& x)
             {
@@ -57,7 +55,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             static typename MultiPass::reference 
             dereference(MultiPass const& mp)
             {
-                if (mp.queuePosition == mp.shared->queuedElements.end())
+                if (mp.queuePosition == mp.shared()->queuedElements.end())
                 {
                     return MultiPass::get_input(mp);
                 }
@@ -73,13 +71,13 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             template <typename MultiPass>
             static void increment(MultiPass& mp)
             {
-                if (mp.queuePosition == mp.shared->queuedElements.end())
+                if (mp.queuePosition == mp.shared()->queuedElements.end())
                 {
                     // don't let the queue get larger than N
-                    if (mp.shared->queuedElements.size() >= N)
-                        mp.shared->queuedElements.pop_front();
+                    if (mp.shared()->queuedElements.size() >= N)
+                        mp.shared()->queuedElements.pop_front();
 
-                    mp.shared->queuedElements.push_back(MultiPass::get_input(mp));
+                    mp.shared()->queuedElements.push_back(MultiPass::get_input(mp));
                     MultiPass::advance_input(mp);
                 }
                 ++mp.queuePosition;
@@ -91,7 +89,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
             template <typename MultiPass>
             static bool is_eof(MultiPass const& mp)
             {
-                return mp.queuePosition == mp.shared->queuedElements.end() &&
+                return mp.queuePosition == mp.shared()->queuedElements.end() &&
                        MultiPass::input_at_eof(mp);
             }
 

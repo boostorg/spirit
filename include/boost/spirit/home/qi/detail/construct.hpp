@@ -1,17 +1,19 @@
-//  Copyright (c) 2001-2009 Hartmut Kaiser
-//
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+/*=============================================================================
+    Copyright (c) 2001-2009 Hartmut Kaiser
+    http://spirit.sourceforge.net/
 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+=============================================================================*/
 #if !defined(BOOST_SPIRIT_CONSTRUCT_MAR_24_2007_0629PM)
 #define BOOST_SPIRIT_CONSTRUCT_MAR_24_2007_0629PM
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1020)
-#pragma once      // MS compatible compilers support #pragma once
+#if defined(_MSC_VER)
+#pragma once
 #endif
 
 #include <boost/spirit/home/qi/parse.hpp>
-#include <boost/spirit/home/qi/numeric.hpp>
+#include <boost/spirit/home/support/common_terminals.hpp>
 
 namespace boost { namespace spirit { namespace qi { namespace detail
 {
@@ -42,7 +44,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator const& last)
         {
             Iterator first_ = first;
-            parse(first_, last, ushort, attr);
+            parse(first_, last, ushort_, attr);
         }
 #else
         // is wchar_t is not an intrinsic type, treat wchar_t only
@@ -91,7 +93,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             Iterator const& last)
         {
             Iterator first_ = first;
-            parse(first_, last, ulong, attr);
+            parse(first_, last, ulong_, attr);
         }
 
 #ifdef BOOST_HAS_LONG_LONG
@@ -138,7 +140,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             parse(first_, last, long_double, attr);
         }
     }
-    
+
 }}}}
 
 #endif

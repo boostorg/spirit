@@ -1,5 +1,5 @@
-//  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001 Daniel C. Nuffer
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -7,6 +7,7 @@
 #if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_1122AM)
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_1122AM
 
+#include <boost/config.hpp>
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/iterator.hpp>
 #include <boost/mpl/bool.hpp>
@@ -24,7 +25,7 @@ namespace boost { namespace spirit { namespace detail
         using boost::spirit::swap;
         swap(t1, t2);
     }
-    
+
 #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
     ///////////////////////////////////////////////////////////////////////////
     //  Meta-function to generate a std::iterator<> base class for multi_pass. 
@@ -40,11 +41,11 @@ namespace boost { namespace spirit { namespace detail
         typedef typename InputPolicy::BOOST_NESTED_TEMPLATE unique<T> input_type;
 
         typedef boost::iterator <
-            std::forward_iterator_tag,
-            typename input_type::value_type,
-            typename input_type::difference_type,
-            typename input_type::pointer,
-            typename input_type::reference
+            std::forward_iterator_tag
+          , typename input_type::value_type
+          , typename input_type::difference_type
+          , typename input_type::pointer
+          , typename input_type::reference
         > type;
     };
 #endif
@@ -56,15 +57,15 @@ namespace boost { namespace spirit { namespace detail
     struct default_input_policy
     {
         default_input_policy() {}
-        
+
         template <typename Functor>
         default_input_policy(Functor const&) {}
-        
+
         template <typename MultiPass>
         static void destroy(MultiPass&) {}
-        
+
         void swap(default_input_policy&) {}
-        
+
         template <typename MultiPass, typename TokenType>
         static TokenType& advance_input(MultiPass& mp, TokenType& curtok);
 
@@ -74,7 +75,7 @@ namespace boost { namespace spirit { namespace detail
         template <typename MultiPass, typename TokenType>
         static bool input_is_valid(MultiPass& mp, TokenType& curtok);
     };
-    
+
     struct default_ownership_policy
     {
         template <typename MultiPass>
@@ -87,11 +88,11 @@ namespace boost { namespace spirit { namespace detail
 
         template <typename MultiPass>
         static bool release(MultiPass& mp);
-        
+
         template <typename MultiPass>
         static bool is_unique(MultiPass const& mp);
     };
-    
+
     struct default_storage_policy
     {
         template <typename MultiPass>
@@ -101,10 +102,10 @@ namespace boost { namespace spirit { namespace detail
 
         template <typename MultiPass>
         static typename MultiPass::reference dereference(MultiPass const& mp);
-        
+
         template <typename MultiPass>
         static void increment(MultiPass&) {}
-        
+
         template <typename MultiPass>
         static void clear_queue(MultiPass&) {}
 
@@ -117,7 +118,7 @@ namespace boost { namespace spirit { namespace detail
         template <typename MultiPass>
         static bool less_than(MultiPass const& mp, MultiPass const& x);
     };
-    
+
     struct default_checking_policy
     {
         template <typename MultiPass>
@@ -131,7 +132,7 @@ namespace boost { namespace spirit { namespace detail
         template <typename MultiPass>
         static void clear_queue(MultiPass&) {}
     };
-    
+
 }}}
 
 #endif

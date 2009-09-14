@@ -1,10 +1,14 @@
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001-2009, Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #if !defined(BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_0201AM)
 #define BOOST_SPIRIT_ITERATOR_MULTI_PASS_MAR_16_2007_0201AM
+
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
 //  Include everything needed for the default configuration of multi_pass
 //  Ownership policies

@@ -1,5 +1,5 @@
-//  Copyright (c) 2001, Daniel C. Nuffer
-//  Copyright (c) 2001-2008, Hartmut Kaiser
+//  Copyright (c) 2001 Daniel C. Nuffer
+//  Copyright (c) 2001-2009 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -10,7 +10,7 @@
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 
-namespace boost { namespace spirit { namespace multi_pass_policies
+namespace boost { namespace spirit { namespace iterator_policies
 {
     ///////////////////////////////////////////////////////////////////////////
     //  class no_check
@@ -35,8 +35,7 @@ namespace boost { namespace spirit { namespace multi_pass_policies
         };
 
         ///////////////////////////////////////////////////////////////////////
-        struct shared 
-        {};
+        struct shared {};
     };
 
 }}}

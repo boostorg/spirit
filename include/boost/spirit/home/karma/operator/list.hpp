@@ -1,4 +1,4 @@
-//  Copyright (c) 2001-2007 Joel de Guzman
+//  Copyright (c) 2001-2009 Joel de Guzman
 //  Copyright (c) 2001-2009 Hartmut Kaiser
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -7,89 +7,100 @@
 #if !defined(SPIRIT_KARMA_LIST_MAY_01_2007_0229PM)
 #define SPIRIT_KARMA_LIST_MAY_01_2007_0229PM
 
-#include <boost/spirit/home/support/component.hpp>
-#include <boost/spirit/home/support/detail/container.hpp>
-#include <boost/spirit/home/support/unused.hpp>
-#include <boost/spirit/home/support/attribute_transform.hpp>
+#if defined(_MSC_VER)
+#pragma once
+#endif
 
-#include <vector>
+#include <boost/spirit/home/karma/domain.hpp>
+#include <boost/spirit/home/karma/generator.hpp>
+#include <boost/spirit/home/karma/meta_compiler.hpp>
+#include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/container.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
+
+namespace boost { namespace spirit
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+    template <>
+    struct use_operator<karma::domain, proto::tag::modulus> // enables g % d
+      : mpl::true_ {};
+
+}}
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    struct list
+    template <typename Left, typename Right>
+    struct list : binary_generator<list<Left, Right> >
     {
-        template <typename T>
-        struct build_attribute_container
+        typedef Left left_type;
+        typedef Right right_type;
+
+        typedef mpl::int_<
+            left_type::properties::value | right_type::properties::value
+        > properties;
+
+        // Build a std::vector from the LHS's attribute. Note
+        // that build_std_vector may return unused_type if the
+        // subject's attribute is an unused_type.
+        template <typename Context, typename Iterator>
+        struct attribute
+          : traits::build_std_vector<
+                typename traits::attribute_of<Left, Context, Iterator>::type
+            >
+        {};
+
+        list(Left const& left, Right const& right)
+          : left(left), right(right) {}
+
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Attribute>
+        bool generate(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Attribute const& attr) const
         {
-            typedef std::vector<T> type;
-        };
+            typedef typename traits::result_of::iterator<
+                typename add_const<Attribute>::type
+            >::type iterator_type;
 
-        template <typename Component, typename Context, typename Iterator>
-        struct attribute :
-            build_container<list, Component, Iterator, Context>
-        {
-        };
+            iterator_type it = traits::begin(attr);
+            iterator_type end = traits::end(attr);
 
-        template <typename Component, typename OutputIterator,
-            typename Context, typename Delimiter, typename Parameter>
-        static bool
-        generate(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Parameter const& param)
-        {
-            typedef typename
-                spirit::result_of::left<Component>::type::director
-            ldirector;
-
-            typedef typename
-                spirit::result_of::right<Component>::type::director
-            rdirector;
-
-            typedef typename
-                container::result_of::iterator<Parameter const>::type
-            iterator_type;
-
-            iterator_type it = container::begin(param);
-            iterator_type end = container::end(param);
-
-            bool result = !container::compare(it, end);
-            if (result && ldirector::generate(
-                  spirit::left(component), sink, ctx, d, container::deref(it)))
+            bool result = !traits::compare(it, end);
+            if (result && left.generate(sink, ctx, d, traits::deref(it)))
             {
-                for (container::next(it); result && !container::compare(it, end);
-                     container::next(it))
+                for (traits::next(it); result && !traits::compare(it, end);
+                     traits::next(it))
                 {
-                    result =
-                        rdirector::generate(
-                            spirit::right(component), sink, ctx, d, unused) &&
-                        ldirector::generate(
-                            spirit::left(component), sink, ctx, d, container::deref(it));
+                    result = right.generate(sink, ctx, d, unused) &&
+                             left.generate(sink, ctx, d, traits::deref(it));
                 }
                 return result;
             }
             return false;
         }
 
-        template <typename Component, typename Context>
-        static std::string what(Component const& component, Context const& ctx)
+        template <typename Context>
+        info what(Context& context) const
         {
-            std::string result = "list[";
-
-            typedef typename
-                spirit::result_of::left<Component>::type::director
-            ldirector;
-
-            typedef typename
-                spirit::result_of::right<Component>::type::director
-            rdirector;
-
-            result += ldirector::what(spirit::left(component), ctx);
-            result += ", ";
-            result += rdirector::what(spirit::right(component), ctx);
-            result += "]";
-            return result;
+            return info("list",
+                std::make_pair(left.what(context), right.what(context)));
         }
+
+        Left left;
+        Right right;
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Generator generators: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Elements, typename Modifiers>
+    struct make_composite<proto::tag::modulus, Elements, Modifiers>
+      : make_binary_composite<Elements, list>
+    {};
 
 }}}
 
