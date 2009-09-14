@@ -1,0 +1,254 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Sequential Or (a || b)</title>
+<link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<link rel="home" href="../../../../index.html" title="Spirit 2.1">
+<link rel="up" href="../operator.html" title="Operator">
+<link rel="prev" href="sequence.html" title="Sequence (a &gt;&gt; b)">
+<link rel="next" href="../string.html" title="String">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sequence.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../string.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+<div class="section" title="Sequential Or (a || b)">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.operator.sequential_or"></a><a class="link" href="sequential_or.html" title="Sequential Or (a || b)"> Sequential
+          Or (<code class="computeroutput"><span class="identifier">a</span> <span class="special">||</span>
+          <span class="identifier">b</span></code>)</a>
+</h5></div></div></div>
+<a name="spirit.qi.reference.operator.sequential_or.description"></a><h6>
+<a name="id702379"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.description">Description</a>
+          </h6>
+<p>
+            The sequential-or operator, <code class="computeroutput"><span class="identifier">a</span>
+            <span class="special">||</span> <span class="identifier">b</span></code>,
+            where the expression <code class="computeroutput"><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span></code>
+            reads as match <code class="computeroutput"><span class="identifier">a</span></code> or
+            <code class="computeroutput"><span class="identifier">b</span></code> and in sequence. That
+            is, if both <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code> match, it must be in sequence; this
+            is equivalent to <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
+            <span class="special">-</span><span class="identifier">b</span>
+            <span class="special">|</span> <span class="identifier">b</span></code>:
+          </p>
+<pre class="programlisting"><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span> <span class="special">||</span> <span class="special">...</span>
+</pre>
+<a name="spirit.qi.reference.operator.sequential_or.header"></a><h6>
+<a name="id702516"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.header">Header</a>
+          </h6>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/sequential_or.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_sequential_or</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+          </p>
+<a name="spirit.qi.reference.operator.sequential_or.model_of"></a><h6>
+<a name="id702590"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.model_of">Model
+            of</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist" title="Notation">
+<p class="title"><b>Notation</b></p>
+<dl>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
+            <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
+<dd><p>
+                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.qi.reference.operator.sequential_or.expression_semantics"></a><h6>
+<a name="id702668"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<p>
+            Semantics of an expression is defined only where it differs from, or
+            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Semantics
+                  </p>
+                  </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">||</span>
+                    <span class="identifier">b</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Match <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code> in sequence. equivalent to
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
+                    <span class="special">-</span><span class="identifier">b</span>
+                    <span class="special">|</span> <span class="identifier">b</span></code>
+                  </p>
+                  </td>
+</tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.operator.sequential_or.attributes"></a><h6>
+<a name="id702809"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.attributes">Attributes</a>
+          </h6>
+<p>
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            Attribute Notation</a>.
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Attribute
+                  </p>
+                  </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">||</span>
+                    <span class="identifier">b</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
+
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">||</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></pre>
+<p>
+                  </p>
+                  </td>
+</tr></tbody>
+</table></div>
+<a name="spirit.qi.reference.operator.sequential_or.complexity"></a><h6>
+<a name="id703490"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.complexity">Complexity</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                The overall complexity of the sequential-or parser is defined by
+                the sum of the complexities of its elements. The complexity of the
+                sequential-or itself is O(N), where N is the number of elements in
+                the sequence.
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<a name="spirit.qi.reference.operator.sequential_or.example"></a><h6>
+<a name="id703514"></a>
+            <a class="link" href="sequential_or.html#spirit.qi.reference.operator.sequential_or.example">Example</a>
+          </h6>
+<p>
+            Some using declarations:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            </p>
+<p>
+              Correctly parsing a number with optional fractional digits:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123.456"</span><span class="special">,</span> <span class="identifier">int_</span> <span class="special">||</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">));</span>  <span class="comment">// full
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">int_</span> <span class="special">||</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">));</span>      <span class="comment">// just the whole number
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">".456"</span><span class="special">,</span> <span class="identifier">int_</span> <span class="special">||</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">));</span>     <span class="comment">// just the fraction</span></pre>
+<p>
+            </p>
+<p>
+            </p>
+<p>
+              A naive but incorrect solution would try to do this using optionals
+              (e.g.):
+            </p>
+<p>
+            
+</p>
+<pre class="programlisting"><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span>  <span class="comment">// will not match ".456"
+</span><span class="special">-</span><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="special">(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span>  <span class="comment">// will not match "123"
+</span><span class="special">-</span><span class="identifier">int_</span> <span class="special">&gt;&gt;</span> <span class="special">-(</span><span class="char">'.'</span> <span class="special">&gt;&gt;</span> <span class="identifier">int_</span><span class="special">)</span> <span class="comment">// will match empty strings! Ooops.
+</span></pre>
+<p>
+          </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright © 2001-2009 Joel
+      de Guzman, Hartmut Kaiser<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sequence.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../string.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
