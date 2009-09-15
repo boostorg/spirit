@@ -28,7 +28,7 @@
           Generators (<code class="computeroutput"><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">lit</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.char.char_generator.description"></a><h6>
-<a name="id763484"></a>
+<a name="id796273"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.description">Description</a>
           </h6>
 <p>
@@ -45,7 +45,7 @@
             There are various forms of <code class="computeroutput"><span class="identifier">char_</span></code>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.char_"></a><h6>
-<a name="id763534"></a>
+<a name="id796324"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char_">char_</a>
           </h6>
 <p>
@@ -56,7 +56,7 @@
 <pre class="programlisting"><span class="identifier">char_</span>               <span class="comment">// emits any character as supplied by the attribute
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.char__ch_"></a><h6>
-<a name="id763575"></a>
+<a name="id796365"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__ch_">char_(ch)</a>
           </h6>
 <p>
@@ -68,7 +68,7 @@
 </span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// emits x (a char)
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.char__first__last_"></a><h6>
-<a name="id763666"></a>
+<a name="id796456"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__first__last_">char_(first,
             last)</a>
           </h6>
@@ -120,7 +120,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.char__def_"></a><h6>
-<a name="id763849"></a>
+<a name="id796638"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__def_">char_(def)</a>
           </h6>
 <p>
@@ -140,7 +140,7 @@
             by the attribute.
           </p>
 <a name="spirit.karma.reference.char.char_generator.lit_ch_"></a><h6>
-<a name="id765072"></a>
+<a name="id797923"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.lit_ch_">lit(ch)</a>
           </h6>
 <p>
@@ -180,7 +180,7 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span>      <span class="comment">// c is a char
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.header"></a><h6>
-<a name="id765249"></a>
+<a name="id798101"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char.hpp&gt;
@@ -190,7 +190,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.namespace"></a><h6>
-<a name="id765324"></a>
+<a name="id798175"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -220,7 +220,7 @@
             Encoding Namespace</a>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.model_of"></a><h6>
-<a name="id765442"></a>
+<a name="id798294"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.model_of">Model
             of</a>
           </h6>
@@ -267,7 +267,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_generator.expression_semantics"></a><h6>
-<a name="id765596"></a>
+<a name="id798448"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -516,7 +516,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.attributes"></a><h6>
-<a name="id766383"></a>
+<a name="id799235"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -661,8 +661,21 @@
 </tr>
 </tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Ch</span></code>
+              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Ch</span></code> and emit the value stored in the
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+              Otherwise the generators will fail.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.char.char_generator.complexity"></a><h6>
-<a name="id766936"></a>
+<a name="id799873"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -691,7 +704,7 @@
             set, where N is the number of characters in the character set.
           </p>
 <a name="spirit.karma.reference.char.char_generator.example"></a><h6>
-<a name="id767120"></a>
+<a name="id800286"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.example">Example</a>
           </h6>
 <p>

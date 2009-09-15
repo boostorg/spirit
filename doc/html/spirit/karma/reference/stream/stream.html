@@ -28,7 +28,7 @@
           etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.stream.stream.description"></a><h6>
-<a name="id796761"></a>
+<a name="id830114"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.description">Description</a>
           </h6>
 <p>
@@ -44,7 +44,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;,</span> <span class="identifier">A</span> <span class="keyword">const</span><span class="special">&amp;);</span>
 </pre>
 <a name="spirit.karma.reference.stream.stream.header"></a><h6>
-<a name="id796870"></a>
+<a name="id830223"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/stream.hpp&gt;
@@ -54,7 +54,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.stream.stream.namespace"></a><h6>
-<a name="id796945"></a>
+<a name="id830297"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -80,14 +80,14 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.synopsis"></a><h6>
-<a name="id797062"></a>
+<a name="id830415"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Char</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">stream_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.stream.stream.template_parameters"></a><h6>
-<a name="id797116"></a>
+<a name="id830469"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.template_parameters">Template
             parameters</a>
           </h6>
@@ -135,7 +135,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.model_of"></a><h6>
-<a name="id797209"></a>
+<a name="id830561"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -161,7 +161,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.stream.stream.expression_semantics"></a><h6>
-<a name="id797299"></a>
+<a name="id830651"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -331,7 +331,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.additional_requirements"></a><h6>
-<a name="id797797"></a>
+<a name="id831150"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -374,7 +374,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.stream.stream.attributes"></a><h6>
-<a name="id798019"></a>
+<a name="id831367"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -485,8 +485,21 @@
               performance and a smaller footprint if compared to <a href="../../../../../../../../libs/any/index.html" target="_top">Boost.Any</a>.
             </p></td></tr>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Attr</span></code>
+              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Attr</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Attr</span></code> and emit the value stored in
+              the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+              Otherwise the generators will fail.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.stream.stream.complexity"></a><h6>
-<a name="id798331"></a>
+<a name="id831764"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -499,7 +512,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.stream.stream.example"></a><h6>
-<a name="id798355"></a>
+<a name="id831788"></a>
             <a class="link" href="stream.html#spirit.karma.reference.stream.stream.example">Example</a>
           </h6>
 <p>

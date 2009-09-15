@@ -364,7 +364,7 @@ __karma_not_predicate__, it succeeds only if the `double_(0.0)` generator
 `double_(0.0)` generator succeeds only if the value of its attribute is equal 
 to its immediate parameter (i.e. in this case `0.0`). Third, the 
 not predicate does not emit any output (regardless whether it succeeds or 
-fails), discarding any possibble output emitted by the `double_(0.0)`.
+fails), discarding any possibly emitted output from the `double_(0.0)`.
 
 As we pass the imaginery part of the complex number as the attribute value for 
 the `!double_(0.0)`, the overall first alternative will be chosen only if 
@@ -379,6 +379,12 @@ last element of the attribute (remember, we pass the real part as the second
 attribute element). We achieve this by using the `omit[]` directive:
 
     omit[double_] << double_ << omit[double_]
+
+The overall attribute of this expression is `tuple<double, double, double>`, 
+but the `omit[]` 'eats up' the first and the last element of that. 
+The output emitted by this expression consist of a single generated double 
+representing the second element of the tuple, i.e. the real part of our complex 
+number.
 
 [important  Generally, it is preferrable to use generator constructs not 
             requiring semantic actions. The reason is that semantic actions 

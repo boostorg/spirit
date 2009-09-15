@@ -67,7 +67,7 @@
           Let's try to cover some basic library features first.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h6>
-<a name="id734249"></a>
+<a name="id765882"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
           Numeric Generators Fail</a>
         </h6>
@@ -100,7 +100,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h6>
-<a name="id734374"></a>
+<a name="id766006"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
           - The Conditionals for Output Generators</a>
         </h6>
@@ -135,7 +135,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h6>
-<a name="id734450"></a>
+<a name="id766083"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
           Supplied Attributes</a>
         </h6>
@@ -149,7 +149,7 @@
           generator but it does not emit any output.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h6>
-<a name="id734491"></a>
+<a name="id766124"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
           everything together</a>
         </h6>
@@ -177,7 +177,7 @@
           generator succeeds only if the value of its attribute is equal to its immediate
           parameter (i.e. in this case <code class="computeroutput"><span class="number">0.0</span></code>).
           Third, the not predicate does not emit any output (regardless whether it
-          succeeds or fails), discarding any possibble output emitted by the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>.
+          succeeds or fails), discarding any possibly emitted output from the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>.
         </p>
 <p>
           As we pass the imaginery part of the complex number as the attribute value
@@ -196,6 +196,12 @@
         </p>
 <pre class="programlisting"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span>
 </pre>
+<p>
+          The overall attribute of this expression is <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></code>, but the <code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code> 'eats up' the first and the last element
+          of that. The output emitted by this expression consist of a single generated
+          double representing the second element of the tuple, i.e. the real part
+          of our complex number.
+        </p>
 <div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>

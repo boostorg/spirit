@@ -276,6 +276,12 @@ hex(num)``]             [`unsigned int`, attribute is optional, if it is
                          succeeds only if both are equal, failing otherwise.]]
 ]
 
+[note  In addition to their usual attribute of type `Num` all listed generators 
+       accept an instance of a `boost::optional<Num>` as well. If the 
+       `boost::optional<>` is initialized (holds a value) the generators behave 
+       as if their attribute was an instance of `Num` and emit the value stored
+       in the `boost::optional<>`. Otherwise the generators will fail.]
+
 [heading Complexity]
 
 [:O(N), where `N` is the number of digits needed to represent the generated 
@@ -524,6 +530,12 @@ If `boost::is_integral<Num>::value` is `false` the type `Num` must have defined:
                          succeeds only if both are equal, failing otherwise.]]
 ]
 
+[note  In addition to their usual attribute of type `Num` all listed generators 
+       accept an instance of a `boost::optional<Num>` as well. If the 
+       `boost::optional<>` is initialized (holds a value) the generators behave 
+       as if their attribute was an instance of `Num` and emit the value stored
+       in the `boost::optional<>`. Otherwise the generators will fail.]
+
 [heading Complexity]
 
 [:O(N), where `N` is the number of digits needed to represent the generated 
@@ -728,6 +740,11 @@ the type `Num` must have defined:
                          succeeds only if both are equal, failing otherwise.]]
 ]
 
+[note  In addition to their usual attribute of type `Num` all listed generators 
+       accept an instance of a `boost::optional<Num>` as well. If the 
+       `boost::optional<>` is initialized (holds a value) the generators behave 
+       as if their attribute was an instance of `Num` and emit the value stored
+       in the `boost::optional<>`. Otherwise the generators will fail.]
 
 [heading Real Number Formatting Policies]
 

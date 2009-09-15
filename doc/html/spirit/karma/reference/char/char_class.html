@@ -29,7 +29,7 @@
           <code class="computeroutput"><span class="identifier">digit</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.char.char_class.description"></a><h6>
-<a name="id769002"></a>
+<a name="id801782"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.description">Description</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             such as forcing lower or upper case.
           </p>
 <a name="spirit.karma.reference.char.char_class.header"></a><h6>
-<a name="id769053"></a>
+<a name="id801832"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char_class.hpp&gt;
@@ -51,7 +51,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.char.char_class.namespace"></a><h6>
-<a name="id769127"></a>
+<a name="id801907"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -132,7 +132,7 @@
             and will not compile if no attribute is associated.
           </p>
 <a name="spirit.karma.reference.char.char_class.model_of"></a><h6>
-<a name="id769493"></a>
+<a name="id802273"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.model_of">Model
             of</a>
           </h6>
@@ -156,7 +156,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_class.expression_semantics"></a><h6>
-<a name="id769562"></a>
+<a name="id802341"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -407,7 +407,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_class.attributes"></a><h6>
-<a name="id772141"></a>
+<a name="id805065"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -421,8 +421,21 @@
 <p>
             </p>
 </blockquote></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Ch</span></code>
+              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Ch</span></code> and emit the value stored in the
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+              Otherwise the generators will fail.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.char.char_class.complexity"></a><h6>
-<a name="id772180"></a>
+<a name="id805190"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -439,7 +452,7 @@
             per invocation.
           </p>
 <a name="spirit.karma.reference.char.char_class.example"></a><h6>
-<a name="id772208"></a>
+<a name="id805217"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.example">Example</a>
           </h6>
 <p>

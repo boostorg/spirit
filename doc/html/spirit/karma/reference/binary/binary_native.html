@@ -28,7 +28,7 @@
           Native Endianness Generators</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.binary.binary_native.description"></a><h6>
-<a name="id799980"></a>
+<a name="id835125"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             (byte order) of the target architecture.
           </p>
 <a name="spirit.karma.reference.binary.binary_native.header"></a><h6>
-<a name="id799997"></a>
+<a name="id835142"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/binary.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.binary.binary_native.namespace"></a><h6>
-<a name="id800071"></a>
+<a name="id835216"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -99,7 +99,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_native.model_of"></a><h6>
-<a name="id801964"></a>
+<a name="id835467"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.model_of">Model
             of</a>
           </h6>
@@ -141,7 +141,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.binary.binary_native.expression_semantics"></a><h6>
-<a name="id802100"></a>
+<a name="id835603"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -288,7 +288,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_native.attributes"></a><h6>
-<a name="id802398"></a>
+<a name="id835900"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -411,8 +411,21 @@
 </tr>
 </tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Attr</span></code>
+              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Attr</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Attr</span></code> and emit the value stored in
+              the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+              Otherwise the generators will fail.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.binary.binary_native.complexity"></a><h6>
-<a name="id802766"></a>
+<a name="id836354"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -425,7 +438,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.binary.binary_native.example"></a><h6>
-<a name="id802790"></a>
+<a name="id836378"></a>
             <a class="link" href="binary_native.html#spirit.karma.reference.binary.binary_native.example">Example</a>
           </h6>
 <p>
