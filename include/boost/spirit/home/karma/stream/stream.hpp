@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/domain.hpp>

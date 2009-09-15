@@ -15,6 +15,7 @@
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/char.hpp>

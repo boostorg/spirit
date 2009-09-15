@@ -20,6 +20,7 @@
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/mpl/or.hpp>

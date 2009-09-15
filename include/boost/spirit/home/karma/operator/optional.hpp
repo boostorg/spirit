@@ -17,6 +17,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/optional.hpp>
 #include <boost/type_traits/is_convertible.hpp>
