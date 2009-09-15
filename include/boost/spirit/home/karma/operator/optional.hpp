@@ -35,51 +35,6 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
-    namespace detail
-    {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Attribute>
-        inline bool
-        optional_is_valid(boost::optional<Attribute> const& opt)
-        {
-            return opt;
-        }
-
-        template <typename Attribute>
-        inline bool
-        optional_is_valid(Attribute const& opt)
-        {
-            return true;
-        }
-
-        inline bool
-        optional_is_valid(unused_type)
-        {
-            return true;
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Attribute>
-        inline Attribute const&
-        optional_get(boost::optional<Attribute> const& opt)
-        {
-            return get(opt);
-        }
-
-        template <typename Attribute>
-        inline Attribute const&
-        optional_get(Attribute const& opt)
-        {
-            return opt;
-        }
-
-        inline unused_type
-        optional_get(unused_type)
-        {
-            return unused;
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     template <typename Subject>
     struct optional : unary_generator<optional<Subject> >
@@ -106,8 +61,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            if (detail::optional_is_valid(attr)) 
-                subject.generate(sink, ctx, d, detail::optional_get(attr));
+            if (traits::has_optional_value(attr)) 
+                subject.generate(sink, ctx, d, traits::optional_value(attr));
             return sink_is_good(sink);
         }
 
