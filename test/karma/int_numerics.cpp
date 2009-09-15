@@ -78,6 +78,18 @@ struct test_minmax
     // action tests
         BOOST_TEST(test(expected_maxval, gen[_1 = val(maxval)]));
         BOOST_TEST(test(expected_minval, gen[_1 = val(minval)]));
+
+    // optional tests
+        boost::optional<T> optmin, optmax(maxval);
+
+        BOOST_TEST(!test("", gen, optmin));
+        BOOST_TEST(!test("", gen(minval), optmin));
+
+        optmin = minval;
+        BOOST_TEST(test(expected_minval, gen, optmin));
+        BOOST_TEST(test(expected_maxval, gen, optmax));
+        BOOST_TEST(test(expected_minval, gen(minval), optmin));
+        BOOST_TEST(test(expected_maxval, gen(maxval), optmax));
     }
 };
 

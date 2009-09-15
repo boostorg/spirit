@@ -522,5 +522,16 @@ int main()
         BOOST_TEST(test("-2.2250738585072014e-308", 
             bordercase(-2.2250738585072014e-308)));     // -DBL_MIN
     }
+
+    {
+        boost::optional<double> v;
+        BOOST_TEST(!test("", double_, v));
+        BOOST_TEST(!test("", double_(1.0), v));
+
+        v = 1.0;
+        BOOST_TEST(test("1.0", double_, v));
+        BOOST_TEST(test("1.0", double_(1.0), v));
+    }
+
     return boost::report_errors();
 }

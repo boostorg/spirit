@@ -121,6 +121,15 @@ main()
         BOOST_TEST(test("[5, 5, 5]", '[' << (int_ % ", ") << ']' | "[]", v));
     }
 
+    {
+        boost::optional<int> v;
+        BOOST_TEST(test("error", int_ | "error" << omit[-int_], v));
+        BOOST_TEST(test("error", int_ | "error" << omit[int_], v));
+        v = 1;
+        BOOST_TEST(test("1", int_ | "error" << omit[-int_], v));
+        BOOST_TEST(test("1", int_ | "error" << omit[int_], v));
+    }
+
     return boost::report_errors();
 }
 

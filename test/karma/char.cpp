@@ -252,5 +252,34 @@ main()
         BOOST_TEST((!test(L"", wide::char_(val(L'y')), L'x')));
     }
 
+    {
+        namespace ascii = boost::spirit::ascii;
+        namespace wide = boost::spirit::standard_wide;
+
+        boost::optional<char> v;
+        boost::optional<wchar_t> w;
+
+        BOOST_TEST(!test("", ascii::char_, v));
+        BOOST_TEST(!test(L"", wide::char_, w));
+
+        BOOST_TEST(!test("", ascii::char_('x'), v));
+        BOOST_TEST(!test(L"", wide::char_(L'x'), w));
+    }
+
+    {
+        namespace ascii = boost::spirit::ascii;
+        namespace wide = boost::spirit::standard_wide;
+
+        boost::optional<char> v ('x');
+        boost::optional<wchar_t> w (L'x');
+
+        BOOST_TEST(test("x", ascii::char_, v));
+        BOOST_TEST(test(L"x", wide::char_, w));
+        BOOST_TEST(test("x", ascii::char_('x'), v));
+        BOOST_TEST(test(L"x", wide::char_(L'x'), w));
+        BOOST_TEST(!test("", ascii::char_('y'), v));
+        BOOST_TEST(!test(L"", wide::char_(L'y'), w));
+    }
+
     return boost::report_errors();
 }
