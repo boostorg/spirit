@@ -241,8 +241,12 @@ namespace boost { namespace spirit { namespace karma
         generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
-            return int_inserter<Radix, CharEncoding, Tag>::call(sink, attr) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            if (!traits::has_optional_value(attr))
+                return false;       // fail if it's an uninitialized optional
+
+            return int_inserter<Radix, CharEncoding, Tag>::
+                        call(sink, traits::optional_value(attr)) &&
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         // this int has no Attribute attached, it needs to have been
@@ -297,11 +301,13 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
-            if (n_ != attr)
+            if (!traits::has_optional_value(attr) || 
+                n_ != traits::optional_value(attr))
+            {
                 return false;
-
+            }
             return int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         // A uint(1U) without any associated attribute just emits its 
@@ -311,7 +317,7 @@ namespace boost { namespace spirit { namespace karma
           , unused_type) const
         {
             return int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         template <typename Context>

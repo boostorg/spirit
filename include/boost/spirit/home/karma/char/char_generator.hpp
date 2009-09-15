@@ -69,8 +69,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& context, Delimiter const& d
           , Attribute const& attr) const
         {
+            if (!traits::has_optional_value(attr))
+                return false;
+
             Char ch = Char();
-            if (!this->derived().test(attr, ch, context))
+            if (!this->derived().test(traits::optional_value(attr), ch, context))
                 return false;
 
             return karma::detail::generate_to(sink, ch, char_encoding(), tag()) &&

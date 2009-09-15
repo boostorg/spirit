@@ -126,9 +126,12 @@ namespace boost { namespace spirit { namespace karma
                 OutputIterator, Char, CharEncoding, Tag
             > sink_device;
 
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
-            ostr << attr << std::flush;
+            ostr << traits::optional_value(attr) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);   // always do post-delimiting
@@ -153,10 +156,13 @@ namespace boost { namespace spirit { namespace karma
                 output_iterator, Char, CharEncoding, Tag
             > sink_device;
 
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
             ostr.imbue(sink.get_ostream().getloc());
-            ostr << attr << std::flush;
+            ostr << traits::optional_value(attr) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);  // always do post-delimiting

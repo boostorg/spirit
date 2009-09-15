@@ -179,6 +179,17 @@ namespace boost { namespace spirit { namespace karma
       : primitive_generator<any_int_generator<T, CharEncoding, Tag, Radix
           , force_sign> >
     {
+    private:
+        template <typename OutputIterator, typename Attribute>
+        static bool insert_int(OutputIterator& sink, Attribute const& attr)
+        {
+            return sign_inserter::call(sink, detail::is_zero(attr)
+                      , detail::is_negative(attr), force_sign) &&
+                   int_inserter<Radix, CharEncoding, Tag>::call(sink
+                      , detail::absolute_value(attr));
+        }
+
+    public:
         template <typename Context, typename Unused>
         struct attribute
         {
@@ -200,11 +211,11 @@ namespace boost { namespace spirit { namespace karma
         generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
-            return sign_inserter::call(sink, detail::is_zero(attr)
-                      , detail::is_negative(attr), force_sign) &&
-                   int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(attr)) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            if (!traits::has_optional_value(attr))
+                return false;       // fail if it's an uninitialized optional
+
+            return insert_int(sink, traits::optional_value(attr)) &&
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         // this int has no Attribute attached, it needs to have been
@@ -235,6 +246,17 @@ namespace boost { namespace spirit { namespace karma
       : primitive_generator<literal_int_generator<T, CharEncoding, Tag, Radix
           , force_sign, no_attribute> >
     {
+    private:
+        template <typename OutputIterator, typename Attribute>
+        static bool insert_int(OutputIterator& sink, Attribute const& attr)
+        {
+            return sign_inserter::call(sink, detail::is_zero(attr)
+                      , detail::is_negative(attr), force_sign) &&
+                   int_inserter<Radix, CharEncoding, Tag>::call(sink
+                      , detail::absolute_value(attr));
+        }
+
+    public:
         template <typename Context, typename Unused>
         struct attribute
           : mpl::if_c<no_attribute, unused_type, T>
@@ -259,14 +281,12 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
-            if (n_ != attr)
+            if (!traits::has_optional_value(attr) || 
+                n_ != traits::optional_value(attr))
+            {
                 return false;
-
-            return sign_inserter::call(sink, detail::is_zero(n_)
-                      , detail::is_negative(n_), force_sign) &&
-                   int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(n_)) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            }
+            return insert_int(sink, n_) && delimit_out(sink, d);
         }
 
         // A int_(1) without any associated attribute just emits its 
@@ -275,11 +295,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , unused_type) const
         {
-            return sign_inserter::call(sink, detail::is_zero(n_)
-                      , detail::is_negative(n_), force_sign) &&
-                   int_inserter<Radix, CharEncoding, Tag>::call(sink
-                      , detail::absolute_value(n_)) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            return insert_int(sink, n_) && delimit_out(sink, d);
         }
 
         template <typename Context>

@@ -181,13 +181,16 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // Even if the endian types are not pod's (at least not in the
             // definition of C++03) it seems to be safe to assume they are.
             // This allows us to treat them as a sequence of consecutive bytes.
             boost::integer::endian<
                 endian, typename karma::detail::integer<bits>::type, bits
             > p;
-            p = attr;
+            p = traits::optional_value(attr);
             unsigned char const* bytes =
                 reinterpret_cast<unsigned char const*>(&p);
 
@@ -239,7 +242,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+          , Attribute const&) const
         {
             // Even if the endian types are not pod's (at least not in the
             // definition of C++03) it seems to be safe to assume they are

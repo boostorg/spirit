@@ -173,8 +173,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
+            if (!traits::has_optional_value(attr))
+                return false;       // fail if it's an uninitialized optional
+
             typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
-            return inserter_type::call(sink, attr, p_) &&
+            return inserter_type::call(sink, traits::optional_value(attr), p_) &&
                    karma::delimit_out(sink, d);    // always do post-delimiting
         }
 
@@ -227,8 +230,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
-            if (n_ != attr)
+            if (!traits::has_optional_value(attr) || 
+                n_ != traits::optional_value(attr))
+            {
                 return false;
+            }
 
             typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
             return inserter_type::call(sink, n_, p_) &&

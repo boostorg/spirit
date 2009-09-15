@@ -183,6 +183,41 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    T const& optional_value(T const& v)
+    {
+        return v;
+    }
+
+    template <typename T>
+    T const& optional_value(boost::optional<T> const& v)
+    {
+        return boost::get<T>(v);
+    }
+
+    inline unused_type optional_value(unused_type)
+    {
+        return unused;
+    }
+
+    template <typename T>
+    bool has_optional_value(T const&)
+    {
+        return true;
+    }
+
+    template <typename T>
+    bool has_optional_value(boost::optional<T> const& v)
+    {
+        return v;
+    }
+
+    inline bool has_optional_value(unused_type)
+    {
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Container, typename T>
     inline void push_back(Container& c, T const& val)
     {
