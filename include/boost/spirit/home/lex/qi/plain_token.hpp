@@ -79,9 +79,10 @@ namespace boost { namespace spirit { namespace qi
                 typedef typename 
                     boost::detail::iterator_traits<Iterator>::value_type 
                 token_type;
+                typedef typename token_type::id_type id_type;
 
                 token_type &t = *first;
-                if (id == t.id()) {
+                if (id_type(id) == t.id()) {
                     qi::detail::assign_to(t, attr);
                     ++first;
                     return true;
