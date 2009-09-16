@@ -21,12 +21,12 @@
 #include "test.hpp"
 
 using namespace spirit_test;
-using namespace boost::spirit::karma;
+using namespace boost::spirit;
 using namespace boost::spirit::ascii;
 
 typedef spirit_test::output_iterator<char>::type outiter_type;
 
-struct num_list : grammar<outiter_type, space_type>
+struct num_list : karma::grammar<outiter_type, space_type>
 {
     num_list() : num_list::base_type(start)
     {
@@ -37,7 +37,7 @@ struct num_list : grammar<outiter_type, space_type>
         start = num1 << ',' << num2 << ',' << num3;
     }
 
-    rule<outiter_type, space_type> start, num1, num2, num3;
+    karma::rule<outiter_type, space_type> start, num1, num2, num3;
 };
 
 int

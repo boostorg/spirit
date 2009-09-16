@@ -42,13 +42,17 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace lex
 { 
+    // use string from standard character set by default
+    using spirit::standard::string_type;
+    using spirit::standard::string;
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  string_token_def 
     //      represents a string based token definition
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename String, typename CharEncoding = unused_type>
+    template <typename String, typename CharEncoding = char_encoding::standard>
     struct string_token_def
       : primitive_lexer<string_token_def<String, CharEncoding> >
     {

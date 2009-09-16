@@ -25,7 +25,6 @@
 #include "word_count_lexer_static.hpp"          // generated tokenizer
 
 using namespace boost::spirit;
-using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
 //[wcl_static_main
@@ -45,7 +44,7 @@ int main(int argc, char* argv[])
     //
     // As a result the token instances contain the token ids as the only data 
     // member.
-    typedef lexertl::token<char const*, lex::omit, boost::mpl::false_> token_type;
+    typedef lex::lexertl::token<char const*, lex::omit, boost::mpl::false_> token_type;
 
     // Define the lexer type to be used as the base class for our token 
     // definition.
@@ -57,8 +56,8 @@ int main(int argc, char* argv[])
     // As we specified the suffix "wcl" while generating the static tables we 
     // need to pass the type lexertl::static_::lexer_wcl as the second template
     // parameter below (see word_count_lexer_generate.cpp).
-    typedef lexertl::static_actor_lexer<
-        token_type, lexertl::static_::lexer_wcl
+    typedef lex::lexertl::static_actor_lexer<
+        token_type, lex::lexertl::static_::lexer_wcl
     > lexer_type;
 
     // create the lexer object instance needed to invoke the lexical analysis 
@@ -67,7 +66,7 @@ int main(int argc, char* argv[])
     // tokenize the given string, all generated tokens are discarded
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    bool r = tokenize(first, last, word_count_lexer);
+    bool r = lex::tokenize(first, last, word_count_lexer);
 
     if (r) {
         std::cout << "lines: " << word_count_lexer.l 

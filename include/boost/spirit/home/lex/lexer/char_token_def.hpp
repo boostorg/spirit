@@ -49,7 +49,11 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace lex
 { 
-    using spirit::lit;    // lit('x') is equivalent to 'x'
+    using spirit::lit;                    // lit('x') is equivalent to 'x'
+
+    // use char_ from standard character set by default
+    using spirit::standard::char_type;
+    using spirit::standard::char_;
 
     ///////////////////////////////////////////////////////////////////////////
     //
@@ -57,7 +61,7 @@ namespace boost { namespace spirit { namespace lex
     //      represents a single character token definition
     //
     ///////////////////////////////////////////////////////////////////////////
-    template <typename CharEncoding>
+    template <typename CharEncoding = char_encoding::standard>
     struct char_token_def
       : primitive_lexer<char_token_def<CharEncoding> >
     {

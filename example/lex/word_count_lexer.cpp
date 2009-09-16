@@ -47,8 +47,7 @@
 #include "example.hpp"
 
 //[wcl_namespaces
-using namespace boost::spirit;
-using namespace boost::spirit::lex;
+namespace lex = boost::spirit::lex;
 //]
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -74,7 +73,7 @@ boost::phoenix::function<distance_func> const distance = distance_func();
 
 //[wcl_token_definition
 template <typename Lexer>
-struct word_count_tokens : lexer<Lexer>
+struct word_count_tokens : lex::lexer<Lexer>
 {
     word_count_tokens()
       : c(0), w(0), l(0)
@@ -95,7 +94,7 @@ struct word_count_tokens : lexer<Lexer>
     }
 
     std::size_t c, w, l;
-    token_def<> word, eol, any;
+    lex::token_def<> word, eol, any;
 };
 //]
 
@@ -112,10 +111,12 @@ int main(int argc, char* argv[])
      type and an iterator, both holding no lexer state, allowing for even more 
      aggressive optimizations. As a result the token instances contain the token 
      ids as the only data member.
->*/  typedef lexertl::token<char const*, lex::omit, boost::mpl::false_> token_type;
+>*/  typedef 
+        lex::lexertl::token<char const*, lex::omit, boost::mpl::false_> 
+     token_type;
 
 /*<  This defines the lexer type to use
->*/  typedef lexertl::actor_lexer<token_type> lexer_type;
+>*/  typedef lex::lexertl::actor_lexer<token_type> lexer_type;
 
 /*<  Create the lexer object instance needed to invoke the lexical analysis 
 >*/  word_count_tokens<lexer_type> word_count_lexer;

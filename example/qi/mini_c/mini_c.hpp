@@ -26,7 +26,6 @@ using boost::phoenix::size;
 
 using namespace boost::spirit;
 using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  The Virtual Machine
@@ -249,6 +248,8 @@ struct white_space : grammar<Iterator>
 {
     white_space() : white_space::base_type(start)
     {
+        using boost::spirit::ascii::char_;
+
         start =
                 space                               // tab/space/cr/lf
             |   "/*" >> *(char_ - "*/") >> "*/"     // C-style comments

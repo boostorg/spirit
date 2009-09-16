@@ -45,8 +45,7 @@
 #include "example.hpp"
 
 using namespace boost::spirit;  
-using namespace boost::spirit::lex;
-  
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition: We use the lexertl based lexer engine as the underlying 
 //                    lexer type.
@@ -107,10 +106,10 @@ struct set_lexer_state
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct strip_comments_tokens : lexer<Lexer>
+struct strip_comments_tokens : lex::lexer<Lexer>
 {
     strip_comments_tokens()
-      : strip_comments_tokens::base_type(match_flags::match_default)
+      : strip_comments_tokens::base_type(lex::match_flags::match_default)
     {
         // define tokens and associate them with the lexer
         cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
@@ -137,7 +136,7 @@ struct strip_comments_tokens : lexer<Lexer>
             ;
     }
 
-    token_def<> cppcomment, ccomment, endcomment, any, eol;
+    lex::token_def<> cppcomment, ccomment, endcomment, any, eol;
 };
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -147,17 +146,19 @@ int main(int argc, char* argv[])
     typedef std::string::iterator base_iterator_type;
 
     // lexer type
-    typedef lexertl::actor_lexer<lexertl::token<base_iterator_type> > lexer_type;
+    typedef 
+        lex::lexertl::actor_lexer<lex::lexertl::token<base_iterator_type> > 
+    lexer_type;
 
     // now we use the types defined above to create the lexer and grammar
     // object instances needed to invoke the parsing process
     strip_comments_tokens<lexer_type> strip_comments;             // Our lexer
 
-    // No parsing is done alltogether, everzthing happens in the lexer semantic
+    // No parsing is done alltogether, everything happens in the lexer semantic
     // actions.
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();
-    bool r = tokenize(first, str.end(), strip_comments);
+    bool r = lex::tokenize(first, str.end(), strip_comments);
 
     if (!r) {
         std::string rest(first, str.end());

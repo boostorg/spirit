@@ -62,7 +62,7 @@
 #include "example.hpp"
 
 //[wcf_namespaces
-using namespace boost::spirit::lex;
+namespace lex = boost::spirit::lex;
 //]
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ enum token_ids
     example we use the Lexertl based lexer engine as the underlying lexer type. 
 */
 template <typename Lexer>
-struct word_count_tokens : lexer<Lexer>
+struct word_count_tokens : lex::lexer<Lexer>
 {
     word_count_tokens()
     {
@@ -158,13 +158,13 @@ int main(int argc, char* argv[])
     std::string str (read_from_file(1 == argc ? "word_count.input" : argv[1]));
 
     // create the token definition instance needed to invoke the lexical analyzer
-    word_count_tokens<lexertl::lexer<> > word_count_functor;
+    word_count_tokens<lex::lexertl::lexer<> > word_count_functor;
 
     // tokenize the given string, the bound functor gets invoked for each of 
     // the matched tokens
     char const* first = str.c_str();
     char const* last = &first[str.size()];
-    bool r = tokenize(first, last, word_count_functor, 
+    bool r = lex::tokenize(first, last, word_count_functor, 
         boost::bind(counter(), _1, boost::ref(c), boost::ref(w), boost::ref(l)));
 
     // print results

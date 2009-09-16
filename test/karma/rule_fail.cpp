@@ -16,7 +16,6 @@
 #include "test.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::karma;
 using namespace boost::spirit::ascii;
 
 // this test must fail compiling as the rule is used with an incompatible 
@@ -27,7 +26,7 @@ int main()
 
     std::string generated;
 
-    rule<outiter_type, rule<outiter_type> > def;
+    karma::rule<outiter_type, karma::rule<outiter_type> > def;
     def = int_(1) << ',' << int_(0);
 
     std::back_insert_iterator<std::string> outit(generated);

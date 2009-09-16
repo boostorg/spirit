@@ -32,21 +32,18 @@
 #include "example.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::ascii;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct example1_tokens : lexer<Lexer>
+struct example1_tokens : lex::lexer<Lexer>
 {
     example1_tokens()
     {
         // define tokens and associate them with the lexer
         identifier = "[a-zA-Z_][a-zA-Z0-9_]*";
-        this->self = char_(',') | '{' | '}' | identifier;
+        this->self = lex::char_(',') | '{' | '}' | identifier;
 
         // any token definition to be used as the skip parser during parsing 
         // has to be associated with a separate lexer state (here 'WS') 
@@ -54,7 +51,7 @@ struct example1_tokens : lexer<Lexer>
         this->self("WS") = white_space;
     }
 
-    token_def<> identifier, white_space;
+    lex::token_def<> identifier, white_space;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -62,16 +59,16 @@ struct example1_tokens : lexer<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
 struct example1_grammar 
-  : grammar<Iterator, in_state_skipper<token_def<> > >
+  : qi::grammar<Iterator, qi::in_state_skipper<lex::token_def<> > >
 {
     template <typename TokenDef>
     example1_grammar(TokenDef const& tok)
       : example1_grammar::base_type(start)
     {
-        start = '{' >> *(tok.identifier >> -char_(',')) >> '}';
+        start = '{' >> *(tok.identifier >> -ascii::char_(',')) >> '}';
     }
 
-    rule<Iterator, in_state_skipper<token_def<> > > start;
+    qi::rule<Iterator, qi::in_state_skipper<lex::token_def<> > > start;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -81,11 +78,11 @@ int main()
     typedef std::string::iterator base_iterator_type;
 
     // This is the token type to return from the lexer iterator
-    typedef lexertl::token<base_iterator_type> token_type;
+    typedef lex::lexertl::token<base_iterator_type> token_type;
 
     // This is the lexer type to use to tokenize the input.
     // We use the lexertl based lexer engine.
-    typedef lexertl::lexer<token_type> lexer_type;
+    typedef lex::lexertl::lexer<token_type> lexer_type;
 
     // This is the lexer type (derived from the given lexer type).
     typedef example1_tokens<lexer_type> example1_lex;
@@ -114,7 +111,7 @@ int main()
     // Note, how we use the token_def defined above as the skip parser. It must
     // be explicitly wrapped inside a state directive, switching the lexer 
     // state for the duration of skipping whitespace.
-    bool r = phrase_parse(iter, end, calc, in_state("WS")[lex.white_space]);
+    bool r = qi::phrase_parse(iter, end, calc, qi::in_state("WS")[lex.white_space]);
 
     if (r && iter == end)
     {

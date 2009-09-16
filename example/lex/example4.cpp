@@ -33,16 +33,13 @@
 #include "example.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
-
 using boost::phoenix::val;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct example4_tokens : lexer<Lexer>
+struct example4_tokens : lex::lexer<Lexer>
 {
     example4_tokens()
     {
@@ -54,20 +51,20 @@ struct example4_tokens : lexer<Lexer>
         while_ = "while";
 
         // associate the tokens and the token set with the lexer
-        this->self = token_def<>('(') | ')' | '{' | '}' | '=' | ';' | constant;
+        this->self = lex::token_def<>('(') | ')' | '{' | '}' | '=' | ';' | constant;
         this->self += if_ | else_ | while_ | identifier;
 
         // define the whitespace to ignore (spaces, tabs, newlines and C-style 
         // comments)
         this->self("WS")
-            =   token_def<>("[ \\t\\n]+") 
+            =   lex::token_def<>("[ \\t\\n]+") 
             |   "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/"
             ;
     }
 
 //[example4_token_def
     // these tokens expose the iterator_range of the matched input sequence
-    token_def<> if_, else_, while_;
+    lex::token_def<> if_, else_, while_;
 
     // The following two tokens have an associated attribute type, 'identifier'
     // carries a string (the identifier name) and 'constant' carries the 
@@ -82,8 +79,8 @@ struct example4_tokens : lexer<Lexer>
     // possible. Moreover, token instances are constructed once by the lexer
     // library. From this point on tokens are passed by reference only, 
     // avoiding them being copied around.
-    token_def<std::string> identifier;
-    token_def<unsigned int> constant;
+    lex::token_def<std::string> identifier;
+    lex::token_def<unsigned int> constant;
 //]
 };
 
@@ -92,7 +89,7 @@ struct example4_tokens : lexer<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
 struct example4_grammar 
-  : grammar<Iterator, in_state_skipper<Lexer> >
+  : qi::grammar<Iterator, qi::in_state_skipper<Lexer> >
 {
     template <typename TokenDef>
     example4_grammar(TokenDef const& tok)
@@ -148,12 +145,12 @@ struct example4_grammar
 
     typedef boost::variant<unsigned int, std::string> expression_type;
 
-    rule<Iterator, in_state_skipper<Lexer> > program, block, statement;
-    rule<Iterator, in_state_skipper<Lexer> > assignment, if_stmt;
-    rule<Iterator, in_state_skipper<Lexer> > while_stmt;
+    qi::rule<Iterator, qi::in_state_skipper<Lexer> > program, block, statement;
+    qi::rule<Iterator, qi::in_state_skipper<Lexer> > assignment, if_stmt;
+    qi::rule<Iterator, qi::in_state_skipper<Lexer> > while_stmt;
 
     //  the expression is the only rule having a return value
-    rule<Iterator, expression_type(), in_state_skipper<Lexer> >  expression;
+    qi::rule<Iterator, expression_type(), qi::in_state_skipper<Lexer> >  expression;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -176,12 +173,12 @@ int main()
     // least one token attribute type you'll have to list all attribute types 
     // used for token_def<> declarations in the token definition class above, 
     // otherwise compilation errors will occur.
-    typedef lexertl::token<
+    typedef lex::lexertl::token<
         base_iterator_type, boost::mpl::vector<unsigned int, std::string> 
     > token_type;
 //]
     // Here we use the lexertl based lexer engine.
-    typedef lexertl::lexer<token_type> lexer_type;
+    typedef lex::lexertl::lexer<token_type> lexer_type;
 
     // This is the token definition type (derived from the given lexer type).
     typedef example4_tokens<lexer_type> example4_tokens;
@@ -210,7 +207,7 @@ int main()
     // Note how we use the lexer defined above as the skip parser. It must
     // be explicitly wrapped inside a state directive, switching the lexer 
     // state for the duration of skipping whitespace.
-    bool r = phrase_parse(iter, end, calc, in_state("WS")[tokens.self]);
+    bool r = qi::phrase_parse(iter, end, calc, qi::in_state("WS")[tokens.self]);
 
     if (r && iter == end)
     {
