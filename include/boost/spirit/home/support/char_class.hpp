@@ -16,6 +16,7 @@
 
 #include <boost/proto/proto.hpp>
 #include <boost/config.hpp>
+#include <boost/mpl/bool.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 
 #if defined(BOOST_MSVC)
@@ -306,6 +307,44 @@ namespace boost { namespace spirit { namespace char_class
             return "ucs4";
         }
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits 
+{
+    ///////////////////////////////////////////////////////////////////////////
+    // This meta-function evaluates to mpl::true_ if the function 
+    // char_encoding::ischar() needs to be called to ensure correct matching.
+    // This happens mainly if the character type returned from the underlying
+    // iterator is larger than the character type of the used character 
+    // encoding. Additionally, this meta-function provides a customization 
+    // point for the lexer library to enforce this behavior while parsing
+    // a token stream.
+    template <typename Char, typename BaseChar>
+    struct mustcheck_ischar 
+      : mpl::bool_<(sizeof(Char) > sizeof(BaseChar)) ? true : false> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The following template calls char_encoding::ischar, if necessary
+    template <typename CharParam, typename CharEncoding
+      , bool MustCheck = mustcheck_ischar<
+            CharParam, typename CharEncoding::char_type>::value>
+    struct ischar
+    {
+        static bool call(CharParam)
+        {
+            return true;
+        }
+    };
+
+    template <typename CharParam, typename CharEncoding>
+    struct ischar<CharParam, CharEncoding, true>
+    {
+        static bool call(CharParam const& ch)
+        {
+            return CharEncoding::ischar(int(ch));
+        }
+    };
+
 }}}
 
 #if defined(BOOST_MSVC)
