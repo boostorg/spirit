@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
