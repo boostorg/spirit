@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace karma
         template <>
         struct absolute_value_helper<float>
         {
-            typedef long double result_type;
+            typedef float result_type;
             static result_type call(float n)
             {
                 return (spirit::detail::signbit)(n) ? -n : n;
@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace karma
         template <>
         struct absolute_value_helper<double>
         {
-            typedef long double result_type;
+            typedef double result_type;
             static result_type call(double n)
             {
                 return (spirit::detail::signbit)(n) ? -n : n;

@@ -344,7 +344,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
         {
-            return result_type(fusion::at_c<0>(term.args)
+            return result_type(T(fusion::at_c<0>(term.args))
               , karma::detail::get_policies<Policies>::call(term.term));
         }
     };
@@ -393,7 +393,7 @@ namespace boost { namespace spirit { namespace karma
             template <typename T_>
             result_type operator()(T_ i, unused_type) const
             {
-                return result_type(i);
+                return result_type(T(i));
             }
         };
     }
