@@ -88,7 +88,7 @@ main()
         std::list<double> v;      // here we put the data to generate
         if (client::parse_numbers(str.begin(), str.end(), v))
         {
-            // ok, we got some numbers, no print them back out
+            // ok, we got some numbers, now print them back out
             std::cout << "-------------------------\n";
 
             std::string generated;

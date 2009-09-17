@@ -40,21 +40,39 @@ namespace client
         return r;
     }
 
+    //[tutorial_karma_numlist3_complex
+    // a simple complex number representation z = a + bi
+    struct complex
+    {
+        complex (double a, double b = 0.0) : a(a), b(b) {}
+
+        double a;
+        double b;
+    };
+
+    // define streaming operator for the type complex
+    std::ostream& 
+    operator<< (std::ostream& os, complex const& z)
+    {
+        os << "{" << z.a << "," << z.b << "}";
+        return os;
+    }
+    //]
+
     ///////////////////////////////////////////////////////////////////////////
     //  Our number list generator
     ///////////////////////////////////////////////////////////////////////////
-    //[tutorial_karma_numlist2
+    //[tutorial_karma_numlist3
     template <typename OutputIterator, typename Container>
     bool generate_numbers(OutputIterator sink, Container const& v)
     {
-        using boost::spirit::karma::double_;
-        using boost::spirit::karma::generate_delimited;
-        using boost::spirit::ascii::space;
+        using boost::spirit::karma::stream;
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::eol;
 
-        bool r = generate_delimited(
+        bool r = generate(
             sink,                           // destination: output iterator
-            double_ % ',',                  // the generator
-            space,                          // the delimiter-generator
+            stream % eol,                   // the generator
             v                               // the data to output 
         );
         return r;
@@ -69,7 +87,7 @@ int
 main()
 {
     std::cout << "/////////////////////////////////////////////////////////\n\n";
-    std::cout << "\t\tA comma separated list generator for Spirit...\n\n";
+    std::cout << "\tA comma separated list generator for Spirit...\n\n";
     std::cout << "/////////////////////////////////////////////////////////\n\n";
 
     std::cout << "Give me a comma separated list of numbers.\n";
@@ -81,15 +99,28 @@ main()
         if (str.empty() || str[0] == 'q' || str[0] == 'Q')
             break;
 
-        std::vector<double> v;      // here we put the data to generate
+        std::vector<double> v;      // here we put the data gotten from input
         if (client::parse_numbers(str.begin(), str.end(), v))
         {
-            // ok, we got some numbers, now print them back out
+            // ok, we got some numbers, fill a vector of client::complex 
+            // instances and print them back out
+            std::vector<client::complex> vc;
+            std::vector<double>::const_iterator end = v.end();
+            for (std::vector<double>::const_iterator it = v.begin(); 
+                 it != end; ++it)
+            {
+                double real(*it);
+                if (++it != end)
+                    vc.push_back(client::complex(real, *it));
+                else
+                    vc.push_back(client::complex(real));
+            }
+
             std::cout << "-------------------------\n";
 
             std::string generated;
             std::back_insert_iterator<std::string> sink(generated);
-            if (!client::generate_numbers(sink, v))
+            if (!client::generate_numbers(sink, vc))
             {
                 std::cout << "-------------------------\n";
                 std::cout << "Generating failed\n";
@@ -98,7 +129,7 @@ main()
             else
             {
                 std::cout << "-------------------------\n";
-                std::cout << "Generated: " << generated << "\n";
+                std::cout << "Generated:\n" << generated << "\n";
                 std::cout << "-------------------------\n";
             }
         }

@@ -42,10 +42,40 @@ instead of the `std::list<double>` we used before. Additionally, the routine
 
 [heading Generate Output from Arbitrary Data]
 
-The output routine developed above is still not generically usable for any STL 
-container. In order to be usable the items stored in the container still need 
-to be convertible to a `double`. Fortunately __karma__ exposes the capabilities 
-to output arbitrary data types while using the same format description 
-expression. 
+The output routine developed above is still not generically usable for all types 
+of STL containers and for arbitrary elements stored in them. In order to be 
+usable the items stored in the container still need to be convertible to a 
+`double`. Fortunately __karma__ exposes the capabilities to output arbitrary 
+data types while using the same format description expression. It implements 
+the [karma_stream `stream`] generators. These are usable with any attribute
+type as long as it has defined a standard streaming operator. For instance for
+any attribute type `Attr` a function:
+
+    std::ostream& operator<< (std::ostream&, Attr const&);
+
+needs to be available. The [karma_stream `stream`] generator will use the 
+standard streaming operator to generate the output. The following example 
+modifies the code shown above to use the [karma_stream `stream`] operator, 
+which makes it usable with almost any data type. It shows how it is possible to 
+integrate a custom data type into the __karma__ generator framework.
+
+[import ../../example/karma/num_list3.cpp]
+
+This is the data structure:
+
+[tutorial_karma_numlist3_complex]
+
+And this is the actual call to generate the output from a vector of those. This
+time we interleave the generated output with newline characters (see 
+__karma_eol__), putting each complex number onto a separate line:
+
+[tutorial_karma_numlist3]
+
+The code shown is fully generic and can be used with any STL container as long 
+as the data items stored in that container implement the standard streaming 
+operator.
+
+The full source code of this example presented in this section can be found here: 
+[@../../example/karma/num_list3.cpp num_list3.cpp].
 
 [endsect]

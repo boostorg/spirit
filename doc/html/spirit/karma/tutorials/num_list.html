@@ -28,7 +28,7 @@
         numbers from a std::vector</a>
 </h4></div></div></div>
 <a name="spirit.karma.tutorials.num_list.using_the_list_operator"></a><h6>
-<a name="id718612"></a>
+<a name="id671506"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.using_the_list_operator">Using
           the List Operator</a>
         </h6>
@@ -91,17 +91,99 @@
 <p>
         </p>
 <a name="spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data"></a><h6>
-<a name="id721370"></a>
+<a name="id674183"></a>
           <a class="link" href="num_list.html#spirit.karma.tutorials.num_list.generate_output_from_arbitrary_data">Generate
           Output from Arbitrary Data</a>
         </h6>
 <p>
           The output routine developed above is still not generically usable for
-          any STL container. In order to be usable the items stored in the container
-          still need to be convertible to a <code class="computeroutput"><span class="keyword">double</span></code>.
-          Fortunately <span class="emphasis"><em>Spirit.Karma</em></span> exposes the capabilities
-          to output arbitrary data types while using the same format description
-          expression.
+          all types of STL containers and for arbitrary elements stored in them.
+          In order to be usable the items stored in the container still need to be
+          convertible to a <code class="computeroutput"><span class="keyword">double</span></code>. Fortunately
+          <span class="emphasis"><em>Spirit.Karma</em></span> exposes the capabilities to output arbitrary
+          data types while using the same format description expression. It implements
+          the <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a>
+          generators. These are usable with any attribute type as long as it has
+          defined a standard streaming operator. For instance for any attribute type
+          <code class="computeroutput"><span class="identifier">Attr</span></code> a function:
+        </p>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;,</span> <span class="identifier">Attr</span> <span class="keyword">const</span><span class="special">&amp;);</span>
+</pre>
+<p>
+          needs to be available. The <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a> generator will use the
+          standard streaming operator to generate the output. The following example
+          modifies the code shown above to use the <a class="link" href="../reference/stream.html" title="Stream"><code class="computeroutput"><span class="identifier">stream</span></code></a> operator, which makes it
+          usable with almost any data type. It shows how it is possible to integrate
+          a custom data type into the <span class="emphasis"><em>Spirit.Karma</em></span> generator
+          framework.
+        </p>
+<p>
+          This is the data structure:
+        </p>
+<p>
+          </p>
+<p>
+            
+</p>
+<pre class="programlisting"><span class="comment">// a simple complex number representation z = a + bi
+</span><span class="keyword">struct</span> <span class="identifier">complex</span>
+<span class="special">{</span>
+    <span class="identifier">complex</span> <span class="special">(</span><span class="keyword">double</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">double</span> <span class="identifier">b</span> <span class="special">=</span> <span class="number">0.0</span><span class="special">)</span> <span class="special">:</span> <span class="identifier">a</span><span class="special">(</span><span class="identifier">a</span><span class="special">),</span> <span class="identifier">b</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span> <span class="special">{}</span>
+
+    <span class="keyword">double</span> <span class="identifier">a</span><span class="special">;</span>
+    <span class="keyword">double</span> <span class="identifier">b</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="comment">// define streaming operator for the type complex
+</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> 
+<span class="keyword">operator</span><span class="special">&lt;&lt;</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span><span class="special">&amp;</span> <span class="identifier">os</span><span class="special">,</span> <span class="identifier">complex</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">z</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="identifier">os</span> <span class="special">&lt;&lt;</span> <span class="string">"{"</span> <span class="special">&lt;&lt;</span> <span class="identifier">z</span><span class="special">.</span><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="string">","</span> <span class="special">&lt;&lt;</span> <span class="identifier">z</span><span class="special">.</span><span class="identifier">b</span> <span class="special">&lt;&lt;</span> <span class="string">"}"</span><span class="special">;</span>
+    <span class="keyword">return</span> <span class="identifier">os</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          </p>
+<p>
+        </p>
+<p>
+          And this is the actual call to generate the output from a vector of those.
+          This time we interleave the generated output with newline characters (see
+          <a class="link" href="../reference/auxiliary/eol.html" title="End of Line (eol)"><code class="computeroutput"><span class="identifier">eol</span></code></a>),
+          putting each complex number onto a separate line:
+        </p>
+<p>
+          </p>
+<p>
+            
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">&gt;</span>
+<span class="keyword">bool</span> <span class="identifier">generate_numbers</span><span class="special">(</span><span class="identifier">OutputIterator</span> <span class="identifier">sink</span><span class="special">,</span> <span class="identifier">Container</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">)</span>
+<span class="special">{</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">stream</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">;</span>
+    <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">eol</span><span class="special">;</span>
+
+    <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">generate</span><span class="special">(</span>
+        <span class="identifier">sink</span><span class="special">,</span>                           <span class="comment">// destination: output iterator
+</span>        <span class="identifier">stream</span> <span class="special">%</span> <span class="identifier">eol</span><span class="special">,</span>                   <span class="comment">// the generator
+</span>        <span class="identifier">v</span>                               <span class="comment">// the data to output 
+</span>    <span class="special">);</span>
+    <span class="keyword">return</span> <span class="identifier">r</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+          </p>
+<p>
+        </p>
+<p>
+          The code shown is fully generic and can be used with any STL container
+          as long as the data items stored in that container implement the standard
+          streaming operator.
+        </p>
+<p>
+          The full source code of this example presented in this section can be found
+          here: <a href="../../../../../example/karma/num_list3.cpp" target="_top">num_list3.cpp</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
