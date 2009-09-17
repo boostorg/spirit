@@ -1,0 +1,51 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[section:num_list Number List - printing numbers from a std::vector]
+
+[heading Using the List Operator]
+
+The C++ Standards library lacks an important feature, namely the support for
+formatting containers. Sure, it's fairly easy to write a custom routine to 
+output a specific container, but doing so over and over again is tedious at 
+best. In this section we will demonstrate some more of the capabilities of 
+__karma__ for generating output from arbitrary STL containers. We will build on 
+the example presented in an earlier section (see: 
+[link spirit.karma.tutorials.warming_up Warming Up]).
+
+The full source code of the example presented in this section can be found here: 
+[@../../example/karma/num_list2.cpp num_list2.cpp].
+
+[import ../../example/karma/num_list2.cpp]
+
+This time we take advantage of Karma's __karma_list__ operator. The semantics 
+of the list operator are fully equivalent to the semantics of the sequence
+we used before. The generator expression
+
+    double_ << *(',' << double_)
+
+is equivalent to the generator expression
+
+    double_ % ','
+
+simplifying the overall code. The list operators attribute is compatible with 
+any STL container as well. For a change we this time use a `std::vector<double>`
+instead of the `std::list<double>` we used before. Additionally, the routine
+`generate_numbers` will now work with any STL container.
+
+[tutorial_karma_numlist2]
+
+[heading Generate Output from Arbitrary Data]
+
+The output routine developed above is still not generically usable for any STL 
+container. In order to be usable the items stored in the container still need 
+to be convertible to a `double`. Fortunately __karma__ exposes the capabilities 
+to output arbitrary data types while using the same format description 
+expression. 
+
+[endsect]

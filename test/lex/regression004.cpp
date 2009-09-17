@@ -20,8 +20,8 @@
 #include <string>
 
 using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
+namespace qi = boost::spirit::qi;
+namespace lex = boost::spirit::lex;
 
 enum tokenids
 {
@@ -29,7 +29,7 @@ enum tokenids
 };
 
 template <typename Lexer>
-struct word_count_tokens : lexer<Lexer>
+struct word_count_tokens : lex::lexer<Lexer>
 {
     word_count_tokens()
     {
@@ -43,11 +43,11 @@ struct word_count_tokens : lexer<Lexer>
             (".", IDANY)
         ;
     }
-    token_def<std::string> word;
+    lex::token_def<std::string> word;
 };
 
 template <typename Iterator>
-struct word_count_grammar : grammar<Iterator>
+struct word_count_grammar : qi::grammar<Iterator>
 {
     template <typename TokenDef>
     word_count_grammar(TokenDef const& tok)
@@ -55,26 +55,25 @@ struct word_count_grammar : grammar<Iterator>
       , c(0), w(0), l(0)
     {
         using boost::phoenix::ref;
-        using boost::phoenix::size;
 
         start =  *(   tok.word      [++ref(w)]
                   |   lit('\n')     [++ref(l)]
-                  |   token(IDANY)  [++ref(c)] // Will never actually be invoked
+                  |   token(IDANY)  [++ref(c)]
                   )
               ;
     }
     std::size_t c, w, l;
-    rule<Iterator> start;
+    qi::rule<Iterator> start;
 };
 
 
 int main(int argc, char* argv[])
 {
-    typedef lexertl::token<
+    typedef lex::lexertl::token<
         const char*, boost::mpl::vector<std::string>
     > token_type;
 
-    typedef lexertl::lexer<token_type> lexer_type;
+    typedef lex::lexertl::lexer<token_type> lexer_type;
     typedef word_count_tokens<lexer_type>::iterator_type iterator_type;
     word_count_tokens<lexer_type> word_count;          // Our lexer
     word_count_grammar<iterator_type> g (word_count);  // Our parser
@@ -83,7 +82,7 @@ int main(int argc, char* argv[])
     char const* first = str.c_str();
     char const* last = &first[str.size()];
 
-    BOOST_TEST(tokenize_and_parse(first, last, word_count, g));
+    BOOST_TEST(lex::tokenize_and_parse(first, last, word_count, g));
     BOOST_TEST(g.l == 1 && g.w == 1 && g.c == 8);
 
     return boost::report_errors();

@@ -39,7 +39,7 @@
           (for the full example code see here: <a href="../../../../../example/lex/word_count_functor.cpp" target="_top">word_count_functor.cpp</a>).
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.prerequisites"></a><h6>
-<a name="id898848"></a>
+<a name="id852494"></a>
           <a class="link" href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.prerequisites">Prerequisites</a>
         </h6>
 <p>
@@ -71,14 +71,14 @@
 <p>
             
 </p>
-<pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">lex</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lex</span><span class="special">;</span>
 </pre>
 <p>
           </p>
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.defining_tokens"></a><h6>
-<a name="id900506"></a>
+<a name="id852743"></a>
           <a class="link" href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.defining_tokens">Defining
           Tokens</a>
         </h6>
@@ -114,7 +114,7 @@
             
 </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">word_count_tokens</span> <span class="special">:</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;</span><span class="identifier">Lexer</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="identifier">word_count_tokens</span><span class="special">()</span>
     <span class="special">{</span>
@@ -133,7 +133,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.doing_the_useful_work"></a><h6>
-<a name="id900815"></a>
+<a name="id853059"></a>
           <a class="link" href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.doing_the_useful_work">Doing
           the Useful Work</a>
         </h6>
@@ -198,7 +198,7 @@
           as well.
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.pulling_everything_together"></a><h6>
-<a name="id901327"></a>
+<a name="id853571"></a>
           <a class="link" href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.pulling_everything_together">Pulling
           Everything Together</a>
         </h6>
@@ -224,13 +224,13 @@
 </span>    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span> <span class="special">(</span><span class="identifier">read_from_file</span><span class="special">(</span><span class="number">1</span> <span class="special">==</span> <span class="identifier">argc</span> <span class="special">?</span> <span class="string">"word_count.input"</span> <span class="special">:</span> <span class="identifier">argv</span><span class="special">[</span><span class="number">1</span><span class="special">]));</span>
 
     <span class="comment">// create the token definition instance needed to invoke the lexical analyzer
-</span>    <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span> <span class="identifier">word_count_functor</span><span class="special">;</span>
+</span>    <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span> <span class="identifier">word_count_functor</span><span class="special">;</span>
 
     <span class="comment">// tokenize the given string, the bound functor gets invoked for each of 
 </span>    <span class="comment">// the matched tokens
 </span>    <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">first</span> <span class="special">=</span> <span class="identifier">str</span><span class="special">.</span><span class="identifier">c_str</span><span class="special">();</span>
     <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">last</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">first</span><span class="special">[</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">size</span><span class="special">()];</span>
-    <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">tokenize</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">word_count_functor</span><span class="special">,</span> 
+    <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">word_count_functor</span><span class="special">,</span> 
         <span class="identifier">boost</span><span class="special">::</span><span class="identifier">bind</span><span class="special">(</span><span class="identifier">counter</span><span class="special">(),</span> <span class="identifier">_1</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">),</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">w</span><span class="special">),</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">l</span><span class="special">)));</span>
 
     <span class="comment">// print results
@@ -251,7 +251,7 @@
 <p>
         </p>
 <a name="spirit.lex.tutorials.lexer_quickstart1.comparing__emphasis_spirit_lex__emphasis__with__ulink_url__http___flex_sourceforge_net___flex__ulink_"></a><h6>
-<a name="id902154"></a>
+<a name="id854412"></a>
           <a class="link" href="lexer_quickstart1.html#spirit.lex.tutorials.lexer_quickstart1.comparing__emphasis_spirit_lex__emphasis__with__ulink_url__http___flex_sourceforge_net___flex__ulink_">Comparing
           <span class="emphasis"><em>Spirit.Lex</em></span> with <a href="http://flex.sourceforge.net/" target="_top">Flex</a></a>
         </h6>

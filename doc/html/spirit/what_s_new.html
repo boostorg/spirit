@@ -27,7 +27,7 @@
 <a name="spirit.what_s_new"></a><a class="link" href="what_s_new.html" title="What's New">What's New</a>
 </h2></div></div></div>
 <a name="spirit.what_s_new.spirit_classic"></a><h4>
-<a name="id634079"></a>
+<a name="id586019"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_classic">Spirit Classic</a>
     </h4>
 <p>
@@ -42,7 +42,7 @@
     </p>
 <p>
       The recommended way of using Spirit Classic now is to include header files
-      from the directory $BOOST_ROOT/boost/spirit/include. All Spirit Classic headers in this directory have a 'classic_'
+      from the directory $BOOST_ROOT/boost/spirit/include. All Spirit Classic headers in this directory have 'classic_'
       prefixed to their name. For example the include
     </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">core</span><span class="special">/</span><span class="identifier">core</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -67,11 +67,11 @@
       for existing applications.
     </p>
 <a name="spirit.what_s_new.spirit_v2_1"></a><h4>
-<a name="id634272"></a>
+<a name="id586212"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.spirit_v2_1">Spirit V2.1</a>
     </h4>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_"></a><h4>
-<a name="id634285"></a>
+<a name="id586225"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_qi__emphasis__and__emphasis_spirit_karma__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Qi</em></span> and <span class="emphasis"><em>Spirit.Karma</em></span>
       from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)</a>
@@ -96,7 +96,7 @@
         attribute is now always the last parameter.
       </li>
 <li class="listitem">
-        Added new overloads of those functions allowing to explicitly specify the
+        Added new overloads of those functions allowing to explicitely specify the
         post-skipping and pre-delimiting behavior.
       </li>
 <li class="listitem">
@@ -153,11 +153,11 @@
       </li>
 <li class="listitem">
         Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">omit</span><span class="special">[]</span></code>
-        directive (see <a class="link" href="karma/reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>)
+        directive (see <a class="link" href="karma/reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a>)
       </li>
 <li class="listitem">
         Added <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">buffer</span><span class="special">[]</span></code>
-        directive (see <a class="link" href="karma/reference/directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code></a>)
+        directive (see <a class="link" href="karma/reference/directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a>)
       </li>
 <li class="listitem">
 <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">delimit</span><span class="special">[]</span></code>
@@ -190,7 +190,7 @@
       </li>
 </ul></div>
 <a name="spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_"></a><h4>
-<a name="id638441"></a>
+<a name="id590360"></a>
       <a class="link" href="what_s_new.html#spirit.what_s_new.what_s_changed_in__emphasis_spirit_lex__emphasis__from_v2_0__boost_v1_37_0__to_2_x__boost_v1_41_0_">What's
       changed in <span class="emphasis"><em>Spirit.Lex</em></span> from V2.0 (Boost V1.37.0) to 2.x
       (Boost V1.41.0)</a>
@@ -198,9 +198,10 @@
 <p>
       Here is a list of changes in <span class="emphasis"><em>Spirit.Lex</em></span> since version
       2.0. <span class="emphasis"><em>Spirit.Lex</em></span> 2.x is a complete rewrite of the <span class="emphasis"><em>Spirit.Lex</em></span>
-      distributed with Boost V1.37. As all parts of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
-      library it is usable either standalone or in conjunction with the other parts.
-      <span class="emphasis"><em>Spirit.Lex</em></span> now uses the infrastructure provided by <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> version 2.1.
+      distributed with Boost V1.37. As with all code portions of the <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+      library, <span class="emphasis"><em>Spirit.Lex</em></span> is usable as standalone piece. <span class="emphasis"><em>Spirit.Lex</em></span>
+      now uses the infrastructure provided by <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+      version 2.1.
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -225,9 +226,7 @@
 </pre>
 </li>
 <li class="listitem">
-        The new lexer class now can be directly used, their is no need anymore to
-        wrap it using the <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code> template as before. Therefore the function
-        <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code>
+        The new lexer class can now be used directly. The function <code class="computeroutput"><span class="identifier">make_lexer</span><span class="special">()</span></code>
         has been removed.
       </li>
 <li class="listitem">
@@ -236,22 +235,20 @@
         functions have been changed to match the parameter sequence as implemented
         by the <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">()</span></code>
         and <code class="computeroutput"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span><span class="special">()</span></code>
-        functions. Both take a possibly arbitrary number of attribute arguments as
-        its last parameters (well, the number of attributes is limited by the macro
-        <code class="computeroutput"><span class="identifier">SPIRIT_ARGUMENTS_LIMIT</span></code>, which
-        defaults to <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code>).
+        functions. Both take an arbitrary number of attribute arguments as the last
+        parameters. This argument list is limited by the macro <code class="computeroutput"><span class="identifier">SPIRIT_ARGUMENTS_LIMIT</span></code>.
       </li>
 <li class="listitem">
         The <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_lexer</span></code>, and <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token</span></code>
         classes have been moved to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span></code>
         namespace and the names have been changed to <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span></code>,
-        <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span></code> (the same applies to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexert_actor_lexer</span></code>,
+        <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span></code>. This also applies to the <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexert_actor_lexer</span></code>,
         and the <code class="computeroutput"><span class="identifier">static_lexertl_</span><span class="special">*</span></code>
-        family of types).
+        family of types.
       </li>
 <li class="listitem">
-        The class <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token_set</span></code> has been removed alltogether
-        as its complete functionality is available from the lexer class.
+        The class <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl_token_set</span></code> has been removed. This
+        functionality is now available from the lexer class.
       </li>
 <li class="listitem">
         The <span class="emphasis"><em>Spirit.Lex</em></span> library has been updated to use the newest
@@ -273,9 +270,8 @@
 <li class="listitem">
         The <code class="computeroutput"><span class="identifier">char_</span><span class="special">()</span></code>
         and <code class="computeroutput"><span class="identifier">string</span><span class="special">()</span></code>
-        placeholders can now be used for token definitions as a replacement for
-        <code class="computeroutput"><span class="identifier">token_def</span></code>, although it is
-        still possible to use the latter.
+        placeholders can now be used for token definitions and are synonymous with
+        <code class="computeroutput"><span class="identifier">token_def</span></code>.
       </li>
 <li class="listitem">
         Lexer semantic actions now have to conform to a changed interface (see <a class="link" href="lex/abstracts/lexer_semantic_actions.html" title="Lexer Semantic Actions">Lexer Semantic Actions</a>

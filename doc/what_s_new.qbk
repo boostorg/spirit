@@ -22,7 +22,7 @@ to be removed in the future.
 
 The recommended way of using Spirit Classic now is to include header
 files from the directory '''$BOOST_ROOT/boost/spirit/include'''. All
-Spirit Classic headers in this directory have a 'classic_' prefixed to
+Spirit Classic headers in this directory have 'classic_' prefixed to
 their name. For example the include
 
     #include <boost/spirit/core/core.hpp>
@@ -55,7 +55,7 @@ backwards compatibility for existing applications.
 * Changed parameter sequence of `qi::phrase_parse`, `qi::phrase_match`, 
   `karma::generate_delimited`, and `match_delimited`. The attribute is now 
   always the last parameter.
-* Added new overloads of those functions allowing to explicitly specify the
+* Added new overloads of those functions allowing to explicitely specify the
   post-skipping and pre-delimiting behavior.
 * Added multi attribute API functions
 * Removed `grammar_def<>`
@@ -99,10 +99,9 @@ backwards compatibility for existing applications.
 [heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)]
 
 Here is a list of changes in __lex__ since version 2.0. __lex__ 2.x is a 
-complete rewrite of the __lex__ distributed with Boost V1.37. As all parts of 
-the __spirit__ library it is usable either standalone or in conjunction with 
-the other parts. __lex__ now uses the infrastructure provided by __spirit__ 
-version 2.1.
+complete rewrite of the __lex__ distributed with Boost V1.37. As with all
+code portions of the __spirit__ library, __lex__ is usable as standalone piece.
+__lex__ now uses the infrastructure provided by __spirit__ version 2.1.
 
 * The lex::lexer_def class has been renamed to lex::lexer, while the original
   class lex::lexer does not exist anymore. This simplifies the creation of
@@ -121,21 +120,20 @@ version 2.1.
             }
       };
 ``
-* The new lexer class now can be directly used, their is no need anymore to 
-  wrap it using the `make_lexer()` template as before. Therefore the function
-  `make_lexer()` has been removed.
+* The new lexer class can now be used directly. The function `make_lexer()` has 
+  been removed.
 * The `lex::tokenize_and_parse()` and `lex::tokenize_and_phrase_parse()` functions 
   have been changed to match the parameter sequence as implemented by the 
   `qi::parse()` and `qi::phrase_parse()` functions. 
-  Both take a possibly arbitrary number of attribute arguments as its last 
-  parameters (well, the number of attributes is limited by the macro
-  `SPIRIT_ARGUMENTS_LIMIT`, which defaults to `PHOENIX_LIMIT`).
+  Both take an arbitrary number of attribute arguments as the last 
+  parameters. This argument list is limited by the macro
+  `SPIRIT_ARGUMENTS_LIMIT`.
 * The `lex::lexertl_lexer`, and `lex::lexertl_token`
   classes have been moved to the `lex::lexertl` namespace and the names have been 
-  changed to `lex::lexertl::lexer`, `lex::lexertl::token` (the same applies to 
-  the `lex::lexert_actor_lexer`, and the `static_lexertl_*` family of types).
-* The class `lex::lexertl_token_set` has been removed alltogether as its 
-  complete functionality is available from the lexer class.
+  changed to `lex::lexertl::lexer`, `lex::lexertl::token`. This also applies to 
+  the `lex::lexert_actor_lexer`, and the `static_lexertl_*` family of types.
+* The class `lex::lexertl_token_set` has been removed. This functionality is now 
+  available from the lexer class.
 * The __lex__ library has been updated to use the newest version of Ben 
   Hansons __lexertl__ lexer construction library (Boost review pending).
 * The `lex::lexer<Lexer>` template constructor now takes an optional parameter
@@ -148,9 +146,10 @@ version 2.1.
 ``
   If no parameter is passed to the constructor, `match_flags::match_default` is 
   used, i.e. the `.` matches newlines and matching is case sensitive.
+
+
 * The `char_()` and `string()` placeholders can now be used for token 
-  definitions as a replacement for `token_def`, although it is still
-  possible to use the latter.
+  definitions and are synonymous with `token_def`. 
 * Lexer semantic actions now have to conform to a changed interface (see
   __sec_lex_semactions__ for details).
 * Added placeholder symbols usable from the inside of lexer semantic actions 

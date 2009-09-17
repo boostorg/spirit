@@ -177,10 +177,10 @@
 [def __karma_not_predicate__        [link spirit.karma.reference.operator.not_predicate not predicate (unary `!`)]]
 
 [template karma_align[str]          [link spirit.karma.reference.directive.alignment [str]]]
-[def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit[a]`]]
-[def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer[a]`]]
+[def __karma_omit__                 [link spirit.karma.reference.directive.omit `omit`]]
+[def __karma_buffer__               [link spirit.karma.reference.directive.buffer `buffer`]]
 [template karma_repeat[str]         [link spirit.karma.reference.directive.repeat [str]]]
-[def __karma_verbatim__             [link spirit.karma.reference.directive.delimit `verbatim[a]`]]
+[def __karma_verbatim__             [link spirit.karma.reference.directive.delimit `verbatim`]]
 [template karma_delimit[str]        [link spirit.karma.reference.directive.delimit [str]]]
 [template karma_upperlower[str]     [link spirit.karma.reference.directive.upperlower [str]]]
 [template karma_maxwidth[str]       [link spirit.karma.reference.directive.maxwidth [str]]]

@@ -51,7 +51,7 @@
             of the <span class="emphasis"><em>Spirit.Lex</em></span> library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id911749"></a>
+<a name="id864171"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -188,7 +188,7 @@
             first time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id912242"></a>
+<a name="id864664"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -261,7 +261,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_"></a><h6>
-<a name="id912493"></a>
+<a name="id865531"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_">Examples
             of using <a class="link" href="../../reference/token.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a></a>
           </h6>
@@ -286,7 +286,7 @@
               
 </p>
 <pre class="programlisting"><span class="comment">// these tokens expose the iterator_range of the matched input sequence
-</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span> <span class="identifier">if_</span><span class="special">,</span> <span class="identifier">else_</span><span class="special">,</span> <span class="identifier">while_</span><span class="special">;</span>
+</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;&gt;</span> <span class="identifier">if_</span><span class="special">,</span> <span class="identifier">else_</span><span class="special">,</span> <span class="identifier">while_</span><span class="special">;</span>
 
 <span class="comment">// The following two tokens have an associated attribute type, 'identifier'
 </span><span class="comment">// carries a string (the identifier name) and 'constant' carries the 
@@ -301,8 +301,8 @@
 </span><span class="comment">// possible. Moreover, token instances are constructed once by the lexer
 </span><span class="comment">// library. From this point on tokens are passed by reference only, 
 </span><span class="comment">// avoiding them being copied around.
-</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">identifier</span><span class="special">;</span>
-<span class="identifier">token_def</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">constant</span><span class="special">;</span>
+</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">identifier</span><span class="special">;</span>
+<span class="identifier">lex</span><span class="special">::</span><span class="identifier">token_def</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">constant</span><span class="special">;</span>
 </pre>
 <p>
             </p>
@@ -338,7 +338,7 @@
 </span><span class="comment">// least one token attribute type you'll have to list all attribute types 
 </span><span class="comment">// used for token_def&lt;&gt; declarations in the token definition class above, 
 </span><span class="comment">// otherwise compilation errors will occur.
-</span><span class="keyword">typedef</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;</span>
+</span><span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;</span>
     <span class="identifier">base_iterator_type</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> 
 <span class="special">&gt;</span> <span class="identifier">token_type</span><span class="special">;</span>
 </pre>

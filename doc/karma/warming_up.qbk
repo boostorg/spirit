@@ -127,6 +127,17 @@ refer to [@../../example/karma/num_list1.cpp num_list1.cpp]).
 [import ../../example/karma/num_list1.cpp]
 [tutorial_karma_numlist1]
 
+[note You might wonder how a `vector<double>`, which is actually a single data 
+      structure, can be used as an argument (we call it attribute) to a sequence
+      of generators. This seems to be counter intuitive and doesn't match with
+      your experience of using `printf`, where each formatting placeholder has
+      to be matched with a corresponding argument. Well, we will explain this
+      behavior in more detail later in this tutorial. For now just consider 
+      this to be a special case, implemented on purpose to allow more flexible
+      output formatting of STL containers: sequences accept a single container
+      attribute if all elements of this sequence accept attribute compatible 
+      with the elements held by this container.]
+
 The generate function returns `true` or `false` depending on the result of the
 output generation. As outlined in different places of this documentation, a 
 generator may fail for different reasons. One of the possible reasons is an 

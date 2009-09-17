@@ -333,46 +333,46 @@ See here for more information about __karma_directive__.
 
 [table 
     [[Expression]           [Attribute]           [Description]]
-    [[[karma_upperlower `lower[a]`]]        [`A`] [Generate `a` as lower case]]
-    [[[karma_upperlower `upper[a]`]]        [`A`] [Generate `a` as upper case]]
+    [[[karma_upperlower `lower`]`[a]`]        [`A`] [Generate `a` as lower case]]
+    [[[karma_upperlower `upper`]`[a]`]        [`A`] [Generate `a` as upper case]]
 
-    [[[karma_align `left_align[a]`]]        [`A`] [Generate `a` left aligned in column of width 
+    [[[karma_align `left_align`]`[a]`]        [`A`] [Generate `a` left aligned in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
-    [[[karma_align `left_align(num)[a]`]]   [`A`] [Generate `a` left aligned in column of width `num`]]
-    [[[karma_align `left_align(num, g)[a]`]][`A`] [Generate `a` left aligned in column of width `num`
+    [[[karma_align `left_align`]`(num)[a]`]   [`A`] [Generate `a` left aligned in column of width `num`]]
+    [[[karma_align `left_align`]`(num, g)[a]`][`A`] [Generate `a` left aligned in column of width `num`
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[[karma_align `center[a]`]]            [`A`] [Generate `a` centered in column of width 
+    [[[karma_align `center`]`[a]`]            [`A`] [Generate `a` centered in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
-    [[[karma_align `center(num)[a]`]]       [`A`] [Generate `a` centered in column of width `num`]]
-    [[[karma_align `center(num, g)[a]`]]    [`A`] [Generate `a` centered in column of width `num`
+    [[[karma_align `center`]`(num)[a]`]       [`A`] [Generate `a` centered in column of width `num`]]
+    [[[karma_align `center`]`(num, g)[a]`]    [`A`] [Generate `a` centered in column of width `num`
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[[karma_align `right_align[a]`]]       [`A`] [Generate `a` right aligned in column of width 
+    [[[karma_align `right_align`]`[a]`]       [`A`] [Generate `a` right aligned in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
-    [[[karma_align `right_align(num)[a]`]]  [`A`] [Generate `a` right aligned in column of width `num`]]
-    [[[karma_align `right_align(num, g)[a]`]][`A`][Generate `a` right aligned in column of width `num`
+    [[[karma_align `right_align`]`(num)[a]`]  [`A`] [Generate `a` right aligned in column of width `num`]]
+    [[[karma_align `right_align`]`(num, g)[a]`][`A`][Generate `a` right aligned in column of width `num`
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[[karma_maxwidth `maxwidth[a]`]]       [`A`] [Generate `a` truncated to column of width 
+    [[[karma_maxwidth `maxwidth`]`[a]`]       [`A`] [Generate `a` truncated to column of width 
                                                    `BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH`]]
-    [[[karma_maxwidth `maxwidth(num)[a]`]]  [`A`] [Generate `a` truncated to column of width `num`]]
+    [[[karma_maxwidth `maxwidth`]`(num)[a]`]  [`A`] [Generate `a` truncated to column of width `num`]]
 
-    [[[karma_repeat `repeat[a]`]]             [`vector<A>`] [Repeat `a` zero or more times]]
-    [[[karma_repeat `repeat(num)[a]`]]        [`vector<A>`] [Repeat `a` `num` times]]
-    [[[karma_repeat `repeat(num1, num2)[a]`]] [`vector<A>`] [Repeat `a` `num1` to `num2` times]]
-    [[[karma_repeat `repeat(num, inf)[a]`]]   [`vector<A>`] [Repeat `a` `num` or more times]]
+    [[[karma_repeat `repeat`]`[a]`]             [`vector<A>`] [Repeat `a` zero or more times]]
+    [[[karma_repeat `repeat`]`(num)[a]`]        [`vector<A>`] [Repeat `a` `num` times]]
+    [[[karma_repeat `repeat`]`(num1, num2)[a]`] [`vector<A>`] [Repeat `a` `num1` to `num2` times]]
+    [[[karma_repeat `repeat`]`(num, inf)[a]`]   [`vector<A>`] [Repeat `a` `num` or more times]]
 
-    [[__karma_verbatim__]   [`A`]               [Disable delimited generation for `a`]]
-    [[[karma_delimit `delimit[a]`]]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
-    [[[karma_delimit `delimit(d)[a]`]]  [`A`]   [Use `d` as a delimiter for generating `a`]]
+    [[__karma_verbatim__`[a]`][`A`]               [Disable delimited generation for `a`]]
+    [[[karma_delimit `delimit`]`[a]`]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
+    [[[karma_delimit `delimit`]`(d)[a]`]  [`A`]   [Use `d` as a delimiter for generating `a`]]
 
-    [[__karma_omit__]       [`A`]               [Consumes the attribute type of `a` without generating anything]]
+    [[__karma_omit__`[a]`]  [`A`]               [Consumes the attribute type of `a` without generating anything]]
 
-    [[__karma_buffer__]     [`A`]               [Temporarily intercepts the output generated by `a`, 
+    [[__karma_buffer__`[a]`][`A`]               [Temporarily intercepts the output generated by `a`, 
                                                  flushing it only after `a` succeeded.]]
 ]
 
