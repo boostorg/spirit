@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2002-2009 Joel Hartmut Kaiser
+    Copyright (c) 2002-2009 Hartmut Kaiser
     Copyright (c) 2002-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -56,10 +56,10 @@ namespace client
         using ascii::space;
 
         bool r = generate_delimited(
-            sink,                           /*< destination: output iterator >*/
-            double_ << *(',' << double_),   /*< the generator >*/
-            space,                          /*< the delimiter-generator >*/
-            v                               /*< the data to output >*/
+            sink,                           // destination: output iterator
+            double_ << *(',' << double_),   // the generator
+            space,                          // the delimiter-generator
+            v                               // the data to output 
         );
         return r;
     }
