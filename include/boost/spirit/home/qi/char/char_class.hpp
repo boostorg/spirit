@@ -57,7 +57,8 @@ namespace boost { namespace spirit { namespace qi
         bool test(CharParam ch, Context&) const
         {
             using spirit::char_class::classify;
-            return classify<char_encoding>::is(classification(), ch);
+            return char_encoding::ischar(ch) && 
+                   classify<char_encoding>::is(classification(), ch);
         }
 
         template <typename Context>
