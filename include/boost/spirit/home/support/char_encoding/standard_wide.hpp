@@ -18,11 +18,27 @@
 #include <boost/cstdint.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <std::size_t N>
+    struct wchar_t_size
+    {
+        BOOST_SPIRIT_ASSERT_MSG(N == 1 || N == 2 || N == 4,
+            not_supported_size_of_wchar_t, ());
+    };
+
+    template <> struct wchar_t_size<1> { enum { mask = 0xff }; };
+    template <> struct wchar_t_size<2> { enum { mask = 0xffff }; };
+    template <> struct wchar_t_size<4> { enum { mask = 0xffffffff }; };
+
+}}}
+
 namespace boost { namespace spirit { namespace char_encoding
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Test characters for specified conditions (using std wchar_t functions)
     ///////////////////////////////////////////////////////////////////////////
+
     struct standard_wide
     {
         typedef wchar_t char_type;
@@ -41,23 +57,12 @@ namespace boost { namespace spirit { namespace char_encoding
             return std::char_traits<Char>::to_char_type(ch);
         }
 
-        template <std::size_t N>
-        struct wchar_t_size
-        {
-            BOOST_SPIRIT_ASSERT_MSG(N == 1 || N == 2 || N == 4,
-                not_supported_size_of_wchar_t, ());
-        };
-
-        template <> struct wchar_t_size<1> { enum { mask = 0xff }; };
-        template <> struct wchar_t_size<2> { enum { mask = 0xffff }; };
-        template <> struct wchar_t_size<4> { enum { mask = 0xffffffff }; };
-
         static bool
         ischar(int ch)
         {
             // we have to watch out for sign extensions
-            return ( 0 == (ch & ~wchar_t_size<sizeof(wchar_t)>::mask) || 
-                    ~0 == (ch | wchar_t_size<sizeof(wchar_t)>::mask)) ? 
+            return ( 0 == (ch & ~traits::wchar_t_size<sizeof(wchar_t)>::mask) || 
+                    ~0 == (ch | traits::wchar_t_size<sizeof(wchar_t)>::mask)) ? 
                 true : false;     // any wchar_t, but no other bits set
         }
 
