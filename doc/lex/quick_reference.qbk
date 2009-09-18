@@ -9,7 +9,7 @@
 This quick reference section is provided for convenience. You can use
 this section as a sort of a "cheat-sheet" on the most commonly used Lex
 components. It is not intended to be complete, but should give you an
-easy way to recall a particular component without having to dig up on
+easy way to recall a particular component without having to dig through
 pages and pages of reference doumentation.
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -27,7 +27,7 @@ pages and pages of reference doumentation.
     [[`str`]            [Character-class specific string (See __char_class_types__)]]
     [[`Str`]            [Character-class specific string type (See __char_class_types__)]]
     [[`Attrib`]         [An attribute type]]
-    [[`fa`]             [A (semantic action) function with signature 
+    [[`fa`]             [A semantic action function with a signature: 
                          `void f(Iterator&, Iterator&, pass_flag&, Idtype&, Context&)`.]]
 ]
 
@@ -94,7 +94,7 @@ inline your lambda expressions:
     l[phoenix-lambda-expression]
 
 __lex__ provides some __boost_phoenix__ placeholders to access important
-information from the `Context` that are otherwise fiddly to extract.
+information from the `Context` that are otherwise difficult to extract.
 
 [variablelist Spirit.Lex specific Phoenix placeholders
     [[`_start, _end`]          [Iterators pointing to the begin and the end of the

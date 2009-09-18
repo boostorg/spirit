@@ -49,7 +49,7 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     //[tutorial_karma_numlist1
     template <typename OutputIterator>
-    bool generate_numbers(OutputIterator sink, std::list<double> const& v)
+    bool generate_numbers(OutputIterator& sink, std::list<double> const& v)
     {
         using karma::double_;
         using karma::generate_delimited;

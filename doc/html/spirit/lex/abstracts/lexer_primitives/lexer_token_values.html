@@ -32,26 +32,25 @@
             stream of input characters and separating it into strings called tokens,
             most of the time separated by whitespace. The different token types recognized
             by a lexical analyzer often get assigned unique integer token identifiers
-            (token ids). These token ids arenormally used by the parser to identifiy
+            (token ids). These token ids are normally used by the parser to identifiy
             the current token without having to look at the matched string again.
             The <span class="emphasis"><em>Spirit.Lex</em></span> library is not different with respect
             to this, as it uses the token ids as the main means of identification
             of the different token types defined for a particular lexical analyzer.
             However, it is different from commonly used lexical analyzers in the
             sense that it returns (references to) instances of a (user defined) token
-            class to the user. The only real limitation posed on this token class
-            is consequently, that it has to carry at least the token id of the token
-            it represents. For more information about the interface a user defined
-            token type has to expose please look at the <a class="link" href="../../reference/token.html" title="Token Class">Token
-            Class</a> reference. The library provides a default token type based
-            on the <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a>
-            library which should be sufficient in most use cases: the <a class="link" href="../../reference/token.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
+            class to the user. The only limitation of this token class is that it
+            must carry at least the token id of the token it represents. For more
+            information about the interface a user defined token type has to expose
+            please look at the <a class="link" href="../../reference/token.html" title="Token Class">Token Class</a>
+            reference. The library provides a default token type based on the <a href="http://www.benhanson.net/lexertl.html" target="_top">Lexertl</a> library which
+            should be sufficient in most cases: the <a class="link" href="../../reference/token.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
             type. This section focusses on the description of general features a
             token class may implement and how this integrates with the other parts
             of the <span class="emphasis"><em>Spirit.Lex</em></span> library.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token"></a><h6>
-<a name="id818466"></a>
+<a name="id820167"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_anatomy_of_a_token">The
             Anatomy of a Token</a>
           </h6>
@@ -106,18 +105,18 @@
 <p><br class="figure-break">
           </p>
 <p>
-            The token value and the lexer state the token has been recogniyed in
-            may be omitted for optimization reasons, avoiding the token to carry
-            more data than actually required. This configuration can be achieved
-            by supplying appropriate template parameters for the <a class="link" href="../../reference/token.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a>
-            template while defining the token type.
+            The token value and the lexer state the token has been recognized in
+            may be omitted for optimization reasons, thus avoiding the need for the
+            token to carry more data than actually required. This configuration can
+            be achieved by supplying appropriate template parameters for the <a class="link" href="../../reference/token.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a> template while defining
+            the token type.
           </p>
 <p>
             The lexer iterator returns the same token type for each of the different
-            matched token definitions. To accomodate for the possibly different token
+            matched token definitions. To accomodate for the possible different token
             <span class="emphasis"><em>value</em></span> types exposed by the various token types (token
             definitions), the general type of the token value is a <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>.
-            As a minimum (for the default configuration) this token value variant
+            At a minimum (for the default configuration) this token value variant
             will be configured to always hold a <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a> containing the
             pair of iterators pointing to the matched input sequence for this token
             instance.
@@ -134,10 +133,10 @@
               once. This happens at the time of the first access to the token value
               requiring the corresponding type conversion. The converted token value
               will be stored in the <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
-              replacing the initially stored iterator range. This avoids to convert
-              the input sequence to the token value more than once, thus optimizing
-              the integration of the lexer with <span class="emphasis"><em>Spirit.Qi</em></span>, even
-              during parser backtracking.
+              replacing the initially stored iterator range. This avoids having to
+              convert the input sequence to the token value more than once, thus
+              optimizing the integration of the lexer with <span class="emphasis"><em>Spirit.Qi</em></span>,
+              even during parser backtracking.
             </p></td></tr>
 </table></div>
 <p>
@@ -172,23 +171,22 @@
 <dt><span class="term">HasState</span></dt>
 <dd><p>
                 This is either <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                or <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>, allowing to control whether
-                the generated token instances will contain the lexer state they were
-                generated in. The default is mpl::true_, so all token instances will
-                contain the lexer state.
+                or <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>, allowing control as to
+                whether the generated token instances will contain the lexer state
+                they were generated in. The default is mpl::true_, so all token instances
+                will contain the lexer state.
               </p></dd>
 </dl>
 </div>
 <p>
-            Normally, during its construction, a token instance always holds the
-            <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a> as its token
-            value (except, if it has been defined using the <code class="computeroutput"><span class="identifier">omit</span></code>
-            token value type). This iterator range then is converted in place to
-            the requested token value type (attribute) when it is requested for the
-            first time.
+            Normally, during construction, a token instance always holds the <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a> as its token
+            value, unless it has been defined using the <code class="computeroutput"><span class="identifier">omit</span></code>
+            token value type. This iterator range then is converted in place to the
+            requested token value type (attribute) when it is requested for the first
+            time.
           </p>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition"></a><h6>
-<a name="id818959"></a>
+<a name="id820660"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.the_physiognomy_of_a_token_definition">The
             Physiognomy of a Token Definition</a>
           </h6>
@@ -235,7 +233,7 @@
             definition type are very similar and interdependent. As a rule of thumb
             you can think of the token definition type as the means of specifying
             everything related to a single specific token type (such as <code class="computeroutput"><span class="identifier">identifier</span></code> or <code class="computeroutput"><span class="identifier">integer</span></code>).
-            On the other hand the token type is used to define the general proerties
+            On the other hand the token type is used to define the general properties
             of all token instances generated by the <span class="emphasis"><em>Spirit.Lex</em></span>
             library.
           </p>
@@ -261,7 +259,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_"></a><h6>
-<a name="id819210"></a>
+<a name="id820911"></a>
             <a class="link" href="lexer_token_values.html#spirit.lex.abstracts.lexer_primitives.lexer_token_values.examples_of_using__link_linkend__spirit_lex_reference_token___code__phrase_role__identifier__lexertl_token__phrase__phrase_role__special___lt__gt___phrase___code___link_">Examples
             of using <a class="link" href="../../reference/token.html" title="Token Class"><code class="computeroutput"><span class="identifier">lexertl_token</span><span class="special">&lt;&gt;</span></code></a></a>
           </h6>
@@ -274,9 +272,9 @@
             the definition of a couple of token types. Some of the token types do
             not expose a special token value (<code class="computeroutput"><span class="identifier">if_</span></code>,
             <code class="computeroutput"><span class="identifier">else_</span></code>, and <code class="computeroutput"><span class="identifier">while_</span></code>). Their token value will always
-            hold the iterator range of the matched input sequence only. The token
-            definitions for the <code class="computeroutput"><span class="identifier">identifier</span></code>
-            and the integer <code class="computeroutput"><span class="identifier">constant</span></code>
+            hold the iterator range of the matched input sequence. The token definitions
+            for the <code class="computeroutput"><span class="identifier">identifier</span></code> and
+            the integer <code class="computeroutput"><span class="identifier">constant</span></code>
             are specialized to expose an explicit token type each: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> and <code class="computeroutput"><span class="keyword">unsigned</span>
             <span class="keyword">int</span></code>.
           </p>

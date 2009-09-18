@@ -41,7 +41,7 @@ source code used in this example see the code here:
 [import ../example/lex/static_lexer/word_count_static.cpp]
 [import ../example/lex/static_lexer/word_count_generate.cpp]
 
-But first we provide the code snippets needed to understand the further 
+But first we provide the code snippets needed to further understand the 
 descriptions. Both, the definition of the used token identifier and the of the 
 token definition class in this example are put into a separate header file to 
 make these available to the code generator and the static lexical analyzer. 
@@ -64,7 +64,7 @@ __class_lexertl_static_lexer__ type as the template parameter.
 
 This example not only shows how to build a static lexer, but it additionally 
 demonstrates how such a lexer can be used for parsing in conjunction with a 
-__qi__ grammar. For completeness we provide the simple grammar used in this 
+__qi__ grammar. For completeness, we provide the simple grammar used in this 
 example. As you can see, this grammar does not have any dependencies on the 
 static lexical analyzer, and for this reason it is not different from a grammar
 used either without a lexer or using a dynamic lexical analyzer as described 
@@ -113,24 +113,23 @@ the first one and involves correcting the corresponding `#include` statement to:
 [wc_static_include]
 
 Otherwise the main program is not different from an equivalent program using 
-the dynamic model. This feature makes it really easy for instance to develop 
-the lexer in dynamic mode and to switch to the static mode after the code has
-been stabilized. The simple generator application showed above enables the 
-integration of the code generator into any existing build process. The 
-following code snippet provides the overall main function, highlighting 
-the code to be changed.
+the dynamic model. This feature makes it easy to develop the lexer in dynamic 
+mode and to switch to the static mode after the code has been stabilized. 
+The simple generator application shown above enables the integration of the 
+code generator into any existing build process. The following code snippet 
+provides the overall main function, highlighting the code to be changed.
 
 [wc_static_main]
 
 [important The generated code for the static lexer contains the token ids as 
-           these have been assigned either explicitly by the programmer or 
+           they have been assigned, either explicitly by the programmer or 
            implicitely during lexer construction. It is your responsibility
            to make sure that all instances of a particular static lexer  
            type use exactly the same token ids. This is ensured by default
            as long as no `first_id` is specified during construction of the
-           static lexer instances (the constructor of the lexer object has
-           a seocnd default parameter allowing to designate a starting token
-           id to be used while assigning the ids to the token definitions).
+           static lexer instances. The constructor of the lexer object has
+           a second default parameter allowing it to designate a starting token
+           id to be used while assigning the ids to the token definitions.
 ]
 
 

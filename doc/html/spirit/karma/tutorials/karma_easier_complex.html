@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="karma_attributes.html" title="Understanding Generator Attributes">
-<link rel="next" href="num_list.html" title="Number List - printing numbers from a std::vector">
+<link rel="next" href="num_list.html" title="Number List - Printing Numbers From a std::vector">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -30,7 +30,7 @@
 <p>
           In one of the previous sections we showed how to format a complex number
           (i.e. a pair of doubles). In this section we will build on this example
-          with the goal to avoid to use semantic actions in the format specification.
+          with the goal to avoid using semantic actions in the format specification.
           Let's have a look at the resulting code first, trying to understand it
           afterwards (the full source file for this example can be found here: <a href="../../../../../example/karma/complex_number_easier.cpp" target="_top">complex_number_easier.cpp</a>):
         </p>
@@ -67,23 +67,39 @@
           Let's try to cover some basic library features first.
         </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h6>
-<a name="id670769"></a>
+<a name="id671848"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
           Numeric Generators Fail</a>
         </h6>
 <p>
           All <a class="link" href="../reference/numeric.html" title="Numeric">numeric generators</a>
           (such as <code class="computeroutput"><span class="identifier">double_</span></code>, et.al.)
-          take the value to emit from an attached attribute. Alternatively, they
-          may be initialized from a literal value. For instance, to emit a constant
-          <code class="computeroutput"><span class="number">0.0</span></code> you may write: <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>. The
-          difference to a simple <code class="computeroutput"><span class="number">0.0</span></code>
-          or <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code> is that
-          the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code> consumes
+          take the value to emit from an attached attribute.
+        </p>
+<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">1.5</span><span class="special">;</span>
+<span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">,</span> <span class="identifier">d</span><span class="special">);</span>       <span class="comment">// will emit '1.5' (without the quotes)
+</span></pre>
+<p>
+          Alternatively, they may be initialized from a literal value. For instance,
+          to emit a constant <code class="computeroutput"><span class="number">1.5</span></code> you
+          may write:
+        </p>
+<pre class="programlisting"><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">(</span><span class="number">1.5</span><span class="special">));</span>     <span class="comment">// will emit '1.5' as well (without the quotes)
+</span></pre>
+<p>
+          The difference to a simple <code class="computeroutput"><span class="number">1.5</span></code>
+          or <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="number">1.5</span><span class="special">)</span></code> is that
+          the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">1.5</span><span class="special">)</span></code> consumes
           an attribute if one is available. Additionally, it compares its immediate
           value to the value of the supplied attribute, and fails if those are not
-          equal. This feature, namely to succeed generating only if the attribute
-          matches the immediate value, enables numeric generators to be used to dynamically
+          equal.
+        </p>
+<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">1.5</span><span class="special">;</span>
+<span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">(</span><span class="number">1.5</span><span class="special">),</span> <span class="identifier">d</span><span class="special">);</span>  <span class="comment">// will emit '1.5' as long as d == 1.5
+</span></pre>
+<p>
+          This feature, namely to succeed generating only if the attribute matches
+          the immediate value, enables numeric generators to be used to dynamically
           control the way output is generated.
         </p>
 <div class="note" title="Note"><table border="0" summary="Note">
@@ -100,7 +116,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h6>
-<a name="id670894"></a>
+<a name="id672136"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
           - The Conditionals for Output Generators</a>
         </h6>
@@ -134,8 +150,24 @@
             is by providing an attribute.
           </p></td></tr>
 </table></div>
+<p>
+          As an example, the following generator succeeds generating
+        </p>
+<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">1.0</span><span class="special">;</span>
+<span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="special">&amp;</span><span class="identifier">double_</span><span class="special">(</span><span class="number">1.0</span><span class="special">),</span> <span class="identifier">d</span><span class="special">));</span>    <span class="comment">// succeeds as d == 1.0
+</span></pre>
+<p>
+          while this one will fail:
+        </p>
+<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">1.0</span><span class="special">;</span>
+<span class="identifier">BOOST_ASSERT</span><span class="special">(!</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">1.0</span><span class="special">),</span> <span class="identifier">d</span><span class="special">));</span>   <span class="comment">// fails as d == 1.0
+</span></pre>
+<p>
+          Neither of these will emit any output. The predicates discard everything
+          emitted by the generators they are applied to.
+        </p>
 <a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h6>
-<a name="id670971"></a>
+<a name="id672384"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
           Supplied Attributes</a>
         </h6>
@@ -162,15 +194,15 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h6>
-<a name="id671049"></a>
+<a name="id672462"></a>
           <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
           everything together</a>
         </h6>
 <p>
           Very similar to our first example ealier we use two alternatives to allow
-          for two different output formats depending on whether the imaginery part
-          of the complex number is equal to zero or not. The first alternative is
-          executed if the imaginary part is not zero, the second alternative otherwise.
+          for the two different output formats depending on whether the imaginery
+          part of the complex number is equal to zero or not. The first alternative
+          is executed if the imaginary part is not zero, the second alternative otherwise.
           This time we make the decision during runtime using the <a class="link" href="../reference/operator/not_predicate.html" title="Not Predicate (!a)">not
           predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>
           combined with the feature of many Karma primitive generators to <span class="emphasis"><em>fail</em></span>

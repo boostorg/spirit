@@ -41,7 +41,7 @@ is `void`).
 
 In the expressions below, the behavior of the lexer component, `l`, is left 
 unspecified in the base `Lexer` concept. These are specified in subsequent, 
-more refined concepts and by the actual models therof.
+more refined concepts and by the actual models thereof.
 
 For any Lexer the following expressions must be valid:
 

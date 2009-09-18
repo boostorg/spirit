@@ -428,6 +428,7 @@ It is also possible to supply a skip parser to the `skip` directive:
     skip(p)[a] // Use `p` as a skipper for parsing `a`
 
 This makes it possible to:
+
 * Perform localized phrase level parsing while doing character level parsing.
 * Replace the current skipper anywhere with an entirely different 
   skipper while doing phrase level parsing.

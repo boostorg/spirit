@@ -45,7 +45,7 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     //[tutorial_karma_numlist2
     template <typename OutputIterator, typename Container>
-    bool generate_numbers(OutputIterator sink, Container const& v)
+    bool generate_numbers(OutputIterator& sink, Container const& v)
     {
         using boost::spirit::karma::double_;
         using boost::spirit::karma::generate_delimited;

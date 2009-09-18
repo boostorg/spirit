@@ -50,7 +50,7 @@ namespace client
         double b;
     };
 
-    // define streaming operator for the type complex
+    // the streaming operator for the type complex
     std::ostream& 
     operator<< (std::ostream& os, complex const& z)
     {
@@ -64,7 +64,7 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     //[tutorial_karma_numlist3
     template <typename OutputIterator, typename Container>
-    bool generate_numbers(OutputIterator sink, Container const& v)
+    bool generate_numbers(OutputIterator& sink, Container const& v)
     {
         using boost::spirit::karma::stream;
         using boost::spirit::karma::generate;

@@ -33,9 +33,9 @@
         ways to build scanners. <span class="emphasis"><em>Spirit.Lex</em></span> is a library built
         to take care of the complexities of creating a lexer for your grammar (in
         this documentation we will use the terms 'lexical analyzer', 'lexer' and
-        'scanner' interchangably). All it needs to create a lexer is to know the
-        set of patterns describing the different tokens you want to recognize in
-        the input. To make this a bit more formal, here are some definitions:
+        'scanner' interchangably). All that is needed to create a lexer is to know
+        the set of patterns describing the different tokens you want to recognize
+        in the input. To make this a bit more formal, here are some definitions:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -51,12 +51,12 @@
 <li class="listitem">
           Characters between tokens are called whitespace; these include spaces,
           tabs, newlines, and formfeeds. Many people also count comments as whitespace,
-          though since some tools such as lint look at comments, this conflation
-          is not perfect.
+          though since some tools such as lint look at comments, this method is not
+          perfect.
         </li>
 </ul></div>
 <a name="spirit.lex.lexer_introduction.why_use_a_separate_lexer_"></a><h5>
-<a name="id805156"></a>
+<a name="id806711"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.why_use_a_separate_lexer_">Why
         Use a Separate Lexer?</a>
       </h5>
@@ -71,7 +71,7 @@
         has been used since its invention.
       </p>
 <p>
-        However, this separation has both practical and theoretical bases and proves
+        However, this separation has both practical and theoretical basis, and proves
         to be very useful in practical applications. In 1956, Noam Chomsky defined
         the "Chomsky Hierarchy" of grammars:
       </p>
@@ -92,19 +92,19 @@
 <p>
         The complexity of these grammars increases from regular grammars being the
         simplest to unrestricted grammars being the most complex. Similarly, the
-        complexity of the recognizers for these grammars increases. Although, a few
-        features of some programming languages (such as C++) are Type 1, fortunately
+        complexity of pattern recognition for these grammars increases. Although,
+        a few features of some programming languages (such as C++) are Type 1, fortunately
         for the most part programming languages can be described using only the Types
-        3 and 2. The neat part about these two types is that they are well known
+        2 and 3. The neat part about these two types is that they are well known
         and the ways to parse them are well understood. It has been shown that any
         regular grammar can be parsed using a state machine (finite automaton). Similarly,
         context-free grammars can always be parsed using a push-down automaton (essentially
         a state machine augmented by a stack).
       </p>
 <p>
-        In real programming languages and practical grammars the parts that can be
-        handled as regular expressions tend to be the lower-level parts, such as
-        the definition of an identifier or of an integer value:
+        In real programming languages and practical grammars, the parts that can
+        be handled as regular expressions tend to be the lower-level pieces, such
+        as the definition of an identifier or of an integer value:
       </p>
 <pre class="programlisting"><span class="identifier">letter</span>     <span class="special">:=</span> <span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="identifier">zA</span><span class="special">-</span><span class="identifier">Z</span><span class="special">]</span>
 <span class="identifier">digit</span>      <span class="special">:=</span> <span class="special">[</span><span class="number">0</span><span class="special">-</span><span class="number">9</span><span class="special">]</span>
@@ -116,8 +116,8 @@
         Higher level parts of practical grammars tend to be more complex and can't
         be implemented using plain regular expressions. We need to store information
         on the built-in hardware stack while recursing the grammar hierarchy, and
-        that in fact this is the preferred approach used for top-down parsing. Since
-        it takes a different kind of abstract machine to parse the two types of grammars,
+        that is the preferred approach used for top-down parsing. Since it takes
+        a different kind of abstract machine to parse the two types of grammars,
         it proved to be efficient to separate the lexical scanner into a separate
         module which is built around the idea of a state machine. The goal here is
         to use the simplest parsing technique needed for the job.
@@ -130,7 +130,7 @@
         possible. Almost every language has certain keywords such as IF, FOR, and
         WHILE. The decision if a certain character sequence actually comprises a
         keyword or just an identifier often can be made only after seeing the first
-        delimiter <span class="emphasis"><em>after</em></span> it. This already is a limited form of
+        delimiter <span class="emphasis"><em>after</em></span> it. In fact, this makes the process
         backtracking, since we need to store the string long enough to be able to
         make the decision. The same is true for more coarse grained language features
         such as nested IF/ELSE statements, where the decision about to which IF belongs
@@ -155,7 +155,7 @@
         grammar recognizers.
       </p>
 <a name="spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id805365"></a>
+<a name="id806920"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.advantages_of_using__emphasis_spirit_lex__emphasis_">Advantages
         of using <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>
@@ -166,8 +166,8 @@
         library and the C++ host language. You don't need any external tools to generate
         the code, your lexer will be perfectly integrated with the rest of your program,
         making it possible to freely access any context information and data structure.
-        Since the C++ compiler sees all the code it will generate optimal code nomatter
-        what configuration options have been chosen by the user. <span class="emphasis"><em>Spirit.Lex</em></span>
+        Since the C++ compiler sees all the code, it will generate optimal code no
+        matter what configuration options have been chosen by the user. <span class="emphasis"><em>Spirit.Lex</em></span>
         gives you the vast majority of features you could get from a similar <a href="http://flex.sourceforge.net/" target="_top">Flex</a> program without the need
         to leave C++ as a host language:
       </p>
@@ -199,11 +199,10 @@
         something not supported by <a href="http://flex.sourceforge.net/" target="_top">Flex</a>
         or other lexical scanner generators (such as <a href="http://re2c.sourceforge.net/" target="_top">re2c</a>,
         <a href="http://www.cs.queensu.ca/~thurston/ragel/" target="_top">Ragel</a>, etc.).
-        But it is very flexible and allows you to speed up the development of your
-        application.
+        This dynamic flexibility allows you to speed up the development of your application.
       </p>
 <a name="spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_"></a><h5>
-<a name="id805468"></a>
+<a name="id807023"></a>
         <a class="link" href="lexer_introduction.html#spirit.lex.lexer_introduction.the_library_structure_of__emphasis_spirit_lex__emphasis_">The
         Library Structure of <span class="emphasis"><em>Spirit.Lex</em></span></a>
       </h5>

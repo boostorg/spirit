@@ -8,8 +8,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  This sample demonstrates a generator formatting and printing a matrix 
-//  of integers taken from a simple vector of vectors. The size an the contents 
-//  of the printed matrix is generated randomly.
+//  of integers taken from a simple vector of vectors. The size and the 
+//  contents of the printed matrix is generated randomly.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -39,7 +39,6 @@ namespace client
         {
             using karma::int_;
             using karma::right_align;
-            using karma::space;
             using karma::eol;
 
             element %= right_align(10)[int_];
@@ -55,7 +54,7 @@ namespace client
 
     //[tutorial_karma_nummatrix
     template <typename OutputIterator>
-    bool generate_numbers(OutputIterator sink
+    bool generate_matrix(OutputIterator& sink
       , std::vector<std::vector<int> > const& v)
     {
         matrix_grammar<OutputIterator> matrix;
@@ -93,10 +92,10 @@ main()
         std::generate(v[row].begin(), v[row].end(), std::rand);
     }
 
-    // ok, we got some numbers, no print them back out
+    // ok, we got the matrix, now print it out
     std::string generated;
     std::back_insert_iterator<std::string> sink(generated);
-    if (!client::generate_numbers(sink, v))
+    if (!client::generate_matrix(sink, v))
     {
         std::cout << "-------------------------\n";
         std::cout << "Generating failed\n";

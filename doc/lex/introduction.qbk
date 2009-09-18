@@ -14,8 +14,8 @@ Most compiler texts start here, and devote several chapters to discussing
 various ways to build scanners. __lex__ is a library built to take care of the 
 complexities of creating a lexer for your grammar (in this documentation we 
 will use the terms 'lexical analyzer', 'lexer' and 'scanner' interchangably). 
-All it needs to create a lexer is to know the set of patterns describing the 
-different tokens you want to recognize in the input. To make this a bit more 
+All that is needed to create a lexer is to know the set of patterns describing 
+the different tokens you want to recognize in the input. To make this a bit more 
 formal, here are some definitions:
 
 * A token is a sequence of consecutive characters having a collective meaning.
@@ -26,7 +26,7 @@ formal, here are some definitions:
   a pattern for a rule matching C++ identifiers.
 * Characters between tokens are called whitespace; these include spaces, tabs, 
   newlines, and formfeeds. Many people also count comments as whitespace, 
-  though since some tools such as lint look at comments, this conflation is not 
+  though since some tools such as lint look at comments, this method is not 
   perfect.
 
 [heading Why Use a Separate Lexer?]
@@ -39,7 +39,7 @@ parser in one module. In fact, __qi__ allows you to write parsers without using 
 lexer, parsing the input character stream directly, and for the most part this 
 is the way __spirit__ has been used since its invention.
 
-However, this separation has both practical and theoretical bases and proves to 
+However, this separation has both practical and theoretical basis, and proves to 
 be very useful in practical applications. In 1956, Noam Chomsky defined the 
 "Chomsky Hierarchy" of grammars:
 
@@ -50,17 +50,17 @@ be very useful in practical applications. In 1956, Noam Chomsky defined the
 
 The complexity of these grammars increases from regular grammars being the 
 simplest to unrestricted grammars being the most complex. Similarly, the 
-complexity of the recognizers for these grammars increases. Although, a few 
+complexity of pattern recognition for these grammars increases. Although, a few 
 features of some programming languages (such as C++) are Type 1, fortunately 
-for the most part programming languages can be described using only the Types 3 
-and 2. The neat part about these two types is that they are well known and the 
+for the most part programming languages can be described using only the Types 2 
+and 3. The neat part about these two types is that they are well known and the 
 ways to parse them are well understood. It has been shown that any regular 
 grammar can be parsed using a state machine (finite automaton). Similarly, 
 context-free grammars can always be parsed using a push-down automaton 
 (essentially a state machine augmented by a stack). 
 
-In real programming languages and practical grammars the parts that can be 
-handled as regular expressions tend to be the lower-level parts, such as the 
+In real programming languages and practical grammars, the parts that can be 
+handled as regular expressions tend to be the lower-level pieces, such as the 
 definition of an identifier or of an integer value:
 
     letter     := [a-zA-Z]
@@ -72,7 +72,7 @@ definition of an identifier or of an integer value:
 Higher level parts of practical grammars tend to be more complex and can't be
 implemented using plain regular expressions. We need to store 
 information on the built-in hardware stack while recursing the grammar 
-hierarchy, and that in fact this is the preferred approach used for top-down 
+hierarchy, and that is the preferred approach used for top-down 
 parsing. Since it takes a different kind of abstract machine to parse the two 
 types of grammars, it proved to be efficient to separate the lexical scanner 
 into a separate module which is built around the idea of a state machine. The 
@@ -85,7 +85,7 @@ backtracking. Unfortunately, in practice most of the time that isn't possible.
 Almost every language has certain keywords such as IF, FOR, and WHILE. The 
 decision if a certain character sequence actually comprises a keyword or just 
 an identifier often can be made only after seeing the first delimiter /after/
-it. This already is a limited form of backtracking, since we need to store the 
+it. In fact, this makes the process backtracking, since we need to store the 
 string long enough to be able to make the decision. The same is true for more 
 coarse grained language features such as nested IF/ELSE statements, where the 
 decision about to which IF belongs the last ELSE statement can be made only
@@ -112,10 +112,10 @@ traditional tools such as __flex__ is its carefully crafted integration with
 the __spirit__ library and the C++ host language. You don't need any external 
 tools to generate the code, your lexer will be perfectly integrated with the 
 rest of your program, making it possible to freely access any context 
-information and data structure. Since the C++ compiler sees all the code it
-will generate optimal code nomatter what configuration options have been chosen
-by the user. __lex__ gives you the vast majority of features you could get from a similar
-__flex__ program without the need to leave C++ as a host language:
+information and data structure. Since the C++ compiler sees all the code, it
+will generate optimal code no matter what configuration options have been chosen
+by the user. __lex__ gives you the vast majority of features you could get from 
+a similar __flex__ program without the need to leave C++ as a host language:
 
 * The definition of tokens is done using regular expressions (patterns)
 * The token definitions can refer to special substitution strings (pattern 
@@ -131,8 +131,8 @@ very similar to the way __flex__ operates - we will mainly focus on the
 opposite, the /dynamic/ model. You can directly integrate the token definitions 
 into your C++ program, building the lexical analyzer dynamically at runtime. The 
 dynamic model is something not supported by __flex__ or other lexical scanner 
-generators (such as __re2c__, __ragel__, etc.). But it is very flexible and 
-allows you to speed up the development of your application.
+generators (such as __re2c__, __ragel__, etc.). This dynamic flexibility allows 
+you to speed up the development of your application.
 
 [heading The Library Structure of __lex__]
 
@@ -145,8 +145,8 @@ lexical analyzer as an arbitrary standard forward iterator. The lexical
 analyzer itself exposes a standard forward iterator as well. The difference 
 here is that the exposed iterator provides access to the token sequence instead
 of to the character sequence. The tokens in this sequence are constructed on 
-the fly by analyzing the underlying character sequence and 
-matching this to the patterns as defined by the application.
+the fly by analyzing the underlying character sequence and matching this to the 
+patterns as defined by the application.
 
 [fig lexerflow.png..The Library structure and Common Flow of Information while using __lex__ in an application..spirit.lexerflow]
 

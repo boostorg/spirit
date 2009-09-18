@@ -11,11 +11,10 @@
 [heading The tokenize function]
 
 The `tokenize()` function is a helper function simplifying the usage of a lexer
-in a standalone fashion. Consider you have a standalone lexer where all the 
-required functionality is implemented inside of lexer semantic actions. A good 
-example for this is the [@../../example/lex/word_count_lexer.cpp word_count_lexer]
+in a standalone fashion. For instance, you may have a standalone lexer where all 
+that functional requirements are implemented inside lexer semantic actions. 
+A good example for this is the [@../../example/lex/word_count_lexer.cpp word_count_lexer]
 described in more detail in the section __sec_lex_quickstart_2__. 
-As a reminder, here is the token definition class:
 
 [wcl_token_definition]
 
@@ -46,7 +45,7 @@ The prototype of this function is:
       , typename Lexer::char_type const* initial_state = 0);
 
 [variablelist where:
-    [[Iterator& first]      [The begin of the input sequence to tokenize. The
+    [[Iterator& first]      [The beginning of the input sequence to tokenize. The
                              value of this iterator will be updated by the 
                              lexer, pointing to the first not matched
                              character of the input after the function 
@@ -55,10 +54,10 @@ The prototype of this function is:
     [[Lexer const& lex]     [The lexer instance to use for tokenization.]]
     [[Lexer::char_type const* initial_state]
                             [This optional parameter can be used to specify 
-                             the initial lexer state fo rthe tokenization.]]
+                             the initial lexer state for tokenization.]]
 ]
 
-A second overload of the `tokenize()` function allows to specify any arbitrary 
+A second overload of the `tokenize()` function allows specifying of any arbitrary 
 function or function object to be called for each of the generated tokens. For 
 some applications this is very useful, as it might avoid having lexer semantic 
 actions. For an example of how to use this function, please have a look at 
@@ -73,7 +72,7 @@ Here is the prototype of this `tokenize()` function overload:
       , typename Lexer::char_type const* initial_state = 0);
 
 [variablelist where:
-    [[Iterator& first]      [The begin of the input sequence to tokenize. The
+    [[Iterator& first]      [The beginning of the input sequence to tokenize. The
                              value of this iterator will be updated by the 
                              lexer, pointing to the first not matched
                              character of the input after the function 
@@ -82,13 +81,12 @@ Here is the prototype of this `tokenize()` function overload:
     [[Lexer const& lex]     [The lexer instance to use for tokenization.]]
     [[F f]                  [A function or function object to be called for 
                              each matched token. This function is expected to 
-                             have the prototype: `bool f(Lexer::token_type);`
-                             and should return `false` if the supplied token
-                             instance is invald (the `tokenize()` function will
-                             return immediatly).]]
+                             have the prototype: `bool f(Lexer::token_type);`.
+                             The `tokenize()` function will return immediatly if 
+                             `F` returns `false.]]
     [[Lexer::char_type const* initial_state]
                             [This optional parameter can be used to specify 
-                             the initial lexer state fo rthe tokenization.]]
+                             the initial lexer state for tokenization.]]
 ]
 
 [heading The generate_static function]

@@ -58,7 +58,7 @@ range in the underlying input sequence.
 
 [wcf_functor]
 
-All what's left is to write some boilerplate code helping to tie together the
+All what is left is to write some boilerplate code helping to tie together the
 pieces described so far. To simplify this example we call the `lex::tokenize()`
 function implemented in __lex__ (for a more detailed description of this 
 function see here: __fixme__), even if we could have written a loop to iterate
@@ -87,7 +87,7 @@ has to be written when using __lex__.
 The remaining examples in this tutorial will use more sophisticated features 
 of __lex__, mainly to allow further simplification of the code to be written, 
 while maintaining the similarity with corresponding features of __flex__. 
-__lex__ has been designed to be as much as possible similar to __flex__, that 
+__lex__ has been designed to be as similiar to __flex__ as possible. That 
 is why this documentation will provide the corresponding __flex__ code for the 
 shown __lex__ examples almost everywhere. So consequently, here is the __flex__ 
 code corresponding to the example as shown above.

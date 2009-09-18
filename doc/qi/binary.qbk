@@ -92,7 +92,7 @@ not defined in __primitive_parser_concept__.
     [[`byte_`]              [`boost::uint_least8_t`]]
     [[`word`]               [`boost::uint_least16_t`]]
     [[`dword`]              [`boost::uint_least32_t`]]
-    [[`qword`]              [`boost::uint_least64_t`)]]
+    [[`qword`]              [`boost::uint_least64_t`]]
     [[`byte_(b)`]           [__unused__]]
     [[`word(w)`]            [__unused__]]
     [[`dword(dw)`]          [__unused__]]

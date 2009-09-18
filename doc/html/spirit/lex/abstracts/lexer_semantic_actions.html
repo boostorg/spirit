@@ -56,7 +56,7 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">start</span></code></span></dt>
 <dd><p>
-              This is a the iterator pointing to the begin of the matched range in
+              This is the iterator pointing to the begin of the matched range in
               the underlying input sequence. The type of the iterator is the same
               as specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
               The semantic action is allowed to change the value of this iterator
@@ -64,9 +64,9 @@
             </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">end</span></code></span></dt>
 <dd><p>
-              This is a the iterator pointing to the end of the matched range in
-              the underlying input sequence. The type of the iterator is the same
-              as specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
+              This is the iterator pointing to the end of the matched range in the
+              underlying input sequence. The type of the iterator is the same as
+              specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
               The semantic action is allowed to change the value of this iterator
               influencing, the matched input sequence.
             </p></dd>
@@ -74,7 +74,7 @@
 <dd><p>
               This value is pre/initialized to <code class="computeroutput"><span class="identifier">pass_normal</span></code>.
               If the semantic action sets it to <code class="computeroutput"><span class="identifier">pass_fail</span></code>
-              the behaves as if the token has not been matched in the first place.
+              this behaves as if the token has not been matched in the first place.
               If the semantic action sets this to <code class="computeroutput"><span class="identifier">pass_ignore</span></code>
               the lexer ignores the current token and tries to match a next token
               from the input.
@@ -105,7 +105,7 @@
 <span class="keyword">void</span> <span class="identifier">f</span> <span class="special">();</span>
 </pre>
 <a name="spirit.lex.abstracts.lexer_semantic_actions.the_context_of_a_lexer_semantic_action"></a><h6>
-<a name="id822808"></a>
+<a name="id826050"></a>
           <a class="link" href="lexer_semantic_actions.html#spirit.lex.abstracts.lexer_semantic_actions.the_context_of_a_lexer_semantic_action">The
           context of a lexer semantic action</a>
         </h6>
@@ -120,7 +120,7 @@
           of the available functionality.
         </p>
 <div class="table">
-<a name="id822829"></a><p class="title"><b>Table 8. Functions exposed by any context passed to a lexer
+<a name="id826070"></a><p class="title"><b>Table 8. Functions exposed by any context passed to a lexer
         semantic action</b></p>
 <div class="table-contents"><table class="table" summary="Functions exposed by any context passed to a lexer
         semantic action">
@@ -196,9 +196,8 @@
               </td>
 <td>
               <p>
-                The function <code class="computeroutput"><span class="identifier">lookahead</span><span class="special">()</span></code> can be for instance used to implement
-                lookahead for lexer engines not supporting constructs like flex'
-                <code class="computeroutput"><span class="identifier">a</span><span class="special">/</span><span class="identifier">b</span></code> (match <code class="computeroutput"><span class="identifier">a</span></code>,
+                The function <code class="computeroutput"><span class="identifier">lookahead</span><span class="special">()</span></code> can be used to implement lookahead
+                for lexer engines not supporting constructs like flex' <code class="computeroutput"><span class="identifier">a</span><span class="special">/</span><span class="identifier">b</span></code> (match <code class="computeroutput"><span class="identifier">a</span></code>,
                 but only when followed by <code class="computeroutput"><span class="identifier">b</span></code>).
                 It invokes the lexer on the input following the current token without
                 actually moving forward in the input stream. The function returns
@@ -241,7 +240,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.lex.abstracts.lexer_semantic_actions.lexer_semantic_actions_using_phoenix"></a><h6>
-<a name="id825080"></a>
+<a name="id826588"></a>
           <a class="link" href="lexer_semantic_actions.html#spirit.lex.abstracts.lexer_semantic_actions.lexer_semantic_actions_using_phoenix">Lexer
           Semantic Actions Using Phoenix</a>
         </h6>
@@ -253,7 +252,7 @@
           predefined <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> placeholders:
         </p>
 <div class="table">
-<a name="id825102"></a><p class="title"><b>Table 9. Predefined Phoenix placeholders for lexer semantic
+<a name="id826611"></a><p class="title"><b>Table 9. Predefined Phoenix placeholders for lexer semantic
         actions</b></p>
 <div class="table-contents"><table class="table" summary="Predefined Phoenix placeholders for lexer semantic
         actions">
@@ -282,7 +281,7 @@
               </td>
 <td>
               <p>
-                Refers to the iterator pointing to the begin of the matched input
+                Refers to the iterator pointing to the beginning of the matched input
                 sequence. Any modifications to this iterator value will be reflected
                 in the generated token.
               </p>
@@ -384,7 +383,7 @@
           table lists the available support functions and describes their functionality:
         </p>
 <div class="table">
-<a name="id825381"></a><p class="title"><b>Table 10. Support functions usable from Phoenix expressions
+<a name="id826890"></a><p class="title"><b>Table 10. Support functions usable from Phoenix expressions
         inside lexer semantic actions</b></p>
 <div class="table-contents"><table class="table" summary="Support functions usable from Phoenix expressions
         inside lexer semantic actions">

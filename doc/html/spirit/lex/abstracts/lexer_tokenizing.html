@@ -28,19 +28,18 @@
         Input Data</a>
 </h4></div></div></div>
 <a name="spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function"></a><h6>
-<a name="id819766"></a>
+<a name="id821467"></a>
           <a class="link" href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function">The
           tokenize function</a>
         </h6>
 <p>
           The <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
           function is a helper function simplifying the usage of a lexer in a standalone
-          fashion. Consider you have a standalone lexer where all the required functionality
-          is implemented inside of lexer semantic actions. A good example for this
-          is the <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer</a>
+          fashion. For instance, you may have a standalone lexer where all that functional
+          requirements are implemented inside lexer semantic actions. A good example
+          for this is the <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer</a>
           described in more detail in the section <a class="link" href="../tutorials/lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Lex
           Quickstart 2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>.
-          As a reminder, here is the token definition class:
         </p>
 <p>
           </p>
@@ -114,9 +113,9 @@
 <dl>
 <dt><span class="term">Iterator&amp; first</span></dt>
 <dd><p>
-              The begin of the input sequence to tokenize. The value of this iterator
-              will be updated by the lexer, pointing to the first not matched character
-              of the input after the function returns.
+              The beginning of the input sequence to tokenize. The value of this
+              iterator will be updated by the lexer, pointing to the first not matched
+              character of the input after the function returns.
             </p></dd>
 <dt><span class="term">Iterator last</span></dt>
 <dd><p>
@@ -129,12 +128,12 @@
 <dt><span class="term">Lexer::char_type const* initial_state</span></dt>
 <dd><p>
               This optional parameter can be used to specify the initial lexer state
-              fo rthe tokenization.
+              for tokenization.
             </p></dd>
 </dl>
 </div>
 <p>
-          A second overload of the <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> function allows to specify any arbitrary
+          A second overload of the <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> function allows specifying of any arbitrary
           function or function object to be called for each of the generated tokens.
           For some applications this is very useful, as it might avoid having lexer
           semantic actions. For an example of how to use this function, please have
@@ -200,9 +199,9 @@
 <dl>
 <dt><span class="term">Iterator&amp; first</span></dt>
 <dd><p>
-              The begin of the input sequence to tokenize. The value of this iterator
-              will be updated by the lexer, pointing to the first not matched character
-              of the input after the function returns.
+              The beginning of the input sequence to tokenize. The value of this
+              iterator will be updated by the lexer, pointing to the first not matched
+              character of the input after the function returns.
             </p></dd>
 <dt><span class="term">Iterator last</span></dt>
 <dd><p>
@@ -216,19 +215,20 @@
 <dd><p>
               A function or function object to be called for each matched token.
               This function is expected to have the prototype: <code class="computeroutput"><span class="keyword">bool</span>
-              <span class="identifier">f</span><span class="special">(</span><span class="identifier">Lexer</span><span class="special">::</span><span class="identifier">token_type</span><span class="special">);</span></code>
-              and should return <code class="computeroutput"><span class="keyword">false</span></code>
-              if the supplied token instance is invald (the <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> function will return immediatly).
+              <span class="identifier">f</span><span class="special">(</span><span class="identifier">Lexer</span><span class="special">::</span><span class="identifier">token_type</span><span class="special">);</span></code>.
+              The <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
+              function will return immediatly if <code class="computeroutput"><span class="identifier">F</span></code>
+              returns `false.
             </p></dd>
 <dt><span class="term">Lexer::char_type const* initial_state</span></dt>
 <dd><p>
               This optional parameter can be used to specify the initial lexer state
-              fo rthe tokenization.
+              for tokenization.
             </p></dd>
 </dl>
 </div>
 <a name="spirit.lex.abstracts.lexer_tokenizing.the_generate_static_function"></a><h6>
-<a name="id822187"></a>
+<a name="id823772"></a>
           <a class="link" href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_generate_static_function">The
           generate_static function</a>
         </h6>

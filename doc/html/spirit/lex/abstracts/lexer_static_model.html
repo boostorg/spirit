@@ -68,7 +68,7 @@
           static lexical analyzer</a>).
         </p>
 <p>
-          But first we provide the code snippets needed to understand the further
+          But first we provide the code snippets needed to further understand the
           descriptions. Both, the definition of the used token identifier and the
           of the token definition class in this example are put into a separate header
           file to make these available to the code generator and the static lexical
@@ -132,8 +132,8 @@
 <p>
           This example not only shows how to build a static lexer, but it additionally
           demonstrates how such a lexer can be used for parsing in conjunction with
-          a <span class="emphasis"><em>Spirit.Qi</em></span> grammar. For completeness we provide the
-          simple grammar used in this example. As you can see, this grammar does
+          a <span class="emphasis"><em>Spirit.Qi</em></span> grammar. For completeness, we provide
+          the simple grammar used in this example. As you can see, this grammar does
           not have any dependencies on the static lexical analyzer, and for this
           reason it is not different from a grammar used either without a lexer or
           using a dynamic lexical analyzer as described before.
@@ -176,7 +176,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id826852"></a>
+<a name="id829083"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -239,7 +239,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id827998"></a>
+<a name="id829447"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -267,12 +267,12 @@
         </p>
 <p>
           Otherwise the main program is not different from an equivalent program
-          using the dynamic model. This feature makes it really easy for instance
-          to develop the lexer in dynamic mode and to switch to the static mode after
-          the code has been stabilized. The simple generator application showed above
-          enables the integration of the code generator into any existing build process.
-          The following code snippet provides the overall main function, highlighting
-          the code to be changed.
+          using the dynamic model. This feature makes it easy to develop the lexer
+          in dynamic mode and to switch to the static mode after the code has been
+          stabilized. The simple generator application shown above enables the integration
+          of the code generator into any existing build process. The following code
+          snippet provides the overall main function, highlighting the code to be
+          changed.
         </p>
 <p>
           </p>
@@ -339,14 +339,14 @@
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The generated code for the static lexer contains the token ids as these
-            have been assigned either explicitly by the programmer or implicitely
+            The generated code for the static lexer contains the token ids as they
+            have been assigned, either explicitly by the programmer or implicitely
             during lexer construction. It is your responsibility to make sure that
             all instances of a particular static lexer type use exactly the same
             token ids. This is ensured by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
-            is specified during construction of the static lexer instances (the constructor
-            of the lexer object has a seocnd default parameter allowing to designate
-            a starting token id to be used while assigning the ids to the token definitions).
+            is specified during construction of the static lexer instances. The constructor
+            of the lexer object has a second default parameter allowing it to designate
+            a starting token id to be used while assigning the ids to the token definitions.
           </p></td></tr>
 </table></div>
 </div>

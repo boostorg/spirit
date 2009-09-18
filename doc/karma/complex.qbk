@@ -273,14 +273,6 @@ is:
 
 again, allowing to simplify the overall attribute type of an expression.
 
-[/
-[heading Attributes of Rules and Grammars]
-
-* explicit attribute type
-* attribute propagation]
-  * explicit and operator%=
-]
-
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -290,7 +282,7 @@ again, allowing to simplify the overall attribute type of an expression.
 
 In one of the previous sections we showed how to format a complex number (i.e. 
 a pair of doubles). In this section we will build on this example with the goal 
-to avoid to use semantic actions in the format specification. Let's have a look 
+to avoid using semantic actions in the format specification. Let's have a look 
 at the resulting code first, trying to understand it afterwards (the full source 
 file for this example can be found here: 
 [@../../example/karma/complex_number_easier.cpp complex_number_easier.cpp]):
@@ -302,14 +294,27 @@ Let's try to cover some basic library features first.
 [heading Making Numeric Generators Fail]
 
 All __karma_numerics__ (such as `double_`, et.al.) take the value to 
-emit from an attached attribute. Alternatively, they may be initialized from a 
-literal value. For instance, to emit a constant `0.0` you may write: 
-`double_(0.0)`. The difference to a simple `0.0` or `lit(0.0)` is that the 
-`double_(0.0)` consumes an attribute if one is available. Additionally, it 
-compares its immediate value to the value of the supplied attribute, and fails 
-if those are not equal. This feature, namely to succeed generating only if 
-the attribute matches the immediate value, enables numeric generators to be 
-used to dynamically control the way output is generated.
+emit from an attached attribute. 
+
+    double d = 1.5;
+    generate(out, double_, d);       // will emit '1.5' (without the quotes)
+
+Alternatively, they may be initialized from a literal value. For instance, to 
+emit a constant `1.5` you may write: 
+
+    generate(out, double_(1.5));     // will emit '1.5' as well (without the quotes)
+
+The difference to a simple `1.5` or `lit(1.5)` is that the `double_(1.5)` 
+consumes an attribute if one is available. Additionally, it compares its 
+immediate value to the value of the supplied attribute, and fails if those are 
+not equal. 
+
+    double d = 1.5;
+    generate(out, double_(1.5), d);  // will emit '1.5' as long as d == 1.5
+
+This feature, namely to succeed generating only if the attribute matches the 
+immediate value, enables numeric generators to be used to dynamically control 
+the way output is generated.
 
 [note  There are more generators exposing the feature to fail if their 
        immediate value is not equal to the supplied attribute. Here are some:
@@ -337,6 +342,19 @@ associated generator fails.
       input, in __karma__ the criteria has to be supplied by the user. The 
       simplest way to do this is by providing an attribute.]
 
+As an example, the following generator succeeds generating
+
+    double d = 1.0;
+    BOOST_ASSERT(generate(out, &double_(1.0), d));    // succeeds as d == 1.0
+
+while this one will fail:
+
+    double d = 1.0;
+    BOOST_ASSERT(!generate(out, !double_(1.0), d));   // fails as d == 1.0
+
+Neither of these will emit any output. The predicates discard everything 
+emitted by the generators they are applied to.
+
 [heading Ignoring Supplied Attributes]
 
 Sometimes it is desirable to 'skip' (i.e. ignore) a provided attribute. This 
@@ -355,7 +373,7 @@ embedded generator but it does not emit any output.
 [heading Putting everything together]
 
 Very similar to our first example ealier we use two alternatives to allow for 
-two different output formats depending on whether the imaginery part of the 
+the two different output formats depending on whether the imaginery part of the 
 complex number is equal to zero or not. The first alternative is executed if the 
 imaginary part is not zero, the second alternative otherwise. This time we make
 the decision during runtime using the __karma_not_predicate__ combined with the 
