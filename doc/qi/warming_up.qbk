@@ -9,7 +9,9 @@
 [section Warming up]
 
 We'll start by showing examples of parser expressions to give you a feel on how
-to build parsers from the simplest parser, building up as we go.
+to build parsers from the simplest parser, building up as we go. When comparing 
+EBNF to __spirit__, the expressions may seem awkward at first. __spirit__ heavily 
+uses operator overloading to accomplish its magic.
 
 [heading Trivial Example #1 Parsing a number]
 
@@ -54,8 +56,8 @@ star is before the expression it modifies. C'est la vie. Blame it on the fact
 that we must work with the syntax rules of C++.
 
 Any expression that evaluates to a parser may be used with the Kleene Star.
-Keep in mind, though, that due to C++ operator precedence rules you may need
-to put the expression in parentheses for complex expressions. The Kleene Star
+Keep in mind that C++ operator precedence rules may require you to put 
+expressions in parentheses for complex expressions. The Kleene Star
 is also known as a Kleene Closure, but we call it the Star in most places.
 
 [heading Trivial Example #4 Parsing a comma-delimited list of numbers]

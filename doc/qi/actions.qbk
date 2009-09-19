@@ -8,17 +8,17 @@
 
 [section Semantic Actions]
 
-Our parser above is really nothing but a recognizer. It answers the question
-"did the input match our grammar?", but it does not do anything other than that.
-It does not extract any information from what was parsed. For example, whenever
-we parse a real number, we wish to store the parsed number after a successful
-match.
+The example in the previous section was very simplistic. It only recognized
+data, but did nothing with it. It answered the question: "Did the input match?".
+Now, we want to extract information from what was parsed. For example, we would
+want to store the parsed number after a successful match. To do this, you will 
+need ['semantic actions].
 
-Enter Semantic actions. Semantic actions may be attached to any point in the
-grammar specification. These actions are C++ functions or function objects that
-are called whenever a part of the parser successfully recognizes a portion of
-the input. Say you have a parser `P`, and a C++ function `F`, you can make the
-parser call `F` whenever it matches an input by attaching `F`:
+Semantic actions may be attached to any point in the grammar specification. 
+These actions are C++ functions or function objects that are called whenever a 
+part of the parser successfully recognizes a portion of the input. Say you have 
+a parser `P`, and a C++ function `F`. You can make the parser call `F` whenever 
+it matches an input by attaching `F`:
 
     P[F]
 
@@ -51,8 +51,8 @@ Given:
 
 Take note that with function objects, we need to have an `operator()` with 3
 arguments. Since we don't care about the other two, we can use `unused_type` for
-these. We'll see more of `unused_type` elsewhere. Get used to it. `unused_type`
-is a Spirit supplied support class.
+these. We'll see more of `unused_type` elsewhere. `unused_type` is a Spirit 
+supplied support class.
 
 All examples parse inputs of the form:
 
@@ -96,8 +96,8 @@ The examples above can be found here: [@../../example/qi/actions.cpp]
 __phoenix__, a companion library bundled with Spirit, is specifically suited
 for binding semantic actions. It is like __boost_lambda__ in steroids, with
 special custom features that make it easy to integrate semantic actions with
-Spirit. If your requirements go beyond simple to moderate parsing, I suggest you
-use this library. Examples presented henceforth shall be using the library
-exclusively
+Spirit. If your requirements go beyond simple to moderate parsing, it is 
+suggested that you use this library. All the following examples in this tutorial
+will use __phoenix__ for sematic actions.
 
 [endsect]
