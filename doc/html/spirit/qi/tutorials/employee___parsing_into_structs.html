@@ -29,7 +29,7 @@
 </h4></div></div></div>
 <p>
           It's a common question in the <a href="http://www.nabble.com/The-Spirit-Parser-Library-f3430.html" target="_top">Spirit
-          General List</a>: how do I parse and place the results into a C++ struct?
+          General List</a>: How do I parse and place the results into a C++ struct?
           Of course, at this point, you already know various ways to do it, using
           semantic actions. There are many ways to skin a cat. Spirit2, being fully
           attributed, makes it even easier. The next example demonstrates some features
@@ -71,8 +71,8 @@
         </p>
 <p>
           Then, we need to tell <a href="../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-          about our employee struct to make it a first- class fusion citizen. If
-          you don't know fusion yet, it is a <a href="http://www.boost.org/" target="_top">Boost</a>
+          about our employee struct to make it a first- class fusion citizen that
+          the grammar can utilize. If you don't know fusion yet, it is a <a href="http://www.boost.org/" target="_top">Boost</a>
           library for working with heterogenous collections of data, commonly referred
           to as tuples. Spirit uses fusion extensively as part of its infrastructure.
         </p>
@@ -179,7 +179,7 @@
           has a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code> attribute.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a><h6>
-<a name="id563617"></a>
+<a name="id562310"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
         </h6>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
@@ -196,7 +196,7 @@
           a double quote.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a><h6>
-<a name="id563730"></a>
+<a name="id562422"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
         </h6>
 <p>
@@ -215,16 +215,18 @@
           is just <code class="computeroutput"><span class="keyword">char</span></code>.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a><h6>
-<a name="id563838"></a>
+<a name="id562530"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
         </h6>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
 </pre>
 <p>
-          is the close kin of the kleene star we got so used to in our tutorial.
-          Like it's kin, the kleene star, its attribute is a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> where <code class="computeroutput"><span class="identifier">A</span></code>
-          is the attribute of <code class="computeroutput"><span class="identifier">a</span></code>.
-          So, putting all these together, the attribute of
+          is similar to kleene star. Rather than match everything, <code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code> matches
+          one or more. Like it's related function, the kleene star, its attribute
+          is a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+          where <code class="computeroutput"><span class="identifier">A</span></code> is the attribute
+          of <code class="computeroutput"><span class="identifier">a</span></code>. So, putting all these
+          together, the attribute of
         </p>
 <pre class="programlisting"><span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span>
 </pre>
@@ -234,7 +236,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a><h6>
-<a name="id563964"></a>
+<a name="id562667"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
         </h6>
@@ -275,7 +277,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a><h6>
-<a name="id564186"></a>
+<a name="id562889"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
         </h6>
@@ -307,7 +309,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a><h6>
-<a name="id564424"></a>
+<a name="id563128"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
         </h6>
@@ -345,7 +347,7 @@
           directly into the rule's attribute, in-situ.
         </p>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a><h6>
-<a name="id564744"></a>
+<a name="id563447"></a>
           <a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
         </h6>
 <p>

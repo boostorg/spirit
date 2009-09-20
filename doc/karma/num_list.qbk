@@ -100,15 +100,12 @@ generating output from more complex - but still regular - data structures.
 For simplicity we will use a `std::vector<std::vector<int> >` as a poor 
 man's matrix representation. But even if the data structure seems to be very 
 simple, the presented principles are applicable to more complex, or custom
-data structures as well. The full source code of the example presented in this 
+data structures as well. The full source code of the example discussed in this 
 section can be found here: [@../../example/karma/num_matrix.cpp num_matrix.cpp].
 
 [import ../../example/karma/num_matrix.cpp]
 
-[heading Attributes of Rules and Grammars]
 
-
-* explicit attribute type
 * attribute propagation
   * explicit and operator%=
 

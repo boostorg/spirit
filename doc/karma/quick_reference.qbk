@@ -112,7 +112,7 @@ See here for more information about __karma_char__.
 
 [section:string String Generators]
 
-See here for more information about __karma_string__.
+See here for more information about [karma_string String Generators].
 
 [table 
     [[Expression]                   [Attribute] [Description]]
@@ -224,7 +224,7 @@ See here for more information about __karma_numeric__.
 
 [section:stream Stream Generators]
 
-See here for more information about __karma_stream__.
+See here for more information about [karma_stream Stream Generators].
 
 [table 
     [[Expression]           [Attribute]     [Description]]
@@ -378,6 +378,15 @@ See here for more information about __karma_directive__.
 
 [endsect]
 
+[section:action Generator Semantic Actions]
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action, `fa` before invoking `g`.]]
+]
+
+[endsect]
+
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -490,11 +499,11 @@ a: Unused --> -a: Unused``]]
                                                 `A1, A2, A3` are optional and can be specified in any order.
                                                 `name` is an optional string that gives the rule
                                                 its name, useful for debugging and error handling.]]
-    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`. `boost::shared_ptr` semantics.]]
+    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
     [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
                                                 holds a reference to `r`. Reference semantics.]]
-    [[`r.copy()`]                               [Get a copy of `r`. `boost::shared_ptr` semantics.]]
+    [[`r.copy()`]                               [Get a copy of `r`.]]
     [[`r.name(name)`]                           [Naming a rule]]
     [[`r.name()`]                               [Getting the name of a rule]]
     [[`r = g;`]                                 [Rule definition]]

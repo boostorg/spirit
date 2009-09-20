@@ -44,9 +44,9 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section Qi Parsers]
+[section:qi_parsers Qi Parsers]
 
-[section char]
+[section:char Character Parsers]
 
 [table
     [[Expression]               [Attribute]       [Description]]
@@ -85,7 +85,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section numeric]
+[section:numeric Numeric Parsers]
 
 [table
     [[Expression]           [Attribute]                 [Description]]
@@ -107,7 +107,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section string]
+[section:string String Parsers]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -136,7 +136,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section auxiliary]
+[section:auxiliary Auxiliary Parsers]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -153,7 +153,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section binary]
+[section:binary Binary Parsers]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -170,7 +170,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section directive]
+[section:directive Parser Directives]
 
 [table 
     [[Expression]                   [Attribute]                     [Description]]
@@ -189,7 +189,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section operator]
+[section:operator Parser Operators]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -215,7 +215,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section action]
+[section:action Parser Semantic Actions]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]

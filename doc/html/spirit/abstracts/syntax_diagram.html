@@ -28,20 +28,27 @@
 </h3></div></div></div>
 <p>
         In the next section, we will deal with Parsing Expression Grammars (PEG)
-        <sup>[<a name="id548962" href="#ftn.id548962" class="footnote">2</a>]</sup>
+        <sup>[<a name="id543501" href="#ftn.id543501" class="footnote">2</a>]</sup>
         , a variant of Extended Backus-Naur Form (EBNF)
-        <sup>[<a name="id548974" href="#ftn.id548974" class="footnote">3</a>]</sup>
+        <sup>[<a name="id543513" href="#ftn.id543513" class="footnote">3</a>]</sup>
         with a different interpretation. It is easier to understand PEG using Syntax
         Diagrams. Syntax diagrams represent a grammar graphically. It was used extensibly
         by Niklaus Wirth
-        <sup>[<a name="id548986" href="#ftn.id548986" class="footnote">4</a>]</sup>
+        <sup>[<a name="id543525" href="#ftn.id543525" class="footnote">4</a>]</sup>
         in the "Pascal User Manual". Syntax Diagrams are easily understandable
         with programmers due to its similarity to flow charts. The isomorphism of
         the diagrams and functions make it ideal for representing Recursive Descent
         parsers which are essentially mutually recursive functions.
       </p>
+<p>
+        Parsing Expression Grammars historically have been used for describing grammars
+        for parsers only (hence the name). In <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>
+        we use a very similar notation for output generation as well. Almost all
+        the concepts described here are equally applicable to <span class="emphasis"><em>Spirit.Qi</em></span>
+        parsers as they are for <span class="emphasis"><em>Spirit.Karma</em></span> generators.
+      </p>
 <a name="spirit.abstracts.syntax_diagram.elements"></a><h5>
-<a name="id548998"></a>
+<a name="id543552"></a>
         <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.elements">Elements</a>
       </h5>
 <p>
@@ -52,7 +59,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/start_stop.png" alt="start_stop"></span>
+            <span class="inlinemediaobject"><img src="../.././images/start_stop.png" alt="start_stop"></span>
           </p>
 <p>
         </p>
@@ -65,7 +72,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/terminal.png" alt="terminal"></span>
+            <span class="inlinemediaobject"><img src="../.././images/terminal.png" alt="terminal"></span>
           </p>
 <p>
         </p>
@@ -79,13 +86,13 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/non-terminal.png" alt="non-terminal"></span>
+            <span class="inlinemediaobject"><img src="../.././images/non-terminal.png" alt="non-terminal"></span>
           </p>
 <p>
         </p>
 </blockquote></div>
 <a name="spirit.abstracts.syntax_diagram.constructs"></a><h5>
-<a name="id549098"></a>
+<a name="id543652"></a>
         <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.constructs">Constructs</a>
       </h5>
 <p>
@@ -95,7 +102,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/sequence.png" alt="sequence"></span>
+            <span class="inlinemediaobject"><img src="../.././images/sequence.png" alt="sequence"></span>
           </p>
 <p>
         </p>
@@ -110,7 +117,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/alternative.png" alt="alternative"></span>
+            <span class="inlinemediaobject"><img src="../.././images/alternative.png" alt="alternative"></span>
           </p>
 <p>
         </p>
@@ -122,7 +129,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/optional.png" alt="optional"></span>
+            <span class="inlinemediaobject"><img src="../.././images/optional.png" alt="optional"></span>
           </p>
 <p>
         </p>
@@ -134,7 +141,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/kleene.png" alt="kleene"></span>
+            <span class="inlinemediaobject"><img src="../.././images/kleene.png" alt="kleene"></span>
           </p>
 <p>
         </p>
@@ -143,7 +150,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/plus.png" alt="plus"></span>
+            <span class="inlinemediaobject"><img src="../.././images/plus.png" alt="plus"></span>
           </p>
 <p>
         </p>
@@ -156,7 +163,7 @@
         This behavior is quite obvious with syntax diagrams as they resemble flow-charts.
       </p>
 <a name="spirit.abstracts.syntax_diagram.predicates"></a><h5>
-<a name="id549258"></a>
+<a name="id543813"></a>
         <a class="link" href="syntax_diagram.html#spirit.abstracts.syntax_diagram.predicates">Predicates</a>
       </h5>
 <p>
@@ -171,7 +178,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/predicate.png" alt="predicate"></span>
+            <span class="inlinemediaobject"><img src="../.././images/predicate.png" alt="predicate"></span>
           </p>
 <p>
         </p>
@@ -188,7 +195,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/and_predicate.png" alt="and_predicate"></span>
+            <span class="inlinemediaobject"><img src="../.././images/and_predicate.png" alt="and_predicate"></span>
           </p>
 <p>
         </p>
@@ -197,7 +204,7 @@
 <p>
           </p>
 <p>
-            <span class="inlinemediaobject"><img src="../../../../images/not_predicate.png" alt="not_predicate"></span>
+            <span class="inlinemediaobject"><img src="../.././images/not_predicate.png" alt="not_predicate"></span>
           </p>
 <p>
         </p>
@@ -211,14 +218,14 @@
       </p>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id548962" href="#id548962" class="para">2</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id543501" href="#id543501" class="para">2</a>] </sup>
             Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
             Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
           </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id548974" href="#id548974" class="para">3</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id543513" href="#id543513" class="para">3</a>] </sup>
             Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
           </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id548986" href="#id548986" class="para">4</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id543525" href="#id543525" class="para">4</a>] </sup>
             Niklaus Wirth: The Programming Language Pascal. (July 1973)
           </p></div>
 </div>

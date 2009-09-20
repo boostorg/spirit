@@ -18,8 +18,7 @@ parser. A PEG can be directly represented as a recursive-descent parser.
 Like EBNF, PEG is a formal grammar for describing a formal language in
 terms of a set of rules used to recognize strings of this language.
 Unlike EBNF, PEGs have an exact interpretation. There is only one valid
-parse tree (see __ast__) for each PEG
-grammar.
+parse tree (see __ast__) for each PEG grammar.
 
 [heading Sequences]
 
@@ -38,8 +37,8 @@ Here's a trivial example:
 
 which means the character `x` must be followed by a digit.
 
-[note In Spirit.Qi, we use the `>>` for sequences since C++ does not
-allow juxtaposition]
+[note In __qi__, we use the `>>` for sequences since C++ does not
+allow juxtaposition, while in __karma__ we use the `<<` instead.]
 
 [heading Alternatives]
 
@@ -47,7 +46,7 @@ Alternatives are represented in PEG using the slash:
 
     a / b
 
-[note In Spirit.Qi, we use the `|` for alternatives just as in EBNF]
+[note In __qi__ and __karma__, we use the `|` for alternatives just as in EBNF.]
 
 Alternatives allow for choices. The expression above reads: try to match
 `a`. If `a` succeeds, success, if not try to match `b`. This is a bit of
@@ -69,8 +68,8 @@ plus loops:
     a*
     a+
 
-[note Spirit.Qi uses the prefix star and plus since there is no postfix
-star or plus in C++.]
+[note __qi__ and __karma__ use the prefix star and plus since there is no 
+postfix star or plus in C++.]
 
 Here are the syntax diagrams:
 
@@ -105,6 +104,9 @@ strings. The difference operator allows you to restrict this set:
     a - b
 
 The expression reads: match `a` but not `b`.
+
+[note There is no difference operator in __karma__, as the concept does not 
+make sense in the context of output generation.]
 
 [endsect]
 

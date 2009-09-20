@@ -14,7 +14,7 @@
 [/include        abstracts/generating.qbk]
 [/include        abstracts/primitives.qbk]
 [/include        abstracts/operators.qbk]
-[/include        abstracts/attributes.qbk]
+[include        abstracts/attributes.qbk]
 [/include        abstracts/semantic_actions.qbk]
 [/include        abstracts/directives.qbk]
 [/include        abstracts/rules.qbk]

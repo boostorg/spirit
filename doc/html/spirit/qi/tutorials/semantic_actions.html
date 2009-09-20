@@ -27,19 +27,19 @@
 <a name="spirit.qi.tutorials.semantic_actions"></a><a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic Actions</a>
 </h4></div></div></div>
 <p>
-          Our parser above is really nothing but a recognizer. It answers the question
-          "did the input match our grammar?", but it does not do anything
-          other than that. It does not extract any information from what was parsed.
-          For example, whenever we parse a real number, we wish to store the parsed
-          number after a successful match.
+          The example in the previous section was very simplistic. It only recognized
+          data, but did nothing with it. It answered the question: "Did the
+          input match?". Now, we want to extract information from what was parsed.
+          For example, we would want to store the parsed number after a successful
+          match. To do this, you will need <span class="emphasis"><em>semantic actions</em></span>.
         </p>
 <p>
-          Enter Semantic actions. Semantic actions may be attached to any point in
-          the grammar specification. These actions are C++ functions or function
-          objects that are called whenever a part of the parser successfully recognizes
-          a portion of the input. Say you have a parser <code class="computeroutput"><span class="identifier">P</span></code>,
-          and a C++ function <code class="computeroutput"><span class="identifier">F</span></code>, you
-          can make the parser call <code class="computeroutput"><span class="identifier">F</span></code>
+          Semantic actions may be attached to any point in the grammar specification.
+          These actions are C++ functions or function objects that are called whenever
+          a part of the parser successfully recognizes a portion of the input. Say
+          you have a parser <code class="computeroutput"><span class="identifier">P</span></code>, and
+          a C++ function <code class="computeroutput"><span class="identifier">F</span></code>. You can
+          make the parser call <code class="computeroutput"><span class="identifier">F</span></code>
           whenever it matches an input by attaching <code class="computeroutput"><span class="identifier">F</span></code>:
         </p>
 <pre class="programlisting"><span class="identifier">P</span><span class="special">[</span><span class="identifier">F</span><span class="special">]</span>
@@ -132,7 +132,7 @@
           with 3 arguments. Since we don't care about the other two, we can use
           <code class="computeroutput"><span class="identifier">unused_type</span></code> for these.
           We'll see more of <code class="computeroutput"><span class="identifier">unused_type</span></code>
-          elsewhere. Get used to it. <code class="computeroutput"><span class="identifier">unused_type</span></code>
+          elsewhere. <code class="computeroutput"><span class="identifier">unused_type</span></code>
           is a Spirit supplied support class.
         </p>
 <p>
@@ -232,7 +232,7 @@
           The examples above can be found here: <a href="../../../../../example/qi/actions.cpp" target="_top">../../example/qi/actions.cpp</a>
         </p>
 <a name="spirit.qi.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id552777"></a>
+<a name="id551887"></a>
           <a class="link" href="semantic_actions.html#spirit.qi.tutorials.semantic_actions.phoenix">Phoenix</a>
         </h6>
 <p>
@@ -241,8 +241,9 @@
           actions. It is like <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
           in steroids, with special custom features that make it easy to integrate
           semantic actions with Spirit. If your requirements go beyond simple to
-          moderate parsing, I suggest you use this library. Examples presented henceforth
-          shall be using the library exclusively
+          moderate parsing, it is suggested that you use this library. All the following
+          examples in this tutorial will use <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+          for sematic actions.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
