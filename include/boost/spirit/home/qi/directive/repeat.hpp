@@ -256,9 +256,6 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T>
-    struct has_semantic_action;
-
     template <typename Subject, typename LoopIter>
     struct has_semantic_action<qi::repeat_parser<Subject, LoopIter> >
       : unary_has_semantic_action<Subject> {};

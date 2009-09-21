@@ -133,14 +133,10 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T>
-    struct has_semantic_action;
-
     template <typename Subject, typename Tail, typename Modifier>
     struct has_semantic_action<
             repository::qi::distinct_parser<Subject, Tail, Modifier> >
       : unary_has_semantic_action<Subject> {};
-
 }}}
 
 #endif

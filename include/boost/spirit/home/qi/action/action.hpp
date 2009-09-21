@@ -112,9 +112,6 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T>
-    struct has_semantic_action;
-
     template <typename Subject, typename Action>
     struct has_semantic_action<qi::action<Subject, Action> >
       : mpl::true_ {};

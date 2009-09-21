@@ -170,9 +170,6 @@ namespace boost { namespace spirit { namespace karma
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T>
-    struct has_semantic_action;
-
     template <typename Subject>
     struct has_semantic_action<karma::redelimit_generator<Subject> >
       : unary_has_semantic_action<Subject> {};

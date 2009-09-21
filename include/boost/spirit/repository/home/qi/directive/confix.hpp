@@ -136,9 +136,6 @@ namespace boost { namespace spirit { namespace qi
 
 namespace boost { namespace spirit { namespace traits
 {
-    template <typename T>
-    struct has_semantic_action;
-
     template <typename Subject, typename Prefix, typename Suffix>
     struct has_semantic_action<
             repository::qi::confix_parser<Subject, Prefix, Suffix> >
@@ -147,7 +144,6 @@ namespace boost { namespace spirit { namespace traits
           , has_semantic_action<Prefix>
           , has_semantic_action<Suffix> 
         > {};
-
 }}}
 
 #endif
