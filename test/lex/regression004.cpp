@@ -19,7 +19,6 @@
 #include <iostream>
 #include <string>
 
-using namespace boost::spirit;
 namespace qi = boost::spirit::qi;
 namespace lex = boost::spirit::lex;
 
@@ -55,6 +54,8 @@ struct word_count_grammar : qi::grammar<Iterator>
       , c(0), w(0), l(0)
     {
         using boost::phoenix::ref;
+        using qi::lit;
+        using qi::token;
 
         start =  *(   tok.word      [++ref(w)]
                   |   lit('\n')     [++ref(l)]
