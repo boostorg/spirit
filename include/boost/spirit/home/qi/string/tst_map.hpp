@@ -88,7 +88,8 @@ namespace boost { namespace spirit { namespace qi
 
                 if (first != last)
                 {
-                    return node::add(r.first->second.root, first, last, val, this);
+                    return node::add(r.first->second.root
+                      , first, last, val, this) ? true : false;
                 }
                 else
                 {
