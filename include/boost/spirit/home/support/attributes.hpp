@@ -13,6 +13,7 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
 #include <boost/spirit/home/support/detail/as_variant.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/fusion/include/transform.hpp>

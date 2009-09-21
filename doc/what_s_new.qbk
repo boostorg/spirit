@@ -46,7 +46,7 @@ backwards compatibility for existing applications.
 
 [heading Spirit V2.1] 
 
-[heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)]
+[heading What's changed in __qi__ and __karma__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
 
 * __spirit__ is now based on the newest version of __boost_proto__
 * `qi::phrase_parse`, `qi::phrase_format` now post-skip by default.
@@ -96,9 +96,9 @@ backwards compatibility for existing applications.
   semantics of this initalization are equivalent to initializing them using 
   `operator%=()` (auto attribute propagation is enabled).
 
-[heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.x (Boost V1.41.0)]
+[heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
 
-Here is a list of changes in __lex__ since version 2.0. __lex__ 2.x is a 
+Here is a list of changes in __lex__ since version 2.0. __lex__ 2.1 is a 
 complete rewrite of the __lex__ distributed with Boost V1.37. As with all
 code portions of the __spirit__ library, __lex__ is usable as standalone piece.
 __lex__ now uses the infrastructure provided by __spirit__ version 2.1.
@@ -147,14 +147,13 @@ __lex__ now uses the infrastructure provided by __spirit__ version 2.1.
   If no parameter is passed to the constructor, `match_flags::match_default` is 
   used, i.e. the `.` matches newlines and matching is case sensitive.
 
-
 * The `char_()` and `string()` placeholders can now be used for token 
   definitions and are synonymous with `token_def`. 
 * Lexer semantic actions now have to conform to a changed interface (see
   __sec_lex_semactions__ for details).
 * Added placeholder symbols usable from the inside of lexer semantic actions 
-  while using Phoenix: _start, _end, _eoi, _state, _val, and _pass (see 
-  __sec_lex_semactions__ for more details).
+  while using Phoenix: `lex::_start`, `lex::_end`, `lex::_eoi`, `lex::_state`, 
+  `lex::_val`, and `lex::_pass` (see __sec_lex_semactions__ for more details).
 * Added (lazy) support functions usable from the inside of lexer semantic
    actions while using Phoenix: `lex::more()`, `lex::less()`, and 
    `lex::lookahead()` (see  __sec_lex_semactions__ for more details).

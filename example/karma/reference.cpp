@@ -5,6 +5,8 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include <boost/config/warning_disable.hpp>
+
 //[reference_karma_includes
 #include <boost/spirit/include/karma.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
@@ -26,7 +28,7 @@ void test_generator(char const* expected, G const& g)
 {
     std::string s;
     std::back_insert_iterator<std::string> out(s);
-    if (boost::spirit::karma::generate(out, g) && str == expected)
+    if (boost::spirit::karma::generate(out, g) && s == expected)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -39,7 +41,7 @@ void test_generator_attr(char const* expected, G const& g, T const& attr)
 {
     std::string s;
     std::back_insert_iterator<std::string> out(s);
-    if (boost::spirit::karma::generate(out, g, attr) && str == expected)
+    if (boost::spirit::karma::generate(out, g, attr) && s == expected)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -53,7 +55,20 @@ void test_generator_attr(char const* expected, G const& g, T1 const& attr1,
 {
     std::string s;
     std::back_insert_iterator<std::string> out(s);
-    if (boost::spirit::karma::generate(out, g, attr1, attr2) && str == expected)
+    if (boost::spirit::karma::generate(out, g, attr1, attr2) && s == expected)
+        std::cout << "ok" << std::endl;
+    else
+        std::cout << "fail" << std::endl;
+}
+//]
+
+//[reference_karma_test_attr_delim
+template <typename G, typename Delimiter, typename T>
+void test_generator_attr_delim(char const* expected, G const& g, Delimiter const& d, T const& attr)
+{
+    std::string s;
+    std::back_insert_iterator<std::string> out(s);
+    if (boost::spirit::karma::generate_delimited(out, g, d, attr) && s == expected)
         std::cout << "ok" << std::endl;
     else
         std::cout << "fail" << std::endl;
@@ -155,7 +170,7 @@ int main()
         v.push_back(1.0);
         v.push_back(2.0);
         v.push_back(3.0);
-        test_generator_attr("1.0 2.0 3.0 ", *double_, space, v);
+        test_generator_attr_delim("1.0 2.0 3.0 ", *double_, space, v);
         //]
     }
 
@@ -171,7 +186,7 @@ int main()
         v1.push_back(1.0);
         v1.push_back(2.0);
         v1.push_back(3.0);
-        test_generator_attr("1.0 2.0 3.0 ", +double_, space, v1);
+        test_generator_attr_delim("1.0 2.0 3.0 ", +double_, space, v1);
         //]
 
         //[reference_karma_plus2
@@ -207,6 +222,9 @@ int main()
         test_generator_attr("1.0", -double_, val);
         test_generator_attr("2.0", -double_, 2.0);
         //]
+    }
+    {
+        using boost::spirit::karma::double_;
 
         //[reference_karma_optional2
         boost::optional<double> val;          // empty optional
@@ -360,7 +378,7 @@ int main()
         //[reference_karma_using_declarations_omit
         using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
-        using boost::spirit::karma::buffer;
+        using boost::spirit::karma::omit;
         //]
 
         //[reference_karma_omit
@@ -373,6 +391,7 @@ int main()
         //[reference_karma_using_declarations_int
         using boost::spirit::karma::generate;
         using boost::spirit::karma::int_;
+        using boost::spirit::karma::lit;
         //]
 
         //[reference_karma_int
@@ -387,15 +406,16 @@ int main()
     {
         //[reference_karma_using_declarations_uint
         using boost::spirit::karma::generate;
-        using boost::spirit::karma::uint;
+        using boost::spirit::karma::uint_;
+        using boost::spirit::karma::lit;
         //]
 
         //[reference_karma_uint
         test_generator("2", lit(2U));
-        test_generator("2", uint(2));
-        test_generator_attr("2", uint(2), 2);
-        test_generator_attr("", uint(2), 3);    // fails (as 2 != 3)!
-        test_generator_attr("2", uint, 2);
+        test_generator("2", uint_(2));
+        test_generator_attr("2", uint_(2), 2);
+        test_generator_attr("", uint_(2), 3);    // fails (as 2 != 3)!
+        test_generator_attr("2", uint_, 2);
         //]
     }
 
@@ -403,6 +423,7 @@ int main()
         //[reference_karma_using_declarations_real
         using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
+        using boost::spirit::karma::lit;
         //]
 
         //[reference_karma_real
@@ -445,6 +466,7 @@ int main()
         //[reference_karma_using_declarations_char_class
         using boost::spirit::karma::generate;
         using boost::spirit::karma::alpha;
+        using boost::spirit::karma::upper;
         //]
 
         //[reference_karma_char_class
@@ -497,10 +519,11 @@ int main()
         //[reference_karma_using_declarations_eps
         using boost::spirit::karma::generate;
         using boost::spirit::karma::eps;
+        using boost::phoenix::val;
         //]
 
         //[reference_karma_eps
-        test_generator("abc", eps[cout << "starting eps example"] << "abc");
+        test_generator("abc", eps[std::cout << val("starting eps example")] << "abc");
         test_generator("abc", eps(true) << "abc");
         test_generator("", eps(false) << "abc");      // fails as eps expression is 'false'
         //]
@@ -509,15 +532,15 @@ int main()
     {
         //[reference_karma_using_declarations_lazy
         using boost::spirit::karma::generate;
-        using boost::spirit::karma::lazy;
+        namespace karma = boost::spirit::karma;
         using boost::spirit::karma::_1;
         using boost::spirit::ascii::string;
         using boost::phoenix::val;
         //]
 
         //[reference_karma_lazy
-        test_generator_attr("abc", lazy(val(string)), "abc");
-        test_generator("abc", lazy(val(string))[_1 = "abc"]);
+        test_generator_attr("abc", karma::lazy(val(string)), "abc");
+        test_generator("abc", karma::lazy(val(string))[_1 = "abc"]);
         //]
     }
 
@@ -542,6 +565,10 @@ int main()
     {
         //[reference_karma_using_declarations_native_binary
         using boost::spirit::karma::generate;
+        using boost::spirit::karma::byte_;
+        using boost::spirit::karma::word;
+        using boost::spirit::karma::dword;
+        using boost::spirit::karma::qword;
         //]
 
         //[reference_karma_native_binary_little
@@ -572,6 +599,9 @@ int main()
     {
         //[reference_karma_using_declarations_little_binary
         using boost::spirit::karma::generate;
+        using boost::spirit::karma::little_word;
+        using boost::spirit::karma::little_dword;
+        using boost::spirit::karma::little_qword;
         //]
 
         //[reference_karma_little_binary
@@ -588,6 +618,9 @@ int main()
     {
         //[reference_karma_using_declarations_big_binary
         using boost::spirit::karma::generate;
+        using boost::spirit::karma::big_word;
+        using boost::spirit::karma::big_dword;
+        using boost::spirit::karma::big_qword;
         //]
 
         //[reference_karma_big_binary

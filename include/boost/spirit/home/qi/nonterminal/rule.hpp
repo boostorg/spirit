@@ -141,7 +141,7 @@ namespace boost { namespace spirit { namespace qi
             // then the expression (expr) is not a valid spirit qi expression.
             BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
 
-            f = detail::bind_parser<mpl::true_>(compile<qi::domain>(expr));
+            f = detail::bind_parser<mpl::false_>(compile<qi::domain>(expr));
         }
 
         rule& operator=(rule const& rhs)

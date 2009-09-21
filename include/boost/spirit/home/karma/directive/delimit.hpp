@@ -168,4 +168,19 @@ namespace boost { namespace spirit { namespace karma
 
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Subject>
+    struct has_semantic_action<karma::redelimit_generator<Subject> >
+      : unary_has_semantic_action<Subject> {};
+
+    template <typename Subject, typename Delimiter>
+    struct has_semantic_action<karma::delimit_generator<Subject, Delimiter> >
+      : unary_has_semantic_action<Subject> {};
+
+}}}
+
 #endif

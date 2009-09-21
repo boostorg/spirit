@@ -277,6 +277,22 @@ namespace boost { namespace spirit { namespace karma
 
 }}} // namespace boost::spirit::karma
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Subject, typename Width>
+    struct has_semantic_action<karma::simple_left_alignment<Subject, Width> >
+      : unary_has_semantic_action<Subject> {};
+
+    template <typename Subject, typename Padding, typename Width>
+    struct has_semantic_action<
+            karma::padding_left_alignment<Subject, Padding, Width> >
+      : unary_has_semantic_action<Subject> {};
+
+}}}
+
 #endif
 
 

@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.kleene.description"></a><h6>
-<a name="id786892"></a>
+<a name="id809352"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             generator, the Kleene star generator always succeeds.
           </p>
 <a name="spirit.karma.reference.operator.kleene.header"></a><h6>
-<a name="id786909"></a>
+<a name="id809368"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/kleene.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.kleene.model_of"></a><h6>
-<a name="id786984"></a>
+<a name="id809443"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.expression_semantics"></a><h6>
-<a name="id787022"></a>
+<a name="id809481"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -105,7 +105,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.attributes"></a><h6>
-<a name="id787129"></a>
+<a name="id809588"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
           </h6>
 <p>
@@ -209,7 +209,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.complexity"></a><h6>
-<a name="id787465"></a>
+<a name="id809924"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -226,7 +226,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.example"></a><h6>
-<a name="id787489"></a>
+<a name="id809948"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.example">Example</a>
           </h6>
 <p>
@@ -256,12 +256,12 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Delimiter</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">test_generator_attr_delim</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">Delimiter</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">d</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">str</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate_delimited</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">d</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">s</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -299,7 +299,7 @@
 <span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1.0</span><span class="special">);</span>
 <span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">2.0</span><span class="special">);</span>
 <span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">3.0</span><span class="special">);</span>
-<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"1.0 2.0 3.0 "</span><span class="special">,</span> <span class="special">*</span><span class="identifier">double_</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
+<span class="identifier">test_generator_attr_delim</span><span class="special">(</span><span class="string">"1.0 2.0 3.0 "</span><span class="special">,</span> <span class="special">*</span><span class="identifier">double_</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 </pre>
 <p>
             </p>

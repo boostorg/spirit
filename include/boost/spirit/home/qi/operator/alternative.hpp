@@ -97,4 +97,14 @@ namespace boost { namespace spirit { namespace qi
     {};
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Elements>
+    struct has_semantic_action<qi::alternative<Elements> >
+      : nary_has_semantic_action<Elements> {};
+}}}
+
 #endif

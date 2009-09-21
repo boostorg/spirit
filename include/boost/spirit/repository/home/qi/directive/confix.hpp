@@ -17,10 +17,11 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
-#include <boost/fusion/include/at.hpp>
-#include <boost/fusion/include/vector.hpp>
 
 #include <boost/spirit/repository/home/support/confix.hpp>
+
+#include <boost/fusion/include/vector.hpp>
+#include <boost/mpl/or.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit 
@@ -130,6 +131,22 @@ namespace boost { namespace spirit { namespace qi
               , compile<qi::domain>(fusion::at_c<1>(term.args), modifiers));
         }
     };
+
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Subject, typename Prefix, typename Suffix>
+    struct has_semantic_action<
+            repository::qi::confix_parser<Subject, Prefix, Suffix> >
+      : mpl::or_<
+            has_semantic_action<Subject>
+          , has_semantic_action<Prefix>
+          , has_semantic_action<Suffix> 
+        > {};
 
 }}}
 

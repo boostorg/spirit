@@ -20,6 +20,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/action_dispatch.hpp>
 
+#include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -108,5 +109,16 @@ namespace boost { namespace spirit
         }
     };
 }}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Subject, typename Action>
+    struct has_semantic_action<qi::action<Subject, Action> >
+      : mpl::true_ {};
+
+}}}
 
 #endif

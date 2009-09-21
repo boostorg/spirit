@@ -105,8 +105,4 @@ section can be found here: [@../../example/karma/num_matrix.cpp num_matrix.cpp].
 
 [import ../../example/karma/num_matrix.cpp]
 
-
-* attribute propagation
-  * explicit and operator%=
-
 [endsect]

@@ -320,7 +320,7 @@ Some includes:
 
 All code snippets below use this common test function:
 
-[reference_karma_test_attr]
+[reference_karma_test_attr_delim]
 
 Some using declarations:
 
@@ -428,6 +428,7 @@ Some includes:
 All code snippets below use this common test function:
 
 [reference_karma_test_attr]
+[reference_karma_test_attr_delim]
 
 Some using declarations:
 

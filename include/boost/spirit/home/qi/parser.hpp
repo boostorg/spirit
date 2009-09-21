@@ -116,6 +116,7 @@ namespace boost { namespace spirit { namespace traits // classification
         BOOST_MPL_HAS_XXX_TRAIT_DEF(binary_parser_id)
     }
 
+    // parser type identification
     template <typename T>
     struct is_parser : detail::has_parser_id<T> {};
 
@@ -130,6 +131,7 @@ namespace boost { namespace spirit { namespace traits // classification
 
     template <typename T>
     struct is_binary_parser : detail::has_binary_parser_id<T> {};
+
 }}}
 
 #endif

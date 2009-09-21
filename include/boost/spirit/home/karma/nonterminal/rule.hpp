@@ -150,7 +150,7 @@ namespace boost { namespace spirit { namespace karma
             // the expression (expr) is not a valid spirit karma expression.
             BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Expr);
 
-            f = detail::bind_generator<mpl::true_>(compile<karma::domain>(expr));
+            f = detail::bind_generator<mpl::false_>(compile<karma::domain>(expr));
         }
 
         rule& operator=(rule const& rhs)

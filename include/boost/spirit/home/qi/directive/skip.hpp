@@ -158,4 +158,18 @@ namespace boost { namespace spirit { namespace qi
 
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Subject>
+    struct has_semantic_action<qi::reskip_parser<Subject> >
+      : unary_has_semantic_action<Subject> {};
+
+    template <typename Subject, typename Skipper>
+    struct has_semantic_action<qi::skip_parser<Subject, Skipper> >
+      : unary_has_semantic_action<Subject> {};
+}}}
+
 #endif

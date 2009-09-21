@@ -266,4 +266,15 @@ namespace boost { namespace spirit { namespace karma
 
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename T>
+    struct has_semantic_action;
+
+    template <typename Subject, typename LoopIter>
+    struct has_semantic_action<karma::repeat_generator<Subject, LoopIter> >
+      : unary_has_semantic_action<Subject> {};
+
+}}}
+
 #endif

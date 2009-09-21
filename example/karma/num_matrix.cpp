@@ -41,9 +41,9 @@ namespace client
             using karma::right_align;
             using karma::eol;
 
-            element %= right_align(10)[int_];
-            row %= '|' << *element << '|';
-            matrix %= row % eol;
+            element = right_align(10)[int_];
+            row = '|' << *element << '|';
+            matrix = row % eol;
         }
 
         karma::rule<OutputIterator, std::vector<std::vector<int> >()> matrix;
@@ -81,7 +81,7 @@ main()
     std::vector<std::vector<int> > v;
 
     // now, generate the size and the contents for the matrix
-    std::srand(std::time(NULL));
+    std::srand((unsigned int)std::time(NULL));
     std::size_t rows = std::rand() / (RAND_MAX / 10);
     std::size_t columns = std::rand() / (RAND_MAX / 10);
 

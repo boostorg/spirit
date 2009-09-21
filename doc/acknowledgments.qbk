@@ -23,7 +23,7 @@ of this writing the Boost review for this library is still pending.
 
 [*Francois Barel] for his silent but steady work on making and keeping Spirit 
 compatible with all versions of gcc, older and newest ones. He not only 
-contributed subrules to Spirit V2.x, but always keeps an eye on the small 
+contributed subrules to Spirit V2.1, but always keeps an eye on the small 
 details which are so important to make a difference.
 
 [*Andreas Haberstroh] for proof reading the documentation and fixing those 
