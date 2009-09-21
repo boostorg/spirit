@@ -60,10 +60,15 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         ischar(int ch)
         {
-            // we have to watch out for sign extensions
-            return ( 0 == (ch & ~traits::wchar_t_size<sizeof(wchar_t)>::mask) || 
-                    ~0 == (ch | traits::wchar_t_size<sizeof(wchar_t)>::mask)) ? 
-                true : false;     // any wchar_t, but no other bits set
+            // we have to watch out for sign extensions (casting is there to 
+            // silence certain compilers complaining about signed/unsigned
+            // mismatch)
+            return (
+                std::size_t(0) == 
+                    std::size_t(ch & ~traits::wchar_t_size<sizeof(wchar_t)>::mask) || 
+                std::size_t(~0) == 
+                    std::size_t(ch | traits::wchar_t_size<sizeof(wchar_t)>::mask)
+            ) ? true : false;     // any wchar_t, but no other bits set
         }
 
         static bool
