@@ -22,6 +22,7 @@ boost_add_executable( qi_num_list1  num_list1.cpp )
 boost_add_executable( num_list2  num_list2.cpp )
 boost_add_executable( num_list3  num_list3.cpp )
 boost_add_executable( num_list4  num_list4.cpp )
+boost_add_executable( reorder_struct  reorder_struct.cpp )
 
 boost_add_executable( calc1  calc1.cpp )
 boost_add_executable( calc2  calc2.cpp )

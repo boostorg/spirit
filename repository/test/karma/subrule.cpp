@@ -31,7 +31,7 @@ int main()
     using namespace boost;
     using namespace boost::spirit;
     using namespace boost::spirit::karma;
-    using namespace boost::spirit::ascii;
+//    using namespace boost::spirit::ascii;
     using boost::spirit::repository::karma::subrule;
 
     typedef spirit_test::output_iterator<char>::type outiter_type;

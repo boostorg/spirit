@@ -23,6 +23,7 @@ exe num_list1 : num_list1.cpp ;
 exe num_list2 : num_list2.cpp ;
 exe num_list3 : num_list3.cpp ;
 exe num_list4 : num_list4.cpp ;
+exe reorder_struct : reorder_struct.cpp ;
 
 exe calculator1 : calc1.cpp ;
 exe calculator2 : calc2.cpp ;
