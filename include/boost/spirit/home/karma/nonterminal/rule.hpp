@@ -221,8 +221,8 @@ namespace boost { namespace spirit { namespace karma
             if (f)
             {
                 // Create an attribute if none is supplied. 
-                typedef traits::make_attribute<attr_type, Attribute> 
-                    make_attribute;
+                typedef traits::make_transformed_attribute<
+                    attr_type, Attribute const> make_attribute;
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -250,13 +250,14 @@ namespace boost { namespace spirit { namespace karma
             if (f)
             {
                 // Create an attribute if none is supplied. 
-                typedef traits::make_attribute<attr_type, Attribute> 
-                    make_attribute;
+                typedef traits::make_transformed_attribute<
+                    attr_type, Attribute const> make_attribute;
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
                 // attributes, passing values of incompatible types for them.
-                context_type context(make_attribute::call(attr), params, caller_context);
+                context_type context(make_attribute::call(attr)
+                  , params, caller_context);
 
                 // If you are seeing a compilation error here stating that the 
                 // third parameter can't be converted to a karma::reference

@@ -303,16 +303,79 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // transform_attribute
+    //
+    // Sometimes the user needs to transform the attribute types for certain
+    // attributes. This template can be used as a customization point, where 
+    // the user is able specify specific transformation rules for any attribute
+    // type.
+    template <typename Destination, typename Source>
+    struct transform_attribute
+    {
+        static Destination call(Source& val) { return Destination(val); }
+    };
+
+    template <typename Destination, typename Source>
+    struct transform_attribute<Destination, Source const>
+    {
+        static Destination call(Source const& val) { return Destination(val); }
+    };
+
+    // The default is not to do any transformation
+    template <typename Attribute>
+    struct transform_attribute<Attribute, Attribute>
+    {
+        static Attribute& call(Attribute& val) { return val; }
+    };
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute, Attribute const>
+    {
+        static Attribute const& call(Attribute const& val) { return val; }
+    };
+
+    // unused_type needs some special handling
+    template <>
+    struct transform_attribute<unused_type, unused_type>
+    {
+        static unused_type call(unused_type) { return unused; }
+    };
+
+    template <>
+    struct transform_attribute<unused_type, unused_type const>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<unused_type, Attribute>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<unused_type, Attribute const>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute, unused_type>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute, unused_type const>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
     // make_attribute
     //
-    // All parsers and generators have specific attribute or parameter types.
-    // Spirit parsers are passed an attribute and Spirit generators
-    // are passed a parameter; these are either references to the expected
-    // type, or an unused_type -- to flag that we do not care about the
-    // attribute/parameter. For semantic actions, however, we need to have a
-    // real value to pass to the semantic action. If the client did not
-    // provide one, we will have to synthesize the value. This class
-    // takes care of that.
+    // All parsers and generators have specific attribute types.
+    // Spirit parsers and generators are passed an attribute; these are either 
+    // references to the expected type, or an unused_type -- to flag that we do 
+    // not care about the attribute. For semantic actions, however, we need to 
+    // have a real value to pass to the semantic action. If the client did not
+    // provide one, we will have to synthesize the value. This class takes care 
+    // of that.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute
@@ -353,14 +416,12 @@ namespace boost { namespace spirit { namespace traits
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute<Attribute&, ActualAttribute>
       : make_attribute<Attribute, ActualAttribute>
-    {
-    };
+    {};
 
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute<Attribute const&, ActualAttribute>
       : make_attribute<Attribute, ActualAttribute>
-    {
-    };
+    {};
 
     template <typename ActualAttribute>
     struct make_attribute<unused_type, ActualAttribute>
@@ -372,6 +433,64 @@ namespace boost { namespace spirit { namespace traits
             return unused;
         }
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Attribute, typename ActualAttribute>
+    struct make_transformed_attribute
+    {
+        // We assume that as soon as the source and destination attribute types
+        // are not the same we need to create a new instance of the destination
+        // in order to do the conversion. In this case we can't just pass 
+        // through the references anymore (as it's done in the template 
+        // make_attribute above).
+        typedef typename remove_const<ActualAttribute>::type 
+            non_const_actual_attribute;
+
+        typedef typename 
+            mpl::if_<
+                is_same<non_const_actual_attribute, Attribute>
+              , ActualAttribute&
+              , Attribute>::type
+        attribute_type;
+
+        typedef typename
+            mpl::if_<
+                is_same<non_const_actual_attribute, unused_type>
+              , typename remove_const<Attribute>::type
+              , attribute_type>::type
+        type;
+
+        static Attribute call(unused_type)
+        {
+             // synthesize the attribute/parameter
+            return boost::get(value_initialized<Attribute>());
+        }
+
+        template <typename T>
+        static type call(T& value)
+        {
+            // create the proper attribute transformation
+            typedef transform_attribute<Attribute, ActualAttribute> transform;
+
+            // return either the transformed value or pass 'value' through
+            return transform::call(value); 
+        }
+    };
+
+    template <typename Attribute, typename ActualAttribute>
+    struct make_transformed_attribute<Attribute&, ActualAttribute>
+      : make_attribute<Attribute, ActualAttribute>
+    {};
+
+    template <typename Attribute, typename ActualAttribute>
+    struct make_transformed_attribute<Attribute const&, ActualAttribute>
+      : make_attribute<Attribute, ActualAttribute>
+    {};
+
+    template <typename ActualAttribute>
+    struct make_transformed_attribute<unused_type, ActualAttribute>
+      : make_attribute<unused_type, ActualAttribute>
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // swap_impl

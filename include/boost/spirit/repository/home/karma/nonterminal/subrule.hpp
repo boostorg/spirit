@@ -200,8 +200,8 @@ namespace boost { namespace spirit { namespace repository { namespace karma
             context_type;
 
             // Create an attribute if none is supplied.
-            typedef traits::make_attribute<subrule_attr_type, Attribute>
-                make_attribute;
+            typedef traits::make_transformed_attribute<
+                subrule_attr_type, Attribute const> make_attribute;
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
@@ -233,14 +233,14 @@ namespace boost { namespace spirit { namespace repository { namespace karma
             context_type;
 
             // Create an attribute if none is supplied.
-            typedef traits::make_attribute<subrule_attr_type, Attribute>
-                make_attribute;
+            typedef traits::make_transformed_attribute<
+                subrule_attr_type, Attribute const> make_attribute;
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
             // passing values of incompatible types for them.
-            context_type context(*this, make_attribute::call(attr)
-              , params, caller_context);
+            context_type context(*this, make_attribute::call(attr), params
+              , caller_context);
 
             return def.binder(sink, context, delimiter);
         }
