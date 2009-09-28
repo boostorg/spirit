@@ -388,6 +388,22 @@ int main()
     }
 
     {
+        //[reference_karma_using_declarations_bool
+        using boost::spirit::karma::generate;
+        using boost::spirit::karma::bool_;
+        using boost::spirit::karma::lit;
+        //]
+
+        //[reference_karma_bool
+        test_generator("true", lit(true));
+        test_generator("false", bool_(false));
+        test_generator_attr("true", bool_(true), true);
+        test_generator_attr("", bool_(true), false);    // fails (as true != false)!
+        test_generator_attr("false", bool_, false);
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_int
         using boost::spirit::karma::generate;
         using boost::spirit::karma::int_;

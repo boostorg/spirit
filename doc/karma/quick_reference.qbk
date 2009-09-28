@@ -25,6 +25,7 @@ pages and pages of reference doumentation.
     [[`attrib`]         [A attribute value]]
     [[`Attrib`]         [An attribute type]]
     [[`b`]              [A boolean expression]]
+    [[`B`]              [A type to be interpreted as in boolean expressions]]
     [[`fg`]             [A (lazy generator) function with signature `G(Unused, Context)`]]
     [[`fa`]             [A (semantic action) function with signature `void(Attr&, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
@@ -218,6 +219,26 @@ See here for more information about __karma_numeric__.
 >()(num)``]]
                                         [`Num`]                [Generate an unsigned `num` as a `Num`, 
                                                                 if an attribute is supplied it must match]]
+]
+
+[endsect]
+
+[section:boolean Boolean Generators]
+
+[table 
+    [[Expression]               [Attribute]     [Description]]
+    [[[boolean `bool_`]]        [`bool`]        [Generate a boolean]]
+    [[[boolean `bool_(b)`]]     [`bool`]        [Generate `b` as a boolean, 
+                                                 if an attribute is supplied it must match]]
+    [[[boolean ``bool_generator<
+    B, Policies
+>()``]]
+                                [`B`]           [Generate a boolean of type `B`]]
+    [[[boolean ``bool_generator<
+    B, Policies
+>()(b)``]]
+                                [`B`]           [Generate a boolean `b` as a `B`, 
+                                                 if an attribute is supplied it must match]]
 ]
 
 [endsect]

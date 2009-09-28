@@ -187,6 +187,7 @@
 [template signed_int[str]           [link spirit.karma.reference.numeric.signed_int [str]]]
 [template unsigned_int[str]         [link spirit.karma.reference.numeric.unsigned_int [str]]]
 [template real_number[str]          [link spirit.karma.reference.numeric.real_number [str]]]
+[template boolean[str]              [link spirit.karma.reference.numeric.boolean [str]]]
 
 [def __karma_char__                 [link spirit.karma.reference.char Character Generators]]
 [template karma_char[str]           [link spirit.karma.reference.char.char_generator [str]]]

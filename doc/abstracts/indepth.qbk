@@ -13,7 +13,9 @@
 
 This section is not for the faint of heart. In here, are distilled the inner 
 workings of __qi__ parsers, using real code from the __spirit__ library as 
-examples.
+examples. On the other hand, here is no reason to fear reading on, though. 
+We tried to explain things step by step while highlighting the important 
+insights.
 
 The `__parser_concept__` class is the base class for all parsers. 
 
