@@ -24,22 +24,30 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
+    //[primitive_parsers_enable_short_
     template <>
     struct use_terminal<qi::domain, tag::short_> // enables short_
       : mpl::true_ {};
+    //]
 
+    //[primitive_parsers_enable_int_
     template <>
     struct use_terminal<qi::domain, tag::int_> // enables int_
       : mpl::true_ {};
+    //]
 
+    //[primitive_parsers_enable_long_
     template <>
     struct use_terminal<qi::domain, tag::long_> // enables long_
       : mpl::true_ {};
+    //]
 
 #ifdef BOOST_HAS_LONG_LONG
+    //[primitive_parsers_enable_long_long_
     template <>
     struct use_terminal<qi::domain, tag::long_long> // enables long_long
       : mpl::true_ {};
+    //]
 #endif
 }}
 
@@ -59,6 +67,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     // This is the actual int parser
     ///////////////////////////////////////////////////////////////////////////
+    //[primitive_parsers_int
     template <
         typename T
       , unsigned Radix = 10
@@ -95,6 +104,7 @@ namespace boost { namespace spirit { namespace qi
             return info("integer");
         }
     };
+    //]
 
     ///////////////////////////////////////////////////////////////////////////
     // This one is the class that the user can instantiate directly
@@ -112,6 +122,7 @@ namespace boost { namespace spirit { namespace qi
     ///////////////////////////////////////////////////////////////////////////
     // Parser generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
+    //[primitive_parsers_make_int
     template <typename T>
     struct make_int
     {
@@ -121,19 +132,28 @@ namespace boost { namespace spirit { namespace qi
             return result_type();
         }
     };
+    //]
 
+    //[primitive_parsers_short_
     template <typename Modifiers>
     struct make_primitive<tag::short_, Modifiers> : make_int<short> {};
+    //]
 
+    //[primitive_parsers_int_
     template <typename Modifiers>
     struct make_primitive<tag::int_, Modifiers> : make_int<int> {};
+    //]
 
+    //[primitive_parsers_long_
     template <typename Modifiers>
     struct make_primitive<tag::long_, Modifiers> : make_int<long> {};
+    //]
 
 #ifdef BOOST_HAS_LONG_LONG
+    //[primitive_parsers_long_long_
     template <typename Modifiers>
     struct make_primitive<tag::long_long, Modifiers> : make_int<long long> {};
+    //]
 #endif
 
 }}}

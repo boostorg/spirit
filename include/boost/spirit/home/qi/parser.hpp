@@ -16,6 +16,8 @@
 
 namespace boost { namespace spirit { namespace qi
 {
+
+    //[parser_base_parser
     template <typename Derived>
     struct parser
     {
@@ -47,6 +49,7 @@ namespace boost { namespace spirit { namespace qi
             return *static_cast<Derived const*>(this);
         }
     };
+    //]
 
     template <typename Derived>
     struct primitive_parser : parser<Derived>

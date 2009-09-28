@@ -22,13 +22,17 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
+    //[composite_parsers_kleene_enable_
     template <>
     struct use_operator<qi::domain, proto::tag::dereference> // enables *p
       : mpl::true_ {};
+    //]
 }}
 
 namespace boost { namespace spirit { namespace qi
 {
+
+    //[composite_parsers_kleene
     template <typename Subject>
     struct kleene : unary_parser<kleene<Subject> >
     {
@@ -80,14 +84,17 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
     };
+    //]
 
     ///////////////////////////////////////////////////////////////////////////
     // Parser generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
+    //[composite_parsers_kleene_generator
     template <typename Elements, typename Modifiers>
     struct make_composite<proto::tag::dereference, Elements, Modifiers>
       : make_unary_composite<Elements, kleene>
     {};
+    //]
 }}}
 
 namespace boost { namespace spirit { namespace traits
