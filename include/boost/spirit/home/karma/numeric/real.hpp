@@ -31,19 +31,6 @@
 
 namespace boost { namespace spirit 
 {
-    namespace tag
-    {
-        template <typename T, typename Policies>
-        struct real_tag 
-        {
-            real_tag() {}
-            real_tag(Policies const& policies)
-              : policies_(policies) {}
-
-            Policies policies_;
-        };
-    }
-
     namespace karma
     {
         ///////////////////////////////////////////////////////////////////////
@@ -56,11 +43,13 @@ namespace boost { namespace spirit
         // order to create a customized real generator
         template <typename T = double, typename Policies = real_policies<T> >
         struct real_generator
-          : spirit::terminal<tag::real_tag<T, Policies> > 
+          : spirit::terminal<tag::stateful_tag<Policies, tag::double_, T> > 
         {
+            typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
+
             real_generator() {}
             real_generator(Policies const& p)
-              : spirit::terminal<tag::real_tag<T, Policies> >(p) {}
+              : spirit::terminal<tag_type>(p) {}
         };
     }
 
@@ -123,20 +112,22 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     // enables custom real generator
-    template <typename T, typename Policy>
-    struct use_terminal<karma::domain, tag::real_tag<T, Policy> >
+    template <typename T, typename Policies>
+    struct use_terminal<karma::domain
+          , tag::stateful_tag<Policies, tag::double_, T> >
       : mpl::true_ {};
 
-    template <typename T, typename Policy, typename A0>
+    template <typename T, typename Policies, typename A0>
     struct use_terminal<karma::domain
-      , terminal_ex<tag::real_tag<T, Policy>, fusion::vector1<A0> >
-    > : mpl::true_ {};
+          , terminal_ex<tag::stateful_tag<Policies, tag::double_, T>
+          , fusion::vector1<A0> > >
+      : mpl::true_ {};
 
     // enables *lazy* custom real generator
-    template <typename T, typename Policy>
+    template <typename T, typename Policies>
     struct use_lazy_terminal<
         karma::domain
-      , tag::real_tag<T, Policy>
+      , tag::stateful_tag<Policies, tag::double_, T>
       , 1 // arity
     > : mpl::true_ {};
 
@@ -269,22 +260,6 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    namespace detail
-    {
-        // extract policies if this is a real_tag
-        template <typename Policies>
-        struct get_real_policies
-        {
-            template <typename Tag>
-            static Policies call(Tag) { return Policies(); }
-
-            template <typename T>
-            static Policies const& call(tag::real_tag<T, Policies> const& p) 
-            { return p.policies_; }
-        };
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -308,8 +283,9 @@ namespace boost { namespace spirit { namespace karma
             template <typename Terminal>
             result_type operator()(Terminal const& term, unused_type) const
             {
-                using karma::detail::get_real_policies;
-                return result_type(get_real_policies<Policies>::call(term));
+                typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
+                using spirit::detail::get_stateful_data;
+                return result_type(get_stateful_data<tag_type>::call(term));
             }
         };
     }
@@ -327,9 +303,10 @@ namespace boost { namespace spirit { namespace karma
       : detail::make_real<long double, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Policy, typename Modifiers>
-    struct make_primitive<tag::real_tag<T, Policy>, Modifiers> 
-      : detail::make_real<T, Modifiers, Policy> {};
+    template <typename T, typename Policies, typename Modifiers>
+    struct make_primitive<
+            tag::stateful_tag<Policies, tag::double_, T>, Modifiers> 
+      : detail::make_real<T, Modifiers, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -354,9 +331,10 @@ namespace boost { namespace spirit { namespace karma
             template <typename Terminal>
             result_type operator()(Terminal const& term, unused_type) const
             {
-                using karma::detail::get_real_policies;
+                typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
+                using spirit::detail::get_stateful_data;
                 return result_type(T(fusion::at_c<0>(term.args))
-                  , get_real_policies<Policies>::call(term.term));
+                  , get_stateful_data<tag_type>::call(term.term));
             }
         };
     }
@@ -377,11 +355,12 @@ namespace boost { namespace spirit { namespace karma
       : detail::make_real_direct<long double, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Policy, typename A0, typename Modifiers>
+    template <typename T, typename Policies, typename A0, typename Modifiers>
     struct make_primitive<
-        terminal_ex<tag::real_tag<T, Policy>, fusion::vector1<A0> >
+        terminal_ex<tag::stateful_tag<Policies, tag::double_, T>
+          , fusion::vector1<A0> >
           , Modifiers>
-      : detail::make_real_direct<T, Modifiers, Policy> {};
+      : detail::make_real_direct<T, Modifiers, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail

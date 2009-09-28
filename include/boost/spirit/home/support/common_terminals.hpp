@@ -80,53 +80,10 @@ namespace boost { namespace spirit
         ( attr )
     )
 
-    ///////////////////////////////////////////////////////////////////////////
-    // support for attr_cast
-    namespace tag
-    {
-        template <typename Attribute, typename Expr>
-        struct attr_cast_tag 
-        {
-            attr_cast_tag() {}
-            attr_cast_tag(Expr const& expr) : expr_(expr) {}
-
-            Expr expr_;
-        };
-    }
-
-    namespace detail
-    {
-        // extract expression if this is a attr_cast_tag
-        template <typename Expr>
-        struct get_expr
-        {
-            template <typename Tag>
-            static Expr call(Tag) { return Expr(); }
-
-            template <typename Attribute>
-            static Expr const& 
-            call(tag::attr_cast_tag<Attribute, Expr> const& t) 
-            { return t.expr_; }
-        };
-    }
-
-    // thats the terminal used to identify a attr_cast<>() component
-    template <typename Attribute, typename Expr>
-    struct attr_cast_type
-      : spirit::terminal<tag::attr_cast_tag<Attribute, Expr> > 
-    {
-        attr_cast_type() {}
-        attr_cast_type(Expr const& expr)
-          : spirit::terminal<tag::attr_cast_tag<Attribute, Expr> >(expr) {}
-    };
-
-    // This one is the function that the user can call directly in order 
-    // to create a customized attr_cast component
-    template <typename Attribute, typename Expr>
-    attr_cast_type<Attribute, Expr>
-    attr_cast(Expr const& expr)
-    {
-        return attr_cast_type<Attribute, Expr>(expr);
+    // special tags (used mainly for stateful tag types)
+    namespace tag 
+    { 
+        struct attr_cast {}; 
     }
 
 }}

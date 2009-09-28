@@ -26,30 +26,6 @@
 namespace boost { namespace spirit { namespace karma 
 { 
     ///////////////////////////////////////////////////////////////////////////
-    //  These are helper functions for the real policies allowing to generate
-    //  a single character and a string
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename CharEncoding = unused_type, typename Tag = unused_type>
-    struct char_inserter
-    {
-        template <typename OutputIterator, typename Char>
-        static bool call(OutputIterator& sink, Char c)
-        {
-            return detail::generate_to(sink, c, CharEncoding(), Tag());
-        }
-    };
-
-    template <typename CharEncoding = unused_type, typename Tag = unused_type>
-    struct string_inserter
-    {
-        template <typename OutputIterator, typename String>
-        static bool call(OutputIterator& sink, String str)
-        {
-            return detail::string_generate(sink, str, CharEncoding(), Tag());
-        }
-    };
-
-    ///////////////////////////////////////////////////////////////////////////
     //
     //  The real_inserter template takes care of the floating point number to 
     //  string conversion. The Policies template parameter is used to allow

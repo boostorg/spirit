@@ -13,6 +13,7 @@
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/char.hpp>
+#include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
 
 namespace boost { namespace spirit { namespace karma 
 {

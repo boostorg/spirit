@@ -26,19 +26,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
 {
-    namespace tag
-    {
-        template <typename T, typename Policies>
-        struct bool_tag 
-        {
-            bool_tag() {}
-            bool_tag(Policies const& policies)
-              : policies_(policies) {}
-
-            Policies policies_;
-        };
-    }
-
     namespace karma
     {
         ///////////////////////////////////////////////////////////////////////
@@ -51,8 +38,14 @@ namespace boost { namespace spirit
         // order to create a customized int generator
         template <typename T = bool, typename Policies = bool_policies<T> >
         struct bool_generator
-          : spirit::terminal<tag::bool_tag<T, Policies> >
-        {};
+          : spirit::terminal<tag::stateful_tag<Policies, tag::bool_, T> >
+        {
+            typedef tag::stateful_tag<Policies, tag::bool_, T> tag_type;
+
+            bool_generator() {}
+            bool_generator(Policies const& data)
+              : spirit::terminal<tag_type>(data) {}
+        };
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -77,19 +70,22 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     // enables any custom bool_generator
-    template <typename T, typename Policies>
-    struct use_terminal<karma::domain, tag::bool_tag<T, Policies> >
+    template <typename Policies, typename T>
+    struct use_terminal<karma::domain
+          , tag::stateful_tag<Policies, tag::bool_, T> >
       : mpl::true_ {};
 
     // enables any custom bool_generator(...)
-    template <typename T, typename Policies, typename A0>
+    template <typename Policies, typename T, typename A0>
     struct use_terminal<karma::domain
-      , terminal_ex<tag::bool_tag<T, Policies>, fusion::vector1<A0> >
-    > : mpl::true_ {};
+          , terminal_ex<tag::stateful_tag<Policies, tag::bool_, T>
+          , fusion::vector1<A0> > >
+      : mpl::true_ {};
 
     // enables *lazy* custom bool_generator
-    template <typename T, typename Policies>
-    struct use_lazy_terminal<karma::domain, tag::bool_tag<T, Policies>, 1> 
+    template <typename Policies, typename T>
+    struct use_lazy_terminal<karma::domain
+          , tag::stateful_tag<Policies, tag::bool_, T>, 1> 
       : mpl::true_ {};
 
 }}
@@ -217,22 +213,6 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    namespace detail
-    {
-        // extract policies if this is a bool_tag
-        template <typename Policies>
-        struct get_bool_policies
-        {
-            template <typename Tag>
-            static Policies call(Tag) { return Policies(); }
-
-            template <typename T>
-            static Policies const& call(tag::bool_tag<T, Policies> const& p) 
-            { return p.policies_; }
-        };
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -257,8 +237,9 @@ namespace boost { namespace spirit { namespace karma
             template <typename Terminal>
             result_type operator()(Terminal const& term, unused_type) const
             {
-                using karma::detail::get_bool_policies;
-                return result_type(get_bool_policies<Policies>::call(term));
+                typedef tag::stateful_tag<Policies, tag::bool_, T> tag_type;
+                using spirit::detail::get_stateful_data;
+                return result_type(get_stateful_data<tag_type>::call(term));
             }
         };
     }
@@ -269,7 +250,8 @@ namespace boost { namespace spirit { namespace karma
       : detail::make_bool<Modifiers> {};
 
     template <typename T, typename Policies, typename Modifiers>
-    struct make_primitive<tag::bool_tag<T, Policies>, Modifiers>
+    struct make_primitive<
+            tag::stateful_tag<Policies, tag::bool_, T>, Modifiers>
       : detail::make_bool<Modifiers, T, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -295,9 +277,10 @@ namespace boost { namespace spirit { namespace karma
             template <typename Terminal>
             result_type operator()(Terminal const& term, unused_type) const
             {
-                using karma::detail::get_bool_policies;
+                typedef tag::stateful_tag<Policies, tag::bool_, T> tag_type;
+                using spirit::detail::get_stateful_data;
                 return result_type(fusion::at_c<0>(term.args)
-                  , get_bool_policies<Policies>::call(term.term));
+                  , get_stateful_data<tag_type>::call(term.term));
             }
         };
     }
@@ -310,7 +293,8 @@ namespace boost { namespace spirit { namespace karma
 
     template <typename T, typename Policies, typename A0, typename Modifiers>
     struct make_primitive<
-        terminal_ex<tag::bool_tag<T, Policies>, fusion::vector1<A0> >
+        terminal_ex<tag::stateful_tag<Policies, tag::bool_, T>
+          , fusion::vector1<A0> >
           , Modifiers>
       : detail::make_bool_direct<Modifiers, T, Policies> {};
 
