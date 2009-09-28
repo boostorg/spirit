@@ -54,13 +54,12 @@ namespace boost { namespace spirit { namespace karma
             typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
             // create a attribute if none is supplied
-            // this creates a _copy_ of the parameter because the semantic
-            // action likely will change parts of this
+            // this creates a _copy_ of the attribute because the semantic
+            // action will likely change parts of this
             typename make_attribute::value_type attr = make_attribute::call(attr_);
 
             // call the function, passing the attribute, the context and a bool 
             // flag that the client can set to false to fail generating.
-            // The client can return false to fail parsing.
             return traits::action_dispatch<Subject>()(f, attr, ctx) && 
                    subject.generate(sink, ctx, d, attr);
         }

@@ -10,6 +10,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/karma/numeric/bool.hpp>
 #include <boost/spirit/home/karma/numeric/int.hpp>
 #include <boost/spirit/home/karma/numeric/uint.hpp>
 #include <boost/spirit/home/karma/numeric/real.hpp>

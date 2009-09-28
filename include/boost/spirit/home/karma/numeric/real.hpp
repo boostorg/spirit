@@ -47,6 +47,11 @@ namespace boost { namespace spirit
     namespace karma
     {
         ///////////////////////////////////////////////////////////////////////
+        // forward declaration only
+        template <typename T>
+        struct real_policies;
+
+        ///////////////////////////////////////////////////////////////////////
         // This one is the class that the user can instantiate directly in 
         // order to create a customized real generator
         template <typename T = double, typename Policies = real_policies<T> >
@@ -268,7 +273,7 @@ namespace boost { namespace spirit { namespace karma
     {
         // extract policies if this is a real_tag
         template <typename Policies>
-        struct get_policies
+        struct get_real_policies
         {
             template <typename Tag>
             static Policies call(Tag) { return Policies(); }
@@ -282,94 +287,101 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, typename Modifiers, typename Policies = real_policies<T> >
-    struct make_real
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef any_real_generator<
-            T, Policies
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
+        template <typename T, typename Modifiers
+          , typename Policies = real_policies<T> >
+        struct make_real
         {
-            using karma::detail::get_policies;
-            return result_type(get_policies<Policies>::call(term));
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef any_real_generator<
+                T, Policies
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                using karma::detail::get_real_policies;
+                return result_type(get_real_policies<Policies>::call(term));
+            }
+        };
+    }
 
     template <typename Modifiers>
     struct make_primitive<tag::float_, Modifiers> 
-      : make_real<float, Modifiers> {};
+      : detail::make_real<float, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::double_, Modifiers> 
-      : make_real<double, Modifiers> {};
+      : detail::make_real<double, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::long_double, Modifiers> 
-      : make_real<long double, Modifiers> {};
+      : detail::make_real<long double, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policy, typename Modifiers>
     struct make_primitive<tag::real_tag<T, Policy>, Modifiers> 
-      : make_real<T, Modifiers, Policy> {};
+      : detail::make_real<T, Modifiers, Policy> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, typename Modifiers, typename Policies = real_policies<T> >
-    struct make_real_direct
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef literal_real_generator<
-            T, Policies
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , false
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
+        template <typename T, typename Modifiers
+          , typename Policies = real_policies<T> >
+        struct make_real_direct
         {
-            return result_type(T(fusion::at_c<0>(term.args))
-              , karma::detail::get_policies<Policies>::call(term.term));
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_real_generator<
+                T, Policies
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , false
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                using karma::detail::get_real_policies;
+                return result_type(T(fusion::at_c<0>(term.args))
+                  , get_real_policies<Policies>::call(term.term));
+            }
+        };
+    }
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::float_, fusion::vector1<A0> >, Modifiers>
-      : make_real_direct<float, Modifiers> {};
+      : detail::make_real_direct<float, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::double_, fusion::vector1<A0> >, Modifiers>
-      : make_real_direct<double, Modifiers> {};
+      : detail::make_real_direct<double, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::long_double, fusion::vector1<A0> >, Modifiers>
-      : make_real_direct<long double, Modifiers> {};
+      : detail::make_real_direct<long double, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename T, typename Policy, typename A0, typename Modifiers>
     struct make_primitive<
         terminal_ex<tag::real_tag<T, Policy>, fusion::vector1<A0> >
           , Modifiers>
-      : make_real_direct<T, Modifiers, Policy> {};
+      : detail::make_real_direct<T, Modifiers, Policy> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail

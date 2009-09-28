@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace karma
     struct real_policies
     {
         ///////////////////////////////////////////////////////////////////////
-        // Expose the data type the generator is targeted to
+        // Expose the data type the generator is targeted at
         ///////////////////////////////////////////////////////////////////////
         typedef T value_type;
 

@@ -405,12 +405,6 @@ namespace boost { namespace spirit { namespace traits
         {
             return value; // just pass the one provided
         }
-
-        template <typename T>
-        static T const& call(T const& value)
-        {
-            return value; // just pass the one provided
-        }
     };
 
     template <typename Attribute, typename ActualAttribute>

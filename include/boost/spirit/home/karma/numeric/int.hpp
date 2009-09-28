@@ -311,99 +311,105 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Modifiers, unsigned Radix = 10
-      , bool force_sign = false>
-    struct make_int
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef any_int_generator<
-            T
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , Radix
-          , force_sign
-        > result_type;
-
-        result_type operator()(unused_type, unused_type) const
+        template <typename T, typename Modifiers, unsigned Radix = 10
+          , bool force_sign = false>
+        struct make_int
         {
-            return result_type();
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef any_int_generator<
+                T
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , Radix
+              , force_sign
+            > result_type;
+
+            result_type operator()(unused_type, unused_type) const
+            {
+                return result_type();
+            }
+        };
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
     struct make_primitive<tag::short_, Modifiers> 
-      : make_int<short, Modifiers> {};
+      : detail::make_int<short, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::int_, Modifiers> 
-      : make_int<int, Modifiers> {};
+      : detail::make_int<int, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::long_, Modifiers> 
-      : make_int<long, Modifiers> {};
+      : detail::make_int<long, Modifiers> {};
 
 #ifdef BOOST_HAS_LONG_LONG
     template <typename Modifiers>
     struct make_primitive<tag::long_long, Modifiers> 
-      : make_int<boost::long_long_type, Modifiers> {};
+      : detail::make_int<boost::long_long_type, Modifiers> {};
 #endif
 
     template <typename T, unsigned Radix, bool force_sign, typename Modifiers>
     struct make_primitive<tag::int_tag<T, Radix, force_sign>, Modifiers>
-      : make_int<T, Modifiers, Radix, force_sign> {};
+      : detail::make_int<T, Modifiers, Radix, force_sign> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Modifiers, unsigned Radix = 10
-      , bool force_sign = false>
-    struct make_int_direct
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef literal_int_generator<
-            T
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , Radix, force_sign, false
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
+        template <typename T, typename Modifiers, unsigned Radix = 10
+          , bool force_sign = false>
+        struct make_int_direct
         {
-            return result_type(fusion::at_c<0>(term.args));
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_int_generator<
+                T
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , Radix, force_sign, false
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                return result_type(fusion::at_c<0>(term.args));
+            }
+        };
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::short_, fusion::vector1<A0> >, Modifiers>
-      : make_int_direct<short, Modifiers> {};
+      : detail::make_int_direct<short, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::int_, fusion::vector1<A0> >, Modifiers>
-      : make_int_direct<int, Modifiers> {};
+      : detail::make_int_direct<int, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::long_, fusion::vector1<A0> >, Modifiers>
-      : make_int_direct<long, Modifiers> {};
+      : detail::make_int_direct<long, Modifiers> {};
 
 #ifdef BOOST_HAS_LONG_LONG
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::long_long, fusion::vector1<A0> >, Modifiers>
-      : make_int_direct<boost::long_long_type, Modifiers> {};
+      : detail::make_int_direct<boost::long_long_type, Modifiers> {};
 #endif
 
     template <typename T, unsigned Radix, bool force_sign, typename A0
@@ -411,7 +417,7 @@ namespace boost { namespace spirit { namespace karma
     struct make_primitive<
         terminal_ex<tag::int_tag<T, Radix, force_sign>, fusion::vector1<A0> >
           , Modifiers>
-      : make_int_direct<T, Modifiers, Radix, force_sign> {};
+      : detail::make_int_direct<T, Modifiers, Radix, force_sign> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
