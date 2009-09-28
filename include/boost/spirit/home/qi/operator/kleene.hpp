@@ -62,11 +62,8 @@ namespace boost { namespace spirit { namespace qi
                 value_type;
             value_type val = value_type();
 
-            // Repeat while not at eoi and subject parses ok. We need to check
-            // for eoi as the subject could be another Kleene parser, which 
-            // would result in an infinite loop when end of input is reached.
-            while (first != last &&
-                subject.parse(first, last, context, skipper, val))
+            // Repeat while subject parses ok
+            while (subject.parse(first, last, context, skipper, val))
             {
                 // push the parsed value into our attribute
                 traits::push_back(attr, val);
