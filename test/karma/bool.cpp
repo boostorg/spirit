@@ -18,16 +18,16 @@
 using namespace spirit_test;
 
 ///////////////////////////////////////////////////////////////////////////////
-// special bool output policy allowing to spell true and false backwards
+// special bool output policy allowing to spell false as true backwards (eurt)
 struct special_bool_policy : boost::spirit::karma::bool_policies<>
 {
     template <typename CharEncoding, typename Tag
       , typename OutputIterator>
-    static bool generate (OutputIterator& sink, bool b)
+    static bool generate_false(OutputIterator& sink, bool b)
     {
         //  we want to spell the names of true and false backwards
         return boost::spirit::karma::string_inserter<CharEncoding, Tag>::
-            call(sink, b ? "eurt" : "aslaf");
+            call(sink, "eurt");
     }
 };
 
@@ -40,21 +40,25 @@ struct test_bool_data
     bool b;
 };
 
+// the two comparison operators need to be defined
+bool operator==(test_bool_data const& lhs, test_bool_data const& rhs)
+{
+    return lhs.b == rhs.b;
+}
+
 bool operator!=(test_bool_data const& lhs, test_bool_data const& rhs)
 {
-    return lhs.b != rhs.b;
+    return !(lhs == rhs);
 }
 
 struct test_bool_policy : boost::spirit::karma::bool_policies<>
 {
-    typedef boost::spirit::karma::bool_policies<> base_type;
-
-    template <typename CharEncoding, typename Tag
-      , typename OutputIterator>
-    static bool generate (OutputIterator& sink, test_bool_data b)
+    template <typename Inserter, typename OutputIterator, typename Policies>
+    static bool
+    call (OutputIterator& sink, test_bool_data b, Policies const& p)
     {
-        //  call the base class supplying the actual bool value
-        return base_type::template generate<CharEncoding, Tag>(sink, b.b);
+        //  call the predefined inserter to do the job
+        return Inserter::call_n(sink, b.b, p);
     }
 };
 
@@ -111,12 +115,12 @@ int main()
             backwards_bool_type;
         backwards_bool_type const backwards_bool;
 
-        BOOST_TEST(test("aslaf", backwards_bool, false));
-        BOOST_TEST(test("eurt", backwards_bool, true));
-        BOOST_TEST(test("aslaf", backwards_bool(false)));
-        BOOST_TEST(test("eurt", backwards_bool(true)));
-        BOOST_TEST(test("aslaf", backwards_bool(false), false));
-        BOOST_TEST(test("eurt", backwards_bool(true), true));
+        BOOST_TEST(test("eurt", backwards_bool, false));
+        BOOST_TEST(test("true", backwards_bool, true));
+        BOOST_TEST(test("eurt", backwards_bool(false)));
+        BOOST_TEST(test("true", backwards_bool(true)));
+        BOOST_TEST(test("eurt", backwards_bool(false), false));
+        BOOST_TEST(test("true", backwards_bool(true), true));
         BOOST_TEST(!test("", backwards_bool(false), true));
         BOOST_TEST(!test("", backwards_bool(true), false));
     }

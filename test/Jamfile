@@ -70,7 +70,7 @@ import testing ;
     [ run karma/actions.cpp                 : : : : karma_actions ]
     [ run karma/and_predicate.cpp           : : : : karma_and_predicate ]
     [ run karma/alternative.cpp             : : : : karma_alternative ]
-    [ run karma/attribute.cpp               : : : : karma_attribute ]
+#    [ run karma/attribute.cpp               : : : : karma_attribute ]
     [ run karma/binary.cpp                  : : : : karma_binary ]
     [ run karma/bool.cpp                    : : : : karma_bool ]
     [ run karma/buffer.cpp                  : : : : karma_buffer ]

@@ -44,12 +44,6 @@ certain expression requirements (for more information about the requirements, se
 [link spirit.karma.reference.numeric.unsigned_int.additional_requirements below])). 
 The `uint_generator` is a template class. Template parameters fine tune its behavior. 
 
-[note `lit` is reused by the [karma_string String Generators], the
-      __karma_char__, and the Numeric Generators. In 
-      general, a char generator is created when you pass in a
-      character, a string generator is created when you pass in a string, and a 
-      numeric generator is created when you use a numeric literal.] 
-
 [heading Header]
 
     // forwards to <boost/spirit/home/karma/numeric/uint.hpp>
@@ -71,10 +65,16 @@ Also, see __include_structure__.
     [[`boost::spirit::ulong_long    // alias: boost::spirit::karma::ulong_long`]]
 ]
 
-[note   The generators `ulong_long` and `ulong_long(num)` are only available on 
+[important The generators `ulong_long` and `ulong_long(num)` are only available on 
         platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
         defined (i.e. on platforms having native support for `unsigned long long` 
         (64 bit) unsigned integer types).]
+
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric literal.] 
 
 [heading Synopsis]
 
@@ -324,12 +324,6 @@ precision integers) as long as the type follows certain expression
 requirements (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.signed_int.additional_requirements below]). 
 
-[note `lit` is reused by the [karma_string String Generators], the
-      __karma_char__, and the Numeric Generators. In 
-      general, a char generator is created when you pass in a
-      character, a string generator is created when you pass in a string, and a 
-      numeric generator is created when you use a numeric literal.] 
-
 [heading Header]
 
     // forwards to <boost/spirit/home/karma/numeric/int.hpp>
@@ -348,10 +342,16 @@ Also, see __include_structure__.
     [[`boost::spirit::long_long     // alias: boost::spirit::karma::long_long`]]
 ]
 
-[note   The generators `long_long` and `long_long(num)` are only available on 
+[important The generators `long_long` and `long_long(num)` are only available on 
         platforms where the preprocessor constant `BOOST_HAS_LONG_LONG` is 
         defined (i.e. on platforms having native support for `long long` 
         (64 bit) integer types).]
+
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric literal.] 
 
 [heading Synopsis]
 
@@ -574,12 +574,6 @@ bignum (unlimited precision numbers) as long as the type follows certain
 expression requirements (for more information about the requirements, see 
 [link spirit.karma.reference.numeric.real_number.additional_requirements below]).
 
-[note `lit` is reused by the [karma_string String Generators], the
-      __karma_char__, and the Numeric Generators. In 
-      general, a char generator is created when you pass in a
-      character, a string generator is created when you pass in a string, and a 
-      numeric generator is created when you use a numeric literal.] 
-
 [heading Header]
 
     // forwards to <boost/spirit/home/karma/numeric/real.hpp>
@@ -596,6 +590,12 @@ Also, see __include_structure__.
     [[`boost::spirit::double_       // alias: boost::spirit::karma::double_`]]
     [[`boost::spirit::long_double   // alias: boost::spirit::karma::long_double`]]
 ]
+
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric literal.] 
 
 [heading Synopsis]
 
@@ -1070,19 +1070,14 @@ Basic usage of an `double_` generator:
 
 [heading Description]
 
-As you might expect, the `bool_generator` can generate boolean. The 
-`bool_generator` generator can be used to generate ordinary primitive C/C++ 
-`bool` or even user defined boolean types as long as the type follows
-certain expression requirements (for more information about the requirements, see 
+As you might expect, the `bool_generator` can generate output from boolean 
+values. The `bool_generator` generator can be used to generate output from 
+ordinary primitive C/C++ `bool` values or user defined boolean types as long as 
+the type follows certain expression requirements (for more information about 
+the requirements, see 
 [link spirit.karma.reference.numeric.boolean.additional_requirements below])). 
 The `bool_generator` is a template class. Template parameters fine tune its 
 behavior. 
-
-[note `lit` is reused by the [karma_string String Generators], the
-      __karma_char__, and the Numeric Generators. In 
-      general, a char generator is created when you pass in a
-      character, a string generator is created when you pass in a string, and a 
-      numeric generator is created when you use a numeric (boolean) literal.] 
 
 [heading Header]
 
@@ -1098,6 +1093,12 @@ Also, see __include_structure__.
     [[`boost::spirit::lit           // alias: boost::spirit::karma::lit`]]
     [[`boost::spirit::bool          // alias: boost::spirit::karma::bool_`]]
 ]
+
+[note `lit` is reused by the [karma_string String Generators], the
+      __karma_char__, and the Numeric Generators. In 
+      general, a char generator is created when you pass in a
+      character, a string generator is created when you pass in a string, and a 
+      numeric generator is created when you use a numeric (boolean) literal.] 
 
 [heading Synopsis]
 
@@ -1184,12 +1185,12 @@ boolean generators using a wide range of formatting options.
 [heading Additional Requirements]
 
 The following lists enumerate the requirements which must be met in order to 
-use a certain type `B` to instantiate and use a 
-`bool_generator<B, Policies>`.
+use a certain type `B` to instantiate and use a `bool_generator<B, Policies>`.
 
-The type `B` must have defined:
+The type `B`:
 
-* comparison operators for: `==`, `!=`
+* must be convertible to `bool`
+* must have defined the comparison operators for: `==`, `!=`
 
 [heading Attributes]
 
@@ -1258,28 +1259,75 @@ A boolean formatting policy should expose the following:
 [table
 [[Expression][Description]]
 [   [``
+        template <typename Inserter
+          , typename OutputIterator
+          , typename Policies>
+        bool call (OutputIterator& sink, Num n
+          , Policies const& p);
+    ``]
+    [This is the main function used to generate the output for a boolean.
+     It is called by the boolean generator in order to perform the 
+     conversion. In theory all of the work can be implemented here, but it is 
+     the easiest to use existing functionality provided by the type specified
+     by the template parameter `Inserter`. The default implementation of this
+     functions is:
+     ``
+          template <typename Inserter, typename OutputIterator
+            , typename Policies>
+          static bool
+          call (OutputIterator& sink, B b, Policies const& p)
+          {
+              return Inserter::call_n(sink, b, p);
+          }
+     ``
+      `sink`: is the output iterator to use for generation 
+
+      `b`: is the boolean to convert 
+
+      `p`: the instance of the policy type used to instantiate this real 
+           number generator.
+    ]]
+[   [``
         template <typename CharEncoding, 
             typename Tag, typename OutputIterator>
-        bool generate(
+        bool generate_false(
             OutputIterator& sink, B b);
     ``]
-    [This function is called to generate the boolean.
+    [This function is called to generate the boolean if it is `false`.
 
      `sink`: is the output iterator to use for generation 
 
-     `b`: The boolean to convert. 
+     `b`: The boolean to convert (the value is `false`). 
 
      The template parameters `CharEncoding` and `Tag` are either of the type 
      `unused_type` or describe the character class and conversion to be 
      applied to any output possibly influenced by either the `lower[]` or 
      `upper[]` directives.
 
-      The return value defines the outcome of the whole generator.]]
+      The return value defines the outcome of the whole generator. ]]
+[   [``
+        template <typename CharEncoding, 
+            typename Tag, typename OutputIterator>
+        bool generate_true(
+            OutputIterator& sink, B b);
+    ``]
+    [This function is called to generate the boolean if it is `true`.
+
+     `sink`: is the output iterator to use for generation 
+
+     `b`: The boolean to convert (the value is `true`). 
+
+     The template parameters `CharEncoding` and `Tag` are either of the type 
+     `unused_type` or describe the character class and conversion to be 
+     applied to any output possibly influenced by either the `lower[]` or 
+     `upper[]` directives.
+
+      The return value defines the outcome of the whole generator. ]]
 ]
 
 [heading Complexity]
 
-[:O(N), where `N` is the number of digits needed to represent the generated 
+[:O(N), where `N` is the number of characters needed to represent the generated 
  boolean.]
 
 [heading Example]
