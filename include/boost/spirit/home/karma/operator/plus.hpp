@@ -72,13 +72,16 @@ namespace boost { namespace spirit { namespace karma
             if (traits::compare(it, end))
                 return false;
 
-            // from now on plus fails only if the underlying output fails
-            bool result = true;
-            for (/**/; result && !traits::compare(it, end); traits::next(it))
+            // from now on plus fails if the underlying output fails or overall
+            // no subject generators succeeded
+            bool result = false;
+            for (/**/; detail::sink_is_good(sink) && !traits::compare(it, end); 
+                 traits::next(it))
             {
-                result = subject.generate(sink, ctx, d, traits::deref(it));
+                if (subject.generate(sink, ctx, d, traits::deref(it)))
+                    result = true;
             }
-            return detail::sink_is_good(sink);
+            return result && detail::sink_is_good(sink);
         }
 
         template <typename Context>

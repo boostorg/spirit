@@ -124,11 +124,28 @@ namespace boost { namespace spirit { namespace karma
     struct repeat_generator 
       : unary_generator<repeat_generator<Subject, LoopIter> >
     {
+    private:
+        // iterate over the given container until its exhausted or the embedded
+        // (left) generator succeeds
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Iterator>
+        bool generate_subject(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Iterator& it, Iterator const& end) const
+        {
+            while (!traits::compare(it, end))
+            {
+                if (subject.generate(sink, ctx, d, traits::deref(it)))
+                    return true;
+                traits::next(it);
+            }
+            return false;
+        }
+
+    public:
         typedef Subject subject_type;
 
-        typedef mpl::int_<
-            generator_properties::countingbuffer | subject_type::properties::value
-        > properties;
+        typedef mpl::int_<subject_type::properties::value> properties;
 
         // Build a std::vector from the subject's attribute. Note
         // that build_std_vector may return unused_type if the
@@ -156,38 +173,25 @@ namespace boost { namespace spirit { namespace karma
             iterator_type end = traits::end(attr);
             typename LoopIter::type i = iter.start();
 
+            // generate the minimal required amount of output
+            for (/**/; !iter.got_min(i); ++i, traits::next(it))
             {
-                // inhibit (redirect) output, disable counting while buffering
-                detail::enable_buffering<OutputIterator> buffering(sink);
-
+                if (!generate_subject(sink, ctx, d, it, end))
                 {
-                    detail::disable_counting<OutputIterator> nocounting(sink);
-
-                    // generate the minimal required amount of output
-                    for (/**/; !iter.got_min(i); ++i, traits::next(it))
-                    {
-                        if (traits::compare(it, end) ||
-                            !subject.generate(sink, ctx, d, traits::deref(it)))
-                        {
-                            // if we fail before reaching the minimum iteration
-                            // required, do not output anything and return false
-                            return false;
-                        }
-                    }
-                }   // re-enable counting
-
-                // copy the output generated so far to the target output iterator
-                buffering.buffer_copy();
+                    // if we fail before reaching the minimum iteration
+                    // required, do not output anything and return false
+                    return false;
+                }
             }
 
             // generate some more up to the maximum specified
-            bool result = true;
-            for (/**/; result && !iter.got_max(i) && !traits::compare(it, end); 
+            for (/**/; detail::sink_is_good(sink) && !iter.got_max(i); 
                  ++i, traits::next(it))
             {
-                result = subject.generate(sink, ctx, d, traits::deref(it));
+                if (!generate_subject(sink, ctx, d, it, end))
+                    break;
             }
-            return result;
+            return detail::sink_is_good(sink);
         }
 
         template <typename Context>

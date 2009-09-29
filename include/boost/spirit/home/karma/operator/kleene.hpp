@@ -69,10 +69,13 @@ namespace boost { namespace spirit { namespace karma
             iterator_type end = traits::end(attr);
 
             // kleene fails only if the underlying output fails
-            bool result = true;
-            for (/**/; result && !traits::compare(it, end); traits::next(it))
+            for (/**/; detail::sink_is_good(sink) && !traits::compare(it, end); 
+                 traits::next(it))
             {
-                result = subject.generate(sink, ctx, d, traits::deref(it));
+                // Ignore return value, failing subject generators are just 
+                // skipped. This allows to selectively generate items in the 
+                // provided attribute.
+                subject.generate(sink, ctx, d, traits::deref(it));
             }
             return detail::sink_is_good(sink);
         }

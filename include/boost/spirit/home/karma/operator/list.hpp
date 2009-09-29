@@ -36,11 +36,33 @@ namespace boost { namespace spirit { namespace karma
     template <typename Left, typename Right>
     struct list : binary_generator<list<Left, Right> >
     {
+    private:
+        // iterate over the given container until its exhausted or the embedded
+        // (left) generator succeeds
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Iterator>
+        bool generate_left(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Iterator& it, Iterator const& end) const
+        {
+            while (!traits::compare(it, end))
+            {
+                if (left.generate(sink, ctx, d, traits::deref(it)))
+                    return true;
+                traits::next(it);
+            }
+            return false;
+        }
+
+    public:
         typedef Left left_type;
         typedef Right right_type;
 
         typedef mpl::int_<
-            left_type::properties::value | right_type::properties::value
+            left_type::properties::value 
+          | right_type::properties::value 
+          | generator_properties::buffering 
+          | generator_properties::counting
         > properties;
 
         // Build a std::vector from the LHS's attribute. Note
@@ -69,16 +91,24 @@ namespace boost { namespace spirit { namespace karma
             iterator_type it = traits::begin(attr);
             iterator_type end = traits::end(attr);
 
-            bool result = !traits::compare(it, end);
-            if (result && left.generate(sink, ctx, d, traits::deref(it)))
+            if (generate_left(sink, ctx, d, it, end))
             {
-                for (traits::next(it); result && !traits::compare(it, end);
-                     traits::next(it))
+                for (traits::next(it); !traits::compare(it, end); traits::next(it))
                 {
-                    result = right.generate(sink, ctx, d, unused) &&
-                             left.generate(sink, ctx, d, traits::deref(it));
+                    // wrap the given output iterator as generate_left might fail
+                    detail::enable_buffering<OutputIterator> buffering(sink);
+                    {
+                        detail::disable_counting<OutputIterator> nocounting(sink);
+
+                        if (!right.generate(sink, ctx, d, unused))
+                            return false;     // shouldn't happen
+
+                        if (!generate_left(sink, ctx, d, it, end))
+                            break;            // return true as one item succeeded
+                    }
+                    buffering.buffer_copy();
                 }
-                return result;
+                return true;
             }
             return false;
         }
