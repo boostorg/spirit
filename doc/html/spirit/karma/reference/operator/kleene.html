@@ -28,7 +28,7 @@
           (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.kleene.description"></a><h6>
-<a name="id828666"></a>
+<a name="id807546"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             generator, the Kleene star generator always succeeds.
           </p>
 <a name="spirit.karma.reference.operator.kleene.header"></a><h6>
-<a name="id828683"></a>
+<a name="id807563"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/kleene.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.kleene.model_of"></a><h6>
-<a name="id828758"></a>
+<a name="id807637"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.model_of">Model
             of</a>
           </h6>
@@ -61,7 +61,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.expression_semantics"></a><h6>
-<a name="id828796"></a>
+<a name="id807676"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -104,8 +104,18 @@
                   </td>
 </tr></tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              All failing iterations of the embedded generator will consume one element
+              from the supplied attribute.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.operator.kleene.attributes"></a><h6>
-<a name="id828903"></a>
+<a name="id807790"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.attributes">Attributes</a>
           </h6>
 <p>
@@ -192,8 +202,7 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
-              The expression:
+              a failing generator <code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>. The expression:
             </p>
 <p>
               
@@ -209,7 +218,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.kleene.complexity"></a><h6>
-<a name="id829239"></a>
+<a name="id808129"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -226,7 +235,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.kleene.example"></a><h6>
-<a name="id829263"></a>
+<a name="id808153"></a>
             <a class="link" href="kleene.html#spirit.karma.reference.operator.kleene.example">Example</a>
           </h6>
 <p>

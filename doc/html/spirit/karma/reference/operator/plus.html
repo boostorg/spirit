@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.operator.plus"></a><a class="link" href="plus.html" title="Plus (+a)"> Plus (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.operator.plus.description"></a><h6>
-<a name="id830190"></a>
+<a name="id809081"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.description">Description</a>
           </h6>
 <p>
@@ -36,7 +36,7 @@
             executed at least once.
           </p>
 <a name="spirit.karma.reference.operator.plus.header"></a><h6>
-<a name="id830207"></a>
+<a name="id809098"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/plus.hpp&gt;
@@ -46,7 +46,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.plus.model_of"></a><h6>
-<a name="id830282"></a>
+<a name="id809172"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -59,7 +59,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.plus.expression_semantics"></a><h6>
-<a name="id830320"></a>
+<a name="id809210"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -103,8 +103,20 @@
                   </td>
 </tr></tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              All failing iterations of the embedded generator will consume one element
+              from the supplied attribute. The overall <code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code> will succeed as long as at least
+              one invocation of the embedded generator will succeed (unless the underlying
+              output stream reports an error).
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.operator.plus.attributes"></a><h6>
-<a name="id830427"></a>
+<a name="id809335"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.attributes">Attributes</a>
           </h6>
 <p>
@@ -191,8 +203,7 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <code class="computeroutput"><span class="identifier">a</span></code>.
-              The expression:
+              a failing generator <code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>. The expression:
             </p>
 <p>
               
@@ -208,7 +219,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.plus.complexity"></a><h6>
-<a name="id830763"></a>
+<a name="id811682"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -224,7 +235,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.plus.example"></a><h6>
-<a name="id830787"></a>
+<a name="id811706"></a>
             <a class="link" href="plus.html#spirit.karma.reference.operator.plus.example">Example</a>
           </h6>
 <p>

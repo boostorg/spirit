@@ -5,7 +5,8 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/utility/enable_if.hpp>
+
+#include <boost/assign/std/vector.hpp>
 
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_char.hpp>
@@ -13,9 +14,12 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_nonterminal.hpp>
+#include <boost/spirit/include/karma_auxiliary.hpp>
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/fusion/include/std_pair.hpp>
 
 #include <string>
 #include <iostream>
@@ -111,6 +115,47 @@ int main()
         v.push_back(456);
         v.push_back(789);
         BOOST_TEST(test_delimited("123 456 789 ", repeat(3)[int_][_1 = phx::ref(v)], space));
+    }
+
+    // failing sub-generators
+    {
+        using namespace boost::assign;
+        namespace karma = boost::spirit::karma;
+
+        typedef std::pair<char, char> data;
+        std::vector<data> v2, v3;
+        v2 += std::make_pair('a', 'a'),
+              std::make_pair('b', 'b'),
+              std::make_pair('c', 'c'),
+              std::make_pair('d', 'd'),
+              std::make_pair('e', 'e'),
+              std::make_pair('f', 'f'),
+              std::make_pair('g', 'g');
+        v3 += std::make_pair('a', 'a'),
+              std::make_pair('b', 'b'),
+              std::make_pair('c', 'c'),
+              std::make_pair('d', 'd');
+
+        karma::rule<spirit_test::output_iterator<char>::type, data()> r;
+
+        r = &char_('d') << char_;
+        BOOST_TEST(test("d", repeat[r], v2));
+
+        r = !char_('d') << char_;
+        BOOST_TEST(test("abcefg", repeat(6)[r], v2));
+        BOOST_TEST(!test("", repeat(5)[r], v2));
+
+        r = !char_('c') << char_;
+        BOOST_TEST(test("abd", repeat(3)[r], v2));
+
+        r = !char_('a') << char_;
+        BOOST_TEST(test("bcdef", repeat(3, 5)[r], v2));
+        BOOST_TEST(test("bcd", repeat(3, 5)[r], v3));
+        BOOST_TEST(!test("", repeat(4, 5)[r], v3));
+
+        BOOST_TEST(test("bcd", repeat(3, inf)[r], v3));
+        BOOST_TEST(test("bcdefg", repeat(3, inf)[r], v2));
+        BOOST_TEST(!test("", repeat(4, inf)[r], v3));
     }
 
     return boost::report_errors();
