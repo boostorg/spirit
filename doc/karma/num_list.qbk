@@ -57,9 +57,9 @@ usable the items stored in the container still need to be convertible to a
 data types while using the same format description expression. It implements 
 the [karma_stream `stream`] generators. These are applicable to any attribute
 type as long as a matching standard streaming operator is defined. For instance 
-for any attribute type `Attr` a function:
+for any attribute type `Attrib` a function:
 
-    std::ostream& operator<< (std::ostream&, Attr const&);
+    std::ostream& operator<< (std::ostream&, Attrib const&);
 
 needs to be available. The [karma_stream `stream`] generator will use the 
 standard streaming operator to generate the output. 

@@ -27,7 +27,7 @@ pages and pages of reference doumentation.
     [[`b`]              [A boolean expression]]
     [[`B`]              [A type to be interpreted as in boolean expressions]]
     [[`fg`]             [A (lazy generator) function with signature `G(Unused, Context)`]]
-    [[`fa`]             [A (semantic action) function with signature `void(Attr&, Context, bool&)`.
+    [[`fa`]             [A (semantic action) function with signature `void(Attrib&, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
                         force the generator to fail. Both `Context` and the boolean flag are
                         optional.]]
@@ -302,6 +302,7 @@ See here for more information about __karma_auxiliary__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
+    [[[karma_attr_cast `attr_cast<Attrib>(g)`]] [`Attrib`]  [Invokes `g` while supplying an attribute of type `Attrib`.]]
     [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
     [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
     [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
@@ -566,16 +567,16 @@ Has the form:
 
 where `f` is a function with the signatures:
 
-    void f(Attr&);
-    void f(Attr&, Context&);
-    void f(Attr&, Context&, bool&);
+    void f(Attrib&);
+    void f(Attrib&, Context&);
+    void f(Attrib&, Context&, bool&);
 
 You can use `__boost_bind__` to bind member functions. For function
 objects, the allowed signatures are:
 
-    void operator()(Attr&, unused_type, unused_type) const;
-    void operator()(Attr&, Context&, unused_type) const;
-    void operator()(Attr&, Context&, bool&) const;
+    void operator()(Attrib&, unused_type, unused_type) const;
+    void operator()(Attrib&, Context&, unused_type) const;
+    void operator()(Attrib&, Context&, bool&) const;
 
 The `unused_type` is used in the signatures above to signify 'don't
 care'.

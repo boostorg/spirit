@@ -186,10 +186,10 @@ instance.
            __boost_any__.
 ]
 
-[note  In addition to their usual attribute of type `Attr` all listed generators 
-       accept an instance of a `boost::optional<Attr>` as well. If the 
+[note  In addition to their usual attribute of type `Attrib` all listed generators 
+       accept an instance of a `boost::optional<Attrib>` as well. If the 
        `boost::optional<>` is initialized (holds a value) the generators behave 
-       as if their attribute was an instance of `Attr` and emit the value stored
+       as if their attribute was an instance of `Attrib` and emit the value stored
        in the `boost::optional<>`. Otherwise the generators will fail.]
 
 [heading Complexity]

@@ -122,6 +122,24 @@ operator<< (std::ostream& os, complex const& z)
 }
 //]
 
+//[reference_karma_auxiliary_attr_cast_data1
+// this is just a test structure we want to use in place of an int
+struct int_data
+{
+    int i;
+};
+
+// we provide a custom attribute transformation to allow its use as an int
+namespace boost { namespace spirit { namespace traits
+{
+    template <>
+    struct transform_attribute<int, int_data const>
+    {
+        static int call(int_data const& d) { return d.i; }
+    };
+}}}
+//]
+
 int main()
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -129,7 +147,6 @@ int main()
     ///////////////////////////////////////////////////////////////////////////
     {
         //[reference_karma_using_declarations_sequence
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         //]
 
@@ -140,7 +157,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_alternative
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::ascii::string;
         //]
@@ -160,7 +176,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_kleene
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::space;
         //]
@@ -176,7 +191,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_plus
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::space;
         //]
@@ -197,7 +211,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_list
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         //]
 
@@ -213,7 +226,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_optional
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         //]
 
@@ -234,7 +246,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_and_predicate
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::ascii::char_;
         using boost::spirit::karma::ascii::string;
@@ -252,7 +263,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_not_predicate
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::ascii::char_;
         using boost::spirit::karma::ascii::string;
@@ -273,7 +283,6 @@ int main()
     ///////////////////////////////////////////////////////////////////////////
     {
         //[reference_karma_using_declarations_alignment
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::left_align;
         using boost::spirit::karma::center;
@@ -290,7 +299,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_repeat
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::repeat;
         //]
@@ -311,7 +319,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_delimit
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::delimit;
         using boost::spirit::karma::verbatim;
@@ -329,7 +336,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_upperlower
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::ascii::upper;
         using boost::spirit::ascii::lower;
@@ -343,7 +349,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_maxwidth
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::maxwidth;
         using boost::spirit::karma::left_align;
@@ -359,7 +364,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_buffer
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::buffer;
         //]
@@ -376,7 +380,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_omit
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::omit;
         //]
@@ -389,7 +392,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_bool
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::bool_;
         using boost::spirit::karma::lit;
         //]
@@ -405,7 +407,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_int
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::int_;
         using boost::spirit::karma::lit;
         //]
@@ -421,7 +422,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_uint
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::uint_;
         using boost::spirit::karma::lit;
         //]
@@ -437,7 +437,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_real
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::double_;
         using boost::spirit::karma::lit;
         //]
@@ -456,7 +455,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_char
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::lit;
         using boost::spirit::ascii::char_;
         //]
@@ -480,7 +478,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_char_class
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::alpha;
         using boost::spirit::karma::upper;
         //]
@@ -498,7 +495,6 @@ int main()
     // string
     {
         //[reference_karma_using_declarations_string
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::lit;
         using boost::spirit::ascii::string;
         //]
@@ -521,7 +517,6 @@ int main()
     // auxiliary
     {
         //[reference_karma_using_declarations_eol
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::eol;
         //]
 
@@ -532,8 +527,18 @@ int main()
     }
 
     {
+        //[reference_karma_using_declarations_attr_cast
+        using boost::spirit::karma::attr_cast;
+        //]
+
+        //[reference_karma_attr_cast1
+        int_data d = { 1 };
+        test_generator("1", karma::attr_cast<int>(karma::int_), d);
+        //]
+    }
+
+    {
         //[reference_karma_using_declarations_eps
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::eps;
         using boost::phoenix::val;
         //]
@@ -547,7 +552,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_lazy
-        using boost::spirit::karma::generate;
         namespace karma = boost::spirit::karma;
         using boost::spirit::karma::_1;
         using boost::spirit::ascii::string;
@@ -564,7 +568,6 @@ int main()
     // stream module
     {
         //[reference_karma_using_declarations_stream
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::stream;
         //]
 
@@ -580,7 +583,6 @@ int main()
     // binary module
     {
         //[reference_karma_using_declarations_native_binary
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::byte_;
         using boost::spirit::karma::word;
         using boost::spirit::karma::dword;
@@ -614,7 +616,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_little_binary
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::little_word;
         using boost::spirit::karma::little_dword;
         using boost::spirit::karma::little_qword;
@@ -633,7 +634,6 @@ int main()
 
     {
         //[reference_karma_using_declarations_big_binary
-        using boost::spirit::karma::generate;
         using boost::spirit::karma::big_word;
         using boost::spirit::karma::big_dword;
         using boost::spirit::karma::big_qword;

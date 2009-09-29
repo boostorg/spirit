@@ -161,7 +161,7 @@
 [def __karma_eps__                  [link spirit.karma.reference.auxiliary.eps `eps`]]
 [def __karma_feps__                 [link spirit.karma.reference.auxiliary.eps `eps(b)`]]
 [template karma_lazy[str]           [link spirit.karma.reference.auxiliary.lazy [str]]]
-[def __karma_llazy__                [link spirit.karma.reference.auxiliary.lazy `fg`]]
+[template karma_attr_cast[str]      [link spirit.karma.reference.auxiliary.attr_cast [str]]]
 
 [def __karma_operator__             [link spirit.karma.reference.operator Generator Operators]]
 [def __karma_sequence__             [link spirit.karma.reference.operator.sequence sequence (`<<`)]]
