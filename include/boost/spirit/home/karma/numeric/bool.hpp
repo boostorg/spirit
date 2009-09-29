@@ -22,6 +22,7 @@
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/bool_policies.hpp>
+#include <boost/spirit/home/karma/numeric/detail/bool_utils.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
@@ -129,8 +130,8 @@ namespace boost { namespace spirit { namespace karma
             if (!traits::has_optional_value(attr))
                 return false;       // fail if it's an uninitialized optional
 
-            return p_.template generate<CharEncoding, Tag>(
-                        sink, traits::optional_value(attr)) &&
+            return bool_inserter<T, Policies, CharEncoding, Tag>::call(
+                        sink, traits::optional_value(attr), p_) &&
                    delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -188,8 +189,8 @@ namespace boost { namespace spirit { namespace karma
             {
                 return false;
             }
-            return p_.template generate<CharEncoding, Tag>(sink, n_) && 
-                   delimit_out(sink, d);
+            return bool_inserter<T, Policies, CharEncoding, Tag>::
+                      call(sink, n_, p_) && delimit_out(sink, d);
         }
 
         // A bool_() without any associated attribute just emits its 
@@ -198,8 +199,8 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , unused_type) const
         {
-            return p_.template generate<CharEncoding, Tag>(sink, n_) && 
-                   delimit_out(sink, d);
+            return bool_inserter<T, Policies, CharEncoding, Tag>::
+                      call(sink, n_) && delimit_out(sink, d);
         }
 
         template <typename Context>
