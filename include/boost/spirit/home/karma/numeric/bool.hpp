@@ -185,7 +185,7 @@ namespace boost { namespace spirit { namespace karma
           , Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
-                n_ != traits::optional_value(attr))
+                bool(n_) != bool(traits::optional_value(attr)))
             {
                 return false;
             }
