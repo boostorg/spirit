@@ -13,5 +13,6 @@
 #include <boost/spirit/home/karma/auxiliary/eps.hpp>
 #include <boost/spirit/home/karma/auxiliary/eol.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
+#include <boost/spirit/home/karma/auxiliary/attr_cast.hpp>
 
 #endif
