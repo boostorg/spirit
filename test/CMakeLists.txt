@@ -24,6 +24,7 @@ boost_test_run(qi_alternative qi/alternative.cpp COMPILE_FLAGS ${test_compile_fl
 boost_test_run(qi_attr qi/attr.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_and_predicate qi/and_predicate.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_binary qi/binary.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(qi_bool qi/bool.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_char qi/char.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_char_class qi/char_class.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(qi_difference qi/difference.cpp COMPILE_FLAGS ${test_compile_flags})

@@ -1189,14 +1189,13 @@ use a certain type `B` to instantiate and use a `bool_generator<B, Policies>`.
 
 The type `B`:
 
-* must be convertible to `bool`
-* must have defined the comparison operators for: `==`, `!=`
+* must be (safely) convertible to `bool`
 
 [heading Attributes]
 
 [table
     [[Expression]       [Attribute]]
-    [[`bool(b)`]        [__unused__]]
+    [[`bool_(b)`]       [__unused__]]
     [[`bool_`]          [`bool`, attribute is mandatory (otherwise 
                          compilation will fail)]]
     [[`bool_(b)`]       [`bool`, attribute is optional, if it is 
@@ -1233,19 +1232,18 @@ parameter to the `bool_generator<>` boolean generator. For instance:
     {
         template <typename CharEncoding, typename Tag
           , typename OutputIterator>
-        static bool generate (OutputIterator& sink, bool b)
+        static bool generate_false(OutputIterator& sink, bool b)
         {
-            //  we want to spell the names of true and false backwards
-            return string_inserter<CharEncoding, Tag>::call(
-                sink, b ? "eurt" : "aslaf");
+            // we want to spell the names of false as eurt (true backwards)
+            return string_inserter<CharEncoding, Tag>::call(sink, "eurt");
         }
     };
 
     typedef karma::bool_generator<special_bool_policy> backwards_bool_type;
     backwards_bool_type const backwards_bool;
 
-    karma::generate(sink, backwards_bool, true);    // will output: eurt
-    karma::generate(sink, backwards_bool(false));   // will output: eslaf
+    karma::generate(sink, backwards_bool, true);    // will output: true
+    karma::generate(sink, backwards_bool(false));   // will output: uert
 
 The template parameter `B` should be the type to be formatted using the 
 overloaded policy type. At the same time `B` will be used as the attribute 

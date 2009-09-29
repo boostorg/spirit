@@ -28,7 +28,7 @@
           Generators (<code class="computeroutput"><span class="identifier">bool_</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.numeric.boolean.description"></a><h6>
-<a name="id770520"></a>
+<a name="id769580"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.description">Description</a>
           </h6>
 <p>
@@ -42,7 +42,7 @@
             a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.header"></a><h6>
-<a name="id770574"></a>
+<a name="id769634"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/bool.hpp&gt;
@@ -52,7 +52,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.namespace"></a><h6>
-<a name="id770648"></a>
+<a name="id769709"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -93,7 +93,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.synopsis"></a><h6>
-<a name="id770789"></a>
+<a name="id769849"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
@@ -102,7 +102,7 @@
 <span class="keyword">struct</span> <span class="identifier">bool_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.boolean.template_parameters"></a><h6>
-<a name="id770858"></a>
+<a name="id769919"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.template_parameters">Template
             parameters</a>
           </h6>
@@ -167,7 +167,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.model_of"></a><h6>
-<a name="id770999"></a>
+<a name="id770059"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.model_of">Model
             of</a>
           </h6>
@@ -197,7 +197,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.boolean.expression_semantics"></a><h6>
-<a name="id771104"></a>
+<a name="id770165"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -352,7 +352,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.additional_requirements"></a><h6>
-<a name="id771562"></a>
+<a name="id771175"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.additional_requirements">Additional
             Requirements</a>
           </h6>
@@ -364,17 +364,11 @@
 <p>
             The type <code class="computeroutput"><span class="identifier">B</span></code>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-              must be convertible to <code class="computeroutput"><span class="keyword">bool</span></code>
-</li>
-<li class="listitem">
-              must have defined the comparison operators for: <code class="computeroutput"><span class="special">==</span></code>,
-              <code class="computeroutput"><span class="special">!=</span></code>
-</li>
-</ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+              must be (safely) convertible to <code class="computeroutput"><span class="keyword">bool</span></code>
+</li></ul></div>
 <a name="spirit.karma.reference.numeric.boolean.attributes"></a><h6>
-<a name="id772849"></a>
+<a name="id771253"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -398,7 +392,7 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="keyword">bool</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
+                    <code class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
                   </p>
                   </td>
 <td>
@@ -489,7 +483,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.boolean_formatting_policies"></a><h6>
-<a name="id773223"></a>
+<a name="id771627"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.boolean_formatting_policies">Boolean
             Formatting Policies</a>
           </h6>
@@ -502,19 +496,18 @@
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Tag</span>
       <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
-    <span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">generate</span> <span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">&amp;</span> <span class="identifier">sink</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">b</span><span class="special">)</span>
+    <span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">generate_false</span><span class="special">(</span><span class="identifier">OutputIterator</span><span class="special">&amp;</span> <span class="identifier">sink</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">b</span><span class="special">)</span>
     <span class="special">{</span>
-        <span class="comment">//  we want to spell the names of true and false backwards
-</span>        <span class="keyword">return</span> <span class="identifier">string_inserter</span><span class="special">&lt;</span><span class="identifier">CharEncoding</span><span class="special">,</span> <span class="identifier">Tag</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span>
-            <span class="identifier">sink</span><span class="special">,</span> <span class="identifier">b</span> <span class="special">?</span> <span class="string">"eurt"</span> <span class="special">:</span> <span class="string">"aslaf"</span><span class="special">);</span>
+        <span class="comment">// we want to spell the names of false as eurt (true backwards)
+</span>        <span class="keyword">return</span> <span class="identifier">string_inserter</span><span class="special">&lt;</span><span class="identifier">CharEncoding</span><span class="special">,</span> <span class="identifier">Tag</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="string">"eurt"</span><span class="special">);</span>
     <span class="special">}</span>
 <span class="special">};</span>
 
 <span class="keyword">typedef</span> <span class="identifier">karma</span><span class="special">::</span><span class="identifier">bool_generator</span><span class="special">&lt;</span><span class="identifier">special_bool_policy</span><span class="special">&gt;</span> <span class="identifier">backwards_bool_type</span><span class="special">;</span>
 <span class="identifier">backwards_bool_type</span> <span class="keyword">const</span> <span class="identifier">backwards_bool</span><span class="special">;</span>
 
-<span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">backwards_bool</span><span class="special">,</span> <span class="keyword">true</span><span class="special">);</span>    <span class="comment">// will output: eurt
-</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">backwards_bool</span><span class="special">(</span><span class="keyword">false</span><span class="special">));</span>   <span class="comment">// will output: eslaf
+<span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">backwards_bool</span><span class="special">,</span> <span class="keyword">true</span><span class="special">);</span>    <span class="comment">// will output: true
+</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">backwards_bool</span><span class="special">(</span><span class="keyword">false</span><span class="special">));</span>   <span class="comment">// will output: uert
 </span></pre>
 <p>
             The template parameter <code class="computeroutput"><span class="identifier">B</span></code>
@@ -524,7 +517,7 @@
             default for <code class="computeroutput"><span class="identifier">B</span></code> is <code class="computeroutput"><span class="keyword">bool</span></code>.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.booelan_formatting_policy_expression_semantics"></a><h6>
-<a name="id773668"></a>
+<a name="id772049"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.booelan_formatting_policy_expression_semantics">Booelan
             Formatting Policy Expression Semantics</a>
           </h6>
@@ -675,7 +668,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.complexity"></a><h6>
-<a name="id774468"></a>
+<a name="id772849"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -689,7 +682,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.boolean.example"></a><h6>
-<a name="id774499"></a>
+<a name="id772880"></a>
             <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.example">Example</a>
           </h6>
 <p>

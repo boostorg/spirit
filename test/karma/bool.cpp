@@ -12,6 +12,7 @@
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/home/support/safe_bool.hpp>
 
 #include "test.hpp"
 
@@ -35,21 +36,17 @@ struct special_bool_policy : boost::spirit::karma::bool_policies<>
 // special policy allowing to use any type as a boolean
 struct test_bool_data
 {
-    test_bool_data(bool b) : b(b) {}
+    explicit test_bool_data(bool b) : b(b) {}
 
     bool b;
+
+    // we need to provide (safe) convertibility to bool
+    typedef boost::spirit::safe_bool<test_bool_data> safe_bool_type;
+    operator safe_bool_type::result_type() const 
+    { 
+        return safe_bool_type()(b); 
+    }
 };
-
-// the two comparison operators need to be defined
-bool operator==(test_bool_data const& lhs, test_bool_data const& rhs)
-{
-    return lhs.b == rhs.b;
-}
-
-bool operator!=(test_bool_data const& lhs, test_bool_data const& rhs)
-{
-    return !(lhs == rhs);
-}
 
 struct test_bool_policy : boost::spirit::karma::bool_policies<>
 {
@@ -58,7 +55,7 @@ struct test_bool_policy : boost::spirit::karma::bool_policies<>
     call (OutputIterator& sink, test_bool_data b, Policies const& p)
     {
         //  call the predefined inserter to do the job
-        return Inserter::call_n(sink, b.b, p);
+        return Inserter::call_n(sink, bool(b), p);
     }
 };
 

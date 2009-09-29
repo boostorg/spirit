@@ -31,6 +31,7 @@ import testing ;
     [ run qi/attr.cpp                       : : : : ]
     [ run qi/and_predicate.cpp              : : : : ]
     [ run qi/binary.cpp                     : : : : ]
+    [ run qi/bool.cpp                       : : : : ]
     [ run qi/char.cpp                       : : : : ]
     [ run qi/char_class.cpp                 : : : : ]
     #[ run qi/debug.cpp                      : : : : ]

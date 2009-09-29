@@ -172,6 +172,29 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
 };
 //]
 
+//[reference_test_bool_policy
+///////////////////////////////////////////////////////////////////////////////
+//  These policies can be used to parse "eurt" (i.e. "true" spelled backwards) 
+//  as `false`
+///////////////////////////////////////////////////////////////////////////////
+struct backwards_bool_policies : boost::spirit::qi::bool_policies<>
+{
+    // we want to interpret a 'true' spelled backwards as 'false'
+    template <typename Iterator, typename Attribute>
+    static bool
+    parse_false(Iterator& first, Iterator const& last, Attribute& attr)
+    {
+        namespace qi = boost::spirit::qi;
+        if (qi::detail::string_parse("eurt", first, last, qi::unused))
+        {
+            qi::detail::assign_to(false, attr);    // result is false
+            return true;
+        }
+        return false;
+    }
+};
+//]
+
 int
 main()
 {
@@ -552,7 +575,7 @@ main()
         test_parser("-12345", int_);
         //]
     }
-    
+
     // real
     {
         //[reference_using_declarations_real
@@ -569,7 +592,26 @@ main()
         test_parser("123,456,789.01", ts_real);
         //]
     }
-    
+
+    // bool_
+    {
+        //[reference_using_declarations_bool
+        using boost::spirit::qi::bool_;
+        using boost::spirit::qi::bool_parser;
+        //]
+
+        //[reference_bool
+        test_parser("true", bool_);
+        test_parser("false", bool_);
+        //]
+
+        //[reference_custom_bool
+        bool_parser<bool, backwards_bool_policies> backwards_bool;
+        test_parser("true", backwards_bool);
+        test_parser("eurt", backwards_bool);
+        //]
+    }
+
     // sequence
     {
         //[reference_using_declarations_sequence

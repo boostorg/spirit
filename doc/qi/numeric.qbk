@@ -561,4 +561,154 @@ And its use:
 
 [endsect] [/ Real Numbers]
 
+[/------------------------------------------------------------------------------]
+[section:boolean Boolean Parser (`bool_`)]
+
+[heading Description]
+
+The `bool_parser` can parse booleans of arbitrary type, `B`. The boolean base 
+type `T` can be a user defined boolean type as long as the type follows certain
+expression requirements (documented below).
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/numeric/bool.hpp>
+    #include <boost/spirit/include/qi_bool.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::bool_        // alias: boost::spirit::qi::bool_`]]
+]
+
+[heading Synopsis]
+
+    template <typename T, typename RealPolicies>
+    struct bool_parser;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`B`]                  [The boolean type of the 
+                            boolean parser.]                [`bool`]]
+    [[`RealPolicies`]       [Policies control the 
+                            parser's behavior.]             [`bool_policies<B>`]]
+]
+
+[heading Model of]
+
+[:__primitive_parser_concept__]
+
+[variablelist Notation
+    [[`BP`]         [An instance of `bool_parser` (type).]]
+    [[`BP`]         [A boolean `Policies` (type).]]
+    [[`b`]          [An object of `B`, the numeric base type.]]
+    [[`f`, `l`]     [__fwditer__. first/last iterator pair.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __primitive_parser_concept__.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`BP()`]           [Instantiate and (default) construct an `bool_parser`]]
+    [[`bool_`]          [Create an `bool_parser<bool, bool_policies<bool> >`]]
+]
+
+[heading Attributes]
+
+[:`B`, The boolean type of the booelan parser.]
+
+[heading Complexity]
+
+[:O(N), where N is the number of characters being parsed.]
+
+[heading Minimum Expression Requirements for `B`]
+
+The boolean type, `B`, the minimum expression requirements listed
+below must be valid. Take note that additional requirements may be
+imposed by custom policies. 
+
+[table
+    [[Expression]                           [Semantics]]
+    [[`B(bool)`]                            [Constructible from a `bool`.]]
+]
+
+[heading Boolean `Policies`]
+
+The boolean `Policies` template parameter is a class that groups all the
+policies that control the parser's behavior. Policies control the boolean
+parsers' behavior. 
+
+The default is `bool_policies<bool>`. The default is provided to take care
+of the most common case (there are many ways to represent, and hence
+parse, boolean numbers). In most cases, the default policies are sufficient
+and can be used straight out of the box. They are designed to parse
+boolean value of the form `"true"` and `"false"`.
+
+[heading Boolean `Policies` Expression Requirements]
+
+For models of boolean `Policies` the following expressions must be valid:
+
+[table
+    [[Expression]                           [Semantics]]
+    [[`BP::parse_true(f, l, n)`]            [Parse a `true` value.]]
+    [[`BP::parse_false(f, l, n)`]           [Parse a `false` value.]]
+]
+
+The functions should return true if the required representations of `true` or 
+`false` have been found. In this case the attribute `n` should be set to the 
+matched value (`true` or `false`).
+
+[heading Boolean `Policies` Specializations]
+
+The easiest way to implement a proper boolean parsing policy is to derive a
+new type from the the type `bool_policies` while overriding the aspects
+of the parsing which need to be changed. For example, here's the
+implementation of a boolean parsing policy interpreting the string `"eurt"`
+(i.e. "true" spelled backwards) as `false`:
+
+    struct backwards_bool_policies : qi::bool_policies<>
+    {
+        // we want to interpret a 'true' spelled backwards as 'false'
+        template <typename Iterator, typename Attribute>
+        static bool
+        parse_false(Iterator& first, Iterator const& last, Attribute& attr)
+        {
+            namespace qi = boost::spirit::qi;
+            if (qi::detail::string_parse("eurt", first, last, qi::unused))
+            {
+                qi::detail::assign_to(false, attr);    // result is false
+                return true;
+            }
+            return false;
+        }
+    };
+
+[heading Example]
+
+Some using declarations:
+
+[reference_using_declarations_bool]
+
+Basic real number parsing:
+
+[reference_bool]
+
+A custom real number policy:
+
+[reference_test_bool_policy]
+
+And its use:
+
+[reference_custom_bool]
+
+[endsect] [/ Real Numbers]
+
 [endsect]
