@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            typename traits::result_of::iterator<Attr>::type end = 
+            typename traits::container_iterator<Attr>::type end = 
                 traits::end(attr);
             if (!traits::compare(iter, end) &&
                 !f(component, traits::deref(iter))) 
@@ -94,7 +94,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {
-            typename traits::result_of::iterator<Attr>::type end = 
+            typename traits::container_iterator<Attr>::type end = 
                 traits::end(attr);
             bool result = f(component, make_iterator_range(iter, end));
             if (result)
@@ -168,7 +168,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         F f;
         Attr const& attr;
-        mutable typename traits::result_of::iterator<Attr>::type iter;
+        mutable typename traits::container_iterator<Attr>::type iter;
     };
 
     // Utility function to make a pass_container

@@ -34,15 +34,6 @@ namespace boost { namespace spirit { namespace traits
     // the user is able specify specific transformation rules for any attribute
     // type.
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        ///////////////////////////////////////////////////////////////////////
-        // Attribute type to be returned by pre_transform()
-        ///////////////////////////////////////////////////////////////////////
-        template <typename T, typename Attribute, typename Enable = void>
-        struct pre_transform;
-    }
-
     template <typename Exposed, typename Transformed, typename Enable = void>
     struct transform_attribute;
 
@@ -54,15 +45,6 @@ namespace boost { namespace spirit { namespace traits
     struct assign_to_attribute_from_value;
 
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        ///////////////////////////////////////////////////////////////////////
-        // Attribute type to be extracted by extract_from()
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Attribute, typename Enable = void>
-        struct extract_from;
-    }
-
     template <typename Attribute, typename Enable = void>
     struct extract_from_attribute;
 
@@ -78,6 +60,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename Enable = void>
     struct container_value;
 
+    template <typename Container, typename Enable = void>
+    struct container_iterator;
+
     template <typename T, typename Enable = void>
     struct is_container;
 
@@ -85,16 +70,9 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename T, typename Enable = void>
     struct push_back_container;
 
-    ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        ///////////////////////////////////////////////////////////////////////
-        // Determine the iterator type of the given container type
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Container, typename Enable = void>
-        struct iterator;
-    }
-
+    ///////////////////////////////////////////////////////////////////////
+    // Determine the iterator type of the given container type
+    ///////////////////////////////////////////////////////////////////////
     template <typename Container, typename Enable = void>
     struct begin_container;
 

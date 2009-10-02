@@ -384,7 +384,7 @@ namespace boost { namespace spirit { namespace traits
 
     namespace result_of
     {
-        template <typename Exposed, typename Transformed, typename Enable/* = void*/>
+        template <typename Exposed, typename Transformed>
         struct pre_transform
           : traits::transform_attribute<Exposed, Transformed>
         {};

@@ -65,56 +65,8 @@ namespace boost { namespace spirit { namespace traits
 
 #undef BOOST_SPIRIT_IS_CONTAINER
 
-    ///////////////////////////////////////////////////////////////////////////
-    namespace detail
-    {
-        template <typename T>
-        struct remove_value_const
-        {
-            typedef T type;
-        };
-
-        template <typename T>
-        struct remove_value_const<T const> 
-          : remove_value_const<T>
-        {};
-
-        template <typename F, typename S>
-        struct remove_value_const<std::pair<F, S> >
-        {
-            typedef typename remove_value_const<F>::type first_type;
-            typedef typename remove_value_const<S>::type second_type;
-            typedef std::pair<first_type, second_type> type;
-        };
-    }
-
     namespace result_of
     {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Container, typename Enable/* = void*/>
-        struct iterator
-        {
-            typedef typename Container::iterator type;
-        };
-
-        template <typename Container>
-        struct iterator<Container const>
-        {
-            typedef typename Container::const_iterator type;
-        };
-
-        template <>
-        struct iterator<unused_type>
-        {
-            typedef unused_type const* type;
-        };
-
-        template <>
-        struct iterator<unused_type const>
-        {
-            typedef unused_type const* type;
-        };
-
         ///////////////////////////////////////////////////////////////////////
         template <typename T>
         struct optional_value
@@ -144,6 +96,29 @@ namespace boost { namespace spirit { namespace traits
         struct optional_value<unused_type const>
         {
             typedef unused_type type;
+        };
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    namespace detail
+    {
+        template <typename T>
+        struct remove_value_const
+        {
+            typedef T type;
+        };
+
+        template <typename T>
+        struct remove_value_const<T const> 
+          : remove_value_const<T>
+        {};
+
+        template <typename F, typename S>
+        struct remove_value_const<std::pair<F, S> >
+        {
+            typedef typename remove_value_const<F>::type first_type;
+            typedef typename remove_value_const<S>::type second_type;
+            typedef std::pair<first_type, second_type> type;
         };
     }
 
@@ -188,6 +163,31 @@ namespace boost { namespace spirit { namespace traits
     struct container_value<unused_type const>
     {
         typedef unused_type type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename Enable/* = void*/>
+    struct container_iterator
+    {
+        typedef typename Container::iterator type;
+    };
+
+    template <typename Container>
+    struct container_iterator<Container const>
+    {
+        typedef typename Container::const_iterator type;
+    };
+
+    template <>
+    struct container_iterator<unused_type>
+    {
+        typedef unused_type const* type;
+    };
+
+    template <>
+    struct container_iterator<unused_type const>
+    {
+        typedef unused_type const* type;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -349,7 +349,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename Enable/* = void*/>
     struct begin_container 
     {
-        typedef typename result_of::iterator<Container>::type type;
+        typedef typename container_iterator<Container>::type type;
         static type call(Container& c)
         {
             return c.begin();
@@ -360,7 +360,7 @@ namespace boost { namespace spirit { namespace traits
     {
         template <typename Container>
         struct begin 
-          : traits::begin_container<Container>
+          : traits::container_iterator<Container>
         {};
     }
 
@@ -381,7 +381,7 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename Enable/* = void*/>
     struct end_container
     {
-        typedef typename result_of::iterator<Container>::type type;
+        typedef typename container_iterator<Container>::type type;
         static type call(Container& c)
         {
             return c.end();
@@ -392,7 +392,7 @@ namespace boost { namespace spirit { namespace traits
     {
         template <typename Container>
         struct end
-          : traits::end_container<Container>
+          : traits::container_iterator<Container>
         {};
     }
 
@@ -456,8 +456,9 @@ namespace boost { namespace spirit { namespace traits
     {
         template <typename Iterator>
         struct next
-          : traits::next_iterator<Iterator>
-        {};
+        {
+            typedef Iterator type;
+        };
     }
 
     template <typename Iterator>
@@ -467,10 +468,10 @@ namespace boost { namespace spirit { namespace traits
         return next_iterator<Iterator>::call(it);
     }
 
-    inline unused_type
+    inline unused_type const*
     next(unused_type const*)
     {
-        return unused;
+        return &unused;
     }
 
     ///////////////////////////////////////////////////////////////////////////

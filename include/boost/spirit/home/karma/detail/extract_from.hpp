@@ -25,38 +25,6 @@ namespace boost { namespace spirit { namespace traits
     //  provided also accept spirit's unused_type; all no-ops. Compiler 
     //  optimization will easily strip these away.
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        template <typename Attribute, typename Enable/* = void*/>
-        struct extract_from
-        {
-            typedef Attribute const& type;
-        };
-
-        template <typename Attribute>
-        struct extract_from<optional<Attribute> >
-        {
-            typedef Attribute const& type;
-        };
-
-        template <typename Attribute>
-        struct extract_from<optional<Attribute const> >
-        {
-            typedef Attribute const& type;
-        };
-
-        template <>
-        struct extract_from<unused_type>
-        {
-            typedef unused_type type;
-        };
-
-        template <>
-        struct extract_from<unused_type const>
-        {
-            typedef unused_type type;
-        };
-    }
 
     // This is the default case: the plain attribute values
     template <typename Attribute, typename Enable/* = void*/>
@@ -100,6 +68,27 @@ namespace boost { namespace spirit { namespace traits
             return attr.get();
         }
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    namespace result_of
+    {
+        template <typename Attribute>
+        struct extract_from
+          : traits::extract_from_attribute<Attribute>
+        {};
+
+        template <>
+        struct extract_from<unused_type>
+        {
+            typedef unused_type type;
+        };
+
+        template <>
+        struct extract_from<unused_type const>
+        {
+            typedef unused_type type;
+        };
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute>

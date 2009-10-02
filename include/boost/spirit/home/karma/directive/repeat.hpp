@@ -165,7 +165,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            typedef typename traits::result_of::iterator<
+            typedef typename traits::container_iterator<
                 typename add_const<Attribute>::type
             >::type iterator_type;
 

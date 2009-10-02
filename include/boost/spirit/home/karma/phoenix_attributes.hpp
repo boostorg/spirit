@@ -24,14 +24,11 @@ namespace boost { namespace spirit { namespace traits
     // generator functions in the context of generators expecting a container 
     // attribute (Kleene, plus, list, repeat, etc.)
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
+    template <typename Eval>
+    struct container_iterator<phoenix::actor<Eval> const>
     {
-        template <typename Eval>
-        struct iterator<phoenix::actor<Eval> const>
-        {
-            typedef phoenix::actor<Eval> const& type;
-        };
-    }
+        typedef phoenix::actor<Eval> const& type;
+    };
 
     template <typename Eval>
     struct begin_container<phoenix::actor<Eval> const>
@@ -87,14 +84,6 @@ namespace boost { namespace spirit { namespace traits
     // Handle Phoenix actors as attributes, just invoke the function object
     // and deal with the result as the attribute.
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        template <typename Eval>
-        struct extract_from<phoenix::actor<Eval> >
-          : boost::result_of<phoenix::actor<Eval>()>
-        {};
-    }
-
     template <typename Eval>
     struct extract_from_attribute<phoenix::actor<Eval> >
     {
