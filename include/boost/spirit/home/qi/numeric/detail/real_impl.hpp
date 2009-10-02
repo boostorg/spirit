@@ -17,6 +17,7 @@
 #include <limits>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/detail/pow10.hpp>
 #include <boost/spirit/home/support/detail/sign.hpp>
 #include <boost/assert.hpp>
@@ -149,11 +150,11 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             if (!got_a_number)
             {
                 // Check whether the number to parse is a NaN or Inf
-                if (p.parse_nan(first, last, attr) ||
-                    p.parse_inf(first, last, attr))
+                if (p.parse_nan(first, last, n) ||
+                    p.parse_inf(first, last, n))
                 {
                     // If we got a negative sign, negate the number
-                    attr = traits::negate(neg, attr);
+                    traits::assign_to(traits::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return early
                 }
 
@@ -244,17 +245,17 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
                 // styles some implementations use for representing NaN or Inf.
 
                 // Check whether the number to parse is a NaN or Inf
-                if (p.parse_nan(first, last, attr) ||
-                    p.parse_inf(first, last, attr))
+                if (p.parse_nan(first, last, n) ||
+                    p.parse_inf(first, last, n))
                 {
                     // If we got a negative sign, negate the number
-                    attr = traits::negate(neg, attr);
+                    traits::assign_to(traits::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
             }
 
             // If we got a negative sign, negate the number
-            attr = traits::negate(neg, n);
+            traits::assign_to(traits::negate(neg, n), attr);
 
             // Success!!!
             return true;
