@@ -15,6 +15,7 @@
 
 #include <boost/detail/iterator.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/char_encoding/ascii.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -362,7 +363,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
 
             if (count + leading_zeros >= MinDigits)
             {
-                attr = val;
+                traits::assign_to(val, attr);
                 first = it;
                 return true;
             }
@@ -457,7 +458,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             {
                 if (count == 0) // must have at least one digit
                     return false;
-                attr = val;
+                traits::assign_to(val, attr);
                 first = it;
                 return true;
             }
@@ -471,7 +472,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                   , SPIRIT_NUMERIC_INNER_LOOP, _)
             }
 
-            attr = val;
+            traits::assign_to(val, attr);
             first = it;
             return true;
         }
