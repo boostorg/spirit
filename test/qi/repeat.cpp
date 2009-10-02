@@ -24,6 +24,23 @@
 #include <iostream>
 #include "test.hpp"
 
+struct x_attr
+{
+};
+
+namespace boost { namespace spirit { namespace traits 
+{
+    template <>
+    struct container_value<x_attr>
+    {
+        typedef char type; // value type of container
+    };
+    
+    inline void push_back(x_attr& c, char val)
+    {
+        // push back value type into container
+    }
+}}}
 
 int
 main()
@@ -179,6 +196,15 @@ main()
         BOOST_TEST(test("aaaaa", repeat(3, val(inf))[char_]));
         BOOST_TEST(test("aaaaaa", repeat(val(3), inf)[char_]));
         BOOST_TEST(!test("aa", repeat(3, val(inf))[char_]));
+    }
+    
+    { // attribute customization
+        
+        x_attr x;
+        test_attr("abcde", repeat[char_], x);
+        test_attr("abcde", repeat(5)[char_], x);
+        test_attr("abcde", repeat(1, 5)[char_], x);
+        test_attr("abcde", repeat(1, inf)[char_], x);
     }
 
     return boost::report_errors();

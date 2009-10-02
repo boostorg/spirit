@@ -51,6 +51,12 @@ main()
         BOOST_TEST(test_attr("a,b,c,d,e,f,g,h", char_ % ',', s));
         BOOST_TEST(s == "abcdefgh");
     }
+    
+    {
+        using boost::spirit::uint_;
+
+        BOOST_TEST(test("1-2", (uint_ % '+') | (uint_ % '-')));
+    }
 
     {
         using boost::spirit::int_;
