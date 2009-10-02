@@ -85,53 +85,54 @@ namespace boost { namespace spirit { namespace traits
         };
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    template <typename Container>
+    struct container_value
+    {
+        typedef typename detail::remove_value_const<
+            typename Container::value_type>::type
+        type;
+    };
+
+    // this will be instantiated if the optional holds a container
+    template <typename T>
+    struct container_value<optional<T> > : container_value<T> {};
+
+    // this will be instantiated if the variant holds a container
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct container_value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    {
+        typedef typename 
+            variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
+        types;
+        typedef typename 
+            mpl::find_if<types, is_container<mpl::_1> >::type 
+        iter;
+
+        typedef typename container_value<
+            typename mpl::if_<
+                is_same<iter, typename mpl::end<types>::type>
+              , unused_type, typename mpl::deref<iter>::type
+            >::type
+        >::type type;
+    };
+
+    template <>
+    struct container_value<unused_type>
+    {
+        typedef unused_type type;
+    };
+
+    template <>
+    struct container_value<unused_type const>
+    {
+        typedef unused_type type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////
+        
     namespace result_of
     {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Container>
-        struct value
-        {
-            typedef typename detail::remove_value_const<
-                typename Container::value_type>::type
-            type;
-        };
-
-        // this will be instantiated if the optional holds a container
-        template <typename T>
-        struct value<optional<T> > : value<T> {};
-
-        // this will be instantiated if the variant holds a container
-        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-        struct value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
-        {
-            typedef typename 
-                variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
-            types;
-            typedef typename 
-                mpl::find_if<types, is_container<mpl::_1> >::type 
-            iter;
-
-            typedef typename value<
-                typename mpl::if_<
-                    is_same<iter, typename mpl::end<types>::type>
-                  , unused_type, typename mpl::deref<iter>::type
-                >::type
-            >::type type;
-        };
-
-        template <>
-        struct value<unused_type>
-        {
-            typedef unused_type type;
-        };
-
-        template <>
-        struct value<unused_type const>
-        {
-            typedef unused_type type;
-        };
-
-        ///////////////////////////////////////////////////////////////////////
         template <typename Container>
         struct iterator
         {

@@ -210,6 +210,8 @@ namespace boost { namespace spirit { namespace qi
           , Context& /*context*/, Skipper const& skipper
           , Attribute& attr) const
         {
+            //$$$ do a preskip if this is an implied lexeme $$$
+            
             if (f)
             {
                 // Create an attribute if none is supplied. 
@@ -241,6 +243,8 @@ namespace boost { namespace spirit { namespace qi
           , Context& caller_context, Skipper const& skipper
           , Attribute& attr, Params const& params) const
         {
+            //$$$ do a preskip if this is an implied lexeme $$$
+
             if (f)
             {
                 // Create an attribute if none is supplied. 

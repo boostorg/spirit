@@ -154,7 +154,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool operator()(Component const& component) const
         {
-            typedef typename traits::result_of::value<Attr>::type rhs;
+            typedef typename traits::container_value<Attr>::type rhs;
             typedef typename traits::attribute_of<
                 Component, context_type>::type lhs_attribute;
 
