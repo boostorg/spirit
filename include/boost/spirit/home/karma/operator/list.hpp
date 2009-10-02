@@ -1,5 +1,5 @@
-//  Copyright (c) 2001-2009 Joel de Guzman
 //  Copyright (c) 2001-2009 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Joel de Guzman
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -43,7 +43,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Iterator>
         bool generate_left(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Iterator& it, Iterator const& end) const
+          , Delimiter const& d, Iterator& it, Iterator& end) const
         {
             while (!traits::compare(it, end))
             {
@@ -71,12 +71,12 @@ namespace boost { namespace spirit { namespace karma
         template <typename Context, typename Iterator>
         struct attribute
           : traits::build_std_vector<
-                typename traits::attribute_of<Left, Context, Iterator>::type
-            >
+                typename traits::attribute_of<Left, Context, Iterator>::type>
         {};
 
         list(Left const& left, Right const& right)
-          : left(left), right(right) {}
+          : left(left), right(right) 
+        {}
 
         template <
             typename OutputIterator, typename Context, typename Delimiter

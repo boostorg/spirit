@@ -75,7 +75,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            if (!traits::compare(iter, traits::end(attr)) &&
+            typename traits::result_of::iterator<Attr>::type end = 
+                traits::end(attr);
+            if (!traits::compare(iter, end) &&
                 !f(component, traits::deref(iter))) 
             {
                 // needs to return false as long as everything is ok
@@ -92,7 +94,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {
-            bool result = f(component, make_iterator_range(iter, traits::end(attr)));
+            typename traits::result_of::iterator<Attr>::type end = 
+                traits::end(attr);
+            bool result = f(component, make_iterator_range(iter, end));
             if (result)
                 iter = traits::end(attr);     // adjust current iter to the end 
             return result;

@@ -131,7 +131,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Iterator>
         bool generate_subject(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Iterator& it, Iterator const& end) const
+          , Delimiter const& d, Iterator& it, Iterator& end) const
         {
             while (!traits::compare(it, end))
             {

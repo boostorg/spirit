@@ -83,7 +83,7 @@ namespace boost { namespace spirit { namespace qi
 
                 token_type &t = *first;
                 if (id_type(id) == t.id()) {
-                    qi::detail::assign_to(t, attr);
+                    spirit::traits::assign_to(t, attr);
                     ++first;
                     return true;
                 }

@@ -22,6 +22,7 @@
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/real_policies.hpp>
 #include <boost/spirit/home/karma/numeric/detail/real_utils.hpp>
@@ -174,7 +175,7 @@ namespace boost { namespace spirit { namespace karma
                 return false;       // fail if it's an uninitialized optional
 
             typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
-            return inserter_type::call(sink, traits::optional_value(attr), p_) &&
+            return inserter_type::call(sink, traits::extract_from(attr), p_) &&
                    karma::delimit_out(sink, d);    // always do post-delimiting
         }
 
@@ -228,7 +229,7 @@ namespace boost { namespace spirit { namespace karma
           , Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
-                n_ != traits::optional_value(attr))
+                n_ != traits::extract_from(attr))
             {
                 return false;
             }

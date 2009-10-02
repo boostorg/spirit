@@ -436,7 +436,8 @@ namespace boost { namespace spirit
     // support for stateful tag types
     namespace tag
     {
-        template <typename Data, typename Tag, typename DataTag = unused_type>
+        template <typename Data, typename Tag
+          , typename DataTag1 = unused_type, typename DataTag2 = unused_type>
         struct stateful_tag 
         {
             typedef Data data_type;
@@ -448,11 +449,12 @@ namespace boost { namespace spirit
         };
     }
 
-    template <typename Data, typename Tag, typename DataTag = unused_type>
+    template <typename Data, typename Tag
+      , typename DataTag1 = unused_type, typename DataTag2 = unused_type>
     struct stateful_tag_type
-      : spirit::terminal<tag::stateful_tag<Data, Tag, DataTag> > 
+      : spirit::terminal<tag::stateful_tag<Data, Tag, DataTag1, DataTag2> > 
     {
-        typedef tag::stateful_tag<Data, Tag, DataTag> tag_type;
+        typedef tag::stateful_tag<Data, Tag, DataTag1, DataTag2> tag_type;
 
         stateful_tag_type() {}
         stateful_tag_type(Data const& data)

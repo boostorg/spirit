@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace qi
             Iterator i = first;
             if (subject.parse(i, last, context, skipper, unused))
             {
-                detail::assign_to(first, i, attr);
+                spirit::traits::assign_to(first, i, attr);
                 first = i;
                 return true;
             }

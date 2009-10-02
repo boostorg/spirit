@@ -19,6 +19,7 @@
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/fusion/include/vector.hpp>
@@ -191,7 +192,7 @@ namespace boost { namespace spirit { namespace karma
             boost::integer::endian<
                 endian, typename karma::detail::integer<bits>::type, bits
             > p;
-            p = traits::optional_value(attr);
+            p = traits::extract_from(attr);
             unsigned char const* bytes =
                 reinterpret_cast<unsigned char const*>(&p);
 

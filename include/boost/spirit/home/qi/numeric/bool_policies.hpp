@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace qi
         {
             if (detail::string_parse("true", first, last, unused))
             {
-                detail::assign_to(T(true), attr);    // result is true
+                spirit::traits::assign_to(T(true), attr);    // result is true
                 return true;
             }
             return false;
@@ -40,7 +40,7 @@ namespace boost { namespace spirit { namespace qi
         {
             if (detail::string_parse("false", first, last, unused))
             {
-                detail::assign_to(T(false), attr);   // result is false
+                spirit::traits::assign_to(T(false), attr);   // result is false
                 return true;
             }
             return false;

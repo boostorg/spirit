@@ -14,6 +14,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/support/detail/as_variant.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/fusion/include/transform.hpp>
@@ -42,11 +43,13 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T>
     struct not_is_variant
-      : mpl::true_ {};
+      : mpl::true_ 
+    {};
 
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
-      : mpl::false_ {};
+      : mpl::false_ 
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // attribute_of
@@ -86,7 +89,7 @@ namespace boost { namespace spirit { namespace traits
     // a single value in any case (even if it actually already is a fusion
     // sequence in its own).
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Component, typename Attribute, typename Enable = void>
+    template <typename Component, typename Attribute, typename Enable/* = void*/>
     struct pass_attribute
     {
         typedef fusion::vector1<Attribute&> type;
@@ -309,40 +312,58 @@ namespace boost { namespace spirit { namespace traits
     // attributes. This template can be used as a customization point, where 
     // the user is able specify specific transformation rules for any attribute
     // type.
-    template <typename Destination, typename Source>
+    template <typename Exposed, typename Transformed, typename Enable/* = void*/>
     struct transform_attribute
     {
-        static Destination call(Source& val) { return Destination(val); }
-    };
-
-    template <typename Destination, typename Source>
-    struct transform_attribute<Destination, Source const>
-    {
-        static Destination call(Source const& val) { return Destination(val); }
+        typedef Transformed type;
+        static Transformed pre(Exposed& val) { return Transformed(val); }
+        static void post(Exposed&, Transformed const&) {}
     };
 
     // The default is not to do any transformation
     template <typename Attribute>
     struct transform_attribute<Attribute, Attribute>
     {
-        static Attribute& call(Attribute& val) { return val; }
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute&, Attribute const&) {}
     };
 
     template <typename Attribute>
-    struct transform_attribute<Attribute, Attribute const>
+    struct transform_attribute<Attribute const, Attribute>
     {
-        static Attribute const& call(Attribute const& val) { return val; }
+        typedef Attribute const& type;
+        static Attribute const& pre(Attribute const& val) { return val; }
+        static void post(Attribute const&, Attribute const&) {}
     };
 
-    // unused_type needs some special handling
+    // reference types need special handling
+    template <typename Exposed, typename Transformed>
+    struct transform_attribute<Exposed&, Transformed>
+      : transform_attribute<Exposed, Transformed>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute&, Attribute>
+      : transform_attribute<Attribute, Attribute>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute const&, Attribute>
+      : transform_attribute<Attribute const, Attribute>
+    {};
+
+    // unused_type needs some special handling as well
     template <>
     struct transform_attribute<unused_type, unused_type>
     {
-        static unused_type call(unused_type) { return unused; }
+        typedef unused_type type;
+        static unused_type pre(unused_type) { return unused; }
+        static void post(unused_type, unused_type) {}
     };
 
     template <>
-    struct transform_attribute<unused_type, unused_type const>
+    struct transform_attribute<unused_type const, unused_type>
       : transform_attribute<unused_type, unused_type>
     {};
 
@@ -352,19 +373,42 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     template <typename Attribute>
-    struct transform_attribute<unused_type, Attribute const>
-      : transform_attribute<unused_type, unused_type>
-    {};
-
-    template <typename Attribute>
     struct transform_attribute<Attribute, unused_type>
       : transform_attribute<unused_type, unused_type>
     {};
 
     template <typename Attribute>
-    struct transform_attribute<Attribute, unused_type const>
+    struct transform_attribute<Attribute const, unused_type>
       : transform_attribute<unused_type, unused_type>
     {};
+
+    namespace result_of
+    {
+        template <typename Exposed, typename Transformed, typename Enable/* = void*/>
+        struct pre_transform
+          : traits::transform_attribute<Exposed, Transformed>
+        {};
+    }
+
+    template <typename Transformed, typename Exposed>
+    typename traits::result_of::pre_transform<Exposed, Transformed>::type
+    pre_transform(Exposed& attr)
+    {
+        return transform_attribute<Exposed, Transformed>::pre(attr);
+    }
+
+    template <typename Transformed, typename Exposed>
+    typename traits::result_of::pre_transform<Exposed const, Transformed>::type
+    pre_transform(Exposed const& attr)
+    {
+        return transform_attribute<Exposed const, Transformed>::pre(attr);
+    }
+
+    template <typename Exposed, typename Transformed>
+    void post_transform(Exposed& dest, Transformed const& attr)
+    {
+        return transform_attribute<Exposed, Transformed>::post(dest, attr);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // make_attribute
@@ -429,64 +473,6 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute, typename ActualAttribute>
-    struct make_transformed_attribute
-    {
-        // We assume that as soon as the source and destination attribute types
-        // are not the same we need to create a new instance of the destination
-        // in order to do the conversion. In this case we can't just pass 
-        // through the references anymore (as it's done in the template 
-        // make_attribute above).
-        typedef typename remove_const<ActualAttribute>::type 
-            non_const_actual_attribute;
-
-        typedef typename 
-            mpl::if_<
-                is_same<non_const_actual_attribute, Attribute>
-              , ActualAttribute&
-              , Attribute>::type
-        attribute_type;
-
-        typedef typename
-            mpl::if_<
-                is_same<non_const_actual_attribute, unused_type>
-              , typename remove_const<Attribute>::type
-              , attribute_type>::type
-        type;
-
-        static Attribute call(unused_type)
-        {
-             // synthesize the attribute/parameter
-            return boost::get(value_initialized<Attribute>());
-        }
-
-        template <typename T>
-        static type call(T& value)
-        {
-            // create the proper attribute transformation
-            typedef transform_attribute<Attribute, ActualAttribute> transform;
-
-            // return either the transformed value or pass 'value' through
-            return transform::call(value); 
-        }
-    };
-
-    template <typename Attribute, typename ActualAttribute>
-    struct make_transformed_attribute<Attribute&, ActualAttribute>
-      : make_attribute<Attribute, ActualAttribute>
-    {};
-
-    template <typename Attribute, typename ActualAttribute>
-    struct make_transformed_attribute<Attribute const&, ActualAttribute>
-      : make_attribute<Attribute, ActualAttribute>
-    {};
-
-    template <typename ActualAttribute>
-    struct make_transformed_attribute<unused_type, ActualAttribute>
-      : make_attribute<unused_type, ActualAttribute>
-    {};
-
-    ///////////////////////////////////////////////////////////////////////////
     // swap_impl
     //
     // Swap (with proper handling of unused_types)
@@ -547,13 +533,19 @@ namespace boost { namespace spirit { namespace traits
     // sequence
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct one_element_sequence : mpl::false_ {};
+    struct one_element_sequence 
+      : mpl::false_ 
+    {};
 
     template <typename T>
-    struct one_element_sequence<fusion::vector1<T> > : mpl::true_ {};
+    struct one_element_sequence<fusion::vector1<T> > 
+      : mpl::true_ 
+    {};
 
     template <typename T>
-    struct one_element_sequence<fusion::vector<T> > : mpl::true_ {};
+    struct one_element_sequence<fusion::vector<T> > 
+      : mpl::true_ 
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // clear
@@ -561,7 +553,7 @@ namespace boost { namespace spirit { namespace traits
     // Clear data efficiently
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct is_container;
+    void clear(T& val);
 
     namespace detail
     {
@@ -604,31 +596,46 @@ namespace boost { namespace spirit { namespace traits
         }
     }
 
+    template <typename T, typename Enable/* = void*/>
+    struct clear_value
+    {
+        static void call(T& val)
+        {
+            detail::clear_impl(val, typename is_container<T>::type());
+        }
+    };
+
+    // optionals
+    template <typename T>
+    struct clear_value<optional<T> >
+    {
+        static void call(optional<T>& val)
+        {
+            if (val)
+                clear(*val);
+        }
+    };
+
+    // variants
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct clear_value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    {
+        static void call(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& val)
+        {
+            apply_visitor(detail::clear_visitor(), val);
+        }
+    };
+
     // main dispatch
     template <typename T>
     void clear(T& val)
     {
-        detail::clear_impl(val, typename is_container<T>::type());
+        clear_value<T>::call(val);
     }
 
     // for unused
     inline void clear(unused_type)
     {
-    }
-
-    // optionals
-    template <typename T>
-    void clear(optional<T>& val)
-    {
-        if (val)
-            clear(*val);
-    }
-
-    // variants
-    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    void clear(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& var)
-    {
-        apply_visitor(detail::clear_visitor(), var);
     }
 
 }}}

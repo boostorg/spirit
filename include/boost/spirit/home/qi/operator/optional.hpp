@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace qi
             if (subject.parse(first, last, context, skipper, val))
             {
                 // assign the parsed value into our attribute
-                qi::detail::assign_to(val, attr);
+                spirit::traits::assign_to(val, attr);
             }
             return true;
         }

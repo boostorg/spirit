@@ -22,6 +22,7 @@
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -215,7 +216,7 @@ namespace boost { namespace spirit { namespace karma
             if (!traits::has_optional_value(attr))
                 return false;       // fail if it's an uninitialized optional
 
-            return insert_int(sink, traits::optional_value(attr)) &&
+            return insert_int(sink, traits::extract_from(attr)) &&
                    delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -283,7 +284,7 @@ namespace boost { namespace spirit { namespace karma
           , Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
-                n_ != traits::optional_value(attr))
+                n_ != traits::extract_from(attr))
             {
                 return false;
             }

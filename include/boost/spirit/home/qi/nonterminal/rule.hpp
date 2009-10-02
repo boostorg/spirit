@@ -214,9 +214,7 @@ namespace boost { namespace spirit { namespace qi
             
             if (f)
             {
-                // Create an attribute if none is supplied. 
-                typedef traits::make_transformed_attribute<
-                    attr_type, Attribute> make_attribute;
+                typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 typename make_attribute::type attr_ = make_attribute::call(attr);
 
@@ -247,9 +245,7 @@ namespace boost { namespace spirit { namespace qi
 
             if (f)
             {
-                // Create an attribute if none is supplied. 
-                typedef traits::make_transformed_attribute<
-                    attr_type, Attribute> make_attribute;
+                typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 typename make_attribute::type attr_ = make_attribute::call(attr);
 

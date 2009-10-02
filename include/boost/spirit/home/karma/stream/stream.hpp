@@ -22,6 +22,7 @@
 #include <boost/spirit/home/karma/stream/detail/format_manip.hpp>
 #include <boost/spirit/home/karma/stream/detail/iterator_sink.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/cons.hpp>
@@ -132,7 +133,7 @@ namespace boost { namespace spirit { namespace karma
 
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
-            ostr << traits::optional_value(attr) << std::flush;
+            ostr << traits::extract_from(attr) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);   // always do post-delimiting
@@ -163,7 +164,7 @@ namespace boost { namespace spirit { namespace karma
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
             ostr.imbue(sink.get_ostream().getloc());
-            ostr << traits::optional_value(attr) << std::flush;
+            ostr << traits::extract_from(attr) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);  // always do post-delimiting

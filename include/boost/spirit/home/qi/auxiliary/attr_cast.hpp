@@ -3,28 +3,31 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(SPIRIT_KARMA_ATTR_CAST_SEP_26_2009_0348PM)
-#define SPIRIT_KARMA_ATTR_CAST_SEP_26_2009_0348PM
+#if !defined(SPIRIT_QI_ATTR_CAST_SEP_26_2009_0735PM)
+#define SPIRIT_QI_ATTR_CAST_SEP_26_2009_0735PM
 
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
-#include <boost/spirit/home/karma/meta_compiler.hpp>
-#include <boost/spirit/home/karma/generator.hpp>
-#include <boost/spirit/home/karma/domain.hpp>
-#include <boost/spirit/home/karma/detail/output_iterator.hpp>
+#include <boost/spirit/home/qi/meta_compiler.hpp>
+#include <boost/spirit/home/qi/parser.hpp>
+#include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
-    // enables attr_cast<>() pseudo generator
+    // Enablers
+    ///////////////////////////////////////////////////////////////////////////
+
+    // enables attr_cast<>() pseudo parser
     template <typename Expr, typename Exposed, typename Transformed>
-    struct use_terminal<karma::domain
+    struct use_terminal<qi::domain
           , tag::stateful_tag<Expr, tag::attr_cast, Exposed, Transformed> >
       : mpl::true_ {};
 
@@ -56,22 +59,20 @@ namespace boost { namespace spirit
     }
 }}
 
-namespace boost { namespace spirit { namespace karma
+namespace boost { namespace spirit { namespace qi
 {
     using spirit::attr_cast;
 
     ///////////////////////////////////////////////////////////////////////////
-    // attr_cast_generator consumes the attribute of subject generator without
+    // attr_cast_parser consumes the attribute of subject generator without
     // generating anything
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed, typename Subject>
-    struct attr_cast_generator
-      : unary_generator<attr_cast_generator<Exposed, Transformed, Subject> >
+    struct attr_cast_parser 
+      : unary_parser<attr_cast_parser<Exposed, Transformed, Subject> >
     {
-        typedef typename result_of::compile<karma::domain, Subject>::type
+        typedef typename result_of::compile<qi::domain, Subject>::type
             subject_type;
-
-        typedef mpl::int_<subject_type::properties::value> properties;
 
         typedef typename mpl::eval_if<
             traits::is_not_unused<Transformed>
@@ -79,52 +80,77 @@ namespace boost { namespace spirit { namespace karma
           , traits::attribute_of<subject_type> >::type 
         transformed_attribute_type;
 
-        attr_cast_generator(Subject const& subject)
+        attr_cast_parser(Subject const& subject)
           : subject(subject) 
         {
             // If you got an error_invalid_expression error message here,
-            // then the expression (Subject) is not a valid spirit karma
+            // then the expression (Subject) is not a valid spirit qi
             // expression.
-            BOOST_SPIRIT_ASSERT_MATCH(karma::domain, Subject);
+            BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Subject);
         }
 
         // If Exposed is given, we use the given type, otherwise all we can do
         // is to guess, so we expose our inner type as an attribute and
         // deal with the passed attribute inside the parse function.
-        template <typename Context, typename Unused>
+        template <typename Context, typename Iterator>
         struct attribute
           : mpl::if_<traits::is_not_unused<Exposed>, Exposed
               , transformed_attribute_type>
         {};
 
-        template <typename OutputIterator, typename Context, typename Delimiter
+        template <typename Iterator, typename Context, typename Skipper
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
-          , Attribute const& attr) const
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr) const
         {
-            return compile<karma::domain>(subject).generate(sink, ctx, d
-                  , traits::pre_transform<transformed_attribute_type>(attr));
+            // Find the real exposed attribute. If exposed is given, we use it
+            // otherwise we assume the exposed attribute type to be the actual
+            // attribute type as passed by the user.
+            typedef typename mpl::if_<
+                traits::is_not_unused<Exposed>, Exposed, Attribute>::type
+            exposed_attribute_type;
+
+            // do down-stream transformation, provides attribute for embedded
+            // parser
+            typedef typename traits::result_of::pre_transform<
+                exposed_attribute_type, transformed_attribute_type>::type 
+            attribute_type;
+
+            attribute_type attr_ = 
+                traits::pre_transform<transformed_attribute_type>(attr);
+
+            if (!compile<qi::domain>(subject).
+                    parse(first, last, context, skipper, attr_))
+            {
+                return false;
+            }
+
+            // do up-stream transformation, this mainly integrates the results
+            // back into the original attribute value, if appropriate
+            traits::post_transform(attr, attr_);
+            return true;
         }
 
         template <typename Context>
         info what(Context& context) const
         {
             return info("attr_cast"
-              , compile<karma::domain>(subject).what(context));
+              , compile<qi::domain>(subject).what(context));
         }
 
         Subject subject;
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    // Generator generator: make_xxx function (objects)
+    // Parser generator: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
     template <typename Expr, typename Exposed, typename Transformed
       , typename Modifiers>
     struct make_primitive<
         tag::stateful_tag<Expr, tag::attr_cast, Exposed, Transformed>, Modifiers>
     {
-        typedef attr_cast_generator<Exposed, Transformed, Expr> result_type;
+        typedef attr_cast_parser<Exposed, Transformed, Expr> result_type;
 
         template <typename Terminal>
         result_type operator()(Terminal const& term, unused_type) const
@@ -135,6 +161,7 @@ namespace boost { namespace spirit { namespace karma
             return result_type(get_stateful_data<tag_type>::call(term));
         }
     };
+
 
 }}}
 

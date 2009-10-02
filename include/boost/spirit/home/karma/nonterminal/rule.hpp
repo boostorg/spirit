@@ -221,8 +221,8 @@ namespace boost { namespace spirit { namespace karma
             if (f)
             {
                 // Create an attribute if none is supplied. 
-                typedef traits::make_transformed_attribute<
-                    attr_type, Attribute const> make_attribute;
+                typedef traits::make_attribute<attr_type, Attribute> 
+                    make_attribute;
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -250,8 +250,8 @@ namespace boost { namespace spirit { namespace karma
             if (f)
             {
                 // Create an attribute if none is supplied. 
-                typedef traits::make_transformed_attribute<
-                    attr_type, Attribute const> make_attribute;
+                typedef traits::make_attribute<attr_type, Attribute> 
+                    make_attribute;
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
