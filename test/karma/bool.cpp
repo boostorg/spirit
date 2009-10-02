@@ -12,7 +12,13 @@
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
+
 #include <boost/spirit/home/support/safe_bool.hpp>
+
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_statement.hpp>
 
 #include "test.hpp"
 
@@ -68,6 +74,7 @@ int main()
     using boost::spirit::karma::lower;
     using boost::spirit::karma::upper;
 
+    // testing plain bool
     {
         BOOST_TEST(test("false", bool_, false));
         BOOST_TEST(test("true", bool_, true));
@@ -79,6 +86,28 @@ int main()
         BOOST_TEST(!test("", bool_(true), false));
         BOOST_TEST(test("false", lit(false)));
         BOOST_TEST(test("true", lit(true)));
+    }
+
+    // test optional attributes
+    {
+        boost::optional<bool> optbool;
+
+        BOOST_TEST(!test("", bool_, optbool));
+        optbool = false;
+        BOOST_TEST(test("false", bool_, optbool));
+        optbool = true;
+        BOOST_TEST(test("true", bool_, optbool));
+    }
+
+    // test Phoenix expression attributes (include karma_phoenix_attributes.hpp)
+    {
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("true", bool_, phoenix::val(true)));
+
+        bool b = false;
+        BOOST_TEST(test("false", bool_, phoenix::ref(b)));
+        BOOST_TEST(test("true", bool_, ++phoenix::ref(b)));
     }
 
     {
@@ -110,7 +139,7 @@ int main()
     {
         typedef boost::spirit::karma::bool_generator<bool, special_bool_policy> 
             backwards_bool_type;
-        backwards_bool_type const backwards_bool;
+        backwards_bool_type const backwards_bool = backwards_bool_type();
 
         BOOST_TEST(test("eurt", backwards_bool, false));
         BOOST_TEST(test("true", backwards_bool, true));
@@ -125,7 +154,8 @@ int main()
     {
         typedef boost::spirit::karma::bool_generator<
             test_bool_data, test_bool_policy> test_bool_type;
-        test_bool_type const test_bool;
+        test_bool_type const test_bool = test_bool_type();
+
         test_bool_data const test_false = test_bool_data(false);
         test_bool_data const test_true = test_bool_data(true);
 

@@ -11,6 +11,7 @@
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
@@ -252,6 +253,7 @@ main()
         BOOST_TEST((!test(L"", wide::char_(val(L'y')), L'x')));
     }
 
+    // we can pass optionals as attributes to any generator
     {
         namespace ascii = boost::spirit::ascii;
         namespace wide = boost::spirit::standard_wide;
@@ -279,6 +281,19 @@ main()
         BOOST_TEST(test(L"x", wide::char_(L'x'), w));
         BOOST_TEST(!test("", ascii::char_('y'), v));
         BOOST_TEST(!test(L"", wide::char_(L'y'), w));
+    }
+
+    // yes, we can use phoenix expressions as attributes as well
+    // but only if we include karma_phoenix_attributes.hpp
+    {
+        namespace ascii = boost::spirit::ascii;
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("x", ascii::char_, phoenix::val('x')));
+
+        char c = 'x';
+        BOOST_TEST(test("x", ascii::char_, phoenix::ref(c)));
+        BOOST_TEST(test("y", ascii::char_, ++phoenix::ref(c)));
     }
 
     return boost::report_errors();

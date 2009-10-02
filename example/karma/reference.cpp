@@ -135,7 +135,7 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct transform_attribute<int, int_data const>
     {
-        static int call(int_data const& d) { return d.i; }
+        static int pre(int_data const& d) { return d.i; }
     };
 }}}
 //]

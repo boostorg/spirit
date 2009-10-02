@@ -187,7 +187,7 @@ struct backwards_bool_policies : boost::spirit::qi::bool_policies<>
         namespace qi = boost::spirit::qi;
         if (qi::detail::string_parse("eurt", first, last, qi::unused))
         {
-            qi::detail::assign_to(false, attr);    // result is false
+            spirit::traits::assign_to(false, attr);    // result is false
             return true;
         }
         return false;

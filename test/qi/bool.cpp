@@ -19,10 +19,11 @@ struct backwards_bool_policies : boost::spirit::qi::bool_policies<>
     static bool
     parse_false(Iterator& first, Iterator const& last, Attribute& attr)
     {
+        namespace spirit = boost::spirit;
         namespace qi = boost::spirit::qi;
         if (qi::detail::string_parse("eurt", first, last, qi::unused))
         {
-            qi::detail::assign_to(false, attr);    // result is false
+            spirit::traits::assign_to(false, attr);    // result is false
             return true;
         }
         return false;
@@ -59,7 +60,7 @@ int main()
     {
         typedef boost::spirit::qi::bool_parser<bool, backwards_bool_policies> 
             backwards_bool_type;
-        backwards_bool_type const backwards_bool;
+        backwards_bool_type const backwards_bool = backwards_bool_type();
 
         BOOST_TEST(test("true", backwards_bool));
         BOOST_TEST(test("eurt", backwards_bool));
@@ -76,7 +77,7 @@ int main()
     {
         typedef boost::spirit::qi::bool_parser<test_bool_type> 
             bool_test_type;
-        bool_test_type const test_bool;
+        bool_test_type const test_bool = bool_test_type();
 
         BOOST_TEST(test("true", test_bool));
         BOOST_TEST(test("false", test_bool));

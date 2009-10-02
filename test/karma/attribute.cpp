@@ -40,7 +40,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 ///////////////////////////////////////////////////////////////////////////////
 // this is just a test structure we need to use in place of an int
-struct test_int_data
+struct test_int_data1
 {
     int i;
 };
@@ -49,9 +49,29 @@ struct test_int_data
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<int, test_int_data const>
+    struct transform_attribute<test_int_data1 const, int>
     {
-        static int call(test_int_data const& d) { return d.i; }
+        typedef int type;
+        static int pre(test_int_data1 const& d) { return d.i; }
+    };
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
+// this is another test structure we need to use in place of an int, but this
+// time we use a reference to the embedded element
+struct test_int_data2
+{
+    int i;
+};
+
+// so we provide a custom attribute transformation
+namespace boost { namespace spirit { namespace traits
+{
+    template <>
+    struct transform_attribute<test_int_data2 const, int>
+    {
+        typedef int const& type;
+        static int const& pre(test_int_data2 const& d) { return d.i; }
     };
 }}}
 
@@ -63,6 +83,7 @@ int main()
 
     test_data d1 = { "s11", "s12", 1, 2.5, "s13" };
     {
+
         BOOST_TEST(test("s121", 
             karma::string << karma::int_, 
             fusion::as_nview<2, 0>(d1)));
@@ -72,24 +93,94 @@ int main()
             fusion::as_nview<2, 0>(d1), ' '));
     }
 
-    test_data d2 = { "s21", "s22", 2, 3.4, "s23" };
-    typedef fusion::result_of::as_nview<test_data const, 1, 2, 4>::type 
-        test_view;
-    std::vector<test_data> v;
-    v.push_back(d1);
-    v.push_back(d2);
-
     {
-        karma::rule<output_iterator<char>::type, test_view()> r =
-            karma::string << karma::string << karma::double_;
+        test_data d2 = { "s21", "s22", 2, 3.4, "s23" };
+        typedef fusion::result_of::as_nview<test_data const, 1, 2, 4>::type 
+            test_view;
+        std::vector<test_data> v;
+        v.push_back(d1);
+        v.push_back(d2);
+
+        karma::rule<output_iterator<char>::type, test_data()> r =
+            karma::attr_cast<test_data, test_view>(
+                karma::string << karma::string << karma::double_
+            );
+
         BOOST_TEST(test("s11s122.5\ns21s223.4", r % karma::eol, v));
         BOOST_TEST(test_delimited("s11s122.5\n s21s223.4", 
             r % karma::eol, v, ' '));
     }
 
     {
-        test_int_data d = { 1 };
-        BOOST_TEST(test("1", karma::attr_cast<int>(karma::int_), d));
+        test_int_data1 d = { 1 };
+        BOOST_TEST(test("1", karma::attr_cast(karma::int_), d));
+        BOOST_TEST(test("1", karma::attr_cast<test_int_data1>(karma::int_), d));
+        BOOST_TEST(test("1", karma::attr_cast<test_int_data1, int>(karma::int_), d));
+    }
+
+    {
+        test_int_data1 d[] = {{ 1 }, { 2 }};
+        std::vector<test_int_data1> v;
+        v.push_back(d[0]);
+        v.push_back(d[1] );
+
+        BOOST_TEST(test("1,2", karma::attr_cast(karma::int_) % ',', v));
+        BOOST_TEST(test("1,2"
+          , karma::attr_cast<test_int_data1>(karma::int_) % ',', v));
+        BOOST_TEST(test("1,2"
+          , karma::attr_cast<test_int_data1, int>(karma::int_) % ',', v));
+    }
+
+    {
+        test_int_data1 d[] = {{ 1 }, { 2 }};
+        std::vector<test_int_data1> v;
+        v.push_back(d[0]);
+        v.push_back(d[1] );
+
+// this won't compile as there is no defined transformation for
+// test_int_data1 and double
+//      BOOST_TEST(test("1.0,2.0", karma::attr_cast(karma::double_) % ',', v));
+//      BOOST_TEST(test("1.0,2.0"
+//        , karma::attr_cast<test_int_data1>(karma::double_) % ',', v));
+
+        BOOST_TEST(test("1.0,2.0"
+          , karma::attr_cast<test_int_data1, int>(karma::double_) % ',', v));
+    }
+
+    {
+        test_int_data2 d = { 1 };
+        BOOST_TEST(test("1", karma::attr_cast(karma::int_), d));
+        BOOST_TEST(test("1", karma::attr_cast<test_int_data2>(karma::int_), d));
+        BOOST_TEST(test("1", karma::attr_cast<test_int_data2, int>(karma::int_), d));
+    }
+
+    {
+        test_int_data2 d[] = {{ 1 }, { 2 }};
+        std::vector<test_int_data2> v;
+        v.push_back(d[0]);
+        v.push_back(d[1] );
+
+        BOOST_TEST(test("1,2", karma::attr_cast(karma::int_) % ',', v));
+        BOOST_TEST(test("1,2"
+          , karma::attr_cast<test_int_data2>(karma::int_) % ',', v));
+        BOOST_TEST(test("1,2"
+          , karma::attr_cast<test_int_data2, int>(karma::int_) % ',', v));
+    }
+
+    {
+        test_int_data2 d[] = {{ 1 }, { 2 }};
+        std::vector<test_int_data2> v;
+        v.push_back(d[0]);
+        v.push_back(d[1] );
+
+// this won't compile as there is no defined transformation for
+// test_int_data2 and double
+//      BOOST_TEST(test("1.0,2.0", karma::attr_cast(karma::double_) % ',', v));
+//      BOOST_TEST(test("1.0,2.0"
+//        , karma::attr_cast<test_int_data2>(karma::double_) % ',', v));
+
+        BOOST_TEST(test("1.0,2.0"
+          , karma::attr_cast<test_int_data2, int>(karma::double_) % ',', v));
     }
 
     return boost::report_errors();

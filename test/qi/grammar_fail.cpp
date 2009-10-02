@@ -12,20 +12,17 @@
 #include <boost/spirit/include/qi_nonterminal.hpp>
 #include <boost/spirit/include/qi_parse.hpp>
 
-using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::ascii;
+namespace qi = boost::spirit::qi;
 
-struct num_list : grammar<char const*, rule<char const*> >
+struct num_list : qi::grammar<char const*, qi::rule<char const*> >
 {
     num_list() : base_type(start)
     {
-        using boost::spirit::int_;
-        num = int_;
+        num = qi::int_;
         start = num >> *(',' >> num);
     }
 
-    rule<char const*, rule<char const*> > start, num;
+    qi::rule<char const*, qi::rule<char const*> > start, num;
 };
 
 // this test must fail compiling
@@ -35,8 +32,8 @@ int main()
     char const* end = &input[strlen(input)+1];
 
     num_list g;
-    bool r = phrase_parse(input, end, g,
-        space | ('%' >> *~char_('\n') >> '\n'));
+    bool r = qi::phrase_parse(input, end, g,
+        qi::space | ('%' >> *~qi::char_('\n') >> '\n'));
 
     return 0;
 }

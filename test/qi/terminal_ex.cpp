@@ -56,7 +56,7 @@ namespace testns
                 if (it == last || *it++ != Char('+'))
                     return false;
 
-            boost::spirit::qi::detail::assign_to(count, attr);
+            boost::spirit::traits::assign_to(count, attr);
             first = it;
             return true;
         }
@@ -104,7 +104,7 @@ namespace testns
                 if (it == last || *it++ != Char('-'))
                     return false;
 
-            boost::spirit::qi::detail::assign_to(count, attr);
+            boost::spirit::traits::assign_to(count, attr);
             first = it;
             return true;
         }
@@ -157,7 +157,7 @@ namespace testns
                 if (it == last || *it++ != Char('*'))
                     return false;
 
-            boost::spirit::qi::detail::assign_to(count, attr);
+            boost::spirit::traits::assign_to(count, attr);
             first = it;
             return true;
         }
