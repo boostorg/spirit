@@ -141,7 +141,7 @@ namespace boost { namespace spirit { namespace qi  { namespace detail
             bool neg = p.parse_sign(first, last);
 
             // Now attempt to parse an integer
-            Attribute n = 0;
+            T n = 0;
             bool got_a_number = p.parse_n(first, last, n);
 
             // If we did not get a number it might be a NaN, Inf or a leading
