@@ -99,12 +99,12 @@ Ok, so now let's parse!
 [import ../../example/qi/num_list1.cpp]
 [tutorial_numlist1]
 
-The parse function returns `true` or `false` depending on the result of the
-parse. The first iterator is passed by reference. On a successful parse,
-this iterator is repositioned to the rightmost position consumed by the
-parser. If this becomes equal to str.end(), then we have a full match.
-If not, then we have a partial match. A partial match happens when the
-parser is only able to parse a portion of the input.
+The parse function returns `true` or `false` depending on the result of
+the parse. The first iterator is passed by reference. On a successful
+parse, this iterator is repositioned to the rightmost position consumed
+by the parser. If this becomes equal to `last`, then we have a full
+match. If not, then we have a partial match. A partial match happens
+when the parser is only able to parse a portion of the input.
 
 Note that we inlined the parser directly in the call to parse. Upon calling
 parse, the expression evaluates into a temporary, unnamed parser which is passed

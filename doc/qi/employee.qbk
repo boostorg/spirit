@@ -8,12 +8,12 @@
 
 [section Employee - Parsing into structs]
 
-It's a common question in the __spirit_list__: How do I parse and place the
-results into a C++ struct? Of course, at this point, you already know various
-ways to do it, using semantic actions. There are many ways to skin a cat.
-Spirit2, being fully attributed, makes it even easier. The next example
-demonstrates some features of Spirit2 that makes this easy. In the process,
-you'll learn about:
+It's a common question in the __spirit_list__: How do I parse and place
+the results into a C++ struct? Of course, at this point, you already
+know various ways to do it, using semantic actions. There are many ways
+to skin a cat. Spirit2, being fully attributed, makes it even easier.
+The next example demonstrates some features of Spirit2 that make this
+easy. In the process, you'll learn about:
 
 * More about attributes
 * Auto rules

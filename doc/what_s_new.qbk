@@ -113,7 +113,7 @@ __lex__ now uses the infrastructure provided by __spirit__ version 2.1.
       template <typename Lexer>
       struct example_tokens : lex::lexer<Lexer>
       {
-            example_lexer()
+            example_tokens()
             {
                 // your token definitions here
                 this->self = ...
