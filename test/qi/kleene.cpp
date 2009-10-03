@@ -35,11 +35,15 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef char type; // value type of container
     };
-    
-    inline void push_back(x_attr& c, char val)
+
+    template <>
+    struct push_back_container<x_attr, char>
     {
-        // push back value type into container
-    }
+        static void call(x_attr& c, char val)
+        {
+            // push back value type into container
+        }
+    };
 }}}
 
 int
