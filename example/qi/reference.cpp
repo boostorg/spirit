@@ -964,7 +964,8 @@ main()
         using boost::spirit::qi::little_word;
         using boost::spirit::qi::little_dword;
         using boost::spirit::qi::little_qword;
-
+        
+        boost::uint8_t uc;
         boost::uint16_t us;
         boost::uint32_t ui;
 //<-
@@ -1007,7 +1008,8 @@ main()
         using boost::spirit::qi::big_word;
         using boost::spirit::qi::big_dword;
         using boost::spirit::qi::big_qword;
-
+        
+        boost::uint8_t uc;
         boost::uint16_t us;
         boost::uint32_t ui;
 //<-
