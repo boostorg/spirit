@@ -23,6 +23,7 @@
 [/include        abstracts/error_handling.qbk]
 [/include        abstracts/parse_trees_and_asts.qbk]
 [include        abstracts/indepth.qbk]
+[include        abstracts/customization_points.qbk]
 
 [endsect]
 
