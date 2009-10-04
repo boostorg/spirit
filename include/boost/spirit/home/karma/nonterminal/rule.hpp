@@ -227,7 +227,8 @@ namespace boost { namespace spirit { namespace karma
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
                 // attributes, without passing values for them.
-                context_type context(make_attribute::call(attr));
+                context_type context(traits::pre_transform<attr_type>(
+                    make_attribute::call(attr)));
 
                 // If you are seeing a compilation error here stating that the 
                 // third parameter can't be converted to a karma::reference
@@ -256,8 +257,8 @@ namespace boost { namespace spirit { namespace karma
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
                 // attributes, passing values of incompatible types for them.
-                context_type context(make_attribute::call(attr)
-                  , params, caller_context);
+                context_type context(traits::pre_transform<attr_type>(
+                    make_attribute::call(attr)), params, caller_context);
 
                 // If you are seeing a compilation error here stating that the 
                 // third parameter can't be converted to a karma::reference

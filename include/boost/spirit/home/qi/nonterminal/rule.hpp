@@ -211,12 +211,17 @@ namespace boost { namespace spirit { namespace qi
           , Attribute& attr) const
         {
             //$$$ do a preskip if this is an implied lexeme $$$
-            
+
             if (f)
             {
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
-                typename make_attribute::type attr_ = make_attribute::call(attr);
+                // do down-stream transformation, provides attribute for 
+                // rhs parser
+                typename traits::result_of::pre_transform<
+                    typename make_attribute::type, attr_type
+                >::type attr_ = 
+                    traits::pre_transform<attr_type>(make_attribute::call(attr));
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -229,6 +234,9 @@ namespace boost { namespace spirit { namespace qi
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
+                    // do up-stream transformation, this integrates the results 
+                    // back into the original attribute value, if appropriate
+                    traits::post_transform(attr, attr_);
                     return true;
                 }
             }
@@ -247,7 +255,12 @@ namespace boost { namespace spirit { namespace qi
             {
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
-                typename make_attribute::type attr_ = make_attribute::call(attr);
+                // do down-stream transformation, provides attribute for 
+                // rhs parser
+                typename traits::result_of::pre_transform<
+                    typename make_attribute::type, attr_type
+                >::type attr_ = 
+                    traits::pre_transform<attr_type>(make_attribute::call(attr));
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -260,6 +273,9 @@ namespace boost { namespace spirit { namespace qi
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
+                    // do up-stream transformation, this integrates the results 
+                    // back into the original attribute value, if appropriate
+                    traits::post_transform(attr, attr_);
                     return true;
                 }
             }

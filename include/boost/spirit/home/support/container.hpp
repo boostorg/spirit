@@ -123,10 +123,12 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////
+    //[customization_container_value_default
     template <typename Container, typename Enable/* = void*/>
     struct container_value
       : detail::remove_value_const<typename Container::value_type>
     {};
+    //]
 
     // this will be instantiated if the optional holds a container
     template <typename T>
@@ -153,11 +155,13 @@ namespace boost { namespace spirit { namespace traits
         >::type type;
     };
 
+    //[customization_container_value_unused
     template <>
     struct container_value<unused_type>
     {
         typedef unused_type type;
     };
+    //]
 
     template <>
     struct container_value<unused_type const>
