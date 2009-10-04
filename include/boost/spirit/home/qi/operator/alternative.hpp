@@ -40,11 +40,19 @@ namespace boost { namespace spirit
 namespace boost { namespace spirit { namespace qi
 {
     namespace detail
-    {       
+    {
+        template <typename T>
+        struct get_variant_element
+            : mpl::identity<T> {};
+
+        template <typename T>
+        struct get_variant_element<recursive_wrapper<T> > 
+            : mpl::identity<T> {};
+            
         template <typename T>
         struct get_variant_types;
 
-#define BOOST_SPIRIT_IDENTITY(z, n, data) mpl::identity<BOOST_PP_CAT(T, n)>
+#define BOOST_SPIRIT_IDENTITY(z, n, data) get_variant_element<BOOST_PP_CAT(T, n)>
         template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
         struct get_variant_types<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
         {
@@ -86,6 +94,7 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr, mpl::true_) const
         {
+            // This branch is chosen if attr *is not* a variant
             detail::alternative_function<Iterator, Context, Skipper, Attribute>
                 f(first, last, context, skipper, attr);
 
@@ -99,6 +108,7 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr, mpl::false_) const
         {
+            // This branch is chosen if attr *is* a variant
             detail::alternative_function<Iterator, Context, Skipper, Attribute>
                 f(first, last, context, skipper, attr);
 
