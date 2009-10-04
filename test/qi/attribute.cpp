@@ -178,6 +178,14 @@ main()
     }
 
     {
+        std::vector<double> v;
+        qi::rule<char const*, int()> r = qi::int_;
+
+        BOOST_TEST(test_attr("1,2", r % ',', v));
+        BOOST_TEST(v.size() == 2 && v[0] == 1.0 && v[1] == 2.0);
+    }
+
+    {
         std::vector<test_int_data1> v;
 
 // this won't compile as there is no defined transformation for
