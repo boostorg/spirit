@@ -123,20 +123,16 @@ main()
             test_view;
         std::vector<test_data> v;
 
-        qi::rule<char const*, test_data()> r1 = 
-            qi::attr_cast<test_data, test_view>(
-                *(qi::char_ - ',') >> ',' >> qi::int_ >> ',' >> qi::double_
-            );
+        qi::rule<char const*, test_view()> r1 = 
+                *(qi::char_ - ',') >> ',' >> qi::int_ >> ',' >> qi::double_;
 
         BOOST_TEST(test_attr("s1,2,1.5\ns2,4,3.5", r1 % qi::eol, v));
         BOOST_TEST(v.size() == 2 &&
             v[0].i1 == 2 && v[0].s1 == "s1" && v[0].d1 == 1.5 &&
             v[1].i1 == 4 && v[1].s1 == "s2" && v[1].d1 == 3.5);
 
-        qi::rule<char const*, test_data(), qi::blank_type> r2 =
-            qi::attr_cast<test_data, test_view>(
-                *(qi::char_ - ',') >> ',' >> qi::int_ >> ',' >> qi::double_
-            );
+        qi::rule<char const*, test_view(), qi::blank_type> r2 =
+                *(qi::char_ - ',') >> ',' >> qi::int_ >> ',' >> qi::double_;
 
         v.clear();
         BOOST_TEST(test_attr("s1, 2, 1.5 \n s2, 4, 3.5", r2 % qi::eol, v, qi::blank));
@@ -175,6 +171,14 @@ main()
 
     {
         std::vector<test_int_data1> v;
+        qi::rule<char const*, int()> r = qi::int_;
+
+        BOOST_TEST(test_attr("1,2", r % ',', v));
+        BOOST_TEST(v.size() == 2 && v[0].i == 1 && v[1].i == 2);
+    }
+
+    {
+        std::vector<test_int_data1> v;
 
 // this won't compile as there is no defined transformation for
 // test_int_data1 and double
@@ -184,6 +188,12 @@ main()
 
         BOOST_TEST(test_attr("1.0,2.2"
           , qi::attr_cast<test_int_data1, int>(qi::double_) % ',', v));
+        BOOST_TEST(v.size() == 2 && v[0].i == 1 && v[1].i == 2);
+
+        qi::rule<char const*, int()> r = qi::double_;
+
+        v.clear();
+        BOOST_TEST(test_attr("1.0,2.0", r % ',', v));
         BOOST_TEST(v.size() == 2 && v[0].i == 1 && v[1].i == 2);
     }
 
@@ -217,6 +227,14 @@ main()
 
     {
         std::vector<test_int_data2> v;
+        qi::rule<char const*, int()> r = qi::int_;
+
+        BOOST_TEST(test_attr("1,2", r % ',', v));
+        BOOST_TEST(v.size() == 2 && v[0].i == 1 && v[1].i == 2);
+    }
+
+    {
+        std::vector<test_int_data2> v;
 
 // this won't compile as there is no defined transformation for
 // test_int_data2 and double
@@ -226,6 +244,12 @@ main()
 
         BOOST_TEST(test_attr("1.0,2.2"
           , qi::attr_cast<test_int_data2, int>(qi::double_) % ',', v));
+        BOOST_TEST(v.size() == 2 && v[0].i == 1 && v[1].i == 2);
+
+        qi::rule<char const*, int()> r = qi::double_;
+
+        v.clear();
+        BOOST_TEST(test_attr("1.0,2.0", r % ',', v));
         BOOST_TEST(v.size() == 2 && v[0].i == 1 && v[1].i == 2);
     }
 

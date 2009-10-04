@@ -101,10 +101,8 @@ int main()
         v.push_back(d1);
         v.push_back(d2);
 
-        karma::rule<output_iterator<char>::type, test_data()> r =
-            karma::attr_cast<test_data, test_view>(
-                karma::string << karma::string << karma::double_
-            );
+        karma::rule<output_iterator<char>::type, test_view()> r =
+                karma::string << karma::string << karma::double_;
 
         BOOST_TEST(test("s11s122.5\ns21s223.4", r % karma::eol, v));
         BOOST_TEST(test_delimited("s11s122.5\n s21s223.4", 
@@ -122,13 +120,23 @@ int main()
         test_int_data1 d[] = {{ 1 }, { 2 }};
         std::vector<test_int_data1> v;
         v.push_back(d[0]);
-        v.push_back(d[1] );
+        v.push_back(d[1]);
 
         BOOST_TEST(test("1,2", karma::attr_cast(karma::int_) % ',', v));
         BOOST_TEST(test("1,2"
           , karma::attr_cast<test_int_data1>(karma::int_) % ',', v));
         BOOST_TEST(test("1,2"
           , karma::attr_cast<test_int_data1, int>(karma::int_) % ',', v));
+    }
+
+    {
+        test_int_data1 d[] = {{ 1 }, { 2 }};
+        std::vector<test_int_data1> v;
+        v.push_back(d[0]);
+        v.push_back(d[1]);
+
+        karma::rule<output_iterator<char>::type, int()> r = karma::int_;
+        BOOST_TEST(test("1,2", r % ',', v));
     }
 
     {
@@ -145,6 +153,9 @@ int main()
 
         BOOST_TEST(test("1.0,2.0"
           , karma::attr_cast<test_int_data1, int>(karma::double_) % ',', v));
+
+        karma::rule<output_iterator<char>::type, int()> r = karma::double_;
+        BOOST_TEST(test("1.0,2.0", r % ',', v));
     }
 
     {
@@ -158,13 +169,23 @@ int main()
         test_int_data2 d[] = {{ 1 }, { 2 }};
         std::vector<test_int_data2> v;
         v.push_back(d[0]);
-        v.push_back(d[1] );
+        v.push_back(d[1]);
 
         BOOST_TEST(test("1,2", karma::attr_cast(karma::int_) % ',', v));
         BOOST_TEST(test("1,2"
           , karma::attr_cast<test_int_data2>(karma::int_) % ',', v));
         BOOST_TEST(test("1,2"
           , karma::attr_cast<test_int_data2, int>(karma::int_) % ',', v));
+    }
+
+    {
+        test_int_data2 d[] = {{ 1 }, { 2 }};
+        std::vector<test_int_data2> v;
+        v.push_back(d[0]);
+        v.push_back(d[1]);
+
+        karma::rule<output_iterator<char>::type, int()> r = karma::int_;
+        BOOST_TEST(test("1,2", r % ',', v));
     }
 
     {
@@ -181,6 +202,9 @@ int main()
 
         BOOST_TEST(test("1.0,2.0"
           , karma::attr_cast<test_int_data2, int>(karma::double_) % ',', v));
+
+        karma::rule<output_iterator<char>::type, int()> r = karma::double_;
+        BOOST_TEST(test("1.0,2.0", r % ',', v));
     }
 
     return boost::report_errors();
