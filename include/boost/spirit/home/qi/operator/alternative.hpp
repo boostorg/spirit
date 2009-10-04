@@ -19,7 +19,7 @@
 #include <boost/spirit/home/support/detail/what_function.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
-#include <boost/fusion/include/any.hpp>
+#include <boost/spirit/home/support/algorithm/any.hpp>
 #include <boost/fusion/include/mpl.hpp>
 #include <boost/fusion/include/for_each.hpp>
 
@@ -39,6 +39,23 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace qi
 {
+    namespace detail
+    {       
+        template <typename T>
+        struct get_variant_types;
+
+#define BOOST_SPIRIT_IDENTITY(z, n, data) mpl::identity<BOOST_PP_CAT(T, n)>
+        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+        struct get_variant_types<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+        {
+            typedef mpl::vector<
+                BOOST_PP_ENUM(
+                    BOOST_VARIANT_LIMIT_TYPES, BOOST_SPIRIT_IDENTITY, _)>
+            type;
+        };
+#undef BOOST_SPIRIT_IDENTITY
+    }
+    
     template <typename Elements>
     struct alternative : nary_parser<alternative<Elements> >
     {
@@ -65,15 +82,39 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Iterator, typename Context
           , typename Skipper, typename Attribute>
-        bool parse(Iterator& first, Iterator const& last
+        bool parse_impl(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper
-          , Attribute& attr) const
+          , Attribute& attr, mpl::true_) const
         {
             detail::alternative_function<Iterator, Context, Skipper, Attribute>
                 f(first, last, context, skipper, attr);
 
             // return true if *any* of the parsers succeed
             return fusion::any(elements, f);
+        }
+        
+        template <typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse_impl(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr, mpl::false_) const
+        {
+            detail::alternative_function<Iterator, Context, Skipper, Attribute>
+                f(first, last, context, skipper, attr);
+
+            // return true if *any* of the parsers succeed
+            typename detail::get_variant_types<Attribute>::type vtypes;
+            return spirit::any(elements, vtypes, f);
+        }
+        
+        template <typename Iterator, typename Context
+          , typename Skipper, typename Attribute>
+        bool parse(Iterator& first, Iterator const& last
+          , Context& context, Skipper const& skipper
+          , Attribute& attr) const
+        {
+            return parse_impl(first, last, context, skipper, attr,
+                spirit::traits::not_is_variant<Attribute>());
         }
 
         template <typename Context>
