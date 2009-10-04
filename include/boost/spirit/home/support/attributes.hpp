@@ -25,6 +25,7 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
@@ -312,12 +313,32 @@ namespace boost { namespace spirit { namespace traits
     // attributes. This template can be used as a customization point, where 
     // the user is able specify specific transformation rules for any attribute
     // type.
+    //
+    // The default attribute transformation where the exposed attribute type is
+    // different from the required transformed attribute type relies on the
+    // convertibility exposed type --> transformed type, which is needed to
+    // successfully execute the pre transform step.
     template <typename Exposed, typename Transformed, typename Enable/* = void*/>
     struct transform_attribute
     {
         typedef Transformed type;
         static Transformed pre(Exposed& val) { return Transformed(val); }
-        static void post(Exposed&, Transformed const&) {}
+
+        static void post(Exposed&, Transformed const&, mpl::false_) 
+        {
+        }
+        static void post(Exposed& val, Transformed const& attr, mpl::true_) 
+        {
+            assign_to(attr, val); 
+        }
+
+        // By default do post transform only if types are convertible, 
+        // otherwise we assume no post transform is required (i.e. the user 
+        // utilizes nview et.al.). 
+        static void post(Exposed& val, Transformed const& attr) 
+        { 
+            post(val, attr, is_convertible<Transformed, Exposed>());
+        }
     };
 
     // The default is not to do any transformation
