@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/qi/domain.hpp>
+#include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/variant.hpp>
@@ -37,7 +38,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // if Attribute is not a variant, then pass it as-is
             return component.parse(first, last, context, skipper, attr);
         }
-        
+
         template <typename Component, typename T>
         bool operator()(Component const& component, mpl::identity<T>) const
         {
@@ -45,7 +46,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             T val;
             if (component.parse(first, last, context, skipper, val))
             {
-                attr = val;
+                traits::assign_to(val, attr);
                 return true;
             }
             return false;
