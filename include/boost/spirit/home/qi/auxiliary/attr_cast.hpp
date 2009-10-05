@@ -17,7 +17,7 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/spirit/home/support/auxiliary/attr_cast.hpp>
 
 namespace boost { namespace spirit
 {
@@ -30,33 +30,6 @@ namespace boost { namespace spirit
     struct use_terminal<qi::domain
           , tag::stateful_tag<Expr, tag::attr_cast, Exposed, Transformed> >
       : mpl::true_ {};
-
-    ///////////////////////////////////////////////////////////////////////////
-    // This one is the function that the user can call directly in order 
-    // to create a customized attr_cast component
-    template <typename Expr>
-    typename enable_if<proto::is_expr<Expr>
-      , stateful_tag_type<Expr, tag::attr_cast> >::type
-    attr_cast(Expr const& expr)
-    {
-        return stateful_tag_type<Expr, tag::attr_cast>(expr);
-    }
-
-    template <typename Exposed, typename Expr>
-    typename enable_if<proto::is_expr<Expr>
-      , stateful_tag_type<Expr, tag::attr_cast, Exposed> >::type
-    attr_cast(Expr const& expr)
-    {
-        return stateful_tag_type<Expr, tag::attr_cast, Exposed>(expr);
-    }
-
-    template <typename Exposed, typename Transformed, typename Expr>
-    typename enable_if<proto::is_expr<Expr>
-      , stateful_tag_type<Expr, tag::attr_cast, Exposed, Transformed> >::type
-    attr_cast(Expr const& expr)
-    {
-        return stateful_tag_type<Expr, tag::attr_cast, Exposed, Transformed>(expr);
-    }
 }}
 
 namespace boost { namespace spirit { namespace qi
