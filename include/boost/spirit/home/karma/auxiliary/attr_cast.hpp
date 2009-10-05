@@ -74,7 +74,7 @@ namespace boost { namespace spirit { namespace karma
         typedef mpl::int_<subject_type::properties::value> properties;
 
         typedef typename mpl::eval_if<
-            traits::is_not_unused<Transformed>
+            traits::not_is_unused<Transformed>
           , mpl::identity<Transformed>
           , traits::attribute_of<subject_type> >::type 
         transformed_attribute_type;
@@ -93,7 +93,7 @@ namespace boost { namespace spirit { namespace karma
         // deal with the passed attribute inside the parse function.
         template <typename Context, typename Unused>
         struct attribute
-          : mpl::if_<traits::is_not_unused<Exposed>, Exposed
+          : mpl::if_<traits::not_is_unused<Exposed>, Exposed
               , transformed_attribute_type>
         {};
 
@@ -102,8 +102,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            return compile<karma::domain>(subject).generate(sink, ctx, d
-                  , traits::pre_transform<transformed_attribute_type>(attr));
+            typedef typename traits::result_of::transform<
+                Attribute const, transformed_attribute_type> transform;
+
+            return compile<karma::domain>(subject).generate(
+                sink, ctx, d, transform::pre(attr));
         }
 
         template <typename Context>

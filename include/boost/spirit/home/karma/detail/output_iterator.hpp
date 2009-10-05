@@ -371,7 +371,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         // get the most derived type of this class
         typedef typename mpl::if_<
-            traits::is_not_unused<Derived>, Derived
+            traits::not_is_unused<Derived>, Derived
           , output_iterator<OutputIterator, Properties, Derived>
         >::type most_derived_type;
 

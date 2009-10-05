@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             // we need to dispatch again depending on the type of the attribute
             // of the current element (component). If this is has no attribute
             // we shouldn't push an element into the container.
-            typedef traits::is_not_unused<
+            typedef traits::not_is_unused<
                 typename traits::attribute_of<
                     Component, context_type, iterator_type
                 >::type

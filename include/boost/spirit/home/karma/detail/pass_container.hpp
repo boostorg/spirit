@@ -134,7 +134,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             // of the current element (component). If this is has no attribute
             // we shouldn't use an element of the container but unused_type 
             // instead
-            typedef traits::is_not_unused<
+            typedef traits::not_is_unused<
                 typename traits::attribute_of<Component, context_type>::type
             > predicate;
 

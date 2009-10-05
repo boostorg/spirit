@@ -218,10 +218,11 @@ namespace boost { namespace spirit { namespace qi
 
                 // do down-stream transformation, provides attribute for 
                 // rhs parser
-                typename traits::result_of::pre_transform<
-                    typename make_attribute::type, attr_type
-                >::type attr_ = 
-                    traits::pre_transform<attr_type>(make_attribute::call(attr));
+                typedef typename traits::result_of::transform<
+                    typename make_attribute::type, attr_type> transform;
+
+                typename transform::type attr_ = 
+                    transform::pre(make_attribute::call(attr));
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -257,10 +258,11 @@ namespace boost { namespace spirit { namespace qi
 
                 // do down-stream transformation, provides attribute for 
                 // rhs parser
-                typename traits::result_of::pre_transform<
-                    typename make_attribute::type, attr_type
-                >::type attr_ = 
-                    traits::pre_transform<attr_type>(make_attribute::call(attr));
+                typedef typename traits::result_of::transform<
+                    typename make_attribute::type, attr_type> transform;
+
+                typename transform::type attr_ = 
+                    transform::pre(make_attribute::call(attr));
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited

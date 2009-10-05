@@ -75,7 +75,7 @@ namespace boost { namespace spirit { namespace qi
             subject_type;
 
         typedef typename mpl::eval_if<
-            traits::is_not_unused<Transformed>
+            traits::not_is_unused<Transformed>
           , mpl::identity<Transformed>
           , traits::attribute_of<subject_type> >::type 
         transformed_attribute_type;
@@ -94,7 +94,7 @@ namespace boost { namespace spirit { namespace qi
         // deal with the passed attribute inside the parse function.
         template <typename Context, typename Iterator>
         struct attribute
-          : mpl::if_<traits::is_not_unused<Exposed>, Exposed
+          : mpl::if_<traits::not_is_unused<Exposed>, Exposed
               , transformed_attribute_type>
         {};
 
@@ -108,17 +108,15 @@ namespace boost { namespace spirit { namespace qi
             // otherwise we assume the exposed attribute type to be the actual
             // attribute type as passed by the user.
             typedef typename mpl::if_<
-                traits::is_not_unused<Exposed>, Exposed, Attribute>::type
+                traits::not_is_unused<Exposed>, Exposed, Attribute>::type
             exposed_attribute_type;
 
             // do down-stream transformation, provides attribute for embedded
             // parser
-            typedef typename traits::result_of::pre_transform<
-                exposed_attribute_type, transformed_attribute_type>::type 
-            attribute_type;
+            typedef typename traits::result_of::transform<
+                exposed_attribute_type, transformed_attribute_type> transform;
 
-            attribute_type attr_ = 
-                traits::pre_transform<transformed_attribute_type>(attr);
+            typename transform::type attr_ = transform::pre(attr);
 
             if (!compile<qi::domain>(subject).
                     parse(first, last, context, skipper, attr_))
