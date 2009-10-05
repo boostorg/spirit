@@ -79,6 +79,14 @@ main()
         BOOST_TEST(test_delimited("c ", int_ | char_ | lit('a'), v, char_(' ')));
     }
 
+//     {
+//         variant<int, std::string> v(10);
+//         BOOST_TEST(test("10", int_ | +char_, v));
+// 
+//         v = "abc";
+//         BOOST_TEST(test("abc", int_ | +char_, v));
+//     }
+
     {
         // if nothing matches, the first explicit alternative will be chosen
         variant<double, char const*> v (10.0);

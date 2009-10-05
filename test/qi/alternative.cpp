@@ -104,6 +104,12 @@ main()
         boost::variant<int, std::string> v;
         BOOST_TEST((test_attr("12345", int_ | +char_, v)));
         BOOST_TEST(boost::get<int>(v) == 12345);
+// 
+//         BOOST_TEST((test_attr("abc", int_ | +char_, v)));
+//         BOOST_TEST(boost::get<std::string>(v) == "abc");
+// 
+//         BOOST_TEST((test_attr("12345", +char_ | int_, v)));
+//         BOOST_TEST(boost::get<std::string>(v) == "12345");
     }
 
     {   // test action
