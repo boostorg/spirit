@@ -218,7 +218,7 @@ namespace boost { namespace spirit { namespace qi
 
                 // do down-stream transformation, provides attribute for 
                 // rhs parser
-                typedef typename traits::result_of::transform<
+                typedef traits::transform_attribute<
                     typename make_attribute::type, attr_type> transform;
 
                 typename transform::type attr_ = 
@@ -258,7 +258,7 @@ namespace boost { namespace spirit { namespace qi
 
                 // do down-stream transformation, provides attribute for 
                 // rhs parser
-                typedef typename traits::result_of::transform<
+                typedef traits::transform_attribute<
                     typename make_attribute::type, attr_type> transform;
 
                 typename transform::type attr_ = 

@@ -314,10 +314,11 @@ namespace boost { namespace spirit { namespace traits
     // the user is able specify specific transformation rules for any attribute
     // type.
     //
-    // The default attribute transformation where the exposed attribute type is
-    // different from the required transformed attribute type relies on the
-    // convertibility exposed type --> transformed type, which is needed to
-    // successfully execute the pre transform step.
+    // The default attribute transformation (where the exposed attribute type is
+    // different from the required transformed attribute type) relies on the
+    // convertibility 'exposed type' --> 'transformed type', which has to exist 
+    // in order to successfully execute the pre transform step.
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed, typename Enable/* = void*/>
     struct transform_attribute
     {
@@ -326,7 +327,7 @@ namespace boost { namespace spirit { namespace traits
         static Transformed pre(Exposed& val) { return Transformed(val); }
         static Transformed pre(Exposed const& val) { return Transformed(val); }
 
-        // By default post transform only if types are convertible, 
+        // By default do post transformation only if types are convertible, 
         // otherwise we assume no post transform is required (i.e. the user 
         // utilizes nview et.al.). 
         static void post(Exposed&, Transformed const&, mpl::false_) 
@@ -412,28 +413,30 @@ namespace boost { namespace spirit { namespace traits
       : transform_attribute<unused_type, unused_type>
     {};
 
+    ///////////////////////////////////////////////////////////////////////////
     namespace result_of
     {
         template <typename Exposed, typename Transformed>
-        struct transform
+        struct pre_transform
           : traits::transform_attribute<Exposed, Transformed>
         {};
     }
 
     template <typename Transformed, typename Exposed>
-    typename traits::result_of::transform<Exposed, Transformed>::type
+    typename traits::result_of::pre_transform<Exposed, Transformed>::type
     pre_transform(Exposed& attr)
     {
         return transform_attribute<Exposed, Transformed>::pre(attr);
     }
 
     template <typename Transformed, typename Exposed>
-    typename traits::result_of::transform<Exposed const, Transformed>::type
+    typename traits::result_of::pre_transform<Exposed const, Transformed>::type
     pre_transform(Exposed const& attr)
     {
         return transform_attribute<Exposed const, Transformed>::pre(attr);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed>
     void post_transform(Exposed& dest, Transformed const& attr)
     {

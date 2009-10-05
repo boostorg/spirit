@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            typedef typename traits::result_of::transform<
+            typedef traits::transform_attribute<
                 Attribute const, transformed_attribute_type> transform;
 
             return compile<karma::domain>(subject).generate(

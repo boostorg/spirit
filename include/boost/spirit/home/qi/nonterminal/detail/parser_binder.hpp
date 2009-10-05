@@ -21,7 +21,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
     template <typename Parser, typename Auto>
     struct parser_binder
     {
-
         parser_binder(Parser const& p)
           : p(p) {}
 
@@ -38,29 +37,6 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool call(Iterator& first, Iterator const& last
           , Context& context, Skipper const& skipper, mpl::false_) const
         {
-//             typedef typename traits::attribute_of<Parser>::type 
-//                 subject_attribute_type;
-//             typedef typename Context::attributes_type context_attributes_type;
-//             typedef typename fusion::result_of::at_c<
-//                 context_attributes_type, 0>::type attribute_type;
-// 
-//             // do down-stream transformation, provides attribute for embedded
-//             // parser
-//             typename traits::result_of::pre_transform<
-//                 subject_attribute_type, attribute_type>::type 
-//             attr_ = traits::pre_transform<subject_attribute_type>(
-//                         fusion::at_c<0>(context.attributes));
-// 
-//             // If DeducedAuto is true (no semantic action), we pass the rule's 
-//             // attribute on to the component.
-//             if (!p.parse(first, last, context, skipper, attr_))
-//                 return false;
-// 
-//             // do up-stream transformation, this mainly integrates the results
-//             // back into the original attribute value, if appropriate
-//             traits::post_transform<subject_attribute_type>(attr_
-//               , fusion::at_c<0>(context.attributes));
-
             // If DeducedAuto is true (no semantic action), we pass the rule's 
             // attribute on to the component.
             return p.parse(first, last, context, skipper
