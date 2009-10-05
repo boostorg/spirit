@@ -33,7 +33,7 @@ namespace boost { namespace spirit { namespace traits
         typedef fusion::vector<int, int, int> date_parts;
 
         // The embedded typedef 'type' exposes the attribute as it will be 
-        // passed to the right hand side. 
+        // passed to the right hand side of the rule. 
         typedef date_parts type;
 
         // The function pre() is called for down-stream conversion of the
@@ -41,7 +41,7 @@ namespace boost { namespace spirit { namespace traits
         // right hand side.
         // The supplied attribute might have been pre-initialized by parsers
         // (i.e. semantic actions) higher up the parser hierarchy (in the 
-        // grammar, in which case we would need to properly initialize the 
+        // grammar), in which case we would need to properly initialize the 
         // returned value from the argument. In this example this is not
         // required, so we just create a new instance of a date_parts.
         static date_parts pre(boost::gregorian::date) 
@@ -51,8 +51,9 @@ namespace boost { namespace spirit { namespace traits
 
         // The function post() is called for up-stream conversion of the 
         // results returned from parsing the right hand side of the rule.
-        // We need to initialize the attribute supplied to the rule with the
-        // values taken from the parsing results.
+        // We need to initialize the attribute supplied to the rule (referenced 
+        // by the first argument) with the values taken from the parsing 
+        // results (referenced by the second argument).
         static void post(boost::gregorian::date& d, date_parts const& v)
         {
             d = boost::gregorian::date(fusion::at_c<0>(v), fusion::at_c<1>(v)
@@ -65,13 +66,11 @@ namespace boost { namespace spirit { namespace traits
 namespace client
 {
     namespace qi = boost::spirit::qi;
-    namespace fusion = boost::fusion;
-
-    typedef fusion::vector<int, int, int> date_parts;
 
     template <typename Iterator>
     bool parse_date(Iterator& first, Iterator last, boost::gregorian::date& d)
     {
+        typedef boost::fusion::vector<int, int, int> date_parts;
         qi::rule<Iterator, date_parts(), qi::space_type> date =
             qi::int_ >> '-' >> qi::int_ >> '-' >> qi::int_;
 
