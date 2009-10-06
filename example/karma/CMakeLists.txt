@@ -8,16 +8,22 @@
 
 boost_add_executable(actions)
 boost_add_executable(basic_facilities DEPENDS boost_date_time)
-boost_add_executable(calc2_ast_dump)
-boost_add_executable(calc2_ast_rpn)
-boost_add_executable(calc2_ast_vm)
+boost_add_executable(karma_calc2_ast_dump calc2_ast_dump.cpp)
+boost_add_executable(karma_calc2_ast_rpn calc2_ast_rpn.cpp)
+boost_add_executable(karma_calc2_ast_vm calc2_ast_vm.cpp)
 boost_add_executable(classify_char)
-boost_add_executable(karma_num_list1 num_list1.cpp)
 boost_add_executable(karma_complex_number complex_number.cpp)
+boost_add_executable(karma_complex_number_easier complex_number_easier.cpp)
+boost_add_executable(karma_num_list1 num_list1.cpp)
+boost_add_executable(karma_num_list2 num_list2.cpp)
+boost_add_executable(karma_num_list3 num_list3.cpp)
+boost_add_executable(karma_num_matrix num_matrix.cpp)
 boost_add_executable(key_value_sequence)
 boost_add_executable(mini_xml_karma)
 boost_add_executable(printf_style_double_format)
 boost_add_executable(quick_start1)
+boost_add_executable(karma_reference reference.cpp)
+boost_add_executable(karma_reorder_struct reorder_struct.cpp)
 
 
 

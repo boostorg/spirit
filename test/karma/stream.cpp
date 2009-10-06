@@ -159,5 +159,12 @@ main()
         BOOST_TEST((test(L"abc", wstream(phx::ref(ws)))));
     }
 
+    {
+        boost::optional<char> c;
+        BOOST_TEST(!test("", stream, c));
+        c = 'x';
+        BOOST_TEST(test("x", stream, c));
+    }
+
     return boost::report_errors();
 }

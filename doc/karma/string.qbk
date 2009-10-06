@@ -117,6 +117,12 @@ not defined in __primitive_generator_concept__.
                              succeeds only if both are equal, failing otherwise]]
 ]
 
+[note  In addition to their usual attribute of type `S` all listed generators 
+       accept an instance of a `boost::optional<S>` as well. If the 
+       `boost::optional<>` is initialized (holds a value) the generators behave 
+       as if their attribute was an instance of `S` and emit the value stored
+       in the `boost::optional<>`. Otherwise the generators will fail.]
+
 [heading Complexity]
 
 [:O(N), where N is the number of characters emitted by the string generator]

@@ -67,7 +67,7 @@ namespace boost { namespace spirit { namespace qi
 
             if (first != last && this->derived().test(*first, context))
             {
-                qi::detail::assign_to(*first, attr);
+                spirit::traits::assign_to(*first, attr);
                 ++first;
                 return true;
             }

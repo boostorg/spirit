@@ -143,7 +143,7 @@ namespace boost { namespace spirit { namespace qi
           , Attribute& attr) const
         {
             // create a local value if Attribute is not unused_type
-            typedef typename traits::result_of::value<Attribute>::type 
+            typedef typename traits::container_value<Attribute>::type 
                 value_type;
             value_type val = value_type();
             typename LoopIter::type i = iter.start();
@@ -252,6 +252,13 @@ namespace boost { namespace spirit { namespace qi
             return result_type(subject, fusion::at_c<0>(term.args));
         }
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename LoopIter>
+    struct has_semantic_action<qi::repeat_parser<Subject, LoopIter> >
+      : unary_has_semantic_action<Subject> {};
 }}}
 
 #endif

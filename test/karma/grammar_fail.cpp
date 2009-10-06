@@ -17,19 +17,18 @@
 #include "test.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::karma;
 using namespace boost::spirit::ascii;
 
 typedef spirit_test::output_iterator<char>::type outiter_type;
 
-struct num_list : grammar<outiter_type, rule<outiter_type> >
+struct num_list : karma::grammar<outiter_type, karma::rule<outiter_type> >
 {
     num_list() : num_list::base_type(start)
     {
         start = int_(1) << ',' << int_(0);
     }
 
-    rule<outiter_type, rule<outiter_type> > start;
+    karma::rule<outiter_type, karma::rule<outiter_type> > start;
 };
 
 // this test must fail compiling as the rule is used with an incompatible 

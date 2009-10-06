@@ -41,6 +41,7 @@ namespace boost { namespace spirit
         ( bin )
         ( oct )
         ( hex )
+        ( bool_ )
         ( ushort_ )
         ( ulong_ )
         ( uint_ )
@@ -78,6 +79,13 @@ namespace boost { namespace spirit
         ( token )
         ( attr )
     )
+
+    // special tags (used mainly for stateful tag types)
+    namespace tag 
+    { 
+        struct attr_cast {}; 
+    }
+
 }}
 
 ///////////////////////////////////////////////////////////////////////////////

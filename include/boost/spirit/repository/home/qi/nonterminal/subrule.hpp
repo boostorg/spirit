@@ -196,9 +196,9 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             context_type;
 
             // prepare attribute
-            typedef
-                traits::make_attribute<subrule_attr_type, Attribute>
-            make_attribute;
+            typedef traits::make_transformed_attribute<
+                subrule_attr_type, Attribute> make_attribute;
+
             typename make_attribute::type attr_ = make_attribute::call(attr);
 
             // If you are seeing a compilation error here, you are probably
@@ -233,9 +233,9 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             context_type;
 
             // prepare attribute
-            typedef
-                traits::make_attribute<subrule_attr_type, Attribute>
-            make_attribute;
+            typedef traits::make_transformed_attribute<
+                subrule_attr_type, Attribute> make_attribute;
+
             typename make_attribute::type attr_ = make_attribute::call(attr);
 
             // If you are seeing a compilation error here, you are probably

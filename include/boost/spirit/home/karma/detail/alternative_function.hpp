@@ -32,10 +32,18 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     //  A component is compatible to a given Attribute type if the Attribute
     //  is the same as the expected type of the component
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Expected, typename Attribute>
+    struct attribute_is_compatible 
+      : is_convertible<Attribute, Expected> {};
+
+    template <typename Expected, typename Attribute>
+    struct attribute_is_compatible<Expected, boost::optional<Attribute> >
+      : is_convertible<Attribute, Expected> {};
+
     template <typename Expected, typename Attribute, typename IsNotVariant>
     struct compute_compatible_component_variant
       : mpl::or_<
-          is_convertible<Attribute, Expected>
+          attribute_is_compatible<Expected, Attribute>
         , is_same<hold_any, Expected> > {};
 
     template <typename Expected, typename Attribute>
@@ -79,14 +87,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
     //  this gets instantiated if the Attribute type is _not_ compatible with
     //  the generator
-    template <typename Component, typename Attribute, typename Expected,
-        typename Enable = void>
+    template <typename Component, typename Attribute, typename Expected
+      , typename Enable = void>
     struct alternative_generate
     {
         template <typename OutputIterator, typename Context, typename Delimiter>
         static bool
-        call(Component const&, OutputIterator&, Context&, Delimiter const&, 
-            Attribute const&)
+        call(Component const&, OutputIterator&, Context&, Delimiter const&
+          , Attribute const&)
         {
             return false;
         }
@@ -97,8 +105,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         template <typename OutputIterator, typename Context, typename Delimiter>
         static bool
-        call(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, unused_type)
+        call(Component const& component, OutputIterator& sink, Context& ctx
+          , Delimiter const& d, unused_type)
         {
             // return true if any of the generators succeed
             return component.generate(sink, ctx, d, unused);
@@ -126,8 +134,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         template <typename OutputIterator, typename Context, typename Delimiter>
         static bool
-        call(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Attribute const& attr)
+        call(Component const& component, OutputIterator& sink
+          , Context& ctx, Delimiter const& d, Attribute const& attr)
         {
             return call(component, sink, ctx, d, attr
               , spirit::traits::not_is_variant<Attribute>());
@@ -135,16 +143,16 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         template <typename OutputIterator, typename Context, typename Delimiter>
         static bool
-        call(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Attribute const& attr, mpl::true_)
+        call(Component const& component, OutputIterator& sink
+          , Context& ctx, Delimiter const& d, Attribute const& attr, mpl::true_)
         {
             return component.generate(sink, ctx, d, attr);
         }
 
         template <typename OutputIterator, typename Context, typename Delimiter>
         static bool
-        call(Component const& component, OutputIterator& sink,
-            Context& ctx, Delimiter const& d, Attribute const& attr, mpl::false_)
+        call(Component const& component, OutputIterator& sink
+          , Context& ctx, Delimiter const& d, Attribute const& attr, mpl::false_)
         {
             typedef
                 compute_compatible_component<Expected, Attribute>
@@ -175,8 +183,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         typename Attribute>
     struct alternative_generate_functor
     {
-        alternative_generate_functor(OutputIterator& sink_, Context& ctx_,
-              Delimiter const& d, Attribute const& attr_)
+        alternative_generate_functor(OutputIterator& sink_, Context& ctx_
+            , Delimiter const& d, Attribute const& attr_)
           : sink(sink_), ctx(ctx_), delim(d), attr(attr_) {}
 
         template <typename Component>

@@ -68,7 +68,7 @@
           static lexical analyzer</a>).
         </p>
 <p>
-          But first we provide the code snippets needed to understand the further
+          But first we provide the code snippets needed to further understand the
           descriptions. Both, the definition of the used token identifier and the
           of the token definition class in this example are put into a separate header
           file to make these available to the code generator and the static lexical
@@ -132,8 +132,8 @@
 <p>
           This example not only shows how to build a static lexer, but it additionally
           demonstrates how such a lexer can be used for parsing in conjunction with
-          a <span class="emphasis"><em>Spirit.Qi</em></span> grammar. For completeness we provide the
-          simple grammar used in this example. As you can see, this grammar does
+          a <span class="emphasis"><em>Spirit.Qi</em></span> grammar. For completeness, we provide
+          the simple grammar used in this example. As you can see, this grammar does
           not have any dependencies on the static lexical analyzer, and for this
           reason it is not different from a grammar used either without a lexer or
           using a dynamic lexical analyzer as described before.
@@ -148,7 +148,7 @@
 </span><span class="comment">//  definition class instance passed to the constructor to allow accessing the
 </span><span class="comment">//  embedded token_def&lt;&gt; instances.
 </span><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">word_count_grammar</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">word_count_grammar</span> <span class="special">:</span> <span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TokenDef</span><span class="special">&gt;</span>
     <span class="identifier">word_count_grammar</span><span class="special">(</span><span class="identifier">TokenDef</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">tok</span><span class="special">)</span>
@@ -160,15 +160,15 @@
 
         <span class="comment">//  associate the defined tokens with the lexer, at the same time 
 </span>        <span class="comment">//  defining the actions to be executed 
-</span>        <span class="identifier">start</span> <span class="special">=</span>  <span class="special">*(</span>   <span class="identifier">tok</span><span class="special">.</span><span class="identifier">word</span>      <span class="special">[</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">w</span><span class="special">),</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span> <span class="special">]</span>
-                  <span class="special">|</span>   <span class="identifier">lit</span><span class="special">(</span><span class="char">'\n'</span><span class="special">)</span>     <span class="special">[</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">l</span><span class="special">),</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">]</span> 
-                  <span class="special">|</span>   <span class="identifier">token</span><span class="special">(</span><span class="identifier">IDANY</span><span class="special">)</span>  <span class="special">[</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">]</span>
+</span>        <span class="identifier">start</span> <span class="special">=</span>  <span class="special">*(</span>   <span class="identifier">tok</span><span class="special">.</span><span class="identifier">word</span>          <span class="special">[</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">w</span><span class="special">),</span> <span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">size</span><span class="special">(</span><span class="identifier">_1</span><span class="special">)</span> <span class="special">]</span>
+                  <span class="special">|</span>   <span class="identifier">lit</span><span class="special">(</span><span class="char">'\n'</span><span class="special">)</span>         <span class="special">[</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">l</span><span class="special">),</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">]</span> 
+                  <span class="special">|</span>   <span class="identifier">qi</span><span class="special">::</span><span class="identifier">token</span><span class="special">(</span><span class="identifier">IDANY</span><span class="special">)</span>  <span class="special">[</span> <span class="special">++</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span> <span class="special">]</span>
                   <span class="special">)</span>
               <span class="special">;</span>
     <span class="special">}</span>
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">c</span><span class="special">,</span> <span class="identifier">w</span><span class="special">,</span> <span class="identifier">l</span><span class="special">;</span>      <span class="comment">// counter for characters, words, and lines
-</span>    <span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
+</span>    <span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
 <span class="special">};</span>
 </pre>
 <p>
@@ -176,7 +176,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id871519"></a>
+<a name="id872556"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -200,7 +200,7 @@
 <pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">argc</span><span class="special">,</span> <span class="keyword">char</span><span class="special">*</span> <span class="identifier">argv</span><span class="special">[])</span>
 <span class="special">{</span>
     <span class="comment">// create the lexer object instance needed to invoke the generator
-</span>    <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span> <span class="identifier">word_count</span><span class="special">;</span> <span class="comment">// the token definition
+</span>    <span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span> <span class="special">&gt;</span> <span class="identifier">word_count</span><span class="special">;</span> <span class="comment">// the token definition
 </span>
     <span class="comment">// open the output file, where the generated tokenizer function will be 
 </span>    <span class="comment">// written to
@@ -212,7 +212,7 @@
 </span>    <span class="comment">// The suffix "wc" used below results in a type lexertl::static_::lexer_wc
 </span>    <span class="comment">// to be generated, which needs to be passed as a template parameter to the 
 </span>    <span class="comment">// lexertl::static_lexer template (see word_count_static.cpp).
-</span>    <span class="keyword">return</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="string">"wc"</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
+</span>    <span class="keyword">return</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">generate_static</span><span class="special">(</span><span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">out</span><span class="special">,</span> <span class="string">"wc"</span><span class="special">)</span> <span class="special">?</span> <span class="number">0</span> <span class="special">:</span> <span class="special">-</span><span class="number">1</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -239,7 +239,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id871868"></a>
+<a name="id872920"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -267,12 +267,12 @@
         </p>
 <p>
           Otherwise the main program is not different from an equivalent program
-          using the dynamic model. This feature makes it really easy for instance
-          to develop the lexer in dynamic mode and to switch to the static mode after
-          the code has been stabilized. The simple generator application showed above
-          enables the integration of the code generator into any existing build process.
-          The following code snippet provides the overall main function, highlighting
-          the code to be changed.
+          using the dynamic model. This feature makes it easy to develop the lexer
+          in dynamic mode and to switch to the static mode after the code has been
+          stabilized. The simple generator application shown above enables the integration
+          of the code generator into any existing build process. The following code
+          snippet provides the overall main function, highlighting the code to be
+          changed.
         </p>
 <p>
           </p>
@@ -283,7 +283,7 @@
 <span class="special">{</span>
     <span class="comment">// Define the token type to be used: 'std::string' is available as the type 
 </span>    <span class="comment">// of the token value.
-</span>    <span class="keyword">typedef</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;</span>
+</span>    <span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">token</span><span class="special">&lt;</span>
         <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span>
     <span class="special">&gt;</span> <span class="identifier">token_type</span><span class="special">;</span>
 
@@ -297,8 +297,8 @@
 </span>    <span class="comment">// As we specified the suffix "wc" while generating the static tables we 
 </span>    <span class="comment">// need to pass the type lexertl::static_::lexer_wc as the second template
 </span>    <span class="comment">// parameter below (see word_count_generate.cpp).
-</span>    <span class="keyword">typedef</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;</span>
-        <span class="identifier">token_type</span><span class="special">,</span> <span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_</span><span class="special">::</span><span class="identifier">lexer_wc</span>
+</span>    <span class="keyword">typedef</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_lexer</span><span class="special">&lt;</span>
+        <span class="identifier">token_type</span><span class="special">,</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">static_</span><span class="special">::</span><span class="identifier">lexer_wc</span>
     <span class="special">&gt;</span> <span class="identifier">lexer_type</span><span class="special">;</span>
 
     <span class="comment">// Define the iterator type exposed by the lexer.
@@ -315,7 +315,7 @@
     <span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">last</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">first</span><span class="special">[</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">size</span><span class="special">()];</span>
 
     <span class="comment">// Parsing is done based on the the token stream, not the character stream.
-</span>    <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">tokenize_and_parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">g</span><span class="special">);</span>
+</span>    <span class="keyword">bool</span> <span class="identifier">r</span> <span class="special">=</span> <span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize_and_parse</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">word_count</span><span class="special">,</span> <span class="identifier">g</span><span class="special">);</span>
 
     <span class="keyword">if</span> <span class="special">(</span><span class="identifier">r</span><span class="special">)</span> <span class="special">{</span>    <span class="comment">// success
 </span>        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"lines: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">g</span><span class="special">.</span><span class="identifier">l</span> <span class="special">&lt;&lt;</span> <span class="string">", words: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">g</span><span class="special">.</span><span class="identifier">w</span> 
@@ -339,14 +339,14 @@
 <th align="left">Important</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            The generated code for the static lexer contains the token ids as these
-            have been assigned either explicitly by the programmer or implicitely
+            The generated code for the static lexer contains the token ids as they
+            have been assigned, either explicitly by the programmer or implicitely
             during lexer construction. It is your responsibility to make sure that
             all instances of a particular static lexer type use exactly the same
             token ids. This is ensured by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
-            is specified during construction of the static lexer instances (the constructor
-            of the lexer object has a seocnd default parameter allowing to designate
-            a starting token id to be used while assigning the ids to the token definitions).
+            is specified during construction of the static lexer instances. The constructor
+            of the lexer object has a second default parameter allowing it to designate
+            a starting token id to be used while assigning the ids to the token definitions.
           </p></td></tr>
 </table></div>
 </div>

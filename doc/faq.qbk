@@ -20,7 +20,7 @@ circumstances using this macro may lead to the aformentioned linker errors.
 
 __spirit__ allows you to define a preprocessor constant disabling the usage
 of `BOOST_MPL_ASSERT_MSG()`, while switching to `BOOST_STATIC_ASSERT()` instead.
-For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1 (either by 
+For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1. Do this by 
 adding 
 
     -DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1
@@ -29,10 +29,10 @@ on the compiler command line or by inserting a
 
     #define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG 1 
 
-into your code before any spirit headers get included).
+into your code before any Spirit headers get included.
 
 Using this trick has no adverse effects on any of the functionality of 
-__spirit__. The only change you might see while using this workaround are less
+__spirit__. The only change you might see while using this workaround is less
 verbose error messages generated from static_assert.
 
 
@@ -116,7 +116,7 @@ directory.
 The last bit missing is __boost_phoenix__ (which currently still lives under the 
 Spirit umbrella, but already has been accepted as a Boost library, so it will 
 move away). __boost_phoenix__ is a library allowing to write functional style C++, 
-which is interesting on itself, but as it initially has been developed for 
+which is interesting in itself, but as it initially has been developed for 
 Spirit, it is nicely integrated and very useful when it comes to writing 
 semantic actions. I think using the boost/spirit/include/phoenix_... headers 
 will be safe in the future as well, as we will probably redirect to the 
@@ -155,13 +155,13 @@ The definition of a __rule__ or __grammar__ may contain a skip parser type. If
 it does, it means that non-terminal can only be used with a skip parser of a
 compatible type. The error above arises when this is not the case, i.e.:
 
-* a non-terminal defined with a skip parser type is used without a skip parser
-  (for example, a rule with a skip parser type is used inside a `lexeme`
+* a non-terminal defined with a skip parser type is used without a skip parser;
+  for example, a rule with a skip parser type is used inside a `lexeme`
   directive, or a grammar with a skip parser type is used in `parse` instead of
-  `phrase_parse`),
-* or a non-terminal is used with a skip parser of an incompatible type
-  (for example, a rule defined with one skip parser type calls a second rule
-  defined with another, incompatible skip parser type).
+  `phrase_parse`,
+* or a non-terminal is used with a skip parser of an incompatible type;
+  for example, a rule defined with one skip parser type calls a second rule
+  defined with another, incompatible skip parser type.
 
 [note The same applies to __karma__, replacing 'skip parser' and `lexeme`
       by 'delimit generator' and `verbatim`. Similarily, corresponding error 

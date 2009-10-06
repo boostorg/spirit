@@ -18,8 +18,17 @@ have been possible, and helping with examples, advices, and suggestions on
 how to use Boost.Proto in the best possible way.
 
 [*Ben Hanson] for providing us with an early version of his Lexertl library, 
-which is proposed to be included into Boost (as Boost.Lexer), but at the time 
+which is proposed to be included into Boost (as Boost.Lexer). At the time 
 of this writing the Boost review for this library is still pending.
+
+[*Francois Barel] for his silent but steady work on making and keeping Spirit 
+compatible with all versions of gcc, older and newest ones. He not only 
+contributed subrules to Spirit V2.1, but always keeps an eye on the small 
+details which are so important to make a difference.
+
+[*Andreas Haberstroh] for proof reading the documentation and fixing those 
+non-native-speaker-quirks we managed to introduce into the first versions of 
+the documentation.
 
 __fixme__: Add more people
 

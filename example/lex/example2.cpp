@@ -32,15 +32,13 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
 using boost::phoenix::ref;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct example2_tokens : lexer<Lexer>
+struct example2_tokens : lex::lexer<Lexer>
 {
     example2_tokens()
     {
@@ -56,17 +54,17 @@ struct example2_tokens : lexer<Lexer>
         // interpreted literally and never as special regex characters. This is
         // done to be able to assign single characters the id of their character
         // code value, allowing to reference those as literals in Qi grammars.
-        this->self = token_def<>(',') | '!' | '.' | '?' | ' ' | '\n' | word;
+        this->self = lex::token_def<>(',') | '!' | '.' | '?' | ' ' | '\n' | word;
     }
 
-    token_def<> word;
+    lex::token_def<> word;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct example2_grammar : grammar<Iterator>
+struct example2_grammar : qi::grammar<Iterator>
 {
     template <typename TokenDef>
     example2_grammar(TokenDef const& tok)
@@ -106,7 +104,7 @@ struct example2_grammar : grammar<Iterator>
         BOOST_SPIRIT_DEBUG_NODE(statement);
     }
 
-    rule<Iterator> story, paragraph, command, question, statement;
+    qi::rule<Iterator> story, paragraph, command, question, statement;
     int paragraphs, commands, questions, statements;
 };
 
@@ -117,11 +115,11 @@ int main()
     typedef std::string::iterator base_iterator_type;
 
     // This is the token type to return from the lexer iterator
-    typedef lexertl::token<base_iterator_type> token_type;
+    typedef lex::lexertl::token<base_iterator_type> token_type;
 
     // This is the lexer type to use to tokenize the input.
     // Here we use the lexertl based lexer engine.
-    typedef lexertl::lexer<token_type> lexer_type;
+    typedef lex::lexertl::lexer<token_type> lexer_type;
 
     // This is the token definition type (derived from the given lexer type).
     typedef example2_tokens<lexer_type> example2_tokens;
@@ -147,7 +145,7 @@ int main()
 
     // Parsing is done based on the the token stream, not the character 
     // stream read from the input.
-    bool r = parse(iter, end, calc);
+    bool r = qi::parse(iter, end, calc);
 
     if (r && iter == end)
     {

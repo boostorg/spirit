@@ -82,4 +82,11 @@ namespace boost { namespace spirit { namespace qi
     };
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject>
+    struct has_semantic_action<qi::omit_directive<Subject> >
+      : mpl::false_ {};
+}}}
+
 #endif

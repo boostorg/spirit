@@ -14,6 +14,7 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/bool.hpp>
@@ -38,19 +39,19 @@ namespace boost { namespace spirit { namespace traits
         BOOST_MPL_HAS_XXX_TRAIT_DEF(reference)
     }
 
-    template <typename T>
-    struct is_container :
-        mpl::bool_<
+    template <typename T, typename Enable/* = void*/>
+    struct is_container 
+      : mpl::bool_<
             detail::has_value_type<T>::value &&
             detail::has_iterator<T>::value &&
             detail::has_size_type<T>::value &&
-            detail::has_reference<T>::value
-        >
+            detail::has_reference<T>::value>
     {};
 
    template <typename T>
    struct is_container<optional<T> > 
-     : is_container<T> {};
+     : is_container<T> 
+   {};
 
 #define BOOST_SPIRIT_IS_CONTAINER(z, N, data)                                 \
        is_container<BOOST_PP_CAT(T, N)>::value ||                             \
@@ -59,103 +60,13 @@ namespace boost { namespace spirit { namespace traits
    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
    struct is_container<variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
      : mpl::bool_<BOOST_PP_REPEAT(BOOST_VARIANT_LIMIT_TYPES
-         , BOOST_SPIRIT_IS_CONTAINER, _) false> {};
+         , BOOST_SPIRIT_IS_CONTAINER, _) false> 
+   {};
 
 #undef BOOST_SPIRIT_IS_CONTAINER
 
-    ///////////////////////////////////////////////////////////////////////////
-    namespace detail
-    {
-        template <typename T>
-        struct remove_value_const
-        {
-            typedef T type;
-        };
-
-        template <typename T>
-        struct remove_value_const<T const> : remove_value_const<T>
-        {};
-
-        template <typename F, typename S>
-        struct remove_value_const<std::pair<F, S> >
-        {
-            typedef typename remove_value_const<F>::type first_type;
-            typedef typename remove_value_const<S>::type second_type;
-            typedef std::pair<first_type, second_type> type;
-        };
-    }
-
     namespace result_of
     {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Container>
-        struct value
-        {
-            typedef typename detail::remove_value_const<
-                typename Container::value_type>::type
-            type;
-        };
-
-        // this will be instantiated if the optional holds a container
-        template <typename T>
-        struct value<optional<T> > : value<T> {};
-
-        // this will be instantiated if the variant holds a container
-        template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-        struct value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
-        {
-            typedef typename 
-                variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
-            types;
-            typedef typename 
-                mpl::find_if<types, is_container<mpl::_1> >::type 
-            iter;
-
-            typedef typename value<
-                typename mpl::if_<
-                    is_same<iter, typename mpl::end<types>::type>
-                  , unused_type, typename mpl::deref<iter>::type
-                >::type
-            >::type type;
-        };
-
-        template <>
-        struct value<unused_type>
-        {
-            typedef unused_type type;
-        };
-
-        template <>
-        struct value<unused_type const>
-        {
-            typedef unused_type type;
-        };
-
-        ///////////////////////////////////////////////////////////////////////
-        template <typename Container>
-        struct iterator
-        {
-            typedef typename Container::iterator type;
-        };
-
-        template <typename Container>
-        struct iterator<Container const>
-        {
-            typedef typename Container::const_iterator type;
-        };
-
-        template <>
-        struct iterator<unused_type>
-        {
-            typedef unused_type const* type;
-        };
-
-        template <>
-        struct iterator<unused_type const>
-        {
-            typedef unused_type const* type;
-        };
-
         ///////////////////////////////////////////////////////////////////////
         template <typename T>
         struct optional_value
@@ -167,6 +78,12 @@ namespace boost { namespace spirit { namespace traits
         struct optional_value<optional<T> >
         {
             typedef T type;
+        };
+
+        template <typename T>
+        struct optional_value<optional<T> const>
+        {
+            typedef T const type;
         };
 
         template <>
@@ -183,19 +100,195 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Container, typename T>
-    inline void push_back(Container& c, T const& val)
+    namespace detail
     {
-        c.insert(c.end(), val);
+        template <typename T>
+        struct remove_value_const
+        {
+            typedef T type;
+        };
+
+        template <typename T>
+        struct remove_value_const<T const> 
+          : remove_value_const<T>
+        {};
+
+        template <typename F, typename S>
+        struct remove_value_const<std::pair<F, S> >
+        {
+            typedef typename remove_value_const<F>::type first_type;
+            typedef typename remove_value_const<S>::type second_type;
+            typedef std::pair<first_type, second_type> type;
+        };
     }
 
-    template <typename Container, typename T>
-    inline void push_back(optional<Container>& c, T const& val)
+    ///////////////////////////////////////////////////////////////////////
+    //[customization_container_value_default
+    template <typename Container, typename Enable/* = void*/>
+    struct container_value
+      : detail::remove_value_const<typename Container::value_type>
+    {};
+    //]
+
+    // this will be instantiated if the optional holds a container
+    template <typename T>
+    struct container_value<optional<T> > 
+      : container_value<T> 
+    {};
+
+    // this will be instantiated if the variant holds a container
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct container_value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
     {
-        if (!c)
-            c = Container();
-        push_back(boost::get<Container>(c), val);
+        typedef typename 
+            variant<BOOST_VARIANT_ENUM_PARAMS(T)>::types 
+        types;
+        typedef typename 
+            mpl::find_if<types, is_container<mpl::_1> >::type 
+        iter;
+
+        typedef typename container_value<
+            typename mpl::if_<
+                is_same<iter, typename mpl::end<types>::type>
+              , unused_type, typename mpl::deref<iter>::type
+            >::type
+        >::type type;
+    };
+
+    //[customization_container_value_unused
+    template <>
+    struct container_value<unused_type>
+    {
+        typedef unused_type type;
+    };
+    //]
+
+    template <>
+    struct container_value<unused_type const>
+    {
+        typedef unused_type type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename Enable/* = void*/>
+    struct container_iterator
+    {
+        typedef typename Container::iterator type;
+    };
+
+    template <typename Container>
+    struct container_iterator<Container const>
+    {
+        typedef typename Container::const_iterator type;
+    };
+
+    template <>
+    struct container_iterator<unused_type>
+    {
+        typedef unused_type const* type;
+    };
+
+    template <>
+    struct container_iterator<unused_type const>
+    {
+        typedef unused_type const* type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T, typename Enable/* = void*/>
+    struct optional_attribute
+    {
+        typedef T const& type;
+
+        static type call(T const& val)
+        {
+            return val;
+        }
+
+        static bool is_valid(T const&)
+        {
+            return true;
+        }
+    };
+
+    template <typename T>
+    struct optional_attribute<optional<T> >
+    {
+        typedef T const& type;
+
+        static type call(optional<T> const& val)
+        {
+            return boost::get<T>(val);
+        }
+
+        static bool is_valid(optional<T> const& val)
+        {
+            return val;
+        }
+    };
+
+    template <typename T>
+    struct optional_attribute<optional<T const> >
+    {
+        typedef T const& type;
+
+        static type call(optional<T const> const& val)
+        {
+            return boost::get<T const>(val);
+        }
+
+        static bool is_valid(optional<T const> const& val)
+        {
+            return val;
+        }
+    };
+
+    template <typename T>
+    typename optional_attribute<T>::type
+    optional_value(T const& val)
+    {
+        return optional_attribute<T>::call(val);
     }
+
+    inline unused_type optional_value(unused_type)
+    {
+        return unused;
+    }
+
+    template <typename T>
+    bool has_optional_value(T const& val)
+    {
+        return optional_attribute<T>::is_valid(val);
+    }
+
+    inline bool has_optional_value(unused_type)
+    {
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename T>
+    void push_back(Container& c, T const& val);
+
+    template <typename Container, typename T, typename Enable/* = void*/>
+    struct push_back_container
+    {
+        static void call(Container& c, T const& val)
+        {
+            c.insert(c.end(), val);
+        }
+    };
+
+    template <typename Container, typename T>
+    struct push_back_container<optional<Container>, T>
+    {
+        static void call(optional<Container>& c, T const& val)
+        {
+            if (!c)
+                c = Container();
+            push_back(boost::get<Container>(c), val);
+        }
+    };
 
     namespace detail
     {
@@ -228,19 +321,27 @@ namespace boost { namespace spirit { namespace traits
     }
 
     template <BOOST_VARIANT_ENUM_PARAMS(typename T_), typename T>
-    inline void push_back(variant<BOOST_VARIANT_ENUM_PARAMS(T_)>& c
-      , T const& val)
+    struct push_back_container<variant<BOOST_VARIANT_ENUM_PARAMS(T_)>, T>
     {
-        apply_visitor(detail::push_back_visitor<T>(val), c);
+        static void call(variant<BOOST_VARIANT_ENUM_PARAMS(T_)>& c, T const& val)
+        {
+            apply_visitor(detail::push_back_visitor<T>(val), c);
+        }
+    };
+
+    template <typename Container, typename T>
+    void push_back(Container& c, T const& val)
+    {
+        push_back_container<Container, T>::call(c, val);
     }
 
     template <typename Container>
-    inline void push_back(Container&, unused_type)
+    void push_back(Container&, unused_type)
     {
     }
 
     template <typename T>
-    inline void push_back(unused_type, T const&)
+    void push_back(unused_type, T const&)
     {
     }
 
@@ -249,18 +350,29 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Container>
-    inline typename result_of::iterator<Container>::type
-    begin(Container& c)
+    template <typename Container, typename Enable/* = void*/>
+    struct begin_container 
     {
-        return c.begin();
+        typedef typename container_iterator<Container>::type type;
+        static type call(Container& c)
+        {
+            return c.begin();
+        }
+    };
+
+    namespace result_of
+    {
+        template <typename Container>
+        struct begin 
+          : traits::container_iterator<Container>
+        {};
     }
 
     template <typename Container>
-    inline typename result_of::iterator<Container const>::type
-    begin(Container const& c)
+    typename begin_container<Container>::type
+    begin(Container& c)
     {
-        return c.begin();
+        return begin_container<Container>::call(c);
     }
 
     inline unused_type const*
@@ -269,18 +381,30 @@ namespace boost { namespace spirit { namespace traits
         return &unused;
     }
 
-    template <typename Container>
-    inline typename result_of::iterator<Container>::type
-    end(Container& c)
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container, typename Enable/* = void*/>
+    struct end_container
     {
-        return c.end();
+        typedef typename container_iterator<Container>::type type;
+        static type call(Container& c)
+        {
+            return c.end();
+        }
+    };
+
+    namespace result_of
+    {
+        template <typename Container>
+        struct end
+          : traits::container_iterator<Container>
+        {};
     }
 
     template <typename Container>
-    inline typename result_of::iterator<Container const>::type
-    end(Container const& c)
+    inline typename end_container<Container>::type
+    end(Container& c)
     {
-        return c.end();
+        return end_container<Container>::call(c);
     }
 
     inline unused_type const*
@@ -290,17 +414,29 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Iterator>
-    inline typename boost::detail::iterator_traits<Iterator>::reference
-    deref(Iterator& it)
+    template <typename Iterator, typename Enable/* = void*/>
+    struct deref_iterator
     {
-        return *it;
+        typedef typename boost::detail::iterator_traits<Iterator>::reference type;
+        static type call(Iterator& it)
+        {
+            return *it;
+        }
+    };
+
+    namespace result_of
+    {
+        template <typename Iterator>
+        struct deref
+          : traits::deref_iterator<Iterator>
+        {};
     }
 
-    inline unused_type
-    deref(unused_type*)
+    template <typename Iterator>
+    typename deref_iterator<Iterator>::type
+    deref(Iterator& it)
     {
-        return unused;
+        return deref_iterator<Iterator>::call(it);
     }
 
     inline unused_type
@@ -310,43 +446,57 @@ namespace boost { namespace spirit { namespace traits
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Enable/* = void*/>
+    struct next_iterator
+    {
+        typedef Iterator type;
+        static type call(Iterator& it)
+        {
+            return ++it;
+        }
+    };
+
+    namespace result_of
+    {
+        template <typename Iterator>
+        struct next
+        {
+            typedef Iterator type;
+        };
+    }
+
     template <typename Iterator>
-    inline Iterator
+    typename next_iterator<Iterator>::type
     next(Iterator& it)
     {
-        return ++it;
+        return next_iterator<Iterator>::call(it);
     }
 
-    inline unused_type
-    next(unused_type*)
-    {
-        return &unused;
-    }
-
-    inline unused_type
+    inline unused_type const*
     next(unused_type const*)
     {
         return &unused;
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Iterator, typename Enable/* = void*/>
+    struct compare_iterators
+    {
+        static bool call(Iterator const& it1, Iterator const& it2)
+        {
+            return it1 == it2;
+        }
+    };
+
     template <typename Iterator>
-    inline bool
-    compare(Iterator const& it1, Iterator const& it2)
+    bool compare(Iterator& it1, Iterator& it2)
     {
-        return it1 == it2;
+        return compare_iterators<Iterator>::call(it1, it2);
     }
 
-    inline bool
-    compare(unused_type*, unused_type*)
+    inline bool compare(unused_type const*, unused_type const*)
     {
-        return true;
-    }
-
-    inline bool
-    compare(unused_type const*, unused_type const*)
-    {
-        return true;
+        return false;
     }
 
 }}}

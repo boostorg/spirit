@@ -11,6 +11,7 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/qi/numeric/bool.hpp>
 #include <boost/spirit/home/qi/numeric/int.hpp>
 #include <boost/spirit/home/qi/numeric/uint.hpp>
 #include <boost/spirit/home/qi/numeric/real.hpp>

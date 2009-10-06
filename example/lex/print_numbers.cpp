@@ -30,23 +30,21 @@
 #include "example.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition: We use the lexertl based lexer engine as the underlying 
 //                    lexer type.
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct print_numbers_tokens : lexer<Lexer>
+struct print_numbers_tokens : lex::lexer<Lexer>
 {
     // define tokens and associate it with the lexer, we set the lexer flags
     // not to match newlines while matching a dot, so we need to add the
     // '\n' explicitly below
     print_numbers_tokens()
-      : print_numbers_tokens::base_type(match_flags::match_not_dot_newline)
+      : print_numbers_tokens::base_type(lex::match_flags::match_not_dot_newline)
     {
-        this->self = token_def<int>("[0-9]*") | ".|\n";
+        this->self = lex::token_def<int>("[0-9]*") | ".|\n";
     }
 };
 
@@ -54,7 +52,7 @@ struct print_numbers_tokens : lexer<Lexer>
 //  Grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct print_numbers_grammar : grammar<Iterator>
+struct print_numbers_grammar : qi::grammar<Iterator>
 {
     print_numbers_grammar()
       : print_numbers_grammar::base_type(start)
@@ -62,13 +60,13 @@ struct print_numbers_grammar : grammar<Iterator>
         // we just know, that the token ids get assigned starting min_token_id
         // so, "[0-9]*" gets the id 'min_token_id' and ".|\n" gets the id
         // 'min_token_id+1'.
-        start =  *(   token(lex::min_token_id)  [ std::cout << _1  << "\n" ] 
-                  |   token(lex::min_token_id+1)
+        start =  *(   qi::token(lex::min_token_id)  [ std::cout << _1  << "\n" ] 
+                  |   qi::token(lex::min_token_id+1)
                   )
               ;
     }
 
-    rule<Iterator> start;
+    qi::rule<Iterator> start;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,11 +77,11 @@ int main(int argc, char* argv[])
 
     // the token type to be used, 'int' is available as the type of the token 
     // attribute and no lexer state is supported
-    typedef lexertl::token<base_iterator_type, boost::mpl::vector<int>
+    typedef lex::lexertl::token<base_iterator_type, boost::mpl::vector<int>
       , boost::mpl::false_> token_type;
 
     // lexer type
-    typedef lexertl::lexer<token_type> lexer_type;
+    typedef lex::lexertl::lexer<token_type> lexer_type;
 
     // iterator type exposed by the lexer 
     typedef print_numbers_tokens<lexer_type>::iterator_type iterator_type;
@@ -97,7 +95,7 @@ int main(int argc, char* argv[])
     // stream read from the input.
     std::string str (read_from_file(1 == argc ? "print_numbers.input" : argv[1]));
     base_iterator_type first = str.begin();
-    bool r = tokenize_and_parse(first, str.end(), print_tokens, print);
+    bool r = lex::tokenize_and_parse(first, str.end(), print_tokens, print);
 
     if (r) {
         std::cout << "-------------------------\n";

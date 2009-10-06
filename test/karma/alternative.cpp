@@ -79,6 +79,14 @@ main()
         BOOST_TEST(test_delimited("c ", int_ | char_ | lit('a'), v, char_(' ')));
     }
 
+//     {
+//         variant<int, std::string> v(10);
+//         BOOST_TEST(test("10", int_ | +char_, v));
+// 
+//         v = "abc";
+//         BOOST_TEST(test("abc", int_ | +char_, v));
+//     }
+
     {
         // if nothing matches, the first explicit alternative will be chosen
         variant<double, char const*> v (10.0);
@@ -119,6 +127,15 @@ main()
         v.push_back(5);
         v.push_back(5);
         BOOST_TEST(test("[5, 5, 5]", '[' << (int_ % ", ") << ']' | "[]", v));
+    }
+
+    {
+        boost::optional<int> v;
+        BOOST_TEST(test("error", int_ | "error" << omit[-int_], v));
+        BOOST_TEST(test("error", int_ | "error" << omit[int_], v));
+        v = 1;
+        BOOST_TEST(test("1", int_ | "error" << omit[-int_], v));
+        BOOST_TEST(test("1", int_ | "error" << omit[int_], v));
     }
 
     return boost::report_errors();

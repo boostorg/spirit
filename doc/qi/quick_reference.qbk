@@ -44,9 +44,9 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section Qi Parsers]
+[section:qi_parsers Qi Parsers]
 
-[section char]
+[section:char Character Parsers]
 
 [table
     [[Expression]               [Attribute]       [Description]]
@@ -85,7 +85,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section numeric]
+[section:numeric Numeric Parsers]
 
 [table
     [[Expression]           [Attribute]                 [Description]]
@@ -107,7 +107,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section string]
+[section:string String Parsers]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -136,7 +136,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section auxiliary]
+[section:auxiliary Auxiliary Parsers]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -153,7 +153,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section binary]
+[section:binary Binary Parsers]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -170,7 +170,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section directive]
+[section:directive Parser Directives]
 
 [table 
     [[Expression]                   [Attribute]                     [Description]]
@@ -179,17 +179,17 @@ pages and pages of reference doumentation.
     [[__qi_omit__`[a]`]             [`Unused`]                      [Ignores the attribute type of `a`]]
     [[__qi_raw__`[a]`]              [__boost_iterator_range__`<I>`] [Presents the transduction of `a` as an iterator range]]
 
-    [[__qi_repeat__`[a]`]           [`vector<A>`]                   [Repeat `a` zero or more times]]
-    [[__qi_repeat__`(N)[a]`]       	[`vector<A>`]                   [Repeat `a` `N` times]]
-    [[__qi_repeat__`(N, M)[a]`]    	[`vector<A>`]                   [Repeat `a` `N` to `M` times]]
-    [[__qi_repeat__`(N, inf)[a]`]  	[`vector<A>`]                   [Repeat `a` `N` or more times]]
+    [[[qi_repeat `repeat[a]`]]      [`vector<A>`]                   [Repeat `a` zero or more times]]
+    [[[qi_repeat `(N)[a]`]]         [`vector<A>`]                   [Repeat `a` `N` times]]
+    [[[qi_repeat `(N, M)[a]`]]      [`vector<A>`]                   [Repeat `a` `N` to `M` times]]
+    [[[qi_repeat `(N, inf)[a]`]]    [`vector<A>`]                   [Repeat `a` `N` or more times]]
 
-    [[__qi_skip__`[a]`]            	[`A`]                           [Re-establish the skipper that got inhibited by lexeme]]
-    [[__qi_skip__`(p)[a]`]         	[`A`]                           [Use `p` as a skipper for parsing `a`]]
+    [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme]]
+    [[__qi_skip__`(p)[a]`]          [`A`]                           [Use `p` as a skipper for parsing `a`]]
 ]
 
 [endsect]
-[section operator]
+[section:operator Parser Operators]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -215,7 +215,7 @@ pages and pages of reference doumentation.
 ]
 
 [endsect]
-[section action]
+[section:action Parser Semantic Actions]
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
@@ -359,11 +359,11 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
                                                 `A1, A2, A3` are optional and can be specified in any order.
                                                 `name` is an optional string that gives the rule
                                                 its name, useful for debugging and error handling.]]
-    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`. `boost::shared_ptr` semantics.]]
-    [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
+    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
+    [[`r = r2;`]                                [Assign rule `r2` to `r`.]]
     [[`r.alias()`]                              [return an alias of `r`. The alias is a parser that
                                                 holds a reference to `r`. Reference semantics.]]
-    [[`r.copy()`]                               [Get a copy of `r`. `boost::shared_ptr` semantics.]]
+    [[`r.copy()`]                               [Get a copy of `r`.]]
     [[`r.name(name)`]                           [Naming a rule]]
     [[`r.name()`]                               [Getting the name of a rule]]
     [[debug(r)]                                 [Debug rule `r`]]

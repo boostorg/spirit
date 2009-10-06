@@ -106,6 +106,10 @@ namespace boost { namespace spirit { namespace traits
     template <typename Elements, typename Attribute>
     struct pass_attribute<qi::sequential_or<Elements>, Attribute>
       : wrap_if_not_tuple<Attribute> {};
+
+    template <typename Elements>
+    struct has_semantic_action<qi::sequential_or<Elements> >
+      : nary_has_semantic_action<Elements> {};
 }}}
 
 #endif

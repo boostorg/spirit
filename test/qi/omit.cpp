@@ -41,9 +41,9 @@ main()
 
     {
         // omit[] means we don't receive the attribute
-        vector<char> attr;
+        char attr;
         BOOST_TEST((test_attr("abc", omit[char_] >> omit['b'] >> char_, attr)));
-        BOOST_TEST((at_c<0>(attr) == 'c'));
+        BOOST_TEST((attr == 'c'));
     }
 
     {
@@ -89,15 +89,8 @@ main()
     }
 
     {
-        // omit[] means we don't receive the attribute
-        vector<char> attr;
-        BOOST_TEST((test_attr("a hello c", char_ >> "hello" >> omit[char_], attr, space)));
-        BOOST_TEST((at_c<0>(attr) == 'a'));
-    }
-
-    {
         // if only one node in a sequence is left (all the others are omitted),
-        // then we should also allow "naked" attributes (unwraped in a tuple)
+        // then we need "naked" attributes (not wraped in a tuple)
         int attr;
         BOOST_TEST((test_attr("a 123 c", omit['a'] >> int_ >> omit['c'], attr, space)));
         BOOST_TEST((attr == 123));

@@ -37,7 +37,6 @@ int main()
 {
     using namespace boost::spirit;
     using namespace boost::spirit::qi;
-    using namespace boost::spirit::lex;
     using namespace spirit_test;
 
     typedef std::string::iterator base_iterator_type;

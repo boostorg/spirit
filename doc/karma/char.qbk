@@ -263,6 +263,12 @@ parameter described above. For example
     [[`~cg`]                [Attribute of `cg`]]
 ]
 
+[note  In addition to their usual attribute of type `Ch` all listed generators 
+       accept an instance of a `boost::optional<Ch>` as well. If the 
+       `boost::optional<>` is initialized (holds a value) the generators behave 
+       as if their attribute was an instance of `Ch` and emit the value stored
+       in the `boost::optional<>`. Otherwise the generators will fail.]
+
 [heading Complexity]
 
 [:O(1)]
@@ -451,6 +457,12 @@ Possible values for `ns` are described in the section __karma_char_encoding_name
 [:All listed character class generators can take any attribute `Ch`. All 
   character class generators (except `space`) require an attribute and will
   fail compiling otherwise.]
+
+[note  In addition to their usual attribute of type `Ch` all listed generators 
+       accept an instance of a `boost::optional<Ch>` as well. If the 
+       `boost::optional<>` is initialized (holds a value) the generators behave 
+       as if their attribute was an instance of `Ch` and emit the value stored
+       in the `boost::optional<>`. Otherwise the generators will fail.]
 
 [heading Complexity]
 

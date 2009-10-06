@@ -59,7 +59,7 @@ namespace boost { namespace spirit { namespace qi
           , Context& context, Skipper const& skipper
           , Attribute& attr) const
         {
-            qi::detail::assign_to(value_, attr);
+            spirit::traits::assign_to(value_, attr);
             return true;        // never consume any input, succeed always
         }
 

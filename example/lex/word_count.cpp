@@ -51,8 +51,6 @@
 //[wcp_namespaces
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
 //]
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -68,7 +66,7 @@ enum tokenids
 
 //[wcp_token_definition
 template <typename Lexer>
-struct word_count_tokens : lexer<Lexer>
+struct word_count_tokens : lex::lexer<Lexer>
 {
     word_count_tokens()
     {
@@ -91,7 +89,7 @@ struct word_count_tokens : lexer<Lexer>
     }
 
     // the token 'word' exposes the matched string as its parser attribute
-    token_def<std::string> word;
+    lex::token_def<std::string> word;
 };
 //]
 
@@ -100,7 +98,7 @@ struct word_count_tokens : lexer<Lexer>
 ///////////////////////////////////////////////////////////////////////////////
 //[wcp_grammar_definition
 template <typename Iterator>
-struct word_count_grammar : grammar<Iterator>
+struct word_count_grammar : qi::grammar<Iterator>
 {
     template <typename TokenDef>
     word_count_grammar(TokenDef const& tok)
@@ -110,15 +108,15 @@ struct word_count_grammar : grammar<Iterator>
         using boost::phoenix::ref;
         using boost::phoenix::size;
 
-        start =  *(   tok.word      [++ref(w), ref(c) += size(_1)]
-                  |   lit('\n')     [++ref(c), ++ref(l)] 
-                  |   token(IDANY)  [++ref(c)]
+        start =  *(   tok.word          [++ref(w), ref(c) += size(_1)]
+                  |   lit('\n')         [++ref(c), ++ref(l)] 
+                  |   qi::token(IDANY)  [++ref(c)]
                   )
               ;
     }
 
     std::size_t c, w, l;
-    rule<Iterator> start;
+    qi::rule<Iterator> start;
 };
 //]
 
@@ -128,12 +126,12 @@ int main(int argc, char* argv[])
 {
 /*<  Define the token type to be used: `std::string` is available as the 
      type of the token attribute 
->*/  typedef lexertl::token<
+>*/  typedef lex::lexertl::token<
         char const*, boost::mpl::vector<std::string>
     > token_type;
 
 /*<  Define the lexer type to use implementing the state machine
->*/  typedef lexertl::lexer<token_type> lexer_type;
+>*/  typedef lex::lexertl::lexer<token_type> lexer_type;
 
 /*<  Define the iterator type exposed by the lexer type
 >*/  typedef word_count_tokens<lexer_type>::iterator_type iterator_type;
@@ -152,7 +150,7 @@ int main(int argc, char* argv[])
      stream read from the input. The function `tokenize_and_parse()` wraps
      the passed iterator range `[first, last)` by the lexical analyzer and 
      uses its exposed iterators to parse the toke stream.
->*/  bool r = tokenize_and_parse(first, last, word_count, g);
+>*/  bool r = lex::tokenize_and_parse(first, last, word_count, g);
 
     if (r) {
         std::cout << "lines: " << g.l << ", words: " << g.w 

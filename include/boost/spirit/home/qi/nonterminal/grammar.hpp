@@ -13,6 +13,7 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/assert_msg.hpp>
 #include <boost/spirit/home/qi/domain.hpp>
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
 #include <boost/spirit/home/qi/reference.hpp>
@@ -53,6 +54,20 @@ namespace boost { namespace spirit { namespace qi
         : proto::extends<terminal, base_type>(terminal::make(start.alias()))
         , name_(name_)
         {}
+
+        // This constructor is used to catch if the start rule is not 
+        // compatible with the grammar. 
+        template <typename Iterator_, typename T1_, typename T2_, typename T3_>
+        grammar(
+            rule<Iterator_, T1_, T2_, T3_> const&
+          , std::string const& = "unnamed-grammar")
+        {
+            // If you see the assertion below failing then the start rule 
+            // passed to the constructor of the grammar is not compatible with 
+            // the grammar (i.e. it uses different template parameters).
+            BOOST_SPIRIT_ASSERT_MSG(false, incompatible_start_rule, 
+                (rule<Iterator_, T1_, T2_, T3_>));
+        }
 
         std::string name() const
         {

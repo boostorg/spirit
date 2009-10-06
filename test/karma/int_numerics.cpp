@@ -21,6 +21,7 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <limits>
 #include "test.hpp"
@@ -78,6 +79,28 @@ struct test_minmax
     // action tests
         BOOST_TEST(test(expected_maxval, gen[_1 = val(maxval)]));
         BOOST_TEST(test(expected_minval, gen[_1 = val(minval)]));
+
+    // optional tests
+        boost::optional<T> optmin, optmax(maxval);
+
+        BOOST_TEST(!test("", gen, optmin));
+        BOOST_TEST(!test("", gen(minval), optmin));
+
+        optmin = minval;
+        BOOST_TEST(test(expected_minval, gen, optmin));
+        BOOST_TEST(test(expected_maxval, gen, optmax));
+        BOOST_TEST(test(expected_minval, gen(minval), optmin));
+        BOOST_TEST(test(expected_maxval, gen(maxval), optmax));
+
+    // Phoenix expression tests (only supported while including
+    // karma_phoenix_attributes.hpp
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("1", gen, phoenix::val(1)));
+
+        T val = 1;
+        BOOST_TEST(test("1", gen, phoenix::ref(val)));
+        BOOST_TEST(test("2", gen, ++phoenix::ref(val)));
     }
 };
 

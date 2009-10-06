@@ -12,6 +12,8 @@
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
+#include <boost/spirit/include/karma_nonterminal.hpp>
+#include <boost/spirit/include/karma_string.hpp>
 
 #include "test.hpp"
 
@@ -62,5 +64,11 @@ main()
             verbatim[delimit[char_('a') << 'b']], char_('*')));
     }
 
+    {
+        karma::rule<output_iterator<char>::type, BOOST_TYPEOF(", ")> r = "abc";
+        BOOST_TEST(test("abc, ", delimit(", ")[r]));
+    }
+
     return boost::report_errors();
 }
+

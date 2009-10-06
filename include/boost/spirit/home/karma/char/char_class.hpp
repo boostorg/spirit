@@ -40,6 +40,18 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma
 {
+    // hoist the char classification namespaces into karma sub-namespaces of 
+    // the same name
+    namespace ascii { using namespace boost::spirit::ascii; }
+    namespace iso8859_1 { using namespace boost::spirit::iso8859_1; }
+    namespace standard { using namespace boost::spirit::standard; }
+    namespace standard_wide { using namespace boost::spirit::standard_wide; }
+
+    // Import the standard namespace into the karma namespace. This allows 
+    // for default handling of all character/string related operations if not 
+    // prefixed with a character set namespace.
+    using namespace boost::spirit::standard;
+
     ///////////////////////////////////////////////////////////////////////////
     //
     //  char_class
@@ -113,7 +125,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Attribute, typename CharParam, typename Context>
         bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
-            ch = attr;
+            ch = CharParam(attr);
 
             using spirit::char_class::classify;
             return classify<char_encoding>::is(tag::space(), attr);

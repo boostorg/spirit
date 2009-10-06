@@ -113,7 +113,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename Attribute, typename CharParam, typename Context>
         bool test(Attribute const& attr, CharParam& ch, Context&) const
         {
-            ch = attr;
+            ch = CharParam(attr);
             return true;
         }
 

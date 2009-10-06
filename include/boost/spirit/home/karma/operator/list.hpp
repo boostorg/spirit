@@ -1,5 +1,5 @@
-//  Copyright (c) 2001-2009 Joel de Guzman
 //  Copyright (c) 2001-2009 Hartmut Kaiser
+//  Copyright (c) 2001-2009 Joel de Guzman
 //
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -36,11 +36,33 @@ namespace boost { namespace spirit { namespace karma
     template <typename Left, typename Right>
     struct list : binary_generator<list<Left, Right> >
     {
+    private:
+        // iterate over the given container until its exhausted or the embedded
+        // (left) generator succeeds
+        template <
+            typename OutputIterator, typename Context, typename Delimiter
+          , typename Iterator>
+        bool generate_left(OutputIterator& sink, Context& ctx
+          , Delimiter const& d, Iterator& it, Iterator& end) const
+        {
+            while (!traits::compare(it, end))
+            {
+                if (left.generate(sink, ctx, d, traits::deref(it)))
+                    return true;
+                traits::next(it);
+            }
+            return false;
+        }
+
+    public:
         typedef Left left_type;
         typedef Right right_type;
 
         typedef mpl::int_<
-            left_type::properties::value | right_type::properties::value
+            left_type::properties::value 
+          | right_type::properties::value 
+          | generator_properties::buffering 
+          | generator_properties::counting
         > properties;
 
         // Build a std::vector from the LHS's attribute. Note
@@ -49,12 +71,12 @@ namespace boost { namespace spirit { namespace karma
         template <typename Context, typename Iterator>
         struct attribute
           : traits::build_std_vector<
-                typename traits::attribute_of<Left, Context, Iterator>::type
-            >
+                typename traits::attribute_of<Left, Context, Iterator>::type>
         {};
 
         list(Left const& left, Right const& right)
-          : left(left), right(right) {}
+          : left(left), right(right) 
+        {}
 
         template <
             typename OutputIterator, typename Context, typename Delimiter
@@ -62,23 +84,31 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            typedef typename traits::result_of::iterator<
+            typedef typename traits::container_iterator<
                 typename add_const<Attribute>::type
             >::type iterator_type;
 
             iterator_type it = traits::begin(attr);
             iterator_type end = traits::end(attr);
 
-            bool result = !traits::compare(it, end);
-            if (result && left.generate(sink, ctx, d, traits::deref(it)))
+            if (generate_left(sink, ctx, d, it, end))
             {
-                for (traits::next(it); result && !traits::compare(it, end);
-                     traits::next(it))
+                for (traits::next(it); !traits::compare(it, end); traits::next(it))
                 {
-                    result = right.generate(sink, ctx, d, unused) &&
-                             left.generate(sink, ctx, d, traits::deref(it));
+                    // wrap the given output iterator as generate_left might fail
+                    detail::enable_buffering<OutputIterator> buffering(sink);
+                    {
+                        detail::disable_counting<OutputIterator> nocounting(sink);
+
+                        if (!right.generate(sink, ctx, d, unused))
+                            return false;     // shouldn't happen
+
+                        if (!generate_left(sink, ctx, d, it, end))
+                            break;            // return true as one item succeeded
+                    }
+                    buffering.buffer_copy();
                 }
-                return result;
+                return true;
             }
             return false;
         }
@@ -101,6 +131,14 @@ namespace boost { namespace spirit { namespace karma
     struct make_composite<proto::tag::modulus, Elements, Modifiers>
       : make_binary_composite<Elements, list>
     {};
+
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Left, typename Right>
+    struct has_semantic_action<karma::list<Left, Right> >
+      : binary_has_semantic_action<Left, Right> {};
 
 }}}
 

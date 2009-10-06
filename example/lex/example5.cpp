@@ -35,16 +35,13 @@
 #include "example.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
-
 using boost::phoenix::val;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition base, defines all tokens for the base grammar below
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Lexer>
-struct example5_base_tokens : lexer<Lexer>
+struct example5_base_tokens : lex::lexer<Lexer>
 {
 protected:
     // this lexer is supposed to be used as a base type only
@@ -60,19 +57,19 @@ public:
         while_ = "while";
 
         // associate the tokens and the token set with the lexer
-        this->self += token_def<>('(') | ')' | '{' | '}' | '=' | ';' | constant;
+        this->self += lex::token_def<>('(') | ')' | '{' | '}' | '=' | ';' | constant;
         this->self += if_ | while_ | identifier;
 
         // define the whitespace to ignore (spaces, tabs, newlines and C-style 
         // comments)
         this->self("WS")
-            =   token_def<>("[ \\t\\n]+") 
+            =   lex::token_def<>("[ \\t\\n]+") 
             |   "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/"
             ;
     }
 
     // these tokens have no attribute
-    token_def<lex::omit> if_, while_;
+    lex::token_def<lex::omit> if_, while_;
 
     // The following two tokens have an associated attribute type, 'identifier'
     // carries a string (the identifier name) and 'constant' carries the 
@@ -87,8 +84,8 @@ public:
     // possible. Moreover, token instances are constructed once by the lexer
     // library. From this point on tokens are passed by reference only, 
     // avoiding them being copied around.
-    token_def<std::string> identifier;
-    token_def<unsigned int> constant;
+    lex::token_def<std::string> identifier;
+    lex::token_def<unsigned int> constant;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,7 +93,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator, typename Lexer>
 struct example5_base_grammar 
-  : grammar<Iterator, in_state_skipper<Lexer> >
+  : qi::grammar<Iterator, qi::in_state_skipper<Lexer> >
 {
     template <typename TokenDef>
     example5_base_grammar(TokenDef const& tok)
@@ -148,15 +145,15 @@ struct example5_base_grammar
             ;
     }
 
-    typedef in_state_skipper<Lexer> skipper_type;
+    typedef qi::in_state_skipper<Lexer> skipper_type;
 
-    rule<Iterator, skipper_type> program, block, statement;
-    rule<Iterator, skipper_type> assignment, if_stmt;
-    rule<Iterator, skipper_type> while_stmt;
+    qi::rule<Iterator, skipper_type> program, block, statement;
+    qi::rule<Iterator, skipper_type> assignment, if_stmt;
+    qi::rule<Iterator, skipper_type> while_stmt;
 
     //  the expression is the only rule having a return value
     typedef boost::variant<unsigned int, std::string> expression_type;
-    rule<Iterator, expression_type(), skipper_type>  expression;
+    qi::rule<Iterator, expression_type(), skipper_type>  expression;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -182,7 +179,7 @@ struct example5_tokens : example5_base_tokens<Lexer>
     }
 
     // this token has no attribute
-    token_def<lex::omit> else_;
+    lex::token_def<lex::omit> else_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -221,12 +218,12 @@ int main()
     // least one token attribute type you'll have to list all attribute types 
     // used for token_def<> declarations in the token definition class above,  
     // otherwise compilation errors will occur.
-    typedef lexertl::token<
+    typedef lex::lexertl::token<
         base_iterator_type, boost::mpl::vector<unsigned int, std::string> 
     > token_type;
 
     // Here we use the lexertl based lexer engine.
-    typedef lexertl::lexer<token_type> lexer_type;
+    typedef lex::lexertl::lexer<token_type> lexer_type;
 
     // This is the token definition type (derived from the given lexer type).
     typedef example5_tokens<lexer_type> example5_tokens;
@@ -256,7 +253,7 @@ int main()
     // be explicitly wrapped inside a state directive, switching the lexer 
     // state for the duration of skipping whitespace.
     std::string ws("WS");
-    bool r = phrase_parse(iter, end, calc, in_state(ws)[tokens.self]);
+    bool r = qi::phrase_parse(iter, end, calc, qi::in_state(ws)[tokens.self]);
 
     if (r && iter == end)
     {

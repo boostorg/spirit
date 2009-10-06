@@ -75,7 +75,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         bool dispatch_attribute_element(Component const& component, mpl::false_) const
         {
             // get the next value to generate from container
-            if (!traits::compare(iter, traits::end(attr)) &&
+            typename traits::container_iterator<Attr>::type end = 
+                traits::end(attr);
+            if (!traits::compare(iter, end) &&
                 !f(component, traits::deref(iter))) 
             {
                 // needs to return false as long as everything is ok
@@ -92,7 +94,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_attribute_element(Component const& component, mpl::true_) const
         {
-            bool result = f(component, make_iterator_range(iter, traits::end(attr)));
+            typename traits::container_iterator<Attr>::type end = 
+                traits::end(attr);
+            bool result = f(component, make_iterator_range(iter, end));
             if (result)
                 iter = traits::end(attr);     // adjust current iter to the end 
             return result;
@@ -130,7 +134,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             // of the current element (component). If this is has no attribute
             // we shouldn't use an element of the container but unused_type 
             // instead
-            typedef traits::is_not_unused<
+            typedef traits::not_is_unused<
                 typename traits::attribute_of<Component, context_type>::type
             > predicate;
 
@@ -154,7 +158,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool operator()(Component const& component) const
         {
-            typedef typename traits::result_of::value<Attr>::type rhs;
+            typedef typename traits::container_value<Attr>::type rhs;
             typedef typename traits::attribute_of<
                 Component, context_type>::type lhs_attribute;
 
@@ -164,7 +168,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
         F f;
         Attr const& attr;
-        mutable typename traits::result_of::iterator<Attr>::type iter;
+        mutable typename traits::container_iterator<Attr>::type iter;
     };
 
     // Utility function to make a pass_container

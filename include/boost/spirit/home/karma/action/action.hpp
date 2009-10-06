@@ -20,8 +20,8 @@
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 
+#include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/identity.hpp>
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -54,13 +54,12 @@ namespace boost { namespace spirit { namespace karma
             typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
             // create a attribute if none is supplied
-            // this creates a _copy_ of the parameter because the semantic
-            // action likely will change parts of this
+            // this creates a _copy_ of the attribute because the semantic
+            // action will likely change parts of this
             typename make_attribute::value_type attr = make_attribute::call(attr_);
 
             // call the function, passing the attribute, the context and a bool 
             // flag that the client can set to false to fail generating.
-            // The client can return false to fail parsing.
             return traits::action_dispatch<Subject>()(f, attr, ctx) && 
                    subject.generate(sink, ctx, d, attr);
         }
@@ -113,5 +112,12 @@ namespace boost { namespace spirit
         }
     };
 }}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Action>
+    struct has_semantic_action<karma::action<Subject, Action> >
+      : mpl::true_ {};
+}}}
 
 #endif

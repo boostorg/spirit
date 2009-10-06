@@ -58,7 +58,7 @@ namespace boost { namespace spirit { namespace qi
             Iterator i = first;
             if (subject.parse(i, last, context, skipper, unused))
             {
-                detail::assign_to(first, i, attr);
+                spirit::traits::assign_to(first, i, attr);
                 first = i;
                 return true;
             }
@@ -87,6 +87,13 @@ namespace boost { namespace spirit { namespace qi
             return result_type(subject);
         }
     };
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject>
+    struct has_semantic_action<qi::raw_directive<Subject> >
+      : unary_has_semantic_action<Subject> {};
 }}}
 
 #endif

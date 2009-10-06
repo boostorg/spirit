@@ -191,4 +191,12 @@ namespace boost { namespace spirit { namespace karma
 
 }}} 
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Elements>
+    struct has_semantic_action<karma::sequence<Elements> >
+      : nary_has_semantic_action<Elements> {};
+
+}}}
+
 #endif

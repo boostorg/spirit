@@ -69,7 +69,7 @@ namespace boost { namespace spirit { namespace lex
             //  or unused_type (if omit has been specified).
             typedef typename Iterator::base_iterator_type iterator_type;
             typedef typename mpl::if_<
-                traits::is_not_unused<Attribute>
+                traits::not_is_unused<Attribute>
               , typename mpl::if_<
                     is_same<Attribute, lex::omit>, unused_type, Attribute
                 >::type
@@ -98,7 +98,7 @@ namespace boost { namespace spirit { namespace lex
 
                 token_type &t = *first;
                 if (token_id_ == t.id() && token_state_ == t.state()) {
-                    qi::detail::assign_to(t, attr);
+                    spirit::traits::assign_to(t, attr);
                     ++first;
                     return true;
                 }

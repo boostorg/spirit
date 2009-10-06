@@ -13,6 +13,8 @@
 #endif
 
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/has_semantic_action.hpp>
+#include <boost/spirit/home/support/attributes_fwd.hpp>
 #include <boost/spirit/home/support/detail/as_variant.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/fusion/include/transform.hpp>
@@ -23,6 +25,7 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
@@ -41,11 +44,13 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename T>
     struct not_is_variant
-      : mpl::true_ {};
+      : mpl::true_ 
+    {};
 
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
-      : mpl::false_ {};
+      : mpl::false_ 
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // attribute_of
@@ -71,7 +76,7 @@ namespace boost { namespace spirit { namespace traits
     {
         template <typename Component>
         struct apply
-          : is_not_unused<typename
+          : not_is_unused<typename
                 attribute_of<Component, Context, Iterator>::type>
         {};
     };
@@ -85,7 +90,7 @@ namespace boost { namespace spirit { namespace traits
     // a single value in any case (even if it actually already is a fusion
     // sequence in its own).
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Component, typename Attribute, typename Enable = void>
+    template <typename Component, typename Attribute, typename Enable/* = void*/>
     struct pass_attribute
     {
         typedef fusion::vector1<Attribute&> type;
@@ -164,7 +169,7 @@ namespace boost { namespace spirit { namespace traits
     // (filter all unused attributes from the list)
     template <typename Sequence>
     struct filter_unused_attributes
-      : fusion::result_of::filter_if<Sequence, is_not_unused<mpl::_> >
+      : fusion::result_of::filter_if<Sequence, not_is_unused<mpl::_> >
     {};
 
     ///////////////////////////////////////////////////////////////////////////
@@ -302,16 +307,152 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // transform_attribute
+    //
+    // Sometimes the user needs to transform the attribute types for certain
+    // attributes. This template can be used as a customization point, where 
+    // the user is able specify specific transformation rules for any attribute
+    // type.
+    //
+    // The default attribute transformation (where the exposed attribute type is
+    // different from the required transformed attribute type) relies on the
+    // convertibility 'exposed type' --> 'transformed type', which has to exist 
+    // in order to successfully execute the pre transform step.
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Exposed, typename Transformed, typename Enable/* = void*/>
+    struct transform_attribute
+    {
+        typedef Transformed type;
+
+        static Transformed pre(Exposed& val) { return Transformed(val); }
+        static Transformed pre(Exposed const& val) { return Transformed(val); }
+
+        // By default do post transformation only if types are convertible, 
+        // otherwise we assume no post transform is required (i.e. the user 
+        // utilizes nview et.al.). 
+        static void post(Exposed&, Transformed const&, mpl::false_) 
+        {
+        }
+        static void post(Exposed& val, Transformed const& attr, mpl::true_) 
+        {
+            assign_to(attr, val); 
+        }
+
+        static void post(Exposed& val, Transformed const& attr) 
+        { 
+            post(val, attr, is_convertible<Transformed, Exposed>());
+        }
+    };
+
+    template <typename Exposed, typename Transformed>
+    struct transform_attribute<Exposed const, Transformed>
+    {
+        typedef Transformed type;
+        static Transformed pre(Exposed const& val) { return Transformed(val); }
+        // Karma only, no post() required
+    };
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute const, Attribute>
+    {
+        typedef Attribute const& type;
+        static Attribute const& pre(Attribute const& val) { return val; }
+        // Karma only, no post() required
+    };
+
+    // reference types need special handling
+    template <typename Exposed, typename Transformed>
+    struct transform_attribute<Exposed&, Transformed>
+      : transform_attribute<Exposed, Transformed>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute&, Attribute>
+    {
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute&, Attribute const&) {}
+    };
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute const&, Attribute>
+      : transform_attribute<Attribute const, Attribute>
+    {};
+
+    // unused_type needs some special handling as well
+    template <>
+    struct transform_attribute<unused_type, unused_type>
+    {
+        typedef unused_type type;
+        static unused_type pre(unused_type) { return unused; }
+        static void post(unused_type, unused_type) {}
+    };
+
+    template <>
+    struct transform_attribute<unused_type const, unused_type>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<unused_type, Attribute>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<unused_type const, Attribute>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute, unused_type>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    template <typename Attribute>
+    struct transform_attribute<Attribute const, unused_type>
+      : transform_attribute<unused_type, unused_type>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    namespace result_of
+    {
+        template <typename Exposed, typename Transformed>
+        struct pre_transform
+          : traits::transform_attribute<Exposed, Transformed>
+        {};
+    }
+
+    template <typename Transformed, typename Exposed>
+    typename traits::result_of::pre_transform<Exposed, Transformed>::type
+    pre_transform(Exposed& attr)
+    {
+        return transform_attribute<Exposed, Transformed>::pre(attr);
+    }
+
+    template <typename Transformed, typename Exposed>
+    typename traits::result_of::pre_transform<Exposed const, Transformed>::type
+    pre_transform(Exposed const& attr)
+    {
+        return transform_attribute<Exposed const, Transformed>::pre(attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Exposed, typename Transformed>
+    void post_transform(Exposed& dest, Transformed const& attr)
+    {
+        return transform_attribute<Exposed, Transformed>::post(dest, attr);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     // make_attribute
     //
-    // All parsers and generators have specific attribute or parameter types.
-    // Spirit parsers are passed an attribute and Spirit generators
-    // are passed a parameter; these are either references to the expected
-    // type, or an unused_type -- to flag that we do not care about the
-    // attribute/parameter. For semantic actions, however, we need to have a
-    // real value to pass to the semantic action. If the client did not
-    // provide one, we will have to synthesize the value. This class
-    // takes care of that.
+    // All parsers and generators have specific attribute types.
+    // Spirit parsers and generators are passed an attribute; these are either 
+    // references to the expected type, or an unused_type -- to flag that we do 
+    // not care about the attribute. For semantic actions, however, we need to 
+    // have a real value to pass to the semantic action. If the client did not
+    // provide one, we will have to synthesize the value. This class takes care 
+    // of that.
     ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute
@@ -341,25 +482,17 @@ namespace boost { namespace spirit { namespace traits
         {
             return value; // just pass the one provided
         }
-
-        template <typename T>
-        static T const& call(T const& value)
-        {
-            return value; // just pass the one provided
-        }
     };
 
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute<Attribute&, ActualAttribute>
       : make_attribute<Attribute, ActualAttribute>
-    {
-    };
+    {};
 
     template <typename Attribute, typename ActualAttribute>
     struct make_attribute<Attribute const&, ActualAttribute>
       : make_attribute<Attribute, ActualAttribute>
-    {
-    };
+    {};
 
     template <typename ActualAttribute>
     struct make_attribute<unused_type, ActualAttribute>
@@ -433,13 +566,19 @@ namespace boost { namespace spirit { namespace traits
     // sequence
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct one_element_sequence : mpl::false_ {};
+    struct one_element_sequence 
+      : mpl::false_ 
+    {};
 
     template <typename T>
-    struct one_element_sequence<fusion::vector1<T> > : mpl::true_ {};
+    struct one_element_sequence<fusion::vector1<T> > 
+      : mpl::true_ 
+    {};
 
     template <typename T>
-    struct one_element_sequence<fusion::vector<T> > : mpl::true_ {};
+    struct one_element_sequence<fusion::vector<T> > 
+      : mpl::true_ 
+    {};
 
     ///////////////////////////////////////////////////////////////////////////
     // clear
@@ -447,7 +586,7 @@ namespace boost { namespace spirit { namespace traits
     // Clear data efficiently
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
-    struct is_container;
+    void clear(T& val);
 
     namespace detail
     {
@@ -490,31 +629,46 @@ namespace boost { namespace spirit { namespace traits
         }
     }
 
+    template <typename T, typename Enable/* = void*/>
+    struct clear_value
+    {
+        static void call(T& val)
+        {
+            detail::clear_impl(val, typename is_container<T>::type());
+        }
+    };
+
+    // optionals
+    template <typename T>
+    struct clear_value<optional<T> >
+    {
+        static void call(optional<T>& val)
+        {
+            if (val)
+                clear(*val);
+        }
+    };
+
+    // variants
+    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
+    struct clear_value<variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+    {
+        static void call(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& val)
+        {
+            apply_visitor(detail::clear_visitor(), val);
+        }
+    };
+
     // main dispatch
     template <typename T>
     void clear(T& val)
     {
-        detail::clear_impl(val, typename is_container<T>::type());
+        clear_value<T>::call(val);
     }
 
     // for unused
     inline void clear(unused_type)
     {
-    }
-
-    // optionals
-    template <typename T>
-    void clear(optional<T>& val)
-    {
-        if (val)
-            clear(*val);
-    }
-
-    // variants
-    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    void clear(variant<BOOST_VARIANT_ENUM_PARAMS(T)>& var)
-    {
-        apply_visitor(detail::clear_visitor(), var);
     }
 
 }}}

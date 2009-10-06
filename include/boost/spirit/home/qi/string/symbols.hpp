@@ -204,7 +204,7 @@ namespace boost { namespace spirit { namespace qi
             if (value_type* val_ptr
                 = lookup->find(first, last, Filter()))
             {
-                detail::assign_to(*val_ptr, attr);
+                spirit::traits::assign_to(*val_ptr, attr);
                 return true;
             }
             return false;

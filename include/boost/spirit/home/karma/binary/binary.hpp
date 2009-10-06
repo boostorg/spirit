@@ -19,7 +19,9 @@
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/mpl/or.hpp>
@@ -181,13 +183,16 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // Even if the endian types are not pod's (at least not in the
             // definition of C++03) it seems to be safe to assume they are.
             // This allows us to treat them as a sequence of consecutive bytes.
             boost::integer::endian<
                 endian, typename karma::detail::integer<bits>::type, bits
             > p;
-            p = attr;
+            p = traits::extract_from(attr);
             unsigned char const* bytes =
                 reinterpret_cast<unsigned char const*>(&p);
 
@@ -239,7 +244,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+          , Attribute const&) const
         {
             // Even if the endian types are not pod's (at least not in the
             // definition of C++03) it seems to be safe to assume they are

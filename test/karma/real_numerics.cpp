@@ -14,6 +14,11 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_phoenix_attributes.hpp>
+
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_statement.hpp>
 
 #include <limits>
 #include "test.hpp"
@@ -522,5 +527,26 @@ int main()
         BOOST_TEST(test("-2.2250738585072014e-308", 
             bordercase(-2.2250738585072014e-308)));     // -DBL_MIN
     }
+
+    {
+        boost::optional<double> v;
+        BOOST_TEST(!test("", double_, v));
+        BOOST_TEST(!test("", double_(1.0), v));
+
+        v = 1.0;
+        BOOST_TEST(test("1.0", double_, v));
+        BOOST_TEST(test("1.0", double_(1.0), v));
+    }
+
+    {   // Phoenix expression tests (include karma_phoenix_attributes.hpp)
+        namespace phoenix = boost::phoenix;
+
+        BOOST_TEST(test("1.0", double_, phoenix::val(1.0)));
+
+        double d = 1.2;
+        BOOST_TEST(test("1.2", double_, phoenix::ref(d)));
+        BOOST_TEST(test("2.2", double_, ++phoenix::ref(d)));
+    }
+
     return boost::report_errors();
 }

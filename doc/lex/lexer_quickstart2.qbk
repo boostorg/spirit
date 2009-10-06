@@ -8,13 +8,13 @@
 
 [section:lexer_quickstart2 Quickstart 2 - A better word counter using __lex__]
 
-People knowing __flex__ will probably complain about the example from the 
+People familiar with  __flex__ will probably complain about the example from the 
 section __sec_lex_quickstart_1__ as being overly complex and not being 
 written to leverage the possibilities provided by this tool. In particular the
 previous example did not directly use the lexer actions to count the lines, 
 words, and characters. So the example provided in this step of the tutorial will 
-show how to use semantic actions in __lex__. Even if it still  
-will allow to count text elements only it introduces other new concepts and 
+show how to use semantic actions in __lex__. Even though this examples still 
+counts textual elements, the purpose is to introduce new concepts and 
 configuration options along the lines (for the full example code 
 see here: [@../../example/lex/word_count_lexer.cpp word_count_lexer.cpp]).
 

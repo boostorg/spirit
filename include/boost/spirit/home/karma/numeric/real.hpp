@@ -15,12 +15,14 @@
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/char.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/real_policies.hpp>
 #include <boost/spirit/home/karma/numeric/detail/real_utils.hpp>
@@ -30,31 +32,25 @@
 
 namespace boost { namespace spirit 
 {
-    namespace tag
-    {
-        template <typename T, typename Policies>
-        struct real_tag 
-        {
-            real_tag() {}
-            real_tag(Policies const& policies)
-              : policies_(policies) {}
-
-            Policies policies_;
-        };
-    }
-
     namespace karma
     {
+        ///////////////////////////////////////////////////////////////////////
+        // forward declaration only
+        template <typename T>
+        struct real_policies;
+
         ///////////////////////////////////////////////////////////////////////
         // This one is the class that the user can instantiate directly in 
         // order to create a customized real generator
         template <typename T = double, typename Policies = real_policies<T> >
         struct real_generator
-          : spirit::terminal<tag::real_tag<T, Policies> > 
+          : spirit::terminal<tag::stateful_tag<Policies, tag::double_, T> > 
         {
+            typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
+
             real_generator() {}
             real_generator(Policies const& p)
-              : spirit::terminal<tag::real_tag<T, Policies> >(p) {}
+              : spirit::terminal<tag_type>(p) {}
         };
     }
 
@@ -117,20 +113,22 @@ namespace boost { namespace spirit
 
     ///////////////////////////////////////////////////////////////////////////
     // enables custom real generator
-    template <typename T, typename Policy>
-    struct use_terminal<karma::domain, tag::real_tag<T, Policy> >
+    template <typename T, typename Policies>
+    struct use_terminal<karma::domain
+          , tag::stateful_tag<Policies, tag::double_, T> >
       : mpl::true_ {};
 
-    template <typename T, typename Policy, typename A0>
+    template <typename T, typename Policies, typename A0>
     struct use_terminal<karma::domain
-      , terminal_ex<tag::real_tag<T, Policy>, fusion::vector1<A0> >
-    > : mpl::true_ {};
+          , terminal_ex<tag::stateful_tag<Policies, tag::double_, T>
+          , fusion::vector1<A0> > >
+      : mpl::true_ {};
 
     // enables *lazy* custom real generator
-    template <typename T, typename Policy>
+    template <typename T, typename Policies>
     struct use_lazy_terminal<
         karma::domain
-      , tag::real_tag<T, Policy>
+      , tag::stateful_tag<Policies, tag::double_, T>
       , 1 // arity
     > : mpl::true_ {};
 
@@ -173,8 +171,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
+            if (!traits::has_optional_value(attr))
+                return false;       // fail if it's an uninitialized optional
+
             typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
-            return inserter_type::call(sink, attr, p_) &&
+            return inserter_type::call(sink, traits::extract_from(attr), p_) &&
                    karma::delimit_out(sink, d);    // always do post-delimiting
         }
 
@@ -227,8 +228,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
-            if (n_ != attr)
+            if (!traits::has_optional_value(attr) || 
+                n_ != traits::extract_from(attr))
+            {
                 return false;
+            }
 
             typedef real_inserter<T, Policies, CharEncoding, Tag> inserter_type;
             return inserter_type::call(sink, n_, p_) &&
@@ -257,112 +261,107 @@ namespace boost { namespace spirit { namespace karma
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    // Generator generators: make_xxx function (objects)
+    ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
-        // extract policies if this is a real_tag
-        template <typename Policies>
-        struct get_policies
+        template <typename T, typename Modifiers
+          , typename Policies = real_policies<T> >
+        struct make_real
         {
-            template <typename Tag>
-            static Policies call(Tag) { return Policies(); }
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
 
-            template <typename T>
-            static Policies const& call(tag::real_tag<T, Policies> const& p) 
-            { return p.policies_; }
+            typedef any_real_generator<
+                T, Policies
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
+                using spirit::detail::get_stateful_data;
+                return result_type(get_stateful_data<tag_type>::call(term));
+            }
         };
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Generator generators: make_xxx function (objects)
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, typename Modifiers, typename Policies = real_policies<T> >
-    struct make_real
-    {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef any_real_generator<
-            T, Policies
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
-        {
-            using karma::detail::get_policies;
-            return result_type(get_policies<Policies>::call(term));
-        }
-    };
-
     template <typename Modifiers>
     struct make_primitive<tag::float_, Modifiers> 
-      : make_real<float, Modifiers> {};
+      : detail::make_real<float, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::double_, Modifiers> 
-      : make_real<double, Modifiers> {};
+      : detail::make_real<double, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::long_double, Modifiers> 
-      : make_real<long double, Modifiers> {};
+      : detail::make_real<long double, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Policy, typename Modifiers>
-    struct make_primitive<tag::real_tag<T, Policy>, Modifiers> 
-      : make_real<T, Modifiers, Policy> {};
+    template <typename T, typename Policies, typename Modifiers>
+    struct make_primitive<
+            tag::stateful_tag<Policies, tag::double_, T>, Modifiers> 
+      : detail::make_real<T, Modifiers, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        typename T, typename Modifiers, typename Policies = real_policies<T> >
-    struct make_real_direct
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef literal_real_generator<
-            T, Policies
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , false
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
+        template <typename T, typename Modifiers
+          , typename Policies = real_policies<T> >
+        struct make_real_direct
         {
-            return result_type(fusion::at_c<0>(term.args)
-              , karma::detail::get_policies<Policies>::call(term.term));
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_real_generator<
+                T, Policies
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , false
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                typedef tag::stateful_tag<Policies, tag::double_, T> tag_type;
+                using spirit::detail::get_stateful_data;
+                return result_type(T(fusion::at_c<0>(term.args))
+                  , get_stateful_data<tag_type>::call(term.term));
+            }
+        };
+    }
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::float_, fusion::vector1<A0> >, Modifiers>
-      : make_real_direct<float, Modifiers> {};
+      : detail::make_real_direct<float, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::double_, fusion::vector1<A0> >, Modifiers>
-      : make_real_direct<double, Modifiers> {};
+      : detail::make_real_direct<double, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::long_double, fusion::vector1<A0> >, Modifiers>
-      : make_real_direct<long double, Modifiers> {};
+      : detail::make_real_direct<long double, Modifiers> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Policy, typename A0, typename Modifiers>
+    template <typename T, typename Policies, typename A0, typename Modifiers>
     struct make_primitive<
-        terminal_ex<tag::real_tag<T, Policy>, fusion::vector1<A0> >
+        terminal_ex<tag::stateful_tag<Policies, tag::double_, T>
+          , fusion::vector1<A0> >
           , Modifiers>
-      : make_real_direct<T, Modifiers, Policy> {};
+      : detail::make_real_direct<T, Modifiers, Policies> {};
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -386,7 +385,7 @@ namespace boost { namespace spirit { namespace karma
             template <typename T_>
             result_type operator()(T_ i, unused_type) const
             {
-                return result_type(i);
+                return result_type(T(i));
             }
         };
     }

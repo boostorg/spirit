@@ -16,11 +16,13 @@
 #include <boost/spirit/home/support/string_traits.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/karma/auxiliary/lazy.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/numeric/detail/numeric_utils.hpp>
 #include <boost/fusion/include/at.hpp>
@@ -241,8 +243,12 @@ namespace boost { namespace spirit { namespace karma
         generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr)
         {
-            return int_inserter<Radix, CharEncoding, Tag>::call(sink, attr) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+            if (!traits::has_optional_value(attr))
+                return false;       // fail if it's an uninitialized optional
+
+            return int_inserter<Radix, CharEncoding, Tag>::
+                        call(sink, traits::extract_from(attr)) &&
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         // this int has no Attribute attached, it needs to have been
@@ -297,11 +303,13 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , Attribute const& attr) const
         {
-            if (n_ != attr)
+            if (!traits::has_optional_value(attr) || 
+                n_ != traits::extract_from(attr))
+            {
                 return false;
-
+            }
             return int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         // A uint(1U) without any associated attribute just emits its 
@@ -311,7 +319,7 @@ namespace boost { namespace spirit { namespace karma
           , unused_type) const
         {
             return int_inserter<Radix, CharEncoding, Tag>::call(sink, n_) &&
-                   karma::delimit_out(sink, d);      // always do post-delimiting
+                   delimit_out(sink, d);      // always do post-delimiting
         }
 
         template <typename Context>
@@ -326,129 +334,135 @@ namespace boost { namespace spirit { namespace karma
     ///////////////////////////////////////////////////////////////////////////
     // Generator generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Modifiers, unsigned Radix = 10>
-    struct make_uint
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef any_uint_generator<
-            T
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , Radix
-        > result_type;
-
-        result_type operator()(unused_type, unused_type) const
+        template <typename T, typename Modifiers, unsigned Radix = 10>
+        struct make_uint
         {
-            return result_type();
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef any_uint_generator<
+                T
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , Radix
+            > result_type;
+
+            result_type operator()(unused_type, unused_type) const
+            {
+                return result_type();
+            }
+        };
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
     struct make_primitive<tag::ushort_, Modifiers> 
-      : make_uint<unsigned short, Modifiers> {};
+      : detail::make_uint<unsigned short, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::uint_, Modifiers> 
-      : make_uint<unsigned int, Modifiers> {};
+      : detail::make_uint<unsigned int, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::ulong_, Modifiers> 
-      : make_uint<unsigned long, Modifiers> {};
+      : detail::make_uint<unsigned long, Modifiers> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::bin, Modifiers> 
-      : make_uint<unsigned, Modifiers, 2> {};
+      : detail::make_uint<unsigned, Modifiers, 2> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::oct, Modifiers> 
-      : make_uint<unsigned, Modifiers, 8> {};
+      : detail::make_uint<unsigned, Modifiers, 8> {};
 
     template <typename Modifiers>
     struct make_primitive<tag::hex, Modifiers> 
-      : make_uint<unsigned, Modifiers, 16> {};
+      : detail::make_uint<unsigned, Modifiers, 16> {};
 
 #ifdef BOOST_HAS_LONG_LONG
     template <typename Modifiers>
     struct make_primitive<tag::ulong_long, Modifiers> 
-      : make_uint<boost::ulong_long_type, Modifiers> {};
+      : detail::make_uint<boost::ulong_long_type, Modifiers> {};
 #endif
 
     template <typename T, unsigned Radix, typename Modifiers>
     struct make_primitive<tag::uint_tag<T, Radix>, Modifiers>
-      : make_uint<T, Modifiers, Radix> {};
+      : detail::make_uint<T, Modifiers, Radix> {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename Modifiers, unsigned Radix = 10>
-    struct make_uint_direct
+    namespace detail
     {
-        static bool const lower = 
-            has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
-        static bool const upper = 
-            has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
-
-        typedef literal_uint_generator<
-            T
-          , typename spirit::detail::get_encoding<
-                Modifiers, unused_type, lower || upper>::type
-          , typename detail::get_casetag<Modifiers, lower || upper>::type
-          , Radix, false
-        > result_type;
-
-        template <typename Terminal>
-        result_type operator()(Terminal const& term, unused_type) const
+        template <typename T, typename Modifiers, unsigned Radix = 10>
+        struct make_uint_direct
         {
-            return result_type(fusion::at_c<0>(term.args));
-        }
-    };
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_uint_generator<
+                T
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , Radix, false
+            > result_type;
+
+            template <typename Terminal>
+            result_type operator()(Terminal const& term, unused_type) const
+            {
+                return result_type(fusion::at_c<0>(term.args));
+            }
+        };
+    }
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::ushort_, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<unsigned short, Modifiers> {};
+      : detail::make_uint_direct<unsigned short, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::uint_, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<unsigned int, Modifiers> {};
+      : detail::make_uint_direct<unsigned int, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::ulong_, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<unsigned long, Modifiers> {};
+      : detail::make_uint_direct<unsigned long, Modifiers> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::bin, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<unsigned, Modifiers, 2> {};
+      : detail::make_uint_direct<unsigned, Modifiers, 2> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::oct, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<unsigned, Modifiers, 8> {};
+      : detail::make_uint_direct<unsigned, Modifiers, 8> {};
 
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::hex, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<unsigned, Modifiers, 16> {};
+      : detail::make_uint_direct<unsigned, Modifiers, 16> {};
 
 #ifdef BOOST_HAS_LONG_LONG
     template <typename Modifiers, typename A0>
     struct make_primitive<
         terminal_ex<tag::ulong_long, fusion::vector1<A0> >, Modifiers>
-      : make_uint_direct<boost::ulong_long_type, Modifiers> {};
+      : detail::make_uint_direct<boost::ulong_long_type, Modifiers> {};
 #endif
 
     template <typename T, unsigned Radix, typename A0, typename Modifiers>
     struct make_primitive<
         terminal_ex<tag::uint_tag<T, Radix>, fusion::vector1<A0> >
           , Modifiers>
-      : make_uint_direct<T, Modifiers, Radix> {};
+      : detail::make_uint_direct<T, Modifiers, Radix> {};
 
     namespace detail
     {

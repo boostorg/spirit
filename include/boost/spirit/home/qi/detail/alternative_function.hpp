@@ -12,6 +12,7 @@
 #endif
 
 #include <boost/spirit/home/qi/domain.hpp>
+#include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/variant.hpp>
@@ -32,31 +33,23 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool call(Component const& component, mpl::true_) const
+        bool operator()(Component const& component) const
         {
             // if Attribute is not a variant, then pass it as-is
             return component.parse(first, last, context, skipper, attr);
         }
 
-        template <typename Component>
-        bool call(Component const& component, mpl::false_) const
+        template <typename Component, typename T>
+        bool operator()(Component const& component, mpl::identity<T>) const
         {
-            // if Attribute is a variant, then create an attribute for
-            // the Component with its expected type.
-            typename traits::attribute_of<Component, Context, Iterator>::type val;
+            // if Attribute is a variant, then create an attribute.
+            T val;
             if (component.parse(first, last, context, skipper, val))
             {
-                attr = val;
+                traits::assign_to(val, attr);
                 return true;
             }
             return false;
-        }
-
-        template <typename Component>
-        bool operator()(Component const& component) const
-        {
-            // return true if the parser succeeds
-            return call(component, spirit::traits::not_is_variant<Attribute>());
         }
 
         Iterator& first;

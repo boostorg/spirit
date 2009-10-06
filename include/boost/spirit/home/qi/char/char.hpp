@@ -119,9 +119,10 @@ namespace boost { namespace spirit { namespace qi
         };
 
         template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context&) const
+        bool test(CharParam ch_, Context&) const
         {
-            return this->ch == char_type(ch);
+            return traits::ischar<CharParam, char_encoding>::call(ch_) && 
+                   ch == char_type(ch_);
         }
 
         template <typename Context>
@@ -156,9 +157,13 @@ namespace boost { namespace spirit { namespace qi
         };
 
         template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context&) const
+        bool test(CharParam ch_, Context&) const
         {
-            return this->lo == char_type(ch) || this->hi == char_type(ch);
+            if (!traits::ischar<CharParam, char_encoding>::call(ch_))
+                return false;
+
+            char_type ch = char_type(ch_);  // optimize for token based parsing
+            return this->lo == ch || this->hi == ch;
         }
 
         template <typename Context>
@@ -184,9 +189,13 @@ namespace boost { namespace spirit { namespace qi
           : from(from), to(to) {}
 
         template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context&) const
+        bool test(CharParam ch_, Context&) const
         {
-            return !(char_type(ch) < from) && !(to < char_type(ch));
+            if (!traits::ischar<CharParam, char_encoding>::call(ch_))
+                return false;
+
+            char_type ch = char_type(ch_);  // optimize for token based parsing
+            return !(ch < from) && !(to < ch);
         }
 
         template <typename Context>
@@ -216,10 +225,14 @@ namespace boost { namespace spirit { namespace qi
         {}
 
         template <typename CharParam, typename Context>
-        bool test(CharParam ch, Context&) const
+        bool test(CharParam ch_, Context&) const
         {
-            return (!(char_type(ch) < from_lo) && !(to_lo < char_type(ch)))
-                || (!(char_type(ch) < from_hi) && !(to_hi < char_type(ch)))
+            if (!traits::ischar<CharParam, char_encoding>::call(ch_))
+                return false;
+
+            char_type ch = char_type(ch_);  // optimize for token based parsing
+            return (!(ch < from_lo) && !(to_lo < ch))
+                || (!(ch < from_hi) && !(to_hi < ch))
             ;
         }
 
@@ -282,7 +295,8 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch, Context&) const
         {
-            return chset.test(char_type(ch));
+            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+                   chset.test(char_type(ch));
         }
 
         template <typename Context>
@@ -341,7 +355,8 @@ namespace boost { namespace spirit { namespace qi
         template <typename CharParam, typename Context>
         bool test(CharParam ch, Context&) const
         {
-            return chset.test(char_type(char_type(ch)));
+            return traits::ischar<CharParam, char_encoding>::call(ch) && 
+                   chset.test(char_type(ch));
         }
 
         template <typename Context>

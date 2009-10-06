@@ -215,13 +215,21 @@ main()
 
     { // auto rules tests
 
-        char ch;
+        char ch = '\0';
         rule<char const*, char()> a;
         a %= alpha;
 
         BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
         BOOST_TEST(ch == 'x');
+        ch = '\0';
+        BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
+        BOOST_TEST(ch == 'z');
 
+        a = alpha;    // test deduced auto rule behavior
+        ch = '\0';
+        BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
+        BOOST_TEST(ch == 'x');
+        ch = '\0';
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
         BOOST_TEST(ch == 'z');
     }
@@ -239,7 +247,18 @@ main()
         BOOST_TEST(test("a,b,c,d,e,f", r[phx::ref(s) = _1]));
         BOOST_TEST(s == "abcdef");
 
+        r = char_ >> *(',' >> char_);    // test deduced auto rule behavior
+        s.clear();
+        BOOST_TEST(test("a,b,c,d,e,f", r[phx::ref(s) = _1]));
+        BOOST_TEST(s == "abcdef");
+
         r %= char_ >> char_ >> char_ >> char_ >> char_ >> char_;
+        s.clear();
+        BOOST_TEST(test("abcdef", r[phx::ref(s) = _1]));
+        BOOST_TEST(s == "abcdef");
+
+        r = char_ >> char_ >> char_ >> char_ >> char_ >> char_;
+        s.clear();
         BOOST_TEST(test("abcdef", r[phx::ref(s) = _1]));
         BOOST_TEST(s == "abcdef");
     }
@@ -255,14 +274,24 @@ main()
 
     { // auto rules aliasing tests
 
-        char ch;
+        char ch = '\0';
         rule<char const*, char()> a, b;
         a %= b;
         b %= alpha;
 
         BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
         BOOST_TEST(ch == 'x');
+        ch = '\0';
+        BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
+        BOOST_TEST(ch == 'z');
 
+        a = b;            // test deduced auto rule behavior
+        b = alpha;
+
+        ch = '\0';
+        BOOST_TEST(test("x", a[phx::ref(ch) = _1]));
+        BOOST_TEST(ch == 'x');
+        ch = '\0';
         BOOST_TEST(test_attr("z", a, ch)); // attribute is given.
         BOOST_TEST(ch == 'z');
     }
@@ -352,6 +381,12 @@ main()
         rule<char const*, std::string()> text;
         text %= +(!char_(')') >> !char_('>') >> char_);
         std::string attr;
+        BOOST_TEST(test_attr("x", text, attr));
+        BOOST_TEST(attr == "x");
+
+        // test deduced auto rule behavior
+        text = +(!char_(')') >> !char_('>') >> char_);
+        attr.clear();
         BOOST_TEST(test_attr("x", text, attr));
         BOOST_TEST(attr == "x");
     }

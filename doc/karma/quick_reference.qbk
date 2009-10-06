@@ -25,8 +25,9 @@ pages and pages of reference doumentation.
     [[`attrib`]         [A attribute value]]
     [[`Attrib`]         [An attribute type]]
     [[`b`]              [A boolean expression]]
+    [[`B`]              [A type to be interpreted as in boolean expressions]]
     [[`fg`]             [A (lazy generator) function with signature `G(Unused, Context)`]]
-    [[`fa`]             [A (semantic action) function with signature `void(Attr&, Context, bool&)`.
+    [[`fa`]             [A (semantic action) function with signature `void(Attrib&, Context, bool&)`.
                         The third parameter is a boolean flag that can be set to false to
                         force the generator to fail. Both `Context` and the boolean flag are
                         optional.]]
@@ -112,7 +113,7 @@ See here for more information about __karma_char__.
 
 [section:string String Generators]
 
-See here for more information about __karma_string__.
+See here for more information about [karma_string String Generators].
 
 [table 
     [[Expression]                   [Attribute] [Description]]
@@ -222,9 +223,29 @@ See here for more information about __karma_numeric__.
 
 [endsect]
 
+[section:boolean Boolean Generators]
+
+[table 
+    [[Expression]               [Attribute]     [Description]]
+    [[[boolean `bool_`]]        [`bool`]        [Generate a boolean]]
+    [[[boolean `bool_(b)`]]     [`bool`]        [Generate `b` as a boolean, 
+                                                 if an attribute is supplied it must match]]
+    [[[boolean ``bool_generator<
+    B, Policies
+>()``]]
+                                [`B`]           [Generate a boolean of type `B`]]
+    [[[boolean ``bool_generator<
+    B, Policies
+>()(b)``]]
+                                [`B`]           [Generate a boolean `b` as a `B`, 
+                                                 if an attribute is supplied it must match]]
+]
+
+[endsect]
+
 [section:stream Stream Generators]
 
-See here for more information about __karma_stream__.
+See here for more information about [karma_stream Stream Generators].
 
 [table 
     [[Expression]           [Attribute]     [Description]]
@@ -281,6 +302,7 @@ See here for more information about __karma_auxiliary__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
+    [[[karma_attr_cast `attr_cast<Attrib>(g)`]] [`Attrib`]  [Invokes `g` while supplying an attribute of type `Attrib`.]]
     [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
     [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
     [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]
@@ -333,47 +355,56 @@ See here for more information about __karma_directive__.
 
 [table 
     [[Expression]           [Attribute]           [Description]]
-    [[[karma_upperlower `lower[a]`]]        [`A`] [Generate `a` as lower case]]
-    [[[karma_upperlower `upper[a]`]]        [`A`] [Generate `a` as upper case]]
+    [[[karma_upperlower `lower`]`[a]`]        [`A`] [Generate `a` as lower case]]
+    [[[karma_upperlower `upper`]`[a]`]        [`A`] [Generate `a` as upper case]]
 
-    [[[karma_align `left_align[a]`]]        [`A`] [Generate `a` left aligned in column of width 
+    [[[karma_align `left_align`]`[a]`]        [`A`] [Generate `a` left aligned in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
-    [[[karma_align `left_align(num)[a]`]]   [`A`] [Generate `a` left aligned in column of width `num`]]
-    [[[karma_align `left_align(num, g)[a]`]][`A`] [Generate `a` left aligned in column of width `num`
+    [[[karma_align `left_align`]`(num)[a]`]   [`A`] [Generate `a` left aligned in column of width `num`]]
+    [[[karma_align `left_align`]`(num, g)[a]`][`A`] [Generate `a` left aligned in column of width `num`
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[[karma_align `center[a]`]]            [`A`] [Generate `a` centered in column of width 
+    [[[karma_align `center`]`[a]`]            [`A`] [Generate `a` centered in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
-    [[[karma_align `center(num)[a]`]]       [`A`] [Generate `a` centered in column of width `num`]]
-    [[[karma_align `center(num, g)[a]`]]    [`A`] [Generate `a` centered in column of width `num`
+    [[[karma_align `center`]`(num)[a]`]       [`A`] [Generate `a` centered in column of width `num`]]
+    [[[karma_align `center`]`(num, g)[a]`]    [`A`] [Generate `a` centered in column of width `num`
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[[karma_align `right_align[a]`]]       [`A`] [Generate `a` right aligned in column of width 
+    [[[karma_align `right_align`]`[a]`]       [`A`] [Generate `a` right aligned in column of width 
                                                  `BOOST_KARMA_DEFAULT_FIELD_LENGTH`]]
-    [[[karma_align `right_align(num)[a]`]]  [`A`] [Generate `a` right aligned in column of width `num`]]
-    [[[karma_align `right_align(num, g)[a]`]][`A`][Generate `a` right aligned in column of width `num`
+    [[[karma_align `right_align`]`(num)[a]`]  [`A`] [Generate `a` right aligned in column of width `num`]]
+    [[[karma_align `right_align`]`(num, g)[a]`][`A`][Generate `a` right aligned in column of width `num`
                                                  while using `g` to generate the necesssary
                                                  padding]]
 
-    [[[karma_maxwidth `maxwidth[a]`]]       [`A`] [Generate `a` truncated to column of width 
+    [[[karma_maxwidth `maxwidth`]`[a]`]       [`A`] [Generate `a` truncated to column of width 
                                                    `BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH`]]
-    [[[karma_maxwidth `maxwidth(num)[a]`]]  [`A`] [Generate `a` truncated to column of width `num`]]
+    [[[karma_maxwidth `maxwidth`]`(num)[a]`]  [`A`] [Generate `a` truncated to column of width `num`]]
 
-    [[[karma_repeat `repeat[a]`]]             [`vector<A>`] [Repeat `a` zero or more times]]
-    [[[karma_repeat `repeat(num)[a]`]]        [`vector<A>`] [Repeat `a` `num` times]]
-    [[[karma_repeat `repeat(num1, num2)[a]`]] [`vector<A>`] [Repeat `a` `num1` to `num2` times]]
-    [[[karma_repeat `repeat(num, inf)[a]`]]   [`vector<A>`] [Repeat `a` `num` or more times]]
+    [[[karma_repeat `repeat`]`[a]`]             [`vector<A>`] [Repeat `a` zero or more times]]
+    [[[karma_repeat `repeat`]`(num)[a]`]        [`vector<A>`] [Repeat `a` `num` times]]
+    [[[karma_repeat `repeat`]`(num1, num2)[a]`] [`vector<A>`] [Repeat `a` `num1` to `num2` times]]
+    [[[karma_repeat `repeat`]`(num, inf)[a]`]   [`vector<A>`] [Repeat `a` `num` or more times]]
 
-    [[__karma_verbatim__]   [`A`]               [Disable delimited generation for `a`]]
-    [[[karma_delimit `delimit[a]`]]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
-    [[[karma_delimit `delimit(d)[a]`]]  [`A`]   [Use `d` as a delimiter for generating `a`]]
+    [[__karma_verbatim__`[a]`][`A`]               [Disable delimited generation for `a`]]
+    [[[karma_delimit `delimit`]`[a]`]     [`A`]   [Reestablish the delimiter that got inhibited by verbatim]]
+    [[[karma_delimit `delimit`]`(d)[a]`]  [`A`]   [Use `d` as a delimiter for generating `a`]]
 
-    [[__karma_omit__]       [`A`]               [Consumes the attribute type of `a` without generating anything]]
+    [[__karma_omit__`[a]`]  [`A`]               [Consumes the attribute type of `a` without generating anything]]
 
-    [[__karma_buffer__]     [`A`]               [Temporarily intercepts the output generated by `a`, 
+    [[__karma_buffer__`[a]`][`A`]               [Temporarily intercepts the output generated by `a`, 
                                                  flushing it only after `a` succeeded.]]
+]
+
+[endsect]
+
+[section:action Generator Semantic Actions]
+
+[table 
+    [[Expression]           [Attribute]                 [Description]]
+    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action, `fa` before invoking `g`.]]
 ]
 
 [endsect]
@@ -490,11 +521,11 @@ a: Unused --> -a: Unused``]]
                                                 `A1, A2, A3` are optional and can be specified in any order.
                                                 `name` is an optional string that gives the rule
                                                 its name, useful for debugging and error handling.]]
-    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`. `boost::shared_ptr` semantics.]]
+    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
     [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
                                                 holds a reference to `r`. Reference semantics.]]
-    [[`r.copy()`]                               [Get a copy of `r`. `boost::shared_ptr` semantics.]]
+    [[`r.copy()`]                               [Get a copy of `r`.]]
     [[`r.name(name)`]                           [Naming a rule]]
     [[`r.name()`]                               [Getting the name of a rule]]
     [[`r = g;`]                                 [Rule definition]]
@@ -536,16 +567,16 @@ Has the form:
 
 where `f` is a function with the signatures:
 
-    void f(Attr&);
-    void f(Attr&, Context&);
-    void f(Attr&, Context&, bool&);
+    void f(Attrib&);
+    void f(Attrib&, Context&);
+    void f(Attrib&, Context&, bool&);
 
 You can use `__boost_bind__` to bind member functions. For function
 objects, the allowed signatures are:
 
-    void operator()(Attr&, unused_type, unused_type) const;
-    void operator()(Attr&, Context&, unused_type) const;
-    void operator()(Attr&, Context&, bool&) const;
+    void operator()(Attrib&, unused_type, unused_type) const;
+    void operator()(Attrib&, Context&, unused_type) const;
+    void operator()(Attrib&, Context&, bool&) const;
 
 The `unused_type` is used in the signatures above to signify 'don't
 care'.

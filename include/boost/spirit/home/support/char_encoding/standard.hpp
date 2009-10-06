@@ -33,7 +33,9 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         ischar(int ch)
         {
-            return true; // use all the bits
+            // uses all 8 bits
+            // we have to watch out for sign extensions
+            return (0 == (ch & ~0xff) || ~0 == (ch | 0xff)) ? true : false;
         }
 
         static int

@@ -102,7 +102,7 @@ namespace boost { namespace spirit { namespace karma
         template <>
         struct absolute_value_helper<float>
         {
-            typedef long double result_type;
+            typedef float result_type;
             static result_type call(float n)
             {
                 return (spirit::detail::signbit)(n) ? -n : n;
@@ -112,7 +112,7 @@ namespace boost { namespace spirit { namespace karma
         template <>
         struct absolute_value_helper<double>
         {
-            typedef long double result_type;
+            typedef double result_type;
             static result_type call(double n)
             {
                 return (spirit::detail::signbit)(n) ? -n : n;
@@ -588,6 +588,30 @@ namespace boost { namespace spirit { namespace karma
             return forcesign ?
                 call_force(sink, is_zero, is_negative) :
                 call_noforce(sink, is_zero, is_negative);
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //  These are helper functions for the real policies allowing to generate
+    //  a single character and a string
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename CharEncoding = unused_type, typename Tag = unused_type>
+    struct char_inserter
+    {
+        template <typename OutputIterator, typename Char>
+        static bool call(OutputIterator& sink, Char c)
+        {
+            return detail::generate_to(sink, c, CharEncoding(), Tag());
+        }
+    };
+
+    template <typename CharEncoding = unused_type, typename Tag = unused_type>
+    struct string_inserter
+    {
+        template <typename OutputIterator, typename String>
+        static bool call(OutputIterator& sink, String str)
+        {
+            return detail::string_generate(sink, str, CharEncoding(), Tag());
         }
     };
 

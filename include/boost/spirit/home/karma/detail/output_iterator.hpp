@@ -371,7 +371,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     {
         // get the most derived type of this class
         typedef typename mpl::if_<
-            traits::is_not_unused<Derived>, Derived
+            traits::not_is_unused<Derived>, Derived
           , output_iterator<OutputIterator, Properties, Derived>
         >::type most_derived_type;
 
@@ -449,12 +449,20 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return *this;
         }
 
+#if defined(BOOST_MSVC)
+// 'argument' : conversion from '...' to '...', possible loss of data
+#pragma warning (push)
+#pragma warning (disable: 4244)
+#endif
         template <typename T>
         void operator=(T const& value) 
         { 
             if (this->base_iterator::output(value))
                 *sink = value; 
         }
+#if defined(BOOST_MSVC)
+#pragma warning (pop)
+#endif
 
         // plain output iterators are considered to be good all the time
         bool good() const { return true; }

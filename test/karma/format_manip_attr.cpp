@@ -18,7 +18,9 @@
 
 #include "test_manip_attr.hpp"
 
-using namespace spirit_test;
+using spirit_test::test;
+using spirit_test::test_delimited;
+using spirit_test::test_predelimited;
 
 ///////////////////////////////////////////////////////////////////////////////
 int

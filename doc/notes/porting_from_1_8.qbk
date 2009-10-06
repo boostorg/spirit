@@ -1,6 +1,6 @@
 [/==============================================================================
-    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -128,12 +128,12 @@ names for the different available parser primitives, directives and operators.
 In __classic__ most of the parser primitives don't expose a specific attribute 
 type. Most parsers expose the pair of iterators pointing to the matched input
 sequence. As in __qi__ all parsers expose a parser specific attribute type it
-introduces a special directive `raw[]` allowing to achieve a similar effect as
-in __classic__. The `raw[]` directive exposes the pair of iterators pointing 
-to the matching sequence of its embedded parser. Even if we very much encourage 
-you to rewrite your parsers to take advantage of the generates parser specific 
-attributes, sometimes it is helpful to get access to the underlying matched 
-input sequence.
+introduces a special directive __qi_raw__`[]` allowing to achieve a similar 
+effect as in __classic__. The __qi_raw__`[]` directive exposes the pair of 
+iterators pointing to the matching sequence of its embedded parser. Even if we 
+very much encourage you to rewrite your parsers to take advantage of the 
+generated parser specific attributes, sometimes it is helpful to get access to 
+the underlying matched input sequence.
 
 [heading Grammars and Rules]
 
@@ -198,7 +198,11 @@ an unsigned value - the value they matched.
 
 If no attribute is desired none needs to be specified. The default attrribute 
 type for both, grammars and rules, is __unused_type__, which is a special 
-placeholder type.
+placeholder type. Generally, using __unused_type__ as the attribute of a parser
+is interpreted as 'this parser has no attribute'. This is mostly used for 
+parsers applied to parts of the input not carrying any significant information, 
+rather being delimiters or structural elements needed for coreect interpretation 
+of the input.
 
 The last difference might seem to be rather cosmetic and insignificant. But it 
 turns out that not having to specify which rule in a grammar is the start rule

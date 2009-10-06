@@ -45,8 +45,6 @@
 #include "example.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Token definition: We use the lexertl based lexer engine as the underlying 
@@ -58,10 +56,10 @@ enum tokenids
 };
 
 template <typename Lexer>
-struct strip_comments_tokens : lexer<Lexer>
+struct strip_comments_tokens : lex::lexer<Lexer>
 {
     strip_comments_tokens() 
-      : strip_comments_tokens::base_type(match_flags::match_default)
+      : strip_comments_tokens::base_type(lex::match_flags::match_default)
     {
         // define tokens and associate them with the lexer
         cppcomment = "\\/\\/[^\n]*";    // '//[^\n]*'
@@ -87,14 +85,14 @@ struct strip_comments_tokens : lexer<Lexer>
         ;
     }
 
-    token_def<> cppcomment, ccomment, endcomment;
+    lex::token_def<> cppcomment, ccomment, endcomment;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Grammar definition
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct strip_comments_grammar : grammar<Iterator>
+struct strip_comments_grammar : qi::grammar<Iterator>
 {
     template <typename TokenDef>
     strip_comments_grammar(TokenDef const& tok)
@@ -103,19 +101,19 @@ struct strip_comments_grammar : grammar<Iterator>
         // The in_state("COMMENT")[...] parser component switches the lexer 
         // state to be 'COMMENT' during the matching of the embedded parser.
         start =  *(   tok.ccomment 
-                      >>  in_state("COMMENT") 
+                      >>  qi::in_state("COMMENT") 
                           [
                               // the lexer is in the 'COMMENT' state during
                               // matching of the following parser components
                               *token(IDANY) >> tok.endcomment 
                           ]
                   |   tok.cppcomment
-                  |   token(IDANY)   [ std::cout << _1 ]
+                  |   qi::token(IDANY)   [ std::cout << _1 ]
                   )
               ;
     }
 
-    rule<Iterator> start;
+    qi::rule<Iterator> start;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -125,7 +123,9 @@ int main(int argc, char* argv[])
     typedef std::string::iterator base_iterator_type;
 
     // lexer type
-    typedef lexertl::lexer<lexertl::token<base_iterator_type> > lexer_type;
+    typedef 
+        lex::lexertl::lexer<lex::lexertl::token<base_iterator_type> > 
+    lexer_type;
 
     // iterator type exposed by the lexer 
     typedef strip_comments_tokens<lexer_type>::iterator_type iterator_type;
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
     std::string str (read_from_file(1 == argc ? "strip_comments.input" : argv[1]));
     base_iterator_type first = str.begin();
 
-    bool r = tokenize_and_parse(first, str.end(), strip_comments, g);
+    bool r = lex::tokenize_and_parse(first, str.end(), strip_comments, g);
 
     if (r) {
         std::cout << "-------------------------\n";

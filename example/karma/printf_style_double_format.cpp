@@ -138,10 +138,10 @@ struct format_policies : karma::real_policies<T>
     int floatfield(T n) const
     {
         if (format_.type == 'e' || format_.type == 'E')
-            return fmtflags::scientific;
+            return base_policy_type::fmtflags::scientific;
 
         if (format_.type == 'f')
-            return fmtflags::fixed;
+            return base_policy_type::fmtflags::fixed;
 
         BOOST_ASSERT(format_.type == 'g' || format_.type == 'G');
         return this->base_policy_type::floatfield(n);
@@ -177,10 +177,11 @@ struct format_policies : karma::real_policies<T>
     {
         if (format_.type == 'E' || format_.type == 'G') {
             // print exponent symbol in upper case
-            return this->base_policy_type::exponent<
-                char_encoding::ascii, tag::upper>(sink, n);
+            return this->base_policy_type::
+                template exponent<char_encoding::ascii, tag::upper>(sink, n);
         }
-        return this->base_policy_type::exponent<CharEncoding, Tag>(sink, n);
+        return this->base_policy_type::
+            template exponent<CharEncoding, Tag>(sink, n);
     }
 
     ///////////////////////////////////////////////////////////////////////////

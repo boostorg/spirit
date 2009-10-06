@@ -66,7 +66,7 @@ namespace boost { namespace spirit { namespace qi
             if (subject.parse(first, last, context, skipper, val))
             {
                 // assign the parsed value into our attribute
-                qi::detail::assign_to(val, attr);
+                spirit::traits::assign_to(val, attr);
             }
             return true;
         }
@@ -87,6 +87,13 @@ namespace boost { namespace spirit { namespace qi
     struct make_composite<proto::tag::negate, Elements, Modifiers>
       : make_unary_composite<Elements, optional>
     {};
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject>
+    struct has_semantic_action<qi::optional<Subject> >
+      : unary_has_semantic_action<Subject> {};
 }}}
 
 #endif

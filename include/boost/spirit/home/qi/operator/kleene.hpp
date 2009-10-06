@@ -22,13 +22,17 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     // Enablers
     ///////////////////////////////////////////////////////////////////////////
+    //[composite_parsers_kleene_enable_
     template <>
     struct use_operator<qi::domain, proto::tag::dereference> // enables *p
       : mpl::true_ {};
+    //]
 }}
 
 namespace boost { namespace spirit { namespace qi
 {
+
+    //[composite_parsers_kleene
     template <typename Subject>
     struct kleene : unary_parser<kleene<Subject> >
     {
@@ -58,7 +62,7 @@ namespace boost { namespace spirit { namespace qi
           , Attribute& attr) const
         {
             // create a local value if Attribute is not unused_type
-            typedef typename traits::result_of::value<Attribute>::type 
+            typedef typename traits::container_value<Attribute>::type 
                 value_type;
             value_type val = value_type();
 
@@ -80,14 +84,24 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
     };
+    //]
 
     ///////////////////////////////////////////////////////////////////////////
     // Parser generators: make_xxx function (objects)
     ///////////////////////////////////////////////////////////////////////////
+    //[composite_parsers_kleene_generator
     template <typename Elements, typename Modifiers>
     struct make_composite<proto::tag::dereference, Elements, Modifiers>
       : make_unary_composite<Elements, kleene>
     {};
+    //]
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject>
+    struct has_semantic_action<qi::kleene<Subject> >
+      : unary_has_semantic_action<Subject> {};
 }}}
 
 #endif

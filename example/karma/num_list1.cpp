@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2002-2009 Joel Hartmut Kaiser
+    Copyright (c) 2002-2009 Hartmut Kaiser
     Copyright (c) 2002-2009 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -49,17 +49,17 @@ namespace client
     ///////////////////////////////////////////////////////////////////////////
     //[tutorial_karma_numlist1
     template <typename OutputIterator>
-    bool generate_numbers(OutputIterator sink, std::list<double> const& v)
+    bool generate_numbers(OutputIterator& sink, std::list<double> const& v)
     {
         using karma::double_;
         using karma::generate_delimited;
         using ascii::space;
 
         bool r = generate_delimited(
-            sink,                           /*< destination: output iterator >*/
-            double_ << *(',' << double_),   /*< the generator >*/
-            space,                          /*< the delimiter-generator >*/
-            v                               /*< the data to output >*/
+            sink,                           // destination: output iterator
+            double_ << *(',' << double_),   // the generator
+            space,                          // the delimiter-generator
+            v                               // the data to output 
         );
         return r;
     }
@@ -88,7 +88,7 @@ main()
         std::list<double> v;      // here we put the data to generate
         if (client::parse_numbers(str.begin(), str.end(), v))
         {
-            // ok, we got some numbers, no print them back out
+            // ok, we got some numbers, now print them back out
             std::cout << "-------------------------\n";
 
             std::string generated;

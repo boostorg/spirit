@@ -45,7 +45,7 @@ more complex parser formed as a composition of other Parsers.
 In the expressions below, the behavior of the parser, `p`, how `skip`
 and `attrib` are handled by `p`, are left unspecified in the base `Parser`
 concept. These are specified in subsequent, more refined concepts and by
-the actual models therof.
+the actual models thereof.
 
 For any Parser the following expressions must be valid:
 

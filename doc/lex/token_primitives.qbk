@@ -8,7 +8,7 @@
 
 [section:primitives Token definition Primitives]
 
-This module includes different primitives allowing to create token definitions.
+This module includes different primitives allowing you to create token definitions.
 It includes `char_`, `string`, character literals, and string literals.
 
 [heading Module Headers]
@@ -26,9 +26,9 @@ Also, see __include_structure__.
 The character based token definitions described in this section are:
 
 The `char_` creates token definitions matching single characters. The `char_` 
-token definition has an associated __lex_char_encoding_namespace__. This is needed when doing basic
-operations such as forcing lower or upper case and dealing with
-character ranges.
+token definition has an associated __lex_char_encoding_namespace__. This is 
+needed when doing basic operations such as forcing lower or upper case and 
+dealing with character ranges.
 
 
 [heading Header]
@@ -70,17 +70,17 @@ defined in __primitive_lexer_concept__.
 [table
     [[Expression]           [Description]]
     [[`ch`]                 [Generate the character literal `ch`. This generator 
-                             never fails (except if the underlying output stream 
-                             reports an error).]]
+                             never fails, unless the underlying output stream 
+                             reports an error.]]
     [[`lit(ch)`]            [Generate the character literal `ch`. This generator 
-                             never fails (except if the underlying output stream 
-                             reports an error).]]
+                             never fails, unless the underlying output stream 
+                             reports an error.]]
     [[`ns::char_(ch)`]      [Generate the character `ch` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
-                             to the immediate literal (except if the underlying 
-                             output stream reports an error). Otherwise this 
+                             to the immediate literal, unless the underlying 
+                             output stream reports an error. Otherwise this 
                              generator fails and does not generate any output.]]
 ]
 

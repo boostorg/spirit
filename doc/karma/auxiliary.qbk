@@ -9,7 +9,8 @@
 [section Auxiliary]
 
 This module includes different auxiliary generators not fitting into any of the 
-other categories. It includes the `eol` and `eps`, `lazy` generators.
+other categories. It includes the `attr_cast`, `eol` and `eps`, `lazy` 
+generators.
 
 [heading Module Header]
 
@@ -17,6 +18,90 @@ other categories. It includes the `eol` and `eps`, `lazy` generators.
     #include <boost/spirit/include/karma_auxiliary.hpp>
 
 Also, see __include_structure__.
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:attr_cast Attribute Transformation Pseudo Generator (`attr_cast`)]
+
+[heading Description]
+
+The `attr_cast<Attrib>()` component invokes the embedded generator while 
+supplying an attribute of type `Attrib`. The supplied attribute gets created from
+the original attribute passed to this component using the customization point 
+`transform_attribute`.
+
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/karma/auxiliary/attr_cast.hpp>
+    #include <boost/spirit/include/karma_attr_cast.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::attr_cast // alias: boost::spirit::karma::attr_cast`]]
+]
+
+[heading Model of]
+
+[:__unary_generator_concept__]
+
+[variablelist Notation
+    [[`g`]      [A generator object.]]
+    [[`Attrib`] [An attribute type]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_generator_concept__.
+
+[table
+    [[Expression]             [Semantics]]
+    [[`attr_cast<Attrib>(g)`] [Create a component invoking the generator `g` 
+                               while passing an attribute of type `Attrib`. 
+                               This generator does not fail unless `g` fails.]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]               [Attribute]]
+    [[`attr_cast<Attrib>(g)`]   [`Attrib`]]
+]
+
+[heading Complexity]
+
+[:The complexity of this component is fully defined by the complexity of the 
+  embedded generator `g`.]
+
+[heading Example]
+
+Some includes:
+
+[reference_karma_includes]
+
+All code snippets below use these common test functions:
+
+[reference_karma_test]
+
+Some using declarations:
+
+[reference_karma_using_declarations_attr_cast]
+
+The example references data structure `int_data` and needs a specializtion of 
+the customization point `transform_attribute`:
+
+[reference_karma_auxiliary_attr_cast_data1]
+
+Now we use the `attr_cast` pseudo generator to invoke the attribute 
+transformation:
+
+[reference_karma_attr_cast1]
+
+[endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [section:eol End of Line (`eol`)]

@@ -22,14 +22,13 @@
 #include "word_count_lexer_tokens.hpp"
 
 using namespace boost::spirit;
-using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
 //[wcl_static_generate_main
 int main(int argc, char* argv[])
 {
     // create the lexer object instance needed to invoke the generator
-    word_count_lexer_tokens<lexertl::actor_lexer<> > word_count; // the token definition
+    word_count_lexer_tokens<lex::lexertl::actor_lexer<> > word_count; // the token definition
 
     // open the output file, where the generated tokenizer function will be 
     // written to
@@ -41,6 +40,6 @@ int main(int argc, char* argv[])
     // The suffix "wcl" used below results in a type lexertl::static_::lexer_wcl
     // to be generated, which needs to be passed as a template parameter to the 
     // lexertl::static_lexer template (see word_count_lexer_static.cpp).
-    return lexertl::generate_static(word_count, out, "wcl") ? 0 : -1;
+    return lex::lexertl::generate_static(word_count, out, "wcl") ? 0 : -1;
 }
 //]

@@ -14,10 +14,12 @@
 #include <boost/spirit/home/karma/domain.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
 #include <boost/spirit/home/karma/detail/generate_to.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/spirit/home/karma/meta_compiler.hpp>
 #include <boost/spirit/home/karma/delimit_out.hpp>
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/container.hpp>
 
 namespace boost { namespace spirit
 {
@@ -69,8 +71,11 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& context, Delimiter const& d
           , Attribute const& attr) const
         {
-            Char ch = Char();
-            if (!this->derived().test(attr, ch, context))
+            if (!traits::has_optional_value(attr))
+                return false;
+
+            Attr ch = Attr();
+            if (!this->derived().test(traits::extract_from(attr), ch, context))
                 return false;
 
             return karma::detail::generate_to(sink, ch, char_encoding(), tag()) &&

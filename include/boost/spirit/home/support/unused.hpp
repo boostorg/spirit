@@ -55,8 +55,8 @@ namespace boost { namespace spirit
     namespace traits
     {
         // We use this test to detect if the argument is not an unused_type
-        template <typename T> struct is_not_unused : mpl::true_ {};
-        template <> struct is_not_unused<unused_type> : mpl::false_ {};
+        template <typename T> struct not_is_unused : mpl::true_ {};
+        template <> struct not_is_unused<unused_type> : mpl::false_ {};
     }
 }}
 

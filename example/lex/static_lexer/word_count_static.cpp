@@ -32,8 +32,6 @@
 
 using namespace boost::spirit;
 using namespace boost::spirit::ascii;
-using namespace boost::spirit::qi;
-using namespace boost::spirit::lex;
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Grammar definition
@@ -44,7 +42,7 @@ using namespace boost::spirit::lex;
 //  definition class instance passed to the constructor to allow accessing the
 //  embedded token_def<> instances.
 template <typename Iterator>
-struct word_count_grammar : grammar<Iterator>
+struct word_count_grammar : qi::grammar<Iterator>
 {
     template <typename TokenDef>
     word_count_grammar(TokenDef const& tok)
@@ -56,15 +54,15 @@ struct word_count_grammar : grammar<Iterator>
 
         //  associate the defined tokens with the lexer, at the same time 
         //  defining the actions to be executed 
-        start =  *(   tok.word      [ ++ref(w), ref(c) += size(_1) ]
-                  |   lit('\n')     [ ++ref(l), ++ref(c) ] 
-                  |   token(IDANY)  [ ++ref(c) ]
+        start =  *(   tok.word          [ ++ref(w), ref(c) += size(_1) ]
+                  |   lit('\n')         [ ++ref(l), ++ref(c) ] 
+                  |   qi::token(IDANY)  [ ++ref(c) ]
                   )
               ;
     }
 
     std::size_t c, w, l;      // counter for characters, words, and lines
-    rule<Iterator> start;
+    qi::rule<Iterator> start;
 };
 //]
 
@@ -74,7 +72,7 @@ int main(int argc, char* argv[])
 {
     // Define the token type to be used: 'std::string' is available as the type 
     // of the token value.
-    typedef lexertl::token<
+    typedef lex::lexertl::token<
         char const*, boost::mpl::vector<std::string>
     > token_type;
 
@@ -88,8 +86,8 @@ int main(int argc, char* argv[])
     // As we specified the suffix "wc" while generating the static tables we 
     // need to pass the type lexertl::static_::lexer_wc as the second template
     // parameter below (see word_count_generate.cpp).
-    typedef lexertl::static_lexer<
-        token_type, lexertl::static_::lexer_wc
+    typedef lex::lexertl::static_lexer<
+        token_type, lex::lexertl::static_::lexer_wc
     > lexer_type;
 
     // Define the iterator type exposed by the lexer.
@@ -106,7 +104,7 @@ int main(int argc, char* argv[])
     char const* last = &first[str.size()];
 
     // Parsing is done based on the the token stream, not the character stream.
-    bool r = tokenize_and_parse(first, last, word_count, g);
+    bool r = lex::tokenize_and_parse(first, last, word_count, g);
 
     if (r) {    // success
         std::cout << "lines: " << g.l << ", words: " << g.w 

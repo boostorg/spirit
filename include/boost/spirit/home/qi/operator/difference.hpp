@@ -92,4 +92,11 @@ namespace boost { namespace spirit { namespace qi
     {};
 }}}
 
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Left, typename Right>
+    struct has_semantic_action<qi::difference<Left, Right> >
+      : binary_has_semantic_action<Left, Right> {};
+}}}
+
 #endif

@@ -27,7 +27,7 @@ after only learning the minimal core and basic concepts.
 
 For development simplicity and ease in deployment, the entire library
 consists of only header files, with no libraries to link against or build.
-Just put the spirit distribution in your include path, compile and run. Code
+Just put the Spirit distribution in your include path, compile and run. Code
 size? -very tight -essentially comparable to hand written recursive descent
 code.
 

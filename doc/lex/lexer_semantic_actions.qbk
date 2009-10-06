@@ -27,14 +27,14 @@ prototype of `f` is:
     void f (Iterator& start, Iterator& end, pass_flag& matched, Idtype& id, Context& ctx);
 
 [variablelist where:
-    [[`Iterator& start`]    [This is a the iterator pointing to the begin of the 
+    [[`Iterator& start`]    [This is the iterator pointing to the begin of the 
                              matched range in the underlying input sequence. The 
                              type of the iterator is the same as specified while
                              defining the type of the `lexertl_lexer<...>` 
                              (its first template parameter). The semantic action 
                              is allowed to change the value of this iterator
                              influencing, the matched input sequence.]]
-    [[`Iterator& end`]      [This is a the iterator pointing to the end of the 
+    [[`Iterator& end`]      [This is the iterator pointing to the end of the 
                              matched range in the underlying input sequence. The 
                              type of the iterator is the same as specified while
                              defining the type of the `lexertl_lexer<...>` 
@@ -42,7 +42,7 @@ prototype of `f` is:
                              is allowed to change the value of this iterator
                              influencing, the matched input sequence.]]
     [[`pass_flag& matched`] [This value is pre/initialized to `pass_normal`.
-                             If the semantic action sets it to `pass_fail` the 
+                             If the semantic action sets it to `pass_fail` this 
                              behaves as if the token has not been matched in 
                              the first place. If the semantic action sets this
                              to `pass_ignore` the lexer ignores the current
@@ -94,8 +94,8 @@ gives an overview and a short description of the available functionality.
       return value to the parameter `end` it is possible to return all but the 
       first n characters of the current token back to the input stream.]]
     [[`bool lookahead(std::size_t id)`]
-     [The function `lookahead()` can be for instance used to implement 
-      lookahead for lexer engines not supporting constructs like flex' `a/b` 
+     [The function `lookahead()` can be used to implement lookahead for lexer 
+      engines not supporting constructs like flex' `a/b` 
       (match `a`, but only when followed by `b`). It invokes the lexer on the 
       input following the current token without actually moving forward in the 
       input stream. The function returns whether the lexer was able to match a 
@@ -118,7 +118,7 @@ described above by using the predefined __spirit__ placeholders:
 [table Predefined Phoenix placeholders for lexer semantic actions
     [[Placeholder]    [Description]]
     [[`_start`]
-     [Refers to the iterator pointing to the begin of the matched input 
+     [Refers to the iterator pointing to the beginning of the matched input 
       sequence. Any modifications to this iterator value will be reflected in 
       the generated token.]]
     [[`_end`]

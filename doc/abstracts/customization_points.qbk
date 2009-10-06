@@ -1,0 +1,337 @@
+[/==============================================================================
+    Copyright (C) 2001-2009 Hartmut Kaiser
+    Copyright (C) 2001-2009 Joel de Guzman
+
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
+    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+===============================================================================/]
+
+[def __customize_is_container__ [link spirit.abstracts.customize.is_container `is_container`]]
+[def __customize_transform_attribute__ [link spirit.abstracts.customize.transform `transform_attribute`]]
+[def __customize_optional_attribute__ [link spirit.abstracts.customize.optional `optional_attribute`]]
+[def __customize_assign_to__ [link spirit.abstracts.customize.assign_to `assign_to`]]
+[def __customize_push_back_container__ `push_back_container` [/ link spirit.abstracts.customize.store_value.push_back `push_back_container`]]
+[def __customize_container_value__ [link spirit.abstracts.customize.store_value.container_value `container_value`]]
+[def __customize_clear_value__ [link spirit.abstracts.customize.store_value.clear_value `clear_value`]]
+[def __customize_extract_from__ [link spirit.abstracts.customize.extract_from `extract_from`]]
+[def __customize_container_iterator__ [link spirit.abstracts.customize.iterate.container_iterator `container_iterator`]]
+[def __customize_begin_container__ [link spirit.abstracts.customize.iterate.begin_container `begin_container`]]
+[def __customize_end_container__ [link spirit.abstracts.customize.iterate.end_container `end_container`]]
+[def __customize_next_iterator__ [link spirit.abstracts.customize.iterate.next_iterator `next_iterator`]]
+[def __customize_deref_iterator__ [link spirit.abstracts.customize.iterate.deref_iterator `deref_iterator`]]
+[def __customize_compare_iterators__ [link spirit.abstracts.customize.iterate.compare_iterators `compare_iterators`]]
+
+[section:customize Customization of Spirits Attribute Handling]
+
+__spirit__ has been written with extensibility in mind. It provides many 
+different attribute customization points allowing to integrate custom data 
+types with the process of parsing in __qi__ or output generation with 
+__karma__. All attribute customization points are exposed using a similar 
+technique: full or partial template specialization. __spirit__ generally 
+implements the main template, providing a default implementation. You as the 
+user have to provide a partial or full specialization of this template for the 
+data types you want to integrate with the library. In fact, the library uses 
+these customization points itself to handle the magic of the __unused_type__ 
+attribute. Here is an example showing the __customize_container_value__ 
+customization point used by different parsers (such as __qi_kleene__, 
+__qi_plus__, etc.) to find the attribute type to be stored in a supplied STL 
+container:
+
+[import ../../../../boost/spirit/home/support/container.hpp]
+
+[customization_container_value_default]
+
+This template is instantiated by the library at the appropriate places while 
+using the supplied container type as the template argument. The embedded `type` 
+is used as the attribute type while parsing the elements to be store in that 
+container.
+
+The following example shows the predefined specialization for __unused_type__:
+
+[customization_container_value_unused]
+
+which defines its embedded `type` to be __unused_type__ as well, this way
+propagating the 'don't care' attribute status to the embedded parser.
+
+All attribute customization points follow the same scheme. The last template 
+parameter is always `typename Enable = void` allowing to apply SFINAE for
+fine grained control over the template specialization process. But most of the
+time you can safely forget about its existence.
+
+The following sections will describe all customization points, together with a 
+description which needs to be specialized for what purpose.
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:is_container Determine if a Type Should be Treated as a Container (Qi and Karma)]
+
+[heading is_container]
+
+The template `is_container` is a template meta-function used as an attribute 
+customization point. It is invoked by the /Qi/ __qi_sequence__ (`>>`) and 
+/Karma/ __karma_sequence__ operators in order to determine whether a supplied
+attribute can potentially be treated as a container.
+
+[heading Header]
+
+    #include <boost/spirit/home/support/container.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename Container, typename Enable>
+    struct is_container;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                                 [Default]]
+    [[`Container`]          [The type, `Container` needs to 
+                             be tested whether it has to be treated
+                             as a container]                              [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `is_container` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`C`]          [A type to be tested whether it needs to be treated
+                     as a container.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                 [Semantics]]
+    [[`is_container<C>::type`]    [Metafunction that evaluates to `mpl::true_` 
+                                   if a given type, `C`, is to be treated as a
+                                   container, `mpl::false_` otherwise (See 
+                                   __mpl_boolean_constant__).]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for the 
+several types. The following table lists those types together with the 
+conditions for which the corresponding specializations will evaluate to 
+`mpl::true_` (see __mpl_boolean_constant__):
+
+[table
+    [[Type]                   [Condition]]
+    [[`T`]                    [Returns `mpl::true_` if `T` has the following 
+                               embedded types defined: `value_type`, 
+                               `iterator`, `size_type`, and`reference`.
+                               Otherwise it will return `mpl::false_`.]]
+    [[`boost::optional<T>`]   [Returns `is_container<T>::type`]]
+    [[`boost::variant<T1, T2, ...>`]
+                              [Returns `mpl::true_` if at least one of the 
+                              `is_container<TN>::type` returns `mpl::true_` 
+                              (where `TN` is `T1`, `T2`, ...).
+                              Otherwise it will return `mpl::false_`.]]
+]
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_container_value__]      [Needs to be implemented whenever `is_container` is implemented.]]
+    [[__customize_push_back_container__]  [Qi: __qi_list__, __qi_kleene__, __qi_plus__, [qi_repeat Repeat].]]
+    [[`container_iterator`]   [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+    [[`begin_container`]      [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+    [[`end_container`]        [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+    [[`deref_iterator`]       [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+    [[`next_iterator`]        [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+    [[`compare_iterators`]    [Karma: __karma_list__, [karma_kleene Kleene (unary `*`)], __karma_plus__, [karma_repeat Repeat].]]
+]
+
+[heading Example]
+
+TBD
+
+[endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[/ section:transform Transform an Attribute to a Different Type (Qi and Karma)]
+
+[/ heading transform_attribute]
+
+[/ endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[/ section:optional Handling of Optional Attributes (Qi and Karma)]
+
+[/ optional_attribute]
+
+[/ endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[/ section:assign_to Store a Parsed Attribute Value (Qi)]
+
+[/ assign_to_attribute_from_iterators]
+[/ assign_to_attribute_from_value]
+
+[/ endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section:store_value Store Parsed Attribute Values into a Container (Qi)]
+
+In order to customize Spirit to accept a given data type as a container for 
+elements parsed by any of the repetitive parsers (__qi_kleene__, __qi_plus__,
+__qi_list__, and [qi_repeat Repeat]) two attribute customization points have to be 
+specialized: __customize_container_value__ and __customize_push_back_container__. This section 
+describes both.
+
+[section:container_value Determine the Type to be stored in a Container (Qi)]
+
+[heading container_value]
+
+The template `container_value` is a template meta function used as an attribute 
+customization point. It is invoked by the /Qi/ repetitive containers 
+(__qi_kleene__, __qi_plus__, __qi_list__, and [qi_repeat Repeat]) to determine the 
+type to store in a container.
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/container.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename Container, typename Enable>
+    struct container_value;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Container`]          [The type, `Container` needs to 
+                             be tested whether it has to be treated
+                             as a container]                              [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `is_container` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`C`]          [A type to be tested whether it needs to be treated
+                     as a container.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                 [Semantics]]
+    [[`container_value<C>::type`] [Metafunction that evaluates to the type
+                                   to be stored in a given container type, 
+                                   `C`.]]
+]
+
+The type `C` is asumed to represent a container.
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for the 
+several types. The following table lists those types together with the 
+conditions for which the corresponding specializations will evaluate to 
+`mpl::true_` (see __mpl_boolean_constant__):
+
+[table
+    [[Type]                   [Value]]
+    [[`C`]                    [The non-const `value_type` of the given container
+                               type, `C`. ]]
+    [[`optional<T>`]          [Returns `container_value<T>::type`]]
+    [[`boost::variant<T1, T2, ...>`]
+                              [Returns `container_value<TN>::value` for the 
+                               first `TN` (out of `T1`, `T2`, ...) for which
+                               `is_container<TN>::type` evaluates to `mpl::true_`.
+                               Otherwise it will return __unused_type__.]]
+    [[__unused_type__]        [Returns __unused_type__.]]
+]
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_push_back_container__]  [Qi: __qi_list__, __qi_kleene__, __qi_plus__, [qi_repeat Repeat].]]
+]
+
+[heading Example]
+
+TBD
+
+[endsect]
+
+[/ section:push_back push_back_container]
+[/ endsect]
+
+[/ clear_value]
+[/ endsect]
+
+[endsect]
+
+
+[/////////////////////////////////////////////////////////////////////////////]
+[/ section:extract_from Extract an Attribute Value to Generate Output (Karma)]
+
+[/ endsect]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[/ section:iterate Extract Attribute Values to Generate Output from a Container (Karma)]
+
+[/ container_iterator]
+[/ endsect]
+
+[/ begin_container]
+[/ endsect]
+
+[/ end_container]
+[/ endsect]
+
+[/ next_iterator]
+[/ endsect]
+
+[/ deref_iterator]
+[/ endsect]
+
+[/ compare_iterators]
+[/ endsect]
+
+[/ endsect]
+
+[endsect]
+

@@ -51,12 +51,10 @@ int main()
     }
 
     {
-        using namespace boost::spirit::ascii;
-
         // initialize lexer
         lexer_def lex;
         lex.self = token_def('+') | '-' | c_comment;
-        lex.self += char_('*') | '/' | cpp_comment;
+        lex.self += lex::char_('*') | '/' | cpp_comment;
 
         // test lexer for two different input strings
         BOOST_TEST(test (lex, "/* this is a comment */", CCOMMENT));

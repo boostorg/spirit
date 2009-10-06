@@ -29,8 +29,10 @@ import testing ;
     [ run qi/actions.cpp                    : : : : ]
     [ run qi/alternative.cpp                : : : : ]
     [ run qi/attr.cpp                       : : : : ]
+    [ run qi/attribute.cpp                  : : : : ]
     [ run qi/and_predicate.cpp              : : : : ]
     [ run qi/binary.cpp                     : : : : ]
+    [ run qi/bool.cpp                       : : : : ]
     [ run qi/char.cpp                       : : : : ]
     [ run qi/char_class.cpp                 : : : : ]
     #[ run qi/debug.cpp                      : : : : ]
@@ -70,7 +72,9 @@ import testing ;
     [ run karma/actions.cpp                 : : : : karma_actions ]
     [ run karma/and_predicate.cpp           : : : : karma_and_predicate ]
     [ run karma/alternative.cpp             : : : : karma_alternative ]
+    [ run karma/attribute.cpp               : : : : karma_attribute ]
     [ run karma/binary.cpp                  : : : : karma_binary ]
+    [ run karma/bool.cpp                    : : : : karma_bool ]
     [ run karma/buffer.cpp                  : : : : karma_buffer ]
     [ run karma/case_handling.cpp           : : : : ]
     [ run karma/center_alignment.cpp        : : : : ]
@@ -123,6 +127,7 @@ import testing ;
     [ run lex/regression002.cpp             : : : : lex_regression002 ]
     [ run lex/regression003_generate.cpp    : $(LEX_DIR)/matlib_static.h : : : lex_regression003_generate ]
     [ run lex/regression003.cpp             : : : <dependency>.//lex_regression003_generate : lex_regression003 ]
+    [ run lex/regression004.cpp             : : : : lex_regression004 ]
 
     ;
 

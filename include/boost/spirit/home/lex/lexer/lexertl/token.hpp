@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/support/safe_bool.hpp>
+#include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/detail/lexer/generator.hpp>
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
@@ -356,126 +357,156 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         return t ? true : false;
     }
 
+}}}}
+
+namespace boost { namespace spirit { namespace traits
+{
     ///////////////////////////////////////////////////////////////////////////
-    //  We have to provide overloads for the construct() function allowing
-    //  to extract the needed value from the token. These overloads have to be
-    //  defined in the same namespace as the token class itself to allow ADL to 
-    //  find them.
+    //  We have to provide specializations for the customization point
+    //  assign_to_attribute_from_value allowing to extract the needed value 
+    //  from the token. 
     ///////////////////////////////////////////////////////////////////////////
 
     //  This is called from the parse function of token_def if the token_def
     //  has been defined to carry a special attribute type
     template <typename Attribute, typename Iterator, typename AttributeTypes
       , typename HasState>
-    inline void 
-    construct(Attribute& attr, token<Iterator, AttributeTypes, HasState>& t)
+    struct assign_to_attribute_from_value<Attribute
+      , lex::lexertl::token<Iterator, AttributeTypes, HasState> >
     {
-    //  The goal of this function is to avoid the conversion of the pair of
-    //  iterators (to the matched character sequence) into the token value 
-    //  of the required type being done more than once. For this purpose it 
-    //  checks whether the stored value type is still the default one (pair 
-    //  of iterators) and if yes, replaces the pair of iterators with the 
-    //  converted value to be returned from subsequent calls.
+        static void 
+        call(lex::lexertl::token<Iterator, AttributeTypes, HasState> const& t
+          , Attribute& attr)
+        {
+        //  The goal of this function is to avoid the conversion of the pair of
+        //  iterators (to the matched character sequence) into the token value 
+        //  of the required type being done more than once. For this purpose it 
+        //  checks whether the stored value type is still the default one (pair 
+        //  of iterators) and if yes, replaces the pair of iterators with the 
+        //  converted value to be returned from subsequent calls.
 
-        if (0 == t.value().which()) {
-        //  first access to the token value
-            typedef iterator_range<Iterator> iterpair_type;
-            iterpair_type const& ip = get<iterpair_type>(t.value());
+            if (0 == t.value().which()) {
+            //  first access to the token value
+                typedef iterator_range<Iterator> iterpair_type;
+                iterpair_type const& ip = get<iterpair_type>(t.value());
 
-        // Interestingly enough we use the assign_to() framework defined in 
-        // Spirit.Qi allowing to convert the pair of iterators to almost any 
-        // required type (assign_to(), if available, uses the standard Spirit 
-        // parsers to do the conversion, and falls back to boost::lexical_cast
-        // otherwise).
-            qi::detail::assign_to(ip.begin(), ip.end(), attr);
+            // Interestingly enough we use the assign_to() framework defined in 
+            // Spirit.Qi allowing to convert the pair of iterators to almost any 
+            // required type (assign_to(), if available, uses the standard Spirit 
+            // parsers to do the conversion, and falls back to boost::lexical_cast
+            // otherwise).
+                spirit::traits::assign_to(ip.begin(), ip.end(), attr);
 
-        //  If you get an error during the compilation of the following 
-        //  assignment expression, you probably forgot to list one or more 
-        //  types used as token value types (in your token_def<...> 
-        //  definitions) in your definition of the token class. I.e. any token 
-        //  value type used for a token_def<...> definition has to be listed 
-        //  during the declaration of the token type to use. For instance let's 
-        //  assume we have two token_def's:
-        //
-        //      token_def<int> number; number = "...";
-        //      token_def<std::string> identifier; identifier = "...";
-        //
-        //  Then you'll have to use the following token type definition 
-        //  (assuming you are using the token class):
-        //
-        //      typedef mpl::vector<int, std::string> token_values;
-        //      typedef token<base_iter_type, token_values> token_type;
-        //
-        //  where: base_iter_type is the iterator type used to expose the 
-        //         underlying input stream.
-        //
-        //  This token_type has to be used as the second template parameter 
-        //  to the lexer class:
-        //
-        //      typedef lexer<base_iter_type, token_type> lexer_type;
-        //
-        //  again, assuming you're using the lexer<> template for your 
-        //  tokenization.
+            //  If you get an error during the compilation of the following 
+            //  assignment expression, you probably forgot to list one or more 
+            //  types used as token value types (in your token_def<...> 
+            //  definitions) in your definition of the token class. I.e. any token 
+            //  value type used for a token_def<...> definition has to be listed 
+            //  during the declaration of the token type to use. For instance let's 
+            //  assume we have two token_def's:
+            //
+            //      token_def<int> number; number = "...";
+            //      token_def<std::string> identifier; identifier = "...";
+            //
+            //  Then you'll have to use the following token type definition 
+            //  (assuming you are using the token class):
+            //
+            //      typedef mpl::vector<int, std::string> token_values;
+            //      typedef token<base_iter_type, token_values> token_type;
+            //
+            //  where: base_iter_type is the iterator type used to expose the 
+            //         underlying input stream.
+            //
+            //  This token_type has to be used as the second template parameter 
+            //  to the lexer class:
+            //
+            //      typedef lexer<base_iter_type, token_type> lexer_type;
+            //
+            //  again, assuming you're using the lexer<> template for your 
+            //  tokenization.
 
-            t.value() = attr;   // re-assign value
+                typedef lex::lexertl::token<
+                    Iterator, AttributeTypes, HasState> token_type;
+                const_cast<token_type&>(t).value() = attr;   // re-assign value
+            }
+            else {
+            // reuse the already assigned value
+                spirit::traits::assign_to(get<Attribute>(t.value()), attr);
+            }
         }
-        else {
-        // reuse the already assigned value
-            qi::detail::assign_to(get<Attribute>(t.value()), attr);
-        }
-    }
+    };
 
     //  These are called from the parse function of token_def if the token type
     //  has no special attribute type assigned 
     template <typename Attribute, typename Iterator, typename HasState>
-    inline void construct(Attribute& attr, 
-        token<Iterator, mpl::vector0<>, HasState>& t)
+    struct assign_to_attribute_from_value<
+        Attribute, lex::lexertl::token<Iterator, mpl::vector0<>, HasState> >
     {
-    //  The default type returned by the token_def parser component (if it
-    //  has no token value type assigned) is the pair of iterators to the 
-    //  matched character sequence.
-
-        qi::detail::assign_to(t.value().begin(), t.value().end(), attr);
-    }
+        static void 
+        call(lex::lexertl::token<Iterator, mpl::vector0<>, HasState> const& t
+          , Attribute& attr)
+        {
+            //  The default type returned by the token_def parser component (if 
+            //  it has no token value type assigned) is the pair of iterators 
+            //  to the matched character sequence.
+            spirit::traits::assign_to(t.value().begin(), t.value().end(), attr);
+        }
+    };
 
     // same as above but using mpl::vector<> instead of mpl::vector0<>
     template <typename Attribute, typename Iterator, typename HasState>
-    inline void construct(Attribute& attr, 
-        token<Iterator, mpl::vector<>, HasState>& t)
+    struct assign_to_attribute_from_value<
+        Attribute, lex::lexertl::token<Iterator, mpl::vector<>, HasState> >
     {
-    //  The default type returned by the token_def parser component (if it
-    //  has no token value type assigned) is the pair of iterators to the 
-    //  matched character sequence.
-
-        qi::detail::assign_to(t.value().begin(), t.value().end(), attr);
-    }
+        static void 
+        call(lex::lexertl::token<Iterator, mpl::vector<>, HasState> const& t
+          , Attribute& attr)
+        {
+            //  The default type returned by the token_def parser component (if 
+            //  it has no token value type assigned) is the pair of iterators 
+            //  to the matched character sequence.
+            spirit::traits::assign_to(t.value().begin(), t.value().end(), attr);
+        }
+    };
 
     //  This is called from the parse function of token_def if the token type
     //  has been explicitly omitted (i.e. no attribute value is used), which
     //  essentially means that every attribute gets initialized using default 
     //  constructed values.
     template <typename Attribute, typename Iterator, typename HasState>
-    inline void
-    construct(Attribute& attr, token<Iterator, lex::omit, HasState>& t) {}
+    struct assign_to_attribute_from_value<
+        Attribute, lex::lexertl::token<Iterator, lex::omit, HasState> >
+    {
+        static void 
+        call(lex::lexertl::token<Iterator, lex::omit, HasState> const& t
+          , Attribute& attr)
+        {
+            // do nothing
+        }
+    };
 
     //  This is called from the parse function of lexer_def_
     template <typename Iterator, typename AttributeTypes, typename HasState>
-    inline void
-    construct(fusion::vector2<std::size_t, iterator_range<Iterator> >& attr,
-        token<Iterator, AttributeTypes, HasState> const& t)
+    struct assign_to_attribute_from_value<
+        fusion::vector2<std::size_t, iterator_range<Iterator> >
+      , lex::lexertl::token<Iterator, AttributeTypes, HasState> >
     {
-    //  The type returned by the lexer_def_ parser components
-    //  is a fusion::vector containing the token id of the matched token 
-    //  and the pair of iterators to the matched character sequence.
+        static void 
+        call(lex::lexertl::token<Iterator, AttributeTypes, HasState> const& t
+          , fusion::vector2<std::size_t, iterator_range<Iterator> >& attr)
+        {
+            //  The type returned by the lexer_def_ parser components is a 
+            //  fusion::vector containing the token id of the matched token 
+            //  and the pair of iterators to the matched character sequence.
+            typedef iterator_range<Iterator> iterpair_type;
+            typedef fusion::vector2<std::size_t, iterator_range<Iterator> > 
+                attribute_type;
 
-        typedef iterator_range<Iterator> iterpair_type;
-        typedef fusion::vector2<std::size_t, iterator_range<Iterator> > 
-            attribute_type;
+            iterpair_type const& ip = get<iterpair_type>(t.value());
+            attr = attribute_type(t.id(), get<iterpair_type>(t.value()));
+        }
+    };
 
-        iterpair_type const& ip = get<iterpair_type>(t.value());
-        attr = attribute_type(t.id(), get<iterpair_type>(t.value()));
-    }
-
-}}}}
+}}}
 
 #endif

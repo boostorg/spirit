@@ -61,7 +61,7 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx
           , Delimiter const& d, Attribute const& attr) const
         {
-            typedef typename traits::result_of::iterator<
+            typedef typename traits::container_iterator<
                 typename add_const<Attribute>::type
             >::type iterator_type;
 
@@ -72,13 +72,16 @@ namespace boost { namespace spirit { namespace karma
             if (traits::compare(it, end))
                 return false;
 
-            // from now on plus fails only if the underlying output fails
-            bool result = true;
-            for (/**/; result && !traits::compare(it, end); traits::next(it))
+            // from now on plus fails if the underlying output fails or overall
+            // no subject generators succeeded
+            bool result = false;
+            for (/**/; detail::sink_is_good(sink) && !traits::compare(it, end); 
+                 traits::next(it))
             {
-                result = subject.generate(sink, ctx, d, traits::deref(it));
+                if (subject.generate(sink, ctx, d, traits::deref(it)))
+                    result = true;
             }
-            return detail::sink_is_good(sink);
+            return result && detail::sink_is_good(sink);
         }
 
         template <typename Context>
@@ -98,6 +101,14 @@ namespace boost { namespace spirit { namespace karma
     struct make_composite<proto::tag::unary_plus, Elements, Modifiers>
       : make_unary_composite<Elements, plus>
     {};
+
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject>
+    struct has_semantic_action<karma::plus<Subject> >
+      : unary_has_semantic_action<Subject> {};
 
 }}}
 

@@ -24,6 +24,28 @@
 #include <iostream>
 #include "test.hpp"
 
+struct x_attr
+{
+};
+
+namespace boost { namespace spirit { namespace traits 
+{
+    template <>
+    struct container_value<x_attr>
+    {
+        typedef char type; // value type of container
+    };
+
+    template <>
+    struct push_back_container<x_attr, char>
+    {
+        static void call(x_attr& c, char val)
+        {
+            // push back value type into container
+        }
+    };
+}}}
+
 int
 main()
 {
@@ -113,6 +135,12 @@ main()
         std::vector<int> v;
         BOOST_TEST(test("123 456 789", (*int_)[phx::ref(v) = _1], space) && 3 == v.size() &&
             v[0] == 123 && v[1] == 456 && v[2] == 789);
+    }
+    
+    { // attribute customization
+        
+        x_attr x;
+        test_attr("abcde", *char_, x);
     }
 
     return boost::report_errors();

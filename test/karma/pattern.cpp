@@ -27,7 +27,6 @@ int main()
 {
     using namespace boost;
     using namespace boost::spirit;
-    using namespace boost::spirit::karma;
     using namespace boost::spirit::ascii;
 
     typedef spirit_test::output_iterator<char>::type outiter_type;
@@ -36,15 +35,15 @@ int main()
     {
         using boost::phoenix::at_c;
 
-        rule<outiter_type, fusion::vector<char, int, double>()> start;
+        karma::rule<outiter_type, fusion::vector<char, int, double>()> start;
         fusion::vector<char, int, double> vec('a', 10, 12.4);
 
         start %= char_ << int_ << double_;
         BOOST_TEST(test("a1012.4", start, vec));
 
-        rule<outiter_type, char()> a;
-        rule<outiter_type, int()> b;
-        rule<outiter_type, double()> c;
+        karma::rule<outiter_type, char()> a;
+        karma::rule<outiter_type, int()> b;
+        karma::rule<outiter_type, double()> c;
 
         a %= char_ << eps;
         b %= int_;
@@ -53,6 +52,9 @@ int main()
         BOOST_TEST(test("a1012.4", start, vec));
 
         start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
+        BOOST_TEST(test("a1012.4", start, vec));
+
+        start = a << b << c;
         BOOST_TEST(test("a1012.4", start, vec));
 
         start %= a << b << c;
@@ -62,15 +64,15 @@ int main()
     {
         using boost::phoenix::at_c;
 
-        rule<outiter_type, space_type, fusion::vector<char, int, double>()> start;
+        karma::rule<outiter_type, space_type, fusion::vector<char, int, double>()> start;
         fusion::vector<char, int, double> vec('a', 10, 12.4);
 
         start %= char_ << int_ << double_;
         BOOST_TEST(test_delimited("a 10 12.4 ", start, vec, space));
 
-        rule<outiter_type, space_type, char()> a;
-        rule<outiter_type, space_type, int()> b;
-        rule<outiter_type, space_type, double()> c;
+        karma::rule<outiter_type, space_type, char()> a;
+        karma::rule<outiter_type, space_type, int()> b;
+        karma::rule<outiter_type, space_type, double()> c;
 
         a %= char_ << eps;
         b %= int_;
@@ -81,20 +83,41 @@ int main()
         start = (a << b << c)[_1 = at_c<0>(_r0), _2 = at_c<1>(_r0), _3 = at_c<2>(_r0)];
         BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
 
+        start = a << b << c;
+        BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
+
         start %= a << b << c;
+        BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
+    }
+
+    // test direct initalization
+    {
+        using boost::phoenix::at_c;
+
+        fusion::vector<char, int, double> vec('a', 10, 12.4);
+        karma::rule<outiter_type, space_type, fusion::vector<char, int, double>()> 
+            start = char_ << int_ << double_;;
+
+        BOOST_TEST(test_delimited("a 10 12.4 ", start, vec, space));
+
+        karma::rule<outiter_type, space_type, char()> a = char_ << eps;
+        karma::rule<outiter_type, space_type, int()> b = int_;
+        karma::rule<outiter_type, space_type, double()> c = double_;
+
+        start = a[_1 = at_c<0>(_r0)] << b[_1 = at_c<1>(_r0)] << c[_1 = at_c<2>(_r0)];
         BOOST_TEST(test_delimited("a  10 12.4 ", start, vec, space));
     }
 
     // locals test
     {
-        rule<outiter_type, locals<std::string> > start;
+        karma::rule<outiter_type, locals<std::string> > start;
 
         start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
         BOOST_TEST(test("abc10abc", start));
     }
 
     {
-        rule<outiter_type, space_type, locals<std::string> > start;
+        karma::rule<outiter_type, space_type, locals<std::string> > start;
 
         start = string[_1 = "abc", _a = _1] << int_[_1 = 10] << string[_1 = _a];
         BOOST_TEST(test_delimited("abc 10 abc ", start, space));
@@ -104,7 +127,7 @@ int main()
     { 
         typedef variant<char, int, double> var_type;
 
-        rule<outiter_type, var_type()> d, start;
+        karma::rule<outiter_type, var_type()> d, start;
 
         d = start.alias();   // d will always track start
 
@@ -121,7 +144,7 @@ int main()
     { 
         typedef variant<char, int, double> var_type;
 
-        rule<outiter_type, space_type, var_type()> d, start;
+        karma::rule<outiter_type, space_type, var_type()> d, start;
 
         d = start.alias();   // d will always track start
 
@@ -138,7 +161,7 @@ int main()
     {
         typedef variant<char, int, double> var_type;
 
-        rule<outiter_type, var_type()> d, start;
+        karma::rule<outiter_type, var_type()> d, start;
 
         d = start.alias();   // d will always track start
 
@@ -150,18 +173,36 @@ int main()
         BOOST_TEST(test("10", d, v));
         v = 12.4;
         BOOST_TEST(test("12.4", d, v));
+
+        start = char_ | int_ | double_;
+
+        v = 'a';
+        BOOST_TEST(test("a", d, v));
+        v = 10;
+        BOOST_TEST(test("10", d, v));
+        v = 12.4;
+        BOOST_TEST(test("12.4", d, v));
     }
 
     {
         typedef variant<char, int, double> var_type;
 
-        rule<outiter_type, space_type, var_type()> d, start;
+        karma::rule<outiter_type, space_type, var_type()> d, start;
 
         d = start.alias();   // d will always track start
 
         start %= char_ | int_ | double_;
 
         var_type v ('a');
+        BOOST_TEST(test_delimited("a ", d, v, space));
+        v = 10;
+        BOOST_TEST(test_delimited("10 ", d, v, space));
+        v = 12.4;
+        BOOST_TEST(test_delimited("12.4 ", d, v, space));
+
+        start = char_ | int_ | double_;
+
+        v = 'a';
         BOOST_TEST(test_delimited("a ", d, v, space));
         v = 10;
         BOOST_TEST(test_delimited("10 ", d, v, space));

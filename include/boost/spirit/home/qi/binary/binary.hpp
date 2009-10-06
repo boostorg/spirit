@@ -193,7 +193,7 @@ namespace boost { namespace spirit { namespace qi
             }
 
             first = it;
-            detail::assign_to(attr_, attr);
+            spirit::traits::assign_to(attr_, attr);
             return true;
         }
 
@@ -244,7 +244,7 @@ namespace boost { namespace spirit { namespace qi
             }
 
             first = it;
-            detail::assign_to(attr_, attr);
+            spirit::traits::assign_to(attr_, attr);
             return true;
         }
 

@@ -28,7 +28,7 @@
           Generators (<code class="computeroutput"><span class="identifier">char_</span></code>, <code class="computeroutput"><span class="identifier">lit</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.char.char_generator.description"></a><h6>
-<a name="id748534"></a>
+<a name="id740063"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.description">Description</a>
           </h6>
 <p>
@@ -45,7 +45,7 @@
             There are various forms of <code class="computeroutput"><span class="identifier">char_</span></code>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.char_"></a><h6>
-<a name="id748584"></a>
+<a name="id740113"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char_">char_</a>
           </h6>
 <p>
@@ -56,7 +56,7 @@
 <pre class="programlisting"><span class="identifier">char_</span>               <span class="comment">// emits any character as supplied by the attribute
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.char__ch_"></a><h6>
-<a name="id748625"></a>
+<a name="id740154"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__ch_">char_(ch)</a>
           </h6>
 <p>
@@ -68,7 +68,7 @@
 </span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span>            <span class="comment">// emits x (a char)
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.char__first__last_"></a><h6>
-<a name="id748716"></a>
+<a name="id740245"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__first__last_">char_(first,
             last)</a>
           </h6>
@@ -120,7 +120,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.char__def_"></a><h6>
-<a name="id748899"></a>
+<a name="id740428"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.char__def_">char_(def)</a>
           </h6>
 <p>
@@ -140,7 +140,7 @@
             by the attribute.
           </p>
 <a name="spirit.karma.reference.char.char_generator.lit_ch_"></a><h6>
-<a name="id750664"></a>
+<a name="id740544"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.lit_ch_">lit(ch)</a>
           </h6>
 <p>
@@ -180,7 +180,7 @@
 <span class="identifier">lit</span><span class="special">(</span><span class="identifier">c</span><span class="special">)</span>      <span class="comment">// c is a char
 </span></pre>
 <a name="spirit.karma.reference.char.char_generator.header"></a><h6>
-<a name="id750842"></a>
+<a name="id740722"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char.hpp&gt;
@@ -190,7 +190,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.namespace"></a><h6>
-<a name="id750916"></a>
+<a name="id740796"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -220,7 +220,7 @@
             Encoding Namespace</a>.
           </p>
 <a name="spirit.karma.reference.char.char_generator.model_of"></a><h6>
-<a name="id751035"></a>
+<a name="id740915"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.model_of">Model
             of</a>
           </h6>
@@ -267,7 +267,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_generator.expression_semantics"></a><h6>
-<a name="id751189"></a>
+<a name="id741069"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -516,7 +516,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.char.char_generator.attributes"></a><h6>
-<a name="id751976"></a>
+<a name="id741856"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -661,8 +661,21 @@
 </tr>
 </tbody>
 </table></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Ch</span></code>
+              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Ch</span></code> and emit the value stored in the
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+              Otherwise the generators will fail.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.char.char_generator.complexity"></a><h6>
-<a name="id752529"></a>
+<a name="id742528"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -691,7 +704,7 @@
             set, where N is the number of characters in the character set.
           </p>
 <a name="spirit.karma.reference.char.char_generator.example"></a><h6>
-<a name="id752713"></a>
+<a name="id742711"></a>
             <a class="link" href="char_generator.html#spirit.karma.reference.char.char_generator.example">Example</a>
           </h6>
 <p>
@@ -726,7 +739,7 @@
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">str</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">s</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -744,7 +757,7 @@
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">str</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">s</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -762,8 +775,7 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">lit</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 </pre>
 <p>

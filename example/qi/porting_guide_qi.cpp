@@ -20,7 +20,7 @@ using namespace boost::spirit;
 template <typename Iterator>
 struct roman : qi::grammar<Iterator, unsigned()>
 {
-    roman() : qi::grammar<Iterator, unsigned()>(first)
+    roman() : roman::base_type(first)
     {
         hundreds.add
             ("C"  , 100)("CC"  , 200)("CCC"  , 300)("CD" , 400)("D" , 500)
@@ -44,9 +44,9 @@ struct roman : qi::grammar<Iterator, unsigned()>
     }
 
     qi::rule<Iterator, unsigned()> first;
-    symbols<char, unsigned> hundreds;
-    symbols<char, unsigned> tens;
-    symbols<char, unsigned> ones;
+    qi::symbols<char, unsigned> hundreds;
+    qi::symbols<char, unsigned> tens;
+    qi::symbols<char, unsigned> ones;
 };
 //]
 
@@ -56,7 +56,7 @@ int main()
         //[porting_guide_qi_parse
         std::string input("1,1");
         std::string::iterator it = input.begin();
-        bool result = qi::parse(it, input.end(), int_);
+        bool result = qi::parse(it, input.end(), qi::int_);
 
         if (result) 
             std::cout << "successful match!\n";
@@ -75,7 +75,7 @@ int main()
         //[porting_guide_qi_phrase_parse
         std::string input(" 1, 1");
         std::string::iterator it = input.begin();
-        bool result = qi::phrase_parse(it, input.end(), int_, ascii::space);
+        bool result = qi::phrase_parse(it, input.end(), qi::int_, ascii::space);
 
         if (result) 
             std::cout << "successful match!\n";

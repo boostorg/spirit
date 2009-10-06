@@ -21,6 +21,11 @@ charts. The isomorphism of the diagrams and functions make it ideal for
 representing __rd__ parsers which are essentially mutually recursive
 functions.
 
+Parsing Expression Grammars historically have been used for describing grammars
+for parsers only (hence the name). In __spirit__ we use a very similar notation 
+for output generation as well. Almost all the concepts described here are 
+equally applicable to __qi__ parsers as they are for __karma__ generators.
+
 [heading Elements]
 
 All diagrams have one entry and exit point. Arrows connect all possible

@@ -1,5 +1,5 @@
 [/==============================================================================
-    Copyright (C) 2001-2008 Joel de Guzman
+    Copyright (C) 2001-2009 Joel de Guzman
     Copyright (C) 2001-2009 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -14,7 +14,7 @@
 [/include        abstracts/generating.qbk]
 [/include        abstracts/primitives.qbk]
 [/include        abstracts/operators.qbk]
-[/include        abstracts/attributes.qbk]
+[include        abstracts/attributes.qbk]
 [/include        abstracts/semantic_actions.qbk]
 [/include        abstracts/directives.qbk]
 [/include        abstracts/rules.qbk]
@@ -22,6 +22,8 @@
 [/include        abstracts/debugging.qbk]
 [/include        abstracts/error_handling.qbk]
 [/include        abstracts/parse_trees_and_asts.qbk]
+[include        abstracts/indepth.qbk]
+[include        abstracts/customization_points.qbk]
 
 [endsect]
 

@@ -30,7 +30,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             ch = *++str;
         }
 
-        detail::assign_to(first, i, attr);
+        spirit::traits::assign_to(first, i, attr);
         first = i;
         return true;
     }
@@ -47,7 +47,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         for (; stri != str_last; ++stri, ++i)
             if (i == last || (*stri != *i))
                 return false;
-        detail::assign_to(first, i, attr);
+        spirit::traits::assign_to(first, i, attr);
         first = i;
         return true;
     }
@@ -62,7 +62,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         for (; *uc_i && *lc_i; ++uc_i, ++lc_i, ++i)
             if (i == last || ((*uc_i != *i) && (*lc_i != *i)))
                 return false;
-        detail::assign_to(first, i, attr);
+        spirit::traits::assign_to(first, i, attr);
         first = i;
         return true;
     }
@@ -80,7 +80,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         for (; uc_i != uc_last; ++uc_i, ++lc_i, ++i)
             if (i == last || ((*uc_i != *i) && (*lc_i != *i)))
                 return false;
-        detail::assign_to(first, i, attr);
+        spirit::traits::assign_to(first, i, attr);
         first = i;
         return true;
     }

@@ -141,7 +141,7 @@ namespace boost { namespace spirit { namespace qi
             // then the expression (expr) is not a valid spirit qi expression.
             BOOST_SPIRIT_ASSERT_MATCH(qi::domain, Expr);
 
-            f = detail::bind_parser<mpl::true_>(compile<qi::domain>(expr));
+            f = detail::bind_parser<mpl::false_>(compile<qi::domain>(expr));
         }
 
         rule& operator=(rule const& rhs)
@@ -210,11 +210,19 @@ namespace boost { namespace spirit { namespace qi
           , Context& /*context*/, Skipper const& skipper
           , Attribute& attr) const
         {
+            //$$$ do a preskip if this is an implied lexeme $$$
+
             if (f)
             {
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
-                typename make_attribute::type attr_ = make_attribute::call(attr);
+                // do down-stream transformation, provides attribute for 
+                // rhs parser
+                typedef traits::transform_attribute<
+                    typename make_attribute::type, attr_type> transform;
+
+                typename transform::type attr_ = 
+                    transform::pre(make_attribute::call(attr));
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -227,6 +235,9 @@ namespace boost { namespace spirit { namespace qi
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
+                    // do up-stream transformation, this integrates the results 
+                    // back into the original attribute value, if appropriate
+                    traits::post_transform(attr, attr_);
                     return true;
                 }
             }
@@ -239,11 +250,19 @@ namespace boost { namespace spirit { namespace qi
           , Context& caller_context, Skipper const& skipper
           , Attribute& attr, Params const& params) const
         {
+            //$$$ do a preskip if this is an implied lexeme $$$
+
             if (f)
             {
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
-                typename make_attribute::type attr_ = make_attribute::call(attr);
+                // do down-stream transformation, provides attribute for 
+                // rhs parser
+                typedef traits::transform_attribute<
+                    typename make_attribute::type, attr_type> transform;
+
+                typename transform::type attr_ = 
+                    transform::pre(make_attribute::call(attr));
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -256,6 +275,9 @@ namespace boost { namespace spirit { namespace qi
                 // an incompatible skipper type.
                 if (f(first, last, context, skipper))
                 {
+                    // do up-stream transformation, this integrates the results 
+                    // back into the original attribute value, if appropriate
+                    traits::post_transform(attr, attr_);
                     return true;
                 }
             }

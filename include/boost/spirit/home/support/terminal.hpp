@@ -432,6 +432,52 @@ namespace boost { namespace spirit
         };
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // support for stateful tag types
+    namespace tag
+    {
+        template <typename Data, typename Tag
+          , typename DataTag1 = unused_type, typename DataTag2 = unused_type>
+        struct stateful_tag 
+        {
+            typedef Data data_type;
+
+            stateful_tag() {}
+            stateful_tag(data_type const& data) : data_(data) {}
+
+            data_type data_;
+        };
+    }
+
+    template <typename Data, typename Tag
+      , typename DataTag1 = unused_type, typename DataTag2 = unused_type>
+    struct stateful_tag_type
+      : spirit::terminal<tag::stateful_tag<Data, Tag, DataTag1, DataTag2> > 
+    {
+        typedef tag::stateful_tag<Data, Tag, DataTag1, DataTag2> tag_type;
+
+        stateful_tag_type() {}
+        stateful_tag_type(Data const& data)
+          : spirit::terminal<tag_type>(data) {}
+    };
+
+    namespace detail
+    {
+        // extract expression if this is a Tag
+        template <typename StatefulTag>
+        struct get_stateful_data
+        {
+            typedef typename StatefulTag::data_type data_type;
+
+            // is invoked if given tag is != Tag
+            template <typename Tag_>
+            static data_type call(Tag_) { return data_type(); }
+
+            // this is invoked if given tag is same as'Tag'
+            static data_type const& call(StatefulTag const& t) { return t.data_; }
+        };
+    }
+
 }}
 
 // Define a spirit terminal. This macro may be placed in any namespace.

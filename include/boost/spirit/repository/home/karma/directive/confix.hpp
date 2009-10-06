@@ -19,8 +19,8 @@
 
 #include <boost/spirit/repository/home/support/confix.hpp>
 
-#include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
+#include <boost/mpl/or.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit 
@@ -123,6 +123,18 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
+}}}
+
+namespace boost { namespace spirit { namespace traits
+{
+    template <typename Subject, typename Prefix, typename Suffix>
+    struct has_semantic_action<
+            repository::karma::confix_generator<Subject, Prefix, Suffix> >
+      : mpl::or_<
+            has_semantic_action<Subject>
+          , has_semantic_action<Prefix>
+          , has_semantic_action<Suffix> 
+        > {};
 }}}
 
 #endif

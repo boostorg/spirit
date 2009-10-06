@@ -29,7 +29,7 @@
           <code class="computeroutput"><span class="identifier">digit</span></code>, etc.)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.char.char_class.description"></a><h6>
-<a name="id754305"></a>
+<a name="id744173"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.description">Description</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             such as forcing lower or upper case.
           </p>
 <a name="spirit.karma.reference.char.char_class.header"></a><h6>
-<a name="id754356"></a>
+<a name="id746681"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/char/char_class.hpp&gt;
@@ -51,7 +51,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.char.char_class.namespace"></a><h6>
-<a name="id754430"></a>
+<a name="id746756"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -132,7 +132,7 @@
             and will not compile if no attribute is associated.
           </p>
 <a name="spirit.karma.reference.char.char_class.model_of"></a><h6>
-<a name="id754796"></a>
+<a name="id747122"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.model_of">Model
             of</a>
           </h6>
@@ -156,7 +156,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.char.char_class.expression_semantics"></a><h6>
-<a name="id754864"></a>
+<a name="id747190"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -407,7 +407,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.char.char_class.attributes"></a><h6>
-<a name="id757055"></a>
+<a name="id748121"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -421,8 +421,21 @@
 <p>
             </p>
 </blockquote></div>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Ch</span></code>
+              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Ch</span></code> and emit the value stored in the
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+              Otherwise the generators will fail.
+            </p></td></tr>
+</table></div>
 <a name="spirit.karma.reference.char.char_class.complexity"></a><h6>
-<a name="id757095"></a>
+<a name="id748246"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -439,7 +452,7 @@
             per invocation.
           </p>
 <a name="spirit.karma.reference.char.char_class.example"></a><h6>
-<a name="id757122"></a>
+<a name="id748274"></a>
             <a class="link" href="char_class.html#spirit.karma.reference.char.char_class.example">Example</a>
           </h6>
 <p>
@@ -474,7 +487,7 @@
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">str</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
+    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">s</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">else</span>
         <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -492,8 +505,8 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">alpha</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">alpha</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">upper</span><span class="special">;</span>
 </pre>
 <p>
             </p>

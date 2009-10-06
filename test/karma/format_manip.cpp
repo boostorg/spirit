@@ -49,7 +49,6 @@ main()
 {
     using namespace boost::spirit;
     using namespace boost::spirit::ascii;
-    using namespace boost::spirit::karma;
 
     namespace fusion = boost::fusion;
     using namespace boost::phoenix;
@@ -62,16 +61,16 @@ main()
             char_[_1 = val('a')]
         ));
         BOOST_TEST(test( "a", 
-            format(char_[_1 = val('a')]) 
+            karma::format(char_[_1 = val('a')]) 
         ));
         BOOST_TEST(test( "a ", 
-            format_delimited(char_[_1 = val('a')], space) 
+            karma::format_delimited(char_[_1 = val('a')], space) 
         ));
         BOOST_TEST(test( "a", 
-            format(char_, 'a') 
+            karma::format(char_, 'a') 
         ));
         BOOST_TEST(test( "a ", 
-            format_delimited(char_, space, 'a') 
+            karma::format_delimited(char_, space, 'a') 
         ));
     }
 
@@ -80,19 +79,19 @@ main()
             char_[_1 = val('a')] << char_[_1 = val('b')] 
         ));
         BOOST_TEST(test( "ab", 
-            format(char_[_1 = val('a')] << char_[_1 = val('b')]) 
+            karma::format(char_[_1 = val('a')] << char_[_1 = val('b')]) 
         ));
         BOOST_TEST(test( "a b ", 
-            format_delimited(char_[_1 = val('a')] << char_[_1 = val('b')], space) 
+            karma::format_delimited(char_[_1 = val('a')] << char_[_1 = val('b')], space) 
         ));
 
         fusion::vector<char, char> t('a', 'b');
 
         BOOST_TEST(test( "ab", 
-            format(char_ << char_, t) 
+            karma::format(char_ << char_, t) 
         ));
         BOOST_TEST(test( "a b ", 
-            format_delimited(char_ << char_, space, t) 
+            karma::format_delimited(char_ << char_, space, t) 
         ));
     }
 
@@ -101,19 +100,19 @@ main()
             char_[_1 = 'a'] << char_[_1 = 'b'] << char_[_1 = 'c']
         ));
         BOOST_TEST(test( "abc", 
-            format(char_('a') << char_('b') << char_('c')) 
+            karma::format(char_('a') << char_('b') << char_('c')) 
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(char_('a') << char_('b') << char_('c'), space) 
+            karma::format_delimited(char_('a') << char_('b') << char_('c'), space) 
         ));
 
         fusion::vector<char, char, char> t('a', 'b', 'c');
 
         BOOST_TEST(test( "abc", 
-            format(char_ << char_ << char_, t) 
+            karma::format(char_ << char_ << char_, t) 
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(char_ << char_ << char_, space, t) 
+            karma::format_delimited(char_ << char_ << char_, space, t) 
         ));
     }
 
@@ -125,10 +124,10 @@ main()
         fusion::vector<char, int> t('a', 2);
 
         BOOST_TEST(test( "a2", 
-            format(char_ << int_, t) 
+            karma::format(char_ << int_, t) 
         ));
         BOOST_TEST(test( "a 2 ", 
-            format_delimited(char_ << int_, space, t) 
+            karma::format_delimited(char_ << int_, space, t) 
         ));
     }
     
@@ -143,10 +142,10 @@ main()
             (*char_)[_1 = v] 
         ));
         BOOST_TEST(test( "abc", 
-            format(*char_, v)
+            karma::format(*char_, v)
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(*char_, space, v)
+            karma::format_delimited(*char_, space, v)
         ));
 
         // output a comma separated list of vector elements
@@ -154,16 +153,16 @@ main()
             (char_ % lit(", "))[_0 = fusion::make_single_view(v)] 
         ));
         BOOST_TEST(test( "a, b, c", 
-            format((char_ % lit(", "))[_0 = fusion::make_single_view(v)])
+            karma::format((char_ % lit(", "))[_0 = fusion::make_single_view(v)])
         ));
         BOOST_TEST(test( "a , b , c ", 
-            format_delimited((char_ % ',')[_0 = fusion::make_single_view(v)], space)
+            karma::format_delimited((char_ % ',')[_0 = fusion::make_single_view(v)], space)
         ));
         BOOST_TEST(test( "a,b,c", 
-            format(char_ % ',', v)
+            karma::format(char_ % ',', v)
         ));
         BOOST_TEST(test( "a , b , c ", 
-            format_delimited(char_ % ',', space, v)
+            karma::format_delimited(char_ % ',', space, v)
         ));
 
         // output all elements of a list
@@ -174,16 +173,16 @@ main()
 //             (*char_)[_1 = l] 
 //         ));
 //         BOOST_TEST(test( "abc", 
-//             format((*char_)[_1 = l])
+//             karma::format((*char_)[_1 = l])
 //         ));
 //         BOOST_TEST(test( "a b c ", 
-//             format_delimited((*char_)[_1 = l], space)
+//             karma::format_delimited((*char_)[_1 = l], space)
 //         ));
         BOOST_TEST(test( "abc", 
-            format(*char_, l)
+            karma::format(*char_, l)
         ));
         BOOST_TEST(test( "a b c ", 
-            format_delimited(*char_, space, l)
+            karma::format_delimited(*char_, space, l)
         ));
     }
 

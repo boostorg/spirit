@@ -12,6 +12,7 @@
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/info.hpp>
+#include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/support/detail/hold_any.hpp>
 #include <boost/spirit/home/support/detail/get_encoding.hpp>
 #include <boost/spirit/home/karma/domain.hpp>
@@ -21,6 +22,7 @@
 #include <boost/spirit/home/karma/stream/detail/format_manip.hpp>
 #include <boost/spirit/home/karma/stream/detail/iterator_sink.hpp>
 #include <boost/spirit/home/karma/detail/get_casetag.hpp>
+#include <boost/spirit/home/karma/detail/extract_from.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/cons.hpp>
@@ -126,9 +128,12 @@ namespace boost { namespace spirit { namespace karma
                 OutputIterator, Char, CharEncoding, Tag
             > sink_device;
 
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
-            ostr << attr << std::flush;
+            ostr << traits::extract_from(attr) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);   // always do post-delimiting
@@ -153,10 +158,13 @@ namespace boost { namespace spirit { namespace karma
                 output_iterator, Char, CharEncoding, Tag
             > sink_device;
 
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
             ostr.imbue(sink.get_ostream().getloc());
-            ostr << attr << std::flush;
+            ostr << traits::extract_from(attr) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);  // always do post-delimiting

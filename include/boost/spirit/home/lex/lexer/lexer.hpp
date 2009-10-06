@@ -90,7 +90,7 @@ namespace boost { namespace spirit { namespace lex
                     token_type &t = *first;
                     if (token_is_valid(t) && t.state() == first.get_state()) {
                     // any of the token definitions matched
-                        qi::detail::assign_to(t, attr);
+                        spirit::traits::assign_to(t, attr);
                         ++first;
                         return true;
                     }
