@@ -84,28 +84,28 @@ not defined in __primitive_generator_concept__.
                              of the mandory attribute. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). The character type of the I/O ostream
                              is assumed to be `char`.]]
     [[`stream(s)`]          [Call the streaming `operator<<()` for the type
                              of the immediate value `s`. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). The character type of the I/O ostream
                              is assumed to be `char`.]]
     [[`wstream`]            [Call the streaming `operator<<()` for the type
                              of the mandory attribute. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). The character type of the I/O ostream
                              is assumed to be `wchar_t`.]]
     [[`wstream(s)`]         [Call the streaming `operator<<()` for the type
                              of the immediate value `s`. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). The character type of the I/O ostream
                              is assumed to be `wchar_t`.]]
 ]
@@ -124,7 +124,7 @@ arbitrary underlying character type.
                              of the mandory attribute. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). The character type of the I/O ostream
                              is assumed to be `Char`]]
     [
@@ -134,7 +134,7 @@ arbitrary underlying character type.
                              of the immediate value `s`. The output emitted 
                              by this operator will be the result of the 
                              `stream` generator. This generator never fails 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). The character type of the I/O ostream
                              is assumed to be `Char`.]]
 ]

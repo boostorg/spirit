@@ -10,7 +10,7 @@
 [def __customize_transform_attribute__ [link spirit.abstracts.customize.transform `transform_attribute`]]
 [def __customize_optional_attribute__ [link spirit.abstracts.customize.optional `optional_attribute`]]
 [def __customize_assign_to__ [link spirit.abstracts.customize.assign_to `assign_to`]]
-[def __customize_push_back_container__ `push_back_container` [/ link spirit.abstracts.customize.store_value.push_back `push_back_container`]]
+[def __customize_push_back_container__ [link spirit.abstracts.customize.store_value.push_back `push_back_container`]]
 [def __customize_container_value__ [link spirit.abstracts.customize.store_value.container_value `container_value`]]
 [def __customize_clear_value__ [link spirit.abstracts.customize.store_value.clear_value `clear_value`]]
 [def __customize_extract_from__ [link spirit.abstracts.customize.extract_from `extract_from`]]
@@ -198,7 +198,7 @@ __qi_list__, and [qi_repeat Repeat]) two attribute customization points have to 
 specialized: __customize_container_value__ and __customize_push_back_container__. This section 
 describes both.
 
-[section:container_value Determine the Type to be stored in a Container (Qi)]
+[section:container_value Determine the Type to be Stored in a Container (Qi)]
 
 [heading container_value]
 
@@ -258,8 +258,6 @@ Also, see __include_structure__.
                                    `C`.]]
 ]
 
-The type `C` is asumed to represent a container.
-
 [heading Predefined Specializations]
 
 __spirit__ predefines specializations of this customization point for the 
@@ -271,7 +269,7 @@ conditions for which the corresponding specializations will evaluate to
     [[Type]                   [Value]]
     [[`C`]                    [The non-const `value_type` of the given container
                                type, `C`. ]]
-    [[`optional<T>`]          [Returns `container_value<T>::type`]]
+    [[`boost::optional<C>`]   [Returns `container_value<C>::type`]]
     [[`boost::variant<T1, T2, ...>`]
                               [Returns `container_value<TN>::value` for the 
                                first `TN` (out of `T1`, `T2`, ...) for which
@@ -296,8 +294,120 @@ TBD
 
 [endsect]
 
-[/ section:push_back push_back_container]
-[/ endsect]
+[section:push_back Store a Parsed Attribute Value into a Container (Qi)]
+
+[heading push_back_container]
+
+The template `push_back_container` is a template meta function used as an 
+attribute customization point. It is invoked by the /Qi/ repetitive containers 
+(__qi_kleene__, __qi_plus__, __qi_list__, and [qi_repeat Repeat]) to store 
+a parsed attribute value into a container.
+
+[heading Module Headers]
+
+    #include <boost/spirit/home/support/container.hpp>
+
+Also, see __include_structure__.
+
+[note This header file does not need to be included directly by any user 
+      program as it is normally included by other Spirit header files relying
+      on its content.]
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::traits`]]
+]
+
+[heading Synopsis]
+
+    template <typename Container, typename Attrib, typename Enable>
+    struct push_back_container;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Container`]          [The type, `Container` needs to 
+                             be tested whether it has to be treated
+                             as a container]                              [none]]
+    [[`Attrib`]             [The type, `Attrib` is the one returned from the 
+                             customization point __customize_container_value__
+                             and represents the attribute value to be stored in 
+                             the container of type `Container`.]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `is_container` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`C`]          [A type to be used as a container to store attribute values in.]]
+    [[`c`]          [A container instance of type `C`.]
+    [[`Attrib`]     [A type to be used as a container to store attribute values in.]]
+    [[`attr`]       [A attribute instance of type `Attrib`.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                     [Semantics]]
+    [[
+``push_back_container<C, Attrib>::call(c, attr)``] 
+                                      [Static function that is invoked whenever an 
+                                       attribute value, `attr` needs to be stored 
+                                       into the container instance `c`.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for the 
+several types. The following table lists those types together with the 
+conditions for which the corresponding specializations will evaluate to 
+`mpl::true_` (see __mpl_boolean_constant__):
+
+[table
+    [[Types]                   [Value]]
+    [[`C`, `Attrib`]           [Store the provided attribute instance `attr` into 
+                                the given container `c` using the function call
+                                `c.insert(c.end(), attr)`.]]
+    [[`boost::optional<C>`, `Attrib`] 
+                               [If the provided instance of `boost::optional<>` is not
+                                initialized, invoke the appropriate initialization
+                                and afterwards apply the customization point
+                                `push_back_container<C, Attrib>`, treating the
+                                instance held by the optional (of type `C`) as 
+                                the container to store the attribute in.]]
+    [[`boost::variant<T1, T2, ...>`, `Attrib`]
+                               [If the instance of the variant currently holds a
+                                value with a type, `TN`, for which `is_container<TN>::type`
+                                evaluates to `mpl::true_`, this customization
+                                point specialization will apply 
+                                `push_back_container<TN, Attrib>`, treating the
+                                instance held by the variant (of type `TN`) as 
+                                the container to store the attribute in. Otherwise
+                                it will raise an assertion.]]
+    [[__unused_type__]         [Do nothing.]]
+]
+
+[heading Related Attribute Customization Points]
+
+If this customization point is implemented, the following other customization 
+points need to be implemented as well.
+
+[table
+    [[Name]                   [When to implement]]
+    [[__customize_container_value__]  [Qi: __qi_list__, __qi_kleene__, __qi_plus__, [qi_repeat Repeat].]]
+]
+
+[heading Example]
+
+TBD
+
+[endsect]
 
 [/ clear_value]
 [/ endsect]

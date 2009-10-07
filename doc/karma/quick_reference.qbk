@@ -601,7 +601,6 @@ information from the `Attrib` and `Context` that are otherwise fiddly to extract
     [[`_val`]                   [The enclosing rule's synthesized attribute.]]
     [[`_r1, _r2... , _rN`]      [The enclosing rule's Nth inherited attribute.]]
     [[`_a, _b... , _j`]         [The enclosing rule's local variables (`_a` refers to the first).]]
-    [[`_val`]                   [The enclosing rule's synthesized attribute.]]
     [[`_pass`]                  [Assign `false` to `_pass` to force a generator failure.]]
 ]
 

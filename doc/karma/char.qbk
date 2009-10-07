@@ -163,41 +163,41 @@ not defined in __primitive_generator_concept__.
 [table
     [[Expression]           [Description]]
     [[`ch`]                 [Generate the character literal `ch`. This generator 
-                             never fails (except if the underlying output stream 
+                             never fails (unless the underlying output stream 
                              reports an error).]]
     [[`lit(ch)`]            [Generate the character literal `ch`. This generator 
-                             never fails (except if the underlying output stream 
+                             never fails (unless the underlying output stream 
                              reports an error).]]
     [[`ns::char_`]          [Generate the character provided by a mandatory 
                              attribute interpreted in the character set defined 
-                             by `ns`. This generator never fails (except if the 
+                             by `ns`. This generator never fails (unless the 
                              underlying output stream reports an error).]]
     [[`ns::char_(ch)`]      [Generate the character `ch` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
-                             to the immediate literal (except if the underlying 
+                             to the immediate literal (unless the underlying 
                              output stream reports an error). Otherwise this 
                              generator fails and does not generate any output.]]
     [[`ns::char_("c")`]     [Generate the character `c` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
-                             to the immediate literal (except if the underlying 
+                             to the immediate literal (unless the underlying 
                              output stream reports an error). Otherwise this 
                              generator fails and does not generate any output.]]
     [[`ns::char_(ch1, ch2)`][Generate the character provided by a mandatory 
                              attribute interpreted in the character set defined 
                              by `ns`. The generator succeeds as long as the 
                              attribute belongs to the character range `[ch1, ch2]` 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). Otherwise this generator fails and does not 
                              generate any output.]]
     [[`ns::char_(cs)`]      [Generate the character provided by a mandatory 
                              attribute interpreted in the character set defined 
                              by `ns`. The generator succeeds as long as the 
                              attribute belongs to the character set `cs` 
-                             (except if the underlying output stream reports an 
+                             (unless the underlying output stream reports an 
                              error). Otherwise this generator fails and does not 
                              generate any output.]]
     [[`~cg`]                [Negate `cg`. The result is a negated char generator 
@@ -364,73 +364,73 @@ not defined in __primitive_generator_concept__.
     [[`ns::alnum`]      [If the mandatory attribute satisfies the concept of 
                          `std::isalnum` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::alpha`]      [If the mandatory attribute satisfies the concept of 
                          `std::isalpha` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::blank`]      [If the mandatory attribute satisfies the concept of 
                          `std::isblank` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::cntrl`]      [If the mandatory attribute satisfies the concept of 
                          `std::iscntrl` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::digit`]      [If the mandatory attribute satisfies the concept of 
                          `std::isdigit` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::graph`]      [If the mandatory attribute satisfies the concept of 
                          `std::isgraph` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::print`]      [If the mandatory attribute satisfies the concept of 
                          `std::isprint` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::punct`]      [If the mandatory attribute satisfies the concept of 
                          `std::ispunct` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::xdigit`]      [If the mandatory attribute satisfies the concept of 
                          `std::isxdigit` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::lower`]      [If the mandatory attribute satisfies the concept of 
                          `std::islower` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::upper`]      [If the mandatory attribute satisfies the concept of 
                          `std::isupper` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.]]
     [[`ns::space`]      [If the optional attribute satisfies the concept of 
                          `std::isspace` in the __karma_char_encoding_namespace__
                          the generator succeeds after emitting 
-                         its attribute (except if the underlying output stream 
+                         its attribute (unless the underlying output stream 
                          reports an error). This generator fails otherwise 
                          while not generating anything.If no attribute is 
                          supplied this generator emits a single space 

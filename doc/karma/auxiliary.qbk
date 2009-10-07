@@ -139,7 +139,7 @@ not defined in __primitive_generator_concept__.
     [[Expression]       [Semantics]]
     [[`eol`]            [Create a component generating a single end of line
                          character in the output. This generator never fails 
-                         (except if the underlying output stream reports an 
+                         (unless the underlying output stream reports an 
                          error).]]
 ]
 
@@ -254,11 +254,11 @@ not defined in __primitive_generator_concept__.
     [[`eps`]            [Creates a component generating an empty string. 
                          Succeeds always.]]
     [[`eps(b)`]         [Creates a component generating an empty string. 
-                         Succeeds if `b` is `true` (except if the underlying 
+                         Succeeds if `b` is `true` (unless the underlying 
                          output stream reports an error).]]
     [[`eps(fb)`]        [Creates a component generating an empty string. 
                          Succeeds if `fb` returns `true` at generate time 
-                         (except if the underlying output stream reports an 
+                         (unless the underlying output stream reports an 
                          error).]]
 ]
 
@@ -352,7 +352,7 @@ not defined in __generator_concept__.
                          generator instance. This generator is then invoked
                          in order to generate the output. This generator will
                          succeed as long as the invoked generated succeeds as 
-                         well (except if the underlying output stream reports 
+                         well (unless the underlying output stream reports 
                          an error).]]
     [[`lazy(fg)`]       [The function or function object will be invoked at 
                          generate time. It is expected to return a generator 

@@ -81,20 +81,20 @@ not defined in __primitive_generator_concept__.
 [table
     [[Expression]           [Description]]
     [[`s`]                  [Generate the string literal `s`. This generator 
-                             never fails (except if the underlying output stream 
+                             never fails (unless the underlying output stream 
                              reports an error).]]
     [[`lit(s)`]             [Generate the string literal `s`. This generator 
-                             never fails (except if the underlying output stream 
+                             never fails (unless the underlying output stream 
                              reports an error).]]
     [[`ns::string`]         [Generate the string provided by a mandatory 
                              attribute interpreted in the character set defined 
-                             by `ns`. This generator never fails (except if the 
+                             by `ns`. This generator never fails (unless the 
                              underlying output stream reports an error).]]
     [[`ns::string(s)`]      [Generate the string `s` as provided by the 
                              immediate literal value the generator is initialized 
                              from. If this generator has an associated attribute 
                              it succeeds only as long as the attribute is equal 
-                             to the immediate literal (except if the underlying 
+                             to the immediate literal (unless the underlying 
                              output stream reports an error). Otherwise this 
                              generator fails and does not generate any output.]]
 ]
