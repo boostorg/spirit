@@ -49,6 +49,11 @@ namespace boost { namespace spirit { namespace traits
     {};
 
    template <typename T>
+   struct is_container<T&> 
+     : is_container<T> 
+   {};
+
+   template <typename T>
    struct is_container<optional<T> > 
      : is_container<T> 
    {};
@@ -130,6 +135,11 @@ namespace boost { namespace spirit { namespace traits
     {};
     //]
 
+    template <typename T>
+    struct container_value<T&> 
+      : container_value<T> 
+    {};
+
     // this will be instantiated if the optional holds a container
     template <typename T>
     struct container_value<optional<T> > 
@@ -175,6 +185,11 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef typename Container::iterator type;
     };
+
+    template <typename Container>
+    struct container_iterator<Container&>
+      : container_iterator<Container>
+    {};
 
     template <typename Container>
     struct container_iterator<Container const>

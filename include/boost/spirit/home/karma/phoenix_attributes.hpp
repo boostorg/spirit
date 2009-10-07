@@ -10,6 +10,11 @@
 #pragma once
 #endif
 
+#include <boost/spirit/include/version.hpp>
+
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
+
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/container.hpp>
 
@@ -24,6 +29,11 @@ namespace boost { namespace spirit { namespace traits
     // generator functions in the context of generators expecting a container 
     // attribute (Kleene, plus, list, repeat, etc.)
     ///////////////////////////////////////////////////////////////////////////
+    template <typename Eval>
+    struct is_container<phoenix::actor<Eval> const>
+      : is_container<typename boost::result_of<phoenix::actor<Eval>()>::type>
+    {};
+
     template <typename Eval>
     struct container_iterator<phoenix::actor<Eval> const>
     {
@@ -96,4 +106,5 @@ namespace boost { namespace spirit { namespace traits
 
 }}}
 
+#endif
 #endif

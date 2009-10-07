@@ -170,7 +170,7 @@ namespace boost { namespace spirit
     phoenix::actor<attribute<1> > const _r1 = attribute<1>();
     phoenix::actor<attribute<2> > const _r2 = attribute<2>();
 
-    //  Bring in the rest of the attributes (_4 .. _N+1), using PP
+    //  Bring in the rest of the attributes (_r4 .. _rN+1), using PP
     BOOST_PP_REPEAT_FROM_TO(
         3, SPIRIT_ATTRIBUTES_LIMIT, SPIRIT_DECLARE_ATTRIBUTE, _)
 
