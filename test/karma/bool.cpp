@@ -99,7 +99,10 @@ int main()
         BOOST_TEST(test("true", bool_, optbool));
     }
 
-    // test Phoenix expression attributes (include karma_phoenix_attributes.hpp)
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
+    // test Phoenix expression attributes (requires to include 
+    // karma_phoenix_attributes.hpp)
     {
         namespace phoenix = boost::phoenix;
 
@@ -109,6 +112,7 @@ int main()
         BOOST_TEST(test("false", bool_, phoenix::ref(b)));
         BOOST_TEST(test("true", bool_, ++phoenix::ref(b)));
     }
+#endif
 
     {
         BOOST_TEST(test("false", lower[bool_], false));

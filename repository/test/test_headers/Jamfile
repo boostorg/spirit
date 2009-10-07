@@ -29,6 +29,11 @@ headers =
     path.glob-tree ../../../../../boost/spirit/repository/include : *.hpp 
 ] ;
 
+main_headers = 
+[ 
+    path.glob-tree ../../../../../boost/spirit/include : *.hpp : classic* phoenix1*
+] ;
+
 for local file in $(headers)
 {
     compile test.cpp
@@ -60,12 +65,12 @@ rule generate-include-all ( target : sources * : properties * )
 }
 
 make auto_all1.cpp 
-    : $(headers) 
+    : $(headers) $(main_headers)
     : @generate-include-all 
     ;
 
 make auto_all2.cpp 
-    : $(headers) 
+    : $(headers) $(main_headers)
     : @generate-include-all 
     : <generate-include-all-order>reverse 
     ;

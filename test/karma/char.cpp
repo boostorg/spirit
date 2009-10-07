@@ -283,6 +283,8 @@ main()
         BOOST_TEST(!test(L"", wide::char_(L'y'), w));
     }
 
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
     // yes, we can use phoenix expressions as attributes as well
     // but only if we include karma_phoenix_attributes.hpp
     {
@@ -295,6 +297,7 @@ main()
         BOOST_TEST(test("x", ascii::char_, phoenix::ref(c)));
         BOOST_TEST(test("y", ascii::char_, ++phoenix::ref(c)));
     }
+#endif
 
     return boost::report_errors();
 }

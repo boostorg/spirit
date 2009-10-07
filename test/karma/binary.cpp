@@ -185,6 +185,8 @@ main()
 #endif
     }
 
+// we support Phoenix attributes only starting with V2.2
+#if SPIRIT_VERSION >= 0x2020
     {   // test Phoenix expression attributes, only supported if 
         // karma_phoenix_attributes.hpp is included
         namespace phoenix = boost::phoenix;
@@ -250,6 +252,7 @@ main()
 
 #endif
     }
+#endif
 
     return boost::report_errors();
 }
