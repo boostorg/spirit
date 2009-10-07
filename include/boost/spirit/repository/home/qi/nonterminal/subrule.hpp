@@ -196,17 +196,30 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             context_type;
 
             // prepare attribute
-            typedef traits::make_transformed_attribute<
+            typedef traits::make_attribute<
                 subrule_attr_type, Attribute> make_attribute;
 
-            typename make_attribute::type attr_ = make_attribute::call(attr);
+            // do down-stream transformation, provides attribute for 
+            // rhs parser
+            typedef traits::transform_attribute<
+                typename make_attribute::type, subrule_attr_type> transform;
+
+            typename transform::type attr_ = 
+                transform::pre(make_attribute::call(attr));
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
             // without passing values for them.
             context_type context(*this, attr_);
 
-            return def.binder(first, last, context, skipper);
+            if (def.binder(first, last, context, skipper))
+            {
+                // do up-stream transformation, this integrates the results 
+                // back into the original attribute value, if appropriate
+                traits::post_transform(attr, attr_);
+                return true;
+            }
+            return false;
         }
 
         template <typename Def
@@ -233,17 +246,30 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             context_type;
 
             // prepare attribute
-            typedef traits::make_transformed_attribute<
+            typedef traits::make_attribute<
                 subrule_attr_type, Attribute> make_attribute;
 
-            typename make_attribute::type attr_ = make_attribute::call(attr);
+            // do down-stream transformation, provides attribute for 
+            // rhs parser
+            typedef traits::transform_attribute<
+                typename make_attribute::type, subrule_attr_type> transform;
+
+            typename transform::type attr_ = 
+                transform::pre(make_attribute::call(attr));
 
             // If you are seeing a compilation error here, you are probably
             // trying to use a subrule which has inherited attributes,
             // passing values of incompatible types for them.
             context_type context(*this, attr_, params, caller_context);
 
-            return def.binder(first, last, context, skipper);
+            if (def.binder(first, last, context, skipper))
+            {
+                // do up-stream transformation, this integrates the results 
+                // back into the original attribute value, if appropriate
+                traits::post_transform(attr, attr_);
+                return true;
+            }
+            return false;
         }
 
         template <typename Context>
