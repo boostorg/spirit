@@ -120,6 +120,11 @@ boost_test_run(lex_set_token_value_phoenix lex/set_token_value_phoenix.cpp COMPI
 
 boost_test_run(lex_regression001 lex/regression001.cpp COMPILE_FLAGS ${test_compile_flags})
 boost_test_run(lex_regression002 lex/regression002.cpp COMPILE_FLAGS ${test_compile_flags})
+boost_test_run(lex_regression004 lex/regression004.cpp COMPILE_FLAGS ${test_compile_flags})
+
+# how to express dependencies? lex_regression003 depends on lex_regression003_generate to be executed first
+# boost_test_run(lex_regression003_generate lex/regression003_generate.cpp COMPILE_FLAGS ${test_compile_flags})
+# boost_test_run(lex_regression003 lex/regression003.cpp COMPILE_FLAGS ${test_compile_flags})
 
 # run support tests
 # boost_test_run(support_hold_any support/hold_any.cpp COMPILE_FLAGS ${test_compile_flags})

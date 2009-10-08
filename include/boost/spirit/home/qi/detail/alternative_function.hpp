@@ -33,23 +33,31 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         }
 
         template <typename Component>
-        bool operator()(Component const& component) const
+        bool call(Component const& component, mpl::true_) const
         {
             // if Attribute is not a variant, then pass it as-is
             return component.parse(first, last, context, skipper, attr);
         }
 
-        template <typename Component, typename T>
-        bool operator()(Component const& component, mpl::identity<T>) const
+        template <typename Component>
+        bool call(Component const& component, mpl::false_) const
         {
-            // if Attribute is a variant, then create an attribute.
-            T val;
+            // if Attribute is a variant, then create an attribute for
+            // the Component with its expected type.
+            typename traits::attribute_of<Component, Context, Iterator>::type val;
             if (component.parse(first, last, context, skipper, val))
             {
                 traits::assign_to(val, attr);
                 return true;
             }
             return false;
+        }
+
+        template <typename Component>
+        bool operator()(Component const& component) const
+        {
+            // return true if the parser succeeds
+            return call(component, spirit::traits::not_is_variant<Attribute>());
         }
 
         Iterator& first;

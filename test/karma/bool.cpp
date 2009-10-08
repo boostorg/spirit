@@ -12,7 +12,6 @@
 #include <boost/spirit/include/karma_string.hpp>
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
-#include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
 #include <boost/spirit/home/support/safe_bool.hpp>
 
@@ -97,17 +96,6 @@ int main()
         BOOST_TEST(test("false", bool_, optbool));
         optbool = true;
         BOOST_TEST(test("true", bool_, optbool));
-    }
-
-    // test Phoenix expression attributes (include karma_phoenix_attributes.hpp)
-    {
-        namespace phoenix = boost::phoenix;
-
-        BOOST_TEST(test("true", bool_, phoenix::val(true)));
-
-        bool b = false;
-        BOOST_TEST(test("false", bool_, phoenix::ref(b)));
-        BOOST_TEST(test("true", bool_, ++phoenix::ref(b)));
     }
 
     {

@@ -9,12 +9,6 @@
 #if !defined(SPIRIT_VERSION_NOVEMBER_13_2008_0834AM)
 #define SPIRIT_VERSION_NOVEMBER_13_2008_0834AM
 
-///////////////////////////////////////////////////////////////////////////////
-//
-//  This is the version of the current Spirit distribution
-//
-///////////////////////////////////////////////////////////////////////////////
-#define SPIRIT_VERSION 0x2010
-#define SPIRIT_PIZZA_VERSION COSMIC_KARMA  // :-)
+#include <boost/spirit/include/version.hpp>
 
 #endif
