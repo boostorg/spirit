@@ -70,6 +70,8 @@ struct test_bool_policy : boost::spirit::karma::bool_policies<>
 int main()
 {
     using boost::spirit::karma::bool_;
+    using boost::spirit::karma::false_;
+    using boost::spirit::karma::true_;
     using boost::spirit::karma::lit;
     using boost::spirit::karma::lower;
     using boost::spirit::karma::upper;
@@ -78,6 +80,8 @@ int main()
     {
         BOOST_TEST(test("false", bool_, false));
         BOOST_TEST(test("true", bool_, true));
+        BOOST_TEST(test("false", false_, false));
+        BOOST_TEST(test("true", true_, true));
         BOOST_TEST(test("false", bool_(false)));
         BOOST_TEST(test("true", bool_(true)));
         BOOST_TEST(test("false", bool_(false), false));

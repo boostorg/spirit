@@ -7,7 +7,9 @@
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/spirit/include/support_argument.hpp>
+#include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_numeric.hpp>
+#include <boost/spirit/include/qi_directive.hpp>
 #include <boost/cstdint.hpp>
 #include "test.hpp"
 
@@ -48,6 +50,27 @@ int main()
         BOOST_TEST(test("true", bool_));
         BOOST_TEST(test("false", bool_));
         BOOST_TEST(!test("fasle", bool_));
+    }
+
+    {
+        using boost::spirit::qi::true_;
+        using boost::spirit::qi::false_;
+
+        BOOST_TEST(test("true", true_));
+        BOOST_TEST(!test("true", false_));
+        BOOST_TEST(test("false", false_));
+        BOOST_TEST(!test("false", true_));
+    }
+
+    {
+        using boost::spirit::qi::true_;
+        using boost::spirit::qi::false_;
+        using boost::spirit::qi::no_case;
+
+        BOOST_TEST(test("True", no_case[bool_]));
+        BOOST_TEST(test("False", no_case[bool_]));
+        BOOST_TEST(test("True", no_case[true_]));
+        BOOST_TEST(test("False", no_case[false_]));
     }
 
     {
