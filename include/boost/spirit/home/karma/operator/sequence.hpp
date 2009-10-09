@@ -121,9 +121,9 @@ namespace boost { namespace spirit { namespace karma
         // standard case. Attribute is a fusion tuple
         template <
             typename OutputIterator, typename Context, typename Delimiter
-          , typename Attribute>
+          , typename Attribute, typename Pred1, typename Pred2>
         bool generate_impl(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Attribute& attr_, mpl::false_) const
+          , Delimiter const& d, Attribute& attr_, Pred1, Pred2) const
         {
             typedef detail::fail_function<
                 OutputIterator, Context, Delimiter> fail_function;
@@ -141,12 +141,14 @@ namespace boost { namespace spirit { namespace karma
               , predicate());
         }
 
-        // Special case when Attribute is an stl container
+        // Special case when Attribute is an stl container and the sequence's
+        // attribute is not a one element sequence
         template <
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool generate_impl(OutputIterator& sink, Context& ctx
-          , Delimiter const& d, Attribute const& attr_, mpl::true_) const
+          , Delimiter const& d, Attribute const& attr_
+          , mpl::true_, mpl::false_) const
         {
             // return false if *any* of the generators fail
             typedef detail::fail_function<
@@ -164,8 +166,15 @@ namespace boost { namespace spirit { namespace karma
         bool generate(OutputIterator& sink, Context& ctx, Delimiter const& d
           , Attribute const& attr) const
         {
-            return generate_impl(sink, ctx, d, attr
-              , traits::is_container<Attribute>());
+            typedef typename traits::is_container<Attribute>::type 
+                is_container;
+
+            typedef typename attribute<Context>::type_ attr_type_;
+            typedef typename traits::one_element_sequence<attr_type_>::type 
+                is_one_element_sequence;
+
+            return generate_impl(sink, ctx, d, attr, is_container()
+              , is_one_element_sequence());
         }
 
         template <typename Context>
