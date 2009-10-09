@@ -145,6 +145,24 @@ main()
         }
     }
 
+    // test special case where sequence has a one element vector attribute 
+    // sequence and this element is a rule (attribute has to be passed through 
+    // without change)
+    {
+        typedef spirit_test::output_iterator<char>::type outiter_type;
+        namespace karma = boost::spirit::karma;
+
+        karma::rule<outiter_type, std::vector<int>()> r = -(int_ % ',');
+        std::vector<int> v;
+        BOOST_TEST(test(">", '>' << r, v));
+
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        v.push_back(4);
+        BOOST_TEST(test(">1,2,3,4", '>' << r, v));
+    }
+
     return boost::report_errors();
 }
 
