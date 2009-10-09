@@ -445,7 +445,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
                 {
                     if (count == 0) // must have at least one digit
                         return false;
-                    attr = 0;
+                    traits::assign_to(0, attr);
                     first = it;
                     return true;
                 }
