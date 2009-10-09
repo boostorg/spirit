@@ -58,6 +58,14 @@ namespace boost { namespace spirit
       : mpl::true_ {};
 
     template <>
+    struct use_terminal<karma::domain, tag::true_>    // enables true_
+      : mpl::true_ {};
+
+    template <>
+    struct use_terminal<karma::domain, tag::false_>    // enables false_
+      : mpl::true_ {};
+
+    template <>
     struct use_terminal<karma::domain, bool>          // enables lit(true)
       : mpl::true_ {};
 
@@ -97,6 +105,10 @@ namespace boost { namespace spirit { namespace karma
 {
     using spirit::bool_;
     using spirit::bool__type;
+    using spirit::true_;
+    using spirit::true__type;
+    using spirit::false_;
+    using spirit::false__type;
 
     using spirit::lit;    // lit(true) is equivalent to true
 
@@ -182,8 +194,8 @@ namespace boost { namespace spirit { namespace karma
         // it fails.
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+        bool generate(OutputIterator& sink, Context&t
+          , Delimiter const& d, Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
                 bool(n_) != bool(traits::extract_from(attr)))
@@ -244,12 +256,42 @@ namespace boost { namespace spirit { namespace karma
                 return result_type(get_stateful_data<tag_type>::call(term));
             }
         };
+
+        template <typename Modifiers, bool b>
+        struct make_bool_literal
+        {
+            static bool const lower = 
+                has_modifier<Modifiers, tag::char_code_base<tag::lower> >::value;
+            static bool const upper = 
+                has_modifier<Modifiers, tag::char_code_base<tag::upper> >::value;
+
+            typedef literal_bool_generator<
+                bool
+              , typename spirit::detail::get_encoding<
+                    Modifiers, unused_type, lower || upper>::type
+              , typename detail::get_casetag<Modifiers, lower || upper>::type
+              , bool_policies<>, false
+            > result_type;
+
+            result_type operator()(unused_type, unused_type) const
+            {
+                return result_type(b);
+            }
+        };
     }
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Modifiers>
     struct make_primitive<tag::bool_, Modifiers> 
       : detail::make_bool<Modifiers> {};
+
+    template <typename Modifiers>
+    struct make_primitive<tag::true_, Modifiers> 
+      : detail::make_bool_literal<Modifiers, true> {};
+
+    template <typename Modifiers>
+    struct make_primitive<tag::false_, Modifiers> 
+      : detail::make_bool_literal<Modifiers, false> {};
 
     template <typename T, typename Policies, typename Modifiers>
     struct make_primitive<
