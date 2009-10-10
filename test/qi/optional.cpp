@@ -13,9 +13,22 @@
 #include <boost/spirit/include/support_argument.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/fusion/adapted/struct.hpp>
 
 #include <iostream>
 #include "test.hpp"
+
+struct adata
+{
+    int a;
+    boost::optional<int> b;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+    adata,
+    (int, a)
+    (boost::optional<int>, b)
+)
 
 int
 main()
@@ -63,6 +76,15 @@ main()
         n = boost::optional<int>();
         BOOST_TEST((test("abcd", (-int_)[phx::ref(n) = _1], false)));
         BOOST_TEST(!n);
+    }
+
+    {
+        std::vector<adata> v;
+        BOOST_TEST((test_attr("a 1 2 a 2", *("a" >> int_ >> -int_), v
+          , char_(' '))));
+        BOOST_TEST(2 == v.size() && 
+            1 == v[0].a && v[0].b && 2 == *(v[0].b) &&
+            2 == v[1].a && !v[1].b);
     }
 
     return boost::report_errors();
