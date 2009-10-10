@@ -194,7 +194,7 @@ namespace boost { namespace spirit { namespace karma
         // it fails.
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context&t
+        bool generate(OutputIterator& sink, Context&
           , Delimiter const& d, Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
