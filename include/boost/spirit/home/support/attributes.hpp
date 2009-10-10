@@ -644,10 +644,8 @@ namespace boost { namespace spirit { namespace traits
     {
         static void call(optional<T>& val)
         {
-            if (val) {
-                clear(*val);
+            if (val) 
                 val = none_t();   // leave optional uninitialized
-            }
         }
     };
 
