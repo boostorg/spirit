@@ -8,37 +8,6 @@
 
 [section:lex_basics Basics]
 
-[heading Character Encoding Namespace]
-
-Some generators need to know which character set a `char` or `wchar_t` is
-operating on. For example, the regular expression `[a-9]` spans a different 
-set of characters in different character sets. Where necessary, Spirit encodes 
-(tags) the token definitions with the character set. 
-
-We have a namespace for each character set Spirit will be supporting.
-That includes `ascii`, `iso8859_1`, `standard` and `standard_wide` (and
-in the future, `unicode`). In each of the character encoding namespaces,
-we place tagged versions of token definitions such as `char_` and `string`. 
-
-Example:
-
-    using boost::spirit::ascii::char_; // use ASCII character token definitions
-
-Namespaces:
-
-* boost::spirit::ascii
-* boost::spirit::iso8859_1
-* boost::spirit::standard
-* boost::spirit::standard_wide
-
-For ease of use, the components in this namespaces are also brought into
-the lex sub-namespaces with the same names:
-
-* boost::spirit::lex::ascii
-* boost::spirit::lex::iso8859_1
-* boost::spirit::lex::standard
-* boost::spirit::lex::standard_wide
-
 [heading Examples]
 
 All sections in the reference present some real world examples. The

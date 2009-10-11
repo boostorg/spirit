@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.karma_basics"></a><a class="link" href="karma_basics.html" title="Basics"> Basics</a>
 </h4></div></div></div>
 <a name="spirit.karma.reference.karma_basics.lazy_argument"></a><h6>
-<a name="id717565"></a>
+<a name="id762420"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
           Argument</a>
         </h6>
@@ -38,9 +38,9 @@
 <pre class="programlisting"><span class="identifier">g</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
 </pre>
 <p>
-          where <code class="computeroutput"><span class="identifier">g</span></code> is a parser. Each
-          of the arguments (a1...aN) can either be an immediate value, or a function,
-          <code class="computeroutput"><span class="identifier">f</span></code>, with signature:
+          where <code class="computeroutput"><span class="identifier">g</span></code> is a generator.
+          Each of the arguments (a1...aN) can either be an immediate value, or a
+          function, <code class="computeroutput"><span class="identifier">f</span></code>, with signature:
         </p>
 <pre class="programlisting"><span class="identifier">T</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
 </pre>
@@ -53,7 +53,7 @@
           Actions</a>).
         </p>
 <a name="spirit.karma.reference.karma_basics.character_encoding_namespace"></a><h6>
-<a name="id717705"></a>
+<a name="id762561"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
           Encoding Namespace</a>
         </h6>
@@ -114,7 +114,7 @@
           </li>
 </ul></div>
 <a name="spirit.karma.reference.karma_basics.examples"></a><h6>
-<a name="id717889"></a>
+<a name="id762744"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Examples</a>
         </h6>
 <p>
@@ -210,7 +210,7 @@
 <p>
         </p>
 <a name="spirit.karma.reference.karma_basics.models"></a><h6>
-<a name="id719332"></a>
+<a name="id764939"></a>
           <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.models">Models</a>
         </h6>
 <p>
@@ -229,7 +229,9 @@
 </ul></div>
 <p>
           The namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code> is open for users to provide their
-          own specializations.
+          own specializations. The customization points implemented by <span class="emphasis"><em>Spirit.Karma</em></span>
+          usable to customize the behavior of generators are described in the section
+          <a class="link" href="../../abstracts/customize.html" title="Customization of Spirit's Attribute Handling">Customization of Attribute Handling</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

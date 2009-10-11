@@ -297,9 +297,10 @@ its invocation. Inherited attributes can be used to parametrize the parser or
 generator depending on the context they are invoked from.
 
 
+[/
 * attribute propagation
   * explicit and operator%=
-
+]
 
 [endsect]
 

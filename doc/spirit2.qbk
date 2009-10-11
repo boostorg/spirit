@@ -79,6 +79,8 @@
 [def __sec_qi__                 [link spirit.qi Qi]]
 [def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_attributes__         [link spirit.abstracts.attributes Attributes]]
+[def __sec_customization_points__ [link spirit.abstracts.customize Customization of Attribute Handling]]
+
 [def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
 [def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Karma Generators]]
 [def __sec_karma_compound__     [link spirit.karma.quick_reference.compound_attribute_rules Generator Compound Attribute Rules]]
@@ -104,13 +106,11 @@
 [def __sec_ref_lex_token__      [link spirit.lex.reference.token Token Class]]
 [def __sec_ref_lex_token_def__  [link spirit.lex.reference.tokendef TokenDef Class]]
 
-[def __lex_char_encoding_namespace__ [link spirit.lex.reference.lex_basics.character_encoding_namespace Character Encoding Namespace]]
-
 [/ References to API descriptions ]
 
-[def __api_tokenize_and_parse__ [link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
+[def __api_tokenize_and_parse__ `tokenize_and_parse()` [/link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
 [def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
-[def __api_generate_static__    [link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
+[def __api_generate_static__    `generate_static()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
 [template karma_format[str]     [str] [/link spirit.karma.reference.format [str]]]
 
@@ -232,11 +232,11 @@
 
 [/ Some images ]
 
-[def __note__                   [$../images/note.png]]
-[def __tip__                    [$../images/tip.png]]
-[def __important__              [$../images/important.png]]
-[def __caution__                [$../images/caution.png]]
-[def __danger__                 [$../images/alert.png]]
+[def __note__                   [$./images/note.png]]
+[def __tip__                    [$./images/tip.png]]
+[def __important__              [$./images/important.png]]
+[def __caution__                [$./images/caution.png]]
+[def __danger__                 [$./images/alert.png]]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [/ some templates]

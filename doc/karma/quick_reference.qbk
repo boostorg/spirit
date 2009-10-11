@@ -571,7 +571,7 @@ where `f` is a function with the signatures:
     void f(Attrib&, Context&);
     void f(Attrib&, Context&, bool&);
 
-You can use `__boost_bind__` to bind member functions. For function
+You can use __boost_bind__ to bind member functions. For function
 objects, the allowed signatures are:
 
     void operator()(Attrib&, unused_type, unused_type) const;

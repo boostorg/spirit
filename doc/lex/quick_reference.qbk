@@ -69,7 +69,7 @@ where `f` is a function with the signatures:
     void f(Iterator&, Iterator&, pass_flag&, Idtype&);
     void f(Iterator&, Iterator&, pass_flag&, Idtype&, Context&);
 
-You can use `__boost_bind__` to bind member functions. For function
+You can use __boost_bind__ to bind member functions. For function
 objects, the allowed signatures are:
 
     void operator()(unused_type, unused_type, unused_type, unused_type, unused_type) const;

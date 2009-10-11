@@ -1091,7 +1091,9 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::lit           // alias: boost::spirit::karma::lit`]]
-    [[`boost::spirit::bool          // alias: boost::spirit::karma::bool_`]]
+    [[`boost::spirit::bool_         // alias: boost::spirit::karma::bool_`]]
+    [[`boost::spirit::true_         // alias: boost::spirit::karma::true_`]]
+    [[`boost::spirit::false_        // alias: boost::spirit::karma::false_`]]
 ]
 
 [note `lit` is reused by the [karma_string String Generators], the
@@ -1153,6 +1155,14 @@ not defined in __primitive_generator_concept__.
                          is equal to the immediate literal (unless the 
                          underlying output stream reports an error). Otherwise 
                          this generator fails and does not generate any output.]]
+    [[`true_`]          [Generate `"true"`. If this generator has an associated 
+                         attribute it succeeds only as long as the attribute 
+                         is `true` as well (unless the underlying output stream 
+                         reports an error).]]
+    [[`false_`]         [Generate `"false"`. If this generator has an associated 
+                         attribute it succeeds only as long as the attribute 
+                         is `false` as well (unless the underlying output stream 
+                         reports an error).]]
 ]
 
 All generators listed in the table above (except `lit(num)`) are predefined 
@@ -1181,6 +1191,9 @@ boolean generators using a wide range of formatting options.
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
 ]
+
+[note   All boolean generators properly respect the [karma_upperlower `upper`]
+        and [karma_upperlower `lower`] directives.]
 
 [heading Additional Requirements]
 

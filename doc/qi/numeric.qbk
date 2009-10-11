@@ -582,6 +582,8 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::bool_        // alias: boost::spirit::qi::bool_`]]
+    [[`boost::spirit::true_        // alias: boost::spirit::qi::true_`]]
+    [[`boost::spirit::false_       // alias: boost::spirit::qi::false_`]]
 ]
 
 [heading Synopsis]
@@ -618,8 +620,14 @@ not defined in __primitive_parser_concept__.
 [table
     [[Expression]       [Semantics]]
     [[`BP()`]           [Instantiate and (default) construct an `bool_parser`]]
-    [[`bool_`]          [Create an `bool_parser<bool, bool_policies<bool> >`]]
+    [[`bool_`]          [Create a `bool_parser<bool, bool_policies<bool> >`]]
+    [[`true_`]          [Create a `bool_parser<bool, bool_policies<bool> >` 
+                         which is succeeding onlz after matching `"true"`.]]
+    [[`false_`]         [Create a `bool_parser<bool, bool_policies<bool> >` 
+                         which is succeeding onlz after matching `"false"`.]]
 ]
+
+[note   All boolean parsers properly respect the __qi_no_case__`[]` directive.]
 
 [heading Attributes]
 

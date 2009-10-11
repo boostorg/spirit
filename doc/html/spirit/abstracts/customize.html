@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customization of Spirits Attribute Handling</title>
+<title>Customization of Spirit's Attribute Handling</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../index.html" title="Spirit 2.1">
@@ -22,17 +22,45 @@
 <div class="spirit-nav">
 <a accesskey="p" href="indepth/parsers_indepth.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="customize/is_container.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Customization of Spirits Attribute Handling">
+<div class="section" title="Customization of Spirit's Attribute Handling">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="spirit.abstracts.customize"></a><a class="link" href="customize.html" title="Customization of Spirits Attribute Handling"> Customization of Spirits
+<a name="spirit.abstracts.customize"></a><a class="link" href="customize.html" title="Customization of Spirit's Attribute Handling"> Customization of Spirit's
       Attribute Handling</a>
 </h3></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="customize/is_container.html"> Determine
         if a Type Should be Treated as a Container (Qi and Karma)</a></span></dt>
+<dt><span class="section"><a href="customize/transform.html"> Transform an
+        Attribute to a Different Type (Qi and Karma)</a></span></dt>
+<dt><span class="section"><a href="customize/assign_to.html"> Store a Parsed
+        Attribute Value (Qi)</a></span></dt>
 <dt><span class="section"><a href="customize/store_value.html"> Store Parsed
         Attribute Values into a Container (Qi)</a></span></dt>
+<dt><span class="section"><a href="customize/clear_value.html"> Re-Initialize
+        an Attribute Value before Parsing (Qi)</a></span></dt>
+<dt><span class="section"><a href="customize/extract_from.html"> Extract an
+        Attribute Value to Generate Output (Karma)</a></span></dt>
 </dl></div>
+<a name="spirit.abstracts.customize.why_do_we_need_attribute_customization_points"></a><h5>
+<a name="id594937"></a>
+        <a class="link" href="customize.html#spirit.abstracts.customize.why_do_we_need_attribute_customization_points">Why
+        do we need Attribute Customization Points</a>
+      </h5>
+<div class="important" title="Important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Before you read on please be aware that the interfaces described in this
+          section are not finalized and may change in the future without attempting
+          to be backwards compatible. We document the customization point interfaces
+          anyways as we think they are important. Understanding customization points
+          helps understanding Spirit. Additionally they prove to be powerful tools
+          enabling full integration of the user's data structures with <span class="emphasis"><em>Qi's</em></span>
+          parsers and <span class="emphasis"><em>Karma's</em></span> generators.
+        </p></td></tr>
+</table></div>
 <p>
         <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> has been written
         with extensibility in mind. It provides many different attribute customization
@@ -43,8 +71,11 @@
         generally implements the main template, providing a default implementation.
         You as the user have to provide a partial or full specialization of this
         template for the data types you want to integrate with the library. In fact,
-        the library uses these customization points itself to handle the magic of
-        the <code class="computeroutput"><span class="identifier">unused_type</span></code> attribute.
+        the library uses these customization points itself for instance to handle
+        the magic of the <code class="computeroutput"><span class="identifier">unused_type</span></code>
+        attribute type.
+      </p>
+<p>
         Here is an example showing the <a class="link" href="customize/store_value/container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> customization point
         used by different parsers (such as <a class="link" href="../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
         <a class="link" href="../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>, etc.) to find
@@ -102,6 +133,22 @@
 <p>
         The following sections will describe all customization points, together with
         a description which needs to be specialized for what purpose.
+      </p>
+<a name="spirit.abstracts.customize.the_usage_of_customization_points"></a><h5>
+<a name="id595258"></a>
+        <a class="link" href="customize.html#spirit.abstracts.customize.the_usage_of_customization_points">The
+        Usage of Customization Points</a>
+      </h5>
+<p>
+        The different customizations points are used by different parts of the library.
+        Part of the customizations points are used by both, <span class="emphasis"><em>Spirit.Qi</em></span>
+        and <span class="emphasis"><em>Spirit.Karma</em></span>, whereas others are specialized to
+        be applied for one of the sub-libraries only. We will explain when a specific
+        customization point needs to be implemented and, equally important, which
+        customization points need to be implemented at the same time. Often it is
+        not sufficient to provide a specialization for one single customization point
+        only, in this case you as the user have to provide all necessary customizations
+        for your data type you want to integrate with the library.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

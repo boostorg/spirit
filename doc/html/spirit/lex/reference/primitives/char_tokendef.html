@@ -28,7 +28,7 @@
           Matching Single Characters</a>
 </h5></div></div></div>
 <a name="spirit.lex.reference.primitives.char_tokendef.description"></a><h6>
-<a name="id860876"></a>
+<a name="id906510"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.description">Description</a>
           </h6>
 <p>
@@ -37,16 +37,16 @@
 <p>
             The <code class="computeroutput"><span class="identifier">char_</span></code> creates token
             definitions matching single characters. The <code class="computeroutput"><span class="identifier">char_</span></code>
-            token definition has an associated <a class="link" href="../lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>. This is needed when doing basic operations
-            such as forcing lower or upper case and dealing with character ranges.
+            token definition is associated <code class="computeroutput"><span class="identifier">standard</span></code>
+            encoding namespace. This is needed when doing basic operations such as
+            forcing lower or upper case and dealing with character ranges.
           </p>
 <a name="spirit.lex.reference.primitives.char_tokendef.header"></a><h6>
-<a name="id860921"></a>
+<a name="id906554"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.header">Header</a>
           </h6>
 <a name="spirit.lex.reference.primitives.char_tokendef.module_headers"></a><h6>
-<a name="id860936"></a>
+<a name="id906570"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.module_headers">Module
             Headers</a>
           </h6>
@@ -57,7 +57,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.lex.reference.primitives.char_tokendef.namespace"></a><h6>
-<a name="id861013"></a>
+<a name="id906646"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -76,18 +76,13 @@
                   </td></tr>
 <tr><td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span></code>
+                    <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">char_</span></code>
                   </p>
                   </td></tr>
 </tbody>
 </table></div>
-<p>
-            In the table above, <code class="computeroutput"><span class="identifier">ns</span></code>
-            is a <a class="link" href="../lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
-            Encoding Namespace</a>.
-          </p>
 <a name="spirit.lex.reference.primitives.char_tokendef.model_of"></a><h6>
-<a name="id861134"></a>
+<a name="id906750"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.model_of">Model
             of</a>
           </h6>
@@ -103,23 +98,15 @@
 <div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span></code>,
-            <code class="computeroutput"><span class="identifier">ch1</span></code>, <code class="computeroutput"><span class="identifier">ch2</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">ch</span></code></span></dt>
 <dd><p>
-                Character-class specific character (See Character Class Types), or
-                a <a class="link" href="../../../karma/reference/karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a character-class specific character
-                value
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">ns</span></code></span></dt>
-<dd><p>
-                A <a class="link" href="../lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
-                Encoding Namespace</a>.
+                Character-class specific character from <code class="computeroutput"><span class="identifier">standard</span></code>
+                character set.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.lex.reference.primitives.char_tokendef.expression_semantics"></a><h6>
-<a name="id861238"></a>
+<a name="id906817"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -153,9 +140,7 @@
                   </td>
 <td>
                   <p>
-                    Generate the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
-                    This generator never fails, unless the underlying output stream
-                    reports an error.
+                    Create a token definition matching the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
                   </p>
                   </td>
 </tr>
@@ -167,33 +152,26 @@
                   </td>
 <td>
                   <p>
-                    Generate the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
-                    This generator never fails, unless the underlying output stream
-                    reports an error.
+                    Create a token definition matching the character literal <code class="computeroutput"><span class="identifier">ch</span></code>.
                   </p>
                   </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">ns</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
+                    <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">char_</span><span class="special">(</span><span class="identifier">ch</span><span class="special">)</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    Generate the character <code class="computeroutput"><span class="identifier">ch</span></code>
-                    as provided by the immediate literal value the generator is initialized
-                    from. If this generator has an associated attribute it succeeds
-                    only as long as the attribute is equal to the immediate literal,
-                    unless the underlying output stream reports an error. Otherwise
-                    this generator fails and does not generate any output.
+                    Create a token definition matching the character <code class="computeroutput"><span class="identifier">ch</span></code>.
                   </p>
                   </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.lex.reference.primitives.char_tokendef.example"></a><h6>
-<a name="id861420"></a>
+<a name="id906999"></a>
             <a class="link" href="char_tokendef.html#spirit.lex.reference.primitives.char_tokendef.example">Example</a>
           </h6>
 </div>

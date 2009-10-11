@@ -65,6 +65,10 @@ defined in _concept-of_XXX_.
     [[`xxx`]                  [when does it evaluate to mpl::true_]]
 ]
 
+[heading When to implement]
+
+Describe when this customization point needs to be implemented by the user.
+
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 

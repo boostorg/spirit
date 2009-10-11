@@ -26,69 +26,8 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="spirit.lex.reference.lex_basics"></a><a class="link" href="lex_basics.html" title="Basics"> Basics</a>
 </h4></div></div></div>
-<a name="spirit.lex.reference.lex_basics.character_encoding_namespace"></a><h6>
-<a name="id860266"></a>
-          <a class="link" href="lex_basics.html#spirit.lex.reference.lex_basics.character_encoding_namespace">Character
-          Encoding Namespace</a>
-        </h6>
-<p>
-          Some generators need to know which character set a <code class="computeroutput"><span class="keyword">char</span></code>
-          or <code class="computeroutput"><span class="keyword">wchar_t</span></code> is operating on.
-          For example, the regular expression <code class="computeroutput"><span class="special">[</span><span class="identifier">a</span><span class="special">-</span><span class="number">9</span><span class="special">]</span></code> spans a different set of characters in
-          different character sets. Where necessary, Spirit encodes (tags) the token
-          definitions with the character set.
-        </p>
-<p>
-          We have a namespace for each character set Spirit will be supporting. That
-          includes <code class="computeroutput"><span class="identifier">ascii</span></code>, <code class="computeroutput"><span class="identifier">iso8859_1</span></code>, <code class="computeroutput"><span class="identifier">standard</span></code>
-          and <code class="computeroutput"><span class="identifier">standard_wide</span></code> (and
-          in the future, <code class="computeroutput"><span class="identifier">unicode</span></code>).
-          In each of the character encoding namespaces, we place tagged versions
-          of token definitions such as <code class="computeroutput"><span class="identifier">char_</span></code>
-          and <code class="computeroutput"><span class="identifier">string</span></code>.
-        </p>
-<p>
-          Example:
-        </p>
-<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span> <span class="comment">// use ASCII character token definitions
-</span></pre>
-<p>
-          Namespaces:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-            boost::spirit::ascii
-          </li>
-<li class="listitem">
-            boost::spirit::iso8859_1
-          </li>
-<li class="listitem">
-            boost::spirit::standard
-          </li>
-<li class="listitem">
-            boost::spirit::standard_wide
-          </li>
-</ul></div>
-<p>
-          For ease of use, the components in this namespaces are also brought into
-          the lex sub-namespaces with the same names:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-            boost::spirit::lex::ascii
-          </li>
-<li class="listitem">
-            boost::spirit::lex::iso8859_1
-          </li>
-<li class="listitem">
-            boost::spirit::lex::standard
-          </li>
-<li class="listitem">
-            boost::spirit::lex::standard_wide
-          </li>
-</ul></div>
 <a name="spirit.lex.reference.lex_basics.examples"></a><h6>
-<a name="id860466"></a>
+<a name="id905008"></a>
           <a class="link" href="lex_basics.html#spirit.lex.reference.lex_basics.examples">Examples</a>
         </h6>
 <p>
@@ -123,7 +62,7 @@
 <p>
         </p>
 <a name="spirit.lex.reference.lex_basics.models"></a><h6>
-<a name="id860678"></a>
+<a name="id905220"></a>
           <a class="link" href="lex_basics.html#spirit.lex.reference.lex_basics.models">Models</a>
         </h6>
 <p>

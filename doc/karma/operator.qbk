@@ -8,6 +8,16 @@
 
 [section Operator]
 
+Operators are used as a means for object composition and embedding.
+Simple generators may be composed to form composites through operator
+overloading, crafted to approximate the syntax of __peg__ (PEG). An
+expression such as:
+
+    a | b
+
+yields a new generator type which is a composite of its operands, `a` and
+`b`. 
+
 This module includes different generators which get instantiated if one of the
 overloaded operators is used with more primitive generator constructs. It 
 includes sequences (`a << b`), alternatives (`a | b`), Kleene star (unary `*`), 

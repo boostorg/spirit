@@ -116,7 +116,9 @@ Predefined models include:
 * a `std::basic_string<Char>`
 
 The namespace `boost::spirit::traits` is open for users to provide their
-own specializations.
+own specializations. The customization points implemented by __qi__ usable
+to customize the behavior of parsers are described in the section 
+__sec_customization_points__.
 
 [endsect]
 

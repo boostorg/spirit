@@ -45,6 +45,17 @@
           Predicate (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a></span></dt>
 </dl></div>
 <p>
+          Operators are used as a means for object composition and embedding. Simple
+          generators may be composed to form composites through operator overloading,
+          crafted to approximate the syntax of <a class="link" href="../../abstracts/parsing_expression_grammar.html" title="Parsing Expression Grammar">Parsing
+          Expression Grammar</a> (PEG). An expression such as:
+        </p>
+<pre class="programlisting"><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span>
+</pre>
+<p>
+          yields a new generator type which is a composite of its operands, <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code>.
+        </p>
+<p>
           This module includes different generators which get instantiated if one
           of the overloaded operators is used with more primitive generator constructs.
           It includes sequences (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">b</span></code>),
@@ -57,7 +68,7 @@
           and the <span class="emphasis"><em>not</em></span> predicate (unary <code class="computeroutput"><span class="special">!</span></code>).
         </p>
 <a name="spirit.karma.reference.operator.module_header"></a><h6>
-<a name="id807635"></a>
+<a name="id854283"></a>
           <a class="link" href="operator.html#spirit.karma.reference.operator.module_header">Module Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator.hpp&gt;
