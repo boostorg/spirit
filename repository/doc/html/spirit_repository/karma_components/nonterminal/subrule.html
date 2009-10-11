@@ -27,7 +27,7 @@
         Karma subrules</a>
 </h4></div></div></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.description"></a><h6>
-<a name="id3187545"></a>
+<a name="id3171809"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.description">Description</a>
         </h6>
 <p>
@@ -77,10 +77,10 @@
 <p>
         </p>
 <p>
-          The example above can be found here: <a href="../../../../../example/karma/mini_xml_karma_sr.cpp" target="_top">../../example/karma/mini_xml_karma_sr.cpp</a>
+          The example above can be found here: <a href="../../../../../example/karma/calc2_ast_dump_sr.cpp" target="_top">../../example/karma/calc2_ast_dump_sr.cpp</a>
         </p>
 <p>
-          As shown in this code snippet (an extract from the mini_xml_karma_sr example),
+          As shown in this code snippet (an extract from the calc2_ast_dump_sr example),
           subrules can be freely mixed with rules and grammars. Here, a group of
           3 subrules (<code class="computeroutput"><span class="identifier">ast_node</span></code>,
           <code class="computeroutput"><span class="identifier">binary_node</span></code>, <code class="computeroutput"><span class="identifier">unary_node</span></code>) is assigned to a rule (named
@@ -89,21 +89,21 @@
           parts), whereas the rest can use rules and grammars.
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.header"></a><h6>
-<a name="id3187893"></a>
+<a name="id3172157"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/repository/home/karma/nonterminal/subrule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_subrule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.synopsis__declaration_"></a><h6>
-<a name="id3187995"></a>
+<a name="id3172260"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.synopsis__declaration_">Synopsis
           (declaration)</a>
         </h6>
 <pre class="programlisting"><span class="identifier">subrule</span><span class="special">&lt;</span><span class="identifier">ID</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">&gt;</span> <span class="identifier">sr</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.parameters__declaration_"></a><h6>
-<a name="id3188083"></a>
+<a name="id3172348"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.parameters__declaration_">Parameters
           (declaration)</a>
         </h6>
@@ -173,7 +173,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.synopsis__usage_"></a><h6>
-<a name="id3188243"></a>
+<a name="id3172506"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.synopsis__usage_">Synopsis
           (usage)</a>
         </h6>
@@ -202,7 +202,7 @@
 <span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,</span> <span class="special">...)</span>         <span class="comment">// Arguments to group, i.e. to start subrule srA
 </span></pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.parameters__usage_"></a><h6>
-<a name="id3188535"></a>
+<a name="id3172799"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.parameters__usage_">Parameters
           (usage)</a>
         </h6>
@@ -326,7 +326,7 @@
 </tbody>
 </table></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.groups"></a><h6>
-<a name="id3188914"></a>
+<a name="id3173178"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.groups">Groups</a>
         </h6>
 <p>
@@ -371,7 +371,7 @@
 </span><span class="special">;</span>
 </pre>
 <a name="spirit_repository.karma_components.nonterminal.subrule.attributes"></a><h6>
-<a name="id3189408"></a>
+<a name="id3173672"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.attributes">Attributes</a>
         </h6>
 <p>
@@ -400,7 +400,7 @@
           </li>
 </ul></div>
 <a name="spirit_repository.karma_components.nonterminal.subrule.locals"></a><h6>
-<a name="id3189517"></a>
+<a name="id3173781"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.locals">Locals</a>
         </h6>
 <p>
@@ -410,7 +410,7 @@
           refer to the subrule's locals, if present.
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.example"></a><h6>
-<a name="id3189567"></a>
+<a name="id3173831"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.example">Example</a>
         </h6>
 <p>
@@ -461,8 +461,7 @@
 <span class="special">{</span>
     <span class="identifier">mini_xml_generator</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">mini_xml_generator</span><span class="special">::</span><span class="identifier">base_type</span><span class="special">(</span><span class="identifier">entry</span><span class="special">)</span>
     <span class="special">{</span>
-        <span class="comment">//[mini_xml_karma_sr_def
-</span>        <span class="identifier">entry</span> <span class="special">%=</span> <span class="special">(</span>
+        <span class="identifier">entry</span> <span class="special">%=</span> <span class="special">(</span>
             <span class="identifier">xml</span> <span class="special">=</span> 
                     <span class="char">'&lt;'</span>  <span class="special">&lt;&lt;</span> <span class="identifier">string</span><span class="special">[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)]</span> <span class="special">&lt;&lt;</span> <span class="char">'&gt;'</span>
                 <span class="special">&lt;&lt;</span>         <span class="special">(*</span><span class="identifier">node</span><span class="special">)[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">at_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="identifier">_val</span><span class="special">)]</span>
@@ -470,7 +469,14 @@
 
           <span class="special">,</span> <span class="identifier">node</span> <span class="special">%=</span> <span class="identifier">string</span> <span class="special">|</span> <span class="identifier">xml</span>
         <span class="special">);</span>
-        </pre>
+    <span class="special">}</span>
+
+    <span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">mini_xml</span><span class="special">()&gt;</span> <span class="identifier">entry</span><span class="special">;</span>
+
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">0</span><span class="special">,</span> <span class="identifier">mini_xml</span><span class="special">()&gt;</span> <span class="identifier">xml</span><span class="special">;</span>
+    <span class="identifier">repo</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">subrule</span><span class="special">&lt;</span><span class="number">1</span><span class="special">,</span> <span class="identifier">mini_xml_node</span><span class="special">()&gt;</span> <span class="identifier">node</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
 <p>
           </p>
 <p>
@@ -482,7 +488,7 @@
           <a href="../../../../../example/karma/mini_xml_karma_sr.cpp" target="_top">../../example/karma/mini_xml_karma_sr.cpp</a>
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.performance"></a><h6>
-<a name="id3190500"></a>
+<a name="id3174935"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.performance">Performance</a>
         </h6>
 <p>
@@ -493,11 +499,18 @@
           subrules is very similar, so performance is very similar too).
         </p>
 <a name="spirit_repository.karma_components.nonterminal.subrule.notes"></a><h6>
-<a name="id3190549"></a>
+<a name="id3174984"></a>
           <a class="link" href="subrule.html#spirit_repository.karma_components.nonterminal.subrule.notes">Notes</a>
         </h6>
 <p>
-          FIXME add compiler-specific bit (MSVC pragmas, g++ option)
+          Subrules push the C++ compiler hard. A group of subrules is a single C++
+          expression. Current C++ compilers cannot handle very complex expressions
+          very well. One restricting factor is the typical compiler's limit on template
+          recursion depth. Some, but not all, compilers allow this limit to be configured.
+        </p>
+<p>
+          g++'s maximum can be set using a compiler flag: <code class="computeroutput"><span class="special">-</span><span class="identifier">ftemplate</span><span class="special">-</span><span class="identifier">depth</span></code>. Set this appropriately if you
+          use relatively complex subrules.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

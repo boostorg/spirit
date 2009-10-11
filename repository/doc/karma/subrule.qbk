@@ -35,9 +35,9 @@ The weaknesses of subrules are:
 
 [calc2_ast_dump_sr_def]
 
-The example above can be found here: [@../../example/karma/mini_xml_karma_sr.cpp]
+The example above can be found here: [@../../example/karma/calc2_ast_dump_sr.cpp]
 
-As shown in this code snippet (an extract from the mini_xml_karma_sr example),
+As shown in this code snippet (an extract from the calc2_ast_dump_sr example),
 subrules can be freely mixed with rules and grammars. Here, a group of
 3 subrules (`ast_node`, `binary_node`, `unary_node`) is assigned to a rule (named
 `entry`). This means that parts of a generator can use subrules (typically
@@ -209,6 +209,13 @@ is very similar, so performance is very similar too).
 
 [heading Notes]
 
-FIXME add compiler-specific bit (MSVC pragmas, g++ option)
+Subrules push the C++ compiler hard. A group of subrules is a single C++
+expression. Current C++ compilers cannot handle very complex expressions very
+well. One restricting factor is the typical compiler's limit on template
+recursion depth. Some, but not all, compilers allow this limit to be
+configured.
+
+g++'s maximum can be set using a compiler flag: `-ftemplate-depth`. Set this
+appropriately if you use relatively complex subrules.
 
 [endsect]

@@ -141,7 +141,6 @@ struct mini_xml_generator
 {
     mini_xml_generator() : mini_xml_generator::base_type(entry)
     {
-        //[mini_xml_karma_sr_def
         entry %= (
             xml = 
                     '<'  << string[_1 = at_c<0>(_val)] << '>'
@@ -150,7 +149,6 @@ struct mini_xml_generator
 
           , node %= string | xml
         );
-        //]
     }
 
     karma::rule<OutputIterator, mini_xml()> entry;

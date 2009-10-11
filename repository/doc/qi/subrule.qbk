@@ -228,6 +228,13 @@ The columns are:
 
 [heading Notes]
 
-FIXME add compiler-specific bit (MSVC pragmas, g++ option)
+Subrules push the C++ compiler hard. A group of subrules is a single C++
+expression. Current C++ compilers cannot handle very complex expressions very
+well. One restricting factor is the typical compiler's limit on template
+recursion depth. Some, but not all, compilers allow this limit to be
+configured.
+
+g++'s maximum can be set using a compiler flag: `-ftemplate-depth`. Set this
+appropriately if you use relatively complex subrules.
 
 [endsect]
