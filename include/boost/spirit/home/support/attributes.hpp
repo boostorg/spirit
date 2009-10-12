@@ -325,7 +325,6 @@ namespace boost { namespace spirit { namespace traits
         typedef Transformed type;
 
         static Transformed pre(Exposed& val) { return Transformed(val); }
-        static Transformed pre(Exposed const& val) { return Transformed(val); }
 
         // By default do post transformation only if types are convertible, 
         // otherwise we assume no post transform is required (i.e. the user 
@@ -350,6 +349,15 @@ namespace boost { namespace spirit { namespace traits
         typedef Transformed type;
         static Transformed pre(Exposed const& val) { return Transformed(val); }
         // Karma only, no post() required
+    };
+
+    // handle case where no transformation is required as the types are the same
+    template <typename Attribute>
+    struct transform_attribute<Attribute, Attribute>
+    {
+        typedef Attribute& type;
+        static Attribute& pre(Attribute& val) { return val; }
+        static void post(Attribute& val, Attribute const& attr) {}
     };
 
     template <typename Attribute>
