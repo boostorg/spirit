@@ -508,6 +508,9 @@ int main()
     }
 #endif
 
+// this appears to be broken on Apple Tiger x86 with gcc4.0.1
+#if (__GNUC__*10000 + __GNUC_MINOR__*100 + __GNUC_PATCHLEVEL__ != 40001) || \
+    !defined(__APPLE__)
     {
         ///////////////////////////////////////////////////////////////////////
         typedef karma::real_generator<double, bordercase_policy<double> > 
@@ -526,6 +529,7 @@ int main()
         BOOST_TEST(test("-2.2250738585072014e-308", 
             bordercase(-2.2250738585072014e-308)));     // -DBL_MIN
     }
+#endif
 
     {
         boost::optional<double> v;
