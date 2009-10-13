@@ -15,6 +15,7 @@
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_nonterminal.hpp>
 
 #include "test.hpp"
 
@@ -136,6 +137,21 @@ main()
         v = 1;
         BOOST_TEST(test("1", int_ | "error" << omit[-int_], v));
         BOOST_TEST(test("1", int_ | "error" << omit[int_], v));
+    }
+
+    {
+        typedef spirit_test::output_iterator<char>::type outiter_type;
+        namespace karma = boost::spirit::karma;
+
+        karma::rule<outiter_type, int()> r = int_;
+        std::vector<int> v;
+        BOOST_TEST(test("", '>' << r % ',' | karma::eps, v));
+
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        v.push_back(4);
+        BOOST_TEST(test(">1,2,3,4", '>' << r % ',' | karma::eps, v));
     }
 
     return boost::report_errors();

@@ -133,7 +133,7 @@ struct int_data
 namespace boost { namespace spirit { namespace traits
 {
     template <>
-    struct transform_attribute<int, int_data const>
+    struct transform_attribute<int_data const, int>
     {
         static int pre(int_data const& d) { return d.i; }
     };
@@ -533,7 +533,7 @@ int main()
 
         //[reference_karma_attr_cast1
         int_data d = { 1 };
-        test_generator("1", karma::attr_cast<int>(karma::int_), d);
+        test_generator("1", karma::attr_cast(karma::int_), d);
         //]
     }
 

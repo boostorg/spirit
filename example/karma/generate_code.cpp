@@ -37,9 +37,10 @@ namespace client
             using karma::_val;
             using karma::_r1;
 
-            start = array_def(phoenix::size(_val)) << " = " << initializer << eol;
+            start = array_def(phoenix::size(_val)) << " = " << initializer 
+                                                   << ';' << eol;
             array_def = "int " << lit(name) << "[" << uint_(_r1) << "]";
-            initializer = "{ " << -(int_ % ", ") << " };";
+            initializer = "{ " << -(int_ % ", ") << " }";
         }
 
         karma::rule<Iterator, void(unsigned)> array_def;
