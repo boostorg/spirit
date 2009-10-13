@@ -1,16 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Transduction
-          Parsing (raw[])</title>
+<title>Transduction Parsing (raw[])</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../directive.html" title=" Directive">
-<link rel="previous" href="omit.html" title=" Ignoring Attribute
-          (omit[])">
-<link rel="next" href="repeat.html" title=" Repetition
-          (repeat[])">
+<link rel="up" href="../directive.html" title="Directive">
+<link rel="prev" href="omit.html" title="Ignoring Attribute (omit[])">
+<link rel="next" href="repeat.html" title="Repetition (repeat[])">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,84 +22,84 @@
 <div class="spirit-nav">
 <a accesskey="p" href="omit.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../directive.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="repeat.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.qi.reference.directive.raw"></a><a href="raw.html" title=" Transduction
-          Parsing (raw[])"> Transduction
-          Parsing (<tt class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Transduction Parsing (raw[])">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.directive.raw"></a><a class="link" href="raw.html" title="Transduction Parsing (raw[])"> Transduction
+          Parsing (<code class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.qi.reference.directive.raw.description"></a><h6>
-<a name="id490974"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.description">Description</a>
+<a name="id678006"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.description">Description</a>
           </h6>
 <p>
-            The <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></tt>
+            The <code class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></code>
             disregards the attribute of its subject parser, instead exposing the
-            half-open range <tt class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></tt> pointing to the matched characters from
-            the input stream. The <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></tt> directive breings back the classic
+            half-open range <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> pointing to the matched characters from
+            the input stream. The <code class="computeroutput"><span class="identifier">raw</span><span class="special">[]</span></code> directive breings back the classic
             Spirit transduction (un-attributed) behavior for a subject parser.
           </p>
 <a name="spirit.qi.reference.directive.raw.header"></a><h6>
-<a name="id491072"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.header">Header</a>
+<a name="id678068"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/directive/raw.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_raw</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.directive.raw.namespace"></a><h6>
-<a name="id491186"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.namespace">Namespace</a>
+<a name="id678689"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
-<tbody><tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">raw</span> <span class="comment">// alias:
-                    boost::spirit::qi::raw</span></tt>
-                  </p></td></tr></tbody>
+                  </p>
+                  </th></tr></thead>
+<tbody><tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">raw</span> <span class="comment">// alias:
+                    boost::spirit::qi::raw</span></code>
+                  </p>
+                  </td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.raw.model_of"></a><h6>
-<a name="id491289"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.model_of">Model of</a>
+<a name="id678767"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>
+                <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code></span></dt>
 <dd><p>
-                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>.
+                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">Iter</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Iter</span></code></span></dt>
 <dd><p>
-                A <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><tt class="computeroutput"><span class="identifier">ForwardIterator</span></tt></a> type.
+                A <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> type.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.directive.raw.expression_semantics"></a><h6>
-<a name="id491429"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.expression_semantics">Expression
+<a name="id678863"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../parser_concepts/unaryparser.html" title="UnaryParser"><tt class="computeroutput"><span class="identifier">UnaryParser</span></tt></a>.
+            is not defined in <a class="link" href="../parser_concepts/unaryparser.html" title="UnaryParser"><code class="computeroutput"><span class="identifier">UnaryParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -110,30 +107,38 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
-<td><p>
-                    Disregard the attribute of the subject parser, <tt class="computeroutput"><span class="identifier">a</span></tt>. Expose instead the half-open
-                    range <tt class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></tt> pointing to the matched characters
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Disregard the attribute of the subject parser, <code class="computeroutput"><span class="identifier">a</span></code>. Expose instead the half-open
+                    range <code class="computeroutput"><span class="special">[</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">)</span></code> pointing to the matched characters
                     from the input stream.
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.directive.raw.attributes"></a><h6>
-<a name="id491605"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.attributes">Attributes</a>
+<a name="id678989"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.attributes">Attributes</a>
           </h6>
 <p>
-            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -142,54 +147,60 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></tt>
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span><span class="special">&lt;</span><span class="identifier">Iter</span><span class="special">&gt;</span> 
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="identifier">raw</span><span class="special">[</span><span class="identifier">a</span><span class="special">]:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              See <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></tt></a>.
+<tr><td align="left" valign="top"><p>
+              See <a href="../../../../../../../../libs/range/doc/utility_class.html#iter_range" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code></a>.
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.directive.raw.complexity"></a><h6>
-<a name="id491890"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.complexity">Complexity</a>
+<a name="id679203"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
                 The complexity is defined by the complexity of the subject parser,
-                <tt class="computeroutput"><span class="identifier">a</span></tt>
+                <code class="computeroutput"><span class="identifier">a</span></code>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.directive.raw.example"></a><h6>
-<a name="id491938"></a>
-            <a href="raw.html#spirit.qi.reference.directive.raw.example">Example</a>
+<a name="id679235"></a>
+            <a class="link" href="raw.html#spirit.qi.reference.directive.raw.example">Example</a>
           </h6>
 <p>
             Some using declarations:

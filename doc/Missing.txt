@@ -42,9 +42,12 @@ Karma
 - More introductory material
 
 Reference
+- attr_cast (in auxiliary.qbk)
 - action.qbk
 - nonterminal.qbk
 - document API functions: generate, generate_delimited, format, format_delimited
+
+- Generators in Depth
 
 Lex
 ---

@@ -302,7 +302,7 @@ See here for more information about __karma_auxiliary__.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[[karma_attr_cast `attr_cast<Attrib>(g)`]] [`Attrib`]  [Invokes `g` while supplying an attribute of type `Attrib`.]]
+    [[[karma_attr_cast `attr_cast<Exposed>(a)`]] [`Exposed`] [Invokes `a` while supplying an attribute of type `Exposed`.]]
     [[__karma_eol__]        [`Unused`]                  [Generates the end of line (`\n`)]]
     [[__karma_eps__]        [`Unused`]                  [Generate an empty string]]
     [[__karma_feps__]       [`Unused`]                  [If `b` is true, generate an empty string]]

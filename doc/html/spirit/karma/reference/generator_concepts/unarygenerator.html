@@ -3,11 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>UnaryGenerator</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../generator_concepts.html" title="Generator
-        Concepts">
-<link rel="previous" href="primitivegenerator.html" title="PrimitiveGenerator">
+<link rel="up" href="../generator_concepts.html" title="Generator Concepts">
+<link rel="prev" href="primitivegenerator.html" title="PrimitiveGenerator">
 <link rel="next" href="binarygenerator.html" title="BinaryGenerator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -23,16 +22,13 @@
 <div class="spirit-nav">
 <a accesskey="p" href="primitivegenerator.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../generator_concepts.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="binarygenerator.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.generator_concepts.unarygenerator"></a><a href="unarygenerator.html" title="UnaryGenerator">UnaryGenerator</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="UnaryGenerator">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.generator_concepts.unarygenerator"></a><a class="link" href="unarygenerator.html" title="UnaryGenerator">UnaryGenerator</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.description"></a><h6>
-<a name="id571670"></a>
-            <a href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.description">Description</a>
+<a name="id759128"></a>
+            <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>UnaryGenerator</em></span> is a composite generator that has
@@ -40,39 +36,39 @@
             following the Delegate Design Pattern.
           </p>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.refinement_of"></a><h6>
-<a name="id571707"></a>
-            <a href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.refinement_of">Refinement
+<a name="id759148"></a>
+            <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.refinement_of">Refinement
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="generator.html" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>
+                <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">g</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">g</span></code></span></dt>
 <dd><p>
                 A UnaryGenerator.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">G</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">G</span></code></span></dt>
 <dd><p>
                 A UnaryGenerator type.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions"></a><h6>
-<a name="id571815"></a>
-            <a href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions">Valid
+<a name="id759225"></a>
+            <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in <a href="generator.html" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>, for any UnaryGenerator
+            In addition to the requirements defined in <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>, for any UnaryGenerator
             the following must be met:
           </p>
 <div class="informaltable"><table class="table">
@@ -82,31 +78,43 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Return type
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">subject</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">subject</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Subject generator.
-                  </p></td>
-<td><p>
-                    <a href="generator.html" title="Generator"><tt class="computeroutput"><span class="identifier">Generator</span></tt></a>
-                  </p></td>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.type_expressions"></a><h6>
-<a name="id571974"></a>
-            <a href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.type_expressions">Type
+<a name="id759340"></a>
+            <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -115,114 +123,111 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">G</span><span class="special">::</span><span class="identifier">subject_type</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">G</span><span class="special">::</span><span class="identifier">subject_type</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     The subject generator type.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_unary_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">&gt;::</span><span class="identifier">type</span></tt>
-                  </p></td>
-<td><p>
-                    Metafunction that evaluates to <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></tt>
-                    if a certain type, <tt class="computeroutput"><span class="identifier">G</span></tt>
-                    is a UnaryGenerator, <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_unary_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                    if a certain type, <code class="computeroutput"><span class="identifier">G</span></code>
+                    is a UnaryGenerator, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
                     otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
                     Boolean Constant</a>).
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.invariants"></a><h6>
-<a name="id572201"></a>
-            <a href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.invariants">Invariants</a>
+<a name="id759506"></a>
+            <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.invariants">Invariants</a>
           </h6>
 <p>
-            For any UnaryGenerator, <tt class="computeroutput"><span class="identifier">G</span></tt>,
+            For any UnaryGenerator, <code class="computeroutput"><span class="identifier">G</span></code>,
             the following invariant always holds:
           </p>
-<div class="itemizedlist"><ul type="disc"><li>
-<tt class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></tt> evaluates to <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></tt>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_generator</span><span class="special">&lt;</span><span class="identifier">G</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
 </li></ul></div>
 <a name="spirit.karma.reference.generator_concepts.unarygenerator.models"></a><h6>
-<a name="id572324"></a>
-            <a href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.models">Models</a>
+<a name="id759591"></a>
+            <a class="link" href="unarygenerator.html#spirit.karma.reference.generator_concepts.unarygenerator.models">Models</a>
           </h6>
 <p>
             The following generators conform to this model:
           </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
-<a href="../operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene Star
-              (unary <tt class="computeroutput"><span class="special">*</span></tt>)</a>,
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+<a class="link" href="../operator/kleene.html" title="Kleene Star (*a)">Kleene Star
+              (unary <code class="computeroutput"><span class="special">*</span></code>)</a>,
             </li>
-<li>
-<a href="../operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a> operator,
+<li class="listitem">
+<a class="link" href="../operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a> operator,
             </li>
-<li>
-<a href="../operator/optional.html" title=" Optional
-          (-a)">Optional (unary
-              <tt class="computeroutput"><span class="special">-</span></tt>)</a> operator,
+<li class="listitem">
+<a class="link" href="../operator/optional.html" title="Optional (-a)">Optional (unary
+              <code class="computeroutput"><span class="special">-</span></code>)</a> operator,
             </li>
-<li>
-<a href="../operator/and_predicate.html" title=" And
-          Predicate (&amp;a)">And predicate
-              (unary <tt class="computeroutput"><span class="special">&amp;</span></tt>)</a> and
-              <a href="../operator/not_predicate.html" title=" Not
-          Predicate (!a)">Not predicate
-              (unary <tt class="computeroutput"><span class="special">!</span></tt>)</a> operators,
+<li class="listitem">
+<a class="link" href="../operator/and_predicate.html" title="And Predicate (&amp;a)">And predicate
+              (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a> and
+              <a class="link" href="../operator/not_predicate.html" title="Not Predicate (!a)">Not predicate
+              (unary <code class="computeroutput"><span class="special">!</span></code>)</a> operators,
             </li>
-<li>
-<a href="../directive/alignment.html" title=" Alignment
-          Directives (left_align[], center[], right_align[])"><tt class="computeroutput"><span class="identifier">left_align</span></tt></a>, <a href="../directive/alignment.html" title=" Alignment
-          Directives (left_align[], center[], right_align[])"><tt class="computeroutput"><span class="identifier">center</span></tt></a>, and <a href="../directive/alignment.html" title=" Alignment
-          Directives (left_align[], center[], right_align[])"><tt class="computeroutput"><span class="identifier">right_align</span></tt></a> directives,
+<li class="listitem">
+<a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">left_align</span></code></a>, <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">center</span></code></a>, and <a class="link" href="../directive/alignment.html" title="Alignment Directives (left_align[], center[], right_align[])"><code class="computeroutput"><span class="identifier">right_align</span></code></a> directives,
             </li>
-<li>
-<a href="../directive/repeat.html" title=" Repetition
-          Directive (repeat[])"><tt class="computeroutput"><span class="identifier">repeat</span></tt></a> directive,
+<li class="listitem">
+<a class="link" href="../directive/repeat.html" title="Repetition Directive (repeat[])"><code class="computeroutput"><span class="identifier">repeat</span></code></a> directive,
             </li>
-<li>
-<a href="../directive/delimit.html" title=" Directives
-          Controlling Automatic Delimiting (verbatim[], delimit[])"><tt class="computeroutput"><span class="identifier">verbatim</span></tt></a> directive,
+<li class="listitem">
+<a class="link" href="../directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], delimit[])"><code class="computeroutput"><span class="identifier">verbatim</span></code></a> directive,
             </li>
-<li>
-<a href="../directive/delimit.html" title=" Directives
-          Controlling Automatic Delimiting (verbatim[], delimit[])"><tt class="computeroutput"><span class="identifier">delimit</span></tt></a> directive,
+<li class="listitem">
+<a class="link" href="../directive/delimit.html" title="Directives Controlling Automatic Delimiting (verbatim[], delimit[])"><code class="computeroutput"><span class="identifier">delimit</span></code></a> directive,
             </li>
-<li>
-<a href="../directive/upperlower.html" title=" Directives
-          Controlling Case Sensitivity (upper[], lower[])"><tt class="computeroutput"><span class="identifier">lower</span></tt></a> and <a href="../directive/upperlower.html" title=" Directives
-          Controlling Case Sensitivity (upper[], lower[])"><tt class="computeroutput"><span class="identifier">upper</span></tt></a> directives,
+<li class="listitem">
+<a class="link" href="../directive/upperlower.html" title="Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">lower</span></code></a> and <a class="link" href="../directive/upperlower.html" title="Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">upper</span></code></a> directives,
             </li>
-<li>
-<a href="../directive/maxwidth.html" title=" Controlling
-          the Maximum Field Wield (maxwidth[])"><tt class="computeroutput"><span class="identifier">maxwidth</span></tt></a> directive,
+<li class="listitem">
+<a class="link" href="../directive/maxwidth.html" title="Controlling the Maximum Field Wield (maxwidth[])"><code class="computeroutput"><span class="identifier">maxwidth</span></code></a> directive,
             </li>
-<li>
-<a href="../directive/buffer.html" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span></tt></a> directive,
+<li class="listitem">
+<a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a> directive,
             </li>
-<li>
-<a href="../directive/omit.html" title=" Consume Attribute
-          (omit[])"><tt class="computeroutput"><span class="identifier">omit</span></tt></a> directive.
+<li class="listitem">
+<a class="link" href="../directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive.
             </li>
 </ul></div>
 <p>
-            <span class="bold"><b>FIXME</b></span> Add more links to models of UnaryGenerator
+            <span class="bold"><strong>FIXME</strong></span> Add more links to models of UnaryGenerator
             concept
           </p>
 </div>
