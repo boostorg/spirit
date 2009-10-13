@@ -87,7 +87,32 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Iterator, typename Enable = void>
     struct compare_iterators;
+}}}
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace result_of
+{
+    // forward declaration only
+    template <typename Attribute>
+    struct extract_from;
+
+    template <typename Exposed, typename Transformed>
+    struct pre_transform;
+
+    template <typename T> 
+    struct optional_value;
+
+    template <typename Container>
+    struct begin;
+
+    template <typename Container>
+    struct end;
+
+    template <typename Iterator>
+    struct next;
+
+    template <typename Iterator>
+    struct deref;
 }}}
 
 #endif

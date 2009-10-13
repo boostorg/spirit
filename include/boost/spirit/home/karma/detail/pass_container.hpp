@@ -25,9 +25,9 @@
 
 namespace boost { namespace spirit { namespace karma { namespace detail
 {
-    // has_same_elements: utility to check if the RHS attribute
+    // has_same_elements: utility to check if the LHS attribute
     // is an STL container and that its value_type is convertible
-    // to the LHS.
+    // to the RHS.
 
     template <typename RHS, typename LHSAttribute
       , bool IsContainer = traits::is_container<LHSAttribute>::value>
@@ -77,8 +77,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             // get the next value to generate from container
             typename traits::container_iterator<Attr>::type end = 
                 traits::end(attr);
-            if (!traits::compare(iter, end) &&
-                !f(component, traits::deref(iter))) 
+            if (!traits::compare(iter, end) && !f(component, traits::deref(iter))) 
             {
                 // needs to return false as long as everything is ok
                 traits::next(iter);
@@ -147,7 +146,9 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         template <typename Component>
         bool dispatch_main(Component const& component, mpl::true_) const
         {
-            bool result = f(component, make_iterator_range(iter, traits::end(attr)));
+            typename traits::container_iterator<Attr>::type end = 
+                traits::end(attr);
+            bool result = f(component, make_iterator_range(iter, end));
             if (result)
                 iter = traits::end(attr);     // adjust current iter to the end 
             return result;

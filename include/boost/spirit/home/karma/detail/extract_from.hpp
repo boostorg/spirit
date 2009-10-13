@@ -18,6 +18,7 @@
 #include <boost/ref.hpp>
 #include <boost/optional.hpp>
 
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -70,39 +71,39 @@ namespace boost { namespace spirit { namespace traits
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        template <typename Attribute>
-        struct extract_from
-          : traits::extract_from_attribute<Attribute>
-        {};
-
-        template <>
-        struct extract_from<unused_type>
-        {
-            typedef unused_type type;
-        };
-
-        template <>
-        struct extract_from<unused_type const>
-        {
-            typedef unused_type type;
-        };
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     template <typename Attribute>
-    typename extract_from_attribute<Attribute>::type
+    typename spirit::result_of::extract_from<Attribute>::type
     extract_from(Attribute const& attr)
     {
         return extract_from_attribute<Attribute>::call(attr);
     };
 
-    inline unused_type extract_from(unused_type)
+    unused_type extract_from(unused_type)
     {
         return unused;
     };
 
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace result_of
+{
+    template <typename Attribute>
+    struct extract_from
+      : traits::extract_from_attribute<Attribute>
+    {};
+
+    template <>
+    struct extract_from<unused_type>
+    {
+        typedef unused_type type;
+    };
+
+    template <>
+    struct extract_from<unused_type const>
+    {
+        typedef unused_type type;
+    };
 }}}
 
 #endif

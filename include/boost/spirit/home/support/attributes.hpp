@@ -34,6 +34,7 @@
 #include <vector>
 #include <utility>
 
+///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -422,23 +423,15 @@ namespace boost { namespace spirit { namespace traits
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    namespace result_of
-    {
-        template <typename Exposed, typename Transformed>
-        struct pre_transform
-          : traits::transform_attribute<Exposed, Transformed>
-        {};
-    }
-
     template <typename Transformed, typename Exposed>
-    typename traits::result_of::pre_transform<Exposed, Transformed>::type
+    typename spirit::result_of::pre_transform<Exposed, Transformed>::type
     pre_transform(Exposed& attr)
     {
         return transform_attribute<Exposed, Transformed>::pre(attr);
     }
 
     template <typename Transformed, typename Exposed>
-    typename traits::result_of::pre_transform<Exposed const, Transformed>::type
+    typename spirit::result_of::pre_transform<Exposed const, Transformed>::type
     pre_transform(Exposed const& attr)
     {
         return transform_attribute<Exposed const, Transformed>::pre(attr);
@@ -678,7 +671,15 @@ namespace boost { namespace spirit { namespace traits
     inline void clear(unused_type)
     {
     }
+}}}
 
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace result_of
+{
+    template <typename Exposed, typename Transformed>
+    struct pre_transform
+      : traits::transform_attribute<Exposed, Transformed>
+    {};
 }}}
 
 #endif

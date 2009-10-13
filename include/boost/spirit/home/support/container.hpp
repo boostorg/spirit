@@ -49,6 +49,11 @@ namespace boost { namespace spirit { namespace traits
     {};
 
    template <typename T>
+   struct is_container<T&> 
+     : is_container<T> 
+   {};
+
+   template <typename T>
    struct is_container<optional<T> > 
      : is_container<T> 
    {};
@@ -64,40 +69,6 @@ namespace boost { namespace spirit { namespace traits
    {};
 
 #undef BOOST_SPIRIT_IS_CONTAINER
-
-    namespace result_of
-    {
-        ///////////////////////////////////////////////////////////////////////
-        template <typename T>
-        struct optional_value
-        {
-            typedef T type;
-        };
-
-        template <typename T>
-        struct optional_value<optional<T> >
-        {
-            typedef T type;
-        };
-
-        template <typename T>
-        struct optional_value<optional<T> const>
-        {
-            typedef T const type;
-        };
-
-        template <>
-        struct optional_value<unused_type>
-        {
-            typedef unused_type type;
-        };
-
-        template <>
-        struct optional_value<unused_type const>
-        {
-            typedef unused_type type;
-        };
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -129,6 +100,11 @@ namespace boost { namespace spirit { namespace traits
       : detail::remove_value_const<typename Container::value_type>
     {};
     //]
+
+    template <typename T>
+    struct container_value<T&> 
+      : container_value<T> 
+    {};
 
     // this will be instantiated if the optional holds a container
     template <typename T>
@@ -175,6 +151,11 @@ namespace boost { namespace spirit { namespace traits
     {
         typedef typename Container::iterator type;
     };
+
+    template <typename Container>
+    struct container_iterator<Container&>
+      : container_iterator<Container>
+    {};
 
     template <typename Container>
     struct container_iterator<Container const>
@@ -353,23 +334,14 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename Enable/* = void*/>
     struct begin_container 
     {
-        typedef typename container_iterator<Container>::type type;
-        static type call(Container& c)
+        static typename container_iterator<Container>::type call(Container& c)
         {
             return c.begin();
         }
     };
 
-    namespace result_of
-    {
         template <typename Container>
-        struct begin 
-          : traits::container_iterator<Container>
-        {};
-    }
-
-    template <typename Container>
-    typename begin_container<Container>::type
+    typename spirit::result_of::begin<Container>::type
     begin(Container& c)
     {
         return begin_container<Container>::call(c);
@@ -385,23 +357,14 @@ namespace boost { namespace spirit { namespace traits
     template <typename Container, typename Enable/* = void*/>
     struct end_container
     {
-        typedef typename container_iterator<Container>::type type;
-        static type call(Container& c)
+        static typename container_iterator<Container>::type call(Container& c)
         {
             return c.end();
         }
     };
 
-    namespace result_of
-    {
-        template <typename Container>
-        struct end
-          : traits::container_iterator<Container>
-        {};
-    }
-
     template <typename Container>
-    inline typename end_container<Container>::type
+    inline typename spirit::result_of::end<Container>::type
     end(Container& c)
     {
         return end_container<Container>::call(c);
@@ -424,14 +387,6 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    namespace result_of
-    {
-        template <typename Iterator>
-        struct deref
-          : traits::deref_iterator<Iterator>
-        {};
-    }
-
     template <typename Iterator>
     typename deref_iterator<Iterator>::type
     deref(Iterator& it)
@@ -449,24 +404,14 @@ namespace boost { namespace spirit { namespace traits
     template <typename Iterator, typename Enable/* = void*/>
     struct next_iterator
     {
-        typedef Iterator type;
-        static type call(Iterator& it)
+        static Iterator call(Iterator& it)
         {
             return ++it;
         }
     };
 
-    namespace result_of
-    {
-        template <typename Iterator>
-        struct next
-        {
-            typedef Iterator type;
-        };
-    }
-
     template <typename Iterator>
-    typename next_iterator<Iterator>::type
+    typename spirit::result_of::next<Iterator>::type
     next(Iterator& it)
     {
         return next_iterator<Iterator>::call(it);
@@ -498,6 +443,63 @@ namespace boost { namespace spirit { namespace traits
     {
         return false;
     }
+}}}
+
+///////////////////////////////////////////////////////////////////////////////
+namespace boost { namespace spirit { namespace result_of
+{
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct optional_value
+    {
+        typedef T type;
+    };
+
+    template <typename T>
+    struct optional_value<optional<T> >
+    {
+        typedef T type;
+    };
+
+    template <typename T>
+    struct optional_value<optional<T> const>
+    {
+        typedef T const type;
+    };
+
+    template <>
+    struct optional_value<unused_type>
+    {
+        typedef unused_type type;
+    };
+
+    template <>
+    struct optional_value<unused_type const>
+    {
+        typedef unused_type type;
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Container>
+    struct begin 
+      : traits::container_iterator<Container>
+    {};
+
+    template <typename Container>
+    struct end
+      : traits::container_iterator<Container>
+    {};
+
+    template <typename Iterator>
+    struct next
+    {
+        typedef Iterator type;
+    };
+
+    template <typename Iterator>
+    struct deref
+      : traits::deref_iterator<Iterator>
+    {};
 
 }}}
 
