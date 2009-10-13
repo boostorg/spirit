@@ -1,0 +1,6 @@
+[section Advanced]
+
+[include        advanced/indepth.qbk]
+[include        advanced/customization_points.qbk]
+
+[endsect]

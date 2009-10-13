@@ -79,7 +79,7 @@
 [def __sec_qi__                 [link spirit.qi Qi]]
 [def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_attributes__         [link spirit.abstracts.attributes Attributes]]
-[def __sec_customization_points__ [link spirit.abstracts.customize Customization of Attribute Handling]]
+[def __sec_customization_points__ [link spirit.advanced.customize Customization of Attribute Handling]]
 
 [def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
 [def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Karma Generators]]
@@ -357,6 +357,7 @@ V2.1). If you're looking for the documentation of Spirit's previous version
 [include qi.qbk]
 [include karma.qbk]
 [include lex.qbk]
+[include advanced.qbk]
 [include support.qbk]
 [include faq.qbk]
 [include notes.qbk]

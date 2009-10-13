@@ -1,12 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Mini XML - Error Handling</title>
+<title>Mini
+        XML - Error Handling</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="prev" href="mini_xml___asts_.html" title="Mini XML - ASTs!">
+<link rel="previous" href="mini_xml___asts_.html" title="Mini XML - ASTs!">
 <link rel="next" href="../quick_reference.html" title="Quick Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,11 +23,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="mini_xml___asts_.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Mini XML - Error Handling">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.qi.tutorials.mini_xml___error_handling"></a><a class="link" href="mini_xml___error_handling.html" title="Mini XML - Error Handling">Mini
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.qi.tutorials.mini_xml___error_handling"></a><a href="mini_xml___error_handling.html" title="Mini
+        XML - Error Handling">Mini
         XML - Error Handling</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           A parser will not be complete without error handling. Spirit2 provides
           some facilities to make it easy to adapt a grammar for error handling.
@@ -43,11 +48,11 @@
 <p>
           What's new?
         </p>
-<a name="spirit.qi.tutorials.mini_xml___error_handling.readable_names"></a><h6>
-<a name="id629190"></a>
-          <a class="link" href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.readable_names">Readable
+<a name="spirit.qi.tutorials.mini_xml___error_handling.readable_names"></a><h5>
+<a name="id442956"></a>
+          <a href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.readable_names">Readable
           Names</a>
-        </h6>
+        </h5>
 <p>
           First, when we call the base class, we give the grammar a name:
         </p>
@@ -62,13 +67,13 @@
 <span class="identifier">start_tag</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"start_tag"</span><span class="special">);</span>
 <span class="identifier">end_tag</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="string">"end_tag"</span><span class="special">);</span>
 </pre>
-<a name="spirit.qi.tutorials.mini_xml___error_handling.on_error"></a><h6>
-<a name="id629370"></a>
-          <a class="link" href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.on_error">On
+<a name="spirit.qi.tutorials.mini_xml___error_handling.on_error"></a><h5>
+<a name="id443207"></a>
+          <a href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.on_error">On
           Error</a>
-        </h6>
+        </h5>
 <p>
-          <code class="computeroutput"><span class="identifier">on_error</span></code> declares our error
+          <tt class="computeroutput"><span class="identifier">on_error</span></tt> declares our error
           handler:
         </p>
 <pre class="programlisting"><span class="identifier">on_error</span><span class="special">&lt;</span><span class="identifier">Action</span><span class="special">&gt;(</span><span class="identifier">rule</span><span class="special">,</span> <span class="identifier">handler</span><span class="special">)</span>
@@ -90,8 +95,8 @@
 <span class="special">);</span>
 </pre>
 <p>
-          we choose to <code class="computeroutput"><span class="identifier">fail</span></code> in our
-          example for the <code class="computeroutput"><span class="identifier">Action</span></code>:
+          we choose to <tt class="computeroutput"><span class="identifier">fail</span></tt> in our
+          example for the <tt class="computeroutput"><span class="identifier">Action</span></tt>:
           Quit and fail. Return a no_match (false). It can be one of:
         </p>
 <div class="informaltable"><table class="table">
@@ -100,75 +105,55 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Action</span></code>
-                </p>
-                </th>
-<th>
-                <p>
+<th><p>
+                  <tt class="computeroutput"><span class="identifier">Action</span></tt>
+                </p></th>
+<th><p>
                   Description
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                <p>
+<td><p>
                   fail
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Quit and fail. Return a no_match.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   retry
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Attempt error recovery, possibly moving the iterator position.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   accept
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Force success, moving the iterator position appropriately.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   rethrow
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   Rethrows the error.
-                </p>
-                </td>
+                </p></td>
 </tr>
 </tbody>
 </table></div>
 <p>
-          <code class="computeroutput"><span class="identifier">rule</span></code> is the rule we attach
-          the handler to. In our case, we are attaching to the <code class="computeroutput"><span class="identifier">xml</span></code>
+          <tt class="computeroutput"><span class="identifier">rule</span></tt> is the rule we attach
+          the handler to. In our case, we are attaching to the <tt class="computeroutput"><span class="identifier">xml</span></tt>
           rule.
         </p>
 <p>
-          <code class="computeroutput"><span class="identifier">handler</span></code> is the actual error
+          <tt class="computeroutput"><span class="identifier">handler</span></tt> is the actual error
           handling function. It expects 4 arguments:
         </p>
 <div class="informaltable"><table class="table">
@@ -177,77 +162,57 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
+<th><p>
                   Arg
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Description
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                <p>
+<td><p>
                   first
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   The position of the iterator when the rule with the handler was
                   entered.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   last
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   The end of input.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   error-pos
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   The actual position of the iterator where the error occurred.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
+<td><p>
                   what
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   What failed: a string decribing the failure.
-                </p>
-                </td>
+                </p></td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.tutorials.mini_xml___error_handling.expectation_points"></a><h6>
-<a name="id629879"></a>
-          <a class="link" href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.expectation_points">Expectation
+<a name="spirit.qi.tutorials.mini_xml___error_handling.expectation_points"></a><h5>
+<a name="id443877"></a>
+          <a href="mini_xml___error_handling.html#spirit.qi.tutorials.mini_xml___error_handling.expectation_points">Expectation
           Points</a>
-        </h6>
+        </h5>
 <p>
           You might not have noticed it, but some of our expressions changed from
-          using the <code class="computeroutput"><span class="special">&gt;&gt;</span></code> to <code class="computeroutput"><span class="special">&gt;</span></code>. Look, for example:
+          using the <tt class="computeroutput"><span class="special">&gt;&gt;</span></tt> to <tt class="computeroutput"><span class="special">&gt;</span></tt>. Look, for example:
         </p>
 <pre class="programlisting"><span class="identifier">end_tag</span> <span class="special">=</span>
         <span class="string">"&lt;/"</span>
@@ -258,10 +223,10 @@
 <p>
           What is it? It's the <span class="emphasis"><em>expectation</em></span> operator. You will
           have some "deterministic points" in the grammar. Those are the
-          places where backtracking <span class="bold"><strong>cannot</strong></span> occur.
-          For our example above, when you get a <code class="computeroutput"><span class="string">"&lt;/"</span></code>,
+          places where backtracking <span class="bold"><b>cannot</b></span> occur.
+          For our example above, when you get a <tt class="computeroutput"><span class="string">"&lt;/"</span></tt>,
           you definitely must see a valid end-tag label next. It should be the one
-          you got from the start-tag. After that, you definitely must have a <code class="computeroutput"><span class="char">'&gt;'</span></code> next. Otherwise, there is no point in
+          you got from the start-tag. After that, you definitely must have a <tt class="computeroutput"><span class="char">'&gt;'</span></tt> next. Otherwise, there is no point in
           proceeding forward and trying other branches, regardless where they are.
           The input is definitely erroneous. When this happens, an expectation_failure
           exception is thrown. Somewhere outward, the error handler will catch the
