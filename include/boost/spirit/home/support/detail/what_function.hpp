@@ -28,7 +28,7 @@ namespace boost { namespace spirit { namespace detail
         template <typename Component>
         void operator()(Component const& component) const
         {
-            get<std::list<info>&>(what.value).push_back(component.what(context));
+            get<std::list<info> >(what.value).push_back(component.what(context));
         }
 
         info& what;
