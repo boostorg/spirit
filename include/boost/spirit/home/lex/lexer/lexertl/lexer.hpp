@@ -149,8 +149,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         typedef void (dummy::*safe_bool)();
 
     public:
-        operator safe_bool () const
-            { return !initialized_dfa_ ? 0 : &dummy::true_; }
+        operator safe_bool() const
+            { return initialized_dfa_ ? &dummy::true_ : 0; }
 
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
             char_type;

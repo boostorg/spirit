@@ -11,6 +11,7 @@
 #endif
 
 #include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/argument.hpp>
@@ -160,14 +161,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 #endif
 
 // works only starting MSVC V8
-#if BOOST_MSVC >= 1500
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
     private:
         struct dummy { void true_() {}; };
         typedef void (dummy::*safe_bool)();
 
     public:
-        operator safe_bool () const
-            { return !is_valid() ? 0 : &dummy::true_; }
+        operator safe_bool() const { return is_valid() ? &dummy::true_ : 0; }
 #endif
 
     protected:
