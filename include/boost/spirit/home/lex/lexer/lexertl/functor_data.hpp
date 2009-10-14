@@ -51,10 +51,10 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // initialize the shared data 
             template <typename IterData>
-            data (IterData const& data, Iterator& first, Iterator const& last)
+            data (IterData const& data_, Iterator& first, Iterator const& last)
               : first_(first), last_(last)
-              , state_machine_(data.state_machine_)
-              , rules_(data.rules_) {}
+              , state_machine_(data_.state_machine_)
+              , rules_(data_.rules_) {}
 
             // The following functions are used by the implementation of the 
             // placeholder '_state'.
@@ -183,8 +183,8 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             // initialize the shared data 
             template <typename IterData>
-            data (IterData const& data, Iterator& first, Iterator const& last)
-              : base_type(data, first, last)
+            data (IterData const& data_, Iterator& first, Iterator const& last)
+              : base_type(data_, first, last)
               , state_(0) {}
 
             // The following functions are used by the implementation of the 
@@ -255,9 +255,9 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
               , Iterator, data, std::size_t> wrap_action_type;
 
             template <typename IterData>
-            data (IterData const& data, Iterator& first, Iterator const& last)
-              : base_type(data, first, last)
-              , actions_(data.actions_), hold_()
+            data (IterData const& data_, Iterator& first, Iterator const& last)
+              : base_type(data_, first, last)
+              , actions_(data_.actions_), hold_()
               , value_(iterator_range<Iterator>(first, last))
               , has_hold_(false), has_value_(false) {}
 

@@ -10,8 +10,8 @@
 #pragma once
 #endif
 
+#include <boost/config.hpp>
 #include <boost/spirit/home/qi/detail/assign_to.hpp>
-#include <boost/spirit/home/support/safe_bool.hpp>
 #include <boost/spirit/home/support/attributes.hpp>
 #include <boost/spirit/home/support/argument.hpp>
 #include <boost/spirit/home/support/detail/lexer/generator.hpp>
@@ -150,16 +150,25 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
         std::size_t state() const { return 0; }   // always '0' (INITIAL state)
 
+        bool is_valid() const 
+        { 
+            return 0 != id_ && id_type(boost::lexer::npos) != id_; 
+        }
+
 #if defined(BOOST_SPIRIT_DEBUG)
         std::pair<Iterator, Iterator> matched_;
 #endif
 
-        // operator_bool() is needed for the safe_bool base class
-        operator typename safe_bool<token>::result_type() const 
-        { 
-            return safe_bool<token>()(
-                0 != id_ && id_type(boost::lexer::npos) != id_); 
-        }
+// works only starting MSVC V8
+#if BOOST_MSVC >= 1500
+    private:
+        struct dummy { void true_() {}; };
+        typedef void (dummy::*safe_bool)();
+
+    public:
+        operator safe_bool () const
+            { return !is_valid() ? 0 : &dummy::true_; }
+#endif
 
     protected:
         id_type id_;            // token id, 0 if nothing has been matched
@@ -354,7 +363,7 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     inline bool 
     token_is_valid(token<Iterator, AttributeTypes, HasState> const& t)
     {
-        return t ? true : false;
+        return t.is_valid();
     }
 
 }}}}

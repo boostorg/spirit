@@ -10,7 +10,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/support/safe_bool.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/token.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/functor.hpp>
 #include <boost/spirit/home/lex/lexer/lexertl/static_functor_data.hpp>
@@ -112,12 +111,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
       , typename Functor = functor<Token, detail::static_data, Iterator> >
     class static_lexer 
     {
+    private:
+        struct dummy { void true_() {}; };
+        typedef void (dummy::*safe_bool)();
+
     public:
-        // operator_bool() is needed for the safe_bool base class
-        operator typename safe_bool<static_lexer>::result_type() const 
-        { 
-            return safe_bool<static_lexer>()(true);    // object is always valid
-        }
+        // object is always valid
+        operator safe_bool() const { return &dummy::true_; }
 
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
