@@ -66,15 +66,15 @@ main()
     {   // test unused attribute handling
 
         vector<optional<int>, optional<char> > attr;
-        BOOST_TEST((test_attr("123ab", int_ || ("a" >> char_), attr)));
+        BOOST_TEST((test_attr("123abc", int_ || ("ab" >> char_), attr)));
         BOOST_TEST((at_c<0>(attr).get() == 123));
-        BOOST_TEST((at_c<1>(attr).get() == 'b'));
+        BOOST_TEST((at_c<1>(attr).get() == 'c'));
     }
 
     {   // test unused attribute handling
 
         optional<int> attr;
-        BOOST_TEST((test_attr("123a", int_ || "a", attr)));
+        BOOST_TEST((test_attr("123ab", int_ || "ab", attr)));
         BOOST_TEST((attr == 123));
     }
 
