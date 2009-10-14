@@ -24,7 +24,6 @@
 #include<boost/spirit/home/support/make_component.hpp>
 #include<boost/spirit/home/support/meta_compiler.hpp>
 #include<boost/spirit/home/support/modify.hpp>
-#include<boost/spirit/home/support/safe_bool.hpp>
 #include<boost/spirit/home/support/sequence_base_id.hpp>
 #include<boost/spirit/home/support/string_traits.hpp>
 #include<boost/spirit/home/support/terminal.hpp>
