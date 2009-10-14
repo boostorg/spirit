@@ -12,6 +12,8 @@
 #pragma once
 #endif
 
+#include <boost/config.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/proto/proto.hpp>
 #include <boost/spirit/home/support/make_component.hpp>
 #include <boost/spirit/home/support/modify.hpp>
@@ -54,6 +56,9 @@ namespace boost { namespace spirit
             !use_operator<Domain, proto::tag::subscript>::value
         ), error_proto_tag_subscript_cannot_be_used, ());
 
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
+        // this is the non-broken part for compilers properly supporting 
+        // partial template specialization (VC7.1 does not)
         struct cases
         {
             template <typename Tag, typename Enable = void>
@@ -113,6 +118,73 @@ namespace boost { namespace spirit
                 >
             {};
         };
+#else
+        // this part actually constitutes invalid C++ code, but it allows us to
+        // convince VC7.1 to do what we want
+        struct cases
+        {
+            template <typename Tag, typename Enable = void>
+            struct case_
+              : proto::not_<proto::_>
+            {};
+
+            ///////////////////////////////////////////////////////////////////
+            // terminals
+            ///////////////////////////////////////////////////////////////////
+            template <>
+            struct case_<proto::tag::terminal>
+              : proto::when<
+                    proto::if_<use_terminal<Domain, proto::_value>()>,
+                    detail::make_terminal<Domain>
+                >
+            {};
+
+            template <typename Tag>
+            struct case_<Tag>
+              : proto::or_<
+            ///////////////////////////////////////////////////////////////////
+            // binary operators
+            ///////////////////////////////////////////////////////////////////
+                    proto::when<proto::binary_expr<
+                        typename enable_if<use_operator<Domain, Tag>, Tag>::type
+                          , meta_grammar, meta_grammar>
+                      , detail::make_binary<Domain, Tag, meta_grammar>
+                    >,
+            ///////////////////////////////////////////////////////////////////
+            // unary operators
+            ///////////////////////////////////////////////////////////////////
+                    proto::when<proto::unary_expr<
+                        typename enable_if<use_operator<Domain, Tag>, Tag>::type
+                          , meta_grammar>
+                      , detail::make_unary<Domain, Tag, meta_grammar>
+                    >
+                >
+            {};
+
+            template <>
+            struct case_<proto::tag::subscript>
+              : proto::or_<
+            ///////////////////////////////////////////////////////////////////
+            // directives
+            ///////////////////////////////////////////////////////////////////
+                    proto::when<proto::binary_expr<proto::tag::subscript
+                      , proto::and_<
+                            proto::terminal<proto::_>
+                          , proto::if_<use_directive<Domain, proto::_value >()> >
+                      , meta_grammar>,
+                        detail::make_directive<Domain, meta_grammar>
+                    >,
+            ///////////////////////////////////////////////////////////////////
+            // semantic actions
+            ///////////////////////////////////////////////////////////////////
+                    proto::when<proto::binary_expr<proto::tag::subscript
+                      , meta_grammar, proto::_>,
+                        detail::make_action<Domain, meta_grammar>
+                    >
+                >
+            {};
+        };
+#endif
 
         struct meta_grammar
           : proto::switch_<cases>

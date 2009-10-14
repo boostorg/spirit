@@ -12,7 +12,6 @@
 
 #include <iosfwd>
 
-#include <boost/spirit/home/support/safe_bool.hpp>
 #include <boost/spirit/home/support/detail/lexer/generator.hpp>
 #include <boost/spirit/home/support/detail/lexer/rules.hpp>
 #include <boost/spirit/home/support/detail/lexer/consts.hpp>
@@ -145,11 +144,13 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
       , typename Functor = functor<Token, lexertl::detail::data, Iterator> >
     class lexer 
     {
+    private:
+        struct dummy { void true_() {}; };
+        typedef void (dummy::*safe_bool)();
+
     public:
-        operator typename safe_bool<lexer>::result_type() const 
-        { 
-            return safe_bool<lexer>()(initialized_dfa_); 
-        }
+        operator safe_bool() const
+            { return initialized_dfa_ ? &dummy::true_ : 0; }
 
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
             char_type;

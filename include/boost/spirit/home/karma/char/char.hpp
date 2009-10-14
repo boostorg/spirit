@@ -228,8 +228,8 @@ namespace boost { namespace spirit { namespace karma
         info what(Context& /*context*/) const
         {
             info result("char-range", char_encoding::toucs4(from));
-            boost::get<std::string&>(result.value) += '-';
-            boost::get<std::string&>(result.value) += to_utf8(char_encoding::toucs4(to));
+            boost::get<std::string>(result.value) += '-';
+            boost::get<std::string>(result.value) += to_utf8(char_encoding::toucs4(to));
             return result;
         }
 
