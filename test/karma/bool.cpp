@@ -14,8 +14,6 @@
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_phoenix_attributes.hpp>
 
-#include <boost/spirit/home/support/safe_bool.hpp>
-
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_statement.hpp>
@@ -47,11 +45,12 @@ struct test_bool_data
     bool b;
 
     // we need to provide (safe) convertibility to bool
-    typedef boost::spirit::safe_bool<test_bool_data> safe_bool_type;
-    operator safe_bool_type::result_type() const 
-    { 
-        return safe_bool_type()(b); 
-    }
+private:
+    struct dummy { void true_() {}; };
+    typedef void (dummy::*safe_bool)();
+
+public:
+    operator safe_bool () const { return b ? &dummy::true_ : 0; }
 };
 
 struct test_bool_policy : boost::spirit::karma::bool_policies<>
