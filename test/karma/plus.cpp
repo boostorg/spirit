@@ -67,7 +67,7 @@ int main()
         BOOST_TEST(test_delimited("10, 20, 30, ", +int_, v, lit(", ")));
 
         BOOST_TEST(test("10,20,30,", +(int_ << ','), v));
-        BOOST_TEST(test_delimited("10 , 20 , 30 , ", +(int_ << ','), v, lit(" ")));
+        BOOST_TEST(test_delimited("10 , 20 , 30 , ", +(int_ << ','), v, lit(' ')));
  
 // leads to infinite loops
 //         fusion::vector<char, char> cc ('a', 'c');

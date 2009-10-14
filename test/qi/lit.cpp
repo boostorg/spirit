@@ -6,6 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/detail/workaround.hpp>
 #include <boost/spirit/include/qi_string.hpp>
 #include <boost/spirit/include/qi_char.hpp>
 #include <boost/spirit/include/qi_action.hpp>
@@ -26,9 +27,10 @@ main()
     {
         BOOST_TEST((test("kimpo", "kimpo")));
         BOOST_TEST((test("kimpo", lit("kimpo"))));
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
         BOOST_TEST((test("x", lit("x"))));
         BOOST_TEST((test(L"x", lit(L"x"))));
-
+#endif
         std::basic_string<char> s("kimpo");
         std::basic_string<wchar_t> ws(L"kimpo");
         BOOST_TEST((test("kimpo", s)));
@@ -40,7 +42,9 @@ main()
     {
         BOOST_TEST((test(L"kimpo", L"kimpo")));
         BOOST_TEST((test(L"kimpo", lit(L"kimpo"))));
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
         BOOST_TEST((test(L"x", lit(L"x"))));
+#endif
         BOOST_TEST((test(L"x", lit(L'x'))));
         BOOST_TEST((test(L"x", lit(L'x'))));
     }
@@ -57,7 +61,9 @@ main()
         using namespace boost::spirit::ascii;
         BOOST_TEST((test("    kimpo", lit("kimpo"), space)));
         BOOST_TEST((test(L"    kimpo", lit(L"kimpo"), space)));
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
         BOOST_TEST((test("    x", lit("x"), space)));
+#endif
         BOOST_TEST((test("    x", lit('x'), space)));
         BOOST_TEST((test(L"    x", lit(L'x'), space)));
     }
@@ -66,7 +72,9 @@ main()
         using namespace boost::spirit::ascii;
         BOOST_TEST((test("    kimpo", lit("kimpo"), space)));
         BOOST_TEST((test(L"    kimpo", lit(L"kimpo"), space)));
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1400)
         BOOST_TEST((test("    x", lit("x"), space)));
+#endif
         BOOST_TEST((test("    x", lit('x'), space)));
         BOOST_TEST((test(L"    x", lit(L'x'), space)));
     }

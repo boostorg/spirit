@@ -11,6 +11,7 @@
 #endif
 
 #include <limits>
+#include <boost/config.hpp>
 
 #include <boost/spirit/home/support/common_terminals.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
@@ -82,9 +83,11 @@ namespace boost { namespace spirit
 #endif
 
     ///////////////////////////////////////////////////////////////////////////
+#if !defined(BOOST_NO_INTRINSIC_WCHAR_T)
     template <>           // enables lit(unsigned short(0))
     struct use_terminal<karma::domain, unsigned short>
       : mpl::true_ {};
+#endif
 
     template <>           // enables lit(0U)
     struct use_terminal<karma::domain, unsigned int>
@@ -490,9 +493,11 @@ namespace boost { namespace spirit { namespace karma
         };
     }
 
+#if !defined(BOOST_NO_INTRINSIC_WCHAR_T)
     template <typename Modifiers>
     struct make_primitive<unsigned short, Modifiers> 
       : detail::basic_uint_literal<unsigned short, Modifiers> {};
+#endif
 
     template <typename Modifiers>
     struct make_primitive<unsigned int, Modifiers> 
