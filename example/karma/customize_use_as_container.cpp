@@ -16,12 +16,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //[customize_karma_use_as_container_data
-// All specializations of attribute customization points have to be placed into
-// the namespace boost::spirit::traits.
 namespace client
 {
     struct use_as_container
     {
+        // Expose a pair holding a pointer to the use_as_container and to the 
+        // current element as our iterator.
+        // We intentionally leave out having it a 'operator==()' to demonstrate
+        // the use of the 'compare_iterators' customization point.
         struct iterator
         {
             iterator(use_as_container const* container, int const* current)
@@ -31,10 +33,12 @@ namespace client
             use_as_container const* container_;
             int const* current_;
         };
+
+        // expose 'int' as the type of each generated element
         typedef int type;
 
-        use_as_container() 
-          : value1_(1), value2_(2), value3_(3)
+        use_as_container(int value1, int value2, int value3) 
+          : value1_(value1), value2_(value2), value3_(value3)
         {}
 
         int value1_;
@@ -47,19 +51,37 @@ namespace client
 //]
 
 //[customize_karma_use_as_container_traits
+// All specializations of attribute customization points have to be placed into
+// the namespace boost::spirit::traits.
+//
+// Note that all templates below are specialized using the 'const' type.
+// This is necessary as all attributes in Karma are 'const'.
 namespace boost { namespace spirit { namespace traits
 {
+    // The specialization of the template 'is_container<>' will tell the 
+    // library to treat the type 'client::use_as_container' as a 
+    // container holding the items to generate output from.
     template <>
     struct is_container<client::use_as_container const>
       : mpl::true_
     {};
 
+    // The specialization of the template 'container_iterator<>' will be
+    // invoked by the library to evaluate the iterator type to be used
+    // for iterating the data elements in the container. We simply return
+    // the type of the iterator exposed by the embedded 'std::vector<int>'.
     template <>
     struct container_iterator<client::use_as_container const>
     {
         typedef client::use_as_container::iterator type;
     };
 
+    // The specialization of the templates 'begin_container<>' and 
+    // 'end_container<>' below will be used by the library to get the iterators 
+    // pointing to the begin and the end of the data to generate output from. 
+    //
+    // The passed argument refers to the attribute instance passed to the list 
+    // generator.
     template <>
     struct begin_container<client::use_as_container const>
     {
@@ -83,8 +105,12 @@ namespace boost { namespace spirit { namespace traits
 //]
 
 //[customize_karma_use_as_container_iterator_traits
+// All specializations of attribute customization points have to be placed into
+// the namespace boost::spirit::traits.
 namespace boost { namespace spirit { namespace traits
 {
+    // The specialization of the template 'deref_iterator<>' will be used to 
+    // dereference the iterator associated with our counter data structure.
     template <>
     struct deref_iterator<client::use_as_container::iterator>
     {
@@ -129,7 +155,7 @@ namespace karma = boost::spirit::karma;
 int main()
 {
     //[customize_karma_use_as_container
-    client::use_as_container d2;
+    client::use_as_container d2 (1, 2, 3);
     // use the instance of a 'client::use_as_container' instead of a STL vector
     std::cout << karma::format(karma::int_ % ", ", d2) << std::endl;   // prints: '1, 2, 3'
     //]

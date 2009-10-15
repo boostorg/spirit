@@ -6,6 +6,14 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
+[import ../example/karma/customize_embedded_container.cpp]    [/ this pulls in the embedded_container example]
+[import ../example/karma/customize_counter.cpp]               [/ this pulls in the counter example]
+[import ../example/karma/customize_use_as_container.cpp]      [/ this pulls in the use_as_container example]
+
+[def __customize_embedded_container_example__ [link spirit.advanced.customize.iterate.container_iterator.example embedded_container_example]]
+[def __customize_counter_example__ [link spirit.advanced.customize.iterate.deref_iterator.example counter_example]]
+[def __customize_use_as_container_example__ [link spirit.advanced.customize.iterate.next_iterator.example use_as_container]]
+
 [section:customize Customization of Spirit's Attribute Handling]
 
 [heading Why do we need Attribute Customization Points]
@@ -173,7 +181,7 @@ where `Op(a)` stands for any meaningful operation on the component `a`.
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                   [When to implement]]
@@ -189,7 +197,9 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+For examples of how to use the customization point `is_container` please
+see here: __customize_embedded_container_example__, 
+__customize_use_as_container_example__, and __customize_counter_example__.
 
 [endsect] [/ is_container]
 
@@ -629,7 +639,7 @@ where `Op(a)` stands for any meaningful operation on the component `a`.
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                   [When to implement]]
@@ -760,7 +770,7 @@ where `Op(a)` stands for any meaningful operation on the component `a`.
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                   [When to implement]]
@@ -1074,7 +1084,7 @@ return `mpl::false_`).
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                               [When to implement]]
@@ -1088,8 +1098,6 @@ points need to be implemented as well.
 ]
 
 [heading Example]
-
-[import ../example/karma/customize_embedded_container.cpp]   [/ this pulls in the example]
 
 Here are the header files needed to make the example code below compile:
 
@@ -1123,6 +1131,10 @@ generator:
 As you can see, the specializations for the customization points as defined 
 above enable the seemless integration of the custom data structure without 
 having to modify the output format or the generator itself.
+
+For other examples of how to use the customization point `container_iterator` 
+please see here: __customize_use_as_container_example__ and
+__customize_counter_example__.
 
 [endsect] [/ container_iterator]
 
@@ -1229,7 +1241,7 @@ return `mpl::false_`).
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                               [When to implement]]
@@ -1244,7 +1256,9 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+For examples of how to use the customization point `begin_container` please
+see here: __customize_embedded_container_example__,
+__customize_use_as_container_example__, and __customize_counter_example__.
 
 [endsect] [/ begin_container]
 
@@ -1339,7 +1353,7 @@ return `mpl::false_`).
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                               [When to implement]]
@@ -1354,7 +1368,9 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+For examples of how to use the customization point `end_container` please
+see here: __customize_embedded_container_example__,
+__customize_use_as_container_example__, and __customize_counter_example__.
 
 [endsect] [/ end_container]
 
@@ -1446,7 +1462,7 @@ would normally return `mpl::false_`).
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                               [When to implement]]
@@ -1461,7 +1477,41 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+Here are the header files needed to make the example code below compile:
+
+[customize_karma_use_as_container_includes]
+
+The example (for the full source code please see here:
+[@../../example/karma/customize_use_as_container.cpp customize_use_as_container.cpp]) 
+uses the data structure
+
+[customize_karma_use_as_container_data]
+
+as a direct attribute to the __karma_list__ generator. This type does not 
+expose any of the interfaces of an STL container. It does not even expose the 
+usual semantics of a container. The purpose of this artifical example is to 
+demonstrate how the customization points can be used to expose independent data
+elements as a single container. The example shows how to enable its use as an 
+attribute to /Karma's/ repetitive generators.
+
+In order to make this data structure compatible we need to specialize a couple 
+of attribute customization points: __customize_is_container__, 
+__customize_container_iterator__, __customize_begin_container__, and
+__customize_end_container__. In addition, we specialize all of the 
+iterator related customization points as well: __customize_deref_iterator__,
+__customize_next_iterator__, and __customize_compare_iterators__.
+
+[customize_karma_use_as_container_traits]
+[customize_karma_use_as_container_iterator_traits]
+
+The last code snippet shows an example using an instance of the data structure 
+`client::use_as_container` to generate output from a __karma_list__ generator:
+
+[customize_karma_use_as_container]
+
+As you can see, the specializations for the customization points as defined 
+above enable the seemless integration of the custom data structure without 
+having to modify the output format or the generator itself.
 
 [endsect] [/ next_iterator]
 
@@ -1560,7 +1610,7 @@ would normally return `mpl::false_`).
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                               [When to implement]]
@@ -1575,7 +1625,42 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+Here are the header files needed to make the example code below compile:
+
+[customize_karma_counter_includes]
+
+The example (for the full source code please see here:
+[@../../example/karma/customize_counter.cpp customize_counter.cpp]) 
+uses the data structure
+
+[customize_karma_counter_data]
+
+as a direct attribute to the __karma_list__ generator. This type does not 
+expose any of the interfaces of an STL container. It does not even expose the 
+usual semantics of a container. The presented customization points build a 
+counter instance which is incrememnted each time it is accessed. The examples 
+shows how to enable its use as an attribute to /Karma's/ repetitive generators.
+
+In order to make this data structure compatible we need to specialize a couple 
+of attribute customization points: __customize_is_container__, 
+__customize_container_iterator__, __customize_begin_container__, and
+__customize_end_container__. In addition, we specialize one of the 
+iterator related customization points as well: __customize_deref_iterator__.
+
+[customize_karma_counter_traits]
+[customize_karma_counter_iterator_traits]
+
+The last code snippet shows an example using an instance of the data structure 
+`client::counter` to generate output from a __karma_list__ generator:
+
+[customize_karma_counter]
+
+As you can see, the specializations for the customization points as defined 
+above enable the seemless integration of the custom data structure without 
+having to modify the output format or the generator itself.
+
+For other examples of how to use the customization point `deref_iterator` 
+please see here: __customize_use_as_container_example__.
 
 [endsect] [/ deref_iterator]
 
@@ -1606,7 +1691,7 @@ Also, see __include_structure__.
 [heading Related Attribute Customization Points]
 
 If this customization point is implemented, the following other customization 
-points need to be implemented as well.
+points might need to be implemented as well.
 
 [table
     [[Name]                               [When to implement]]
@@ -1621,7 +1706,8 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+For an example of how to use the customization point `compare_iterators` 
+please see here: __customize_use_as_container_example__.
 
 [endsect] [/ compare_iterators]
 

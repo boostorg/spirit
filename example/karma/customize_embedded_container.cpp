@@ -35,13 +35,14 @@ namespace client
 //[customize_karma_embedded_container_traits
 // All specializations of attribute customization points have to be placed into
 // the namespace boost::spirit::traits.
+//
+// Note that all templates below are specialized using the 'const' type.
+// This is necessary as all attributes in Karma are 'const'.
 namespace boost { namespace spirit { namespace traits
 {
     // The specialization of the template 'is_container<>' will tell the 
     // library to treat the type 'client::embedded_container' as a 
     // container holding the items to generate output from.
-    // Note that all templates below are specialized using the 'const' type.
-    // This is necessary as all attributes in Karma are 'const'.
     template <>
     struct is_container<client::embedded_container const>
       : mpl::true_
@@ -57,15 +58,17 @@ namespace boost { namespace spirit { namespace traits
         typedef client::embedded_container::iterator type;
     };
 
-    // The specialization of the template 'begin_container<>' will be used
-    // by the library to get the iterator pointing to the first element of 
-    // the data to generate output from. This specialization simply returns 
-    // the 'begin' iterator as exposed by the embedded 'std::vector<int>'.
+    // The specialization of the templates 'begin_container<>' and 
+    // 'end_container<>' below will be used by the library to get the iterators 
+    // pointing to the begin and the end of the data to generate output from. 
+    // These specializations simply return the 'begin' and 'end' iterators as 
+    // exposed by the embedded 'std::vector<int>'.
+    //
+    // The passed argument refers to the attribute instance passed to the list 
+    // generator.
     template <>
     struct begin_container<client::embedded_container const>
     {
-        // The passed argument refers to the attribute instance passed to the
-        // list generator.
         static client::embedded_container::iterator 
         call(client::embedded_container const& d)
         {
@@ -73,15 +76,9 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-    // The specialization of the template 'end_container<>' will be used
-    // by the library to get the iterator pointing to the end of the data 
-    // to generate output from. This specialization simply returns the 'end' 
-    // iterator as exposed by the embedded 'std::vector<int>'.
     template <>
     struct end_container<client::embedded_container const>
     {
-        // The passed argument refers to the attribute instance passed to the
-        // list generator.
         static client::embedded_container::iterator 
         call(client::embedded_container const& d)
         {
