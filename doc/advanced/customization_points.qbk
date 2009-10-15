@@ -1058,7 +1058,7 @@ types returned by the embedded typedef `type`:
     [[Template Parameters]     [Value]]
     [[`C`]                     [Returns `C::iterator`.]]
     [[`C const`]               [Returns `C::const_iterator`.]]
-    [[__unused_type__]         [Returns `unused_type const*`.]]
+    [[__unused_type__]         [Returns __unused_type__` const*`.]]
 ]
 
 [heading When to implement]
@@ -1089,7 +1089,40 @@ points need to be implemented as well.
 
 [heading Example]
 
-TBD
+[import ../example/karma/customize_embedded_container.cpp]   [/ this pulls in the example]
+
+Here are the header files needed to make the example code below compile:
+
+[customize_karma_embedded_container_includes]
+
+The example (for the full source code please see here:
+[@../../example/karma/customize_embedded_container.cpp customize_embedded_container.cpp]) 
+uses the data structure
+
+[customize_karma_embedded_container_data]
+
+as a direct container attribute to the __karma_list__ generator. In order to 
+make this data structure compatible we need to specialize a couple of attribute 
+customization points: __customize_is_container__, __customize_container_iterator__, 
+__customize_begin_container__, and __customize_end_container__. As you can see
+the specializations simply expose the embedded `std::vector<int>` as the 
+container to use. We don't need to specialize the customization points related 
+to iterators (__customize_deref_iterator__, __customize_next_iterator__,
+and __customize_compare_iterators__) as we expose a standard iterator and the 
+default implementation of these customizations handles standard iterators out 
+of the box. 
+
+[customize_karma_embedded_container_traits]
+
+The last code snippet shows an example using an instance of the data structure 
+`client::embedded_container` to generate output from a __karma_list__ 
+generator:
+
+[customize_karma_embedded_container]
+
+As you can see, the specializations for the customization points as defined 
+above enable the seemless integration of the custom data structure without 
+having to modify the output format or the generator itself.
 
 [endsect] [/ container_iterator]
 
@@ -1330,7 +1363,11 @@ TBD
 
 [heading next_iterator]
 
-Short description here...
+The template `next_iterator` is a type used as an attribute customization point. 
+It is invoked by the /Karma/ repetitive generators (such as __karma_list__, 
+[karma_kleene Kleene (unary `*`)], __karma_plus__, and [karma_repeat Repeat]) 
+in order to get an iterator pointing to the next element of a container 
+holding the attributes to generate output from.
 
 [heading Module Headers]
 
@@ -1349,6 +1386,62 @@ Also, see __include_structure__.
     [[`boost::spirit::traits`]]
 ]
 
+[heading Synopsis]
+
+    template <typename Iterator, typename Enable>
+    struct next_iterator;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Iterator`]           [The type, `Iterator` of the iterator to increment.
+                             This is the same as the type returned by the 
+                             customization point __customize_container_iterator__.]    [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `end_container` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`Iterator`]       [An iterator type.]]
+    [[`it`]             [An instance of an iterator, `Iterator`.]]
+    [[`C`]              [A container type a iterator type, `Iterator` belongs to.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                     [Semantics]]
+    [[`next_iterator<Iterator>::call(it)`]    [Increment the iterator pointing so that 
+                                       it is pointing to the next element.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. The following table lists those types together with the 
+types returned by the embedded typedef `type`:
+
+[table
+    [[Template Parameters]     [Value]]
+    [[`Iterator`]              [Executes `++it`.]]
+    [[__unused_type__` const*`][Does nothing.]]
+]
+
+[heading When to implement]
+
+The customization point `next_iterator` needs to be implemented for a specific 
+iterator type whenever the container this iterator belongs to is to be used as 
+an attribute in place of a STL container. It is applicable for generators 
+(__karma__) only. As a rule of thumb: it has to be implemented whenever a certain 
+iterator type belongs to a container which is to be passed as an attribute 
+to a generator normally exposing a STL container, `C` and if the container type 
+does not expose the interface of a STL container (i.e. `is_container<C>::type` 
+would normally return `mpl::false_`). 
 
 [heading Related Attribute Customization Points]
 
@@ -1377,7 +1470,11 @@ TBD
 
 [heading deref_iterator]
 
-Short description here...
+The template `deref_iterator` is a type used as an attribute customization point. 
+It is invoked by the /Karma/ repetitive generators (such as __karma_list__, 
+[karma_kleene Kleene (unary `*`)], __karma_plus__, and [karma_repeat Repeat]) 
+in order to dereference an iterator pointing to an element of a container 
+holding the attributes to generate output from.
 
 [heading Module Headers]
 
@@ -1395,6 +1492,70 @@ Also, see __include_structure__.
     [[Name]]
     [[`boost::spirit::traits`]]
 ]
+
+[heading Synopsis]
+
+    template <typename Iterator, typename Enable>
+    struct deref_iterator;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Iterator`]           [The type, `Iterator` of the iterator to dereference.
+                             This is the same as the type returned by the 
+                             customization point __customize_container_iterator__.]    [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `end_container` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`Iterator`]       [An iterator type.]]
+    [[`it`]             [An instance of an iterator, `Iterator`.]]
+    [[`C`]              [A container type a iterator type, `Iterator` belongs to.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                             [Semantics]]
+    [[`deref_iterator<Iterator>::type`]       [Metafunction result evaluating to the 
+                                      type returned by dereferencing the iterator.]]
+    [[`deref_iterator<Iterator>::call(it)`]   [Return the element in the container
+                                      the itertor is referring to. The type of the
+                                      returned value is the same as returned by the 
+                                      metafunction result `type`.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. The following table lists those types together with the 
+types returned by the embedded typedef `type`:
+
+[table
+    [[Template Parameters]     [Value]]
+    [[`Iterator`]              [The metafunction result `type` evaluates to 
+              `boost::detail::iterator_traits<Iterator>::reference` and the 
+              function `call()` returns `*it`.]]
+    [[__unused_type__` const*`][The metafunction result `type` evaluates to 
+              __unused_type__ and the function `call()` returns `unused`.]]
+]
+
+[heading When to implement]
+
+The customization point `deref_iterator` needs to be implemented for a specific 
+iterator type whenever the container this iterator belongs to is to be used as 
+an attribute in place of a STL container. It is applicable for generators 
+(__karma__) only. As a rule of thumb: it has to be implemented whenever a certain 
+iterator type belongs to a container which is to be passed as an attribute 
+to a generator normally exposing a STL container, `C` and if the container type 
+does not expose the interface of a STL container (i.e. `is_container<C>::type` 
+would normally return `mpl::false_`). 
 
 [heading Related Attribute Customization Points]
 
