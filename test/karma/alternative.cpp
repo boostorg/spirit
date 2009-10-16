@@ -49,6 +49,17 @@ main()
         BOOST_TEST(test("c", int_ | char_ | lit('a'), v));
     }
 
+    // testing for alignment/truncation problems on little endian systems
+    // (big endian systems will fail one of the other tests below)
+    {
+        std::basic_string<wchar_t> generated;
+        std::back_insert_iterator<std::basic_string<wchar_t> > outit(generated);
+        boost::variant<int, char> v(10);
+        bool result = karma::generate_delimited(outit
+          , karma::int_ | karma::char_, karma::char_(' '), v);
+        BOOST_TEST(result && generated == L"10 ");
+    }
+
     {
         // test if alternatives with all components having unused 
         // attribute generate first alternative 
