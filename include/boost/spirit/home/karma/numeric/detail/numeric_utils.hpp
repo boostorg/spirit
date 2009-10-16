@@ -440,7 +440,7 @@ namespace boost { namespace spirit { namespace karma
     /**/
 
 #define BOOST_KARMA_NUMERICS_INNER_LOOP_SUFFIX(z, x, data)                    \
-            *sink = ch;                                                       \
+            *sink = char(ch);                                                 \
             ++sink;                                                           \
         }                                                                     \
     /**/
@@ -473,7 +473,7 @@ namespace boost { namespace spirit { namespace karma
                 BOOST_KARMA_NUMERICS_LOOP_UNROLL,
                 BOOST_KARMA_NUMERICS_INNER_LOOP_SUFFIX, _);
 
-            *sink = ch;
+            *sink = char(ch);
             ++sink;
             return true;
         }
