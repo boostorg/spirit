@@ -169,76 +169,13 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     //  The following classes are used to intercept the output into a buffer
     //  allowing to do things like alignment, character escaping etc.
-    //
-    //  We need to use virtual functions because output_iterators do not have
-    //  an associated value_type. The type of the buffer elements is available
-    //  at insertion time only (and not at buffer creation time).
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename OutputIterator>
-    struct abstract_container
-    {
-        virtual ~abstract_container() {}
-        virtual void output(void const *item) = 0;
-        virtual bool copy(OutputIterator& sink, std::size_t maxwidth) const = 0;
-        virtual std::size_t buffer_size() const = 0;
-    };
-
-    template <typename OutputIterator, typename T>
-    class concrete_container : public abstract_container<OutputIterator>
-    {
-    public:
-        concrete_container(std::size_t size)
-        { 
-            buffer.reserve(size); 
-        }
-        ~concrete_container() {}
-
-    private:
-        void output(void const *item)
-        {
-            buffer.push_back(*static_cast<T const*>(item));
-        }
-        bool copy(OutputIterator& sink, std::size_t maxwidth) const
-        {
-#if defined(BOOST_MSVC)
-#pragma warning(push)
-#pragma warning(disable: 4267)
-#endif
-            typename std::basic_string<T>::const_iterator end = 
-                buffer.begin() + (std::min)(buffer.size(), maxwidth);
-
-#if defined(BOOST_MSVC)
-#pragma warning(pop)
-#endif
-
-            std::copy(buffer.begin(), end, sink);
-            return true;
-        }
-//         template <typename RestIterator>
-//         bool copy_rest(RestIterator& restsink, std::size_t start_at) const
-//         {
-//             typename std::basic_string<T>::const_iterator begin = 
-//                 buffer.begin() + (std::min)(buffer.size(), start_at);
-// 
-//             std::copy(begin, buffer.end(), restsink);
-//             return true;
-//         }
-        std::size_t buffer_size() const
-        {
-            return buffer.size();
-        }
-
-    private:
-        std::basic_string<T> buffer;
-    };
-
     ///////////////////////////////////////////////////////////////////////////
     template <typename OutputIterator>
     class buffer_sink : boost::noncopyable
     {
     public:
         buffer_sink()
-          : width(0), buffer(0) {}
+          : width(0) {}
 
         ~buffer_sink() 
         { 
@@ -249,42 +186,55 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         { 
             tidy();             // release existing buffer
             width = (width_ == std::size_t(-1)) ? 0 : width_;
+            buffer.reserve(width); 
         }
 
         void tidy() 
         { 
-            delete buffer; buffer = 0; width = 0; 
+            buffer.clear(); 
+            width = 0; 
         }
 
         template <typename T>
         void output(T const& value)
         {
-            if (0 == buffer)
-            {
-                typedef concrete_container<OutputIterator, T> container;
-                buffer = new container(width);
-            }
-            buffer->output(&value);
+            BOOST_STATIC_ASSERT(sizeof(T) <= sizeof(wchar_t));
+            buffer.push_back(value);
         }
 
         bool copy(OutputIterator& sink, std::size_t maxwidth) const 
         { 
-            return buffer ? buffer->copy(sink, maxwidth) : false; 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable: 4267)
+#endif
+            typename std::basic_string<wchar_t>::const_iterator end = 
+                buffer.begin() + (std::min)(buffer.size(), maxwidth);
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
+            std::copy(buffer.begin(), end, sink);
+            return true;
         }
 //         template <typename RestIterator>
 //         bool copy_rest(RestIterator& sink, std::size_t start_at) const 
 //         { 
-//             return buffer ? buffer->copy_rest(sink, start_at) : false; 
+//             typename std::basic_string<T>::const_iterator begin = 
+//                 buffer.begin() + (std::min)(buffer.size(), start_at);
+// 
+//             std::copy(begin, buffer.end(), restsink);
+//             return true;
 //         }
 
         std::size_t buffer_size() const 
         { 
-            return buffer ? buffer->buffer_size() : 0; 
+            return buffer.size();
         }
 
     private:
         std::size_t width;
-        abstract_container<OutputIterator> *buffer;
+        std::basic_string<wchar_t> buffer;
     };
 
     ///////////////////////////////////////////////////////////////////////////
