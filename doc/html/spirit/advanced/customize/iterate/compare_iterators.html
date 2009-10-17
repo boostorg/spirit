@@ -28,14 +28,21 @@
           Compare two Iterator pointing into a Container Attribute for Equality</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.iterate.compare_iterators.compare_iterators"></a><h6>
-<a name="id936668"></a>
+<a name="id880314"></a>
             <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.compare_iterators">compare_iterators</a>
           </h6>
 <p>
-            Short description here...
+            The template <code class="computeroutput"><span class="identifier">compare_iterators</span></code>
+            is a type used as an attribute customization point. It is invoked by
+            the <span class="emphasis"><em>Karma</em></span> repetitive generators (such as <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+            (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene
+            (unary <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, and <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>)
+            in order to compare the current iterator (returned either from <a class="link" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a> or from <a class="link" href="next_iterator.html" title="Increment the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">next_iterator</span></code></a>) with the end
+            iterator (returned from <a class="link" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>) in order to find
+            the end of the element sequence to gerenate output for.
           </p>
 <a name="spirit.advanced.customize.iterate.compare_iterators.module_headers"></a><h6>
-<a name="id936684"></a>
+<a name="id880411"></a>
             <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.module_headers">Module
             Headers</a>
           </h6>
@@ -56,7 +63,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.iterate.compare_iterators.namespace"></a><h6>
-<a name="id936772"></a>
+<a name="id880499"></a>
             <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -72,14 +79,226 @@
                   </p>
                   </td></tr></tbody>
 </table></div>
+<a name="spirit.advanced.customize.iterate.compare_iterators.synopsis"></a><h6>
+<a name="id880577"></a>
+            <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.synopsis">Synopsis</a>
+          </h6>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">compare_iterators</span>
+<span class="special">{</span>
+    <span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">call</span><span class="special">(</span><span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">it1</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">it2</span><span class="special">);</span>
+<span class="special">};</span>
+</pre>
+<a name="spirit.advanced.customize.iterate.compare_iterators.template_parameters"></a><h6>
+<a name="id880710"></a>
+            <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.template_parameters">Template
+            parameters</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Parameter
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Default
+                  </p>
+                  </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The type, <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                    of the iterator to dereference. This is the same as the type
+                    returned by the customization point <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>.
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    none
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Enable</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Helper template parameter usable to selectively enable or disable
+                    certain specializations of <code class="computeroutput"><span class="identifier">compare_iterators</span></code>
+                    utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
+                    or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">void</span></code>
+                  </p>
+                  </td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.advanced.customize.iterate.compare_iterators.notation"></a><h6>
+<a name="id880885"></a>
+            <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.notation">Notation</a>
+          </h6>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Iterator</span></code></span></dt>
+<dd><p>
+                An iterator type.
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">it1</span></code>,
+            <code class="computeroutput"><span class="identifier">it2</span></code></span></dt>
+<dd><p>
+                Instance of iterators of type, <code class="computeroutput"><span class="identifier">Iterator</span></code>.
+              </p></dd>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">C</span></code></span></dt>
+<dd><p>
+                A container type a iterator type, <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                belongs to.
+              </p></dd>
+</dl>
+</div>
+<a name="spirit.advanced.customize.iterate.compare_iterators.expression_semantics"></a><h6>
+<a name="id880982"></a>
+            <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.expression_semantics">Expression
+            Semantics</a>
+          </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Expression
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Semantics
+                  </p>
+                  </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">compare_iterators</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">it1</span><span class="special">,</span> <span class="identifier">it2</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Returns whether the iterators <code class="computeroutput"><span class="identifier">it1</span></code>
+                    <code class="computeroutput"><span class="identifier">it2</span></code> are to be
+                    treated as beeing equal.
+                  </p>
+                  </td>
+</tr></tbody>
+</table></div>
+<a name="spirit.advanced.customize.iterate.compare_iterators.predefined_specializations"></a><h6>
+<a name="id881101"></a>
+            <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.predefined_specializations">Predefined
+            Specializations</a>
+          </h6>
+<p>
+            <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines
+            specializations of this customization point for several types. The following
+            table lists those types together with the types returned by the embedded
+            typedef <code class="computeroutput"><span class="identifier">type</span></code>:
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Template Parameters
+                  </p>
+                  </th>
+<th>
+                  <p>
+                    Value
+                  </p>
+                  </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns it1 == it2.
+                  </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused_type</span></code><code class="computeroutput">
+                    <span class="keyword">const</span><span class="special">*</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> always returns false.
+                  </p>
+                  </td>
+</tr>
+</tbody>
+</table></div>
+<a name="spirit.advanced.customize.iterate.compare_iterators.when_to_implement"></a><h6>
+<a name="id881245"></a>
+            <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.when_to_implement">When
+            to implement</a>
+          </h6>
+<p>
+            The customization point <code class="computeroutput"><span class="identifier">compare_iterators</span></code>
+            needs to be implemented for a specific iterator type whenever the container
+            this iterator belongs to is to be used as an attribute in place of a
+            STL container. It is applicable for generators (<span class="emphasis"><em>Spirit.Karma</em></span>)
+            only. As a rule of thumb: it has to be implemented whenever a certain
+            iterator type belongs to a container which is to be passed as an attribute
+            to a generator normally exposing a STL container, <code class="computeroutput"><span class="identifier">C</span></code>
+            and if the container type does not expose the interface of a STL container
+            (i.e. <code class="computeroutput"><span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;::</span><span class="identifier">type</span></code> would normally return <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>).
+          </p>
 <a name="spirit.advanced.customize.iterate.compare_iterators.related_attribute_customization_points"></a><h6>
-<a name="id936848"></a>
+<a name="id881316"></a>
             <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
 <p>
             If this customization point is implemented, the following other customization
-            points need to be implemented as well.
+            points might need to be implemented as well.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -199,11 +418,12 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.compare_iterators.example"></a><h6>
-<a name="id937608"></a>
+<a name="id881803"></a>
             <a class="link" href="compare_iterators.html#spirit.advanced.customize.iterate.compare_iterators.example">Example</a>
           </h6>
 <p>
-            TBD
+            For an example of how to use the customization point <code class="computeroutput"><span class="identifier">compare_iterators</span></code>
+            please see here: <a class="link" href="next_iterator.html#spirit.advanced.customize.iterate.next_iterator.example">use_as_container</a>.
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

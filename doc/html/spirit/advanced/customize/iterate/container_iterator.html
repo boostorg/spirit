@@ -28,7 +28,7 @@
           Determine the Type of the Iterator of a Container (Karma)</a>
 </h5></div></div></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.container_iterator"></a><h6>
-<a name="id928876"></a>
+<a name="id862185"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.container_iterator">container_iterator</a>
           </h6>
 <p>
@@ -41,7 +41,7 @@
             the items to be exposed as the elements of a container.
           </p>
 <a name="spirit.advanced.customize.iterate.container_iterator.module_headers"></a><h6>
-<a name="id928945"></a>
+<a name="id862253"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.module_headers">Module
             Headers</a>
           </h6>
@@ -62,7 +62,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.namespace"></a><h6>
-<a name="id929032"></a>
+<a name="id862341"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -79,14 +79,17 @@
                   </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.synopsis"></a><h6>
-<a name="id929110"></a>
+<a name="id862419"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">container_iterator</span><span class="special">;</span>
+<span class="keyword">struct</span> <span class="identifier">container_iterator</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">type</span><span class="special">;</span>
+<span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.iterate.container_iterator.template_parameters"></a><h6>
-<a name="id929178"></a>
+<a name="id862517"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.template_parameters">Template
             parameters</a>
           </h6>
@@ -155,7 +158,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.notation"></a><h6>
-<a name="id929343"></a>
+<a name="id862683"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.notation">Notation</a>
           </h6>
 <div class="variablelist">
@@ -168,7 +171,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.iterate.container_iterator.expression_semantics"></a><h6>
-<a name="id929383"></a>
+<a name="id862722"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -225,7 +228,7 @@
             </li>
 </ul></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.predefined_specializations"></a><h6>
-<a name="id929528"></a>
+<a name="id862867"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.predefined_specializations">Predefined
             Specializations</a>
           </h6>
@@ -285,7 +288,7 @@
                   </td>
 <td>
                   <p>
-                    Returns <code class="computeroutput"><span class="identifier">unused_type</span>
+                    Returns <code class="computeroutput"><span class="identifier">unused_type</span></code><code class="computeroutput">
                     <span class="keyword">const</span><span class="special">*</span></code>.
                   </p>
                   </td>
@@ -293,7 +296,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.when_to_implement"></a><h6>
-<a name="id929713"></a>
+<a name="id863055"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.when_to_implement">When
             to implement</a>
           </h6>
@@ -308,13 +311,13 @@
             would normally return <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>).
           </p>
 <a name="spirit.advanced.customize.iterate.container_iterator.related_attribute_customization_points"></a><h6>
-<a name="id929784"></a>
+<a name="id863125"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
 <p>
             If this customization point is implemented, the following other customization
-            points need to be implemented as well.
+            points might need to be implemented as well.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -434,11 +437,159 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.container_iterator.example"></a><h6>
-<a name="id930271"></a>
+<a name="id864916"></a>
             <a class="link" href="container_iterator.html#spirit.advanced.customize.iterate.container_iterator.example">Example</a>
           </h6>
 <p>
-            TBD
+            Here are the header files needed to make the example code below compile:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            The example (for the full source code please see here: <a href="../../../../../../example/karma/customize_embedded_container.cpp" target="_top">customize_embedded_container.cpp</a>)
+            uses the data structure
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">client</span>
+<span class="special">{</span>
+    <span class="keyword">struct</span> <span class="identifier">embedded_container</span>
+    <span class="special">{</span>
+        <span class="comment">// expose the iterator of the embedded vector as our iterator
+</span>        <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">const_iterator</span> <span class="identifier">iterator</span><span class="special">;</span>
+
+        <span class="comment">// expose the type of the held data elements as our type
+</span>        <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">value_type</span> <span class="identifier">type</span><span class="special">;</span>
+
+        <span class="comment">// this is the vector holding the actual elements we need to generate 
+</span>        <span class="comment">// output from
+</span>        <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">data</span><span class="special">;</span>
+    <span class="special">};</span>
+<span class="special">}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            as a direct container attribute to the <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+            (<code class="computeroutput"><span class="special">%</span></code>)</a> generator. In
+            order to make this data structure compatible we need to specialize a
+            couple of attribute customization points: <a class="link" href="../is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">is_container</span></code></a>, <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>, <a class="link" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a>, and <a class="link" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>. As you can see
+            the specializations simply expose the embedded <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span></code> as the container to use. We don't
+            need to specialize the customization points related to iterators (<a class="link" href="deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">deref_iterator</span></code></a>, <a class="link" href="next_iterator.html" title="Increment the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">next_iterator</span></code></a>, and <a class="link" href="compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality"><code class="computeroutput"><span class="identifier">compare_iterators</span></code></a>) as we expose
+            a standard iterator and the default implementation of these customizations
+            handles standard iterators out of the box.
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="comment">// All specializations of attribute customization points have to be placed into
+</span><span class="comment">// the namespace boost::spirit::traits.
+</span><span class="comment">//
+</span><span class="comment">// Note that all templates below are specialized using the 'const' type.
+</span><span class="comment">// This is necessary as all attributes in Karma are 'const'.
+</span><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">spirit</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">traits</span>
+<span class="special">{</span>
+    <span class="comment">// The specialization of the template 'is_container&lt;&gt;' will tell the 
+</span>    <span class="comment">// library to treat the type 'client::embedded_container' as a 
+</span>    <span class="comment">// container holding the items to generate output from.
+</span>    <span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="keyword">const</span><span class="special">&gt;</span>
+      <span class="special">:</span> <span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span>
+    <span class="special">{};</span>
+
+    <span class="comment">// The specialization of the template 'container_iterator&lt;&gt;' will be
+</span>    <span class="comment">// invoked by the library to evaluate the iterator type to be used
+</span>    <span class="comment">// for iterating the data elements in the container. We simply return
+</span>    <span class="comment">// the type of the iterator exposed by the embedded 'std::vector&lt;int&gt;'.
+</span>    <span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">container_iterator</span><span class="special">&lt;</span><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="keyword">const</span><span class="special">&gt;</span>
+    <span class="special">{</span>
+        <span class="keyword">typedef</span> <span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">type</span><span class="special">;</span>
+    <span class="special">};</span>
+
+    <span class="comment">// The specialization of the templates 'begin_container&lt;&gt;' and 
+</span>    <span class="comment">// 'end_container&lt;&gt;' below will be used by the library to get the iterators 
+</span>    <span class="comment">// pointing to the begin and the end of the data to generate output from. 
+</span>    <span class="comment">// These specializations simply return the 'begin' and 'end' iterators as 
+</span>    <span class="comment">// exposed by the embedded 'std::vector&lt;int&gt;'.
+</span>    <span class="comment">//
+</span>    <span class="comment">// The passed argument refers to the attribute instance passed to the list 
+</span>    <span class="comment">// generator.
+</span>    <span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">begin_container</span><span class="special">&lt;</span><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="keyword">const</span><span class="special">&gt;</span>
+    <span class="special">{</span>
+        <span class="keyword">static</span> <span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span><span class="special">::</span><span class="identifier">iterator</span> 
+        <span class="identifier">call</span><span class="special">(</span><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">d</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="keyword">return</span> <span class="identifier">d</span><span class="special">.</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
+        <span class="special">}</span>
+    <span class="special">};</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;&gt;</span>
+    <span class="keyword">struct</span> <span class="identifier">end_container</span><span class="special">&lt;</span><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="keyword">const</span><span class="special">&gt;</span>
+    <span class="special">{</span>
+        <span class="keyword">static</span> <span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span><span class="special">::</span><span class="identifier">iterator</span> 
+        <span class="identifier">call</span><span class="special">(</span><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">d</span><span class="special">)</span>
+        <span class="special">{</span>
+            <span class="keyword">return</span> <span class="identifier">d</span><span class="special">.</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">end</span><span class="special">();</span>
+        <span class="special">}</span>
+    <span class="special">};</span>
+<span class="special">}}}</span>
+</pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            The last code snippet shows an example using an instance of the data
+            structure <code class="computeroutput"><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span></code> to generate output
+            from a <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List (<code class="computeroutput"><span class="special">%</span></code>)</a> generator:
+          </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">client</span><span class="special">::</span><span class="identifier">embedded_container</span> <span class="identifier">d1</span><span class="special">;</span>    <span class="comment">// create some test data
+</span><span class="identifier">d1</span><span class="special">.</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">1</span><span class="special">);</span>
+<span class="identifier">d1</span><span class="special">.</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">2</span><span class="special">);</span>
+<span class="identifier">d1</span><span class="special">.</span><span class="identifier">data</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">3</span><span class="special">);</span>
+
+<span class="comment">// use the instance of an 'client::embedded_container' instead of a 
+</span><span class="comment">// STL vector
+</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">karma</span><span class="special">::</span><span class="identifier">format</span><span class="special">(</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">int_</span> <span class="special">%</span> <span class="string">", "</span><span class="special">,</span> <span class="identifier">d1</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>   <span class="comment">// prints: '1, 2, 3'
+</span></pre>
+<p>
+            </p>
+<p>
+          </p>
+<p>
+            As you can see, the specializations for the customization points as defined
+            above enable the seemless integration of the custom data structure without
+            having to modify the output format or the generator itself.
+          </p>
+<p>
+            For other examples of how to use the customization point <code class="computeroutput"><span class="identifier">container_iterator</span></code> please see here:
+            <a class="link" href="next_iterator.html#spirit.advanced.customize.iterate.next_iterator.example">use_as_container</a>
+            and <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.example">counter_example</a>.
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
