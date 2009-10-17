@@ -9,8 +9,8 @@
 [section:directive Directive]
 
 This module includes different directives usable to augment and parametrize 
-other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, and 
-`skip` directives.
+other parsers. It includes the `no_case`, `lexeme`, `omit`, `raw`, `repeat`, 
+and `skip` directives.
 
 
 [heading Module Header]

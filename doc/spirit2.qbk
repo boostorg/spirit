@@ -79,6 +79,8 @@
 [def __sec_qi__                 [link spirit.qi Qi]]
 [def __sec_karma__              [link spirit.karma Karma]]
 [def __sec_attributes__         [link spirit.abstracts.attributes Attributes]]
+[def __sec_customization_points__ [link spirit.advanced.customize Customization of Attribute Handling]]
+
 [def __sec_karma_numeric_performance__  [link spirit.karma.performance_measurements.numeric_performance Performance of Numeric Generators]]
 [def __sec_karma_primitive__    [link spirit.karma.quick_reference.primitive_generators Karma Generators]]
 [def __sec_karma_compound__     [link spirit.karma.quick_reference.compound_attribute_rules Generator Compound Attribute Rules]]
@@ -101,26 +103,24 @@
 [def __sec_lex_attributes__     [link spirit.lex.abstracts.lexer_attributes Lexer Attributes]]
 [def __sec_lex_semactions__     [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
 
-[def __sec_ref_lex_token__      [link spirit.lex.reference.token Token Class]]
-[def __sec_ref_lex_token_def__  [link spirit.lex.reference.tokendef TokenDef Class]]
-
-[def __lex_char_encoding_namespace__ [link spirit.lex.reference.lex_basics.character_encoding_namespace Character Encoding Namespace]]
+[def __sec_ref_lex_token__      [/ link spirit.lex.reference.token Token Class] Token Class]
+[def __sec_ref_lex_token_def__  [/ link spirit.lex.reference.tokendef TokenDef Class] TokenDef Class]
 
 [/ References to API descriptions ]
 
-[def __api_tokenize_and_parse__ [link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
+[def __api_tokenize_and_parse__ `tokenize_and_parse()` [/link spirit.qi_and_karma.abstracts.parsing_and_generating.the_tokenize_and_phrase_parse___function `tokenize_and_parse()`]]
 [def __api_tokenize__           [link spirit.lex.lexer_tokenizing.the_tokenize_function `tokenize()`]]
-[def __api_generate_static__    [link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
+[def __api_generate_static__    `generate_static()` [/link spirit.lex.lexer_tokenizing.the_generate_static_function `generate_static()`]]
 
 [template karma_format[str]     [str] [/link spirit.karma.reference.format [str]]]
 
 [/ References to classes ]
 
-[def __class_token_def__        [link spirit.lex.reference.tokendef `token_def<>`]]
+[def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `token_def<>`]
 
-[def __class_lexertl_token__    [link spirit.lex.reference.token `lexertl_token<>`]]
-[def __class_lexertl_lexer__    [link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
-[def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
+[def __class_lexertl_token__    [/ link spirit.lex.reference.token `lexertl_token<>`] `lexertl::token<>`]
+[def __class_lexertl_lexer__    [/ link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`] `lexertl_lexer<>`]
+[def __class_lexertl_static_lexer__ [/ link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`] `lexertl_static_lexer<>`]
 
 [/ References to support ]
 
@@ -230,13 +230,28 @@
 
 [def __lex_actions__                [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
 
+[def __customize_is_container__     [link spirit.advanced.customize.is_container `is_container`]]
+[def __customize_transform_attribute__ [link spirit.advanced.customize.transform `transform_attribute`]]
+[def __customize_optional_attribute__ [link spirit.advanced.customize.optional `optional_attribute`]]
+[def __customize_assign_to__        [link spirit.advanced.customize.assign_to `assign_to`]]
+[def __customize_push_back_container__ [link spirit.advanced.customize.store_value.push_back `push_back_container`]]
+[def __customize_container_value__  [link spirit.advanced.customize.store_value.container_value `container_value`]]
+[def __customize_clear_value__      [link spirit.advanced.customize.clear_value `clear_value`]]
+[def __customize_extract_from__     [link spirit.advanced.customize.extract_from `extract_from`]]
+[def __customize_container_iterator__ [link spirit.advanced.customize.iterate.container_iterator `container_iterator`]]
+[def __customize_begin_container__  [link spirit.advanced.customize.iterate.begin_container `begin_container`]]
+[def __customize_end_container__    [link spirit.advanced.customize.iterate.end_container `end_container`]]
+[def __customize_next_iterator__    [link spirit.advanced.customize.iterate.next_iterator `next_iterator`]]
+[def __customize_deref_iterator__   [link spirit.advanced.customize.iterate.deref_iterator `deref_iterator`]]
+[def __customize_compare_iterators__ [link spirit.advanced.customize.iterate.compare_iterators `compare_iterators`]]
+
 [/ Some images ]
 
-[def __note__                   [$../images/note.png]]
-[def __tip__                    [$../images/tip.png]]
-[def __important__              [$../images/important.png]]
-[def __caution__                [$../images/caution.png]]
-[def __danger__                 [$../images/alert.png]]
+[def __note__                   [$./images/note.png]]
+[def __tip__                    [$./images/tip.png]]
+[def __important__              [$./images/important.png]]
+[def __caution__                [$./images/caution.png]]
+[def __danger__                 [$./images/alert.png]]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [/ some templates]
@@ -357,6 +372,7 @@ V2.1). If you're looking for the documentation of Spirit's previous version
 [include qi.qbk]
 [include karma.qbk]
 [include lex.qbk]
+[include advanced.qbk]
 [include support.qbk]
 [include faq.qbk]
 [include notes.qbk]

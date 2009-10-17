@@ -126,7 +126,7 @@ uint
 ulong
 ulong_long``]           [Generate the unsigned integer provided by a mandatory 
                          attribute using the default formatting (radix is 10). 
-                         This generator never fails (except if the underlying 
+                         This generator never fails (unless the underlying 
                          output stream reports an error).]]
     [
 [``ushort(num)
@@ -137,7 +137,7 @@ ulong_long(num)``]      [Generate the unsigned integer provided by the
                          from using the default formatting (radix is 10). If 
                          this generator has an associated attribute it succeeds 
                          only as long as the attribute is equal to the 
-                         immediate literal (except if the underlying output 
+                         immediate literal (unless the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
     [
@@ -158,7 +158,7 @@ hex(num)``]             [Generate the unsigned integer provided by the
                          radix is 8, `hex`: radix is 16). If 
                          this generator has an associated attribute it succeeds 
                          only as long as the attribute is equal to the 
-                         immediate literal (except if the underlying output 
+                         immediate literal (unless the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
 ]
@@ -179,7 +179,7 @@ options.
                          by a mandatory attribute using the specified `Radix` 
                          (possible values are `2`, `8`, `10`, and `16`, the 
                          default value is `10`).This generator never fails 
-                         (except if the underlying output stream reports an 
+                         (unless the underlying output stream reports an 
                          error).]]
     [
 [``uint_generator<
@@ -191,7 +191,7 @@ options.
                          (possible values are `2`, `8`, `10`, and `16`, the 
                          default value is `10`). If this generator has an 
                          associated attribute it succeeds only as long as the 
-                         attribute is equal to the immediate literal (except if 
+                         attribute is equal to the immediate literal (unless 
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
@@ -410,7 +410,7 @@ long_
 long_long``]            [Generate the integer provided by a mandatory attribute
                          using the default formatting (radix is 10, sign is 
                          only printed for negative literals). This generator 
-                         never fails (except if the underlying output stream 
+                         never fails (unless the underlying output stream 
                          reports an error).]]
     [
 [``short_(num)
@@ -421,7 +421,7 @@ long_long(num)``]       [Generate the integer provided by the immediate literal
                          default formatting (radix is 10, sign is only printed 
                          for negative literals). If this generator has an 
                          associated attribute it succeeds only as long as the 
-                         attribute is equal to the immediate literal (except if 
+                         attribute is equal to the immediate literal (unless 
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
@@ -446,7 +446,7 @@ type to create integer generators using a wide range of formatting options.
                          literals. If `force_sign` is `true`, all numbers will 
                          be printed using a sign, i.e. `'-'` for negative 
                          numbers, `'+'` for positive numbers, and `' '` for 
-                         zeros. This generator never fails (except if the 
+                         zeros. This generator never fails (unless the 
                          underlying output stream reports an error).]]
     [
 [``int_generator<
@@ -462,7 +462,7 @@ type to create integer generators using a wide range of formatting options.
                          `'-'` for negative numbers, `'+'` for positive numbers,
                          and `' '` for zeros. If this generator has an 
                          associated attribute it succeeds only as long as the 
-                         attribute is equal to the immediate literal (except if 
+                         attribute is equal to the immediate literal (unless 
                          the underlying output stream reports an error). 
                          Otherwise this generator fails and does not generate 
                          any output.]]
@@ -637,7 +637,7 @@ not defined in __primitive_generator_concept__.
                          representation for numbers `fabs(n) <= 1e5 && fabs(n) > 1e-3`,
                          scientific representation otherwise, 3 fractional digits,
                          sign is only printed for negative literals). This 
-                         generator never fails (except if the underlying output 
+                         generator never fails (unless the underlying output 
                          stream reports an error).]]
     [
 [``float_
@@ -648,7 +648,7 @@ long_double``]          [Generate the real number provided by a
                          `fabs(n) <= 1e5 && fabs(n) > 1e-3`, scientific 
                          representation otherwise, 3 fractional digits,
                          sign is only printed for negative literals). This 
-                         generator never fails (except if the underlying output 
+                         generator never fails (unless the underlying output 
                          stream reports an error).]]
     [
 [``float_(num)
@@ -682,7 +682,7 @@ options.
                         [Generate the real number of type `Num` 
                          provided by a mandatory attribute using the specified 
                          `RealPolicies`. This generator never fails 
-                         (except if the underlying output stream reports an 
+                         (unless the underlying output stream reports an 
                          error).]]
 ]
 
@@ -1091,7 +1091,9 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::lit           // alias: boost::spirit::karma::lit`]]
-    [[`boost::spirit::bool          // alias: boost::spirit::karma::bool_`]]
+    [[`boost::spirit::bool_         // alias: boost::spirit::karma::bool_`]]
+    [[`boost::spirit::true_         // alias: boost::spirit::karma::true_`]]
+    [[`boost::spirit::false_        // alias: boost::spirit::karma::false_`]]
 ]
 
 [note `lit` is reused by the [karma_string String Generators], the
@@ -1138,11 +1140,11 @@ not defined in __primitive_generator_concept__.
     [[`lit(b)`]         [Generate the boolean literal `b` using the default
                          formatting (`false` is generated as `"false"`, and 
                          `true` is generated as `"true"`). This generator never 
-                         fails (except if the underlying output stream reports an error).]]
+                         fails (unless the underlying output stream reports an error).]]
     [[`bool_`]          [Generate the boolean value provided by a mandatory 
                          attribute using the default formatting (`false` is 
                          generated as `"false"`, and `true` is generated as 
-                         `"true"`). This generator never fails (except if the 
+                         `"true"`). This generator never fails (unless the 
                          underlying output stream reports an error).]]
     [[`bool_(num)`]     [Generate the booelan value provided by the 
                          immediate literal value the generator is initialized 
@@ -1150,9 +1152,17 @@ not defined in __primitive_generator_concept__.
                          generated as `"false"`, and `true` is generated as 
                          `"true"`). If this generator has an associated 
                          attribute it succeeds only as long as the attribute 
-                         is equal to the immediate literal (except if the 
+                         is equal to the immediate literal (unless the 
                          underlying output stream reports an error). Otherwise 
                          this generator fails and does not generate any output.]]
+    [[`true_`]          [Generate `"true"`. If this generator has an associated 
+                         attribute it succeeds only as long as the attribute 
+                         is `true` as well (unless the underlying output stream 
+                         reports an error).]]
+    [[`false_`]         [Generate `"false"`. If this generator has an associated 
+                         attribute it succeeds only as long as the attribute 
+                         is `false` as well (unless the underlying output stream 
+                         reports an error).]]
 ]
 
 All generators listed in the table above (except `lit(num)`) are predefined 
@@ -1167,7 +1177,7 @@ boolean generators using a wide range of formatting options.
     B, Policies
 >()``]                  [Generate the boolean of type `B` provided 
                          by a mandatory attribute using the specified `Policies` 
-                         This generator never fails (except if the underlying 
+                         This generator never fails (unless the underlying 
                          output stream reports an error).]]
     [
 [``bool_generator<
@@ -1177,10 +1187,13 @@ boolean generators using a wide range of formatting options.
                          initialized from, using the specified `Policies`. If 
                          this generator has an associated attribute it succeeds 
                          only as long as the attribute is equal to the 
-                         immediate literal (except if the underlying output 
+                         immediate literal (unless the underlying output 
                          stream reports an error). Otherwise this generator 
                          fails and does not generate any output.]]
 ]
+
+[note   All boolean generators properly respect the [karma_upperlower `upper`]
+        and [karma_upperlower `lower`] directives.]
 
 [heading Additional Requirements]
 

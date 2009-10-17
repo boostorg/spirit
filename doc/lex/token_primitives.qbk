@@ -9,7 +9,7 @@
 [section:primitives Token definition Primitives]
 
 This module includes different primitives allowing you to create token definitions.
-It includes `char_`, `string`, character literals, and string literals.
+It includes `char_`, character literals, `string`, and string literals.
 
 [heading Module Headers]
 
@@ -26,10 +26,9 @@ Also, see __include_structure__.
 The character based token definitions described in this section are:
 
 The `char_` creates token definitions matching single characters. The `char_` 
-token definition has an associated __lex_char_encoding_namespace__. This is 
+token definition is associated `standard` encoding namespace. This is 
 needed when doing basic operations such as forcing lower or upper case and 
 dealing with character ranges.
-
 
 [heading Header]
 
@@ -45,21 +44,16 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::lit // alias: boost::spirit::lex::lit` ]]
-    [[`ns::char_`]]
+    [[`lex::char_`]]
 ]
-
-In the table above, `ns` is a __lex_char_encoding_namespace__. 
 
 [heading Model of]
 
 [:__primitive_lexer_concept__]
 
 [variablelist Notation
-    [[`ch`, `ch1`, `ch2`]
-                  [Character-class specific character (See __char_class_types__),
-                   or a __karma_lazy_argument__ that evaluates to a 
-                   character-class specific character value]]
-    [[`ns`]       [A __lex_char_encoding_namespace__.]]
+    [[`ch`]       [Character-class specific character from `standard` character 
+                   set.]]
 ]
 
 [heading Expression Semantics]
@@ -69,19 +63,12 @@ defined in __primitive_lexer_concept__.
 
 [table
     [[Expression]           [Description]]
-    [[`ch`]                 [Generate the character literal `ch`. This generator 
-                             never fails, unless the underlying output stream 
-                             reports an error.]]
-    [[`lit(ch)`]            [Generate the character literal `ch`. This generator 
-                             never fails, unless the underlying output stream 
-                             reports an error.]]
-    [[`ns::char_(ch)`]      [Generate the character `ch` as provided by the 
-                             immediate literal value the generator is initialized 
-                             from. If this generator has an associated attribute 
-                             it succeeds only as long as the attribute is equal 
-                             to the immediate literal, unless the underlying 
-                             output stream reports an error. Otherwise this 
-                             generator fails and does not generate any output.]]
+    [[`ch`]                 [Create a token definition matching the character 
+                             literal `ch`. ]]
+    [[`lit(ch)`]            [Create a token definition matching the character 
+                             literal `ch`. ]]
+    [[`lex::char_(ch)`]     [Create a token definition matching the character 
+                             `ch`.]]
 ]
 
 [heading Example]

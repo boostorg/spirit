@@ -56,13 +56,14 @@ the sections __sec_qi_primitive__ and __sec_karma_primitive__.
 [section:compound_attributes Attributes of Compound Components]
 
 __qi__ and __karma__ implement well defined attribute type propagation rules 
-for all compound generators, such as sequences, alternatives, Kleene star, etc. 
-The main attribute propagation rule for a sequences are for instance:
+for all compound parsers and generators, such as sequences, alternatives, 
+Kleene star, etc. The main attribute propagation rule for a sequences are for 
+instance:
 
 [table
     [[Library]      [Sequence attribute propagation rule]]
-    [[Qi]           [`a: A, b: B --> (a >> b): tuple<A, B>`]]
-    [[Karma]        [`a: A, b: B --> (a << b): tuple<A, B>`]]
+    [[/Qi/]         [`a: A, b: B --> (a >> b): tuple<A, B>`]]
+    [[/Karma/]      [`a: A, b: B --> (a << b): tuple<A, B>`]]
 ]
 
 which reads as:
@@ -110,20 +111,20 @@ attribute:
     // the following parses "1.0 2.0" into a pair of double
     std::string input("1.0 2.0");
     std::pair<double, double> p;
-    qi::parse(input.begin(), input, end(), 
-        double_ >> double_,             // parser grammar 
-        ascii::space,                   // delimiter grammar
-        p);                             // attribute to fill while parsing
+    qi::phrase_parse(input.begin(), input.end(), 
+        qi::double_ >> qi::double_,       // parser grammar 
+        qi::space,                        // delimiter grammar
+        p);                               // attribute to fill while parsing
 
 and generate output for it:
 
     // the following generates: "1.0 2.0" from the pair filled above
     std::string str;
     std::back_insert_iterator<std::string> out(str);
-    karma::generate(out, 
-        double_ << double_,             // generator grammar (format description)
-        ascii::space,                   // delimiter grammar
-        p);                             // data to use as the attribute 
+    karma::generate_delimited(out, 
+        karma::double_ << karma::double_, // generator grammar (format description)
+        karma::space,                     // delimiter grammar
+        p);                               // data to use as the attribute 
 
 (where the `ascii::space` generator is used as the delimiter, allowing to 
 automatically skip/insert delimiting spaces in between all primitives). 
@@ -136,8 +137,8 @@ automatically skip/insert delimiting spaces in between all primitives).
       could be rewritten as:
       ``
           double d1 = 0.0, d2 = 0.0;
-          qi::parse(begin, end, double_ >> double_, space, d1, d2);
-          karma::generate(out, double_ << double_, space, d1, d2);
+          qi::phrase_parse(begin, end, qi::double_ >> qi::double_, qi::space, d1, d2);
+          karma::generate_delimited(out, karma::double_ << karma::double_, karma::space, d1, d2);
       ``
       where the first attribute is used for the first `double_`, and 
       the second attribute is used for the second `double_`.
@@ -173,7 +174,7 @@ parts of our complex number. This can be achieved by writing:
 
 [table
     [[Library]      [Sequence expression]]
-    [[Qi]           [`'(' << double_ >> ", " << double_ >> ')'`]]
+    [[Qi]           [`'(' >> double_ >> ", " >> double_ >> ')'`]]
     [[Karma]        [`'(' << double_ << ", " << double_ << ')'`]]
 ]
 
@@ -188,9 +189,9 @@ sequence. As said, they just don't expose any attribute and don't produce
     // the following parses "1.0 2.0" into a pair of double
     std::string input("(1.0, 2.0)");
     std::pair<double, double> p;
-    qi::parse(input.begin(), input, end(), 
-        '(' >> double_ >> ", " >> double_ << ')', // parser grammar 
-        p);                                       // attribute to fill while parsing
+    qi::parse(input.begin(), input.end(), 
+        '(' >> qi::double_ >> ", " >> qi::double_ >> ')', // parser grammar 
+        p);                                               // attribute to fill while parsing
 
 and here is the equivalent __karma__ code snippet:
 
@@ -198,7 +199,7 @@ and here is the equivalent __karma__ code snippet:
     std::string str;
     std::back_insert_iterator<std::string> out(str);
     generate(out, 
-        '(' << double_ << ", " << double_ << ')', // generator grammar (format description)
+        '(' << karma::double_ << ", " << karma::double_ << ')', // generator grammar (format description)
         p);                                       // data to use as the attribute 
 
 where the first element of the pair passed in as the data to generate is still
@@ -215,8 +216,8 @@ typesafe placeholders for the attribute values.
       using /Spirit's/ multi-attribute API function:
       ``
           double d1 = 0.0, d2 = 0.0;
-          qi::parse(begin, end, '(' >> double_ >> ", " >> double_ << ')', d1, d2);
-          karma::generate(out, '(' << double_ << ", " << double_ << ')', d1, d2);
+          qi::parse(begin, end, '(' >> qi::double_ >> ", " >> qi::double_ << ')', d1, d2);
+          karma::generate(out, '(' << karma::double_ << ", " << karma::double_ << ')', d1, d2);
       ``
       which provides a clear and comfortable syntax, more similar to the 
       placeholder based syntax as exposed by `printf` or `boost::format`.
@@ -297,9 +298,10 @@ its invocation. Inherited attributes can be used to parametrize the parser or
 generator depending on the context they are invoked from.
 
 
+[/
 * attribute propagation
   * explicit and operator%=
-
+]
 
 [endsect]
 

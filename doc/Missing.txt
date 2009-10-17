@@ -1,0 +1,65 @@
+#  Copyright (C) 2001-2009 Joel de Guzman
+#  Copyright (C) 2001-2009 Hartmut Kaiser
+#
+#  Distributed under the Boost Software License, Version 1.0. (See accompanying
+#  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+---------------------------------
+Missing sections in documentation
+---------------------------------
+
+Common
+------
+- Notes/Protability (notes.qbk)
+- Notes/Techniques (notes.qbk)
+- Acknowlegdements: add people
+- Rationale (rationale.qbk)
+- abstracts/parsing.qbk
+- abstracts/generating.qbk
+- abstracts/primitives.qbk
+- abstracts/operators.qbk
+- abstracts/semantic_actions.qbk
+- abstracts/directives.qbk
+- abstracts/rules.qbk
+- abstracts/grammars.qbk
+- abstracts/debugging.qbk
+- abstracts/error_handling.qbk
+- abstracts/parse_trees_and_asts.qbk
+- customization points (partially missing)
+
+Qi
+--
+- is parser.qbk still needed?
+
+Reference
+- action.qbk
+- nonterminal.qbk
+- stream.qbk
+- document API functions: parse, phrase_parse, match, phrase_match
+
+Karma
+-----
+- More introductory material
+
+Reference
+- attr_cast (in auxiliary.qbk)
+- action.qbk
+- nonterminal.qbk
+- document API functions: generate, generate_delimited, format, format_delimited
+
+- Generators in Depth
+
+Lex
+---
+- lexer_attributes.qbk
+- lexer_states.qbk
+- parsing_using_a_lexer.qbk
+- token_definition.qbk
+
+Reference
+- all lexer components (lexer, token_def, char_, string, literals)
+- lexer primitives for parsing: token, in_state, set_state (lexer_primitives.qbk)
+- all API functions (tokenize_and_parse, etc.)
+- token.qbk
+
+

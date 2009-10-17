@@ -15,7 +15,7 @@ attributes. Such generators take the form:
 
     g(a1, a2,... aN)
 
-where `g` is a parser. Each of the arguments (a1...aN) can either be an
+where `g` is a generator. Each of the arguments (a1...aN) can either be an
 immediate value, or a function, `f`, with signature:
 
     T f(Unused, Context)
@@ -87,7 +87,9 @@ Predefined models include:
 * a `std::basic_string<Char>`
 
 The namespace `boost::spirit::traits` is open for users to provide their
-own specializations.
+own specializations. The customization points implemented by __karma__ usable
+to customize the behavior of generators are described in the section 
+__sec_customization_points__.
 
 [endsect]
 

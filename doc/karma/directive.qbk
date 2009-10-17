@@ -85,13 +85,13 @@ defined in __unary_generator_concept__.
                                      (default: 10), while using `space` to emit 
                                      the necessary padding. This generator succeeds as 
                                      long as its embedded generator `a` does not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
     [[`left_align(width)[a]`]       [Generate `a` left aligned in a column of 
                                      the given `width`, while using `space` to emit 
                                      the necessary padding. This generator succeeds as 
                                      long as its embedded generator `a` does not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
     [[`left_align(pad)[a]`]         [Generate `a` left aligned in a column of 
                                      width as defined by the preprocessor constant
@@ -107,7 +107,7 @@ defined in __unary_generator_concept__.
                                      `pad` to emit the necessary padding. This 
                                      generator succeeds as long as its embedded 
                                      and padding generators `a` and `pad` do not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
 
     [[`center[a]`]                  [Generate `a` centered in a column of 
@@ -116,13 +116,13 @@ defined in __unary_generator_concept__.
                                      (default: 10), while using `space` to emit 
                                      the necessary padding. This generator succeeds as 
                                      long as its embedded generator `a` does not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
     [[`center(width)[a]`]           [Generate `a` centered in a column of 
                                      the given `width`, while using `space` to emit 
                                      the necessary padding. This generator succeeds as 
                                      long as its embedded generator `a` does not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
     [[`center(pad)[a]`]             [Generate `a` centered in a column of 
                                      width as defined by the preprocessor constant
@@ -138,7 +138,7 @@ defined in __unary_generator_concept__.
                                      `pad` to emit the necessary padding. This 
                                      generator succeeds as long as its embedded 
                                      and padding generators `a` and `pad` do not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
 
     [[`right_align[a]`]             [Generate `a` right aligned in a column of 
@@ -147,13 +147,13 @@ defined in __unary_generator_concept__.
                                      (default: 10), while using `space` to emit 
                                      the necessary padding. This generator succeeds as 
                                      long as its embedded generator `a` does not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
     [[`right_align(width)[a]`]      [Generate `a` right aligned in a column of 
                                      the given `width`, while using `space` to emit 
                                      the necessary padding. This generator succeeds as 
                                      long as its embedded generator `a` does not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
     [[`right_align(pad)[a]`]        [Generate `a` right aligned in a column of 
                                      width as defined by the preprocessor constant
@@ -169,7 +169,7 @@ defined in __unary_generator_concept__.
                                      `pad` to emit the necessary padding. This 
                                      generator succeeds as long as its embedded 
                                      and padding generators `a` and `pad` do not 
-                                     fail (except if the underlying output stream 
+                                     fail (unless the underlying output stream 
                                      reports an error).]]
 ]
 
@@ -323,7 +323,7 @@ defined in __unary_generator_concept__.
                                      embedded generator `a` does not fail and 
                                      as long as the associated attribute 
                                      (container) contains at least `num` elements
-                                     (except if the underlying output stream 
+                                     (unless the underlying output stream 
                                      reports an error).]]
     [[`repeat(num1, num2)[a]`]      [Repeat the generator `a` at least `num1` 
                                      times but not more than `num2` times. This 
@@ -331,7 +331,7 @@ defined in __unary_generator_concept__.
                                      embedded generator `a` does not fail and 
                                      as long as the associated attribute 
                                      (container) contains at least `num1` elements
-                                     (except if the underlying output stream 
+                                     (unless the underlying output stream 
                                      reports an error). If the associated
                                      attribute (container) does contain more 
                                      than `num2` elements, this directive 
@@ -342,7 +342,7 @@ defined in __unary_generator_concept__.
                                      its embedded generator `a` does not fail 
                                      and as long as the associated attribute 
                                      (container) contains at least `num` elements
-                                     (except if the underlying output stream 
+                                     (unless the underlying output stream 
                                      reports an error).]]
 ]
 
@@ -477,16 +477,16 @@ defined in __unary_generator_concept__.
                          delimiting generator. If used inside a `verbatim[]` 
                          directive it re-enables the delimiter generator as used
                          outside of this `verbatim[]` instead. The directive succeeds
-                         as long as the embedded generator succeeded (except if 
+                         as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error).]]
     [[`delimit(d)[a]`]  [Enable automatic delimiting for the embedded generator
                          `a` while using the generator `d` as the 
                          delimiting generator. The directive succeeds
-                         as long as the embedded generator succeeded (except if 
+                         as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error).]]
     [[`verbatim[a]`]    [Disable automatic delimiting for the embedded generator
                          `a`. The directive succeeds
-                         as long as the embedded generator succeeded (except if 
+                         as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error). This 
                          directive it has no effect if it is used when no 
                          delimiting is active.]]
@@ -603,11 +603,11 @@ __boost_proto__ expression into the corresponding parser expressions).
     [[Expression]       [Semantics]]
     [[`ns::lower[a]`]   [Generate `a` as lower case, interpreted in the 
                          character set defined by `ns`. The directive succeeds
-                         as long as the embedded generator succeeded (except if 
+                         as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error).]]
     [[`ns::upper[a]`]   [Generate `a` as upper case, interpreted in the 
                          character set defined by `ns`. The directive succeeds
-                         as long as the embedded generator succeeded (except if 
+                         as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error).]]
 ]
 
@@ -708,14 +708,14 @@ defined in __unary_generator_concept__.
                              of characters as defined by the preprocessor constant
                              `BOOST_KARMA_DEFAULT_FIELD_MAXWIDTH`. Any additional
                              output is truncated. The directive succeeds as long 
-                             as the embedded generator succeeded (except if 
+                             as the embedded generator succeeded (unless 
                              the underlying output stream reports an error).]]
     [[`maxwidth(num)[a]`]   [Limit the overall length of the emitted output of 
                              the embedded generator (including characters 
                              generated by automatic delimiting) to the number
                              of characters as defined by `num`. Any additional
                              output is truncated. The directive succeeds as long 
-                             as the embedded generator succeeded (except if the 
+                             as the embedded generator succeeded (unless the 
                              underlying output stream reports an error).]]
 ]
 
@@ -819,7 +819,7 @@ defined in __unary_generator_concept__.
                          buffer. If `a` succeeds the buffer content is flushed
                          to the underlying output stream, otherwise the buffer
                          content is discarded. The buffer directive succeeds
-                         as long as the embedded generator succeeded (except if 
+                         as long as the embedded generator succeeded (unless 
                          the underlying output stream reports an error).]]
 ]
 

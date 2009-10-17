@@ -24,10 +24,10 @@ Also, see __include_structure__.
 
 [heading Description]
 
-The `attr_cast<Attrib>()` component invokes the embedded generator while 
-supplying an attribute of type `Attrib`. The supplied attribute gets created from
-the original attribute passed to this component using the customization point 
-`transform_attribute`.
+The `attr_cast<Exposed, Transformed>()` component invokes the embedded generator 
+while supplying an attribute of type `Transformed`. The supplied attribute gets created 
+from the original attribute (of type `Exposed`) passed to this component using the 
+customization point __customize_transform_attribute__.
 
 
 [heading Header]
@@ -44,13 +44,36 @@ Also, see __include_structure__.
     [[`boost::spirit::attr_cast // alias: boost::spirit::karma::attr_cast`]]
 ]
 
+[heading Synopsis]
+
+    template <Exposed, Transformed>
+    <unspecified> attr_cast(<unspecified>);
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`Exposed`]    [The type of the attribute supplied to the `attr_cast`.] [__unused_type__]]
+    [[`Transformed`][The type of the attribute expected by the embedded 
+                     generator `g`.]                    [__unused_type__]]
+]
+
+The `attr_cast` is a function template. It is possible to invoke it using the 
+following schemes:
+
+    attr_cast(g)
+    attr_cast<Exposed>(g)
+    attr_cast<Exposed, Transformed>(g)
+
+depending on which of the attribute types can be deduced properly if not 
+explicitly specified.
+
 [heading Model of]
 
 [:__unary_generator_concept__]
 
 [variablelist Notation
-    [[`g`]      [A generator object.]]
-    [[`Attrib`] [An attribute type]]
+    [[`g`]          [A generator object.]]
 ]
 
 [heading Expression Semantics]
@@ -60,16 +83,38 @@ not defined in __unary_generator_concept__.
 
 [table
     [[Expression]             [Semantics]]
-    [[`attr_cast<Attrib>(g)`] [Create a component invoking the generator `g` 
-                               while passing an attribute of type `Attrib`. 
-                               This generator does not fail unless `g` fails.]]
+    [[`attr_cast(g)`]         [Create a component invoking the 
+                              generator `g` while passing an attribute of the type 
+                              as normally expected by `g`. The type of supplied 
+                              attribute will be transformed to the type 
+                              exposed as it's attribute type by `g` using the 
+                              attribute customization point __customize_transform_attribute__.
+                              This generator does not fail unless `g` fails.]]
+    [[`attr_cast<Exposed>(g)`] [Create a component invoking the 
+                              generator `g` while passing an attribute of the type 
+                              as normally expected by `g`. The supplied attribute 
+                              is expected to be of the type `Exposed`, it will be 
+                              transformed to the type exposed as it's attribute type 
+                              by `g`using the attribute customization point 
+                              __customize_transform_attribute__.
+                              This generator does not fail unless `g` fails.]]
+    [[`attr_cast<Exposed, Transformed>(g)`] [Create a component invoking the 
+                              generator `g` while passing an attribute of type 
+                              `Transformed`. The supplied attribute is expected
+                              to be of the type `Exposed`, it will be transformed
+                              to the type `Transformed` using the attribute 
+                              customization point __customize_transform_attribute__.
+                              This generator does not fail unless `g` fails.]]
 ]
 
 [heading Attributes]
 
 [table
-    [[Expression]               [Attribute]]
-    [[`attr_cast<Attrib>(g)`]   [`Attrib`]]
+    [[Expression]                             [Attribute]]
+    [[`attr_cast(g)`]                         [`g: A --> attr_cast(g): A`]]
+    [[`attr_cast<Exposed>(g)`] [`g: A --> attr_cast<Exposed>(g): Exposed`]]
+    [[`attr_cast<Exposed, Transformed>(g)`] 
+                  [`g: A --> attr_cast<Exposed, Transformed>(g): Exposed`]]
 ]
 
 [heading Complexity]
@@ -91,8 +136,8 @@ Some using declarations:
 
 [reference_karma_using_declarations_attr_cast]
 
-The example references data structure `int_data` and needs a specializtion of 
-the customization point `transform_attribute`:
+The example references data structure `int_data` needs a specialization of 
+the customization point __customize_transform_attribute__:
 
 [reference_karma_auxiliary_attr_cast_data1]
 
@@ -139,7 +184,7 @@ not defined in __primitive_generator_concept__.
     [[Expression]       [Semantics]]
     [[`eol`]            [Create a component generating a single end of line
                          character in the output. This generator never fails 
-                         (except if the underlying output stream reports an 
+                         (unless the underlying output stream reports an 
                          error).]]
 ]
 
@@ -254,11 +299,11 @@ not defined in __primitive_generator_concept__.
     [[`eps`]            [Creates a component generating an empty string. 
                          Succeeds always.]]
     [[`eps(b)`]         [Creates a component generating an empty string. 
-                         Succeeds if `b` is `true` (except if the underlying 
+                         Succeeds if `b` is `true` (unless the underlying 
                          output stream reports an error).]]
     [[`eps(fb)`]        [Creates a component generating an empty string. 
                          Succeeds if `fb` returns `true` at generate time 
-                         (except if the underlying output stream reports an 
+                         (unless the underlying output stream reports an 
                          error).]]
 ]
 
@@ -352,7 +397,7 @@ not defined in __generator_concept__.
                          generator instance. This generator is then invoked
                          in order to generate the output. This generator will
                          succeed as long as the invoked generated succeeds as 
-                         well (except if the underlying output stream reports 
+                         well (unless the underlying output stream reports 
                          an error).]]
     [[`lazy(fg)`]       [The function or function object will be invoked at 
                          generate time. It is expected to return a generator 
