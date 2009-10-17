@@ -171,14 +171,14 @@ main()
 #else // BOOST_LITTLE_ENDIAN
 
         boost::optional<boost::uint8_t> v8 (0x01);
-        BOOST_TEST(!binary_test("\x01", 1, byte_, v8));
+        BOOST_TEST(binary_test("\x01", 1, byte_, v8));
         boost::optional<boost::uint16_t> v16 (0x0102);
-        BOOST_TEST(!binary_test("\x01\x02", 2, word, v16));
+        BOOST_TEST(binary_test("\x01\x02", 2, word, v16));
         boost::optional<boost::uint32_t> v32 (0x01020304);
-        BOOST_TEST(!binary_test("\x01\x02\x03\x04", 4, dword, v32));
+        BOOST_TEST(binary_test("\x01\x02\x03\x04", 4, dword, v32));
 #ifdef BOOST_HAS_LONG_LONG
         boost::optional<boost::uint64_t> v64 (0x0102030405060708LL);
-        BOOST_TEST(!binary_test("\x01\x02\x03\x04\x05\x06\x07\x08", 8, qword, v64));
+        BOOST_TEST(binary_test("\x01\x02\x03\x04\x05\x06\x07\x08", 8, qword, v64));
 #endif
 
 #endif
