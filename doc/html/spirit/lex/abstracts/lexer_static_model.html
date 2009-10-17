@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../abstracts.html" title="Abstracts">
 <link rel="prev" href="lexer_semantic_actions.html" title="Lexer Semantic Actions">
-<link rel="next" href="lexer_parsing.html" title="Parsing using a Lexer">
+<link rel="next" href="../quick_reference.html" title="Quick Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="lexer_semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lexer_parsing.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="lexer_semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="The Static Lexer Model">
 <div class="titlepage"><div><div><h4 class="title">
@@ -125,9 +125,8 @@
 <p>
           The only thing changing between the three different use cases is the template
           parameter used to instantiate a concrete token definition. Fot the dynamic
-          model and the code generator you probably will use the <a class="link" href="../reference/lexer.html#spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model"><code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code></a>
-          template, where for the static model you will use the <a class="link" href="../reference/lexer.html#spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model"><code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code></a>
-          type as the template parameter.
+          model and the code generator you probably will use the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code> template, where for the static
+          model you will use the <code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code> type as the template parameter.
         </p>
 <p>
           This example not only shows how to build a static lexer, but it additionally
@@ -176,7 +175,7 @@
 <p>
         </p>
 <a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id903389"></a>
+<a name="id843299"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
         </h6>
@@ -239,7 +238,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id903748"></a>
+<a name="id843658"></a>
           <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
         </h6>
@@ -248,11 +247,9 @@
           one is to change your main program at two places. First, you need to change
           the type of the used lexer (that is the template parameter used while instantiating
           your token definition class). While in the dynamic model we have been using
-          the <a class="link" href="../reference/lexer.html#spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model"><code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code></a>
-          template, we now need to change that to the <a class="link" href="../reference/lexer.html#spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model"><code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code></a>
-          type. The second change is tightly related to the first one and involves
-          correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code>
-          statement to:
+          the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code>
+          template, we now need to change that to the <code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code> type. The second change is tightly
+          related to the first one and involves correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code> statement to:
         </p>
 <p>
           </p>
@@ -361,7 +358,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="lexer_semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lexer_parsing.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="lexer_semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

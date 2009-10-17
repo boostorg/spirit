@@ -103,8 +103,8 @@
 [def __sec_lex_attributes__     [link spirit.lex.abstracts.lexer_attributes Lexer Attributes]]
 [def __sec_lex_semactions__     [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
 
-[def __sec_ref_lex_token__      [link spirit.lex.reference.token Token Class]]
-[def __sec_ref_lex_token_def__  [link spirit.lex.reference.tokendef TokenDef Class]]
+[def __sec_ref_lex_token__      [/ link spirit.lex.reference.token Token Class] Token Class]
+[def __sec_ref_lex_token_def__  [/ link spirit.lex.reference.tokendef TokenDef Class] TokenDef Class]
 
 [/ References to API descriptions ]
 
@@ -116,11 +116,11 @@
 
 [/ References to classes ]
 
-[def __class_token_def__        [link spirit.lex.reference.tokendef `token_def<>`]]
+[def __class_token_def__        [/ link spirit.lex.reference.tokendef `token_def<>`] `token_def<>`]
 
-[def __class_lexertl_token__    [link spirit.lex.reference.token `lexertl_token<>`]]
-[def __class_lexertl_lexer__    [link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`]]
-[def __class_lexertl_static_lexer__ [link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`]]
+[def __class_lexertl_token__    [/ link spirit.lex.reference.token `lexertl_token<>`] `lexertl::token<>`]
+[def __class_lexertl_lexer__    [/ link spirit.lex.reference.lexer.the_lexertl__lexer_class_implementing_the_dynamic_model `lexertl_lexer<>`] `lexertl_lexer<>`]
+[def __class_lexertl_static_lexer__ [/ link spirit.lex.reference.lexer.the_lexertl__static_lexer_class_implementing_the_static_model `lexertl_static_lexer<>`] `lexertl_static_lexer<>`]
 
 [/ References to support ]
 

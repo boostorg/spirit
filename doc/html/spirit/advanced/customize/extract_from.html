@@ -28,7 +28,7 @@
         Attribute Value to Generate Output (Karma)</a>
 </h4></div></div></div>
 <a name="spirit.advanced.customize.extract_from.extract_from"></a><h6>
-<a name="id932186"></a>
+<a name="id872151"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.extract_from">extract_from</a>
         </h6>
 <p>
@@ -37,7 +37,7 @@
           extraction for any data type possibly used to store the values to output.
         </p>
 <a name="spirit.advanced.customize.extract_from.module_headers"></a><h6>
-<a name="id932210"></a>
+<a name="id872175"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.module_headers">Module
           Headers</a>
         </h6>
@@ -58,7 +58,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.namespace"></a><h6>
-<a name="id932303"></a>
+<a name="id872268"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.namespace">Namespace</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -75,14 +75,18 @@
                 </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.synopsis"></a><h6>
-<a name="id932376"></a>
+<a name="id872341"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">extract_from_attribute</span><span class="special">;</span>
+<span class="keyword">struct</span> <span class="identifier">extract_from_attribute</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="special">&lt;</span><span class="identifier">unspecified</span><span class="special">&gt;</span> <span class="identifier">type</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="identifier">type</span> <span class="identifier">call</span><span class="special">(</span><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">);</span>
+<span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.extract_from.template_parameters"></a><h6>
-<a name="id932443"></a>
+<a name="id873719"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.template_parameters">Template
           parameters</a>
         </h6>
@@ -151,7 +155,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.notation"></a><h6>
-<a name="id932609"></a>
+<a name="id873884"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.notation">Notation</a>
         </h6>
 <div class="variablelist" title="Notation">
@@ -168,7 +172,7 @@
 </dl>
 </div>
 <a name="spirit.advanced.customize.extract_from.expression_semantics"></a><h6>
-<a name="id933847"></a>
+<a name="id873950"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.expression_semantics">Expression
           Semantics</a>
         </h6>
@@ -207,7 +211,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.predefined_specializations"></a><h6>
-<a name="id933946"></a>
+<a name="id874049"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.predefined_specializations">Predefined
           Specializations</a>
         </h6>
@@ -301,7 +305,7 @@
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.extract_from.when_to_implement"></a><h6>
-<a name="id934290"></a>
+<a name="id874393"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.when_to_implement">When
           to implement</a>
         </h6>
@@ -313,7 +317,7 @@
           and is not copy constructible.
         </p>
 <a name="spirit.advanced.customize.extract_from.example"></a><h6>
-<a name="id934324"></a>
+<a name="id874427"></a>
           <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.example">Example</a>
         </h6>
 <p>

@@ -108,7 +108,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Container, typename Enable>
-    struct is_container;
+    struct is_container
+    {
+        typedef <unspecified> type;
+    };
 
 [heading Template parameters]
 
@@ -234,7 +237,12 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Exposed, typename Transformed, typename Enable>
-    struct transform_attribute;
+    struct transform_attribute
+    {
+        typedef <unspecified> type;
+        static type pre(Exposed& val);
+        static void post(Exposed& val, type attr);    // Qi only
+    };
 
 [heading Template parameters]
 
@@ -388,7 +396,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Attrib, typename Iterator, typename Enable>
-    struct assign_to_attribute_from_iterators;
+    struct assign_to_attribute_from_iterators
+    {
+        static void call(Iterator const& first, Iterator const& last, Attrib& attr);
+    };
 
 [heading Template parameters]
 
@@ -475,7 +486,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Attrib, typename T, typename Enable>
-    struct assign_to_attribute_from_value;
+    struct assign_to_attribute_from_value
+    {
+        static void call(T const& val, Attrib& attr);
+    };
 
 [heading Template parameters]
 
@@ -571,7 +585,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Container, typename Enable>
-    struct container_value;
+    struct container_value
+    {
+        typedef <unspecified> type;
+    };
 
 [heading Template parameters]
 
@@ -682,7 +699,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Container, typename Attrib, typename Enable>
-    struct push_back_container;
+    struct push_back_container
+    {
+        static void call(Container& c, Attrib const& val);
+    };
 
 [heading Template parameters]
 
@@ -818,7 +838,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Attrib, typename Enable>
-    struct clear_value;
+    struct clear_value
+    {
+        static void call(Attrib& val);
+    };
 
 [heading Template parameters]
 
@@ -915,7 +938,11 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Attrib, typename Enable>
-    struct extract_from_attribute;
+    struct extract_from_attribute
+    {
+        typedef <unspecified> type;
+        static type call(Attrib const& attr);
+    };
 
 [heading Template parameters]
 
@@ -1016,7 +1043,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Container, typename Enable>
-    struct container_iterator;
+    struct container_iterator
+    {
+        typedef <unspecified> type;
+    };
 
 [heading Template parameters]
 
@@ -1169,7 +1199,11 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Container, typename Enable>
-    struct begin_container;
+    struct begin_container
+    {
+        static typename container_iterator<Container>::type 
+        call(Container& c);
+    };
 
 [heading Template parameters]
 
@@ -1293,7 +1327,11 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Container, typename Enable>
-    struct end_container;
+    struct end_container
+    {
+        static typename container_iterator<Container>::type 
+        call(Container& c);
+    };
 
 [heading Template parameters]
 
@@ -1405,7 +1443,10 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Iterator, typename Enable>
-    struct next_iterator;
+    struct next_iterator
+    {
+        static void call(Iterator& it);
+    };
 
 [heading Template parameters]
 
@@ -1416,7 +1457,7 @@ Also, see __include_structure__.
                              customization point __customize_container_iterator__.]    [none]]
     [[`Enable`]             [Helper template parameter usable to selectively
                              enable or disable certain specializations
-                             of `end_container` utilizing SFINAE (i.e.
+                             of `next_iterator` utilizing SFINAE (i.e.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
@@ -1546,7 +1587,11 @@ Also, see __include_structure__.
 [heading Synopsis]
 
     template <typename Iterator, typename Enable>
-    struct deref_iterator;
+    struct deref_iterator
+    {
+        typedef <unspecified> type;
+        static type call(Iterator& it);
+    };
 
 [heading Template parameters]
 
@@ -1557,7 +1602,7 @@ Also, see __include_structure__.
                              customization point __customize_container_iterator__.]    [none]]
     [[`Enable`]             [Helper template parameter usable to selectively
                              enable or disable certain specializations
-                             of `end_container` utilizing SFINAE (i.e.
+                             of `deref_iterator` utilizing SFINAE (i.e.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
 ]
 
@@ -1669,7 +1714,13 @@ please see here: __customize_use_as_container_example__.
 
 [heading compare_iterators]
 
-Short description here...
+The template `compare_iterators` is a type used as an attribute customization 
+point. It is invoked by the /Karma/ repetitive generators (such as __karma_list__, 
+[karma_kleene Kleene (unary `*`)], __karma_plus__, and [karma_repeat Repeat]) 
+in order to compare the current iterator (returned either from 
+__customize_begin_container__ or from __customize_next_iterator__) with the end 
+iterator (returned from __customize_end_container__) in order to find the end 
+of the element sequence to gerenate output for.
 
 [heading Module Headers]
 
@@ -1687,6 +1738,68 @@ Also, see __include_structure__.
     [[Name]]
     [[`boost::spirit::traits`]]
 ]
+
+[heading Synopsis]
+
+    template <typename Iterator, typename Enable>
+    struct compare_iterators
+    {
+        static bool call(Iterator const& it1, Iterator const& it2);
+    };
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`Iterator`]           [The type, `Iterator` of the iterator to dereference.
+                             This is the same as the type returned by the 
+                             customization point __customize_container_iterator__.]    [none]]
+    [[`Enable`]             [Helper template parameter usable to selectively
+                             enable or disable certain specializations
+                             of `compare_iterators` utilizing SFINAE (i.e.
+                             `boost::enable_if` or `boost::disable_if`).] [`void`]]
+]
+
+[heading Notation]
+
+[variablelist 
+    [[`Iterator`]       [An iterator type.]]
+    [[`it1`, `it2`]     [Instance of iterators of type, `Iterator`.]]
+    [[`C`]              [A container type a iterator type, `Iterator` belongs to.]]
+]
+
+[heading Expression Semantics]
+
+[table
+    [[Expression]                             [Semantics]]
+    [[`compare_iterators<Iterator>::call(it1, it2)`]   
+                                              [Returns whether the iterators `it1`
+                                               `it2` are to be treated as beeing 
+                                               equal.]]
+]
+
+[heading Predefined Specializations]
+
+__spirit__ predefines specializations of this customization point for  
+several types. The following table lists those types together with the 
+types returned by the embedded typedef `type`:
+
+[table
+    [[Template Parameters]     [Value]]
+    [[`Iterator`]              [The function `call()` returns it1 == it2.]]
+    [[__unused_type__` const*`][The function `call()` always returns false.]]
+]
+
+[heading When to implement]
+
+The customization point `compare_iterators` needs to be implemented for a specific 
+iterator type whenever the container this iterator belongs to is to be used as 
+an attribute in place of a STL container. It is applicable for generators 
+(__karma__) only. As a rule of thumb: it has to be implemented whenever a certain 
+iterator type belongs to a container which is to be passed as an attribute 
+to a generator normally exposing a STL container, `C` and if the container type 
+does not expose the interface of a STL container (i.e. `is_container<C>::type` 
+would normally return `mpl::false_`). 
 
 [heading Related Attribute Customization Points]
 
