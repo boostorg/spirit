@@ -55,7 +55,7 @@ namespace boost { namespace spirit { namespace karma
 
         grammar(start_type const& start
               , std::string const& name_ = "unnamed-grammar")
-          : proto::extends<terminal, base_type>(terminal::make(start.alias()))
+          : proto::extends<terminal, base_type>(terminal::make(reference_(start)))
           , name_(name_)
         {}
 
