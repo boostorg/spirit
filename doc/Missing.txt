@@ -29,7 +29,7 @@ Common
 
 Qi
 --
-- is parser.qbk still needed?
+XXX [deleted] is parser.qbk still needed?
 
 Reference
 - action.qbk

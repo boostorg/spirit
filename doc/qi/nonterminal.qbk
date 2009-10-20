@@ -6,8 +6,198 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[/ section Nonterminal]
+[section Nonterminal]
 
+[heading Module Headers]
 
+    // forwards to <boost/spirit/qi/nonterminal.hpp>
+    #include <boost/spirit/include/qi_nonterminal.hpp>
 
-[/ endsect]
+Also, see __include_structure__.
+
+[/------------------------------------------------------------------------------]
+[section Rule]
+
+[heading Description]
+
+The rule is a polymorphic parser that acts as a named place-holder
+capturing the behavior of an PEG expression assigned to it. Naming an
+PEG expression allows it to be referenced later.
+
+[heading Header]
+
+    // forwards to <boost/spirit/qi/nonterminal/rule.hpp>
+    #include <boost/spirit/include/qi_rule.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::qi::rule`]]
+]
+
+[heading Synopsis]
+
+    template <typename Iterator, typename T1, typename T2, typename T3>
+    struct rule;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`Iterator`]           [The underlying iterator 
+                            type that the rule is  
+                            expected to work on.]           []]
+    [[`A1`, `A2`, `A3`]     [Either `Signature`, 
+                            `Skipper` or `Locals` in 
+                            any order. See table below.]    [See table below.]]
+]
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`Signature`]          [Specifies the rule's synthesized 
+                            (return value) and inherited 
+                            (arguments) attributes. More on
+                            this below.]                    [__unused_type__. 
+                                                            When `Signature` defaults 
+                                                            to __unused_type__, the effect 
+                                                            is the same as specifying a signature
+                                                            of `void()` which is also equivalent 
+                                                            to `unused()`]]
+    [[`Skipper`]            [Specifies the rule's skipper 
+                            parser. Specify this if you
+                            want the rule to skip white 
+                            spaces.]                        [__unused_type__]]
+    [[`Locals`]             [Specifies the rule's local
+                            variables. See below.]          [__unused_type__]]
+]
+
+[heading Model of]
+
+[:__parser_concept__]
+
+[variablelist Notation
+    [[`RT`]                     [Synthesized attribute. The rule or grammar's return type.]]
+    [[`Arg1`, `Arg2`, `ArgN`]   [Inherited attributes. Zero or more arguments.]]
+    [[`L1`, `L2`, `LN`]         [Zero or more local variables.]]
+    [[`r, r2`]                  [Rules]]
+    [[`g`]                      [A grammar]]
+    [[`p`]                      [A parser expression]]
+    [[`my_grammar`]             [A user defined grammar]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __parser_concept__.
+
+[table
+    [[Expression]                               [Description]]
+    [[`rule<Iterator, A1, A2, A3> r(name);`]    [Rule declaration. `Iterator` is required.
+                                                `A1, A2, A3` are optional and can be specified in any order.
+                                                `name` is an optional string that gives the rule
+                                                its name, useful for debugging and error handling.]]
+    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
+    [[`r = r2;`]                                [Assign rule `r2` to `r`.]]
+    [[`r.alias()`]                              [return an alias of `r`. The alias is a parser that
+                                                holds a reference to `r`. Reference semantics.]]
+    [[`r.copy()`]                               [Get a copy of `r`.]]
+    [[`r.name(name)`]                           [Naming a rule]]
+    [[`r.name()`]                               [Getting the name of a rule]]
+    [[debug(r)]                                 [Debug rule `r`]]
+    [[`r = p;`]                                 [Rule definition]]
+    [[`r %= p;`]                                [Auto-rule definition. The attribute of `p` should be
+                                                compatible with the synthesized attribute of `r`. When `p`
+                                                is successful, its attribute is automatically propagated
+                                                to `r`'s synthesized attribute.]]
+    [[`g.name(name)`]                           [Naming a grammar]]
+    [[`g.name()`]                               [Getting the name of a grammar]]
+]
+
+[heading Attributes]
+
+[:`T`, The synthesized attribute of the rule.]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the RHS parser, `p`]
+
+[heading Example]
+
+[reference_rule]
+
+[endsect] [/ Rule]
+
+[/------------------------------------------------------------------------------]
+[section Grammar]
+
+[heading Description]
+
+Description of XXX
+
+[heading Header]
+
+    #include <boost/spirit/xxx.hpp>
+
+    ...
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::xx`]]
+]
+
+[heading Synopsis]
+
+    template <typename T>
+    struct XXX;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]               [Default]]
+    [[`T`]                  [What is T]                 []]
+]
+
+[heading Model of]
+
+[variablelist Notation
+    [[`xxx`]     [An XXX]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is not
+defined in _concept-of_XXX_.
+
+[table
+    [[Expression]       [Semantics]]
+    [[`xxx`]            [Semantics of `xxx`]]
+]
+
+[heading Attributes]
+
+See __qi_comp_attr_notation__.
+
+[table
+    [[Expression]       [Attribute]]
+    [[`xxx`]            [Attribute of `xxx`]]
+]
+
+[heading Complexity]
+
+Big-O complexity of the parser
+
+[heading Example]
+
+Real example code. Use Quickbook import mechanism to link to actual
+working code snippets here.
+
+[endsect] [/ Grammar]
+
+[endsect] [/ Nonterminal]

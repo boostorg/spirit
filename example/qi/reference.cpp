@@ -1046,5 +1046,39 @@ main()
         //]
     }
    
+    // rule
+    {
+        //[reference_rule
+        //`Some using declarations:
+        using boost::spirit::qi::rule;
+        using boost::spirit::qi::int_;
+        using boost::spirit::ascii::space_type;
+
+        /*`Basic rule:
+         */
+        rule<char const*> r;
+        r = int_;
+        test_parser("123", r);
+        
+        /*`Rule with synthesized attribute:
+         */
+        rule<char const*, int()> ra;
+        ra = int_;
+        int i;
+        test_parser_attr("123", ra, i);
+        assert(i ==  123);
+        
+        /*`Rule with skipper and synthesized attribute:
+         */
+        rule<char const*, std::vector<int>(), space_type> rs;
+        rs = *int_;
+        std::vector<int> v;
+        test_phrase_parser_attr("123 456 789", rs, v);
+        assert(v[0] ==  123);
+        assert(v[1] ==  456);
+        assert(v[2] ==  789);
+        //]
+    }
+    
     return 0;
 }

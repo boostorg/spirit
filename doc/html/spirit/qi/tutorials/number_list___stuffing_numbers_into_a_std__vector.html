@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Number List - stuffing numbers into a std::vector</title>
+<title>Number
+        List - stuffing numbers into a std::vector</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="prev" href="sum___adding_numbers.html" title="Sum - adding numbers">
-<link rel="next" href="number_list_redux___list_syntax.html" title="Number List Redux - list syntax">
+<link rel="previous" href="sum___adding_numbers.html" title="Sum - adding
+        numbers">
+<link rel="next" href="number_list_redux___list_syntax.html" title="Number
+        List Redux - list syntax">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,11 +25,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="sum___adding_numbers.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="number_list_redux___list_syntax.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Number List - stuffing numbers into a std::vector">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.qi.tutorials.number_list___stuffing_numbers_into_a_std__vector"></a><a class="link" href="number_list___stuffing_numbers_into_a_std__vector.html" title="Number List - stuffing numbers into a std::vector">Number
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.qi.tutorials.number_list___stuffing_numbers_into_a_std__vector"></a><a href="number_list___stuffing_numbers_into_a_std__vector.html" title="Number
+        List - stuffing numbers into a std::vector">Number
         List - stuffing numbers into a std::vector</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           This sample demontrates a parser for a comma separated list of numbers.
           The numbers are inserted in a vector using phoenix.
@@ -72,18 +79,18 @@
         </p>
 <p>
           This, again, is the same parser as before. This time, instead of summing
-          up the numbers, we stuff them in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>.
-          <code class="computeroutput"><span class="identifier">push_back</span></code> is supplied by
+          up the numbers, we stuff them in a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></tt>.
+          <tt class="computeroutput"><span class="identifier">push_back</span></tt> is supplied by
           <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>. The expression:
         </p>
 <pre class="programlisting"><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">),</span> <span class="identifier">_1</span><span class="special">)</span>
 </pre>
 <p>
-          appends the parsed number. Like before, <code class="computeroutput"><span class="identifier">_1</span></code>
+          appends the parsed number. Like before, <tt class="computeroutput"><span class="identifier">_1</span></tt>
           is a <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> placeholder
-          for the parsed result attribute. Also, like before, <code class="computeroutput"><span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span></code>
+          for the parsed result attribute. Also, like before, <tt class="computeroutput"><span class="identifier">ref</span><span class="special">(</span><span class="identifier">v</span><span class="special">)</span></tt>
           tells <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> that
-          <code class="computeroutput"><span class="identifier">v</span></code>, the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code>,
+          <tt class="computeroutput"><span class="identifier">v</span></tt>, the <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></tt>,
           is a mutable reference.
         </p>
 </div>
