@@ -18,6 +18,7 @@
 #include <boost/spirit/home/karma/nonterminal/rule.hpp>
 #include <boost/spirit/home/karma/reference.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace karma
 {

@@ -18,6 +18,7 @@
 #include <boost/spirit/home/qi/nonterminal/rule.hpp>
 #include <boost/spirit/home/qi/reference.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
