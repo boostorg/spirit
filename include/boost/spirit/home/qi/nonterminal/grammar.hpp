@@ -65,8 +65,9 @@ namespace boost { namespace spirit { namespace qi
             // If you see the assertion below failing then the start rule 
             // passed to the constructor of the grammar is not compatible with 
             // the grammar (i.e. it uses different template parameters).
-            BOOST_SPIRIT_ASSERT_MSG(false, incompatible_start_rule, 
-                (rule<Iterator_, T1_, T2_, T3_>));
+            BOOST_SPIRIT_ASSERT_MSG(
+                (is_same<start_type, rule<Iterator_, T1_, T2_, T3_> >::value)
+              , incompatible_start_rule, (rule<Iterator_, T1_, T2_, T3_>));
         }
 
         std::string name() const
