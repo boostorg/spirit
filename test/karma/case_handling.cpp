@@ -8,6 +8,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <boost/detail/workaround.hpp>
 
 #include <boost/spirit/include/karma_char.hpp>
 #include <boost/spirit/include/karma_string.hpp>
@@ -164,6 +165,10 @@ main()
         BOOST_TEST(test(L"\t", upper[upper[space]], L'\t'));
     }
 
+// needed for VC7.1 only
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("german")
+#endif
     {
         using namespace boost::spirit::iso8859_1;
 
@@ -173,6 +178,9 @@ main()
         BOOST_TEST(test("Ä", upper['Ä']));
         BOOST_TEST(test("Ä", upper['ä']));
     }
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("")
+#endif
 
     {
         using namespace boost::spirit::ascii;
@@ -248,6 +256,10 @@ main()
         BOOST_TEST(test("A1- ", upper[upper[string("A1- ")]]));
     }
 
+// needed for VC7.1 only
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("german")
+#endif
     {
         using namespace boost::spirit::iso8859_1;
 
@@ -257,6 +269,9 @@ main()
         BOOST_TEST(test("ÄÄ", upper["Ää"]));
         BOOST_TEST(test("ÄÄ", upper["Ää"]));
     }
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("")
+#endif
 
     {
         using namespace boost::spirit::ascii;
