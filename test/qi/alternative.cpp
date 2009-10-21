@@ -86,7 +86,7 @@ main()
     }
 
     {
-        boost::variant</*unused_type,*/ int, char, unused_type> v;
+        boost::variant<unused_type, int, char> v;
 
         BOOST_TEST((test_attr("12345", lit("rock") | int_ | char_, v)));
         BOOST_TEST(boost::get<int>(v) == 12345);
@@ -115,7 +115,7 @@ main()
     {   // test action
 
         namespace phoenix = boost::phoenix;
-        boost::variant<int, char, unused_type> v;
+        boost::variant<unused_type, int, char> v;
 
         BOOST_TEST((test("12345", (lit("rock") | int_ | char_)[phoenix::ref(v) = _1])));
         BOOST_TEST(boost::get<int>(v) == 12345);
@@ -175,7 +175,7 @@ main()
         BOOST_TEST( (test("ab1_", lexeme[*(alnum | char_('_'))][test_action('_')])) );
         BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][test_action('2')])) );
 
-        //~ BOOST_TEST( (test("abcab12", lexeme[*("abc" | alnum)][test_action_2()])) );
+        BOOST_TEST( (test("abcab12", lexeme[*("abc" | alnum)][test_action_2()])) );
     }
 
     {
