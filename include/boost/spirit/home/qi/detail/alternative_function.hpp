@@ -42,8 +42,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         template <typename Component>
         bool call(Component const& component, mpl::false_) const
         {
-            // if Attribute is a variant, then create an attribute for
-            // the Component with its expected type.
+            // if Attribute is a variant or optional, then create an 
+            // attribute for the Component with its expected type.
             typename traits::attribute_of<Component, Context, Iterator>::type val;
             if (component.parse(first, last, context, skipper, val))
             {
@@ -57,7 +57,11 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         bool operator()(Component const& component) const
         {
             // return true if the parser succeeds
-            return call(component, spirit::traits::not_is_variant<Attribute>());
+            return call(component, 
+                mpl::and_<
+                    spirit::traits::not_is_variant<Attribute>,
+                    spirit::traits::not_is_optional<Attribute> 
+                >());
         }
 
         Iterator& first;
