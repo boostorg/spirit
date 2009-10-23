@@ -21,6 +21,7 @@
 #include <boost/fusion/include/filter_if.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/push_front.hpp>
+#include <boost/fusion/include/pop_front.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/utility/value_init.hpp>
@@ -268,15 +269,34 @@ namespace boost { namespace spirit { namespace traits
         
     namespace detail
     {
-        // default case
         template <typename Sequence, bool no_unused
             , int size = mpl::size<Sequence>::value>
-        struct build_collapsed_variant 
+        struct build_collapsed_variant;
+                
+        // N element case, no unused
+        template <typename Sequence, int size>
+        struct build_collapsed_variant<Sequence, true, size>
             : spirit::detail::as_variant<Sequence> {};
                 
-        // 1 element case
-        template <typename Sequence, bool no_unused>
-        struct build_collapsed_variant<Sequence, no_unused, 1>
+        // N element case with unused
+        template <typename Sequence, int size>
+        struct build_collapsed_variant<Sequence, false, size>
+        {
+            typedef optional<
+                typename spirit::detail::as_variant<
+                    typename fusion::result_of::pop_front<Sequence>::type
+                >::type
+            > type;
+        };
+
+        // 1 element case, no unused
+        template <typename Sequence>
+        struct build_collapsed_variant<Sequence, true, 1>
+            : mpl::front<Sequence> {};
+
+        // 1 element case, with unused
+        template <typename Sequence>
+        struct build_collapsed_variant<Sequence, false, 1>
             : mpl::front<Sequence> {};
 
         // 2 element case, no unused
