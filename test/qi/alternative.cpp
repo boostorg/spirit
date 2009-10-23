@@ -112,11 +112,13 @@ main()
 
     {   // test action
 
-        namespace phoenix = boost::phoenix;
-        boost::variant<unused_type, int, char> v;
+        namespace phx = boost::phoenix;
+        boost::optional<boost::variant<int, char> > v;
 
-        BOOST_TEST((test("12345", (lit("rock") | int_ | char_)[phoenix::ref(v) = _1])));
-        BOOST_TEST(boost::get<int>(v) == 12345);
+        BOOST_TEST((test("12345", (lit("rock") | int_ | char_)[phx::ref(v) = _1])));
+        BOOST_TEST(boost::get<int>(boost::get(v)) == 12345);
+        BOOST_TEST((test("rock", (lit("rock") | int_ | char_)[phx::ref(v) = _1])));
+        BOOST_TEST(!v);
     }
 
     {
