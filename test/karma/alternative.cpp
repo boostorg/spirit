@@ -74,6 +74,23 @@ main()
     }
 
     {
+        // more tests for optional attribute
+        optional<int> o;
+        BOOST_TEST(test("a", lit('a') | int_, o));
+        BOOST_TEST(test("a", int_ | lit('a'), o));
+
+        o = 10;
+        BOOST_TEST(test("a", lit('a') | int_, o));
+        BOOST_TEST(test("10", int_ | lit('a'), o));
+    }
+
+    {
+        int i = 10;
+        BOOST_TEST(test("a", lit('a') | int_, i));
+        BOOST_TEST(test("10", int_ | lit('a'), i));
+    }
+
+    {
         // testing for alignment/truncation problems on little endian systems
         // (big endian systems will fail one of the other tests below)
         std::basic_string<wchar_t> generated;
