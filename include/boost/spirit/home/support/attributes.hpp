@@ -59,12 +59,11 @@ namespace boost { namespace spirit { namespace traits
       : not_is_variant<T>
     {};
 
+    // we treat every type as if it where the variant (as this meta function is
+    // invoked for variant types only)
     template <typename T>
-    struct variant_type;
-
-    template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
-    struct variant_type<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
-      : mpl::identity<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> > 
+    struct variant_type
+      : mpl::identity<T> 
     {};
 
     template <typename T>
