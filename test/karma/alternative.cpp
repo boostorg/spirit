@@ -51,7 +51,14 @@ main()
 
     {
         // test optional attribute
-        optional<variant<int, char> > v (10);
+        optional<variant<int, char> > v;
+        BOOST_TEST(!test("", char_ | int_, v));
+        BOOST_TEST(!test("", int_ | char_, v));
+        BOOST_TEST(test("a", lit('a') | char_ | int_, v));
+        BOOST_TEST(test("a", char_ | lit('a') | int_, v));
+        BOOST_TEST(test("a", int_ | lit('a') | char_, v));
+
+        v = 10;
         BOOST_TEST(test("10", char_ | int_, v));
         BOOST_TEST(test("10", int_ | char_, v));
         BOOST_TEST(test("a", lit('a') | char_ | int_, v));
