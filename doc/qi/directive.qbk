@@ -97,6 +97,9 @@ Simple usage of `lexeme[]`:
 
 [reference_lexeme]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect]
 
 [/------------------------------------------------------------------------------]
@@ -123,7 +126,7 @@ Also, see __include_structure__.
     [[`ns::no_case`]]
 ]
 
-In the table above, `ns` is a __char_encoding_namespace__. 
+In the table above, `ns` represents a __char_encoding_namespace__. 
 
 [heading Model of]
 
@@ -174,6 +177,9 @@ A more sophisticated use case of `no_case[]` in conjunction with a symbol
 table (see __qi_symbols__ for more details):
 
 [reference_symbols_with_no_case]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect]
 
@@ -233,6 +239,9 @@ not defined in __unary_parser_concept__.
 Some using declarations:
 
 [reference_using_declarations_omit]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [reference_omit]
 
@@ -309,6 +318,9 @@ Some using declarations:
 
 [reference_raw]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect]
 
 [/------------------------------------------------------------------------------]
@@ -347,7 +359,7 @@ Also, see __include_structure__.
 [variablelist Notation
     [[`a`]              [A __parser_concept__.]]
     [[`n`,`min`,`max`]  [An `int` anything that can be converted to an 
-                        `int`, or a __lazy_argument__ that evaluates to 
+                        `int`, or a __qi_lazy_argument__ that evaluates to 
                         anything that can be converted to an `int`.]]
 ]
 
@@ -408,6 +420,9 @@ the length of the incoming string. Here's a sample input:
 [:__pascal_string__]
 
 [reference_repeat_pascal]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect]
 
@@ -494,6 +509,9 @@ Some using declarations:
 Simple usage of `skip[]`:
 
 [reference_skip]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect]
 

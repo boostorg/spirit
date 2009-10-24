@@ -162,6 +162,9 @@ Basic unsigned integers:
 
 [reference_thousand_separated]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ Unsigned Integers]
 
 [/------------------------------------------------------------------------------]
@@ -288,6 +291,9 @@ Some using declarations:
 Basic signed integers:
 
 [reference_int]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Signed Integers]
 
@@ -559,6 +565,9 @@ And its use:
 
 [reference_custom_real]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ Real Numbers]
 
 [/------------------------------------------------------------------------------]
@@ -716,6 +725,9 @@ A custom real number policy:
 And its use:
 
 [reference_custom_bool]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Real Numbers]
 

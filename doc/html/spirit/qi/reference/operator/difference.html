@@ -29,7 +29,7 @@
           <span class="identifier">b</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.operator.difference.description"></a><h6>
-<a name="id635906"></a>
+<a name="id653351"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.description">Description</a>
           </h6>
 <p>
@@ -37,10 +37,10 @@
             <span class="special">-</span> <span class="identifier">b</span></code>,
             is a binary operator that matches the first (LHS) operand but not the
             second (RHS).
-            <sup>[<a name="id635935" href="#ftn.id635935" class="footnote">7</a>]</sup>
+            <sup>[<a name="id653380" href="#ftn.id653380" class="footnote">7</a>]</sup>
           </p>
 <a name="spirit.qi.reference.operator.difference.header"></a><h6>
-<a name="id635974"></a>
+<a name="id653420"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/difference.hpp&gt;
@@ -50,7 +50,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.difference.model_of"></a><h6>
-<a name="id636049"></a>
+<a name="id653494"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.model_of">Model
             of</a>
           </h6>
@@ -74,7 +74,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.difference.expression_semantics"></a><h6>
-<a name="id636127"></a>
+<a name="id653572"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -115,7 +115,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.attributes"></a><h6>
-<a name="id636237"></a>
+<a name="id653682"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.attributes">Attributes</a>
           </h6>
 <p>
@@ -158,7 +158,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.complexity"></a><h6>
-<a name="id636453"></a>
+<a name="id653898"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -172,7 +172,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.difference.example"></a><h6>
-<a name="id636477"></a>
+<a name="id653922"></a>
             <a class="link" href="difference.html#spirit.qi.reference.operator.difference.example">Example</a>
           </h6>
 <p>
@@ -204,9 +204,19 @@
             </p>
 <p>
           </p>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The test harness for the example(s) above is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id635935" href="#id635935" class="para">7</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id653380" href="#id653380" class="para">7</a>] </sup>
                 Unlike classic Spirit, with Spirit2, the expression will always fail
                 if the RHS is a successful match regardless if the RHS matches less
                 characters. For example, the rule <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"policeman"</span><span class="special">)</span> <span class="special">-</span> <span class="string">"police"</span></code> will always fail

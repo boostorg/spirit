@@ -28,7 +28,7 @@
           Little Endianness Generators</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.binary.binary_little.description"></a><h6>
-<a name="id745519"></a>
+<a name="id759865"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             byte order.
           </p>
 <a name="spirit.karma.reference.binary.binary_little.header"></a><h6>
-<a name="id745536"></a>
+<a name="id759881"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/binary.hpp&gt;
@@ -47,7 +47,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.binary.binary_little.namespace"></a><h6>
-<a name="id745610"></a>
+<a name="id759956"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -93,7 +93,7 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_little.model_of"></a><h6>
-<a name="id745820"></a>
+<a name="id760166"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.model_of">Model
             of</a>
           </h6>
@@ -130,7 +130,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.binary.binary_little.expression_semantics"></a><h6>
-<a name="id745932"></a>
+<a name="id760277"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -249,7 +249,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_little.attributes"></a><h6>
-<a name="id746171"></a>
+<a name="id760516"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -348,7 +348,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.binary.binary_little.complexity"></a><h6>
-<a name="id746459"></a>
+<a name="id760804"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -361,9 +361,19 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.binary.binary_little.example"></a><h6>
-<a name="id746483"></a>
+<a name="id760828"></a>
             <a class="link" href="binary_little.html#spirit.karma.reference.binary.binary_little.example">Example</a>
           </h6>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 <p>
             Some includes:
           </p>
@@ -378,47 +388,6 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">std_pair</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
-</pre>
-<p>
-            </p>
-<p>
-          </p>
-<p>
-            All code snippets below use these common test functions:
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">test_binary_generator</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="special">!</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">memcmp</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">c_str</span><span class="special">(),</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">size</span><span class="special">))</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="keyword">else</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="special">}</span>
-</pre>
-<p>
-            </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">test_binary_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="special">!</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">memcmp</span><span class="special">(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">c_str</span><span class="special">(),</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">size</span><span class="special">))</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="keyword">else</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="special">}</span>
 </pre>
 <p>
             </p>

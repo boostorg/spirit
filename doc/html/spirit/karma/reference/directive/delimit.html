@@ -28,7 +28,7 @@
           Controlling Automatic Delimiting (<code class="computeroutput"><span class="identifier">verbatim</span><span class="special">[]</span></code>, <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code>)</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.directive.delimit.description"></a><h6>
-<a name="id773131"></a>
+<a name="id780113"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.description">Description</a>
           </h6>
 <p>
@@ -37,7 +37,7 @@
             while the directive <code class="computeroutput"><span class="identifier">delimit</span><span class="special">[]</span></code> (re-)enables automatic delimiting.
           </p>
 <a name="spirit.karma.reference.directive.delimit.header"></a><h6>
-<a name="id773191"></a>
+<a name="id780173"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.header">Header</a>
           </h6>
 <p>
@@ -58,7 +58,7 @@
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.directive.delimit.namespace"></a><h6>
-<a name="id773347"></a>
+<a name="id780329"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -84,7 +84,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.model_of"></a><h6>
-<a name="id773465"></a>
+<a name="id780447"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.model_of">Model
             of</a>
           </h6>
@@ -118,7 +118,7 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.directive.delimit.expression_semantics"></a><h6>
-<a name="id773591"></a>
+<a name="id780573"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -193,7 +193,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.attributes"></a><h6>
-<a name="id773825"></a>
+<a name="id780807"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.attributes">Attributes</a>
           </h6>
 <p>
@@ -269,7 +269,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.directive.delimit.complexity"></a><h6>
-<a name="id774280"></a>
+<a name="id781262"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -285,9 +285,19 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.directive.delimit.example"></a><h6>
-<a name="id774325"></a>
+<a name="id781307"></a>
             <a class="link" href="delimit.html#spirit.karma.reference.directive.delimit.example">Example</a>
           </h6>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 <p>
             Some includes:
           </p>
@@ -299,30 +309,6 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
-</pre>
-<p>
-            </p>
-<p>
-          </p>
-<p>
-            All code snippets below use this common test function:
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr1</span><span class="special">,</span> 
-    <span class="identifier">T2</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr2</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr1</span><span class="special">,</span> <span class="identifier">attr2</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">s</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="keyword">else</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="special">}</span>
 </pre>
 <p>
             </p>

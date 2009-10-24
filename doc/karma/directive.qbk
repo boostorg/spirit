@@ -242,13 +242,12 @@ a: Unused, pad: Pad --> right_align(pad, width)[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -406,13 +405,12 @@ is /not/ rolled back.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -517,13 +515,12 @@ a: Unused --> verbatim[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes_simple]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr2]
 
 Some using declarations:
 
@@ -560,7 +557,7 @@ Also, see __include_structure__.
     [[`ns::upper`]]
 ]
 
-In the table above, `ns` is a __karma_char_encoding_namespace__. 
+In the table above, `ns` represents a __karma_char_encoding_namespace__. 
 
 [heading Model of]
 
@@ -646,13 +643,12 @@ a: Unused --> ns:upper[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes_simple]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -756,13 +752,12 @@ a: Unused --> maxwidth(num)[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes_simple]
-
-All code snippets below use this common test function:
-
-[reference_karma_test]
 
 Some using declarations:
 
@@ -846,13 +841,12 @@ a: Unused --> buffer[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -924,13 +918,12 @@ a: Unused --> omit[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 

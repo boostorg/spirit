@@ -107,6 +107,9 @@ not defined in __primitive_parser_concept__.
 
 [reference_qi_native_binary]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -189,6 +192,9 @@ not defined in __primitive_parser_concept__.
 
 [reference_qi_little_binary]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -270,6 +276,9 @@ not defined in __primitive_parser_concept__.
 [heading Example]
 
 [reference_qi_big_binary]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect]
 

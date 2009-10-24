@@ -124,7 +124,7 @@ Also, see __include_structure__.
     [[`ns::char_`]]
 ]
 
-In the table above, `ns` is a __char_encoding_namespace__. 
+In the table above, `ns` represents a __char_encoding_namespace__. 
 
 [heading Model of]
 
@@ -132,11 +132,11 @@ In the table above, `ns` is a __char_encoding_namespace__.
 
 [variablelist Notation
     [[`c`, `f`, `l`]    [A literal char, e.g. `'x'`, `L'x'` or anything that can be
-                        converted to a `char` or `wchar_t`, or a __lazy_argument__ 
+                        converted to a `char` or `wchar_t`, or a __qi_lazy_argument__ 
                         that evaluates to anything that can be converted to a `char` 
                         or `wchar_t`.]]
     [[`ns`]             [A __char_encoding_namespace__.]]
-    [[`cs`]             [A __string__ or a __lazy_argument__ that evaluates to a __string__
+    [[`cs`]             [A __string__ or a __qi_lazy_argument__ that evaluates to a __string__
                         that specifies a char-set definition string following a syntax
                         that resembles posix style regular expression character sets
                         (except the square brackets and the negation `^` character).]]
@@ -168,9 +168,9 @@ not defined in __primitive_parser_concept__.
 
 [table
     [[Expression]       [Attribute]]
-    [[`c`]              [__unused__ or if `c` is a __lazy_argument__, the character 
+    [[`c`]              [__unused__ or if `c` is a __qi_lazy_argument__, the character 
                         type returned by invoking it.]]
-    [[`lit(c)`]         [__unused__ or if `c` is a __lazy_argument__, the character 
+    [[`lit(c)`]         [__unused__ or if `c` is a __qi_lazy_argument__, the character 
                         type returned by invoking it.]]
     [[`ns::char_`]      [The character type of the __char_encoding_namespace__, `ns`.]]
     [[`ns::char_(c)`]   [The character type of the __char_encoding_namespace__, `ns`.]]
@@ -206,6 +206,9 @@ Character set:
 Lazy char_ using __phoenix__
 
 [reference_char_phoenix]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Char]
 
@@ -245,7 +248,7 @@ Also, see __include_structure__.
     [[`ns::xdigit`]]
 ]
 
-In the table above, `ns` is a __char_encoding_namespace__. 
+In the table above, `ns` represents a __char_encoding_namespace__. 
 
 [heading Model of]
 
@@ -293,6 +296,9 @@ Some using declarations:
 Basic usage:
 
 [reference_char_class]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Char Classification]
 

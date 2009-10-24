@@ -116,13 +116,12 @@ containers. The selected mode depends on the type of the attribute supplied
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -208,13 +207,12 @@ first of them succeeds. See below for an example of this behavior.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -232,7 +230,6 @@ the string `"example"`, resulting in the first alternative to be chosen for the
 generated output.
 
 [reference_karma_alternative2]
-
 
 [endsect]
 
@@ -327,13 +324,12 @@ rolled back.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr_delim]
 
 Some using declarations:
 
@@ -439,14 +435,12 @@ rolled back.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
-[reference_karma_test_attr_delim]
 
 Some using declarations:
 
@@ -553,13 +547,12 @@ the list generator fail.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -645,13 +638,12 @@ rolled back.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 
@@ -727,13 +719,12 @@ See __karma_comp_attr_notation__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test]
 
 Some using declarations:
 
@@ -805,13 +796,12 @@ See __karma_comp_attr_notation__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use this common test function:
-
-[reference_karma_test_attr]
 
 Some using declarations:
 

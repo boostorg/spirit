@@ -48,9 +48,9 @@ Also, see __include_structure__.
 
 [variablelist Notation
     [[`a`]          [A arbitrary typed constant value, e.g. 0.0, "Hello", or a 
-                    variable of arbitrary type or a __lazy_argument__ that evaluates 
+                    variable of arbitrary type or a __qi_lazy_argument__ that evaluates 
                     to an arbitrary type.]]
-    [[`A`]          [The type of `a` or if it is a __lazy_argument__, its
+    [[`A`]          [The type of `a` or if it is a __qi_lazy_argument__, its
                     return type.]]
 ]
 
@@ -93,6 +93,9 @@ Using `attr` with literals:
 Using `attr` with __phoenix__ function objects:
 
 [reference_attr_phoenix]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Attribute]
 
@@ -153,6 +156,9 @@ Using `eol`:
 
 [reference_eol]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ End of Line]
 
 [/------------------------------------------------------------------------------]
@@ -212,6 +218,9 @@ Using `eoi`:
 
 [reference_eoi]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ End of Input]
 
 [/------------------------------------------------------------------------------]
@@ -238,15 +247,15 @@ alternatives fail:
 [heading Semantic Predicate]
 
 Semantic predicates allow you to attach a conditional function anywhere
-in the grammar. In this role, the epsilon takes a __lazy_argument__ that
-returns `true` or `false`. The __lazy_argument__ is typically a test
+in the grammar. In this role, the epsilon takes a __qi_lazy_argument__ that
+returns `true` or `false`. The __qi_lazy_argument__ is typically a test
 that is called to resolve ambiguity in the grammar. A parse failure will
-be reported when the __lazy_argument__ result evaluates to `false`.
+be reported when the __qi_lazy_argument__ result evaluates to `false`.
 Otherwise an empty match will be reported. The general form is:
 
     eps_p(f) >> rest;
 
-The __lazy_argument__ `f` is called to do a semantic test (say, checking
+The __qi_lazy_argument__ `f` is called to do a semantic test (say, checking
 if a symbol is in the symbol table). If test returns true, `rest` will
 be evaluated. Otherwise, the production will return early with a
 no-match without ever touching rest. 
@@ -270,7 +279,7 @@ Also, see __include_structure__.
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`f`]    [A __lazy_argument__ that evaluates `bool`.]]
+    [[`f`]    [A __qi_lazy_argument__ that evaluates `bool`.]]
 ]
 
 [heading Expression Semantics]
@@ -308,6 +317,9 @@ Some using declarations:
 
 [reference_eps_while]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/Epsilon]
 
 [/------------------------------------------------------------------------------]
@@ -338,7 +350,7 @@ Also, see __include_structure__.
 [:__parser_concept__]
 
 [variablelist Notation  
-    [[`fp`]     [A __lazy_argument__ that evaluates to a
+    [[`fp`]     [A __qi_lazy_argument__ that evaluates to a
                 __parser_concept__.]] 
 ]
 
@@ -349,11 +361,11 @@ not defined in __parser_concept__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`fp`]             [Create a lazy-parser from a __lazy_argument__, `fp`.
+    [[`fp`]             [Create a lazy-parser from a __qi_lazy_argument__, `fp`.
                         `fp` will be invoked at parse time. `fp` is expected to 
                         return a __parser_concept__ object. This parser is then 
                         invoked in order to parse the input.]]
-    [[`lazy(fp)`]       [Create a lazy-parser from a __lazy_argument__, `fp`.
+    [[`lazy(fp)`]       [Create a lazy-parser from a __qi_lazy_argument__, `fp`.
                         `fp` will be invoked at parse time. `fp` is expected to 
                         return a __parser_concept__ object. This parser is then 
                         invoked in order to parse the input.]]
@@ -381,6 +393,9 @@ Some using declarations:
 Using `lazy`:
 
 [reference_lazy]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Lazy]
 

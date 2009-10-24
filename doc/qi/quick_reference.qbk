@@ -257,7 +257,7 @@ __unused_type__. ]
 [table 
     [[Expression]           [Attribute]]
 
-    [[sequence (`>>`)]
+    [[`a >> b`]
 [``a: A, b: B --> (a >> b): tuple<A, B>
 a: A, b: Unused --> (a >> b): A
 a: Unused, b: B --> (a >> b): B
@@ -268,7 +268,7 @@ a: vector<A>, b: A --> (a >> b): vector<A>
 a: A, b: vector<A> --> (a >> b): vector<A>
 a: vector<A>, b: vector<A> --> (a >> b): vector<A>``]]
 
-    [[expect (`>`)]
+    [[`a > b`]
 [``a: A, b: B --> (a > b): tuple<A, B>
 a: A, b: Unused --> (a > b): A
 a: Unused, b: B --> (a > b): B
@@ -279,46 +279,46 @@ a: vector<A>, b: A --> (a > b): vector<A>
 a: A, b: vector<A> --> (a > b): vector<A>
 a: vector<A>, b: vector<A> --> (a > b): vector<A>``]]
 
-    [[alternative (`|`)]
+    [[`a | b`]
 [``a: A, b: B --> (a | b): variant<A, B>
 a: A, b: Unused --> (a | b): A
 a: Unused, b: B --> (a | b): B
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
-    [[difference (`-`)]
+    [[`a - b`]
 [``a: A, b: B --> (a - b): A
 a: Unused, b: B --> (a - b): Unused``]]
 
-    [[kleene (unary `*`)]
+    [[`*a`]
 [``a: A --> *a: vector<A>
 a: Unused --> *a: Unused``]]
-    [[plus (unary `+`)]
+    [[`+a`]
 [``a: A --> +a: vector<A>
 a: Unused --> +a: Unused``]]
 
-    [[list (`%`)]
+    [[`a % b`]
 [``a: A, b: B --> (a % b): vector<A>
 a: Unused, b: B --> (a % b): Unused``]]
 
-    [[repetition]
+    [[`repeat(...,...)[p]`]
 [``a: A --> repeat(...,...)[a]: vector<A>
 a: Unused --> repeat(...,...)[a]: Unused``]]
 
-    [[sequential or (`||`)] 
+    [[`a || b`] 
 [``a: A, b: B --> (a || b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a || b): optional<A>
 a: Unused, b: B --> (a || b): optional<B>
 a: Unused, b: Unused --> (a || b): Unused``]]
 
-    [[optional (unary `-`)]
+    [[`-a`]
 [``a: A --> -a: optional<A>
 a: Unused --> -a: Unused``]]
 
-    [[and predicate (`&`)]  [`a: A --> &a: Unused`]]
-    [[not predicate (`!`)]  [`a: A --> !a: Unused`]]
+    [[`&a`]  [`a: A --> &a: Unused`]]
+    [[`!b`]  [`a: A --> !a: Unused`]]
 
-    [[permutation (`^`)]
+    [[`a ^ b`]
 [``a: A, b: B --> (a ^ b): tuple<optional<A>, optional<B> >
 a: A, b: Unused --> (a ^ b): optional<A>
 a: Unused, b: B --> (a ^ b): optional<B>
