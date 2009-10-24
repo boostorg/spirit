@@ -161,6 +161,10 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
             typedef typename component_type::distance distance_type;
 
+            // if we got passed an empty optional, just fail generation
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // make sure, the content of the passed variant matches our
             // expectations
             typename traits::optional_attribute<Attribute>::type attr_ = 
