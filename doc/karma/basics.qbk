@@ -78,6 +78,15 @@ These test the generators with one or more user supplied attributes.
 [reference_karma_test_attr]
 [reference_karma_test_attr2]
 
+This tests the generators with one attribute and while using delimited output.
+
+[reference_karma_test_attr_delim]
+
+The examples of the binary generators use one or more of the following tests.
+
+[reference_karma_binary_test]
+[reference_karma_binary_test_attr]
+
 [heading Models]
 
 Predefined models include:

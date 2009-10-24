@@ -3,14 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Operator</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="previous" href="numeric/boolean.html" title=" Boolean Parser
-          (bool_)">
-<link rel="next" href="operator/alternative.html" title=" Alternative
-          (a |
-          b)">
+<link rel="prev" href="numeric/boolean.html" title="Boolean Parser (bool_)">
+<link rel="next" href="operator/alternative.html" title="Alternative (a | b)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,74 +22,70 @@
 <div class="spirit-nav">
 <a accesskey="p" href="numeric/boolean.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="operator/alternative.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.qi.reference.operator"></a><a href="operator.html" title="Operator">Operator</a>
-</h4></div></div>
-<div></div>
-</div>
+<div class="section" title="Operator">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.qi.reference.operator"></a><a class="link" href="operator.html" title="Operator">Operator</a>
+</h4></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="operator/alternative.html"> Alternative
-          (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-          <span class="identifier">b</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/and_predicate.html"> And
-          Predicate (<tt class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></tt>)</a></span></dt>
+          Predicate (<code class="computeroutput"><span class="special">&amp;</span><span class="identifier">a</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/difference.html"> Difference
-          (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">-</span>
-          <span class="identifier">b</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">-</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/expect.html"> Expectation
-          (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
-          <span class="identifier">b</span></tt>)</a></span></dt>
-<dt><span class="section"><a href="operator/kleene.html"> Kleene (<tt class="computeroutput"><span class="special">*</span><span class="identifier">a</span></tt>)</a></span></dt>
-<dt><span class="section"><a href="operator/list.html"> List (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
+<dt><span class="section"><a href="operator/kleene.html"> Kleene (<code class="computeroutput"><span class="special">*</span><span class="identifier">a</span></code>)</a></span></dt>
+<dt><span class="section"><a href="operator/list.html"> List (<code class="computeroutput"><span class="identifier">a</span> <span class="special">%</span> <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/not_predicate.html"> Not
-          Predicate (<tt class="computeroutput"><span class="special">!</span><span class="identifier">a</span></tt>)</a></span></dt>
+          Predicate (<code class="computeroutput"><span class="special">!</span><span class="identifier">a</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/optional.html"> Optional
-          (<tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/permutation.html"> Permutation
-          (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">^</span>
-          <span class="identifier">b</span></tt>)</a></span></dt>
-<dt><span class="section"><a href="operator/plus.html"> Plus (<tt class="computeroutput"><span class="special">+</span><span class="identifier">a</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">^</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
+<dt><span class="section"><a href="operator/plus.html"> Plus (<code class="computeroutput"><span class="special">+</span><span class="identifier">a</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/sequence.html"> Sequence
-          (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
-          <span class="identifier">b</span></tt>)</a></span></dt>
+          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">&gt;&gt;</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
 <dt><span class="section"><a href="operator/sequential_or.html"> Sequential
-          Or (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">||</span>
-          <span class="identifier">b</span></tt>)</a></span></dt>
+          Or (<code class="computeroutput"><span class="identifier">a</span> <span class="special">||</span>
+          <span class="identifier">b</span></code>)</a></span></dt>
 </dl></div>
 <p>
           Operators are used as a means for object composition and embedding. Simple
           parsers may be composed to form composites through operator overloading,
-          crafted to approximate the syntax of <a href="../../abstracts/parsing_expression_grammar.html" title="Parsing
-      Expression Grammar">Parsing
+          crafted to approximate the syntax of <a class="link" href="../../abstracts/parsing_expression_grammar.html" title="Parsing Expression Grammar">Parsing
           Expression Grammar</a> (PEG). An expression such as:
         </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span>
 </pre>
 <p>
-          yields a new parser type which is a composite of its operands, <tt class="computeroutput"><span class="identifier">a</span></tt> and <tt class="computeroutput"><span class="identifier">b</span></tt>.
+          yields a new parser type which is a composite of its operands, <code class="computeroutput"><span class="identifier">a</span></code> and <code class="computeroutput"><span class="identifier">b</span></code>.
         </p>
 <p>
           This module includes different parsers which get instantiated if one of
           the overloaded operators is used with more primitive parser constructs.
-          It includes Alternative (<tt class="computeroutput"><span class="special">|</span></tt>),
-          And predicate (unary <tt class="computeroutput"><span class="special">&amp;</span></tt>),
-          Difference (<tt class="computeroutput"><span class="special">-</span></tt>), Expect (<tt class="computeroutput"><span class="special">&gt;</span></tt>), Kleene star (unary <tt class="computeroutput"><span class="special">*</span></tt>), Lists (unary <tt class="computeroutput"><span class="special">%</span></tt>),
-          Not predicate (unary <tt class="computeroutput"><span class="special">!</span></tt>), Optional
-          (<tt class="computeroutput"><span class="special">-</span></tt>), Permutation (<tt class="computeroutput"><span class="special">^</span></tt>), Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>),
-          Sequence (<tt class="computeroutput"><span class="special">&gt;&gt;</span></tt>) and Sequential-Or
-          (<tt class="computeroutput"><span class="special">||</span></tt>).
+          It includes Alternative (<code class="computeroutput"><span class="special">|</span></code>),
+          And predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>),
+          Difference (<code class="computeroutput"><span class="special">-</span></code>), Expect (<code class="computeroutput"><span class="special">&gt;</span></code>), Kleene star (unary <code class="computeroutput"><span class="special">*</span></code>), Lists (unary <code class="computeroutput"><span class="special">%</span></code>),
+          Not predicate (unary <code class="computeroutput"><span class="special">!</span></code>), Optional
+          (<code class="computeroutput"><span class="special">-</span></code>), Permutation (<code class="computeroutput"><span class="special">^</span></code>), Plus (unary <code class="computeroutput"><span class="special">+</span></code>),
+          Sequence (<code class="computeroutput"><span class="special">&gt;&gt;</span></code>) and Sequential-Or
+          (<code class="computeroutput"><span class="special">||</span></code>).
         </p>
-<a name="spirit.qi.reference.operator.module_header"></a><h5>
-<a name="id520162"></a>
-          <a href="operator.html#spirit.qi.reference.operator.module_header">Module Header</a>
-        </h5>
+<a name="spirit.qi.reference.operator.module_header"></a><h6>
+<a name="id665321"></a>
+          <a class="link" href="operator.html#spirit.qi.reference.operator.module_header">Module Header</a>
+        </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
+          Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

@@ -1,15 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Optional
-          (-a)</title>
+<title>Optional (-a)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="previous" href="list.html" title=" Lists (a % b)">
-<link rel="next" href="and_predicate.html" title=" And
-          Predicate (&amp;a)">
+<link rel="prev" href="list.html" title="Lists (a % b)">
+<link rel="next" href="and_predicate.html" title="And Predicate (&amp;a)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,55 +22,51 @@
 <div class="spirit-nav">
 <a accesskey="p" href="list.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="and_predicate.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.reference.operator.optional"></a><a href="optional.html" title=" Optional
-          (-a)"> Optional
-          (<tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>)</a>
-</h5></div></div>
-<div></div>
-</div>
+<div class="section" title="Optional (-a)">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.reference.operator.optional"></a><a class="link" href="optional.html" title="Optional (-a)"> Optional
+          (<code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>)</a>
+</h5></div></div></div>
 <a name="spirit.karma.reference.operator.optional.description"></a><h6>
-<a name="id688008"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.description">Description</a>
+<a name="id817512"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.description">Description</a>
           </h6>
 <p>
             The optional generator is used to conditionally execute an embedded generator.
             It succeeds always.
           </p>
 <a name="spirit.karma.reference.operator.optional.header"></a><h6>
-<a name="id688039"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.header">Header</a>
+<a name="id817528"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/operator/optional.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_optional</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.operator.optional.model_of"></a><h6>
-<a name="id688153"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.model_of">Model
+<a name="id817603"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>
+                <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.optional.expression_semantics"></a><h6>
-<a name="id688207"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.expression_semantics">Expression
+<a name="id817641"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><tt class="computeroutput"><span class="identifier">UnaryGenerator</span></tt></a>.
+            is not defined in <a class="link" href="../generator_concepts/unarygenerator.html" title="UnaryGenerator"><code class="computeroutput"><span class="identifier">UnaryGenerator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -80,31 +74,39 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
-                  </p></td>
-<td><p>
-                    The generator <tt class="computeroutput"><span class="identifier">a</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The generator <code class="computeroutput"><span class="identifier">a</span></code>
                     is executed depending on the availability of an attribute. The
                     optional generator succeeds as long as its embedded generator
                     succeeds (unless the underlying output stream reports an error).
-                  </p></td>
+                  </p>
+                  </td>
 </tr></tbody>
 </table></div>
 <a name="spirit.karma.reference.operator.optional.attributes"></a><h6>
-<a name="id688343"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.attributes">Attributes</a>
+<a name="id817741"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.attributes">Attributes</a>
           </h6>
 <p>
-            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
+            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.karma.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -113,38 +115,44 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody><tr>
-<td><p>
-                    <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>
-                    (optional, unary <tt class="computeroutput"><span class="special">-</span></tt>)
-                  </p></td>
 <td>
-<p>
+                  <p>
+                    <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>
+                    (optional, unary <code class="computeroutput"><span class="special">-</span></code>)
+                  </p>
+                  </td>
+<td>
+                  <p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">-</span><span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span></pre>
 <p>
                   </p>
-</td>
+                  </td>
 </tr></tbody>
 </table></div>
-<div class="important"><table border="0" summary="Important">
+<div class="important" title="Important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The table above uses <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt> as a placeholder only. The notation
-              of <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>
-              stands for the data type <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></tt>.
+<tr><td align="left" valign="top"><p>
+              The table above uses <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code> as a placeholder only. The notation
+              of <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>
+              stands for the data type <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span></code>.
             </p></td></tr>
 </table></div>
 <p>
@@ -158,16 +166,15 @@
             means that any failing element might have already generated some output,
             which is <span class="emphasis"><em>not</em></span> rolled back.
           </p>
-<div class="tip"><table border="0" summary="Tip">
+<div class="tip" title="Tip"><table border="0" summary="Tip">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../images/tip.png"></td>
 <th align="left">Tip</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top">
+<tr><td align="left" valign="top">
 <p>
               The simplest way to force a optional generator to behave as if it did
-              buffering is to wrap it into a buffering directive (see <a href="../directive/buffer.html" title=" Temporary
-          Output Buffering (buffer[])"><tt class="computeroutput"><span class="identifier">buffer</span></tt></a>):
+              buffering is to wrap it into a buffering directive (see <a class="link" href="../directive/buffer.html" title="Temporary Output Buffering (buffer[])"><code class="computeroutput"><span class="identifier">buffer</span></code></a>):
             </p>
 <p>
               
@@ -177,13 +184,13 @@
             </p>
 <p>
               which will <span class="emphasis"><em>not</em></span> generate any output in case of
-              a failing generator <tt class="computeroutput"><span class="special">-</span><span class="identifier">a</span></tt>.
+              a failing generator <code class="computeroutput"><span class="special">-</span><span class="identifier">a</span></code>.
             </p>
 </td></tr>
 </table></div>
 <a name="spirit.karma.reference.operator.optional.complexity"></a><h6>
-<a name="id688782"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.complexity">Complexity</a>
+<a name="id818052"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -197,9 +204,19 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.operator.optional.example"></a><h6>
-<a name="id688821"></a>
-            <a href="optional.html#spirit.karma.reference.operator.optional.example">Example</a>
+<a name="id818076"></a>
+            <a class="link" href="optional.html#spirit.karma.reference.operator.optional.example">Example</a>
           </h6>
+<div class="note" title="Note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 <p>
             Some includes:
           </p>
@@ -214,29 +231,6 @@
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">std_pair</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
-</pre>
-<p>
-            </p>
-<p>
-          </p>
-<p>
-            All code snippets below use this common test function:
-          </p>
-<p>
-            </p>
-<p>
-              
-</p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">G</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">void</span> <span class="identifier">test_generator_attr</span><span class="special">(</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">expected</span><span class="special">,</span> <span class="identifier">G</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">)</span>
-<span class="special">{</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">s</span><span class="special">;</span>
-    <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_insert_iterator</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">out</span><span class="special">(</span><span class="identifier">s</span><span class="special">);</span>
-    <span class="keyword">if</span> <span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">g</span><span class="special">,</span> <span class="identifier">attr</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">s</span> <span class="special">==</span> <span class="identifier">expected</span><span class="special">)</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"ok"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-    <span class="keyword">else</span>
-        <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"fail"</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
-<span class="special">}</span>
 </pre>
 <p>
             </p>

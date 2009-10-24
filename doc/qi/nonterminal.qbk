@@ -64,7 +64,7 @@ or`_r10`.
     [[Parameter]            [Description]                   [Default]]
     [[`Iterator`]           [The underlying iterator 
                             type that the rule is  
-                            expected to work on.]           []]
+                            expected to work on.]           [none]]
     [[`A1`, `A2`, `A3`]     [Either `Signature`, 
                             `Skipper` or `Locals` in 
                             any order. See table below.]    [See table below.]]

@@ -124,13 +124,12 @@ not defined in __unary_generator_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use these common test functions:
-
-[reference_karma_test]
 
 Some using declarations:
 
@@ -203,13 +202,12 @@ The complexity is constant as a single character is generated in the output.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use these common test functions:
-
-[reference_karma_test]
 
 Some using declarations:
 
@@ -324,13 +322,12 @@ The complexity is constant as no output is generated.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use these common test functions:
-
-[reference_karma_test]
 
 Some using declarations:
 
@@ -426,14 +423,12 @@ generator returned from `fg`.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use these common test functions:
-
-[reference_karma_test]
-[reference_karma_test_attr]
 
 Some using declarations:
 

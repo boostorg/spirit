@@ -152,6 +152,8 @@
 [def __binary_generator_concept__   [link spirit.karma.reference.generator_concepts.binarygenerator `BinaryGenerator`]]
 [def __nary_generator_concept__     [link spirit.karma.reference.generator_concepts.narygenerator `NaryGenerator`]]
 [def __karma_lazy_argument__        [link spirit.karma.reference.karma_basics.lazy_argument Lazy Argument]]
+[def __karma_lazy_arguments__       [link spirit.karma.reference.karma_basics.lazy_argument Lazy Arguments]]
+[def __karma_basics_examples__      [link spirit.karma.reference.karma_basics.examples Basics Examples]]
 
 [/////////////////////////////////////////////////////////////////////////////]
 [def __karma_auxiliary__            [link spirit.karma.reference.auxiliary Auxiliary Generators]]

@@ -1,15 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Complex - A
-        first more complex generator</title>
+<title>Complex - A first more complex generator</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="previous" href="semantic_actions.html" title="Semantic Actions">
-<link rel="next" href="karma_easier_complex.html" title=" Complex
-        - Made easier">
+<link rel="prev" href="semantic_actions.html" title="Semantic Actions">
+<link rel="next" href="karma_easier_complex.html" title="Complex - Made easier">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,20 +22,16 @@
 <div class="spirit-nav">
 <a accesskey="p" href="semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="karma_easier_complex.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.karma.tutorials.karma_complex"></a><a href="karma_complex.html" title=" Complex - A
-        first more complex generator"> Complex - A
+<div class="section" title="Complex - A first more complex generator">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.karma.tutorials.karma_complex"></a><a class="link" href="karma_complex.html" title="Complex - A first more complex generator"> Complex - A
         first more complex generator</a>
-</h4></div></div>
-<div></div>
-</div>
+</h4></div></div></div>
 <p>
           In this section we will develop a generator for complex numbers, allowing
-          to represent a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></tt> either as <tt class="computeroutput"><span class="special">(</span><span class="identifier">real</span><span class="special">,</span> <span class="identifier">imag</span><span class="special">)</span></tt>
-          (where <tt class="computeroutput"><span class="identifier">real</span></tt> and <tt class="computeroutput"><span class="identifier">imag</span></tt> are the real and imaginary parts
-          of the complex number) or as a simple <tt class="computeroutput"><span class="identifier">real</span></tt>
+          to represent a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code> either as <code class="computeroutput"><span class="special">(</span><span class="identifier">real</span><span class="special">,</span> <span class="identifier">imag</span><span class="special">)</span></code>
+          (where <code class="computeroutput"><span class="identifier">real</span></code> and <code class="computeroutput"><span class="identifier">imag</span></code> are the real and imaginary parts
+          of the complex number) or as a simple <code class="computeroutput"><span class="identifier">real</span></code>
           if the imaginary part happens to be equal to zero. This example will highlight
           the power of <span class="emphasis"><em>Spirit.Karma</em></span> allowing to combine compile
           time definition of formatting rules with runtime based decisions which
@@ -56,7 +50,7 @@
           where the first alternative should be used for numbers having a non-zero
           imaginary part, while the second is for real numbers. Generally, alternatives
           are tried in the sequence of their definition as long until one of the
-          expressions (as delimited by <tt class="computeroutput"><span class="char">'|'</span></tt>)
+          expressions (as delimited by <code class="computeroutput"><span class="char">'|'</span></code>)
           succeeds. If no generator expression succeeds the whole alternative fails.
         </p>
 <p>
@@ -66,7 +60,7 @@
           will be chosen instead. The decision about whether to choose the first
           alternative has to be made at runtime as only then we actually know the
           value of the imaginary part of the complex number. <span class="emphasis"><em>Spirit.Karma</em></span>
-          provides us with with a primitive generator <tt class="computeroutput"><span class="identifier">eps</span><span class="special">()</span></tt>, which is usable as a semantic predicate.
+          provides us with with a primitive generator <code class="computeroutput"><span class="identifier">eps</span><span class="special">()</span></code>, which is usable as a semantic predicate.
           It has the property to 'succeed' generating only if its argument is true
           (while it never generates any output on its own).
         </p>
@@ -85,7 +79,7 @@
           (The full cpp file for this example can be found here: <a href="../../../../../example/karma/complex_number.cpp" target="_top">complex_number.cpp</a>).
         </p>
 <p>
-          We will use the <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></tt> type for this and all subsequent
+          We will use the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">complex</span></code> type for this and all subsequent
           related examples. And here you can see the full code of the generator allowing
           to output a complex number either as a pair of numbers (if the imaginary
           part is non-zero) or as a single number (if the complex is a real number):
@@ -119,23 +113,23 @@
 <p>
         </p>
 <p>
-          The <tt class="computeroutput"><span class="identifier">double_</span></tt> generators
+          The <code class="computeroutput"><span class="identifier">double_</span></code> generators
           have this semantic action attached:
         </p>
 <pre class="programlisting"><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">n</span>
 </pre>
 <p>
-          which passes <tt class="computeroutput"><span class="identifier">n</span></tt> to the first
+          which passes <code class="computeroutput"><span class="identifier">n</span></code> to the first
           element of the generator the semantic action is attached to. Remember,
           semantic actions in <span class="emphasis"><em>Spirit.Karma</em></span> are called before
           the corresponding generator is invoked and they are expected to provide
           the generator with the data to be used. The semantic action above assigns
-          the value to be generated (<tt class="computeroutput"><span class="identifier">n</span></tt>)
-          to the generator (actually, the attribute of <tt class="computeroutput"><span class="identifier">double_</span></tt>).
-          <tt class="computeroutput"><span class="identifier">_1</span></tt> is a Phoenix placeholder
+          the value to be generated (<code class="computeroutput"><span class="identifier">n</span></code>)
+          to the generator (actually, the attribute of <code class="computeroutput"><span class="identifier">double_</span></code>).
+          <code class="computeroutput"><span class="identifier">_1</span></code> is a Phoenix placeholder
           referring to the attribute of the generator the semantic action is attached
           to. If you need more information about semantic actions, you may want to
-          read about those in this section: <a href="semantic_actions.html" title="Semantic Actions">Semantic
+          read about those in this section: <a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic
           Actions</a>.
         </p>
 <p>

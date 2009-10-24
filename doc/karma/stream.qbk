@@ -198,14 +198,12 @@ instance.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+      __karma_basics_examples__ section.]
+
 Some includes:
 
 [reference_karma_includes]
-
-All code snippets below use these common test functions:
-
-[reference_karma_test]
-[reference_karma_test_attr]
 
 Some using declarations:
 

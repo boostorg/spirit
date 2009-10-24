@@ -1,16 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Binary
-          Little Endian</title>
+<title>Binary Little Endian</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../binary.html" title=" Binary">
-<link rel="previous" href="binary_native.html" title=" Binary
-          Native Endian">
-<link rel="next" href="binary_big.html" title=" Binary Big
-          Endian">
+<link rel="up" href="../binary.html" title="Binary">
+<link rel="prev" href="binary_native.html" title="Binary Native Endian">
+<link rel="next" href="binary_big.html" title="Binary Big Endian">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,115 +22,119 @@
 <div class="spirit-nav">
 <a accesskey="p" href="binary_native.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../binary.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="binary_big.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.qi.reference.binary.binary_little"></a><a href="binary_little.html" title=" Binary
-          Little Endian"> Binary
+<div class="section" title="Binary Little Endian">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.binary.binary_little"></a><a class="link" href="binary_little.html" title="Binary Little Endian"> Binary
           Little Endian</a>
-</h5></div></div>
-<div></div>
-</div>
+</h5></div></div></div>
 <a name="spirit.qi.reference.binary.binary_little.description"></a><h6>
-<a name="id477486"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.description">Description</a>
+<a name="id621735"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.description">Description</a>
           </h6>
 <p>
             Binary little endian parsers are designed to parse binary byte streams
             that are laid out in little endian.
           </p>
 <a name="spirit.qi.reference.binary.binary_little.header"></a><h6>
-<a name="id477517"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.header">Header</a>
+<a name="id621752"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/binary.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_binary</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.binary.binary_little.namespace"></a><h6>
-<a name="id477630"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.namespace">Namespace</a>
+<a name="id621827"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
+                  </p>
+                  </th></tr></thead>
 <tbody>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">little_word</span> <span class="comment">//
-                    alias: boost::spirit::qi::little_word</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">little_dword</span> <span class="comment">//
-                    alias: boost::spirit::qi::little_dword</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">little_qword</span> <span class="comment">//
-                    alias: boost::spirit::qi::little_qword</span></tt>
-                  </p></td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">little_word</span> <span class="comment">//
+                    alias: boost::spirit::qi::little_word</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">little_dword</span> <span class="comment">//
+                    alias: boost::spirit::qi::little_dword</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">little_qword</span> <span class="comment">//
+                    alias: boost::spirit::qi::little_qword</span></code>
+                  </p>
+                  </td></tr>
 </tbody>
 </table></div>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              <tt class="computeroutput"><span class="identifier">little_qword</span></tt> is only
-              available on platforms where the preprocessor constant <tt class="computeroutput"><span class="identifier">BOOST_HAS_LONG_LONG</span></tt> is defined (i.e.
-              on platforms having native support for <tt class="computeroutput"><span class="keyword">unsigned</span>
-              <span class="keyword">long</span> <span class="keyword">long</span></tt>
+<tr><td align="left" valign="top"><p>
+              <code class="computeroutput"><span class="identifier">little_qword</span></code> is only
+              available on platforms where the preprocessor constant <code class="computeroutput"><span class="identifier">BOOST_HAS_LONG_LONG</span></code> is defined (i.e.
+              on platforms having native support for <code class="computeroutput"><span class="keyword">unsigned</span>
+              <span class="keyword">long</span> <span class="keyword">long</span></code>
               (64 bit) integer types).
             </p></td></tr>
 </table></div>
 <a name="spirit.qi.reference.binary.binary_little.model_of"></a><h6>
-<a name="id477892"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.model_of">Model
+<a name="id622021"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>
+                <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist">
+<div class="variablelist" title="Notation">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">w</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">w</span></code></span></dt>
 <dd><p>
-                A 16 bit binary value or a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                A 16 bit binary value or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a 16 bit binary value. This value
                 is always in native endian.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">dw</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">dw</span></code></span></dt>
 <dd><p>
-                A 32 bit binary value or a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                A 32 bit binary value or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a 32 bit binary value. This value
                 is always in native endian.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">qw</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">qw</span></code></span></dt>
 <dd><p>
-                A 64 bit binary value or a <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+                A 64 bit binary value or a <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a 64 bit binary value. This value
                 is always in native endian.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.binary.binary_little.expression_semantics"></a><h6>
-<a name="id478056"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.expression_semantics">Expression
+<a name="id622133"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>.
+            is not defined in <a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -141,67 +142,95 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_word</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_word</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Matches any 16 bit little endian binary.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_dword</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_dword</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Matches any 32 bit little endian binary.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_qword</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_qword</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Matches any 64 bit little endian binary.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_word</span><span class="special">(</span><span class="identifier">w</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_word</span><span class="special">(</span><span class="identifier">w</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Matches an exact 16 bit little endian binary.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_dword</span><span class="special">(</span><span class="identifier">dw</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_dword</span><span class="special">(</span><span class="identifier">dw</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Matches an exact 32 bit little endian binary.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_qword</span><span class="special">(</span><span class="identifier">qw</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_qword</span><span class="special">(</span><span class="identifier">qw</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Matches an exact 32 bit little endian binary.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.binary.binary_little.attributes"></a><h6>
-<a name="id478367"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.attributes">Attributes</a>
+<a name="id622371"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -209,67 +238,95 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Attribute
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_word</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least16_t</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_word</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least16_t</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_dword</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least32_t</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_dword</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least32_t</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_qword</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least64_t</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_qword</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uint_least64_t</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_word</span><span class="special">(</span><span class="identifier">w</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_word</span><span class="special">(</span><span class="identifier">w</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_dword</span><span class="special">(</span><span class="identifier">dw</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_dword</span><span class="special">(</span><span class="identifier">dw</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">little_qword</span><span class="special">(</span><span class="identifier">qw</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">little_qword</span><span class="special">(</span><span class="identifier">qw</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.binary.binary_little.complexity"></a><h6>
-<a name="id478743"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.complexity">Complexity</a>
+<a name="id622659"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -281,8 +338,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.binary.binary_little.example"></a><h6>
-<a name="id478780"></a>
-            <a href="binary_little.html#spirit.qi.reference.binary.binary_little.example">Example</a>
+<a name="id622683"></a>
+            <a class="link" href="binary_little.html#spirit.qi.reference.binary.binary_little.example">Example</a>
           </h6>
 <p>
             </p>
@@ -328,13 +385,13 @@
             </p>
 <p>
           </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The test harness for the example(s) above is presented in the <a href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+<tr><td align="left" valign="top"><p>
+              The test harness for the example(s) above is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>

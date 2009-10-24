@@ -1,16 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>
-          Comparing the performance of a sequence of several generators</title>
+<title>Comparing the performance of a sequence of several generators</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../numeric_performance.html" title="
-        Performance of Numeric Generators">
-<link rel="previous" href="double_performance.html" title="
-          Comparing the performance of a single double_ generator">
-<link rel="next" href="../../../lex.html" title=" Lex - Writing Lexical Analyzers">
+<link rel="up" href="../numeric_performance.html" title="Performance of Numeric Generators">
+<link rel="prev" href="double_performance.html" title="Comparing the performance of a single double_ generator">
+<link rel="next" href="../../../lex.html" title="Lex - Writing Lexical Analyzers">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,21 +22,17 @@
 <div class="spirit-nav">
 <a accesskey="p" href="double_performance.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric_performance.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../../../lex.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.karma.performance_measurements.numeric_performance.format_performance"></a><a href="format_performance.html" title="
-          Comparing the performance of a sequence of several generators">
+<div class="section" title="Comparing the performance of a sequence of several generators">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.karma.performance_measurements.numeric_performance.format_performance"></a><a class="link" href="format_performance.html" title="Comparing the performance of a sequence of several generators">
           Comparing the performance of a sequence of several generators</a>
-</h5></div></div>
-<div></div>
-</div>
+</h5></div></div></div>
 <p>
             This performance measurements are centered around formatting of a sequence
-            of different items, including 2 <tt class="computeroutput"><span class="keyword">double</span></tt>
+            of different items, including 2 <code class="computeroutput"><span class="keyword">double</span></code>
             floating point numbers using different libraries and methods. The overall
             execution times for those examples are compared below. We compare using
-            <tt class="computeroutput"><span class="identifier">sprintf</span></tt>, C++ iostreams,
+            <code class="computeroutput"><span class="identifier">sprintf</span></code>, C++ iostreams,
             <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>, and
             <span class="emphasis"><em>Spirit.Karma</em></span>.
           </p>
@@ -159,13 +152,12 @@
             using different compilers. All times are in seconds measured for 1000000
             iterations (platform: Windows7, Intel Core Duo(tm) Processor, 2.8GHz,
             4GByte RAM). For a more readable comparison of the results see this
-            <a href="format_performance.html#spirit.karma.format_performance" title="Figure 5. Performance comparison for a sequence
-            of several items">figure</a>.
+            <a class="link" href="format_performance.html#spirit.karma.format_performance" title="Figure 5. Performance comparison for a sequence of several items">figure</a>.
           </p>
 <div class="table">
-<a name="id698473"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
+<a name="id826151"></a><p class="title"><b>Table 7. Performance comparison for a sequence of several
           items (all times in [s], 1000000 iterations)</b></p>
-<table class="table" summary="Performance comparison for a sequence of several
+<div class="table-contents"><table class="table" summary="Performance comparison for a sequence of several
           items (all times in [s], 1000000 iterations)">
 <colgroup>
 <col>
@@ -177,133 +169,202 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                <p>
                   Library
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   gcc 4.4.0 (32 bit)
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   VC++ 10 (32 bit)
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   Intel 11.1 (32 bit)
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   gcc 4.4.0 (64 bit)
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   VC++ 10 (64 bit)
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   Intel 11.1 (64 bit)
-                </p></th>
+                </p>
+                </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
+<td>
+                <p>
                   sprintf
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.725
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.892
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.903
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.469
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.608
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.493
-                </p></td>
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
+<td>
+                <p>
                   iostreams
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   4.827
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   5.287
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   4.444
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   3.112
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   3.319
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   2.877
-                </p></td>
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
+<td>
+                <p>
                   <a href="../../../../../../../../libs/format/index.html" target="_top">Boost.Format</a>
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   5.881
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   7.089
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   5.801
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   5.455
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   5.254
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   4.164
-                </p></td>
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
+<td>
+                <p>
                   <span class="emphasis"><em>Spirit.Karma</em></span>
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.942
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.242
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   0.999
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   1.334
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   0.758
-                </p></td>
-<td><p>
+                </p>
+                </td>
+<td>
+                <p>
                   0.686
-                </p></td>
+                </p>
+                </td>
 </tr>
 </tbody>
-</table>
+</table></div>
 </div>
-<p>
+<br class="table-break"><p>
             </p>
 <div class="figure">
 <a name="spirit.karma.format_performance"></a><p class="title"><b>Figure 5. Performance comparison for a sequence
             of several items</b></p>
-<span class="inlinemediaobject"><img src="./images/format_performance.png" alt="Performance comparison for a sequence
-            of several items"></span>
+<div class="figure-contents"><span class="inlinemediaobject"><img src="../../../.././images/format_performance.png" alt="Performance comparison for a sequence of several items"></span></div>
 </div>
-<p>
+<p><br class="figure-break">
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
