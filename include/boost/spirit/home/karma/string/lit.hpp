@@ -88,7 +88,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         static bool
-        generate(OutputIterator& sink, Context& /*ctx*/, Delimiter const& d, 
+        generate(OutputIterator& sink, Context& context, Delimiter const& d, 
             Attribute const& attr)
         {
             if (!traits::has_optional_value(attr))
@@ -96,7 +96,7 @@ namespace boost { namespace spirit { namespace karma
 
             return 
                 karma::detail::string_generate(sink
-                    , traits::extract_from(attr), char_encoding(), Tag()) &&
+                  , traits::extract_from(attr, context), char_encoding(), Tag()) &&
                 karma::delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -149,8 +149,8 @@ namespace boost { namespace spirit { namespace karma
         template <
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+        bool generate(OutputIterator& sink, Context& context
+          , Delimiter const& d, Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr))
                 return false;
@@ -158,7 +158,7 @@ namespace boost { namespace spirit { namespace karma
             // fail if attribute isn't matched by immediate literal
             using spirit::traits::get_c_string;
             if (!detail::string_compare(
-                    get_c_string(traits::extract_from(attr))
+                    get_c_string(traits::extract_from(attr, context))
                   , get_c_string(str_), char_encoding(), Tag()))
             {
                 return false;

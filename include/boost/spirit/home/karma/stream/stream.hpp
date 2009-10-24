@@ -121,7 +121,7 @@ namespace boost { namespace spirit { namespace karma
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute
         >
-        static bool generate(OutputIterator& sink, Context&
+        static bool generate(OutputIterator& sink, Context& context
           , Delimiter const& d, Attribute const& attr)
         {
             typedef karma::detail::iterator_sink<
@@ -133,7 +133,7 @@ namespace boost { namespace spirit { namespace karma
 
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
-            ostr << traits::extract_from(attr) << std::flush;
+            ostr << traits::extract_from(attr, context) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);   // always do post-delimiting
@@ -149,7 +149,8 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(
             karma::detail::output_iterator<
                 karma::ostream_iterator<T, Char, Traits>, Properties
-            >& sink, Context&, Delimiter const& d, Attribute const& attr)
+            >& sink, Context& context, Delimiter const& d
+          , Attribute const& attr)
         {
             typedef karma::detail::output_iterator<
                 karma::ostream_iterator<T, Char, Traits>, Properties
@@ -164,7 +165,7 @@ namespace boost { namespace spirit { namespace karma
             // use existing operator<<()
             boost::iostreams::stream<sink_device> ostr(sink);
             ostr.imbue(sink.get_ostream().getloc());
-            ostr << traits::extract_from(attr) << std::flush;
+            ostr << traits::extract_from(attr, context) << std::flush;
 
             if (ostr.good()) 
                 return karma::delimit_out(sink, d);  // always do post-delimiting
@@ -178,8 +179,11 @@ namespace boost { namespace spirit { namespace karma
         static bool
         generate(OutputIterator&, Context&, Delimiter const&, unused_type)
         {
-            BOOST_SPIRIT_ASSERT_MSG(false, stream_not_usable_without_attribute,
-                (OutputIterator, Delimiter));
+            // It is not possible (doesn't make sense) to use stream generators 
+            // without providing any attribute, as the generator doesn't 'know' 
+            // what to output. The following assertion fires if this situation
+            // is detected in your code.
+            BOOST_SPIRIT_ASSERT_MSG(false, stream_not_usable_without_attribute, ());
             return false;
         }
 

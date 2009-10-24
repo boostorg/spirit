@@ -89,6 +89,10 @@ namespace boost { namespace spirit { namespace karma
         template <typename CharParam, typename Context>
         bool test(unused_type, CharParam& ch, Context&) const
         {
+            // It is not possible (doesn't make sense) to use char_ generators 
+            // without providing any attribute, as the generator doesn't 'know' 
+            // what to output. The following assertion fires if this situation
+            // is detected in your code.
             BOOST_SPIRIT_ASSERT_MSG(false
               , char_class_not_usable_without_attribute, ());
             return false;

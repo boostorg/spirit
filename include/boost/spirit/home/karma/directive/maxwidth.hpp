@@ -49,20 +49,20 @@ namespace boost { namespace spirit
     struct use_lazy_directive<karma::domain, tag::maxwidth, 1> 
       : mpl::true_ {};
 
-//     // enables maxwidth(w, r)[g], where w provides a maxwidth and r is a output
-//     // iterator used to receive the rest of the output not fitting into the 
-//     // maxwidth limit
-//     template <typename T, typename RestIter>
-//     struct use_directive<karma::domain
-//           , terminal_ex<tag::maxwidth, fusion::vector2<T, RestIter> > > 
-//       : mpl::true_ {};
-// 
-//     // enables *lazy* maxwidth(w, r)[g], where w provides a maxwidth and r is 
-//     // a output iterator used to receive the rest of the output not fitting 
-//     // into the maxwidth limit
-//     template <>
-//     struct use_lazy_directive<karma::domain, tag::maxwidth, 2> 
-//       : mpl::true_ {};
+    // enables maxwidth(w, r)[g], where w provides a maxwidth and r is an output
+    // iterator used to receive the rest of the output not fitting into the 
+    // maxwidth limit
+    template <typename T, typename RestIter>
+    struct use_directive<karma::domain
+          , terminal_ex<tag::maxwidth, fusion::vector2<T, RestIter> > > 
+      : mpl::true_ {};
+
+    // enables *lazy* maxwidth(w, r)[g], where w provides a maxwidth and r is 
+    // an output iterator used to receive the rest of the output not fitting 
+    // into the maxwidth limit
+    template <>
+    struct use_lazy_directive<karma::domain, tag::maxwidth, 2> 
+      : mpl::true_ {};
 
 }}
 
@@ -75,12 +75,11 @@ namespace boost { namespace spirit { namespace karma
     namespace detail
     {
         ///////////////////////////////////////////////////////////////////////
-        template <typename OutputIterator, typename T>
+        template <typename OutputIterator, typename RestIterator>
         bool buffer_copy_rest(detail::enable_buffering<OutputIterator>& buff
-          , std::size_t start_at, T& dest)
+          , std::size_t start_at, RestIterator& dest)
         {
-            // not implemented yet
-            return true; // buff.buffer_copy_rest(start_at);
+            return buff.buffer_copy_rest(dest, start_at);
         }
 
         template <typename OutputIterator>
@@ -199,23 +198,23 @@ namespace boost { namespace spirit { namespace karma
         }
     };
 
-//     // creates maxwidth(width, restiter)[] directive generator
-//     template <
-//         typename T, typename RestIter, typename Subject, typename Modifiers>
-//     struct make_directive<
-//         terminal_ex<tag::maxwidth, fusion::vector2<T, RestIter> >
-//       , Subject, Modifiers>
-//     {
-//         typedef maxwidth_width<Subject, T, RestIter> result_type;
-// 
-//         template <typename Terminal>
-//         result_type operator()(Terminal const& term, Subject const& subject
-//           , unused_type) const
-//         {
-//             return result_type(subject, fusion::at_c<0>(term.args)
-//               , fusion::at_c<1>(term.args));
-//         }
-//     };
+    // creates maxwidth(width, restiter)[] directive generator
+    template <
+        typename T, typename RestIter, typename Subject, typename Modifiers>
+    struct make_directive<
+        terminal_ex<tag::maxwidth, fusion::vector2<T, RestIter> >
+      , Subject, Modifiers>
+    {
+        typedef maxwidth_width<Subject, T, RestIter> result_type;
+
+        template <typename Terminal>
+        result_type operator()(Terminal const& term, Subject const& subject
+          , unused_type) const
+        {
+            return result_type(subject, fusion::at_c<0>(term.args)
+              , fusion::at_c<1>(term.args));
+        }
+    };
 
 }}} // namespace boost::spirit::karma
 
