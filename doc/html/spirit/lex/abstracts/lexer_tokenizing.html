@@ -1,16 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Tokenizing
-        Input Data</title>
+<title>Tokenizing Input Data</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../abstracts.html" title=" Abstracts">
-<link rel="previous" href="lexer_primitives/lexer_token_values.html" title="
-          About Tokens and Token Values">
-<link rel="next" href="lexer_semantic_actions.html" title=" Lexer
-        Semantic Actions">
+<link rel="up" href="../abstracts.html" title="Abstracts">
+<link rel="prev" href="lexer_primitives/lexer_token_values.html" title="About Tokens and Token Values">
+<link rel="next" href="lexer_semantic_actions.html" title="Lexer Semantic Actions">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -25,28 +22,23 @@
 <div class="spirit-nav">
 <a accesskey="p" href="lexer_primitives/lexer_token_values.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="lexer_semantic_actions.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.lex.abstracts.lexer_tokenizing"></a><a href="lexer_tokenizing.html" title=" Tokenizing
-        Input Data"> Tokenizing
+<div class="section" title="Tokenizing Input Data">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.lex.abstracts.lexer_tokenizing"></a><a class="link" href="lexer_tokenizing.html" title="Tokenizing Input Data"> Tokenizing
         Input Data</a>
-</h4></div></div>
-<div></div>
-</div>
-<a name="spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function"></a><h5>
-<a name="id707598"></a>
-          <a href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function">The
+</h4></div></div></div>
+<a name="spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function"></a><h6>
+<a name="id869129"></a>
+          <a class="link" href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_tokenize_function">The
           tokenize function</a>
-        </h5>
+        </h6>
 <p>
-          The <tt class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></tt>
+          The <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
           function is a helper function simplifying the usage of a lexer in a standalone
           fashion. For instance, you may have a standalone lexer where all that functional
           requirements are implemented inside lexer semantic actions. A good example
           for this is the <a href="../../../../../example/lex/word_count_lexer.cpp" target="_top">word_count_lexer</a>
-          described in more detail in the section <a href="../tutorials/lexer_quickstart2.html" title=" Quickstart
-        2 - A better word counter using Spirit.Lex">Lex
+          described in more detail in the section <a class="link" href="../tutorials/lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Lex
           Quickstart 2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>.
         </p>
 <p>
@@ -86,7 +78,7 @@
 <p>
           The construct used to tokenize the given input, while discarding all generated
           tokens is a common application of the lexer. For this reason <span class="emphasis"><em>Spirit.Lex</em></span>
-          exposes an API function <tt class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></tt> minimizing the code required:
+          exposes an API function <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> minimizing the code required:
         </p>
 <pre class="programlisting"><span class="comment">// Read input from the given file
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">str</span> <span class="special">(</span><span class="identifier">read_from_file</span><span class="special">(</span><span class="number">1</span> <span class="special">==</span> <span class="identifier">argc</span> <span class="special">?</span> <span class="string">"word_count.input"</span> <span class="special">:</span> <span class="identifier">argv</span><span class="special">[</span><span class="number">1</span><span class="special">]));</span>
@@ -99,15 +91,14 @@
 </pre>
 <p>
           This code is completely equivalent to the more verbose version as shown
-          in the section <a href="../tutorials/lexer_quickstart2.html" title=" Quickstart
-        2 - A better word counter using Spirit.Lex">Lex
+          in the section <a class="link" href="../tutorials/lexer_quickstart2.html" title="Quickstart 2 - A better word counter using Spirit.Lex">Lex
           Quickstart 2 - A better word counter using <span class="emphasis"><em>Spirit.Lex</em></span></a>.
-          The function <tt class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></tt>
+          The function <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
           will return either if the end of the input has been reached (in this case
-          the return value will be <tt class="computeroutput"><span class="keyword">true</span></tt>),
+          the return value will be <code class="computeroutput"><span class="keyword">true</span></code>),
           or if the lexer couldn't match any of the token definitions in the input
-          (in this case the return value will be <tt class="computeroutput"><span class="keyword">false</span></tt>
-          and the iterator <tt class="computeroutput"><span class="identifier">first</span></tt>
+          (in this case the return value will be <code class="computeroutput"><span class="keyword">false</span></code>
+          and the iterator <code class="computeroutput"><span class="identifier">first</span></code>
           will point to the first not matched character in the input sequence).
         </p>
 <p>
@@ -117,7 +108,7 @@
 <span class="keyword">bool</span> <span class="identifier">tokenize</span><span class="special">(</span><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">Lexer</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">lex</span>
   <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">::</span><span class="identifier">char_type</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">initial_state</span> <span class="special">=</span> <span class="number">0</span><span class="special">);</span>
 </pre>
-<div class="variablelist">
+<div class="variablelist" title="where:">
 <p class="title"><b>where:</b></p>
 <dl>
 <dt><span class="term">Iterator&amp; first</span></dt>
@@ -142,7 +133,7 @@
 </dl>
 </div>
 <p>
-          A second overload of the <tt class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></tt> function allows specifying of any arbitrary
+          A second overload of the <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> function allows specifying of any arbitrary
           function or function object to be called for each of the generated tokens.
           For some applications this is very useful, as it might avoid having lexer
           semantic actions. For an example of how to use this function, please have
@@ -151,10 +142,10 @@
 <p>
           </p>
 <p>
-            The main function simply loads the given file into memory (as a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></tt>), instantiates an instance of
-            the token definition template using the correct iterator type (<tt class="computeroutput"><span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;</span></tt>), and finally calls <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span></tt>, passing an instance of the
-            counter function object. The return value of <tt class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span><span class="special">()</span></tt> will be <tt class="computeroutput"><span class="keyword">true</span></tt>
-            if the whole input sequence has been successfully tokenized, and <tt class="computeroutput"><span class="keyword">false</span></tt> otherwise.
+            The main function simply loads the given file into memory (as a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>), instantiates an instance of
+            the token definition template using the correct iterator type (<code class="computeroutput"><span class="identifier">word_count_tokens</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;</span></code>), and finally calls <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span></code>, passing an instance of the
+            counter function object. The return value of <code class="computeroutput"><span class="identifier">lex</span><span class="special">::</span><span class="identifier">tokenize</span><span class="special">()</span></code> will be <code class="computeroutput"><span class="keyword">true</span></code>
+            if the whole input sequence has been successfully tokenized, and <code class="computeroutput"><span class="keyword">false</span></code> otherwise.
           </p>
 <p>
           </p>
@@ -197,13 +188,13 @@
 <p>
         </p>
 <p>
-          Here is the prototype of this <tt class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></tt> function overload:
+          Here is the prototype of this <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code> function overload:
         </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">tokenize</span><span class="special">(</span><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">Iterator</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">Lexer</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">lex</span><span class="special">,</span> <span class="identifier">F</span> <span class="identifier">f</span>
   <span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Lexer</span><span class="special">::</span><span class="identifier">char_type</span> <span class="keyword">const</span><span class="special">*</span> <span class="identifier">initial_state</span> <span class="special">=</span> <span class="number">0</span><span class="special">);</span>
 </pre>
-<div class="variablelist">
+<div class="variablelist" title="where:">
 <p class="title"><b>where:</b></p>
 <dl>
 <dt><span class="term">Iterator&amp; first</span></dt>
@@ -223,10 +214,10 @@
 <dt><span class="term">F f</span></dt>
 <dd><p>
               A function or function object to be called for each matched token.
-              This function is expected to have the prototype: <tt class="computeroutput"><span class="keyword">bool</span>
-              <span class="identifier">f</span><span class="special">(</span><span class="identifier">Lexer</span><span class="special">::</span><span class="identifier">token_type</span><span class="special">);</span></tt>.
-              The <tt class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></tt>
-              function will return immediatly if <tt class="computeroutput"><span class="identifier">F</span></tt>
+              This function is expected to have the prototype: <code class="computeroutput"><span class="keyword">bool</span>
+              <span class="identifier">f</span><span class="special">(</span><span class="identifier">Lexer</span><span class="special">::</span><span class="identifier">token_type</span><span class="special">);</span></code>.
+              The <code class="computeroutput"><span class="identifier">tokenize</span><span class="special">()</span></code>
+              function will return immediatly if <code class="computeroutput"><span class="identifier">F</span></code>
               returns `false.
             </p></dd>
 <dt><span class="term">Lexer::char_type const* initial_state</span></dt>
@@ -236,11 +227,11 @@
             </p></dd>
 </dl>
 </div>
-<a name="spirit.lex.abstracts.lexer_tokenizing.the_generate_static_function"></a><h5>
-<a name="id710637"></a>
-          <a href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_generate_static_function">The
+<a name="spirit.lex.abstracts.lexer_tokenizing.the_generate_static_function"></a><h6>
+<a name="id872612"></a>
+          <a class="link" href="lexer_tokenizing.html#spirit.lex.abstracts.lexer_tokenizing.the_generate_static_function">The
           generate_static function</a>
-        </h5>
+        </h6>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

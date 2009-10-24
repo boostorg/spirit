@@ -650,5 +650,37 @@ int main()
         //]
     }
 
+    // rule
+    {
+        //[karma_reference_rule
+        //`Some using declarations:
+        using boost::spirit::karma::rule;
+        using boost::spirit::karma::int_;
+        using boost::spirit::ascii::space_type;
+
+        /*`Basic rule:
+         */
+        rule<char const*> r;
+        r = int_(123);
+        test_generator("123", r);
+
+        /*`Rule with consumed attribute:
+         */
+        rule<char const*, int()> ra;
+        ra = int_;
+        test_generator_attr("123", ra, 123);
+
+        /*`Rule with delimiter and consumed attribute:
+         */
+        rule<char const*, std::vector<int>(), space_type> rs;
+        rs = *int_;
+        std::vector<int> v;
+        v.push_back(123);
+        v.push_back(456);
+        v.push_back(789);
+        test_generator_attr_delim("123 456 789", rs, v);
+        //]
+    }
+
     return 0;
 }

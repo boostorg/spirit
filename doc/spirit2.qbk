@@ -100,7 +100,7 @@
 [def __sec_lex_static_model__   [link spirit.lex.abstracts.lexer_static_model The /Static/ Model]]
 [def __sec_lex_primitives__     [link spirit.lex.abstracts.lexer_primitives Lexer Primitives]]
 [def __sec_lex_tokenvalues__    [link spirit.lex.abstracts.lexer_primitives.lexer_token_values About Tokens and Token Values]]
-[def __sec_lex_attributes__     [link spirit.lex.abstracts.lexer_attributes Lexer Attributes]]
+[def __sec_lex_attributes__     [/ link spirit.lex.abstracts.lexer_attributes Lexer Attributes] Lexer Attributes]
 [def __sec_lex_semactions__     [link spirit.lex.abstracts.lexer_semantic_actions Lexer Semantic Actions]]
 
 [def __sec_ref_lex_token__      [/ link spirit.lex.reference.token Token Class] Token Class]

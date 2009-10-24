@@ -49,9 +49,26 @@ main()
         BOOST_TEST(test("c", int_ | char_ | lit('a'), v));
     }
 
-    // testing for alignment/truncation problems on little endian systems
-    // (big endian systems will fail one of the other tests below)
     {
+        // test optional attribute
+        optional<variant<int, char> > v (10);
+        BOOST_TEST(test("10", char_ | int_, v));
+        BOOST_TEST(test("10", int_ | char_, v));
+        BOOST_TEST(test("a", lit('a') | char_ | int_, v));
+        BOOST_TEST(test("a", char_ | lit('a') | int_, v));
+        BOOST_TEST(test("10", int_ | lit('a') | char_, v));
+
+        v = 'c';
+        BOOST_TEST(test("c", char_ | int_, v));
+        BOOST_TEST(test("a", lit('a') | char_ | int_, v));
+        BOOST_TEST(test("c", char_ | lit('a') | int_, v));
+        BOOST_TEST(test("a", int_ | lit('a') | char_, v));
+        BOOST_TEST(test("c", int_ | char_ | lit('a'), v));
+    }
+
+    {
+        // testing for alignment/truncation problems on little endian systems
+        // (big endian systems will fail one of the other tests below)
         std::basic_string<wchar_t> generated;
         std::back_insert_iterator<std::basic_string<wchar_t> > outit(generated);
         boost::variant<int, char> v(10);
@@ -91,6 +108,7 @@ main()
         BOOST_TEST(test_delimited("c ", int_ | char_ | lit('a'), v, char_(' ')));
     }
 
+// this leads to infinite loops
 //     {
 //         variant<int, std::string> v(10);
 //         BOOST_TEST(test("10", int_ | +char_, v));
@@ -117,6 +135,22 @@ main()
     {
         // if nothing matches, the first explicit alternative will be chosen
         variant<double, char const*> v (10.0);
+        BOOST_TEST(test_delimited("11 ", char_ | lit(11), v, char_(' ')));
+        BOOST_TEST(test_delimited("11 ", lit(11) | char_ , v, char_(' ')));
+        BOOST_TEST(test_delimited("10.0 ", double_ | lit(11), v, char_(' ')));
+        BOOST_TEST(test_delimited("11 ", lit(11) | double_, v, char_(' ')));
+        BOOST_TEST(!test_delimited("", char_ | int_, v, char_(' ')));
+
+        v = "c";
+        BOOST_TEST(test_delimited("11 ", char_ | lit(11), v, char_(' ')));
+        BOOST_TEST(test_delimited("11 ", double_ | lit(11), v, char_(' ')));
+        BOOST_TEST(!test_delimited("", char_ | int_, v, char_(' ')));
+    }
+
+    {
+        // if nothing matches, the first explicit alternative will be chosen,
+        // optionals need to be accepted
+        optional<variant<double, char const*> > v (10.0);
         BOOST_TEST(test_delimited("11 ", char_ | lit(11), v, char_(' ')));
         BOOST_TEST(test_delimited("11 ", lit(11) | char_ , v, char_(' ')));
         BOOST_TEST(test_delimited("10.0 ", double_ | lit(11), v, char_(' ')));

@@ -44,20 +44,20 @@ main()
     }
 
     {
-//         std::string str;
-//         BOOST_TEST(test("01234567", 
-//             maxwidth(8, std::back_inserter(str))[lit("01234567")]) &&
-//             str.empty());
-// 
-//         str = "";
-//         BOOST_TEST(test("0123456", 
-//             maxwidth(8, std::back_inserter(str))[lit("0123456")]) &&
-//             str.empty());
-// 
-//         str = "";
-//         BOOST_TEST(test("01234567", 
-//             maxwidth(8, std::back_inserter(str))[lit("012345678")]) &&
-//             str == "8");
+        std::string str;
+        BOOST_TEST(test("01234567", 
+            maxwidth(8, std::back_inserter(str))[lit("01234567")]) &&
+            str.empty());
+
+        str = "";
+        BOOST_TEST(test("0123456", 
+            maxwidth(8, std::back_inserter(str))[lit("0123456")]) &&
+            str.empty());
+
+        str = "";
+        BOOST_TEST(test("01234567", 
+            maxwidth(8, std::back_inserter(str))[lit("012345678")]) &&
+            str == "8");
     }
 
     {

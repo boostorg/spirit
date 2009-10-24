@@ -8,6 +8,127 @@
 
 [section Nonterminal]
 
+[heading Module Headers]
 
+    // forwards to <boost/spirit/karma/nonterminal.hpp>
+    #include <boost/spirit/include/karma_nonterminal.hpp>
+
+Also, see __include_structure__.
+
+[//////////////////////////////////////////////////////////////////////////////]
+[section Rule]
+
+[heading Description]
+
+The rule is a polymorphic generator that acts as a named place-holder
+capturing the behavior of an PEG expression assigned to it. Naming an
+PEG expression allows it to be referenced later.
+
+[heading Header]
+
+    // forwards to <boost/spirit/karma/nonterminal/rule.hpp>
+    #include <boost/spirit/include/karma_rule.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::karma::rule`]]
+]
+
+[heading Synopsis]
+
+    template <typename OutputIterator, typename T1, typename T2, typename T3>
+    struct rule;
+
+[heading Template parameters]
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`OutputIterator`]     [The underlying output iterator 
+                            type that the rule is  
+                            expected to work on.]           [none]]
+    [[`A1`, `A2`, `A3`]     [Either `Signature`, 
+                            `Delimiter` or `Locals` in 
+                            any order. See table below.]    [See table below.]]
+]
+
+Here is more information about the template parameters:
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`Signature`]          [Specifies the rule's consumed 
+                            (value to output) and inherited 
+                            (arguments) attributes. More on
+                            this below.]                    [__unused_type__. 
+                                                            When `Signature` defaults 
+                                                            to __unused_type__, the effect 
+                                                            is the same as specifying a signature
+                                                            of `void()` which is also equivalent 
+                                                            to `unused()`]]
+    [[`Delimiter`]          [Specifies the rule's delimiter 
+                            generator. Specify this if you
+                            want the rule to skip white 
+                            spaces.]                        [__unused_type__]]
+    [[`Locals`]             [Specifies the rule's local
+                            variables. See below.]          [__unused_type__]]
+]
+
+[heading Model of]
+
+[:__generator_concept__]
+
+[variablelist Notation
+    [[`RT`]                     [Consumed attribute. The type of the rule or grammar's 
+                                 values to generate output from.]]
+    [[`Arg1`, `Arg2`, `ArgN`]   [Inherited attributes. Zero or more arguments.]]
+    [[`L1`, `L2`, `LN`]         [Zero or more local variables.]]
+    [[`r, r2`]                  [Rules]]
+    [[`g`]                      [A grammar]]
+    [[`expr`]                   [A generator expression]]
+    [[`my_grammar`]             [A user defined grammar]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __generator_concept__.
+
+[table
+    [[Expression]                               [Description]]
+    [[`rule<OutputIterator, A1, A2, A3> r(name);`] 
+                                                [Rule declaration. `OutputIterator` is required.
+                                                `A1, A2, A3` are optional and can be specified in any order.
+                                                `name` is an optional string that gives the rule
+                                                its name, useful for debugging.]]
+    [[`rule<OutputIterator, A1, A2, A3> r(r2);`][Copy construct rule `r` from rule `r2`.]]
+    [[`r = r2;`]                                [Assign rule `r2` to `r`.]]
+    [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
+                                                holds a reference to `r`. Reference semantics.]]
+    [[`r.copy()`]                               [Get a copy of `r`.]]
+    [[`r.name(name)`]                           [Naming a rule]]
+    [[`r.name()`]                               [Getting the name of a rule]]
+    [[`r = expr;`]                              [Rule definition]]
+    [[`r %= expr;`]                             [Auto-rule definition. The attribute of `expr` should be
+                                                compatible with the synthesized attribute of `r`.]]
+    [[`g.name(name)`]                           [Naming a grammar]]
+    [[`g.name()`]                               [Getting the name of a grammar]]
+]
+
+[heading Attributes]
+
+[:`T`, The consumed attribute of the rule.]
+
+[heading Complexity]
+
+[:The complexity is defined by the complexity of the RHS generator, `expr`]
+
+[heading Example]
+
+[karma_reference_rule]
+
+[endsect] [/ Rule]
 
 [endsect]

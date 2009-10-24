@@ -7,7 +7,7 @@
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../nonterminal.html" title="Nonterminal">
 <link rel="prev" href="../nonterminal.html" title="Nonterminal">
-<link rel="next" href="grammar.html" title="Grammar">
+<link rel="next" href="../stream.html" title="Stream">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,34 +20,34 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="grammar.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../stream.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="Rule">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.nonterminal.rule"></a><a class="link" href="rule.html" title="Rule">Rule</a>
+<a name="spirit.karma.reference.nonterminal.rule"></a><a class="link" href="rule.html" title="Rule">Rule</a>
 </h5></div></div></div>
-<a name="spirit.qi.reference.nonterminal.rule.description"></a><h6>
-<a name="id655432"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.description">Description</a>
+<a name="spirit.karma.reference.nonterminal.rule.description"></a><h6>
+<a name="id778958"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.description">Description</a>
           </h6>
 <p>
-            The rule is a polymorphic parser that acts as a named place-holder capturing
-            the behavior of an PEG expression assigned to it. Naming an PEG expression
-            allows it to be referenced later.
+            The rule is a polymorphic generator that acts as a named place-holder
+            capturing the behavior of an PEG expression assigned to it. Naming an
+            PEG expression allows it to be referenced later.
           </p>
-<a name="spirit.qi.reference.nonterminal.rule.header"></a><h6>
-<a name="id655448"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.header">Header</a>
+<a name="spirit.karma.reference.nonterminal.rule.header"></a><h6>
+<a name="id778975"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.header">Header</a>
           </h6>
-<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/qi/nonterminal/rule.hpp&gt;
-</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_rule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/karma/nonterminal/rule.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_rule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
-<a name="spirit.qi.reference.nonterminal.rule.namespace"></a><h6>
-<a name="id655523"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.namespace">Namespace</a>
+<a name="spirit.karma.reference.nonterminal.rule.namespace"></a><h6>
+<a name="id779049"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
@@ -58,20 +58,20 @@
                   </th></tr></thead>
 <tbody><tr><td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span></code>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span></code>
                   </p>
                   </td></tr></tbody>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.rule.synopsis"></a><h6>
-<a name="id655603"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.synopsis">Synopsis</a>
+<a name="spirit.karma.reference.nonterminal.rule.synopsis"></a><h6>
+<a name="id779130"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.synopsis">Synopsis</a>
           </h6>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T3</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">rule</span><span class="special">;</span>
 </pre>
-<a name="spirit.qi.reference.nonterminal.rule.template_parameters"></a><h6>
-<a name="id655697"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.template_parameters">Template
+<a name="spirit.karma.reference.nonterminal.rule.template_parameters"></a><h6>
+<a name="id781135"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -101,17 +101,18 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                    <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    The underlying iterator type that the rule is expected to work
-                    on.
+                    The underlying output iterator type that the rule is expected
+                    to work on.
                   </p>
                   </td>
 <td>
                   <p>
+                    none
                   </p>
                   </td>
 </tr>
@@ -124,8 +125,9 @@
 <td>
                   <p>
                     Either <code class="computeroutput"><span class="identifier">Signature</span></code>,
-                    <code class="computeroutput"><span class="identifier">Skipper</span></code> or <code class="computeroutput"><span class="identifier">Locals</span></code> in any order. See table
-                    below.
+                    <code class="computeroutput"><span class="identifier">Delimiter</span></code> or
+                    <code class="computeroutput"><span class="identifier">Locals</span></code> in any
+                    order. See table below.
                   </p>
                   </td>
 <td>
@@ -136,6 +138,9 @@
 </tr>
 </tbody>
 </table></div>
+<p>
+            Here is more information about the template parameters:
+          </p>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -168,7 +173,7 @@
                   </td>
 <td>
                   <p>
-                    Specifies the rule's synthesized (return value) and inherited
+                    Specifies the rule's consumed (value to output) and inherited
                     (arguments) attributes. More on this below.
                   </p>
                   </td>
@@ -185,13 +190,13 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">Skipper</span></code>
+                    <code class="computeroutput"><span class="identifier">Delimiter</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    Specifies the rule's skipper parser. Specify this if you want
-                    the rule to skip white spaces.
+                    Specifies the rule's delimiter generator. Specify this if you
+                    want the rule to skip white spaces.
                   </p>
                   </td>
 <td>
@@ -219,15 +224,16 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.rule.model_of"></a><h6>
-<a name="id656036"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.model_of">Model of</a>
+<a name="spirit.karma.reference.nonterminal.rule.model_of"></a><h6>
+<a name="id781478"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.model_of">Model
+            of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
               </p>
 <p>
             </p>
@@ -237,7 +243,8 @@
 <dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">RT</span></code></span></dt>
 <dd><p>
-                Synthesized attribute. The rule or grammar's return type.
+                Consumed attribute. The type of the rule or grammar's values to generate
+                output from.
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">Arg1</span></code>,
             <code class="computeroutput"><span class="identifier">Arg2</span></code>, <code class="computeroutput"><span class="identifier">ArgN</span></code></span></dt>
@@ -257,9 +264,9 @@
 <dd><p>
                 A grammar
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">p</span></code></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">expr</span></code></span></dt>
 <dd><p>
-                A parser expression
+                A generator expression
               </p></dd>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">my_grammar</span></code></span></dt>
 <dd><p>
@@ -267,14 +274,14 @@
               </p></dd>
 </dl>
 </div>
-<a name="spirit.qi.reference.nonterminal.rule.expression_semantics"></a><h6>
-<a name="id656244"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.expression_semantics">Expression
+<a name="spirit.karma.reference.nonterminal.rule.expression_semantics"></a><h6>
+<a name="id781686"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+            is not defined in <a class="link" href="../generator_concepts/generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -297,7 +304,7 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
+                    <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span>
                     <span class="identifier">A1</span><span class="special">,</span>
                     <span class="identifier">A2</span><span class="special">,</span>
                     <span class="identifier">A3</span><span class="special">&gt;</span>
@@ -306,18 +313,17 @@
                   </td>
 <td>
                   <p>
-                    Rule declaration. <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                    Rule declaration. <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
                     is required. <code class="computeroutput"><span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span></code>
                     are optional and can be specified in any order. <code class="computeroutput"><span class="identifier">name</span></code> is an optional string
-                    that gives the rule its name, useful for debugging and error
-                    handling.
+                    that gives the rule its name, useful for debugging.
                   </p>
                   </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
+                    <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span>
                     <span class="identifier">A1</span><span class="special">,</span>
                     <span class="identifier">A2</span><span class="special">,</span>
                     <span class="identifier">A3</span><span class="special">&gt;</span>
@@ -354,7 +360,7 @@
 <td>
                   <p>
                     return an alias of <code class="computeroutput"><span class="identifier">r</span></code>.
-                    The alias is a parser that holds a reference to <code class="computeroutput"><span class="identifier">r</span></code>. Reference semantics.
+                    The alias is a generator that holds a reference to <code class="computeroutput"><span class="identifier">r</span></code>. Reference semantics.
                   </p>
                   </td>
 </tr>
@@ -397,20 +403,8 @@
 <tr>
 <td>
                   <p>
-                    debug(r)
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Debug rule <code class="computeroutput"><span class="identifier">r</span></code>
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
                     <code class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
-                    <span class="identifier">p</span><span class="special">;</span></code>
+                    <span class="identifier">expr</span><span class="special">;</span></code>
                   </p>
                   </td>
 <td>
@@ -423,16 +417,13 @@
 <td>
                   <p>
                     <code class="computeroutput"><span class="identifier">r</span> <span class="special">%=</span>
-                    <span class="identifier">p</span><span class="special">;</span></code>
+                    <span class="identifier">expr</span><span class="special">;</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    Auto-rule definition. The attribute of <code class="computeroutput"><span class="identifier">p</span></code>
-                    should be compatible with the synthesized attribute of <code class="computeroutput"><span class="identifier">r</span></code>. When <code class="computeroutput"><span class="identifier">p</span></code>
-                    is successful, its attribute is automatically propagated to
-                    <code class="computeroutput"><span class="identifier">r</span></code>'s synthesized
-                    attribute.
+                    Auto-rule definition. The attribute of <code class="computeroutput"><span class="identifier">expr</span></code>
+                    should be compatible with the synthesized attribute of <code class="computeroutput"><span class="identifier">r</span></code>.
                   </p>
                   </td>
 </tr>
@@ -462,36 +453,37 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.rule.attributes"></a><h6>
-<a name="id656936"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.attributes">Attributes</a>
+<a name="spirit.karma.reference.nonterminal.rule.attributes"></a><h6>
+<a name="id782340"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <code class="computeroutput"><span class="identifier">T</span></code>, The synthesized
-                attribute of the rule.
+                <code class="computeroutput"><span class="identifier">T</span></code>, The consumed attribute
+                of the rule.
               </p>
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.qi.reference.nonterminal.rule.complexity"></a><h6>
-<a name="id656968"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.complexity">Complexity</a>
+<a name="spirit.karma.reference.nonterminal.rule.complexity"></a><h6>
+<a name="id782371"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The complexity is defined by the complexity of the RHS parser, <code class="computeroutput"><span class="identifier">p</span></code>
+                The complexity is defined by the complexity of the RHS generator,
+                <code class="computeroutput"><span class="identifier">expr</span></code>
               </p>
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.qi.reference.nonterminal.rule.example"></a><h6>
-<a name="id656999"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.example">Example</a>
+<a name="spirit.karma.reference.nonterminal.rule.example"></a><h6>
+<a name="id782402"></a>
+            <a class="link" href="rule.html#spirit.karma.reference.nonterminal.rule.example">Example</a>
           </h6>
 <p>
             </p>
@@ -503,8 +495,8 @@
 <p>
               
 </p>
-<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">;</span></pre>
 <p>
             </p>
@@ -519,14 +511,14 @@
               
 </p>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&gt;</span> <span class="identifier">r</span><span class="special">;</span>
-<span class="identifier">r</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
-<span class="identifier">test_parser</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">r</span><span class="special">);</span></pre>
+<span class="identifier">r</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">(</span><span class="number">123</span><span class="special">);</span>
+<span class="identifier">test_generator</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">r</span><span class="special">);</span></pre>
 <p>
             </p>
 <p>
             </p>
 <p>
-              Rule with synthesized attribute:
+              Rule with consumed attribute:
             </p>
 <p>
             </p>
@@ -535,15 +527,13 @@
 </p>
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="keyword">int</span><span class="special">()&gt;</span> <span class="identifier">ra</span><span class="special">;</span>
 <span class="identifier">ra</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
-<span class="keyword">int</span> <span class="identifier">i</span><span class="special">;</span>
-<span class="identifier">test_parser_attr</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">ra</span><span class="special">,</span> <span class="identifier">i</span><span class="special">);</span>
-<span class="identifier">assert</span><span class="special">(</span><span class="identifier">i</span> <span class="special">==</span>  <span class="number">123</span><span class="special">);</span></pre>
+<span class="identifier">test_generator_attr</span><span class="special">(</span><span class="string">"123"</span><span class="special">,</span> <span class="identifier">ra</span><span class="special">,</span> <span class="number">123</span><span class="special">);</span></pre>
 <p>
             </p>
 <p>
             </p>
 <p>
-              Rule with skipper and synthesized attribute:
+              Rule with delimiter and consumed attribute:
             </p>
 <p>
             </p>
@@ -553,10 +543,10 @@
 <pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(),</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">rs</span><span class="special">;</span>
 <span class="identifier">rs</span> <span class="special">=</span> <span class="special">*</span><span class="identifier">int_</span><span class="special">;</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
-<span class="identifier">test_phrase_parser_attr</span><span class="special">(</span><span class="string">"123 456 789"</span><span class="special">,</span> <span class="identifier">rs</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
-<span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">==</span>  <span class="number">123</span><span class="special">);</span>
-<span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">==</span>  <span class="number">456</span><span class="special">);</span>
-<span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">2</span><span class="special">]</span> <span class="special">==</span>  <span class="number">789</span><span class="special">);</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">123</span><span class="special">);</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">456</span><span class="special">);</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">789</span><span class="special">);</span>
+<span class="identifier">test_generator_attr_delim</span><span class="special">(</span><span class="string">"123 456 789"</span><span class="special">,</span> <span class="identifier">rs</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 </pre>
 <p>
             </p>
@@ -574,7 +564,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="grammar.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../stream.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>
