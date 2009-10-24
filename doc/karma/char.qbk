@@ -134,7 +134,7 @@ Also, see __include_structure__.
     [[`ns::char_`]]
 ]
 
-In the table above, `ns` is a __karma_char_encoding_namespace__. 
+In the table above, `ns` represents a __karma_char_encoding_namespace__. 
 
 [heading Model of]
 
@@ -342,7 +342,7 @@ Also, see __include_structure__.
     [[`ns::xdigit`]]
 ]
 
-In the table above, `ns` is a __karma_char_encoding_namespace__ used by the 
+In the table above, `ns` represents a __karma_char_encoding_namespace__ used by the 
 corresponding character class generator. All listed generators have a mandatory 
 attribute `Ch` and will not compile if no attribute is associated.
 

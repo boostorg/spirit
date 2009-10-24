@@ -56,14 +56,14 @@ Examples:
     [[`ns::string`]]
 ]
 
-In the table above, `ns` is a __char_encoding_namespace__. 
+In the table above, `ns` represents a __char_encoding_namespace__. 
 
 [heading Model of]
 
 [:__primitive_parser_concept__]
 
 [variablelist Notation
-    [[`s`]      [A __string__ or a __lazy_argument__ that evaluates to a __string__.]]
+    [[`s`]      [A __string__ or a __qi_lazy_argument__ that evaluates to a __string__.]]
     [[`ns`]     [A __char_encoding_namespace__.]]]
 
 [heading Expression Semantics]
@@ -115,6 +115,9 @@ From a `std::string`
 Lazy strings using __phoenix__
 
 [reference_string_phoenix]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ lit/string]
 
@@ -271,6 +274,9 @@ containing one or more uppercase characters will not match any input
 when symbols is used in a `no_case` directive.
 
 [reference_symbols_with_no_case]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ symbols]
 

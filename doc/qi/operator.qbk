@@ -109,6 +109,9 @@ Some using declarations:
 
 [reference_alternative]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ Alternative]
 
 [/------------------------------------------------------------------------------]
@@ -164,6 +167,9 @@ See __qi_comp_attr_notation__.
 [heading Example]
 
 [reference_and_predicate]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ And Predicate]
 
@@ -225,6 +231,9 @@ complexities of both operands.]
 [heading Example]
 
 [reference_difference]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Difference]
 
@@ -316,6 +325,9 @@ Some using declarations:
 
 [reference_expect]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ Expectation]
 
 [/------------------------------------------------------------------------------]
@@ -372,6 +384,9 @@ successful repetitions.]
 [heading Example]
 
 [reference_kleene]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Kleene]
 
@@ -432,6 +447,9 @@ the List itself is O(N), where N is the number successful repetitions.]
 
 [reference_list]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ List]
 
 [/------------------------------------------------------------------------------]
@@ -488,6 +506,9 @@ See __qi_comp_attr_notation__.
 
 [reference_not_predicate]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ Not Predicate]
 
 [/------------------------------------------------------------------------------]
@@ -541,6 +562,9 @@ a: Unused --> -a: Unused``]]
 [heading Example]
 
 [reference_optional]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Optional]
 
@@ -618,6 +642,9 @@ Some using declarations:
 
 [reference_permutation]
 
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
+
 [endsect] [/ Permutation]
 
 [/------------------------------------------------------------------------------]
@@ -673,6 +700,9 @@ the Plus itself is O(N), where N is the number successful repetitions.]
 [heading Example]
 
 [reference_plus]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Plus]
 
@@ -742,6 +772,9 @@ Some using declarations:
 [reference_using_declarations_sequence]
 
 [reference_sequence]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Sequence]
 
@@ -813,6 +846,9 @@ Some using declarations:
 [reference_using_declarations_sequential_or]
 
 [reference_sequential_or]
+
+[note The test harness for the example(s) above is presented in the
+__qi_basics_examples__ section.]
 
 [endsect] [/ Sequential Or]
 

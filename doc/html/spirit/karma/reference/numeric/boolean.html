@@ -1,12 +1,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Boolean Generators (bool_)</title>
+<title> Boolean
+          Generators (bool_)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../numeric.html" title="Numeric">
-<link rel="prev" href="real_number.html" title="Real Number Generators (float_, double_, etc.)">
+<link rel="up" href="../numeric.html" title=" Numeric">
+<link rel="previous" href="real_number.html" title=" Real
+          Number Generators (float_,
+          double_, etc.)">
 <link rel="next" href="../nonterminal.html" title="Nonterminal">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,82 +25,76 @@
 <div class="spirit-nav">
 <a accesskey="p" href="real_number.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Boolean Generators (bool_)">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.numeric.boolean"></a><a class="link" href="boolean.html" title="Boolean Generators (bool_)"> Boolean
-          Generators (<code class="computeroutput"><span class="identifier">bool_</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.numeric.boolean"></a><a href="boolean.html" title=" Boolean
+          Generators (bool_)"> Boolean
+          Generators (<tt class="computeroutput"><span class="identifier">bool_</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.karma.reference.numeric.boolean.description"></a><h6>
-<a name="id772342"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.description">Description</a>
+<a name="id617210"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.description">Description</a>
           </h6>
 <p>
-            As you might expect, the <code class="computeroutput"><span class="identifier">bool_generator</span></code>
-            can generate output from boolean values. The <code class="computeroutput"><span class="identifier">bool_generator</span></code>
+            As you might expect, the <tt class="computeroutput"><span class="identifier">bool_generator</span></tt>
+            can generate output from boolean values. The <tt class="computeroutput"><span class="identifier">bool_generator</span></tt>
             generator can be used to generate output from ordinary primitive C/C++
-            <code class="computeroutput"><span class="keyword">bool</span></code> values or user defined
+            <tt class="computeroutput"><span class="keyword">bool</span></tt> values or user defined
             boolean types as long as the type follows certain expression requirements
-            (for more information about the requirements, see <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.additional_requirements">below</a>)).
-            The <code class="computeroutput"><span class="identifier">bool_generator</span></code> is
+            (for more information about the requirements, see <a href="boolean.html#spirit.karma.reference.numeric.boolean.additional_requirements">below</a>)).
+            The <tt class="computeroutput"><span class="identifier">bool_generator</span></tt> is
             a template class. Template parameters fine tune its behavior.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.header"></a><h6>
-<a name="id772396"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.header">Header</a>
+<a name="id617305"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/bool.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_bool</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.namespace"></a><h6>
-<a name="id772470"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.namespace">Namespace</a>
+<a name="id617419"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th>
-                  <p>
+<thead><tr><th><p>
                     Name
-                  </p>
-                  </th></tr></thead>
+                  </p></th></tr></thead>
 <tbody>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
-                    boost::spirit::karma::lit</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">bool_</span> <span class="comment">// alias:
-                    boost::spirit::karma::bool_</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">true_</span> <span class="comment">// alias:
-                    boost::spirit::karma::true_</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">false_</span> <span class="comment">// alias:
-                    boost::spirit::karma::false_</span></code>
-                  </p>
-                  </td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
+                    boost::spirit::karma::lit</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">bool_</span> <span class="comment">// alias:
+                    boost::spirit::karma::bool_</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">true_</span> <span class="comment">// alias:
+                    boost::spirit::karma::true_</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">false_</span> <span class="comment">// alias:
+                    boost::spirit::karma::false_</span></tt>
+                  </p></td></tr>
 </tbody>
 </table></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
-              <a class="link" href="../string.html" title="String">String Generators</a>,
-              the <a class="link" href="../char.html" title="Char">Character Generators</a>,
+<tr><td colspan="2" align="left" valign="top"><p>
+              <tt class="computeroutput"><span class="identifier">lit</span></tt> is reused by the
+              <a href="../string.html" title="String">String Generators</a>,
+              the <a href="../char.html" title=" Char">Character Generators</a>,
               and the Numeric Generators. In general, a char generator is created
               when you pass in a character, a string generator is created when you
               pass in a string, and a numeric generator is created when you use a
@@ -105,8 +102,8 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.synopsis"></a><h6>
-<a name="id775026"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.synopsis">Synopsis</a>
+<a name="id617713"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">B</span>
@@ -114,8 +111,8 @@
 <span class="keyword">struct</span> <span class="identifier">bool_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.boolean.template_parameters"></a><h6>
-<a name="id775095"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.template_parameters">Template
+<a name="id617809"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -125,97 +122,79 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Parameter
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Default
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">B</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">B</span></tt>
+                  </p></td>
+<td><p>
                     The boolean base type of the boolean generator.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">bool</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">bool</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Policies</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Policies</span></tt>
+                  </p></td>
+<td><p>
                     The policies to use while converting the boolean.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">bool_policies</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">bool_policies</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span></tt>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.model_of"></a><h6>
-<a name="id775236"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.model_of">Model
+<a name="id617989"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
+                <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">b</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">b</span></tt></span></dt>
 <dd><p>
-                Boolean literal, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
-                Argument</a> that evaluates to a boolean value of type <code class="computeroutput"><span class="identifier">B</span></code>
+                Boolean literal, or a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Argument</a> that evaluates to a boolean value of type <tt class="computeroutput"><span class="identifier">B</span></tt>
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">B</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">B</span></tt></span></dt>
 <dd><p>
-                Type of <code class="computeroutput"><span class="identifier">b</span></code>: any type
-                usable as a boolean, or in case of a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Type of <tt class="computeroutput"><span class="identifier">b</span></tt>: any type
+                usable as a boolean, or in case of a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a>, its return value
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.boolean.expression_semantics"></a><h6>
-<a name="id775341"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.expression_semantics">Expression
+<a name="id618140"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+            is not defined in <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -223,110 +202,86 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Generate the boolean literal <code class="computeroutput"><span class="identifier">b</span></code>
-                    using the default formatting (<code class="computeroutput"><span class="keyword">false</span></code>
-                    is generated as <code class="computeroutput"><span class="string">"false"</span></code>,
-                    and <code class="computeroutput"><span class="keyword">true</span></code> is generated
-                    as <code class="computeroutput"><span class="string">"true"</span></code>).
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Generate the boolean literal <tt class="computeroutput"><span class="identifier">b</span></tt>
+                    using the default formatting (<tt class="computeroutput"><span class="keyword">false</span></tt>
+                    is generated as <tt class="computeroutput"><span class="string">"false"</span></tt>,
+                    and <tt class="computeroutput"><span class="keyword">true</span></tt> is generated
+                    as <tt class="computeroutput"><span class="string">"true"</span></tt>).
                     This generator never fails (unless the underlying output stream
                     reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">bool_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">bool_</span></tt>
+                  </p></td>
+<td><p>
                     Generate the boolean value provided by a mandatory attribute
-                    using the default formatting (<code class="computeroutput"><span class="keyword">false</span></code>
-                    is generated as <code class="computeroutput"><span class="string">"false"</span></code>,
-                    and <code class="computeroutput"><span class="keyword">true</span></code> is generated
-                    as <code class="computeroutput"><span class="string">"true"</span></code>).
+                    using the default formatting (<tt class="computeroutput"><span class="keyword">false</span></tt>
+                    is generated as <tt class="computeroutput"><span class="string">"false"</span></tt>,
+                    and <tt class="computeroutput"><span class="keyword">true</span></tt> is generated
+                    as <tt class="computeroutput"><span class="string">"true"</span></tt>).
                     This generator never fails (unless the underlying output stream
                     reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
                     Generate the booelan value provided by the immediate literal
                     value the generator is initialized from using the default formatting
-                    (<code class="computeroutput"><span class="keyword">false</span></code> is generated
-                    as <code class="computeroutput"><span class="string">"false"</span></code>,
-                    and <code class="computeroutput"><span class="keyword">true</span></code> is generated
-                    as <code class="computeroutput"><span class="string">"true"</span></code>).
+                    (<tt class="computeroutput"><span class="keyword">false</span></tt> is generated
+                    as <tt class="computeroutput"><span class="string">"false"</span></tt>,
+                    and <tt class="computeroutput"><span class="keyword">true</span></tt> is generated
+                    as <tt class="computeroutput"><span class="string">"true"</span></tt>).
                     If this generator has an associated attribute it succeeds only
                     as long as the attribute is equal to the immediate literal (unless
                     the underlying output stream reports an error). Otherwise this
                     generator fails and does not generate any output.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">true_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Generate <code class="computeroutput"><span class="string">"true"</span></code>.
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">true_</span></tt>
+                  </p></td>
+<td><p>
+                    Generate <tt class="computeroutput"><span class="string">"true"</span></tt>.
                     If this generator has an associated attribute it succeeds only
-                    as long as the attribute is <code class="computeroutput"><span class="keyword">true</span></code>
+                    as long as the attribute is <tt class="computeroutput"><span class="keyword">true</span></tt>
                     as well (unless the underlying output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">false_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Generate <code class="computeroutput"><span class="string">"false"</span></code>.
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">false_</span></tt>
+                  </p></td>
+<td><p>
+                    Generate <tt class="computeroutput"><span class="string">"false"</span></tt>.
                     If this generator has an associated attribute it succeeds only
-                    as long as the attribute is <code class="computeroutput"><span class="keyword">false</span></code>
+                    as long as the attribute is <tt class="computeroutput"><span class="keyword">false</span></tt>
                     as well (unless the underlying output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <p>
-            All generators listed in the table above (except <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>) are predefined specializations of the
-            <code class="computeroutput"><span class="identifier">bool_generator</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></code>
+            All generators listed in the table above (except <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>) are predefined specializations of the
+            <tt class="computeroutput"><span class="identifier">bool_generator</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></tt>
             basic boolean generator type described below. It is possible to directly
             use this type to create boolean generators using a wide range of formatting
             options.
@@ -337,21 +292,17 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">bool_generator</span><span class="special">&lt;</span>
@@ -359,18 +310,16 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Generate the boolean of type <code class="computeroutput"><span class="identifier">B</span></code>
-                    provided by a mandatory attribute using the specified <code class="computeroutput"><span class="identifier">Policies</span></code> This generator never
+</td>
+<td><p>
+                    Generate the boolean of type <tt class="computeroutput"><span class="identifier">B</span></tt>
+                    provided by a mandatory attribute using the specified <tt class="computeroutput"><span class="identifier">Policies</span></tt> This generator never
                     fails (unless the underlying output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">bool_generator</span><span class="special">&lt;</span>
@@ -378,49 +327,49 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Generate the boolean of type <code class="computeroutput"><span class="identifier">B</span></code>
+</td>
+<td><p>
+                    Generate the boolean of type <tt class="computeroutput"><span class="identifier">B</span></tt>
                     provided by the immediate literal value the generator is initialized
-                    from, using the specified <code class="computeroutput"><span class="identifier">Policies</span></code>.
+                    from, using the specified <tt class="computeroutput"><span class="identifier">Policies</span></tt>.
                     If this generator has an associated attribute it succeeds only
                     as long as the attribute is equal to the immediate literal (unless
                     the underlying output stream reports an error). Otherwise this
                     generator fails and does not generate any output.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              All boolean generators properly respect the <a class="link" href="../directive/upperlower.html" title="Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">upper</span></code></a> and <a class="link" href="../directive/upperlower.html" title="Directives Controlling Case Sensitivity (upper[], lower[])"><code class="computeroutput"><span class="identifier">lower</span></code></a> directives.
+<tr><td colspan="2" align="left" valign="top"><p>
+              All boolean generators properly respect the <a href="../directive/upperlower.html" title=" Directives
+          Controlling Case Sensitivity (upper[], lower[])"><tt class="computeroutput"><span class="identifier">upper</span></tt></a> and <a href="../directive/upperlower.html" title=" Directives
+          Controlling Case Sensitivity (upper[], lower[])"><tt class="computeroutput"><span class="identifier">lower</span></tt></a> directives.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.additional_requirements"></a><h6>
-<a name="id775903"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.additional_requirements">Additional
+<a name="id618955"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.additional_requirements">Additional
             Requirements</a>
           </h6>
 <p>
             The following lists enumerate the requirements which must be met in order
-            to use a certain type <code class="computeroutput"><span class="identifier">B</span></code>
-            to instantiate and use a <code class="computeroutput"><span class="identifier">bool_generator</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></code>.
+            to use a certain type <tt class="computeroutput"><span class="identifier">B</span></tt>
+            to instantiate and use a <tt class="computeroutput"><span class="identifier">bool_generator</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">,</span> <span class="identifier">Policies</span><span class="special">&gt;</span></tt>.
           </p>
 <p>
-            The type <code class="computeroutput"><span class="identifier">B</span></code>:
+            The type <tt class="computeroutput"><span class="identifier">B</span></tt>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-              must be (safely) convertible to <code class="computeroutput"><span class="keyword">bool</span></code>
+<div class="itemizedlist"><ul type="disc"><li>
+              must be (safely) convertible to <tt class="computeroutput"><span class="keyword">bool</span></tt>
 </li></ul></div>
 <a name="spirit.karma.reference.numeric.boolean.attributes"></a><h6>
-<a name="id775981"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.attributes">Attributes</a>
+<a name="id619072"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -428,61 +377,45 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">bool_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">bool</span></code>, attribute
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">bool_</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">bool</span></tt>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">bool</span></code>, attribute
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">bool_</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">bool</span></tt>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <code class="computeroutput"><span class="identifier">b</span></code> and succeeds
+                    with <tt class="computeroutput"><span class="identifier">b</span></tt> and succeeds
                     only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">bool_generator</span><span class="special">&lt;</span>
@@ -490,17 +423,15 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">B</span></code>, attribute
+</td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">B</span></tt>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">bool_generator</span><span class="special">&lt;</span>
@@ -508,40 +439,38 @@
 <span class="special">&gt;()(</span><span class="identifier">b</span><span class="special">)</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">B</span></code>, attribute
+</td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">B</span></tt>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <code class="computeroutput"><span class="identifier">b</span></code> and succeeds
+                    with <tt class="computeroutput"><span class="identifier">b</span></tt> and succeeds
                     only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">B</span></code>
-              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
-              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">B</span></code> and emit the value stored in the
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+<tr><td colspan="2" align="left" valign="top"><p>
+              In addition to their usual attribute of type <tt class="computeroutput"><span class="identifier">B</span></tt>
+              all listed generators accept an instance of a <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span></tt> as well. If the <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></tt> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <tt class="computeroutput"><span class="identifier">B</span></tt> and emit the value stored in the
+              <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></tt>.
               Otherwise the generators will fail.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.boolean_formatting_policies"></a><h6>
-<a name="id776355"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.boolean_formatting_policies">Boolean
+<a name="id619590"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.boolean_formatting_policies">Boolean
             Formatting Policies</a>
           </h6>
 <p>
             If special formatting of a boolean is needed, overload the policy class
-            <code class="computeroutput"><span class="identifier">bool_policies</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span></code>
-            and use it as a template parameter to the <code class="computeroutput"><span class="identifier">bool_generator</span><span class="special">&lt;&gt;</span></code> boolean generator. For instance:
+            <tt class="computeroutput"><span class="identifier">bool_policies</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span></tt>
+            and use it as a template parameter to the <tt class="computeroutput"><span class="identifier">bool_generator</span><span class="special">&lt;&gt;</span></tt> boolean generator. For instance:
           </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">special_bool_policy</span> <span class="special">:</span> <span class="identifier">karma</span><span class="special">::</span><span class="identifier">bool_policies</span><span class="special">&lt;&gt;</span>
 <span class="special">{</span>
@@ -561,15 +490,15 @@
 </span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">sink</span><span class="special">,</span> <span class="identifier">backwards_bool</span><span class="special">(</span><span class="keyword">false</span><span class="special">));</span>   <span class="comment">// will output: uert
 </span></pre>
 <p>
-            The template parameter <code class="computeroutput"><span class="identifier">B</span></code>
+            The template parameter <tt class="computeroutput"><span class="identifier">B</span></tt>
             should be the type to be formatted using the overloaded policy type.
-            At the same time <code class="computeroutput"><span class="identifier">B</span></code> will
+            At the same time <tt class="computeroutput"><span class="identifier">B</span></tt> will
             be used as the attribute type of the created real number generator. The
-            default for <code class="computeroutput"><span class="identifier">B</span></code> is <code class="computeroutput"><span class="keyword">bool</span></code>.
+            default for <tt class="computeroutput"><span class="identifier">B</span></tt> is <tt class="computeroutput"><span class="keyword">bool</span></tt>.
           </p>
 <a name="spirit.karma.reference.numeric.boolean.booelan_formatting_policy_expression_semantics"></a><h6>
-<a name="id776778"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.booelan_formatting_policy_expression_semantics">Booelan
+<a name="id620189"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.booelan_formatting_policy_expression_semantics">Booelan
             Formatting Policy Expression Semantics</a>
           </h6>
 <p>
@@ -581,21 +510,17 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Inserter</span>
@@ -606,14 +531,14 @@
 </pre>
 <p>
                   </p>
-                  </td>
+</td>
 <td>
-                  <p>
+<p>
                     This is the main function used to generate the output for a boolean.
                     It is called by the boolean generator in order to perform the
                     conversion. In theory all of the work can be implemented here,
                     but it is the easiest to use existing functionality provided
-                    by the type specified by the template parameter <code class="computeroutput"><span class="identifier">Inserter</span></code>. The default implementation
+                    by the type specified by the template parameter <tt class="computeroutput"><span class="identifier">Inserter</span></tt>. The default implementation
                     of this functions is: 
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Inserter</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">OutputIterator</span>
@@ -625,22 +550,22 @@
 <span class="special">}</span>
 </pre>
 <p>
-                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
+                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
                     output iterator to use for generation
                   </p>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">b</span></code>: is the boolean
+<p>
+                    <tt class="computeroutput"><span class="identifier">b</span></tt>: is the boolean
                     to convert
                   </p>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">p</span></code>: the instance
+<p>
+                    <tt class="computeroutput"><span class="identifier">p</span></tt>: the instance
                     of the policy type used to instantiate this real number generator.
                   </p>
-                  </td>
+</td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">,</span> 
@@ -650,36 +575,36 @@
 </pre>
 <p>
                   </p>
-                  </td>
+</td>
 <td>
-                  <p>
-                    This function is called to generate the boolean if it is <code class="computeroutput"><span class="keyword">false</span></code>.
+<p>
+                    This function is called to generate the boolean if it is <tt class="computeroutput"><span class="keyword">false</span></tt>.
                   </p>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
+<p>
+                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
                     output iterator to use for generation
                   </p>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">b</span></code>: The boolean
-                    to convert (the value is <code class="computeroutput"><span class="keyword">false</span></code>).
+<p>
+                    <tt class="computeroutput"><span class="identifier">b</span></tt>: The boolean
+                    to convert (the value is <tt class="computeroutput"><span class="keyword">false</span></tt>).
                   </p>
-                  <p>
-                    The template parameters <code class="computeroutput"><span class="identifier">CharEncoding</span></code>
-                    and <code class="computeroutput"><span class="identifier">Tag</span></code> are either
-                    of the type <code class="computeroutput"><span class="identifier">unused_type</span></code>
+<p>
+                    The template parameters <tt class="computeroutput"><span class="identifier">CharEncoding</span></tt>
+                    and <tt class="computeroutput"><span class="identifier">Tag</span></tt> are either
+                    of the type <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
                     or describe the character class and conversion to be applied
-                    to any output possibly influenced by either the <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>
-                    or <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>
+                    to any output possibly influenced by either the <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>
+                    or <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt>
                     directives.
                   </p>
-                  <p>
+<p>
                     The return value defines the outcome of the whole generator.
                   </p>
-                  </td>
+</td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharEncoding</span><span class="special">,</span> 
@@ -689,52 +614,52 @@
 </pre>
 <p>
                   </p>
-                  </td>
+</td>
 <td>
-                  <p>
-                    This function is called to generate the boolean if it is <code class="computeroutput"><span class="keyword">true</span></code>.
+<p>
+                    This function is called to generate the boolean if it is <tt class="computeroutput"><span class="keyword">true</span></tt>.
                   </p>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">sink</span></code>: is the
+<p>
+                    <tt class="computeroutput"><span class="identifier">sink</span></tt>: is the
                     output iterator to use for generation
                   </p>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">b</span></code>: The boolean
-                    to convert (the value is <code class="computeroutput"><span class="keyword">true</span></code>).
+<p>
+                    <tt class="computeroutput"><span class="identifier">b</span></tt>: The boolean
+                    to convert (the value is <tt class="computeroutput"><span class="keyword">true</span></tt>).
                   </p>
-                  <p>
-                    The template parameters <code class="computeroutput"><span class="identifier">CharEncoding</span></code>
-                    and <code class="computeroutput"><span class="identifier">Tag</span></code> are either
-                    of the type <code class="computeroutput"><span class="identifier">unused_type</span></code>
+<p>
+                    The template parameters <tt class="computeroutput"><span class="identifier">CharEncoding</span></tt>
+                    and <tt class="computeroutput"><span class="identifier">Tag</span></tt> are either
+                    of the type <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
                     or describe the character class and conversion to be applied
-                    to any output possibly influenced by either the <code class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></code>
-                    or <code class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></code>
+                    to any output possibly influenced by either the <tt class="computeroutput"><span class="identifier">lower</span><span class="special">[]</span></tt>
+                    or <tt class="computeroutput"><span class="identifier">upper</span><span class="special">[]</span></tt>
                     directives.
                   </p>
-                  <p>
+<p>
                     The return value defines the outcome of the whole generator.
                   </p>
-                  </td>
+</td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.boolean.complexity"></a><h6>
-<a name="id777603"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.complexity">Complexity</a>
+<a name="id621310"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                O(N), where <code class="computeroutput"><span class="identifier">N</span></code> is
+                O(N), where <tt class="computeroutput"><span class="identifier">N</span></tt> is
                 the number of characters needed to represent the generated boolean.
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.boolean.example"></a><h6>
-<a name="id777634"></a>
-            <a class="link" href="boolean.html#spirit.karma.reference.numeric.boolean.example">Example</a>
+<a name="id621359"></a>
+            <a href="boolean.html#spirit.karma.reference.numeric.boolean.example">Example</a>
           </h6>
 <p>
             Some includes:
@@ -812,7 +737,7 @@
 <p>
           </p>
 <p>
-            Basic usage of an <code class="computeroutput"><span class="identifier">bool_</span></code>
+            Basic usage of an <tt class="computeroutput"><span class="identifier">bool_</span></tt>
             generator:
           </p>
 <p>

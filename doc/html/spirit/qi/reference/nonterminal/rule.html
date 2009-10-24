@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Rule</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../nonterminal.html" title="Nonterminal">
-<link rel="prev" href="../nonterminal.html" title="Nonterminal">
+<link rel="previous" href="../nonterminal.html" title="Nonterminal">
 <link rel="next" href="grammar.html" title="Grammar">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,56 +22,95 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="grammar.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Rule">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.nonterminal.rule"></a><a class="link" href="rule.html" title="Rule">Rule</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.nonterminal.rule"></a><a href="rule.html" title="Rule">Rule</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.qi.reference.nonterminal.rule.description"></a><h6>
-<a name="id655432"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.description">Description</a>
+<a name="id497724"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.description">Description</a>
           </h6>
 <p>
-            The rule is a polymorphic parser that acts as a named place-holder capturing
-            the behavior of an PEG expression assigned to it. Naming an PEG expression
-            allows it to be referenced later.
+            The rule is a polymorphic parser that acts as a named placeholder capturing
+            the behavior of a <a href="../../../abstracts/parsing_expression_grammar.html" title="Parsing
+      Expression Grammar">Parsing
+            Expression Grammar</a> expression assigned to it. Naming a <a href="../../../abstracts/parsing_expression_grammar.html" title="Parsing
+      Expression Grammar">Parsing
+            Expression Grammar</a> expression allows it to be referenced later
+            and makes it possible for the rule to call itself. This is one of the
+            most important mechanisms and the reason behind the word "recursive"
+            in recursive descent parsing.
           </p>
 <a name="spirit.qi.reference.nonterminal.rule.header"></a><h6>
-<a name="id655448"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.header">Header</a>
+<a name="id497777"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/qi/nonterminal/rule.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_rule</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.nonterminal.rule.namespace"></a><h6>
-<a name="id655523"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.namespace">Namespace</a>
+<a name="id497890"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th>
-                  <p>
+<thead><tr><th><p>
                     Name
-                  </p>
-                  </th></tr></thead>
-<tbody><tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span></code>
-                  </p>
-                  </td></tr></tbody>
+                  </p></th></tr></thead>
+<tbody>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">locals</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">debug</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">_val</span> <span class="comment">// alias:
+                    boost::spirit::qi::_val</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">_lp</span> <span class="comment">// alias:
+                    boost::spirit::qi::_lp</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">_rN</span> <span class="comment">// alias:
+                    boost::spirit::qi::_rN</span></tt>
+                  </p></td></tr>
+</tbody>
 </table></div>
+<p>
+            In the table above <span class="bold"><b>_lp</b></span> represents a
+            local variable placeholder and can be one of <tt class="computeroutput"><span class="identifier">_a</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_b</span></tt>, <tt class="computeroutput"><span class="identifier">_c</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_d</span></tt>, <tt class="computeroutput"><span class="identifier">_e</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_f</span></tt>, <tt class="computeroutput"><span class="identifier">_g</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_h</span></tt>, <tt class="computeroutput"><span class="identifier">_i</span></tt>
+            or <tt class="computeroutput"><span class="identifier">_j</span></tt> and <span class="bold"><b>_rN</b></span>
+            represents an inherited attribute placeholder and can be one of <tt class="computeroutput"><span class="identifier">_r1</span></tt>, <tt class="computeroutput"><span class="identifier">_r2</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_r3</span></tt>, <tt class="computeroutput"><span class="identifier">_r4</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_r5</span></tt>, <tt class="computeroutput"><span class="identifier">_r6</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_r7</span></tt>, <tt class="computeroutput"><span class="identifier">_r8</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_r9</span></tt> or<tt class="computeroutput"><span class="identifier">_r10</span></tt>.
+          </p>
 <a name="spirit.qi.reference.nonterminal.rule.synopsis"></a><h6>
-<a name="id655603"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.synopsis">Synopsis</a>
+<a name="id498500"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.synopsis">Synopsis</a>
           </h6>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T3</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A3</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">rule</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.nonterminal.rule.template_parameters"></a><h6>
-<a name="id655697"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.template_parameters">Template
+<a name="id498628"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -81,58 +120,40 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Parameter
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Default
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
+                  </p></td>
+<td><p>
                     The underlying iterator type that the rule is expected to work
                     on.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">A1</span></code>, <code class="computeroutput"><span class="identifier">A2</span></code>, <code class="computeroutput"><span class="identifier">A3</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Either <code class="computeroutput"><span class="identifier">Signature</span></code>,
-                    <code class="computeroutput"><span class="identifier">Skipper</span></code> or <code class="computeroutput"><span class="identifier">Locals</span></code> in any order. See table
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">A1</span></tt>, <tt class="computeroutput"><span class="identifier">A2</span></tt>, <tt class="computeroutput"><span class="identifier">A3</span></tt>
+                  </p></td>
+<td><p>
+                    Either <tt class="computeroutput"><span class="identifier">Signature</span></tt>,
+                    <tt class="computeroutput"><span class="identifier">Skipper</span></tt> or <tt class="computeroutput"><span class="identifier">Locals</span></tt> in any order. See table
                     below.
-                  </p>
-                  </td>
-<td>
-                  <p>
+                  </p></td>
+<td><p>
                     See table below.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
@@ -143,138 +164,195 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Parameter
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Default
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Signature</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Signature</span></tt>
+                  </p></td>
+<td><p>
                     Specifies the rule's synthesized (return value) and inherited
-                    (arguments) attributes. More on this below.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-                    When <code class="computeroutput"><span class="identifier">Signature</span></code>
-                    defaults to <code class="computeroutput"><span class="identifier">unused_type</span></code>,
-                    the effect is the same as specifying a signature of <code class="computeroutput"><span class="keyword">void</span><span class="special">()</span></code>
-                    which is also equivalent to <code class="computeroutput"><span class="identifier">unused</span><span class="special">()</span></code>
-                  </p>
-                  </td>
+                    attributes (arguments). More on this below.
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>.
+                    When <tt class="computeroutput"><span class="identifier">Signature</span></tt>
+                    defaults to <tt class="computeroutput"><span class="identifier">unused_type</span></tt>,
+                    the effect is the same as specifying a signature of <tt class="computeroutput"><span class="keyword">void</span><span class="special">()</span></tt>
+                    which is also equivalent to <tt class="computeroutput"><span class="identifier">unused_type</span><span class="special">()</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Skipper</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Skipper</span></tt>
+                  </p></td>
+<td><p>
                     Specifies the rule's skipper parser. Specify this if you want
                     the rule to skip white spaces.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Locals</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Locals</span></tt>
+                  </p></td>
+<td><p>
                     Specifies the rule's local variables. See below.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused_type</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.nonterminal.rule.model_of"></a><h6>
-<a name="id656036"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.model_of">Model of</a>
+<a name="id499079"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.model_of">Model of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<a name="spirit.qi.reference.nonterminal.rule.signature"></a><h6>
+<a name="id499132"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.signature">Signature</a>
+          </h6>
+<p>
+            Rules can have both synthesized and inherited attributes. The rule's
+            <span class="emphasis"><em>Signature</em></span> specifies both the synthesized and inherited
+            attributes. The specification uses the function declarator syntax:
+          </p>
+<pre class="programlisting"><span class="identifier">RT</span><span class="special">(</span><span class="identifier">A0</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">AN</span><span class="special">)</span>
+</pre>
+<p>
+            where <tt class="computeroutput"><span class="identifier">RT</span></tt> is the rule's
+            synthesized attribute and <tt class="computeroutput"><span class="identifier">A0</span></tt>
+            ... <tt class="computeroutput"><span class="identifier">AN</span></tt> are the rule's
+            inherited attributes.
+          </p>
+<a name="spirit.qi.reference.nonterminal.rule.attributes"></a><h6>
+<a name="id499275"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.attributes">Attributes</a>
+          </h6>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                The rule's parser attribute is <tt class="computeroutput"><span class="identifier">RT</span></tt>:
+                The synthesized attribute of the rule.
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<p>
+            The rule models a C++ function. The rule's synthesized attribute is analogous
+            to the function return value and its inherited attributes are analogous
+            to function arguments. The inherited attributes (arguments) can be passed
+            in just like any <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+            Argument</a>, e.g.:
+          </p>
+<pre class="programlisting"><span class="identifier">r</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span> <span class="comment">// Evaluate expr at parse time and pass the result to the parser r
+</span></pre>
+<a name="spirit.qi.reference.nonterminal.rule._code__phrase_role__identifier___val__phrase___code_"></a><h6>
+<a name="id499377"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule._code__phrase_role__identifier___val__phrase___code_"><tt class="computeroutput"><span class="identifier">_val</span></tt></a>
+          </h6>
+<p>
+            The <tt class="computeroutput"><span class="identifier">_val</span></tt> placeholder
+            can be used in <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            semantic actions anywhere in the rule's definition (RHS). This <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> placeholder refers
+            to the rule's (synthesized) attribute. The <tt class="computeroutput"><span class="identifier">_val</span></tt>
+            placeholder acts like a mutable reference to the rule's attribute.
+          </p>
+<a name="spirit.qi.reference.nonterminal.rule._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"></a><h6>
+<a name="id499462"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"><tt class="computeroutput"><span class="identifier">_r1</span></tt>...<tt class="computeroutput"><span class="identifier">r10</span></tt></a>
+          </h6>
+<p>
+            The <tt class="computeroutput"><span class="identifier">_r1</span></tt>...<tt class="computeroutput"><span class="identifier">r10</span></tt> placeholders can be used in <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> semantic actions
+            anywhere in the rule's definition (RHS). These <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            placeholders refer to the rule's inherited attributes.
+          </p>
+<a name="spirit.qi.reference.nonterminal.rule.locals"></a><h6>
+<a name="id499553"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.locals">Locals</a>
+          </h6>
+<p>
+            Rules can have local variables that will be created on the stack at parse
+            time. A locals descriptor added to the rule declaration will give the
+            rule local variables:
+          </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">,</span> <span class="special">...</span> <span class="keyword">typename</span> <span class="identifier">TN</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">locals</span><span class="special">;</span>
+</pre>
+<p>
+            where <tt class="computeroutput"><span class="identifier">T0</span></tt> ... <tt class="computeroutput"><span class="identifier">TN</span></tt> are the types of local variables
+            accessible in your <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            semantic actions using the placeholders <tt class="computeroutput"><span class="identifier">_a</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_b</span></tt>, <tt class="computeroutput"><span class="identifier">_c</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_d</span></tt>, <tt class="computeroutput"><span class="identifier">_e</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_f</span></tt>, <tt class="computeroutput"><span class="identifier">_g</span></tt>,
+            <tt class="computeroutput"><span class="identifier">_h</span></tt>, <tt class="computeroutput"><span class="identifier">_i</span></tt>
+            and <tt class="computeroutput"><span class="identifier">_j</span></tt> which correspond
+            to the rule's local variables <tt class="computeroutput"><span class="identifier">T0</span></tt>
+            ... <tt class="computeroutput"><span class="identifier">T9</span></tt>.
+          </p>
+<p>
+            See example below.
+          </p>
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">RT</span></code></span></dt>
-<dd><p>
-                Synthesized attribute. The rule or grammar's return type.
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">Arg1</span></code>,
-            <code class="computeroutput"><span class="identifier">Arg2</span></code>, <code class="computeroutput"><span class="identifier">ArgN</span></code></span></dt>
-<dd><p>
-                Inherited attributes. Zero or more arguments.
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">L1</span></code>,
-            <code class="computeroutput"><span class="identifier">L2</span></code>, <code class="computeroutput"><span class="identifier">LN</span></code></span></dt>
-<dd><p>
-                Zero or more local variables.
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">r</span><span class="special">,</span> <span class="identifier">r2</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">r</span><span class="special">,</span> <span class="identifier">r2</span></tt></span></dt>
 <dd><p>
                 Rules
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">g</span></code></span></dt>
-<dd><p>
-                A grammar
-              </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">p</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">p</span></tt></span></dt>
 <dd><p>
                 A parser expression
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">my_grammar</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">arg1</span></tt>,
+            <tt class="computeroutput"><span class="identifier">arg2</span></tt>, ... <tt class="computeroutput"><span class="identifier">argN</span></tt></span></dt>
 <dd><p>
-                A user defined grammar
+                <a href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Arguments</a>
+                that evaluate to each of the rule's inherited attributes (see below).
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Iterator</span></tt></span></dt>
+<dd><p>
+                The underlying iterator type that the rule is expected to work on.
+              </p></dd>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">A1</span></tt>,
+            <tt class="computeroutput"><span class="identifier">A2</span></tt>, <tt class="computeroutput"><span class="identifier">A3</span></tt></span></dt>
+<dd><p>
+                Either <tt class="computeroutput"><span class="identifier">Signature</span></tt>,
+                <tt class="computeroutput"><span class="identifier">Skipper</span></tt> or <tt class="computeroutput"><span class="identifier">Locals</span></tt> in any order.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.nonterminal.rule.expression_semantics"></a><h6>
-<a name="id656244"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.expression_semantics">Expression
+<a name="id500104"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>.
+            is not defined in <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -282,216 +360,160 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
-                    <span class="identifier">A1</span><span class="special">,</span>
-                    <span class="identifier">A2</span><span class="special">,</span>
-                    <span class="identifier">A3</span><span class="special">&gt;</span>
-                    <span class="identifier">r</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span></code>
+<p>
+                    
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> 
+    <span class="identifier">r</span><span class="special">(</span><span class="identifier">name</span><span class="special">);</span></pre>
+<p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Rule declaration. <code class="computeroutput"><span class="identifier">Iterator</span></code>
-                    is required. <code class="computeroutput"><span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span></code>
-                    are optional and can be specified in any order. <code class="computeroutput"><span class="identifier">name</span></code> is an optional string
+</td>
+<td><p>
+                    Rule declaration. <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
+                    is required. <tt class="computeroutput"><span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span></tt>
+                    are optional and can be specified in any order. <tt class="computeroutput"><span class="identifier">name</span></tt> is an optional string
                     that gives the rule its name, useful for debugging and error
                     handling.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span>
-                    <span class="identifier">A1</span><span class="special">,</span>
-                    <span class="identifier">A2</span><span class="special">,</span>
-                    <span class="identifier">A3</span><span class="special">&gt;</span>
-                    <span class="identifier">r</span><span class="special">(</span><span class="identifier">r2</span><span class="special">);</span></code>
+<p>
+                    
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> 
+    <span class="identifier">r</span><span class="special">(</span><span class="identifier">r2</span><span class="special">);</span></pre>
+<p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Copy construct rule <code class="computeroutput"><span class="identifier">r</span></code>
-                    from rule <code class="computeroutput"><span class="identifier">r2</span></code>.
-                  </p>
-                  </td>
+</td>
+<td><p>
+                    Copy construct rule <tt class="computeroutput"><span class="identifier">r</span></tt>
+                    from rule <tt class="computeroutput"><span class="identifier">r2</span></tt>.
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
-                    <span class="identifier">r2</span><span class="special">;</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Assign rule <code class="computeroutput"><span class="identifier">r2</span></code>
-                    to <code class="computeroutput"><span class="identifier">r</span></code>.
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span></tt>
+                  </p></td>
+<td><p>
+                    In a parser expression, invoke rule <tt class="computeroutput"><span class="identifier">r</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">alias</span><span class="special">()</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    return an alias of <code class="computeroutput"><span class="identifier">r</span></code>.
-                    The alias is a parser that holds a reference to <code class="computeroutput"><span class="identifier">r</span></code>. Reference semantics.
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span><span class="special">(</span><span class="identifier">arg1</span><span class="special">,</span>
+                    <span class="identifier">arg2</span><span class="special">,</span>
+                    <span class="special">...</span> <span class="identifier">argN</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    In a parser expression, invoke rule <tt class="computeroutput"><span class="identifier">r</span></tt>
+                    passing in inherited attributes <tt class="computeroutput"><span class="identifier">arg1</span></tt>...<tt class="computeroutput"><span class="identifier">argN</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">copy</span><span class="special">()</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Get a copy of <code class="computeroutput"><span class="identifier">r</span></code>.
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
+                    <span class="identifier">r2</span><span class="special">;</span></tt>
+                  </p></td>
+<td><p>
+                    Assign rule <tt class="computeroutput"><span class="identifier">r2</span></tt>
+                    to <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Naming a rule
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">alias</span><span class="special">()</span></tt>
+                  </p></td>
+<td><p>
+                    return an alias of <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                    The alias is a parser that holds a reference to <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">name</span><span class="special">()</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Getting the name of a rule
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">copy</span><span class="special">()</span></tt>
+                  </p></td>
+<td><p>
+                    Get a copy of <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Naming a rule.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span><span class="special">.</span><span class="identifier">name</span><span class="special">()</span></tt>
+                  </p></td>
+<td><p>
+                    Getting the name of a rule.
+                  </p></td>
+</tr>
+<tr>
+<td><p>
                     debug(r)
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Debug rule <code class="computeroutput"><span class="identifier">r</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    Debug rule <tt class="computeroutput"><span class="identifier">r</span></tt>.
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
-                    <span class="identifier">p</span><span class="special">;</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Rule definition
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span> <span class="special">=</span>
+                    <span class="identifier">p</span><span class="special">;</span></tt>
+                  </p></td>
+<td><p>
+                    Rule definition. This is equivalent to <tt class="computeroutput"><span class="identifier">r</span>
+                    <span class="special">%=</span> <span class="identifier">p</span></tt>
+                    (see below) if there are no semantic actions attached anywhere
+                    in <tt class="computeroutput"><span class="identifier">p</span></tt>.
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">r</span> <span class="special">%=</span>
-                    <span class="identifier">p</span><span class="special">;</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Auto-rule definition. The attribute of <code class="computeroutput"><span class="identifier">p</span></code>
-                    should be compatible with the synthesized attribute of <code class="computeroutput"><span class="identifier">r</span></code>. When <code class="computeroutput"><span class="identifier">p</span></code>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">r</span> <span class="special">%=</span>
+                    <span class="identifier">p</span><span class="special">;</span></tt>
+                  </p></td>
+<td><p>
+                    Auto-rule definition. The attribute of <tt class="computeroutput"><span class="identifier">p</span></tt>
+                    should be compatible with the synthesized attribute of <tt class="computeroutput"><span class="identifier">r</span></tt>. When <tt class="computeroutput"><span class="identifier">p</span></tt>
                     is successful, its attribute is automatically propagated to
-                    <code class="computeroutput"><span class="identifier">r</span></code>'s synthesized
+                    <tt class="computeroutput"><span class="identifier">r</span></tt>'s synthesized
                     attribute.
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">name</span><span class="special">(</span><span class="identifier">name</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Naming a grammar
-                  </p>
-                  </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">g</span><span class="special">.</span><span class="identifier">name</span><span class="special">()</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Getting the name of a grammar
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.rule.attributes"></a><h6>
-<a name="id656936"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.attributes">Attributes</a>
-          </h6>
-<div class="blockquote"><blockquote class="blockquote">
-<p>
-              </p>
-<p>
-                <code class="computeroutput"><span class="identifier">T</span></code>, The synthesized
-                attribute of the rule.
-              </p>
-<p>
-            </p>
-</blockquote></div>
 <a name="spirit.qi.reference.nonterminal.rule.complexity"></a><h6>
-<a name="id656968"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.complexity">Complexity</a>
+<a name="id501121"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The complexity is defined by the complexity of the RHS parser, <code class="computeroutput"><span class="identifier">p</span></code>
+                The complexity is defined by the complexity of the RHS parser, <tt class="computeroutput"><span class="identifier">p</span></tt>
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.nonterminal.rule.example"></a><h6>
-<a name="id656999"></a>
-            <a class="link" href="rule.html#spirit.qi.reference.nonterminal.rule.example">Example</a>
+<a name="id501169"></a>
+            <a href="rule.html#spirit.qi.reference.nonterminal.rule.example">Example</a>
           </h6>
 <p>
             </p>
@@ -505,6 +527,11 @@
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">locals</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">_1</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">_a</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">alpha</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">char_</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">;</span></pre>
 <p>
             </p>
@@ -556,12 +583,38 @@
 <span class="identifier">test_phrase_parser_attr</span><span class="special">(</span><span class="string">"123 456 789"</span><span class="special">,</span> <span class="identifier">rs</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 <span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">==</span>  <span class="number">123</span><span class="special">);</span>
 <span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">1</span><span class="special">]</span> <span class="special">==</span>  <span class="number">456</span><span class="special">);</span>
-<span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">2</span><span class="special">]</span> <span class="special">==</span>  <span class="number">789</span><span class="special">);</span>
-</pre>
+<span class="identifier">assert</span><span class="special">(</span><span class="identifier">v</span><span class="special">[</span><span class="number">2</span><span class="special">]</span> <span class="special">==</span>  <span class="number">789</span><span class="special">);</span></pre>
+<p>
+            </p>
+<p>
+            </p>
+<p>
+              Rule with one local variable:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="identifier">rule</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">locals</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">rl</span><span class="special">;</span>
+<span class="identifier">rl</span> <span class="special">=</span> <span class="identifier">alpha</span><span class="special">[</span><span class="identifier">_a</span> <span class="special">=</span> <span class="identifier">_1</span><span class="special">]</span> <span class="special">&gt;&gt;</span> <span class="identifier">char_</span><span class="special">(</span><span class="identifier">_a</span><span class="special">);</span> <span class="comment">// get two identical characters
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"aa"</span><span class="special">,</span> <span class="identifier">rl</span><span class="special">);</span> <span class="comment">// pass
+</span><span class="identifier">test_parser</span><span class="special">(</span><span class="string">"ax"</span><span class="special">,</span> <span class="identifier">rl</span><span class="special">);</span> <span class="comment">// fail
+</span></pre>
 <p>
             </p>
 <p>
           </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              The test harness for the example(s) above is presented in the <a href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -966,7 +966,6 @@ main()
         using boost::spirit::qi::little_dword;
         using boost::spirit::qi::little_qword;
         
-        boost::uint8_t uc;
         boost::uint16_t us;
         boost::uint32_t ui;
 //<-
@@ -1010,7 +1009,6 @@ main()
         using boost::spirit::qi::big_dword;
         using boost::spirit::qi::big_qword;
         
-        boost::uint8_t uc;
         boost::uint16_t us;
         boost::uint32_t ui;
 //<-
@@ -1052,6 +1050,11 @@ main()
         //`Some using declarations:
         using boost::spirit::qi::rule;
         using boost::spirit::qi::int_;
+        using boost::spirit::qi::locals;
+        using boost::spirit::qi::_1;
+        using boost::spirit::qi::_a;
+        using boost::spirit::ascii::alpha;
+        using boost::spirit::ascii::char_;
         using boost::spirit::ascii::space_type;
 
         /*`Basic rule:
@@ -1077,6 +1080,13 @@ main()
         assert(v[0] ==  123);
         assert(v[1] ==  456);
         assert(v[2] ==  789);
+        
+        /*`Rule with one local variable:
+         */
+        rule<char const*, locals<char> > rl;
+        rl = alpha[_a = _1] >> char_(_a); // get two identical characters
+        test_parser("aa", rl); // pass
+        test_parser("ax", rl); // fail
         //]
     }
     

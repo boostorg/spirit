@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Alternative (a | b)</title>
+<title> Alternative
+          (a |
+          b)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../operator.html" title="Operator">
-<link rel="prev" href="../operator.html" title="Operator">
-<link rel="next" href="and_predicate.html" title="And Predicate (&amp;a)">
+<link rel="previous" href="../operator.html" title="Operator">
+<link rel="next" href="and_predicate.html" title=" And
+          Predicate (&amp;a)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,21 +25,26 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../operator.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../operator.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="and_predicate.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Alternative (a | b)">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.operator.alternative"></a><a class="link" href="alternative.html" title="Alternative (a | b)"> Alternative
-          (<code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-          <span class="identifier">b</span></code>)</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.operator.alternative"></a><a href="alternative.html" title=" Alternative
+          (a |
+          b)"> Alternative
+          (<tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+          <span class="identifier">b</span></tt>)</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.qi.reference.operator.alternative.description"></a><h6>
-<a name="id675197"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.description">Description</a>
+<a name="id520319"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.description">Description</a>
           </h6>
 <p>
-            The alternative operator, <code class="computeroutput"><span class="identifier">a</span>
-            <span class="special">|</span> <span class="identifier">b</span></code>,
-            matches one of two or more operands (<code class="computeroutput"><span class="identifier">a</span></code>,
-            <code class="computeroutput"><span class="identifier">b</span></code>, ... etc.):
+            The alternative operator, <tt class="computeroutput"><span class="identifier">a</span>
+            <span class="special">|</span> <span class="identifier">b</span></tt>,
+            matches one of two or more operands (<tt class="computeroutput"><span class="identifier">a</span></tt>,
+            <tt class="computeroutput"><span class="identifier">b</span></tt>, ... etc.):
           </p>
 <pre class="programlisting"><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span> <span class="special">|</span> <span class="special">...</span>
 </pre>
@@ -49,58 +57,58 @@
           </p>
 <p>
             Short-circuiting is done in the same manner as C or C++'s logical expressions;
-            e.g. <code class="computeroutput"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">x</span> <span class="special">&lt;</span> <span class="number">3</span> <span class="special">||</span> <span class="identifier">y</span>
-            <span class="special">&lt;</span> <span class="number">2</span><span class="special">)</span></code> where, if <code class="computeroutput"><span class="identifier">x</span>
-            <span class="special">&lt;</span> <span class="number">3</span></code>,
-            the <code class="computeroutput"><span class="identifier">y</span> <span class="special">&lt;</span>
-            <span class="number">2</span></code> test is not done at all. In addition
+            e.g. <tt class="computeroutput"><span class="keyword">if</span> <span class="special">(</span><span class="identifier">x</span> <span class="special">&lt;</span> <span class="number">3</span> <span class="special">||</span> <span class="identifier">y</span>
+            <span class="special">&lt;</span> <span class="number">2</span><span class="special">)</span></tt> where, if <tt class="computeroutput"><span class="identifier">x</span>
+            <span class="special">&lt;</span> <span class="number">3</span></tt>,
+            the <tt class="computeroutput"><span class="identifier">y</span> <span class="special">&lt;</span>
+            <span class="number">2</span></tt> test is not done at all. In addition
             to providing an implicit priority rule for alternatives which is necessary,
             given its non-deterministic nature, short-circuiting improves the execution
             time. If the order of your alternatives is logically irrelevant, strive
             to put the (expected) most common choice first for maximum efficiency.
           </p>
 <a name="spirit.qi.reference.operator.alternative.header"></a><h6>
-<a name="id675362"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.header">Header</a>
+<a name="id520551"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/alternative.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_alternative</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.alternative.model_of"></a><h6>
-<a name="id678384"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.model_of">Model
+<a name="id520666"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>
+                <a href="../parser_concepts/naryparser.html" title="NaryParser"><tt class="computeroutput"><span class="identifier">NaryParser</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">a</span></code>,
-            <code class="computeroutput"><span class="identifier">b</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">a</span></tt>,
+            <tt class="computeroutput"><span class="identifier">b</span></tt></span></dt>
 <dd><p>
-                A <a class="link" href="../parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                A <a href="../parser_concepts/parser.html" title="Parser"><tt class="computeroutput"><span class="identifier">Parser</span></tt></a>
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.alternative.expression_semantics"></a><h6>
-<a name="id678462"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.expression_semantics">Expression
+<a name="id520779"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/naryparser.html" title="NaryParser"><code class="computeroutput"><span class="identifier">NaryParser</span></code></a>.
+            is not defined in <a href="../parser_concepts/naryparser.html" title="NaryParser"><tt class="computeroutput"><span class="identifier">NaryParser</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -108,37 +116,29 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                    <span class="identifier">b</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Match <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code>.
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                    <span class="identifier">b</span></tt>
+                  </p></td>
+<td><p>
+                    Match <tt class="computeroutput"><span class="identifier">a</span></tt> or <tt class="computeroutput"><span class="identifier">b</span></tt>.
+                  </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.attributes"></a><h6>
-<a name="id678573"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.attributes">Attributes</a>
+<a name="id520928"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.attributes">Attributes</a>
           </h6>
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
+            See <a href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
             Attribute Notation</a>.
           </p>
 <div class="informaltable"><table class="table">
@@ -147,26 +147,20 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+                    <span class="identifier">b</span></tt>
+                  </p></td>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-                    <span class="identifier">b</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
@@ -176,12 +170,12 @@
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></pre>
 <p>
                   </p>
-                  </td>
+</td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.alternative.complexity"></a><h6>
-<a name="id678992"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.complexity">Complexity</a>
+<a name="id521473"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -195,8 +189,8 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.alternative.example"></a><h6>
-<a name="id679016"></a>
-            <a class="link" href="alternative.html#spirit.qi.reference.operator.alternative.example">Example</a>
+<a name="id521513"></a>
+            <a href="alternative.html#spirit.qi.reference.operator.alternative.example">Example</a>
           </h6>
 <p>
             Some using declarations:
@@ -246,7 +240,7 @@
 <p>
             </p>
 <p>
-              This should print <code class="computeroutput"><span class="string">"Hello"</span></code>.
+              This should print <tt class="computeroutput"><span class="string">"Hello"</span></tt>.
               Note: There are better ways to extract the value from the variant.
               See <a href="http://www.boost.org/doc/html/variant.html" target="_top">Boost.Variant</a>
               visitation. This code is solely for demonstration.
@@ -266,7 +260,7 @@
             </p>
 <p>
               Extracting the attributes using Semantic Actions with <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-              (this should print <code class="computeroutput"><span class="number">123</span></code>):
+              (this should print <tt class="computeroutput"><span class="number">123</span></tt>):
             </p>
 <p>
             </p>
@@ -279,6 +273,16 @@
             </p>
 <p>
           </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              The test harness for the example(s) above is presented in the <a href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

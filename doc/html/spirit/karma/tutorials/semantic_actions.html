@@ -3,11 +3,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Semantic Actions</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="prev" href="warming_up.html" title="Warming up">
-<link rel="next" href="karma_complex.html" title="Complex - A first more complex generator">
+<link rel="previous" href="warming_up.html" title="Warming up">
+<link rel="next" href="karma_complex.html" title=" Complex - A
+        first more complex generator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,16 +23,19 @@
 <div class="spirit-nav">
 <a accesskey="p" href="warming_up.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="karma_complex.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Semantic Actions">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.tutorials.semantic_actions"></a><a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic Actions</a>
-</h4></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.tutorials.semantic_actions"></a><a href="semantic_actions.html" title="Semantic Actions">Semantic Actions</a>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           In the previous section we mentioned a very important difference between
           parsers and generators. While parsers may be used without 'producing' any
           data, generators alsways need data to generate the output from. We mentioned
           one way of passing data to the generator by supplying it as a parameter
-          to one of the main API functions (for instance <code class="computeroutput"><span class="identifier">generate</span><span class="special">()</span></code> or <code class="computeroutput"><span class="identifier">generate_delimited</span><span class="special">()</span></code>). But sometimes this is not possible
+          to one of the main API functions (for instance <tt class="computeroutput"><span class="identifier">generate</span><span class="special">()</span></tt> or <tt class="computeroutput"><span class="identifier">generate_delimited</span><span class="special">()</span></tt>). But sometimes this is not possible
           or not desireable.
         </p>
 <p>
@@ -39,16 +43,16 @@
           in <span class="emphasis"><em>Spirit.Karma</em></span> as well. Semantic actions may be attached
           to any point in the grammar specification. These actions are C++ functions
           or function objects that are called whenever a part of the generator is
-          about to be invoked. Say you have a generator <code class="computeroutput"><span class="identifier">G</span></code>,
-          and a C++ function <code class="computeroutput"><span class="identifier">F</span></code>, you
-          can make the generator call <code class="computeroutput"><span class="identifier">F</span></code>
-          just before it gets invoked by attaching <code class="computeroutput"><span class="identifier">F</span></code>:
+          about to be invoked. Say you have a generator <tt class="computeroutput"><span class="identifier">G</span></tt>,
+          and a C++ function <tt class="computeroutput"><span class="identifier">F</span></tt>, you
+          can make the generator call <tt class="computeroutput"><span class="identifier">F</span></tt>
+          just before it gets invoked by attaching <tt class="computeroutput"><span class="identifier">F</span></tt>:
         </p>
 <pre class="programlisting"><span class="identifier">G</span><span class="special">[</span><span class="identifier">F</span><span class="special">]</span>
 </pre>
 <p>
-          The expression above links <code class="computeroutput"><span class="identifier">F</span></code>
-          to the generator, <code class="computeroutput"><span class="identifier">G</span></code>.
+          The expression above links <tt class="computeroutput"><span class="identifier">F</span></tt>
+          to the generator, <tt class="computeroutput"><span class="identifier">G</span></tt>.
         </p>
 <p>
           Semantic actions in <span class="emphasis"><em>Spirit.Qi</em></span> are invoked after a
@@ -59,34 +63,34 @@
         </p>
 <p>
           The function/function object signature depends on the type of the generator
-          to which it is attached. The generator <code class="computeroutput"><span class="identifier">double_</span></code>
+          to which it is attached. The generator <tt class="computeroutput"><span class="identifier">double_</span></tt>
           expects the number to generate. Thus, if we were to attach a function
-          <code class="computeroutput"><span class="identifier">F</span></code> to <code class="computeroutput"><span class="identifier">double_</span></code>,
-          we need <code class="computeroutput"><span class="identifier">F</span></code> to be declared
+          <tt class="computeroutput"><span class="identifier">F</span></tt> to <tt class="computeroutput"><span class="identifier">double_</span></tt>,
+          we need <tt class="computeroutput"><span class="identifier">F</span></tt> to be declared
           as:
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">F</span><span class="special">(</span><span class="keyword">double</span><span class="special">&amp;</span> <span class="identifier">n</span><span class="special">);</span>
 </pre>
 <p>
-          where the function is expected to initialize the parameter <code class="computeroutput"><span class="identifier">n</span></code> with the value to generate.
+          where the function is expected to initialize the parameter <tt class="computeroutput"><span class="identifier">n</span></tt> with the value to generate.
         </p>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top">
+<tr><td colspan="2" align="left" valign="top">
 <p>
-            Generally, and more formally, the semantic action <code class="computeroutput"><span class="identifier">F</span></code>
-            attached to a generator <code class="computeroutput"><span class="identifier">G</span></code>
+            Generally, and more formally, the semantic action <tt class="computeroutput"><span class="identifier">F</span></tt>
+            attached to a generator <tt class="computeroutput"><span class="identifier">G</span></tt>
             needs to take a reference to the generators attribute type as its first
             parameter. For more information about generator attributes please see
             the section Generator Attributes.
           </p>
 <p>
-            In the example above the function F takes a <code class="computeroutput"><span class="keyword">double</span><span class="special">&amp;</span></code> as its first parameter as the attribute
-            of the <code class="computeroutput"><span class="identifier">double_</span></code> generator
-            happens to be a <code class="computeroutput"><span class="keyword">double</span></code>.
+            In the example above the function F takes a <tt class="computeroutput"><span class="keyword">double</span><span class="special">&amp;</span></tt> as its first parameter as the attribute
+            of the <tt class="computeroutput"><span class="identifier">double_</span></tt> generator
+            happens to be a <tt class="computeroutput"><span class="keyword">double</span></tt>.
           </p>
 </td></tr>
 </table></div>
@@ -107,22 +111,22 @@
 <p>
           In the following example we present various ways to attach semantic actions:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             Using plain function pointer
           </li>
-<li class="listitem">
+<li>
             Using simple function object
           </li>
-<li class="listitem">
+<li>
             Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
             a plain function
           </li>
-<li class="listitem">
+<li>
             Using <a href="../../../../../../../libs/bind/index.html" target="_top">Boost.Bind</a> with
             a member function
           </li>
-<li class="listitem">
+<li>
             Using <a href="../../../../../../../libs/lambda/index.html" target="_top">Boost.Lambda</a>
 </li>
 </ul></div>
@@ -168,11 +172,11 @@
 <p>
         </p>
 <p>
-          Take note that with function objects, we need to have an <code class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></code>
+          Take note that with function objects, we need to have an <tt class="computeroutput"><span class="keyword">operator</span><span class="special">()</span></tt>
           with 3 arguments. Since we don't care about the other two, we can use
-          <code class="computeroutput"><span class="identifier">unused_type</span></code> for these.
-          We'll see more of <code class="computeroutput"><span class="identifier">unused_type</span></code>
-          elsewhere. Get used to it. <code class="computeroutput"><span class="identifier">unused_type</span></code>
+          <tt class="computeroutput"><span class="identifier">unused_type</span></tt> for these.
+          We'll see more of <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+          elsewhere. Get used to it. <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
           is a Spirit supplied support class. Most of the time it stands for 'I don't
           care, just use the appropriate default'.
         </p>
@@ -199,8 +203,8 @@
 <p>
         </p>
 <p>
-          What's new? Well <code class="computeroutput"><span class="identifier">int_</span></code> is
-          the sibbling of <code class="computeroutput"><span class="identifier">double_</span></code>.
+          What's new? Well <tt class="computeroutput"><span class="identifier">int_</span></tt> is
+          the sibbling of <tt class="computeroutput"><span class="identifier">double_</span></tt>.
           I'm sure you can guess what this generator does and what type of attribute
           it expects.
         </p>
@@ -275,10 +279,10 @@
 <p>
           The examples above can be found here: <a href="../../../../../example/karma/actions.cpp" target="_top">actions.cpp</a>
         </p>
-<a name="spirit.karma.tutorials.semantic_actions.phoenix"></a><h6>
-<a name="id705252"></a>
-          <a class="link" href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
-        </h6>
+<a name="spirit.karma.tutorials.semantic_actions.phoenix"></a><h5>
+<a name="id549242"></a>
+          <a href="semantic_actions.html#spirit.karma.tutorials.semantic_actions.phoenix">Phoenix</a>
+        </h5>
 <p>
           <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>, a companion
           library bundled with Spirit, is specifically suited for binding semantic

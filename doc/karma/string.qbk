@@ -59,7 +59,7 @@ Also, see __include_structure__.
     [[`ns::string`]]
 ]
 
-In the table above, `ns` is a __karma_char_encoding_namespace__ used by the 
+In the table above, `ns` represents a __karma_char_encoding_namespace__ used by the 
 corresponding string generator. 
 
 [heading Model of]

@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Complex - Made easier</title>
+<title> Complex
+        - Made easier</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="prev" href="karma_complex.html" title="Complex - A first more complex generator">
-<link rel="next" href="num_list.html" title="Number List - Printing Numbers From a std::vector">
+<link rel="previous" href="karma_complex.html" title=" Complex - A
+        first more complex generator">
+<link rel="next" href="num_list.html" title=" Number List - Printing
+        Numbers From a std::vector">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,11 +25,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="karma_complex.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="num_list.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Complex - Made easier">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.tutorials.karma_easier_complex"></a><a class="link" href="karma_easier_complex.html" title="Complex - Made easier"> Complex
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.tutorials.karma_easier_complex"></a><a href="karma_easier_complex.html" title=" Complex
+        - Made easier"> Complex
         - Made easier</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           In the previous section we showed how to format a complex number (i.e.
           a pair of doubles). In this section we will build on this example with
@@ -66,14 +73,14 @@
 <p>
           Let's try to cover some basic library features first.
         </p>
-<a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h6>
-<a name="id706582"></a>
-          <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
+<a name="spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail"></a><h5>
+<a name="id551139"></a>
+          <a href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.making_numeric_generators_fail">Making
           Numeric Generators Fail</a>
-        </h6>
+        </h5>
 <p>
-          All <a class="link" href="../reference/numeric.html" title="Numeric">Numeric Generators</a>
-          (such as <code class="computeroutput"><span class="identifier">double_</span></code>, et.al.)
+          All <a href="../reference/numeric.html" title=" Numeric">Numeric Generators</a>
+          (such as <tt class="computeroutput"><span class="identifier">double_</span></tt>, et.al.)
           take the value to emit from an attached attribute.
         </p>
 <pre class="programlisting"><span class="keyword">double</span> <span class="identifier">d</span> <span class="special">=</span> <span class="number">1.5</span><span class="special">;</span>
@@ -81,15 +88,15 @@
 </span></pre>
 <p>
           Alternatively, they may be initialized from a literal value. For instance,
-          to emit a constant <code class="computeroutput"><span class="number">1.5</span></code> you
+          to emit a constant <tt class="computeroutput"><span class="number">1.5</span></tt> you
           may write:
         </p>
 <pre class="programlisting"><span class="identifier">generate</span><span class="special">(</span><span class="identifier">out</span><span class="special">,</span> <span class="identifier">double_</span><span class="special">(</span><span class="number">1.5</span><span class="special">));</span>     <span class="comment">// will emit '1.5' as well (without the quotes)
 </span></pre>
 <p>
-          The difference to a simple <code class="computeroutput"><span class="number">1.5</span></code>
-          or <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="number">1.5</span><span class="special">)</span></code> is that
-          the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">1.5</span><span class="special">)</span></code> consumes
+          The difference to a simple <tt class="computeroutput"><span class="number">1.5</span></tt>
+          or <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="number">1.5</span><span class="special">)</span></tt> is that
+          the <tt class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">1.5</span><span class="special">)</span></tt> consumes
           an attribute if one is available. Additionally, it compares its immediate
           value to the value of the supplied attribute, and fails if those are not
           equal.
@@ -102,31 +109,33 @@
           the immediate value, enables numeric generators to be used to dynamically
           control the way output is generated.
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             There are more generators exposing the feature to fail if their immediate
-            value is not equal to the supplied attribute. Here are some: all <a class="link" href="../reference/char.html" title="Char">Character Generators</a>, all
-            <a class="link" href="../reference/string.html" title="String">String Generators</a>.
-            Generally, all generators having a sibling created by a variant of <code class="computeroutput"><span class="identifier">lit</span><span class="special">()</span></code>
+            value is not equal to the supplied attribute. Here are some: all <a href="../reference/char.html" title=" Char">Character Generators</a>, all
+            <a href="../reference/string.html" title="String">String Generators</a>.
+            Generally, all generators having a sibling created by a variant of <tt class="computeroutput"><span class="identifier">lit</span><span class="special">()</span></tt>
             belong into this category.
           </p></td></tr>
 </table></div>
-<a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h6>
-<a name="id706870"></a>
-          <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
+<a name="spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators"></a><h5>
+<a name="id551572"></a>
+          <a href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.predicates___the_conditionals_for_output_generators">Predicates
           - The Conditionals for Output Generators</a>
-        </h6>
+        </h5>
 <p>
-          In addition to the <a class="link" href="../reference/auxiliary/eps.html" title="Epsilon (eps)"><code class="computeroutput"><span class="identifier">eps</span></code></a> generator mentioned earlier
+          In addition to the <a href="../reference/auxiliary/eps.html" title=" Epsilon (eps)"><tt class="computeroutput"><span class="identifier">eps</span></tt></a> generator mentioned earlier
           <span class="emphasis"><em>Spirit.Karma</em></span> provides two special operators enabling
-          dynamic flow control: the <a class="link" href="../reference/operator/and_predicate.html" title="And Predicate (&amp;a)">And
-          predicate (unary <code class="computeroutput"><span class="special">&amp;</span></code>)</a>
-          and the <a class="link" href="../reference/operator/not_predicate.html" title="Not Predicate (!a)">Not
-          predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>.
+          dynamic flow control: the <a href="../reference/operator/and_predicate.html" title=" And
+          Predicate (&amp;a)">And
+          predicate (unary <tt class="computeroutput"><span class="special">&amp;</span></tt>)</a>
+          and the <a href="../reference/operator/not_predicate.html" title=" Not
+          Predicate (!a)">Not
+          predicate (unary <tt class="computeroutput"><span class="special">!</span></tt>)</a>.
           The main property of both predicates is to discard all output emitted by
           the generator they are attached to. This is equivalent to the behaviour
           of predicates used for parsing. There the predicates do not consume any
@@ -134,12 +143,12 @@
           succeeds as long as its associated generator suceeds, while the not predicate
           succeeds only if its associated generator fails.
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             The generator predicates in <span class="emphasis"><em>Spirit.Karma</em></span> consume
             an attribute, if available. This makes them behave differently from predicates
             in <span class="emphasis"><em>Spirit.Qi</em></span>, where they do not expose any attribute.
@@ -166,45 +175,49 @@
           Neither of these will emit any output. The predicates discard everything
           emitted by the generators they are applied to.
         </p>
-<a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h6>
-<a name="id708248"></a>
-          <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
+<a name="spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes"></a><h5>
+<a name="id556218"></a>
+          <a href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.ignoring_supplied_attributes">Ignoring
           Supplied Attributes</a>
-        </h6>
+        </h5>
 <p>
           Sometimes it is desirable to 'skip' (i.e. ignore) a provided attribute.
           This happens for instance in alternative generators, where some of the
           alternatives need to extract only part of the overall attribute passed
           to the alternative generator. <span class="emphasis"><em>Spirit.Karma</em></span> has a special
-          pseudo generator for that: the directive <a class="link" href="../reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a><code class="computeroutput"><span class="special">[]</span></code>.
+          pseudo generator for that: the directive <a href="../reference/directive/omit.html" title=" Consume Attribute
+          (omit[])"><tt class="computeroutput"><span class="identifier">omit</span></tt></a><tt class="computeroutput"><span class="special">[]</span></tt>.
           This directive consumes an attribute of the type defined by its embedded
           generator but it does not emit any output.
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-            The <span class="emphasis"><em>Spirit.Karma</em></span> <a class="link" href="../reference/directive/omit.html" title="Consume Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> directive does the 'opposite'
+<tr><td colspan="2" align="left" valign="top"><p>
+            The <span class="emphasis"><em>Spirit.Karma</em></span> <a href="../reference/directive/omit.html" title=" Consume Attribute
+          (omit[])"><tt class="computeroutput"><span class="identifier">omit</span></tt></a> directive does the 'opposite'
             of the directive of the same name in <span class="emphasis"><em>Spirit.Qi</em></span>.
-            While the <a class="link" href="../../qi/reference/directive/omit.html" title="Ignoring Attribute (omit[])"><code class="computeroutput"><span class="identifier">omit</span></code></a> in <span class="emphasis"><em>Spirit.Qi</em></span>
+            While the <a href="../../qi/reference/directive/omit.html" title=" Ignoring Attribute
+          (omit[])"><tt class="computeroutput"><span class="identifier">omit</span></tt></a> in <span class="emphasis"><em>Spirit.Qi</em></span>
             consumes input without exposing an attribute, its <span class="emphasis"><em>Spirit.Karma</em></span>
             counterpart consumes an attribute without emitting any output.
           </p></td></tr>
 </table></div>
-<a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h6>
-<a name="id708326"></a>
-          <a class="link" href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
+<a name="spirit.karma.tutorials.karma_easier_complex.putting_everything_together"></a><h5>
+<a name="id556354"></a>
+          <a href="karma_easier_complex.html#spirit.karma.tutorials.karma_easier_complex.putting_everything_together">Putting
           everything together</a>
-        </h6>
+        </h5>
 <p>
           Very similar to our first example ealier we use two alternatives to allow
           for the two different output formats depending on whether the imaginery
           part of the complex number is equal to zero or not. The first alternative
           is executed if the imaginary part is not zero, the second alternative otherwise.
-          This time we make the decision during runtime using the <a class="link" href="../reference/operator/not_predicate.html" title="Not Predicate (!a)">Not
-          predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>
+          This time we make the decision during runtime using the <a href="../reference/operator/not_predicate.html" title=" Not
+          Predicate (!a)">Not
+          predicate (unary <tt class="computeroutput"><span class="special">!</span></tt>)</a>
           combined with the feature of many Karma primitive generators to <span class="emphasis"><em>fail</em></span>
           under certain conditions. Here is the first alternative again for your
           reference:
@@ -212,52 +225,53 @@
 <pre class="programlisting"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="char">'('</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="char">')'</span>
 </pre>
 <p>
-          The generator <code class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
-          does several things. First, because of the <a class="link" href="../reference/operator/not_predicate.html" title="Not Predicate (!a)">Not
-          predicate (unary <code class="computeroutput"><span class="special">!</span></code>)</a>,
-          it succeeds only if the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
+          The generator <tt class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></tt>
+          does several things. First, because of the <a href="../reference/operator/not_predicate.html" title=" Not
+          Predicate (!a)">Not
+          predicate (unary <tt class="computeroutput"><span class="special">!</span></tt>)</a>,
+          it succeeds only if the <tt class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></tt>
           generator <span class="emphasis"><em>fails</em></span>, making the whole first alternative
-          fail otherwise. Second, the <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
+          fail otherwise. Second, the <tt class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></tt>
           generator succeeds only if the value of its attribute is equal to its immediate
-          parameter (i.e. in this case <code class="computeroutput"><span class="number">0.0</span></code>).
+          parameter (i.e. in this case <tt class="computeroutput"><span class="number">0.0</span></tt>).
           And third, the not predicate does not emit any output (regardless whether
           it succeeds or fails), discarding any possibly emitted output from the
-          <code class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>.
+          <tt class="computeroutput"><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></tt>.
         </p>
 <p>
           As we pass the imaginery part of the complex number as the attribute value
-          for the <code class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>,
+          for the <tt class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></tt>,
           the overall first alternative will be chosen only if it is not equal to
-          zero (the <code class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></code>
+          zero (the <tt class="computeroutput"><span class="special">!</span><span class="identifier">double_</span><span class="special">(</span><span class="number">0.0</span><span class="special">)</span></tt>
           does not fail). That is exactly what we need!
         </p>
 <p>
           Now, the second alternative has to emit the real part of the complex number
           only. In order to simplify the overall grammar we strive to unify the attribute
           types of all alternatives. As the attribute type exposed by the first alternative
-          is <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></code>,
+          is <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></tt>,
           we need to skip the first and last element of the attribute (remember,
           we pass the real part as the second attribute element). We achieve this
-          by using the <code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code>
+          by using the <tt class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></tt>
           directive:
         </p>
 <pre class="programlisting"><span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span> <span class="special">&lt;&lt;</span> <span class="identifier">double_</span> <span class="special">&lt;&lt;</span> <span class="identifier">omit</span><span class="special">[</span><span class="identifier">double_</span><span class="special">]</span>
 </pre>
 <p>
-          The overall attribute of this expression is <code class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></code>, but the <code class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></code> 'eats up' the first and the last element.
+          The overall attribute of this expression is <tt class="computeroutput"><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span></tt>, but the <tt class="computeroutput"><span class="identifier">omit</span><span class="special">[]</span></tt> 'eats up' the first and the last element.
           The output emitted by this expression consist of a single generated double
           representing the second element of the tuple, i.e. the real part of our
           complex number.
         </p>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             Generally, it is preferrable to use generator constructs not requiring
             semantic actions. The reason is that semantic actions often use constructs
-            like: <code class="computeroutput"><span class="identifier">double_</span><span class="special">[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">real</span><span class="special">()]</span></code>.
+            like: <tt class="computeroutput"><span class="identifier">double_</span><span class="special">[</span><span class="identifier">_1</span> <span class="special">=</span> <span class="identifier">c</span><span class="special">.</span><span class="identifier">real</span><span class="special">()]</span></tt>.
             But this assignment is a real one! The data is in fact <span class="emphasis"><em>copied</em></span>
             to the attribute value of the generator the action is attached to. On
             the other hand, grammars without any semantic actions usually don't have
