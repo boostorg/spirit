@@ -52,6 +52,10 @@ main()
         BOOST_TEST(!test("z", no_case['x']));
     }
 
+// needed for VC7.1 only
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("french")
+#endif
     {
         using namespace boost::spirit::iso8859_1;
         BOOST_TEST(test("¡", no_case[char_('·')]));
@@ -61,9 +65,13 @@ main()
         using namespace boost::spirit::iso8859_1;
         BOOST_TEST(test("X", no_case[char_("a-z")]));
         BOOST_TEST(!test("1", no_case[char_("a-z")]));
+
         BOOST_TEST(test("…", no_case[char_("Â-Ô")]));
         BOOST_TEST(!test("ˇ", no_case[char_("Â-Ô")]));
     }
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("")
+#endif
 
     {
         using namespace boost::spirit::ascii;
@@ -72,11 +80,17 @@ main()
         BOOST_TEST(!test("Vavoo", no_case[lit("bochi bochi")]));
     }
 
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("french")
+#endif
     {
         using namespace boost::spirit::iso8859_1;
         BOOST_TEST(test("¡·", no_case[lit("·¡")]));
         BOOST_TEST(test("··", no_case[no_case[lit("·¡")]]));
     }
+#if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1310))
+#pragma setlocale("")
+#endif
 
     {
         // should work!
