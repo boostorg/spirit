@@ -39,7 +39,7 @@
 <div></div>
 </div>
 <a name="spirit.qi.reference.operator.difference.description"></a><h6>
-<a name="id525310"></a>
+<a name="id525306"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.description">Description</a>
           </h6>
 <p>
@@ -47,10 +47,10 @@
             <span class="special">-</span> <span class="identifier">b</span></tt>,
             is a binary operator that matches the first (LHS) operand but not the
             second (RHS).
-            <sup>[<a name="id525352" href="#ftn.id525352">7</a>]</sup>
+            <sup>[<a name="id525348" href="#ftn.id525348">7</a>]</sup>
           </p>
 <a name="spirit.qi.reference.operator.difference.header"></a><h6>
-<a name="id525416"></a>
+<a name="id525411"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/qi/operator/difference.hpp&gt;
@@ -60,7 +60,7 @@
             Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.operator.difference.model_of"></a><h6>
-<a name="id525530"></a>
+<a name="id525525"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.model_of">Model
             of</a>
           </h6>
@@ -84,7 +84,7 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.operator.difference.expression_semantics"></a><h6>
-<a name="id525642"></a>
+<a name="id525638"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.expression_semantics">Expression
             Semantics</a>
           </h6>
@@ -117,7 +117,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.attributes"></a><h6>
-<a name="id525792"></a>
+<a name="id525788"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.attributes">Attributes</a>
           </h6>
 <p>
@@ -154,7 +154,7 @@
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.operator.difference.complexity"></a><h6>
-<a name="id526073"></a>
+<a name="id526068"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
@@ -168,9 +168,19 @@
             </p>
 </blockquote></div>
 <a name="spirit.qi.reference.operator.difference.example"></a><h6>
-<a name="id526111"></a>
+<a name="id526107"></a>
             <a href="difference.html#spirit.qi.reference.operator.difference.example">Example</a>
           </h6>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              The test harness for the example(s) below is presented in the <a href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 <p>
             </p>
 <p>
@@ -200,19 +210,9 @@
             </p>
 <p>
           </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td colspan="2" align="left" valign="top"><p>
-              The test harness for the example(s) above is presented in the <a href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
-              section.
-            </p></td></tr>
-</table></div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id525352" href="#id525352">7</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id525348" href="#id525348">7</a>] </sup>
                 Unlike classic Spirit, with Spirit2, the expression will always fail
                 if the RHS is a successful match regardless if the RHS matches less
                 characters. For example, the rule <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"policeman"</span><span class="special">)</span> <span class="special">-</span> <span class="string">"police"</span></tt> will always fail

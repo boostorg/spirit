@@ -89,6 +89,9 @@ a: Unused --> lexeme[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_lexeme]
@@ -96,9 +99,6 @@ Some using declarations:
 Simple usage of `lexeme[]`:
 
 [reference_lexeme]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect]
 
@@ -165,6 +165,9 @@ a: Unused --> ns::no_case[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_no_case]
@@ -177,9 +180,6 @@ A more sophisticated use case of `no_case[]` in conjunction with a symbol
 table (see __qi_symbols__ for more details):
 
 [reference_symbols_with_no_case]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect]
 
@@ -236,12 +236,12 @@ not defined in __unary_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_omit]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [reference_omit]
 
@@ -312,14 +312,14 @@ a: Unused --> raw[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_raw]
 
 [reference_raw]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect]
 
@@ -405,6 +405,9 @@ of repetitions to execute.]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Using the repeat directive, we can now write our examples above.
 
 Some using declarations:
@@ -420,9 +423,6 @@ the length of the incoming string. Here's a sample input:
 [:__pascal_string__]
 
 [reference_repeat_pascal]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect]
 
@@ -502,6 +502,9 @@ a: Unused --> lexeme[a]: Unused``]]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_skip]
@@ -509,9 +512,6 @@ Some using declarations:
 Simple usage of `skip[]`:
 
 [reference_skip]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect]
 

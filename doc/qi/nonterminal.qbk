@@ -132,10 +132,10 @@ __qi_nonterminal_attribute__]
 
 [heading Example]
 
-[reference_rule]
-
-[note The test harness for the example(s) above is presented in the
+[note The test harness for the example(s) below is presented in the
 __qi_basics_examples__ section.]
+
+[reference_rule]
 
 [endsect] [/ Rule]
 
@@ -244,10 +244,10 @@ __qi_nonterminal_attribute__]
 
 [heading Example]
 
-[reference_grammar]
-
-[note The test harness for the example(s) above is presented in the
+[note The test harness for the example(s) below is presented in the
 __qi_basics_examples__ section.]
+
+[reference_grammar]
 
 [endsect] [/ Grammar]
 

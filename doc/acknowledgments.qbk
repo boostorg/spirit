@@ -30,8 +30,32 @@ details which are so important to make a difference.
 non-native-speaker-quirks we managed to introduce into the first versions of 
 the documentation.
 
-__fixme__: Add more people
+[*Tobias Schwinger] for proposing expectation points and GCC port of an
+early version.
 
+[*Chris Hoeppler] for proof reading and copy editing.
+
+[*Joao Abecasis] for his early support and involvement in Spirit2
+development and for disturbing my peace every once in a while for a
+couple of jokes.
+
+[*Dave Abrahams] as always, for countless advice and help on C++,
+library development, interfaces, usability and ease of use, for
+reviewing the code and providing valuable feedback and for always
+keeping us on our toes.
+
+[*OvermindDL] for proof reading and copy editing.
+
+Special thanks to spirit-devel and spirit-general mailing lists for
+participating in the discussions, being early adopters of pre-release
+versions of Spirit2 from the very start and helping out in various tasks
+such as helping with support, bug tracking, benchmarking and testing,
+etc. The list include: [*Michael Caisse], [*Carl barron], [*Larry
+Evans], [*Francois Barel], [*Daniel James], [*Richard Webb], [*Martin
+Wille], [*Dan Marsden], [*Cedric Venet], [*Allan Odgaard], [*Matthias
+Vallentin], [*Justinas V.D.].
+
+The list goes on and on...
 
 [heading Acknowledgements from the Spirit V1 /classic/ Documentation]
 

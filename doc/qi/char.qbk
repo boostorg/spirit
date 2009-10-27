@@ -187,6 +187,9 @@ distinct character ranges in the set.]
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_lit_char]
@@ -206,9 +209,6 @@ Character set:
 Lazy char_ using __phoenix__
 
 [reference_char_phoenix]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Char]
 
@@ -289,6 +289,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_char_class]
@@ -296,9 +299,6 @@ Some using declarations:
 Basic usage:
 
 [reference_char_class]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Char Classification]
 

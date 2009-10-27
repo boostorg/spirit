@@ -82,6 +82,9 @@ The complexity is constant as no input is consumed and no matching is done.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_attr]
@@ -94,8 +97,6 @@ Using `attr` with __phoenix__ function objects:
 
 [reference_attr_phoenix]
 
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Attribute]
 
@@ -148,6 +149,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_eol]
@@ -155,9 +159,6 @@ Some using declarations:
 Using `eol`:
 
 [reference_eol]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ End of Line]
 
@@ -210,6 +211,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_eoi]
@@ -217,9 +221,6 @@ Some using declarations:
 Using `eoi`:
 
 [reference_eoi]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ End of Input]
 
@@ -307,6 +308,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_eps]
@@ -316,9 +320,6 @@ Some using declarations:
 [reference_eps_if]
 
 [reference_eps_while]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/Epsilon]
 
@@ -386,6 +387,9 @@ the parser returned from `fp`.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]	
+
 Some using declarations:
 
 [reference_using_declarations_lazy]
@@ -393,9 +397,6 @@ Some using declarations:
 Using `lazy`:
 
 [reference_lazy]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Lazy]
 

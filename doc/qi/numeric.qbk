@@ -152,6 +152,9 @@ valid:
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_uint]
@@ -161,9 +164,6 @@ Basic unsigned integers:
 [reference_uint]
 
 [reference_thousand_separated]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Unsigned Integers]
 
@@ -284,6 +284,9 @@ valid:
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_int]
@@ -291,9 +294,6 @@ Some using declarations:
 Basic signed integers:
 
 [reference_int]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Signed Integers]
 
@@ -549,6 +549,9 @@ implementation of the pre-defined `strict_real_policies`:
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_real]
@@ -564,9 +567,6 @@ A custom real number policy:
 And its use:
 
 [reference_custom_real]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Real Numbers]
 
@@ -710,6 +710,9 @@ implementation of a boolean parsing policy interpreting the string `"eurt"`
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_bool]
@@ -725,9 +728,6 @@ A custom real number policy:
 And its use:
 
 [reference_custom_bool]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Real Numbers]
 
