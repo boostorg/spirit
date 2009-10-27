@@ -1090,5 +1090,33 @@ main()
         //]
     }
     
+    // grammar
+    {
+        //[reference_grammar
+        //`Some using declarations:
+        using boost::spirit::ascii::space_type;
+        using boost::spirit::int_;
+        using boost::spirit::qi::grammar;
+        using boost::spirit::qi::rule;
+
+        /*`Basic grammar usage:
+         */
+        struct num_list : grammar<char const*, space_type>
+        {
+            num_list() : base_type(start)
+            {
+                using boost::spirit::int_;
+                num = int_;
+                start = num >> *(',' >> num);
+            }
+
+            rule<char const*, space_type> start, num;
+        };
+        
+        num_list nlist;
+        test_phrase_parser("123, 456, 789", nlist);
+        //]
+    }
+    
     return 0;
 }

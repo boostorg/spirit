@@ -1,13 +1,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>The Static Lexer Model</title>
+<title> The Static
+        Lexer Model</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../abstracts.html" title="Abstracts">
-<link rel="prev" href="lexer_semantic_actions.html" title="Lexer Semantic Actions">
-<link rel="next" href="../quick_reference.html" title="Quick Reference">
+<link rel="up" href="../abstracts.html" title=" Abstracts">
+<link rel="previous" href="lexer_semantic_actions.html" title=" Lexer
+        Semantic Actions">
+<link rel="next" href="../quick_reference.html" title=" Quick Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,11 +24,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="lexer_semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../abstracts.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="The Static Lexer Model">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.lex.abstracts.lexer_static_model"></a><a class="link" href="lexer_static_model.html" title="The Static Lexer Model"> The <span class="emphasis"><em>Static</em></span>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.lex.abstracts.lexer_static_model"></a><a href="lexer_static_model.html" title=" The Static
+        Lexer Model"> The <span class="emphasis"><em>Static</em></span>
         Lexer Model</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           The documentation of <span class="emphasis"><em>Spirit.Lex</em></span> so far mostly was
           about describing the features of the <span class="emphasis"><em>dynamic</em></span> model,
@@ -50,12 +56,12 @@
           Assuming you already built a dynamic lexer for your problem, there are
           two more steps needed to create a static lexical analyzer using <span class="emphasis"><em>Spirit.Lex</em></span>:
         </p>
-<div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem">
+<div class="orderedlist"><ol type="1">
+<li>
             generating the C++ code for the static analyzer (including the tokenization
             function and corresponding tables), and
           </li>
-<li class="listitem">
+<li>
             modifying the dynamic lexical anlyzer to use the generated code.
           </li>
 </ol></div>
@@ -125,8 +131,8 @@
 <p>
           The only thing changing between the three different use cases is the template
           parameter used to instantiate a concrete token definition. Fot the dynamic
-          model and the code generator you probably will use the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code> template, where for the static
-          model you will use the <code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code> type as the template parameter.
+          model and the code generator you probably will use the <tt class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></tt> template, where for the static
+          model you will use the <tt class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></tt> type as the template parameter.
         </p>
 <p>
           This example not only shows how to build a static lexer, but it additionally
@@ -174,17 +180,17 @@
           </p>
 <p>
         </p>
-<a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h6>
-<a name="id911905"></a>
-          <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
+<a name="spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer"></a><h5>
+<a name="id704957"></a>
+          <a href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.generating_the_static_analyzer">Generating
           the Static Analyzer</a>
-        </h6>
+        </h5>
 <p>
           The first additional step to perform in order to create a static lexical
           analyzer is to create a small standalone program for creating the lexer
           tables and the corresponding tokenization function. For this purpose the
           <span class="emphasis"><em>Spirit.Lex</em></span> library exposes a special API - the function
-          <code class="computeroutput"><span class="identifier">generate_static</span><span class="special">()</span></code>
+          <tt class="computeroutput"><span class="identifier">generate_static</span><span class="special">()</span></tt>
           . It implements the whole code generator, no further code is needed. All
           what it takes to invoke this function is to supply a token definition instance,
           an output stream to use to generate the code to, and an optional string
@@ -223,33 +229,33 @@
           a file for later inclusion into the static lexical analzyer as shown in
           the next topic (the full generated code can be viewed <a href="../../../../../example/lex/static_lexer/word_count_static.hpp" target="_top">here</a>).
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             The generated code will have compiled in the version number of the current
             <span class="emphasis"><em>Spirit.Lex</em></span> library. This version number is used
             at compilation time of your static lexer object to ensure this is compiled
             using exactly the same version of the <span class="emphasis"><em>Spirit.Lex</em></span>
             library as the lexer tables have been generated with. If the versions
-            do not match you will see an compilation error mentioning an <code class="computeroutput"><span class="identifier">incompatible_static_lexer_version</span></code>.
+            do not match you will see an compilation error mentioning an <tt class="computeroutput"><span class="identifier">incompatible_static_lexer_version</span></tt>.
           </p></td></tr>
 </table></div>
-<a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h6>
-<a name="id912264"></a>
-          <a class="link" href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
+<a name="spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer"></a><h5>
+<a name="id705468"></a>
+          <a href="lexer_static_model.html#spirit.lex.abstracts.lexer_static_model.modifying_the_dynamic_analyzer">Modifying
           the Dynamic Analyzer</a>
-        </h6>
+        </h5>
 <p>
           The second required step to convert an existing dynamic lexer into a static
           one is to change your main program at two places. First, you need to change
           the type of the used lexer (that is the template parameter used while instantiating
           your token definition class). While in the dynamic model we have been using
-          the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></code>
-          template, we now need to change that to the <code class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></code> type. The second change is tightly
-          related to the first one and involves correcting the corresponding <code class="computeroutput"><span class="preprocessor">#include</span></code> statement to:
+          the <tt class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;&gt;</span></tt>
+          template, we now need to change that to the <tt class="computeroutput"><span class="identifier">lexertl_static_lexer</span><span class="special">&lt;&gt;</span></tt> type. The second change is tightly
+          related to the first one and involves correcting the corresponding <tt class="computeroutput"><span class="preprocessor">#include</span></tt> statement to:
         </p>
 <p>
           </p>
@@ -330,17 +336,17 @@
           </p>
 <p>
         </p>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             The generated code for the static lexer contains the token ids as they
             have been assigned, either explicitly by the programmer or implicitely
             during lexer construction. It is your responsibility to make sure that
             all instances of a particular static lexer type use exactly the same
-            token ids. This is ensured by default as long as no <code class="computeroutput"><span class="identifier">first_id</span></code>
+            token ids. This is ensured by default as long as no <tt class="computeroutput"><span class="identifier">first_id</span></tt>
             is specified during construction of the static lexer instances. The constructor
             of the lexer object has a second default parameter allowing it to designate
             a starting token id to be used while assigning the ids to the token definitions.

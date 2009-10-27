@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Grammar</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../nonterminal.html" title="Nonterminal">
-<link rel="prev" href="rule.html" title="Rule">
+<link rel="previous" href="rule.html" title="Rule">
 <link rel="next" href="../numeric.html" title="Numeric">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,55 +22,56 @@
 <div class="spirit-nav">
 <a accesskey="p" href="rule.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Grammar">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.nonterminal.grammar"></a><a class="link" href="grammar.html" title="Grammar">Grammar</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.qi.reference.nonterminal.grammar"></a><a href="grammar.html" title="Grammar">Grammar</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.qi.reference.nonterminal.grammar.description"></a><h6>
-<a name="id710582"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.description">Description</a>
+<a name="id503097"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.description">Description</a>
           </h6>
 <p>
-            Description of XXX
+            The grammar encapsulates a set of <a href="rule.html" title="Rule">Rules</a>
+            (as well as primitive parsers (<a href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><tt class="computeroutput"><span class="identifier">PrimitiveParser</span></tt></a>) and sub-grammars).
+            The grammar is the main mechanism for modularization and composition.
+            Grammars can be composed to form more complex grammars.
           </p>
 <a name="spirit.qi.reference.nonterminal.grammar.header"></a><h6>
-<a name="id710599"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.header">Header</a>
+<a name="id503158"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.header">Header</a>
           </h6>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">xxx</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-
-<span class="special">...</span>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/qi/nonterminal/grammar.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_grammar</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.nonterminal.grammar.namespace"></a><h6>
-<a name="id710668"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.namespace">Namespace</a>
+<a name="id503271"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th>
-                  <p>
+<thead><tr><th><p>
                     Name
-                  </p>
-                  </th></tr></thead>
-<tbody><tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">xx</span></code>
-                  </p>
-                  </td></tr></tbody>
+                  </p></th></tr></thead>
+<tbody><tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span></tt>
+                  </p></td></tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.nonterminal.grammar.synopsis"></a><h6>
-<a name="id710741"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.synopsis">Synopsis</a>
+<a name="id503378"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.synopsis">Synopsis</a>
           </h6>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">XXX</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A3</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">grammar</span><span class="special">;</span>
 </pre>
 <a name="spirit.qi.reference.nonterminal.grammar.template_parameters"></a><h6>
-<a name="id710795"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.template_parameters">Template
+<a name="id503508"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -80,61 +81,134 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Parameter
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Default
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
-<tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">T</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    What is T
-                  </p>
-                  </td>
-<td>
-                  <p>
-                  </p>
-                  </td>
-</tr></tbody>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
+                  </p></td>
+<td><p>
+                    The underlying iterator type that the rule is expected to work
+                    on.
+                  </p></td>
+<td><p>
+                    none
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">A1</span></tt>, <tt class="computeroutput"><span class="identifier">A2</span></tt>, <tt class="computeroutput"><span class="identifier">A3</span></tt>
+                  </p></td>
+<td><p>
+                    Either <tt class="computeroutput"><span class="identifier">Signature</span></tt>,
+                    <tt class="computeroutput"><span class="identifier">Skipper</span></tt> or <tt class="computeroutput"><span class="identifier">Locals</span></tt> in any order. See table
+                    below.
+                  </p></td>
+<td><p>
+                    See table below.
+                  </p></td>
+</tr>
+</tbody>
+</table></div>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th><p>
+                    Parameter
+                  </p></th>
+<th><p>
+                    Description
+                  </p></th>
+<th><p>
+                    Default
+                  </p></th>
+</tr></thead>
+<tbody>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Signature</span></tt>
+                  </p></td>
+<td><p>
+                    Specifies the rule's synthesized (return value) and inherited
+                    attributes (arguments). More on this below.
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>.
+                    When <tt class="computeroutput"><span class="identifier">Signature</span></tt>
+                    defaults to <tt class="computeroutput"><span class="identifier">unused_type</span></tt>,
+                    the effect is the same as specifying a signature of <tt class="computeroutput"><span class="keyword">void</span><span class="special">()</span></tt>
+                    which is also equivalent to <tt class="computeroutput"><span class="identifier">unused_type</span><span class="special">()</span></tt>
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Skipper</span></tt>
+                  </p></td>
+<td><p>
+                    Specifies the rule's skipper parser. Specify this if you want
+                    the rule to skip white spaces.
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  </p></td>
+</tr>
+<tr>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Locals</span></tt>
+                  </p></td>
+<td><p>
+                    Specifies the rule's local variables. See below.
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                  </p></td>
+</tr>
+</tbody>
 </table></div>
 <a name="spirit.qi.reference.nonterminal.grammar.model_of"></a><h6>
-<a name="id710880"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.model_of">Model
+<a name="id503959"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.model_of">Model
             of</a>
           </h6>
-<div class="variablelist" title="Notation">
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+              </p>
+<p>
+                <a href="../parser_concepts/nonterminal.html" title="Nonterminal"><tt class="computeroutput"><span class="identifier">Nonterminal</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">xxx</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">g</span></tt></span></dt>
 <dd><p>
-                An XXX
+                A grammar
               </p></dd>
 </dl>
 </div>
 <a name="spirit.qi.reference.nonterminal.grammar.expression_semantics"></a><h6>
-<a name="id710921"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.expression_semantics">Expression
+<a name="id504043"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in _concept-of<span class="underline">XXX</span>.
+            is not defined in <a href="../parser_concepts/nonterminal.html" title="Nonterminal"><tt class="computeroutput"><span class="identifier">Nonterminal</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -142,83 +216,127 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
 <td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">xxx</span></code>
+<p>
+                    
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">my_grammar</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="identifier">my_grammar</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">my_grammar</span><span class="special">::</span><span class="identifier">base_type</span><span class="special">(</span><span class="identifier">start</span><span class="special">,</span> <span class="identifier">name</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="comment">// Rule definitions
+</span>        <span class="identifier">start</span> <span class="special">=</span> <span class="comment">/* ... */</span><span class="special">;</span>
+    <span class="special">}</span>
+
+    <span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
+    <span class="comment">// more rule declarations...
+</span><span class="special">};</span>
+</pre>
+<p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Semantics of <code class="computeroutput"><span class="identifier">xxx</span></code>
-                  </p>
-                  </td>
+</td>
+<td><p>
+                    Grammar definition. <tt class="computeroutput"><span class="identifier">name</span></tt>
+                    is an optional string that gives the grammar its name, useful
+                    for debugging and error handling.
+                  </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.qi.reference.nonterminal.grammar.attributes"></a><h6>
-<a name="id711010"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.attributes">Attributes</a>
+<a name="id504457"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.attributes">Attributes</a>
           </h6>
+<div class="blockquote"><blockquote class="blockquote">
 <p>
-            See <a class="link" href="../../quick_reference/compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Compound
-            Attribute Notation</a>.
-          </p>
-<div class="informaltable"><table class="table">
-<colgroup>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>
-                  <p>
-                    Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
-                    Attribute
-                  </p>
-                  </th>
-</tr></thead>
-<tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">xxx</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Attribute of <code class="computeroutput"><span class="identifier">xxx</span></code>
-                  </p>
-                  </td>
-</tr></tbody>
-</table></div>
+              </p>
+<p>
+                The parser attribute of the grammar is <tt class="computeroutput"><span class="identifier">T</span></tt>,
+                its inherited attribute. See <a href="../parser_concepts/nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.attributes"><tt class="computeroutput"><span class="identifier">Attribute</span></tt></a>
+              </p>
+<p>
+            </p>
+</blockquote></div>
 <a name="spirit.qi.reference.nonterminal.grammar.complexity"></a><h6>
-<a name="id711098"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.complexity">Complexity</a>
+<a name="id504523"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.complexity">Complexity</a>
           </h6>
+<div class="blockquote"><blockquote class="blockquote">
 <p>
-            Big-O complexity of the parser
-          </p>
+              </p>
+<p>
+                The complexity is defined by the complexity of the its definition.
+              </p>
+<p>
+            </p>
+</blockquote></div>
 <a name="spirit.qi.reference.nonterminal.grammar.example"></a><h6>
-<a name="id711115"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.example">Example</a>
+<a name="id504560"></a>
+            <a href="grammar.html#spirit.qi.reference.nonterminal.grammar.example">Example</a>
           </h6>
 <p>
-            Real example code. Use Quickbook import mechanism to link to actual working
-            code snippets here.
+            </p>
+<p>
+              Some using declarations:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">;</span></pre>
+<p>
+            </p>
+<p>
+            </p>
+<p>
+              Basic grammar usage:
+            </p>
+<p>
+            </p>
+<p>
+              
+</p>
+<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">num_list</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">space_type</span><span class="special">&gt;</span>
+<span class="special">{</span>
+    <span class="identifier">num_list</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">base_type</span><span class="special">(</span><span class="identifier">start</span><span class="special">)</span>
+    <span class="special">{</span>
+        <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
+        <span class="identifier">num</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
+        <span class="identifier">start</span> <span class="special">=</span> <span class="identifier">num</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">num</span><span class="special">);</span>
+    <span class="special">}</span>
+
+    <span class="identifier">rule</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">,</span> <span class="identifier">num</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="identifier">num_list</span> <span class="identifier">nlist</span><span class="special">;</span>
+<span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="string">"123, 456, 789"</span><span class="special">,</span> <span class="identifier">nlist</span><span class="special">);</span>
+</pre>
+<p>
+            </p>
+<p>
           </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td colspan="2" align="left" valign="top"><p>
+              The test harness for the example(s) above is presented in the <a href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              section.
+            </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

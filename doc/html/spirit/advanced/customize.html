@@ -1,13 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customization of Spirit's Attribute Handling</title>
+<title> Customization of Spirit's
+      Attribute Handling</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../index.html" title="Spirit 2.1">
 <link rel="up" href="../advanced.html" title="Advanced">
-<link rel="prev" href="indepth/parsers_indepth.html" title="Parsers in Depth">
-<link rel="next" href="customize/is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)">
+<link rel="previous" href="indepth/parsers_indepth.html" title=" Parsers in
+        Depth">
+<link rel="next" href="customize/is_container.html" title=" Determine
+        if a Type Should be Treated as a Container (Qi and Karma)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,11 +25,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="indepth/parsers_indepth.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../advanced.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="customize/is_container.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Customization of Spirit's Attribute Handling">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="spirit.advanced.customize"></a><a class="link" href="customize.html" title="Customization of Spirit's Attribute Handling"> Customization of Spirit's
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h3 class="title">
+<a name="spirit.advanced.customize"></a><a href="customize.html" title=" Customization of Spirit's
+      Attribute Handling"> Customization of Spirit's
       Attribute Handling</a>
-</h3></div></div></div>
+</h3></div></div>
+<div></div>
+</div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="customize/is_container.html"> Determine
         if a Type Should be Treated as a Container (Qi and Karma)</a></span></dt>
@@ -43,17 +50,17 @@
 <dt><span class="section"><a href="customize/iterate.html"> Extract Attribute
         Values to Generate Output from a Container (Karma)</a></span></dt>
 </dl></div>
-<a name="spirit.advanced.customize.why_do_we_need_attribute_customization_points"></a><h5>
-<a name="id927259"></a>
-        <a class="link" href="customize.html#spirit.advanced.customize.why_do_we_need_attribute_customization_points">Why
+<a name="spirit.advanced.customize.why_do_we_need_attribute_customization_points"></a><h4>
+<a name="id719745"></a>
+        <a href="customize.html#spirit.advanced.customize.why_do_we_need_attribute_customization_points">Why
         do we need Attribute Customization Points</a>
-      </h5>
-<div class="important" title="Important"><table border="0" summary="Important">
+      </h4>
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
           Before you read on please be aware that the interfaces described in this
           section are not finalized and may change in the future without attempting
           to be backwards compatible. We document the customization point interfaces
@@ -74,13 +81,14 @@
         You as the user have to provide a partial or full specialization of this
         template for the data types you want to integrate with the library. In fact,
         the library uses these customization points itself for instance to handle
-        the magic of the <code class="computeroutput"><span class="identifier">unused_type</span></code>
+        the magic of the <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
         attribute type.
       </p>
 <p>
-        Here is an example showing the <a class="link" href="customize/store_value/container_value.html" title="Determine the Type to be Stored in a Container (Qi)"><code class="computeroutput"><span class="identifier">container_value</span></code></a> customization point
-        used by different parsers (such as <a class="link" href="../qi/reference/operator/kleene.html" title="Kleene (*a)">Kleene</a>,
-        <a class="link" href="../qi/reference/operator/plus.html" title="Plus (+a)">Plus</a>, etc.) to find
+        Here is an example showing the <a href="customize/store_value/container_value.html" title="
+          Determine the Type to be Stored in a Container (Qi)"><tt class="computeroutput"><span class="identifier">container_value</span></tt></a> customization point
+        used by different parsers (such as <a href="../qi/reference/operator/kleene.html" title=" Kleene (*a)">Kleene</a>,
+        <a href="../qi/reference/operator/plus.html" title=" Plus (+a)">Plus</a>, etc.) to find
         the attribute type to be stored in a supplied STL container:
       </p>
 <p>
@@ -100,11 +108,11 @@
 <p>
         This template is instantiated by the library at the appropriate places while
         using the supplied container type as the template argument. The embedded
-        <code class="computeroutput"><span class="identifier">type</span></code> is used as the attribute
+        <tt class="computeroutput"><span class="identifier">type</span></tt> is used as the attribute
         type while parsing the elements to be store in that container.
       </p>
 <p>
-        The following example shows the predefined specialization for <code class="computeroutput"><span class="identifier">unused_type</span></code>:
+        The following example shows the predefined specialization for <tt class="computeroutput"><span class="identifier">unused_type</span></tt>:
       </p>
 <p>
         </p>
@@ -122,13 +130,13 @@
 <p>
       </p>
 <p>
-        which defines its embedded <code class="computeroutput"><span class="identifier">type</span></code>
-        to be <code class="computeroutput"><span class="identifier">unused_type</span></code> as well,
+        which defines its embedded <tt class="computeroutput"><span class="identifier">type</span></tt>
+        to be <tt class="computeroutput"><span class="identifier">unused_type</span></tt> as well,
         this way propagating the 'don't care' attribute status to the embedded parser.
       </p>
 <p>
         All attribute customization points follow the same scheme. The last template
-        parameter is always <code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">Enable</span> <span class="special">=</span> <span class="keyword">void</span></code> allowing to apply SFINAE for fine grained
+        parameter is always <tt class="computeroutput"><span class="keyword">typename</span> <span class="identifier">Enable</span> <span class="special">=</span> <span class="keyword">void</span></tt> allowing to apply SFINAE for fine grained
         control over the template specialization process. But most of the time you
         can safely forget about its existence.
       </p>
@@ -136,11 +144,11 @@
         The following sections will describe all customization points, together with
         a description which needs to be specialized for what purpose.
       </p>
-<a name="spirit.advanced.customize.the_usage_of_customization_points"></a><h5>
-<a name="id927579"></a>
-        <a class="link" href="customize.html#spirit.advanced.customize.the_usage_of_customization_points">The
+<a name="spirit.advanced.customize.the_usage_of_customization_points"></a><h4>
+<a name="id720232"></a>
+        <a href="customize.html#spirit.advanced.customize.the_usage_of_customization_points">The
         Usage of Customization Points</a>
-      </h5>
+      </h4>
 <p>
         The different customizations points are used by different parts of the library.
         Part of the customizations points are used by both, <span class="emphasis"><em>Spirit.Qi</em></span>
