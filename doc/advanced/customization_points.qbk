@@ -941,7 +941,9 @@ Also, see __include_structure__.
     struct extract_from_attribute
     {
         typedef <unspecified> type;
-        static type call(Attrib const& attr);
+
+        template <typename Context>
+        static type call(Attrib const& attr, Context& context);
     };
 
 [heading Template parameters]
@@ -954,6 +956,8 @@ Also, see __include_structure__.
                              enable or disable certain specializations
                              of `clear_value` utilizing SFINAE (i.e.
                              `boost::enable_if` or `boost::disable_if`).] [`void`]]
+    [[`Context`]            [This is the type of the current generator execution 
+                             context.]]
 ]
 
 [heading Notation]
@@ -968,7 +972,8 @@ Also, see __include_structure__.
 [table
     [[Expression]       [Semantics]]
     [[
-``extract_from_attribute<Attrib>::call(attr)``] [Extract the value to generate 
+``extract_from_attribute<Attrib>::call(attr, ctx)``] 
+                        [Extract the value to generate 
                          output from and return it to the caller.]]
 ]
 

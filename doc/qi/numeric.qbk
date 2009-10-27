@@ -694,14 +694,14 @@ implementation of a boolean parsing policy interpreting the string `"eurt"`
     struct backwards_bool_policies : qi::bool_policies<>
     {
         // we want to interpret a 'true' spelled backwards as 'false'
-        template <typename Iterator, typename Attribute>
+        template <typename Iterator, typename Attribute, typename Context>
         static bool
-        parse_false(Iterator& first, Iterator const& last, Attribute& attr)
+        parse_false(Iterator& first, Iterator const& last, Attribute& attr, Context& ctx)
         {
             namespace qi = boost::spirit::qi;
-            if (qi::detail::string_parse("eurt", first, last, qi::unused))
+            if (qi::detail::string_parse("eurt", first, last, qi::unused, qi::unused))
             {
-                spirit::traits::assign_to(false, attr);    // result is false
+                spirit::traits::assign_to(false, attr, ctx);    // result is false
                 return true;
             }
             return false;
