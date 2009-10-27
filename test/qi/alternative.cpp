@@ -43,8 +43,7 @@ struct test_action
 
 struct test_action_2
 {
-    typedef std::vector<boost::variant<boost::spirit::unused_type, char> >
-        result_type;
+    typedef std::vector<boost::optional<char> > result_type;
 
     void operator()(result_type const& v
       , boost::spirit::unused_type
@@ -53,11 +52,10 @@ struct test_action_2
         using boost::get;
 
         BOOST_TEST(v.size() == 5 && 
-            v[0].which() == 0 &&
-            v[1].which() == 1 && get<char>(v[1]) == 'a' && 
-            v[2].which() == 1 && get<char>(v[2]) == 'b' && 
-            v[3].which() == 1 && get<char>(v[3]) == '1' && 
-            v[4].which() == 1 && get<char>(v[4]) == '2');
+            v[1] == 'a' && 
+            v[2] == 'b' && 
+            v[3] == '1' && 
+            v[4] == '2');
     }
 };
 
@@ -101,11 +99,13 @@ main()
 
     {   // test action
 
-        namespace phoenix = boost::phoenix;
-        boost::variant<unused_type, int, char> v;
+        namespace phx = boost::phoenix;
+        boost::optional<boost::variant<int, char> > v;
 
-        BOOST_TEST((test("12345", (lit("rock") | int_ | char_)[phoenix::ref(v) = _1])));
-        BOOST_TEST(boost::get<int>(v) == 12345);
+        BOOST_TEST((test("12345", (lit("rock") | int_ | char_)[phx::ref(v) = _1])));
+        BOOST_TEST(boost::get<int>(boost::get(v)) == 12345);
+        BOOST_TEST((test("rock", (lit("rock") | int_ | char_)[phx::ref(v) = _1])));
+        BOOST_TEST(!v);
     }
 
     {
@@ -158,11 +158,22 @@ main()
         using boost::spirit::ascii::alnum;
         using boost::spirit::ascii::alpha;
         using boost::spirit::ascii::digit;
+        using boost::spirit::ascii::string;
+        namespace phx = boost::phoenix;
 
-        BOOST_TEST( (test("ab1_", lexeme[*(alnum | char_('_'))][test_action('_')])) );
-        BOOST_TEST( (test("ab12", lexeme[*(alpha | digit)][test_action('2')])) );
 
-        BOOST_TEST( (test("abcab12", lexeme[*("abc" | alnum)][test_action_2()])) );
+        BOOST_TEST( (test("ab1_", (*(alnum | char_('_')))[test_action('_')])) );
+        BOOST_TEST( (test("ab12", (*(alpha | digit))[test_action('2')])) );
+
+        BOOST_TEST( (test("abcab12", (*("abc" | alnum))[test_action_2()])) );
+
+        std::vector<boost::optional<char> > v;
+        BOOST_TEST( (test("x,y,z", (*(',' | char_))[phx::ref(v) = _1])) );
+        assert(v[0] == 'x');
+        assert(!v[1]);       
+        assert(v[2] == 'y');
+        assert(!v[3]);        
+        assert(v[4] == 'z');        
     }
 
     {

@@ -340,7 +340,7 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
-        template <typename Container>
+    template <typename Container>
     typename spirit::result_of::begin<Container>::type
     begin(Container& c)
     {
@@ -404,23 +404,21 @@ namespace boost { namespace spirit { namespace traits
     template <typename Iterator, typename Enable/* = void*/>
     struct next_iterator
     {
-        static Iterator call(Iterator& it)
+        static void call(Iterator& it)
         {
-            return ++it;
+            ++it;
         }
     };
 
     template <typename Iterator>
-    typename spirit::result_of::next<Iterator>::type
-    next(Iterator& it)
+    void next(Iterator& it)
     {
-        return next_iterator<Iterator>::call(it);
+        next_iterator<Iterator>::call(it);
     }
 
-    inline unused_type const*
-    next(unused_type const*)
+    inline void next(unused_type const*)
     {
-        return &unused;
+        // do nothing
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -491,15 +489,15 @@ namespace boost { namespace spirit { namespace result_of
     {};
 
     template <typename Iterator>
-    struct next
-    {
-        typedef Iterator type;
-    };
-
-    template <typename Iterator>
     struct deref
       : traits::deref_iterator<Iterator>
     {};
+
+    template <>
+    struct deref<unused_type const*>
+    {
+        typedef unused_type type;
+    };
 
 }}}
 

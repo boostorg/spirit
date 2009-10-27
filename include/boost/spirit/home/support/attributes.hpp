@@ -21,6 +21,7 @@
 #include <boost/fusion/include/filter_if.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/push_front.hpp>
+#include <boost/fusion/include/pop_front.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/utility/value_init.hpp>
@@ -50,6 +51,34 @@ namespace boost { namespace spirit { namespace traits
 
     template <BOOST_VARIANT_ENUM_PARAMS(typename T)>
     struct not_is_variant<boost::variant<BOOST_VARIANT_ENUM_PARAMS(T)> >
+      : mpl::false_ 
+    {};
+
+    template <typename T>
+    struct not_is_variant<boost::optional<T> >
+      : not_is_variant<T>
+    {};
+
+    // we treat every type as if it where the variant (as this meta function is
+    // invoked for variant types only)
+    template <typename T>
+    struct variant_type
+      : mpl::identity<T> 
+    {};
+
+    template <typename T>
+    struct variant_type<boost::optional<T> >
+      : variant_type<T>
+    {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename T>
+    struct not_is_optional
+      : mpl::true_ 
+    {};
+
+    template <typename T>
+    struct not_is_optional<boost::optional<T> >
       : mpl::false_ 
     {};
 
@@ -256,7 +285,59 @@ namespace boost { namespace spirit { namespace traits
             typename mpl::find_if<Sequence, is_same<mpl::_, unused_type> >::type
           , typename mpl::end<Sequence>::type>
     {};
+        
+    namespace detail
+    {
+        template <typename Sequence, bool no_unused
+            , int size = mpl::size<Sequence>::value>
+        struct build_collapsed_variant;
+                
+        // N element case, no unused
+        template <typename Sequence, int size>
+        struct build_collapsed_variant<Sequence, true, size>
+            : spirit::detail::as_variant<Sequence> {};
+                
+        // N element case with unused
+        template <typename Sequence, int size>
+        struct build_collapsed_variant<Sequence, false, size>
+        {
+            typedef optional<
+                typename spirit::detail::as_variant<
+                    typename fusion::result_of::pop_front<Sequence>::type
+                >::type
+            > type;
+        };
 
+        // 1 element case, no unused
+        template <typename Sequence>
+        struct build_collapsed_variant<Sequence, true, 1>
+            : mpl::front<Sequence> {};
+
+        // 1 element case, with unused
+        template <typename Sequence>
+        struct build_collapsed_variant<Sequence, false, 1>
+            : mpl::front<Sequence> {};
+
+        // 2 element case, no unused
+        template <typename Sequence>
+        struct build_collapsed_variant<Sequence, true, 2>
+            : spirit::detail::as_variant<Sequence> {};
+
+        // 2 element case, with unused
+        template <typename Sequence>
+        struct build_collapsed_variant<Sequence, false, 2>
+        {
+            typedef optional<
+                typename mpl::deref<
+                    typename mpl::next<
+                        typename mpl::begin<Sequence>::type
+                    >::type
+                >::type
+            >
+            type;
+        };
+    }
+        
     ///////////////////////////////////////////////////////////////////////////
     // build_variant
     //
@@ -264,7 +345,7 @@ namespace boost { namespace spirit { namespace traits
     // that 1) all attributes in the variant are unique 2) puts the unused
     // attribute, if there is any, to the front and 3) collapses single element
     // variants, variant<T> to T.
-    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////       
     template <typename Sequence>
     struct build_variant
     {
@@ -272,6 +353,8 @@ namespace boost { namespace spirit { namespace traits
         typedef typename
             filter_unused_attributes<Sequence>::type
         filtered_attributes;
+        
+        typedef has_no_unused<Sequence> no_unused;
 
         // If the original attribute list does not contain any unused
         // attributes, it is used, otherwise a single unused_type is
@@ -279,7 +362,7 @@ namespace boost { namespace spirit { namespace traits
         // there is an unused_type in the list, it is the first one.
         typedef typename
             mpl::eval_if<
-                has_no_unused<Sequence>,
+                no_unused,
                 mpl::identity<Sequence>,
                 fusion::result_of::push_front<filtered_attributes, unused_type>
             >::type
@@ -294,16 +377,14 @@ namespace boost { namespace spirit { namespace traits
                     mpl::_1, mpl::push_back<mpl::_1, mpl::_2>
                 >
             >::type
-        new_sequence;
+        no_duplicates;
 
         // If there is only one type in the list of types we strip off the
         // variant. IOTW, collapse single element variants, variant<T> to T.
+        // Take note that this also collapses variant<unused_type, T> to T.
         typedef typename
-            mpl::eval_if<
-                mpl::equal_to<mpl::size<new_sequence>, mpl::int_<1> >,
-                mpl::deref<mpl::front<attribute_sequence> >,
-                spirit::detail::as_variant<new_sequence>
-            >::type
+            traits::detail::build_collapsed_variant<
+                no_duplicates, no_unused::value>::type
         type;
     };
 
@@ -681,5 +762,6 @@ namespace boost { namespace spirit { namespace result_of
       : traits::transform_attribute<Exposed, Transformed>
     {};
 }}}
+
 
 #endif

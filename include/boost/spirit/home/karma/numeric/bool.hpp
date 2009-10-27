@@ -137,14 +137,14 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         bool
-        generate(OutputIterator& sink, Context&, Delimiter const& d
+        generate(OutputIterator& sink, Context& context, Delimiter const& d
           , Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr))
                 return false;       // fail if it's an uninitialized optional
 
             return bool_inserter<T, Policies, CharEncoding, Tag>::call(
-                        sink, traits::extract_from(attr), p_) &&
+                        sink, traits::extract_from(attr, context), p_) &&
                    delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -154,6 +154,10 @@ namespace boost { namespace spirit { namespace karma
         static bool
         generate(OutputIterator&, Context&, Delimiter const&, unused_type)
         {
+            // It is not possible (doesn't make sense) to use boolean generators 
+            // without providing any attribute, as the generator doesn't 'know' 
+            // what to output. The following assertion fires if this situation
+            // is detected in your code.
             BOOST_SPIRIT_ASSERT_MSG(false, bool_not_usable_without_attribute, ());
             return false;
         }
@@ -194,11 +198,11 @@ namespace boost { namespace spirit { namespace karma
         // it fails.
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context&
+        bool generate(OutputIterator& sink, Context& context
           , Delimiter const& d, Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
-                bool(n_) != bool(traits::extract_from(attr)))
+                bool(n_) != bool(traits::extract_from(attr, context)))
             {
                 return false;
             }

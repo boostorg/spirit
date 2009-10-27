@@ -180,8 +180,8 @@ namespace boost { namespace spirit { namespace karma
         template <
             typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        static bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr)
+        static bool generate(OutputIterator& sink, Context& context
+          , Delimiter const& d, Attribute const& attr)
         {
             if (!traits::has_optional_value(attr))
                 return false;
@@ -192,7 +192,7 @@ namespace boost { namespace spirit { namespace karma
             boost::integer::endian<
                 endian, typename karma::detail::integer<bits>::type, bits
             > p;
-            p = traits::extract_from(attr);
+            p = traits::extract_from(attr, context);
             unsigned char const* bytes =
                 reinterpret_cast<unsigned char const*>(&p);
 
@@ -211,6 +211,10 @@ namespace boost { namespace spirit { namespace karma
         static bool generate(OutputIterator& sink, Context&, Delimiter const& d
           , unused_type)
         {
+            // It is not possible (doesn't make sense) to use binary generators 
+            // without providing any attribute, as the generator doesn't 'know' 
+            // what to output. The following assertion fires if this situation
+            // is detected in your code.
             BOOST_SPIRIT_ASSERT_MSG(false,
                 binary_generator_not_usable_without_attribute, ());
             return false;

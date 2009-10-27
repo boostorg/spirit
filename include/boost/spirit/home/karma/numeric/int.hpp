@@ -210,13 +210,13 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
         static bool
-        generate(OutputIterator& sink, Context&, Delimiter const& d
+        generate(OutputIterator& sink, Context& context, Delimiter const& d
           , Attribute const& attr)
         {
             if (!traits::has_optional_value(attr))
                 return false;       // fail if it's an uninitialized optional
 
-            return insert_int(sink, traits::extract_from(attr)) &&
+            return insert_int(sink, traits::extract_from(attr, context)) &&
                    delimit_out(sink, d);      // always do post-delimiting
         }
 
@@ -226,6 +226,10 @@ namespace boost { namespace spirit { namespace karma
         static bool
         generate(OutputIterator&, Context&, Delimiter const&, unused_type)
         {
+            // It is not possible (doesn't make sense) to use numeric generators 
+            // without providing any attribute, as the generator doesn't 'know' 
+            // what to output. The following assertion fires if this situation
+            // is detected in your code.
             BOOST_SPIRIT_ASSERT_MSG(false, int_not_usable_without_attribute, ());
             return false;
         }
@@ -280,11 +284,11 @@ namespace boost { namespace spirit { namespace karma
         // it fails.
         template <typename OutputIterator, typename Context, typename Delimiter
           , typename Attribute>
-        bool generate(OutputIterator& sink, Context&, Delimiter const& d
-          , Attribute const& attr) const
+        bool generate(OutputIterator& sink, Context& context
+          , Delimiter const& d, Attribute const& attr) const
         {
             if (!traits::has_optional_value(attr) || 
-                n_ != traits::extract_from(attr))
+                n_ != traits::extract_from(attr, context))
             {
                 return false;
             }

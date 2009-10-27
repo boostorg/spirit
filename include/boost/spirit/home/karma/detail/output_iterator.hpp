@@ -217,15 +217,22 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             std::copy(buffer.begin(), end, sink);
             return true;
         }
-//         template <typename RestIterator>
-//         bool copy_rest(RestIterator& sink, std::size_t start_at) const 
-//         { 
-//             typename std::basic_string<T>::const_iterator begin = 
-//                 buffer.begin() + (std::min)(buffer.size(), start_at);
-// 
-//             std::copy(begin, buffer.end(), restsink);
-//             return true;
-//         }
+        template <typename RestIterator>
+        bool copy_rest(RestIterator& sink, std::size_t start_at) const 
+        { 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+#pragma warning(disable: 4267)
+#endif
+            typename std::basic_string<wchar_t>::const_iterator begin = 
+                buffer.begin() + (std::min)(buffer.size(), start_at);
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
+            std::copy(begin, buffer.end(), sink);
+            return true;
+        }
 
         std::size_t buffer_size() const 
         { 
@@ -524,10 +531,12 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             return buffer_data.buffer_size();
         }
 
-//         bool buffer_copy_rest(std::size_t start_at = 0)
-//         {
-//             return buffer_data.copy_rest(sink, start_at);
-//         }
+        // copy to the remaining characters to the specified sink
+        template <typename RestIterator>
+        bool buffer_copy_rest(RestIterator& sink, std::size_t start_at = 0)
+        {
+            return buffer_data.copy_rest(sink, start_at);
+        }
 
     private:
         OutputIterator& sink;

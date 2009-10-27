@@ -49,7 +49,8 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     template <typename Expected, typename Attribute>
     struct compute_compatible_component_variant<Expected, Attribute, mpl::false_>
     {
-        typedef typename Attribute::types types;
+        typedef typename traits::variant_type<Attribute>::type variant_type;
+        typedef typename variant_type::types types;
         typedef typename mpl::end<types>::type end;
 
         typedef typename 
@@ -160,9 +161,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
 
             typedef typename component_type::distance distance_type;
 
+            // if we got passed an empty optional, just fail generation
+            if (!traits::has_optional_value(attr))
+                return false;
+
             // make sure, the content of the passed variant matches our
             // expectations
-            if (attr.which() != distance_type::value)
+            typename traits::optional_attribute<Attribute>::type attr_ = 
+                traits::optional_value(attr);
+            if (attr_.which() != distance_type::value)
                 return false;
 
             // returns true if any of the generators succeed
@@ -170,7 +177,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
                 typename mpl::deref<typename component_type::iter>::type
             compatible_type;
 
-            return component.generate(sink, ctx, d, get<compatible_type>(attr));
+            return component.generate(sink, ctx, d, get<compatible_type>(attr_));
         }
     };
 

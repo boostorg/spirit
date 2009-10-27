@@ -32,7 +32,9 @@ namespace boost { namespace spirit { namespace traits
     struct extract_from_attribute
     {
         typedef Attribute const& type;
-        static type call(Attribute const& attr)
+
+        template <typename Context>
+        static type call(Attribute const& attr, Context&)
         {
             return attr;
         }
@@ -43,7 +45,9 @@ namespace boost { namespace spirit { namespace traits
     struct extract_from_attribute<optional<Attribute> >
     {
         typedef Attribute const& type;
-        static type call(optional<Attribute> const& attr)
+
+        template <typename Context>
+        static type call(optional<Attribute> const& attr, Context&)
         {
             return boost::get<Attribute>(attr);
         }
@@ -53,7 +57,9 @@ namespace boost { namespace spirit { namespace traits
     struct extract_from_attribute<optional<Attribute const> >
     {
         typedef Attribute const& type;
-        static type call(optional<Attribute const> const& attr)
+
+        template <typename Context>
+        static type call(optional<Attribute const> const& attr, Context&)
         {
             return boost::get<Attribute const>(attr);
         }
@@ -64,21 +70,24 @@ namespace boost { namespace spirit { namespace traits
     struct extract_from_attribute<reference_wrapper<Attribute> >
     {
         typedef Attribute const& type;
-        static type call(reference_wrapper<Attribute> const& attr)
+
+        template <typename Context>
+        static type call(reference_wrapper<Attribute> const& attr, Context&)
         {
             return attr.get();
         }
     };
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Attribute>
+    template <typename Attribute, typename Context>
     typename spirit::result_of::extract_from<Attribute>::type
-    extract_from(Attribute const& attr)
+    extract_from(Attribute const& attr, Context& context)
     {
-        return extract_from_attribute<Attribute>::call(attr);
+        return extract_from_attribute<Attribute>::call(attr, context);
     };
 
-    unused_type extract_from(unused_type)
+    template <typename Context>
+    unused_type extract_from(unused_type, Context&)
     {
         return unused;
     };
