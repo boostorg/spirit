@@ -375,7 +375,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_grammars__                [link spirit.qi.reference.nonterminal.grammar grammars]]
 
 [/ stream]
-[template qi_format[str]            [str] [/link spirit.karma.reference.format [str]]]
+[template qi_format[str]            [str] [/link spirit.qi.reference.match [str]]]
 
 
 [/ $$$ End $$$ ]

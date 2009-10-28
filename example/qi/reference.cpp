@@ -196,6 +196,27 @@ struct backwards_bool_policies : boost::spirit::qi::bool_policies<>
 };
 //]
 
+//[reference_qi_stream_complex
+// a simple complex number representation z = a + bi
+struct complex
+{
+    complex (double a, double b)
+      : a(a), b(b)
+    {}
+
+    double a;
+    double b;
+};
+
+// define streaming operator for the type complex
+std::istream& 
+operator>> (std::istream& is, complex& z)
+{
+    is << "{" >> z.a >> "," >> z.b >> "}";
+    return is;
+}
+//]
+
 int
 main()
 {
@@ -871,7 +892,7 @@ main()
         //[reference_list
         //`Some using declarations:
         using boost::spirit::qi::int_;
-        
+
         /*`Parse a comma separated list of numbers and put them in a vector:
          */
         std::vector<int> attr;
@@ -883,7 +904,27 @@ main()
             << std::endl;
         //]
     }
-    
+
+    // stream
+    {
+        //[reference_qi_stream
+        //`Using declarations and variables: 
+        using boost::spirit::qi::stream;
+        using boost::spirit::qi::stream_parser;
+
+        /*`Parse a simple string using the operator>>(istream&, std::string&);
+         */
+        test_parser_attr("abc", stream, str);
+        std::cout << str << std::endl;
+
+        /*`Parse our complex type using the operator>>(istream&, complex&);
+         */
+        complex c;
+        test_parser_attr("{1.0,2.5}", stream_parser<char, complex>(), c);
+        std::cout << c.a << "," << c.b << std::endl;
+        //]
+    }
+
     // native binary
     {
         //[reference_qi_native_binary
@@ -892,7 +933,7 @@ main()
         using boost::spirit::qi::word;
         using boost::spirit::qi::dword;
         using boost::spirit::qi::qword;
-        
+
         boost::uint8_t uc;
         boost::uint16_t us;
         boost::uint32_t ui;

@@ -650,6 +650,22 @@ int main()
         //]
     }
 
+    // action
+    {
+        //[reference_karma_using_declarations_action
+        using boost::spirit::karma::int_;
+        using boost::spirit::karma::_1;
+        using boost::phoenix::ref;
+        using boost::phoenix::val;
+        //]
+
+        //[reference_karma_action
+        int i = 42;
+        test_generator("42", int_[_1 = ref(i)]);
+        test_generator("abc", string[_1 = val("abc")]);
+        //]
+    }
+
     // rule
     {
         //[karma_reference_rule
@@ -679,6 +695,39 @@ int main()
         v.push_back(456);
         v.push_back(789);
         test_generator_attr_delim("123 456 789", rs, v);
+        //]
+    }
+
+    // grammar
+    {
+        //[karma_reference_grammar
+        //`Some using declarations:
+        using boost::spirit::ascii::space_type;
+        using boost::spirit::ascii::space;
+        using boost::spirit::int_;
+        using boost::spirit::karma::grammar;
+        using boost::spirit::karma::rule;
+
+        /*`Basic grammar usage:
+         */
+        struct num_list : grammar<char const*, space_type>
+        {
+            num_list() : base_type(start)
+            {
+                using boost::spirit::int_;
+                num = int_;
+                start = num << *(',' << num);
+            }
+
+            rule<char const*, space_type> start, num;
+        };
+
+        num_list nlist;
+        std::vector<int> v;
+        v.push_back(123);
+        v.push_back(456);
+        v.push_back(789);
+        test_generator_attr_delim("123 , 456 , 789", nlist, space, v);
         //]
     }
 

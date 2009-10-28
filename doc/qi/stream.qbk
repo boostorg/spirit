@@ -25,12 +25,12 @@ Also, see __include_structure__.
 
 The `stream_parser` is a primitive which allows to use pre-existing standard
 streaming operators for input parsing integrated with __qi__. It 
-provides a wrapper parser dispatching the value to input to the stream 
-operator of the corresponding type. Any value `a` to be formatted using the
-`stream_parser` will result in invoking the standard streaming operator
-for its type `A`, for instance:
+provides a wrapper parser dispatching the underlying input stream to the stream 
+operator of the corresponding attribute type to be parsed. Any value `a` to be 
+parsed using the `stream_parser` will result in invoking the standard streaming 
+operator for its type `A`, for instance:
 
-    std::istream& operator>> (std::istream&, A const&);
+    std::istream& operator>> (std::istream&, A&);
 
 [heading Header]
 
@@ -49,7 +49,7 @@ Also, see __include_structure__.
 
 [heading Synopsis]
 
-    template <typename Char>
+    template <typename Char, typename Attrib>
     struct stream_parser;
 
 [heading Template parameters]
@@ -60,6 +60,8 @@ Also, see __include_structure__.
                  the input. This type will be used while 
                  assigning the generated characters to the 
                  underlying input iterator.]           [`char`]]
+    [[`Attrib`] [The type of the attribute the `stream_parser` is
+                 expected to parse its input into.]    [`spirit::hold_any`]]
 ]
 
 [heading Model of]
@@ -81,28 +83,14 @@ not defined in __primitive_parser_concept__.
 [table
     [[Expression]           [Description]]
     [[`stream`]             [Call the streaming `operator>>()` for the type
-                             of the mandory attribute. The input emitted 
-                             by this operator will be the result of the 
-                             `stream` parser. This parser never fails 
-                             (unless the underlying input stream reports an 
-                             error). The character type of the I/O istream
-                             is assumed to be `char`.]]
-    [[`stream(s)`]          [Call the streaming `operator>>()` for the type
-                             of the immediate value `s`. The input emitted 
+                             of the mandory attribute. The input recognized 
                              by this operator will be the result of the 
                              `stream` parser. This parser never fails 
                              (unless the underlying input stream reports an 
                              error). The character type of the I/O istream
                              is assumed to be `char`.]]
     [[`wstream`]            [Call the streaming `operator>>()` for the type
-                             of the mandory attribute. The input emitted 
-                             by this operator will be the result of the 
-                             `stream` parser. This parser never fails 
-                             (unless the underlying input stream reports an 
-                             error). The character type of the I/O istream
-                             is assumed to be `wchar_t`.]]
-    [[`wstream(s)`]         [Call the streaming `operator>>()` for the type
-                             of the immediate value `s`. The input emitted 
+                             of the mandory attribute. The input recognized 
                              by this operator will be the result of the 
                              `stream` parser. This parser never fails 
                              (unless the underlying input stream reports an 
@@ -119,50 +107,38 @@ arbitrary underlying character type.
     [[Expression]       [Semantics]]
     [
 [``stream_parser<
-    Char
+    Char, Attrib
 >()``]                      [Call the streaming `operator>>()` for the type
-                             of the mandory attribute. The input emitted 
+                             of the optional attribute, `Attrib`. The input recognized 
                              by this operator will be the result of the 
-                             `stream` parser. This parser never fails 
+                             `stream_parser<>` parser. This parser never fails 
                              (unless the underlying input stream reports an 
                              error). The character type of the I/O istream
                              is assumed to be `Char`]]
-    [
-[``stream_parser<
-    Char
->()(s)``]                   [Call the streaming `operator>>()` for the type
-                             of the immediate value `s`. The input emitted 
-                             by this operator will be the result of the 
-                             `stream` parser. This parser never fails 
-                             (unless the underlying input stream reports an 
-                             error). The character type of the I/O istream
-                             is assumed to be `Char`.]]
 ]
 
 [heading Additional Requirements]
 
 All of the stream parsers listed above require the type of the value to 
-generate input for (either the immediate value or the associated attribute) to 
-implement a streaming operator conforming to the usual I/O streams conventions
-(where `attribute_type` is the type of the value to generate input for):
+parse (the associated attribute) to implement a streaming operator conforming 
+to the usual I/O streams conventions (where `attribute_type` is the type of the 
+value to recognize while parse):
 
     template <typename Istream>
-    Istream& operator>> (Istream& os, attribute_type const& attr)
+    Istream& operator>> (Istream& os, attribute_type& attr)
     {
         // type specific input parsing
         return os;
     }
 
 This operator will be called by the stream parsers to gather the input for
-the attribute of type `attribute_type`. All data streamed into the given 
-`Istream` will end up being generated by the corresponding stream parser 
-instance.
+the attribute of type `attribute_type`. 
 
-[note   If the `stream` parser is invoked inside a [qi_format `format`] 
-        (or [qi_format `format_delimited`]) stream manipulator the `Istream` 
+[note   If the `stream` parser is invoked inside a [qi_format `match`] 
+        (or [qi_format `phrase_match`]) stream manipulator the `Istream` 
         passed to the `operator>>()` will have registered (imbued) the same 
-        standard locale instance as the stream the [qi_format `format`] (or 
-        [qi_format `format_delimited`]) manipulator has been used with. 
+        standard locale instance as the stream the [qi_format `match`] (or 
+        [qi_format `phrase_match`]) manipulator has been used with. 
         This ensures all facets registered (imbued) with the original I/O 
         stream object are used during input parsing.
 ]
@@ -171,35 +147,30 @@ instance.
 
 [table
     [[Expression]           [Attribute]]
-    [[`stream`]             [`hold_any`, attribute is mandatory (otherwise compilation will fail)]]
-    [[`stream(s)`]          [__unused__]]
-    [[`wstream`]            [`hold_any`, attribute is mandatory (otherwise compilation will fail)]]
-    [[`wstream(s)`]         [__unused__]]
-    [[`stream_parser<Char>()`]    [`hold_any`, attribute is mandatory (otherwise compilation will fail)]]
-    [[`stream_parser<Char>()(s)`] [__unused__]]
+    [[`stream`]             [`spirit::hold_any`]]
+    [[`wstream`]            [`spirit::hold_any`]]
+    [[`stream_parser<Char, Attrib>()`]    [`Attrib`]]
 ]
 
-[important The attribute type `hold_any` exposed by some of the stream 
+[important The attribute type `spirit::hold_any` exposed by some of the stream 
            parsers is semantically and syntactically equivalent to 
            the type implemented by __boost_any__. It has been added to /Spirit/ 
            as it has better a performance and a smaller footprint if compared to 
            __boost_any__.
 ]
 
-[note  In addition to their usual attribute of type `Attrib` all listed parsers 
-       accept an instance of a `boost::optional<Attrib>` as well. If the 
-       `boost::optional<>` is initialized (holds a value) the parsers behave 
-       as if their attribute was an instance of `Attrib` and emit the value stored
-       in the `boost::optional<>`. Otherwise the parsers will fail.]
-
 [heading Complexity]
 
-[:O(N), where N is the number of characters emitted by the stream parser]
+[:O(N), where N is the number of characters consumed by the stream parser]
 
 [heading Example]
 
 [note The test harness for the example(s) below is presented in the
 __qi_basics_examples__ section.]
+
+A class definition used in the examples:
+
+[reference_qi_stream_complex]
 
 [reference_qi_stream]
 

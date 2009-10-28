@@ -123,7 +123,7 @@ not defined in __qi_nonterminal__.
 
 [heading Attributes]
 
-[:The parser attribute of the rule is `T`, its inherited attribute. See
+[:The parser attribute of the rule is `T`, its synthesized attribute. See
 __qi_nonterminal_attribute__] 
 
 [heading Complexity]
