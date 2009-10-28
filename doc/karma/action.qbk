@@ -87,7 +87,7 @@ generating any output.
 [heading Complexity]
 
 The complexity of the action generator is defined by the complexity of the 
-generator teh semantic action is attached to and the complexity of the function
+generator the semantic action is attached to and the complexity of the function
 or function object used as the semantic action.
 
 [important Please note that the use of semantic actions in __karma__ generally
