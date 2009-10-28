@@ -112,7 +112,7 @@ Examples:
 [heading Header]
 
     // forwards to <boost/spirit/home/qi/char/char.hpp>
-    #include <boost/spirit/qi_char.hpp>
+    #include <boost/spirit/qi_char_.hpp>
 
 Also, see __include_structure__.
 

@@ -40,17 +40,18 @@ Reference
 - document API functions: parse, phrase_parse, match, phrase_match
 - cross-link from quickref to reference topics
 [done] - attr_cast (in auxiliary.qbk)
+[done] - add missing header files to include
 
 Karma
 -----
 - More introductory material
+- Generators in Depth
 
 Reference
 [done] - action.qbk
+[done] - attr_cast (in auxiliary.qbk)
 [done] - nonterminal.qbk
 - document API functions: generate, generate_delimited, format, format_delimited
-
-- Generators in Depth
 
 Lex
 ---

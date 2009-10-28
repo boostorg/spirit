@@ -26,8 +26,8 @@ predicate (unary `!`), Optional (`-`), Permutation (`^`), Plus (unary
 
 [heading Module Header]
 
-    // forwards to <boost/spirit/home/karma/operator.hpp>
-    #include <boost/spirit/include/karma_operator.hpp>
+    // forwards to <boost/spirit/home/qi/operator.hpp>
+    #include <boost/spirit/include/qi_operator.hpp>
 
 Also, see __include_structure__.
 
