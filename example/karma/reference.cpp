@@ -135,6 +135,7 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct transform_attribute<int_data const, int>
     {
+        typedef int type;
         static int pre(int_data const& d) { return d.i; }
     };
 }}}
@@ -528,12 +529,13 @@ int main()
 
     {
         //[reference_karma_using_declarations_attr_cast
+        using boost::spirit::karma::int_;
         using boost::spirit::karma::attr_cast;
         //]
 
         //[reference_karma_attr_cast1
         int_data d = { 1 };
-        test_generator("1", karma::attr_cast(karma::int_), d);
+        test_generator("1", attr_cast(int_), d);
         //]
     }
 
@@ -647,6 +649,87 @@ int main()
         test_binary_generator_attr("\x02\x01", 2, big_word, 0x0201);
         test_binary_generator_attr("\x04\x03\x02\x01", 4, big_dword, 0x04030201);
         test_binary_generator_attr("\x08\x07\x06\x05\x04\x03\x02\x01", 8, big_qword, 0x0807060504030201LL);
+        //]
+    }
+
+    // action
+    {
+        //[reference_karma_using_declarations_action
+        using boost::spirit::karma::int_;
+        using boost::spirit::karma::_1;
+        using boost::phoenix::ref;
+        using boost::phoenix::val;
+        //]
+
+        //[reference_karma_action
+        int i = 42;
+        test_generator("42", int_[_1 = ref(i)]);
+        test_generator("abc", string[_1 = val("abc")]);
+        //]
+    }
+
+    // rule
+    {
+        //[karma_reference_rule
+        //`Some using declarations:
+        using boost::spirit::karma::rule;
+        using boost::spirit::karma::int_;
+        using boost::spirit::ascii::space_type;
+
+        /*`Basic rule:
+         */
+        rule<char const*> r;
+        r = int_(123);
+        test_generator("123", r);
+
+        /*`Rule with consumed attribute:
+         */
+        rule<char const*, int()> ra;
+        ra = int_;
+        test_generator_attr("123", ra, 123);
+
+        /*`Rule with delimiter and consumed attribute:
+         */
+        rule<char const*, std::vector<int>(), space_type> rs;
+        rs = *int_;
+        std::vector<int> v;
+        v.push_back(123);
+        v.push_back(456);
+        v.push_back(789);
+        test_generator_attr_delim("123 456 789", rs, v);
+        //]
+    }
+
+    // grammar
+    {
+        //[karma_reference_grammar
+        //`Some using declarations:
+        using boost::spirit::ascii::space_type;
+        using boost::spirit::ascii::space;
+        using boost::spirit::int_;
+        using boost::spirit::karma::grammar;
+        using boost::spirit::karma::rule;
+
+        /*`Basic grammar usage:
+         */
+        struct num_list : grammar<char const*, space_type>
+        {
+            num_list() : base_type(start)
+            {
+                using boost::spirit::int_;
+                num = int_;
+                start = num << *(',' << num);
+            }
+
+            rule<char const*, space_type> start, num;
+        };
+
+        num_list nlist;
+        std::vector<int> v;
+        v.push_back(123);
+        v.push_back(456);
+        v.push_back(789);
+        test_generator_attr_delim("123 , 456 , 789", nlist, space, v);
         //]
     }
 

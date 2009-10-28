@@ -69,6 +69,7 @@
 
 [def __mpl_boolean_constant__   [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Boolean Constant]]
 [def __mpl_int_constant__       [@boost:/libs/mpl/doc/refmanual/integral-constant.html MPL Integral Constant]]
+[def __mpl_fwd_sequence__       [@boost:/libs/mpl/doc/refmanual/http://www.boost.org/doc/libs/1_40_0/libs/mpl/doc/refmanual/forward-sequence.html MPL Forward Sequence]]
 
 [def __fixme__                  *FIXME*]
 
@@ -151,6 +152,9 @@
 [def __unary_generator_concept__    [link spirit.karma.reference.generator_concepts.unarygenerator `UnaryGenerator`]]
 [def __binary_generator_concept__   [link spirit.karma.reference.generator_concepts.binarygenerator `BinaryGenerator`]]
 [def __nary_generator_concept__     [link spirit.karma.reference.generator_concepts.narygenerator `NaryGenerator`]]
+[def __karma_nonterminal_concept__  [link spirit.karma.reference.generator_concepts.nonterminal `Nonterminal`]]
+[def __karma_nonterminal_attribute__ [link spirit.karma.reference.generator_concepts.nonterminal.attributes `Attribute`]]
+
 [def __karma_lazy_argument__        [link spirit.karma.reference.karma_basics.lazy_argument Lazy Argument]]
 [def __karma_lazy_arguments__       [link spirit.karma.reference.karma_basics.lazy_argument Lazy Arguments]]
 [def __karma_basics_examples__      [link spirit.karma.reference.karma_basics.examples Basics Examples]]
@@ -220,8 +224,12 @@
 [def __karma_context__              Context] [/$$$ TODO: link me $$$]
 [def __karma_attribute__            Generator Attributes] [/$$$ TODO: link me $$$]
 [def __karma_compatible_attribute__ Compatible Attributes] [/$$$ TODO: link me $$$]
-[def __karma_rule__                 Rule] [/$$$ TODO: link me $$$]
-[def __karma_grammar__              Grammar] [/$$$ TODO: link me $$$]
+
+[def __karma_nonterminal__          [link spirit.karma.reference.nonterminal `Nonterminals`]]
+[def __karma_rule__                 [link spirit.karma.reference.nonterminal.rule rule]]
+[def __karma_rules__                [link spirit.karma.reference.nonterminal.rule rules]]
+[def __karma_grammar__              [link spirit.karma.reference.nonterminal.grammar grammar]]
+[def __karma_grammars__             [link spirit.karma.reference.nonterminal.grammar grammars]]
 [def __karma_comp_attr_notation__   [link spirit.karma.quick_reference.compound_attribute_rules.notation Compound Attribute Notation]]
 
 [/////////////////////////////////////////////////////////////////////////////]
@@ -317,6 +325,8 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __unary_parser_concept__       [link spirit.qi.reference.parser_concepts.unaryparser `UnaryParser`]]
 [def __binary_parser_concept__      [link spirit.qi.reference.parser_concepts.binaryparser `BinaryParser`]]
 [def __nary_parser_concept__        [link spirit.qi.reference.parser_concepts.naryparser `NaryParser`]]
+[def __qi_nonterminal__             [link spirit.qi.reference.parser_concepts.nonterminal `Nonterminal`]]
+[def __qi_nonterminal_attribute__   [link spirit.qi.reference.parser_concepts.nonterminal.attributes `Attribute`]]
 
 [/ basics]
 [def __qi_lazy_argument__           [link spirit.qi.reference.basics.lazy_argument Lazy Argument]]
@@ -357,6 +367,15 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 [def __qi_plus__                    [link spirit.qi.reference.operator.plus Plus]]
 [def __qi_sequence__                [link spirit.qi.reference.operator.sequence Sequence]]
 [def __qi_sequential_or__           [link spirit.qi.reference.operator.sequential_or Sequential Or]]
+
+[/ nonterminal]
+[def __qi_rule__                    [link spirit.qi.reference.nonterminal.rule rule]]
+[def __qi_rules__                   [link spirit.qi.reference.nonterminal.rule rules]]
+[def __qi_grammar__                 [link spirit.qi.reference.nonterminal.grammar grammar]]
+[def __qi_grammars__                [link spirit.qi.reference.nonterminal.grammar grammars]]
+
+[/ stream]
+[template qi_format[str]            [str] [/link spirit.qi.reference.match [str]]]
 
 
 [/ $$$ End $$$ ]

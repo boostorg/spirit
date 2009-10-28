@@ -100,6 +100,9 @@ where `N` is the number of characters in the string to be parsed.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_lit_string]
@@ -115,9 +118,6 @@ From a `std::string`
 Lazy strings using __phoenix__
 
 [reference_string_phoenix]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ lit/string]
 
@@ -260,6 +260,9 @@ template parameter to the symbols class:
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_symbols]
@@ -275,8 +278,6 @@ when symbols is used in a `no_case` directive.
 
 [reference_symbols_with_no_case]
 
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ symbols]
 

@@ -39,19 +39,7 @@ Also, see __include_structure__.
 [table
     [[Name]]
     [[`boost::spirit::qi::rule`]]
-    [[`boost::spirit::qi::locals`]]
-    [[`boost::spirit::qi::debug`]]
-
-    [[`boost::spirit::_val  // alias: boost::spirit::qi::_val`]]
-    [[`boost::spirit::_lp   // alias: boost::spirit::qi::_lp`]]
-    [[`boost::spirit::_rN   // alias: boost::spirit::qi::_rN`]]
 ]
-
-In the table above [*_lp] represents a local variable placeholder and
-can be one of `_a`, `_b`, `_c`, `_d`, `_e`, `_f`, `_g`, `_h`, `_i` or
-`_j` and [*_rN] represents an inherited attribute placeholder and can be
-one of `_r1`, `_r2`, `_r3`, `_r4`, `_r5`, `_r6`, `_r7`, `_r8`, `_r9`
-or`_r10`.
 
 [heading Synopsis]
 
@@ -70,12 +58,14 @@ or`_r10`.
                             any order. See table below.]    [See table below.]]
 ]
 
+Here is more information about the template parameters:
+
 [table
     [[Parameter]            [Description]                   [Default]]
     [[`Signature`]          [Specifies the rule's synthesized 
                             (return value) and inherited 
                             attributes (arguments). More on
-                            this below.]                    [__unused_type__. 
+                            this here: __qi_nonterminal__.] [__unused_type__. 
                                                             When `Signature` defaults 
                                                             to __unused_type__, the effect 
                                                             is the same as specifying a signature
@@ -86,70 +76,16 @@ or`_r10`.
                             want the rule to skip white 
                             spaces.]                        [__unused_type__]]
     [[`Locals`]             [Specifies the rule's local
-                            variables. See below.]          [__unused_type__]]
+                            variables. See __qi_nonterminal__.] [__unused_type__]]
 ]
 
 [heading Model of]
 
-[:__parser_concept__]
-
-[heading Signature]
-
-Rules can have both synthesized and inherited attributes. The rule's
-/Signature/ specifies both the synthesized and inherited attributes. The
-specification uses the function declarator syntax: 
-
-    RT(A0, A1, A2, ..., AN)
-    
-where `RT` is the rule's synthesized attribute and `A0` ... `AN` are the
-rule's inherited attributes.
-
-[heading Attributes]
-
-[:The rule's parser attribute is `RT`: The synthesized attribute of the
-rule.]
-
-The rule models a C++ function. The rule's synthesized attribute is
-analogous to the function return value and its inherited attributes are
-analogous to function arguments. The inherited attributes (arguments)
-can be passed in just like any __qi_lazy_argument__, e.g.:
-
-    r(expr) // Evaluate expr at parse time and pass the result to the parser r
-    
-[heading `_val`]
-
-The `_val` placeholder can be used in __phoenix__ semantic actions
-anywhere in the rule's definition (RHS). This __phoenix__ placeholder
-refers to the rule's (synthesized) attribute. The `_val` placeholder
-acts like a mutable reference to the rule's attribute.
-
-[heading `_r1`...`r10`]
-
-The `_r1`...`r10` placeholders can be used in __phoenix__ semantic
-actions anywhere in the rule's definition (RHS). These __phoenix__
-placeholders refer to the rule's inherited attributes.
-
-[heading Locals]
-
-Rules can have local variables that will be created on the stack at
-parse time. A locals descriptor added to the rule declaration will give
-the rule local variables: 
-
-    template <typename T0, typename T1, typename T2, ... typename TN>
-    struct locals;
-
-where `T0` ... `TN` are the types of local variables accessible in your
-__phoenix__ semantic actions using the placeholders `_a`, `_b`, `_c`,
-`_d`, `_e`, `_f`, `_g`, `_h`, `_i` and `_j` which correspond to the
-rule's local variables `T0` ... `T9`.
-
-See example below.
+[:__qi_nonterminal__]
 
 [variablelist Notation
     [[`r, r2`]                      [Rules]]
     [[`p`]                          [A parser expression]]
-    [[`arg1`, `arg2`, ... `argN`]   [__qi_lazy_arguments__ that evaluate to each of 
-                                    the rule's inherited attributes (see below).]]
     [[`Iterator`]                   [The underlying iterator type that the rule is  
                                     expected to work on.]]
     [[`A1`, `A2`, `A3`]             [Either `Signature`, `Skipper` or `Locals` in 
@@ -159,7 +95,7 @@ See example below.
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is
-not defined in __parser_concept__.
+not defined in __qi_nonterminal__.
 
 [table
     [[Expression]                               [Description]]
@@ -172,17 +108,10 @@ not defined in __parser_concept__.
     [[
 ``rule<Iterator, A1, A2, A3> 
     r(r2);``]                                   [Copy construct rule `r` from rule `r2`.]]
-    [[`r`]                                      [In a parser expression, invoke rule `r`]]
-    [[`r(arg1, arg2, ... argN)`]                [In a parser expression, invoke rule `r` 
-                                                passing in inherited attributes
-                                                `arg1`...`argN`]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`.]]
     [[`r.alias()`]                              [return an alias of `r`. The alias is a parser that
                                                 holds a reference to `r`.]]
     [[`r.copy()`]                               [Get a copy of `r`.]]
-    [[`r.name(name)`]                           [Naming a rule.]]
-    [[`r.name()`]                               [Getting the name of a rule.]]
-    [[debug(r)]                                 [Debug rule `r`.]]
     [[`r = p;`]                                 [Rule definition. This is equivalent to `r %= p`
                                                 (see below) if there are no semantic actions attached 
                                                 anywhere in `p`.]]
@@ -192,16 +121,21 @@ not defined in __parser_concept__.
                                                 to `r`'s synthesized attribute.]]
 ]
 
+[heading Attributes]
+
+[:The parser attribute of the rule is `T`, its synthesized attribute. See
+__qi_nonterminal_attribute__] 
+
 [heading Complexity]
 
 [:The complexity is defined by the complexity of the RHS parser, `p`]
 
 [heading Example]
 
-[reference_rule]
-
-[note The test harness for the example(s) above is presented in the
+[note The test harness for the example(s) below is presented in the
 __qi_basics_examples__ section.]
+
+[reference_rule]
 
 [endsect] [/ Rule]
 
@@ -210,13 +144,15 @@ __qi_basics_examples__ section.]
 
 [heading Description]
 
-Description of XXX
+The grammar encapsulates a set of __qi_rules__ (as well as primitive
+parsers (__primitive_parser_concept__) and sub-grammars). The grammar is
+the main mechanism for modularization and composition. Grammars can be
+composed to form more complex grammars.
 
 [heading Header]
 
-    #include <boost/spirit/xxx.hpp>
-
-    ...
+    // forwards to <boost/spirit/qi/nonterminal/grammar.hpp>
+    #include <boost/spirit/include/qi_grammar.hpp>
 
 Also, see __include_structure__.
 
@@ -224,54 +160,100 @@ Also, see __include_structure__.
 
 [table
     [[Name]]
-    [[`boost::spirit::xx`]]
+    [[`boost::spirit::qi::grammar`]]
 ]
 
 [heading Synopsis]
 
-    template <typename T>
-    struct XXX;
+    template <typename Iterator, typename A1, typename A2, typename A3>
+    struct grammar;
 
 [heading Template parameters]
 
 [table
-    [[Parameter]            [Description]               [Default]]
-    [[`T`]                  [What is T]                 []]
+    [[Parameter]            [Description]                   [Default]]
+    [[`Iterator`]           [The underlying iterator 
+                            type that the rule is  
+                            expected to work on.]           [none]]
+    [[`A1`, `A2`, `A3`]     [Either `Signature`, 
+                            `Skipper` or `Locals` in 
+                            any order. See table below.]    [See table below.]]
+]
+
+Here is more information about the template parameters:
+
+[table
+    [[Parameter]            [Description]                   [Default]]
+    [[`Signature`]          [Specifies the grammar's synthesized 
+                            (return value) and inherited 
+                            attributes (arguments). More on
+                            this here: __qi_nonterminal__.] [__unused_type__. 
+                                                            When `Signature` defaults 
+                                                            to __unused_type__, the effect 
+                                                            is the same as specifying a signature
+                                                            of `void()` which is also equivalent 
+                                                            to `unused_type()`]]
+    [[`Skipper`]            [Specifies the grammar's skipper 
+                            parser. Specify this if you
+                            want the grammar to skip white 
+                            spaces.]                        [__unused_type__]]
+    [[`Locals`]             [Specifies the grammar's local
+                            variables. See __qi_nonterminal__.]          [__unused_type__]]
 ]
 
 [heading Model of]
 
+[:__qi_nonterminal__]
+
 [variablelist Notation
-    [[`xxx`]     [An XXX]]
+    [[`g`]                      [A grammar]]
 ]
 
 [heading Expression Semantics]
 
 Semantics of an expression is defined only where it differs from, or is not
-defined in _concept-of_XXX_.
+defined in __qi_nonterminal__.
 
 [table
     [[Expression]       [Semantics]]
-    [[`xxx`]            [Semantics of `xxx`]]
+    [[
+``
+    template <typename Iterator>
+    struct my_grammar : grammar<Iterator, A1, A2, A3>
+    {
+        my_grammar() : my_grammar::base_type(start, name)
+        {
+            // Rule definitions
+            start = /* ... */;
+        }
+
+        rule<Iterator, A1, A2, A3> start;
+        // more rule declarations...
+    };
+``
+    ]                   [Grammar definition. `name` is an optional string that gives the
+                        grammar its name, useful for debugging and error handling.]]
 ]
+
+[note The template parameters of a grammar and its start rule (the rule passed 
+      to the grammar's base class constructor) must match, otherwise you will 
+      see compilation errors.]
 
 [heading Attributes]
 
-See __qi_comp_attr_notation__.
-
-[table
-    [[Expression]       [Attribute]]
-    [[`xxx`]            [Attribute of `xxx`]]
-]
+[:The parser attribute of the grammar is `T`, its synthesized attribute. See
+__qi_nonterminal_attribute__]
 
 [heading Complexity]
 
-Big-O complexity of the parser
+[:The complexity is defined by the complexity of the its definition.]
 
 [heading Example]
 
-Real example code. Use Quickbook import mechanism to link to actual
-working code snippets here.
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
+[reference_grammar]
 
 [endsect] [/ Grammar]
 

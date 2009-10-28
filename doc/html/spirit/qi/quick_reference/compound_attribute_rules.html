@@ -7,7 +7,7 @@
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../quick_reference.html" title="Quick Reference">
 <link rel="prev" href="qi_parsers/action.html" title="Parser Semantic Actions">
-<link rel="next" href="non_terminals.html" title="Non-terminals">
+<link rel="next" href="non_terminals.html" title="Nonterminals">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -28,7 +28,7 @@
         Attribute Rules</a>
 </h4></div></div></div>
 <a name="spirit.qi.quick_reference.compound_attribute_rules.notation"></a><h6>
-<a name="id580445"></a>
+<a name="id605758"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.notation">Notation</a>
         </h6>
 <p>
@@ -72,7 +72,7 @@
           </p></td></tr>
 </table></div>
 <a name="spirit.qi.quick_reference.compound_attribute_rules.compound_parser_attribute_types"></a><h6>
-<a name="id583112"></a>
+<a name="id607333"></a>
           <a class="link" href="compound_attribute_rules.html#spirit.qi.quick_reference.compound_attribute_rules.compound_parser_attribute_types">Compound
           Parser Attribute Types</a>
         </h6>
@@ -154,8 +154,9 @@
                   
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span>
-<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">B</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span><span class="special">,</span> <span class="identifier">c</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span> <span class="special">|</span> <span class="identifier">c</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">variant</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span> <span class="special">&gt;</span>
+<span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">B</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">B</span><span class="special">&gt;</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">Unused</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">Unused</span>
 <span class="identifier">a</span><span class="special">:</span> <span class="identifier">A</span><span class="special">,</span> <span class="identifier">b</span><span class="special">:</span> <span class="identifier">A</span> <span class="special">--&gt;</span> <span class="special">(</span><span class="identifier">a</span> <span class="special">|</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">A</span></pre>
 <p>

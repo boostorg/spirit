@@ -30,8 +30,8 @@ struct ts_real_policies : boost::spirit::qi::ureal_policies<T>
     static bool
     parse_frac_n(Iterator& first, Iterator const& last, Attribute& attr)
     {
-        return boost::spirit::qi::
-            extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
+        namespace qi = boost::spirit::qi;
+        return qi::extract_uint<T, 10, 1, 2, true>::call(first, last, attr);
     }
 
     //  No exponent

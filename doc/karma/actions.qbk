@@ -59,9 +59,11 @@ single argument function, like above. The other arguments are simply ignored.
 
 Overall, the possible signatures for semantic actions are:
 
-    void f(Attr&);
-    void f(Attr&, Context&);
-    void f(Attr&, Context&, bool&);
+    void f(Attrib&);
+    void f(Attrib&, Context&);
+    void f(Attrib&, Context&, bool&);
+
+[heading Examples of Semantic Actions]
 
 In the following example we present various ways to attach semantic actions:
 

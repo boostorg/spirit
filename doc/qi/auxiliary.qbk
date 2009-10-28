@@ -9,8 +9,8 @@
 [section Auxiliary]
 
 This module includes different auxiliary parsers not fitting into any of the 
-other categories. This module includes the `attr`, `eoi`, `eol`, `eps`, and 
-`lazy` parsers.
+other categories. This module includes the `attr`, `attr_cast`, `eoi`, `eol`, 
+`eps`, and `lazy` parsers.
 
 [heading Module Header]
 
@@ -82,6 +82,9 @@ The complexity is constant as no input is consumed and no matching is done.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_attr]
@@ -94,10 +97,128 @@ Using `attr` with __phoenix__ function objects:
 
 [reference_attr_phoenix]
 
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
+[endsect] [/ attr]
 
-[endsect] [/ Attribute]
+[/------------------------------------------------------------------------------]
+[section:attr_cast Attribute Transformation Pseudo Generator (`attr_cast`)]
+
+[heading Description]
+
+The `attr_cast<Exposed, Transformed>()` component invokes the embedded parser 
+while supplying an attribute of type `Transformed`. The supplied attribute gets created 
+from the original attribute (of type `Exposed`) passed to this component using the 
+customization point __customize_transform_attribute__.
+
+[heading Header]
+
+    // forwards to <boost/spirit/home/qi/auxiliary/attr_cast.hpp>
+    #include <boost/spirit/include/qi_attr_cast.hpp>
+
+Also, see __include_structure__.
+
+[heading Namespace]
+
+[table
+    [[Name]]
+    [[`boost::spirit::attr_cast // alias: boost::spirit::qi::attr_cast`]]
+]
+
+[heading Synopsis]
+
+    template <Exposed, Transformed>
+    <unspecified> attr_cast(<unspecified>);
+
+[heading Template parameters]
+
+[table
+    [[Parameter]    [Description]                       [Default]]
+    [[`Exposed`]    [The type of the attribute supplied to the `attr_cast`.] [__unused_type__]]
+    [[`Transformed`][The type of the attribute expected by the embedded 
+                     parser `p`.]                    [__unused_type__]]
+]
+
+The `attr_cast` is a function template. It is possible to invoke it using the 
+following schemes:
+
+    attr_cast(p)
+    attr_cast<Exposed>(p)
+    attr_cast<Exposed, Transformed>(p)
+
+depending on which of the attribute types can be deduced properly if not 
+explicitly specified.
+
+[heading Model of]
+
+[:__unary_parser_concept__]
+
+[variablelist Notation
+    [[`p`]          [A parser object.]]
+]
+
+[heading Expression Semantics]
+
+Semantics of an expression is defined only where it differs from, or is
+not defined in __unary_parser_concept__.
+
+[table
+    [[Expression]             [Semantics]]
+    [[`attr_cast(p)`]         [Create a component invoking the 
+                              parser `p` while passing an attribute of the type 
+                              as normally expected by `p`. The type of the supplied 
+                              attribute will be transformed to the type 
+                              `p` exposes as its attribute type (by using the 
+                              attribute customization point __customize_transform_attribute__).]]
+    [[`attr_cast<Exposed>(p)`] [Create a component invoking the 
+                              parser `p` while passing an attribute of the type 
+                              as normally expected by `p`. The supplied attribute 
+                              is expected to be of the type `Exposed`, it will be 
+                              transformed to the type `p` exposes as its attribute type 
+                              (using the attribute customization point 
+                              __customize_transform_attribute__).]]
+    [[`attr_cast<Exposed, Transformed>(p)`] [Create a component invoking the 
+                              parser `p` while passing an attribute of type 
+                              `Transformed`. The supplied attribute is expected
+                              to be of the type `Exposed`, it will be transformed
+                              to the type `Transformed` (using the attribute 
+                              customization point __customize_transform_attribute__).]]
+]
+
+[heading Attributes]
+
+[table
+    [[Expression]                             [Attribute]]
+    [[`attr_cast(p)`]                         [`p: A --> attr_cast(p): A`]]
+    [[`attr_cast<Exposed>(p)`] [`p: A --> attr_cast<Exposed>(p): Exposed`]]
+    [[`attr_cast<Exposed, Transformed>(p)`] 
+                  [`p: A --> attr_cast<Exposed, Transformed>(p): Exposed`]]
+]
+
+[heading Complexity]
+
+[:The complexity of this component is fully defined by the complexity of the 
+  embedded parser `p`.]
+
+[heading Example]
+
+[note The test harness for the example(s) below is presented in the
+      __qi_basics_examples__ section.]
+
+Some using declarations:
+
+[reference_qi_using_declarations_attr_cast]
+
+The example references data structure `int_data` which needs a specialization of 
+the customization point __customize_transform_attribute__:
+
+[reference_qi_auxiliary_attr_cast_data1]
+
+Now we use the `attr_cast` pseudo parser to invoke the attribute 
+transformation:
+
+[reference_qi_attr_cast1]
+
+[endsect]
+
 
 [/------------------------------------------------------------------------------]
 [section:eol End of Line (`eol`)]
@@ -148,6 +269,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_eol]
@@ -155,9 +279,6 @@ Some using declarations:
 Using `eol`:
 
 [reference_eol]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ End of Line]
 
@@ -210,6 +331,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_eoi]
@@ -217,9 +341,6 @@ Some using declarations:
 Using `eoi`:
 
 [reference_eoi]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ End of Input]
 
@@ -307,6 +428,9 @@ not defined in __primitive_parser_concept__.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]
+
 Some using declarations:
 
 [reference_using_declarations_eps]
@@ -316,9 +440,6 @@ Some using declarations:
 [reference_eps_if]
 
 [reference_eps_while]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/Epsilon]
 
@@ -386,6 +507,9 @@ the parser returned from `fp`.
 
 [heading Example]
 
+[note The test harness for the example(s) below is presented in the
+__qi_basics_examples__ section.]	
+
 Some using declarations:
 
 [reference_using_declarations_lazy]
@@ -393,9 +517,6 @@ Some using declarations:
 Using `lazy`:
 
 [reference_lazy]
-
-[note The test harness for the example(s) above is presented in the
-__qi_basics_examples__ section.]
 
 [endsect] [/ Lazy]
 

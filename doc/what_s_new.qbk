@@ -77,24 +77,37 @@ backwards compatibility for existing applications.
 * The `uint`, `ushort`, `ulong`, and `byte` terminal placeholders have been 
   renamed to `uint_`, `ushort_`, `ulong_`, and `byte_`.
 * `qi::skip[]` now re-enables outer skipper if used inside `lexeme[]`
-* Added `karma::maxwidth[]` directive
-* Added `karma::omit[]` directive (see __karma_omit__)
-* Added `karma::buffer[]` directive (see __karma_buffer__)
+* Added `karma::maxwidth[]` directive (see [karma_maxwidth `maxwidth`])
+* Added `karma::omit[]` allowing to consume the attribute of subject generator 
+  without emitting any output (see __karma_omit__).
+* Added `karma::buffer[]` allowing to avoid unwanted output to be generated in 
+  case of a generator failing in the middle of a sequence (see __karma_buffer__).
 * `karma::delimit[]` now re-enables outer delimiter if used inside `verbatim[]`
-* karma: added and-predicate (`operator&()`) and not-predicate (`operator!()`)
-* karma: changed semantics of `char_()`, `string()`, `int_()` et.al., and 
+* Karma: added and-predicate (`operator&()`) and not-predicate (`operator!()`)
+  Both now always consume an attribute.
+* Karma: changed semantics of `char_()`, `string()`, `int_()` et.al., and 
   `double_()` et.al.: all of these generators now always expose an attribute. 
   If they do not have an associate attribute, they generate their immediate 
   literal. If they have an associated attribute, the generators first test if 
-  the attribute value is equal to the immediate literal. They fail not 
-  while generating anything if those are not equal. Otherwise they generate 
-  their immediate literal. For more information see for instance 
-  [signed_int `int_`].
+  the attribute value is equal to the immediate literal. They fail while not 
+  generating anything if those are not equal. Otherwise they generate their 
+  immediate literal. For more information see for instance [signed_int `int_`].
 * `karma::lit()` can now be used to generate integer and floating point numbers
-* `qi::rule` and `karma::rule` now can be directly initialzed using their copy
-  constructor. I.e. this works now: `qi::rule<...> r = ...some parser...;`.The
-  semantics of this initalization are equivalent to initializing them using 
-  `operator%=()` (auto attribute propagation is enabled).
+* `qi::rule` and `karma::rule` now can be directly initialized using their copy
+  constructor. I.e. this works now: `qi::rule<...> r = ...some parser...;`.
+* Added `qi::attr()` exposing its immediate parameter as its attribute. 
+* Added boolean parsers and generators (`bool_`, `true_`, `false_`).
+* Added `attr_cast<>` enabling in place attribute type conversion in Qi and Karma 
+  grammars.
+* Almost all Karma generators now accept `optional<>` attributes and will fail
+  generating if this is not initialized.
+* Qi and Karma rules now automatically detect whether to apply auto-rule 
+  semantics or now (no need for using `operator%=()` anymore, even if it's still
+  existing). Auto-rule semantics are applied if the right hand side has no
+  semantic actions attached to any of the elements. This works for rule 
+  initialization and assignment.
+* Qi and Karma rules now do intrinsic attribute transformation based on the 
+  attribute customization point __customize_transform_attribute__.
 
 [heading What's changed in __lex__ from V2.0 (Boost V1.37.0) to 2.1 (Boost V1.41.0)]
 

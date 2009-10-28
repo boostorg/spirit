@@ -281,8 +281,9 @@ a: vector<A>, b: vector<A> --> (a > b): vector<A>``]]
 
     [[`a | b`]
 [``a: A, b: B --> (a | b): variant<A, B>
-a: A, b: Unused --> (a | b): A
-a: Unused, b: B --> (a | b): B
+a: A, b: Unused --> (a | b): optional<A>
+a: A, b: B, c: Unused --> (a | b | c): optional<variant<A, B> >
+a: Unused, b: B --> (a | b): optional<B>
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 
@@ -328,7 +329,7 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 
 [endsect]
 
-[section Non-terminals]
+[section:non_terminals Nonterminals]
 
 [variablelist Notation
     [[`RT`]                     [Synthesized attribute. The rule or grammar's return type.]]
@@ -350,7 +351,7 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 
 [variablelist Template Arguments
     [[`Iterator`]               [The iterator type you will use for parsing.]]
-    [[`A1`, `A2`, `A3`]         [Can be one of 1)Signature 2)Locals 3)Skipper.]]
+    [[`A1`, `A2`, `A3`]         [Can be one of 1) Signature 2) Locals 3) Skipper.]]
 ]
 
 [table
@@ -390,7 +391,6 @@ a: Unused, b: Unused --> (a ^ b): Unused``]]
 ``
     ]                                           [Grammar definition. `name` is an optional string that gives the
                                                 grammar its name, useful for debugging and error handling.]]
-    [[my_grammar<Iterator> g]                   [Instantiating a grammar]]
     [[`g.name(name)`]                           [Naming a grammar]]
     [[`g.name()`]                               [Getting the name of a grammar]]
 ]

@@ -311,7 +311,6 @@ See here for more information about __karma_auxiliary__.
                              is the return type of `fg`] [Invoke `fg` at generation time, returning a generator
                                                         `g` which is then called to generate.]]
     [[[karma_lazy `fg`]]    [see [karma_lazy `lazy(fg)`] above]  [Equivalent to [karma_lazy `lazy(fg)`]]]
-    [[`g[fa]`]              [Attribute of `g`]          [Call semantic action `fa` (before executing `g`).]]
 ]
 
 [endsect]
@@ -490,7 +489,9 @@ a: Unused --> -a: Unused``]]
 [endsect]
 
 [/////////////////////////////////////////////////////////////////////////////]
-[section Non-terminals]
+[section:non_terminals Nonterminals]
+
+See here for more information about __karma_nonterminal__.
 
 [variablelist Notation
     [[`RT`]                     [Synthesized attribute. The rule or grammar's return type.]]
@@ -512,16 +513,16 @@ a: Unused --> -a: Unused``]]
 
 [variablelist Template Arguments
     [[`Iterator`]               [The iterator type you will use for parsing.]]
-    [[`A1`, `A2`, `A3`]         [Can be one of 1)Signature 2)Locals 3)Skipper.]]
+    [[`A1`, `A2`, `A3`]         [Can be one of 1) Signature 2) Locals 3) Delimiter.]]
 ]
 
 [table
     [[Expression]                               [Description]]
-    [[`rule<Iterator, A1, A2, A3> r(name);`]    [Rule declaration. `Iterator` is required.
+    [[`rule<OutputIterator, A1, A2, A3> r(name);`]    [Rule declaration. `OutputIterator` is required.
                                                 `A1, A2, A3` are optional and can be specified in any order.
                                                 `name` is an optional string that gives the rule
                                                 its name, useful for debugging and error handling.]]
-    [[`rule<Iterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
+    [[`rule<OutputIterator, A1, A2, A3> r(r2);`]      [Copy construct rule `r` from rule `r2`.]]
     [[`r = r2;`]                                [Assign rule `r2` to `r`. `boost::shared_ptr` semantics.]]
     [[`r.alias()`]                              [return an alias of `r`. The alias is a generator that
                                                 holds a reference to `r`. Reference semantics.]]
@@ -536,8 +537,8 @@ a: Unused --> -a: Unused``]]
 
     [[
 ``
-    template <typename Iterator>
-    struct my_grammar : grammar<Iterator, A1, A2, A3>
+    template <typename OutputIterator>
+    struct my_grammar : grammar<OutputIterator, A1, A2, A3>
     {
         my_grammar() : my_grammar::base_type(start, name)
         {
@@ -545,13 +546,13 @@ a: Unused --> -a: Unused``]]
             start = /* ... */;
         }
 
-        rule<Iterator, A1, A2, A3> start;
+        rule<OutputIterator, A1, A2, A3> start;
         // more rule declarations...
     };
 ``
     ]                                           [Grammar definition. `name` is an optional string that gives the
-                                                grammar its name, useful for debugging and error handling.]]
-    [[my_grammar<Iterator> g]                   [Instantiating a grammar]]
+                                                grammar its name, useful for debugging.]]
+    [[my_grammar<OutputIterator> g]             [Instantiating a grammar]]
     [[`g.name(name)`]                           [Naming a grammar]]
     [[`g.name()`]                               [Getting the name of a grammar]]
 ]
