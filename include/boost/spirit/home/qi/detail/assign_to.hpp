@@ -82,7 +82,7 @@ namespace boost { namespace spirit { namespace traits
             attr = val;
         }
     };
-    
+
     template <typename Attribute>
     struct assign_to_attribute_from_value<optional<Attribute>, unused_type>
     {

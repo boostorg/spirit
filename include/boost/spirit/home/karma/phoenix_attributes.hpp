@@ -98,9 +98,11 @@ namespace boost { namespace spirit { namespace traits
     struct extract_from_attribute<phoenix::actor<Eval> >
     {
         typedef typename boost::result_of<phoenix::actor<Eval>()>::type type;
-        static type call(phoenix::actor<Eval> const& f)
+
+        template <typename Context>
+        static type call(phoenix::actor<Eval> const& f, Context& context)
         {
-            return f();
+            return f(unused, context);
         }
     };
 
