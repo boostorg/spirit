@@ -85,25 +85,25 @@ not defined in __unary_generator_concept__.
     [[Expression]             [Semantics]]
     [[`attr_cast(g)`]         [Create a component invoking the 
                               generator `g` while passing an attribute of the type 
-                              as normally expected by `g`. The type of supplied 
+                              as normally expected by `g`. The type of the supplied 
                               attribute will be transformed to the type 
-                              exposed as it's attribute type by `g` using the 
-                              attribute customization point __customize_transform_attribute__.
+                              `g` exposes as its attribute type (by using the 
+                              attribute customization point __customize_transform_attribute__).
                               This generator does not fail unless `g` fails.]]
     [[`attr_cast<Exposed>(g)`] [Create a component invoking the 
                               generator `g` while passing an attribute of the type 
                               as normally expected by `g`. The supplied attribute 
                               is expected to be of the type `Exposed`, it will be 
-                              transformed to the type exposed as it's attribute type 
-                              by `g`using the attribute customization point 
-                              __customize_transform_attribute__.
+                              transformed to the type `g` exposes as its attribute type 
+                              (using the attribute customization point 
+                              __customize_transform_attribute__).
                               This generator does not fail unless `g` fails.]]
     [[`attr_cast<Exposed, Transformed>(g)`] [Create a component invoking the 
                               generator `g` while passing an attribute of type 
                               `Transformed`. The supplied attribute is expected
                               to be of the type `Exposed`, it will be transformed
-                              to the type `Transformed` using the attribute 
-                              customization point __customize_transform_attribute__.
+                              to the type `Transformed` (using the attribute 
+                              customization point __customize_transform_attribute__).
                               This generator does not fail unless `g` fails.]]
 ]
 
@@ -135,7 +135,7 @@ Some using declarations:
 
 [reference_karma_using_declarations_attr_cast]
 
-The example references data structure `int_data` needs a specialization of 
+The example references data structure `int_data` which needs a specialization of 
 the customization point __customize_transform_attribute__:
 
 [reference_karma_auxiliary_attr_cast_data1]

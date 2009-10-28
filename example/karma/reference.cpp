@@ -135,6 +135,7 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct transform_attribute<int_data const, int>
     {
+        typedef int type;
         static int pre(int_data const& d) { return d.i; }
     };
 }}}
@@ -528,12 +529,13 @@ int main()
 
     {
         //[reference_karma_using_declarations_attr_cast
+        using boost::spirit::karma::int_;
         using boost::spirit::karma::attr_cast;
         //]
 
         //[reference_karma_attr_cast1
         int_data d = { 1 };
-        test_generator("1", karma::attr_cast(karma::int_), d);
+        test_generator("1", attr_cast(int_), d);
         //]
     }
 

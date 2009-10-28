@@ -217,6 +217,29 @@ operator>> (std::istream& is, complex& z)
 }
 //]
 
+//[reference_qi_auxiliary_attr_cast_data1
+// this is just a test structure we want to use in place of an int
+struct int_data
+{
+    int i;
+};
+
+
+// we provide a custom attribute transformation to allow its use as an int
+namespace boost { namespace spirit { namespace traits
+{
+    // in this case we just expose the embedded 'int' as the attribute instance 
+    // to use, allowing to leave the function 'post()' empty
+    template <>
+    struct transform_attribute<int_data, int>
+    {
+        typedef int& type;
+        static int& pre(int_data& d) { return d.i; }
+        static void post(int_data& val, int const& attr) {}
+    };
+}}}
+//]
+
 int
 main()
 {
@@ -473,7 +496,21 @@ main()
         std::cout << d << std::endl;              // will print '1.2'
         //]
     }
-    
+
+    // attr_cast
+    {
+        //[reference_qi_using_declarations_attr_cast
+        using boost::spirit::qi::int_;
+        using boost::spirit::qi::attr_cast;
+        //]
+
+        //[reference_qi_attr_cast1
+        int_data d = { 0 };
+        test_parser_attr("1", attr_cast(int_), d);
+        std::cout << d.i << std::endl;
+        //]
+    }
+
     // eol
     {
         //[reference_using_declarations_eol
