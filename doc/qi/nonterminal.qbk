@@ -58,12 +58,14 @@ Also, see __include_structure__.
                             any order. See table below.]    [See table below.]]
 ]
 
+Here is more information about the template parameters:
+
 [table
     [[Parameter]            [Description]                   [Default]]
     [[`Signature`]          [Specifies the rule's synthesized 
                             (return value) and inherited 
                             attributes (arguments). More on
-                            this below.]                    [__unused_type__. 
+                            this here: __qi_nonterminal__.] [__unused_type__. 
                                                             When `Signature` defaults 
                                                             to __unused_type__, the effect 
                                                             is the same as specifying a signature
@@ -74,14 +76,12 @@ Also, see __include_structure__.
                             want the rule to skip white 
                             spaces.]                        [__unused_type__]]
     [[`Locals`]             [Specifies the rule's local
-                            variables. See below.]          [__unused_type__]]
+                            variables. See __qi_nonterminal__.] [__unused_type__]]
 ]
 
 [heading Model of]
 
 [:__qi_nonterminal__]
-
-[heading Signature]
 
 [variablelist Notation
     [[`r, r2`]                      [Rules]]
@@ -180,23 +180,25 @@ Also, see __include_structure__.
                             any order. See table below.]    [See table below.]]
 ]
 
+Here is more information about the template parameters:
+
 [table
     [[Parameter]            [Description]                   [Default]]
-    [[`Signature`]          [Specifies the rule's synthesized 
+    [[`Signature`]          [Specifies the grammar's synthesized 
                             (return value) and inherited 
                             attributes (arguments). More on
-                            this below.]                    [__unused_type__. 
+                            this here: __qi_nonterminal__.] [__unused_type__. 
                                                             When `Signature` defaults 
                                                             to __unused_type__, the effect 
                                                             is the same as specifying a signature
                                                             of `void()` which is also equivalent 
                                                             to `unused_type()`]]
-    [[`Skipper`]            [Specifies the rule's skipper 
+    [[`Skipper`]            [Specifies the grammar's skipper 
                             parser. Specify this if you
-                            want the rule to skip white 
+                            want the grammar to skip white 
                             spaces.]                        [__unused_type__]]
-    [[`Locals`]             [Specifies the rule's local
-                            variables. See below.]          [__unused_type__]]
+    [[`Locals`]             [Specifies the grammar's local
+                            variables. See __qi_nonterminal__.]          [__unused_type__]]
 ]
 
 [heading Model of]
@@ -233,9 +235,13 @@ defined in __qi_nonterminal__.
                         grammar its name, useful for debugging and error handling.]]
 ]
 
+[note The template parameters of a grammar and its start rule (the rule passed 
+      to the grammar's base class constructor) must match, otherwise you will 
+      see compilation errors.]
+
 [heading Attributes]
 
-[:The parser attribute of the grammar is `T`, its inherited attribute. See
+[:The parser attribute of the grammar is `T`, its synthesized attribute. See
 __qi_nonterminal_attribute__]
 
 [heading Complexity]

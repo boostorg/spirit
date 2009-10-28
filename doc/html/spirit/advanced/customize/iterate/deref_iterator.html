@@ -1,17 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>
-          Dereference the Iterator pointing into a Container Attribute</title>
+<title>Dereference the Iterator pointing into a Container Attribute</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../iterate.html" title=" Extract Attribute
-        Values to Generate Output from a Container (Karma)">
-<link rel="previous" href="next_iterator.html" title="
-          Increment the Iterator pointing into a Container Attribute">
-<link rel="next" href="compare_iterators.html" title="
-          Compare two Iterator pointing into a Container Attribute for Equality">
+<link rel="up" href="../iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
+<link rel="prev" href="next_iterator.html" title="Increment the Iterator pointing into a Container Attribute">
+<link rel="next" href="compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -26,67 +22,65 @@
 <div class="spirit-nav">
 <a accesskey="p" href="next_iterator.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../iterate.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="compare_iterators.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.advanced.customize.iterate.deref_iterator"></a><a href="deref_iterator.html" title="
-          Dereference the Iterator pointing into a Container Attribute">
+<div class="section" title="Dereference the Iterator pointing into a Container Attribute">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.advanced.customize.iterate.deref_iterator"></a><a class="link" href="deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute">
           Dereference the Iterator pointing into a Container Attribute</a>
-</h5></div></div>
-<div></div>
-</div>
+</h5></div></div></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.deref_iterator"></a><h6>
-<a name="id752326"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.deref_iterator">deref_iterator</a>
+<a name="id944074"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.deref_iterator">deref_iterator</a>
           </h6>
 <p>
-            The template <tt class="computeroutput"><span class="identifier">deref_iterator</span></tt>
+            The template <code class="computeroutput"><span class="identifier">deref_iterator</span></code>
             is a type used as an attribute customization point. It is invoked by
-            the <span class="emphasis"><em>Karma</em></span> repetitive generators (such as <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-            (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene
-            (unary <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, and <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>)
+            the <span class="emphasis"><em>Karma</em></span> repetitive generators (such as <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+            (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene
+            (unary <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, and <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>)
             in order to dereference an iterator pointing to an element of a container
             holding the attributes to generate output from.
           </p>
 <a name="spirit.advanced.customize.iterate.deref_iterator.module_headers"></a><h6>
-<a name="id752445"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.module_headers">Module
+<a name="id944148"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.module_headers">Module
             Headers</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">container</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
+<tr><td align="left" valign="top"><p>
               This header file does not need to be included directly by any user
               program as it is normally included by other Spirit header files relying
               on its content.
             </p></td></tr>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.namespace"></a><h6>
-<a name="id752574"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.namespace">Namespace</a>
+<a name="id944238"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
-<tbody><tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></tt>
-                  </p></td></tr></tbody>
+                  </p>
+                  </th></tr></thead>
+<tbody><tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code>
+                  </p>
+                  </td></tr></tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.synopsis"></a><h6>
-<a name="id752672"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.synopsis">Synopsis</a>
+<a name="id944316"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">deref_iterator</span>
@@ -96,8 +90,8 @@
 <span class="special">};</span>
 </pre>
 <a name="spirit.advanced.customize.iterate.deref_iterator.template_parameters"></a><h6>
-<a name="id752856"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.template_parameters">Template
+<a name="id944448"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -107,72 +101,89 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Parameter
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Default
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
-                  </p></td>
-<td><p>
-                    The type, <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The type, <code class="computeroutput"><span class="identifier">Iterator</span></code>
                     of the iterator to dereference. This is the same as the type
-                    returned by the customization point <a href="container_iterator.html" title="
-          Determine the Type of the Iterator of a Container (Karma)"><tt class="computeroutput"><span class="identifier">container_iterator</span></tt></a>.
-                  </p></td>
-<td><p>
+                    returned by the customization point <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>.
+                  </p>
+                  </td>
+<td>
+                  <p>
                     none
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Enable</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Enable</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Helper template parameter usable to selectively enable or disable
-                    certain specializations of <tt class="computeroutput"><span class="identifier">deref_iterator</span></tt>
-                    utilizing SFINAE (i.e. <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></tt>
-                    or <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></tt>).
-                  </p></td>
-<td><p>
-                    <tt class="computeroutput"><span class="keyword">void</span></tt>
-                  </p></td>
+                    certain specializations of <code class="computeroutput"><span class="identifier">deref_iterator</span></code>
+                    utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
+                    or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">void</span></code>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.notation"></a><h6>
-<a name="id753101"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.notation">Notation</a>
+<a name="id944623"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.notation">Notation</a>
           </h6>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">Iterator</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">Iterator</span></code></span></dt>
 <dd><p>
                 An iterator type.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">it</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">it</span></code></span></dt>
 <dd><p>
-                An instance of an iterator, <tt class="computeroutput"><span class="identifier">Iterator</span></tt>.
+                An instance of an iterator, <code class="computeroutput"><span class="identifier">Iterator</span></code>.
               </p></dd>
-<dt><span class="term"><tt class="computeroutput"><span class="identifier">C</span></tt></span></dt>
+<dt><span class="term"><code class="computeroutput"><span class="identifier">C</span></code></span></dt>
 <dd><p>
-                A container type a iterator type, <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
+                A container type a iterator type, <code class="computeroutput"><span class="identifier">Iterator</span></code>
                 belongs to.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.expression_semantics"></a><h6>
-<a name="id753225"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.expression_semantics">Expression
+<a name="id944713"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.expression_semantics">Expression
             Semantics</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -181,45 +192,57 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Expression
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Semantics
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">deref_iterator</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">type</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">deref_iterator</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Metafunction result evaluating to the type returned by dereferencing
                     the iterator.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">deref_iterator</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">it</span><span class="special">)</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">deref_iterator</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">it</span><span class="special">)</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Return the element in the container the itertor is referring
                     to. The type of the returned value is the same as returned by
-                    the metafunction result <tt class="computeroutput"><span class="identifier">type</span></tt>.
-                  </p></td>
+                    the metafunction result <code class="computeroutput"><span class="identifier">type</span></code>.
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.predefined_specializations"></a><h6>
-<a name="id753421"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.predefined_specializations">Predefined
+<a name="id944854"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.predefined_specializations">Predefined
             Specializations</a>
           </h6>
 <p>
             <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines
             specializations of this customization point for several types. The following
             table lists those types together with the types returned by the embedded
-            typedef <tt class="computeroutput"><span class="identifier">type</span></tt>:
+            typedef <code class="computeroutput"><span class="identifier">type</span></code>:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -227,56 +250,68 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Template Parameters
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Value
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
-                  </p></td>
-<td><p>
-                    The metafunction result <tt class="computeroutput"><span class="identifier">type</span></tt>
-                    evaluates to <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">reference</span></tt>
-                    and the function <tt class="computeroutput"><span class="identifier">call</span><span class="special">()</span></tt> returns <tt class="computeroutput"><span class="special">*</span><span class="identifier">it</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The metafunction result <code class="computeroutput"><span class="identifier">type</span></code>
+                    evaluates to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">detail</span><span class="special">::</span><span class="identifier">iterator_traits</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">&gt;::</span><span class="identifier">reference</span></code>
+                    and the function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns <code class="computeroutput"><span class="special">*</span><span class="identifier">it</span></code>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">unused_type</span></tt><tt class="computeroutput">
-                    <span class="keyword">const</span><span class="special">*</span></tt>
-                  </p></td>
-<td><p>
-                    The metafunction result <tt class="computeroutput"><span class="identifier">type</span></tt>
-                    evaluates to <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
-                    and the function <tt class="computeroutput"><span class="identifier">call</span><span class="special">()</span></tt> returns <tt class="computeroutput"><span class="identifier">unused</span></tt>.
-                  </p></td>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">unused_type</span></code><code class="computeroutput">
+                    <span class="keyword">const</span><span class="special">*</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    The metafunction result <code class="computeroutput"><span class="identifier">type</span></code>
+                    evaluates to <code class="computeroutput"><span class="identifier">unused_type</span></code>
+                    and the function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns <code class="computeroutput"><span class="identifier">unused</span></code>.
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.when_to_implement"></a><h6>
-<a name="id753738"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.when_to_implement">When
+<a name="id945074"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.when_to_implement">When
             to implement</a>
           </h6>
 <p>
-            The customization point <tt class="computeroutput"><span class="identifier">deref_iterator</span></tt>
+            The customization point <code class="computeroutput"><span class="identifier">deref_iterator</span></code>
             needs to be implemented for a specific iterator type whenever the container
             this iterator belongs to is to be used as an attribute in place of a
             STL container. It is applicable for generators (<span class="emphasis"><em>Spirit.Karma</em></span>)
             only. As a rule of thumb: it has to be implemented whenever a certain
             iterator type belongs to a container which is to be passed as an attribute
-            to a generator normally exposing a STL container, <tt class="computeroutput"><span class="identifier">C</span></tt>
+            to a generator normally exposing a STL container, <code class="computeroutput"><span class="identifier">C</span></code>
             and if the container type does not expose the interface of a STL container
-            (i.e. <tt class="computeroutput"><span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;::</span><span class="identifier">type</span></tt> would normally return <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></tt>).
+            (i.e. <code class="computeroutput"><span class="identifier">is_container</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;::</span><span class="identifier">type</span></code> would normally return <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>).
           </p>
 <a name="spirit.advanced.customize.iterate.deref_iterator.related_attribute_customization_points"></a><h6>
-<a name="id753861"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.related_attribute_customization_points">Related
+<a name="id945145"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.related_attribute_customization_points">Related
             Attribute Customization Points</a>
           </h6>
 <p>
@@ -289,107 +324,120 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Name
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     When to implement
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <a href="../is_container.html" title=" Determine
-        if a Type Should be Treated as a Container (Qi and Karma)"><tt class="computeroutput"><span class="identifier">is_container</span></tt></a>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <a class="link" href="../is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">is_container</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Needs to be implemented whenever a type is to be used as a container
                     attribute in <span class="emphasis"><em>Karma</em></span>.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <a href="container_iterator.html" title="
-          Determine the Type of the Iterator of a Container (Karma)"><tt class="computeroutput"><span class="identifier">container_iterator</span></tt></a>
-                  </p></td>
-<td><p>
-                    Karma: <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-                    (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene (unary
-                    <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>.
-                  </p></td>
+<td>
+                  <p>
+                    <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <a href="begin_container.html" title="
-          Get the Iterator pointing to the Begin of a Container Attribute"><tt class="computeroutput"><span class="identifier">begin_container</span></tt></a>
-                  </p></td>
-<td><p>
-                    Karma: <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-                    (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene (unary
-                    <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>.
-                  </p></td>
+<td>
+                  <p>
+                    <a class="link" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <a href="end_container.html" title="
-          Get the Iterator pointing to the End of a Container Attribute"><tt class="computeroutput"><span class="identifier">end_container</span></tt></a>
-                  </p></td>
-<td><p>
-                    Karma: <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-                    (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene (unary
-                    <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>.
-                  </p></td>
+<td>
+                  <p>
+                    <a class="link" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <a href="deref_iterator.html" title="
-          Dereference the Iterator pointing into a Container Attribute"><tt class="computeroutput"><span class="identifier">deref_iterator</span></tt></a>
-                  </p></td>
-<td><p>
-                    Karma: <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-                    (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene (unary
-                    <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>.
-                  </p></td>
+<td>
+                  <p>
+                    <a class="link" href="deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">deref_iterator</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <a href="next_iterator.html" title="
-          Increment the Iterator pointing into a Container Attribute"><tt class="computeroutput"><span class="identifier">next_iterator</span></tt></a>
-                  </p></td>
-<td><p>
-                    Karma: <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-                    (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene (unary
-                    <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>.
-                  </p></td>
+<td>
+                  <p>
+                    <a class="link" href="next_iterator.html" title="Increment the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">next_iterator</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <a href="compare_iterators.html" title="
-          Compare two Iterator pointing into a Container Attribute for Equality"><tt class="computeroutput"><span class="identifier">compare_iterators</span></tt></a>
-                  </p></td>
-<td><p>
-                    Karma: <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-                    (<tt class="computeroutput"><span class="special">%</span></tt>)</a>, <a href="../../../karma/reference/operator/kleene.html" title=" Kleene Star
-          (*a)">Kleene (unary
-                    <tt class="computeroutput"><span class="special">*</span></tt>)</a>, <a href="../../../karma/reference/operator/plus.html" title=" Plus (+a)">Plus (unary <tt class="computeroutput"><span class="special">+</span></tt>)</a>, <a href="../../../karma/reference/directive/repeat.html" title=" Repetition
-          Directive (repeat[])">Repeat</a>.
-                  </p></td>
+<td>
+                  <p>
+                    <a class="link" href="compare_iterators.html" title="Compare two Iterator pointing into a Container Attribute for Equality"><code class="computeroutput"><span class="identifier">compare_iterators</span></code></a>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    Karma: <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+                    (<code class="computeroutput"><span class="special">%</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/kleene.html" title="Kleene Star (*a)">Kleene (unary
+                    <code class="computeroutput"><span class="special">*</span></code>)</a>, <a class="link" href="../../../karma/reference/operator/plus.html" title="Plus (+a)">Plus (unary <code class="computeroutput"><span class="special">+</span></code>)</a>, <a class="link" href="../../../karma/reference/directive/repeat.html" title="Repetition Directive (repeat[])">Repeat</a>.
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.advanced.customize.iterate.deref_iterator.example"></a><h6>
-<a name="id754601"></a>
-            <a href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.example">Example</a>
+<a name="id945906"></a>
+            <a class="link" href="deref_iterator.html#spirit.advanced.customize.iterate.deref_iterator.example">Example</a>
           </h6>
 <p>
             Here are the header files needed to make the example code below compile:
@@ -440,8 +488,8 @@
 <p>
           </p>
 <p>
-            as a direct attribute to the <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List
-            (<tt class="computeroutput"><span class="special">%</span></tt>)</a> generator. This
+            as a direct attribute to the <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List
+            (<code class="computeroutput"><span class="special">%</span></code>)</a> generator. This
             type does not expose any of the interfaces of an STL container. It does
             not even expose the usual semantics of a container. The presented customization
             points build a counter instance which is incrememnted each time it is
@@ -450,14 +498,9 @@
           </p>
 <p>
             In order to make this data structure compatible we need to specialize
-            a couple of attribute customization points: <a href="../is_container.html" title=" Determine
-        if a Type Should be Treated as a Container (Qi and Karma)"><tt class="computeroutput"><span class="identifier">is_container</span></tt></a>, <a href="container_iterator.html" title="
-          Determine the Type of the Iterator of a Container (Karma)"><tt class="computeroutput"><span class="identifier">container_iterator</span></tt></a>, <a href="begin_container.html" title="
-          Get the Iterator pointing to the Begin of a Container Attribute"><tt class="computeroutput"><span class="identifier">begin_container</span></tt></a>, and <a href="end_container.html" title="
-          Get the Iterator pointing to the End of a Container Attribute"><tt class="computeroutput"><span class="identifier">end_container</span></tt></a>. In addition,
+            a couple of attribute customization points: <a class="link" href="../is_container.html" title="Determine if a Type Should be Treated as a Container (Qi and Karma)"><code class="computeroutput"><span class="identifier">is_container</span></code></a>, <a class="link" href="container_iterator.html" title="Determine the Type of the Iterator of a Container (Karma)"><code class="computeroutput"><span class="identifier">container_iterator</span></code></a>, <a class="link" href="begin_container.html" title="Get the Iterator pointing to the Begin of a Container Attribute"><code class="computeroutput"><span class="identifier">begin_container</span></code></a>, and <a class="link" href="end_container.html" title="Get the Iterator pointing to the End of a Container Attribute"><code class="computeroutput"><span class="identifier">end_container</span></code></a>. In addition,
             we specialize one of the iterator related customization points as well:
-            <a href="deref_iterator.html" title="
-          Dereference the Iterator pointing into a Container Attribute"><tt class="computeroutput"><span class="identifier">deref_iterator</span></tt></a>.
+            <a class="link" href="deref_iterator.html" title="Dereference the Iterator pointing into a Container Attribute"><code class="computeroutput"><span class="identifier">deref_iterator</span></code></a>.
           </p>
 <p>
             </p>
@@ -550,8 +593,8 @@
           </p>
 <p>
             The last code snippet shows an example using an instance of the data
-            structure <tt class="computeroutput"><span class="identifier">client</span><span class="special">::</span><span class="identifier">counter</span></tt> to generate output from a
-            <a href="../../../karma/reference/operator/list.html" title=" Lists (a % b)">List (<tt class="computeroutput"><span class="special">%</span></tt>)</a> generator:
+            structure <code class="computeroutput"><span class="identifier">client</span><span class="special">::</span><span class="identifier">counter</span></code> to generate output from a
+            <a class="link" href="../../../karma/reference/operator/list.html" title="Lists (a % b)">List (<code class="computeroutput"><span class="special">%</span></code>)</a> generator:
           </p>
 <p>
             </p>
@@ -572,7 +615,7 @@
             having to modify the output format or the generator itself.
           </p>
 <p>
-            For other examples of how to use the customization point <tt class="computeroutput"><span class="identifier">deref_iterator</span></tt> please see here: <a href="next_iterator.html#spirit.advanced.customize.iterate.next_iterator.example">use_as_container</a>.
+            For other examples of how to use the customization point <code class="computeroutput"><span class="identifier">deref_iterator</span></code> please see here: <a class="link" href="next_iterator.html#spirit.advanced.customize.iterate.next_iterator.example">use_as_container</a>.
           </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

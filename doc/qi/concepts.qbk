@@ -11,8 +11,8 @@
 Spirit.Qi parsers fall into a couple of generalized __concepts__. The
 /Parser/ is the most fundamental concept. All Spirit.Qi parsers are
 models of the /Parser/ concept. /PrimitiveParser/, /UnaryParser/,
-/BinaryParser/ and /NaryParser/ are all refinements of the /Parser/
-concept.
+/BinaryParser/, /NaryParser/, and /Nonterminal/ are all refinements of the 
+/Parser/ concept.
 
 The following sections provide details on these concepts.
 
@@ -314,7 +314,7 @@ attributes are analogous to function arguments. The inherited attributes
 (arguments) can be passed in just like any __qi_lazy_argument__, e.g.:
 
     r(expr) // Evaluate expr at parse time and pass the result to the Nonterminal r
-    
+
 [heading `_val`]
 
 The `boost::spirit::qi_val` placeholder can be used in __phoenix__

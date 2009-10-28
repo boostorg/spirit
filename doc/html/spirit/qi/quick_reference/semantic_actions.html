@@ -1,13 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Semantic
-        Actions</title>
+<title>Semantic Actions</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../quick_reference.html" title="Quick Reference">
-<link rel="previous" href="non_terminals.html" title="Non-terminals">
+<link rel="prev" href="non_terminals.html" title="Nonterminals">
 <link rel="next" href="phoenix.html" title="Phoenix">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -23,22 +22,18 @@
 <div class="spirit-nav">
 <a accesskey="p" href="non_terminals.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../quick_reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="phoenix.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.qi.quick_reference.semantic_actions"></a><a href="semantic_actions.html" title="Semantic
-        Actions">Semantic
+<div class="section" title="Semantic Actions">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.qi.quick_reference.semantic_actions"></a><a class="link" href="semantic_actions.html" title="Semantic Actions">Semantic
         Actions</a>
-</h4></div></div>
-<div></div>
-</div>
+</h4></div></div></div>
 <p>
           Has the form:
         </p>
 <pre class="programlisting"><span class="identifier">p</span><span class="special">[</span><span class="identifier">f</span><span class="special">]</span>
 </pre>
 <p>
-          where <tt class="computeroutput"><span class="identifier">f</span></tt> is a function with
+          where <code class="computeroutput"><span class="identifier">f</span></code> is a function with
           the signatures:
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;);</span>
@@ -55,7 +50,7 @@
 <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;,</span> <span class="identifier">Context</span><span class="special">&amp;,</span> <span class="keyword">bool</span><span class="special">&amp;)</span> <span class="keyword">const</span><span class="special">;</span>
 </pre>
 <p>
-          The <tt class="computeroutput"><span class="identifier">unused_type</span></tt> is used
+          The <code class="computeroutput"><span class="identifier">unused_type</span></code> is used
           in the signatures above to signify 'don't care'.
         </p>
 </div>

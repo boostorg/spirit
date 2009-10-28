@@ -7,7 +7,7 @@
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../nonterminal.html" title="Nonterminal">
 <link rel="prev" href="rule.html" title="Rule">
-<link rel="next" href="../numeric.html" title="Numeric">
+<link rel="next" href="../stream.html" title="Stream">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,35 +20,35 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="rule.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="rule.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../stream.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="Grammar">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.nonterminal.grammar"></a><a class="link" href="grammar.html" title="Grammar">Grammar</a>
+<a name="spirit.karma.reference.nonterminal.grammar"></a><a class="link" href="grammar.html" title="Grammar">Grammar</a>
 </h5></div></div></div>
-<a name="spirit.qi.reference.nonterminal.grammar.description"></a><h6>
-<a name="id686978"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.description">Description</a>
+<a name="spirit.karma.reference.nonterminal.grammar.description"></a><h6>
+<a name="id816555"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.description">Description</a>
           </h6>
 <p>
             The grammar encapsulates a set of <a class="link" href="rule.html" title="Rule">rules</a>
-            (as well as primitive parsers (<a class="link" href="../parser_concepts/primitiveparser.html" title="PrimitiveParser"><code class="computeroutput"><span class="identifier">PrimitiveParser</span></code></a>) and sub-grammars).
+            (as well as primitive generators (<a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>) and sub-grammars).
             The grammar is the main mechanism for modularization and composition.
             Grammars can be composed to form more complex grammars.
           </p>
-<a name="spirit.qi.reference.nonterminal.grammar.header"></a><h6>
-<a name="id687009"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.header">Header</a>
+<a name="spirit.karma.reference.nonterminal.grammar.header"></a><h6>
+<a name="id816588"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.header">Header</a>
           </h6>
-<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/qi/nonterminal/grammar.hpp&gt;
-</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_grammar</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/karma/nonterminal/grammar.hpp&gt;
+</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_grammar</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
             Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
-<a name="spirit.qi.reference.nonterminal.grammar.namespace"></a><h6>
-<a name="id687084"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.namespace">Namespace</a>
+<a name="spirit.karma.reference.nonterminal.grammar.namespace"></a><h6>
+<a name="id816663"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
@@ -59,20 +59,20 @@
                   </th></tr></thead>
 <tbody><tr><td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span></code>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">grammar</span></code>
                   </p>
                   </td></tr></tbody>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.grammar.synopsis"></a><h6>
-<a name="id688257"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.synopsis">Synopsis</a>
+<a name="spirit.karma.reference.nonterminal.grammar.synopsis"></a><h6>
+<a name="id816743"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.synopsis">Synopsis</a>
           </h6>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A3</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A2</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">A3</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">grammar</span><span class="special">;</span>
 </pre>
-<a name="spirit.qi.reference.nonterminal.grammar.template_parameters"></a><h6>
-<a name="id688351"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.template_parameters">Template
+<a name="spirit.karma.reference.nonterminal.grammar.template_parameters"></a><h6>
+<a name="id816837"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -102,13 +102,13 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                    <code class="computeroutput"><span class="identifier">OutputIterator</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    The underlying iterator type that the rule is expected to work
-                    on.
+                    The underlying output iterator type that the rule is expected
+                    to work on.
                   </p>
                   </td>
 <td>
@@ -126,8 +126,9 @@
 <td>
                   <p>
                     Either <code class="computeroutput"><span class="identifier">Signature</span></code>,
-                    <code class="computeroutput"><span class="identifier">Skipper</span></code> or <code class="computeroutput"><span class="identifier">Locals</span></code> in any order. See table
-                    below.
+                    <code class="computeroutput"><span class="identifier">Delimiter</span></code> or
+                    <code class="computeroutput"><span class="identifier">Locals</span></code> in any
+                    order. See table below.
                   </p>
                   </td>
 <td>
@@ -174,7 +175,7 @@
 <td>
                   <p>
                     Specifies the grammar's synthesized (return value) and inherited
-                    attributes (arguments). More on this here: <a class="link" href="../parser_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+                    attributes (arguments). More on this here: <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
                   </p>
                   </td>
 <td>
@@ -190,13 +191,13 @@
 <tr>
 <td>
                   <p>
-                    <code class="computeroutput"><span class="identifier">Skipper</span></code>
+                    <code class="computeroutput"><span class="identifier">Delimiter</span></code>
                   </p>
                   </td>
 <td>
                   <p>
-                    Specifies the grammar's skipper parser. Specify this if you want
-                    the grammar to skip white spaces.
+                    Specifies the grammar's delimiter generator. Specify this if
+                    you want the grammer to delimit the generated output.
                   </p>
                   </td>
 <td>
@@ -213,7 +214,7 @@
                   </td>
 <td>
                   <p>
-                    Specifies the grammar's local variables. See <a class="link" href="../parser_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+                    Specifies the grammar's local variables. See <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
                   </p>
                   </td>
 <td>
@@ -224,16 +225,16 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.grammar.model_of"></a><h6>
-<a name="id688713"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.model_of">Model
+<a name="spirit.karma.reference.nonterminal.grammar.model_of"></a><h6>
+<a name="id817199"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../parser_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>
+                <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>
               </p>
 <p>
             </p>
@@ -247,14 +248,14 @@
               </p></dd>
 </dl>
 </div>
-<a name="spirit.qi.reference.nonterminal.grammar.expression_semantics"></a><h6>
-<a name="id688774"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.expression_semantics">Expression
+<a name="spirit.karma.reference.nonterminal.grammar.expression_semantics"></a><h6>
+<a name="id817260"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../parser_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
+            is not defined in <a class="link" href="../generator_concepts/nonterminal.html" title="Nonterminal"><code class="computeroutput"><span class="identifier">Nonterminal</span></code></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -278,8 +279,8 @@
                   <p>
                     
 </p>
-<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">my_grammar</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">OutputIterator</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <span class="identifier">my_grammar</span> <span class="special">:</span> <span class="identifier">grammar</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span>
 <span class="special">{</span>
     <span class="identifier">my_grammar</span><span class="special">()</span> <span class="special">:</span> <span class="identifier">my_grammar</span><span class="special">::</span><span class="identifier">base_type</span><span class="special">(</span><span class="identifier">start</span><span class="special">,</span> <span class="identifier">name</span><span class="special">)</span>
     <span class="special">{</span>
@@ -287,7 +288,7 @@
 </span>        <span class="identifier">start</span> <span class="special">=</span> <span class="comment">/* ... */</span><span class="special">;</span>
     <span class="special">}</span>
 
-    <span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
+    <span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">A3</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">;</span>
     <span class="comment">// more rule declarations...
 </span><span class="special">};</span>
 </pre>
@@ -298,7 +299,7 @@
                   <p>
                     Grammar definition. <code class="computeroutput"><span class="identifier">name</span></code>
                     is an optional string that gives the grammar its name, useful
-                    for debugging and error handling.
+                    for debugging.
                   </p>
                   </td>
 </tr></tbody>
@@ -314,23 +315,23 @@
               will see compilation errors.
             </p></td></tr>
 </table></div>
-<a name="spirit.qi.reference.nonterminal.grammar.attributes"></a><h6>
-<a name="id689087"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.attributes">Attributes</a>
+<a name="spirit.karma.reference.nonterminal.grammar.attributes"></a><h6>
+<a name="id817574"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.attributes">Attributes</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                The parser attribute of the grammar is <code class="computeroutput"><span class="identifier">T</span></code>,
-                its synthesized attribute. See <a class="link" href="../parser_concepts/nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.attributes"><code class="computeroutput"><span class="identifier">Attribute</span></code></a>
+                The generator attribute of the grammar is <code class="computeroutput"><span class="identifier">T</span></code>,
+                its consumed attribute. See <a class="link" href="../generator_concepts/nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.attributes"><code class="computeroutput"><span class="identifier">Attribute</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.qi.reference.nonterminal.grammar.complexity"></a><h6>
-<a name="id689132"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.complexity">Complexity</a>
+<a name="spirit.karma.reference.nonterminal.grammar.complexity"></a><h6>
+<a name="id817616"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -341,9 +342,9 @@
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.qi.reference.nonterminal.grammar.example"></a><h6>
-<a name="id689156"></a>
-            <a class="link" href="grammar.html#spirit.qi.reference.nonterminal.grammar.example">Example</a>
+<a name="spirit.karma.reference.nonterminal.grammar.example"></a><h6>
+<a name="id817640"></a>
+            <a class="link" href="grammar.html#spirit.karma.reference.nonterminal.grammar.example">Example</a>
           </h6>
 <div class="note" title="Note"><table border="0" summary="Note">
 <tr>
@@ -351,7 +352,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../basics.html#spirit.qi.reference.basics.examples">Basics Examples</a>
+              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>
@@ -366,9 +367,10 @@
               
 </p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space_type</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span><span class="special">;</span>
 <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">;</span>
-<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">;</span></pre>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">grammar</span><span class="special">;</span>
+<span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span><span class="special">;</span></pre>
 <p>
             </p>
 <p>
@@ -387,14 +389,18 @@
     <span class="special">{</span>
         <span class="keyword">using</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">int_</span><span class="special">;</span>
         <span class="identifier">num</span> <span class="special">=</span> <span class="identifier">int_</span><span class="special">;</span>
-        <span class="identifier">start</span> <span class="special">=</span> <span class="identifier">num</span> <span class="special">&gt;&gt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&gt;&gt;</span> <span class="identifier">num</span><span class="special">);</span>
+        <span class="identifier">start</span> <span class="special">=</span> <span class="identifier">num</span> <span class="special">&lt;&lt;</span> <span class="special">*(</span><span class="char">','</span> <span class="special">&lt;&lt;</span> <span class="identifier">num</span><span class="special">);</span>
     <span class="special">}</span>
 
     <span class="identifier">rule</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">space_type</span><span class="special">&gt;</span> <span class="identifier">start</span><span class="special">,</span> <span class="identifier">num</span><span class="special">;</span>
 <span class="special">};</span>
 
 <span class="identifier">num_list</span> <span class="identifier">nlist</span><span class="special">;</span>
-<span class="identifier">test_phrase_parser</span><span class="special">(</span><span class="string">"123, 456, 789"</span><span class="special">,</span> <span class="identifier">nlist</span><span class="special">);</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">123</span><span class="special">);</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">456</span><span class="special">);</span>
+<span class="identifier">v</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">789</span><span class="special">);</span>
+<span class="identifier">test_generator_attr_delim</span><span class="special">(</span><span class="string">"123 , 456 , 789"</span><span class="special">,</span> <span class="identifier">nlist</span><span class="special">,</span> <span class="identifier">space</span><span class="special">,</span> <span class="identifier">v</span><span class="special">);</span>
 </pre>
 <p>
             </p>
@@ -412,7 +418,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="rule.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../numeric.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="rule.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../nonterminal.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../stream.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

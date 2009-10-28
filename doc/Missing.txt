@@ -10,7 +10,7 @@ Missing sections in documentation
 
 Common
 ------
-- Notes/Protability (notes.qbk)
+- Notes/Portability (notes.qbk)
 - Notes/Techniques (notes.qbk)
 - Acknowlegdements: add people
 - Rationale (rationale.qbk)
@@ -25,17 +25,18 @@ Common
 - abstracts/debugging.qbk
 - abstracts/error_handling.qbk
 - abstracts/parse_trees_and_asts.qbk
-- customization points (partially missing)
+[done] - customization points (partially missing)
 
 Qi
 --
-XXX [deleted] is parser.qbk still needed?
+[deleted] - is parser.qbk still needed?
 
 Reference
 - action.qbk
-- nonterminal.qbk
+[done] - nonterminal.qbk
 - stream.qbk
 - document API functions: parse, phrase_parse, match, phrase_match
+- cross-link from quickref to reference topics
 
 Karma
 -----
@@ -44,7 +45,7 @@ Karma
 Reference
 - attr_cast (in auxiliary.qbk)
 - action.qbk
-- nonterminal.qbk
+[done] - nonterminal.qbk
 - document API functions: generate, generate_delimited, format, format_delimited
 
 - Generators in Depth

@@ -35,6 +35,8 @@ reference to a boolean 'hit' parameter). We don't need these, for now, but we'll
 see more on these other arguments later. Spirit.Qi allows us to bind a single
 argument function, like above. The other arguments are simply ignored.
 
+[heading Examples of Semantic Actions]
+
 Presented are various ways to attach semantic actions:
 
 * Using plain function pointer

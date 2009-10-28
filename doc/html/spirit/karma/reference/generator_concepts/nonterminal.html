@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../parser_concepts.html" title="Parser Concepts">
-<link rel="prev" href="naryparser.html" title="NaryParser">
-<link rel="next" href="../basics.html" title="Basics">
+<link rel="up" href="../generator_concepts.html" title="Generator Concepts">
+<link rel="prev" href="narygenerator.html" title="NaryGenerator">
+<link rel="next" href="../karma_basics.html" title="Basics">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,71 +20,70 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="naryparser.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../parser_concepts.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../basics.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="narygenerator.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../generator_concepts.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../karma_basics.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 <div class="section" title="Nonterminal">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.qi.reference.parser_concepts.nonterminal"></a><a class="link" href="nonterminal.html" title="Nonterminal">Nonterminal</a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal"></a><a class="link" href="nonterminal.html" title="Nonterminal">Nonterminal</a>
 </h5></div></div></div>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.description"></a><h6>
-<a name="id646316"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.description">Description</a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal.description"></a><h6>
+<a name="id770689"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.description">Description</a>
           </h6>
 <p>
             A Nonterminal is a symbol in a <a class="link" href="../../../abstracts/parsing_expression_grammar.html" title="Parsing Expression Grammar">Parsing
             Expression Grammar</a> production that represents a grammar fragment.
             Nonterminals may self reference to specify recursion. This is one of
             the most important concepts and the reason behind the word "recursive"
-            in recursive descent parsing.
+            in recursive descent generation.
           </p>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.refinement_of"></a><h6>
-<a name="id646342"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.refinement_of">Refinement
+<a name="spirit.karma.reference.generator_concepts.nonterminal.refinement_of"></a><h6>
+<a name="id770711"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.refinement_of">Refinement
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>
+                <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.signature"></a><h6>
-<a name="id646380"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.signature">Signature</a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal.signature"></a><h6>
+<a name="id770747"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.signature">Signature</a>
           </h6>
 <p>
-            Nonterminals can have both synthesized and inherited attributes. The
-            Nonterminal's <span class="emphasis"><em>Signature</em></span> specifies both the synthesized
-            and inherited attributes. The specification uses the function declarator
-            syntax:
+            Rules can have both consumed and inherited attributes. The rule's <span class="emphasis"><em>Signature</em></span>
+            specifies both the consumed and inherited attributes. The specification
+            uses the function declarator syntax:
           </p>
 <pre class="programlisting"><span class="identifier">RT</span><span class="special">(</span><span class="identifier">A0</span><span class="special">,</span> <span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">AN</span><span class="special">)</span>
 </pre>
 <p>
-            where <code class="computeroutput"><span class="identifier">RT</span></code> is the Nonterminal's
-            synthesized attribute and <code class="computeroutput"><span class="identifier">A0</span></code>
-            ... <code class="computeroutput"><span class="identifier">AN</span></code> are the Nonterminal's
+            where <code class="computeroutput"><span class="identifier">RT</span></code> is the rule's
+            consumed attribute and <code class="computeroutput"><span class="identifier">A0</span></code>
+            ... <code class="computeroutput"><span class="identifier">AN</span></code> are the rule's
             inherited attributes.
           </p>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.attributes"></a><h6>
-<a name="id647732"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.attributes">Attributes</a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal.attributes"></a><h6>
+<a name="id770845"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.attributes">Attributes</a>
           </h6>
 <p>
-            The Nonterminal models a C++ function. The Nonterminal's synthesized
-            attribute is analogous to the function return value and its inherited
-            attributes are analogous to function arguments. The inherited attributes
-            (arguments) can be passed in just like any <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy
+            The rule models a C++ function. The rule's consumed attribute is analogous
+            to the function return value as it is the type -exposed- by the rule.
+            Its inherited attributes are analogous to function arguments. The inherited
+            attributes (arguments) can be passed in just like any <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
             Argument</a>, e.g.:
           </p>
 <pre class="programlisting"><span class="identifier">r</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span> <span class="comment">// Evaluate expr at parse time and pass the result to the Nonterminal r
 </span></pre>
-<a name="spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"></a><h6>
-<a name="id647779"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"><code class="computeroutput"><span class="identifier">_val</span></code></a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"></a><h6>
+<a name="id770890"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"><code class="computeroutput"><span class="identifier">_val</span></code></a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi_val</span></code> placeholder can be used in
@@ -92,11 +91,11 @@
             actions anywhere in the Nonterminal's definition. This <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
             placeholder refers to the Nonterminal's (synthesized) attribute. The
             <code class="computeroutput"><span class="identifier">_val</span></code> placeholder acts
-            like a mutable reference to the Nonterminal's attribute.
+            like a immutable reference to the Nonterminal's attribute.
           </p>
-<a name="spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"></a><h6>
-<a name="id647839"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"><code class="computeroutput"><span class="identifier">_r1</span></code>...<code class="computeroutput"><span class="identifier">r10</span></code></a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"></a><h6>
+<a name="id770950"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"><code class="computeroutput"><span class="identifier">_r1</span></code>...<code class="computeroutput"><span class="identifier">r10</span></code></a>
           </h6>
 <p>
             The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">_r1</span></code>...<code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">r10</span></code>
@@ -104,9 +103,9 @@
             semantic actions anywhere in the Nonterminal's definition. These <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> placeholders
             refer to the Nonterminal's inherited attributes.
           </p>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.locals"></a><h6>
-<a name="id647921"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.locals">Locals</a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal.locals"></a><h6>
+<a name="id771034"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.locals">Locals</a>
           </h6>
 <p>
             Nonterminals can have local variables that will be created on the stack
@@ -151,18 +150,19 @@
 <dt><span class="term"><code class="computeroutput"><span class="identifier">arg1</span></code>,
             <code class="computeroutput"><span class="identifier">arg2</span></code>, ... <code class="computeroutput"><span class="identifier">argN</span></code></span></dt>
 <dd><p>
-                <a class="link" href="../basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Arguments</a>
-                that evaluate to each of the Nonterminal's inherited attributes.
+                <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Arguments</a> that evaluate to each of the Nonterminal's inherited
+                attributes.
               </p></dd>
 </dl>
 </div>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.valid_expressions"></a><h6>
-<a name="id648397"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.valid_expressions">Valid
+<a name="spirit.karma.reference.generator_concepts.nonterminal.valid_expressions"></a><h6>
+<a name="id771512"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in <a class="link" href="parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>, for any NaryParser the
+            In addition to the requirements defined in <a class="link" href="../../../qi/reference/parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>, for any NaryParser the
             following must be met:
           </p>
 <div class="informaltable"><table class="table">
@@ -197,7 +197,7 @@
                   </td>
 <td>
                   <p>
-                    In a parser expression, invoke Nonterminal <code class="computeroutput"><span class="identifier">x</span></code>
+                    In a generator expression, invoke Nonterminal <code class="computeroutput"><span class="identifier">x</span></code>
                   </p>
                   </td>
 <td>
@@ -216,7 +216,7 @@
                   </td>
 <td>
                   <p>
-                    In a parser expression, invoke Nonterminal <code class="computeroutput"><span class="identifier">r</span></code>
+                    In a generator expression, invoke Nonterminal <code class="computeroutput"><span class="identifier">x</span></code>
                     passing in inherited attributes <code class="computeroutput"><span class="identifier">arg1</span></code>...<code class="computeroutput"><span class="identifier">argN</span></code>
                   </p>
                   </td>
@@ -260,28 +260,11 @@
                   </p>
                   </td>
 </tr>
-<tr>
-<td>
-                  <p>
-                    debug(x)
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Debug Nonterminal <code class="computeroutput"><span class="identifier">x</span></code>.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">void</span></code>
-                  </p>
-                  </td>
-</tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.type_expressions"></a><h6>
-<a name="id648749"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.type_expressions">Type
+<a name="spirit.karma.reference.generator_concepts.nonterminal.type_expressions"></a><h6>
+<a name="id771906"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -313,7 +296,7 @@
                     The Signature of <code class="computeroutput"><span class="identifier">X</span></code>:
                     An <a href="../../../../libs/mpl/doc/refmanual/http://www.boost.org/doc/libs/1_40_0/libs/mpl/doc/refmanual/forward-sequence.html" target="_top">MPL
                     Forward Sequence</a>. The first element is the Nonterminal's
-                    synthesized attribute type and the rest are the inherited attribute
+                    consumed attribute type and the rest are the inherited attribute
                     types.
                   </p>
                   </td>
@@ -334,9 +317,9 @@
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.parser_concepts.nonterminal.models"></a><h6>
-<a name="id648882"></a>
-            <a class="link" href="nonterminal.html#spirit.qi.reference.parser_concepts.nonterminal.models">Models</a>
+<a name="spirit.karma.reference.generator_concepts.nonterminal.models"></a><h6>
+<a name="id772041"></a>
+            <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.models">Models</a>
           </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><a class="link" href="../nonterminal/rule.html" title="Rule">rule</a></li>
@@ -354,7 +337,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="naryparser.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../parser_concepts.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../basics.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
+<a accesskey="p" href="narygenerator.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../generator_concepts.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../karma_basics.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

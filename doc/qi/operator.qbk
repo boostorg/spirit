@@ -89,8 +89,9 @@ See __qi_comp_attr_notation__.
     [[Expression]       [Attribute]]
     [[`a | b`]  
 [``a: A, b: B --> (a | b): variant<A, B>
-a: A, b: Unused --> (a | b): A
-a: Unused, b: B --> (a | b): B
+a: A, b: Unused --> (a | b): optional<A>
+a: A, b: B, c: Unused --> (a | b | c): optional<variant<A, B> >
+a: Unused, b: B --> (a | b): optional<B>
 a: Unused, b: Unused --> (a | b): Unused
 a: A, b: A --> (a | b): A``]]
 ]

@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Basics</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="previous" href="parser_concepts/nonterminal.html" title="Nonterminal">
+<link rel="prev" href="parser_concepts/nonterminal.html" title="Nonterminal">
 <link rel="next" href="auxiliary.html" title="Auxiliary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,17 +22,14 @@
 <div class="spirit-nav">
 <a accesskey="p" href="parser_concepts/nonterminal.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="auxiliary.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.qi.reference.basics"></a><a href="basics.html" title="Basics">Basics</a>
-</h4></div></div>
-<div></div>
-</div>
-<a name="spirit.qi.reference.basics.lazy_argument"></a><h5>
-<a name="id465522"></a>
-          <a href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
-        </h5>
+<div class="section" title="Basics">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.qi.reference.basics"></a><a class="link" href="basics.html" title="Basics">Basics</a>
+</h4></div></div></div>
+<a name="spirit.qi.reference.basics.lazy_argument"></a><h6>
+<a name="id648928"></a>
+          <a class="link" href="basics.html#spirit.qi.reference.basics.lazy_argument">Lazy Argument</a>
+        </h6>
 <p>
           Some parsers (e.g. primitives and non-terminals) may take in additional
           attributes. Such parsers take the form:
@@ -40,39 +37,39 @@
 <pre class="programlisting"><span class="identifier">p</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...</span> <span class="identifier">aN</span><span class="special">)</span>
 </pre>
 <p>
-          where <tt class="computeroutput"><span class="identifier">p</span></tt> is a parser. Each
+          where <code class="computeroutput"><span class="identifier">p</span></code> is a parser. Each
           of the arguments (a1...aN) can either be an immediate value, or a function,
-          <tt class="computeroutput"><span class="identifier">f</span></tt>, with signature:
+          <code class="computeroutput"><span class="identifier">f</span></code>, with signature:
         </p>
 <pre class="programlisting"><span class="identifier">T</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
 </pre>
 <p>
-          where <tt class="computeroutput"><span class="identifier">T</span></tt>, the function's
-          return value, is compatible with the argument type expected and <tt class="computeroutput"><span class="identifier">Context</span></tt> is the parser's Context type
-          (The first argument is <tt class="computeroutput"><span class="identifier">unused</span></tt>
-          to make the <tt class="computeroutput"><span class="identifier">Context</span></tt> the
+          where <code class="computeroutput"><span class="identifier">T</span></code>, the function's
+          return value, is compatible with the argument type expected and <code class="computeroutput"><span class="identifier">Context</span></code> is the parser's Context type
+          (The first argument is <code class="computeroutput"><span class="identifier">unused</span></code>
+          to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
           second argument. This is done for uniformity with Semantic Actions).
         </p>
-<a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h5>
-<a name="id465730"></a>
-          <a href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
+<a name="spirit.qi.reference.basics.character_encoding_namespace"></a><h6>
+<a name="id649064"></a>
+          <a class="link" href="basics.html#spirit.qi.reference.basics.character_encoding_namespace">Character
           Encoding Namespace</a>
-        </h5>
+        </h6>
 <p>
-          Some parsers need to know which character set a <tt class="computeroutput"><span class="keyword">char</span></tt>
-          or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt> is operating on.
-          For example, the <tt class="computeroutput"><span class="identifier">alnum</span></tt>
+          Some parsers need to know which character set a <code class="computeroutput"><span class="keyword">char</span></code>
+          or <code class="computeroutput"><span class="keyword">wchar_t</span></code> is operating on.
+          For example, the <code class="computeroutput"><span class="identifier">alnum</span></code>
           parser works differently with ISO8859.1 and ASCII encodings. Where necessary,
           Spirit encodes (tags) the parser with the character set.
         </p>
 <p>
           We have a namespace for each character set Spirit will be supporting. That
-          includes <tt class="computeroutput"><span class="identifier">ascii</span></tt>, <tt class="computeroutput"><span class="identifier">iso8859_1</span></tt>, <tt class="computeroutput"><span class="identifier">standard</span></tt>
-          and <tt class="computeroutput"><span class="identifier">standard_wide</span></tt> (and
-          in the future, <tt class="computeroutput"><span class="identifier">unicode</span></tt>).
+          includes <code class="computeroutput"><span class="identifier">ascii</span></code>, <code class="computeroutput"><span class="identifier">iso8859_1</span></code>, <code class="computeroutput"><span class="identifier">standard</span></code>
+          and <code class="computeroutput"><span class="identifier">standard_wide</span></code> (and
+          in the future, <code class="computeroutput"><span class="identifier">unicode</span></code>).
           In each of the character encoding namespaces, we place tagged versions
-          of parsers such as <tt class="computeroutput"><span class="identifier">alnum</span></tt>,
-          <tt class="computeroutput"><span class="identifier">space</span></tt> etc.
+          of parsers such as <code class="computeroutput"><span class="identifier">alnum</span></code>,
+          <code class="computeroutput"><span class="identifier">space</span></code> etc.
         </p>
 <p>
           Example:
@@ -82,17 +79,17 @@
 <p>
           Namespaces:
         </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
             boost::spirit::ascii
           </li>
-<li>
+<li class="listitem">
             boost::spirit::iso8859_1
           </li>
-<li>
+<li class="listitem">
             boost::spirit::standard
           </li>
-<li>
+<li class="listitem">
             boost::spirit::standard_wide
           </li>
 </ul></div>
@@ -100,24 +97,24 @@
           For ease of use, the components in this namespaces are also brought into
           the qi sub-namespaces with the same names:
         </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
             boost::spirit::qi::ascii
           </li>
-<li>
+<li class="listitem">
             boost::spirit::qi::iso8859_1
           </li>
-<li>
+<li class="listitem">
             boost::spirit::qi::standard
           </li>
-<li>
+<li class="listitem">
             boost::spirit::qi::standard_wide
           </li>
 </ul></div>
-<a name="spirit.qi.reference.basics.examples"></a><h5>
-<a name="id466004"></a>
-          <a href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
-        </h5>
+<a name="spirit.qi.reference.basics.examples"></a><h6>
+<a name="id649248"></a>
+          <a class="link" href="basics.html#spirit.qi.reference.basics.examples">Examples</a>
+        </h6>
 <p>
           All sections in the reference present some real world examples. The examples
           use a common test harness to keep the example code as minimal and direct
@@ -228,8 +225,8 @@
 <p>
         </p>
 <p>
-          The <tt class="computeroutput"><span class="identifier">print_info</span></tt> utility
-          function prints information contained in the <tt class="computeroutput"><span class="identifier">info</span></tt>
+          The <code class="computeroutput"><span class="identifier">print_info</span></code> utility
+          function prints information contained in the <code class="computeroutput"><span class="identifier">info</span></code>
           class.
         </p>
 <p>
@@ -266,20 +263,20 @@
           </p>
 <p>
         </p>
-<a name="spirit.qi.reference.basics.string"></a><h5>
-<a name="id469433"></a>
-          <a href="basics.html#spirit.qi.reference.basics.string">String</a>
-        </h5>
-<a name="spirit.qi.reference.basics.header"></a><h5>
-<a name="id469456"></a>
-          <a href="basics.html#spirit.qi.reference.basics.header">Header</a>
-        </h5>
+<a name="spirit.qi.reference.basics.string"></a><h6>
+<a name="id653602"></a>
+          <a class="link" href="basics.html#spirit.qi.reference.basics.string">String</a>
+        </h6>
+<a name="spirit.qi.reference.basics.header"></a><h6>
+<a name="id653616"></a>
+          <a class="link" href="basics.html#spirit.qi.reference.basics.header">Header</a>
+        </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/support/string_traits.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">support_string_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          A string can be any object <tt class="computeroutput"><span class="identifier">s</span></tt>,
-          of type, <tt class="computeroutput"><span class="identifier">S</span></tt>, that satisfies
+          A string can be any object <code class="computeroutput"><span class="identifier">s</span></code>,
+          of type, <code class="computeroutput"><span class="identifier">S</span></code>, that satisfies
           the following expression traits:
         </p>
 <div class="informaltable"><table class="table">
@@ -288,89 +285,112 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                <p>
                   Expression
-                </p></th>
-<th><p>
+                </p>
+                </th>
+<th>
+                <p>
                   Semantics
-                </p></th>
+                </p>
+                </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_string</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></tt>
-                </p></td>
-<td><p>
-                  Metafunction that evaluates to <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></tt>
-                  if a certain type, <tt class="computeroutput"><span class="identifier">S</span></tt>
-                  is a string, <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></tt>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_string</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></code>
+                </p>
+                </td>
+<td>
+                <p>
+                  Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+                  if a certain type, <code class="computeroutput"><span class="identifier">S</span></code>
+                  is a string, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
                   otherwise (See <a href="../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
                   Boolean Constant</a>).
-                </p></td>
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
-                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">char_type_of</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></tt>
-                </p></td>
-<td><p>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">char_type_of</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span></code>
+                </p>
+                </td>
+<td>
+                <p>
                   Metafunction that returns the underlying char type of a string
-                  type, <tt class="computeroutput"><span class="identifier">S</span></tt>.
-                </p></td>
+                  type, <code class="computeroutput"><span class="identifier">S</span></code>.
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
-                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_c_string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></tt>
-                </p></td>
-<td><p>
-                  Function that returns the underlying raw C-string from <tt class="computeroutput"><span class="identifier">s</span></tt>.
-                </p></td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_c_string</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                </p>
+                </td>
+<td>
+                <p>
+                  Function that returns the underlying raw C-string from <code class="computeroutput"><span class="identifier">s</span></code>.
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
-                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_begin</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></tt>
-                </p></td>
-<td><p>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_begin</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                </p>
+                </td>
+<td>
+                <p>
                   Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
-                  iterator from <tt class="computeroutput"><span class="identifier">s</span></tt>
+                  iterator from <code class="computeroutput"><span class="identifier">s</span></code>
                   that points to the beginning the string.
-                </p></td>
+                </p>
+                </td>
 </tr>
 <tr>
-<td><p>
-                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_end</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></tt>
-                </p></td>
-<td><p>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span><span class="special">::</span><span class="identifier">get_end</span><span class="special">(</span><span class="identifier">s</span><span class="special">)</span></code>
+                </p>
+                </td>
+<td>
+                <p>
                   Function that returns an <a href="http://www.sgi.com/tech/stl/" target="_top">STL</a>
-                  iterator from <tt class="computeroutput"><span class="identifier">s</span></tt>
+                  iterator from <code class="computeroutput"><span class="identifier">s</span></code>
                   that points to the end of the string.
-                </p></td>
+                </p>
+                </td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.qi.reference.basics.models"></a><h5>
-<a name="id470110"></a>
-          <a href="basics.html#spirit.qi.reference.basics.models">Models</a>
-        </h5>
+<a name="spirit.qi.reference.basics.models"></a><h6>
+<a name="id654635"></a>
+          <a class="link" href="basics.html#spirit.qi.reference.basics.models">Models</a>
+        </h6>
 <p>
           Predefined models include:
         </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
             any literal string, e.g. "Hello, World",
           </li>
-<li>
+<li class="listitem">
             a pointer/reference to a null-terminated array of characters
           </li>
-<li>
-            a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></tt>
+<li class="listitem">
+            a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
 </li>
 </ul></div>
 <p>
-          The namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></tt> is open for users to provide their
+          The namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code> is open for users to provide their
           own specializations. The customization points implemented by <span class="emphasis"><em>Spirit.Qi</em></span>
           usable to customize the behavior of parsers are described in the section
-          <a href="../../advanced/customize.html" title=" Customization of Spirit's
-      Attribute Handling">Customization of Attribute Handling</a>.
+          <a class="link" href="../../advanced/customize.html" title="Customization of Spirit's Attribute Handling">Customization of Attribute Handling</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

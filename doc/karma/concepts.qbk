@@ -11,8 +11,8 @@
 __karma__ generators fall into a couple of generalized __concepts__. The
 /Generator/ is the most fundamental concept. All __karma__ generators are
 models of the /Generator/ concept. /PrimitiveGenerator/, /UnaryGenerator/,
-/BinaryGenerator/ and /NaryGenerator/ are all refinements of the /Generator/
-concept.
+/BinaryGenerator/, /NaryGenerator/, and /Nonterminal/ are all refinements of 
+the /Generator/ concept.
 
 The following sections provide details on these concepts.
 
@@ -312,5 +312,119 @@ The following generators conform to this model:
 __fixme__ Add more links to models of NaryGenerator concept
 
 [endsect] [/ NaryGenerator Concept]
+
+[/////////////////////////////////////////////////////////////////////////////]
+[section Nonterminal]
+
+[heading Description]
+
+A Nonterminal is a symbol in a __peg__ production that represents a
+grammar fragment. Nonterminals may self reference to specify recursion.
+This is one of the most important concepts and the reason behind the
+word "recursive" in recursive descent generation.
+
+[heading Refinement of]
+
+[:__generator_concept__]
+
+[heading Signature]
+
+Rules can have both consumed and inherited attributes. The rule's
+/Signature/ specifies both the consumed and inherited attributes. The
+specification uses the function declarator syntax: 
+
+    RT(A0, A1, A2, ..., AN)
+
+where `RT` is the rule's consumed attribute and `A0` ... `AN` are the
+rule's inherited attributes.
+
+[heading Attributes]
+
+The rule models a C++ function. The rule's consumed attribute is
+analogous to the function return value as it is the type -exposed- by the rule. 
+Its inherited attributes are analogous to function arguments. The inherited 
+attributes (arguments) can be passed in just like any __karma_lazy_argument__, 
+e.g.:
+
+    r(expr) // Evaluate expr at parse time and pass the result to the Nonterminal r
+
+[heading `_val`]
+
+The `boost::spirit::qi_val` placeholder can be used in __phoenix__
+semantic actions anywhere in the Nonterminal's definition. This
+__phoenix__ placeholder refers to the Nonterminal's (synthesized)
+attribute. The `_val` placeholder acts like a immutable reference to the
+Nonterminal's attribute.
+
+[heading `_r1`...`r10`]
+
+The `boost::spirit::_r1`...`boost::spirit::r10` placeholders can be used
+in __phoenix__ semantic actions anywhere in the Nonterminal's
+definition. These __phoenix__ placeholders refer to the Nonterminal's
+inherited attributes.
+
+[heading Locals]
+
+Nonterminals can have local variables that will be created on the stack
+at parse time. A locals descriptor added to the Nonterminal declaration
+will give the Nonterminal local variables: 
+
+    template <typename T0, typename T1, typename T2, ... typename TN>
+    struct locals;
+
+where `T0` ... `TN` are the types of local variables accessible in your
+__phoenix__ semantic actions using the placeholders: 
+
+* `boost::spirit::_a`
+* `boost::spirit::_b` 
+* `boost::spirit::_c`
+* `boost::spirit::_d` 
+* `boost::spirit::_e` 
+* `boost::spirit::_f` 
+* `boost::spirit::_g`
+* `boost::spirit::_h` 
+* `boost::spirit::_i` 
+* `boost::spirit::_j` 
+    
+which correspond to the Nonterminal's local variables `T0` ... `T9`.
+
+[variablelist Notation
+    [[`x`]                          [A Nonterminal]]
+    [[`X`]                          [A Nonterminal type]]
+    [[`arg1`, `arg2`, ... `argN`]   [__karma_lazy_arguments__ that evaluate to each of 
+                                    the Nonterminal's inherited attributes.]]
+]
+
+[heading Valid Expressions]
+
+In addition to the requirements defined in __parser_concept__, for any
+NaryParser the following must be met:
+
+[table
+    [[Expression]               [Semantics]                                         [Return type]]
+    [[`x`]                      [In a generator expression, invoke Nonterminal `x`]  [`X`]]
+    [[`x(arg1, arg2, ... argN)`][In a generator expression, invoke Nonterminal `x` 
+                                passing in inherited attributes
+                                `arg1`...`argN`]                                    [`X`]]
+    [[`x.name(name)`]           [Naming a Nonterminal.]                             [`void`]]
+    [[`x.name()`]               [Getting the name of a Nonterminal.]                [`std::string`]]
+]
+
+[heading Type Expressions]
+
+[table
+    [[Expression]       [Description]]
+    [[`X::sig_type`]    [The Signature of `X`: An __mpl_fwd_sequence__.
+                        The first element is the Nonterminal's consumed attribute
+                        type and the rest are the inherited attribute types.]]
+    [[`X::locals_type`] [The local variables of `X`: An __mpl_fwd_sequence__.]]
+]
+
+[heading Models]
+
+* __karma_rule__
+* __karma_grammar__
+
+[endsect]
 
 [endsect]
