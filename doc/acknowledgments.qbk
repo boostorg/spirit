@@ -47,9 +47,9 @@ keeping us on our toes.
 [*OvermindDL] for his creative ideas on the mailing list helping to resolve 
 even more difficult user problems.
 
-[*Carl Barron] for his early adption and valuable feedback of the Lexer library
+[*Carl Barron] for his early adoption and valuable feedback of the Lexer library
 forcing us to design a proper API covering all of his use cases. He also 
-contributed an early version of the variadic attribute API for Qi and Karma.
+contributed an early version of the variadic attribute API for Qi.
 
 Special thanks to spirit-devel and spirit-general mailing lists for
 participating in the discussions, being early adopters of pre-release

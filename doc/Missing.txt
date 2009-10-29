@@ -53,7 +53,7 @@ Reference
 [done] - attr_cast (in auxiliary.qbk)
 [done] - nonterminal.qbk
 [done] - document API functions: generate, generate_delimited
-- document API functions: format, format_delimited
+[done] - document API functions: format, format_delimited
 
 Lex
 ---
