@@ -67,7 +67,7 @@ can be found here: __early_spirit__.
 
 Version 1.0 to 1.8 was a complete rewrite of the original Spirit parser
 using expression templates and static polymorphism, inspired by the
-works of Todd Veldhuizen (__todd__exprtemplates__, C++ Report, June
+works of Todd Veldhuizen (__exprtemplates__, C++ Report, June
 1995). Initially, the static-Spirit version was meant only to replace
 the core of the original dynamic-Spirit. Dynamic-Spirit needed a parser
 to implement itself anyway. The original employed a hand-coded
@@ -110,7 +110,7 @@ and STL --between compile time and runtime -- mapping types to values.
 Fusion is a direct descendant of both MPL and __boost_tuples__. Fusion
 is now a full-fledged __boost__ library. __phoenix__ also had to be
 beefed up to support Spirit V2. The result is __boost_phoenix__. Last
-but not least, Spirit V2 uses an __todd__exprtemplates__ library called
+but not least, Spirit V2 uses an __exprtemplates__ library called
 __boost_proto__.
 
 Even though it has evolved and matured to become a multi-module library,
@@ -166,7 +166,7 @@ __sec_lex__) is roughly divided into 3 parts:
 
 # Reference: Detailed formal technical reference. We start with a quick
   reference -- an easy to use table that maps into the reference proper.
-  The reference proper starts with C++ __cpp_concepts__ followed by
+  The reference proper starts with C++ concepts followed by
   models of the concepts.
 
 Some icons are used to mark certain topics indicative of their relevance.
@@ -180,7 +180,7 @@ These icons precede some text to indicate:
                                         doesn't fit in the flow of the text)]]
 
     [[__tip__]          [Tip]           [Suggestion on how to do something
-                                        (especially something that not be obvious)]]
+                                        (especially something that is not obvious)]]
 
     [[__important__]    [Important]     [Important note on something to take
                                         particular notice of]]

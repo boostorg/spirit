@@ -39,11 +39,10 @@
 [def __repo__                   [@../../repository/doc/html/index.html Repository]]
 
 [def __early_spirit__           [@http://spirit.sourceforge.net/dl_docs/pre-spirit.htm pre-Spirit]]
-[def __todd__exprtemplates__    [@http://ubiety.uwaterloo.ca/~tveldhui/papers/Expression-Templates/exprtmpl.html Expression Templates]]
+[def __exprtemplates__          [@http://en.wikipedia.org/wiki/Expression_templates Expression Templates]]
 [/ Ideally, this would link to the references section but there doesn't seem to be
    a way to do it!]
 [def __ebnf_intro__             [@http://www.csci.csusb.edu/dick/maths/intro_ebnf.html EBNF intro]]
-[def __cpp_concepts__           [@http://en.wikipedia.org/wiki/C%2B%2B0x#Concept Concepts]]
 [def __attr_grammar__           [@http://en.wikipedia.org/wiki/Attribute_grammar Attribute Grammar]]
 [def __string_template__        [@http://www.stringtemplate.org/ StringTemplate]]
 [def __lexertl__                [@http://www.benhanson.net/lexertl.html Lexertl]]
