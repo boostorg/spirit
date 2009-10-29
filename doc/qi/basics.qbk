@@ -12,9 +12,9 @@
 Some parsers (e.g. primitives and non-terminals) may take in additional
 attributes. Such parsers take the form:
 
-    p(a1, a2,... aN)
+    p(a1, a2,..., aN)
 
-where `p` is a parser. Each of the arguments (a1...aN) can either be an
+where `p` is a parser. Each of the arguments (a1 ... aN) can either be an
 immediate value, or a function, `f`, with signature:
 
     T f(Unused, Context)

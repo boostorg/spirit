@@ -882,7 +882,7 @@ functions:
                     the function `force_sign()` described above)
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, immediatly returning `false` from 
+      `false`, no further output is generated, immediately returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
@@ -910,7 +910,7 @@ functions:
       apply. See the description for the `fraction_part()` function below.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, immediatly returning `false` from 
+      `false`, no further output is generated, immediately returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
@@ -950,7 +950,7 @@ functions:
       by the implementation of this policy function.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, immediatly returning `false` from 
+      `false`, no further output is generated, immediately returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
@@ -973,7 +973,7 @@ functions:
      `upper[]` directives.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, immediatly returning `false` from 
+      `false`, no further output is generated, immediately returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
@@ -999,7 +999,7 @@ functions:
      `upper[]` directives.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, immediatly returning `false` from 
+      `false`, no further output is generated, immediately returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 [   [``
@@ -1025,7 +1025,7 @@ functions:
       `upper[]` directives.
 
       The return value defines the outcome of the whole generator. If it is 
-      `false`, no further output is generated, immediatly returning `false` from 
+      `false`, no further output is generated, immediately returning `false` from 
       the calling `real_generator` as well. If it is `true`, normal output 
       generation continues.]]
 ]

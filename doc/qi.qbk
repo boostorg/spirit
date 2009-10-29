@@ -31,6 +31,7 @@
 [import ../example/qi/reference.cpp]
 [include        qi/concepts.qbk]
 [include        qi/basics.qbk]
+[include        qi/parse_api.qbk]
 [include        qi/action.qbk]
 [include        qi/auxiliary.qbk]
 [include        qi/binary.qbk]

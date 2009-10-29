@@ -71,11 +71,11 @@ The type `Context` is the type of the parser execution context. This type is
 unspecified and depends on the context the parser is invoked in. The value, 
 `context` used by semantic actions written using __phoenix__ to access various 
 context dependent attributes and values. For more information about __phoenix__ 
-placeholder expressions usable in semantic actions see __qi_nonterminal_concept__.
+placeholder expressions usable in semantic actions see __qi_nonterminal__.
 
 The third parameter, `pass`, can be used by the semantic action to force the 
 associated parser to fail. If pass is set to `false` the action parser 
-will immediatly return `false` as well, while not invoking `p` and not 
+will immediately return `false` as well, while not invoking `p` and not 
 generating any output.
 
 [heading Attributes]

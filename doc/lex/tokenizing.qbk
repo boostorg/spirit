@@ -82,7 +82,7 @@ Here is the prototype of this `tokenize()` function overload:
     [[F f]                  [A function or function object to be called for 
                              each matched token. This function is expected to 
                              have the prototype: `bool f(Lexer::token_type);`.
-                             The `tokenize()` function will return immediatly if 
+                             The `tokenize()` function will return immediately if 
                              `F` returns `false.]]
     [[Lexer::char_type const* initial_state]
                             [This optional parameter can be used to specify 

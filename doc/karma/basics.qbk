@@ -13,9 +13,9 @@
 Some generators (e.g. primitives and non-terminals) may take in additional
 attributes. Such generators take the form:
 
-    g(a1, a2,... aN)
+    g(a1, a2,..., aN)
 
-where `g` is a generator. Each of the arguments (a1...aN) can either be an
+where `g` is a generator. Each of the arguments (a1 ... aN) can either be an
 immediate value, or a function, `f`, with signature:
 
     T f(Unused, Context)
