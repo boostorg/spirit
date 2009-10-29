@@ -29,22 +29,22 @@ The top spirit directory is:
 
 Currently, the directory contains:
 
-    [actor]     [attribute]     [core]      [dynamic]
-    [debug]     [error_handling][home]      [include]
-    [iterator]  [meta]          [phoenix]   [symbols]
-    [tree]      [utility]
+    [actor]     [attribute]     [core]      [debug]
+    [dynamic]   [error_handling][home]      [include]
+    [iterator]  [meta]          [phoenix]   [repository]
+    [symbols]   [tree]          [utility]
 
 These include some old v1.8 directories that are now depracated. These
-are: actor, attribute, core, dynamic, debug, error_handling, iterator,
+are: actor, attribute, core, debug, dynamic, error_handling, iterator,
 meta, phoenix, symbols, tree and utility. There is no guarantee that these
 directories will still be present in future versions of Spirit. We only
 keep them for backward compatibility. Please be warned.
 
-Each directory (except include and home) have a corresponding header file that
-contains forwarding includes of each relevant include file that the
-directory contains. For example, there exists a <boost/spirit/actor.hpp>
-header file which includes all the relevant files from the boost/spirit/actor/ 
-directory.
+Each directory (except include, home, and repository) has a corresponding
+header file that contains forwarding includes of each relevant include file
+that the directory contains. For example, there exists a
+<boost/spirit/actor.hpp> header file which includes all the relevant files
+from the boost/spirit/actor directory.
 
 To distinguish between Spirit versions, you can inspect the version file:
 
@@ -119,6 +119,10 @@ boost/spirit/include.
 
 For some additional information about the rationale you might want to have a 
 look at the FAQ entry __include_structure_faq__.
+
+The subdirectory `boost/spirit/repository` does not belong to the main Spirit
+distribution. For more information please refer to: 
+[link spirit.repository Spirit Repository].
 
 [endsect] [/Include]
 

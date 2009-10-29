@@ -67,6 +67,10 @@ Some includes:
 
 [reference_karma_includes]
 
+The used output  iterator:
+
+[reference_karma_output_iterator]
+
 Our test functions:
 
 This one tests the generators without attributes.

@@ -54,31 +54,29 @@
 <pre class="programlisting"><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">int</span><span class="special">(</span><span class="keyword">double</span><span class="special">)&gt;</span> <span class="identifier">r</span><span class="special">;</span>
 </pre>
 <p>
-          In the world of generators, nonterminals are as equally useful as in the
-          parser world. Generator nonterminals encapsulate a format description for
-          a particular data type, and, whenever we need to emit output for this data
-          type, the corresponding nonterminal is invoked in a similar way as the
-          predefined <span class="emphasis"><em>Spirit.Karma</em></span> generator primitives. The
-          <span class="emphasis"><em>Spirit.Karma</em></span> nonterminals are very similar to the
-          <span class="emphasis"><em>Spirit.Qi</em></span> nonterminals. Generator nonterminals may
-          accept <span class="emphasis"><em>parameters</em></span> as well, and we call those inherited
-          attributes too. The main difference is that they do not expose a synthesized
-          attribute (as parsers do), but they require a special <span class="emphasis"><em>consumed
-          attribute</em></span>. Usually the consumed attribute is the value the generator
-          creates its output from. Even if the consumed attribute is not 'returned'
-          from the generator we chose to use the same function style declaration
-          syntax as used in <span class="emphasis"><em>Spirit.Qi</em></span>. The example below declares
-          a <span class="emphasis"><em>Spirit.Karma</em></span> <code class="computeroutput"><span class="identifier">rule</span></code>
-          consuming a <code class="computeroutput"><span class="keyword">double</span></code> while not
-          expecting any additional inherited attributes.
+          In the world of generators, nonterminals are just as useful as in the parser
+          world. Generator nonterminals encapsulate a format description for a particular
+          data type, and, whenever we need to emit output for this data type, the
+          corresponding nonterminal is invoked in a similar way as the predefined
+          <span class="emphasis"><em>Spirit.Karma</em></span> generator primitives. The <span class="emphasis"><em>Spirit.Karma</em></span>
+          nonterminals are very similar to the <span class="emphasis"><em>Spirit.Qi</em></span> nonterminals.
+          Generator nonterminals may accept <span class="emphasis"><em>parameters</em></span> as well,
+          and we call those inherited attributes too. The main difference is that
+          they do not expose a synthesized attribute (as parsers do), but they require
+          a special <span class="emphasis"><em>consumed attribute</em></span>. Usually the consumed
+          attribute is the value the generator creates its output from. Even if the
+          consumed attribute is not 'returned' from the generator we chose to use
+          the same function style declaration syntax as used in <span class="emphasis"><em>Spirit.Qi</em></span>.
+          The example below declares a <span class="emphasis"><em>Spirit.Karma</em></span> <code class="computeroutput"><span class="identifier">rule</span></code> consuming a <code class="computeroutput"><span class="keyword">double</span></code>
+          while not expecting any additional inherited attributes.
         </p>
 <pre class="programlisting"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">double</span><span class="special">()&gt;</span> <span class="identifier">r</span><span class="special">;</span>
 </pre>
 <p>
-          In addition to this, nonterminal parsers and generators may accept <span class="emphasis"><em>parameters</em></span>,
-          called inherited attributes. These are normally passed to the component
-          during its invocation. Inherited attributes can be used to parametrize
-          the parser or generator depending on the context they are invoked from.
+          The inherited attributes of nonterminal parsers and generators are normally
+          passed to the component during its invocation. These are the <span class="emphasis"><em>parameters</em></span>
+          the parser or generator may accept and they can be used to parameterize
+          the component depending on the context they are invoked from.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

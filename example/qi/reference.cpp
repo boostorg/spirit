@@ -200,7 +200,7 @@ struct backwards_bool_policies : boost::spirit::qi::bool_policies<>
 // a simple complex number representation z = a + bi
 struct complex
 {
-    complex (double a, double b)
+    complex (double a = 0.0, double b = 0.0)
       : a(a), b(b)
     {}
 
@@ -212,7 +212,10 @@ struct complex
 std::istream& 
 operator>> (std::istream& is, complex& z)
 {
-    is << "{" >> z.a >> "," >> z.b >> "}";
+    char lbrace = '\0', comma = '\0', rbrace = '\0';
+    is >> lbrace >> z.a >> comma >> z.b >> rbrace;
+    if (lbrace != '{' || comma != ',' || rbrace != '}')
+        is.setstate(std::ios_base::failbit);
     return is;
 }
 //]
@@ -239,6 +242,29 @@ namespace boost { namespace spirit { namespace traits
     };
 }}}
 //]
+
+namespace client 
+{
+    using boost::spirit::qi::grammar;
+    using boost::spirit::qi::rule;
+    using boost::spirit::ascii::space_type;
+
+//[reference_grammar_definition
+/*`Basic grammar usage:
+ */
+    struct num_list : grammar<char const*, space_type>
+    {
+        num_list() : base_type(start)
+        {
+            using boost::spirit::int_;
+            num = int_;
+            start = num >> *(',' >> num);
+        }
+
+        rule<char const*, space_type> start, num;
+    };
+//]
+}
 
 int
 main()
@@ -501,12 +527,11 @@ main()
     {
         //[reference_qi_using_declarations_attr_cast
         using boost::spirit::qi::int_;
-        using boost::spirit::qi::attr_cast;
         //]
 
         //[reference_qi_attr_cast1
         int_data d = { 0 };
-        test_parser_attr("1", attr_cast(int_), d);
+        test_parser_attr("1", boost::spirit::qi::attr_cast(int_), d);
         std::cout << d.i << std::endl;
         //]
     }
@@ -951,6 +976,7 @@ main()
 
         /*`Parse a simple string using the operator>>(istream&, std::string&);
          */
+        std::string str;
         test_parser_attr("abc", stream, str);
         std::cout << str << std::endl;
 
@@ -1170,27 +1196,18 @@ main()
     
     // grammar
     {
-        //[reference_grammar
+        using client::num_list;
+
+        //[reference_grammar_using
         //`Some using declarations:
         using boost::spirit::ascii::space_type;
         using boost::spirit::int_;
         using boost::spirit::qi::grammar;
         using boost::spirit::qi::rule;
+        //]
 
-        /*`Basic grammar usage:
-         */
-        struct num_list : grammar<char const*, space_type>
-        {
-            num_list() : base_type(start)
-            {
-                using boost::spirit::int_;
-                num = int_;
-                start = num >> *(',' >> num);
-            }
-
-            rule<char const*, space_type> start, num;
-        };
-        
+        //[reference_grammar
+        //`How to use the example grammar:
         num_list nlist;
         test_phrase_parser("123, 456, 789", nlist);
         //]

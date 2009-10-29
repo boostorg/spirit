@@ -159,7 +159,7 @@ Things to take notice of:
 
 [tutorial_roman_grammar_parse]
 
-`roman_parser` is an object of type `roman` -our roman numeral parser. This time
+`roman_parser` is an object of type `roman`, our roman numeral parser. This time
 around, we are using the no-skipping version of the parse functions. We do not
 want to skip any spaces! We are also passing in an attribute, `unsigned result`,
 which will receive the parsed value.

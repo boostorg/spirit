@@ -16,9 +16,9 @@ Parsers and generators in __spirit__ are fully attributed. __qi__ parsers always
 attribute/ as it is returned from a successful match representing the matched 
 input sequence. For instance, numeric parsers, such as `int_` or `double_`, 
 return the `int` or `double` value converted from the matched input sequence.
-Other primitive parser components have other intuitive attribute types, such as 
-for instance `int_` which has `int`, or `ascii::char_` which has `char`. For
-primitive parsers apply the normal C++ convertibility rules: you can use any 
+Other primitive parser components have other intuitive attribute types, e.g. 
+the parser `ascii::char_` has `char` as attribute type. For
+primitive parsers the normal C++ convertibility rules apply: you can use any 
 C++ type to receive the parsed value as long as the attribute type of the 
 parser is convertible to the type provided. The following example shows how a 
 synthesized parser attribute (the `int` value) is extracted by calling the 
@@ -36,8 +36,8 @@ attribute is most of the time the value the generator is designed to emit
 output for. For primitive generators the normal C++ convertibility rules apply. 
 Any data type convertible to the attribute type of a primitive generator can be 
 used to provide the data to generate. We present a similar example as above, 
-this time the consumed generator attribute (the `int` value) is passed to the 
-API function `karma::generate`:
+this time the consumed attribute of the `int_` generator (the `int` value)
+is passed to the API function `karma::generate`:
 
     int value = 123;
     std::string str;
@@ -45,8 +45,8 @@ API function `karma::generate`:
     karma::generate(out, int_, value);                // str == "123"
 
 Other primitive generator components have other intuitive attribute types, very
-similar to the corresponding parser components, such as for instance `int_` 
-which has `int`, or `ascii::char_` which has `char`. For a full list of 
+similar to the corresponding parser components.  For instance, the
+`ascii::char_` generator has `char` as consumed attribute. For a full list of 
 available parser and generator primitives and their attribute types please see 
 the sections __sec_qi_primitive__ and __sec_karma_primitive__.
 
@@ -62,8 +62,8 @@ instance:
 
 [table
     [[Library]      [Sequence attribute propagation rule]]
-    [[/Qi/]         [`a: A, b: B --> (a >> b): tuple<A, B>`]]
-    [[/Karma/]      [`a: A, b: B --> (a << b): tuple<A, B>`]]
+    [[Qi]           [`a: A, b: B --> (a >> b): tuple<A, B>`]]
+    [[Karma]        [`a: A, b: B --> (a << b): tuple<A, B>`]]
 ]
 
 which reads as:
@@ -100,8 +100,8 @@ corresponding element of the component sequence. For example, the expression:
     [[Karma]        [`double_ << double_`]]
 ]
 
-is compatible any fusion sequence holding two types, where both types have
-to be compatible to `double`. The first element of the fusion sequence has to 
+is compatible with any fusion sequence holding two types, where both types have
+to be compatible with `double`. The first element of the fusion sequence has to 
 be compatible with the attribute of the first `double_`, and the second element 
 of the fusion sequence has to be compatible with the attribute of the second 
 `double_`. If we assume to have an instance of a `std::pair<double, double>`, 
@@ -126,7 +126,7 @@ and generate output for it:
         karma::space,                     // delimiter grammar
         p);                               // data to use as the attribute 
 
-(where the `ascii::space` generator is used as the delimiter, allowing to 
+(where the `karma::space` generator is used as the delimiter, allowing to 
 automatically skip/insert delimiting spaces in between all primitives). 
 
 [tip  *For sequences only:* __qi__ and __karma__ expose a set of API functions 
@@ -186,7 +186,7 @@ consume any of the elements of a fusion sequence passed to this component
 sequence. As said, they just don't expose any attribute and don't produce 
 (consume) any data. The following example shows this:
 
-    // the following parses "1.0 2.0" into a pair of double
+    // the following parses "(1.0 2.0)" into a pair of double
     std::string input("(1.0, 2.0)");
     std::pair<double, double> p;
     qi::parse(input.begin(), input.end(), 
@@ -274,7 +274,7 @@ for more information):
 
     qi::rule<Iterator, int(double)> r;
 
-In the world of generators, nonterminals are as equally useful as in the parser
+In the world of generators, nonterminals are just as useful as in the parser
 world. Generator nonterminals encapsulate a format description for a particular 
 data type, and, whenever we need to emit output for this data type, the 
 corresponding nonterminal is invoked in a similar way as the predefined 
@@ -291,11 +291,10 @@ inherited attributes.
 
     karma::rule<OutputIterator, double()> r;
 
-
-In addition to this, nonterminal parsers and generators may accept /parameters/,
-called inherited attributes. These are normally passed to the component during
-its invocation. Inherited attributes can be used to parametrize the parser or
-generator depending on the context they are invoked from.
+The inherited attributes of nonterminal parsers and generators are normally
+passed to the component during its invocation. These are the /parameters/ the
+parser or generator may accept and they can be used to parameterize the
+component depending on the context they are invoked from.
 
 
 [/

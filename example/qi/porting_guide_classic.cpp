@@ -8,7 +8,7 @@
 //[porting_guide_classic_includes
 #include <boost/spirit/include/classic.hpp>
 #include <boost/spirit/include/phoenix1.hpp>
-#include <iostreams>
+#include <iostream>
 #include <string>
 //]
 
@@ -38,9 +38,9 @@ struct roman : public grammar<roman>
 
             first = eps_p         [phoenix::var(self.r) = phoenix::val(0)]
                 >>  (  +ch_p('M') [phoenix::var(self.r) += phoenix::val(1000)]
-                    ||  hundreds  [phoenix::var(self.r) += _1]
-                    ||  tens      [phoenix::var(self.r) += _1]
-                    ||  ones      [phoenix::var(self.r) += _1] 
+                    ||  hundreds  [phoenix::var(self.r) += phoenix::_1]
+                    ||  tens      [phoenix::var(self.r) += phoenix::_1]
+                    ||  ones      [phoenix::var(self.r) += phoenix::_1] 
                     ) ;
         }
 

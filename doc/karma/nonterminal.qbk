@@ -256,6 +256,10 @@ __karma_nonterminal_attribute__]
 [note The test harness for the example(s) below is presented in the
       __karma_basics_examples__ section.]
 
+[karma_reference_grammar_using]
+
+[karma_reference_grammar_definition]
+
 [karma_reference_grammar]
 
 [endsect] [/ Grammar]

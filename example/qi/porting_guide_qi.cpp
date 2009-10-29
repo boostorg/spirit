@@ -7,7 +7,8 @@
 =============================================================================*/
 //[porting_guide_qi_includes
 #include <boost/spirit/include/qi.hpp>
-#include <iostreams>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <iostream>
 #include <string>
 #include <algorithm>
 //]
@@ -95,7 +96,7 @@ int main()
         std::string input("MMIX");        // MMIX == 2009
         std::string::iterator it = input.begin();
         unsigned value = 0;
-        roman r;
+        roman<std::string::iterator> r;
         if (qi::parse(it, input.end(), r, value)) 
             std::cout << "successfully matched: " << value << "\n";
         //]

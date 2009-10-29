@@ -29,9 +29,9 @@
 </h3></div></div></div>
 <p>
         Parsing Expression Grammars (PEG)
-        <sup>[<a name="id570684" href="#ftn.id570684" class="footnote">5</a>]</sup>
+        <sup>[<a name="id548877" href="#ftn.id548877" class="footnote">5</a>]</sup>
         are a derivative of Extended Backus-Naur Form (EBNF)
-        <sup>[<a name="id570696" href="#ftn.id570696" class="footnote">6</a>]</sup>
+        <sup>[<a name="id548889" href="#ftn.id548889" class="footnote">6</a>]</sup>
         with a different interpretation, designed to represent a recursive descent
         parser. A PEG can be directly represented as a recursive-descent parser.
       </p>
@@ -42,7 +42,7 @@
         Abstract Syntax Tree) for each PEG grammar.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.sequences"></a><h5>
-<a name="id570716"></a>
+<a name="id548909"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.sequences">Sequences</a>
       </h5>
 <p>
@@ -84,7 +84,7 @@
         </p></td></tr>
 </table></div>
 <a name="spirit.abstracts.parsing_expression_grammar.alternatives"></a><h5>
-<a name="id571258"></a>
+<a name="id549452"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.alternatives">Alternatives</a>
       </h5>
 <p>
@@ -124,11 +124,10 @@
         PEGs allow for ambiguity in the alternatives. In the expression above, both
         <code class="computeroutput"><span class="identifier">a</span></code> or <code class="computeroutput"><span class="identifier">b</span></code>
         can both match an input string. However, only the first matching alternative
-        is valid. As noted, there can only be one valid parse tree ($$$ explain more
-        about this $$$).
+        is valid. As noted, there can only be one valid parse tree.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.loops"></a><h5>
-<a name="id571405"></a>
+<a name="id549598"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.loops">Loops</a>
       </h5>
 <p>
@@ -176,7 +175,7 @@
 <p>
         Unlike EBNF, PEGs have greedy loops. It will match as much as it can until
         its subject fails to match without regard to what follows. The following
-        is a classic example of a fairly common EBNF/reg-ex expression failing to
+        is a classic example of a fairly common EBNF/regex expression failing to
         match in PEG:
       </p>
 <pre class="programlisting"><span class="identifier">alnum</span><span class="special">*</span> <span class="identifier">digit</span>
@@ -191,7 +190,7 @@
         We will see more of these other mechanisms shortly.
       </p>
 <a name="spirit.abstracts.parsing_expression_grammar.difference"></a><h5>
-<a name="id571552"></a>
+<a name="id549746"></a>
         <a class="link" href="parsing_expression_grammar.html#spirit.abstracts.parsing_expression_grammar.difference">Difference</a>
       </h5>
 <p>
@@ -217,11 +216,11 @@
 </table></div>
 <div class="footnotes">
 <br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a name="ftn.id570684" href="#id570684" class="para">5</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id548877" href="#id548877" class="para">5</a>] </sup>
             Bryan Ford: Parsing Expression Grammars: A Recognition-Based Syntactic
             Foundation, <a href="http://pdos.csail.mit.edu/~baford/packrat/popl04/" target="_top">http://pdos.csail.mit.edu/~baford/packrat/popl04/</a>
           </p></div>
-<div class="footnote"><p><sup>[<a name="ftn.id570696" href="#id570696" class="para">6</a>] </sup>
+<div class="footnote"><p><sup>[<a name="ftn.id548889" href="#id548889" class="para">6</a>] </sup>
             Richard E. Pattis: EBNF: A Notation to Describe Syntax, <a href="http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf" target="_top">http://www.cs.cmu.edu/~pattis/misc/ebnf.pdf</a>
           </p></div>
 </div>

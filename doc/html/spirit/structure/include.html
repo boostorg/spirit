@@ -62,23 +62,23 @@
 <p>
         Currently, the directory contains:
       </p>
-<pre class="programlisting"><span class="special">[</span><span class="identifier">actor</span><span class="special">]</span>     <span class="special">[</span><span class="identifier">attribute</span><span class="special">]</span>     <span class="special">[</span><span class="identifier">core</span><span class="special">]</span>      <span class="special">[</span><span class="identifier">dynamic</span><span class="special">]</span>
-<span class="special">[</span><span class="identifier">debug</span><span class="special">]</span>     <span class="special">[</span><span class="identifier">error_handling</span><span class="special">][</span><span class="identifier">home</span><span class="special">]</span>      <span class="special">[</span><span class="identifier">include</span><span class="special">]</span>
-<span class="special">[</span><span class="identifier">iterator</span><span class="special">]</span>  <span class="special">[</span><span class="identifier">meta</span><span class="special">]</span>          <span class="special">[</span><span class="identifier">phoenix</span><span class="special">]</span>   <span class="special">[</span><span class="identifier">symbols</span><span class="special">]</span>
-<span class="special">[</span><span class="identifier">tree</span><span class="special">]</span>      <span class="special">[</span><span class="identifier">utility</span><span class="special">]</span>
+<pre class="programlisting"><span class="special">[</span><span class="identifier">actor</span><span class="special">]</span>     <span class="special">[</span><span class="identifier">attribute</span><span class="special">]</span>     <span class="special">[</span><span class="identifier">core</span><span class="special">]</span>      <span class="special">[</span><span class="identifier">debug</span><span class="special">]</span>
+<span class="special">[</span><span class="identifier">dynamic</span><span class="special">]</span>   <span class="special">[</span><span class="identifier">error_handling</span><span class="special">][</span><span class="identifier">home</span><span class="special">]</span>      <span class="special">[</span><span class="identifier">include</span><span class="special">]</span>
+<span class="special">[</span><span class="identifier">iterator</span><span class="special">]</span>  <span class="special">[</span><span class="identifier">meta</span><span class="special">]</span>          <span class="special">[</span><span class="identifier">phoenix</span><span class="special">]</span>   <span class="special">[</span><span class="identifier">repository</span><span class="special">]</span>
+<span class="special">[</span><span class="identifier">symbols</span><span class="special">]</span>   <span class="special">[</span><span class="identifier">tree</span><span class="special">]</span>          <span class="special">[</span><span class="identifier">utility</span><span class="special">]</span>
 </pre>
 <p>
         These include some old v1.8 directories that are now depracated. These are:
-        actor, attribute, core, dynamic, debug, error_handling, iterator, meta, phoenix,
+        actor, attribute, core, debug, dynamic, error_handling, iterator, meta, phoenix,
         symbols, tree and utility. There is no guarantee that these directories will
         still be present in future versions of Spirit. We only keep them for backward
         compatibility. Please be warned.
       </p>
 <p>
-        Each directory (except include and home) have a corresponding header file
-        that contains forwarding includes of each relevant include file that the
-        directory contains. For example, there exists a &lt;boost/spirit/actor.hpp&gt;
-        header file which includes all the relevant files from the boost/spirit<span class="emphasis"><em>actor</em></span>
+        Each directory (except include, home, and repository) has a corresponding
+        header file that contains forwarding includes of each relevant include file
+        that the directory contains. For example, there exists a &lt;boost/spirit/actor.hpp&gt;
+        header file which includes all the relevant files from the boost/spirit/actor
         directory.
       </p>
 <p>
@@ -207,6 +207,11 @@
         For some additional information about the rationale you might want to have
         a look at the FAQ entry <a class="link" href="../faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">Header
         Hell</a>.
+      </p>
+<p>
+        The subdirectory <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span></code> does not belong to the main
+        Spirit distribution. For more information please refer to: <a class="link" href="../repository.html" title="Spirit Repository">Spirit
+        Repository</a>.
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

@@ -58,7 +58,7 @@ a deviation from the usual EBNF interpretation where you simply match
 PEGs allow for ambiguity in the alternatives. In the expression above,
 both `a` or `b` can both match an input string. However, only the first
 matching alternative is valid. As noted, there can only be one valid
-parse tree ($$$ explain more about this $$$).
+parse tree. [/FIXME: $$$ explain more about this $$$]
 
 [heading Loops]
 
@@ -81,7 +81,7 @@ The first, called the Kleene star, matches zero or more of its subject
 
 Unlike EBNF, PEGs have greedy loops. It will match as much as it can
 until its subject fails to match without regard to what follows. The
-following is a classic example of a fairly common EBNF/reg-ex expression
+following is a classic example of a fairly common EBNF/regex expression
 failing to match in PEG:
 
     alnum* digit
