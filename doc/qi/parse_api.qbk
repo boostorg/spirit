@@ -19,15 +19,17 @@ reference that will hold the parsed attribute on a successful parse.
 
     // forwards to <boost/spirit/qi/parse.hpp>
     #include <boost/spirit/inlcude/qi_parse.hpp>
-    
+
 For variadic attributes:
 
     // forwards to <boost/spirit/qi/parse_attr.hpp>
-    #include <boost/spirit/inlcude/qi_parse_attr.hpp>
-    
-(The variadic attributes version of the API allows one or more
-attributes to be passed into the parse functions. This forms
-are usable when the parser expression is a __qi_sequence__)
+    #include <boost/spirit/include/qi_parse_attr.hpp>
+
+The variadic attributes version of the API allows one or more
+attributes to be passed into the parse functions. The functions taking two 
+or more are usable when the parser expression is a __qi_sequence__ only.
+In this case each of the attributes passed have to match the corresponding 
+part of the sequence.
 
 Also, see __include_structure__.
 
@@ -49,15 +51,16 @@ Also, see __include_structure__.
         Iterator& first
       , Iterator last
       , Expr const& expr);
-      
-    template <typename Iterator, typename Expr, typename Attr>
+
+    template <typename Iterator, typename Expr
+      , typename Attr1, typename Attr2, ..., typename AttrN>
     inline bool
     parse(
         Iterator& first
       , Iterator last
       , Expr const& expr
-      , Attr1& attr1, Attr2& attr2... AttrN& attrN);
-      
+      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+
     template <typename Iterator, typename Expr, typename Skipper>
     inline bool
     phrase_parse(
@@ -66,22 +69,50 @@ Also, see __include_structure__.
       , Expr const& expr
       , Skipper const& skipper
       , BOOST_SCOPED_ENUM(skip_flag) post_skip = skip_flag::postskip);
-      
-    template <typename Iterator, typename Expr, typename Skipper, typename Attr>
+
+    template <typename Iterator, typename Expr, typename Skipper
+      , typename Attr1, typename Attr2, ..., typename AttrN>
     inline bool
     phrase_parse(
         Iterator& first
       , Iterator last
       , Expr const& expr
       , Skipper const& skipper
-      , Attr1& attr1, Attr2& attr2... AttrN& attrN);
-      
+      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+
+    template <typename Iterator, typename Expr, typename Skipper
+      , typename Attr1, typename Attr2, ..., typename AttrN>
+    inline bool
+    phrase_parse(
+        Iterator& first
+      , Iterator last
+      , Expr const& expr
+      , Skipper const& skipper
+      , BOOST_SCOPED_ENUM(skip_flag) post_skip
+      , Attr1& attr1, Attr2& attr2, ..., AttrN& attrN);
+
+All functions above returns `true` if none of the involved parser components
+failed, and `false` otherwise. 
+
+The maximum number of supported arguments is limited by the preprocessor 
+constant `SPIRIT_ARGUMENTS_LIMIT`. This constant defaults to the value defined
+by the preprocessor constant `PHOENIX_LIMIT` (which in turn defaults to `10`). 
+
+[note The variadic function with two or more attributes internally combine 
+      references to all passed attributes into a `fusion::vector` and forward 
+      this as a combined attribute to the corresponding one attribute function.]
+
+The `phrase_parse` functions not taking an explicit `skip_flag` as one of their 
+arguments invoke the passed skipper after a successful match of the parser 
+expression. This can be inhbited by using the other versions of that function 
+while passing `skip_flag::dont_postskip`.
+
 [table
     [[Parameter]                    [Description]]
     [[`Iterator`]                   [__fwditer__ pointing to the source to parse.]]
     [[`Expr`]                       [An expression that can be converted to a Qi parser.]]
     [[`Skipper`]                    [Parser used to skip white spaces.]]
-    [[`Attr1`, `Attr2`, ... `AttrN`][One or more attributes.]]
+    [[`Attr1`, `Attr2`, ..., `AttrN`][One or more attributes.]]
 ]
 
 [endsect]

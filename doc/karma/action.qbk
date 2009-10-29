@@ -74,7 +74,7 @@ placeholder expressions usable in semantic actions see __karma_nonterminal_conce
 
 The third parameter, `pass`, can be used by the semantic action to force the 
 associated generator to fail. If pass is set to `false` the action generator 
-will immediatly return `false` as well, while not invoking `g` and not 
+will immediately return `false` as well, while not invoking `g` and not 
 generating any output.
 
 [heading Attributes]
