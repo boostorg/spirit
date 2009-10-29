@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-#include <boost/spirit/home/karma/stream/format_manip.hpp>
-#include <boost/spirit/home/karma/stream/format_manip_attr.hpp>
 #include <boost/spirit/home/karma/stream/ostream_iterator.hpp>
 #include <boost/spirit/home/karma/stream/stream.hpp>
 

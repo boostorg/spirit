@@ -12,8 +12,9 @@
 
 #include <boost/spirit/home/karma/generate.hpp>
 #include <boost/spirit/home/karma/generator.hpp>
-#include <boost/spirit/home/support/unused.hpp>
+#include <boost/spirit/home/karma/detail/output_iterator.hpp>
 #include <boost/spirit/home/karma/stream/detail/format_manip.hpp>
+#include <boost/spirit/home/support/unused.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma 

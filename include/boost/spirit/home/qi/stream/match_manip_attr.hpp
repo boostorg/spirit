@@ -10,7 +10,7 @@
 #if !defined(BOOST_SPIRIT_MATCH_MANIP_ATTR_MAY_05_2007_1202PM)
 #define BOOST_SPIRIT_MATCH_MANIP_ATTR_MAY_05_2007_1202PM
 
-#include <boost/spirit/home/qi/stream/detail/match_manip.hpp>
+#include <boost/spirit/home/qi/stream/match_manip.hpp>
 
 #include <boost/fusion/include/vector.hpp>
 #include <boost/preprocessor/iterate.hpp>

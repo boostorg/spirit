@@ -8,7 +8,7 @@
 #if !defined(BOOST_SPIRIT_KARMA_FORMAT_MANIP_ATTR_APR_24_2009_0734AM)
 #define BOOST_SPIRIT_KARMA_FORMAT_MANIP_ATTR_APR_24_2009_0734AM
 
-#include <boost/spirit/home/karma/stream/detail/format_manip.hpp>
+#include <boost/spirit/home/karma/stream/format_manip.hpp>
 
 #include <boost/fusion/include/vector.hpp>
 #include <boost/preprocessor/iterate.hpp>

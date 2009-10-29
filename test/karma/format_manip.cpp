@@ -5,6 +5,7 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/karma.hpp>
+#include <boost/spirit/include/karma_format.hpp>
 #include <boost/spirit/include/karma_stream.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
