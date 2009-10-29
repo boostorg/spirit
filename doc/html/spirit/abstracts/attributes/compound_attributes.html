@@ -34,7 +34,10 @@
           main attribute propagation rule for a sequences are for instance:
         </p>
 <div class="informaltable"><table class="table">
-<colgroup><col></colgroup>
+<colgroup>
+<col>
+<col>
+</colgroup>
 <thead><tr>
 <th>
                 <p>
@@ -48,7 +51,13 @@
                 </th>
 </tr></thead>
 <tbody>
-<tr><td>
+<tr>
+<td>
+                <p>
+                  Qi
+                </p>
+                </td>
+<td>
                 <p>
                   <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
                   <span class="identifier">A</span><span class="special">,</span>
@@ -57,8 +66,15 @@
                   <span class="special">(</span><span class="identifier">a</span>
                   <span class="special">&gt;&gt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>
                 </p>
-                </td></tr>
-<tr><td>
+                </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Karma
+                </p>
+                </td>
+<td>
                 <p>
                   <code class="computeroutput"><span class="identifier">a</span><span class="special">:</span>
                   <span class="identifier">A</span><span class="special">,</span>
@@ -67,7 +83,8 @@
                   <span class="special">(</span><span class="identifier">a</span>
                   <span class="special">&lt;&lt;</span> <span class="identifier">b</span><span class="special">):</span> <span class="identifier">tuple</span><span class="special">&lt;</span><span class="identifier">A</span><span class="special">,</span> <span class="identifier">B</span><span class="special">&gt;</span></code>
                 </p>
-                </td></tr>
+                </td>
+</tr>
 </tbody>
 </table></div>
 <p>
@@ -119,7 +136,7 @@
           Compound Attribute Rules</a>.
         </p>
 <a name="spirit.abstracts.attributes.compound_attributes.the_attribute_of_sequence_parsers_and_generators"></a><h6>
-<a name="id572587"></a>
+<a name="id550770"></a>
           <a class="link" href="compound_attributes.html#spirit.abstracts.attributes.compound_attributes.the_attribute_of_sequence_parsers_and_generators">The
           Attribute of Sequence Parsers and Generators</a>
         </h6>
@@ -175,8 +192,8 @@
 </tbody>
 </table></div>
 <p>
-          is compatible any fusion sequence holding two types, where both types have
-          to be compatible to <code class="computeroutput"><span class="keyword">double</span></code>.
+          is compatible with any fusion sequence holding two types, where both types
+          have to be compatible with <code class="computeroutput"><span class="keyword">double</span></code>.
           The first element of the fusion sequence has to be compatible with the
           attribute of the first <code class="computeroutput"><span class="identifier">double_</span></code>,
           and the second element of the fusion sequence has to be compatible with
@@ -204,7 +221,7 @@
 </span>    <span class="identifier">p</span><span class="special">);</span>                               <span class="comment">// data to use as the attribute 
 </span></pre>
 <p>
-          (where the <code class="computeroutput"><span class="identifier">ascii</span><span class="special">::</span><span class="identifier">space</span></code> generator is used as the delimiter,
+          (where the <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">space</span></code> generator is used as the delimiter,
           allowing to automatically skip/insert delimiting spaces in between all
           primitives).
         </p>
@@ -234,7 +251,7 @@
 </td></tr>
 </table></div>
 <a name="spirit.abstracts.attributes.compound_attributes.the_attribute_of_alternative_parsers_and_generators"></a><h6>
-<a name="id574806"></a>
+<a name="id552989"></a>
           <a class="link" href="compound_attributes.html#spirit.abstracts.attributes.compound_attributes.the_attribute_of_alternative_parsers_and_generators">The
           Attribute of Alternative Parsers and Generators</a>
         </h6>

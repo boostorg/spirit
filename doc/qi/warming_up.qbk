@@ -43,7 +43,7 @@ consumed depending on how the parser is invoked (see below).
   This is an important concept.
 ]
 
-[heading Trivial Example #3 Parsing one or more numbers]
+[heading Trivial Example #3 Parsing zero or more numbers]
 
 Create a parser that will accept zero or more floating-point numbers.
 

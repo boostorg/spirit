@@ -27,17 +27,17 @@
 <a name="spirit.qi.reference.parser_concepts.parser"></a><a class="link" href="parser.html" title="Parser">Parser</a>
 </h5></div></div></div>
 <a name="spirit.qi.reference.parser_concepts.parser.description"></a><h6>
-<a name="id613823"></a>
+<a name="id593382"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.description">Description</a>
           </h6>
 <p>
             The <span class="emphasis"><em>Parser</em></span> is the most fundamental concept. A Parser
-            has a member function, <code class="computeroutput"><span class="identifier">parse</span></code>,
+            has a member function <code class="computeroutput"><span class="identifier">parse</span></code>,
             that accepts a first-last <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> pair and returns
-            bool as its result. The iterators delimit the data being parsed. The
-            Parser's <code class="computeroutput"><span class="identifier">parse</span></code> member
-            function returns <code class="computeroutput"><span class="keyword">true</span></code> if
-            the parse succeeds, in which case the first iterator is advanced accordingly.
+            <code class="computeroutput"><span class="keyword">bool</span></code> as its result. The
+            iterators delimit the data being parsed. The Parser's <code class="computeroutput"><span class="identifier">parse</span></code>
+            member function returns <code class="computeroutput"><span class="keyword">true</span></code>
+            if the parse succeeds, in which case the first iterator is advanced accordingly.
             Each Parser can represent a specific pattern or algorithm, or it can
             be a more complex parser formed as a composition of other Parsers.
           </p>
@@ -81,13 +81,13 @@
 </dl>
 </div>
 <a name="spirit.qi.reference.parser_concepts.parser.valid_expressions"></a><h6>
-<a name="id614093"></a>
+<a name="id593660"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
             In the expressions below, the behavior of the parser, <code class="computeroutput"><span class="identifier">p</span></code>,
-            how <code class="computeroutput"><span class="identifier">skip</span></code> and <code class="computeroutput"><span class="identifier">attrib</span></code> are handled by <code class="computeroutput"><span class="identifier">p</span></code>, are left unspecified in the base
+            and how <code class="computeroutput"><span class="identifier">skip</span></code> and <code class="computeroutput"><span class="identifier">attrib</span></code> are handled by <code class="computeroutput"><span class="identifier">p</span></code>, are left unspecified in the base
             <code class="computeroutput"><span class="identifier">Parser</span></code> concept. These
             are specified in subsequent, more refined concepts and by the actual
             models thereof.
@@ -161,7 +161,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.type_expressions"></a><h6>
-<a name="id614361"></a>
+<a name="id593927"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.type_expressions">Type
             Expressions</a>
           </h6>
@@ -214,7 +214,7 @@
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parser_concepts.parser.postcondition"></a><h6>
-<a name="id614559"></a>
+<a name="id594125"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.postcondition">Postcondition</a>
           </h6>
 <p>
@@ -224,7 +224,7 @@
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               On a successful match, <code class="computeroutput"><span class="identifier">f</span></code>
-              is positioned one past the first non-matching character/token.
+              is positioned one past the last matching character/token.
             </li>
 <li class="listitem">
               On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
@@ -236,7 +236,7 @@
               On a failed match, if a <code class="computeroutput"><span class="identifier">skip</span></code>
               parser is not <code class="computeroutput"><span class="identifier">unused</span></code>,
               <code class="computeroutput"><span class="identifier">f</span></code> is positioned one
-              past the first character/token not matching <code class="computeroutput"><span class="identifier">skip</span></code>.
+              past the last character/token matching <code class="computeroutput"><span class="identifier">skip</span></code>.
             </li>
 <li class="listitem">
               On a failed match, <code class="computeroutput"><span class="identifier">attrib</span></code>
@@ -248,7 +248,7 @@
             </li>
 </ul></div>
 <a name="spirit.qi.reference.parser_concepts.parser.models"></a><h6>
-<a name="id614759"></a>
+<a name="id594252"></a>
             <a class="link" href="parser.html#spirit.qi.reference.parser_concepts.parser.models">Models</a>
           </h6>
 <p>

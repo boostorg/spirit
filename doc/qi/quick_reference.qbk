@@ -147,7 +147,7 @@ pages and pages of reference doumentation.
     [[`lazy(fp)`]           [Attribute of `P` where `P`
                             is the return type of `fp`] [Invoke `fp` at parse time, returning a parser
                                                         `p` which is then called to parse.]]
-    [[`fp`]                 [see `lazy(fp)` above]      [Equivalent to `lazy[fp]`]]
+    [[`fp`]                 [see `lazy(fp)` above]      [Equivalent to `lazy(fp)`]]
     [[__qi_attr__]          [`Attrib`]                  [Doesn't consume/parse any input, but exposes the 
                                                          argument `attrib` as its attribute.]]
 ]
@@ -180,9 +180,9 @@ pages and pages of reference doumentation.
     [[__qi_raw__`[a]`]              [__boost_iterator_range__`<I>`] [Presents the transduction of `a` as an iterator range]]
 
     [[[qi_repeat `repeat[a]`]]      [`vector<A>`]                   [Repeat `a` zero or more times]]
-    [[[qi_repeat `(N)[a]`]]         [`vector<A>`]                   [Repeat `a` `N` times]]
-    [[[qi_repeat `(N, M)[a]`]]      [`vector<A>`]                   [Repeat `a` `N` to `M` times]]
-    [[[qi_repeat `(N, inf)[a]`]]    [`vector<A>`]                   [Repeat `a` `N` or more times]]
+    [[[qi_repeat `repeat(N)[a]`]]         [`vector<A>`]                   [Repeat `a` `N` times]]
+    [[[qi_repeat `repeat(N, M)[a]`]]      [`vector<A>`]                   [Repeat `a` `N` to `M` times]]
+    [[[qi_repeat `repeat(N, inf)[a]`]]    [`vector<A>`]                   [Repeat `a` `N` or more times]]
 
     [[__qi_skip__`[a]`]             [`A`]                           [Re-establish the skipper that got inhibited by lexeme]]
     [[__qi_skip__`(p)[a]`]          [`A`]                           [Use `p` as a skipper for parsing `a`]]
@@ -211,7 +211,7 @@ pages and pages of reference doumentation.
     [[`a ^ b`]              [`tuple<`
                                 `optional<A>,`
                                 `optional<B> >`
-                            ]                           [Permutation. Parse `a` and `b` in any order]]
+                            ]                           [Permutation. Parse `a` or `b` or `a` followed by `b` or `b` followed by `a`.]]
 ]
 
 [endsect]

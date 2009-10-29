@@ -28,15 +28,16 @@ we'll have an attribute of:
 So, what does this give us? Well, we can simply pass in a `std::vector<double>`
 to our number list parser and it will happily churn out our result in our
 vector. For that to happen, we'll use a variation of the `phrase_parse` with
-an additional argument: the parser's attribute:
+an additional argument: the parser's attribute. With the following arguments
+passed to `phrase_parse`
 
 # An iterator pointing to the start of the input
 # An iterator pointing to one past the end of the input
 # The parser object
-# The parser's attribute
 # Another parser called the skip parser
+# The parser's attribute
 
-So, our parser now is further simplified to:
+our parser now is further simplified to:
 
 [import ../../example/qi/num_list4.cpp]
 

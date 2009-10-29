@@ -61,8 +61,8 @@ and its definition:
 
     node = (xml | text)                 [_val = _1];
 
-We'll see what a `mini_xml_node` structure later. Looking at the rule
-definition, we see some alternation goiing on here. An xml `node` is
+We'll see what a `mini_xml_node` structure is later. Looking at the rule
+definition, we see some alternation going on here. An xml `node` is
 either an `xml` OR `text`. Hmmm... hold on to that thought...
 
     rule<Iterator, std::string(), space_type> start_tag;
@@ -108,13 +108,13 @@ not have a synthesized attribute. Let's see its definition:
         >>  '>'
     ;
 
-`_r1` is yet another __phoenix__ placeholder for the 1st inherited attribute (we
+`_r1` is yet another __phoenix__ placeholder for the first inherited attribute (we
 have only one, use `_r2`, `_r3`, etc. if you have more).
 
 [heading A Lazy Lit]
 
 Check out how we used `lit` here, this time, not with a literal string, but with
-the value of the 1st inherited attribute, which is specified as `std::string` in
+the value of the first inherited attribute, which is specified as `std::string` in
 our rule declaration.
 
 Finally, our `xml` rule:
@@ -197,8 +197,8 @@ employee example, we can adapt that to be a __fusion__ sequence:
 [heading One More Take]
 
 Here's another version. The AST structure remains the same, but this time,
-you'll see that we make use of auto-rules making the grammar semantic-action-
-less. Here it is:
+you'll see that we make use of auto-rules making the grammar
+semantic-action-less. Here it is:
 
 [tutorial_xml2_grammar]
 
@@ -232,6 +232,6 @@ Let's see how this is used in action:
   local variable.
 
 There are no actions involved in stuffing data into our `xml` attribute. It's
-all taken cared of thatnks to the auto-rule.
+all taken care of thanks to the auto-rule.
 
 [endsect]

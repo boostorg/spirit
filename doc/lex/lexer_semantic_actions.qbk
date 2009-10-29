@@ -30,14 +30,14 @@ prototype of `f` is:
     [[`Iterator& start`]    [This is the iterator pointing to the begin of the 
                              matched range in the underlying input sequence. The 
                              type of the iterator is the same as specified while
-                             defining the type of the `lexertl_lexer<...>` 
+                             defining the type of the `lexertl::actor_lexer<...>` 
                              (its first template parameter). The semantic action 
                              is allowed to change the value of this iterator
                              influencing, the matched input sequence.]]
     [[`Iterator& end`]      [This is the iterator pointing to the end of the 
                              matched range in the underlying input sequence. The 
                              type of the iterator is the same as specified while
-                             defining the type of the `lexertl_lexer<...>` 
+                             defining the type of the `lexertl::actor_lexer<...>` 
                              (its first template parameter). The semantic action 
                              is allowed to change the value of this iterator
                              influencing, the matched input sequence.]]
@@ -68,6 +68,10 @@ allowed as well:
     void f (Iterator& start, Iterator& end, pass_flag& matched);
     void f (Iterator& start, Iterator& end);
     void f ();
+
+[important In order to use lexer semantic actions you need to use type 
+           `lexertl::actor_lexer<>` as your lexer class (instead of the 
+           type `lexertl::lexer<>` as described in earlier examples).]
 
 [heading The context of a lexer semantic action]
 

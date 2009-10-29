@@ -58,7 +58,7 @@
 <dd><p>
               This is the iterator pointing to the begin of the matched range in
               the underlying input sequence. The type of the iterator is the same
-              as specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
+              as specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">actor_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
               The semantic action is allowed to change the value of this iterator
               influencing, the matched input sequence.
             </p></dd>
@@ -66,7 +66,7 @@
 <dd><p>
               This is the iterator pointing to the end of the matched range in the
               underlying input sequence. The type of the iterator is the same as
-              specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
+              specified while defining the type of the <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">actor_lexer</span><span class="special">&lt;...&gt;</span></code> (its first template parameter).
               The semantic action is allowed to change the value of this iterator
               influencing, the matched input sequence.
             </p></dd>
@@ -104,8 +104,18 @@
 <span class="keyword">void</span> <span class="identifier">f</span> <span class="special">(</span><span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">start</span><span class="special">,</span> <span class="identifier">Iterator</span><span class="special">&amp;</span> <span class="identifier">end</span><span class="special">);</span>
 <span class="keyword">void</span> <span class="identifier">f</span> <span class="special">();</span>
 </pre>
+<div class="important" title="Important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            In order to use lexer semantic actions you need to use type <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">actor_lexer</span><span class="special">&lt;&gt;</span></code>
+            as your lexer class (instead of the type <code class="computeroutput"><span class="identifier">lexertl</span><span class="special">::</span><span class="identifier">lexer</span><span class="special">&lt;&gt;</span></code> as described in earlier examples).
+          </p></td></tr>
+</table></div>
 <a name="spirit.lex.abstracts.lexer_semantic_actions.the_context_of_a_lexer_semantic_action"></a><h6>
-<a name="id870811"></a>
+<a name="id850830"></a>
           <a class="link" href="lexer_semantic_actions.html#spirit.lex.abstracts.lexer_semantic_actions.the_context_of_a_lexer_semantic_action">The
           context of a lexer semantic action</a>
         </h6>
@@ -120,7 +130,7 @@
           of the available functionality.
         </p>
 <div class="table">
-<a name="id870831"></a><p class="title"><b>Table 8. Functions exposed by any context passed to a lexer
+<a name="id850850"></a><p class="title"><b>Table 8. Functions exposed by any context passed to a lexer
         semantic action</b></p>
 <div class="table-contents"><table class="table" summary="Functions exposed by any context passed to a lexer
         semantic action">
@@ -240,7 +250,7 @@
 </table></div>
 </div>
 <br class="table-break"><a name="spirit.lex.abstracts.lexer_semantic_actions.lexer_semantic_actions_using_phoenix"></a><h6>
-<a name="id871349"></a>
+<a name="id851378"></a>
           <a class="link" href="lexer_semantic_actions.html#spirit.lex.abstracts.lexer_semantic_actions.lexer_semantic_actions_using_phoenix">Lexer
           Semantic Actions Using Phoenix</a>
         </h6>
@@ -252,7 +262,7 @@
           predefined <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> placeholders:
         </p>
 <div class="table">
-<a name="id871372"></a><p class="title"><b>Table 9. Predefined Phoenix placeholders for lexer semantic
+<a name="id851400"></a><p class="title"><b>Table 9. Predefined Phoenix placeholders for lexer semantic
         actions</b></p>
 <div class="table-contents"><table class="table" summary="Predefined Phoenix placeholders for lexer semantic
         actions">
@@ -383,7 +393,7 @@
           table lists the available support functions and describes their functionality:
         </p>
 <div class="table">
-<a name="id871651"></a><p class="title"><b>Table 10. Support functions usable from Phoenix expressions
+<a name="id851679"></a><p class="title"><b>Table 10. Support functions usable from Phoenix expressions
         inside lexer semantic actions</b></p>
 <div class="table-contents"><table class="table" summary="Support functions usable from Phoenix expressions
         inside lexer semantic actions">

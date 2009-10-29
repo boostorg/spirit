@@ -22,6 +22,10 @@
 #include <string>
 //]
 
+//[reference_karma_output_iterator
+typedef std::back_insert_iterator<std::string> output_iterator_type;
+//]
+
 //[reference_karma_test
 template <typename G>
 void test_generator(char const* expected, G const& g)
@@ -140,6 +144,30 @@ namespace boost { namespace spirit { namespace traits
     };
 }}}
 //]
+
+namespace client
+{
+    using boost::spirit::karma::grammar;
+    using boost::spirit::karma::rule;
+    using boost::spirit::ascii::space_type;
+
+    //[karma_reference_grammar_definition
+    /*`Basic grammar usage:
+     */
+    struct num_list : grammar<output_iterator_type, space_type, std::vector<int>()>
+    {
+        num_list() : base_type(start)
+        {
+            using boost::spirit::int_;
+            num = int_;
+            start = num << *(',' << num);
+        }
+
+        rule<output_iterator_type, space_type, std::vector<int>()> start;
+        rule<output_iterator_type, space_type, int()> num;
+    };
+    //]
+}
 
 int main()
 {
@@ -530,12 +558,11 @@ int main()
     {
         //[reference_karma_using_declarations_attr_cast
         using boost::spirit::karma::int_;
-        using boost::spirit::karma::attr_cast;
         //]
 
         //[reference_karma_attr_cast1
         int_data d = { 1 };
-        test_generator("1", attr_cast(int_), d);
+        test_generator_attr("1", boost::spirit::karma::attr_cast(int_), d);
         //]
     }
 
@@ -656,6 +683,7 @@ int main()
     {
         //[reference_karma_using_declarations_action
         using boost::spirit::karma::int_;
+        using boost::spirit::karma::string;
         using boost::spirit::karma::_1;
         using boost::phoenix::ref;
         using boost::phoenix::val;
@@ -674,56 +702,48 @@ int main()
         //`Some using declarations:
         using boost::spirit::karma::rule;
         using boost::spirit::karma::int_;
+        using boost::spirit::ascii::space;
         using boost::spirit::ascii::space_type;
 
         /*`Basic rule:
          */
-        rule<char const*> r;
+        rule<output_iterator_type> r;
         r = int_(123);
         test_generator("123", r);
 
         /*`Rule with consumed attribute:
          */
-        rule<char const*, int()> ra;
+        rule<output_iterator_type, int()> ra;
         ra = int_;
         test_generator_attr("123", ra, 123);
 
         /*`Rule with delimiter and consumed attribute:
          */
-        rule<char const*, std::vector<int>(), space_type> rs;
+        rule<output_iterator_type, std::vector<int>(), space_type> rs;
         rs = *int_;
         std::vector<int> v;
         v.push_back(123);
         v.push_back(456);
         v.push_back(789);
-        test_generator_attr_delim("123 456 789", rs, v);
+        test_generator_attr_delim("123 456 789", rs, space, v);
         //]
     }
 
     // grammar
     {
-        //[karma_reference_grammar
+        using client::num_list;
+
+        //[karma_reference_grammar_using
         //`Some using declarations:
         using boost::spirit::ascii::space_type;
         using boost::spirit::ascii::space;
         using boost::spirit::int_;
         using boost::spirit::karma::grammar;
         using boost::spirit::karma::rule;
+        //]
 
-        /*`Basic grammar usage:
-         */
-        struct num_list : grammar<char const*, space_type>
-        {
-            num_list() : base_type(start)
-            {
-                using boost::spirit::int_;
-                num = int_;
-                start = num << *(',' << num);
-            }
-
-            rule<char const*, space_type> start, num;
-        };
-
+        //[karma_reference_grammar
+        //`How to use the example grammar:
         num_list nlist;
         std::vector<int> v;
         v.push_back(123);

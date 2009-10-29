@@ -41,7 +41,7 @@
         <a href="http://spirit.sourceforge.net" target="_top">Spirit</a>.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.include_files"></a><h5>
-<a name="id934006"></a>
+<a name="id915269"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.include_files">Include
         Files</a>
       </h5>
@@ -223,7 +223,7 @@
 </tbody>
 </table></div>
 <a name="spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions"></a><h5>
-<a name="id935918"></a>
+<a name="id916096"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.the_free_parse_functions">The
         Free Parse Functions</a>
       </h5>
@@ -255,7 +255,7 @@
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">classic</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix1</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostreams</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 </pre>
 <p>
@@ -280,7 +280,8 @@
           
 </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostreams</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">phoenix_operator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">algorithm</span><span class="special">&gt;</span>
 </pre>
@@ -409,7 +410,7 @@
         Encoding Namespace</a> for more information.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.naming_conventions"></a><h5>
-<a name="id938085"></a>
+<a name="id919940"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.naming_conventions">Naming
         Conventions</a>
       </h5>
@@ -429,7 +430,7 @@
         parser primitives, directives and operators.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.parser_attributes"></a><h5>
-<a name="id938157"></a>
+<a name="id920012"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.parser_attributes">Parser
         Attributes</a>
       </h5>
@@ -447,7 +448,7 @@
         underlying matched input sequence.
       </p>
 <a name="spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules"></a><h5>
-<a name="id938226"></a>
+<a name="id920081"></a>
         <a class="link" href="porting_from_spirit_1_8_x.html#spirit.notes.porting_from_spirit_1_8_x.grammars_and_rules">Grammars
         and Rules</a>
       </h5>
@@ -488,9 +489,9 @@
 
             <span class="identifier">first</span> <span class="special">=</span> <span class="identifier">eps_p</span>         <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="number">0</span><span class="special">)]</span>
                 <span class="special">&gt;&gt;</span>  <span class="special">(</span>  <span class="special">+</span><span class="identifier">ch_p</span><span class="special">(</span><span class="char">'M'</span><span class="special">)</span> <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">val</span><span class="special">(</span><span class="number">1000</span><span class="special">)]</span>
-                    <span class="special">||</span>  <span class="identifier">hundreds</span>  <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">_1</span><span class="special">]</span>
-                    <span class="special">||</span>  <span class="identifier">tens</span>      <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">_1</span><span class="special">]</span>
-                    <span class="special">||</span>  <span class="identifier">ones</span>      <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">_1</span><span class="special">]</span> 
+                    <span class="special">||</span>  <span class="identifier">hundreds</span>  <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">_1</span><span class="special">]</span>
+                    <span class="special">||</span>  <span class="identifier">tens</span>      <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">_1</span><span class="special">]</span>
+                    <span class="special">||</span>  <span class="identifier">ones</span>      <span class="special">[</span><span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">var</span><span class="special">(</span><span class="identifier">self</span><span class="special">.</span><span class="identifier">r</span><span class="special">)</span> <span class="special">+=</span> <span class="identifier">phoenix</span><span class="special">::</span><span class="identifier">_1</span><span class="special">]</span> 
                     <span class="special">)</span> <span class="special">;</span>
         <span class="special">}</span>
 
@@ -574,7 +575,7 @@
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"MMIX"</span><span class="special">);</span>        <span class="comment">// MMIX == 2009
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
 <span class="keyword">unsigned</span> <span class="identifier">value</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-<span class="identifier">roman</span> <span class="identifier">r</span><span class="special">;</span>
+<span class="identifier">roman</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">&gt;</span> <span class="identifier">r</span><span class="special">;</span>
 <span class="keyword">if</span> <span class="special">(</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">it</span><span class="special">,</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">r</span><span class="special">,</span> <span class="identifier">value</span><span class="special">))</span> 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"successfully matched: "</span> <span class="special">&lt;&lt;</span> <span class="identifier">value</span> <span class="special">&lt;&lt;</span> <span class="string">"\n"</span><span class="special">;</span>
 </pre>

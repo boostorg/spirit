@@ -13,13 +13,13 @@ facilities to make it easy to adapt a grammar for error handling. We'll wrap up
 the Qi tutorial with another version of the mini xml parser, this time, with
 error handling.
 
-[@../../example/qi/mini_xml1.cpp] and here: [@../../example/qi/mini_xml2.cpp]
+[@../../example/qi/mini_xml1.cpp] and here: [@../../example/qi/mini_xml3.cpp]
 
-[/ import ../example/qi/mini_xml3.cpp /]
+[import ../example/qi/mini_xml3.cpp]
 
 Here's the grammar:
 
-[/ tutorial_xml3_grammar /]
+[tutorial_xml3_grammar]
 
 What's new?
 
@@ -104,7 +104,7 @@ input is definitely erroneous. When this happens, an expectation_failure
 exception is thrown. Somewhere outward, the error handler will catch the
 exception.
 
-Try building the parser: [@../../example/qi/mini_xml2.cpp]. You can find some
+Try building the parser: [@../../example/qi/mini_xml3.cpp]. You can find some
 examples in: [@../../example/qi/mini_xml_samples] for testing purposes.
 "4.toyxml" has an error in it:
 

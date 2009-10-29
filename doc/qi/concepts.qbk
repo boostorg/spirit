@@ -22,8 +22,8 @@ The following sections provide details on these concepts.
 [heading Description]
 
 The /Parser/ is the most fundamental concept. A Parser has a member
-function, `parse`, that accepts a first-last __fwditer__ pair and
-returns bool as its result. The iterators delimit the data being parsed.
+function `parse`, that accepts a first-last __fwditer__ pair and
+returns `bool` as its result. The iterators delimit the data being parsed.
 The Parser's `parse` member function returns `true` if the parse
 succeeds, in which case the first iterator is advanced accordingly. Each
 Parser can represent a specific pattern or algorithm, or it can be a
@@ -42,7 +42,7 @@ more complex parser formed as a composition of other Parsers.
 
 [heading Valid Expressions]
 
-In the expressions below, the behavior of the parser, `p`, how `skip`
+In the expressions below, the behavior of the parser, `p`, and how `skip`
 and `attrib` are handled by `p`, are left unspecified in the base `Parser`
 concept. These are specified in subsequent, more refined concepts and by
 the actual models thereof.
@@ -74,12 +74,12 @@ For any Parser the following expressions must be valid:
 
 Upon return from `p.parse` the following post conditions should hold:
 
-* On a successful match, `f` is positioned one past the first 
-  non-matching character/token.
+* On a successful match, `f` is positioned one past the last 
+  matching character/token.
 * On a failed match, if a `skip` parser is __unused__, 
   `f` is restored to its original position prior to entry.
 * On a failed match, if a `skip` parser is not __unused__, 
-  `f` is positioned one past the first character/token not 
+  `f` is positioned one past the last character/token
   matching `skip`.
 * On a failed match, `attrib` is left untouched.
 * No post-skips: trailing `skip` characters/tokens will not be skipped.
@@ -317,15 +317,15 @@ attributes are analogous to function arguments. The inherited attributes
 
 [heading `_val`]
 
-The `boost::spirit::qi_val` placeholder can be used in __phoenix__
+The `boost::spirit::qi::_val` placeholder can be used in __phoenix__
 semantic actions anywhere in the Nonterminal's definition. This
 __phoenix__ placeholder refers to the Nonterminal's (synthesized)
 attribute. The `_val` placeholder acts like a mutable reference to the
 Nonterminal's attribute.
 
-[heading `_r1`...`r10`]
+[heading `_r1` ... `r10`]
 
-The `boost::spirit::_r1`...`boost::spirit::r10` placeholders can be used
+The `boost::spirit::_r1` ... `boost::spirit::r10` placeholders can be used
 in __phoenix__ semantic actions anywhere in the Nonterminal's
 definition. These __phoenix__ placeholders refer to the Nonterminal's
 inherited attributes.
@@ -336,7 +336,7 @@ Nonterminals can have local variables that will be created on the stack
 at parse time. A locals descriptor added to the Nonterminal declaration
 will give the Nonterminal local variables: 
 
-    template <typename T0, typename T1, typename T2, ... typename TN>
+    template <typename T0, typename T1, typename T2, ..., typename TN>
     struct locals;
 
 where `T0` ... `TN` are the types of local variables accessible in your
@@ -358,7 +358,7 @@ which correspond to the Nonterminal's local variables `T0` ... `T9`.
 [variablelist Notation
     [[`x`]                          [A Nonterminal]]
     [[`X`]                          [A Nonterminal type]]
-    [[`arg1`, `arg2`, ... `argN`]   [__qi_lazy_arguments__ that evaluate to each of 
+    [[`arg1`, `arg2`, ..., `argN`]   [__qi_lazy_arguments__ that evaluate to each of 
                                     the Nonterminal's inherited attributes.]]
 ]
 
@@ -370,9 +370,9 @@ NaryParser the following must be met:
 [table
     [[Expression]               [Semantics]                                         [Return type]]
     [[`x`]                      [In a parser expression, invoke Nonterminal `x`]    [`X`]]
-    [[`x(arg1, arg2, ... argN)`][In a parser expression, invoke Nonterminal `r` 
+    [[`x(arg1, arg2, ..., argN)`][In a parser expression, invoke Nonterminal `r` 
                                 passing in inherited attributes
-                                `arg1`...`argN`]                                    [`X`]]
+                                `arg1` ... `argN`]                                  [`X`]]
     [[`x.name(name)`]           [Naming a Nonterminal.]                             [`void`]]
     [[`x.name()`]               [Getting the name of a Nonterminal.]                [`std::string`]]
     [[debug(x)]                 [Debug Nonterminal `x`.]                            [`void`]]
@@ -393,8 +393,6 @@ NaryParser the following must be met:
 * __qi_rule__
 * __qi_grammar__
 
-[endsect] [/ XXX Concept]
-
-
+[endsect] [/ Concept]
 
 [endsect]

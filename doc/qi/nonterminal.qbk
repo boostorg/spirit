@@ -253,6 +253,10 @@ __qi_nonterminal_attribute__]
 [note The test harness for the example(s) below is presented in the
 __qi_basics_examples__ section.]
 
+[reference_grammar_using]
+
+[reference_grammar_definition]
+
 [reference_grammar]
 
 [endsect] [/ Grammar]

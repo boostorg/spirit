@@ -50,7 +50,7 @@
           So, what does this give us? Well, we can simply pass in a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">&gt;</span></code>
           to our number list parser and it will happily churn out our result in our
           vector. For that to happen, we'll use a variation of the <code class="computeroutput"><span class="identifier">phrase_parse</span></code> with an additional argument:
-          the parser's attribute:
+          the parser's attribute. With the following arguments passed to <code class="computeroutput"><span class="identifier">phrase_parse</span></code>
         </p>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
@@ -63,14 +63,14 @@
             The parser object
           </li>
 <li class="listitem">
-            The parser's attribute
+            Another parser called the skip parser
           </li>
 <li class="listitem">
-            Another parser called the skip parser
+            The parser's attribute
           </li>
 </ol></div>
 <p>
-          So, our parser now is further simplified to:
+          our parser now is further simplified to:
         </p>
 <p>
           </p>
