@@ -254,7 +254,7 @@ Some using declarations:
 
 The `raw[]` disregards the attribute of its subject parser, instead
 exposing the half-open range `[first, last)` pointing to the matched
-characters from the input stream. The `raw[]` directive breings back the
+characters from the input stream. The `raw[]` directive brings back the
 classic Spirit transduction (un-attributed) behavior for a subject
 parser.
 
