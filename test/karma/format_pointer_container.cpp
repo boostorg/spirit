@@ -9,7 +9,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/spirit/include/karma.hpp>
-#include <boost/spirit/include/karma_stream.hpp>
+#include <boost/spirit/include/karma_format.hpp>
 
 #include <sstream>
 #include <string>

@@ -15,6 +15,7 @@
 #include <boost/spirit/include/karma_directive.hpp>
 #include <boost/spirit/include/karma_operator.hpp>
 #include <boost/spirit/include/karma_action.hpp>
+#include <boost/spirit/include/karma_stream.hpp>
 #include <boost/spirit/include/karma_format_attr.hpp>
 
 #include "test_manip_attr.hpp"
