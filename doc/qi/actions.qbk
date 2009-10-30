@@ -102,4 +102,24 @@ Spirit. If your requirements go beyond simple to moderate parsing, it is
 suggested that you use this library. All the following examples in this tutorial
 will use __phoenix__ for sematic actions.
 
+[important There are different ways to write semantic actions for __qi__: 
+           using plain functions, __boost_bind__, __boost_lambda__, or 
+           __phoenix__. The latter three allow you to use special placeholders
+           to control parameter placement (`_1`, `_2`, etc.). Every of those
+           libraries has it's own implementation of the placeholders, all
+           in different namespaces. You have to make sure not to mix 
+           placeholders with a library they don't belong to and not to 
+           use different libraries while writing a semantic action.
+
+           Generally, for __boost_bind__, use `::_1`, `::_2`, etc. (yes, these
+           placeholders are defined in the globl namespace). 
+
+           For __boost_lambda__ use the placeholders defined in the namespace 
+           `boost::lambda`. 
+
+          For semantic actions written using __phoenix__ use the placeholders 
+          defined in the namespace `boost::spirit`. Please note that all 
+          existing placeholders for your convenience are also available from 
+          the namespace `boost::spirit::qi`.]
+
 [endsect]

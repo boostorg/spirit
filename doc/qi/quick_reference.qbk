@@ -418,6 +418,9 @@ objects, the allowed signatures are:
 The `unused_type` is used in the signatures above to signify 'don't
 care'.
 
+For more detailed information about semantic actions see: 
+[link spirit.qi.tutorials.semantic_actions here].
+
 [endsect]
 [section Phoenix]
 
@@ -436,5 +439,12 @@ information from the `Attrib` and `Context` that are otherwise fiddly to extract
     [[`_a, _b... , _j`]         [The enclosing rule's local variables (`_a` refers to the first).]]
     [[`_pass`]                  [Assign `false` to `_pass` to force a parser failure.]]
 ]
+
+[important  All placeholders mentioned above are defined in the namespace 
+           `boost::spirit` and, for your convenience, are available in the 
+           namespace `boost::spirit::qi` as well.]
+
+For more detailed information about semantic actions see: 
+[link spirit.qi.tutorials.semantic_actions here].
 
 [endsect]

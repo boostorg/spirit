@@ -605,6 +605,10 @@ information from the `Attrib` and `Context` that are otherwise fiddly to extract
     [[`_pass`]                  [Assign `false` to `_pass` to force a generator failure.]]
 ]
 
+[important  All placeholders mentioned above are defined in the namespace 
+           `boost::spirit` and, for your convenience, are available in the 
+           namespace `boost::spirit::karma` as well.]
+
 For more information see __karma_actions__.
 
 [endsect]

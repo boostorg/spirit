@@ -619,6 +619,10 @@ Also, see __include_structure__.
     [[`BP`]         [A boolean `Policies` (type).]]
     [[`b`]          [An object of `B`, the numeric base type.]]
     [[`f`, `l`]     [__fwditer__. first/last iterator pair.]]
+    [[`attr`]       [An attribute value.]]
+    [[`Context`]    [The type of the parse context of the current invocation of
+                     the `bool_` parser.]]
+    [[`ctx`]        [An instance of the parse context, `Context`.]]
 ]
 
 [heading Expression Semantics]
@@ -675,8 +679,8 @@ For models of boolean `Policies` the following expressions must be valid:
 
 [table
     [[Expression]                           [Semantics]]
-    [[`BP::parse_true(f, l, n)`]            [Parse a `true` value.]]
-    [[`BP::parse_false(f, l, n)`]           [Parse a `false` value.]]
+    [[`BP::parse_true(f, l, attr, ctx)`]    [Parse a `true` value.]]
+    [[`BP::parse_false(f, l, attr, ctx)`]   [Parse a `false` value.]]
 ]
 
 The functions should return true if the required representations of `true` or 

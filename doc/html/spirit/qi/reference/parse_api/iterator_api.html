@@ -1,15 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> Iterator
-          Based Parse API</title>
+<title>Iterator Based Parse API</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../parse_api.html" title=" Parse API">
-<link rel="previous" href="../parse_api.html" title=" Parse API">
-<link rel="next" href="stream_api.html" title=" Stream
-          Based Parse API">
+<link rel="up" href="../parse_api.html" title="Parse API">
+<link rel="prev" href="../parse_api.html" title="Parse API">
+<link rel="next" href="stream_api.html" title="Stream Based Parse API">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,30 +22,26 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../parse_api.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../parse_api.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="stream_api.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h5 class="title">
-<a name="spirit.qi.reference.parse_api.iterator_api"></a><a href="iterator_api.html" title=" Iterator
-          Based Parse API"> Iterator
+<div class="section" title="Iterator Based Parse API">
+<div class="titlepage"><div><div><h5 class="title">
+<a name="spirit.qi.reference.parse_api.iterator_api"></a><a class="link" href="iterator_api.html" title="Iterator Based Parse API"> Iterator
           Based Parse API</a>
-</h5></div></div>
-<div></div>
-</div>
+</h5></div></div></div>
 <a name="spirit.qi.reference.parse_api.iterator_api.description"></a><h6>
-<a name="id472835"></a>
-            <a href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.description">Description</a>
+<a name="id600926"></a>
+            <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.description">Description</a>
           </h6>
 <p>
             The library provides a couple of free functions to make parsing a snap.
-            These parser functions have two forms. The first form <tt class="computeroutput"><span class="identifier">parse</span></tt>
-            works on the character level. The second <tt class="computeroutput"><span class="identifier">phrase_parse</span></tt>
+            These parser functions have two forms. The first form <code class="computeroutput"><span class="identifier">parse</span></code>
+            works on the character level. The second <code class="computeroutput"><span class="identifier">phrase_parse</span></code>
             works on the phrase level and requires skip parser. Both versions can
             take in attributes by reference that will hold the parsed values on a
             successful parse.
           </p>
 <a name="spirit.qi.reference.parse_api.iterator_api.header"></a><h6>
-<a name="id472893"></a>
-            <a href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.header">Header</a>
+<a name="id600957"></a>
+            <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/qi/parse.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">qi_parse</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -61,42 +55,50 @@
 <p>
             The variadic attributes version of the API allows one or more attributes
             to be passed into the parse functions. The functions taking two or more
-            are usable when the parser expression is a <a href="../operator/sequence.html" title=" Sequence
-          (a &gt;&gt;
-          b)">Sequence</a>
+            are usable when the parser expression is a <a class="link" href="../operator/sequence.html" title="Sequence (a &gt;&gt; b)">Sequence</a>
             only. In this case each of the attributes passed have to match the corresponding
             part of the sequence.
           </p>
 <p>
-            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.qi.reference.parse_api.iterator_api.namespace"></a><h6>
-<a name="id473107"></a>
-            <a href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.namespace">Namespace</a>
+<a name="id601096"></a>
+            <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th><p>
+<thead><tr><th>
+                  <p>
                     Name
-                  </p></th></tr></thead>
+                  </p>
+                  </th></tr></thead>
 <tbody>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">postskip</span></tt>
-                  </p></td></tr>
-<tr><td><p>
-                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">dont_postskip</span></tt>
-                  </p></td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">phrase_parse</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">postskip</span></code>
+                  </p>
+                  </td></tr>
+<tr><td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">dont_postskip</span></code>
+                  </p>
+                  </td></tr>
 </tbody>
 </table></div>
 <a name="spirit.qi.reference.parse_api.iterator_api.synopsis"></a><h6>
-<a name="id473390"></a>
-            <a href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.synopsis">Synopsis</a>
+<a name="id601310"></a>
+            <a class="link" href="iterator_api.html#spirit.qi.reference.parse_api.iterator_api.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Iterator</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="keyword">bool</span>
@@ -145,35 +147,35 @@
   <span class="special">,</span> <span class="identifier">Attr1</span><span class="special">&amp;</span> <span class="identifier">attr1</span><span class="special">,</span> <span class="identifier">Attr2</span><span class="special">&amp;</span> <span class="identifier">attr2</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">AttrN</span><span class="special">&amp;</span> <span class="identifier">attrN</span><span class="special">);</span>
 </pre>
 <p>
-            All functions above return <tt class="computeroutput"><span class="keyword">true</span></tt>
-            if none of the involved parser components failed, and <tt class="computeroutput"><span class="keyword">false</span></tt>
+            All functions above return <code class="computeroutput"><span class="keyword">true</span></code>
+            if none of the involved parser components failed, and <code class="computeroutput"><span class="keyword">false</span></code>
             otherwise.
           </p>
 <p>
             The maximum number of supported arguments is limited by the preprocessor
-            constant <tt class="computeroutput"><span class="identifier">SPIRIT_ARGUMENTS_LIMIT</span></tt>.
+            constant <code class="computeroutput"><span class="identifier">SPIRIT_ARGUMENTS_LIMIT</span></code>.
             This constant defaults to the value defined by the preprocessor constant
-            <tt class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></tt> (which
-            in turn defaults to <tt class="computeroutput"><span class="number">10</span></tt>).
+            <code class="computeroutput"><span class="identifier">PHOENIX_LIMIT</span></code> (which
+            in turn defaults to <code class="computeroutput"><span class="number">10</span></code>).
           </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
+<tr><td align="left" valign="top"><p>
               The variadic function with two or more attributes internally combine
-              references to all passed attributes into a <tt class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></tt>
+              references to all passed attributes into a <code class="computeroutput"><span class="identifier">fusion</span><span class="special">::</span><span class="identifier">vector</span></code>
               and forward this as a combined attribute to the corresponding one attribute
               function.
             </p></td></tr>
 </table></div>
 <p>
-            The <tt class="computeroutput"><span class="identifier">phrase_parse</span></tt> functions
-            not taking an explicit <tt class="computeroutput"><span class="identifier">skip_flag</span></tt>
+            The <code class="computeroutput"><span class="identifier">phrase_parse</span></code> functions
+            not taking an explicit <code class="computeroutput"><span class="identifier">skip_flag</span></code>
             as one of their arguments invoke the passed skipper after a successful
             match of the parser expression. This can be inhbited by using the other
-            versions of that function while passing <tt class="computeroutput"><span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">dont_postskip</span></tt>
+            versions of that function while passing <code class="computeroutput"><span class="identifier">skip_flag</span><span class="special">::</span><span class="identifier">dont_postskip</span></code>
             to the corresponding argument.
           </p>
 <div class="informaltable"><table class="table">
@@ -182,46 +184,66 @@
 <col>
 </colgroup>
 <thead><tr>
-<th><p>
+<th>
+                  <p>
                     Parameter
-                  </p></th>
-<th><p>
+                  </p>
+                  </th>
+<th>
+                  <p>
                     Description
-                  </p></th>
+                  </p>
+                  </th>
 </tr></thead>
 <tbody>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Iterator</span></tt>
-                  </p></td>
-<td><p>
-                    <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><tt class="computeroutput"><span class="identifier">ForwardIterator</span></tt></a> pointing
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Iterator</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
+                    <a href="http://www.sgi.com/tech/stl/ForwardIterator.html" target="_top"><code class="computeroutput"><span class="identifier">ForwardIterator</span></code></a> pointing
                     to the source to parse.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Expr</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Expr</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     An expression that can be converted to a Qi parser.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Skipper</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Skipper</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     Parser used to skip white spaces.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 <tr>
-<td><p>
-                    <tt class="computeroutput"><span class="identifier">Attr1</span></tt>, <tt class="computeroutput"><span class="identifier">Attr2</span></tt>, ..., <tt class="computeroutput"><span class="identifier">AttrN</span></tt>
-                  </p></td>
-<td><p>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="identifier">Attr1</span></code>, <code class="computeroutput"><span class="identifier">Attr2</span></code>, ..., <code class="computeroutput"><span class="identifier">AttrN</span></code>
+                  </p>
+                  </td>
+<td>
+                  <p>
                     One or more attributes.
-                  </p></td>
+                  </p>
+                  </td>
 </tr>
 </tbody>
 </table></div>

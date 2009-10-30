@@ -1,15 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Complex
-        - Our first complex parser</title>
+<title>Complex - Our first complex parser</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../tutorials.html" title="Tutorials">
-<link rel="previous" href="semantic_actions.html" title="Semantic Actions">
-<link rel="next" href="sum___adding_numbers.html" title="Sum - adding
-        numbers">
+<link rel="prev" href="semantic_actions.html" title="Semantic Actions">
+<link rel="next" href="sum___adding_numbers.html" title="Sum - adding numbers">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,15 +22,11 @@
 <div class="spirit-nav">
 <a accesskey="p" href="semantic_actions.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../tutorials.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="sum___adding_numbers.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" lang="en">
-<div class="titlepage">
-<div><div><h4 class="title">
-<a name="spirit.qi.tutorials.complex___our_first_complex_parser"></a><a href="complex___our_first_complex_parser.html" title="Complex
-        - Our first complex parser">Complex
+<div class="section" title="Complex - Our first complex parser">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="spirit.qi.tutorials.complex___our_first_complex_parser"></a><a class="link" href="complex___our_first_complex_parser.html" title="Complex - Our first complex parser">Complex
         - Our first complex parser</a>
-</h4></div></div>
-<div></div>
-</div>
+</h4></div></div></div>
 <p>
           Well, not really a complex parser, but a parser that parses complex numbers.
           This time, we're using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
@@ -47,26 +41,26 @@
 <p>
           What's new? Well, we have:
         </p>
-<div class="orderedlist"><ol type="1">
-<li>
-            Alternates: e.g. <tt class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
-            <span class="identifier">b</span></tt>. Try <tt class="computeroutput"><span class="identifier">a</span></tt>
-            first. If it succeeds, good. If not, try the next alternative, <tt class="computeroutput"><span class="identifier">b</span></tt>.
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+            Alternates: e.g. <code class="computeroutput"><span class="identifier">a</span> <span class="special">|</span>
+            <span class="identifier">b</span></code>. Try <code class="computeroutput"><span class="identifier">a</span></code>
+            first. If it succeeds, good. If not, try the next alternative, <code class="computeroutput"><span class="identifier">b</span></code>.
           </li>
-<li>
+<li class="listitem">
             Optionals: e.g. -p. Match the parser p zero or one time.
           </li>
 </ol></div>
 <p>
           The complex parser presented above reads as:
         </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
             One or two real number in parantheses, separated by comma (the second
             number is optional)
           </li>
-<li>
-<span class="bold"><b>OR</b></span> a single real number.
+<li class="listitem">
+<span class="bold"><strong>OR</strong></span> a single real number.
           </li>
 </ul></div>
 <p>
@@ -123,30 +117,30 @@
 <p>
           The full cpp file for this example can be found here: <a href="../../../../../example/qi/complex_number.cpp" target="_top">../../example/qi/complex_number.cpp</a>
         </p>
-<div class="note"><table border="0" summary="Note">
+<div class="note" title="Note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td colspan="2" align="left" valign="top"><p>
+<tr><td align="left" valign="top"><p>
             Those with experience using <a href="../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-            might be confused with the placeholders that we are using (i.e. <tt class="computeroutput"><span class="identifier">_1</span></tt>, <tt class="computeroutput"><span class="identifier">_2</span></tt>,
+            might be confused with the placeholders that we are using (i.e. <code class="computeroutput"><span class="identifier">_1</span></code>, <code class="computeroutput"><span class="identifier">_2</span></code>,
             etc.). Please be aware that we are not using the same placeholders supplied
             by Phoenix. Take note that we are pulling in the placeholders from namespace
-            <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span></tt>qi`.
+            <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span></code>qi`.
             These placeholders are specifically tailored for Spirit.
           </p></td></tr>
 </table></div>
 <p>
-          The <tt class="computeroutput"><span class="identifier">double_</span></tt> parser attaches
+          The <code class="computeroutput"><span class="identifier">double_</span></code> parser attaches
           this action:
         </p>
 <pre class="programlisting"><span class="identifier">ref</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span> <span class="special">=</span> <span class="identifier">_1</span>
 </pre>
 <p>
-          This assigns the parsed result (actually, the attribute of <tt class="computeroutput"><span class="identifier">double_</span></tt>) to n. <tt class="computeroutput"><span class="identifier">ref</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span></tt>
-          tells Phoenix that <tt class="computeroutput"><span class="identifier">n</span></tt> is
-          a mutable reference. <tt class="computeroutput"><span class="identifier">_1</span></tt>
+          This assigns the parsed result (actually, the attribute of <code class="computeroutput"><span class="identifier">double_</span></code>) to n. <code class="computeroutput"><span class="identifier">ref</span><span class="special">(</span><span class="identifier">n</span><span class="special">)</span></code>
+          tells Phoenix that <code class="computeroutput"><span class="identifier">n</span></code> is
+          a mutable reference. <code class="computeroutput"><span class="identifier">_1</span></code>
           is a Phoenix placeholder for the parsed result attribute.
         </p>
 </div>
