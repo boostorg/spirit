@@ -3,10 +3,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Include</title>
 <link rel="stylesheet" href="../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../index.html" title="Spirit 2.1">
 <link rel="up" href="../structure.html" title="Structure">
-<link rel="prev" href="../structure.html" title="Structure">
+<link rel="previous" href="../structure.html" title="Structure">
 <link rel="next" href="../abstracts.html" title="Abstracts">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,10 +22,13 @@
 <div class="spirit-nav">
 <a accesskey="p" href="../structure.html"><img src="../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../structure.html"><img src="../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../abstracts.html"><img src="../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Include">
-<div class="titlepage"><div><div><h3 class="title">
-<a name="spirit.structure.include"></a><a class="link" href="include.html" title="Include">Include</a>
-</h3></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h3 class="title">
+<a name="spirit.structure.include"></a><a href="include.html" title="Include">Include</a>
+</h3></div></div>
+<div></div>
+</div>
 <p>
         Spirit is a header file only library. There are no libraries to link to.
         This section documents the structure of the Spirit headers.
@@ -34,23 +37,23 @@
         Spirit contains five sub-libraries plus a 'support' module where common support
         classes are placed:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
           Classic
         </li>
-<li class="listitem">
+<li>
           Qi
         </li>
-<li class="listitem">
+<li>
           Karma
         </li>
-<li class="listitem">
+<li>
           Lex
         </li>
-<li class="listitem">
+<li>
           Phoenix
         </li>
-<li class="listitem">
+<li>
           Support
         </li>
 </ul></div>
@@ -106,26 +109,26 @@
         is a special flat directory that contains all the spirit headers. To accomodate
         the flat structure, the headers are prefixed with the sub-library name:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
           classic_
         </li>
-<li class="listitem">
+<li>
           karma_
         </li>
-<li class="listitem">
+<li>
           lex_
         </li>
-<li class="listitem">
+<li>
           phoenix1_
         </li>
-<li class="listitem">
+<li>
           phoenix_
         </li>
-<li class="listitem">
+<li>
           qi_
         </li>
-<li class="listitem">
+<li>
           support_
         </li>
 </ul></div>
@@ -136,26 +139,26 @@
 <p>
         If you want to simply include the main sub-library name, then you can include:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
           &lt;boost/spirit/include/classic.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/include/karma.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/include/lex.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/include/phoenix1.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/include/phoenix.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/include/qi.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/include/support.hpp&gt;
         </li>
 </ul></div>
@@ -174,23 +177,23 @@
 <p>
         As usual, these directories have their corresponding include files:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
           &lt;boost/spirit/home/classic.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/home/karma.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/home/lex.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/home/phoenix.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/home/qi.hpp&gt;
         </li>
-<li class="listitem">
+<li>
           &lt;boost/spirit/home/support.hpp&gt;
         </li>
 </ul></div>
@@ -205,12 +208,12 @@
       </p>
 <p>
         For some additional information about the rationale you might want to have
-        a look at the FAQ entry <a class="link" href="../faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">Header
+        a look at the FAQ entry <a href="../faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">Header
         Hell</a>.
       </p>
 <p>
-        The subdirectory <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span></code> does not belong to the main
-        Spirit distribution. For more information please refer to: <a class="link" href="../repository.html" title="Spirit Repository">Spirit
+        The subdirectory <tt class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">repository</span></tt> does not belong to the main
+        Spirit distribution. For more information please refer to: <a href="../repository.html" title=" Spirit Repository">Spirit
         Repository</a>.
       </p>
 </div>

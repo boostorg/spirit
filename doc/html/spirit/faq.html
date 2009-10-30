@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Spirit FAQ</title>
+<title> Spirit FAQ</title>
 <link rel="stylesheet" href="../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../index.html" title="Spirit 2.1">
 <link rel="up" href="../index.html" title="Spirit 2.1">
-<link rel="prev" href="support/multi_pass.html" title="The multi pass iterator">
+<link rel="previous" href="support/multi_pass.html" title=" The multi pass iterator">
 <link rel="next" href="notes.html" title="Notes">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,30 +22,33 @@
 <div class="spirit-nav">
 <a accesskey="p" href="support/multi_pass.html"><img src="../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="notes.html"><img src="../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Spirit FAQ">
-<div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="spirit.faq"></a><a class="link" href="faq.html" title="Spirit FAQ"> Spirit FAQ</a>
-</h2></div></div></div>
-<a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_"></a><h4>
-<a name="id932871"></a>
-      <a class="link" href="faq.html#spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_">I'm
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h2 class="title" style="clear: both">
+<a name="spirit.faq"></a><a href="faq.html" title=" Spirit FAQ"> Spirit FAQ</a>
+</h2></div></div>
+<div></div>
+</div>
+<a name="spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_"></a><h3>
+<a name="id790351"></a>
+      <a href="faq.html#spirit.faq.i_m_getting_multiple_symbol_definition_errors_while_using_visual_c____anything_i_could_do_about_that_">I'm
       getting multiple symbol definition errors while using Visual C++. Anything
       I could do about that?</a>
-    </h4>
+    </h3>
 <p>
-      Do you see strange multiple symbol definition linker errors mentioning <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">failed</span></code>
-      and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span></code>?
+      Do you see strange multiple symbol definition linker errors mentioning <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">failed</span></tt>
+      and <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi</span><span class="special">::</span><span class="identifier">rule</span></tt>?
       Then this FAQ entry might be for you.
     </p>
 <p>
       <a href="http://www.boost.org/libs/mpl/index.html" target="_top">Boost.Mpl</a> implements
-      a macro <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code> which essentially is a more powerfull version
+      a macro <tt class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></tt> which essentially is a more powerfull version
       of static_assert. Unfortunately under certain circumstances using this macro
       may lead to the aformentioned linker errors.
     </p>
 <p>
       <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> allows you to define
-      a preprocessor constant disabling the usage of <code class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></code>, while switching to <code class="computeroutput"><span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">()</span></code> instead. For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1.
+      a preprocessor constant disabling the usage of <tt class="computeroutput"><span class="identifier">BOOST_MPL_ASSERT_MSG</span><span class="special">()</span></tt>, while switching to <tt class="computeroutput"><span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">()</span></tt> instead. For that you need define BOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG=1.
       Do this by adding
     </p>
 <pre class="programlisting"><span class="special">-</span><span class="identifier">DBOOST_SPIRIT_DONT_USE_MPL_ASSERT_MSG</span><span class="special">=</span><span class="number">1</span>
@@ -63,12 +66,12 @@
       see while using this workaround is less verbose error messages generated from
       static_assert.
     </p>
-<a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_"></a><h4>
-<a name="id933042"></a>
-      <a class="link" href="faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">I'm
+<a name="spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_"></a><h3>
+<a name="id790614"></a>
+      <a href="faq.html#spirit.faq.i_m_very_confused_about_the_header_hell_in_my_boost_spirit_directory__what_s_all_this_about_">I'm
       very confused about the header hell in my boost/spirit directory. What's all
       this about?</a>
-    </h4>
+    </h3>
 <p>
       The boost/spirit directory currently holds two versions of the Spirit library:
       <a href="../../../../../libs/spirit/classic/index.html" target="_top"><span class="emphasis"><em>Spirit.Classic</em></span></a>
@@ -171,26 +174,27 @@
       as we will probably redirect to the Boost.Phoenix headers as soon as these
       are available.
     </p>
-<a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_"></a><h4>
-<a name="id933566"></a>
-      <a class="link" href="faq.html#spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_">Why
-      doesn't my symbol table work in a <code class="computeroutput"><span class="identifier">no_case</span></code>
+<a name="spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_"></a><h3>
+<a name="id791390"></a>
+      <a href="faq.html#spirit.faq.why_doesn_t_my_symbol_table_work_in_a__code__phrase_role__identifier__no_case__phrase___code__directive_">Why
+      doesn't my symbol table work in a <tt class="computeroutput"><span class="identifier">no_case</span></tt>
       directive?</a>
-    </h4>
+    </h3>
 <p>
-      In order to perform case-insensitive parsing (using <a class="link" href="qi/reference/directive/no_case.html" title="Inhibiting Case Sensitivity (no_case[])"><code class="computeroutput"><span class="identifier">no_case</span></code></a>) with a symbol table (i.e.
-      use a <a class="link" href="qi/reference/string/symbols.html" title="Symbols (symbols)"><code class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span>
-      <span class="identifier">T</span><span class="special">&gt;</span></code></a>
-      parser in a <code class="computeroutput"><span class="identifier">no_case</span></code> directive),
+      In order to perform case-insensitive parsing (using <a href="qi/reference/directive/no_case.html" title=" Inhibiting
+          Case Sensitivity (no_case[])"><tt class="computeroutput"><span class="identifier">no_case</span></tt></a>) with a symbol table (i.e.
+      use a <a href="qi/reference/string/symbols.html" title=" Symbols (symbols)"><tt class="computeroutput"><span class="identifier">symbols</span><span class="special">&lt;</span><span class="identifier">Ch</span><span class="special">,</span>
+      <span class="identifier">T</span><span class="special">&gt;</span></tt></a>
+      parser in a <tt class="computeroutput"><span class="identifier">no_case</span></tt> directive),
       that symbol table needs to be filled with all-lowercase contents. Entries containing
       one or more uppercase characters will not match any input.
     </p>
-<a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_"></a><h4>
-<a name="id933637"></a>
-      <a class="link" href="faq.html#spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_">I'm
-      getting a compilation error mentioning <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span></code>
-      and/or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function4</span></code>. What does this mean?</a>
-    </h4>
+<a name="spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_"></a><h3>
+<a name="id791528"></a>
+      <a href="faq.html#spirit.faq.i_m_getting_a_compilation_error_mentioning__code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function__phrase___code__and_or___________code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__function4__phrase___code___what_does_this_mean_">I'm
+      getting a compilation error mentioning <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function</span></tt>
+      and/or <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function4</span></tt>. What does this mean?</a>
+    </h3>
 <p>
       If you are using Visual C++ and have an error like:
     </p>
@@ -211,30 +215,30 @@ note: candidates are: ... boost::function4&lt;R,T1,T2,T3,T4&gt;::operator()(T0,T
       it means that non-terminal can only be used with a skip parser of a compatible
       type. The error above arises when this is not the case, i.e.:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
         a non-terminal defined with a skip parser type is used without a skip parser;
-        for example, a rule with a skip parser type is used inside a <code class="computeroutput"><span class="identifier">lexeme</span></code> directive, or a grammar with a skip
-        parser type is used in <code class="computeroutput"><span class="identifier">parse</span></code>
-        instead of <code class="computeroutput"><span class="identifier">phrase_parse</span></code>,
+        for example, a rule with a skip parser type is used inside a <tt class="computeroutput"><span class="identifier">lexeme</span></tt> directive, or a grammar with a skip
+        parser type is used in <tt class="computeroutput"><span class="identifier">parse</span></tt>
+        instead of <tt class="computeroutput"><span class="identifier">phrase_parse</span></tt>,
       </li>
-<li class="listitem">
+<li>
         or a non-terminal is used with a skip parser of an incompatible type; for
         example, a rule defined with one skip parser type calls a second rule defined
         with another, incompatible skip parser type.
       </li>
 </ul></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
         The same applies to <span class="emphasis"><em>Spirit.Karma</em></span>, replacing 'skip parser'
-        and <code class="computeroutput"><span class="identifier">lexeme</span></code> by 'delimit generator'
-        and <code class="computeroutput"><span class="identifier">verbatim</span></code>. Similarily,
+        and <tt class="computeroutput"><span class="identifier">lexeme</span></tt> by 'delimit generator'
+        and <tt class="computeroutput"><span class="identifier">verbatim</span></tt>. Similarily,
         corresponding error messages in <span class="emphasis"><em>Spirit.Karma</em></span> reference
-        <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function3</span></code> and the 3rd parameter (instead
+        <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">function3</span></tt> and the 3rd parameter (instead
         of the 4th).
       </p></td></tr>
 </table></div>

@@ -357,10 +357,10 @@ Also, see __include_structure__.
 [:__unary_parser_concept__]
 
 [variablelist Notation
-    [[`a`]              [A __parser_concept__.]]
-    [[`n`,`min`,`max`]  [An `int` anything that can be converted to an 
-                        `int`, or a __qi_lazy_argument__ that evaluates to 
-                        anything that can be converted to an `int`.]]
+    [[`a`]                [A __parser_concept__.]]
+    [[`n`, `min`, `max`]  [An `int` anything that can be converted to an 
+                          `int`, or a __qi_lazy_argument__ that evaluates to 
+                          anything that can be converted to an `int`.]]
 ]
 
 [heading Expression Semantics]

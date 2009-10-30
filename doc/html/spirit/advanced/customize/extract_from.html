@@ -1,13 +1,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Extract an Attribute Value to Generate Output (Karma)</title>
+<title> Extract an
+        Attribute Value to Generate Output (Karma)</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../customize.html" title="Customization of Spirit's Attribute Handling">
-<link rel="prev" href="clear_value.html" title="Re-Initialize an Attribute Value before Parsing (Qi)">
-<link rel="next" href="iterate.html" title="Extract Attribute Values to Generate Output from a Container (Karma)">
+<link rel="up" href="../customize.html" title=" Customization of Spirit's
+      Attribute Handling">
+<link rel="previous" href="clear_value.html" title=" Re-Initialize
+        an Attribute Value before Parsing (Qi)">
+<link rel="next" href="iterate.html" title=" Extract Attribute
+        Values to Generate Output from a Container (Karma)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,62 +26,62 @@
 <div class="spirit-nav">
 <a accesskey="p" href="clear_value.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../customize.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="iterate.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Extract an Attribute Value to Generate Output (Karma)">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.advanced.customize.extract_from"></a><a class="link" href="extract_from.html" title="Extract an Attribute Value to Generate Output (Karma)"> Extract an
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.advanced.customize.extract_from"></a><a href="extract_from.html" title=" Extract an
+        Attribute Value to Generate Output (Karma)"> Extract an
         Attribute Value to Generate Output (Karma)</a>
-</h4></div></div></div>
-<a name="spirit.advanced.customize.extract_from.extract_from"></a><h6>
-<a name="id902746"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.extract_from">extract_from</a>
-        </h6>
+</h4></div></div>
+<div></div>
+</div>
+<a name="spirit.advanced.customize.extract_from.extract_from"></a><h5>
+<a name="id759429"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.extract_from">extract_from</a>
+        </h5>
 <p>
           Before generating output for a value this value needs to extracted from
-          the attribute instance provided by the user. The customization point <code class="computeroutput"><span class="identifier">extract_from</span></code> is utilized to adapt this
+          the attribute instance provided by the user. The customization point <tt class="computeroutput"><span class="identifier">extract_from</span></tt> is utilized to adapt this
           extraction for any data type possibly used to store the values to output.
         </p>
-<a name="spirit.advanced.customize.extract_from.module_headers"></a><h6>
-<a name="id902770"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.module_headers">Module
+<a name="spirit.advanced.customize.extract_from.module_headers"></a><h5>
+<a name="id759473"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.module_headers">Module
           Headers</a>
-        </h6>
+        </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">home</span><span class="special">/</span><span class="identifier">karma</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">extract_from</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          Also, see <a class="link" href="../../structure/include.html" title="Include">Include Structure</a>.
+          Also, see <a href="../../structure/include.html" title="Include">Include Structure</a>.
         </p>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
+<tr><td colspan="2" align="left" valign="top"><p>
             This header file does not need to be included directly by any user program
             as it is normally included by other Spirit header files relying on its
             content.
           </p></td></tr>
 </table></div>
-<a name="spirit.advanced.customize.extract_from.namespace"></a><h6>
-<a name="id902863"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.namespace">Namespace</a>
-        </h6>
+<a name="spirit.advanced.customize.extract_from.namespace"></a><h5>
+<a name="id759611"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.namespace">Namespace</a>
+        </h5>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th>
-                <p>
+<thead><tr><th><p>
                   Name
-                </p>
-                </th></tr></thead>
-<tbody><tr><td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code>
-                </p>
-                </td></tr></tbody>
+                </p></th></tr></thead>
+<tbody><tr><td><p>
+                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></tt>
+                </p></td></tr></tbody>
 </table></div>
-<a name="spirit.advanced.customize.extract_from.synopsis"></a><h6>
-<a name="id902936"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.synopsis">Synopsis</a>
-        </h6>
+<a name="spirit.advanced.customize.extract_from.synopsis"></a><h5>
+<a name="id759706"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.synopsis">Synopsis</a>
+        </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Attrib</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Enable</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">extract_from_attribute</span>
 <span class="special">{</span>
@@ -87,148 +91,120 @@
     <span class="keyword">static</span> <span class="identifier">type</span> <span class="identifier">call</span><span class="special">(</span><span class="identifier">Attrib</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">attr</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">&amp;</span> <span class="identifier">context</span><span class="special">);</span>
 <span class="special">};</span>
 </pre>
-<a name="spirit.advanced.customize.extract_from.template_parameters"></a><h6>
-<a name="id903111"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.template_parameters">Template
+<a name="spirit.advanced.customize.extract_from.template_parameters"></a><h5>
+<a name="id759945"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.template_parameters">Template
           parameters</a>
-        </h6>
+        </h5>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
+<th><p>
                   Parameter
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Description
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Default
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The type, <code class="computeroutput"><span class="identifier">Attrib</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Attrib</span></tt>
+                </p></td>
+<td><p>
+                  The type, <tt class="computeroutput"><span class="identifier">Attrib</span></tt>
                   of the attribute to be used to generate output from.
-                </p>
-                </td>
-<td>
-                <p>
+                </p></td>
+<td><p>
                   none
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Enable</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Enable</span></tt>
+                </p></td>
+<td><p>
                   Helper template parameter usable to selectively enable or disable
-                  certain specializations of <code class="computeroutput"><span class="identifier">clear_value</span></code>
-                  utilizing SFINAE (i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></code>
-                  or <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></code>).
-                </p>
-                </td>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="keyword">void</span></code>
-                </p>
-                </td>
+                  certain specializations of <tt class="computeroutput"><span class="identifier">clear_value</span></tt>
+                  utilizing SFINAE (i.e. <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">enable_if</span></tt>
+                  or <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">disable_if</span></tt>).
+                </p></td>
+<td><p>
+                  <tt class="computeroutput"><span class="keyword">void</span></tt>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Context</span></code>
-                </p>
-                </td>
-<td>
-                <p>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Context</span></tt>
+                </p></td>
+<td><p>
                   This is the type of the current generator execution context.
-                </p>
-                </td>
+                </p></td>
 <td class="auto-generated"> </td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.advanced.customize.extract_from.notation"></a><h6>
-<a name="id903301"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.notation">Notation</a>
-        </h6>
-<div class="variablelist" title="Notation">
+<a name="spirit.advanced.customize.extract_from.notation"></a><h5>
+<a name="id760198"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.notation">Notation</a>
+        </h5>
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">Attrib</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Attrib</span></tt></span></dt>
 <dd><p>
               A type to be used to generate output from.
             </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">attr</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">attr</span></tt></span></dt>
 <dd><p>
-              A attribute instance of type <code class="computeroutput"><span class="identifier">Attrib</span></code>.
+              A attribute instance of type <tt class="computeroutput"><span class="identifier">Attrib</span></tt>.
             </p></dd>
 </dl>
 </div>
-<a name="spirit.advanced.customize.extract_from.expression_semantics"></a><h6>
-<a name="id903367"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.expression_semantics">Expression
+<a name="spirit.advanced.customize.extract_from.expression_semantics"></a><h5>
+<a name="id760285"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.expression_semantics">Expression
           Semantics</a>
-        </h6>
+        </h5>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
+<th><p>
                   Expression
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Semantics
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody><tr>
 <td>
-                <p>
+<p>
                   
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">extract_from_attribute</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">&gt;::</span><span class="identifier">call</span><span class="special">(</span><span class="identifier">attr</span><span class="special">,</span> <span class="identifier">ctx</span><span class="special">)</span></pre>
 <p>
                 </p>
-                </td>
-<td>
-                <p>
+</td>
+<td><p>
                   Extract the value to generate output from and return it to the
                   caller.
-                </p>
-                </td>
+                </p></td>
 </tr></tbody>
 </table></div>
-<a name="spirit.advanced.customize.extract_from.predefined_specializations"></a><h6>
-<a name="id903474"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.predefined_specializations">Predefined
+<a name="spirit.advanced.customize.extract_from.predefined_specializations"></a><h5>
+<a name="id760426"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.predefined_specializations">Predefined
           Specializations</a>
-        </h6>
+        </h5>
 <p>
           <a href="http://spirit.sourceforge.net" target="_top">Spirit</a> predefines specializations
           of this customization point for several types. The following table lists
@@ -240,100 +216,80 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                <p>
+<th><p>
                   Template Parameters
-                </p>
-                </th>
-<th>
-                <p>
+                </p></th>
+<th><p>
                   Value
-                </p>
-                </th>
+                </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">Attrib</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The exposed typedef <code class="computeroutput"><span class="identifier">type</span></code>
-                  is defined to <code class="computeroutput"><span class="identifier">Attrib</span>
-                  <span class="keyword">const</span><span class="special">&amp;</span></code>.
-                  The function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns the argument by reference
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">Attrib</span></tt>
+                </p></td>
+<td><p>
+                  The exposed typedef <tt class="computeroutput"><span class="identifier">type</span></tt>
+                  is defined to <tt class="computeroutput"><span class="identifier">Attrib</span>
+                  <span class="keyword">const</span><span class="special">&amp;</span></tt>.
+                  The function <tt class="computeroutput"><span class="identifier">call</span><span class="special">()</span></tt> returns the argument by reference
                   without change.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The exposed typedef <code class="computeroutput"><span class="identifier">type</span></code>
-                  is defined to <code class="computeroutput"><span class="identifier">Attrib</span>
-                  <span class="keyword">const</span><span class="special">&amp;</span></code>.
-                  The function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns the value held by the
-                  <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  The exposed typedef <tt class="computeroutput"><span class="identifier">type</span></tt>
+                  is defined to <tt class="computeroutput"><span class="identifier">Attrib</span>
+                  <span class="keyword">const</span><span class="special">&amp;</span></tt>.
+                  The function <tt class="computeroutput"><span class="identifier">call</span><span class="special">()</span></tt> returns the value held by the
+                  <tt class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;&gt;</span></tt>
                   argument by reference without change.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">reference_wrapper</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">&gt;</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The exposed typedef <code class="computeroutput"><span class="identifier">type</span></code>
-                  is defined to <code class="computeroutput"><span class="identifier">Attrib</span>
-                  <span class="keyword">const</span><span class="special">&amp;</span></code>.
-                  The function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns the value held by the
-                  <code class="computeroutput"><span class="identifier">reference_wrapper</span><span class="special">&lt;&gt;</span></code> argument by reference without
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">reference_wrapper</span><span class="special">&lt;</span><span class="identifier">Attrib</span><span class="special">&gt;</span></tt>
+                </p></td>
+<td><p>
+                  The exposed typedef <tt class="computeroutput"><span class="identifier">type</span></tt>
+                  is defined to <tt class="computeroutput"><span class="identifier">Attrib</span>
+                  <span class="keyword">const</span><span class="special">&amp;</span></tt>.
+                  The function <tt class="computeroutput"><span class="identifier">call</span><span class="special">()</span></tt> returns the value held by the
+                  <tt class="computeroutput"><span class="identifier">reference_wrapper</span><span class="special">&lt;&gt;</span></tt> argument by reference without
                   change.
-                </p>
-                </td>
+                </p></td>
 </tr>
 <tr>
-<td>
-                <p>
-                  <code class="computeroutput"><span class="identifier">unused_type</span></code>
-                </p>
-                </td>
-<td>
-                <p>
-                  The exposed typedef <code class="computeroutput"><span class="identifier">type</span></code>
-                  is defined to <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-                  The function <code class="computeroutput"><span class="identifier">call</span><span class="special">()</span></code> returns an instance of <code class="computeroutput"><span class="identifier">unused_type</span></code>.
-                </p>
-                </td>
+<td><p>
+                  <tt class="computeroutput"><span class="identifier">unused_type</span></tt>
+                </p></td>
+<td><p>
+                  The exposed typedef <tt class="computeroutput"><span class="identifier">type</span></tt>
+                  is defined to <tt class="computeroutput"><span class="identifier">unused_type</span></tt>.
+                  The function <tt class="computeroutput"><span class="identifier">call</span><span class="special">()</span></tt> returns an instance of <tt class="computeroutput"><span class="identifier">unused_type</span></tt>.
+                </p></td>
 </tr>
 </tbody>
 </table></div>
-<a name="spirit.advanced.customize.extract_from.when_to_implement"></a><h6>
-<a name="id903818"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.when_to_implement">When
+<a name="spirit.advanced.customize.extract_from.when_to_implement"></a><h5>
+<a name="id760919"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.when_to_implement">When
           to implement</a>
-        </h6>
+        </h5>
 <p>
-          The customization point <code class="computeroutput"><span class="identifier">extract_from_attribute</span></code>
+          The customization point <tt class="computeroutput"><span class="identifier">extract_from_attribute</span></tt>
           needs to be implemented for a specific type whenever the default implementation
           as shown above is not applicable. Examples for this could be that the type
-          to be extracted is different from <code class="computeroutput"><span class="identifier">Attrib</span></code>
+          to be extracted is different from <tt class="computeroutput"><span class="identifier">Attrib</span></tt>
           and is not copy constructible.
         </p>
-<a name="spirit.advanced.customize.extract_from.example"></a><h6>
-<a name="id903852"></a>
-          <a class="link" href="extract_from.html#spirit.advanced.customize.extract_from.example">Example</a>
-        </h6>
+<a name="spirit.advanced.customize.extract_from.example"></a><h5>
+<a name="id760977"></a>
+          <a href="extract_from.html#spirit.advanced.customize.extract_from.example">Example</a>
+        </h5>
 <p>
           TBD
         </p>

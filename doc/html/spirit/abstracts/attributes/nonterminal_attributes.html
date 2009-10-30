@@ -1,13 +1,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Attributes of Rules and Grammars</title>
+<title>
+        Attributes of Rules and Grammars</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../attributes.html" title="Attributes">
-<link rel="prev" href="more_sompound_attributes.html" title="More About Attributes of Compound Components">
-<link rel="next" href="../../qi.html" title="Qi - Writing Parsers">
+<link rel="up" href="../attributes.html" title=" Attributes">
+<link rel="previous" href="more_sompound_attributes.html" title="
+        More About Attributes of Compound Components">
+<link rel="next" href="../../qi.html" title=" Qi - Writing Parsers">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,11 +24,15 @@
 <div class="spirit-nav">
 <a accesskey="p" href="more_sompound_attributes.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../attributes.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../../qi.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Attributes of Rules and Grammars">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.abstracts.attributes.nonterminal_attributes"></a><a class="link" href="nonterminal_attributes.html" title="Attributes of Rules and Grammars">
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.abstracts.attributes.nonterminal_attributes"></a><a href="nonterminal_attributes.html" title="
+        Attributes of Rules and Grammars">
         Attributes of Rules and Grammars</a>
-</h4></div></div></div>
+</h4></div></div>
+<div></div>
+</div>
 <p>
           Nonterminals are well known from parsers where they are used as the main
           means of constructing more complex parsers out of simpler ones. The nonterminals
@@ -40,14 +46,14 @@
         </p>
 <p>
           Both, the types of the inherited and the synthesized attributes have to
-          be explicitely specified while defining the particular <code class="computeroutput"><span class="identifier">grammar</span></code>
-          or the <code class="computeroutput"><span class="identifier">rule</span></code> (the Spirit
+          be explicitely specified while defining the particular <tt class="computeroutput"><span class="identifier">grammar</span></tt>
+          or the <tt class="computeroutput"><span class="identifier">rule</span></tt> (the Spirit
           <a href="../../../../../repository/doc/html/index.html" target="_top">Repository</a> additionally
-          has <code class="computeroutput"><span class="identifier">subrules</span></code> which conform
+          has <tt class="computeroutput"><span class="identifier">subrules</span></tt> which conform
           to a similar interface). As an example, the following code declares a
-          <span class="emphasis"><em>Spirit.Qi</em></span> <code class="computeroutput"><span class="identifier">rule</span></code>
-          exposing an <code class="computeroutput"><span class="keyword">int</span></code> as its synthesized
-          attribute, while expecting a single <code class="computeroutput"><span class="keyword">double</span></code>
+          <span class="emphasis"><em>Spirit.Qi</em></span> <tt class="computeroutput"><span class="identifier">rule</span></tt>
+          exposing an <tt class="computeroutput"><span class="keyword">int</span></tt> as its synthesized
+          attribute, while expecting a single <tt class="computeroutput"><span class="keyword">double</span></tt>
           as its inherited attribute (see the section about the <span class="emphasis"><em>Spirit.Qi</em></span>
           Rule for more information):
         </p>
@@ -67,7 +73,7 @@
           attribute is the value the generator creates its output from. Even if the
           consumed attribute is not 'returned' from the generator we chose to use
           the same function style declaration syntax as used in <span class="emphasis"><em>Spirit.Qi</em></span>.
-          The example below declares a <span class="emphasis"><em>Spirit.Karma</em></span> <code class="computeroutput"><span class="identifier">rule</span></code> consuming a <code class="computeroutput"><span class="keyword">double</span></code>
+          The example below declares a <span class="emphasis"><em>Spirit.Karma</em></span> <tt class="computeroutput"><span class="identifier">rule</span></tt> consuming a <tt class="computeroutput"><span class="keyword">double</span></tt>
           while not expecting any additional inherited attributes.
         </p>
 <pre class="programlisting"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">rule</span><span class="special">&lt;</span><span class="identifier">OutputIterator</span><span class="special">,</span> <span class="keyword">double</span><span class="special">()&gt;</span> <span class="identifier">r</span><span class="special">;</span>

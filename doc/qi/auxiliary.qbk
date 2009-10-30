@@ -374,7 +374,7 @@ that is called to resolve ambiguity in the grammar. A parse failure will
 be reported when the __qi_lazy_argument__ result evaluates to `false`.
 Otherwise an empty match will be reported. The general form is:
 
-    eps_p(f) >> rest;
+    eps(f) >> rest;
 
 The __qi_lazy_argument__ `f` is called to do a semantic test (say, checking
 if a symbol is in the symbol table). If test returns true, `rest` will

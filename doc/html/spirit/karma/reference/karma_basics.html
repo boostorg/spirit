@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Basics</title>
+<title> Basics</title>
 <link rel="stylesheet" href="../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.1">
 <link rel="up" href="../reference.html" title="Reference">
-<link rel="prev" href="generator_concepts/nonterminal.html" title="Nonterminal">
-<link rel="next" href="generate_api.html" title="Generate API">
+<link rel="previous" href="generator_concepts/nonterminal.html" title="Nonterminal">
+<link rel="next" href="generate_api.html" title=" Generate API">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,15 +22,18 @@
 <div class="spirit-nav">
 <a accesskey="p" href="generator_concepts/nonterminal.html"><img src="../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="generate_api.html"><img src="../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Basics">
-<div class="titlepage"><div><div><h4 class="title">
-<a name="spirit.karma.reference.karma_basics"></a><a class="link" href="karma_basics.html" title="Basics"> Basics</a>
-</h4></div></div></div>
-<a name="spirit.karma.reference.karma_basics.lazy_argument"></a><h6>
-<a name="id740092"></a>
-          <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h4 class="title">
+<a name="spirit.karma.reference.karma_basics"></a><a href="karma_basics.html" title=" Basics"> Basics</a>
+</h4></div></div>
+<div></div>
+</div>
+<a name="spirit.karma.reference.karma_basics.lazy_argument"></a><h5>
+<a name="id599223"></a>
+          <a href="karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
           Argument</a>
-        </h6>
+        </h5>
 <p>
           Some generators (e.g. primitives and non-terminals) may take in additional
           attributes. Such generators take the form:
@@ -38,40 +41,40 @@
 <pre class="programlisting"><span class="identifier">g</span><span class="special">(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">,...,</span> <span class="identifier">aN</span><span class="special">)</span>
 </pre>
 <p>
-          where <code class="computeroutput"><span class="identifier">g</span></code> is a generator.
+          where <tt class="computeroutput"><span class="identifier">g</span></tt> is a generator.
           Each of the arguments (a1 ... aN) can either be an immediate value, or
-          a function, <code class="computeroutput"><span class="identifier">f</span></code>, with signature:
+          a function, <tt class="computeroutput"><span class="identifier">f</span></tt>, with signature:
         </p>
 <pre class="programlisting"><span class="identifier">T</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">Unused</span><span class="special">,</span> <span class="identifier">Context</span><span class="special">)</span>
 </pre>
 <p>
-          where <code class="computeroutput"><span class="identifier">T</span></code>, the function's
-          return value, is compatible with the argument type expected and <code class="computeroutput"><span class="identifier">Context</span></code> is the generators's Context type
-          (The first argument is <code class="computeroutput"><span class="identifier">unused</span></code>
-          to make the <code class="computeroutput"><span class="identifier">Context</span></code> the
-          second argument. This is done for uniformity with <a class="link" href="../tutorials/semantic_actions.html" title="Semantic Actions">Semantic
+          where <tt class="computeroutput"><span class="identifier">T</span></tt>, the function's
+          return value, is compatible with the argument type expected and <tt class="computeroutput"><span class="identifier">Context</span></tt> is the generators's Context type
+          (The first argument is <tt class="computeroutput"><span class="identifier">unused</span></tt>
+          to make the <tt class="computeroutput"><span class="identifier">Context</span></tt> the
+          second argument. This is done for uniformity with <a href="../tutorials/semantic_actions.html" title="Semantic Actions">Semantic
           Actions</a>).
         </p>
-<a name="spirit.karma.reference.karma_basics.character_encoding_namespace"></a><h6>
-<a name="id740233"></a>
-          <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
+<a name="spirit.karma.reference.karma_basics.character_encoding_namespace"></a><h5>
+<a name="id599441"></a>
+          <a href="karma_basics.html#spirit.karma.reference.karma_basics.character_encoding_namespace">Character
           Encoding Namespace</a>
-        </h6>
+        </h5>
 <p>
-          Some generators need to know which character set a <code class="computeroutput"><span class="keyword">char</span></code>
-          or <code class="computeroutput"><span class="keyword">wchar_t</span></code> is operating on.
-          For example, the <code class="computeroutput"><span class="identifier">alnum</span></code>
+          Some generators need to know which character set a <tt class="computeroutput"><span class="keyword">char</span></tt>
+          or <tt class="computeroutput"><span class="keyword">wchar_t</span></tt> is operating on.
+          For example, the <tt class="computeroutput"><span class="identifier">alnum</span></tt>
           generator works differently with ISO8859.1 and ASCII encodings. Where necessary,
           Spirit encodes (tags) the generator with the character set.
         </p>
 <p>
           We have a namespace for each character set Spirit will be supporting. That
-          includes <code class="computeroutput"><span class="identifier">ascii</span></code>, <code class="computeroutput"><span class="identifier">iso8859_1</span></code>, <code class="computeroutput"><span class="identifier">standard</span></code>
-          and <code class="computeroutput"><span class="identifier">standard_wide</span></code> (and
-          in the future, <code class="computeroutput"><span class="identifier">unicode</span></code>).
+          includes <tt class="computeroutput"><span class="identifier">ascii</span></tt>, <tt class="computeroutput"><span class="identifier">iso8859_1</span></tt>, <tt class="computeroutput"><span class="identifier">standard</span></tt>
+          and <tt class="computeroutput"><span class="identifier">standard_wide</span></tt> (and
+          in the future, <tt class="computeroutput"><span class="identifier">unicode</span></tt>).
           In each of the character encoding namespaces, we place tagged versions
-          of generators such as <code class="computeroutput"><span class="identifier">alnum</span></code>,
-          <code class="computeroutput"><span class="identifier">space</span></code> etc.
+          of generators such as <tt class="computeroutput"><span class="identifier">alnum</span></tt>,
+          <tt class="computeroutput"><span class="identifier">space</span></tt> etc.
         </p>
 <p>
           Example:
@@ -81,17 +84,17 @@
 <p>
           Namespaces:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             boost::spirit::ascii
           </li>
-<li class="listitem">
+<li>
             boost::spirit::iso8859_1
           </li>
-<li class="listitem">
+<li>
             boost::spirit::standard
           </li>
-<li class="listitem">
+<li>
             boost::spirit::standard_wide
           </li>
 </ul></div>
@@ -99,24 +102,24 @@
           For ease of use, the components in this namespaces are also brought into
           the karma sub-namespaces with the same names:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             boost::spirit::karma::ascii
           </li>
-<li class="listitem">
+<li>
             boost::spirit::karma::iso8859_1
           </li>
-<li class="listitem">
+<li>
             boost::spirit::karma::standard
           </li>
-<li class="listitem">
+<li>
             boost::spirit::karma::standard_wide
           </li>
 </ul></div>
-<a name="spirit.karma.reference.karma_basics.examples"></a><h6>
-<a name="id740416"></a>
-          <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Examples</a>
-        </h6>
+<a name="spirit.karma.reference.karma_basics.examples"></a><h5>
+<a name="id599715"></a>
+          <a href="karma_basics.html#spirit.karma.reference.karma_basics.examples">Examples</a>
+        </h5>
 <p>
           All sections in the reference present some real world examples. The examples
           use a common test harness to keep the example code as minimal and direct
@@ -289,29 +292,30 @@
           </p>
 <p>
         </p>
-<a name="spirit.karma.reference.karma_basics.models"></a><h6>
-<a name="id744382"></a>
-          <a class="link" href="karma_basics.html#spirit.karma.reference.karma_basics.models">Models</a>
-        </h6>
+<a name="spirit.karma.reference.karma_basics.models"></a><h5>
+<a name="id603274"></a>
+          <a href="karma_basics.html#spirit.karma.reference.karma_basics.models">Models</a>
+        </h5>
 <p>
           Predefined models include:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
+<div class="itemizedlist"><ul type="disc">
+<li>
             any literal string, e.g. "Hello, World",
           </li>
-<li class="listitem">
+<li>
             a pointer/reference to a null-terminated array of characters
           </li>
-<li class="listitem">
-            a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></code>
+<li>
+            a <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">Char</span><span class="special">&gt;</span></tt>
 </li>
 </ul></div>
 <p>
-          The namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></code> is open for users to provide their
+          The namespace <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">traits</span></tt> is open for users to provide their
           own specializations. The customization points implemented by <span class="emphasis"><em>Spirit.Karma</em></span>
           usable to customize the behavior of generators are described in the section
-          <a class="link" href="../../advanced/customize.html" title="Customization of Spirit's Attribute Handling">Customization of Attribute Handling</a>.
+          <a href="../../advanced/customize.html" title=" Customization of Spirit's
+      Attribute Handling">Customization of Attribute Handling</a>.
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

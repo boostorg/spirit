@@ -1,13 +1,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Signed Integer Number Generators (int_, etc.)</title>
+<title> Signed
+          Integer Number Generators (int_,
+          etc.)</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../numeric.html" title="Numeric">
-<link rel="prev" href="unsigned_int.html" title="Unsigned Integer Number Generators (uint_, etc.)">
-<link rel="next" href="real_number.html" title="Real Number Generators (float_, double_, etc.)">
+<link rel="up" href="../numeric.html" title=" Numeric">
+<link rel="previous" href="unsigned_int.html" title=" Unsigned
+          Integer Number Generators (uint_,
+          etc.)">
+<link rel="next" href="real_number.html" title=" Real
+          Number Generators (float_,
+          double_, etc.)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,107 +28,100 @@
 <div class="spirit-nav">
 <a accesskey="p" href="unsigned_int.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../numeric.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="real_number.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="Signed Integer Number Generators (int_, etc.)">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.karma.reference.numeric.signed_int"></a><a class="link" href="signed_int.html" title="Signed Integer Number Generators (int_, etc.)"> Signed
-          Integer Number Generators (<code class="computeroutput"><span class="identifier">int_</span></code>,
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.karma.reference.numeric.signed_int"></a><a href="signed_int.html" title=" Signed
+          Integer Number Generators (int_,
+          etc.)"> Signed
+          Integer Number Generators (<tt class="computeroutput"><span class="identifier">int_</span></tt>,
           etc.)</a>
-</h5></div></div></div>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.karma.reference.numeric.signed_int.description"></a><h6>
-<a name="id806286"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.description">Description</a>
+<a name="id664732"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.description">Description</a>
           </h6>
 <p>
-            The <code class="computeroutput"><span class="identifier">int_generator</span></code> can
+            The <tt class="computeroutput"><span class="identifier">int_generator</span></tt> can
             generate signed integers of arbitrary length and size. This is almost
-            the same as the <code class="computeroutput"><span class="identifier">int_generator</span></code>.
-            The only difference is the additional task of generating the <code class="computeroutput"><span class="char">'+'</span></code> or <code class="computeroutput"><span class="char">'-'</span></code>
+            the same as the <tt class="computeroutput"><span class="identifier">int_generator</span></tt>.
+            The only difference is the additional task of generating the <tt class="computeroutput"><span class="char">'+'</span></tt> or <tt class="computeroutput"><span class="char">'-'</span></tt>
             sign preceding the number. The class interface is the same as that of
-            the <code class="computeroutput"><span class="identifier">int_generator</span></code>.
+            the <tt class="computeroutput"><span class="identifier">int_generator</span></tt>.
           </p>
 <p>
-            The <code class="computeroutput"><span class="identifier">int_generator</span></code> generator
+            The <tt class="computeroutput"><span class="identifier">int_generator</span></tt> generator
             can be used to emit ordinary primitive C/C++ integers or even user defined
             scalars such as bigints (unlimited precision integers) as long as the
             type follows certain expression requirements (for more information about
-            the requirements, see <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.additional_requirements">below</a>).
+            the requirements, see <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.additional_requirements">below</a>).
           </p>
 <a name="spirit.karma.reference.numeric.signed_int.header"></a><h6>
-<a name="id806354"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.header">Header</a>
+<a name="id664859"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="comment">// forwards to &lt;boost/spirit/home/karma/numeric/int.hpp&gt;
 </span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">spirit</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">karma_int</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-            Also, see <a class="link" href="../../../structure/include.html" title="Include">Include Structure</a>.
+            Also, see <a href="../../../structure/include.html" title="Include">Include Structure</a>.
           </p>
 <a name="spirit.karma.reference.numeric.signed_int.namespace"></a><h6>
-<a name="id806429"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.namespace">Namespace</a>
+<a name="id664974"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.namespace">Namespace</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup><col></colgroup>
-<thead><tr><th>
-                  <p>
+<thead><tr><th><p>
                     Name
-                  </p>
-                  </th></tr></thead>
+                  </p></th></tr></thead>
 <tbody>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
-                    boost::spirit::karma::lit</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">short_</span> <span class="comment">// alias:
-                    boost::spirit::karma::short_</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">int_</span> <span class="comment">// alias:
-                    boost::spirit::karma::int_</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">long_</span> <span class="comment">// alias:
-                    boost::spirit::karma::long_</span></code>
-                  </p>
-                  </td></tr>
-<tr><td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">long_long</span> <span class="comment">//
-                    alias: boost::spirit::karma::long_long</span></code>
-                  </p>
-                  </td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">lit</span> <span class="comment">// alias:
+                    boost::spirit::karma::lit</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">short_</span> <span class="comment">// alias:
+                    boost::spirit::karma::short_</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">int_</span> <span class="comment">// alias:
+                    boost::spirit::karma::int_</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">long_</span> <span class="comment">// alias:
+                    boost::spirit::karma::long_</span></tt>
+                  </p></td></tr>
+<tr><td><p>
+                    <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">long_long</span> <span class="comment">//
+                    alias: boost::spirit::karma::long_long</span></tt>
+                  </p></td></tr>
 </tbody>
 </table></div>
-<div class="important" title="Important"><table border="0" summary="Important">
+<div class="important"><table border="0" summary="Important">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../images/important.png"></td>
 <th align="left">Important</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              The generators <code class="computeroutput"><span class="identifier">long_long</span></code>
-              and <code class="computeroutput"><span class="identifier">long_long</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-              are only available on platforms where the preprocessor constant <code class="computeroutput"><span class="identifier">BOOST_HAS_LONG_LONG</span></code> is defined (i.e.
-              on platforms having native support for <code class="computeroutput"><span class="keyword">long</span>
-              <span class="keyword">long</span></code> (64 bit) integer types).
+<tr><td colspan="2" align="left" valign="top"><p>
+              The generators <tt class="computeroutput"><span class="identifier">long_long</span></tt>
+              and <tt class="computeroutput"><span class="identifier">long_long</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+              are only available on platforms where the preprocessor constant <tt class="computeroutput"><span class="identifier">BOOST_HAS_LONG_LONG</span></tt> is defined (i.e.
+              on platforms having native support for <tt class="computeroutput"><span class="keyword">long</span>
+              <span class="keyword">long</span></tt> (64 bit) integer types).
             </p></td></tr>
 </table></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              <code class="computeroutput"><span class="identifier">lit</span></code> is reused by the
-              <a class="link" href="../string.html" title="String">String Generators</a>,
-              the <a class="link" href="../char.html" title="Char">Character Generators</a>,
+<tr><td colspan="2" align="left" valign="top"><p>
+              <tt class="computeroutput"><span class="identifier">lit</span></tt> is reused by the
+              <a href="../string.html" title="String">String Generators</a>,
+              the <a href="../char.html" title=" Char">Character Generators</a>,
               and the Numeric Generators. In general, a char generator is created
               when you pass in a character, a string generator is created when you
               pass in a string, and a numeric generator is created when you use a
@@ -130,8 +129,8 @@
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.signed_int.synopsis"></a><h6>
-<a name="id806736"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.synopsis">Synopsis</a>
+<a name="id665395"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">T</span>
@@ -140,8 +139,8 @@
 <span class="keyword">struct</span> <span class="identifier">int_generator</span><span class="special">;</span>
 </pre>
 <a name="spirit.karma.reference.numeric.signed_int.template_parameters"></a><h6>
-<a name="id806820"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.template_parameters">Template
+<a name="id665511"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.template_parameters">Template
             parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -151,130 +150,106 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Parameter
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Default
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">T</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">T</span></tt>
+                  </p></td>
+<td><p>
                     The numeric base type of the numeric parser.
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">int</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">int</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Radix</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Radix</span></tt>
+                  </p></td>
+<td><p>
                     The radix base. This can be either 2: binary, 8: octal, 10: decimal
                     and 16: hexadecimal.
-                  </p>
-                  </td>
-<td>
-                  <p>
+                  </p></td>
+<td><p>
                     10
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">force_sign</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    If <code class="computeroutput"><span class="keyword">true</span></code>, all numbers
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">force_sign</span></tt>
+                  </p></td>
+<td><p>
+                    If <tt class="computeroutput"><span class="keyword">true</span></tt>, all numbers
                     will have a sign (space for zero)
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">false</span></code>
-                  </p>
-                  </td>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">false</span></tt>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.signed_int.model_of"></a><h6>
-<a name="id806987"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.model_of">Model
+<a name="id665726"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.model_of">Model
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>
+                <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">num</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">num</span></tt></span></dt>
 <dd><p>
-                Numeric literal, any signed integer value, or a <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
+                Numeric literal, any signed integer value, or a <a href="../karma_basics.html#spirit.karma.reference.karma_basics.lazy_argument">Lazy
                 Argument</a> that evaluates to a signed integer value of type
-                <code class="computeroutput"><span class="identifier">Num</span></code>
+                <tt class="computeroutput"><span class="identifier">Num</span></tt>
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">Num</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Num</span></tt></span></dt>
 <dd><p>
-                Type of <code class="computeroutput"><span class="identifier">num</span></code>: any
+                Type of <tt class="computeroutput"><span class="identifier">num</span></tt>: any
                 signed integer type
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">Radix</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">Radix</span></tt></span></dt>
 <dd><p>
                 A constant integer literal specifying the required radix for the
-                output conversion. Valid values are <code class="computeroutput"><span class="number">2</span></code>,
-                <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>,
-                and <code class="computeroutput"><span class="number">16</span></code>.
+                output conversion. Valid values are <tt class="computeroutput"><span class="number">2</span></tt>,
+                <tt class="computeroutput"><span class="number">8</span></tt>, <tt class="computeroutput"><span class="number">10</span></tt>,
+                and <tt class="computeroutput"><span class="number">16</span></tt>.
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">force_sign</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">force_sign</span></tt></span></dt>
 <dd><p>
                 A constant boolean literal specifying whether the generated number
-                should always have a sign (<code class="computeroutput"><span class="char">'+'</span></code>
-                for positive numbers, <code class="computeroutput"><span class="char">'-'</span></code>
-                for negative numbers and a '<code class="computeroutput"> </code>' for zero).
+                should always have a sign (<tt class="computeroutput"><span class="char">'+'</span></tt>
+                for positive numbers, <tt class="computeroutput"><span class="char">'-'</span></tt>
+                for negative numbers and a '<tt class="computeroutput"> </tt>' for zero).
               </p></dd>
 </dl>
 </div>
 <a name="spirit.karma.reference.numeric.signed_int.expression_semantics"></a><h6>
-<a name="id807173"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.expression_semantics">Expression
+<a name="id665996"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.expression_semantics">Expression
             Semantics</a>
           </h6>
 <p>
             Semantics of an expression is defined only where it differs from, or
-            is not defined in <a class="link" href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><code class="computeroutput"><span class="identifier">PrimitiveGenerator</span></code></a>.
+            is not defined in <a href="../generator_concepts/primitivegenerator.html" title="PrimitiveGenerator"><tt class="computeroutput"><span class="identifier">PrimitiveGenerator</span></tt></a>.
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -282,36 +257,28 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Generate the integer literal <code class="computeroutput"><span class="identifier">num</span></code>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    Generate the integer literal <tt class="computeroutput"><span class="identifier">num</span></tt>
                     using the default formatting (radix is 10, sign is only printed
                     for negative literals). This generator never fails (except if
                     the underlying output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">short_</span>
@@ -320,19 +287,17 @@
 <span class="identifier">long_long</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
+</td>
+<td><p>
                     Generate the integer provided by a mandatory attribute using
                     the default formatting (radix is 10, sign is only printed for
                     negative literals). This generator never fails (unless the underlying
                     output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">short_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span>
@@ -341,9 +306,8 @@
 <span class="identifier">long_long</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
+</td>
+<td><p>
                     Generate the integer provided by the immediate literal value
                     the generator is initialized from using the default formatting
                     (radix is 10, sign is only printed for negative literals). If
@@ -351,14 +315,13 @@
                     long as the attribute is equal to the immediate literal (unless
                     the underlying output stream reports an error). Otherwise this
                     generator fails and does not generate any output.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <p>
-            All generators listed in the table above (except <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>) are predefined specializations of the
-            <code class="computeroutput"><span class="identifier">int_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">force_sign</span><span class="special">&gt;</span></code>
+            All generators listed in the table above (except <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>) are predefined specializations of the
+            <tt class="computeroutput"><span class="identifier">int_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">force_sign</span><span class="special">&gt;</span></tt>
             basic integer number generator type described below. It is possible to
             directly use this type to create integer generators using a wide range
             of formatting options.
@@ -369,21 +332,17 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">int_generator</span><span class="special">&lt;</span>
@@ -391,28 +350,26 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Generate the integer of type <code class="computeroutput"><span class="identifier">Num</span></code>
-                    provided by a mandatory attribute using the specified <code class="computeroutput"><span class="identifier">Radix</span></code> (possible values are
-                    <code class="computeroutput"><span class="number">2</span></code>, <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>,
-                    and <code class="computeroutput"><span class="number">16</span></code>, the default
-                    value is <code class="computeroutput"><span class="number">10</span></code>). If
-                    <code class="computeroutput"><span class="identifier">force_sign</span></code> is
-                    <code class="computeroutput"><span class="keyword">false</span></code> (the default),
-                    a sign is only printed for negative literals. If <code class="computeroutput"><span class="identifier">force_sign</span></code> is <code class="computeroutput"><span class="keyword">true</span></code>, all numbers will be printed
-                    using a sign, i.e. <code class="computeroutput"><span class="char">'-'</span></code>
-                    for negative numbers, <code class="computeroutput"><span class="char">'+'</span></code>
-                    for positive numbers, and <code class="computeroutput"><span class="char">' '</span></code>
+</td>
+<td><p>
+                    Generate the integer of type <tt class="computeroutput"><span class="identifier">Num</span></tt>
+                    provided by a mandatory attribute using the specified <tt class="computeroutput"><span class="identifier">Radix</span></tt> (possible values are
+                    <tt class="computeroutput"><span class="number">2</span></tt>, <tt class="computeroutput"><span class="number">8</span></tt>, <tt class="computeroutput"><span class="number">10</span></tt>,
+                    and <tt class="computeroutput"><span class="number">16</span></tt>, the default
+                    value is <tt class="computeroutput"><span class="number">10</span></tt>). If
+                    <tt class="computeroutput"><span class="identifier">force_sign</span></tt> is
+                    <tt class="computeroutput"><span class="keyword">false</span></tt> (the default),
+                    a sign is only printed for negative literals. If <tt class="computeroutput"><span class="identifier">force_sign</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt>, all numbers will be printed
+                    using a sign, i.e. <tt class="computeroutput"><span class="char">'-'</span></tt>
+                    for negative numbers, <tt class="computeroutput"><span class="char">'+'</span></tt>
+                    for positive numbers, and <tt class="computeroutput"><span class="char">' '</span></tt>
                     for zeros. This generator never fails (unless the underlying
                     output stream reports an error).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">int_generator</span><span class="special">&lt;</span>
@@ -420,89 +377,87 @@
 <span class="special">&gt;()(</span><span class="identifier">num</span><span class="special">)</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    Generate the integer of type <code class="computeroutput"><span class="identifier">Num</span></code>
+</td>
+<td><p>
+                    Generate the integer of type <tt class="computeroutput"><span class="identifier">Num</span></tt>
                     provided by the immediate literal value the generator is initialized
-                    from, using the specified <code class="computeroutput"><span class="identifier">Radix</span></code>
-                    (possible values are <code class="computeroutput"><span class="number">2</span></code>,
-                    <code class="computeroutput"><span class="number">8</span></code>, <code class="computeroutput"><span class="number">10</span></code>, and <code class="computeroutput"><span class="number">16</span></code>,
-                    the default value is <code class="computeroutput"><span class="number">10</span></code>).
-                    If <code class="computeroutput"><span class="identifier">force_sign</span></code>
-                    is <code class="computeroutput"><span class="keyword">false</span></code> (the default),
-                    a sign is only printed for negative literals. If <code class="computeroutput"><span class="identifier">force_sign</span></code> is <code class="computeroutput"><span class="keyword">true</span></code>, all numbers will be printed
-                    using a sign, i.e. <code class="computeroutput"><span class="char">'-'</span></code>
-                    for negative numbers, <code class="computeroutput"><span class="char">'+'</span></code>
-                    for positive numbers, and <code class="computeroutput"><span class="char">' '</span></code>
+                    from, using the specified <tt class="computeroutput"><span class="identifier">Radix</span></tt>
+                    (possible values are <tt class="computeroutput"><span class="number">2</span></tt>,
+                    <tt class="computeroutput"><span class="number">8</span></tt>, <tt class="computeroutput"><span class="number">10</span></tt>, and <tt class="computeroutput"><span class="number">16</span></tt>,
+                    the default value is <tt class="computeroutput"><span class="number">10</span></tt>).
+                    If <tt class="computeroutput"><span class="identifier">force_sign</span></tt>
+                    is <tt class="computeroutput"><span class="keyword">false</span></tt> (the default),
+                    a sign is only printed for negative literals. If <tt class="computeroutput"><span class="identifier">force_sign</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt>, all numbers will be printed
+                    using a sign, i.e. <tt class="computeroutput"><span class="char">'-'</span></tt>
+                    for negative numbers, <tt class="computeroutput"><span class="char">'+'</span></tt>
+                    for positive numbers, and <tt class="computeroutput"><span class="char">' '</span></tt>
                     for zeros. If this generator has an associated attribute it succeeds
                     only as long as the attribute is equal to the immediate literal
                     (unless the underlying output stream reports an error). Otherwise
                     this generator fails and does not generate any output.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.numeric.signed_int.additional_requirements"></a><h6>
-<a name="id807808"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.additional_requirements">Additional
+<a name="id666928"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.additional_requirements">Additional
             Requirements</a>
           </h6>
 <p>
             The following lists enumerate the requirements which must be met in order
-            to use a certain type <code class="computeroutput"><span class="identifier">Num</span></code>
-            to instantiate and use a <code class="computeroutput"><span class="identifier">int_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">force_sign</span><span class="special">&gt;</span></code>.
+            to use a certain type <tt class="computeroutput"><span class="identifier">Num</span></tt>
+            to instantiate and use a <tt class="computeroutput"><span class="identifier">int_generator</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">,</span> <span class="identifier">Radix</span><span class="special">,</span> <span class="identifier">force_sign</span><span class="special">&gt;</span></tt>.
           </p>
 <p>
-            If <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_integral</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;::</span><span class="identifier">value</span></code> is <code class="computeroutput"><span class="keyword">true</span></code>
-            the type <code class="computeroutput"><span class="identifier">Num</span></code> must have
+            If <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_integral</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;::</span><span class="identifier">value</span></tt> is <tt class="computeroutput"><span class="keyword">true</span></tt>
+            the type <tt class="computeroutput"><span class="identifier">Num</span></tt> must have
             defined:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-              comparison operators for: <code class="computeroutput"><span class="special">&lt;</span></code>,
-              <code class="computeroutput"><span class="special">&lt;=</span></code>, <code class="computeroutput"><span class="special">==</span></code>,
-              <code class="computeroutput"><span class="special">!=</span></code>, <code class="computeroutput"><span class="special">&gt;</span></code>,
-              and <code class="computeroutput"><span class="special">&gt;=</span></code>
+<div class="itemizedlist"><ul type="disc">
+<li>
+              comparison operators for: <tt class="computeroutput"><span class="special">&lt;</span></tt>,
+              <tt class="computeroutput"><span class="special">&lt;=</span></tt>, <tt class="computeroutput"><span class="special">==</span></tt>,
+              <tt class="computeroutput"><span class="special">!=</span></tt>, <tt class="computeroutput"><span class="special">&gt;</span></tt>,
+              and <tt class="computeroutput"><span class="special">&gt;=</span></tt>
 </li>
-<li class="listitem">
-              numeric operators for: <code class="computeroutput"><span class="special">+</span></code>,
-              <code class="computeroutput"><span class="special">-</span></code>, <code class="computeroutput"><span class="special">/</span></code>,
-              <code class="computeroutput"><span class="special">*</span></code>, <code class="computeroutput"><span class="special">%</span></code>,
-              and unary <code class="computeroutput"><span class="special">-</span></code>
+<li>
+              numeric operators for: <tt class="computeroutput"><span class="special">+</span></tt>,
+              <tt class="computeroutput"><span class="special">-</span></tt>, <tt class="computeroutput"><span class="special">/</span></tt>,
+              <tt class="computeroutput"><span class="special">*</span></tt>, <tt class="computeroutput"><span class="special">%</span></tt>,
+              and unary <tt class="computeroutput"><span class="special">-</span></tt>
 </li>
 </ul></div>
 <p>
-            If <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_integral</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;::</span><span class="identifier">value</span></code> is <code class="computeroutput"><span class="keyword">false</span></code>
-            the type <code class="computeroutput"><span class="identifier">Num</span></code> must have
+            If <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_integral</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;::</span><span class="identifier">value</span></tt> is <tt class="computeroutput"><span class="keyword">false</span></tt>
+            the type <tt class="computeroutput"><span class="identifier">Num</span></tt> must have
             defined:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-              comparison operators for: <code class="computeroutput"><span class="special">&lt;</span></code>,
-              <code class="computeroutput"><span class="special">&lt;=</span></code>, <code class="computeroutput"><span class="special">==</span></code>,
-              <code class="computeroutput"><span class="special">!=</span></code>, <code class="computeroutput"><span class="special">&gt;</span></code>,
-              and <code class="computeroutput"><span class="special">&gt;=</span></code>
+<div class="itemizedlist"><ul type="disc">
+<li>
+              comparison operators for: <tt class="computeroutput"><span class="special">&lt;</span></tt>,
+              <tt class="computeroutput"><span class="special">&lt;=</span></tt>, <tt class="computeroutput"><span class="special">==</span></tt>,
+              <tt class="computeroutput"><span class="special">!=</span></tt>, <tt class="computeroutput"><span class="special">&gt;</span></tt>,
+              and <tt class="computeroutput"><span class="special">&gt;=</span></tt>
 </li>
-<li class="listitem">
-              numeric operators for: <code class="computeroutput"><span class="special">+</span></code>,
-              <code class="computeroutput"><span class="special">-</span></code>, <code class="computeroutput"><span class="special">/</span></code>,
-              <code class="computeroutput"><span class="special">*</span></code>, <code class="computeroutput"><span class="special">%</span></code>,
-              and unary <code class="computeroutput"><span class="special">-</span></code>
+<li>
+              numeric operators for: <tt class="computeroutput"><span class="special">+</span></tt>,
+              <tt class="computeroutput"><span class="special">-</span></tt>, <tt class="computeroutput"><span class="special">/</span></tt>,
+              <tt class="computeroutput"><span class="special">*</span></tt>, <tt class="computeroutput"><span class="special">%</span></tt>,
+              and unary <tt class="computeroutput"><span class="special">-</span></tt>
 </li>
-<li class="listitem">
+<li>
               helper functions implementing the interface and the semantics of:
-              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fmod</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fabs</span></code>,
-              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">lround</span></code>,
-              <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ltrunc</span></code>, <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">floor</span></code>,
-              and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ceil</span></code>. These need to be defined in
+              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fmod</span></tt>, <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fabs</span></tt>,
+              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pow</span></tt>, <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">lround</span></tt>,
+              <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ltrunc</span></tt>, <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">floor</span></tt>,
+              and <tt class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ceil</span></tt>. These need to be defined in
               a way so that they will be found using argument dependent lookup (ADL).
             </li>
 </ul></div>
 <a name="spirit.karma.reference.numeric.signed_int.attributes"></a><h6>
-<a name="id809447"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.attributes">Attributes</a>
+<a name="id667618"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.attributes">Attributes</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -510,145 +465,105 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Attribute
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">unused</span></code>
-                  </p>
-                  </td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">unused</span></tt>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">short_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">short</span></code>, attribute
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">short_</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">short</span></tt>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">short_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">short</span></code>, attribute
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">short_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">short</span></tt>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <code class="computeroutput"><span class="identifier">num</span></code> and
+                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
                     succeeds only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">int_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">int</span></code>, attribute is
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">int_</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">int</span></tt>, attribute is
                     mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">int_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">int</span></code>, attribute is
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">int_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">int</span></tt>, attribute is
                     optional, if it is supplied, the generator compares the attribute
-                    with <code class="computeroutput"><span class="identifier">num</span></code> and
+                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
                     succeeds only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">long_</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">long</span></code>, attribute
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">long_</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">long</span></tt>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">long_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">long</span></code>, attribute
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">long_</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">long</span></tt>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <code class="computeroutput"><span class="identifier">num</span></code> and
+                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
                     succeeds only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">long_long</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></code>,
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">long_long</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></tt>,
                     attribute is mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">long_long</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></code>,
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">long_long</span><span class="special">(</span><span class="identifier">num</span><span class="special">)</span></tt>
+                  </p></td>
+<td><p>
+                    <tt class="computeroutput"><span class="keyword">long</span> <span class="keyword">long</span></tt>,
                     attribute is optional, if it is supplied, the generator compares
-                    the attribute with <code class="computeroutput"><span class="identifier">num</span></code>
+                    the attribute with <tt class="computeroutput"><span class="identifier">num</span></tt>
                     and succeeds only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">int_generator</span><span class="special">&lt;</span>
@@ -656,17 +571,15 @@
 <span class="special">&gt;()</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Num</span></code>, attribute
+</td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Num</span></tt>, attribute
                     is mandatory (otherwise compilation will fail)
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
 <td>
-                  <p>
+<p>
                     
 </p>
 <pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">int_generator</span><span class="special">&lt;</span>
@@ -674,56 +587,54 @@
 <span class="special">&gt;()(</span><span class="identifier">num</span><span class="special">)</span></pre>
 <p>
                   </p>
-                  </td>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">Num</span></code>, attribute
+</td>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">Num</span></tt>, attribute
                     is optional, if it is supplied, the generator compares the attribute
-                    with <code class="computeroutput"><span class="identifier">num</span></code> and
+                    with <tt class="computeroutput"><span class="identifier">num</span></tt> and
                     succeeds only if both are equal, failing otherwise.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              In addition to their usual attribute of type <code class="computeroutput"><span class="identifier">Num</span></code>
-              all listed generators accept an instance of a <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></code> as well. If the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code> is initialized (holds a value)
-              the generators behave as if their attribute was an instance of <code class="computeroutput"><span class="identifier">Num</span></code> and emit the value stored in
-              the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></code>.
+<tr><td colspan="2" align="left" valign="top"><p>
+              In addition to their usual attribute of type <tt class="computeroutput"><span class="identifier">Num</span></tt>
+              all listed generators accept an instance of a <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">Num</span><span class="special">&gt;</span></tt> as well. If the <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></tt> is initialized (holds a value)
+              the generators behave as if their attribute was an instance of <tt class="computeroutput"><span class="identifier">Num</span></tt> and emit the value stored in
+              the <tt class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span><span class="special">&lt;&gt;</span></tt>.
               Otherwise the generators will fail.
             </p></td></tr>
 </table></div>
 <a name="spirit.karma.reference.numeric.signed_int.complexity"></a><h6>
-<a name="id810089"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.complexity">Complexity</a>
+<a name="id668503"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.complexity">Complexity</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                O(N), where <code class="computeroutput"><span class="identifier">N</span></code> is
+                O(N), where <tt class="computeroutput"><span class="identifier">N</span></tt> is
                 the number of digits needed to represent the generated integer number
               </p>
 <p>
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.numeric.signed_int.example"></a><h6>
-<a name="id810120"></a>
-            <a class="link" href="signed_int.html#spirit.karma.reference.numeric.signed_int.example">Example</a>
+<a name="id668553"></a>
+            <a href="signed_int.html#spirit.karma.reference.numeric.signed_int.example">Example</a>
           </h6>
-<div class="note" title="Note"><table border="0" summary="Note">
+<div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>
-              The test harness for the example(s) below is presented in the <a class="link" href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
+<tr><td colspan="2" align="left" valign="top"><p>
+              The test harness for the example(s) below is presented in the <a href="../karma_basics.html#spirit.karma.reference.karma_basics.examples">Basics Examples</a>
               section.
             </p></td></tr>
 </table></div>
@@ -762,7 +673,7 @@
 <p>
           </p>
 <p>
-            Basic usage of an <code class="computeroutput"><span class="identifier">int_</span></code>
+            Basic usage of an <tt class="computeroutput"><span class="identifier">int_</span></tt>
             generator:
           </p>
 <p>

@@ -30,10 +30,12 @@ details which are so important to make a difference.
 non-native-speaker-quirks we managed to introduce into the first versions of 
 the documentation.
 
+[*Chris Hoeppler] for taking up the editorial tasks for the initial
+version of this documentation together with Andreas Haberstroh. Chris
+did a lot especially at the last minute when we are about to release.
+
 [*Tobias Schwinger] for proposing expectation points and GCC port of an
 early version.
-
-[*Chris Hoeppler] for proof reading and copy editing.
 
 [*Joao Abecasis] for his early support and involvement in Spirit2
 development and for disturbing my peace every once in a while for a

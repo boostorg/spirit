@@ -127,13 +127,13 @@ Lazy strings using __phoenix__
 
 [heading Description]
 
-This class `symbols` implements a symbol table: an associative container
+The class `symbols` implements a symbol table: an associative container
 (or map) of key-value pairs where the keys are strings. The `symbols`
 class can work efficiently with 8, 16, 32 and even 64 bit characters.
 
 Traditionally, symbol table management is maintained seperately outside
 the grammar through semantic actions. Contrary to standard practice, the
-Spirit symbol table class symbols is-a parser. An instance of which may
+Spirit symbol table class `symbols` is-a parser, an instance of which may
 be used anywhere in the grammar specification. It is an example of a
 dynamic parser. A dynamic parser is characterized by its ability to
 modify its behavior at run time. Initially, an empty symbols object
@@ -202,21 +202,21 @@ defined in __primitive_parser_concept__.
     [[`Sym(sseq, dseq)`]            [Construct symbols from `sseq` and `dseq`
                                     (An __stl__ container of strings and an __stl__ container of
                                     data with `value_type` `T`).]]
-    [[`sym = sym`]                  [Assign `sym2` to `sym`.]]
-    [[`sym = s1, s2,... sN`]        [Assigns one or more symbols (`s1`...`sN`) to `sym`.]]
-    [[`sym += s1, s2,... sN`]       [Adds one or more symbols (`s1`...`sN`) to `sym`.]]
-    [[`sym.add(s1)(s2)...(sN)`]     [Adds one or more symbols (`s1`...`sN`) to `sym`.]]
+    [[`sym = sym2`]                 [Assign `sym2` to `sym`.]]
+    [[`sym = s1, s2, ..., sN`]      [Assign one or more symbols (`s1`...`sN`) to `sym`.]]
+    [[`sym += s1, s2, ..., sN`]     [Add one or more symbols (`s1`...`sN`) to `sym`.]]
+    [[`sym.add(s1)(s2)...(sN)`]     [Add one or more symbols (`s1`...`sN`) to `sym`.]]
     [[`sym.add(s1, d1)(s2, d2)...(sN, dN)`]
-                                    [Adds one or more symbols (`s1`...`sN`)
+                                    [Add one or more symbols (`s1`...`sN`)
                                     with associated data (`d1`...`dN`) to `sym`.]]
-    [[`sym -= s1, s2,... sN`]       [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
+    [[`sym -= s1, s2, ..., sN`]     [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
     [[`sym.remove(s1)(s2)...(sN)`]  [Remove one or more symbols (`s1`...`sN`) from `sym`.]]
     [[`sym.clear()`]                [Erase all of the symbols in `sym`.]]
-    [[`sym.at(s)`]                  [Returns a reference to the object associated
+    [[`sym.at(s)`]                  [Return a reference to the object associated
                                     with symbol, `s`. If `sym` does not already
                                     contain such an object, `at` inserts the default
                                     object `T()`.]]
-    [[`sym.find(s)`]                [Returns a pointer to the object associated
+    [[`sym.find(s)`]                [Return a pointer to the object associated
                                     with symbol, `s`. If `sym` does not already
                                     contain such an object, `find` returns a null
                                     pointer.]]
@@ -236,7 +236,7 @@ complexity:
 
 [:O(log n+k)]
 
-Where k is the length of the string to be searched and in a TST with n
+Where k is the length of the string to be searched in a TST with n
 strings.
 
 TSTs are faster than hashing for many typical search problems especially

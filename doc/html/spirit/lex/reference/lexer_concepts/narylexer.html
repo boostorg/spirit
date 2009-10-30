@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>NaryLexer</title>
 <link rel="stylesheet" href="../../../../../../../../doc/html/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.1">
-<link rel="up" href="../lexer_concepts.html" title="Lexer Concepts">
-<link rel="prev" href="unarylexer.html" title="UnaryLexer">
-<link rel="next" href="../lex_basics.html" title="Basics">
+<link rel="up" href="../lexer_concepts.html" title=" Lexer Concepts">
+<link rel="previous" href="unarylexer.html" title="UnaryLexer">
+<link rel="next" href="../lex_basics.html" title=" Basics">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -22,54 +22,57 @@
 <div class="spirit-nav">
 <a accesskey="p" href="unarylexer.html"><img src="../../../../../../../../doc/html/images/prev.png" alt="Prev"></a><a accesskey="u" href="../lexer_concepts.html"><img src="../../../../../../../../doc/html/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/html/images/home.png" alt="Home"></a><a accesskey="n" href="../lex_basics.html"><img src="../../../../../../../../doc/html/images/next.png" alt="Next"></a>
 </div>
-<div class="section" title="NaryLexer">
-<div class="titlepage"><div><div><h5 class="title">
-<a name="spirit.lex.reference.lexer_concepts.narylexer"></a><a class="link" href="narylexer.html" title="NaryLexer">NaryLexer</a>
-</h5></div></div></div>
+<div class="section" lang="en">
+<div class="titlepage">
+<div><div><h5 class="title">
+<a name="spirit.lex.reference.lexer_concepts.narylexer"></a><a href="narylexer.html" title="NaryLexer">NaryLexer</a>
+</h5></div></div>
+<div></div>
+</div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.description"></a><h6>
-<a name="id877214"></a>
-            <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.description">Description</a>
+<a name="id735450"></a>
+            <a href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>NaryLexer</em></span> is a composite lexer component that has
             one or more subjects. The NaryLexer allows its subjects to be treated
-            in the same way as a single instance of a <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a> following the Composite
+            in the same way as a single instance of a <a href="lexer.html" title="Lexer"><tt class="computeroutput"><span class="identifier">Lexer</span></tt></a> following the Composite
             Design Pattern.
           </p>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.refinement_of"></a><h6>
-<a name="id877250"></a>
-            <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.refinement_of">Refinement
+<a name="id735505"></a>
+            <a href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.refinement_of">Refinement
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
               </p>
 <p>
-                <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a>
+                <a href="lexer.html" title="Lexer"><tt class="computeroutput"><span class="identifier">Lexer</span></tt></a>
               </p>
 <p>
             </p>
 </blockquote></div>
-<div class="variablelist" title="Notation">
+<div class="variablelist">
 <p class="title"><b>Notation</b></p>
 <dl>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">l</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">l</span></tt></span></dt>
 <dd><p>
                 A NaryLexer.
               </p></dd>
-<dt><span class="term"><code class="computeroutput"><span class="identifier">L</span></code></span></dt>
+<dt><span class="term"><tt class="computeroutput"><span class="identifier">L</span></tt></span></dt>
 <dd><p>
                 A NaryLexer type.
               </p></dd>
 </dl>
 </div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.valid_expressions"></a><h6>
-<a name="id877332"></a>
-            <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.valid_expressions">Valid
+<a name="id735612"></a>
+            <a href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a>, for any NaryLexer the
+            In addition to the requirements defined in <a href="lexer.html" title="Lexer"><tt class="computeroutput"><span class="identifier">Lexer</span></tt></a>, for any NaryLexer the
             following must be met:
           </p>
 <div class="informaltable"><table class="table">
@@ -79,44 +82,32 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Semantics
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Return type
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody><tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements</span></tt>
+                  </p></td>
+<td><p>
                     The tuple of elements.
-                  </p>
-                  </td>
-<td>
-                  <p>
+                  </p></td>
+<td><p>
                     A <a href="../../../../../../../../libs/fusion/doc/html/index.html" target="_top">Boost.Fusion</a>
-                    Sequence of <a class="link" href="lexer.html" title="Lexer"><code class="computeroutput"><span class="identifier">Lexer</span></code></a> types.
-                  </p>
-                  </td>
+                    Sequence of <a href="lexer.html" title="Lexer"><tt class="computeroutput"><span class="identifier">Lexer</span></tt></a> types.
+                  </p></td>
 </tr></tbody>
 </table></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.type_expressions"></a><h6>
-<a name="id877456"></a>
-            <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.type_expressions">Type
+<a name="id735778"></a>
+            <a href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -125,72 +116,60 @@
 <col>
 </colgroup>
 <thead><tr>
-<th>
-                  <p>
+<th><p>
                     Expression
-                  </p>
-                  </th>
-<th>
-                  <p>
+                  </p></th>
+<th><p>
                     Description
-                  </p>
-                  </th>
+                  </p></th>
 </tr></thead>
 <tbody>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements_type</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">l</span><span class="special">.</span><span class="identifier">elements_type</span></tt>
+                  </p></td>
+<td><p>
                     Elements tuple type.
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 <tr>
-<td>
-                  <p>
-                    <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_nary_lexer</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">&gt;::</span><span class="identifier">type</span></code>
-                  </p>
-                  </td>
-<td>
-                  <p>
-                    Metafunction that evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
-                    if a certain type, <code class="computeroutput"><span class="identifier">L</span></code>
-                    is a NaryLexer, <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code>
+<td><p>
+                    <tt class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_nary_lexer</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">&gt;::</span><span class="identifier">type</span></tt>
+                  </p></td>
+<td><p>
+                    Metafunction that evaluates to <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></tt>
+                    if a certain type, <tt class="computeroutput"><span class="identifier">L</span></tt>
+                    is a NaryLexer, <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></tt>
                     otherwise (See <a href="../../../../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">MPL
                     Boolean Constant</a>).
-                  </p>
-                  </td>
+                  </p></td>
 </tr>
 </tbody>
 </table></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.invariants"></a><h6>
-<a name="id877628"></a>
-            <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.invariants">Invariants</a>
+<a name="id736004"></a>
+            <a href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.invariants">Invariants</a>
           </h6>
 <p>
-            For each element, <code class="computeroutput"><span class="identifier">E</span></code>,
-            in any NaryLexer, <code class="computeroutput"><span class="identifier">L</span></code>,
+            For each element, <tt class="computeroutput"><span class="identifier">E</span></tt>,
+            in any NaryLexer, <tt class="computeroutput"><span class="identifier">L</span></tt>,
             the following invariant always holds:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_lexer</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
+<div class="itemizedlist"><ul type="disc"><li>
+<tt class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_lexer</span><span class="special">&lt;</span><span class="identifier">E</span><span class="special">&gt;::</span><span class="identifier">type</span></tt> evaluates to <tt class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></tt>
 </li></ul></div>
 <a name="spirit.lex.reference.lexer_concepts.narylexer.models"></a><h6>
-<a name="id877713"></a>
-            <a class="link" href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.models">Models</a>
+<a name="id736129"></a>
+            <a href="narylexer.html#spirit.lex.reference.lexer_concepts.narylexer.models">Models</a>
           </h6>
 <p>
             The following lexer components conform to this model:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<div class="itemizedlist"><ul type="disc"><li>
               lexer sequence component
             </li></ul></div>
 <p>
-            <span class="bold"><strong>FIXME</strong></span> Add more links to models of NaryLexer
+            <span class="bold"><b>FIXME</b></span> Add more links to models of NaryLexer
             concept
           </p>
 </div>
