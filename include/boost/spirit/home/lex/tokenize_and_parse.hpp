@@ -75,7 +75,10 @@ namespace boost { namespace spirit { namespace lex
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
-        return compile<qi::domain>(xpr).parse(iter, lex.end(), unused, unused, unused);
+        typename Lexer::iterator_type end = lex.end();
+        bool result = compile<qi::domain>(xpr).parse(
+            iter, end, unused, unused, unused);
+        return result && iter == end;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -91,7 +94,10 @@ namespace boost { namespace spirit { namespace lex
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
-        return compile<qi::domain>(xpr).parse(iter, lex.end(), unused, unused, attr);
+        typename Lexer::iterator_type end = lex.end();
+        bool result = compile<qi::domain>(xpr).parse(
+            iter, end, unused, unused, attr);
+        return result && iter == end;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -135,7 +141,7 @@ namespace boost { namespace spirit { namespace lex
     //                  input sequence. Note, the skip parser will have to 
     //                  act on the same token sequence as the main parser 
     //                  'xpr'.
-    //  post_skip:      The post_skip flag controls whether the funciton will
+    //  post_skip:      The post_skip flag controls whether the function will
     //                  invoke an additional post skip after the main parser
     //                  returned.
     //  attr:           The top level attribute passed to the parser. It will 
@@ -163,14 +169,15 @@ namespace boost { namespace spirit { namespace lex
         skipper_type const skipper_ = compile<qi::domain>(skipper);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
+        typename Lexer::iterator_type end = lex.end();
         if (!compile<qi::domain>(xpr).parse(
-                iter, lex.end(), unused, skipper_, unused))
+                iter, end, unused, skipper_, unused))
             return false;
 
         // do a final post-skip
         if (post_skip == skip_flag::postskip)
-            qi::skip_over(iter, lex.end(), skipper_);
-        return true;
+            qi::skip_over(iter, end, skipper_);
+        return iter != end;
     }
 
     template <typename Iterator, typename Lexer, typename ParserExpr
@@ -192,14 +199,15 @@ namespace boost { namespace spirit { namespace lex
         skipper_type const skipper_ = compile<qi::domain>(skipper);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
+        typename Lexer::iterator_type end = lex.end();
         if (!compile<qi::domain>(xpr).parse(
-                iter, lex.end(), unused, skipper_, attr))
+                iter, end, unused, skipper_, attr))
             return false;
 
         // do a final post-skip
         if (post_skip == skip_flag::postskip)
-            qi::skip_over(iter, lex.end(), skipper_);
-        return true;
+            qi::skip_over(iter, end, skipper_);
+        return iter != end;
     }
 
     ///////////////////////////////////////////////////////////////////////////
