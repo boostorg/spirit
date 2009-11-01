@@ -128,6 +128,7 @@ import testing ;
     [ run lex/regression003_generate.cpp    : $(LEX_DIR)/matlib_static.h : : : lex_regression003_generate ]
     [ run lex/regression003.cpp             : : : <dependency>.//lex_regression003_generate : lex_regression003 ]
     [ run lex/regression004.cpp             : : : : lex_regression004 ]
+    [ run lex/regression005.cpp             : : : : lex_regression005 ]
 
     ;
 
