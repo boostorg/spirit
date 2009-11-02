@@ -105,7 +105,7 @@ will use __phoenix__ for sematic actions.
 [important There are different ways to write semantic actions for __qi__: 
            using plain functions, __boost_bind__, __boost_lambda__, or 
            __phoenix__. The latter three allow you to use special placeholders
-           to control parameter placement (`_1`, `_2`, etc.). Every of those
+           to control parameter placement (`_1`, `_2`, etc.). Each of those
            libraries has it's own implementation of the placeholders, all
            in different namespaces. You have to make sure not to mix 
            placeholders with a library they don't belong to and not to 

@@ -124,10 +124,10 @@ a sledgehammer.
 
 Just before the development of Spirit V2 began, Hartmut came across the
 __string_template__ library that is a part of the ANTLR parser
-framework. ['attribute quote to http://www.stringtemplate.org/] It is a
+framework. [footnote Quote from http://www.stringtemplate.org/: It is a
 Java template engine (with ports for C# and Python) for generating
-source code, web pages, emails, or any other formatted text output.
-['end of quote!] The concepts presented in that library lead Hartmut to
+source code, web pages, emails, or any other formatted text output.]
+The concepts presented in that library lead Hartmut to
 the next step in the evolution of Spirit. Parsing and generation are
 tightly connected to a formal notation, or a grammar. The grammar
 describes both input and output, and therefore, a parser library should

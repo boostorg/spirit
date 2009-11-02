@@ -84,8 +84,8 @@ enum token_ids
     (`ID_WORD`, `ID_EOL`, and `ID_CHAR` are enum values representing the token 
     ids, but could be anything else convertible to an integer as well).
     The direct base class of any token definition class needs to be the 
-    template `lexer_def<>`, where the corresponding template parameter (here:
-    `lexertl_lexer<BaseIterator>`) defines which underlying lexer engine has 
+    template `lex::lexer<>`, where the corresponding template parameter (here:
+    `lex::lexertl::lexer<BaseIterator>`) defines which underlying lexer engine has 
     to be used to provide the required state machine functionality. In this 
     example we use the Lexertl based lexer engine as the underlying lexer type. 
 */

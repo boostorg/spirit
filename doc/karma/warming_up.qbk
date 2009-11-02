@@ -91,7 +91,7 @@ generated output zero or more times.
 
 [heading Let's Generate!]
 
-We're done with defining the generator. All what's left is to invoke the 
+We're done with defining the generator. All that's left is to invoke the 
 generator to do its work. For now, we will use the `generate_delimited` function. 
 One overload of this function accepts four arguments:
 
@@ -135,7 +135,7 @@ refer to [@../../example/karma/num_list1.cpp num_list1.cpp]).
       behavior in more detail later in this tutorial. For now just consider 
       this to be a special case, implemented on purpose to allow more flexible
       output formatting of STL containers: sequences accept a single container
-      attribute if all elements of this sequence accept attribute compatible 
+      attribute if all elements of this sequence accept attributes compatible 
       with the elements held by this container.]
 
 The generate function returns `true` or `false` depending on the result of the
@@ -147,14 +147,14 @@ particular generator.
 
 [note `char` and `wchar_t` operands
 
-    The careful reader may notice that the parser expression has `','` instead 
+    The careful reader may notice that the generator expression has `','` instead 
     of `lit(',')` as the previous examples did. This is ok due to C++ syntax 
     rules of conversion. Spirit provides `<<` operators that are overloaded to 
     accept a `char` or `wchar_t` argument on its left or right (but not both). 
     An operator may be overloaded if at least one of its parameters is a 
     user-defined type. In this case, the `double_` is the 2nd argument to 
     `operator<<`, and so the proper overload of `<<` is used, converting `','` 
-    into a character literal parser.
+    into a character literal generator.
 
     The problem with omiting the `lit` should be obvious: `'a' << 'b'` is not a
     spirit generator, it is a numeric expression, left-shifting the ASCII (or 

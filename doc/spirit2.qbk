@@ -308,6 +308,7 @@ For now, I'll put my stuff here adhoc (JDG). $$$]
 
 [def __fwditer__                    [@http://www.sgi.com/tech/stl/ForwardIterator.html `ForwardIterator`]]
 [def __outputiter__                 [@http://www.sgi.com/tech/stl/OutputIterator.html `OutputIterator`]]
+[def __randomiter__                 [@http://www.sgi.com/tech/stl/RandomAccessIterator.html `RandomAccessIterator`]]
 [def __concepts__                   [@http://www.boost.org/community/generic_programming.html#concept concepts]]
 [def __endianness__                 [@http://en.wikipedia.org/wiki/Endianness endianness]]
 [def __iomanip__                    [@http://www.cppreference.com/wiki/io/io_flags#manipulators Manipulators]]

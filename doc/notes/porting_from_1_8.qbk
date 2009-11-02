@@ -74,7 +74,7 @@ __classic__ all free functions were named `parse`. In __qi__ they are are named
 either `qi::parse` or `qi::phrase_parse` depending on whether the parsing should 
 be done using a skipper (`qi::phrase_parse`) or not (`qi::parse`). All free 
 functions now return a simple `bool`. A returned `true` means success (i.e. the
-parser has matched) or `false` (i.e. the parser either didn't match). This is
+parser has matched) or `false` (i.e. the parser didn't match). This is
 equivalent to the former old `parse_info` member `hit`. __qi__ doesn't support
 tracking of the matched input length anymore. The old `parse_info` member 
 `full` can be emulated by comparing the iterators after `qi::parse` returned.
@@ -194,14 +194,14 @@ an unsigned value - the value they matched.
          are interpreted as the types of inherited attributes the rule or 
          grammar expect to be passed during parsing. For more information 
          please see the section about inherited and synthesized attributes for
-         rules and grammars.]
+         rules and grammars (__sec_attributes__).]
 
-If no attribute is desired none needs to be specified. The default attrribute 
+If no attribute is desired none needs to be specified. The default attribute 
 type for both, grammars and rules, is __unused_type__, which is a special 
 placeholder type. Generally, using __unused_type__ as the attribute of a parser
 is interpreted as 'this parser has no attribute'. This is mostly used for 
 parsers applied to parts of the input not carrying any significant information, 
-rather being delimiters or structural elements needed for coreect interpretation 
+rather being delimiters or structural elements needed for correct interpretation 
 of the input.
 
 The last difference might seem to be rather cosmetic and insignificant. But it 
