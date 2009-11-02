@@ -235,7 +235,7 @@ namespace boost { namespace spirit { namespace lex
     //
     //  The function takes a pair of iterators spanning the underlying input 
     //  stream to scan, the lexer object (built from the token definitions),
-    //  and a (optional) functor being call for each of the generated tokens. 
+    //  and a (optional) functor being called for each of the generated tokens. 
     //
     //  The function returns true if the scanning of the input succeeded (the 
     //  given input sequence has been successfully matched by the given token
