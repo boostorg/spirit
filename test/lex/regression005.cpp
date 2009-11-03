@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
     my_lexer<lexer_type> lexer;
     my_grammar<iterator_type> grammar(lexer);
 
-    BOOST_TEST(!lex::tokenize_and_parse(first, last, lexer, grammar));
+    BOOST_TEST(lex::tokenize_and_parse(first, last, lexer, grammar));
     BOOST_TEST(first != last);
 
     return boost::report_errors();
