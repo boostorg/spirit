@@ -75,10 +75,8 @@ namespace boost { namespace spirit { namespace lex
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
-        typename Lexer::iterator_type end = lex.end();
-        bool result = compile<qi::domain>(xpr).parse(
-            iter, end, unused, unused, unused);
-        return result && iter == end;
+        return compile<qi::domain>(xpr).parse(
+            iter, lex.end(), unused, unused, unused);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -94,10 +92,8 @@ namespace boost { namespace spirit { namespace lex
         BOOST_SPIRIT_ASSERT_MATCH(qi::domain, ParserExpr);
 
         typename Lexer::iterator_type iter = lex.begin(first, last);
-        typename Lexer::iterator_type end = lex.end();
-        bool result = compile<qi::domain>(xpr).parse(
-            iter, end, unused, unused, attr);
-        return result && iter == end;
+        return compile<qi::domain>(xpr).parse(
+            iter, lex.end(), unused, unused, attr);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -177,7 +173,7 @@ namespace boost { namespace spirit { namespace lex
         // do a final post-skip
         if (post_skip == skip_flag::postskip)
             qi::skip_over(iter, end, skipper_);
-        return iter != end;
+        return true;
     }
 
     template <typename Iterator, typename Lexer, typename ParserExpr
@@ -207,7 +203,7 @@ namespace boost { namespace spirit { namespace lex
         // do a final post-skip
         if (post_skip == skip_flag::postskip)
             qi::skip_over(iter, end, skipper_);
-        return iter != end;
+        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
