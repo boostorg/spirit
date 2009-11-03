@@ -6,7 +6,7 @@
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ===============================================================================/]
 
-[section Lexer]
+[section:lexer Supported Regular Expressions]
 
 [table Regular expressions support
     [[Expression]   [Meaning]]
@@ -85,7 +85,6 @@ Regular expressions can be given a name and referred to in rules using the
 syntax `{NAME}` where `NAME` is the name you have given to the macro.  A macro
 name can be at most 30 characters long and must start with a `_` or a letter.
 Subsequent characters can be `_`, `-`, a letter or a decimal digit.
-Use the `rules::add_macro()` method to define a macro.
 
 [endsect]
 

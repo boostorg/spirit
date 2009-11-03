@@ -33,6 +33,7 @@
 
 [section:quick_reference Quick Reference]
 [include        lex/quick_reference.qbk]
+[include        lex/lexer.qbk]
 [endsect]
 
 [section:reference Reference]
