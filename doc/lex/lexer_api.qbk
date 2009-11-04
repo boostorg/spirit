@@ -59,7 +59,7 @@ and an (optional) functor being called for each of the generated tokens. If no
 function object `f` is given, the generated tokens will be discarded.
 
 The functions return `true` if the scanning of the input succeeded (the 
-given input sequence has been successfully and fully matched by the given 
+given input sequence has been successfully matched by the given 
 token definitions).
 
 The argument `f` is expected to be a function (callable) object taking a single 
@@ -97,7 +97,7 @@ and a parser object (built from the parser grammar definition). Additionally
 they may take the attributes for the parser step.
 
 The function returns `true` if the parsing succeeded (the given input
-sequence has been successfully and fully matched by the given grammar).
+sequence has been successfully matched by the given grammar).
 
     template <typename Iterator, typename Lexer, typename ParserExpr>
     inline bool
@@ -125,7 +125,7 @@ the parsing process. Additionally they may take the attributes for the parser
 step.
 
 The function returns `true` if the parsing succeeded (the given input
-sequence has been successfully and fully matched by the given grammar).
+sequence has been successfully matched by the given grammar).
 
     template <typename Iterator, typename Lexer, typename ParserExpr
       , typename Skipper>

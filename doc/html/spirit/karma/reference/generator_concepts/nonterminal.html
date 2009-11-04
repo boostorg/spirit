@@ -27,7 +27,7 @@
 <a name="spirit.karma.reference.generator_concepts.nonterminal"></a><a class="link" href="nonterminal.html" title="Nonterminal">Nonterminal</a>
 </h5></div></div></div>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.description"></a><h6>
-<a name="id776553"></a>
+<a name="id729849"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.description">Description</a>
           </h6>
 <p>
@@ -38,7 +38,7 @@
             in recursive descent generation.
           </p>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.refinement_of"></a><h6>
-<a name="id776574"></a>
+<a name="id729870"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.refinement_of">Refinement
             of</a>
           </h6>
@@ -52,7 +52,7 @@
             </p>
 </blockquote></div>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.signature"></a><h6>
-<a name="id776610"></a>
+<a name="id729906"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.signature">Signature</a>
           </h6>
 <p>
@@ -69,7 +69,7 @@
             inherited attributes.
           </p>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.attributes"></a><h6>
-<a name="id776709"></a>
+<a name="id730005"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.attributes">Attributes</a>
           </h6>
 <p>
@@ -82,19 +82,17 @@
 <pre class="programlisting"><span class="identifier">r</span><span class="special">(</span><span class="identifier">expr</span><span class="special">)</span> <span class="comment">// Evaluate expr at parse time and pass the result to the Nonterminal r
 </span></pre>
 <a name="spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"></a><h6>
-<a name="id776753"></a>
+<a name="id730049"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___val__phrase___code_"><code class="computeroutput"><span class="identifier">_val</span></code></a>
           </h6>
 <p>
-            The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">qi_val</span></code> placeholder can be used in
-            <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> semantic
-            actions anywhere in the Nonterminal's definition. This <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
-            placeholder refers to the Nonterminal's (synthesized) attribute. The
-            <code class="computeroutput"><span class="identifier">_val</span></code> placeholder acts
-            like a immutable reference to the Nonterminal's attribute.
+            The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">spirit</span><span class="special">::</span><span class="identifier">karma</span><span class="special">::</span><span class="identifier">_val</span></code> placeholder can be used in <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a> semantic actions
+            anywhere in the Nonterminal's definition. This <a href="../../../../../../phoenix/doc/html/index.html" target="_top">Phoenix</a>
+            placeholder refers to the Nonterminal's (consumed) attribute. The <code class="computeroutput"><span class="identifier">_val</span></code> placeholder acts like a immutable
+            reference to the Nonterminal's attribute.
           </p>
 <a name="spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"></a><h6>
-<a name="id776813"></a>
+<a name="id730116"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal._code__phrase_role__identifier___r1__phrase___code_____code__phrase_role__identifier__r10__phrase___code_"><code class="computeroutput"><span class="identifier">_r1</span></code>...<code class="computeroutput"><span class="identifier">r10</span></code></a>
           </h6>
 <p>
@@ -104,15 +102,15 @@
             refer to the Nonterminal's inherited attributes.
           </p>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.locals"></a><h6>
-<a name="id776897"></a>
+<a name="id730200"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.locals">Locals</a>
           </h6>
 <p>
             Nonterminals can have local variables that will be created on the stack
-            at parse time. A locals descriptor added to the Nonterminal declaration
+            at runtime. A locals descriptor added to the Nonterminal declaration
             will give the Nonterminal local variables:
           </p>
-<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">,</span> <span class="special">...</span> <span class="keyword">typename</span> <span class="identifier">TN</span><span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">,</span> <span class="special">...,</span> <span class="keyword">typename</span> <span class="identifier">TN</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">locals</span><span class="special">;</span>
 </pre>
 <p>
@@ -157,13 +155,13 @@
 </dl>
 </div>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.valid_expressions"></a><h6>
-<a name="id777376"></a>
+<a name="id732260"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
-            In addition to the requirements defined in <a class="link" href="../../../qi/reference/parser_concepts/parser.html" title="Parser"><code class="computeroutput"><span class="identifier">Parser</span></code></a>, for any NaryParser the
-            following must be met:
+            In addition to the requirements defined in <a class="link" href="generator.html" title="Generator"><code class="computeroutput"><span class="identifier">Generator</span></code></a>, for any Nonterminal
+            the following must be met:
           </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -211,7 +209,7 @@
                   <p>
                     <code class="computeroutput"><span class="identifier">x</span><span class="special">(</span><span class="identifier">arg1</span><span class="special">,</span>
                     <span class="identifier">arg2</span><span class="special">,</span>
-                    <span class="special">...</span> <span class="identifier">argN</span><span class="special">)</span></code>
+                    <span class="special">...,</span> <span class="identifier">argN</span><span class="special">)</span></code>
                   </p>
                   </td>
 <td>
@@ -234,7 +232,7 @@
                   </td>
 <td>
                   <p>
-                    Naming a Nonterminal.
+                    Set the name of a Nonterminal
                   </p>
                   </td>
 <td>
@@ -251,7 +249,7 @@
                   </td>
 <td>
                   <p>
-                    Getting the name of a Nonterminal.
+                    Get the name of a Nonterminal
                   </p>
                   </td>
 <td>
@@ -263,7 +261,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.type_expressions"></a><h6>
-<a name="id779271"></a>
+<a name="id732573"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.type_expressions">Type
             Expressions</a>
           </h6>
@@ -318,7 +316,7 @@
 </tbody>
 </table></div>
 <a name="spirit.karma.reference.generator_concepts.nonterminal.models"></a><h6>
-<a name="id779407"></a>
+<a name="id732709"></a>
             <a class="link" href="nonterminal.html#spirit.karma.reference.generator_concepts.nonterminal.models">Models</a>
           </h6>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">

@@ -54,6 +54,7 @@ Reference
 [done] - nonterminal.qbk
 [done] - document API functions: generate, generate_delimited
 [done] - document API functions: format, format_delimited
+- pad(num)
 
 Lex
 ---

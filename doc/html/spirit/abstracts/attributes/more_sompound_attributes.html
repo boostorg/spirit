@@ -98,7 +98,7 @@
           any attribute and don't produce (consume) any data. The following example
           shows this:
         </p>
-<pre class="programlisting"><span class="comment">// the following parses "(1.0 2.0)" into a pair of double
+<pre class="programlisting"><span class="comment">// the following parses "(1.0, 2.0)" into a pair of double
 </span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">input</span><span class="special">(</span><span class="string">"(1.0, 2.0)"</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">p</span><span class="special">;</span>
 <span class="identifier">qi</span><span class="special">::</span><span class="identifier">parse</span><span class="special">(</span><span class="identifier">input</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">input</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> 

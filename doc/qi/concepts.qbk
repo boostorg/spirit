@@ -122,7 +122,11 @@ This is typically carried out through a call to `qi::skip_over`:
 
 [heading Models] 
 
-__fixme__ Add links to /PrimitiveParser/ models here.
+* __qi_attr__
+* __qi_eoi__
+* __qi_eol__
+* __qi_eps__
+* __qi_symbols__
 
 [endsect] [/ PrimitiveParser Concept]
 
@@ -172,7 +176,15 @@ For any UnaryParser, `P`, the following invariant always holds:
 
 [heading Models]
 
-__fixme__ Add links to models of UnaryParser concept
+* __qi_and_predicate__
+* __qi_kleene__
+* __qi_lexeme__ 
+* __qi_not_predicate__
+* __qi_omit__
+* __qi_plus__
+* __qi_raw__
+* [qi_repeat `repeat`]
+* __qi_skip__
 
 [endsect] [/ UnaryParser Concept]
 
@@ -226,7 +238,8 @@ For any BinaryParser, `P`, the following invariants always hold:
 
 [heading Models]
 
-__fixme__ Add links to models of BinaryParser concept
+* __qi_difference__
+* __qi_list__
 
 [endsect] [/ BinaryParser Concept]
 
@@ -277,7 +290,11 @@ always holds:
 
 [heading Models]
 
-__fixme__ Add links to models of NaryParser concept
+* __qi_alternative__
+* __qi_expect__
+* __qi_permutation__
+* __qi_sequence__
+* __qi_sequential_or__
 
 [endsect] [/ NaryParser Concept]
 
@@ -393,7 +410,7 @@ Nonterminal the following must be met:
 * __qi_rule__
 * __qi_grammar__
 
-[endsect] [/ XXX Concept]
+[endsect] [/ Concept]
 
 
 

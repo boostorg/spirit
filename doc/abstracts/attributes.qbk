@@ -126,7 +126,7 @@ and generate output for it:
         karma::space,                     // delimiter grammar
         p);                               // data to use as the attribute 
 
-(where the `ascii::space` generator is used as the delimiter, allowing to 
+(where the `karma::space` generator is used as the delimiter, allowing to 
 automatically skip/insert delimiting spaces in between all primitives). 
 
 [tip  *For sequences only:* __qi__ and __karma__ expose a set of API functions 

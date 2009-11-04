@@ -140,11 +140,6 @@ pages and pages of reference doumentation.
 
 [table 
     [[Expression]           [Attribute]                 [Description]]
-    [[`eol`]                [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
-    [[`eoi`]                [`Unused`]                  [Matches the end of input (first == last)]]
-    [[`eps`]                [`Unused`]                  [Match an empty string]]
-    [[`eps(b)`]             [`Unused`]                  [If `b` is true, match an empty string]]
-    [[`lazy(fp)`]           [Attribute of `P` where `P`
     [[__qi_eol__]           [`Unused`]                  [Matches the end of line (`\r` or `\n` or `\r\n`)]]
     [[__qi_eoi__]           [`Unused`]                  [Matches the end of input (first == last)]]
     [[__qi_eps__]           [`Unused`]                  [Match an empty string]]
