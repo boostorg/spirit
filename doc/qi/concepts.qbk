@@ -22,7 +22,7 @@ The following sections provide details on these concepts.
 [heading Description]
 
 The /Parser/ is the most fundamental concept. A Parser has a member
-function `parse`, that accepts a first-last __fwditer__ pair and
+function, `parse`, that accepts a first-last __fwditer__ pair andreturns bool as its result. The iterators delimit the data being parsed.function `parse`, that accepts a first-last __fwditer__ pair and
 returns `bool` as its result. The iterators delimit the data being parsed.
 The Parser's `parse` member function returns `true` if the parse
 succeeds, in which case the first iterator is advanced accordingly. Each
@@ -122,11 +122,7 @@ This is typically carried out through a call to `qi::skip_over`:
 
 [heading Models] 
 
-* __qi_attr__
-* __qi_eoi__
-* __qi_eol__
-* __qi_eps__
-* __qi_symbols__
+__fixme__ Add links to /PrimitiveParser/ models here.
 
 [endsect] [/ PrimitiveParser Concept]
 
@@ -176,16 +172,7 @@ For any UnaryParser, `P`, the following invariant always holds:
 
 [heading Models]
 
-* __qi_and_predicate__
-* __qi_kleene__
-* __qi_lexeme__ 
-* __qi_not_predicate__
-* __qi_omit__
-* __qi_plus__
-* __qi_raw__
-* [qi_repeat `repeat`]
-* __qi_skip__
-
+__fixme__ Add links to models of UnaryParser concept
 
 [endsect] [/ UnaryParser Concept]
 
@@ -239,9 +226,7 @@ For any BinaryParser, `P`, the following invariants always hold:
 
 [heading Models]
 
-* __qi_difference__
-* __qi_list__
-
+__fixme__ Add links to models of BinaryParser concept
 
 [endsect] [/ BinaryParser Concept]
 
@@ -292,12 +277,7 @@ always holds:
 
 [heading Models]
 
-* __qi_alternative__
-* __qi_expect__
-* __qi_permutation__
-* __qi_sequence__
-* __qi_sequential_or__
-
+__fixme__ Add links to models of NaryParser concept
 
 [endsect] [/ NaryParser Concept]
 
@@ -378,21 +358,21 @@ which correspond to the Nonterminal's local variables `T0` ... `T9`.
 [variablelist Notation
     [[`x`]                          [A Nonterminal]]
     [[`X`]                          [A Nonterminal type]]
-    [[`arg1`, `arg2`, ..., `argN`]   [__qi_lazy_arguments__ that evaluate to each of 
+    [[`arg1`, `arg2`, ..., `argN`]  [__qi_lazy_arguments__ that evaluate to each of 
                                     the Nonterminal's inherited attributes.]]
 ]
 
 [heading Valid Expressions]
 
 In addition to the requirements defined in __parser_concept__, for any
-NaryParser the following must be met:
+Nonterminal the following must be met:
 
 [table
     [[Expression]               [Semantics]                                         [Return type]]
     [[`x`]                      [In a parser expression, invoke Nonterminal `x`]    [`X`]]
     [[`x(arg1, arg2, ..., argN)`][In a parser expression, invoke Nonterminal `r` 
                                 passing in inherited attributes
-                                `arg1` ... `argN`]                                  [`X`]]
+                                `arg1` ... `argN`]                                    [`X`]]
     [[`x.name(name)`]           [Naming a Nonterminal.]                             [`void`]]
     [[`x.name()`]               [Getting the name of a Nonterminal.]                [`std::string`]]
     [[debug(x)]                 [Debug Nonterminal `x`.]                            [`void`]]
@@ -413,6 +393,8 @@ NaryParser the following must be met:
 * __qi_rule__
 * __qi_grammar__
 
-[endsect] [/ Concept]
+[endsect] [/ XXX Concept]
+
+
 
 [endsect]

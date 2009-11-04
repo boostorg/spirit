@@ -13,9 +13,10 @@ facilities to make it easy to adapt a grammar for error handling. We'll wrap up
 the Qi tutorial with another version of the mini xml parser, this time, with
 error handling.
 
-[@../../example/qi/mini_xml1.cpp] and here: [@../../example/qi/mini_xml3.cpp]
+The full cpp file for this example can be found here:
+[@../../example/qi/mini_xml3.cpp]
 
-[import ../example/qi/mini_xml3.cpp]
+[import ../../example/qi/mini_xml3.cpp]
 
 Here's the grammar:
 

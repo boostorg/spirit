@@ -25,6 +25,7 @@ symbol.
 Traditionally, symbol table management is maintained seperately outside the BNF
 grammar through semantic actions. Contrary to standard practice, the Spirit
 symbol table class symbols is-a parser. An object of which may be used
+symbol table class `symbols` is a parser, an object of which may be used
 anywhere in the EBNF grammar specification. It is an example of a dynamic
 parser. A dynamic parser is characterized by its ability to modify its behavior
 at run time. Initially, an empty symbols object matches nothing. At any time,
